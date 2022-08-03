@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
@@ -13,7 +15,9 @@ using Content.Shared.Trigger;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction;
+using Content.Shared.Payload.Components;
 using Content.Shared.StepTrigger.Systems;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -118,8 +122,30 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (user != null)
             {
-                _adminLogger.Add(LogType.Trigger,
-                    $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
+                // There's gotta be a better way to do this, very sussy
+                if (TryComp(uid, out ContainerManagerComponent? grenade) && grenade.TryGetContainer("payload", out IContainer? container))
+                {
+                    var payload = container.ContainedEntities.First();
+
+                    if (TryComp(payload, out ChemicalPayloadComponent? chemicalPayloadComponent))
+                    {
+                        if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA))
+                            return;
+
+                        if (!TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
+                            return;
+
+                        _adminLogger.Add(LogType.Trigger,
+                            $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
+                    }
+
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.Trigger,
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
+                }
+
             }
             else
             {

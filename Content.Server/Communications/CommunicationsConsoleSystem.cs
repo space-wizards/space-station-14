@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using Content.Server.Access.Systems;
+using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
@@ -13,6 +14,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Communications;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -33,6 +35,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private const int MaxMessageLength = 256;
         private const float UIUpdateInterval = 5.0f;
@@ -254,6 +257,9 @@ namespace Content.Server.Communications
                 return;
             }
             _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
+            // yucky double check if player is valid, but couldn't find a way to ensure it after announcement was sent
+            if (message.Session.AttachedEntity is {Valid: true} player)
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(player):player} has sent the following station announcement: {msg}");
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)

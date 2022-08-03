@@ -33,6 +33,16 @@ namespace Content.Shared.Access.Components
                 JobTitle = jobTitle;
                 AccessList = accessList;
             }
+
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class LogChangesToIdCardMessage : BoundUserInterfaceMessage
+        {
+            public LogChangesToIdCardMessage()
+            {
+
+            }
         }
 
         // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
