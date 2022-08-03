@@ -18,8 +18,8 @@
   id: MimeBlockade
   name: action-name-spell-blockade
   description: action-description-spell-blockade
-  useDelay: 35
-  popup: action-popup-spell-blockade
+  useDelay: 50
+  userPopup: action-popup-spell-blockade
   itemIconStyle: BigAction
   icon:
     sprite: Objects/Magic/magicactions.rsi

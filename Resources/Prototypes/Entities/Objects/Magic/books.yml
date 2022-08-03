@@ -107,6 +107,6 @@
       instantSpells:
         MimeBlockade: -1
       worldSpells:
-        MimeGun: 10
+        MimeGun: 3
       isPersistent: true
       singleUse: true

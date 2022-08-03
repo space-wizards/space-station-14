@@ -20,12 +20,12 @@
   id: MimeGun
   name: action-name-spell-fingergun
   description: action-description-spell-fingergun
-  useDelay: 3
+  useDelay: 5
   itemIconStyle: BigAction
   checkCanAccess: false
   range: 60
-  #sound: !type:SoundPathSpecifier
-  #  path: /Audio/Magic/fireball.ogg
+  sound: !type:SoundPathSpecifier
+    path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
   icon:
     sprite: Objects/Magic/magicactions.rsi
     state: finger_guns
