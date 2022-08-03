@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Humanoid;
 
 [RegisterComponent]
-public sealed class SharedHumanoidComponent : Component
+public abstract class SharedHumanoidComponent : Component
 {
     /// <summary>
     ///     Current species. Dictates things like base body sprites,
@@ -51,6 +51,7 @@ public sealed class SharedHumanoidComponent : Component
 
     // ^^^ Attempting this, let's see how well this goes
 
+    /* TODO: Goes in server
     /// <summary>
     ///     All current markings on this humanoid, by visual layer.
     ///
@@ -58,6 +59,7 @@ public sealed class SharedHumanoidComponent : Component
     /// </summary>
     [ViewVariables]
     public MarkingSet CurrentMarkings = new();
+    */
 
     /// <summary>
     ///     Visual layers currently hidden. This will affect the base sprite

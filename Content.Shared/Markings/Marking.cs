@@ -1,3 +1,4 @@
+using System.Linq;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Markings
@@ -68,21 +69,37 @@ namespace Content.Shared.Markings
 
         public int CompareTo(Marking? marking)
         {
-            if (marking == null) return 1;
-            else return this.MarkingId.CompareTo(marking.MarkingId);
+            if (marking == null)
+            {
+                return 1;
+            }
+
+            return MarkingId.CompareTo(marking.MarkingId);
         }
 
         public int CompareTo(string? markingId)
         {
-            if (markingId == null) return 1;
-            return this.MarkingId.CompareTo(markingId);
+            if (markingId == null)
+            {
+                return 1;
+            }
+
+            return MarkingId.CompareTo(markingId);
         }
 
         public bool Equals(Marking? other)
         {
-            if (other == null) return false;
-            return (this.MarkingId.Equals(other.MarkingId));
+            if (other == null)
+            {
+                return false;
+            }
+            return MarkingId.Equals(other.MarkingId)
+                && _markingColors.SequenceEqual(other._markingColors)
+                && Visible.Equals(other.Visible)
+                && Forced.Equals(other.Forced);
         }
+
+        // VERY BIG TODO: TURN THIS INTO JSONSERIALIZER IMPLEMENTATION
 
 
         // look this could be better but I don't think serializing

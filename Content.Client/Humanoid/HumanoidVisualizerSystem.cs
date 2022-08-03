@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Humanoid;
 
-public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidComponent>
+public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SpriteSystem _spriteSystem = default!;
@@ -20,50 +20,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SharedHumanoidComponent, ComponentInit>(OnInitialize);
-    }
-
-    private void OnInitialize(EntityUid uid, SharedHumanoidComponent component, ComponentInit args)
-    {
-        if (_prototypeManager.TryIndex(component.Initial, out HumanoidMarkingStartingSet? startingSet))
-        {
-            component.CurrentMarkings = new(startingSet.Markings);
-        }
-        UpdateHumanoidAppearance(uid, true, true, true, component.HiddenLayers, component);
-    }
-
-    private void UpdateHumanoidAppearance(EntityUid uid,
-        bool updateBaseSprites = false,
-        bool updateSkinColor = false,
-        bool updateMarkings = false,
-        HashSet<HumanoidVisualLayers>? newHiddenSet = null,
-        SharedHumanoidComponent? humanoid = null)
-    {
-        if (!Resolve(uid, ref humanoid))
-        {
-            return;
-        }
-
-        if (!_prototypeManager.TryIndex(humanoid.Species, out SpeciesPrototype? species)
-            || !_prototypeManager.TryIndex(species.SpriteSet, out HumanoidSpeciesSpritesPrototype? spriteSet)
-            || !_prototypeManager.TryIndex(spriteSet.BaseSprites, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
-        {
-            return;
-        }
-
-        // This is the humanoid appearance sprite pipeline.
-
-        if (updateBaseSprites)
-            ApplyBaseSprites(uid, baseSprites.Sprites);
-
-        if (updateSkinColor)
-            ApplySkinColor(uid, baseSprites.Sprites, humanoid.SkinColor);
-
-        if (newHiddenSet != null)
-            ReplaceHiddenLayers(uid, newHiddenSet, humanoid);
-
-        if (updateMarkings)
-            ApplyAllMarkings(uid, species, baseSprites);
     }
 
     // Since this doesn't allow you to discern what you'd want to change
@@ -73,7 +29,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
     // Alternatively, the 'last changed' items could be cached server-side, and given
     // a null state upon the next state change, that way specific things aren't refreshed
     // every single time something is changed.
-    protected override void OnAppearanceChange(EntityUid uid, SharedHumanoidComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, HumanoidComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
 
@@ -119,72 +75,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         // TODO: Check diff
     }
 
-    private void HandleState(EntityUid uid, SharedHumanoidComponent humanoid, ref ComponentHandleState args)
-    {
-        if (args.Current is not HumanoidComponentState state)
-        {
-            return;
-        }
-
-        humanoid.Age = state.Age;
-        humanoid.Gender = state.Gender;
-
-        if (!_prototypeManager.TryIndex(state.Species, out SpeciesPrototype? species)
-            || !_prototypeManager.TryIndex(species.SpriteSet, out HumanoidSpeciesSpritesPrototype? spriteSet)
-            || !_prototypeManager.TryIndex(spriteSet.BaseSprites, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
-        {
-            throw new ArgumentException("invalid species or sprites passed into component state");
-        }
-
-        // a lot of these checks are here to ensure that
-        // we don't needlessly reorganize everything when one single
-        // field's state was changed
-
-        var updateBaseSprites = false;
-        var updateSkinColor = false;
-        var updateVisibility = false;
-        var updateMarkings = false;
-
-        if (humanoid.Species != state.Species || humanoid.Sex != state.Sex)
-        {
-            humanoid.Species = state.Species;
-            humanoid.Sex = state.Sex;
-
-            updateBaseSprites = true;
-        }
-
-        if (humanoid.SkinColor != state.SkinColor)
-        {
-            humanoid.SkinColor = state.SkinColor;
-
-            updateSkinColor = true;
-        }
-
-        // This one is hard. It's less nicer to store the previous state in the component.
-        var hiddenLayers = state.HiddenLayers.ToHashSet();
-
-        if (!humanoid.HiddenLayers.SequenceEqual(hiddenLayers))
-        {
-            updateVisibility = true;
-        }
-
-        if (!humanoid.CurrentMarkings.Equals(state.Markings))
-        {
-            humanoid.CurrentMarkings = state.Markings;
-
-            updateMarkings = true;
-        }
-
-        UpdateHumanoidAppearance(uid,
-            updateBaseSprites,
-            updateSkinColor,
-            updateMarkings,
-            updateVisibility ? hiddenLayers : null,
-            humanoid);
-    }
-
     private void ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
-        SharedHumanoidComponent? humanoid)
+        HumanoidComponent? humanoid)
     {
         if (!Resolve(uid, ref humanoid))
         {
@@ -219,20 +111,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         }
     }
 
-    private void ApplyAllMarkings(EntityUid uid, SpeciesPrototype species, HumanoidSpeciesBaseSpritesPrototype baseSprites, SharedHumanoidComponent? humanoid = null)
-    {
-        if (!Resolve(uid, ref humanoid))
-        {
-            return;
-        }
-
-        ClearAllMarkings(uid);
-        // var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
-        ApplyMarkings(uid, humanoid.CurrentMarkings);
-        ApplyDefaultMarkings(uid, points);
-    }
-
-    private void ClearAllMarkings(EntityUid uid, SharedHumanoidComponent? humanoid = null,
+    private void ClearAllMarkings(EntityUid uid, HumanoidComponent? humanoid = null,
         SpriteComponent? spriteComp = null)
     {
         if (!Resolve(uid, ref humanoid, ref spriteComp))
@@ -266,82 +145,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         }
     }
 
-    /* See below.
-    private Dictionary<MarkingCategories, MarkingPoints> GetMarkingLimitsAndDefaults(string pointPrototypeId,
-        Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> spriteSettings)
-    {
-        // empty string implies no limit
-        if (string.IsNullOrEmpty(pointPrototypeId))
-        {
-            return new();
-        }
-
-        if (!_prototypeManager.TryIndex(pointPrototypeId, out MarkingPointsPrototype? pointPrototype))
-        {
-            throw new ArgumentException("invalid prototype ID for marking points");
-        }
-
-        var points = MarkingPoints.CloneMarkingPointDictionary(pointPrototype.Points);
-
-        foreach (var (layer, setting) in spriteSettings)
-        {
-            var category = MarkingCategoriesConversion.FromHumanoidVisualLayers(layer);
-            if (setting.ReplaceOnly && MarkingCategoriesConversion.IsReplaceable(category))
-            {
-                if (!points.TryGetValue(category, out var point))
-                {
-                    point = new();
-                }
-
-                point.Points = 1;
-                points[category] = point;
-            }
-        }
-
-        return points;
-    }
-    */
-
-    /* This needs to be applied on the server instead.
-    private void ApplyDefaultMarkings(EntityUid uid,
-        Dictionary<MarkingCategories, MarkingPoints> usedPoints,
-        SharedHumanoidComponent? humanoid = null,
-        SpriteComponent? sprite = null)
-    {
-        if (!Resolve(uid, ref sprite, ref humanoid))
-        {
-            return;
-        }
-
-        foreach (var (layerType, points) in usedPoints)
-        {
-            if (!points.Required || points.Points <= 0)
-            {
-                continue;
-            }
-
-            while (points.Points > 0)
-            {
-                // this all has to be checked, continues shouldn't occur because
-                // points.Points needs to be subtracted
-                if (points.DefaultMarkings.TryGetValue(points.Points - 1, out var marking)
-                    && _markingManager.Markings().TryGetValue(marking, out var markingPrototype)
-                    && markingPrototype.MarkingCategory == layerType) // check if this actually belongs on this layer, too
-                {
-                    ApplyMarking(uid, markingPrototype, null);
-
-                    humanoid.CurrentMarkings.AddBack(markingPrototype.AsMarking());
-                }
-
-                points.Points--;
-            }
-        }
-    }
-    */
-
     private void ApplyMarkings(EntityUid uid,
         List<Marking> markings,
-        SharedHumanoidComponent? humanoid = null,
+        HumanoidComponent? humanoid = null,
         SpriteComponent? spriteComp = null)
     {
         if (!Resolve(uid, ref spriteComp, ref humanoid))
@@ -363,7 +169,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
     private void ApplyMarking(EntityUid uid,
         MarkingPrototype markingPrototype,
         IReadOnlyList<Color>? colors,
-        SharedHumanoidComponent? humanoid = null,
+        HumanoidComponent? humanoid = null,
         SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite, ref humanoid))
