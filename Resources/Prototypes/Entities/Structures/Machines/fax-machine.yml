@@ -1,0 +1,66 @@
+﻿- type: entity
+  id: fax_machine
+  parent: BaseMachinePowered
+  name: fax machine
+  description: A bluespace powered fax machine. You'd expect NT to invent something new, nope! Use fax. Deal with it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/mixer.rsi
+      netsync: false
+      layers:
+        - state: mixer_empty
+        - state: mixer_screens
+          shader: unshaded
+    - type: Icon
+      sprite: Structures/Machines/mixer.rsi
+      state: mixer_loaded
+    - type: ChemMaster
+      beakerSlot:
+        whitelistFailPopup: chem-master-component-cannot-put-entity-message
+        whitelist:
+          components:
+            - FitsInDispenser
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.4,0.25,0.4"
+          mass: 25
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:ChangeConstructionNodeBehavior
+              node: machineFrame
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: ActivatableUI
+      key: enum.ChemMasterUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChemMasterUiKey.Key
+          type: ChemMasterBoundUserInterface
+    - type: ApcPowerReceiver
+      powerLoad: 250
+    # Machine / Construction stuff
+    - type: Wires
+      BoardName: "chem_master"
+      LayoutId: chem_master
+    - type: Machine
+      board: ChemMasterMachineCircuitboard
+    - type: MaterialStorage
+    - type: Construction
+      graph: Machine
+      node: machine
+
