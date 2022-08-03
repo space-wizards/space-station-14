@@ -126,6 +126,7 @@ namespace Content.Server.Cloning.Systems
             var speciesProto = _prototype.Index<SpeciesPrototype>(humanoid.Species).Prototype;
             var mob = Spawn(speciesProto, Transform(clonePod.Owner).MapPosition);
             _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance);
+            _appearanceSystem.UpdateSexGender(mob, humanoid.Sex, humanoid.Gender);
 
             MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
 
