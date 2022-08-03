@@ -53,6 +53,9 @@ namespace Content.Server.Dragon
         [ViewVariables, DataField("spawnRiftAction")]
         public InstantAction? SpawnRiftAction;
 
+        [ViewVariables(VVAccess.ReadWrite), DataField("riftPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string RiftPrototype = "CarpRift";
+
         /// <summary>
         /// The amount of time it takes to devour something
         /// <remarks>
