@@ -20,9 +20,10 @@ public sealed partial class StoreSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<StoreComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<StoreComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
 
         InitializeUi();
     }
@@ -31,6 +32,12 @@ public sealed partial class StoreSystem : EntitySystem
     {
         RefreshAllListings(component);
         InitializeFromPreset(component.Preset, component);
+        RaiseLocalEvent(uid, new StoreAddedEvent(), true);
+    }
+
+    private void OnShutdown(EntityUid uid, StoreComponent component, ComponentShutdown args)
+    {
+        RaiseLocalEvent(uid, new StoreRemovedEvent(), true);
     }
 
     private void OnAfterInteract(EntityUid uid, CurrencyComponent component, AfterInteractEvent args)

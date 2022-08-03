@@ -20,7 +20,7 @@ public sealed class CurrencyPrototype : IPrototype
     [DataField("name")]
     public string Name { get; } = string.Empty;
 
-    [DataField("entityId", serverOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("entityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? EntityId { get; } = null;
 
     [DataField("canWithdraw")]

@@ -41,17 +41,20 @@ public sealed partial class StoreMenu : DefaultWindow
     {
         Balance = balance;
 
-        var balanceStr = string.Empty;
+        var currency = new Dictionary<(string, FixedPoint2), CurrencyPrototype>();
         foreach (var type in balance)
-        {
-            var proto = _prototypeManager.Index<CurrencyPrototype>(type.Key);
+            currency.Add((type.Key, type.Value), _prototypeManager.Index<CurrencyPrototype>(type.Key));
 
-            balanceStr += $"{Loc.GetString(proto.Name, ("amount", 1))}: {type.Value}\n";
-        }
+        var balanceStr = string.Empty;
+        foreach (var type in currency)
+            balanceStr += $"{Loc.GetString(type.Value.Name, ("amount", 1))}: {type.Key.Item2}\n";
         BalanceInfo.SetMarkup(balanceStr.TrimEnd());
 
-        // you can't withdraw if you don't have TC
-        WithdrawButton.Disabled = true;
+        var disabled = true;
+        foreach (var type in currency)
+            if (type.Value.CanWithdraw && type.Value.EntityId != null && type.Key.Item2 > 0)
+                disabled = false;
+        WithdrawButton.Disabled = disabled;
     }
 
     public void UpdateListing(List<ListingData> listings)
@@ -141,7 +144,7 @@ public sealed partial class StoreMenu : DefaultWindow
     public string GetListingPriceString(ListingData listing)
     {
         var text = string.Empty;
-
+        
         foreach (var type in listing.Cost)
         {
             var currency = _prototypeManager.Index<CurrencyPrototype>(type.Key);

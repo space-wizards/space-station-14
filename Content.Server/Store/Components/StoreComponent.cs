@@ -3,6 +3,7 @@ using Content.Shared.Store;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Store.Components;
 
@@ -34,7 +35,7 @@ public sealed class StoreComponent : Component
     /// The list of currencies that can be inserted into this store.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), DataField("currencyWhitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<CurrencyPrototype>))]
-    public HashSet<string> CurrencyWhitelist = new(); //todo: remove
+    public HashSet<string> CurrencyWhitelist = new();
 
     /// <summary>
     /// Whether or not this store can be activated by clicking on it (like an uplink)
@@ -59,4 +60,17 @@ public sealed class StoreComponent : Component
     /// </summary>
     [ViewVariables]
     public HashSet<ListingData> LastAvailableListings = new();
+
+    #region audio
+    [ViewVariables]
+    [DataField("buySuccessSound")]
+    public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
+
+    [ViewVariables]
+    [DataField("insufficientFundsSound")]
+    public SoundSpecifier InsufficientFundsSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
+    #endregion
 }
+
+public sealed class StoreAddedEvent : EntityEventArgs { };
+public sealed class StoreRemovedEvent : EntityEventArgs { };

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -7,9 +7,6 @@ using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Traitor;
-using Content.Server.Traitor.Uplink;
-using Content.Server.Traitor.Uplink.Account;
-using Content.Server.Traitor.Uplink.Components;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -109,14 +106,14 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
             _inventory.TryEquip(owned, newTmp, "back", true);
 
             // Like normal traitors, they need access to a traitor account.
-            var uplinkAccount = new UplinkAccount(startingBalance, owned);
-            var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-            accounts.AddNewAccount(uplinkAccount);
+            //var uplinkAccount = new UplinkAccount(startingBalance, owned);
+            //var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+            //accounts.AddNewAccount(uplinkAccount);
 
-            EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .AddUplink(owned, uplinkAccount, newPDA);
+            //EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+            //    .AddUplink(owned, uplinkAccount, newPDA);
 
-            _allOriginalNames[uplinkAccount] = Name(owned);
+            //_allOriginalNames[uplinkAccount] = Name(owned);
 
             // The PDA needs to be marked with the correct owner.
             var pda = Comp<PDAComponent>(newPDA);
@@ -186,6 +183,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
         var lines = new List<string>();
         lines.Add(Loc.GetString("traitor-death-match-end-round-description-first-line"));
+        /*
         foreach (var uplink in EntityManager.EntityQuery<UplinkComponent>(true))
         {
             var uplinkAcc = uplink.UplinkAccount;
@@ -195,7 +193,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
                     ("originalName", _allOriginalNames[uplinkAcc]),
                     ("tcBalance", uplinkAcc.Balance)));
             }
-        }
+        }*/
 
         ev.AddLine(string.Join('\n', lines));
     }

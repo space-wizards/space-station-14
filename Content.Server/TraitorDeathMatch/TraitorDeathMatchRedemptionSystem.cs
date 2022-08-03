@@ -1,7 +1,6 @@
-﻿using Content.Server.Mind.Components;
-using Content.Server.Traitor.Uplink.Account;
-using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Mind.Components;
 using Content.Server.TraitorDeathMatch.Components;
+using Content.Server.Store.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -12,7 +11,6 @@ namespace Content.Server.TraitorDeathMatch;
 public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly UplinkAccountsSystem _uplink = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -43,7 +41,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             return;
         }
 
-        if (!EntityManager.TryGetComponent<UplinkComponent>(args.Used, out var victimUplink))
+        if (!EntityManager.TryGetComponent<StoreComponent>(args.Used, out var victimUplink))
         {
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
@@ -72,10 +70,10 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             return;
         }
 
-        UplinkComponent? userUplink = null;
+        StoreComponent? userUplink = null;
 
         if (_inventory.TryGetSlotEntity(args.User, "id", out var pdaUid) &&
-            EntityManager.TryGetComponent<UplinkComponent>(pdaUid, out var userUplinkComponent))
+            EntityManager.TryGetComponent<StoreComponent>(pdaUid, out var userUplinkComponent))
             userUplink = userUplinkComponent;
 
         if (userUplink == null)
@@ -88,6 +86,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             return;
         }
 
+        /*
         // We have finally determined both PDA components. FINALLY.
 
         var userAccount = userUplink.UplinkAccount;
@@ -122,7 +121,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("traitor-death-match-redemption-component-interact-using-success-message",
                 ("tcAmount", transferAmount)), uid, Filter.Entities(args.User));
-
+        */
         args.Handled = true;
     }
 }

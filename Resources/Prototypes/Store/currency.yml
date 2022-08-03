@@ -2,17 +2,9 @@
   id: Telecrystal
   name: store-currency-name-telecrystal
   entityId: Telecrystal
+  canWithdraw: true
 
 #debug
 - type: currency
   id: DebugDollar
   name: store-currency-name-debugdollar
-
-- type: entity
-  parent: Telecrystal
-  id: debugdollar
-  suffix: debug dollar
-  components:
-  - type: Currency
-    price:
-      DebugDollar: 1

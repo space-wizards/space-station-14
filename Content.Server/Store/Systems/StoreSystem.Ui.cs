@@ -10,6 +10,7 @@ using Content.Shared.Store;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using System.Linq;
+using Robust.Shared.Player;
 
 namespace Content.Server.Store.Systems;
 
@@ -18,6 +19,7 @@ public sealed partial class StoreSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public void InitializeUi()
     {
@@ -100,8 +102,13 @@ public sealed partial class StoreSystem : EntitySystem
 
         //check that we have enough money
         foreach (var currency in listing.Cost)
+        {
             if (!component.Balance.TryGetValue(currency.Key, out var balance) || balance < currency.Value)
+            {
+                _audio.Play(component.InsufficientFundsSound, Filter.SinglePlayer(msg.Session), uid);
                 return;
+            }
+        }
 
         foreach (var currency in listing.Cost)
             component.Balance[currency.Key] -= currency.Value;
@@ -130,6 +137,7 @@ public sealed partial class StoreSystem : EntitySystem
         }
 
         listing.PurchaseAmount++;
+        _audio.Play(component.BuySuccessSound, Filter.SinglePlayer(msg.Session), uid);
 
         UpdateUserInterface(msg.Buyer, component);
     }

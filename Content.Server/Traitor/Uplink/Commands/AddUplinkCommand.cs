@@ -1,8 +1,6 @@
 using Content.Server.Administration;
-using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -83,14 +81,9 @@ namespace Content.Server.Traitor.Uplink.Commands
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var tcCount = configManager.GetCVar(CCVars.TraitorStartingBalance);
 
-            // Get account
-            var uplinkAccount = new UplinkAccount(tcCount, user);
-            var accounts = entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-            accounts.AddNewAccount(uplinkAccount);
-
             // Finally add uplink
             if (!entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .AddUplink(user, uplinkAccount, uplinkEntity))
+                .AddUplink(user, tcCount, uplinkEntity: uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
                 return;
