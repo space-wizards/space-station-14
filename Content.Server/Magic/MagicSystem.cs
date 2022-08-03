@@ -125,7 +125,7 @@ public sealed class MagicSystem : EntitySystem
         if (component.SingleUse)
         {
             EntityManager.DeleteEntity(uid);
-            _popupSystem.PopupEntity("The book crumbles", ev.User, Filter.Entities(ev.User), PopupType.Large);
+            _popupSystem.PopupEntity(Loc.GetString("action-spellbook-crumble"), ev.User, Filter.Entities(ev.User), PopupType.Large);
         }
     }
 

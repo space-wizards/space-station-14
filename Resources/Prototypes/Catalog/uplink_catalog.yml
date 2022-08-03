@@ -334,6 +334,17 @@
   jobWhitelist:
   - Chaplain
 
+- type: uplinkListing
+  id: uplinkMimeBook
+  category: Job
+  itemId: MimeSpellbook
+  description: The classical two part series on how to further hone your mime skills.
+  price: 20
+  surplus: false
+  jobWhitelist:
+  - Mime
+
+
 # Armor
 
 # Should be cameleon shoes, change when implemented.

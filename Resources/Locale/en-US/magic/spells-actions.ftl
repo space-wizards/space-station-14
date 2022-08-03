@@ -1,4 +1,6 @@
-﻿action-name-spell-rune-flash = Flash Rune
+﻿action-spellbook-crumble = The book crumbles
+
+action-name-spell-rune-flash = Flash Rune
 action-description-spell-rune-flash = Summons a rune that flashes if used.
 
 action-name-spell-forcewall = Forcewall

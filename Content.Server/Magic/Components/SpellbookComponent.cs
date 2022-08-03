@@ -32,10 +32,16 @@ public sealed class SpellbookComponent : Component
     [DataField("learnTime")]
     public float LearnTime = .75f;
 
+    /// <summary>
+    /// If set to true then you don't have to keep the book after learning it
+    /// </summary>
     [ViewVariables]
     [DataField("isPersistent")]
     public bool Persistent = false;
 
+    /// <summary>
+    /// If set to true the book will crumble after a single use
+    /// </summary>
     [ViewVariables]
     [DataField("singleUse")]
     public bool SingleUse = false;

@@ -108,5 +108,6 @@
         MimeBlockade: -1
       worldSpells:
         MimeGun: 3
+      learnTime: 3
       isPersistent: true
       singleUse: true
