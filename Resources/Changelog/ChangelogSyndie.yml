@@ -1755,3 +1755,18 @@ Entries:
     type: Add
   id: 202
   time: '2022-08-02T14:15:09.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u0423\u043B\u0443\u0447\u0448\u0435\u043D \u043F\u0435\u0440\u0435\u0432\
+      \u043E\u0434"
+    type: Tweak
+  id: 203
+  time: '2022-08-03T15:45:52.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u043F\u043E\u0447\u0438\u043D\u0435\u043D\u044B \u043D\u0430\u0437\u0432\
+      \u0430\u043D\u0438\u044F \u043A\u043E\u043C\u043D\u0430\u0442\u043D\u044B\u0445\
+      \ \u0440\u0430\u0441\u0442\u0435\u043D\u0438\u0439"
+    type: Fix
+  id: 204
+  time: '2022-08-03T15:45:15.0000000+00:00'
