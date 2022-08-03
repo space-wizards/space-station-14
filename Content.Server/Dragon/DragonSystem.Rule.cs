@@ -44,7 +44,7 @@ public sealed partial class DragonSystem
         return;
     }
 
-    private void OnRiftRoundEnd(EntityUid uid, DragonRiftComponent component, RoundEndTextAppendEvent args)
+    private void OnRiftRoundEnd(RoundEndTextAppendEvent args)
     {
         if (!RuleAdded)
             return;

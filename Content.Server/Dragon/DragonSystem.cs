@@ -47,8 +47,9 @@ namespace Content.Server.Dragon
 
             SubscribeLocalEvent<DragonRiftComponent, ComponentShutdown>(OnRiftShutdown);
             SubscribeLocalEvent<DragonRiftComponent, ComponentGetState>(OnRiftGetState);
+            SubscribeLocalEvent<DragonRiftComponent, AnchorStateChangedEvent>(OnAnchorChange);
 
-            SubscribeLocalEvent<DragonRiftComponent, RoundEndTextAppendEvent>(OnRiftRoundEnd);
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRiftRoundEnd);
         }
 
         public override void Update(float frameTime)
@@ -94,6 +95,14 @@ namespace Content.Server.Dragon
 
         #region Rift
 
+        private void OnAnchorChange(EntityUid uid, DragonRiftComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (!args.Anchored)
+            {
+                QueueDel(uid);
+            }
+        }
+
         private void OnRiftShutdown(EntityUid uid, DragonRiftComponent component, ComponentShutdown args)
         {
             if (TryComp<DragonComponent>(component.Dragon, out var dragon))
@@ -130,8 +139,20 @@ namespace Content.Server.Dragon
                 return;
             }
 
+            // TODO: Random sprite colors
+            // TODO: Random carp colors
+            // TODO: Make weightless movement floatier
+            // TODO: Spawn dragon in space
+            var xform = Transform(uid);
+
+            // Have to be on a grid fam
+            if (xform.GridUid == null)
+            {
+                return;
+            }
+
             component.SpawnsLeft--;
-            var carpUid = Spawn(component.RiftPrototype, Transform(uid).MapPosition);
+            var carpUid = Spawn(component.RiftPrototype, xform.MapPosition);
             component.Rifts.Add(carpUid);
             Comp<DragonRiftComponent>(carpUid).Dragon = uid;
             _audioSystem.Play("/Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg", Filter.Pvs(carpUid, entityManager: EntityManager), carpUid);
