@@ -25,7 +25,7 @@ public sealed class LightningSystem : SharedLightningSystem
     private void OnLightning(LightningEvent ev)
     {
         //TODO: Need to spawn an offset from the comp owner coords, not on them directly.
-        var ent = Spawn("LightningBase", ev.OwnerCoords);
+        var ent = Spawn("LightningBase", ev.OwnerCoords.Offset(ev.OwnerCoords.Position.ToAngle().ToWorldVec().Normalized));
         //TODO: Edge shape works but the position is wacky as hell if done like this (like miles away from the lightning)
         var shape = new EdgeShape(ev.OwnerCoords.Position, ev.TargetCoords.Position);
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
@@ -56,9 +56,9 @@ public sealed class LightningSystem : SharedLightningSystem
         var compCoords = compXForm.Coordinates;
         var userXForm = Transform(args.User);
         var userCoords = userXForm.Coordinates;
-        var userAngle = userXForm.WorldRotation; //User rotation seems fine but it's not the answer, comp rot is definitely not either.
 
-        var distance = compXForm.LocalPosition - userXForm.LocalPosition; //Tried to calculate the distance with the vec2 but not great for scaling.
+        var distance = userXForm.LocalPosition - compXForm.LocalPosition;
+        var userAngle = distance.ToWorldAngle(); //This plus the above distance works.
 
         var ev = new LightningEvent(compCoords, userCoords, userAngle, component.MaxLength, distance);
         RaiseLocalEvent(uid, ev, true);
