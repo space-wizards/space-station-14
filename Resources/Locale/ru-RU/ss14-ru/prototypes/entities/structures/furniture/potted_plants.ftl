@@ -1,5 +1,5 @@
-ent-PottedPlantBase = { ent-BaseStructureDynamic }
-    .desc = { ent-BaseStructureDynamic.desc }
+ent-PottedPlantBase = комнатное растение
+    .desc = Чудесный кусочек природы, заключенный в горшке.
     .suffix = { "" }
 ent-PottedPlant0 = { ent-PottedPlantBase }
     .desc = { ent-PottedPlantBase.desc }
