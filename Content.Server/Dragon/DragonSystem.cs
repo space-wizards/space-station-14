@@ -124,6 +124,13 @@ namespace Content.Server.Dragon
                 return;
             }
 
+            if (component.SpawnsLeft == 0)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("dragon-spawn-action-popup-message-fail-no-eggs"), uid, Filter.Entities(uid));
+                return;
+            }
+
+            component.SpawnsLeft--;
             var carpUid = Spawn(component.RiftPrototype, Transform(uid).MapPosition);
             component.Rifts.Add(carpUid);
             Comp<DragonRiftComponent>(carpUid).Dragon = uid;
@@ -280,7 +287,7 @@ namespace Content.Server.Dragon
             // If dragon has spawns then add one.
             if (component.SpawnsLeft > 0)
             {
-                Spawn(component.SpawnPrototype, Transform(dragonuid).Coordinates);
+                Spawn(component.SpawnPrototype, Transform(dragonuid).MapPosition);
                 component.SpawnsLeft--;
                 return;
             }
