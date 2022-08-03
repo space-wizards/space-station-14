@@ -1,6 +1,7 @@
 - type: job
   id: Boxer
   name: "boxer"
+  roleTimer: JobBoxer
   startingGear: BoxerGear
   setPreference: false
   departments:
