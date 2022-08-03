@@ -497,7 +497,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
-    
+
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCentcomFormalDress
@@ -507,8 +507,8 @@
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi   
-    
+    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
+
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHosFormal
@@ -518,7 +518,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi      
+    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -529,7 +529,11 @@
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi  
+    sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
+  - type: SuitSensor
+    controlsLocked: true
+    randomMode: false
+    mode: SensorOff
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -552,4 +556,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
-    
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtClown
+  name: sexy clown suit
+  description: It makes you look HONKable!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/sexyclown.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/sexyclown.rsi

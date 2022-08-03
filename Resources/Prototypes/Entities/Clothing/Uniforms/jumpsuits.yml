@@ -756,6 +756,10 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+  - type: SuitSensor
+    controlsLocked: true
+    randomMode: false
+    mode: SensorOff
 
 - type: entity
   parent: ClothingUniformBase
