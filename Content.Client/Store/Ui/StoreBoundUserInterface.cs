@@ -37,7 +37,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
         _menu.OnWithdrawAttempt += (tc) =>
         {
-            SendMessage(new UplinkTryWithdrawTC(tc));
         };
     }
     protected override void UpdateState(BoundUserInterfaceState state)

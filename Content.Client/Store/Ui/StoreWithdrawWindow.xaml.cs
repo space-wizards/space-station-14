@@ -28,6 +28,5 @@ public sealed partial class StoreWithdrawWindow : DefaultWindow
             OnWithdrawAttempt?.Invoke(WithdrawSlider.Value);
             Close();
         };
-        CancelButton.OnButtonDown += _ => Close();
     }
 }
