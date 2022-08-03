@@ -13,34 +13,48 @@ namespace Content.Server.Store.Conditions;
 public sealed class StoreJobCondition : ListingCondition
 {
     [DataField("whitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
-    public HashSet<string> Whitelist = new();
+    public HashSet<string>? Whitelist;
 
     [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
-    public HashSet<string> Blacklist = new();
+    public HashSet<string>? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
 
         if (!ent.TryGetComponent<MindComponent>(args.User, out var mind) || mind.Mind == null)
-            return false;
+            return true;
 
-        var found = false;
-        foreach (var role in mind.Mind.AllRoles)
+        if (Blacklist != null)
         {
-            if (role.GetType() == typeof(Job))
+            foreach (var role in mind.Mind.AllRoles)
             {
-                var job = (Job) role;
+                if (role.GetType() == typeof(Job))
+                {
+                    var job = (Job) role;
 
-                if (Whitelist.Contains(job.Prototype.ID))
-                    found = true;
-
-                if (Blacklist.Contains(job.Prototype.ID))
-                    return false;
+                    if (Blacklist.Contains(job.Prototype.ID))
+                        return false;
+                }
             }
         }
-        if (!found)
-            return false;
+
+        if (Whitelist != null)
+        {
+            var found = false;
+            foreach (var role in mind.Mind.AllRoles)
+            {
+                if (role.GetType() == typeof(Job))
+                {
+                    var job = (Job) role;
+
+                    if (Whitelist.Contains(job.Prototype.ID))
+                        found = true;
+                }
+            }
+            if (!found)
+                return false;
+        }
 
         return true;
     }

@@ -6,6 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 using Robust.Shared.Utility;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
+using System.Linq;
 
 namespace Content.Shared.Store;
 
@@ -16,7 +17,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual, DataDefinition]
-public record ListingData
+public class ListingData : IEquatable<ListingData>
 {
     [DataField("name")]
     public string Name = string.Empty;
@@ -30,6 +31,7 @@ public record ListingData
     [DataField("cost", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
     public Dictionary<string, FixedPoint2> Cost = new();
 
+    [NonSerialized]
     [DataField("conditions", serverOnly: true)]
     public List<ListingCondition>? Conditions;
 
@@ -52,6 +54,38 @@ public record ListingData
     /// used internally for tracking how many times an item was purchased.
     /// </summary>
     public int PurchaseAmount = 0;
+
+    public bool Equals(ListingData? listing)
+    {
+        if (listing == null)
+            return false;
+
+        //simple conditions
+        if (Priority != listing.Priority ||
+            Name != listing.Name ||
+            Description != listing.Description ||
+            ProductEntity != listing.ProductEntity ||
+            ProductAction != listing.ProductAction ||
+            ProductEvent != listing.ProductEvent)
+            return false;
+
+        if (Icon != null && !Icon.Equals(listing.Icon))
+            return false;
+
+        ///more complicated conditions that eat perf. these don't really matter
+        ///as much because you will very rarely have to check these. 
+        if (!Categories.OrderBy(x => x).SequenceEqual(listing.Categories.OrderBy(x => x)))
+            return false;
+
+        if (!Cost.OrderBy(x => x).SequenceEqual(listing.Cost.OrderBy(x => x)))
+            return false;
+
+        if ((Conditions != null && listing.Conditions != null) &&
+            !Conditions.OrderBy(x => x).SequenceEqual(listing.Conditions.OrderBy(x => x)))
+            return false;
+
+        return true;
+    }
 }
 
 /// <summary>
@@ -60,7 +94,7 @@ public record ListingData
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed record ListingPrototype : ListingData, IPrototype
+public sealed class ListingPrototype : ListingData, IPrototype
 {
     [ViewVariables]
     [IdDataField]

@@ -74,21 +74,23 @@ public sealed partial class StoreSystem : EntitySystem
 
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
-        /// PROBLEM AREA:
-        /// The big pain in the ass here is that for some reason, despite the listingData in the message being identical
-        /// to that of the one stored in the component, they are somehow not the same, which means we cannot modify it
-        /// for tracking as needed
+        ListingData? listing = component.Listings.Where(x => x.Equals(msg.Listing)).FirstOrDefault();
+        if (listing == null) //make sure this listing actually exists
+        {
+            Logger.Debug("listing does not exist");
+            return;
+        }
 
         //verify that we can actually buy this listing and it wasn't added
-        if (!ListingHasCategory(msg.Listing, component.Categories))
+        if (!ListingHasCategory(listing, component.Categories))
             return;
 
-        if (msg.Listing.Conditions != null)
+        if (listing.Conditions != null)
         {
-            var args = new ListingConditionArgs(msg.Buyer, msg.Listing, EntityManager);
+            var args = new ListingConditionArgs(msg.Buyer, listing, EntityManager);
             var conditionsMet = true;
 
-            foreach (var condition in msg.Listing.Conditions)
+            foreach (var condition in listing.Conditions)
                 if (!condition.Condition(args))
                     conditionsMet = false;
 
@@ -97,54 +99,37 @@ public sealed partial class StoreSystem : EntitySystem
         }
 
         //check that we have enough money
-        foreach (var currency in msg.Listing.Cost)
+        foreach (var currency in listing.Cost)
             if (!component.Balance.TryGetValue(currency.Key, out var balance) || balance < currency.Value)
                 return;
 
-        foreach (var currency in msg.Listing.Cost)
+        foreach (var currency in listing.Cost)
             component.Balance[currency.Key] -= currency.Value;
 
-        if (msg.Listing.ProductEntity != null)
+        if (listing.ProductEntity != null)
         {
-            var product = Spawn(msg.Listing.ProductEntity, Transform(msg.Buyer).Coordinates);
+            var product = Spawn(listing.ProductEntity, Transform(msg.Buyer).Coordinates);
             _hands.TryPickupAnyHand(msg.Buyer, product);
         }
 
-        if (msg.Listing.ProductAction != null)
+        if (listing.ProductAction != null)
         {
-            var action = new InstantAction(_proto.Index<InstantActionPrototype>(msg.Listing.ProductAction));
+            var action = new InstantAction(_proto.Index<InstantActionPrototype>(listing.ProductAction));
             _actions.AddAction(msg.Buyer, action, null);
         }
 
-        if (msg.Listing.ProductEvent != null)
+        if (listing.ProductEvent != null)
         {
-            RaiseLocalEvent(msg.Listing.ProductEvent);
+            RaiseLocalEvent(listing.ProductEvent);
         }
 
         if (TryComp<MindComponent>(msg.Buyer, out var mind))
         {
-            _admin.Add(LogType.StorePurchase, LogImpact.Medium,
-                $"{ToPrettyString(mind.Owner):player} purchased listing \"{msg.Listing.Name}\" from {ToPrettyString(uid)}");
+            _admin.Add(LogType.StorePurchase, LogImpact.Low,
+                $"{ToPrettyString(mind.Owner):player} purchased listing \"{listing.Name}\" from {ToPrettyString(uid)}");
         }
 
-        //testing... don't worry about this
-        //the problem areas seem to be cost and categories. Conditions probably would have similar issues if not null.
-        foreach (var listing in component.Listings)
-        {
-            Logger.Debug("==");
-            Logger.Debug($"{listing.Equals(msg.Listing)}");
-            foreach (var f in msg.Listing.Categories)
-                Logger.Debug(f);
-            foreach (var l in listing.Categories)
-                Logger.Debug(l);
-            Logger.Debug($"{msg.Listing.Categories.Equals(listing.Categories)}");
-
-            foreach (var g in msg.Listing.Cost)
-                Logger.Debug($"{g.Key}: {g.Value}");
-            foreach (var h in listing.Cost)
-                Logger.Debug($"{h.Key}: {h.Value}");
-            Logger.Debug($"{msg.Listing.Cost.Equals(listing.Cost)}");
-        }
+        listing.PurchaseAmount++;
 
         UpdateUserInterface(msg.Buyer, component);
     }

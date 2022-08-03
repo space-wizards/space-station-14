@@ -3,6 +3,7 @@ using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Store;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using System.Linq;
@@ -20,15 +21,16 @@ public sealed partial class StoreSystem : EntitySystem
 
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
 
-        SubscribeLocalEvent<StoreComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ActivateInWorldEvent>(OnActivate);
 
         InitializeUi();
     }
 
-    private void OnInit(EntityUid uid, StoreComponent component, ComponentInit args)
+    private void OnStartup(EntityUid uid, StoreComponent component, ComponentStartup args)
     {
         RefreshAllListings(component);
+        InitializeFromPreset(component.Preset, component);
     }
 
     private void OnAfterInteract(EntityUid uid, CurrencyComponent component, AfterInteractEvent args)
@@ -89,5 +91,26 @@ public sealed partial class StoreSystem : EntitySystem
         args.Handled = true;
 
         ToggleUi(args.User, component);
+    }
+
+    public void InitializeFromPreset(string? preset, StoreComponent component)
+    {
+        if (preset == null)
+            return;
+            
+
+        if (!_proto.TryIndex<StorePresetPrototype>(preset, out var proto))
+            return;
+
+        InitializeFromPreset(proto, component);
+    }
+
+    public void InitializeFromPreset(StorePresetPrototype preset, StoreComponent component)
+    {
+        component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
+        component.ActivateInHand = preset.ActivateInHand;
+        component.Categories.UnionWith(preset.Categories);
+        if (component.Balance == new Dictionary<string, FixedPoint2>()) //if we don't have a value stored, use the preset
+            TryAddCurrency(preset.InitialBalance, component);
     }
 }

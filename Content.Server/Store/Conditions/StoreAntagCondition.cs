@@ -1,11 +1,9 @@
 using Content.Server.Mind.Components;
-using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Shared.Roles;
-using Content.Shared.Store;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Server.Store.Conditions;
+namespace Content.Shared.Store.Conditions;
 
 /// <summary>
 /// Allows a store entry to be filtered out based on the user's antag role.
@@ -15,34 +13,48 @@ namespace Content.Server.Store.Conditions;
 public sealed class StoreAntagCondition : ListingCondition
 {
     [DataField("whitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AntagPrototype>))]
-    public HashSet<string> Whitelist = new();
+    public HashSet<string>? Whitelist;
 
     [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AntagPrototype>))]
-    public HashSet<string> Blacklist = new();
+    public HashSet<string>? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
 
         if (!ent.TryGetComponent<MindComponent>(args.User, out var mind) || mind.Mind == null)
-            return false;
+            return true;
 
-        var found = false;
-        foreach (var role in mind.Mind.AllRoles)
+        if (Blacklist != null)
         {
-            if (role.GetType() == typeof(TraitorRole))
+            foreach (var role in mind.Mind.AllRoles)
             {
-                var antag = (TraitorRole) role;
+                if (role.GetType() != typeof(TraitorRole))
+                    continue;
 
-                if (Whitelist.Contains(antag.Prototype.ID))
-                    found = true;
+                var blacklistantag = (TraitorRole) role;
 
-                if (Blacklist.Contains(antag.Prototype.ID))
+                if (Blacklist.Contains(blacklistantag.Prototype.ID))
                     return false;
             }
         }
-        if (!found)
-            return false;
+
+        if (Whitelist != null)
+        {
+            var found = false;
+            foreach (var role in mind.Mind.AllRoles)
+            {
+                if (role.GetType() == typeof(TraitorRole))
+                {
+                    var antag = (TraitorRole) role;
+
+                    if (Whitelist.Contains(antag.Prototype.ID))
+                        found = true;
+                }
+            }
+            if (!found)
+                return false;
+        }
 
         return true;
     }

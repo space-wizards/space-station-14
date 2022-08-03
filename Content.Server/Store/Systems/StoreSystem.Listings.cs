@@ -7,15 +7,19 @@ public sealed partial class StoreSystem : EntitySystem
 {
     public void RefreshAllListings(StoreComponent component)
     {
+        component.Listings = GetAllListings();
+    }
+
+    public HashSet<ListingData> GetAllListings()
+    {
         var allListings = _proto.EnumeratePrototypes<ListingPrototype>();
 
-        component.Listings = new();
+        var allData = new HashSet<ListingData>();
 
         foreach (var listing in allListings)
-        {
-            ListingData data = listing;
-            component.Listings.Add(data);
-        }
+            allData.Add(listing);
+
+        return allData;
     }
 
     public bool TryAddListing(StoreComponent component, string listingId)
@@ -35,9 +39,17 @@ public sealed partial class StoreSystem : EntitySystem
 
     public IEnumerable<ListingData> GetAvailableListings(EntityUid user, StoreComponent component)
     {
-        foreach (var listing in component.Listings)
+        return GetAvailableListings(user, component.Listings, component.Categories);
+    }
+
+    public IEnumerable<ListingData> GetAvailableListings(EntityUid user, HashSet<ListingData>? listings, HashSet<string> categories)
+    {
+        if (listings == null)
+            listings = GetAllListings();
+
+        foreach (var listing in listings)
         {
-            if (!ListingHasCategory(listing, component.Categories))
+            if (!ListingHasCategory(listing, categories))
                 continue;
 
             if (listing.Conditions != null)
@@ -46,8 +58,13 @@ public sealed partial class StoreSystem : EntitySystem
                 var conditionsMet = true;
 
                 foreach (var condition in listing.Conditions)
+                {
                     if (!condition.Condition(args))
+                    {
                         conditionsMet = false;
+                        break;
+                    }
+                }
 
                 if (!conditionsMet)
                     continue;

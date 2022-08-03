@@ -1,0 +1,17 @@
+- type: storePreset
+  id: StorePresetUplink
+  storeName: Uplink
+  activateInHand: false
+  categories:
+  - UplinkWeapons
+  - UplinkAmmo
+  - UplinkExplosives
+  - UplinkMisc
+  - UplinkBundles
+  - UplinkTools
+  - UplinkUtility
+  - UplinkJob
+  - UplinkArmor
+  - UplinkPointless
+  currencyWhitelist:
+  - Telecrystal

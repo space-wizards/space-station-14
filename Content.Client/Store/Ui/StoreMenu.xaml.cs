@@ -93,8 +93,8 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var listingName = listing.Name; // == string.Empty ? prototype.Name : listing.ListingName;
-        var listingDesc = listing.Description; // == string.Empty ? prototype.Description : listing.Description;
+        string listingName = new (listing.Name);
+        string listingDesc = new (listing.Description);
         var listingPrice = listing.Cost;
         var canBuy = CanBuyListing(Balance, listingPrice);
 
@@ -102,12 +102,18 @@ public sealed partial class StoreMenu : DefaultWindow
 
         Texture? texture = null;
         if (listing.Icon != null)
-        {
             texture = spriteSys.Frame0(listing.Icon);
-        }
-        else if (listing.ProductEntity != null)
+
+        if (listing.ProductEntity != null)
         {
-            texture = spriteSys.GetPrototypeIcon(listing.ProductEntity).Default;
+            if (texture == null)
+                texture = spriteSys.GetPrototypeIcon(listing.ProductEntity).Default;
+
+            var proto = _prototypeManager.Index<EntityPrototype>(listing.ProductEntity);
+            if (listingName == string.Empty)
+                listingName = proto.Name;
+            if (listingDesc == string.Empty)
+                listingDesc = proto.Description;
         }
         else if (listing.ProductAction != null)
         {
@@ -169,6 +175,8 @@ public sealed partial class StoreMenu : DefaultWindow
             }
         }
 
+        //TODO: implement priority for categories.
+        
         if (CurrentCategory == string.Empty && allCategories.Count > 0)
             CurrentCategory = allCategories[0];
 
@@ -183,7 +191,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
             var catButton = new StoreCategoryButton
             {
-                Text = catproto.Name,
+                Text = Loc.GetString(catproto.Name),
                 Id = catproto.ID
             };
 

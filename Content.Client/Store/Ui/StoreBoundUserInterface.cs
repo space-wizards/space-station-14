@@ -20,7 +20,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     {
         _menu = new StoreMenu();
 
-        _menu.OpenCenteredLeft();
+        _menu.OpenCentered();
         _menu.OnClose += Close;
 
         _menu.OnListingButtonPressed += (_, listing) =>

@@ -6,3 +6,45 @@
 - type: storeCategory
   id: Debug2
   name: debug category 2
+
+#uplink categoires
+- type: storeCategory
+  id: UplinkWeapons
+  name: Weapons
+
+- type: storeCategory
+  id: UplinkAmmo
+  name: Ammo
+
+- type: storeCategory
+  id: UplinkExplosives
+  name: Explosives
+
+- type: storeCategory
+  id: UplinkMisc
+  name: Misc
+
+- type: storeCategory
+  id: UplinkBundles
+  name: Bundles
+
+- type: storeCategory
+  id: UplinkTools
+  name: Tools
+
+- type: storeCategory
+  id: UplinkUtility
+  name: Utility
+
+- type: storeCategory
+  id: UplinkJob
+  name: Job
+
+- type: storeCategory
+  id: UplinkArmor
+  name: Armor
+
+- type: storeCategory
+  id: UplinkPointless
+  name: Pointless
+
