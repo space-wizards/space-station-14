@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Hands.Systems;
@@ -79,7 +79,7 @@ public sealed class InternalsSystem : EntitySystem
 
         if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
         {
-            _gasTank.DisconnectFromInternals(tank, component.Owner);
+            _gasTank.DisconnectFromInternals(tank);
         }
 
         component.GasTankEntity = null;
@@ -93,7 +93,7 @@ public sealed class InternalsSystem : EntitySystem
 
         if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
         {
-            _gasTank.DisconnectFromInternals(tank, component.Owner);
+            _gasTank.DisconnectFromInternals(tank);
         }
 
         component.GasTankEntity = tankEntity;

@@ -228,6 +228,15 @@
   categories:
   - UplinkUtility
 
+- type: uplinkListing
+  id: ReinforcementTeleporterSyndicate
+  category: Utility
+  itemId: ReinforcementTeleporterSyndicate
+  listingName: Reinforcement Teleporter
+  description: Teleport in an agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
+  icon: Objects/Devices/communication.rsi/old-radio.png
+  price: 25
+
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
   id: UplinkHeadset

@@ -57,8 +57,8 @@ namespace Content.Server.Light.EntitySystems
                     case ExpendableLightState.Fading:
                         component.CurrentState = ExpendableLightState.Dead;
                         var meta = MetaData(component.Owner);
-                        meta.EntityName = component.SpentName;
-                        meta.EntityDescription = component.SpentDesc;
+                        meta.EntityName = Loc.GetString(component.SpentName);
+                        meta.EntityDescription = Loc.GetString(component.SpentDesc);
 
                         UpdateSpriteAndSounds(component);
                         UpdateVisualizer(component);

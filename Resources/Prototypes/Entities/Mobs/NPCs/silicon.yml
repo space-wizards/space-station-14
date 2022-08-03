@@ -128,6 +128,11 @@
     makeSentient: true
     name: honkbot
     description: An artificial being of pure evil.
+  - type: InteractionPopup
+    interactSuccessString: petting-success-honkbot
+    interactFailureString: petting-failure-honkbot
+    interactSuccessSound:
+      path: /Audio/Items/bikehorn.ogg
 
 - type: entity
   parent: MobSiliconBase
@@ -156,6 +161,11 @@
         maxVol: 30
   - type: DrainableSolution
     solution: drainBuffer
+  - type: InteractionPopup
+    interactSuccessString: petting-success-cleanbot
+    interactFailureString: petting-failure-cleanbot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   parent: MobSiliconBase
@@ -175,3 +185,8 @@
   - type: Construction
     graph: MediBot
     node: bot
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medibot
+    interactFailureString: petting-failure-medibot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg

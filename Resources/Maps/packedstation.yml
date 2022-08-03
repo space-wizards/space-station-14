@@ -90,9 +90,9 @@ grids:
   - ind: 1,-3
     tiles: NgAAADcAAAA2AAAANgAAADYAAAA3AAAANgAAADYAAAA2AAAANwAAADYAAAAAAAAANwAAADcAAAA3AAAAHgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAAAAAAADcAAAA3AAAANwAAADEAAAI3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAATcAAAA3AAAANwAAADEAAAExAAACMQAAADEAAAIxAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAI3AAAANwAAADcAAAAxAAABHgAAAh4AAAAeAAAAMQAAATcAAAA3AAAANwAAADcAAAAxAAABMQAAADEAAAMxAAAAMQAAAjEAAAI3AAAAMQAAAx4AAAEeAAAAHgAAAzEAAAI3AAAAMQAAAzEAAAI3AAAAMQAAATEAAAExAAADMQAAATEAAAAxAAABMQAAAzEAAAAeAAABHgAAAR4AAAExAAACNwAAADEAAAExAAACNwAAADEAAAIxAAADMQAAADEAAAExAAAAMQAAADEAAAExAAADHgAAAB4AAAEeAAABMQAAATEAAAAxAAAAMQAAADcAAAAxAAADMQAAAjEAAAMxAAABMQAAAjEAAAAxAAACMQAAADEAAAMxAAACMQAAAjEAAAM3AAAAMQAAADEAAAI3AAAAMQAAAjEAAAMxAAABMQAAAjcAAAA3AAAANwAAADcAAAA3AAAAMQAAATcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAIxAAABMQAAADEAAAExAAABMQAAADEAAAExAAADMQAAADEAAAAxAAADMQAAAzEAAAAxAAAAMQAAAjEAAAAxAAAAMQAAAzEAAAMxAAACMQAAAzEAAAAxAAABMQAAAjEAAAAxAAAAMQAAAzEAAAExAAABMQAAATEAAAMxAAABMQAAAjEAAAMxAAADMQAAAjEAAAExAAACMQAAATEAAAI3AAAANwAAADcAAAAxAAABNwAAADcAAAA3AAAAMQAAADEAAAAxAAADMQAAAzEAAAA3AAAANwAAADEAAAA3AAAANwAAADEAAAIxAAACMQAAAjEAAAExAAABNwAAADcAAAAxAAABNwAAADEAAAAxAAAANwAAADEAAAIxAAABMQAAATEAAAAxAAACMQAAATEAAAAxAAADMQAAAjEAAAIxAAADMQAAAA==
   - ind: 2,-2
-    tiles: MQAAADcAAAAxAAABMQAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAI3AAAAMQAAADEAAAE2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAExAAABNgAAADcAAAA3AAAANwAAADcAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAA3AAAANwAAADcAAAA3AAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAANwAAADcAAAA3AAAANwAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAATcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAIxAAAANwAAADcAAAA3AAAANwAAAB4AAAIeAAACHgAAATcAAAAAAAAAAAAAAAAAAAA3AAAANwAAAA==
+    tiles: MQAAADcAAAAxAAABMQAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAI3AAAAMQAAADEAAAE2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAE3AAAANgAAADcAAAA3AAAANwAAADcAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAA3AAAANwAAADcAAAA3AAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAANwAAADcAAAA3AAAANwAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAATcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAIxAAAANwAAADcAAAA3AAAANwAAAB4AAAIeAAACHgAAATcAAAAAAAAAAAAAAAAAAAA3AAAANwAAAA==
   - ind: 2,-3
-    tiles: HgAAAh4AAAMxAAAAMQAAADEAAAExAAABMQAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADEAAAIxAAABMQAAAzEAAAIxAAABMQAAADEAAAIrAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAANwAAADYAAAAxAAAAMQAAAzEAAAIxAAADMQAAATEAAAIxAAABKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAA2AAAAMQAAAzEAAAAxAAADMQAAAzEAAAIxAAABMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAANgAAADEAAAExAAAAMQAAADEAAAIxAAAAMQAAATEAAAErAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADYAAAAxAAADMQAAATEAAAExAAACMQAAAzEAAAIxAAABKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADcAAAA2AAAAMQAAAzEAAAMxAAADMQAAAzEAAAExAAAAMQAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADEAAAExAAABMQAAATEAAAAxAAABMQAAAzEAAAM3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAAxAAADMQAAAzEAAAExAAADMQAAADEAAAIxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAExAAADHgAAAR4AAAIeAAAAHgAAAzcAAAAeAAACHgAAAh4AAAEeAAADHgAAAB4AAAAeAAADNwAAADEAAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAHgAAAx4AAAAeAAABHgAAAx4AAAAeAAAAHgAAADcAAAAxAAACMQAAAjEAAAAxAAAANwAAAB4AAAIeAAACHgAAAx4AAAMeAAADHgAAAh4AAAAeAAACHgAAAB4AAAA3AAAAMQAAAjEAAAExAAABMQAAAjcAAAAeAAADHgAAAR4AAAAeAAACHgAAAB4AAAAeAAADHgAAAh4AAAAeAAABNwAAADEAAAMxAAABMQAAADEAAAAxAAADHgAAAR4AAAIeAAACHgAAAB4AAAIeAAAAHgAAAx4AAAAeAAABHgAAAjcAAAA3AAAANwAAADEAAAAxAAABNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAAMQAAAzcAAAAxAAADMQAAAjEAAAE3AAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAAA==
+    tiles: HgAAAh4AAAMxAAAAMQAAADEAAAExAAABMQAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADEAAAIxAAABMQAAAzEAAAIxAAABMQAAADEAAAIrAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAANwAAADYAAAAxAAAAMQAAAzEAAAIxAAADMQAAATEAAAIxAAABKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAA2AAAAMQAAAzEAAAAxAAADMQAAAzEAAAIxAAABMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAANgAAADEAAAExAAAAMQAAADEAAAIxAAAAMQAAATEAAAErAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADYAAAAxAAADMQAAATEAAAExAAACMQAAAzEAAAIxAAABKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADcAAAA2AAAAMQAAAzEAAAMxAAADMQAAAzEAAAExAAAAMQAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADEAAAExAAABMQAAATEAAAAxAAABMQAAAzEAAAM3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAAxAAADMQAAAzEAAAExAAADMQAAADEAAAIxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAExAAADHgAAAR4AAAIeAAAAHgAAAzcAAAAeAAACHgAAAh4AAAEeAAADHgAAAB4AAAAeAAADNwAAADEAAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAHgAAAx4AAAAeAAABHgAAAx4AAAAeAAAAHgAAADcAAAAxAAACMQAAAjEAAAAxAAAANwAAAB4AAAIeAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAA3AAAAMQAAAjEAAAExAAABMQAAAjcAAAAeAAADHgAAAR4AAAAeAAACHgAAAB4AAAAeAAADHgAAAh4AAAAeAAABNwAAADEAAAMxAAABMQAAADEAAAAxAAADHgAAAR4AAAIeAAACHgAAAB4AAAIeAAAAHgAAAx4AAAAeAAABHgAAAjcAAAA3AAAANwAAADEAAAAxAAABNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAAMQAAAzcAAAAxAAADMQAAAjEAAAE3AAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAAA==
   - ind: 1,1
     tiles: NQAAATcAAAAxAAAANwAAADcAAAAuAAAANwAAADcAAAA3AAAAMQAAAzEAAAAxAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAuAAAALgAAAC4AAAA3AAAAMQAAAzEAAAIxAAACMQAAATcAAAAxAAAAMQAAAjcAAAA3AAAANwAAADcAAAA3AAAALgAAAC4AAAAuAAAANwAAADEAAAIxAAADMQAAAzEAAAI3AAAAMQAAADEAAAAxAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAzEAAAAxAAACNwAAADcAAAA3AAAANwAAADEAAAMxAAADMQAAAzEAAAExAAACMQAAADEAAAIxAAAAMQAAADEAAAIxAAACMQAAAzcAAAAxAAACMQAAADEAAAI3AAAAMQAAAjEAAAMxAAADMQAAADEAAAExAAABMQAAAzEAAAExAAABMQAAATEAAAI3AAAAMQAAADEAAAM3AAAAMQAAAjEAAAMxAAABMQAAATEAAAIxAAADMQAAADEAAAExAAADMQAAATEAAAMxAAABNwAAADcAAAA3AAAANwAAADcAAAAxAAADMQAAATEAAAMxAAABNwAAADEAAAAxAAABMQAAAjEAAAMxAAACMQAAADEAAAAxAAABMQAAAzEAAAA3AAAAMQAAAzEAAAMxAAACMQAAADcAAAAxAAAAMQAAADEAAAAxAAACMQAAADEAAAAxAAABMQAAAjEAAAExAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAjEAAAIxAAABMQAAAjEAAAExAAABMQAAAB4AAAIeAAACHgAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAMxAAACMQAAAzcAAAAeAAAAHgAAAh4AAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAABMQAAADEAAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAzEAAAAxAAACNwAAAB4AAAEeAAABHgAAATcAAAA1AAAANQAAAjUAAAI1AAACNQAAADcAAAA1AAAANQAAATEAAAAxAAACMQAAAzcAAAAeAAADHgAAAR4AAAM3AAAANQAAATUAAAA1AAACNQAAAzUAAAA3AAAANQAAAjUAAAIxAAABMQAAATEAAAI3AAAAHgAAAR4AAAMeAAACNwAAADUAAAM1AAABNQAAATUAAAI1AAADNQAAAzUAAAA1AAADMQAAATEAAAAxAAADNwAAADcAAAA3AAAANwAAAA==
   - ind: 2,0
@@ -116,7 +116,7 @@ grids:
   - ind: 0,2
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAMQAAADEAAAMxAAAAMQAAATcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAAxAAACMQAAAwAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADcAAAAxAAABMQAAATEAAAEAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAAMQAAAjEAAAExAAADAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADcAAAAeAAACHgAAAh4AAAMAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAHgAAAx4AAAAeAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAB4AAAMeAAADHgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAAA==
   - ind: 1,2
-    tiles: NwAAADUAAAI1AAACNQAAATUAAAM1AAACNwAAADUAAAM1AAADMQAAATEAAAExAAADNwAAADcAAAA3AAAANwAAADcAAAA1AAACNQAAADUAAAA1AAACNQAAADcAAAA1AAADNQAAAzEAAAMxAAADMQAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAABMQAAAzEAAAIxAAADNwAAAB4AAAIeAAABNwAAADEAAAAxAAABMQAAATEAAAAxAAABMQAAAjEAAAIxAAADMQAAAjEAAAIxAAADMQAAAzcAAAAeAAADHgAAAzEAAAMxAAADMQAAAjEAAAAxAAABMQAAATEAAAExAAADMQAAADEAAAIxAAAAMQAAAzEAAAIeAAADHgAAAR4AAAM3AAAAMQAAADEAAAExAAAAMQAAATEAAAExAAADMQAAAjEAAAIxAAACMQAAADEAAAMxAAADNwAAAB4AAAAeAAABNwAAADcAAAAeAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAM3AAAAHgAAAzcAAAA3AAAANwAAADcAAAAeAAAAHgAAAR4AAAE3AAAAKAAAACgAAAAoAAAAKAAAADcAAAAeAAAAHgAAAB4AAAA3AAAAHgAAADUAAAE3AAAAHgAAAx4AAAMeAAAANwAAACgAAAAoAAAAKAAAACgAAAA3AAAAHgAAAh4AAAIeAAADNwAAAB4AAAA1AAABNwAAAB4AAAMeAAAAHgAAADcAAAAoAAAAKAAAACgAAAAoAAAAHgAAAh4AAAMeAAABHgAAATcAAAAeAAAANQAAAzcAAAA3AAAAHgAAAjcAAAA3AAAAKAAAACgAAAAoAAAAKAAAADcAAAAeAAABHgAAAR4AAAA3AAAAHgAAADUAAAEAAAAANwAAADcAAAA3AAAANwAAADcAAAAeAAADHgAAADcAAAA3AAAAHgAAAzcAAAAeAAACHgAAAh4AAAA3AAAAAAAAAAAAAAA3AAAAHgAAAR4AAAMeAAADHgAAAB4AAAEeAAADHgAAAR4AAAMeAAADHgAAAB4AAAEeAAADNwAAAAAAAAAAAAAANwAAAB4AAAAeAAABHgAAAx4AAAAeAAADHgAAAB4AAAAeAAABHgAAAB4AAAMeAAACHgAAAh4AAAAAAAAAAAAAADcAAAAeAAABHgAAAB4AAAEeAAABHgAAAh4AAAEeAAAAHgAAAB4AAAMeAAACHgAAAB4AAAMeAAABNgAAADYAAAA3AAAANwAAADcAAAA3AAAAHgAAAB4AAAEeAAAAHgAAAh4AAAIeAAAAHgAAAx4AAAIeAAABHgAAAA==
+    tiles: NwAAADUAAAI1AAACNQAAATUAAAM1AAACNwAAADUAAAM1AAADMQAAATEAAAExAAADNwAAADcAAAA3AAAANwAAADcAAAA1AAACNQAAADUAAAA1AAACNQAAADcAAAA1AAADNQAAAzEAAAMxAAADMQAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAABMQAAAzEAAAIxAAADNwAAAB4AAAIeAAABNwAAADEAAAAxAAABMQAAATEAAAAxAAABMQAAAjEAAAIxAAADMQAAAjEAAAIxAAADMQAAAzcAAAAeAAADHgAAAzEAAAMxAAADMQAAAjEAAAAxAAABMQAAATEAAAExAAADMQAAADEAAAIxAAAAMQAAAzEAAAIeAAADHgAAAR4AAAM3AAAAMQAAADEAAAExAAAAMQAAATEAAAExAAADMQAAAjEAAAIxAAACMQAAADEAAAMxAAADNwAAAB4AAAAeAAABNwAAADcAAAAeAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAM3AAAAHgAAAzcAAAA3AAAANwAAADcAAAAeAAAAHgAAAR4AAAE3AAAAKAAAACgAAAAoAAAAKAAAADcAAAAeAAAAHgAAAB4AAAA3AAAAHgAAADUAAAE3AAAAHgAAAx4AAAMeAAAANwAAACgAAAAoAAAAKAAAACgAAAA3AAAAHgAAAh4AAAIeAAADNwAAAB4AAAA1AAABNwAAAB4AAAMeAAAAHgAAADcAAAAoAAAAKAAAACgAAAAoAAAAHgAAAh4AAAMeAAABHgAAATcAAAAeAAAANQAAAzcAAAA3AAAAJAAAADcAAAA3AAAAKAAAACgAAAAoAAAAKAAAADcAAAAeAAABHgAAAR4AAAA3AAAAHgAAADUAAAEAAAAANwAAADcAAAA3AAAANwAAADcAAAAeAAADHgAAADcAAAA3AAAAHgAAAzcAAAAeAAACHgAAAh4AAAA3AAAAAAAAAAAAAAA3AAAAHgAAAR4AAAMeAAADHgAAAB4AAAEeAAADHgAAAR4AAAMeAAADHgAAAB4AAAEeAAADNwAAAAAAAAAAAAAANwAAAB4AAAAeAAABHgAAAx4AAAAeAAADHgAAAB4AAAAeAAABHgAAAB4AAAMeAAACHgAAAh4AAAAAAAAAAAAAADcAAAAeAAABHgAAAB4AAAEeAAABHgAAAh4AAAEeAAAAHgAAAB4AAAMeAAACHgAAAB4AAAMeAAABNgAAADYAAAA3AAAANwAAADcAAAA3AAAAHgAAAB4AAAEeAAAAHgAAAh4AAAIeAAAAHgAAAx4AAAIeAAABHgAAAA==
   - ind: 2,1
     tiles: NwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAACgAAAA3AAAANwAAADEAAAMxAAADMQAAAzEAAAAxAAAAMQAAADEAAAAxAAABMQAAAjEAAAAxAAABNwAAACgAAAAoAAAAKAAAADcAAAAxAAADMQAAAzEAAAExAAAAMQAAATEAAAExAAACMQAAAzEAAAMxAAADMQAAAigAAAAoAAAAKAAAACgAAAA3AAAAMQAAATEAAAMxAAAAMQAAAzEAAAExAAACMQAAATEAAAExAAADMQAAAzEAAAI3AAAAKAAAACgAAAAoAAAANwAAADEAAAMxAAAAMQAAAzEAAAAxAAADMQAAAjEAAAExAAADNwAAADcAAAA3AAAANwAAACgAAAAoAAAAKAAAADcAAAAxAAACNwAAADcAAAAxAAAAMQAAATEAAAIxAAAAMQAAATcAAAAxAAACMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAzEAAAMxAAADMQAAADEAAAMeAAADHgAAAR4AAAAeAAABHgAAAzcAAAAeAAAAHgAAAB4AAAM3AAAANwAAADEAAAMxAAACMQAAATEAAAIxAAAANwAAAB4AAAMeAAAAHgAAAx4AAAIeAAACHgAAAh4AAAMeAAACNwAAADcAAAAxAAABMQAAADEAAAIxAAACMQAAAjcAAAAeAAACHgAAAx4AAAIeAAACNwAAAB4AAAAeAAAAHgAAADcAAAA3AAAAHgAAAjEAAAIxAAAAMQAAAjEAAAE3AAAANwAAAB4AAAEeAAADNwAAADcAAAAeAAACHgAAAB4AAAM3AAAANwAAADEAAAIxAAAAMQAAATEAAAMxAAAANwAAAB4AAAAeAAADHgAAAB4AAAM3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAACMQAAAjEAAAAxAAADMQAAAzcAAAAeAAACHgAAAB4AAAEeAAACNwAAADcAAAA3AAAAMwAAADcAAAA3AAAAMQAAATEAAAExAAAAMQAAATEAAAE3AAAAHgAAAx4AAAIeAAACHgAAATcAAAA3AAAANwAAADMAAAA3AAAANwAAADEAAAAxAAACMQAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADcAAAAxAAADMQAAAjEAAAMxAAADMQAAATEAAAMxAAAAMgAAADIAAAAyAAAANwAAADYAAAA3AAAAMwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAAxAAABNwAAADIAAAAyAAAAMgAAADcAAAA2AAAANwAAADMAAAA3AAAANwAAAA==
   - ind: 2,2
@@ -187,7 +187,7 @@ entities:
 - uid: 2
   components:
   - pos: 0.4375,0.484375
-    parent: null
+    parent: 126
     type: Transform
   - index: 0
     type: MapGrid
@@ -8518,9 +8518,17 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -8540,11 +8548,19 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
       - 0
       - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -9468,11 +9484,11 @@ entities:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 2,-33
-        709:
+        703:
           color: '#5A5A5AFF'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-35
-        710:
+        704:
           color: '#5A5A5AFF'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-36
@@ -9657,35 +9673,35 @@ entities:
           color: '#52B4E996'
           id: CheckerNESW
           coordinates: 63,-12
-        713:
+        707:
           color: '#AAAAAAFF'
           id: CheckerNESW
           coordinates: 32,-10
-        716:
+        710:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 57,-2
-        717:
+        711:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 61,-2
-        718:
+        712:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 61,-1
-        719:
+        713:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 57,-1
-        720:
+        714:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 58,-2
-        721:
+        715:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 59,-2
-        722:
+        716:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 60,-2
@@ -9767,15 +9783,15 @@ entities:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -2,-6
-        703:
+        702:
           color: '#5A5A5AFF'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-31
-        711:
+        705:
           color: '#FFFFFFFF'
           id: Caution
           coordinates: -7,-13
-        712:
+        706:
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: -7,-12
@@ -10677,23 +10693,23 @@ entities:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 36,24
-        714:
+        708:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 61,0
-        715:
+        709:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 57,0
-        723:
+        717:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 60,0
-        724:
+        718:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 59,0
-        725:
+        719:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 58,0
@@ -11549,116 +11565,116 @@ entities:
           id: HalfTileOverlayGreyscale180
           coordinates: 78,-6
       0,1:
-        726:
+        720:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 13,37
-        727:
+        721:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 14,37
-        728:
+        722:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 15,37
-        729:
+        723:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 26,39
-        730:
+        724:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 26,40
-        731:
+        725:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 26,41
-        732:
+        726:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 26,42
-        733:
+        727:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: 28,39
-        734:
+        728:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: 28,40
-        735:
+        729:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: 28,41
-        736:
+        730:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: 28,42
-        737:
+        731:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 27,46
-        738:
+        732:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 28,46
-        739:
+        733:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 26,46
-        740:
+        734:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 29,47
-        741:
+        735:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 30,47
-        742:
+        736:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 31,47
-        743:
+        737:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 25,47
-        744:
+        738:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 24,47
-        745:
+        739:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 23,47
-        746:
+        740:
           color: '#334E6DC8'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 22,47
-        751:
+        745:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 21,46
-        752:
+        746:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 20,46
-        753:
+        747:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 19,46
       1,1:
-        747:
+        741:
           color: '#334E6DC8'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 32,47
-        748:
+        742:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 33,46
-        749:
+        743:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 34,46
-        750:
+        744:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 35,46
@@ -12237,9 +12253,9 @@ entities:
     parent: 2
     type: Transform
 - uid: 86
-  type: SpawnMobDrone
+  type: NitrousOxideCanister
   components:
-  - pos: 16.5,-26.5
+  - pos: 30.5,-23.5
     parent: 2
     type: Transform
 - uid: 87
@@ -12504,11 +12520,9 @@ entities:
     parent: 2
     type: Transform
 - uid: 126
-  type: AirlockExternalLocked
   components:
-  - pos: 0.5,14.5
-    parent: 2
-    type: Transform
+  - index: 4
+    type: Map
 - uid: 127
   type: ReinforcedWindow
   components:
@@ -12583,6 +12597,8 @@ entities:
   - pos: -4.3740964,-12.360607
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 139
@@ -12804,6 +12820,8 @@ entities:
   - pos: 6.490892,-5.409955
     parent: 2
     type: Transform
+  - solution: bucket
+    type: Drink
 - uid: 171
   type: MopItem
   components:
@@ -13697,6 +13715,8 @@ entities:
   - pos: 10.438802,4.97286
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -30115,6 +30135,8 @@ entities:
   - pos: 20.544691,33.624443
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 2723
@@ -30123,6 +30145,8 @@ entities:
   - pos: 20.529066,29.655691
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 2724
@@ -30516,6 +30540,8 @@ entities:
   - pos: 22.507973,40.51647
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 2781
@@ -38256,6 +38282,8 @@ entities:
   - pos: 32.49905,41.93212
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -48707,6 +48735,8 @@ entities:
   - pos: 67.5,37.5
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 5475
@@ -72150,6 +72180,8 @@ entities:
   - pos: 32.544136,8.944672
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 8708
@@ -72861,6 +72893,8 @@ entities:
   - pos: 107.54654,-24.346563
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 8821
@@ -92225,9 +92259,9 @@ entities:
     parent: 2
     type: Transform
 - uid: 11204
-  type: SignEngineering
+  type: AirlockExternalGlassLocked
   components:
-  - pos: 24.546726,-25.498436
+  - pos: 0.5,14.5
     parent: 2
     type: Transform
 - uid: 11205
@@ -93239,16 +93273,12 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11316
-  type: FirelockEdge
+  type: EmergencyLight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 7.5,19.5
+  - rot: 1.5707963267948966 rad
+    pos: 25.5,-15.5
     parent: 2
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 11317
   type: GasVentPump
   components:
@@ -93334,16 +93364,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11325
-  type: FirelockEdge
+  type: AirlockGlass
   components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,19.5
+  - pos: 3.5,13.5
     parent: 2
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 11326
   type: FirelockEdge
   components:
@@ -93400,16 +93425,12 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11333
-  type: FirelockEdge
+  type: EmergencyLight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 9.5,19.5
+  - rot: -1.5707963267948966 rad
+    pos: 27.5,33.5
     parent: 2
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 11334
   type: FirelockGlass
   components:
@@ -96912,15 +96933,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11811
-  type: FirelockEdge
+  type: VendingMachineSalvage
   components:
-  - pos: 26.5,12.5
+  - name: Salvage Equipment
+    type: MetaData
+  - pos: 7.5,19.5
     parent: 2
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 11812
   type: CableApcExtension
   components:
@@ -97357,15 +97376,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11859
-  type: TraitorDMRedemptionMachineSpawner
+  type: AirlockGlass
   components:
-  - pos: 86.5,-2.5
+  - pos: 2.5,13.5
     parent: 2
     type: Transform
 - uid: 11860
-  type: TraitorDMRedemptionMachineSpawner
+  type: WindowDirectional
   components:
-  - pos: 69.5,34.5
+  - pos: 40.5,35.5
     parent: 2
     type: Transform
 - uid: 11861
@@ -98756,10 +98775,14 @@ entities:
   - pos: 41.497684,26.564539
     parent: 2
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 12063
@@ -98914,6 +98937,8 @@ entities:
     pos: 43.53429,20.757835
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 12082
@@ -99287,6 +99312,8 @@ entities:
   - pos: 37.37405,43.99462
     parent: 2
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 12117
@@ -100397,6 +100424,8 @@ entities:
   - pos: 4.5,-6.5
     parent: 2
     type: Transform
+  - solution: bucket
+    type: Drink
   - containers:
       storagebase: !type:Container
         ents: []
@@ -101076,10 +101105,14 @@ entities:
   - pos: 39.5295,-3.4902697
     parent: 2
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 12333
@@ -101400,4 +101433,145 @@ entities:
   - pos: -5.5,0.5
     parent: 2
     type: Transform
+- uid: 12373
+  type: WindowDirectional
+  components:
+  - pos: 41.5,35.5
+    parent: 2
+    type: Transform
+- uid: 12374
+  type: EmergencyLight
+  components:
+  - pos: 10.5,1.5
+    parent: 2
+    type: Transform
+- uid: 12375
+  type: EmergencyLight
+  components:
+  - pos: 36.5,1.5
+    parent: 2
+    type: Transform
+- uid: 12376
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 62.5,-0.5
+    parent: 2
+    type: Transform
+- uid: 12377
+  type: EmergencyLight
+  components:
+  - pos: 16.5,-33.5
+    parent: 2
+    type: Transform
+- uid: 12378
+  type: EmergencyLight
+  components:
+  - pos: 35.5,-32.5
+    parent: 2
+    type: Transform
+- uid: 12379
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 36.5,25.5
+    parent: 2
+    type: Transform
+- uid: 12380
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 25.5,44.5
+    parent: 2
+    type: Transform
+- uid: 12381
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 11.5,21.5
+    parent: 2
+    type: Transform
+- uid: 12382
+  type: EmergencyLight
+  components:
+  - pos: 33.5,15.5
+    parent: 2
+    type: Transform
+- uid: 12383
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 60.5,18.5
+    parent: 2
+    type: Transform
+- uid: 12384
+  type: Catwalk
+  components:
+  - pos: 39.5,-36.5
+    parent: 2
+    type: Transform
+- uid: 12385
+  type: Catwalk
+  components:
+  - pos: 40.5,-36.5
+    parent: 2
+    type: Transform
+- uid: 12386
+  type: Catwalk
+  components:
+  - pos: 41.5,-36.5
+    parent: 2
+    type: Transform
+- uid: 12387
+  type: Catwalk
+  components:
+  - pos: 42.5,-36.5
+    parent: 2
+    type: Transform
+- uid: 12388
+  type: Catwalk
+  components:
+  - pos: 43.5,-36.5
+    parent: 2
+    type: Transform
+- uid: 12389
+  type: Catwalk
+  components:
+  - pos: 44.5,-36.5
+    parent: 2
+    type: Transform
+- uid: 12390
+  type: Catwalk
+  components:
+  - pos: 45.5,-36.5
+    parent: 2
+    type: Transform
+- uid: 12391
+  type: WoodDoor
+  components:
+  - pos: 34.5,4.5
+    parent: 2
+    type: Transform
+- uid: 12392
+  type: WoodDoor
+  components:
+  - pos: 36.5,4.5
+    parent: 2
+    type: Transform
+- uid: 12393
+  type: RiotShield
+  components:
+  - pos: 36.4059,20.547966
+    parent: 2
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12394
+  type: RiotShield
+  components:
+  - pos: 36.56215,20.438591
+    parent: 2
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...

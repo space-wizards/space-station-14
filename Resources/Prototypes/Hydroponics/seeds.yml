@@ -340,6 +340,10 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+    Allicin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: onionred
@@ -363,6 +367,10 @@
       Max: 10
       PotencyDivisor: 10
     Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Allicin:
       Min: 1
       Max: 4
       PotencyDivisor: 25
