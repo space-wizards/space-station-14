@@ -15,6 +15,9 @@ namespace Content.Shared.Eye.Blinding
             SubscribeLocalEvent<BlindfoldComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<BlindfoldComponent, GotUnequippedEvent>(OnUnequipped);
 
+            SubscribeLocalEvent<VisionCorrectionComponent, GotEquippedEvent>(OnGlassesEquipped);
+            SubscribeLocalEvent<VisionCorrectionComponent, GotUnequippedEvent>(OnGlassesUnequipped);
+
             SubscribeLocalEvent<BlurryVisionComponent, ComponentGetState>(OnGetState);
 
             SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentInit>(OnInit);
@@ -43,6 +46,31 @@ namespace Content.Shared.Eye.Blinding
             if (!TryComp<BlindableComponent>(args.Equipee, out var blindComp))
                 return;
             AdjustBlindSources(args.Equipee, false, blindComp);
+        }
+
+        private void OnGlassesEquipped(EntityUid uid, VisionCorrectionComponent component, GotEquippedEvent args)
+        {
+            if (!TryComp<SharedClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP) // we live in a society
+                return;
+            // Is the clothing in its actual slot?
+            if (!clothing.Slots.HasFlag(args.SlotFlags))
+                return;
+
+            if (!TryComp<BlurryVisionComponent>(args.Equipee, out var blur))
+                return;
+
+            component.IsActive = true;
+            blur.Magnitude += component.VisionBonus;
+            blur.Dirty();
+        }
+
+        private void OnGlassesUnequipped(EntityUid uid, VisionCorrectionComponent component, GotUnequippedEvent args)
+        {
+            if (!component.IsActive || !TryComp<BlurryVisionComponent>(args.Equipee, out var blur))
+                return;
+            component.IsActive = false;
+            blur.Magnitude -= component.VisionBonus;
+            blur.Dirty();
         }
 
         private void OnGetState(EntityUid uid, BlurryVisionComponent component, ref ComponentGetState args)
@@ -107,7 +135,6 @@ namespace Content.Shared.Eye.Blinding
             } else
             {
                 RemComp<BlurryVisionComponent>(uid);
-                blindable.EyeDamage = 0;
             }
 
             if (!blindable.EyeTooDamaged && blindable.EyeDamage >= 8)
@@ -115,6 +142,8 @@ namespace Content.Shared.Eye.Blinding
 
             if (blindable.EyeTooDamaged && blindable.EyeDamage < 8)
                 AdjustBlindSources(uid, false, blindable);
+
+            Math.Clamp(blindable.EyeDamage, 0, 8);
         }
     }
 

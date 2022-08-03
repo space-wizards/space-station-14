@@ -87,6 +87,7 @@
     sprite: Clothing/Eyes/Glasses/glasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/glasses.rsi
+  - type: VisionCorrection
 
 - type: entity
   parent: ClothingEyesBase

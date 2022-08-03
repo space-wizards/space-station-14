@@ -36,6 +36,9 @@ namespace Content.Client.Eye.Blinding
             if (!_entityManager.TryGetComponent<BlurryVisionComponent>(playerEntity, out var blurComp))
                 return false;
 
+            if (!blurComp.Active)
+                return false;
+
             if (_entityManager.TryGetComponent<BlindableComponent>(playerEntity, out var blindComp)
                 && blindComp.Sources > 0)
                 return false;

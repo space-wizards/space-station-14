@@ -8,5 +8,7 @@ namespace Content.Shared.Eye.Blinding
     {
         [DataField("mangitude")]
         public float Magnitude = 1f;
+
+        public bool Active => Magnitude < 10f;
     }
 }
