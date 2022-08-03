@@ -1,0 +1,38 @@
+﻿- type: entity
+  id: fax_machine
+  parent: BaseMachinePowered
+  name: fax machine
+  description: A bluespace powered fax machine. You'd expect NT to invent something new, nope! Use fax. Deal with it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/fax_machine.rsi
+      netsync: false
+      layers:
+        - state: fax
+    - type: Icon
+      sprite: Structures/Machines/fax_machine.rsi
+      state: fax
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.4,0.25,0.4"
+          mass: 25
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: ActivatableUI # TODO: Fix this bullshit code with the fax system instead of copying it from CHEMMASTER
+      key: enum.ChemMasterUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChemMasterUiKey.Key
+          type: ChemMasterBoundUserInterface
+    - type: ApcPowerReceiver
+      powerLoad: 250
+
