@@ -13,8 +13,16 @@ public enum HumanoidVisualizerKey
     Key
 }
 
-public enum HumanoidVisualizerChangeKey
+public enum HumanoidVisualizerDataKey
 {
+    /// <summary>
+    ///     Current species. This is primarily for fetching
+    ///     all species sprites for a character, including
+    ///     any base species sprites. Server authoritative:
+    ///     clients do not have to worry about validating
+    ///     this.
+    /// </summary>
+    Species,
     /// <summary>
     ///     Skin color. Changes the skin tone of every
     ///     'skin' layer, including markings that follow
@@ -22,10 +30,9 @@ public enum HumanoidVisualizerChangeKey
     /// </summary>
     SkinColor,
     /// <summary>
-    ///     Base layer color. Changes the color of a
-    ///     base layer.
+    ///     Eye color. Changes the color of a human's eye.
     /// </summary>
-    BaseLayerColor,
+    EyeColor,
     /// <summary>
     ///     Layer visibility. Changes the visibility of
     ///     a single layer, including all markings.
@@ -37,10 +44,4 @@ public enum HumanoidVisualizerChangeKey
     ///     will update all the markings on a humanoid.
     /// </summary>
     Markings
-}
-
-public sealed class HumanoidVisualizerChanges
-{
-    private List<HumanoidVisualizerChangeKey> _changed = new();
-    private Color?
 }

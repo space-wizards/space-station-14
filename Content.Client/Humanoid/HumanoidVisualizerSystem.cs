@@ -76,6 +76,47 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
     protected override void OnAppearanceChange(EntityUid uid, SharedHumanoidComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
+
+        // can't get humanoid visuals without a species
+        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Species, out var speciesRaw)
+            && speciesRaw is not string speciesId)
+        {
+            return;
+        }
+
+        // TODO: Check species diff
+
+        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.SkinColor, out var skinColorRaw)
+            && skinColorRaw is not Color skinColor)
+        {
+            return;
+        }
+
+        // TODO: Check skin color diff
+
+        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.EyeColor, out var eyeColorRaw)
+            && eyeColorRaw is not Color eyeColor)
+        {
+            return;
+        }
+
+        // TODO: Check eye color diff
+
+        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.LayerVisibility, out var layerVisRaw)
+            && layerVisRaw is not List<HumanoidVisualLayers> layerVis)
+        {
+            return;
+        }
+
+        // TODO: Check diff
+
+        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Markings, out var markingsRaw)
+            && markingsRaw is not List<Marking> markings)
+        {
+            return;
+        }
+
+        // TODO: Check diff
     }
 
     private void HandleState(EntityUid uid, SharedHumanoidComponent humanoid, ref ComponentHandleState args)
