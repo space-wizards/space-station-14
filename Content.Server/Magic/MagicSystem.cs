@@ -16,6 +16,7 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
@@ -39,6 +40,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -120,6 +122,11 @@ public sealed class MagicSystem : EntitySystem
             _actionsSystem.AddActions(ev.User, component.Spells, uid);
         if (component.Persistent)
             _actionsSystem.AddActions(ev.User, component.Spells, null);
+        if (component.SingleUse)
+        {
+            EntityManager.DeleteEntity(uid);
+            _popupSystem.PopupEntity("The book crumbles", ev.User, Filter.Entities(ev.User), PopupType.Large);
+        }
     }
 
     private void OnLearnCancel(EntityUid uid, SpellbookComponent component, LearnDoAfterCancel args)
@@ -148,6 +155,7 @@ public sealed class MagicSystem : EntitySystem
                 var comp = EnsureComp<PreventCollideComponent>(ent);
                 comp.Uid = args.Performer;
             }
+
         }
 
         args.Handled = true;

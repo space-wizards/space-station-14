@@ -24,6 +24,10 @@ action-name-spell-fireball = Fireball
 action-description-spell-fireball = Fires an explosive fireball towards the clicked location.
 action-speech-spell-fireball = ONI'SOMA!
 
-action-name-spell-mimewall = Big Invisible Wall
-action-description-spell-mimewall = Long wall
-action-popup-spell-mimewall = {CAPITALIZE(THE($user))} brushes up against an invisible wall!
+action-name-spell-fingergun = Finger Guns
+action-description-spell-fingergun = Shoot up to three mimed bullets from your fingers that damage and mute their targets.
+action-popup-spell-fingergun = You draw your fingers!
+
+action-name-spell-blockade = Invisible Blockade
+action-description-spell-blockade = Form an invisible three tile wide blockade.
+action-popup-spell-blockade = You form a blockade in front of yourself.

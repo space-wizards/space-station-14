@@ -111,3 +111,54 @@
       types:
         Piercing: 300
     ignoreResistances: true
+
+- type: entity
+  id: ProjectileFingerGun
+  name: mime bullet
+  description: insert raunchy finger bang joke
+  components:
+    - type: FlyBySound
+    - type: Clickable
+    - type: Sprite
+      netsync: false
+      noRot: false
+#      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+#      layers:
+#        - state: bullet
+#          shader: unshaded
+    - type: Physics
+      bodyType: Dynamic
+      linearDamping: 0
+      angularDamping: 0
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.1,-0.1,0.1,0.1"
+          hard: false
+          id: projectile
+          mask:
+            - Impassable
+            - BulletImpassable
+    - type: Projectile
+      impactEffect: BulletImpactEffect
+      damage:
+        types:
+          Piercing: 20
+      soundHit:
+        path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    - type: StaminaDamageOnCollide
+      damage: 25
+    - type: TimedDespawn
+      lifetime: 10
+    - type: SolutionInjectOnCollide
+      transferAmount: 25
+    - type: InjectableSolution
+      solution: toxin
+    - type: SolutionContainerManager
+      solutions:
+        toxin:
+          maxVol: 25
+          reagents:
+          - ReagentId: MuteToxin
+            Quantity: 25

@@ -36,5 +36,9 @@ public sealed class SpellbookComponent : Component
     [DataField("isPersistent")]
     public bool Persistent = false;
 
+    [ViewVariables]
+    [DataField("singleUse")]
+    public bool SingleUse = false;
+
     public CancellationTokenSource? CancelToken;
 }

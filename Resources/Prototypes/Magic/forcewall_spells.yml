@@ -15,15 +15,15 @@
     posData: !type:TargetInFront
 
 - type: instantAction
-  id: MimeWall
-  name: action-name-spell-forcewall
-  description: action-description-spell-forcewall
+  id: MimeBlockade
+  name: action-name-spell-blockade
+  description: action-description-spell-blockade
   useDelay: 35
-  popup: action-popup-spell-mimewall
+  popup: action-popup-spell-blockade
   itemIconStyle: BigAction
   icon:
     sprite: Objects/Magic/magicactions.rsi
-    state: shield
+    state: invisible_blockade
   serverEvent: !type:InstantSpawnSpellEvent
     prototype: WallInvisible
     preventCollide: false
