@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: The medical scanner is now climbable, type: Fix}
-  id: 1585
-  time: '2022-05-22T20:43:06.0000000+00:00'
 - author: ike709
   changes:
   - {message: Added a reoccurrence delay to station events. By default no event will
@@ -2926,3 +2921,9 @@ Entries:
     type: Tweak}
   id: 2084
   time: '2022-08-04T00:43:54.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: crew monitoring console now has proper window size, type: Fix}
+  - {message: id card console limits name and job lengths to 30 characters, type: Fix}
+  id: 2085
+  time: '2022-08-04T00:46:03.0000000+00:00'
