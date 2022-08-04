@@ -37,7 +37,7 @@ namespace Content.Server.Body.Components
         {
             base.Initialize();
 
-            _mechanismContainer = Owner.EnsureContainer<Container>($"{Name}-{nameof(BodyPartComponent)}");
+            _mechanismContainer = Owner.EnsureContainer<Container>(ContainerId);
 
             // This is ran in Startup as entities spawned in Initialize
             // are not synced to the client since they are assumed to be
