@@ -1,15 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: All base animals around the station can now carry diseases. Have fun
-      giving all the beloved station pets cancer., type: Tweak}
-  id: 1588
-  time: '2022-05-23T19:40:16.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Servers can now specify their own rules file, type: Add}
-  id: 1589
-  time: '2022-05-23T19:43:09.0000000+00:00'
 - author: Rane
   changes:
   - {message: Ported vomiting from the Nyanotrasen fork. Several new and old diseases
@@ -2928,3 +2917,13 @@ Entries:
   - {message: The nuke and disk can no longer be sold to cargo., type: Fix}
   id: 2087
   time: '2022-08-04T03:01:14.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Removed the tiny fans from the nukie planet as it has atmos., type: Tweak}
+  id: 2088
+  time: '2022-08-04T03:02:51.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Cargo can now dock properly on delta., type: Tweak}
+  id: 2089
+  time: '2022-08-04T03:03:08.0000000+00:00'
