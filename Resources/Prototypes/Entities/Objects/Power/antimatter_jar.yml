@@ -2,7 +2,7 @@
   parent: BaseItem
   id: AMEJar
   name: AME fuel jar
-  description: A hermetically sealed jar containing antimatter for use in an antimatter reactor.
+  description: "A hermetically sealed jar containing antimatter for use in an antimatter reactor.\nCaution: Loose antimatter may cause fourth-degree burns."
   components:
   - type: Item
     size: 5
@@ -29,3 +29,7 @@
         seal:
           True: { visible: false }
           False: { visible: true }
+  - type: Artifact
+    suppressed: true
+  - type: TemperatureArtifact
+    targetTemp: 1000 # around 520 celsius

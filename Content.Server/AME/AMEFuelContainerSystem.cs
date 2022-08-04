@@ -2,7 +2,10 @@ using Content.Server.AME.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Item;
 using Content.Server.Singularity.Components;
+using Content.Server.StationEvents.Events;
 using Content.Server.Tools;
+using Content.Server.Xenoarchaeology.XenoArtifacts;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Shared.AME;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -20,6 +23,7 @@ namespace Content.Server.AME
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly ItemSystem _itemSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
 
         private const float UpdateCooldown = 1f;
 
@@ -44,24 +48,25 @@ namespace Content.Server.AME
             ItemComponent? item = null,
             SinguloFoodComponent? singuloFood = null,
             PointLightComponent? light = null,
-            AppearanceComponent? appearance = null)
+            AppearanceComponent? appearance = null,
+            ArtifactComponent? artifact = null)
         {
             if (!Resolve(uid, ref container, ref singuloFood, ref light, ref appearance))
+                return false;
+
+            if (!Resolve(uid, ref item, ref artifact))
                 return false;
 
             if (!container.Sealed)
                 return false;
 
-            Resolve(uid, ref item);
-
             container.Sealed = false;
             singuloFood.Energy = container.SinguloFoodPerThousand;
             light.Enabled = true;
+            artifact.IsSuppressed = false;
+            _itemSystem.SetHeldPrefix(uid, "open", item);
 
             appearance.SetData(AMEFuelContainerVisuals.IsOpen, true);
-
-            if (item != null)
-                _itemSystem.SetHeldPrefix(uid, "open", item);
 
             SoundSystem.Play("/Audio/Items/crowbar.ogg", Filter.Pvs(uid, entityManager: EntityManager), uid);
 
@@ -97,10 +102,23 @@ namespace Content.Server.AME
         private async void OnAMEFuelContainerInteractUsing(EntityUid uid, AMEFuelContainerComponent container,
             InteractUsingEvent args)
         {
-            if (args.Handled || !await _toolSystem.UseTool(args.Used, args.User, uid, 0, 0.2f, container.QualityNeeded))
+            if (args.Handled || !await _toolSystem.UseTool(args.Used, args.User, uid, 0, 0, container.QualityNeeded))
                 return;
 
             args.Handled = TryOpenAMEFuelContainer(uid, args.User, container);
+        }
+
+        private bool ActivateTemperatureArtifact(EntityUid uid,
+            ArtifactComponent? artifact = null,
+            TemperatureArtifactComponent? temperatureArtifact = null)
+        {
+            if (!Resolve(uid, ref artifact, ref temperatureArtifact))
+                return false;
+
+            if (!_artifactSystem.TryActivateArtifact(uid, component: artifact))
+                return false;
+
+            return true;
         }
 
         public override void Update(float frameTime)
@@ -109,6 +127,7 @@ namespace Content.Server.AME
 
             foreach (var (leaking, container, singuloFood, pointLight) in EntityQuery<LeakingAMEFuelContainerComponent, AMEFuelContainerComponent, SinguloFoodComponent, PointLightComponent>())
             {
+
                 leaking.Accumulator += frameTime;
 
                 if (leaking.Accumulator < UpdateCooldown)
@@ -117,6 +136,8 @@ namespace Content.Server.AME
                 leaking.Accumulator -= UpdateCooldown;
 
                 container.FuelAmount -= (int)Math.Round(container.OpenFuelConsumption * UpdateCooldown);
+
+                ActivateTemperatureArtifact(container.Owner);
 
                 // Finish emitting fuel
                 if (container.FuelAmount <= 0)

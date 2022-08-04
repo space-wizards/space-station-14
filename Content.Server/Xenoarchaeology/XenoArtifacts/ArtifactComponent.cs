@@ -32,7 +32,7 @@ public sealed class ArtifactComponent : Component
     ///     Is this artifact under some suppression device?
     ///     If true, will ignore all trigger activations attempts.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), DataField("suppressed")]
     public bool IsSuppressed;
 
     public TimeSpan LastActivationTime;
