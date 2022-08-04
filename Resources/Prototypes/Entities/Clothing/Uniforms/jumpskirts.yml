@@ -553,13 +553,3 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
     
-- type: entity
-  parent: ClothingUniformSkirtBase
-  id: ClothingUniformJumpskirtClown
-  name: sexy clown suit
-  description: It makes you look HONKable!
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/sexyclown.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/sexyclown.rsi

@@ -145,18 +145,6 @@
 
 - type: entity
   parent: ClothingMaskBase
-  id: ClothingMaskSexyClown
-  name: sexy-clown mask and wig
-  description: A feminine clown mask for the best clowns.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/sexyclown.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/sexyclown.rsi
-  - type: BreathMask
-
-- type: entity
-  parent: ClothingMaskBase
   id: ClothingMaskJoy
   name: joy mask
   description: Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout.
