@@ -137,7 +137,7 @@
     slots:
       - Back
     - type: Item
-      size: 100
+      size: 30
 
 # Filled captain
 - type: entity
