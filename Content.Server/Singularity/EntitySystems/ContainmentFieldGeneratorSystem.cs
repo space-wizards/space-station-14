@@ -248,7 +248,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             otherFieldGeneratorComponent == component ||
             !TryComp<PhysicsComponent>(ent, out var collidableComponent) ||
             collidableComponent.BodyType != BodyType.Static ||
-            gen1XForm.GridUid != Transform(otherFieldGeneratorComponent.Owner).GridUid)
+            gen1XForm.ParentUid != Transform(otherFieldGeneratorComponent.Owner).ParentUid)
         {
             return false;
         }
@@ -336,10 +336,10 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         foreach (var (_, generators) in component.Connections)
         {
-            var gen1GridUid = Transform(component.Owner).GridUid;
-            var gen2GridUid = xFormQuery.GetComponent(generators.Item1.Owner).GridUid;
+            var gen1ParentGrid = xFormQuery.GetComponent(component.Owner).ParentUid;
+            var gent2ParentGrid = xFormQuery.GetComponent(generators.Item1.Owner).ParentUid;
 
-            if (gen1GridUid != gen2GridUid)
+            if (gen1ParentGrid != gent2ParentGrid)
                 RemoveConnections(component);
         }
     }
