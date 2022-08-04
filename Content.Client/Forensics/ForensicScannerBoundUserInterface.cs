@@ -7,7 +7,7 @@ namespace Content.Client.Forensics
     {
         private ForensicScannerMenu? _window;
 
-        public ForensicScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ForensicScannerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
