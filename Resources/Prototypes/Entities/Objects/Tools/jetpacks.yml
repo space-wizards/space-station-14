@@ -136,8 +136,8 @@
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     slots:
       - Back
-    - type: Item
-      size: 30
+  - type: Item
+    size: 30
 
 # Filled captain
 - type: entity
