@@ -31,4 +31,5 @@
     id: ClownPDA
     ears: ClothingHeadsetService
   satchel: ClothingBackpackSatchelFilled
+  innerclothingskirt: ClothingUniformJumpskirtClown
   duffelbag: ClothingBackpackDuffelClownFilled
