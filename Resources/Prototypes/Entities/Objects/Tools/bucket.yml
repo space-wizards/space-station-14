@@ -46,3 +46,5 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: fill-
+  - type: ExaminableSolution
+    solution: bucket
