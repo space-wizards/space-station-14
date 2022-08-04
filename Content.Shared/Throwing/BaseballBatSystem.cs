@@ -34,9 +34,9 @@ namespace Content.Shared.Throwing
 
             var dir = (args.ClickLocation.ToMapPos(EntityManager) - EntityManager.GetComponent<TransformComponent>(args.User).WorldPosition).Normalized;
 
-            foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, 7.0f, dir, 45f))
+            foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, 0.5f, diff.ToAngle(), 45f))
             {
-                _throwingSystem.TryThrow(entity, dir * 20f, 10f, uid);
+                _throwingSystem.TryThrow(entity, dir * 2f, 50f, uid);
             }
         }
     }
