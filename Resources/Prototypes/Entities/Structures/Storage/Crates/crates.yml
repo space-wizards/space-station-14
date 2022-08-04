@@ -26,7 +26,6 @@
     containers:
     - entity_storage
 
-
 - type: entity
   id: CratePlastic
   name: plastic crate

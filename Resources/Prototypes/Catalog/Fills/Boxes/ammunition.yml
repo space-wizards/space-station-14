@@ -373,11 +373,11 @@
   id: BoxAmmoProvider
   abstract: true
   components:
-    - type: BallisticAmmoProvider
-    - type: ContainerContainer
-      containers:
-        ballistic-ammo: !type:Container
-          ents: []
+  - type: BallisticAmmoProvider
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+      storagebase: !type:Container
 
 # Shotgun Shells
 - type: entity
