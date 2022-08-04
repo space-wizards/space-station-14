@@ -187,12 +187,16 @@ namespace Content.Server.Lathe
                 component.Queue.RemoveAt(0);
                 return TryStartProducing(uid, prodComp, component);
             }
-                
+
             if (!component.CanProduce(recipe) || !TryComp(uid, out MaterialStorageComponent? storage))
+            {
+                component.Queue.RemoveAt(0);
                 return false;
+            }
 
             prodComp ??= EnsureComp<LatheProducingComponent>(uid);
 
+            // Do nothing if the lathe is already producing something.
             if (prodComp.Recipe != null)
                 return false;
 
