@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: More gun impact sounds have been added., type: Tweak}
-  id: 1581
-  time: '2022-05-22T08:23:37.0000000+00:00'
 - author: Rane
   changes:
   - {message: Glucose and sugar are now the same thing., type: Tweak}
@@ -2927,3 +2922,8 @@ Entries:
   - {message: Barratry has been removed., type: Remove}
   id: 2080
   time: '2022-08-03T23:44:11.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Emergency light alarm now uses the correct sound., type: Fix}
+  id: 2081
+  time: '2022-08-04T00:37:20.0000000+00:00'
