@@ -12,9 +12,10 @@ public sealed class NPCBlackboard
     /// </summary>
     private static readonly Dictionary<string, object> BlackboardDefaults = new()
     {
+        {"BufferRange", 10f},
         {"FollowCloseRange", 3f},
         {"FollowRange", 7f},
-        {"IdleRange", 14f},
+        {"IdleRange", 7f},
         {"MaximumIdleTime", 7f},
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},

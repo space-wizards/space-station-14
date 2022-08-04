@@ -80,14 +80,14 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
 
             await job.AsTask;
 
-            if (job.Result == null)
+            if (job.Result == null || !_entManager.TryGetComponent<TransformComponent>(target.Owner, out var targetXform))
             {
                 continue;
             }
 
             return (true, new Dictionary<string, object>()
             {
-                { TargetKey, target },
+                { TargetKey, targetXform.Coordinates },
             });
         }
 
