@@ -17,5 +17,5 @@ drink-component-try-use-drink-had-enough-other = Они не могут выпи
 drink-component-try-use-drink-success-slurp = Сёрб
 drink-component-force-feed = { CAPITALIZE($user) } пытается вас чем-то напоить!
 drink-component-force-feed-success = { CAPITALIZE($user) } вас чем-то напоил!
-drink-component-force-feed-success-user = Вы успешно напоили { $user }
+drink-component-force-feed-success-user = Вы успешно напоили { $target }
 drink-system-verb-drink = Пить
