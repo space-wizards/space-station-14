@@ -1,6 +1,6 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
-using Content.Server.NPC.Pathfinding.Accessible;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -14,7 +14,7 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    private AiReachableSystem _reachable = default!;
+    private PathfindingSystem _path = default!;
     private EntityLookupSystem _lookup = default!;
 
     [DataField("rangeKey", required: true)]
@@ -30,7 +30,7 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
     {
         base.Initialize();
         var sysManager = IoCManager.Resolve<IEntitySystemManager>();
-        _reachable = sysManager.GetEntitySystem<AiReachableSystem>();
+        _path = sysManager.GetEntitySystem<PathfindingSystem>();
         _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
     }
 
@@ -51,50 +51,46 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             return (false, null);
         }
 
-        var comp = registration.Type;
+        var compType = registration.Type;
+        var query = _entManager.GetEntityQuery(compType);
+        var targets = new List<Component>();
 
         // TODO: Need to get ones that are accessible.
         // TODO: Look at unreal HTN to see repeatable ones maybe?
         foreach (var entity in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            // if (entity == owner || !_entManager)
-                // continue;
+            if (entity == owner || !query.TryGetComponent(entity, out var comp))
+                continue;
+
+            targets.Add(comp);
         }
 
-        // TODO: Copy over GoToPuddleSystem here.
-
-        // Very inefficient (should weight each region by its node count) but better than the old system
-
-
-        if (!_entManager.TryGetComponent(_entManager.GetComponent<TransformComponent>(owner).GridUid,
-                out IMapGridComponent? grid))
+        if (targets.Count == 0)
         {
             return (false, null);
         }
 
-        var reachableArgs = ReachableArgs.GetArgs(owner, blackboard.GetValueOrDefault<float>(RangeKey));
-        var entityRegion = _reachable.GetRegion(owner);
-        var reachableRegions = _reachable.GetReachableRegions(reachableArgs, entityRegion);
-
-        if (reachableRegions.Count == 0)
-            return (false, null);
-
-        var reachableNodes = new List<PathfindingNode>();
-
-        foreach (var region in reachableRegions)
+        while (targets.Count > 0)
         {
-            foreach (var node in region.Nodes)
+            // TODO: Get nearest at some stage
+            var target = _random.PickAndTake(targets);
+
+            // TODO: God the path api sucks PLUS I need some fast way to get this.
+            var job = _path.RequestPath(owner, target.Owner, CancellationToken.None);
+
+            await job.AsTask;
+
+            if (job.Result == null)
             {
-                reachableNodes.Add(node);
+                continue;
             }
+
+            return (true, new Dictionary<string, object>()
+            {
+                { TargetKey, target },
+            });
         }
 
-        var targetNode = _random.Pick(reachableNodes);
-
-        var target = grid.Grid.GridTileToLocal(targetNode.TileRef.GridIndices);
-        return (true, new Dictionary<string, object>()
-        {
-            { TargetKey, target },
-        });
+        return (false, null);
     }
 }

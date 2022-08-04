@@ -8,9 +8,10 @@
         <ui:StripeBack>
             <Label Text="NPC" HorizontalAlignment="Center"/>
         </ui:StripeBack>
-            <BoxContainer Name="NPCBox" Orientation="Vertical">
-
-            </BoxContainer>
+        <BoxContainer Name="NPCBox" Orientation="Vertical">
+            <CheckBox Name="NPCPath" Text="Path"/>
+            <CheckBox Name="NPCThonk" Text="Thonk"/>
+        </BoxContainer>
         <ui:StripeBack>
             <Label Text="Pathfinder" HorizontalAlignment="Center"/>
         </ui:StripeBack>

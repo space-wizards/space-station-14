@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Client.AI
+namespace Content.Client.NPC
 {
 #if DEBUG
     public sealed class ClientPathfindingDebugSystem : EntitySystem
@@ -121,7 +115,7 @@ namespace Content.Client.AI
         }
 
 
-        private void EnableMode(PathfindingDebugMode tooltip)
+        public void EnableMode(PathfindingDebugMode tooltip)
         {
             Modes |= tooltip;
             if (Modes != 0)
@@ -148,7 +142,7 @@ namespace Content.Client.AI
             // So need further investigation.
         }
 
-        private void DisableMode(PathfindingDebugMode mode)
+        public void DisableMode(PathfindingDebugMode mode)
         {
             if (mode == PathfindingDebugMode.Regions && (Modes & PathfindingDebugMode.Regions) != 0)
             {

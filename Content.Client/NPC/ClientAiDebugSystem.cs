@@ -1,29 +1,24 @@
-using System;
-using System.Collections.Generic;
 using Content.Client.Stylesheets;
 using Content.Shared.AI;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.AI
+namespace Content.Client.NPC
 {
 #if DEBUG
     public sealed class ClientAiDebugSystem : EntitySystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
-        private AiDebugMode _tooltips = AiDebugMode.None;
+        public AiDebugMode Tooltips { get; private set; } = AiDebugMode.None;
         private readonly Dictionary<EntityUid, PanelContainer> _aiBoxes = new();
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            if (_tooltips == 0)
+            if (Tooltips == 0)
             {
                 if (_aiBoxes.Count > 0)
                 {
@@ -76,7 +71,7 @@ namespace Content.Client.AI
 
         private void HandleUtilityAiDebugMessage(SharedAiDebug.UtilityAiDebugMessage message)
         {
-            if ((_tooltips & AiDebugMode.Thonk) != 0)
+            if ((Tooltips & AiDebugMode.Thonk) != 0)
             {
                 // I guess if it's out of range we don't know about it?
                 var entity = message.EntityUid;
@@ -93,7 +88,7 @@ namespace Content.Client.AI
 
         private void HandleAStarRouteMessage(SharedAiDebug.AStarRouteMessage message)
         {
-            if ((_tooltips & AiDebugMode.Paths) != 0)
+            if ((Tooltips & AiDebugMode.Paths) != 0)
             {
                 var entity = message.EntityUid;
                 TryCreatePanel(entity);
@@ -107,7 +102,7 @@ namespace Content.Client.AI
 
         private void HandleJpsRouteMessage(SharedAiDebug.JpsRouteMessage message)
         {
-            if ((_tooltips & AiDebugMode.Paths) != 0)
+            if ((Tooltips & AiDebugMode.Paths) != 0)
             {
                 var entity = message.EntityUid;
                 TryCreatePanel(entity);
@@ -126,23 +121,23 @@ namespace Content.Client.AI
                 tooltip.Dispose();
             }
             _aiBoxes.Clear();
-            _tooltips = AiDebugMode.None;
+            Tooltips = AiDebugMode.None;
         }
 
 
-        private void EnableTooltip(AiDebugMode tooltip)
+        public void EnableTooltip(AiDebugMode tooltip)
         {
-            _tooltips |= tooltip;
+            Tooltips |= tooltip;
         }
 
-        private void DisableTooltip(AiDebugMode tooltip)
+        public void DisableTooltip(AiDebugMode tooltip)
         {
-            _tooltips &= ~tooltip;
+            Tooltips &= ~tooltip;
         }
 
         public void ToggleTooltip(AiDebugMode tooltip)
         {
-            if ((_tooltips & tooltip) != 0)
+            if ((Tooltips & tooltip) != 0)
             {
                 DisableTooltip(tooltip);
             }

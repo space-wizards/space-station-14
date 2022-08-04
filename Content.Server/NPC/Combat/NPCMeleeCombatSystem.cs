@@ -89,6 +89,8 @@ public sealed class NPCMeleeCombatSystem : EntitySystem
         if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance) ||
             distance > weapon.Range)
         {
+            // TODO: Steering in combat.
+            component.Status = CombatStatus.TargetUnreachable;
             return;
         }
 

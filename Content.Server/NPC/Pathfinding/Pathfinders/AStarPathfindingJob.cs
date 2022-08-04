@@ -13,8 +13,8 @@ namespace Content.Server.NPC.Pathfinding.Pathfinders
         public static event Action<SharedAiDebug.AStarRouteDebug>? DebugRoute;
 #endif
 
-        private readonly PathfindingNode? _startNode;
-        private PathfindingNode? _endNode;
+        private readonly PathfindingNode _startNode;
+        private PathfindingNode _endNode;
         private readonly PathfindingArgs _pathfindingArgs;
         private readonly IEntityManager _entityManager;
 
@@ -34,8 +34,8 @@ namespace Content.Server.NPC.Pathfinding.Pathfinders
 
         protected override async Task<Queue<TileRef>?> Process()
         {
-            if (_startNode == null ||
-                _endNode == null ||
+            if (_startNode.TileRef.Equals(TileRef.Zero) ||
+                _endNode.TileRef.Equals(TileRef.Zero) ||
                 Status == JobStatus.Finished)
             {
                 return null;
