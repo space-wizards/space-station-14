@@ -3,6 +3,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Body.Systems.Body;
@@ -290,6 +291,8 @@ public abstract partial class SharedBodySystem
 
         if (!slot.ContainerSlot.Remove(part))
             return false;
+
+        part.RandomOffset(0.25f);
 
         var ev = new PartRemovedFromBodyEvent(body.Owner, part, slot.Id);
         RaiseLocalEvent(body.Owner, ev);

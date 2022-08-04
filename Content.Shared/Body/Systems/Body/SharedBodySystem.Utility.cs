@@ -213,6 +213,21 @@ public abstract partial class SharedBodySystem
     }
 
     /// <summary>
+    ///     Returns all slots with parts in them, as well as the parts
+    /// </summary>
+    public IEnumerable<(BodyPartSlot slot, SharedBodyPartComponent part)> GetAllSlotsWithPart(EntityUid uid, SharedBodyComponent? body = null)
+    {
+        if (!Resolve(uid, ref body))
+            yield break;
+
+        foreach (var (_, slot) in body.Slots)
+        {
+            if (slot.HasPart && TryComp<SharedBodyPartComponent>(slot?.Part, out var part))
+                yield return (slot, part);
+        }
+    }
+
+    /// <summary>
     /// Gets the part in the center slot of the body, if any
     /// </summary>
     public SharedBodyPartComponent? GetCenterPart(EntityUid uid,

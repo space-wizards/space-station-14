@@ -1,5 +1,6 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems.Part;
+using System.Linq;
 
 namespace Content.Server.Body.Systems;
 
@@ -32,10 +33,10 @@ public sealed class BodyPartSystem : SharedBodyPartSystem
         if (!Resolve(uid, ref part))
             return gibs;
 
-        foreach (var mechanism in GetAllMechanisms(uid, part))
+        foreach (var mechanism in GetAllMechanisms(uid, part).ToArray())
         {
-            gibs.Add(part.Owner);
-            TryRemoveMechanism(uid, mechanism, part);
+            if (TryRemoveMechanism(uid, mechanism, part))
+                gibs.Add(mechanism.Owner);
         }
 
         return gibs;

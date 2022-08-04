@@ -104,13 +104,13 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return gibs;
 
-            foreach (var part in GetAllParts(uid, body))
+            foreach (var (slot, part) in GetAllSlotsWithPart(uid, body))
             {
                 gibs.Add(part.Owner);
-                RemovePart(uid, part, body);
+                RemovePart(uid, slot, body);
 
                 if (gibParts)
-                    gibs.UnionWith(_bodyPartSystem.Gib(uid, part));
+                    gibs.UnionWith(_bodyPartSystem.Gib(part.Owner, part));
             }
 
             foreach (var part in gibs)
