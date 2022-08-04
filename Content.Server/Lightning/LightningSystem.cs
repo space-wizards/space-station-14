@@ -42,7 +42,11 @@ public sealed class LightningSystem : SharedLightningSystem
 
             _fixture.TryCreateFixture(physics, fixture);
 
-            //TODO: Fix rotation issues and distance issues
+            var entXForm = Transform(ent);
+
+            entXForm.AttachParent(component.Owner);
+
+            //TODO: Fix distance issues
 
             for (int i = 0; i < distanceLength; i++)
             {
@@ -50,7 +54,8 @@ public sealed class LightningSystem : SharedLightningSystem
                 var newEnt = Spawn("LightningBase", offset);
                 if (!TryComp<SpriteComponent>(newEnt, out var newSprites))
                     return;
-                sprites.Rotation = ev.Angle;
+                newSprites.Rotation = ev.Angle;
+                Transform(newEnt).AttachParent(ent);
             }
         }
     }
