@@ -39,11 +39,19 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
+        HumanoidSpeciesBaseSpritesPrototype? baseSprites;
+
         if (speciesRaw is string speciesId)
         {
+            if (!_prototypeManager.TryIndex(speciesId, out baseSprites))
+            {
+                return;
+            }
+
             if (component.Species != speciesId)
             {
-                // do species base sprite application
+                ApplyBaseSprites(uid, baseSprites.Sprites);
+                component.Species = speciesId;
             }
         }
         else
@@ -56,7 +64,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         {
             if (component.SkinColor != skinColor)
             {
-                ApplySkinColor(uid, new(), skinColor);
+                ApplySkinColor(uid, baseSprites.Sprites, skinColor);
+                component.SkinColor = skinColor;
             }
         }
 
@@ -315,6 +324,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             {
                 continue;
             }
+
+            skinColor.A = spriteInfo.LayerAlpha;
 
             SetBaseLayerColor(uid, layer, skinColor, spriteComp);
         }
