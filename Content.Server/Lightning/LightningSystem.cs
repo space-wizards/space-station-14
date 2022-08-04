@@ -20,13 +20,15 @@ public sealed class LightningSystem : SharedLightningSystem
 
         SubscribeLocalEvent<LightningComponent, InteractHandEvent>(OnHandInteract);
 
-        SubscribeAllEvent<LightningEvent>(OnLightning);
+        SubscribeLocalEvent<LightningComponent, LightningEvent>(OnLightning);
     }
 
-    private void OnLightning(LightningEvent ev)
+    private void OnLightning(EntityUid uid, LightningComponent component, LightningEvent ev)
     {
-        var ent = Spawn("LightningBase", ev.Offset);
+        var offset = ev.Offset;
+        var ent = Spawn("LightningBase", offset);
         var shape = new EdgeShape(ev.OffsetCorrection, new Vector2(0,0));
+        var distanceLength = ev.CalculatedDistance.Length;
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
             TryComp<TransformComponent>(ent, out var xForm))
         {
@@ -40,7 +42,16 @@ public sealed class LightningSystem : SharedLightningSystem
 
             _fixture.TryCreateFixture(physics, fixture);
 
-            //TODO: Spawn more entities of lightning prototype without fixtures to complete the chain and also parent them
+            //TODO: Fix rotation issues and distance issues
+
+            for (int i = 0; i < distanceLength; i++)
+            {
+                offset = offset.Offset(ev.CalculatedDistance.Normalized);
+                var newEnt = Spawn("LightningBase", offset);
+                if (!TryComp<SpriteComponent>(newEnt, out var newSprites))
+                    return;
+                sprites.Rotation = ev.Angle;
+            }
         }
     }
 
