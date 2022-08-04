@@ -37,7 +37,6 @@ namespace Content.Server.NPC.Systems
         {
             base.Initialize();
             _sawmill = Logger.GetSawmill("npc");
-            InitializeUtility();
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, ComponentInit>(OnNPCInit);
             SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);
@@ -109,7 +108,6 @@ namespace Content.Server.NPC.Systems
             _count = 0;
             // Add your system here.
             _htn.UpdateNPC(ref _count, _maxUpdates, frameTime);
-            UpdateUtility(frameTime);
         }
 
         private void OnMobStateChange(EntityUid uid, NPCComponent component, MobStateChangedEvent args)

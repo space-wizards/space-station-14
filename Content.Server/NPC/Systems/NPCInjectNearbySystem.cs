@@ -12,7 +12,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.NPC.Systems
 {
-    public sealed class InjectNearbySystem : EntitySystem
+    public sealed class NPCInjectNearbySystem : EntitySystem
     {
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
@@ -51,7 +51,7 @@ namespace Content.Server.NPC.Systems
             if (damage.TotalDamage <= MedibotComponent.StandardMedDamageThreshold)
             {
                 _solutionSystem.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedInjectAmount, out var accepted);
-                EnsureComp<RecentlyInjectedComponent>(target);
+                EnsureComp<NPCRecentlyInjectedComponent>(target);
                 _popupSystem.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, Filter.Entities(target));
                 SoundSystem.Play("/Audio/Items/hypospray.ogg", Filter.Pvs(target), target);
                 _chat.TrySendInGameICMessage(medibot, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, false);
@@ -61,7 +61,7 @@ namespace Content.Server.NPC.Systems
             if (damage.TotalDamage >= MedibotComponent.EmergencyMedDamageThreshold)
             {
                 _solutionSystem.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedInjectAmount, out var accepted);
-                EnsureComp<RecentlyInjectedComponent>(target);
+                EnsureComp<NPCRecentlyInjectedComponent>(target);
                 _popupSystem.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, Filter.Entities(target));
                 SoundSystem.Play("/Audio/Items/hypospray.ogg", Filter.Pvs(target), target);
                 _chat.TrySendInGameICMessage(medibot, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, false);

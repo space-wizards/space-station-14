@@ -3,7 +3,11 @@ namespace Content.Server.NPC.Systems;
 /// <summary>
 /// Handles sight + sounds for NPCs.
 /// </summary>
-public sealed class NPCPerceptionSystem : EntitySystem
+public sealed partial class NPCPerceptionSystem : EntitySystem
 {
-    // TODO
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        UpdateRecentlyInjected(frameTime);
+    }
 }
