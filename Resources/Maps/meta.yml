@@ -25766,6 +25766,8 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
+  - id: Meta
+    type: BecomesStation
 - uid: 1
   type: WallReinforced
   components:
