@@ -19,6 +19,15 @@ public abstract class SharedHumanoidComponent : Component
     public string Species { get; set; } = default!;
 
     /// <summary>
+    ///     Any custom base layers this humanoid might have. See:
+    ///     limb transplants (potentially), robotic arms, etc.
+    ///     Stored on the server, this is merged in the client into
+    ///     all layer settings.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Dictionary<HumanoidVisualLayers, string> CustomBaseLayers = new();
+
+    /// <summary>
     ///     The initial sprites that this humanoid should
     ///     start with. Processed after the humanoid's
     ///     base sprites are processed, and includes things
@@ -119,6 +128,9 @@ public sealed class HumanoidMarkingStartingSet : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
+
+    [DataField("customBaseLayers")]
+    public Dictionary<HumanoidVisualLayers, string> CustomBaseLayers = new();
 
     [DataField("markings")]
     public List<Marking> Markings = new();

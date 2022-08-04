@@ -24,6 +24,11 @@ public enum HumanoidVisualizerDataKey
     /// </summary>
     Species,
     /// <summary>
+    ///     Custom base layers on this humanoid. Overrides
+    ///     base layers on a species.
+    /// </summary>
+    CustomBaseLayer,
+    /// <summary>
     ///     Skin color. Changes the skin tone of every
     ///     'skin' layer, including markings that follow
     ///     skin tone.

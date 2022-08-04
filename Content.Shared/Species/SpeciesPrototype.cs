@@ -139,11 +139,14 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
      ///     be ignored.
      /// </summary>
      [DataField("sprites", required: true)]
-     public Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> Sprites = new();
+     public Dictionary<HumanoidVisualLayers, string> Sprites = new();
 }
 
-public sealed class HumanoidSpeciesSpriteLayer
+[Prototype("humanoidBaseSprite")]
+public sealed class HumanoidSpeciesSpriteLayer : IPrototype
 {
+    [IdDataField]
+    public string ID { get; } = default!;
     /// <summary>
     ///     The base sprite for this sprite layer. This is what
     ///     will replace the empty layer tagged by the enum
@@ -190,6 +193,12 @@ public sealed class HumanoidSpeciesSpriteLayer
     /// </summary>
     [DataField("layerAlpha")]
     public float LayerAlpha { get; } = 1.0f;
+
+    /// <summary>
+    ///     If this sprite layer should allow markings or not.
+    /// </summary>
+    [DataField("allowsMarkings")]
+    public bool AllowsMarkings;
 
     /// <summary>
     ///     If this layer should always match the

@@ -16,6 +16,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SpriteSystem _spriteSystem = default!;
     [Dependency] private MarkingManager _markingManager = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, HumanoidComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
@@ -26,18 +27,26 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        HumanoidSpeciesBaseSpritesPrototype? baseSprites;
-
         if (speciesRaw is string speciesId)
         {
-            if (!_prototypeManager.TryIndex(speciesId, out baseSprites))
+            if (!_prototypeManager.TryIndex(speciesId, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
             {
                 return;
             }
 
             if (component.Species != speciesId)
             {
-                ApplyBaseSprites(uid, baseSprites.Sprites);
+                if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.CustomBaseLayer, out var customBaseRaw)
+                    && customBaseRaw is Dictionary<HumanoidVisualLayers, string> customBase)
+                {
+                    MergeCustomBaseSprites(uid, baseSprites.Sprites, customBase);
+                }
+                else
+                {
+                    MergeCustomBaseSprites(uid, baseSprites.Sprites, null);
+                }
+
+                ApplyBaseSprites(uid);
                 component.Species = speciesId;
             }
         }
@@ -51,7 +60,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         {
             if (component.SkinColor != skinColor)
             {
-                ApplySkinColor(uid, baseSprites.Sprites, skinColor);
+                ApplySkinColor(uid, skinColor);
                 component.SkinColor = skinColor;
             }
         }
@@ -74,7 +83,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Markings, out var markingsRaw)
             && markingsRaw is List<Marking> markings)
         {
-            DiffAndApplyMarkings(uid, markings, baseSprites.Sprites);
+            DiffAndApplyMarkings(uid, markings);
         }
     }
 
@@ -116,7 +125,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
     private void DiffAndApplyMarkings(EntityUid uid,
         List<Marking> newMarkings,
-        Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> layerSettings,
         HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
@@ -152,7 +160,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible, layerSettings);
+            ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible);
         }
 
         if (dirtyRangeStart >= 0)
@@ -161,7 +169,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             var oldRange = humanoid.CurrentMarkings.GetRange(dirtyRangeStart, newMarkings.Count - 1);
 
             ClearMarkings(uid, oldRange, humanoid);
-            ApplyMarkings(uid, range, layerSettings, humanoid);
+            ApplyMarkings(uid, range, humanoid);
         }
 
         if (dirtyMarkings.Count > 0 || dirtyRangeStart >= 0)
@@ -228,7 +236,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
     private void ApplyMarkings(EntityUid uid,
         List<Marking> markings,
-        Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> layerSettings,
         HumanoidComponent? humanoid = null,
         SpriteComponent? spriteComp = null)
     {
@@ -239,12 +246,12 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         foreach (var marking in new ReverseMarkingEnumerator(markings))
         {
-            if (!marking.Visible || !_markingManager.IsValidMarking(marking, out var markingPrototype))
+            if (!_markingManager.IsValidMarking(marking, out var markingPrototype))
             {
                 continue;
             }
 
-            ApplyMarking(uid, markingPrototype, marking.MarkingColors, marking.Visible, layerSettings);
+            ApplyMarking(uid, markingPrototype, marking.MarkingColors, marking.Visible);
         }
     }
 
@@ -252,7 +259,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         MarkingPrototype markingPrototype,
         IReadOnlyList<Color>? colors,
         bool visible,
-        Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> layerSettings,
         HumanoidComponent? humanoid = null,
         SpriteComponent? sprite = null)
     {
@@ -291,7 +297,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            layerSettings.TryGetValue(markingPrototype.BodyPart, out var setting);
+            humanoid.BaseLayers.TryGetValue(markingPrototype.BodyPart, out var setting);
 
             if (markingPrototype.FollowSkinColor || colors == null)
             {
@@ -310,15 +316,17 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         }
     }
 
-    private void ApplySkinColor(EntityUid uid, Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> sprites,
-        Color skinColor, SpriteComponent? spriteComp = null)
+    private void ApplySkinColor(EntityUid uid,
+        Color skinColor,
+        HumanoidComponent? humanoid = null,
+        SpriteComponent? spriteComp = null)
     {
-        if (!Resolve(uid, ref spriteComp))
+        if (!Resolve(uid, ref humanoid, ref spriteComp))
         {
             return;
         }
 
-        foreach (var (layer, spriteInfo) in sprites)
+        foreach (var (layer, spriteInfo) in humanoid.BaseLayers)
         {
             if (!spriteInfo.MatchSkin)
             {
@@ -344,15 +352,57 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         sprite[index].Color = color;
     }
 
-    private void ApplyBaseSprites(EntityUid uid, Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> sprites,
-        SpriteComponent? spriteComp = null)
+    private void MergeCustomBaseSprites(EntityUid uid, Dictionary<HumanoidVisualLayers, string> baseSprites,
+        Dictionary<HumanoidVisualLayers, string>? customBaseSprites,
+        HumanoidComponent? humanoid = null)
     {
-        if (!Resolve(uid, ref spriteComp))
+        if (!Resolve(uid, ref humanoid))
         {
             return;
         }
 
-        foreach (var (layer, spriteInfo) in sprites)
+        foreach (var (key, id) in baseSprites)
+        {
+            if (!_prototypeManager.TryIndex(id, out HumanoidSpeciesSpriteLayer? baseLayer))
+            {
+                continue;
+            }
+
+            humanoid.BaseLayers.Add(key, baseLayer);
+        }
+
+        if (customBaseSprites == null)
+        {
+            return;
+        }
+
+        foreach (var (key, id) in customBaseSprites)
+        {
+            if (!_prototypeManager.TryIndex(id, out HumanoidSpeciesSpriteLayer? baseLayer))
+            {
+                continue;
+            }
+
+            if (humanoid.BaseLayers.ContainsKey(key))
+            {
+                humanoid.BaseLayers[key] = baseLayer;
+                continue;
+            }
+
+            humanoid.BaseLayers.Add(key, baseLayer);
+        }
+    }
+
+    private void ApplyBaseSprites(EntityUid uid,
+        HumanoidComponent? humanoid = null,
+        SpriteComponent? spriteComp = null)
+    {
+        if (!Resolve(uid, ref humanoid, ref spriteComp))
+        {
+            return;
+        }
+
+        foreach (var (layer, spriteInfo) in humanoid.BaseLayers)
         {
             if (spriteInfo.BaseSprite != null && spriteComp.LayerMapTryGet(layer, out var index))
             {
