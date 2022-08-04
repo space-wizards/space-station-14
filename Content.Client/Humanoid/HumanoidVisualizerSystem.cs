@@ -16,19 +16,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SpriteSystem _spriteSystem = default!;
     [Dependency] private MarkingManager _markingManager = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
-    // Since this doesn't allow you to discern what you'd want to change
-    // without doing a double call, this will always setup all markings/accessories,
-    // skin color, etc. upon change. Oops.
-    //
-    // Alternatively, the 'last changed' items could be cached server-side, and given
-    // a null state upon the next state change, that way specific things aren't refreshed
-    // every single time something is changed.
     protected override void OnAppearanceChange(EntityUid uid, HumanoidComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
@@ -87,7 +74,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Markings, out var markingsRaw)
             && markingsRaw is List<Marking> markings)
         {
-            DiffAndApplyMarkings(uid, markings);
+            DiffAndApplyMarkings(uid, markings, baseSprites.Sprites);
         }
     }
 
@@ -127,7 +114,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         }
     }
 
-    private void DiffAndApplyMarkings(EntityUid uid, List<Marking> newMarkings, HumanoidComponent? humanoid = null)
+    private void DiffAndApplyMarkings(EntityUid uid,
+        List<Marking> newMarkings,
+        Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> layerSettings,
+        HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
         {
@@ -162,7 +152,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible);
+            ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible, layerSettings);
         }
 
         if (dirtyRangeStart >= 0)
@@ -171,7 +161,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             var oldRange = humanoid.CurrentMarkings.GetRange(dirtyRangeStart, newMarkings.Count - 1);
 
             ClearMarkings(uid, oldRange, humanoid);
-            ApplyMarkings(uid, range, humanoid);
+            ApplyMarkings(uid, range, layerSettings, humanoid);
         }
 
         if (dirtyMarkings.Count > 0 || dirtyRangeStart >= 0)
@@ -238,6 +228,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
     private void ApplyMarkings(EntityUid uid,
         List<Marking> markings,
+        Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> layerSettings,
         HumanoidComponent? humanoid = null,
         SpriteComponent? spriteComp = null)
     {
@@ -253,7 +244,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            ApplyMarking(uid, markingPrototype, marking.MarkingColors, marking.Visible);
+            ApplyMarking(uid, markingPrototype, marking.MarkingColors, marking.Visible, layerSettings);
         }
     }
 
@@ -261,6 +252,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         MarkingPrototype markingPrototype,
         IReadOnlyList<Color>? colors,
         bool visible,
+        Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> layerSettings,
         HumanoidComponent? humanoid = null,
         SpriteComponent? sprite = null)
     {
@@ -274,7 +266,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        visible |= humanoid.HiddenLayers.Contains(markingPrototype.BodyPart);
+        visible &= !humanoid.HiddenLayers.Contains(markingPrototype.BodyPart);
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
@@ -285,6 +277,13 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
             var layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
 
+            if (!sprite.LayerMapTryGet(layerId, out _))
+            {
+                var layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
+                sprite.LayerMapSet(layerId, layer);
+                sprite.LayerSetSprite(layerId, rsi);
+            }
+
             sprite.LayerSetVisible(layerId, visible);
 
             if (!visible)
@@ -292,16 +291,17 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            if (!sprite.LayerMapTryGet(layerId, out _))
-            {
-                var layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
-                sprite.LayerMapSet(layerId, layer);
-            }
-
+            layerSettings.TryGetValue(markingPrototype.BodyPart, out var setting);
 
             if (markingPrototype.FollowSkinColor || colors == null)
             {
-                sprite.LayerSetColor(layerId, humanoid.SkinColor);
+                var skinColor = humanoid.SkinColor;
+                if (setting is { MarkingsMatchSkin: true })
+                {
+                    skinColor.A = setting.LayerAlpha;
+                }
+
+                sprite.LayerSetColor(layerId, skinColor);
             }
             else
             {
@@ -325,9 +325,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            skinColor.A = spriteInfo.LayerAlpha;
+            var color = skinColor;
+            color.A = spriteInfo.LayerAlpha;
 
-            SetBaseLayerColor(uid, layer, skinColor, spriteComp);
+            SetBaseLayerColor(uid, layer, color, spriteComp);
         }
     }
 

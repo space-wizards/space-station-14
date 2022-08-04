@@ -197,6 +197,14 @@ public sealed class HumanoidSpeciesSpriteLayer
     /// </summary>
     [DataField("matchSkin")]
     public bool MatchSkin;
+
+    /// <summary>
+    ///     If any markings that go on this layer should
+    ///     match the skin tone of this part, including
+    ///     alpha.
+    /// </summary>
+    [DataField("markingsMatchSkin")]
+    public bool MarkingsMatchSkin;
 }
 
 public enum SpeciesSkinColor : byte
