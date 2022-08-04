@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry has received several tweaks., type: Tweak}
-  id: 1584
-  time: '2022-05-22T19:29:27.0000000+00:00'
 - author: themias
   changes:
   - {message: The medical scanner is now climbable, type: Fix}
@@ -2925,3 +2920,9 @@ Entries:
   - {message: The admin announcement UI auto-closing is now optional., type: Tweak}
   id: 2083
   time: '2022-08-04T00:39:10.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: Muting lobby music will now also mute the restart sound (APC DESTROYED),
+    type: Tweak}
+  id: 2084
+  time: '2022-08-04T00:43:54.0000000+00:00'
