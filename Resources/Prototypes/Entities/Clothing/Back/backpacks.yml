@@ -17,6 +17,10 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
   - type: Storage
     capacity: 100
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
