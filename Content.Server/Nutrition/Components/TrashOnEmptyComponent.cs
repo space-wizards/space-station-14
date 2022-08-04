@@ -7,5 +7,10 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent]
     public sealed class TrashOnEmptyComponent : Component
     {
+        /// <summary>
+        /// The name of the solution of which to check emptiness
+        /// </summary>
+        [ViewVariables] [DataField("solution")]
+        public string Solution { get; set; } = string.Empty;
     }
 }

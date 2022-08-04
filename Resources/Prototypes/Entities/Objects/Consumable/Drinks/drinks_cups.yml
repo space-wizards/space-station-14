@@ -175,6 +175,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coffee.rsi
   - type: TrashOnEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkBaseCup
@@ -193,6 +194,7 @@
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-1
   - type: TrashOnEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkBaseCup
@@ -213,6 +215,7 @@
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
   - type: TrashOnEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkBaseCup
@@ -231,3 +234,5 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
     state: icon-1
+  - type: TrashOnEmpty
+    solution: drink
