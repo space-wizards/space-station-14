@@ -185,12 +185,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (ev.User != null && !_handsSystem.TryDropIntoContainer(ev.User.Value, ev.ToInsert, unit.Container))
-                return;
-            else
-                unit.Container.Insert(toInsert);
-
-            AfterInsert(unit, toInsert);
+            if (unit.Container.Insert(toInsert))
+                AfterInsert(unit, toInsert);
         }
 
         public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, DisposalUnitComponent? disposal = null)

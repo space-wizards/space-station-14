@@ -317,10 +317,15 @@ public sealed partial class CargoSystem
                 // Don't re-sell anything, sell anything anchored (e.g. light fixtures), or anything blacklisted
                 // (e.g. players).
                 if (toSell.Contains(ent) ||
-                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored)) continue;
+                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored))
+                    continue;
+
+                if (HasComp<CargoSellBlacklistComponent>(ent))
+                    continue;
 
                 var price = _pricing.GetPrice(ent);
-                if (price == 0) continue;
+                if (price == 0)
+                    continue;
                 toSell.Add(ent);
                 amount += price;
             }
