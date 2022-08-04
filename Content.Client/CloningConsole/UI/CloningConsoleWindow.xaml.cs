@@ -22,26 +22,6 @@ namespace Content.Client.CloningConsole.UI
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            UpdateProgress();
-        }
-
-        private void UpdateProgress()
-        {
-            if (_lastUpdate == null)
-                return;
-
-            CloningProgressBar.MaxValue = _lastUpdate.Maximum;
-            float simulatedProgress = _lastUpdate.Progress;
-            if (_lastUpdate.Progressing)
-            {
-                TimeSpan sinceReference = _timing.RealTime - _lastUpdate.ReferenceTime;
-                simulatedProgress += (float) sinceReference.TotalSeconds;
-                simulatedProgress = MathHelper.Clamp(simulatedProgress, 0f, _lastUpdate.Maximum);
-            }
-            float percentage = simulatedProgress / CloningProgressBar.MaxValue * 100;
-            EjectButton.Disabled = simulatedProgress < CloningProgressBar.MaxValue;
-            ProgressLabel.Text = $"{percentage:0}%";
-            CloningProgressBar.Value = simulatedProgress;
         }
 
         public void Populate(CloningConsoleBoundUserInterfaceState state)
@@ -114,8 +94,6 @@ namespace Content.Client.CloningConsole.UI
                 CloningPodContents.Visible = true;
                 CloningPodFar.Visible = false;
                 CloningPodMissing.Visible = false;
-
-                UpdateProgress();
 
                 ClonerBrainActivity.SetMarkup(Loc.GetString(state.MindPresent ? "cloning-console-mind-present-text" : "cloning-console-no-mind-activity-text"));
                 // Set label depending if clonepod is occupied or not

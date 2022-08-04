@@ -213,9 +213,6 @@ namespace Content.Server.Cloning.Systems
 
             // cloning pod info
             var cloneBodyInfo = Loc.GetString("generic-unknown");
-            float cloningProgress = 0;
-            float cloningTime = 30f;
-            bool clonerProgressing = false;
             bool clonerConnected = false;
             bool clonerMindPresent = false;
             bool clonerInRange = consoleComponent.CloningPodInRange;
@@ -225,9 +222,6 @@ namespace Content.Server.Cloning.Systems
                 clonerConnected = true;
                 EntityUid? cloneBody = clonePod.BodyContainer.ContainedEntity;
 
-                cloningProgress = clonePod.CloningProgress;
-                cloningTime = clonePod.CloningTime;
-                clonerProgressing = _powerReceiverSystem.IsPowered(clonePod.Owner) && (clonePod.BodyContainer.ContainedEntity != null);
                 clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
                 if (cloneBody != null)
                 {
@@ -243,10 +237,6 @@ namespace Content.Server.Cloning.Systems
             return new CloningConsoleBoundUserInterfaceState(
                 scanBodyInfo,
                 cloneBodyInfo,
-                _gameTiming.CurTime,
-                cloningProgress,
-                cloningTime,
-                clonerProgressing,
                 clonerMindPresent,
                 clonerStatus,
                 scannerConnected,

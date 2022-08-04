@@ -52,15 +52,6 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center" />
                     </BoxContainer>
-                    <ProgressBar Name="CloningProgressBar"
-                                MinSize="190 20"
-                                HorizontalAlignment="Center"
-                                HorizontalExpand="True"
-                                MinValue="0"
-                                Page="0"
-                                Value="0.5">
-                        <Label Name="ProgressLabel"/>
-                    </ProgressBar>
                 </BoxContainer>
                 <BoxContainer Name="CloningPodMissing" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'cloning-console-window-no-clone-pod-detected-label'}" />
