@@ -340,6 +340,10 @@
     solution: food
     openSounds:
       collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -486,6 +490,10 @@
     solution: food
     openSounds:
       collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
