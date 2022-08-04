@@ -16,6 +16,10 @@
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
     capacity: 100
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
