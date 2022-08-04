@@ -40,7 +40,6 @@ namespace Content.Client.Access.UI
             _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
 
             _window.OnClose += Close;
-
             _window.OpenCentered();
         }
 
