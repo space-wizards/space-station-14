@@ -1,6 +1,5 @@
-using Content.Server.AI.Steering;
+using Content.Server.NPC.Steering;
 using Robust.Shared.Map;
-using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Operators.Movement
 {
