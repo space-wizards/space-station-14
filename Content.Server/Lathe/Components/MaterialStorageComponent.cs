@@ -1,4 +1,7 @@
 using Content.Shared.Lathe;
+using Content.Shared.Whitelist;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Content.Shared.Materials;
 
 namespace Content.Server.Lathe.Components
 {
@@ -16,6 +19,20 @@ namespace Content.Server.Lathe.Components
         public int StorageLimit => _storageLimit;
         [DataField("StorageLimit")]
         private int _storageLimit = -1;
+
+        /// <summary>
+        /// Whitelist for specifying the kind of items that can be insert into this entity.
+        /// </summary>
+        [ViewVariables]
+        [DataField("whitelist")]
+        public EntityWhitelist? EntityWhitelist;
+
+        /// <summary>
+        /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
+        /// </summary>
+        [ViewVariables]
+        [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
+        public List<string> MaterialWhiteList = new();
 
         public override ComponentState GetComponentState()
         {

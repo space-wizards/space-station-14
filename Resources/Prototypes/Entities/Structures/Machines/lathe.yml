@@ -49,6 +49,11 @@
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
   - type: Wires
     BoardName: "Autolathe"
     LayoutId: Autolathe
@@ -78,11 +83,6 @@
     anchored: true
   - type: Pullable
   - type: Lathe
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
 
 - type: entity
   parent: BaseMachinePowered
@@ -140,6 +140,11 @@
     LayoutId: Protolathe
   - type: TechnologyDatabase
   - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
   - type: ProtolatheDatabase
     protolatherecipes:
       - LightTube
@@ -212,11 +217,6 @@
     anchored: true
   - type: Pullable
   - type: Lathe
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
 
 - type: entity
   parent: Protolathe

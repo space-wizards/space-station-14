@@ -27,7 +27,7 @@ namespace Content.Server.Lathe
         [Dependency] private readonly SharedAudioSystem _audioSys = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly ResearchSystem _researchSys = default!;
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -83,12 +83,15 @@ namespace Content.Server.Lathe
             if (recipes == null)
                 return;
 
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage))
+                return;
+
             foreach (var recipe in recipes)
             {
                 foreach (var mat in recipe.RequiredMaterials)
                 {
-                    if (!component.MaterialWhiteList.Contains(mat.Key))
-                        component.MaterialWhiteList.Add(mat.Key);
+                    if (!storage.MaterialWhiteList.Contains(mat.Key))
+                        storage.MaterialWhiteList.Add(mat.Key);
                 }
             }
         }
@@ -104,14 +107,14 @@ namespace Content.Server.Lathe
 
             if (!TryComp<MaterialStorageComponent>(uid, out var storage)
                 || !TryComp<MaterialComponent>(args.Used, out var material)
-                || component.LatheWhitelist?.IsValid(args.Used) == false)
+                || storage.EntityWhitelist?.IsValid(args.Used) == false)
                 return;
 
             args.Handled = true;
 
             var matUsed = false;
             foreach (var mat in material.Materials)
-                if (component.MaterialWhiteList.Contains(mat.ID))
+                if (storage.MaterialWhiteList.Contains(mat.ID))
                     matUsed = true;
 
             if (!matUsed)
@@ -156,7 +159,7 @@ namespace Content.Server.Lathe
             EntityManager.QueueDeleteEntity(args.Used);
 
             EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = component.InsertionTime;
-            
+
             _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
                 ("item", args.Used)), uid, Filter.Entities(args.User));
 
@@ -187,7 +190,7 @@ namespace Content.Server.Lathe
                 component.Queue.RemoveAt(0);
                 return TryStartProducing(uid, prodComp, component);
             }
-                
+
             if (!component.CanProduce(recipe) || !TryComp(uid, out MaterialStorageComponent? storage))
                 return false;
 

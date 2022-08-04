@@ -1,6 +1,7 @@
 using Content.Shared.MobState.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Stacks;
+using Content.Shared.Jittering;
 using Content.Server.MobState;
 using Content.Server.Power.Components;
 
@@ -36,12 +37,23 @@ namespace Content.Server.Medical.BiomassReclaimer
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<ActiveBiomassReclaimerComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<ActiveBiomassReclaimerComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<BiomassReclaimerComponent, DragDropEvent>(OnDragDrop);
+        }
+
+        private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
+        {
+            EnsureComp<JitteringComponent>(uid);
+        }
+
+        private void OnShutdown(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentShutdown args)
+        {
+            RemComp<JitteringComponent>(uid);
         }
 
         private void OnDragDrop(EntityUid uid, BiomassReclaimerComponent component, DragDropEvent args)
         {
-            Logger.Error("Received event...");
             if (args.Handled)
                 return;
 
