@@ -81,6 +81,12 @@
         acts: ["Destruction"]
   - type: Machine
     board: HydroponicsTrayMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
   - type: MaterialStorage
   - type: Wires
     BoardName: "HydroponicsTray"

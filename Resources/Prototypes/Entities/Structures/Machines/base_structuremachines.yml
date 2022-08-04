@@ -34,6 +34,13 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+  - type: Machine
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
 
 - type: entity
   abstract: true
