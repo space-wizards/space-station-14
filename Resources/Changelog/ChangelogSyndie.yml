@@ -1770,3 +1770,10 @@ Entries:
     type: Fix
   id: 204
   time: '2022-08-03T15:45:15.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u043F\u043E\u043F\u0440\u0430\u0432\u043B\u0435\u043D \u043F\u0435\u0440\
+      \u0435\u0432\u043E\u0434"
+    type: Fix
+  id: 205
+  time: '2022-08-04T07:47:01.0000000+00:00'
