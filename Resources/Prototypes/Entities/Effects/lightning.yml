@@ -13,3 +13,9 @@
     enabled: false
   - type: Electrified
     requirePower: false
+  - type: PointLight
+    enabled: true
+    color: "#4080FF"
+    radius: 3.5
+    softness: 1
+    autoRot: true
