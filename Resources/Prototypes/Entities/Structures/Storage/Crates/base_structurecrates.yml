@@ -34,6 +34,7 @@
     capacity: 500
   - type: Weldable
   - type: PlaceableSurface
+    isPlaceable: false # defaults to closed.
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -123,3 +124,5 @@
   - type: Construction
     graph: CrateSecure
     node: cratesecure
+    containers:
+    - entity_storage
