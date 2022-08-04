@@ -311,6 +311,9 @@ public abstract partial class SharedBodySystem
             if (!TryComp<SharedBodyPartComponent>(connection.Part, out var connectedPart))
                 continue;
 
+            if (connectedPart.Compatibility == null)
+                continue;
+
             if (connectedPart.Compatibility != part.Compatibility)
                 return false;
         }

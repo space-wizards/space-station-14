@@ -35,14 +35,24 @@ public abstract partial class SharedBodyPartSystem
         if (!Resolve(uid, ref part))
             return false;
 
-        if (mechanism.Compatibility != null ||
-            part.Compatibility != null && part.Compatibility != mechanism.Compatibility)
+        if (!IsCompatible(uid, mechanism, part))
             return false;
 
-        if (GetCurrentSize(uid, part) + mechanism.Size <= part.Size)
+        if (!(GetCurrentSize(uid, part) + mechanism.Size <= part.Size))
             return false;
 
-        return !part.MechanismContainer?.CanInsert(mechanism.Owner, EntityManager) ?? false;
+        return part.MechanismContainer?.CanInsert(mechanism.Owner, EntityManager) ?? false;
+    }
+
+    public bool IsCompatible(EntityUid uid, MechanismComponent mechanism, SharedBodyPartComponent? part = null)
+    {
+        if (!Resolve(uid, ref part))
+            return false;
+
+        if (mechanism.Compatibility == null || part.Compatibility == null)
+            return true;
+
+        return (mechanism.Compatibility == part.Compatibility);
     }
 
     /// <summary>
