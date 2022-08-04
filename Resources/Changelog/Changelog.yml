@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Ported vomiting from the Nyanotrasen fork. Several new and old diseases
-      and chems now cause vomiting., type: Add}
-  - {message: The vomit puddle sprite no longer loses its color as it evaporates.,
-    type: Fix}
-  id: 1590
-  time: '2022-05-23T23:03:27.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Balanced slipping speed so items don't go mach 5., type: Tweak}
@@ -2927,3 +2919,9 @@ Entries:
   - {message: Cargo can now dock properly on delta., type: Tweak}
   id: 2089
   time: '2022-08-04T03:03:08.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: 'Janitors can now throw away more things, including empty teacups and
+      empty ketchup packets!', type: Tweak}
+  id: 2090
+  time: '2022-08-04T08:52:08.0000000+00:00'
