@@ -102,7 +102,10 @@ namespace Content.Shared.Examine
                 else if (MobStateSystem.IsCritical(examiner, mobState) || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
                     return CritExamineRange;
                 else if (TryComp<BlurryVisionComponent>(examiner, out var blurry) && blurry.Magnitude != 0)
-                    return (ExamineRange - (14 * (1 / blurry.Magnitude)));
+                {
+                    float range = ExamineRange - (2 * (8 - blurry.Magnitude));
+                    return Math.Clamp(range, 2, 16);
+                }
             }
             return ExamineRange;
         }
