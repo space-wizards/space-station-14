@@ -8,7 +8,6 @@
   - type: Icon
   - type: Mechanism
     size: 4
-    compatibility: Universal
 
 - type: entity
   id: MechanismHonkModule
@@ -20,4 +19,3 @@
   - type: Icon
   - type: Mechanism
     size: 3
-    compatibility: Universal
