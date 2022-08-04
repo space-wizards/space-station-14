@@ -25,17 +25,12 @@ public sealed class LightningSystem : SharedLightningSystem
 
     private void OnLightning(LightningEvent ev)
     {
-        //TODO: Need to spawn an offset from the comp owner coords, not on them directly.
         var ent = Spawn("LightningBase", ev.Offset);
-        //TODO: Edge shape works but the position is wacky as hell if done like this (like miles away from the lightning)
         var shape = new EdgeShape(ev.OffsetCorrection, new Vector2(0,0));
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
             TryComp<TransformComponent>(ent, out var xForm))
         {
-            //TODO: Just X makes it too fat, X and Y with the same distance makes it too large, find the correct Y to work for this.
-            //Defintely have more y than x here. 1-1.5 seems to work out perfectly without it looking too fat
-            //Doesn't really feel like lightning yet though.
-            //sprites.Scale = new Vector2(1.5f, ev.Distance);
+            //TODO: Scale doesn't work, try adding other entities without fixtures instead..
             sprites.Rotation = ev.Angle;
             var fixture = new Fixture(physics, shape)
             {
@@ -44,6 +39,8 @@ public sealed class LightningSystem : SharedLightningSystem
             };
 
             _fixture.TryCreateFixture(physics, fixture);
+
+            //TODO: Spawn more entities of lightning prototype without fixtures to complete the chain and also parent them
         }
     }
 
