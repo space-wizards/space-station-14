@@ -235,6 +235,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateScience
@@ -630,4 +632,6 @@
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock
+    containers:
+    - entity_storage
 
