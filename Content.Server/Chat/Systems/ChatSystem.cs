@@ -249,16 +249,16 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var (message, channel) = GetRadioPrefix(source, originalMessage);
 
-        message = TransformSpeech(source, message);
-        if (message.Length == 0)
-            return;
-
         if (channel != null)
         {
             _listener.PingListeners(source, message, channel);
             SendEntityWhisper(source, message, hideChat);
             return;
         }
+
+        message = TransformSpeech(source, message);
+        if (message.Length == 0)
+            return;
 
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
@@ -436,7 +436,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return newMessage;
     }
 
-    private string TransformSpeech(EntityUid sender, string message)
+    public string TransformSpeech(EntityUid sender, string message)
     {
         var ev = new TransformSpeechEvent(sender, message);
         RaiseLocalEvent(ev);
