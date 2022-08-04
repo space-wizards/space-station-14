@@ -23,6 +23,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 
 - type: entity
