@@ -308,7 +308,7 @@ public abstract partial class SharedBodySystem
             if (!connection.HasPart)
                 continue;
 
-            if (!TryComp<SharedBodyPartComponent>(uid, out var connectedPart))
+            if (!TryComp<SharedBodyPartComponent>(connection.Part, out var connectedPart))
                 continue;
 
             if (connectedPart.Compatibility != part.Compatibility)
