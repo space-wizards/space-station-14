@@ -44,27 +44,27 @@ namespace Content.Server.Baseball
 
             var dir = args.ClickLocation.ToMapPos(EntityManager) - EntityManager.GetComponent<TransformComponent>(args.User).WorldPosition.Normalized;
 
+            //The melee system uses a collision raycast but apparently that doesnt work with items so GetEntitiesInArc it is!
             foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, 0.5f, diff.ToAngle(), 50f, LookupFlags.None))
             {
                 if (EntityManager.HasComponent<ItemComponent>(entity) && EntityManager.HasComponent<ThrownItemComponent>(entity))
                 {
 
-                    var rand = _random.Next(1, 5);
-
+                    var rand = _random.Next(1, 5); // random chance of fireball wack
 
                     if (rand < 4)
                     {
-
                         _throwingSystem.TryThrow(entity, diff + _random.NextAngle(10f, 180f).ToVec(), 10f * _random.NextFloat(2, component.WackForceMultiplier), uid);
                         if (EntityManager.HasComponent<ThrownItemComponent>(entity))
-                            _audioSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.User), entity, AudioParams.Default);
+                            _audioSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
                         return;
                     }
 
+                    //just shoots a wizard fireball
                     var fireball = Spawn("ProjectileFireball", EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                    _gunSystem.ShootProjectile(fireball, diff, args.User);
                     EntityManager.DeleteEntity(entity);
-
+                    _gunSystem.ShootProjectile(fireball, diff, args.User);
+                    _audioSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
                 }
             }
         }
