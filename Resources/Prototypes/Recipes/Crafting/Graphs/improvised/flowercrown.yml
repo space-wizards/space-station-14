@@ -6,8 +6,8 @@
       edges:
         - to: flowercrown
           steps:
-            - prototype: FoodPoppy
-              name: poppy flower
+            - tag: Flower
+              name: flower
               icon:
                 sprite: Objects/Specific/Hydroponics/poppy.rsi
                 state: produce
