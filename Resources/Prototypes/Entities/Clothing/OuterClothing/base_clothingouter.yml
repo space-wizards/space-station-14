@@ -66,6 +66,9 @@
   - type: DiseaseProtection
     protection: 0.05
   - type: ToggleableClothing
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
 
 - type: entity
   abstract: true
