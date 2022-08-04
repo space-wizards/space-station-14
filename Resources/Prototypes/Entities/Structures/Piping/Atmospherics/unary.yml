@@ -15,6 +15,7 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: CollideOnAnchor
 
 - type: entity
   parent: GasUnaryBase

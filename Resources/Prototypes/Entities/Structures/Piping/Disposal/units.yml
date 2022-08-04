@@ -70,6 +70,10 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      disposal-unit: !type:Container
+        ents: []
 
 - type: entity
   id: DisposalUnit
