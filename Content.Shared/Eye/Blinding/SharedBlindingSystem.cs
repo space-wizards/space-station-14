@@ -114,12 +114,12 @@ namespace Content.Shared.Eye.Blinding
             }
         }
 
-        public void AdjustEyeDamage(EntityUid uid, bool Add, BlindableComponent? blindable = null)
+        public void AdjustEyeDamage(EntityUid uid, bool add, BlindableComponent? blindable = null)
         {
             if (!Resolve(uid, ref blindable, false))
                 return;
 
-            if (Add)
+            if (add)
             {
                 blindable.EyeDamage++;
             } else
@@ -138,12 +138,17 @@ namespace Content.Shared.Eye.Blinding
             }
 
             if (!blindable.EyeTooDamaged && blindable.EyeDamage >= 8)
+            {
+                blindable.EyeTooDamaged = true;
                 AdjustBlindSources(uid, true, blindable);
-
+            }
             if (blindable.EyeTooDamaged && blindable.EyeDamage < 8)
+            {
+                blindable.EyeTooDamaged = false;
                 AdjustBlindSources(uid, false, blindable);
+            }
 
-            Math.Clamp(blindable.EyeDamage, 0, 8);
+            blindable.EyeDamage = Math.Clamp(blindable.EyeDamage, 0, 8);
         }
     }
 
