@@ -30,7 +30,7 @@
 - type: entity
   abstract: true
   parent: Clothing
-  id: UnSensoredClothingUniformBase
+  id: UnsensoredClothingUniformBase
   components:
   - type: Sprite
     state: icon
