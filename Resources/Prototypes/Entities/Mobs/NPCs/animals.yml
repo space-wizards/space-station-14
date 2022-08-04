@@ -746,8 +746,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: mouse
-    description: A hungry and mischievous mouse.
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -1326,8 +1326,8 @@
         - UnarmedAttackHostiles
     - type: GhostTakeoverAvailable
       makeSentient: true
-      name: giant spider
-      description: Wreak havoc on the station's inhabitants!
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
 
 - type: entity
   name: possum
