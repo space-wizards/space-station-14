@@ -1,17 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Glucose and sugar are now the same thing., type: Tweak}
-  - {message: Alcohols now metabolize into some ethanol., type: Add}
-  - {message: Heavily caffeinated drinks metabolize into some theobromine instead
-      of directly containing theobromine in their containers., type: Tweak}
-  id: 1582
-  time: '2022-05-22T08:25:38.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Very small damage changes will no longer interrupt doafters., type: Tweak}
-  id: 1583
-  time: '2022-05-22T08:57:49.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Barratry has received several tweaks., type: Tweak}
@@ -2927,3 +2914,14 @@ Entries:
   - {message: Emergency light alarm now uses the correct sound., type: Fix}
   id: 2081
   time: '2022-08-04T00:37:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed an issue preventing lathes from being unanchored using a wrench.,
+    type: Fix}
+  id: 2082
+  time: '2022-08-04T00:38:56.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: The admin announcement UI auto-closing is now optional., type: Tweak}
+  id: 2083
+  time: '2022-08-04T00:39:10.0000000+00:00'
