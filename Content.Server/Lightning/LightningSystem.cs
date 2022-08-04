@@ -2,6 +2,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Lightning;
 using Content.Shared.Lightning.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -32,12 +33,14 @@ public sealed class LightningSystem : SharedLightningSystem
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
             TryComp<TransformComponent>(ent, out var xForm))
         {
-            //TODO: Scale doesn't work, try adding other entities without fixtures instead..
             sprites.Rotation = ev.Angle;
             var fixture = new Fixture(physics, shape)
             {
-                //TODO: Figure out what else should be added here.
-                ID = "LightningBody"
+                //TODO: Figure out what else should be added here, on impact doesn't shock but on collide does.
+                ID = "LightningBody",
+                Hard = false,
+                CollisionMask = (int)CollisionGroup.ItemMask,
+                CollisionLayer = (int)CollisionGroup.SlipLayer
             };
 
             _fixture.TryCreateFixture(physics, fixture);
