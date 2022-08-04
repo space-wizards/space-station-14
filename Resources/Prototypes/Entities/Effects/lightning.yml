@@ -12,7 +12,4 @@
   - type: CollisionWake
     enabled: false
   - type: Electrified
-    onHandInteract: true
-    onInteractUsing: true
-    onBump: true
     requirePower: false
