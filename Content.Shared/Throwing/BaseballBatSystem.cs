@@ -41,7 +41,7 @@ namespace Content.Shared.Throwing
             {
                 if (EntityManager.HasComponent<ItemComponent>(entity))
                 {
-                    _throwingSystem.TryThrow(entity, diff, 10f, uid);
+                    _throwingSystem.TryThrow(entity, diff + _random.NextAngle(10f, 180f).ToVec(), 10f * _random.NextFloat(2, component.WackForceMultiplier), uid);
                     if (EntityManager.HasComponent<ThrownItemComponent>(entity))
                         _audioSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.User), entity, AudioParams.Default);
                 }
