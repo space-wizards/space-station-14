@@ -12,6 +12,7 @@ namespace Content.Server.RevolutionFlag;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         private const string RevolutionaryPrototypeId = "Revolutionary";
+        private const string CourageEffectKey = "Courage";
         private DamageModifierSet Modifiers = default!; 
         
         public override void Initialize()
@@ -44,24 +45,21 @@ namespace Content.Server.RevolutionFlag;
             {
                 if (!TryComp<MindComponent>(entityInRange, out var mind))
                     continue;
-                if (!GetRole(mind, RevolutionaryPrototypeId))
-                    continue;
-                _statusEffectSystem.TryAddStatusEffect(entityInRange, "Courage", flagComp.timespan, true);
+                // if (!GetRole(mind, RevolutionaryPrototypeId))
+                //     continue;
+                _statusEffectSystem.TryAddStatusEffect<FlagBuffComponent>(entityInRange, CourageEffectKey, flagComp.timespan, true);
             }
         }
 
         private void ModifyDamage(EntityUid uid, FlagBuffComponent comp, MeleeHitEvent args)
         {
-            if (!_statusEffectSystem.HasStatusEffect(uid, "Courage"))
-                return;
-            
             /* 
                 This is a little bit cheaty but I couldn't 
                 figure out how to specify a damagemodifierset 
                 inside a component to actually modify the damage
                 so for now I'm just adding the base damage to
                 bonus damage
-            */
+            */                                                  
             args.BonusDamage += args.BaseDamage;
         }
 
@@ -88,7 +86,7 @@ namespace Content.Server.RevolutionFlag;
             foreach (var flagComp in EntityQuery<FlagComponent>())
             {
                 flagComp.accumulator += frametime;
-                if (flagComp.accumulator > 1)
+                if (flagComp.accumulator > 0.1)
                 {
                     flagComp.accumulator = 0;
                     Aura(flagComp, flagComp.range);

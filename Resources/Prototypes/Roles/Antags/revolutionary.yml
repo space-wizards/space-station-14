@@ -2,7 +2,7 @@
   id: Revolutionary
   name: "Revolutionary"
   antagonist: true
-  setPreference: true
+  setPreference: false
   objective: "Take down the head of staff.. Vive la révolution!"
 
 - type: antag

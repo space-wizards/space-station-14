@@ -80,6 +80,7 @@
       - PressureImmunity
       - Muted
       - ForcedSleep
+      - Courage
   - type: DiseaseCarrier
   - type: Blindable
   # Other

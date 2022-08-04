@@ -12,7 +12,7 @@ namespace Content.Server.RevolutionFlag.Components
         public float range { get; set; } = 2.5f;
 
         [DataField("timespan")]
-        public TimeSpan timespan = new TimeSpan(0,0,2);
+        public TimeSpan timespan = new TimeSpan(0,0,5);
 
         [ViewVariables(VVAccess.ReadOnly)]
         public bool active = false;

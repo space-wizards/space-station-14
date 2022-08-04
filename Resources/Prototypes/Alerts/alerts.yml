@@ -39,6 +39,12 @@
   description: "There are [color=red]too many toxins[/color] in the air you are breathing. Put on [color=green]internals[/color] or get away."
 
 - type: alert
+  id: Courage
+  icons: [/Textures/Interface/Alerts/Courage/revolution_emblem.png]
+  name: "[color=green]Courage[/color]"
+  description: "Seeing the [color=green]flag[/color] that bears the emblem of the revolution gives you [color=green]strength[/color]"
+
+- type: alert
   id: LowPressure
   category: Pressure
   icons:

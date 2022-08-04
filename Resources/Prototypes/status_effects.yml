@@ -46,3 +46,4 @@
 
 - type: statusEffect
   id: Courage
+  alert: Courage

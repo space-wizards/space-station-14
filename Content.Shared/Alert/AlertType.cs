@@ -35,6 +35,7 @@
         Muted,
         VowOfSilence,
         VowBroken,
+        Courage,
         Debug1,
         Debug2,
         Debug3,
