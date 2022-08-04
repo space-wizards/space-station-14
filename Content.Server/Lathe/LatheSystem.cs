@@ -39,10 +39,6 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
-        // These queues are to remove COMPONENTS to the lathes
-        private Queue<LatheInsertingComponent> _insertingRemoveQueue = new();
-        private Queue<LatheProducingComponent> _producingRemoveQueue = new();
-
         public override void Update(float frameTime)
         {
             foreach (var comp in EntityQuery<LatheInsertingComponent>())
@@ -53,7 +49,7 @@ namespace Content.Server.Lathe
                     continue;
 
                 UpdateInsertingAppearance(comp.Owner, false);
-                _insertingRemoveQueue.Enqueue(comp);
+                RemCompDeferred(comp.Owner, comp);
             }
 
             foreach (var comp in EntityQuery<LatheProducingComponent>())
@@ -63,12 +59,6 @@ namespace Content.Server.Lathe
                 if (comp.TimeRemaining <= 0)
                     FinishProducing(comp.Owner, comp);
             }
-
-            while (_producingRemoveQueue.TryDequeue(out var comp))
-                RemComp(comp.Owner, comp);
-
-            while (_insertingRemoveQueue.TryDequeue(out var comp))
-                RemComp(comp.Owner, comp);
         }
 
         /// <summary>
@@ -235,7 +225,7 @@ namespace Content.Server.Lathe
         {
             if (prodComp.Recipe == null || !_prototypeManager.TryIndex<LatheRecipePrototype>(prodComp.Recipe, out var recipe))
             {
-                RemComp(prodComp.Owner, prodComp);
+                RemCompDeferred(prodComp.Owner, prodComp);
                 UpdateRunningAppearance(uid, false);
                 return;
             }
