@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Balanced slipping speed so items don't go mach 5., type: Tweak}
-  id: 1591
-  time: '2022-05-23T23:11:17.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed an issue where drained power cells could still explode, type: Fix}
@@ -2925,3 +2920,8 @@ Entries:
       empty ketchup packets!', type: Tweak}
   id: 2090
   time: '2022-08-04T08:52:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Rat King seems to have been getting swole..., type: Add}
+  id: 2091
+  time: '2022-08-04T21:55:20.0000000+00:00'
