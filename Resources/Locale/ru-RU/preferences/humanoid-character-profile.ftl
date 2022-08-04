@@ -8,7 +8,7 @@ humanoid-character-profile-summary =
         [epicene] Им
        *[neuter] Ему
     } { $age } { $age ->
-	    [one] год
-	    [few] года
+        [one] год
+        [few] года
        *[other] лет
     }.
