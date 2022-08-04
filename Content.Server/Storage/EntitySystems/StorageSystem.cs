@@ -648,7 +648,7 @@ namespace Content.Server.Storage.EntitySystems
                 if (!TryComp(entity, out ServerUserInterfaceComponent? ui))
                     continue;
 
-                foreach (var bui in ui.Interfaces)
+                foreach (var bui in ui.Interfaces.Values)
                 {
                     _uiSystem.TryClose(uid, bui.UiKey, session, ui);
                 }
