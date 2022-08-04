@@ -1,35 +1,6 @@
 - type: entity
   abstract: true
   parent: Clothing
-  id: ClothingWithSuitSensor
-  components:
-  - type: SuitSensor
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    transmitFrequencyId: SuitSensor
-  - type: WirelessNetworkConnection
-    range: 500
-
-- type: entity
-  abstract: true
-  parent: ClothingWithSuitSensor
-  id: ClothingUniformBase
-  components:
-  - type: Sprite
-    state: icon
-  - type: Clothing
-    slots: [innerclothing]
-    equipSound:
-      path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: MaterialCloth1
-      amount: 3
-
-- type: entity
-  abstract: true
-  parent: Clothing
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite
@@ -46,37 +17,32 @@
 
 - type: entity
   abstract: true
-  parent: ClothingWithSuitSensor
-  id: ClothingUniformSkirtBase
-  components:
-  - type: Sprite
-    state: icon
-  - type: Clothing
-    slots: [innerclothing]
-    femaleMask: UniformTop
-    equipSound:
-      path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: MaterialCloth1
-      amount: 3
-
-- type: entity
-  abstract: true
-  parent: Clothing
+  parent: UnsensoredClothingUniformBase
   id: UnsensoredClothingUniformSkirtBase
   description: Not legal in Japan
   components:
-  - type: Sprite
-    state: icon
   - type: Clothing
     slots: [innerclothing]
     femaleMask: UniformTop
-    equipSound:
-      path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: MaterialCloth1
-      amount: 3
+
+
+- type: entity
+  abstract: true
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformBase
+  components:
+  - type: SuitSensor
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: SuitSensor
+  - type: WirelessNetworkConnection
+    range: 500
+
+- type: entity
+  abstract: true
+  parent: ClothingUniformBase
+  id: ClothingUniformSkirtBase
+  components:
+  - type: Clothing
+    slots: [innerclothing]
+    femaleMask: UniformTop
