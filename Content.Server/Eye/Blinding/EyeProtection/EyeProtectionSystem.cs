@@ -37,8 +37,10 @@ namespace Content.Server.Eye.Blinding.EyeProtection
 
             if (statusTime <= 0)
                 return;
+
+            var statusTimeSpan = TimeSpan.FromSeconds(statusTime * (blindable.EyeDamage + 1));
             // Add permanent eye damage if they had zero protection, also scale their temporary blindness by how much they already accumulated.
-            if (blindable.BlindResistance <= 0 && _statusEffectsSystem.TryAddStatusEffect(args.User, "TemporaryBlindness", component.StatusEffectTime * (blindable.EyeDamage + 1), false, "TemporaryBlindness"));
+            if (_statusEffectsSystem.TryAddStatusEffect(args.User, "TemporaryBlindness", statusTimeSpan, false, "TemporaryBlindness") && blindable.BlindResistance <= 0)
                 _blindingSystem.AdjustEyeDamage(args.User, true, blindable);
         }
         private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, WelderToggledEvent args)
@@ -48,7 +50,7 @@ namespace Content.Server.Eye.Blinding.EyeProtection
 
         private void OnEquipped(EntityUid uid, EyeProtectionComponent component, GotEquippedEvent args)
         {
-            if (!TryComp<SharedClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP) // we live in a society
+            if (!TryComp<SharedClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP)
                 return;
 
             if (!clothing.Slots.HasFlag(args.SlotFlags))

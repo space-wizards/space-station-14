@@ -110,6 +110,8 @@ namespace Content.Shared.Eye.Blinding
                 blurry.Dirty();
             } else
             {
+                if (blindable.EyeDamage == 0)
+                    RemComp<BlurryVisionComponent>(uid);
                 blindable.Sources = 0;
             }
         }
