@@ -19,11 +19,11 @@ public sealed partial class StoreMenu : DefaultWindow
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    //private UplinkWithdrawWindow? _withdrawWindow;
+    private StoreWithdrawWindow? _withdrawWindow;
 
     public event Action<BaseButton.ButtonEventArgs, ListingData>? OnListingButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
-    public event Action<int>? OnWithdrawAttempt;
+    public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
 
     public EntityUid? CurrentBuyer = null;
     public Dictionary<string, FixedPoint2> Balance = new();
@@ -34,7 +34,7 @@ public sealed partial class StoreMenu : DefaultWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        //WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
+        WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
     }
 
     public void UpdateBalance(Dictionary<string, FixedPoint2> balance)
@@ -43,24 +43,32 @@ public sealed partial class StoreMenu : DefaultWindow
 
         var currency = new Dictionary<(string, FixedPoint2), CurrencyPrototype>();
         foreach (var type in balance)
+        {
             currency.Add((type.Key, type.Value), _prototypeManager.Index<CurrencyPrototype>(type.Key));
+        }
 
         var balanceStr = string.Empty;
         foreach (var type in currency)
+        {
             balanceStr += $"{Loc.GetString(type.Value.Name, ("amount", 1))}: {type.Key.Item2}\n";
+        }
+
         BalanceInfo.SetMarkup(balanceStr.TrimEnd());
 
         var disabled = true;
         foreach (var type in currency)
+        {
             if (type.Value.CanWithdraw && type.Value.EntityId != null && type.Key.Item2 > 0)
                 disabled = false;
+        }
+
         WithdrawButton.Disabled = disabled;
     }
 
     public void UpdateListing(List<ListingData> listings)
     {
         var sorted = listings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
-         
+
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
         ClearListings();
@@ -72,7 +80,6 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private void OnWithdrawButtonDown(BaseButton.ButtonEventArgs args)
     {
-        /*
         // check if window is already open
         if (_withdrawWindow != null && _withdrawWindow.IsOpen)
         {
@@ -81,10 +88,11 @@ public sealed partial class StoreMenu : DefaultWindow
         }
 
         // open a new one
-        _withdrawWindow = new UplinkWithdrawWindow(_loggedInUplinkAccount.DataBalance);
+        _withdrawWindow = new StoreWithdrawWindow();
         _withdrawWindow.OpenCentered();
 
-        _withdrawWindow.OnWithdrawAttempt += OnWithdrawAttempt;*/
+        _withdrawWindow.CreateCurrencyButtons(Balance);
+        _withdrawWindow.OnWithdrawAttempt += OnWithdrawAttempt;
     }
 
     private void AddListingGui(ListingData listing)
@@ -144,7 +152,7 @@ public sealed partial class StoreMenu : DefaultWindow
     public string GetListingPriceString(ListingData listing)
     {
         var text = string.Empty;
-        
+
         foreach (var type in listing.Cost)
         {
             var currency = _prototypeManager.Index<CurrencyPrototype>(type.Key);
@@ -187,7 +195,6 @@ public sealed partial class StoreMenu : DefaultWindow
 
         foreach (var proto in allCategories)
         {
-
             var catButton = new StoreCategoryButton
             {
                 Text = Loc.GetString(proto.Name),
@@ -203,7 +210,7 @@ public sealed partial class StoreMenu : DefaultWindow
     {
         base.Close();
         CurrentBuyer = null;
-        //_withdrawWindow?.Close();
+        _withdrawWindow?.Close();
     }
 
     private sealed class StoreCategoryButton : Button

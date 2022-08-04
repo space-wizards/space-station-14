@@ -1,7 +1,7 @@
 - type: currency
   id: Telecrystal
   name: store-currency-name-telecrystal
-  entityId: Telecrystal
+  entityId: Telecrystal1
   canWithdraw: true
 
 #debug

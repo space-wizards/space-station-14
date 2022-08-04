@@ -1,4 +1,5 @@
 using Content.Shared.FixedPoint;
+using Content.Shared.MobState;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Store;
@@ -48,5 +49,22 @@ public sealed class StoreBuyListingMessage : BoundUserInterfaceMessage
     {
         Buyer = buyer;
         Listing = listing;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class StoreRequestWithdrawMessage : BoundUserInterfaceMessage
+{
+    public EntityUid Buyer;
+
+    public string Currency;
+
+    public int Amount;
+
+    public StoreRequestWithdrawMessage(EntityUid buyer, string currency, int amount)
+    {
+        Buyer = buyer;
+        Currency = currency;
+        Amount = amount;
     }
 }

@@ -8,6 +8,7 @@
         VerticalExpand="True">
         <SliderIntInput Name="WithdrawSlider" HorizontalExpand="True" />
         <BoxContainer
+            Name="ButtonContainer"
             VerticalAlignment="Bottom"
             Orientation="Vertical"
             VerticalExpand="True" />

@@ -10,7 +10,10 @@ using Content.Shared.Store;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using System.Linq;
+using Content.Server.Stack;
+using Content.Shared.Prototypes;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
 
@@ -20,11 +23,13 @@ public sealed partial class StoreSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly StackSystem _stack = default!;
 
     public void InitializeUi()
     {
         SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>((_,c,r) => UpdateUserInterface(r.CurrentBuyer, c));
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
+        SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
     }
 
     public void ToggleUi(EntityUid user, StoreComponent component)
@@ -92,9 +97,8 @@ public sealed partial class StoreSystem : EntitySystem
             var args = new ListingConditionArgs(msg.Buyer, listing, EntityManager);
             var conditionsMet = true;
 
-            foreach (var condition in listing.Conditions)
-                if (!condition.Condition(args))
-                    conditionsMet = false;
+            foreach (var condition in listing.Conditions.Where(condition => !condition.Condition(args)))
+                conditionsMet = false;
 
             if (!conditionsMet)
                 return;
@@ -139,6 +143,59 @@ public sealed partial class StoreSystem : EntitySystem
         listing.PurchaseAmount++;
         _audio.Play(component.BuySuccessSound, Filter.SinglePlayer(msg.Session), uid);
 
+        UpdateUserInterface(msg.Buyer, component);
+    }
+
+    /// <summary>
+    /// Handles dispensing the currency you requested to be withdrawn.
+    /// </summary>
+    /// <remarks>
+    /// This would need to be done should a currency with decimal values need to use it.
+    /// not quite sure how to handle that
+    /// </remarks>
+    private void OnRequestWithdraw(EntityUid uid, StoreComponent component, StoreRequestWithdrawMessage msg)
+    {
+        //make sure we have enough cash in the bank and we actually support this currency
+        if (!component.Balance.TryGetValue(msg.Currency, out var currentAmount) || currentAmount < msg.Amount)
+            return;
+
+        //make sure a malicious client didn't send us random shit
+        if (!_proto.TryIndex<CurrencyPrototype>(msg.Currency, out var proto))
+            return;
+
+        //we need an actually valid entity to spawn. This check has been done earlier, but just in case.
+        if (proto.EntityId == null || !proto.CanWithdraw)
+            return;
+
+        var entproto = _proto.Index<EntityPrototype>(proto.EntityId);
+
+        var amountRemaining = msg.Amount;
+        var coordinates = Transform(msg.Buyer).Coordinates;
+        if (entproto.HasComponent<StackComponent>())
+        {
+            while (amountRemaining > 0)
+            {
+                var ent = Spawn(proto.EntityId, coordinates);
+                var stackComponent = Comp<StackComponent>(ent); //we already know it exists
+
+                var amountPerStack = Math.Min(stackComponent.MaxCount, amountRemaining);
+
+                _stack.SetCount(ent, amountPerStack, stackComponent);
+                amountRemaining -= amountPerStack;
+                _hands.TryPickupAnyHand(msg.Buyer, ent);
+            }
+        }
+        else //please for the love of christ give your currency stack component
+        {
+            while (amountRemaining > 0)
+            {
+                var ent = Spawn(proto.EntityId, coordinates);
+                _hands.TryPickupAnyHand(msg.Buyer, ent);
+                amountRemaining--;
+            }
+        }
+
+        component.Balance[msg.Currency] -= msg.Amount;
         UpdateUserInterface(msg.Buyer, component);
     }
 }

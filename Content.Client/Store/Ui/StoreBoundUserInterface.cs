@@ -10,7 +10,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 {
     private StoreMenu? _menu;
 
-    public StoreBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public StoreBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
 
     }
@@ -35,8 +35,10 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
                 SendMessage(new StoreRequestUpdateInterfaceMessage(_menu.CurrentBuyer.Value));
         };
 
-        _menu.OnWithdrawAttempt += (tc) =>
+        _menu.OnWithdrawAttempt += (_, type, amount) =>
         {
+            if (_menu.CurrentBuyer != null)
+                SendMessage(new StoreRequestWithdrawMessage(_menu.CurrentBuyer.Value, type, amount));
         };
     }
     protected override void UpdateState(BoundUserInterfaceState state)
