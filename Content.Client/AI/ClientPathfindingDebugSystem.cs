@@ -22,8 +22,7 @@ namespace Content.Client.AI
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-
-        private PathfindingDebugMode _modes = PathfindingDebugMode.None;
+        public PathfindingDebugMode Modes { get; private set; } = PathfindingDebugMode.None;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
         private DebugPathfindingOverlay? _overlay;
 
@@ -47,8 +46,8 @@ namespace Content.Client.AI
 
         private void HandleAStarRouteMessage(SharedAiDebug.AStarRouteMessage message)
         {
-            if ((_modes & PathfindingDebugMode.Nodes) != 0 ||
-                (_modes & PathfindingDebugMode.Route) != 0)
+            if ((Modes & PathfindingDebugMode.Nodes) != 0 ||
+                (Modes & PathfindingDebugMode.Route) != 0)
             {
                 _overlay?.AStarRoutes.Add(message);
                 Timer.Spawn(TimeSpan.FromSeconds(_routeDuration), () =>
@@ -61,8 +60,8 @@ namespace Content.Client.AI
 
         private void HandleJpsRouteMessage(SharedAiDebug.JpsRouteMessage message)
         {
-            if ((_modes & PathfindingDebugMode.Nodes) != 0 ||
-                    (_modes & PathfindingDebugMode.Route) != 0)
+            if ((Modes & PathfindingDebugMode.Nodes) != 0 ||
+                    (Modes & PathfindingDebugMode.Route) != 0)
             {
                 _overlay?.JpsRoutes.Add(message);
                 Timer.Spawn(TimeSpan.FromSeconds(_routeDuration), () =>
@@ -96,7 +95,7 @@ namespace Content.Client.AI
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            _overlay = new DebugPathfindingOverlay(EntityManager, _eyeManager, _playerManager, _prototypeManager) {Modes = _modes};
+            _overlay = new DebugPathfindingOverlay(EntityManager, _eyeManager, _playerManager, _prototypeManager) {Modes = Modes};
             overlayManager.AddOverlay(_overlay);
 
             return _overlay;
@@ -117,22 +116,22 @@ namespace Content.Client.AI
 
         public void Disable()
         {
-            _modes = PathfindingDebugMode.None;
+            Modes = PathfindingDebugMode.None;
             DisableOverlay();
         }
 
 
         private void EnableMode(PathfindingDebugMode tooltip)
         {
-            _modes |= tooltip;
-            if (_modes != 0)
+            Modes |= tooltip;
+            if (Modes != 0)
             {
                 EnableOverlay();
             }
 
             if (_overlay != null)
             {
-                _overlay.Modes = _modes;
+                _overlay.Modes = Modes;
             }
 
             if (tooltip == PathfindingDebugMode.Graph)
@@ -151,25 +150,25 @@ namespace Content.Client.AI
 
         private void DisableMode(PathfindingDebugMode mode)
         {
-            if (mode == PathfindingDebugMode.Regions && (_modes & PathfindingDebugMode.Regions) != 0)
+            if (mode == PathfindingDebugMode.Regions && (Modes & PathfindingDebugMode.Regions) != 0)
             {
                 RaiseNetworkEvent(new SharedAiDebug.UnsubscribeReachableMessage());
             }
 
-            _modes &= ~mode;
-            if (_modes == 0)
+            Modes &= ~mode;
+            if (Modes == 0)
             {
                 DisableOverlay();
             }
             else if (_overlay != null)
             {
-                _overlay.Modes = _modes;
+                _overlay.Modes = Modes;
             }
         }
 
         public void ToggleTooltip(PathfindingDebugMode mode)
         {
-            if ((_modes & mode) != 0)
+            if ((Modes & mode) != 0)
             {
                 DisableMode(mode);
             }
