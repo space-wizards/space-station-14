@@ -521,7 +521,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpskirtOperative
   name: operative jumpskirt
   description: Uniform for elite syndicate operatives performing tactical operations in deep space.
@@ -530,10 +530,6 @@
     sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
-  - type: SuitSensor
-    controlsLocked: true
-    randomMode: false
-    mode: SensorOff
 
 - type: entity
   parent: ClothingUniformSkirtBase

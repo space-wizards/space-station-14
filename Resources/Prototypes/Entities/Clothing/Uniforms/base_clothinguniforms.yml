@@ -29,8 +29,44 @@
 
 - type: entity
   abstract: true
+  parent: Clothing
+  id: UnSensoredClothingUniformBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    slots: [innerclothing]
+    equipSound:
+      path: /Audio/Items/jumpsuit_equip.ogg
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 3
+
+- type: entity
+  abstract: true
   parent: ClothingWithSuitSensor
   id: ClothingUniformSkirtBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    slots: [innerclothing]
+    femaleMask: UniformTop
+    equipSound:
+      path: /Audio/Items/jumpsuit_equip.ogg
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 3
+
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: UnsensoredClothingUniformSkirtBase
+  description: "Not legal in Japan"
   components:
   - type: Sprite
     state: icon
