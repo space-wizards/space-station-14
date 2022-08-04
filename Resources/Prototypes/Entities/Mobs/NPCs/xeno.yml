@@ -13,7 +13,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: MeleeCombatCompound
+    rootTask: XenoCompound
   - type: Tool
     speed: 0.3
     qualities:
@@ -349,6 +349,8 @@
       gender: male
   - type: InputMover
   - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - Xeno

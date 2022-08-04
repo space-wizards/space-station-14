@@ -271,11 +271,12 @@ public sealed class HTNSystem : EntitySystem
 
         component.PlanAccumulator += component.PlanCooldown;
         var cancelToken = new CancellationTokenSource();
+        var branchTraversal = component.Plan?.BranchTraversalRecord;
 
         var job = new HTNPlanJob(
             0.02,
             _prototypeManager.Index<HTNCompoundTask>(component.RootTask),
-            component.BlackboardA.ShallowClone(), cancelToken.Token);
+            component.BlackboardA.ShallowClone(), branchTraversal, cancelToken.Token);
 
         _planQueue.EnqueueJob(job);
         component.PlanningJob = job;

@@ -24,7 +24,7 @@ public sealed class HTNComponent : NPCComponent
     /// How long to wait after having planned to try planning again.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("planCooldown")]
-    public float PlanCooldown = 0.5f;
+    public float PlanCooldown = 0.45f;
 
     /// <summary>
     /// How much longer until we can try re-planning. This will happen even during update in case something changed.
