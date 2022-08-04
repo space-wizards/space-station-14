@@ -202,10 +202,10 @@
       visuals:
         - type: MappedItemVisualizer
           sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
-        - type: SolutionContainerVisualizer
-          maxFillLevels: 3
-          fillBaseName: cart_water_
-          changeColor: false
+    - type: SolutionContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: cart_water_
+      changeColor: false
     - type: UserInterface
       interfaces:
       - key: enum.StorageUiKey.Key
