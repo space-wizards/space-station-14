@@ -185,7 +185,7 @@
       - unshaded
 
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: BaseGasThermoMachine
   name: thermomachine
   abstract: true
@@ -208,9 +208,6 @@
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
-    - type: Construction
-      graph: Machine
-      node: machine
     - type: Wires
       BoardName: "Thermomachine"
       LayoutId: Thermomachine
@@ -245,10 +242,6 @@
       mode: Freezer
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
-    - type: ContainerContainer
-      containers:
-        machine_parts: !type:Container
-        machine_board: !type:Container
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -274,7 +267,3 @@
       mode: Heater
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
-    - type: ContainerContainer
-      containers:
-        machine_parts: !type:Container
-        machine_board: !type:Container

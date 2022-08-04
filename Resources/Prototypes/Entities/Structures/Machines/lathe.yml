@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Autolathe
   name: autolathe
   description: It produces items using metal and glass.
@@ -33,9 +33,6 @@
       - MachineMask
       layer:
       - MachineLayer
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:
@@ -85,7 +82,7 @@
         - Ingot
 
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Protolathe
   name: protolathe
   description: Converts raw materials into useful objects.
@@ -120,9 +117,6 @@
       layer:
       - MachineLayer
   - type: ResearchClient
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:

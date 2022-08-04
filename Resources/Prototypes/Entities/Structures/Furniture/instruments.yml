@@ -114,9 +114,8 @@
   - type: Sprite
     state: tuba
 
-
 - type: entity
-  parent: BasePlaceableInstrument
+  parent: [ BasePlaceableInstrument, ConstructibleMachine]
   id: DawInstrument
   name: digital audio workstation
   description: Cutting edge music technology, straight from the 90s.
@@ -131,20 +130,11 @@
   - type: Appearance
     visuals:
     - type: WiresVisualizer
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Wires
     BoardName: "DawInstrument"
     LayoutId: DawInstrument
   - type: Machine
     board: DawInstrumentMachineCircuitboard
-  - type: ContainerContainer
-    containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
