@@ -33,7 +33,6 @@ namespace Content.Shared.Access.Components
                 JobTitle = jobTitle;
                 AccessList = accessList;
             }
-
         }
 
         // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
