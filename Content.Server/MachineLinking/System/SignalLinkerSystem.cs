@@ -326,6 +326,10 @@ namespace Content.Server.MachineLinking.System
                     ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
                     Filter.Entities(user), PopupType.Medium);
 
+            var newLink = new NewLinkEvent(user, transmitter.Owner, args.TransmitterPort, receiver.Owner, args.ReceiverPort);
+            RaiseLocalEvent(receiver.Owner, newLink);
+            RaiseLocalEvent(transmitter.Owner, newLink);
+
             return true;
         }
 
