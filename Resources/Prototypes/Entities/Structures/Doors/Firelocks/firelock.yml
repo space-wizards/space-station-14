@@ -85,10 +85,14 @@
       interfaces:
         - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
+    - type: Physics
+      canCollide: false
     - type: Airtight
       fixVacuum: true
+      airBlocked: false
       noAirWhenFullyAirBlocked: true
     - type: Occluder
+      enabled: false
     - type: Construction
       graph: Firelock
       node: Firelock
@@ -143,3 +147,7 @@
       enabled: false
     - type: Door
       occludes: false
+    - type: Airtight
+      airBlocked: false
+    - type: Physics
+      canCollide: false

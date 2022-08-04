@@ -127,6 +127,12 @@
   - type: Construction
     graph: Shutters
     node: ShuttersRadiation
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
 
 - type: entity
   id: ShuttersWindow
@@ -154,6 +160,10 @@
   - type: Construction
     graph: Shutters
     node: ShuttersWindow
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
 
 # Frame for construction
 - type: entity
