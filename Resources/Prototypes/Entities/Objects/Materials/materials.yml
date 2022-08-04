@@ -109,7 +109,7 @@
   - type: Sprite
     state: wood
   - type: Item
-    HeldPrefix: wood
+    heldPrefix: wood
 
 - type: entity
   parent: MaterialWoodPlank
@@ -152,10 +152,12 @@
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
     state: bearpelt
+  - type: Item
+    sprite: Clothing/Head/Misc/hides.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/hides.rsi
-    HeldPrefix: bear
-    Slots:
+    heldPrefix: bear
+    slots:
       - HEAD
 
 - type: entity
@@ -169,7 +171,7 @@
   - type: Sprite
     state: diamond
   - type: Item
-    HeldPrefix: diamond
+    heldPrefix: diamond
 
 - type: entity
   parent: MaterialDiamond

@@ -1,6 +1,7 @@
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Communications
 {
@@ -49,6 +50,12 @@ namespace Content.Server.Communications
         /// </summary>
         [DataField("global")]
         public bool AnnounceGlobal = false;
+
+        /// <summary>
+        /// Announce sound file path
+        /// </summary>
+        [DataField("sound")]
+        public SoundSpecifier AnnouncementSound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
     }

@@ -1,0 +1,194 @@
+﻿- type: objective
+  id: CaptainIDStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: CaptainIDCard
+      owner: job-name-captain
+
+- type: objective
+  id: KillRandomObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - RandomTraitorAliveCondition
+  conditions:
+    - !type:KillRandomPersonCondition {}
+  canBeDuplicate: true
+
+- type: objective
+  id: RandomTraitorAliveObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - KillRandomPersonCondition
+    - !type:MultipleTraitorsRequirement
+  conditions:
+    - !type:RandomTraitorAliveCondition {}
+  canBeDuplicate: true
+
+- type: objective
+  id: StayAliveObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - DieCondition
+  conditions:
+    - !type:StayAliveCondition {}
+
+- type: objective
+  id: DieObjective
+  issuer: syndicate
+  prob: 0.03
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - StayAliveCondition
+        - StealCondition
+  conditions:
+    - !type:DieCondition {}
+
+- type: objective
+  id: CMOHyposprayStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: Hypospray
+      owner: job-name-cmo
+
+- type: objective
+  id: RDHardsuitStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: ClothingOuterHardsuitRd
+      owner: job-name-rd
+
+- type: objective
+  id: NukeDiskStealObjective
+  issuer: syndicate
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: NukeDisk
+      owner: objective-condition-steal-station
+
+- type: objective
+  id: IDComputerBoardStealObjective
+  issuer: syndicate
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: IDComputerCircuitboard
+      owner: job-name-hop
+
+- type: objective
+  id: MagbootsStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: ClothingShoesBootsMagAdv
+      owner: job-name-ce
+
+- type: objective
+  id: SupplyConsoleBoardStealObjective
+  issuer: syndicate
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: SupplyComputerCircuitboard
+      owner: job-name-qm
+
+- type: objective
+  id: CorgiMeatStealObjective
+  issuer: syndicate
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: FoodMeatCorgi
+      owner: objective-condition-steal-Ian
+
+- type: objective
+  id: CaptainGunStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.1
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: WeaponAntiqueLaser
+      owner: job-name-captain
+
+- type: objective
+  id: CaptainJetpackStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.1
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: JetpackCaptainFilled
+      owner: job-name-captain

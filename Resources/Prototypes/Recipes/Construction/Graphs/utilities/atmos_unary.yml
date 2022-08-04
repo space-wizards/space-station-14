@@ -9,25 +9,32 @@
       - material: Steel
         amount: 2
         doAfter: 1
+
     - to: passivevent
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
+
     - to: ventscrubber
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
+
     - to: outletinjector
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
+
   - node: ventpump
     entity: GasVentPump
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -38,10 +45,14 @@
         doAfter: 1
       - tool: Welding
         doAfter: 1
+
   - node: passivevent
     entity: GasPassiveVent
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -52,10 +63,14 @@
         doAfter: 1
       - tool: Welding
         doAfter: 1
+
   - node: ventscrubber
     entity: GasVentScrubber
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -66,10 +81,14 @@
         doAfter: 1
       - tool: Welding
         doAfter: 1
+
   - node: outletinjector
     entity: GasOutletInjector
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -78,4 +97,3 @@
       steps:
       - tool: Welding
         doAfter: 1
-    

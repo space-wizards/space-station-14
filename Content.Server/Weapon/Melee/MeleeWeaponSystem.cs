@@ -7,7 +7,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -259,12 +258,12 @@ namespace Content.Server.Weapon.Melee
                 }
                 else if (type != null && damageSoundComp.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
                 {
-                    SoundSystem.Play(damageSoundType!.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundType.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (type != null && damageSoundComp.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
                 {
-                    SoundSystem.Play(damageSoundGroup!.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundGroup.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
             }

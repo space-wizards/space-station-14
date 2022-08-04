@@ -11,7 +11,7 @@ namespace Content.Server.Research.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("points")]
         public int Points = 0;
 
-        [ViewVariables(VVAccess.ReadOnly)] public int Id { get; private set; }
+        [ViewVariables(VVAccess.ReadOnly)] public int Id { get; set; }
 
         [ViewVariables(VVAccess.ReadOnly)]
         public List<ResearchPointSourceComponent> PointSources { get; } = new();

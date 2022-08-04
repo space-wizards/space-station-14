@@ -11,10 +11,11 @@
     netsync: false
     sprite: Objects/Tools/bucket.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 100
+  - type: Clothing
     sprite: Objects/Tools/bucket.rsi
-    Slots:
+    slots:
     - HEAD
   - type: SolutionContainerManager
     solutions:

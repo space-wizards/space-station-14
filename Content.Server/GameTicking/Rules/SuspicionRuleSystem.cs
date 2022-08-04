@@ -16,7 +16,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Roles;
-using Content.Shared.Sound;
 using Content.Shared.Suspicion;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
@@ -97,7 +96,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnRoundStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.SuspicionMinPlayers);
@@ -119,7 +118,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnPlayersAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minTraitors = _cfg.GetCVar(CCVars.SuspicionMinTraitors);
@@ -203,7 +202,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
 
@@ -269,7 +268,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.Id;
         EndTime = null;
@@ -288,7 +287,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void CheckWinConditions()
     {
-        if (!Enabled || !_cfg.GetCVar(CCVars.GameLobbyEnableWin))
+        if (!RuleAdded || !_cfg.GetCVar(CCVars.GameLobbyEnableWin))
             return;
 
         var traitorsAlive = 0;
@@ -457,7 +456,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnLateJoinRefresh(RefreshLateJoinAllowedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         ev.Disallow();

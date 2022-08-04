@@ -9,12 +9,11 @@
     netsync: false
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
-  - type: Item
-    size: 12
-    sprite: Objects/Misc/nukedisk.rsi
-    state: icon
   - type: StaticPrice
     price: 2000
+  - type: CargoSellBlacklist
+  - type: WarpPoint
+    location: nuke disk
 
 - type: entity
   name: nuclear authentication disk
@@ -25,10 +24,6 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Misc/nukedisk.rsi
-    state: icon
-  - type: Item
-    size: 12
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
   - type: StaticPrice

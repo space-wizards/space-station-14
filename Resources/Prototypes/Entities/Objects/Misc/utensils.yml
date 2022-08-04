@@ -38,7 +38,6 @@
   - type: Sprite
     state: plastic_fork
   - type: Item
-    color: white
   - type: Utensil
     types:
     - Fork
@@ -58,7 +57,7 @@
   - type: Sprite
     state: spoon
   - type: Item
-    HeldPrefix: spoon
+    heldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
@@ -75,8 +74,7 @@
   - type: Sprite
     state: plastic_spoon
   - type: Item
-    color: white
-    HeldPrefix: spoon
+    heldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
@@ -94,7 +92,6 @@
   - type: Sprite
     state: plastic_knife
   - type: Item
-    color: white
   - type: Utensil
     types:
     - Knife

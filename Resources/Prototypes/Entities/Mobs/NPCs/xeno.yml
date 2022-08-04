@@ -10,9 +10,9 @@
     protection: 1
   - type: CombatMode
     canDisarm: true
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
@@ -349,9 +349,9 @@
     attributes:
       proper: true
       gender: male
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles

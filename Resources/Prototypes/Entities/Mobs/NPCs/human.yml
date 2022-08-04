@@ -1,12 +1,12 @@
 - type: entity
   name: Civilian
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobCivilian
   description: A miserable pile of secrets.
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Clothing
     - Hunger
@@ -20,13 +20,13 @@
 
 - type: entity
   name: Spirate
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobSpirate
   description: Yarr!
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Clothing
     - Hunger
@@ -46,10 +46,10 @@
   - type: GhostTakeoverAvailable
     makeSentient: false
     name: CBURN Agent
-    description: A highly trained Centcomm agent, capable of dealing with various threats.
+    description: A highly trained CentCom agent, capable of dealing with various threats.
 
 - type: entity
-  parent: MobHumanBase
+  parent: BaseMobHuman
   suffix: Dead
   save: true
   id: SalvageHumanCorpse

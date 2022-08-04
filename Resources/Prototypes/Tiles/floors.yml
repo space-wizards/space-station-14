@@ -811,3 +811,35 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
+# Caves
+- type: tile
+  id: FloorCave
+  name: cave
+  texture: cave
+  variants: 7
+  placementVariants: [0, 1, 2, 3, 4, 5, 6]
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorCaveDrought
+  name: cave drought
+  texture: cavedrought
+  variants: 8
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000

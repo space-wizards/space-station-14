@@ -76,6 +76,19 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieLamp
+  name: lamp plushie
+  description: A light emitting friend!
+  components:
+  - type: Sprite
+    state: plushie_lamp
+  - type: PointLight
+    netsync: false
+    radius: 1.5
+    energy: 2
+
+- type: entity
+  parent: BasePlushie
   id: PlushieLizard #Weh!
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
@@ -144,7 +157,7 @@
   - type: Sprite
     state: carpplush
   - type: Item
-    HeldPrefix: carpplush
+    heldPrefix: carpplush
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Effects/bite.ogg
@@ -209,7 +222,7 @@
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/ducky.rsi
-    Slots:
+    slots:
     - HEAD
   - type: EmitSoundOnUse
     sound:
@@ -266,7 +279,7 @@
     state: doll
   - type: Item
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: doll
+    heldPrefix: doll
 
 - type: entity
   parent: BaseItem
@@ -450,7 +463,6 @@
     netsync: false
   - type: Item
     size: 24
-    state: icon
 
 - type: entity
   parent: FoamWeaponBase
@@ -464,7 +476,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: foamcrossbow
+    heldPrefix: foamcrossbow
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto
@@ -503,7 +515,7 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: capgun
+    heldPrefix: capgun
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -538,7 +550,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: foamblade
+    heldPrefix: foamblade
   - type: ItemCooldown
 
 # MISC
@@ -555,7 +567,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: bask
+    heldPrefix: bask
 
 - type: entity
   parent: BaseItem
@@ -569,7 +581,7 @@
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: footb
+    heldPrefix: footb
 
 - type: entity
   parent: BaseItem
@@ -583,7 +595,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: synb
+    heldPrefix: synb
 
 - type: entity
   parent: BaseItem
@@ -597,7 +609,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: corgib
+    heldPrefix: corgib
 
 - type: entity
   parent: BaseItem
@@ -617,7 +629,7 @@
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: singularitytoy
+    heldPrefix: singularitytoy
 
 - type: entity
   parent: BaseItem
@@ -635,4 +647,4 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: orb
+    heldPrefix: orb

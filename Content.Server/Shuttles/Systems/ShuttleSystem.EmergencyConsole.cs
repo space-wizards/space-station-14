@@ -5,9 +5,11 @@ using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
@@ -51,7 +53,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleTransitTime"/>
     /// </summary>
-    private float _transitTime;
+    public float TransitTime { get; private set; }
 
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleAuthorizeTime"/>
@@ -64,9 +66,14 @@ public sealed partial class ShuttleSystem
     private static readonly Color DangerColor = Color.Red;
 
     /// <summary>
-    /// Have the emergency shuttles been authorised to launch at Centcomm?
+    /// Have the emergency shuttles been authorised to launch at CentCom?
     /// </summary>
     private bool _launchedShuttles;
+
+    /// <summary>
+    /// Have we announced the launch?
+    /// </summary>
+    private bool _announced;
 
     private void InitializeEmergencyConsole()
     {
@@ -76,6 +83,18 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
+        SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
+    }
+
+    private void OnEmergencyOpenAttempt(EntityUid uid, EmergencyShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        // I'm hoping ActivatableUI checks it's open before allowing these messages.
+        if (!_configManager.GetCVar(CCVars.EmergencyEarlyLaunchAllowed))
+        {
+            args.Cancel();
+            _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, Filter.Entities(args.User));
+            return;
+        }
     }
 
     private void SetAuthorizeTime(float obj)
@@ -85,7 +104,7 @@ public sealed partial class ShuttleSystem
 
     private void SetTransitTime(float obj)
     {
-        _transitTime = obj;
+        TransitTime = obj;
     }
 
     private void ShutdownEmergencyConsole()
@@ -105,40 +124,54 @@ public sealed partial class ShuttleSystem
 
         _consoleAccumulator -= frameTime;
 
+        // No early launch but we're under the timer.
+        if (!_launchedShuttles && _consoleAccumulator <= _authorizeTime)
+        {
+            if (!EarlyLaunchAuthorized)
+                AnnounceLaunch();
+        }
+
+        // Imminent departure
         if (!_launchedShuttles && _consoleAccumulator <= DefaultStartupTime)
         {
             _launchedShuttles = true;
 
-            if (_centcommMap != null)
+            if (_centComMap != null)
             {
                 foreach (var comp in EntityQuery<StationDataComponent>(true))
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
-                    if (Deleted(_centcomm))
+                    if (Deleted(_centCom))
                     {
                         // TODO: Need to get non-overlapping positions.
-                        Hyperspace(shuttle,
+                        FTLTravel(shuttle,
                             new EntityCoordinates(
-                                _mapManager.GetMapEntityId(_centcommMap.Value),
-                                Vector2.One * 1000f), _consoleAccumulator, _transitTime);
+                                _mapManager.GetMapEntityId(_centComMap.Value),
+                                Vector2.One * 1000f), _consoleAccumulator, TransitTime);
                     }
                     else
                     {
-                        Hyperspace(shuttle,
-                            _centcomm.Value, _consoleAccumulator, _transitTime);
+                        FTLTravel(shuttle,
+                            _centCom.Value, _consoleAccumulator, TransitTime, dock: true);
                     }
                 }
             }
         }
 
+        // Departed
         if (_consoleAccumulator <= 0f)
         {
             _launchedShuttles = true;
-            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{_transitTime:0}")));
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
             _roundEndCancelToken = new CancellationTokenSource();
-            Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
+            Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
+
+            // Guarantees that emergency shuttle arrives first before anyone else can FTL.
+            if (_centCom != null)
+                AddFTLDestination(_centCom.Value, true);
+
         }
     }
 
@@ -149,7 +182,7 @@ public sealed partial class ShuttleSystem
 
         if (!_reader.FindAccessTags(player.Value).Contains(EmergencyRepealAllAccess))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value));
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
             return;
         }
 
@@ -168,7 +201,7 @@ public sealed partial class ShuttleSystem
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value));
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
             return;
         }
 
@@ -189,7 +222,7 @@ public sealed partial class ShuttleSystem
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value));
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
             return;
         }
 
@@ -202,7 +235,7 @@ public sealed partial class ShuttleSystem
         if (remaining > 0)
             _chatSystem.DispatchGlobalAnnouncement(
                 Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)),
-                playDefaultSound: false, colorOverride: DangerColor);
+                playSound: false, colorOverride: DangerColor);
 
         if (!CheckForLaunch(component))
             SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
@@ -212,6 +245,7 @@ public sealed partial class ShuttleSystem
 
     private void CleanupEmergencyConsole()
     {
+        _announced = false;
         _roundEndCancelToken = null;
         _launchedShuttles = false;
         _consoleAccumulator = 0f;
@@ -258,20 +292,28 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool EarlyLaunch()
     {
-        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived) return false;
+        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
-        _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
+        _consoleAccumulator =_authorizeTime;
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
+        AnnounceLaunch();
+        UpdateAllEmergencyConsoles();
+        return true;
+    }
+
+    private void AnnounceLaunch()
+    {
+        if (_announced) return;
+
+        _announced = true;
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
-            playDefaultSound: false,
+            playSound: false,
             colorOverride: DangerColor);
 
         SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
-        UpdateAllEmergencyConsoles();
-        return true;
     }
 
     public bool DelayEmergencyRoundEnd()

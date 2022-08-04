@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -156,9 +157,11 @@ namespace Content.Server.Shuttles.Systems
 
             dockB.DockedWith = null;
             dockB.DockJoint = null;
+            dockB.DockJointId = null;
 
             dockA.DockJoint = null;
             dockA.DockedWith = null;
+            dockA.DockJointId = null;
 
             // If these grids are ever null then need to look at fixing ordering for unanchored events elsewhere.
             var gridAUid = EntityManager.GetComponent<TransformComponent>(dockA.Owner).GridUid;
@@ -279,6 +282,11 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         public void Dock(DockingComponent dockA, DockingComponent dockB)
         {
+            if (dockB.Owner.GetHashCode() < dockA.Owner.GetHashCode())
+            {
+                (dockA, dockB) = (dockB, dockA);
+            }
+
             _sawmill.Debug($"Docking between {dockA.Owner} and {dockB.Owner}");
 
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
@@ -302,8 +310,18 @@ namespace Content.Server.Shuttles.Systems
 
             // These need playing around with
             // Could also potentially have collideconnected false and stiffness 0 but it was a bit more suss???
+            WeldJoint joint;
 
-            var joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, DockingJoint + dockA.Owner);
+            // Pre-existing joint so use that.
+            if (dockA.DockJointId != null)
+            {
+                DebugTools.Assert(dockB.DockJointId == dockA.DockJointId);
+                joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, dockA.DockJointId);
+            }
+            else
+            {
+                joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, DockingJoint + dockA.Owner);
+            }
 
             var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
             var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
@@ -320,8 +338,12 @@ namespace Content.Server.Shuttles.Systems
 
             dockA.DockedWith = dockB.Owner;
             dockB.DockedWith = dockA.Owner;
+
             dockA.DockJoint = joint;
+            dockA.DockJointId = joint.ID;
+
             dockB.DockJoint = joint;
+            dockB.DockJointId = joint.ID;
 
             if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
             {
@@ -439,10 +461,17 @@ namespace Content.Server.Shuttles.Systems
                 _doorSystem.TryClose(doorB.Owner, doorB);
             }
 
-            var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
-            recentlyDocked.LastDocked = dock.DockedWith.Value;
-            recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
-            recentlyDocked.LastDocked = dock.DockedWith.Value;
+            if (!Deleted(dock.Owner))
+            {
+                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
+                recentlyDocked.LastDocked = dock.DockedWith.Value;
+            }
+
+            if (!Deleted(dock.DockedWith.Value))
+            {
+                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
+                recentlyDocked.LastDocked = dock.DockedWith.Value;
+            }
 
             Cleanup(dock);
         }

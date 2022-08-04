@@ -57,7 +57,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
 
     private void OnRoundEndTextEvent(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         if (Deleted(_pirateShip))
@@ -120,14 +120,14 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started(GameRuleConfiguration _) { }
+    public override void Started() { }
 
-    public override void Ended(GameRuleConfiguration _) { }
+    public override void Ended() { }
 
     private void OnPlayerSpawningEvent(RulePlayerSpawningEvent ev)
     {
         // Forgive me for copy-pasting nukies.
-        if (!Enabled)
+        if (!RuleAdded)
         {
             return;
         }
@@ -189,7 +189,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         if (spawns.Count == 0)
         {
             spawns.Add(Transform(_pirateShip).Coordinates);
-            Logger.WarningS("pirates", $"Fell back to default spawn for nukies!");
+            Logger.WarningS("pirates", $"Fell back to default spawn for pirates!");
         }
 
         for (var i = 0; i < ops.Length; i++)
@@ -223,9 +223,17 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         }); // Include the players in the appraisal.
     }
 
+    //Forcing one player to be a pirate.
+    public void MakePirate(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("PirateGear"), null);
+    }
+
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.PiratesMinPlayers);

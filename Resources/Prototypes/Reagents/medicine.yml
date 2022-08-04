@@ -380,6 +380,7 @@
         amount: -10000
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
 
@@ -394,15 +395,14 @@
     Medicine:
       effects:
       - !type:HealthChange
+        probability: 0.3
         damage:
           types:
-            Poison: 1
-          groups:
-            Brute: -1.5
+            Heat: 0.5
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
-            min: 15
+            min: 30
         damage:
           types:
             Poison: 3
@@ -417,6 +417,7 @@
         probability: 0.2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
         probability: 0.1
 
