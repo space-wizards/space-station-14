@@ -28,7 +28,7 @@ public sealed class LightningSystem : SharedLightningSystem
         var offset = ev.Offset;
         var ent = Spawn("LightningBase", offset);
         var shape = new EdgeShape(ev.OffsetCorrection, new Vector2(0,0));
-        var distanceLength = ev.CalculatedDistance.Length;
+        var distanceLength = ev.OffsetCorrection.Length;
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
             TryComp<TransformComponent>(ent, out var xForm))
         {
@@ -46,9 +46,7 @@ public sealed class LightningSystem : SharedLightningSystem
 
             entXForm.AttachParent(component.Owner);
 
-            //TODO: Fix distance issues
-
-            for (int i = 0; i < distanceLength; i++)
+            for (int i = 0; i < distanceLength-1; i++)
             {
                 offset = offset.Offset(ev.CalculatedDistance.Normalized);
                 var newEnt = Spawn("LightningBase", offset);
