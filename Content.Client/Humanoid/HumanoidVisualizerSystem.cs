@@ -34,45 +34,52 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         base.OnAppearanceChange(uid, component, ref args);
 
         // can't get humanoid visuals without a species
-        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Species, out var speciesRaw)
-            && speciesRaw is not string speciesId)
+        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Species, out var speciesRaw))
         {
             return;
         }
 
-        // TODO: Check species diff
-
-        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.SkinColor, out var skinColorRaw)
-            && skinColorRaw is not Color skinColor)
+        if (speciesRaw is string speciesId)
+        {
+            if (component.Species != speciesId)
+            {
+                // do species base sprite application
+            }
+        }
+        else
         {
             return;
         }
 
-        // TODO: Check skin color diff
-
-        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.EyeColor, out var eyeColorRaw)
-            && eyeColorRaw is not Color eyeColor)
+        if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.SkinColor, out var skinColorRaw)
+            && skinColorRaw is Color skinColor)
         {
-            return;
+            if (component.SkinColor != skinColor)
+            {
+                ApplySkinColor(uid, new(), skinColor);
+            }
         }
 
-        // TODO: Check eye color diff
-
-        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.LayerVisibility, out var layerVisRaw)
-            && layerVisRaw is not List<HumanoidVisualLayers> layerVis)
+        if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.EyeColor, out var eyeColorRaw)
+            && eyeColorRaw is Color eyeColor)
         {
-            return;
+            // just set the base sprite's eye color
+            SetBaseLayerColor(uid, HumanoidVisualLayers.Eyes, eyeColor);
         }
 
-        // TODO: Check diff
-
-        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Markings, out var markingsRaw)
-            && markingsRaw is not List<Marking> markings)
+        if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.LayerVisibility, out var layerVisRaw)
+            && layerVisRaw is List<HumanoidVisualLayers> layerVisList)
         {
-            return;
+            var layerVis = layerVisList.ToHashSet();
+            ReplaceHiddenLayers(uid, layerVis, component);
         }
 
-        // TODO: Check diff
+
+        if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Markings, out var markingsRaw)
+            && markingsRaw is List<Marking> markings)
+        {
+            DiffAndApplyMarkings(uid, markings);
+        }
     }
 
     private void ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
@@ -111,6 +118,59 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         }
     }
 
+    private void DiffAndApplyMarkings(EntityUid uid, List<Marking> newMarkings, HumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        var dirtyMarkings = new List<int>();
+        var dirtyRangeStart = humanoid.CurrentMarkings.Count == 0 ? 0 : -1;
+
+        for (var i = 0; i < humanoid.CurrentMarkings.Count; i++)
+        {
+            // if the marking is different here, set the range start to i and break, we need
+            // to rebuild all markings starting from i
+            if (humanoid.CurrentMarkings[i].MarkingId != newMarkings[i].MarkingId)
+            {
+                dirtyRangeStart = i;
+                break;
+            }
+
+            // otherwise, we add the current marking to dirtyMarkings if it has different
+            // settings
+            if (humanoid.CurrentMarkings[i] != newMarkings[i])
+            {
+                dirtyMarkings.Add(i);
+            }
+        }
+
+        foreach (var i in dirtyMarkings)
+        {
+            if (!_markingManager.IsValidMarking(newMarkings[i], out var dirtyMarking))
+            {
+                continue;
+            }
+
+            ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible);
+        }
+
+        if (dirtyRangeStart >= 0)
+        {
+            var range = newMarkings.GetRange(dirtyRangeStart, newMarkings.Count - 1);
+            var oldRange = humanoid.CurrentMarkings.GetRange(dirtyRangeStart, newMarkings.Count - 1);
+
+            ClearMarkings(uid, oldRange, humanoid);
+            ApplyMarkings(uid, range, humanoid);
+        }
+
+        if (dirtyMarkings.Count > 0 || dirtyRangeStart >= 0)
+        {
+            humanoid.CurrentMarkings = newMarkings;
+        }
+    }
+
     private void ClearAllMarkings(EntityUid uid, HumanoidComponent? humanoid = null,
         SpriteComponent? spriteComp = null)
     {
@@ -119,29 +179,51 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        foreach (var marking in humanoid.CurrentMarkings.GetForwardEnumerator())
+        ClearMarkings(uid, humanoid.CurrentMarkings, humanoid, spriteComp);
+    }
+
+    private void ClearMarkings(EntityUid uid, List<Marking> markings, HumanoidComponent? humanoid = null,
+        SpriteComponent? spriteComp = null)
+    {
+        if (!Resolve(uid, ref humanoid, ref spriteComp))
         {
-            if (!_markingManager.IsValidMarking(marking, out var prototype))
+            return;
+        }
+
+        foreach (var marking in markings)
+        {
+            RemoveMarking(uid, marking, humanoid, spriteComp);
+        }
+    }
+
+    private void RemoveMarking(EntityUid uid, Marking marking, HumanoidComponent? humanoid = null,
+        SpriteComponent? spriteComp = null)
+    {
+        if (!Resolve(uid, ref humanoid, ref spriteComp))
+        {
+            return;
+        }
+
+        if (!_markingManager.IsValidMarking(marking, out var prototype))
+        {
+            return;
+        }
+
+        foreach (var sprite in prototype.Sprites)
+        {
+            if (sprite is not SpriteSpecifier.Rsi rsi)
             {
                 continue;
             }
 
-            foreach (var sprite in prototype.Sprites)
+            var layerId = $"{marking.MarkingId}-{rsi.RsiState}";
+            if (!spriteComp.LayerMapTryGet(layerId, out var index))
             {
-                if (sprite is not SpriteSpecifier.Rsi rsi)
-                {
-                    continue;
-                }
-
-                var layerId = $"{marking.MarkingId}-{rsi.RsiState}";
-                if (!spriteComp.LayerMapTryGet(layerId, out var index))
-                {
-                    continue;
-                }
-
-                spriteComp.LayerMapRemove(layerId);
-                spriteComp.RemoveLayer(index);
+                continue;
             }
+
+            spriteComp.LayerMapRemove(layerId);
+            spriteComp.RemoveLayer(index);
         }
     }
 
@@ -162,13 +244,14 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            ApplyMarking(uid, markingPrototype, marking.MarkingColors);
+            ApplyMarking(uid, markingPrototype, marking.MarkingColors, marking.Visible);
         }
     }
 
     private void ApplyMarking(EntityUid uid,
         MarkingPrototype markingPrototype,
         IReadOnlyList<Color>? colors,
+        bool visible,
         HumanoidComponent? humanoid = null,
         SpriteComponent? sprite = null)
     {
@@ -177,11 +260,12 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        if (humanoid.HiddenLayers.Contains(markingPrototype.BodyPart)
-            || !sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
+        if (!sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
         {
             return;
         }
+
+        visible |= humanoid.HiddenLayers.Contains(markingPrototype.BodyPart);
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
@@ -192,14 +276,20 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
             var layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
 
-            if (sprite.LayerMapTryGet(layerId, out var existingLayer))
+            sprite.LayerSetVisible(layerId, visible);
+
+            if (!visible)
             {
-                sprite.RemoveLayer(existingLayer);
-                sprite.LayerMapRemove(markingPrototype.ID);
+                continue;
             }
 
-            var layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
-            sprite.LayerMapSet(layerId, layer);
+            if (!sprite.LayerMapTryGet(layerId, out _))
+            {
+                var layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
+                sprite.LayerMapSet(layerId, layer);
+            }
+
+
             if (markingPrototype.FollowSkinColor || colors == null)
             {
                 sprite.LayerSetColor(layerId, humanoid.SkinColor);
