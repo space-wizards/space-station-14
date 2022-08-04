@@ -8,8 +8,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.75
     baseSprintSpeed : 3.75
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -110,6 +110,7 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
 
@@ -123,9 +124,9 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 3.5
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
@@ -192,6 +193,7 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: Vocal
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg

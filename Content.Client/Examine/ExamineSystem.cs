@@ -1,7 +1,6 @@
-using System.Linq;
-using System.Threading;
 using Content.Client.Verbs;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -13,6 +12,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Threading;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -192,7 +193,7 @@ namespace Content.Client.Examine
 
             hBox.AddChild(new Label
             {
-                Text = EntityManager.GetComponent<MetaDataComponent>(target).EntityName,
+                Text = Identity.Name(target, EntityManager, player),
                 HorizontalExpand = true,
             });
 

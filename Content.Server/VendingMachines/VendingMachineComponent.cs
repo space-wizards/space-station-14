@@ -1,23 +1,17 @@
 using Content.Server.UserInterface;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedVendingMachineComponent))]
     public sealed class VendingMachineComponent : SharedVendingMachineComponent
     {
         public bool Ejecting;
-
-        public TimeSpan AnimationDuration = TimeSpan.Zero;
-
-        [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]
-        public string PackPrototypeId = string.Empty;
-
-        public string SpriteName = "";
 
         public bool Broken;
 

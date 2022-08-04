@@ -23,13 +23,13 @@ public sealed class DiseaseTest
         {
             foreach (var proto in protoManager.EnumeratePrototypes<DiseasePrototype>())
             {
-                var stages = proto.Stages;
+                var stagesLength = proto.Stages.Count;
 
                 foreach (var effect in proto.Effects)
                 {
                     for (var i = 0; i < effect.Stages.Length; i++)
                     {
-                        Assert.That(stages.Contains(i), $"Disease {proto.ID} has an effect with an incorrect stage, {i}!");
+                        Assert.That(i >= 0 && i < stagesLength, $"Disease {proto.ID} has an effect with an incorrect stage, {i}!");
                     }
                 }
 
@@ -37,7 +37,7 @@ public sealed class DiseaseTest
                 {
                     for (var i = 0; i < cure.Stages.Length; i++)
                     {
-                        Assert.That(stages.Contains(i), $"Disease {proto.ID} has a cure with an incorrect stage, {i}!");
+                        Assert.That(i >= 0 && i < stagesLength, $"Disease {proto.ID} has a cure with an incorrect stage, {i}!");
                     }
                 }
             }

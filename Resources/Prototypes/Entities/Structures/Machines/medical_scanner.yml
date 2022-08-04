@@ -5,6 +5,9 @@
   description: A bulky medical scanner.
   components:
   - type: MedicalScanner
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceList
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/scanner.rsi
@@ -47,11 +50,6 @@
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer
-  - type: ActivatableUI
-    key: enum.MedicalScannerUiKey.Key
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-    - key: enum.MedicalScannerUiKey.Key
-      type: MedicalScannerBoundUserInterface
   - type: Climbable
+  - type: ApcPowerReceiver
+    powerLoad: 200 #Receives most of its power from the console

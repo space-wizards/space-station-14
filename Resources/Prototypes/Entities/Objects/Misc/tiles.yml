@@ -43,7 +43,7 @@
   - type: Sprite
     state: steel
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -53,7 +53,7 @@
   - type: Construction
     graph: TileSteel
     node: steeltile
-    
+
 - type: entity
   name: steel tile
   parent: FloorTileItemBase
@@ -62,7 +62,7 @@
   - type: Sprite
     state: metaldiamond
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -81,7 +81,7 @@
   - type: Sprite
     state: wood
   - type: Item
-    HeldPrefix: wood
+    heldPrefix: wood
   - type: FloorTile
     outputs:
       - plating
@@ -100,7 +100,7 @@
   - type: Sprite
     state: white
   - type: Item
-    HeldPrefix: white
+    heldPrefix: white
   - type: FloorTile
     outputs:
       - plating
@@ -119,7 +119,7 @@
   - type: Sprite
     state: dark
   - type: Item
-    HeldPrefix: dark
+    heldPrefix: dark
   - type: FloorTile
     outputs:
       - plating
@@ -138,7 +138,7 @@
   - type: Sprite
     state: techfloor
   - type: Item
-    HeldPrefix: dark
+    heldPrefix: dark
   - type: FloorTile
     outputs:
       - plating
@@ -154,7 +154,7 @@
   - type: Sprite
     state: reinforced
   - type: Item
-    HeldPrefix: reinforced
+    heldPrefix: reinforced
   - type: FloorTile
     outputs:
       - plating
@@ -172,7 +172,7 @@
   - type: Sprite
     state: monofloor
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -188,7 +188,7 @@
   - type: Sprite
     state: lino
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -204,7 +204,7 @@
   - type: Sprite
     state: dirty
   - type: Item
-    HeldPrefix: dirty
+    heldPrefix: dirty
   - type: FloorTile
     outputs:
       - plating
@@ -220,7 +220,7 @@
   - type: Sprite
     state: dark
   - type: Item
-    HeldPrefix: dark
+    heldPrefix: dark
   - type: FloorTile
     outputs:
       - plating
@@ -236,7 +236,7 @@
   - type: Sprite
     state: rockvault
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -252,7 +252,7 @@
   - type: Sprite
     state: blue
   - type: Item
-    HeldPrefix: carpet-blue
+    heldPrefix: carpet-blue
   - type: FloorTile
     outputs:
       - plating
@@ -269,7 +269,7 @@
   - type: Sprite
     state: showroom
   - type: Item
-    HeldPrefix: showroom
+    heldPrefix: showroom
   - type: FloorTile
     outputs:
       - plating
@@ -285,7 +285,7 @@
   - type: Sprite
     state: showroom
   - type: Item
-    HeldPrefix: showroom
+    heldPrefix: showroom
   - type: FloorTile
     outputs:
       - plating
@@ -301,7 +301,7 @@
   - type: Sprite
     state: hydro
   - type: Item
-    HeldPrefix: hydro
+    heldPrefix: hydro
   - type: FloorTile
     outputs:
       - plating
@@ -317,7 +317,7 @@
   - type: Sprite
     state: bar
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -333,7 +333,7 @@
   - type: Sprite
     state: clown
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -349,7 +349,7 @@
   - type: Sprite
     state: mime
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -365,7 +365,7 @@
   - type: Sprite
     state: kitchen
   - type: Item
-    HeldPrefix: dark
+    heldPrefix: dark
   - type: FloorTile
     outputs:
       - plating
@@ -381,7 +381,7 @@
   - type: Sprite
     state: laundry
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -398,14 +398,14 @@
   - type: Sprite
     state: arcadeblue
   - type: Item
-    HeldPrefix: arcadeblue
+    heldPrefix: arcadeblue
   - type: FloorTile
     outputs:
       - plating
       - FloorArcadeBlue
   - type: Stack
     stackType: FloorTileStackArcadeBlue
-    
+
 - type: entity
   name: blue arcade floor
   parent: FloorTileItemBase
@@ -414,7 +414,7 @@
   - type: Sprite
     state: arcadeblue2
   - type: Item
-    HeldPrefix: generic
+    heldPrefix: generic
   - type: FloorTile
     outputs:
       - plating
@@ -430,7 +430,7 @@
   - type: Sprite
     state: arcadered
   - type: Item
-    HeldPrefix: arcadered
+    heldPrefix: arcadered
   - type: FloorTile
     outputs:
       - plating
@@ -446,14 +446,14 @@
   - type: Sprite
     state: eighties
   - type: Item
-    HeldPrefix: eighties
+    heldPrefix: eighties
   - type: FloorTile
     outputs:
       - plating
       - FloorEighties
   - type: Stack
     stackType: FloorTileStackEighties
-    
+
 - type: entity
   name: clown carpet floor
   parent: FloorTileItemBase
@@ -462,14 +462,14 @@
   - type: Sprite
     state: carpetclown
   - type: Item
-    HeldPrefix: generic
+    heldPrefix: generic
   - type: FloorTile
     outputs:
       - plating
       - FloorCarpetClown
   - type: Stack
     stackType: FloorTileStackCarpetClown
-    
+
 - type: entity
   name: office carpet floor
   parent: FloorTileItemBase
@@ -478,14 +478,14 @@
   - type: Sprite
     state: carpetoffice
   - type: Item
-    HeldPrefix: generic
+    heldPrefix: generic
   - type: FloorTile
     outputs:
       - plating
       - FloorCarpetOffice
   - type: Stack
     stackType: FloorTileStackCarpetOffice
-    
+
 - type: entity
   name: boxing ring floor
   parent: FloorTileItemBase
@@ -494,14 +494,14 @@
   - type: Sprite
     state: boxing
   - type: Item
-    HeldPrefix: generic
+    heldPrefix: generic
   - type: FloorTile
     outputs:
       - plating
       - FloorBoxing
   - type: Stack
     stackType: FloorTileStackBoxing
-    
+
 - type: entity
   name: gym floor
   parent: FloorTileItemBase
@@ -510,7 +510,7 @@
   - type: Sprite
     state: gym
   - type: Item
-    HeldPrefix: generic
+    heldPrefix: generic
   - type: FloorTile
     outputs:
       - plating
@@ -527,7 +527,7 @@
   - type: Sprite
     state: shuttlewhite
   - type: Item
-    HeldPrefix: shuttlewhite
+    heldPrefix: shuttlewhite
   - type: FloorTile
     outputs:
       - plating
@@ -543,7 +543,7 @@
   - type: Sprite
     state: shuttleblue
   - type: Item
-    HeldPrefix: shuttleblue
+    heldPrefix: shuttleblue
   - type: FloorTile
     outputs:
       - plating
@@ -559,7 +559,7 @@
   - type: Sprite
     state: shuttleorange
   - type: Item
-    HeldPrefix: shuttleorange
+    heldPrefix: shuttleorange
   - type: FloorTile
     outputs:
       - plating
@@ -575,7 +575,7 @@
   - type: Sprite
     state: shuttlepurple
   - type: Item
-    HeldPrefix: shuttlepurple
+    heldPrefix: shuttlepurple
   - type: FloorTile
     outputs:
       - plating
@@ -591,7 +591,7 @@
   - type: Sprite
     state: shuttlered
   - type: Item
-    HeldPrefix: shuttlered
+    heldPrefix: shuttlered
   - type: FloorTile
     outputs:
       - plating
@@ -608,7 +608,7 @@
   - type: Sprite
     state: gold
   - type: Item
-    HeldPrefix: gold
+    heldPrefix: gold
   - type: FloorTile
     outputs:
       - plating
@@ -624,7 +624,7 @@
   - type: Sprite
     state: silver
   - type: Item
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: FloorTile
     outputs:
       - plating
@@ -641,7 +641,7 @@
   - type: Sprite
     state: gcircuit
   - type: Item
-    HeldPrefix: gcircuit
+    heldPrefix: gcircuit
   - type: FloorTile
     outputs:
       - plating
@@ -657,7 +657,7 @@
   - type: Sprite
     state: bcircuit
   - type: Item
-    HeldPrefix: bcircuit
+    heldPrefix: bcircuit
   - type: FloorTile
     outputs:
       - plating
@@ -674,7 +674,7 @@
   - type: Sprite
     state: grass
   - type: Item
-    HeldPrefix: grass
+    heldPrefix: grass
   - type: FloorTile
     outputs:
       - plating
@@ -690,7 +690,7 @@
   - type: Sprite
     state: grassjungle
   - type: Item
-    HeldPrefix: grassjungle
+    heldPrefix: grassjungle
   - type: FloorTile
     outputs:
       - plating
@@ -706,7 +706,7 @@
   - type: Sprite
     state: snow
   - type: Item
-    HeldPrefix: snow
+    heldPrefix: snow
   - type: FloorTile
     outputs:
       - plating

@@ -222,10 +222,6 @@ public sealed partial class StationJobsSystem : EntitySystem
                 UpdateJobsAvailable();
                 return true;
             case true:
-                // Job is unlimited so just say we adjusted it and do nothing.
-                if (jobList[jobPrototypeId] == null)
-                    return true;
-
                 stationJobs.TotalJobs += amount - (int)jobList[jobPrototypeId]!.Value;
 
                 jobList[jobPrototypeId] = (uint)amount;

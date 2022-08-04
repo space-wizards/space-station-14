@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
 using Content.Client.Items.Components;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Hands.Components;
+using Content.Shared.IdentityManagement;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 using static Content.Client.IoC.StaticIoC;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -159,11 +154,12 @@ namespace Content.Client.Items.UI
             if (_entityManager.TryGetComponent(_entity, out HandVirtualItemComponent? virtualItem)
                 && _entityManager.EntityExists(virtualItem.BlockingEntity))
             {
-                _itemNameLabel.Text = _entityManager.GetComponent<MetaDataComponent>(virtualItem.BlockingEntity).EntityName;
+                // Uses identity because we can be blocked by pulling someone
+                _itemNameLabel.Text = Identity.Name(virtualItem.BlockingEntity, _entityManager);
             }
             else
             {
-                _itemNameLabel.Text = _entityManager.GetComponent<MetaDataComponent>(_entity.Value).EntityName;
+                _itemNameLabel.Text = Identity.Name(_entity.Value, _entityManager);
             }
         }
 

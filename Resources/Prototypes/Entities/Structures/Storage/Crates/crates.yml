@@ -580,7 +580,7 @@
   parent: CrateGeneric
   components:
   - type: EntityStorage
-    Capacity: 500
+    capacity: 500
   - type: Sprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:

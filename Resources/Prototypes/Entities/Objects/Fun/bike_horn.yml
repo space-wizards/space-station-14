@@ -7,27 +7,34 @@
   - type: Sprite
     sprite: Objects/Fun/bikehorn.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     sprite: Objects/Fun/bikehorn.rsi
     size: 5
-    Slots: [Belt]
+  - type: Clothing
+    sprite: Objects/Fun/bikehorn.rsi
+    slots: [Belt]
     quickEquip: false
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       collection: BikeHorn
-    variation: 0.125
+      params:
+        variation: 0.125
   - type: UseDelay
     delay: 0.5
   - type: EmitSoundOnTrigger
     sound:
       collection: BikeHorn
+      params:
+        variation: 0.125
   - type: Tag
     tags:
     - Payload # yes, you can make re-usable prank grenades
   - type: MeleeWeapon
     hitSound:
       collection: BikeHorn
+      params:
+        variation: 0.125
     damage:
       types:
         Blunt: 0

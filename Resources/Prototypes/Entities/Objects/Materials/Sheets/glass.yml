@@ -58,7 +58,7 @@
   - type: Sprite
     state: glass_3
   - type: Item
-    HeldPrefix: glass
+    heldPrefix: glass
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -111,7 +111,7 @@
   - type: Sprite
     state: rglass_3
   - type: Item
-    HeldPrefix: rglass
+    heldPrefix: rglass
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -152,7 +152,7 @@
   - type: Sprite
     state: pglass_3
   - type: Item
-    HeldPrefix: pglass
+    heldPrefix: pglass
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -190,7 +190,7 @@
   - type: Sprite
     state: rpglass_3
   - type: Item
-    HeldPrefix: rpglass
+    heldPrefix: rpglass
   - type: Appearance
     visuals:
     - type: StackVisualizer

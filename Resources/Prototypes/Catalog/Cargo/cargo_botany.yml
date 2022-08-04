@@ -11,6 +11,18 @@
   group: market
 
 - type: cargoProduct
+  name: "Medicinal seeds crate"
+  id: HydroponicsSeedsMedicinal
+  description: "A wannabe chemist's dream! Contains many different medicinal seeds. Requires Hydroponics access to open."
+  icon:
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+    state: seed
+  product: CrateHydroponicsSeedsMedicinal
+  cost: 1000
+  category: Hydroponics
+  group: market
+
+- type: cargoProduct
   name: "hydroponics crate"
   id: HydroponicsTools
   description: "Supplies for growing a great garden! Contains two bottles of ammonia, two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, as well as a pair of leather gloves and a botanist's apron."
@@ -33,15 +45,3 @@
   cost: 1000
   category: Hydroponics
   group: market
-
-#- type: cargoProduct
-#  name: "hydroponics backpack crate"
-#  id: HydroponicsBackpack
-#  description: "Bring on the flood with this high-capacity backpack crate. Contains 500 units of life-giving H2O. Requires hydroponics access to open."
-#  icon:
-#    sprite:
-#    state:
-#  product:
-#  cost: 1000
-#  category: Hydroponics
-#  group: market
