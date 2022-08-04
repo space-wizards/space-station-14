@@ -1,4 +1,4 @@
-namespace Content.Server.NPC.Tracking
+namespace Content.Server.NPC.Components
 {
     /// Added when a medibot injects someone
     /// So they don't get injected again for at least a minute.

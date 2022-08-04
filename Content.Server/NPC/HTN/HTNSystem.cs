@@ -11,13 +11,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN;
 
-public sealed partial class HTNSystem : EntitySystem
+public sealed class HTNSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
 
     private ISawmill _sawmill = default!;
-    private readonly JobQueue _planQueue = new(0.005);
+    private readonly JobQueue _planQueue = new();
 
     // TODO: Move this onto JobQueue as a finishedjobs thing we can flush.
 
@@ -63,7 +63,7 @@ public sealed partial class HTNSystem : EntitySystem
     {
         foreach (var precon in primitive.Preconditions)
         {
-            IoCManager.InjectDependencies(precon);
+            precon.Initialize(EntityManager.EntitySysManager);
         }
 
         primitive.Operator.Initialize();
@@ -95,7 +95,7 @@ public sealed partial class HTNSystem : EntitySystem
 
             foreach (var precon in branch.Preconditions)
             {
-                IoCManager.InjectDependencies(precon);
+                precon.Initialize(EntityManager.EntitySysManager);
             }
         }
     }

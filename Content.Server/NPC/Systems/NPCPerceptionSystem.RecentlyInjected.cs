@@ -1,4 +1,4 @@
-using Content.Server.NPC.Tracking;
+using Content.Server.NPC.Components;
 
 namespace Content.Server.NPC.Systems;
 

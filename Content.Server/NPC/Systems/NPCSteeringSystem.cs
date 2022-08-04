@@ -11,7 +11,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Server.NPC.Steering
+namespace Content.Server.NPC.Systems
 {
     public sealed class NPCSteeringSystem : EntitySystem
     {

@@ -1,8 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.NPC.Pathfinding.Pathfinders;
-using Content.Server.NPC.Steering;
+using Content.Server.NPC.Systems;
 using Robust.Shared.Map;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;

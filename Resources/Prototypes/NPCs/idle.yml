@@ -10,6 +10,11 @@
         - id: MoveToAccessiblePrimitive
         - id: RandomIdleTimePrimitive
         - id: WaitIdleTimePrimitive
+      preconditions:
+        - !type:BuckledPrecondition
+          isBuckled: false
+        - !type:PulledPrecondition
+          isPulled: false
 
 
 - type: htnPrimitive

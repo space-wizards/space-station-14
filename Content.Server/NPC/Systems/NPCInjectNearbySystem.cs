@@ -1,7 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.NPC.Tracking;
+using Content.Server.NPC.Components;
 using Content.Server.Popups;
 using Content.Server.Silicons.Bots;
 using Content.Shared.Damage;

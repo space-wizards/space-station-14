@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.MobState;
-using Content.Server.NPC.Combat;
+using Content.Server.NPC.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 

@@ -1,4 +1,4 @@
-namespace Content.Server.NPC.Combat;
+namespace Content.Server.NPC.Components;
 
 /// <summary>
 /// Added to NPCs whenever they're in melee combat so they can be handled by the dedicated system.

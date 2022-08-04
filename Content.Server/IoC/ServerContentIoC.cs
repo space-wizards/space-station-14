@@ -13,8 +13,6 @@ using Content.Server.Maps;
 using Content.Server.Module;
 using Content.Server.MoMMI;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NPC.Utility.Considerations;
-using Content.Server.NPC.WorldState;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Preferences.Managers;
@@ -39,8 +37,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IServerDbManager, ServerDbManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<BlackboardManager, BlackboardManager>();
-            IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<ServerUpdateManager>();
             IoCManager.Register<IObjectivesManager, ObjectivesManager>();

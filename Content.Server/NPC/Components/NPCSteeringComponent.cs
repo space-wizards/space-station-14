@@ -2,7 +2,7 @@ using System.Threading;
 using Content.Server.CPUJob.JobQueues;
 using Robust.Shared.Map;
 
-namespace Content.Server.NPC.Steering;
+namespace Content.Server.NPC.Components;
 
 /// <summary>
 /// Added to NPCs that are moving.

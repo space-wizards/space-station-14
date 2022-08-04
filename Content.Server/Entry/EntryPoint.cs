@@ -11,11 +11,8 @@ using Content.Server.GhostKick;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
-using Content.Server.LandMines;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NPC.Utility.Considerations;
-using Content.Server.NPC.WorldState;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
@@ -121,8 +118,6 @@ namespace Content.Server.Entry
             else
             {
                 IoCManager.Resolve<RecipeManager>().Initialize();
-                IoCManager.Resolve<BlackboardManager>().Initialize();
-                IoCManager.Resolve<ConsiderationsManager>().Initialize();
                 IoCManager.Resolve<IAdminManager>().Initialize();
                 IoCManager.Resolve<IAfkManager>().Initialize();
                 IoCManager.Resolve<RulesManager>().Initialize();

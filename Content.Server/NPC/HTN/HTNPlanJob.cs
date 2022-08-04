@@ -11,7 +11,7 @@ namespace Content.Server.NPC.HTN;
 /// </summary>
 public sealed class HTNPlanJob : Job<HTNPlan>
 {
-    private HTNCompoundTask _rootTask;
+    private readonly HTNCompoundTask _rootTask;
     private NPCBlackboard _blackboard;
 
     public HTNPlanJob(
@@ -68,7 +68,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                         {
                             Blackboard = _blackboard.ShallowClone(),
                             CompoundTask = compound,
-                            MethodTraversal = btrIndex,
+                            BranchTraversal = btrIndex,
                             PrimitiveCount = primitiveCount,
                         });
 
@@ -101,7 +101,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             return null;
         }
 
-        var branchTraversalRecord = decompHistory.Reverse().Select(o => o.MethodTraversal).ToList();
+        var branchTraversalRecord = decompHistory.Reverse().Select(o => o.BranchTraversal).ToList();
 
         return new HTNPlan(finalPlan, branchTraversalRecord, appliedStates);
     }
@@ -138,6 +138,9 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         return true;
     }
 
+    /// <summary>
+    /// Goes through each compound task branch and tries to find an appropriate one.
+    /// </summary>
     private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
     {
         for (var i = mtrIndex; i < compound.Branches.Count; i++)
@@ -187,7 +190,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             return;
 
         // Increment MTR so next time we try the next method on the compound task.
-        mtrIndex = lastDecomp.MethodTraversal + 1;
+        mtrIndex = lastDecomp.BranchTraversal + 1;
 
         var count = finalPlan.Count;
 
@@ -200,6 +203,9 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         tasksToProcess.Enqueue(lastDecomp.CompoundTask);
     }
 
+    /// <summary>
+    /// Stores the state of an HTN Plan while planning it. This is so we can rollback if a particular branch is unsuitable.
+    /// </summary>
     private sealed class DecompositionState
     {
         /// <summary>
@@ -218,9 +224,9 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         public HTNCompoundTask CompoundTask = default!;
 
         /// <summary>
-        /// Which method (AKA branch) we took of the compound task. Whenever we rollback the decomposition state
+        /// Which branch (AKA method) we took of the compound task. Whenever we rollback the decomposition state
         /// this gets incremented by 1 so we check the next method.
         /// </summary>
-        public int MethodTraversal;
+        public int BranchTraversal;
     }
 }
