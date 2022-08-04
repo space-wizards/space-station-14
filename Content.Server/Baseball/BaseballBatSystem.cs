@@ -21,7 +21,7 @@ namespace Content.Server.Baseball
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly GunSystem _GunSystem = default!;
+        [Dependency] private readonly GunSystem _gunSystem = default!;
 
         /// <inheritdoc/>
         public override void Initialize()
@@ -46,7 +46,7 @@ namespace Content.Server.Baseball
 
             foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, 0.5f, diff.ToAngle(), 50f, LookupFlags.None))
             {
-                if (EntityManager.HasComponent<ItemComponent>(entity))
+                if (EntityManager.HasComponent<ItemComponent>(entity) && EntityManager.HasComponent<ThrownItemComponent>(entity))
                 {
 
                     var rand = _random.Next(1, 5);
@@ -62,7 +62,7 @@ namespace Content.Server.Baseball
                     }
 
                     var fireball = Spawn("ProjectileFireball", EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                    _GunSystem.ShootProjectile(fireball, diff, args.User);
+                    _gunSystem.ShootProjectile(fireball, diff, args.User);
                     EntityManager.DeleteEntity(entity);
 
                 }
