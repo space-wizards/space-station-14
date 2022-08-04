@@ -1,13 +1,9 @@
-using Content.Shared.Hands.Components;
-using Content.Shared.Inventory;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.PDA;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -17,7 +13,6 @@ namespace Content.Server.Access.Systems
 {
     public sealed class IdCardSystem : SharedIdCardSystem
     {
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -25,13 +20,15 @@ namespace Content.Server.Access.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<IdCardComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<IdCardComponent, BeingMicrowavedEvent>(OnMicrowaved);
         }
 
-        private void OnInit(EntityUid uid, IdCardComponent id, ComponentInit args)
+        private void OnMapInit(EntityUid uid, IdCardComponent id, MapInitEvent args)
         {
-            id.OriginalOwnerName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
+            // On one hand, these prototypes should default to having the correct name. On the other hand, id cards are
+            // rarely ever spawned in on their own without an owner, so this is fine.
+            id.OriginalEntityName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
             UpdateEntityName(uid, id);
         }
 
@@ -116,7 +113,7 @@ namespace Content.Server.Access.Systems
 
             if (string.IsNullOrWhiteSpace(id.FullName) && string.IsNullOrWhiteSpace(id.JobTitle))
             {
-                EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalOwnerName;
+                EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalEntityName;
                 return;
             }
 
@@ -124,7 +121,7 @@ namespace Content.Server.Access.Systems
 
             var val = string.IsNullOrWhiteSpace(id.FullName)
                 ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
-                    ("originalOwnerName", id.OriginalOwnerName),
+                    ("originalOwnerName", id.OriginalEntityName),
                     ("jobSuffix", jobSuffix))
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                     ("fullName", id.FullName),
