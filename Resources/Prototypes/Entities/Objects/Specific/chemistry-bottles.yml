@@ -40,6 +40,8 @@
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
+  - type: TrashOnEmpty
+    solution: drink
 
 - type: entity
   name: bottle
@@ -161,7 +163,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink: 
+      drink:
         maxVol: 30
         reagents:
         - ReagentId: Ephedrine
@@ -174,7 +176,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink: 
+      drink:
         maxVol: 30
         reagents:
         - ReagentId: Omnizine
