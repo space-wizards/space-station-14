@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
 
@@ -18,8 +19,6 @@ namespace Content.Server.Access.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
 
-        private List<string>? AccessChangesToLog;
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -31,6 +30,7 @@ namespace Content.Server.Access.Components
             {
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
+
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -43,11 +43,8 @@ namespace Content.Server.Access.Components
             switch (obj.Message)
             {
                 case WriteToTargetIdMessage msg:
-                    TryWriteToTargetId(msg.FullName, msg.JobTitle, msg.AccessList);
+                    TryWriteToTargetId(msg.FullName, msg.JobTitle, msg.AccessList, player);
                     UpdateUserInterface();
-                    break;
-                case LogChangesToIdCardMessage msg:
-                    LogChangesSinceWindowOpened(obj.Session.AttachedEntity.Value);
                     break;
             }
         }
@@ -68,10 +65,10 @@ namespace Content.Server.Access.Components
         }
 
         /// <summary>
-        /// Called when the "Submit" button in the UI gets pressed.
+        /// Called whenever an access button is pressed, adding or removing that access from the target ID card.
         /// Writes data passed from the UI into the ID stored in <see cref="TargetIdSlot"/>, if present.
         /// </summary>
-        private void TryWriteToTargetId(string newFullName, string newJobTitle, List<string> newAccessList)
+        private void TryWriteToTargetId(string newFullName, string newJobTitle, List<string> newAccessList, EntityUid player)
         {
             if (TargetIdSlot.Item is not {Valid: true} targetIdEntity || !PrivilegedIdIsAuthorized())
                 return;
@@ -85,26 +82,15 @@ namespace Content.Server.Access.Components
                 Logger.Warning("Tried to write unknown access tag.");
                 return;
             }
-            // For admin logging in LogChangesSinceWindowOpened()
-            AccessChangesToLog = newAccessList;
 
             var accessSystem = EntitySystem.Get<AccessSystem>();
             accessSystem.TrySetTags(targetIdEntity, newAccessList);
 
-        }
-        /// <summary>
-        /// Called when the window is closed to save only the last change made to the ID card, as to avoid log spamming.
-        /// </summary>
-        private void LogChangesSinceWindowOpened(EntityUid player)
-        {
-            if (AccessChangesToLog == null)
-                return;
-
-            if (TargetIdSlot.Item is not {Valid: true} targetIdEntity)
-                return;
-
+            /*TODO: ECS IdCardConsoleComponent and then log on card ejection, together with the save.
+            This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{_entities.ToPrettyString(player):player} has modified ID Card ({_entities.ToPrettyString(targetIdEntity):entity} with these accesses ({string.Join(", ", AccessChangesToLog)})");
+                $"{_entities.ToPrettyString(player):player} has modified {_entities.ToPrettyString(targetIdEntity):entity} with the following accesses: [{string.Join(", ", newAccessList)}]");
+
         }
 
         public void UpdateUserInterface()

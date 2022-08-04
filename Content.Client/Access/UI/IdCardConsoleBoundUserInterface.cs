@@ -37,11 +37,7 @@ namespace Content.Client.Access.UI
             _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels) {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
 
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
-            _window.TargetIdButton.OnPressed += _ =>
-            {
-                SendMessage(new LogChangesToIdCardMessage());
-                SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
-            };
+            _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
 
             _window.OnClose += Close;
 

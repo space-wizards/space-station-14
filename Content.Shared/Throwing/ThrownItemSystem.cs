@@ -56,6 +56,8 @@ namespace Content.Shared.Throwing
                 fixturesComponent.Fixtures.Count != 1) return;
             if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
 
+            if (EntityManager.TryGetComponent(component.Owner, out CollideOnAnchorComponent? collide))
+                physicsComponent.CanCollide = false;
             if (fixturesComponent.Fixtures.ContainsKey(ThrowingFixture))
             {
                 Logger.Error($"Found existing throwing fixture on {component.Owner}");
