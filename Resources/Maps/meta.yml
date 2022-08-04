@@ -24064,11 +24064,11 @@ entities:
       -33,-75: 0
       -33,-74: 6
       -33,-73: 0
-      -33,-72: 6
-      -33,-71: 7
-      -33,-70: 8
+      -33,-72: 7
+      -33,-71: 8
+      -33,-70: 9
       -33,-69: 0
-      -32,-75: 9
+      -32,-75: 10
       -32,-74: 0
       -32,-73: 0
       -32,-72: 0
@@ -24099,7 +24099,7 @@ entities:
       -30,-67: 0
       -30,-66: 0
       -30,-65: 0
-      -29,-75: 9
+      -29,-75: 11
       -29,-74: 0
       -29,-73: 0
       -29,-72: 0
@@ -24110,7 +24110,7 @@ entities:
       -29,-67: 0
       -29,-66: 0
       -29,-65: 0
-      -28,-75: 10
+      -28,-75: 12
       -28,-74: 0
       -28,-73: 0
       -28,-72: 0
@@ -24121,7 +24121,7 @@ entities:
       -28,-67: 0
       -28,-66: 0
       -28,-65: 0
-      -27,-75: 11
+      -27,-75: 9
       -27,-74: 0
       -27,-73: 0
       -27,-72: 0
@@ -25691,10 +25691,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 202.38438
+      temperature: 197.84608
       moles:
-      - 15.004604
-      - 56.445892
+      - 14.66359
+      - 55.163033
       - 0
       - 0
       - 0
@@ -25706,10 +25706,25 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 197.84608
+      temperature: 172.88554
       moles:
-      - 14.66359
-      - 55.163033
+      - 12.788015
+      - 48.107296
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 190.47139
+      moles:
+      - 14.109443
+      - 53.078384
       - 0
       - 0
       - 0
@@ -25736,10 +25751,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 202.38437
+      temperature: 197.8461
       moles:
-      - 15.004604
-      - 56.445892
+      - 14.66359
+      - 55.163033
       - 0
       - 0
       - 0
@@ -25751,10 +25766,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 197.8461
+      temperature: 172.88556
       moles:
-      - 14.66359
-      - 55.163033
+      - 12.788014
+      - 48.107292
       - 0
       - 0
       - 0
@@ -40283,6 +40298,9 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
+  - inputs:
+      MedicalScannerReceiver: []
+    type: SignalReceiver
 - uid: 1973
   type: CloningPod
   components:
@@ -40299,7 +40317,11 @@ entities:
         ents: []
       machine_parts: !type:Container
         ents: []
+      System.Func`3[Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.MetaDataComponent,System.String]-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
+  - inputs:
+      CloningPodReceiver: []
+    type: SignalReceiver
 - uid: 1974
   type: ShowcaseRobotMarauder
   components:
@@ -49088,6 +49110,8 @@ entities:
     type: RefillableSolution
   - solution: food
     type: DrainableSolution
+  - tags: []
+    type: Tag
 - uid: 3164
   type: FoodCondimentBottleEnzyme
   components:
@@ -49100,6 +49124,8 @@ entities:
     type: RefillableSolution
   - solution: food
     type: DrainableSolution
+  - tags: []
+    type: Tag
 - uid: 3165
   type: FoodCondimentBottleEnzyme
   components:
@@ -49112,6 +49138,8 @@ entities:
     type: RefillableSolution
   - solution: food
     type: DrainableSolution
+  - tags: []
+    type: Tag
 - uid: 3166
   type: LargeBeaker
   components:
@@ -75952,12 +75980,18 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - tags:
+    - Trash
+    type: Tag
 - uid: 6729
   type: EpinephrineChemistryBottle
   components:
   - pos: 0.37828708,53.65387
     parent: 0
     type: Transform
+  - tags:
+    - Bottle
+    type: Tag
   - canCollide: False
     type: Physics
 - uid: 6730
@@ -94226,6 +94260,9 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - tags:
+    - Trash
+    type: Tag
 - uid: 9248
   type: VendingMachineWallMedical
   components:
@@ -126238,6 +126275,8 @@ entities:
     type: Physics
   - solution: drink
     type: DrainableSolution
+  - tags: []
+    type: Tag
 - uid: 13589
   type: DrinkWaterCup
   components:
@@ -126248,6 +126287,8 @@ entities:
     type: Physics
   - solution: drink
     type: DrainableSolution
+  - tags: []
+    type: Tag
 - uid: 13590
   type: DrinkWaterCup
   components:
@@ -126258,6 +126299,8 @@ entities:
     type: Physics
   - solution: drink
     type: DrainableSolution
+  - tags: []
+    type: Tag
 - uid: 13591
   type: WallSolid
   components:
@@ -136920,13 +136963,32 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
+  - inputs:
+      MedicalScannerReceiver:
+      - port: CloningPodSender
+        uid: 15043
+      - port: MedicalScannerSender
+        uid: 15043
+    type: SignalReceiver
 - uid: 15043
-  type: computerBodyScanner
+  type: ComputerCloningConsole
   components:
   - rot: 3.141592653589793 rad
     pos: -16.5,-44.5
     parent: 0
     type: Transform
+  - outputs:
+      MedicalScannerSender:
+      - port: MedicalScannerReceiver
+        uid: 15042
+      - port: CloningPodReceiver
+        uid: 15047
+      CloningPodSender:
+      - port: MedicalScannerReceiver
+        uid: 15042
+      - port: CloningPodReceiver
+        uid: 15047
+    type: SignalTransmitter
   - containers:
       board: !type:Container
         ents: []
@@ -136970,7 +137032,15 @@ entities:
         ents: []
       machine_parts: !type:Container
         ents: []
+      System.Func`3[Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.MetaDataComponent,System.String]-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
+  - inputs:
+      CloningPodReceiver:
+      - port: CloningPodSender
+        uid: 15043
+      - port: MedicalScannerSender
+        uid: 15043
+    type: SignalReceiver
 - uid: 15048
   type: SignCloning
   components:
@@ -145520,6 +145590,9 @@ entities:
   - pos: -26.55828,-32.44256
     parent: 0
     type: Transform
+  - tags:
+    - Bottle
+    type: Tag
   - canCollide: False
     type: Physics
 - uid: 16231
@@ -145528,6 +145601,9 @@ entities:
   - pos: -26.417656,-32.66131
     parent: 0
     type: Transform
+  - tags:
+    - Bottle
+    type: Tag
   - canCollide: False
     type: Physics
 - uid: 16232
@@ -145538,6 +145614,9 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - tags:
+    - Trash
+    type: Tag
 - uid: 16233
   type: ClothingNeckStethoscope
   components:
@@ -160512,6 +160591,8 @@ entities:
     type: RefillableSolution
   - solution: food
     type: DrainableSolution
+  - tags: []
+    type: Tag
 - uid: 18398
   type: ReagentContainerFlour
   components:
