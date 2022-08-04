@@ -66,7 +66,7 @@
   abstract: true
   parent: Clothing
   id: UnsensoredClothingUniformSkirtBase
-  description: "Not legal in Japan"
+  description: Not legal in Japan
   components:
   - type: Sprite
     state: icon
