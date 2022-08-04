@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed an issue where drained power cells could still explode, type: Fix}
-  id: 1592
-  time: '2022-05-24T00:11:20.0000000+00:00'
 - author: ike709
   changes:
   - {message: Disabling lobby music now disables round-end music., type: Tweak}
@@ -2925,3 +2920,9 @@ Entries:
   - {message: The Rat King seems to have been getting swole..., type: Add}
   id: 2091
   time: '2022-08-04T21:55:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed items not getting removed from the lathe queue when there are
+      insufficient resources., type: Fix}
+  id: 2092
+  time: '2022-08-04T23:19:31.0000000+00:00'
