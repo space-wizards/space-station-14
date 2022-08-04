@@ -41,6 +41,8 @@
   - type: Machine
     board: CloningPodMachineCircuitboard
   - type: MaterialStorage
+    materialWhiteList:
+    - Biomass
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod

@@ -2,6 +2,7 @@ using Content.Shared.Lathe;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Content.Shared.Materials;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Lathe.Components
 {
@@ -33,6 +34,12 @@ namespace Content.Server.Lathe.Components
         [ViewVariables]
         [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
         public List<string> MaterialWhiteList = new();
+
+        /// <summary>
+        /// The sound that plays when inserting an item into the storage
+        /// </summary>
+        [DataField("insertingSound")]
+        public SoundSpecifier? InsertingSound;
 
         public override ComponentState GetComponentState()
         {

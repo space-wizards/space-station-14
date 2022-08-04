@@ -31,7 +31,7 @@ namespace Content.Server.Lathe
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
@@ -96,11 +96,7 @@ namespace Content.Server.Lathe
             }
         }
 
-        /// <summary>
-        /// When someone tries to use an item on the lathe,
-        /// insert it if it's a stack and fits inside
-        /// </summary>
-        private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, MaterialStorageComponent component, InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
@@ -149,19 +145,24 @@ namespace Content.Server.Lathe
                 lastMat = mat;
             }
 
+            EntityManager.QueueDeleteEntity(args.Used);
+
             // Play a sound when inserting, if any
             if (component.InsertingSound != null)
                 _audioSys.PlayPvs(component.InsertingSound, uid);
 
+            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
+                ("item", args.Used)), uid, Filter.Entities(args.User));
+
+
+            // TODO: You can probably split this part off of lathe component too
+            if (!TryComp<LatheComponent>(uid, out var lathe))
+                return;
+
             // We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
-            EntityManager.QueueDeleteEntity(args.Used);
-
-            EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = component.InsertionTime;
-
-            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
-                ("item", args.Used)), uid, Filter.Entities(args.User));
+            EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = lathe.InsertionTime;
 
             if (matProto != null)
             {

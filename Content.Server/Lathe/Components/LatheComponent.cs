@@ -2,7 +2,6 @@ using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Content.Shared.Materials;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Lathe.Components
@@ -33,12 +32,6 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         [DataField("producingSound")]
         public SoundSpecifier? ProducingSound;
-
-        /// <summary>
-        /// The sound that plays when inserting an item into the lathe, if any
-        /// </summary>
-        [DataField("insertingSound")]
-        public SoundSpecifier? InsertingSound;
 
         /// <summmary>
         /// The lathe's UI.
