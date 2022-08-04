@@ -44,14 +44,6 @@
       partType: Head
       size: 7
       compatibility: Biological
-    #Unique stuff the skull has for one a skelly gets "boned" nyeheheh
-    - type: BodyReassemble
-      action:
-        icon: Mobs/Species/Skeleton/parts.rsi/full.png
-        name: reassemble-action
-        description: reassemble-description
-        itemIconStyle: NoItem
-        event: !type:ReassembleActionEvent
     - type: Input
       context: "human"
     - type: Speech

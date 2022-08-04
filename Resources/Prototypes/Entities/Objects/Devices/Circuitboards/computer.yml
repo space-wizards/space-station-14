@@ -222,3 +222,12 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSyndie
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CloningConsoleComputerCircuitboard
+  name: cloning console computer board
+  description: A computer printed circuit board for a cloning console
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCloningConsole
