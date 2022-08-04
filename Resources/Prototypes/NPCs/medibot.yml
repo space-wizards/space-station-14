@@ -1,0 +1,37 @@
+- type: htnCompound
+  id: MedibotCompound
+  branches:
+    - tasks:
+        - id: InjectNearbyCompound
+    - tasks:
+        - id: IdleCompound
+
+- type: htnCompound
+  id: InjectNearbyCompound
+  branches:
+    - tasks:
+        - id: PickPuddlePrimitive
+        - id: MedibotSpeakPrimitive
+        - id: MoveToAccessiblePrimitive
+        - id: SetIdleTimePrimitive
+        - id: WaitIdleTimePrimitive
+        # TODO: Injection
+
+
+- type: htnPrimitive
+  id: MedibotSpeakPrimitive
+  operator: !type:SpeakOperator
+    speech: medibot-start-inject
+
+- type: htnPrimitive
+  id: PickPuddlePrimitive
+  operator: !type:PickAccessibleComponentOperator
+    rangeKey: BufferRange
+    targetKey: MovementTarget
+    component: Puddle
+
+- type: htnPrimitive
+  id: SetIdleTimePrimitive
+  operator: !type:SetFloatOperator
+    targetKey: IdleTime
+    amount: 3
