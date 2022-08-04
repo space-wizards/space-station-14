@@ -491,6 +491,10 @@
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/drawbow2.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   parent: BaseItem
@@ -530,6 +534,10 @@
     autoCycle: true
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   parent: BaseItem

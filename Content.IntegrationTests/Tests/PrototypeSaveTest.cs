@@ -86,6 +86,9 @@ public sealed class PrototypeSaveTest
             if (_ignoredPrototypes.Contains(prototype.ID))
                 continue;
 
+            if (prototype.SetSuffix == "DEBUG")
+                continue;
+
             prototypes.Add(prototype);
         }
 
