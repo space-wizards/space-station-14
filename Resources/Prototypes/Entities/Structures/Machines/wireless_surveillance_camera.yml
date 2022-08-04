@@ -8,6 +8,9 @@
     - type: Construction
       graph: Machine
       node: machine
+      containers:
+      - machine_parts
+      - machine_board
     - type: InteractionOutline
     - type: Eye
     - type: WirelessNetworkConnection
@@ -29,6 +32,12 @@
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Camera
           type: SurveillanceCameraSetupBoundUi
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+          ents: []
+        machine_parts: !type:Container
+          ents: []
   placement:
     mode: SnapgridCenter
 
