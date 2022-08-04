@@ -1,4 +1,4 @@
-namespace Content.Shared.Throwing
+namespace Content.Server.Baseball
 {
 
     /// <summary>
@@ -9,6 +9,6 @@ namespace Content.Shared.Throwing
     {
         [DataField("wackForceMultiplier")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WackForceMultiplier {get; set; } = 10f;
+        public float WackForceMultiplier {get; set; } = 5f;
     }
 }
