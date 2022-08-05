@@ -86,6 +86,9 @@ namespace Content.Server.StationEvents
         {
             base.Update(frameTime);
 
+            if (!_configurationManager.GetCVar(CCVars.EventsEnabled))
+                return;
+
             if (!RuleStarted)
                 return;
 
