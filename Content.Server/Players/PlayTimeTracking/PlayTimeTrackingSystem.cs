@@ -19,8 +19,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Players.PlayTimeTracking;
 
 /// <summary>
-/// This handles issuing saves of role / overall times to the DB during the regular course of play.
-/// <see cref="PlayTimeTrackingManager"/> handles the actual data.
+/// Connects <see cref="PlayTimeTrackingManager"/> to the simulation state. Reports trackers and such.
 /// </summary>
 public sealed class PlayTimeTrackingSystem : EntitySystem
 {
@@ -152,6 +151,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
     {
         _tracking.QueueRefreshTrackers(ev.PlayerSession);
+        // Send timers to client when they join lobby, so the UIs are up-to-date.
         _tracking.QueueSendTimers(ev.PlayerSession);
     }
 

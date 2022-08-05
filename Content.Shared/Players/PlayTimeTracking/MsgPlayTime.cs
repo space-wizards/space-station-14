@@ -3,6 +3,9 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Players.PlayTimeTracking;
 
+/// <summary>
+/// Sent server -> client to inform the client of their play times.
+/// </summary>
 public sealed class MsgPlayTime : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.EntityEvent;

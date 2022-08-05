@@ -12,6 +12,10 @@ namespace Content.Server.Database;
 /// Manages per-user data that comes from the database. Ensures it is loaded efficiently on client connect,
 /// and ensures data is loaded before allowing players to spawn or such.
 /// </summary>
+/// <remarks>
+/// Actual loading code is handled by separate managers such as <see cref="IServerPreferencesManager"/>.
+/// This manager is simply a centralized "is loading done" controller for other code to rely on.
+/// </remarks>
 public sealed class UserDbDataManager
 {
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
