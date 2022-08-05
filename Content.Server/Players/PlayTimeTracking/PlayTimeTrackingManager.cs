@@ -30,7 +30,6 @@ public sealed class PlayTimeTrackingManager
 
     private ValueList<IPlayerSession> _playersDirty;
 
-
     // DB saving logic.
     private TimeSpan _saveInterval;
     private TimeSpan _lastSave;
@@ -63,7 +62,7 @@ public sealed class PlayTimeTrackingManager
 
     public void Update()
     {
-        RefreshDirtyTrackers();
+        UpdateDirtyPlayers();
 
         if (_timing.RealTime < _lastSave + _saveInterval)
             return;
@@ -71,21 +70,33 @@ public sealed class PlayTimeTrackingManager
         Save();
     }
 
-    private void RefreshDirtyTrackers()
+    private void UpdateDirtyPlayers()
     {
         if (_playersDirty.Count == 0)
             return;
 
         var time = _timing.RealTime;
 
-        foreach (var dirty in _playersDirty)
+        foreach (var player in _playersDirty)
         {
-            if (!_cachedPlayerData.TryGetValue(dirty, out var data))
+            if (!_cachedPlayerData.TryGetValue(player, out var data))
                 continue;
 
-            DebugTools.Assert(data.TrackersDirty);
+            DebugTools.Assert(data.IsDirty);
 
-            RefreshSingleTracker(dirty, data, time);
+            if (data.NeedRefreshTackers)
+            {
+                RefreshSingleTracker(player, data, time);
+                data.NeedRefreshTackers = true;
+            }
+
+            if (data.NeedSendTimers)
+            {
+                SendRoleTimers(player);
+                data.NeedSendTimers = false;
+            }
+
+            data.IsDirty = false;
         }
 
         _playersDirty.Clear();
@@ -97,7 +108,7 @@ public sealed class PlayTimeTrackingManager
 
         FlushSingleTracker(data, time);
 
-        data.TrackersDirty = false;
+        data.NeedRefreshTackers = false;
 
         data.ActiveTrackers.Clear();
 
@@ -150,7 +161,7 @@ public sealed class PlayTimeTrackingManager
 
         _lastSave = _timing.RealTime;
 
-        WaitPending(DoSaveAsync());
+        TrackPending(DoSaveAsync());
     }
 
     public async void SaveSession(IPlayerSession session)
@@ -158,10 +169,10 @@ public sealed class PlayTimeTrackingManager
         // This causes all trackers to refresh, ah well.
         FlushAllTrackers();
 
-        WaitPending(DoSaveSessionAsync(session));
+        TrackPending(DoSaveSessionAsync(session));
     }
 
-    private async void WaitPending(Task task)
+    private async void TrackPending(Task task)
     {
         _pendingSaveTasks.Add(task);
 
@@ -224,6 +235,7 @@ public sealed class PlayTimeTrackingManager
         data.Initialized = true;
 
         QueueRefreshTrackers(session);
+        QueueSendTimers(session);
     }
 
     public void ClientDisconnected(IPlayerSession session)
@@ -233,7 +245,7 @@ public sealed class PlayTimeTrackingManager
         _cachedPlayerData.Remove(session);
     }
 
-    public void SendRoleTimers(IPlayerSession pSession)
+    private void SendRoleTimers(IPlayerSession pSession)
     {
         var roles = GetTrackerTimes(pSession);
 
@@ -289,14 +301,28 @@ public sealed class PlayTimeTrackingManager
 
     public void QueueRefreshTrackers(IPlayerSession player)
     {
-        if (!_cachedPlayerData.TryGetValue(player, out var data))
-            return;
+        if (DirtyPlayer(player) is { } data)
+            data.NeedRefreshTackers = true;
+    }
 
-        if (data.TrackersDirty || !data.Initialized)
-            return;
+    public void QueueSendTimers(IPlayerSession player)
+    {
+        if (DirtyPlayer(player) is { } data)
+            data.NeedSendTimers = true;
+    }
 
-        data.TrackersDirty = true;
-        _playersDirty.Add(player);
+    private PlayTimeInfo? DirtyPlayer(IPlayerSession player)
+    {
+        if (!_cachedPlayerData.TryGetValue(player, out var data) || !data.Initialized)
+            return null;
+
+        if (!data.IsDirty)
+        {
+            data.IsDirty = true;
+            _playersDirty.Add(player);
+        }
+
+        return data;
     }
 
     /// <summary>
@@ -305,8 +331,9 @@ public sealed class PlayTimeTrackingManager
     private sealed class PlayTimeInfo
     {
         // Active tracking info
-
-        public bool TrackersDirty;
+        public bool IsDirty;
+        public bool NeedRefreshTackers;
+        public bool NeedSendTimers;
         public readonly HashSet<string> ActiveTrackers = new();
         public TimeSpan LastUpdate;
 

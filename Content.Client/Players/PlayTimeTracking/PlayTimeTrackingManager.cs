@@ -23,7 +23,7 @@ public sealed class PlayTimeTrackingManager
 
     public void Initialize()
     {
-        _net.RegisterNetMessage<MsgPlayTime>(RxRoleTimers);
+        _net.RegisterNetMessage<MsgPlayTime>(RxPlayTime);
 
         _client.RunLevelChanged += ClientOnRunLevelChanged;
     }
@@ -37,9 +37,15 @@ public sealed class PlayTimeTrackingManager
         }
     }
 
-    private void RxRoleTimers(MsgPlayTime message)
+    private void RxPlayTime(MsgPlayTime message)
     {
         _roles = message.Trackers;
+
+        /*var sawmill = Logger.GetSawmill("play_time");
+        foreach (var (tracker, time) in _roles)
+        {
+            sawmill.Info($"{tracker}: {time}");
+        }*/
     }
 
     public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out string? reason)

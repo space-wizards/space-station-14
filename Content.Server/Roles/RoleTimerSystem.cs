@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
+using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
@@ -44,6 +45,7 @@ public sealed class RoleTimerSystem : EntitySystem
         SubscribeLocalEvent<AFKEvent>(OnAFK);
         SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
     }
 
     public override void Shutdown()
@@ -146,6 +148,12 @@ public sealed class RoleTimerSystem : EntitySystem
             return;
 
         _tracking.QueueRefreshTrackers(actor.PlayerSession);
+    }
+
+    private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
+    {
+        _tracking.QueueRefreshTrackers(ev.PlayerSession);
+        _tracking.QueueSendTimers(ev.PlayerSession);
     }
 
     public bool IsAllowed(IPlayerSession player, string role)
