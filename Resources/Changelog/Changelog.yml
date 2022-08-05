@@ -1,117 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Removed security access from the syndicate segway, type: Fix}
-  id: 1574
-  time: '2022-05-21T20:35:16.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Fixed being able to use multitools on airlocks without first opening
-      the wiring panel with a screwdriver, type: Fix}
-  id: 1575
-  time: '2022-05-21T20:35:47.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'When the server shuts down or you fail to connect because of a key
-      error, the button shown will say `Relaunch` rather than `Reconnect` and will
-      restart the client for you.', type: Tweak}
-  id: 1576
-  time: '2022-05-22T01:56:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add gas tank internals connection sound, type: Add}
-  id: 1577
-  time: '2022-05-22T02:31:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee combat no longer possible with guns (for now)., type: Tweak}
-  - {message: Drag-drop no longer possible in combat mode., type: Tweak}
-  id: 1578
-  time: '2022-05-22T02:31:46.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'New lobby song: Spac Stac by Hayabusa', type: Add}
-  id: 1579
-  time: '2022-05-22T02:49:15.0000000+00:00'
-- author: Putnam
-  changes:
-  - {message: Game presets can now be limited by player count (both min and max),
-    type: Add}
-  id: 1580
-  time: '2022-05-22T03:55:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: More gun impact sounds have been added., type: Tweak}
-  id: 1581
-  time: '2022-05-22T08:23:37.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Glucose and sugar are now the same thing., type: Tweak}
-  - {message: Alcohols now metabolize into some ethanol., type: Add}
-  - {message: Heavily caffeinated drinks metabolize into some theobromine instead
-      of directly containing theobromine in their containers., type: Tweak}
-  id: 1582
-  time: '2022-05-22T08:25:38.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Very small damage changes will no longer interrupt doafters., type: Tweak}
-  id: 1583
-  time: '2022-05-22T08:57:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry has received several tweaks., type: Tweak}
-  id: 1584
-  time: '2022-05-22T19:29:27.0000000+00:00'
-- author: themias
-  changes:
-  - {message: The medical scanner is now climbable, type: Fix}
-  id: 1585
-  time: '2022-05-22T20:43:06.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added a reoccurrence delay to station events. By default no event will
-      reoccur twice within 30 minutes., type: Tweak}
-  id: 1586
-  time: '2022-05-23T01:01:54.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Gibbing an entity in the microwave no longer locks its UI, type: Fix}
-  id: 1587
-  time: '2022-05-23T19:39:52.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: All base animals around the station can now carry diseases. Have fun
-      giving all the beloved station pets cancer., type: Tweak}
-  id: 1588
-  time: '2022-05-23T19:40:16.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Servers can now specify their own rules file, type: Add}
-  id: 1589
-  time: '2022-05-23T19:43:09.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Ported vomiting from the Nyanotrasen fork. Several new and old diseases
-      and chems now cause vomiting., type: Add}
-  - {message: The vomit puddle sprite no longer loses its color as it evaporates.,
-    type: Fix}
-  id: 1590
-  time: '2022-05-23T23:03:27.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Balanced slipping speed so items don't go mach 5., type: Tweak}
-  id: 1591
-  time: '2022-05-23T23:11:17.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed an issue where drained power cells could still explode, type: Fix}
-  id: 1592
-  time: '2022-05-24T00:11:20.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Disabling lobby music now disables round-end music., type: Tweak}
-  id: 1593
-  time: '2022-05-24T21:45:17.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: HoP now has Brig access instead of Security access., type: Tweak}
@@ -2928,3 +2815,126 @@ Entries:
   - {message: accents carry over the radio again, type: Fix}
   id: 2073
   time: '2022-08-02T02:33:30.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: Thieving Gloves will not reveal your fingerprints to detective, type: Fix}
+  id: 2074
+  time: '2022-08-02T12:55:09.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new cave floors. Check them out in a future mapping update., type: Add}
+  id: 2075
+  time: '2022-08-02T12:55:30.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added allicins to aliums. Animals can''t eat onions, garlic or leeks!',
+    type: Add}
+  id: 2076
+  time: '2022-08-02T13:01:15.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: 'Rotating and Strafing keybinds have been swapped. Use E/Q to rotate
+      the shuttle, A/D to strafe.', type: Tweak}
+  id: 2077
+  time: '2022-08-02T13:02:28.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: backpack and duffels no longer only display default gray when held,
+    type: Fix}
+  id: 2078
+  time: '2022-08-02T21:30:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs no longer move at half speed., type: Fix}
+  - {message: NPCs shouldn't get stuck going back and forth anymore., type: Fix}
+  id: 2079
+  time: '2022-08-03T06:02:50.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Barratry has been removed., type: Remove}
+  id: 2080
+  time: '2022-08-03T23:44:11.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Emergency light alarm now uses the correct sound., type: Fix}
+  id: 2081
+  time: '2022-08-04T00:37:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed an issue preventing lathes from being unanchored using a wrench.,
+    type: Fix}
+  id: 2082
+  time: '2022-08-04T00:38:56.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: The admin announcement UI auto-closing is now optional., type: Tweak}
+  id: 2083
+  time: '2022-08-04T00:39:10.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: Muting lobby music will now also mute the restart sound (APC DESTROYED),
+    type: Tweak}
+  id: 2084
+  time: '2022-08-04T00:43:54.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: crew monitoring console now has proper window size, type: Fix}
+  - {message: id card console limits name and job lengths to 30 characters, type: Fix}
+  id: 2085
+  time: '2022-08-04T00:46:03.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: You can no longer spill closed drinks, type: Tweak}
+  id: 2086
+  time: '2022-08-04T00:47:14.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Nukes can no longer be unanchored once they are armed, without disarming
+      the nuke.', type: Fix}
+  - {message: The nuke and disk can no longer be sold to cargo., type: Fix}
+  id: 2087
+  time: '2022-08-04T03:01:14.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Removed the tiny fans from the nukie planet as it has atmos., type: Tweak}
+  id: 2088
+  time: '2022-08-04T03:02:51.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Cargo can now dock properly on delta., type: Tweak}
+  id: 2089
+  time: '2022-08-04T03:03:08.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: 'Janitors can now throw away more things, including empty teacups and
+      empty ketchup packets!', type: Tweak}
+  id: 2090
+  time: '2022-08-04T08:52:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Rat King seems to have been getting swole..., type: Add}
+  id: 2091
+  time: '2022-08-04T21:55:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed items not getting removed from the lathe queue when there are
+      insufficient resources., type: Fix}
+  id: 2092
+  time: '2022-08-04T23:19:31.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Sprite layers were added to the field gens to give them more soul, type: Add}
+  - {message: Field bouncing was added. Anything that collides with a field will be
+      thrown back a bit., type: Add}
+  - {message: Added examine text for players to check to see if a containment field
+      generator is toggled on or not., type: Add}
+  - {message: You now need less field generators to establish a full connection (4
+      instead of 8), type: Tweak}
+  - {message: 'Saltern''s singulo area now starts with less Emitters, Field Generators
+      and Rad Collectors.', type: Tweak}
+  - {message: Field Generators can now be put in a 1x1 pattern without any weird issues,
+    type: Fix}
+  - {message: Level 4 singulos can be contained without any weird escaping issues.,
+    type: Fix}
+  id: 2093
+  time: '2022-08-05T04:22:37.0000000+00:00'

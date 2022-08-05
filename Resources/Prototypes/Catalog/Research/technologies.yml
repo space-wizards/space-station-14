@@ -126,6 +126,7 @@
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
+    - CloningConsoleComputerCircuitboard
 
 - type: technology
   name: "advanced life support systems"

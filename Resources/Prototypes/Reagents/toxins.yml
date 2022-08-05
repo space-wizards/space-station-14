@@ -100,6 +100,7 @@
           - SpaceFlu
           - BirdFlew
           - Plague
+          - TongueTwister
           - MemeticAmirmir
 
 - type: reagent
@@ -421,3 +422,22 @@
           type: Animal
         reagent: Protein
         amount: 0.5
+
+- type: reagent
+  id: Allicin
+  name: reagent-name-allicin
+  desc: reagent-desc-allicin
+  physicalDesc: reagent-physical-desc-pungent
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 6
