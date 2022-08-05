@@ -12,6 +12,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Physics;
+using Content.Shared.Weapon.Melee.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -23,14 +24,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Weapon.Melee
 {
-    public sealed class MeleeWeaponSystem : EntitySystem
+    public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
         public const float DamagePitchVariation = 0.15f;
 
@@ -218,7 +219,7 @@ namespace Content.Server.Weapon.Melee
             }
 
             comp.LastAttackTime = curTime;
-            comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.ArcCooldownTime);
+            comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
             RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
         }
 

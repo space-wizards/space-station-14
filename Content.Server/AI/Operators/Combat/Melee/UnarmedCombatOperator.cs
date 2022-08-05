@@ -1,6 +1,7 @@
 using Content.Server.CombatMode;
 using Content.Server.Interaction;
 using Content.Server.Weapon.Melee.Components;
+using Content.Shared.Weapon.Melee.Components;
 
 namespace Content.Server.AI.Operators.Combat.Melee
 {

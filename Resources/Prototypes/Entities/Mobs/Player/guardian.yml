@@ -64,7 +64,6 @@
     arcwidth: 30
     arc: fist
     cooldownTime: 0.7
-    arcCooldownTime: 0.7
     damage:
       types:
         Blunt: 22

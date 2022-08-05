@@ -31,6 +31,7 @@ using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
 using Content.Server.IdentityManagement;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Weapon.Melee.Components;
 
 namespace Content.Server.Zombies
 {

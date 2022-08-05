@@ -20,7 +20,6 @@
     arcwidth: 60
     arc: default
     cooldownTime: 1.5
-    arcCooldownTime: 1.5
   - type: StaminaDamageOnHit
     damage: 55
   - type: Battery

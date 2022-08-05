@@ -12,6 +12,7 @@ using Content.Server.AI.WorldState.States.Combat;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.AI.WorldState.States.Movement;
 using Content.Server.Weapon.Melee.Components;
+using Content.Shared.Weapon.Melee.Components;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {

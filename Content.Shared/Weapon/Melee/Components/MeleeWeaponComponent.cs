@@ -1,15 +1,25 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Weapon.Melee.Components
+namespace Content.Shared.Weapon.Melee.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class MeleeWeaponComponent : Component
     {
+        /// <summary>
+        /// Do we only attack our clicked entity or do we do wide attacks?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool PrecisionMode = false;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
         public SoundSpecifier? HitSound;
 
+        /// <summary>
+        /// Plays if no damage is done to the target entity.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("noDamageSound")]
         public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
@@ -17,10 +27,6 @@ namespace Content.Server.Weapon.Melee.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]
         public SoundSpecifier MissSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
-
-        [ViewVariables]
-        [DataField("arcCooldownTime")]
-        public float ArcCooldownTime { get; } = 1f;
 
         [ViewVariables]
         [DataField("cooldownTime")]

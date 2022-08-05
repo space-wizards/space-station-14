@@ -1,12 +1,7 @@
-using System;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using static Content.Shared.Weapons.Melee.MeleeWeaponSystemMessages;
@@ -14,11 +9,10 @@ using static Content.Shared.Weapons.Melee.MeleeWeaponSystemMessages;
 namespace Content.Client.Weapons.Melee
 {
     [UsedImplicitly]
-    public sealed class MeleeWeaponSystem : EntitySystem
+    public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly EffectSystem _effectSystem = default!;
 
         public override void Initialize()
         {
@@ -83,7 +77,7 @@ namespace Content.Client.Weapons.Melee
                         DeathTime = curTime.Add(TimeSpan.FromMilliseconds(300f)),
                     };
 
-                    _effectSystem.CreateEffect(effect);
+                    // _effectSystem.CreateEffect(effect);
                 }
             }
 

@@ -8,6 +8,7 @@ using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
+using Content.Shared.Weapon.Melee.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
