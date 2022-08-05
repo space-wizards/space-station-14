@@ -6,6 +6,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
@@ -267,6 +268,10 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev);
+
+        // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
+        if (!TryComp(source, out MindComponent? mind))
+            return;
 
         if (originalMessage == message)
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {originalMessage}.");

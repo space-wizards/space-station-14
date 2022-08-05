@@ -17,6 +17,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Payload.Components;
 using Content.Shared.StepTrigger.Systems;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Explosion.EntitySystems
@@ -43,7 +44,8 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -122,23 +124,17 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (user != null)
             {
-                // There's gotta be a better way to do this, very sussy
-                if (TryComp(uid, out ContainerManagerComponent? grenade) && grenade.TryGetContainer("payload", out IContainer? container))
+                // Check if entity is bomb/mod. grenade/etc
+                if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
+                    TryComp(container.ContainedEntities.First(), out ChemicalPayloadComponent? chemicalPayloadComponent))
                 {
-                    var payload = container.ContainedEntities.First();
+                    // If a beaker is missing, the entity won't explode, so no reason to log it
+                    if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||
+                        !TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
+                        return;
 
-                    if (TryComp(payload, out ChemicalPayloadComponent? chemicalPayloadComponent))
-                    {
-                        if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA))
-                            return;
-
-                        if (!TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
-                            return;
-
-                        _adminLogger.Add(LogType.Trigger,
-                            $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
-                    }
-
+                    _adminLogger.Add(LogType.Trigger,
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
                 }
                 else
                 {
