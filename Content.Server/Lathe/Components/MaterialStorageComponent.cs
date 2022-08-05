@@ -97,5 +97,14 @@ namespace Content.Server.Lathe.Components
         {
             return InsertMaterial(id, -amount);
         }
+
+        // forgive me I needed to write a crumb of e/c code to not go fucking insane i swear i will ecs this entire shitty fucking system one day
+        public int GetMaterialAmount(string id)
+        {
+            if (!Storage.TryGetValue(id, out var amount))
+                return 0;
+
+            return amount;
+        }
     }
 }

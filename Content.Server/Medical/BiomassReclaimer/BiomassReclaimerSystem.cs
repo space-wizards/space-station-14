@@ -10,9 +10,7 @@ namespace Content.Server.Medical.BiomassReclaimer
     public sealed class BiomassReclaimerSystem : EntitySystem
     {
         [Dependency] private readonly MobStateSystem _mobState = default!;
-
         [Dependency] private readonly SharedStackSystem _stackSystem = default!;
-
 
         public override void Update(float frameTime)
         {

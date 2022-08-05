@@ -14,6 +14,7 @@ using Content.Shared.Cloning;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MobState;
+using Content.Server.Lathe.Components;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -120,11 +121,26 @@ namespace Content.Server.Cloning.Systems
             if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
                 return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
+            if (!TryComp<MaterialStorageComponent>(clonePod.Owner, out var podStorage))
+                return false;
+
             if (!TryComp<HumanoidAppearanceComponent>(bodyToClone, out var humanoid))
                 return false; // whatever body was to be cloned, was not a humanoid
 
-            var speciesProto = _prototype.Index<SpeciesPrototype>(humanoid.Species).Prototype;
-            var mob = Spawn(speciesProto, Transform(clonePod.Owner).MapPosition);
+            if (!_prototype.TryIndex<SpeciesPrototype>(humanoid.Species, out var speciesPrototype))
+                return false;
+
+            var biomassAmount = podStorage.GetMaterialAmount("Biomass");
+            biomassAmount /= 50; // the vol is hardcoded somewhere, I can't find where, and we have to do a shrimple conversion.
+
+            if (biomassAmount < speciesPrototype.CloningCost)
+                return false;
+
+            podStorage.RemoveMaterial("Biomass", speciesPrototype.CloningCost * 50);
+            var biomassAmountAfter = podStorage.GetMaterialAmount("Biomass");
+            biomassAmountAfter /= 50;
+
+            var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
             _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance);
             _appearanceSystem.UpdateSexGender(mob, humanoid.Sex, humanoid.Gender);
 
