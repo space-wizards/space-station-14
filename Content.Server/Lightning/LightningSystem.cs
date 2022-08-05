@@ -39,6 +39,7 @@ public sealed class LightningSystem : SharedLightningSystem
                 //TODO: Figure out what else should be added here, on impact doesn't shock but on collide does.
                 ID = "LightningBody",
                 Hard = false,
+                Body = { BodyType = BodyType.Dynamic},
                 CollisionMask = (int)CollisionGroup.ItemMask,
                 CollisionLayer = (int)CollisionGroup.SlipLayer
             };
@@ -70,7 +71,6 @@ public sealed class LightningSystem : SharedLightningSystem
         var compXForm = Transform(component.Owner);
         var compCoords = compXForm.Coordinates;
         var userXForm = Transform(args.User);
-        var userCoords = userXForm.Coordinates;
 
         var calculatedDistance = userXForm.LocalPosition - compXForm.LocalPosition;
         var userAngle = calculatedDistance.ToWorldAngle(); //This plus the above distance works.
@@ -78,7 +78,7 @@ public sealed class LightningSystem : SharedLightningSystem
         var offset = compCoords.Offset(calculatedDistance.Normalized);
         var offsetCorrection = (calculatedDistance / calculatedDistance.Length) * (calculatedDistance.Length - 1);
 
-        var ev = new LightningEvent(compCoords, userCoords, userAngle, component.MaxLength, calculatedDistance, offset, offsetCorrection);
+        var ev = new LightningEvent(userAngle, calculatedDistance, offset, offsetCorrection);
         RaiseLocalEvent(uid, ev, true);
 
         args.Handled = true;
