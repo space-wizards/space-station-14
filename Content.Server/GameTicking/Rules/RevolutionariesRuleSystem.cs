@@ -32,12 +32,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
 
     private Dictionary<Mind.Mind, bool> _aliveRevoHeads = new();
     private Dictionary<Mind.Mind, bool> _aliveCommandHeads = new();
-
     private bool _revsWon;
     public override string Prototype => "Revolution";
-
     private readonly SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
-    private readonly List<Mind.Mind> _revoHeads = new ();
+    private Dictionary<string, string> _revolutionHeadNames = new();
 
     private const string RevolutionaryHeadPrototypeId = "RevolutionaryHead";
 
@@ -85,12 +83,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
         
-        ev.AddLine(_revsWon ? Loc.GetString("revolutionaries-head-won") : Loc.GetString("revolutionaries-crew-won"));
+        ev.AddLine(_revsWon ? Loc.GetString("revolutionaries-won") : Loc.GetString("revolutionaries-crew-won"));
         ev.AddLine(Loc.GetString("revolutionaries-list-start"));
-        foreach (var revohead in _revoHeads)
+        foreach (var player in _revolutionHeadNames)
         {
-            if (revohead.CharacterName is not null)
-            ev.AddLine(revohead.CharacterName);
+            ev.AddLine(player.Key + " (" + player.Value + ")");
         }
     }
 
@@ -154,16 +151,27 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
             var antagPrototype = _prototypeManager.Index<AntagPrototype>(RevolutionaryHeadPrototypeId);
             var revoHeadRole = new TraitorRole(mind, antagPrototype);
             mind.AddRole(revoHeadRole);
-            _revoHeads.Add(mind);
             _aliveRevoHeads.Add(mind, true);
             
-            if (mind.OwnedEntity != null)
-            {
-                _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("RevoHeadGear"), null);
-            }
+            if (mind.OwnedEntity is null)
+                return;
+            
+            var messageWrapper = Loc.GetString("chat-manager-server-wrap-message");
+            _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("RevoHeadGear"), null);
+
+            if (mind.Session == null)
+                return;
+            
+            var inCharacterName = mind.CharacterName;
+            if (inCharacterName != null)
+                _revolutionHeadNames.Add(inCharacterName, mind.Session.Name);
+
+            _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, Loc.GetString("revolution-head-role-greeting"),
+               messageWrapper, default, false, mind.Session.ConnectedClient, Color.Red);
         }
 
         SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
+        
     }
 
     private void OnMobStateChanged(MobStateChangedEvent ev) 
@@ -225,6 +233,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
     {
         _aliveRevoHeads.Clear();
         _aliveCommandHeads.Clear();
+        _revolutionHeadNames = new();
         _revsWon = false;
     }
 

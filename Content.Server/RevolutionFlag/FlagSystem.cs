@@ -45,8 +45,8 @@ namespace Content.Server.RevolutionFlag;
             {
                 if (!TryComp<MindComponent>(entityInRange, out var mind))
                     continue;
-                // if (!GetRole(mind, RevolutionaryPrototypeId))
-                //     continue;
+                if (!GetRole(mind, RevolutionaryPrototypeId))
+                    continue;
                 _statusEffectSystem.TryAddStatusEffect<FlagBuffComponent>(entityInRange, CourageEffectKey, flagComp.timespan, true);
             }
         }

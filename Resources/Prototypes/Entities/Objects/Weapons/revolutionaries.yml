@@ -20,7 +20,7 @@
   name: Revolution flag
   parent: BaseItem
   id: RevolutionFlag
-  description: A flag that bears the emblem of the revolution, it may not be much but it may bring courage and strength to those that fight for freedom
+  description: A flag that bears the emblem of the revolution, it may not be much but it may bring courage to those that fight for freedom
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/revolutionflag.rsi
