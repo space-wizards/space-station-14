@@ -811,6 +811,7 @@
       sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMonasticRobeLight
