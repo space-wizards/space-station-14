@@ -823,6 +823,8 @@
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
 
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitBlueShield
   name: blue shield suit
   description: ...
