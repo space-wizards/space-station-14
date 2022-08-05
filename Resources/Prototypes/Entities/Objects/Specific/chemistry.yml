@@ -232,6 +232,8 @@
     injectOnly: false
   - type: Spillable
     solution: injector
+  - type: TrashOnEmpty
+    solution: injector
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
