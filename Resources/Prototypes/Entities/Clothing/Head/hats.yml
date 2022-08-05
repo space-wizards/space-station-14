@@ -468,6 +468,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/nursehat.rsi
 
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadBeretBlueShield
   name: beret blue shield
   description: ...
