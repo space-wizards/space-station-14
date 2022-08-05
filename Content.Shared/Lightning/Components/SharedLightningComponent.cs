@@ -6,18 +6,22 @@ namespace Content.Shared.Lightning.Components;
 public abstract class SharedLightningComponent : Component
 {
     /// <summary>
-    /// Can this lightning arc to something else?
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canArc")]
-    public bool CanArc;
-
-    /// <summary>
-    /// How many arcs should this produce/how far should it go?
+    /// If this can arc, how many targets should this arc to?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxArc")]
     public int MaxArc;
+
+    /// <summary>
+    /// List of targets that this collided with already
+    /// </summary>
+    [ViewVariables]
+    [DataField("arcTargets")]
+    public HashSet<EntityUid> ArcTargets = new();
+
+    [ViewVariables]
+    [DataField("bodyPrototype", required: true)]
+    public string BodyPrototype = default!;
 
     /// <summary>
     /// How far should this lightning go?

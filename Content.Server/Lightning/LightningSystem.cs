@@ -1,4 +1,6 @@
-﻿using Content.Server.Lightning.Components;
+﻿using System.Linq;
+using Content.Server.Containers;
+using Content.Server.Lightning.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Lightning;
 using Content.Shared.Lightning.Components;
@@ -20,23 +22,35 @@ public sealed class LightningSystem : SharedLightningSystem
         base.Initialize();
 
         SubscribeLocalEvent<LightningComponent, InteractHandEvent>(OnHandInteract);
-
         SubscribeLocalEvent<LightningComponent, LightningEvent>(OnLightning);
     }
 
+    //TODO: Make this a CreateLightning event or something
     private void OnLightning(EntityUid uid, LightningComponent component, LightningEvent ev)
     {
-        var offset = ev.Offset;
-        var ent = Spawn("LightningBase", offset);
-        var shape = new EdgeShape(ev.OffsetCorrection, new Vector2(0,0));
-        var distanceLength = ev.OffsetCorrection.Length;
+        CreateLightning(component, ev.Angle, ev.CalculatedDistance, ev.Offset, ev.OffsetCorrection);
+    }
+
+    /// <summary>
+    /// Called where the target data spawns lightning from user to target
+    /// </summary>
+    /// <param name="component"></param>
+    /// <param name="userAngle"></param>
+    /// <param name="calculatedDistance"></param>
+    /// <param name="lightningOffset"></param>
+    /// <param name="offsetCorrection"></param>
+    public void CreateLightning(LightningComponent component, Angle userAngle, Vector2 calculatedDistance, EntityCoordinates lightningOffset, Vector2 offsetCorrection)
+    {
+        var offset = lightningOffset;
+        var ent = Spawn(component.BodyPrototype, offset);
+        var shape = new EdgeShape(offsetCorrection, new Vector2(0,0));
+        var distanceLength = offsetCorrection.Length;
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
             TryComp<TransformComponent>(ent, out var xForm))
         {
-            sprites.Rotation = ev.Angle;
+            sprites.Rotation = userAngle;
             var fixture = new Fixture(physics, shape)
             {
-                //TODO: Figure out what else should be added here, on impact doesn't shock but on collide does.
                 ID = "LightningBody",
                 Hard = false,
                 Body = { BodyType = BodyType.Dynamic},
@@ -52,13 +66,49 @@ public sealed class LightningSystem : SharedLightningSystem
 
             for (int i = 0; i < distanceLength-1; i++)
             {
-                offset = offset.Offset(ev.CalculatedDistance.Normalized);
-                var newEnt = Spawn("LightningBase", offset);
+                offset = offset.Offset(calculatedDistance.Normalized);
+                var newEnt = Spawn(component.BodyPrototype, offset);
                 if (!TryComp<SpriteComponent>(newEnt, out var newSprites))
                     return;
-                newSprites.Rotation = ev.Angle;
+                newSprites.Rotation = userAngle;
                 Transform(newEnt).AttachParent(ent);
             }
+        }
+    }
+
+    /// <summary>
+    /// Gets the Target Data for the lightning
+    /// </summary>
+    /// <param name="component"></param>
+    /// <param name="target"></param>
+    public void GetTargetData(LightningComponent component, EntityUid target)
+    {
+        var compXForm = Transform(component.Owner);
+        var compCoords = compXForm.Coordinates;
+        var userXForm = Transform(target);
+
+        var calculatedDistance = userXForm.LocalPosition - compXForm.LocalPosition;
+        var userAngle = calculatedDistance.ToWorldAngle();
+
+        var offset = compCoords.Offset(calculatedDistance.Normalized);
+        var offsetCorrection = (calculatedDistance / calculatedDistance.Length) * (calculatedDistance.Length - 1);
+
+        var ev = new LightningEvent(userAngle, calculatedDistance, offset, offsetCorrection);
+        RaiseLocalEvent(component.Owner, ev, true);
+
+        if (component.MaxArc > 0 && !component.ArcTargets.Contains(component.Owner) || !component.ArcTargets.Contains(target))
+        {
+            component.ArcTargets.Add(component.Owner);
+            component.ArcTargets.Add(target);
+            Arc(component, target);
+        }
+    }
+
+    public void Arc(LightningComponent component, EntityUid target)
+    {
+        if (HasComp<LightningComponent>(target) || target.ContainsPrototypeRecursive(component.BodyPrototype))
+        {
+            return;
         }
     }
 
@@ -67,19 +117,7 @@ public sealed class LightningSystem : SharedLightningSystem
         if (args.Handled)
             return;
 
-        //TODO: Get rid of all of this, it was just a test to see how this works with spawning.
-        var compXForm = Transform(component.Owner);
-        var compCoords = compXForm.Coordinates;
-        var userXForm = Transform(args.User);
-
-        var calculatedDistance = userXForm.LocalPosition - compXForm.LocalPosition;
-        var userAngle = calculatedDistance.ToWorldAngle(); //This plus the above distance works.
-
-        var offset = compCoords.Offset(calculatedDistance.Normalized);
-        var offsetCorrection = (calculatedDistance / calculatedDistance.Length) * (calculatedDistance.Length - 1);
-
-        var ev = new LightningEvent(userAngle, calculatedDistance, offset, offsetCorrection);
-        RaiseLocalEvent(uid, ev, true);
+        GetTargetData(component, args.User);
 
         args.Handled = true;
     }

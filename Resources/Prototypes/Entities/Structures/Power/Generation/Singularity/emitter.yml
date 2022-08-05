@@ -76,3 +76,4 @@
   - type: Machine
     board: EmitterCircuitboard
   - type: Lightning
+    bodyPrototype: LightningBase
