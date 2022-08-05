@@ -66,39 +66,46 @@ public sealed class WiresSystem : EntitySystem
 
         WireLayout? layout = null;
         List<Wire>? wireSet = null;
-        if (wires.LayoutId != null)
+        if (!wires.AlwaysRandomize)
         {
-            if (!wires.AlwaysRandomize)
+            TryGetLayout(wires.LayoutId, out layout);
+        }
+
+        List<IWireAction> wireActions = new();
+        var dummyWires = 0;
+
+        if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
+        {
+            return;
+        }
+
+        dummyWires += layoutPrototype.DummyWires;
+
+        if (layoutPrototype.Wires != null)
+        {
+            wireActions.AddRange(layoutPrototype.Wires);
+        }
+
+        // does the prototype have a parent (and are the wires empty?) if so, we just create
+        // a new layout based on that
+        foreach (var parentLayout in _protoMan.EnumerateParents<WireLayoutPrototype>(wires.LayoutId))
+        {
+            if (parentLayout.Wires != null)
             {
-                TryGetLayout(wires.LayoutId, out layout);
+                wireActions.AddRange(parentLayout.Wires);
             }
 
-            if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
-                return;
+            dummyWires += parentLayout.DummyWires;
+        }
 
-            // does the prototype have a parent (and are the wires empty?) if so, we just create
-            // a new layout based on that
-            //
-            // TODO: Merge wire layouts...
-            if (!string.IsNullOrEmpty(layoutPrototype.Parent) && layoutPrototype.Wires == null)
+        if (wireActions.Count > 0)
+        {
+            foreach (var wire in wireActions)
             {
-                var parent = layoutPrototype.Parent;
-
-                if (!_protoMan.TryIndex(parent, out WireLayoutPrototype? parentPrototype))
-                    return;
-
-                layoutPrototype = parentPrototype;
+                wire.Initialize();
             }
 
-            if (layoutPrototype.Wires != null)
-            {
-                foreach (var wire in layoutPrototype.Wires)
-                {
-                    wire.Initialize();
-                }
-
-                wireSet = CreateWireSet(uid, layout, layoutPrototype.Wires, layoutPrototype.DummyWires);
-            }
+            wireSet = CreateWireSet(uid, layout, wireActions, dummyWires);
         }
 
         if (wireSet == null || wireSet.Count == 0)
@@ -108,7 +115,7 @@ public sealed class WiresSystem : EntitySystem
 
         wires.WiresList.AddRange(wireSet);
 
-        Dictionary<object, int> types = new Dictionary<object, int>();
+        var types = new Dictionary<object, int>();
 
         if (layout != null)
         {

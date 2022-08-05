@@ -9,11 +9,9 @@
     netsync: false
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
-  - type: Item
-    size: 12
-    sprite: Objects/Misc/nukedisk.rsi
   - type: StaticPrice
     price: 2000
+  - type: CargoSellBlacklist
   - type: WarpPoint
     location: nuke disk
 
@@ -28,8 +26,5 @@
     netsync: false
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
-  - type: Item
-    size: 12
-    sprite: Objects/Misc/nukedisk.rsi
   - type: StaticPrice
     price: 1 # it's worth even less than normal items. Perfection.

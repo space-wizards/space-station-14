@@ -195,7 +195,7 @@ public sealed partial class ChemistrySystem
         if (user != target)
         {
             // Create a pop-up for the target
-            var userName = Identity.Name(user, EntityManager);
+            var userName = Identity.Entity(user, EntityManager);
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
                 ("user", userName)), user, Filter.Entities(target));
 

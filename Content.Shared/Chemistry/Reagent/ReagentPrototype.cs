@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Chemistry.Reagent
@@ -30,8 +31,8 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("group")]
         public string Group { get; } = "Unknown";
 
-        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<ReagentPrototype>))]
-        public string? Parent { get; private set; }
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ReagentPrototype>))]
+        public string[]? Parents { get; private set; }
 
         [NeverPushInheritance]
         [AbstractDataFieldAttribute]
