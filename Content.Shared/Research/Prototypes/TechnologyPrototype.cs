@@ -41,7 +41,7 @@ namespace Content.Shared.Research.Prototypes
         [DataField("description")]
         public string Description
         {
-            get => (_description is not null) ? Loc.GetString(_description) : "";
+            get => (_description is not null) ? _description : "";
             private set => _description = Loc.GetString(value);
         }
 
