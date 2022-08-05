@@ -13,6 +13,14 @@ namespace Content.Server.Traitor.Uplink
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly StoreSystem _store = default!;
 
+        public int GetTCBalance(StoreComponent component)
+        {
+            FixedPoint2? tcBalance = component.Balance.GetValueOrDefault("Telecrystal");
+            var emo = tcBalance != null ? tcBalance.Value.Int() : 0;
+
+            return emo; //hey ma, that's me!
+        }
+
         public bool AddUplink(EntityUid user, FixedPoint2 balance, string uplinkPresetId = "StorePresetUplink", EntityUid? uplinkEntity = null)
         {
             // Try to find target item

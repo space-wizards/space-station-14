@@ -179,7 +179,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         }
 
         // creadth: we need to create uplink for the antag.
-        // PDA should be in place already/
+        // PDA should be in place already
         DebugTools.AssertNotNull(mind.OwnedEntity);
 
         var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
