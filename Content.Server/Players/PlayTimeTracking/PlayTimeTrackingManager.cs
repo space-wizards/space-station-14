@@ -6,11 +6,16 @@ using Content.Shared.CCVar;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
 using Robust.Shared.Asynchronous;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
+using Robust.Shared.Exceptions;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Players.PlayTimeTracking;
+
+public delegate void CalcPlayTimeTrackersCallback(in NetUserId player, HashSet<string> trackers);
 
 public sealed class PlayTimeTrackingManager
 {
@@ -19,9 +24,14 @@ public sealed class PlayTimeTrackingManager
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ITaskManager _task = default!;
+    [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 
     private ISawmill _sawmill = default!;
 
+    private ValueList<NetUserId> _playersDirty;
+
+
+    // DB saving logic.
     private TimeSpan _saveInterval;
     private TimeSpan _lastSave;
 
@@ -34,7 +44,7 @@ public sealed class PlayTimeTrackingManager
 
     private readonly Dictionary<NetUserId, PlayTimeInfo> _cachedPlayerData = new();
 
-    public event Action? BeforeSave;
+    public event CalcPlayTimeTrackersCallback? CalcTrackers;
 
     public void Initialize()
     {
@@ -53,25 +63,101 @@ public sealed class PlayTimeTrackingManager
 
     public void Update()
     {
+        RefreshDirtyTrackers();
+
         if (_timing.RealTime < _lastSave + _saveInterval)
             return;
 
         Save();
     }
 
+    private void RefreshDirtyTrackers()
+    {
+        if (_playersDirty.Count == 0)
+            return;
+
+        var time = _timing.RealTime;
+
+        foreach (var dirty in _playersDirty)
+        {
+            if (!_cachedPlayerData.TryGetValue(dirty, out var data))
+                continue;
+
+            DebugTools.Assert(data.TrackersDirty);
+
+            RefreshSingleTracker(dirty, data, time);
+        }
+
+        _playersDirty.Clear();
+    }
+
+    private void RefreshSingleTracker(in NetUserId dirty, PlayTimeInfo data, TimeSpan time)
+    {
+        DebugTools.Assert(data.Initialized);
+
+        FlushSingleTracker(data, time);
+
+        data.TrackersDirty = false;
+
+        data.ActiveTrackers.Clear();
+
+        // Fetch new trackers.
+        // Inside try catch to avoid state corruption from bad callback code.
+        try
+        {
+            CalcTrackers?.Invoke(dirty, data.ActiveTrackers);
+        }
+        catch (Exception e)
+        {
+            _runtimeLog.LogException(e, "PlayTime CalcTrackers");
+            data.ActiveTrackers.Clear();
+        }
+    }
+
+    public void FlushAllTrackers()
+    {
+        var time = _timing.RealTime;
+
+        foreach (var (userId, data) in _cachedPlayerData)
+        {
+            FlushSingleTracker(data, time);
+        }
+    }
+
+    public void FlushTracker(IPlayerSession player)
+    {
+        var time = _timing.RealTime;
+        var userId = player.UserId;
+        var data = _cachedPlayerData[userId];
+
+        FlushSingleTracker(data, time);
+    }
+
+    private static void FlushSingleTracker(PlayTimeInfo data, TimeSpan time)
+    {
+        var delta = time - data.LastUpdate;
+        data.LastUpdate = time;
+
+        // Flush active trackers into semi-permanent storage.
+        foreach (var active in data.ActiveTrackers)
+        {
+            AddTimeToTracker(data, active, delta);
+        }
+    }
+
     public async void Save()
     {
-        _lastSave = _timing.RealTime;
+        FlushAllTrackers();
 
-        BeforeSave?.Invoke();
+        _lastSave = _timing.RealTime;
 
         WaitPending(DoSaveAsync());
     }
 
     public async void SaveSession(IPlayerSession session)
     {
-        // Yes this causes all sessions to be flushed by the tracking system: Ah well.
-        BeforeSave?.Invoke();
+        // This causes all trackers to refresh, ah well.
+        FlushAllTrackers();
 
         WaitPending(DoSaveSessionAsync(session));
     }
@@ -96,12 +182,12 @@ public sealed class PlayTimeTrackingManager
 
         foreach (var (player, data) in _cachedPlayerData)
         {
-            foreach (var tracker in data.TrackersDirty)
+            foreach (var tracker in data.DbTrackersDirty)
             {
                 log.Add(new PlayTimeUpdate(player, tracker, data.Trackers[tracker]));
             }
 
-            data.TrackersDirty.Clear();
+            data.DbTrackersDirty.Clear();
         }
 
         await _db.UpdatePlayTimes(log);
@@ -111,15 +197,15 @@ public sealed class PlayTimeTrackingManager
     {
         var log = new List<PlayTimeUpdate>();
 
-        foreach (var (player, data) in _cachedPlayerData)
-        {
-            foreach (var tracker in data.TrackersDirty)
-            {
-                log.Add(new PlayTimeUpdate(player, tracker, data.Trackers[tracker]));
-            }
+        var userId = session.UserId;
+        var data = _cachedPlayerData[userId];
 
-            data.TrackersDirty.Clear();
+        foreach (var tracker in data.DbTrackersDirty)
+        {
+            log.Add(new PlayTimeUpdate(userId, tracker, data.Trackers[tracker]));
         }
+
+        data.DbTrackersDirty.Clear();
 
         await _db.UpdatePlayTimes(log);
     }
@@ -140,6 +226,8 @@ public sealed class PlayTimeTrackingManager
         }
 
         data.Initialized = true;
+
+        QueueRefreshTrackers(session);
     }
 
     public void ClientDisconnected(IPlayerSession session)
@@ -166,10 +254,15 @@ public sealed class PlayTimeTrackingManager
         if (!_cachedPlayerData.TryGetValue(id, out var data) || !data.Initialized)
             throw new InvalidOperationException("Play time info is not yet loaded for this player!");
 
+        AddTimeToTracker(data, tracker, time);
+    }
+
+    private static void AddTimeToTracker(PlayTimeInfo data, string tracker, TimeSpan time)
+    {
         ref var timer = ref CollectionsMarshal.GetValueRefOrAddDefault(data.Trackers, tracker, out _);
         timer += time;
 
-        data.TrackersDirty.Add(tracker);
+        data.DbTrackersDirty.Add(tracker);
     }
 
     public void AddTimeToOverallPlaytime(NetUserId id, TimeSpan time)
@@ -198,11 +291,32 @@ public sealed class PlayTimeTrackingManager
         return data.Trackers.GetValueOrDefault(tracker);
     }
 
+    public void QueueRefreshTrackers(IPlayerSession player)
+    {
+        var userId = player.UserId;
+        if (!_cachedPlayerData.TryGetValue(userId, out var data))
+            return;
+
+        if (data.TrackersDirty || !data.Initialized)
+            return;
+
+        data.TrackersDirty = true;
+        _playersDirty.Add(userId);
+    }
+
     /// <summary>
     /// Play time info for a particular player.
     /// </summary>
     private sealed class PlayTimeInfo
     {
+        // Active tracking info
+
+        public bool TrackersDirty;
+        public readonly HashSet<string> ActiveTrackers = new();
+        public TimeSpan LastUpdate;
+
+        // Stored tracked time info.
+
         /// <summary>
         /// Have we finished retrieving our data from the DB?
         /// </summary>
@@ -210,6 +324,9 @@ public sealed class PlayTimeTrackingManager
 
         public readonly Dictionary<string, TimeSpan> Trackers = new();
 
-        public readonly HashSet<string> TrackersDirty = new();
+        /// <summary>
+        /// Set of trackers which are different from their DB values and need to be saved to DB.
+        /// </summary>
+        public readonly HashSet<string> DbTrackersDirty = new();
     }
 }

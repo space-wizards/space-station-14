@@ -51,3 +51,12 @@ cmd-savetime-succeed = Saved playtime for {$username}
 cmd-savetime-arg-user = <user name>
 cmd-savetime-error-args = Expected exactly one argument
 
+## 'playtime_flush' command'
+
+cmd-playtime_flush-desc = Flush active trackers to stored in playtime tracking.
+cmd-playtime_flush-help = Usage: {$command} [user name]
+    This causes a flush to the internal storage only, it does not flush to DB immediately.
+    If a user is provided, only that user is flushed.
+
+cmd-playtime_flush-error-args = Expected zero or one arguments
+cmd-playtime_flush-arg-user = [user name]

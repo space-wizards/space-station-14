@@ -5,16 +5,15 @@ using Content.Server.Players;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Enums;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Roles;
@@ -26,27 +25,16 @@ namespace Content.Server.Roles;
 public sealed class RoleTimerSystem : EntitySystem
 {
     [Dependency] private readonly IAfkManager _afk = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
-
-    private ISawmill _sawmill = default!;
-
-    /// <summary>
-    /// If someone just joined track the last time we set their times so the autosave doesn't round up.
-    /// </summary>
-    private readonly Dictionary<IPlayerSession, TimeSpan> _lastSetTime = new();
+    [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _sawmill = Logger.GetSawmill("play_time");
-
-        _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-        _playTimeTracking.BeforeSave += FullSave;
+        _tracking.CalcTrackers += CalcTrackers;
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundEnd);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -55,18 +43,41 @@ public sealed class RoleTimerSystem : EntitySystem
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleRemove);
         SubscribeLocalEvent<AFKEvent>(OnAFK);
         SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
 
-        FullSave();
-
-        _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-        _playTimeTracking.BeforeSave -= FullSave;
+        _tracking.CalcTrackers -= CalcTrackers;
     }
 
+    private void CalcTrackers(in NetUserId player, HashSet<string> trackers)
+    {
+        var playerSession = _playerManager.GetSessionByUserId(player);
+
+        if (_afk.IsAfk(playerSession))
+            return;
+
+        if (!IsPlayerAlive(playerSession))
+            return;
+
+        trackers.Add(PlayTimeTrackingShared.TrackerOverall);
+        trackers.UnionWith(GetTimedRoles(playerSession));
+    }
+
+    private bool IsPlayerAlive(IPlayerSession session)
+    {
+        var attached = session.AttachedEntity;
+        if (attached == null)
+            return false;
+
+        if (!TryComp<MobStateComponent>(attached, out var state))
+            return false;
+
+        return state.CurrentState is DamageState.Alive or DamageState.Critical;
+    }
 
     public IEnumerable<string> GetTimedRoles(Mind.Mind mind)
     {
@@ -94,7 +105,7 @@ public sealed class RoleTimerSystem : EntitySystem
         if (ev.Mind.Session == null)
             return;
 
-        Save(ev.Mind.Session);
+        _tracking.QueueRefreshTrackers(ev.Mind.Session);
     }
 
     private void OnRoleAdd(RoleAddedEvent ev)
@@ -102,93 +113,41 @@ public sealed class RoleTimerSystem : EntitySystem
         if (ev.Mind.Session == null)
             return;
 
-        var time = "";
-        if (ev.Role is IRoleTimer timer)
-            time = _prototypes.Index<PlayTimeTrackerPrototype>(timer.Timer).ID;
-
-        // Save all but the current role.
-        SaveRoles(ev.Mind.Session, GetTimedRoles(ev.Mind).Where(r => r != time));
-    }
-
-    private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
-    {
-        switch (args.NewStatus)
-        {
-            case SessionStatus.Connected:
-                _lastSetTime[args.Session] = _timing.RealTime;
-                break;
-
-            case SessionStatus.Disconnected:
-                Save(args.Session);
-                _lastSetTime.Remove(args.Session);
-                break;
-        }
+        _tracking.QueueRefreshTrackers(ev.Mind.Session);
     }
 
     private void OnRoundEnd(RoundRestartCleanupEvent ev)
     {
-        _playTimeTracking.Save();
+        _tracking.Save();
     }
 
     private void OnUnAFK(ref UnAFKEvent ev)
     {
-        _lastSetTime[ev.Session] = _timing.RealTime;
+        _tracking.QueueRefreshTrackers(ev.Session);
     }
 
     private void OnAFK(ref AFKEvent ev)
     {
-        Save(ev.Session);
-    }
-
-    private void FullSave()
-    {
-        _sawmill.Info("Running full save of role timers");
-
-        // This is gonna have rounding if someone changes their jobs but it's only 5 minutes anyway, not like we need to track
-        // per second values every time they get a new job.
-        foreach (var player in Filter.GetAllPlayers())
-        {
-            var pSession = (IPlayerSession) player;
-            if (_afk.IsAfk(pSession))
-                continue;
-
-            Save(pSession);
-            _playTimeTracking.SendRoleTimers(pSession);
-        }
-    }
-
-    public void Save(IPlayerSession pSession)
-    {
-        SaveRoles(pSession, GetTimedRoles(pSession));
-    }
-
-    private void SaveRoles(IPlayerSession pSession, IEnumerable<string> roles)
-    {
-        var currentTime = _timing.RealTime;
-        if (!_lastSetTime.TryGetValue(pSession, out var lastSave))
-            lastSave = currentTime;
-
-        var addedTime = currentTime - lastSave;
-        _sawmill.Info($"Adding {addedTime.TotalSeconds:0} seconds to {pSession} playtime");
-
-        foreach (var role in roles)
-        {
-            _playTimeTracking.AddTimeToTracker(pSession.UserId, role, addedTime);
-        }
-
-        _playTimeTracking.AddTimeToOverallPlaytime(pSession.UserId, addedTime);
-        _lastSetTime[pSession] = currentTime;
+        _tracking.QueueRefreshTrackers(ev.Session);
     }
 
     private void OnPlayerAttached(PlayerAttachedEvent ev)
     {
-        PlayerRolesChanged(ev.Player);
+        _tracking.QueueRefreshTrackers(ev.Player);
     }
 
     private void OnPlayerDetached(PlayerDetachedEvent ev)
     {
         // This doesn't fire if the player doesn't leave their body. I guess it's fine?
-        PlayerRolesChanged(ev.Player);
+        _tracking.QueueRefreshTrackers(ev.Player);
+    }
+
+    private void OnMobStateChanged(MobStateChangedEvent ev)
+    {
+        if (!TryComp(ev.Entity, out ActorComponent? actor))
+            return;
+
+        _tracking.QueueRefreshTrackers(actor.PlayerSession);
     }
 
     public bool IsAllowed(NetUserId id, string role)
@@ -198,7 +157,7 @@ public sealed class RoleTimerSystem : EntitySystem
             !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
-        var playTimes = _playTimeTracking.GetTrackerTimes(id);
+        var playTimes = _tracking.GetTrackerTimes(id);
 
         return JobRequirements.TryRequirementsMet(id, job, playTimes, out _, _prototypes);
     }
@@ -209,7 +168,7 @@ public sealed class RoleTimerSystem : EntitySystem
         if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return roles;
 
-        var playTimes = _playTimeTracking.GetTrackerTimes(id);
+        var playTimes = _tracking.GetTrackerTimes(id);
 
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
@@ -236,7 +195,7 @@ public sealed class RoleTimerSystem : EntitySystem
         if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return;
 
-        var playTimes = _playTimeTracking.GetTrackerTimes(id);
+        var playTimes = _tracking.GetTrackerTimes(id);
 
         for (var i = 0; i < jobs.Count; i++)
         {
@@ -260,6 +219,6 @@ public sealed class RoleTimerSystem : EntitySystem
 
     public void PlayerRolesChanged(IPlayerSession player)
     {
-        Save(player);
+        _tracking.QueueRefreshTrackers(player);
     }
 }

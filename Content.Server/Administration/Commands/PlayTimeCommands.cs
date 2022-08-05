@@ -3,7 +3,6 @@ using Content.Shared.Administration;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Commands;
 
@@ -252,7 +251,6 @@ public sealed class SavePlayTimeCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public string Command => "savetime";
     public string Description => Loc.GetString("cmd-savetime-desc");
@@ -284,6 +282,53 @@ public sealed class SavePlayTimeCommand : IConsoleCommand
             return CompletionResult.FromHintOptions(
                 CompletionHelper.SessionNames(players: _playerManager),
                 Loc.GetString("cmd-savetime-arg-user"));
+        }
+
+        return CompletionResult.Empty;
+    }
+}
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class PlayTimeFlushCommand : IConsoleCommand
+{
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+
+    public string Command => "playtime_flush";
+    public string Description => Loc.GetString("cmd-playtime_flush-desc");
+    public string Help => Loc.GetString("cmd-playtime_flush-help", ("command", Command));
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length is not (0 or 1))
+        {
+            shell.WriteError(Loc.GetString("cmd-playtime_flush-error-args"));
+            return;
+        }
+
+        if (args.Length == 0)
+        {
+            _playTimeTracking.FlushAllTrackers();
+            return;
+        }
+
+        var name = args[0];
+        if (!_playerManager.TryGetSessionByUsername(name, out var pSession))
+        {
+            shell.WriteError(Loc.GetString("parse-session-fail", ("username", name)));
+            return;
+        }
+
+        _playTimeTracking.FlushTracker(pSession);
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.SessionNames(players: _playerManager),
+                Loc.GetString("cmd-playtime_flush-arg-user"));
         }
 
         return CompletionResult.Empty;
