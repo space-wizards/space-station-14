@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: HoP now has Brig access instead of Security access., type: Tweak}
-  id: 1594
-  time: '2022-05-24T21:53:49.0000000+00:00'
 - author: themias
   changes:
   - {message: Dead bodies can no longer recover by lying in bed, type: Fix}
@@ -2938,3 +2933,9 @@ Entries:
     type: Fix}
   id: 2093
   time: '2022-08-05T04:22:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You no longer automatically place down items when clicking on closed
+      lockers and crates., type: Fix}
+  id: 2094
+  time: '2022-08-05T23:49:16.0000000+00:00'
