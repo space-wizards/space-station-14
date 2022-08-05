@@ -191,3 +191,24 @@
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
       - id: JetpackSecurityFilled
+
+- type: entity
+  id: LockerBlueShieldFilled
+  suffix: Filled
+  parent: LockerBlueShield
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponDisabler
+      - id: PinpointerNuclear
+      - id: ClothingUniformJumpskirtBlueShield
+      - id: ClothingUniformJumpsuitBlueShield
+      - id: ClothingEyesGlassesSunglasses
+      - id: ClothingHeadsetCommand
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingShoesBlueShieldShoes
+      - id: ClothingOuterBlueShieldVest
+      - id: ClothingHeadBeretBlueShield
+      - id: MedkitCombatFilled
+      - id: MedkitFilled
+      - id: ClothingBeltSecurityFilled
