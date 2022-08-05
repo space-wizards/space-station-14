@@ -133,7 +133,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
         RaiseLocalEvent(uid, new StartClimbEvent(climbable), false);
-        RaiseLocalEvent(climbable, new ClimbedOnEvent(uid, instigator), false);
+        RaiseLocalEvent(climbable, new ClimbedOnEvent(uid, user), false);
 
         if (silent)
             return;
