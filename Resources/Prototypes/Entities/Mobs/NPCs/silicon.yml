@@ -176,6 +176,8 @@
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
   - type: Speech
+  - type: HTN
+    rootTask: MedibotCompound
   - type: Construction
     graph: MediBot
     node: bot

@@ -10,12 +10,12 @@
   id: InjectNearbyCompound
   branches:
     - tasks:
-        - id: PickPuddlePrimitive
+        - id: PickNearbyInjectablePrimitive
         - id: MedibotSpeakPrimitive
         - id: MoveToAccessiblePrimitive
         - id: SetIdleTimePrimitive
         - id: WaitIdleTimePrimitive
-        # TODO: Injection
+        - id: MedibotInjectPrimitive
 
 
 - type: htnPrimitive
@@ -24,11 +24,15 @@
     speech: medibot-start-inject
 
 - type: htnPrimitive
-  id: PickPuddlePrimitive
-  operator: !type:PickAccessibleComponentOperator
-    rangeKey: BufferRange
-    targetKey: MovementTarget
-    component: Puddle
+  id: PickNearbyInjectablePrimitive
+  operator: !type:PickNearbyInjectableOperator
+    targetKey: InjectTarget
+    targetMoveKey: MovementTarget
+
+- type: htnPrimitive
+  id: MedibotInjectPrimitive
+  operator: !type:MedibotInjectOperator
+    targetKey: InjectTarget
 
 - type: htnPrimitive
   id: SetIdleTimePrimitive

@@ -17,6 +17,7 @@ public sealed class NPCBlackboard
         {"FollowRange", 7f},
         {"IdleRange", 7f},
         {"MaximumIdleTime", 7f},
+        {MedibotInjectRange, 4f},
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
         {"VisionRadius", 7f},
@@ -174,6 +175,7 @@ public sealed class NPCBlackboard
 
     public const string Access = "Access";
     public const string FollowTarget = "FollowTarget";
+    public const string MedibotInjectRange = "MedibotInjectRange";
     public const string Owner = "Owner";
     public const string OwnerCoordinates = "OwnerCoordinates";
     public const string MovementTarget = "MovementTarget";

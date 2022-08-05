@@ -19,8 +19,6 @@ public sealed class HTNSystem : EntitySystem
     private ISawmill _sawmill = default!;
     private readonly JobQueue _planQueue = new();
 
-    // TODO: Move this onto JobQueue as a finishedjobs thing we can flush.
-
     // Hierarchical Task Network
     public override void Initialize()
     {
@@ -66,7 +64,7 @@ public sealed class HTNSystem : EntitySystem
             precon.Initialize(EntityManager.EntitySysManager);
         }
 
-        primitive.Operator.Initialize();
+        primitive.Operator.Initialize(EntityManager.EntitySysManager);
     }
 
     private void UpdateCompound(HTNCompoundTask compound)

@@ -19,9 +19,9 @@ public sealed class PickMeleeTargetOperator : HTNOperator
     [ViewVariables, DataField("keyCoordinates")]
     public string KeyCoordinates = "CombatTargetCoordinates";
 
-    public override void Initialize()
+    public override void Initialize(IEntitySystemManager sysManager)
     {
-        base.Initialize();
+        base.Initialize(sysManager);
         _tags = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiFactionTagSystem>();
     }
 

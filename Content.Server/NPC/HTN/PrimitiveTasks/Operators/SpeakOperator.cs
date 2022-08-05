@@ -9,9 +9,9 @@ public sealed class SpeakOperator : HTNOperator
     [ViewVariables, DataField("speech", required: true)]
     public string Speech = string.Empty;
 
-    public override void Initialize()
+    public override void Initialize(IEntitySystemManager sysManager)
     {
-        base.Initialize();
+        base.Initialize(sysManager);
         _chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
     }
 
@@ -19,7 +19,7 @@ public sealed class SpeakOperator : HTNOperator
     {
         var speaker = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        _chat.TrySendInGameICMessage(speaker, Speech, InGameICChatType.Speak, false);
+        _chat.TrySendInGameICMessage(speaker, Loc.GetString(Speech), InGameICChatType.Speak, false);
         return base.Update(blackboard, frameTime);
     }
 }

@@ -50,10 +50,9 @@ public sealed class MoveToOperator : HTNOperator
 
     private const string MovementCancelToken = "MovementCancelToken";
 
-    public override void Initialize()
+    public override void Initialize(IEntitySystemManager sysManager)
     {
-        base.Initialize();
-        var sysManager = IoCManager.Resolve<IEntitySystemManager>();
+        base.Initialize(sysManager);
         _pathfind = sysManager.GetEntitySystem<PathfindingSystem>();
         _steering = sysManager.GetEntitySystem<NPCSteeringSystem>();
     }

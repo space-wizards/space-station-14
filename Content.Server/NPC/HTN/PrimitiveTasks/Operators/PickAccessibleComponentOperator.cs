@@ -26,10 +26,9 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
     [ViewVariables, DataField("component", required: true)]
     public string Component = string.Empty;
 
-    public override void Initialize()
+    public override void Initialize(IEntitySystemManager sysManager)
     {
-        base.Initialize();
-        var sysManager = IoCManager.Resolve<IEntitySystemManager>();
+        base.Initialize(sysManager);
         _path = sysManager.GetEntitySystem<PathfindingSystem>();
         _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
     }

@@ -20,9 +20,9 @@ public sealed class PickAccessibleOperator : HTNOperator
     [ViewVariables, DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
 
-    public override void Initialize()
+    public override void Initialize(IEntitySystemManager sysManager)
     {
-        base.Initialize();
+        base.Initialize(sysManager);
         _reachable = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiReachableSystem>();
     }
 
