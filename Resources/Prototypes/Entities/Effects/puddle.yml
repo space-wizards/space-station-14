@@ -8,6 +8,8 @@
   - type: Sprite
     drawdepth: FloorObjects
   - type: SolutionContainerManager
+    solutions:
+      puddle: {}
   - type: Puddle
     spillSound:
       path: /Audio/Effects/Fluids/splat.ogg

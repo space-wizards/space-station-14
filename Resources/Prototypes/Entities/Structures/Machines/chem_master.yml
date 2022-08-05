@@ -60,4 +60,12 @@
   - type: Machine
     board: ChemMasterMachineCircuitboard
   - type: MaterialStorage
-
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      ChemMaster-beaker: !type:ContainerSlot
+  - type: ItemSlots
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}
