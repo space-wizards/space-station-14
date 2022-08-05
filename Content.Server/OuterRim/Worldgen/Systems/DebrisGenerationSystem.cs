@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.OuterRim.Worldgen.Components;
 using Content.Server.OuterRim.Worldgen.Prototypes;
+using Content.Shared.OuterRim.Worldgen.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -28,6 +29,9 @@ public class DebrisGenerationSystem : EntitySystem
     {
         var grid = _mapManager.CreateGrid(location.MapId);
         grid.WorldPosition = location.Position;
+
+        var identity = EnsureComp<GridIdentityComponent>(grid.GridEntityId);
+        identity.GridColor = proto.DebrisRadarColor;
 
         switch (proto.FloorplanStyle)
         {

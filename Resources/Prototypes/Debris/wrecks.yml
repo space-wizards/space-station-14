@@ -47,6 +47,7 @@
         - id: Grille
           prob: 0.3
           orGroup: Debris
+  debrisRadarColor: "#FFFFFF"
 
 
 - type: debris
@@ -98,3 +99,4 @@
         - id: Grille
           prob: 0.3
           orGroup: Debris
+  debrisRadarColor: "#FFFFFF"

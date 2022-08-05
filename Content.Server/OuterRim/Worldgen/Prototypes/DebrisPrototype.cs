@@ -39,6 +39,9 @@ public sealed class DebrisPrototype : IPrototype
 
     [DataField("radius", required: true)]
     public uint Radius { get; } = default!;
+
+    [DataField("debrisRadarColor")]
+    public Color DebrisRadarColor { get; } = Color.SandyBrown;
 }
 
 public enum DebrisFloorplanStyle

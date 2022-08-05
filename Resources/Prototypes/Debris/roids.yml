@@ -49,6 +49,7 @@
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockIce
+  debrisRadarColor: "#B2CFCF"
 
 - type: debris
   id: FrozenRoidDebris2
@@ -62,6 +63,7 @@
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockIce
+  debrisRadarColor: "#B2CFCF"
 
 - type: debris
   id: FrozenRoidDebris3
@@ -75,3 +77,4 @@
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockIce
+  debrisRadarColor: "#B2CFCF"

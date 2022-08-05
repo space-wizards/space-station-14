@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Shared.OuterRim.Worldgen.Components;
 using Content.Shared.Shuttles.BUIStates;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -158,6 +159,7 @@ public sealed class RadarControl : Control
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var fixturesQuery = _entManager.GetEntityQuery<FixturesComponent>();
         var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
+        var identityQuery = _entManager.GetEntityQuery<GridIdentityComponent>();
 
         var mapPosition = _coordinates.Value.ToMap(_entManager);
 
@@ -220,7 +222,12 @@ public sealed class RadarControl : Control
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
 
-            if (ShowIFF)
+            var gridColor = Color.Aquamarine;
+
+            if (identityQuery.TryGetComponent(grid.GridEntityId, out var identityComponent))
+                gridColor = identityComponent.GridColor;
+
+            if (ShowIFF && (identityComponent?.ShowIff ?? true))
             {
                 Label label;
 
@@ -266,8 +273,10 @@ public sealed class RadarControl : Control
                 ClearLabel(grid.GridEntityId);
             }
 
+
+
             // Detailed view
-            DrawGrid(handle, matty, gridFixtures, Color.Aquamarine);
+            DrawGrid(handle, matty, gridFixtures, gridColor);
 
             DrawDocks(handle, grid.GridEntityId, matty);
         }

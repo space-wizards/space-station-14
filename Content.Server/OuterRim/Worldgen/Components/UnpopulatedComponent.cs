@@ -10,9 +10,7 @@ namespace Content.Server.OuterRim.Worldgen.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(PopulatorSystem), typeof(DebrisGenerationSystem))]
-public class UnpopulatedComponent : Component
+public sealed class UnpopulatedComponent : Component
 {
-    public override string Name => "Unpopulated";
-
     public DebrisPopulator? Populator;
 }
