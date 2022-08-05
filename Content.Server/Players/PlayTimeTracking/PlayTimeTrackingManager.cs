@@ -92,7 +92,7 @@ public sealed class PlayTimeTrackingManager
 
             if (data.NeedSendTimers)
             {
-                SendRoleTimers(player);
+                SendPlayTimes(player);
                 data.NeedSendTimers = false;
             }
 
@@ -153,6 +153,18 @@ public sealed class PlayTimeTrackingManager
         {
             AddTimeToTracker(data, active, delta);
         }
+    }
+
+    private void SendPlayTimes(IPlayerSession pSession)
+    {
+        var roles = GetTrackerTimes(pSession);
+
+        var msg = new MsgPlayTime
+        {
+            Trackers = roles
+        };
+
+        _net.ServerSendMessage(msg, pSession.ConnectedClient);
     }
 
     public async void Save()
@@ -243,18 +255,6 @@ public sealed class PlayTimeTrackingManager
         SaveSession(session);
 
         _cachedPlayerData.Remove(session);
-    }
-
-    private void SendRoleTimers(IPlayerSession pSession)
-    {
-        var roles = GetTrackerTimes(pSession);
-
-        var msg = new MsgPlayTime
-        {
-            Trackers = roles
-        };
-
-        _net.ServerSendMessage(msg, pSession.ConnectedClient);
     }
 
     public void AddTimeToTracker(IPlayerSession id, string tracker, TimeSpan time)
