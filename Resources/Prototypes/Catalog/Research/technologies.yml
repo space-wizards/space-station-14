@@ -126,7 +126,7 @@
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
-    - CloningConsoleComputerCircuitboard
+    - BiomassReclaimerMachineCircuitboard
 
 - type: technology
   name: "advanced life support systems"
@@ -143,6 +143,7 @@
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
     - StasisBedMachineCircuitboard
+    - CloningConsoleComputerCircuitboard
 
 # Security Technology Tree
 

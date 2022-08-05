@@ -20,3 +20,5 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/reclaimer_ambience.ogg
+  - type: Machine
+    board: BiomassReclaimerMachineCircuitboard
