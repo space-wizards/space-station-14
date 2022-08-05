@@ -56,7 +56,7 @@
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBlueShieldShoes
-  name: combat boots
+  name: blue shield boots
   description: ...
   components:
   - type: Sprite
