@@ -1,0 +1,43 @@
+- type: job
+  id: Blueshield
+  name: blueshield
+  weight: 20
+  startingGear: BlueshieldGear
+  departments:
+  - Command
+  icon: "BlueShield"
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  access:
+  - BlueShield
+  - Cargo
+  - Salvage
+  - Command
+  - Engineering
+  - Atmospherics
+  - External
+  - Maintenance
+  - Medical
+  - Research
+  - Security
+  - Brig
+  - Service
+
+- type: startingGear
+  id: BlueshieldGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueShield
+    head: ClothingHeadBeretBlueShield
+    back: ClothingBackpack
+    shoes: ClothingShoesBlueShieldShoes
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterBlueShieldVest
+    id: BlueShieldPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityFilled
+  innerclothingskirt: ClothingUniformJumpskirtBlueShield
+  satchel: ClothingBackpackSatchel
+  duffelbag: ClothingBackpackDuffel
