@@ -16,6 +16,9 @@ carp-rift-warning = A rift is causing an unnaturally large energy flux at {$loca
 carp-rift-duplicate = Cannot have 2 charging rifts at the same time!
 carp-rift-examine = It is [color=yellow]{$percentage}%[/color] charged!
 carp-rift-max = You have reached your maximum amount of rifts
+carp-rift-anchor = Rifts require a stable surface to spawn.
+carp-rift-weakened = You are unable to summon more rifts in your weakened state.
+carp-rift-destroyed = A rift has been destroyed! You are now weakened temporarily.
 
 # Round end
 dragon-round-end-summary = The dragons were:

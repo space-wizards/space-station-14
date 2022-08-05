@@ -8,7 +8,7 @@
     - type: GhostTakeoverAvailable
       makeSentient: true
       name: Space dragon
-      description: Call in 3 carp rifts and take over this quadrant!
+      description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
     - type: Speech
     - type: CombatMode
       disarmAction:
@@ -20,6 +20,7 @@
     - type: MovementSpeedModifier
       baseWalkSpeed: 3
       baseSprintSpeed: 5
+      weightlessModifier: 1.5
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.Base:
@@ -113,9 +114,3 @@
         name: action-name-carp-rift
         description: action-description-carp-rift
         useDelay: 1
-      spawnAction:
-        event: !type:DragonSpawnActionEvent
-        icon: Interface/Actions/carp_summon.png
-        name: action-name-carp-summon
-        description: action-description-carp-summon
-        useDelay: 5

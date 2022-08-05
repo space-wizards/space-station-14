@@ -32,20 +32,33 @@ namespace Content.Server.Dragon
         [DataField("devourAction")]
         public EntityTargetAction? DevourAction;
 
-        [DataField("spawnActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-        public string SpawnActionId = "DragonSpawn";
-
         /// <summary>
         /// If we have active rifts.
         /// </summary>
         [ViewVariables, DataField("rifts")]
         public List<EntityUid> Rifts = new();
 
+        public bool Weakened => WeakenedAccumulator > 0f;
+
         /// <summary>
-        /// Spawn the <see cref="SpawnPrototype"/>
+        /// When any rift is destroyed how long is the dragon weakened for
         /// </summary>
-        [DataField("spawnAction")]
-        public InstantAction? SpawnAction;
+        [ViewVariables(VVAccess.ReadWrite), DataField("weakenedDuration")]
+        public float WeakenedDuration = 120f;
+
+        /// <summary>
+        /// Has a rift been destroyed and the dragon in a temporary weakened state?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("weakenedAccumulator")]
+        public float WeakenedAccumulator = 0f;
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("riftAccumulator")]
+        public float RiftAccumulator = 0f;
+
+        /// <summary>
+        /// Maximum time the dragon can go without spawning a rift before they die.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("maxAccumulator")] public float RiftMaxAccumulator = 300f;
 
         /// <summary>
         /// Spawns a rift which can summon more mobs.
@@ -66,14 +79,7 @@ namespace Content.Server.Dragon
         public float StructureDevourTime = 10f;
 
         [DataField("devourTime")]
-        public float DevourTime = 2f;
-
-        [DataField("spawnCount")] public int SpawnsLeft = 2;
-
-        [DataField("maxSpawnCount")] public int MaxSpawns = 2;
-
-        [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? SpawnPrototype = "MobCarpDragon";
+        public float DevourTime = 3f;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]
         public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
@@ -120,8 +126,6 @@ namespace Content.Server.Dragon
     }
 
     public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
-
-    public sealed class DragonSpawnActionEvent : InstantActionEvent {}
 
     public sealed class DragonSpawnRiftActionEvent : InstantActionEvent {}
 }

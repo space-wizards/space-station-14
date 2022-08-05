@@ -15,6 +15,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
 using Content.Shared.Examine;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 
@@ -28,6 +29,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
@@ -39,8 +41,8 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnDragonDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourActionEvent>(OnDevourAction);
-            SubscribeLocalEvent<DragonComponent, DragonSpawnActionEvent>(OnDragonSpawnAction);
             SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnDragonRift);
+            SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
 
             SubscribeLocalEvent<DragonComponent, DragonStructureDevourComplete>(OnDragonStructureDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourCancelledEvent>(OnDragonDevourCancelled);
@@ -57,6 +59,43 @@ namespace Content.Server.Dragon
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            foreach (var comp in EntityQuery<DragonComponent>())
+            {
+                if (comp.WeakenedAccumulator > 0f)
+                {
+                    comp.WeakenedAccumulator -= frameTime;
+
+                    // No longer weakened.
+                    if (comp.WeakenedAccumulator < 0f)
+                    {
+                        comp.WeakenedAccumulator = 0f;
+                        _movement.RefreshMovementSpeedModifiers(comp.Owner);
+                    }
+                }
+
+                // If there's an active rift don't accumulate.
+                if (comp.Rifts.Count > 0)
+                {
+                    var lastRift = comp.Rifts[^1];
+
+                    if (TryComp<DragonRiftComponent>(lastRift, out var rift) && rift.State != DragonRiftState.Finished)
+                    {
+                        comp.RiftAccumulator = 0f;
+                        continue;
+                    }
+                }
+
+                comp.RiftAccumulator += frameTime;
+
+                // Delete it, naughty dragon!
+                if (comp.RiftAccumulator >= comp.RiftMaxAccumulator)
+                {
+                    Roar(comp);
+                    QueueDel(comp.Owner);
+                }
+            }
+
             foreach (var comp in EntityQuery<DragonRiftComponent>())
             {
                 if (comp.State != DragonRiftState.Finished && comp.Accumulator >= comp.MaxAccumulator)
@@ -112,9 +151,19 @@ namespace Content.Server.Dragon
 
         private void OnRiftShutdown(EntityUid uid, DragonRiftComponent component, ComponentShutdown args)
         {
-            if (TryComp<DragonComponent>(component.Dragon, out var dragon))
+            if (TryComp<DragonComponent>(component.Dragon, out var dragon) && !dragon.Weakened)
             {
-                dragon.Rifts.Remove(uid);
+                foreach (var rift in dragon.Rifts)
+                {
+                    QueueDel(rift);
+                }
+
+                dragon.Rifts.Clear();
+
+                // We can't predict the rift being destroyed anyway so no point adding weakened to shared.
+                dragon.WeakenedAccumulator = dragon.WeakenedDuration;
+                _movement.RefreshMovementSpeedModifiers(component.Dragon);
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon, Filter.Entities(component.Dragon));
             }
         }
 
@@ -126,8 +175,22 @@ namespace Content.Server.Dragon
             };
         }
 
+        private void OnDragonMove(EntityUid uid, DragonComponent component, RefreshMovementSpeedModifiersEvent args)
+        {
+            if (component.Weakened)
+            {
+                args.ModifySpeed(0.5f, 0.5f);
+            }
+        }
+
         private void OnDragonRift(EntityUid uid, DragonComponent component, DragonSpawnRiftActionEvent args)
         {
+            if (component.Weakened)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-weakened"), uid, Filter.Entities(uid));
+                return;
+            }
+
             if (component.Rifts.Count >= 3)
             {
                 _popupSystem.PopupEntity(Loc.GetString("carp-rift-max"), uid, Filter.Entities(uid));
@@ -140,21 +203,15 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            if (component.SpawnsLeft == 0)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("dragon-spawn-action-popup-message-fail-no-eggs"), uid, Filter.Entities(uid));
-                return;
-            }
-
             var xform = Transform(uid);
 
             // Have to be on a grid fam
             if (xform.GridUid == null)
             {
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-anchor"), uid, Filter.Entities(uid));
                 return;
             }
 
-            component.SpawnsLeft--;
             var carpUid = Spawn(component.RiftPrototype, xform.MapPosition);
             component.Rifts.Add(carpUid);
             Comp<DragonRiftComponent>(carpUid).Dragon = uid;
@@ -167,7 +224,7 @@ namespace Content.Server.Dragon
         {
             foreach (var rift in component.Rifts)
             {
-                Del(rift);
+                QueueDel(rift);
             }
         }
 
@@ -195,13 +252,7 @@ namespace Content.Server.Dragon
             var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
 
             //Humanoid devours allow dragon to get eggs, corpses included
-            if (EntityManager.HasComponent<HumanoidAppearanceComponent>(args.Target))
-            {
-                // Add a spawn for a consumed humanoid
-                component.SpawnsLeft = Math.Min(component.SpawnsLeft + 1, component.MaxSpawns);
-            }
-            //Non-humanoid mobs can only heal dragon for half the normal amount, with no additional spawn tickets
-            else
+            if (!EntityManager.HasComponent<HumanoidAppearanceComponent>(args.Target))
             {
                 ichorInjection.ScaleSolution(0.5f);
             }
@@ -223,10 +274,14 @@ namespace Content.Server.Dragon
                 _audioSystem.PlayPvs(component.SoundDevour, uid, component.SoundDevour.Params);
         }
 
+        private void Roar(DragonComponent component)
+        {
+            if (component.SoundRoar != null)
+                _audioSystem.Play(component.SoundRoar, Filter.Pvs(component.Owner, 4f, EntityManager), component.Owner, component.SoundRoar.Params);
+        }
+
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
         {
-            component.SpawnsLeft = Math.Min(component.SpawnsLeft, component.MaxSpawns);
-
             //Dragon doesn't actually chew, since he sends targets right into his stomach.
             //I did it mom, I added ERP content into upstream. Legally!
             component.DragonStomach = _containerSystem.EnsureContainer<Container>(uid, "dragon_stomach");
@@ -234,14 +289,10 @@ namespace Content.Server.Dragon
             if (component.DevourAction != null)
                 _actionsSystem.AddAction(uid, component.DevourAction, null);
 
-            if (component.SpawnAction != null)
-                _actionsSystem.AddAction(uid, component.SpawnAction, null);
-
             if (component.SpawnRiftAction != null)
                 _actionsSystem.AddAction(uid, component.SpawnRiftAction, null);
 
-            if (component.SoundRoar != null)
-                _audioSystem.Play(component.SoundRoar, Filter.Pvs(uid, 4f, EntityManager), uid, component.SoundRoar.Params);
+            Roar(component);
         }
 
         /// <summary>
@@ -255,7 +306,6 @@ namespace Content.Server.Dragon
             {
                 return;
             }
-
 
             args.Handled = true;
             var target = args.Target;
@@ -301,22 +351,6 @@ namespace Content.Server.Dragon
                 BreakOnUserMove = true,
                 BreakOnStun = true,
             });
-        }
-
-        private void OnDragonSpawnAction(EntityUid dragonuid, DragonComponent component, DragonSpawnActionEvent args)
-        {
-            if (component.SpawnPrototype == null)
-                return;
-
-            // If dragon has spawns then add one.
-            if (component.SpawnsLeft > 0)
-            {
-                Spawn(component.SpawnPrototype, Transform(dragonuid).MapPosition);
-                component.SpawnsLeft--;
-                return;
-            }
-
-            _popupSystem.PopupEntity(Loc.GetString("dragon-spawn-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
         }
 
         private sealed class DragonDevourComplete : EntityEventArgs
