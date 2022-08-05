@@ -8,6 +8,7 @@ using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Species;
 using Content.Shared.Damage;
 using Content.Shared.Stacks;
+using Content.Shared.Examine;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.EUI;
@@ -21,25 +22,9 @@ using Content.Server.Lathe.Components;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Clothing.Components;
-using Content.Server.Fluids.Components;
-using Content.Server.Nutrition.Components;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Database;
-using Content.Shared.FixedPoint;
-using Content.Shared.Inventory.Events;
-using Content.Shared.Throwing;
-using Content.Shared.Verbs;
-using JetBrains.Annotations;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
+using Content.Server.Chat.Systems;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -59,6 +44,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedStackSystem _stackSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
@@ -72,6 +58,7 @@ namespace Content.Server.Cloning.Systems
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
             SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchor);
+            SubscribeLocalEvent<CloningPodComponent, ExaminedEvent>(OnExamined);
         }
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
@@ -130,6 +117,15 @@ namespace Content.Server.Cloning.Systems
             _cloningConsoleSystem.UpdateUserInterface(console);
         }
 
+        private void OnExamined(EntityUid uid, CloningPodComponent component, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange || !_powerReceiverSystem.IsPowered(uid))
+                return;
+
+            if (TryComp<MaterialStorageComponent>(uid, out var storage))
+                args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", storage.GetMaterialAmount("Biomass"))));
+        }
+
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
         {
             if (!Resolve(uid, ref clonePod) || bodyToClone == null)
@@ -166,7 +162,11 @@ namespace Content.Server.Cloning.Systems
             var biomassAmount = podStorage.GetMaterialAmount("Biomass");
 
             if (biomassAmount < speciesPrototype.CloningCost)
+            {
+                if (clonePod.ConnectedConsole != null)
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", speciesPrototype.CloningCost)), InGameICChatType.Speak, false);
                 return false;
+            }
 
             podStorage.RemoveMaterial("Biomass", speciesPrototype.CloningCost);
             clonePod.UsedBiomass = speciesPrototype.CloningCost;
@@ -176,11 +176,14 @@ namespace Content.Server.Cloning.Systems
             if (TryComp<DamageableComponent>(bodyToClone, out var damageable) &&
                 damageable.Damage.DamageDict.TryGetValue("Cellular", out var cellularDmg))
             {
+                if (cellularDmg > 0 && clonePod.ConnectedConsole != null)
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning"), InGameICChatType.Speak, false);
+
                 var chance = Math.Clamp((float) (cellularDmg / 100), 0, 1);
                 if (_robustRandom.Prob(chance))
                 {
                     UpdateStatus(CloningPodStatus.Gore, clonePod);
-                    clonePod.failedClone = true;
+                    clonePod.FailedClone = true;
                     AddComp<ActiveCloningPodComponent>(uid);
                     return true;
                 }
@@ -220,7 +223,7 @@ namespace Content.Server.Cloning.Systems
                 if (!_powerReceiverSystem.IsPowered(cloning.Owner))
                     continue;
 
-                if (cloning.failedClone)
+                if (cloning.FailedClone)
                 {
                     cloning.CloningProgress += frameTime;
                     if (cloning.CloningProgress < cloning.CloningTime)
@@ -261,7 +264,7 @@ namespace Content.Server.Cloning.Systems
 
         private void EndFailedCloning(EntityUid uid, CloningPodComponent clonePod)
         {
-            clonePod.failedClone = false;
+            clonePod.FailedClone = false;
             clonePod.CloningProgress = 0f;
             UpdateStatus(CloningPodStatus.Idle, clonePod);
             var transform = Transform(uid);

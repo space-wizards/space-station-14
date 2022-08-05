@@ -526,6 +526,8 @@
     interfaces:
       - key: enum.CloningConsoleUiKey.Key
         type: CloningConsoleBoundUserInterface
+  - type: Speech
+    speechSounds: Pai
 
 - type: entity
   parent: BaseComputer

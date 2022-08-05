@@ -127,9 +127,10 @@
   components:
   - type: Material
     materials:
-      Biomass: 50
+      Biomass: 1
   - type: Stack
     stackType: Biomass
+    maxCount: 100
   - type: Sprite
     sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube

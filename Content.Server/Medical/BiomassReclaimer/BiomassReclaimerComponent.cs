@@ -16,16 +16,18 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// This is calculated from the YieldPerUnitMass
         /// and adjusted for genetic damage too.
         /// </summary>
-        public float CurrentExpectedYield = 17.5f;
+        public float CurrentExpectedYield = 28f;
 
         /// <summary>
         /// How many units of biomass it produces for each unit of mass.
         /// </summary>
-        public float YieldPerUnitMass = 0.25f;
+        [DataField("yieldPerUnitMass")]
+        public float YieldPerUnitMass = 0.4f;
 
         /// <summary>
         /// Will this refuse to gib a living mob?
         /// </summary>
+        [DataField("safetyEnabled")]
         public bool SafetyEnabled = true;
     }
 }

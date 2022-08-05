@@ -11,7 +11,7 @@ namespace Content.Server.Cloning.Components
         [ViewVariables] public Mind.Mind? CapturedMind;
         [ViewVariables] public float CloningProgress = 0;
         [ViewVariables] public int UsedBiomass = 70;
-        [ViewVariables] public bool failedClone = false;
+        [ViewVariables] public bool FailedClone = false;
         [DataField("cloningTime")]
         [ViewVariables] public float CloningTime = 30f;
         [ViewVariables] public CloningPodStatus Status;
