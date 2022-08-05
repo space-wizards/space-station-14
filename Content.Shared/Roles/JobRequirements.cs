@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Players.PlayTimeTracking;
 using JetBrains.Annotations;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -54,7 +53,6 @@ namespace Content.Shared.Roles
     public static class JobRequirements
     {
         public static bool TryRequirementsMet(
-            NetUserId id,
             JobPrototype job,
             Dictionary<string, TimeSpan> playTimes,
             [NotNullWhen(false)] out string? reason,
@@ -66,7 +64,7 @@ namespace Content.Shared.Roles
 
             foreach (var requirement in job.Requirements)
             {
-                if (!TryRequirementMet(id, requirement, playTimes, out reason, prototypes))
+                if (!TryRequirementMet(requirement, playTimes, out reason, prototypes))
                     return false;
             }
 
@@ -77,7 +75,6 @@ namespace Content.Shared.Roles
         /// Returns a string with the reason why a particular requirement may not be met.
         /// </summary>
         public static bool TryRequirementMet(
-            NetUserId id,
             JobRequirement requirement,
             Dictionary<string, TimeSpan> playTimes,
             [NotNullWhen(false)] out string? reason,

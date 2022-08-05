@@ -60,7 +60,7 @@ public sealed class PlayTimeTrackingManager
         var first = true;
         foreach (var requirement in job.Requirements)
         {
-            if (JobRequirements.TryRequirementMet(player.UserId, requirement, roles, out reason, _prototypes))
+            if (JobRequirements.TryRequirementMet(requirement, roles, out reason, _prototypes))
                 continue;
 
             if (!first)

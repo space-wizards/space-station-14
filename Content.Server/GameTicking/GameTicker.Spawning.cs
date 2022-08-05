@@ -95,7 +95,7 @@ namespace Content.Server.GameTicking
             if (jobBans == null || jobId != null && jobBans.Contains(jobId))
                 return;
 
-            if (jobId != null && !_roleTimers.IsAllowed(player.UserId, jobId))
+            if (jobId != null && !_roleTimers.IsAllowed(player, jobId))
                 return;
             SpawnPlayer(player, character, station, jobId, lateJoin);
         }
@@ -136,7 +136,7 @@ namespace Content.Server.GameTicking
             // Figure out job restrictions
             var restrictedRoles = new HashSet<string>();
 
-            var getDisallowed = _roleTimers.GetDisallowedJobs(player.UserId);
+            var getDisallowed = _roleTimers.GetDisallowedJobs(player);
             restrictedRoles.UnionWith(getDisallowed);
 
             var jobBans = _roleBanManager.GetJobBans(player.UserId);

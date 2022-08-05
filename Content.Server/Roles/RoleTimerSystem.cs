@@ -53,18 +53,16 @@ public sealed class RoleTimerSystem : EntitySystem
         _tracking.CalcTrackers -= CalcTrackers;
     }
 
-    private void CalcTrackers(in NetUserId player, HashSet<string> trackers)
+    private void CalcTrackers(IPlayerSession player, HashSet<string> trackers)
     {
-        var playerSession = _playerManager.GetSessionByUserId(player);
-
-        if (_afk.IsAfk(playerSession))
+        if (_afk.IsAfk(player))
             return;
 
-        if (!IsPlayerAlive(playerSession))
+        if (!IsPlayerAlive(player))
             return;
 
         trackers.Add(PlayTimeTrackingShared.TrackerOverall);
-        trackers.UnionWith(GetTimedRoles(playerSession));
+        trackers.UnionWith(GetTimedRoles(player));
     }
 
     private bool IsPlayerAlive(IPlayerSession session)
@@ -150,25 +148,25 @@ public sealed class RoleTimerSystem : EntitySystem
         _tracking.QueueRefreshTrackers(actor.PlayerSession);
     }
 
-    public bool IsAllowed(NetUserId id, string role)
+    public bool IsAllowed(IPlayerSession player, string role)
     {
         if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
             job.Requirements == null ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
-        var playTimes = _tracking.GetTrackerTimes(id);
+        var playTimes = _tracking.GetTrackerTimes(player);
 
-        return JobRequirements.TryRequirementsMet(id, job, playTimes, out _, _prototypes);
+        return JobRequirements.TryRequirementsMet(job, playTimes, out _, _prototypes);
     }
 
-    public HashSet<string> GetDisallowedJobs(NetUserId id)
+    public HashSet<string> GetDisallowedJobs(IPlayerSession player)
     {
         var roles = new HashSet<string>();
         if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return roles;
 
-        var playTimes = _tracking.GetTrackerTimes(id);
+        var playTimes = _tracking.GetTrackerTimes(player);
 
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
@@ -176,7 +174,7 @@ public sealed class RoleTimerSystem : EntitySystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    if (JobRequirements.TryRequirementMet(id, requirement, playTimes, out _, _prototypes))
+                    if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
                         continue;
 
                     goto NoRole;
@@ -190,12 +188,13 @@ public sealed class RoleTimerSystem : EntitySystem
         return roles;
     }
 
-    public void RemoveDisallowedJobs(NetUserId id, ref List<string> jobs)
+    public void RemoveDisallowedJobs(NetUserId userId, ref List<string> jobs)
     {
         if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return;
 
-        var playTimes = _tracking.GetTrackerTimes(id);
+        var player = _playerManager.GetSessionByUserId(userId);
+        var playTimes = _tracking.GetTrackerTimes(player);
 
         for (var i = 0; i < jobs.Count; i++)
         {
@@ -208,7 +207,7 @@ public sealed class RoleTimerSystem : EntitySystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                if (JobRequirements.TryRequirementMet(id, requirement, playTimes, out _, _prototypes))
+                if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
                     continue;
 
                 jobs.RemoveSwap(i);

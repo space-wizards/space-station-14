@@ -30,14 +30,14 @@ public sealed class AddOverallTimeCommand : IConsoleCommand
             return;
         }
 
-        if (!_playerManager.TryGetUserId(args[0], out var userId))
+        if (!_playerManager.TryGetSessionByUsername(args[0], out var player))
         {
             shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
             return;
         }
 
-        _playTimeTracking.AddTimeToOverallPlaytime(userId, TimeSpan.FromMinutes(minutes));
-        var overall = _playTimeTracking.GetOverallPlaytime(userId);
+        _playTimeTracking.AddTimeToOverallPlaytime(player, TimeSpan.FromMinutes(minutes));
+        var overall = _playTimeTracking.GetOverallPlaytime(player);
 
         shell.WriteLine(Loc.GetString(
             "cmd-addoveralltime-succeed",
@@ -76,7 +76,7 @@ public sealed class AddRoleTimeCommand : IConsoleCommand
         }
 
         var userName = args[0];
-        if (!_playerManager.TryGetUserId(userName, out var userId))
+        if (!_playerManager.TryGetSessionByUsername(userName, out var player))
         {
             shell.WriteError(Loc.GetString("parse-session-fail", ("username", userName)));
             return;
@@ -91,8 +91,8 @@ public sealed class AddRoleTimeCommand : IConsoleCommand
             return;
         }
 
-        _playTimeTracking.AddTimeToTracker(userId, role, TimeSpan.FromMinutes(minutes));
-        var time = _playTimeTracking.GetOverallPlaytime(userId);
+        _playTimeTracking.AddTimeToTracker(player, role, TimeSpan.FromMinutes(minutes));
+        var time = _playTimeTracking.GetOverallPlaytime(player);
         shell.WriteLine(Loc.GetString("cmd-addroletime-succeed",
             ("username", userName),
             ("role", role),
@@ -141,13 +141,13 @@ public sealed class GetOverallTimeCommand : IConsoleCommand
         }
 
         var userName = args[0];
-        if (!_playerManager.TryGetUserId(userName, out var userId))
+        if (!_playerManager.TryGetSessionByUsername(userName, out var player))
         {
             shell.WriteError(Loc.GetString("parser-session-fail", ("username", userName)));
             return;
         }
 
-        var value = _playTimeTracking.GetOverallPlaytime(userId);
+        var value = _playTimeTracking.GetOverallPlaytime(player);
         shell.WriteLine(Loc.GetString(
             "cmd-getoveralltime-success",
             ("username", userName),
@@ -194,7 +194,7 @@ public sealed class GetRoleTimerCommand : IConsoleCommand
 
         if (args.Length == 1)
         {
-            var timers = _playTimeTracking.GetTrackerTimes(session.UserId);
+            var timers = _playTimeTracking.GetTrackerTimes(session);
 
             if (timers.Count == 0)
             {
@@ -212,12 +212,12 @@ public sealed class GetRoleTimerCommand : IConsoleCommand
         {
             if (args[1] == "Overall")
             {
-                var timer = _playTimeTracking.GetOverallPlaytime(session.UserId);
+                var timer = _playTimeTracking.GetOverallPlaytime(session);
                 shell.WriteLine(Loc.GetString("cmd-getroletimers-overall", ("time", timer)));
                 return;
             }
 
-            var time = _playTimeTracking.GetPlayTimeForTracker(session.UserId, args[1]);
+            var time = _playTimeTracking.GetPlayTimeForTracker(session, args[1]);
             shell.WriteLine(Loc.GetString("cmd-getroletimers-succeed", ("username", session.Name),
                 ("time", time)));
         }
