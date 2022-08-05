@@ -21,70 +21,51 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        // can't get humanoid visuals without a species
-        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Species, out var speciesRaw))
+        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerKey.Key, out var dataRaw)
+            || dataRaw is not HumanoidVisualizerData data)
         {
             return;
         }
 
-        if (speciesRaw is string speciesId)
-        {
-            if (!_prototypeManager.TryIndex(speciesId, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
-            {
-                return;
-            }
-
-            if (component.Species != speciesId)
-            {
-                if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.CustomBaseLayer, out var customBaseRaw)
-                    && customBaseRaw is Dictionary<HumanoidVisualLayers, string> customBase)
-                {
-                    MergeCustomBaseSprites(uid, baseSprites.Sprites, customBase);
-                }
-                else
-                {
-                    MergeCustomBaseSprites(uid, baseSprites.Sprites, null);
-                }
-
-                ApplyBaseSprites(uid);
-                component.Species = speciesId;
-            }
-        }
-        else
+        if (!_prototypeManager.TryIndex(data.Species, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
         {
             return;
         }
 
-        if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.SkinColor, out var skinColorRaw)
-            && skinColorRaw is Color skinColor)
+        if (component.Species != data.Species)
         {
-            if (component.SkinColor != skinColor)
+            if (data.CustomBaseLayerInfo.Count != 0)
             {
-                ApplySkinColor(uid, skinColor);
-                component.SkinColor = skinColor;
+                MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo);
+            }
+            else
+            {
+                MergeCustomBaseSprites(uid, baseSprites.Sprites, null);
+            }
+
+            ApplyBaseSprites(uid);
+            component.Species = data.Species;
+        }
+
+        if (component.SkinColor != data.SkinColor)
+        {
+            ApplySkinColor(uid, data.SkinColor);
+            component.SkinColor = data.SkinColor;
+        }
+
+        if (data.CustomBaseLayerInfo.Count != 0)
+        {
+            foreach (var (layer, info) in data.CustomBaseLayerInfo)
+            {
+                SetBaseLayerColor(uid, layer, info.Color);
             }
         }
 
-        if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.EyeColor, out var eyeColorRaw)
-            && eyeColorRaw is Color eyeColor)
-        {
-            // just set the base sprite's eye color
-            SetBaseLayerColor(uid, HumanoidVisualLayers.Eyes, eyeColor);
-        }
-
-        if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.LayerVisibility, out var layerVisRaw)
-            && layerVisRaw is List<HumanoidVisualLayers> layerVisList)
-        {
-            var layerVis = layerVisList.ToHashSet();
-            ReplaceHiddenLayers(uid, layerVis, component);
-        }
+        var layerVis = data.LayerVisibility.ToHashSet();
+        ReplaceHiddenLayers(uid, layerVis, component);
 
 
-        if (args.AppearanceData.TryGetValue(HumanoidVisualizerDataKey.Markings, out var markingsRaw)
-            && markingsRaw is List<Marking> markings)
-        {
-            DiffAndApplyMarkings(uid, markings);
-        }
+        DiffAndApplyMarkings(uid, data.Markings);
     }
 
     private void ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
@@ -353,7 +334,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
     }
 
     private void MergeCustomBaseSprites(EntityUid uid, Dictionary<HumanoidVisualLayers, string> baseSprites,
-        Dictionary<HumanoidVisualLayers, string>? customBaseSprites,
+        Dictionary<HumanoidVisualLayers, SharedHumanoidComponent.CustomBaseLayerInfo>? customBaseSprites,
         HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
@@ -376,9 +357,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        foreach (var (key, id) in customBaseSprites)
+        foreach (var (key, info) in customBaseSprites)
         {
-            if (!_prototypeManager.TryIndex(id, out HumanoidSpeciesSpriteLayer? baseLayer))
+            if (!_prototypeManager.TryIndex(info.ID, out HumanoidSpeciesSpriteLayer? baseLayer))
             {
                 continue;
             }

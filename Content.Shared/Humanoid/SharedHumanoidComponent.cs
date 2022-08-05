@@ -25,7 +25,23 @@ public abstract class SharedHumanoidComponent : Component
     ///     all layer settings.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public Dictionary<HumanoidVisualLayers, string> CustomBaseLayers = new();
+    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
+
+    [Serializable, NetSerializable]
+    public sealed class CustomBaseLayerInfo
+    {
+        public CustomBaseLayerInfo(string id, Color color)
+        {
+            ID = id;
+            Color = color;
+        }
+
+        public string ID { get; }
+        public Color Color { get; }
+    }
+
+    [ViewVariables(VVAccess.ReadOnly]
+    public Dictionary<HumanoidVisualLayers, Color> CustomBaseLayerColors = new();
 
     /// <summary>
     ///     The initial sprites that this humanoid should
