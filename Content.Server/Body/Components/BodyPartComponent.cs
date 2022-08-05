@@ -33,7 +33,7 @@ namespace Content.Server.Body.Components
             mechanism.Owner.RandomOffset(0.25f);
         }
 
-        protected override void Initialize()
+        public void MapInitialize()
         {
             base.Initialize();
 

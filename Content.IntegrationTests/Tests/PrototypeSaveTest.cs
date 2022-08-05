@@ -27,17 +27,12 @@ public sealed class PrototypeSaveTest
 {
     private readonly HashSet<string> _ignoredPrototypes = new()
     {
-        "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this.
+        "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
     };
 
     [Test]
     public async Task UninitializedSaveTest()
     {
-        // Log the problem comps
-        
-        // ah need a custom context to ignore entity uid
-        // actually..... why do mobs even have an entityuiid to save??
-
         // Apparently SpawnTest fails to clean  up properly. Due to the similarities, I'll assume this also fails.
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, Dirty = true, Destructive = true });
         var server = pairTracker.Pair.Server;
