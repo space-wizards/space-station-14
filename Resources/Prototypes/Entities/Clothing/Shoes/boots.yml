@@ -52,3 +52,14 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBlueShieldShoes
+  name: combat boots
+  description: ...
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/blueshield.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/blueshield.rsi
