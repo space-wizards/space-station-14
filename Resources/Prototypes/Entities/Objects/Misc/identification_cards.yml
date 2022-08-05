@@ -546,4 +546,4 @@
     - state: idblueshield
     - state: default
   - type: PresetIdCard
-    job: BlueShield
+    job: Blueshield
