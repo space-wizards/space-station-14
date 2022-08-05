@@ -187,12 +187,16 @@ namespace Content.Server.Lathe
                 component.Queue.RemoveAt(0);
                 return TryStartProducing(uid, prodComp, component);
             }
-                
+
             if (!component.CanProduce(recipe) || !TryComp(uid, out MaterialStorageComponent? storage))
+            {
+                component.Queue.RemoveAt(0);
                 return false;
+            }
 
             prodComp ??= EnsureComp<LatheProducingComponent>(uid);
 
+            // Do nothing if the lathe is already producing something.
             if (prodComp.Recipe != null)
                 return false;
 
@@ -203,6 +207,7 @@ namespace Content.Server.Lathe
             foreach (var (material, amount) in recipe.RequiredMaterials)
             {
                 // This should always return true, otherwise CanProduce fucked up.
+                // TODO just remove materials when first queuing, to avoid queuing more items than can actually be produced.
                 storage.RemoveMaterial(material, amount);
             }
 
@@ -278,6 +283,7 @@ namespace Content.Server.Lathe
             {
                 for (var i = 0; i < args.Quantity; i++)
                 {
+                    // TODO check required materials exist and make materials unavailable.
                     component.Queue.Add(recipe.ID);
                 }
 
