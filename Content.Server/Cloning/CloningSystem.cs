@@ -1,11 +1,13 @@
 using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.GameTicking;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Species;
 using Content.Shared.Damage;
+using Content.Shared.Stacks;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.EUI;
@@ -16,8 +18,28 @@ using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MobState;
 using Content.Server.Lathe.Components;
+using Content.Shared.Atmos;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
-
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Server.Administration.Logs;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Clothing.Components;
+using Content.Server.Fluids.Components;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
+using Content.Shared.FixedPoint;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Throwing;
+using Content.Shared.Verbs;
+using JetBrains.Annotations;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -33,6 +55,12 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedStackSystem _stackSystem = default!;
+        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+
+
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -136,12 +164,12 @@ namespace Content.Server.Cloning.Systems
 
             // biomass checks
             var biomassAmount = podStorage.GetMaterialAmount("Biomass");
-            biomassAmount /= 50; // the vol is hardcoded somewhere, I can't find where, and we have to do a shrimple conversion.
 
             if (biomassAmount < speciesPrototype.CloningCost)
                 return false;
 
-            podStorage.RemoveMaterial("Biomass", speciesPrototype.CloningCost * 50);
+            podStorage.RemoveMaterial("Biomass", speciesPrototype.CloningCost);
+            clonePod.UsedBiomass = speciesPrototype.CloningCost;
             // end of biomass checks
 
             // genetic damage checks
@@ -152,6 +180,8 @@ namespace Content.Server.Cloning.Systems
                 if (_robustRandom.Prob(chance))
                 {
                     UpdateStatus(CloningPodStatus.Gore, clonePod);
+                    clonePod.failedClone = true;
+                    AddComp<ActiveCloningPodComponent>(uid);
                     return true;
                 }
             }
@@ -192,7 +222,11 @@ namespace Content.Server.Cloning.Systems
 
                 if (cloning.failedClone)
                 {
+                    cloning.CloningProgress += frameTime;
+                    if (cloning.CloningProgress < cloning.CloningTime)
+                        continue;
 
+                    EndFailedCloning(cloning.Owner, cloning);
                 }
 
                 if (cloning.BodyContainer.ContainedEntity != null)
@@ -220,7 +254,37 @@ namespace Content.Server.Cloning.Systems
             clonePod.BodyContainer.Remove(entity);
             clonePod.CapturedMind = null;
             clonePod.CloningProgress = 0f;
+            clonePod.UsedBiomass = 0;
             UpdateStatus(CloningPodStatus.Idle, clonePod);
+            RemCompDeferred<ActiveCloningPodComponent>(uid);
+        }
+
+        private void EndFailedCloning(EntityUid uid, CloningPodComponent clonePod)
+        {
+            clonePod.failedClone = false;
+            clonePod.CloningProgress = 0f;
+            UpdateStatus(CloningPodStatus.Idle, clonePod);
+            var transform = Transform(uid);
+            var indices = _transformSystem.GetGridOrMapTilePosition(uid);
+
+            var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
+
+            Solution bloodSolution = new();
+
+            int i = 0;
+            while (i < 1)
+            {
+                tileMix?.AdjustMoles(Gas.Miasma, 6f);
+                bloodSolution.AddReagent("Blood", 50);
+                if (_robustRandom.Prob(0.2f))
+                    i++;
+            }
+            _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
+
+            var biomassStack = Spawn("MaterialBiomass", transform.Coordinates);
+            _stackSystem.SetCount(biomassStack, _robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)));
+
+            clonePod.UsedBiomass = 0;
             RemCompDeferred<ActiveCloningPodComponent>(uid);
         }
 
