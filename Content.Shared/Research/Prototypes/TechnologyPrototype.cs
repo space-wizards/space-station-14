@@ -22,7 +22,7 @@ namespace Content.Shared.Research.Prototypes
         [DataField("name")]
         public string Name
         {
-            get => (_name is not null) ? Loc.GetString(_name) : ID;
+            get => (_name is not null) ? _name : ID;
             private set => _name = Loc.GetString(value);
         }
 
