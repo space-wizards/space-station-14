@@ -472,7 +472,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadBeretBlueShield
   name: beret blue shield
-  description: ...
+  description: In his homeland, you would be considered a petty hooligan, but here you are the law.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_blue_shield.rsi
