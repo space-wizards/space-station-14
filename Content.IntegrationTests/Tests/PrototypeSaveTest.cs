@@ -22,6 +22,10 @@ namespace Content.IntegrationTests.Tests;
 ///     This test ensure that when an entity prototype is spawned into an un-initialized map, its component data is not
 ///     modified during init. I.e., when the entity is saved to the map, its data is simply the default prototype data (ignoring transform component).
 /// </summary>
+/// <remarks>
+///     If you are here becaus your test is failing, one easy way of figuring out how to fix the prototype is to just
+///     spawn it into a new empty map and seeing what the map yml looks like.
+/// </remarks>
 [TestFixture]
 public sealed class PrototypeSaveTest
 {
