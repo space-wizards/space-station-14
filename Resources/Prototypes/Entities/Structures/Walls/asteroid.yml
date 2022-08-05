@@ -3,7 +3,7 @@
   parent: BaseStructure
   name: asteroid rock
   suffix: Low Ore Yield
-  description: A rocky asteroid.
+  description: A rocky asteroid. Doesn't look very appetizing.
   components:
   - type: Gatherable
     whitelist:
@@ -21,7 +21,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 30
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -48,7 +48,7 @@
   parent: AsteroidRock
   name: asteroid rock
   suffix: higher ore yield
-  description: An asteroid.
+  description: An asteroid. Who knows what this one's seen.
   components:
   - type: Gatherable
     whitelist:
