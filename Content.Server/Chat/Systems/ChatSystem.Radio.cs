@@ -68,16 +68,16 @@ public sealed partial class ChatSystem
                         isDept = true;
                         break;
                     case 'b':
-                        // MODE_BINARY
+                        // TODO: MODE_BINARY
                         return (message, null);
                     case 'i':
-                        // MODE_INTERCOM
+                        // TODO: MODE_INTERCOM
                         return (message, null);
                     case 'r':
-                        // MODE_R_HAND
+                        // TODO: MODE_R_HAND
                         return (message, null);
                     case 'l':
-                        // MODE_L_HAND
+                        // TODO: MODE_L_HAND
                         return (message, null);
                     default:
                         _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
