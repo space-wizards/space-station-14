@@ -2,12 +2,12 @@ using Content.Shared.Movement;
 using Content.Server.DoAfter;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
-using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Player;
 using Content.Shared.Storage;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Movement.Events;
 
 namespace Content.Server.Resist;
 
@@ -22,13 +22,13 @@ public sealed class EscapeInventorySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CanEscapeInventoryComponent, RelayMoveInputEvent>(OnRelayMovement);
+        SubscribeLocalEvent<CanEscapeInventoryComponent, MoveInputEvent>(OnRelayMovement);
         SubscribeLocalEvent<CanEscapeInventoryComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeDoAfterComplete>(OnEscapeComplete);
         SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeDoAfterCancel>(OnEscapeFail);
     }
 
-    private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, RelayMoveInputEvent args)
+    private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
     {
         //Prevents the user from creating multiple DoAfters if they're already resisting.
         if (component.IsResisting == true)

@@ -3,7 +3,7 @@ using Robust.Server.Player;
 
 namespace Content.Server.Ghost.Roles.Components
 {
-    [Friend(typeof(GhostRoleSystem))]
+    [Access(typeof(GhostRoleSystem))]
     public abstract class GhostRoleComponent : Component
     {
         [DataField("name")] public string _roleName = "Unknown";
@@ -18,12 +18,20 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
         protected bool MakeSentient = true;
 
+        /// <summary>
+        ///     The probability that this ghost role will be available after init.
+        ///     Used mostly for takeover roles that want some probability of being takeover, but not 100%.
+        /// </summary>
+        [DataField("prob")]
+        public float Probability = 1f;
+
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleName
         {
-            get => _roleName;
+            get => Loc.GetString(_roleName);
             set
             {
                 _roleName = value;
@@ -32,9 +40,10 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleDescription
         {
-            get => _roleDescription;
+            get => Loc.GetString(_roleDescription);
             set
             {
                 _roleDescription = value;
@@ -43,6 +52,7 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleRules
         {
             get => _roleRules;

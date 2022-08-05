@@ -14,6 +14,22 @@
       - id: Scalpel
 
 - type: entity
+  id: ClothingBackpackDuffelCBURN
+  parent: ClothingBackpackDuffel
+  name: CBURN duffel bag
+  description: A duffel bag containing a variety of biological containment equipment.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunDoubleBarreled
+      - id: BoxShotgunFlare
+        amount: 2
+      - id: PillRomerol
+        amount: 5
+      - id: GrenadeFlash
+        amount: 2
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateMedical
   id: ClothingBackpackDuffelSyndicateFilledMedical
   name: syndicate surgical duffel bag
@@ -31,12 +47,12 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledShotgun
-  name: Bojevic bundle
-  description: "Lean and mean: Contains the popular Bojevic Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  name: Bulldog bundle
+  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
     contents:
-      - id: WeaponShotgunBojevic
+      - id: WeaponShotgunBulldog
       - id: MagazineShotgun
       - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles
@@ -57,12 +73,12 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledRevolver
-  name: Predator bundle
-  description: "Go loud and proud with a fully loaded Magnum Predator, bundled with two speed loaders."
+  name: Python bundle
+  description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRevolverPredator
+      - id: WeaponRevolverPython
       - id: SpeedLoaderMagnum
         amount: 2
 
@@ -81,29 +97,25 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   name: China-Lake bundle
-  description: "An old China-Lake grenade launcher bundled with 9 rounds of various destruction capability."
+  description: "An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability."
   components:
   - type: StorageFill
     contents:
       - id: WeaponLauncherChinaLake
       - id: GrenadeBlast
-        amount: 3
-      - id: GrenadeFlash
-        amount: 3
+        amount: 4
       - id: GrenadeFrag
-        amount: 3
-  - type: Storage
-    capacity: 200
+        amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledCarbine
-  name: Z8 Bulldog bundle
+  name: M-90gl bundle
   description: "A versatile battle rifle with an attached grenade launcher, bundled with 3 magazines and 6 grenades of various capabilities."
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRifleBulldog
+      - id: WeaponRifleM90GrenadeLauncher
       - id: MagazineRifle
         amount: 2
       - id: GrenadeBlast
@@ -116,7 +128,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
-  name: Centcom official costume duffel bag
+  name: CentCom official costume duffel bag
   description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key."
   components:
   - type: StorageFill
@@ -182,6 +194,17 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateEVABundle
+  name: syndicate EVA bundle
+  description: "Contains the Syndicate approved EVA suit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetSyndicate
+      - id: ClothingOuterHardsuitSyndicate
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateHardsuitBundle
   name: syndicate hardsuit bundle
   description: "Contains the Syndicate's signature blood red hardsuit."
@@ -213,8 +236,8 @@
     contents:
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
-      - id: WeaponPistolClarissa
-      - id: BaseUplinkRadio40TC
+      - id: WeaponPistolViper
+      - id: PinpointerNuclear
 
 
 - type: entity
@@ -231,7 +254,8 @@
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
-      - id: BaseUplinkRadio40TC
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
-      - id: WeaponPistolClarissa
+      - id: WeaponPistolViper
+      - id: PinpointerNuclear
+      - id: HandheldHealthAnalyzer

@@ -131,8 +131,8 @@ namespace Content.Server.Light.EntitySystems
             var wasReplaced = _poweredLight.ReplaceBulb(fixtureUid, bulb, fixture);
             if (wasReplaced)
             {
-                SoundSystem.Play(Filter.Pvs(replacerUid), replacer.Sound.GetSound(),
-                    replacerUid, AudioParams.Default.WithVolume(-4f));
+                SoundSystem.Play(replacer.Sound.GetSound(),
+                    Filter.Pvs(replacerUid), replacerUid, AudioParams.Default.WithVolume(-4f));
             }
 
 
@@ -169,7 +169,7 @@ namespace Content.Server.Light.EntitySystems
             {
                 var msg = Loc.GetString("comp-light-replacer-insert-light",
                     ("light-replacer", replacer.Owner), ("bulb", bulb.Owner));
-                _popupSystem.PopupEntity(msg, replacerUid, Filter.Entities(userUid.Value));
+                _popupSystem.PopupEntity(msg, replacerUid, Filter.Entities(userUid.Value), PopupType.Medium);
             }
 
             return hasInsert;
@@ -208,7 +208,7 @@ namespace Content.Server.Light.EntitySystems
             if (insertedBulbs > 0 && userUid != null)
             {
                 var msg = Loc.GetString("comp-light-replacer-refill-from-storage", ("light-replacer", storage.Owner));
-                _popupSystem.PopupEntity(msg, replacerUid, Filter.Entities(userUid.Value));
+                _popupSystem.PopupEntity(msg, replacerUid, Filter.Entities(userUid.Value), PopupType.Medium);
             }
 
             return insertedBulbs > 0;

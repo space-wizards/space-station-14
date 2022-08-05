@@ -7,7 +7,7 @@
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
     sprite: Objects/Specific/Medical/medical.rsi
-    HeldPrefix: ointment
+    heldPrefix: ointment
 
 - type: entity
   name: ointment
@@ -21,7 +21,7 @@
   - type: Sprite
     state: ointment
   - type: Item
-    HeldPrefix: ointment
+    heldPrefix: ointment
   - type: Healing
     damageContainer: Biological
     damage:
@@ -109,6 +109,10 @@
     netsync: false
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
+  - type: Stack
+    stackType: AloeCream
+    max: 10
+    count: 10
 
 # Pills
 - type: entity

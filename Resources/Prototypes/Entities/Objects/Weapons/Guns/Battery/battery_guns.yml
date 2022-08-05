@@ -5,6 +5,8 @@
   components:
   - type: Sprite
     netsync: false
+  - type: Item
+    size: 50
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
@@ -23,8 +25,16 @@
   - type: Appearance
 
 - type: entity
-  name: retro laser gun
+  id: BaseWeaponBatterySmall
   parent: BaseWeaponBattery
+  abstract: true
+  components:
+  - type: Item
+    size: 10
+
+- type: entity
+  name: retro laser gun
+  parent: BaseWeaponBatterySmall
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -37,7 +47,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
@@ -50,7 +59,7 @@
 
 - type: entity
   name: makeshift laser gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
@@ -63,7 +72,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 48
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
@@ -71,18 +79,15 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
-  - type: Construction
-    graph: MakeshiftLaser
-    node: makeshiftLaser
 
 - type: entity
-  name: cog laser carbine
+  name: laser gun
   parent: BaseWeaponBattery
-  id: WeaponLaserRifleCog
+  id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -90,8 +95,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -101,9 +105,9 @@
     fireCost: 62.5
 
 - type: entity
-  name: PDW-10 pulse pistol
-  parent: BaseWeaponBattery
-  id: WeaponPulsePistolPdw
+  name: pulse pistol
+  parent: BaseWeaponBatterySmall
+  id: WeaponPulsePistol
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
   - type: Sprite
@@ -115,7 +119,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -131,9 +134,9 @@
     startingCharge: 2000
 
 - type: entity
-  name: DEAC-12 pulse carbine
+  name: pulse carbine
   parent: BaseWeaponBattery
-  id: WeaponPulseCarbineDeac
+  id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
   - type: Sprite
@@ -145,7 +148,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -163,10 +165,10 @@
     startingCharge: 5000
 
 - type: entity
-  name: destroyer pulse rifle
+  name: pulse rifle
   parent: BaseWeaponBattery
-  id: WeaponPulseRifleDestroyer
-  description: A weapon that fully lives up to its name.
+  id: WeaponPulseRifle
+  description: A weapon that is almost as infamous as its users.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
@@ -177,7 +179,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: Gun
     fireRate: 1.5
@@ -205,7 +206,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: Gun
     fireRate: 1.5
@@ -230,7 +230,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: Gun
     soundGunshot:
@@ -245,10 +244,48 @@
   - type: Appearance
 
 - type: entity
+  name: disabler
+  parent: BaseWeaponBattery
+  id: WeaponDisabler
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  components:
+    - type: Tag
+      tags:
+        - Taser
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-0
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Item
+      size: 10
+    - type: Clothing
+      quickEquip: false
+      slots:
+        - Belt
+    - type: Gun
+      fireRate: 2
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+    - type: ProjectileBatteryAmmoProvider
+      proto: BulletDisabler
+      fireCost: 100
+    - type: MagazineVisuals
+      magState: mag
+      steps: 5
+      zeroVisible: true
+    - type: Appearance
+
+- type: entity
   name: taser
   parent: BaseWeaponBattery
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
+  # Use Disabler
+  suffix: Obsolete
   components:
   - type: Tag
     tags:
@@ -261,22 +298,19 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    size: 10
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    size: 24
     quickEquip: false
-    Slots:
+    slots:
     - Belt
-    HeldPrefix: taser4
+    heldPrefix: taser4
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletTaser
+    proto: BulletDisabler
     fireCost: 100
-  - type: Battery
-    maxCharge: 100
-    startingCharge: 100
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -285,7 +319,7 @@
 
 - type: entity
   name: antique laser gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponAntiqueLaser
   description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
@@ -298,7 +332,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
   - type: Gun
     soundGunshot:
@@ -306,6 +339,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
   - type: MagazineVisuals
     magState: mag
     steps: 5

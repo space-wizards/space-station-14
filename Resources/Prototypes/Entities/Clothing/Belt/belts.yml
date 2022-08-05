@@ -19,12 +19,12 @@
         - Screwdriver
         - Flashlight
         - Wrench
-#        - Painter
 #        - GeigerCounter
         - Flare
         - CableCoil
         - CigPack
       components:
+        - AirlockPainter
         - SignalLinker
         - RCD
         - RCDAmmo
@@ -82,7 +82,6 @@
         - Screwdriver
         - Flashlight
         - Wrench
-#        - Painter
 #        - GeigerCounter
         - Flare
         - CableCoil
@@ -90,6 +89,7 @@
         - JawsOfLife
         - CigPack
       components:
+        - AirlockPainter
         - SignalLinker
         - RCD
         - RCDAmmo
@@ -193,6 +193,7 @@
         - Soap
         - Flashlight
         - CigPack
+        - TrashBag
       components:
         - LightReplacer
   - type: ItemMapper
@@ -239,6 +240,7 @@
       components:
         - Hypospray
         - Radio
+        - Injector
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -292,6 +294,9 @@
         # - PlantAnalyzer
         - PlantSampleTaker
         - BotanyShovel
+        - BotanyHoe
+        - BotanyHatchet
+        - PlantSampleTaker
         - PlantBGone
         - Bottle
         - CigPack
@@ -435,6 +440,25 @@
 
 - type: entity
   parent: ClothingBeltStorageBase
+  id: ClothingBeltSyndieHolster
+  name: syndicate shoulder holster
+  description: A deep shoulder holster capable of holding many types of ballistics.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+        - Gun
+        - MeleeWeapon
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+
+- type: entity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltSecurityWebbing
   name: security webbing
   description: Unique and versatile chest rig, can hold security gear.
@@ -480,3 +504,19 @@
   - type: Clothing
     sprite: Clothing/Belt/suspenders.rsi
     quickEquip: true
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltWand
+  name: wand belt
+  description: A belt designed to hold various rods of power. A veritable fanny pack of exotic magic.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/wand.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/wand.rsi
+  - type: Storage
+    capacity: 120
+    whitelist:
+      tags:
+      - WizardWand

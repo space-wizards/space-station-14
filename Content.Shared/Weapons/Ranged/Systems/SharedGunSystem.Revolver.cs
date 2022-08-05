@@ -98,7 +98,7 @@ public partial class SharedGunSystem
 
     private void OnRevolverVerbs(EntityUid uid, RevolverAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract) return;
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null) return;
 
         args.Verbs.Add(new Verb()
         {
@@ -220,7 +220,9 @@ public partial class SharedGunSystem
     private void UpdateRevolverAppearance(RevolverAmmoProviderComponent component)
     {
         if (!TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
-        appearance.SetData(AmmoVisuals.AmmoCount, GetRevolverCount(component));
+        var count = GetRevolverCount(component);
+        appearance.SetData(AmmoVisuals.HasAmmo, count != 0);
+        appearance.SetData(AmmoVisuals.AmmoCount, count);
         appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 

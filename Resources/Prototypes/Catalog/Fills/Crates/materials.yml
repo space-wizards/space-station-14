@@ -38,16 +38,6 @@
       - id: MaterialWoodPlank
         amount: 1
 
-- type: entity
-  id: CrateMaterialFuelTank
-  name:  fueltank crate
-  parent: CrateGenericSteel
-  components:
-  - type: StorageFill
-    contents:
-      - id: WeldingFuelTankFull
-        amount: 1
-
 #- type: entity
 #  id: CrateMaterialHFuelTank
 #  name:  fueltank crate
@@ -57,16 +47,6 @@
 #    contents:
 #      - id: WeldingFuelTank
 #        amount: 1
-
-- type: entity
-  id: CrateMaterialWaterTank
-  name:  watertank crate
-  parent: CrateGenericSteel
-  components:
-  - type: StorageFill
-    contents:
-      - id: WaterTankFull
-        amount: 1
 
 #- type: entity
 #  id: CrateMaterialHWaterTank

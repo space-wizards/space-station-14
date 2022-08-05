@@ -1,11 +1,11 @@
 - type: job
   id: Musician
-  name: "musician"
+  name: job-name-musician
   startingGear: MusicianGear
   departments:
   - Civilian
   icon: "Musician"
-  supervisors: "whoever hires you"
+  supervisors: job-supervisors-hire
   access:
   - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
   - Theatre

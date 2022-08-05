@@ -2,7 +2,6 @@ using System.Threading;
 using Content.Server.Power.Components;
 // using Content.Server.WireHacking;
 using Content.Shared.Doors.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 // using static Content.Shared.Wires.SharedWiresComponent;
@@ -154,7 +153,7 @@ namespace Content.Server.Doors.Components
 
             BoltsDown = newBolts;
 
-            SoundSystem.Play(Filter.Broadcast(), newBolts ? BoltDownSound.GetSound() : BoltUpSound.GetSound(), Owner);
+            SoundSystem.Play(newBolts ? BoltDownSound.GetSound() : BoltUpSound.GetSound(), Filter.Pvs(Owner), Owner);
         }
     }
 }

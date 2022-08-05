@@ -5,9 +5,16 @@
   description: A handy-dandy holographic projector that displays a janitorial sign.
   components:
   - type: HolosignProjector
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.0
+  - type: PowerCellSlot
+    cellSlot:
+      startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/custodial.rsi
     state: icon
+    netsync: false
 
 - type: entity
   parent: Holoprojector
@@ -17,7 +24,8 @@
   components:
   - type: HolosignProjector
     signProto: HoloFan
-    rechargeTime: 120
+    chargeUse: 120
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/atmos.rsi
     state: icon
+    netsync: false

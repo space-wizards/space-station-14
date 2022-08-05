@@ -98,7 +98,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficial
-  name: centcom official's jumpsuit
+  name: CentCom official's jumpsuit
   description: It's a jumpsuit worn by CentCom's officials.
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficer
-  name: centcom officer's jumpsuit
+  name: CentCom officer's jumpsuit
   description: It's a jumpsuit worn by CentCom Officers.
   components:
   - type: Sprite
@@ -770,6 +770,58 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPsychologist
+  name: psychologist suit
+  description: I don't lose things. I place things in locations which later elude me.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/psychologist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/psychologist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitReporter
+  name: reporter suit
+  description: A good reporter remains a skeptic all their life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/reporter.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/reporter.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJournalist
+  name: journalist suit
+  description: If journalism is good, it is controversial, by nature.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/journalist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/journalist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMonasticRobeDark
+  name: dark monastic robe
+  description: It's a dark robe, often worn by religious folk.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMonasticRobeLight
+  name: light monastic robe
+  description: It's a light robe, often worn by religious folk.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
+
   id: ClothingUniformJumpsuitBlueShield
   name: blue shield suit
   description: ...
@@ -778,4 +830,3 @@
     sprite: Clothing/Uniforms/Jumpsuit/blueshield.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/blueshield.rsi
-

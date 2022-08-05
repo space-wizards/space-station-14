@@ -2,9 +2,9 @@
   name: "drone"
   id: DronePreset
   partIDs:
-    hand 1: LeftHandDrone
-    hand 2: LeftHandDrone
-    hand 3: LeftHandDrone
-    hand 4: LeftHandDrone
-    hand 5: RightHandDrone
-    hand 6: RightHandDrone
+    hand 1: LeftArmBorg
+    hand 2: LeftArmBorg
+    hand 3: LeftArmBorg
+    hand 4: LeftArmBorg
+    hand 5: RightArmBorg
+    hand 6: RightArmBorg

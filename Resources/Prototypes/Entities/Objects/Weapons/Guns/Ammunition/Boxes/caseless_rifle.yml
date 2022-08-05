@@ -10,6 +10,8 @@
         - CartridgeCaselessRifle
     proto: CartridgeCaselessRifle
     capacity: 60
+  - type: Item
+    size: 5
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -97,21 +99,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifleFlash
-  name: ammunition box (.25 caseless flash)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleFlash
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: flash
 
 - type: entity
   parent: BaseMagazineBoxCaselessRifle

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -30,42 +30,14 @@ namespace Content.IntegrationTests.Tests.Networking
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
     [TestFixture]
-    public sealed class SimplePredictReconcileTest : ContentIntegrationTest
+    public sealed class SimplePredictReconcileTest
     {
         [Test]
         public async Task Test()
         {
-            // Initialize client & server with text component and system registered.
-            // They can't be registered/detected automatically.
-            var (client, server) = await StartConnectedServerDummyTickerClientPair(
-                new ClientContentIntegrationOption
-                {
-                    // This test is designed around specific timing values and when I wrote it interpolation was off.
-                    // As such, I would have to update half this test to make sure it works with interpolation.
-                    // I'm kinda lazy.
-                    CVarOverrides =
-                    {
-                        {CVars.NetInterp.Name, "false"},
-                        {CVars.NetPVS.Name, "false"}
-                    },
-                    ContentBeforeIoC = () =>
-                    {
-                        IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
-                    }
-                },
-                new ServerContentIntegrationOption
-                {
-                    CVarOverrides =
-                    {
-                        {CVars.NetPVS.Name, "false"}
-                    },
-                    ContentBeforeIoC = () =>
-                    {
-                        IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
-                    }
-                });
+            await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, DisableInterpolate = true, DummyTicker = true});
+            var server = pairTracker.Pair.Server;
+            var client = pairTracker.Pair.Client;
 
             // Pull in all dependencies we need.
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
@@ -85,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var clientSystem = client.ResolveDependency<IEntitySystemManager>()
                 .GetEntitySystem<PredictionTestEntitySystem>();
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
@@ -98,7 +70,7 @@ namespace Content.IntegrationTests.Tests.Networking
             });
 
             // Run some ticks so that
-            await RunTicksSync(client, server, 3);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 3);
 
             // Due to technical things with the game state processor it has an extra state in the buffer here.
             // This burns through it real quick, but I'm not sure it should be there?
@@ -387,10 +359,11 @@ namespace Content.IntegrationTests.Tests.Networking
                     Assert.That(clientComponent.Foo, Is.True);
                 }
             }
+            await pairTracker.CleanReturnAsync();
         }
 
         [NetworkedComponent()]
-        private sealed class PredictionTestComponent : Component
+        public sealed class PredictionTestComponent : Component
         {
             private bool _foo;
 
@@ -432,7 +405,7 @@ namespace Content.IntegrationTests.Tests.Networking
         }
 
         [Reflect(false)]
-        private sealed class PredictionTestEntitySystem : EntitySystem
+        public sealed class PredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
 

@@ -8,8 +8,8 @@ namespace Content.Shared.Access.Components
     [NetworkedComponent]
     public abstract class SharedIdCardConsoleComponent : Component
     {
-        public const int MaxFullNameLength = 256;
-        public const int MaxJobTitleLength = 256;
+        public const int MaxFullNameLength = 30;
+        public const int MaxJobTitleLength = 30;
 
         public static string PrivilegedIdCardSlotId = "IdCardConsole-privilegedId";
         public static string TargetIdCardSlotId = "IdCardConsole-targetId";

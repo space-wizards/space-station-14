@@ -12,7 +12,9 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     # - Clothing
     - Idle
@@ -68,8 +70,6 @@
       types:
         Bloodloss:
           -0.25
-  - type: DrawableSolution
-    solution: bloodstream
   - type: Damageable
     damageContainer: Biological
   - type: AtmosExposed
@@ -92,19 +92,26 @@
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
+      0: Alive
+      50: Critical
+      100: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
   - type: HeatResistance
   - type: CombatMode
   - type: Internals
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
     - SlowedDown
     - Stutter
     - Electrocution
+    - ForcedSleep
   - type: Body
     template: AnimalTemplate
     preset: AnimalPreset
@@ -119,9 +126,9 @@
   - type: Appearance
     visuals:
     - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
   - type: Actions
   - type: DoAfter
   - type: Climbing
@@ -138,12 +145,11 @@
     group: GenericNumber
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.8
-      60: 0.6
-      80: 0.4
-      90: 0.2
+      60: 0.7
+      80: 0.5
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
+  - type: Perishable
 
 - type: entity
   save: false
@@ -152,23 +158,27 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach
     # - Thirst
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   - type: Barotrauma
     damage:
       types:
         Blunt: 0.15 #per second, scales with pressure and other constants.
+  - type: StatusEffects
+    allowed:
+      - Stun
+      - KnockedDown
+      - SlowedDown
+      - Stutter
+      - Electrocution
+      - ForcedSleep
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -197,4 +207,6 @@
         Heat : 1 #per second, scales with temperature & other constants
   - type: Bloodstream
     bloodMaxVolume: 150
+  - type: MobPrice
+    price: 150
 

@@ -2,7 +2,6 @@ using Content.Server.Stack;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -83,7 +82,7 @@ namespace Content.Server.Tiles
         {
             var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
-            SoundSystem.Play(Filter.Pvs(location), placeSound.GetSound(), location, AudioHelpers.WithVariation(0.125f, _random));
+            SoundSystem.Play(placeSound.GetSound(), Filter.Pvs(location), location, AudioHelpers.WithVariation(0.125f, _random));
         }
     }
 }

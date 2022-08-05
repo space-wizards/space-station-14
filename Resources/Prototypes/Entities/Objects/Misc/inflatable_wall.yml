@@ -61,6 +61,7 @@
       layer:
       - WallLayer
   - type: Door
+    occludes: false
     openSound:
       path: /Audio/Misc/zip.ogg
     closeSound:

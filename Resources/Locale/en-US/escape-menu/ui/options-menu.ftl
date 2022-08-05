@@ -16,6 +16,8 @@ ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby & Round-end Music
+ui-options-restart-sounds = Round Restart Sounds
+ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-station-ambience = Station Ambience
 ui-options-space-ambience = Space Ambience
@@ -69,6 +71,7 @@ ui-options-header-interaction-adv = Advanced Interaction
 ui-options-header-ui = User Interface
 ui-options-header-misc = Miscellaneous
 ui-options-header-hotbar = Hotbar
+ui-options-header-shuttle = Shuttle
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
 ui-options-header-general = General
@@ -155,6 +158,14 @@ ui-options-function-loadout6 = Hotbar Loadout 6
 ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
+
+ui-options-function-shuttle-strafe-up = Strafe up
+ui-options-function-shuttle-strafe-right = Strafe right
+ui-options-function-shuttle-strafe-left = Strafe left
+ui-options-function-shuttle-strafe-down = Strafe down
+ui-options-function-shuttle-rotate-left = Rotate left
+ui-options-function-shuttle-rotate-right = Rotate right
+ui-options-function-shuttle-brake = Brake
 
 ## Network menu
 

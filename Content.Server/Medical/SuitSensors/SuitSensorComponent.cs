@@ -7,7 +7,7 @@ namespace Content.Server.Medical.SuitSensors
     ///     If enabled, will report to crew monitoring console owners position and status.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(SuitSensorSystem))]
+    [Access(typeof(SuitSensorSystem))]
     public sealed class SuitSensorComponent : Component
     {
         /// <summary>

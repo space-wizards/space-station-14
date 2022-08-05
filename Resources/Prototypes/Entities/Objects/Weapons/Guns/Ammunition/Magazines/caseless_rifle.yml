@@ -13,6 +13,8 @@
         - CartridgeCaselessRifle
     proto: CartridgeCaselessRifle
     capacity: 30
+  - type: Item
+    size: 5
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -39,6 +41,8 @@
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
     capacity: 10
+  - type: Item
+    size: 3
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_short.rsi
     layers:
@@ -55,13 +59,15 @@
   components:
   - type: Tag
     tags:
-      - MagazinePistol
+      - MagazinePistolCaselessRifle
   - type: BallisticAmmoProvider
     whitelist:
       tags:
         - CartridgeCaselessRifle
     proto: CartridgeCaselessRifle
     capacity: 10
+  - type: Item
+    size: 5
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
     layers:
@@ -105,8 +111,6 @@
     steps: 6
     zeroVisible: false
   - type: Appearance
-
-# No flash
 
 - type: entity
   id: MagazinePistolCaselessRifleHighVelocity
@@ -235,21 +239,6 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineCaselessRifleShortFlash
-  name: "short magazine (.25 caseless flash)"
-  parent: BaseMagazineCaselessRifleShort
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleFlash
-    capacity: 20
-  - type: Sprite
-    layers:
-    - state: flash
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

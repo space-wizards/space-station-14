@@ -8,6 +8,9 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Cuffs
 {
@@ -23,14 +26,14 @@ namespace Content.Server.Cuffs
 
             SubscribeLocalEvent<HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
-
             SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
+            SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
         }
 
         private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)
         {
             // Can the user access the cuffs, and is there even anything to uncuff?
-            if (!args.CanAccess || component.CuffedHandCount == 0)
+            if (!args.CanAccess || component.CuffedHandCount == 0 || args.Hands == null)
                 return;
 
             // We only check can interact if the user is not uncuffing themselves. As a result, the verb will show up
@@ -44,6 +47,57 @@ namespace Content.Server.Cuffs
             verb.Text = Loc.GetString("uncuff-verb-get-data-text");
             //TODO VERB ICON add uncuffing symbol? may re-use the alert symbol showing that you are currently cuffed?
             args.Verbs.Add(verb);
+        }
+
+        private void OnCuffAfterInteract(EntityUid uid, HandcuffComponent component, AfterInteractEvent args)
+        {
+            if (component.Cuffing)
+                return;
+
+            if (args.Target is not {Valid: true} target ||
+                    !EntityManager.TryGetComponent<CuffableComponent>(args.Target.Value, out var cuffed))
+            {
+                return;
+            }
+
+            if (component.Broken)
+            {
+                args.User.PopupMessage(Loc.GetString("handcuff-component-cuffs-broken-error"));
+                return;
+            }
+
+            if (!EntityManager.TryGetComponent<HandsComponent?>(target, out var hands))
+            {
+                args.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", args.Target)));
+                return;
+            }
+
+            if (cuffed.CuffedHandCount >= hands.Count)
+            {
+                args.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", args.Target)));
+                return;
+            }
+
+            if (!args.CanReach)
+            {
+                args.User.PopupMessage(Loc.GetString("handcuff-component-too-far-away-error"));
+                return;
+            }
+
+            if (args.Target == args.User)
+            {
+                args.User.PopupMessage(Loc.GetString("handcuff-component-target-self"));
+            }
+            else
+            {
+                args.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", args.Target)));
+                args.User.PopupMessage(target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", args.User)));
+            }
+
+            SoundSystem.Play(component.StartCuffSound.GetSound(), Filter.Pvs(uid), uid);
+
+            component.TryUpdateCuff(args.User, target, cuffed);
+            args.Handled = true;
         }
 
         private void OnUncuffAttempt(UncuffAttemptEvent args)

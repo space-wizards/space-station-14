@@ -1,7 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Physics;
-using Content.Shared.Sound;
-using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -13,6 +12,9 @@ public sealed class HitscanPrototype : IPrototype, IShootable
     [ViewVariables]
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("staminaDamage")]
+    public float StaminaDamage;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("damage")]
     public DamageSpecifier? Damage;

@@ -4,6 +4,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -55,7 +56,7 @@ namespace Content.Server.Power.EntitySystems
             else
             {
                 _popupSystem.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                    Filter.Entities(args.Session.AttachedEntity.Value));
+                    Filter.Entities(args.Session.AttachedEntity.Value), PopupType.Medium);
             }
         }
 
@@ -68,7 +69,7 @@ namespace Content.Server.Power.EntitySystems
             battery.CanDischarge = apc.MainBreakerEnabled;
 
             UpdateUIState(uid, apc);
-            SoundSystem.Play(Filter.Pvs(uid), apc.OnReceiveMessageSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(apc.OnReceiveMessageSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
         }
 
         private void OnEmagged(EntityUid uid, ApcComponent comp, GotEmaggedEvent args)

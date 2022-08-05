@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
@@ -15,7 +16,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Roles;
-using Content.Shared.Sound;
 using Content.Shared.Suspicion;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
@@ -96,7 +96,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnRoundStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.SuspicionMinPlayers);
@@ -118,7 +118,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnPlayersAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minTraitors = _cfg.GetCVar(CCVars.SuspicionMinTraitors);
@@ -215,7 +215,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         var filter = Filter.Empty()
             .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
-        SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
+        SoundSystem.Play(_addedSound.GetSound(), filter, AudioParams.Default);
 
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 
@@ -287,7 +287,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void CheckWinConditions()
     {
-        if (!Enabled || !_cfg.GetCVar(CCVars.GameLobbyEnableWin))
+        if (!RuleAdded || !_cfg.GetCVar(CCVars.GameLobbyEnableWin))
             return;
 
         var traitorsAlive = 0;
@@ -456,7 +456,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnLateJoinRefresh(RefreshLateJoinAllowedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         ev.Disallow();

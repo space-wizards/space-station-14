@@ -4,7 +4,7 @@ using Content.Shared.Pointing.Components;
 namespace Content.Server.Pointing.Components
 {
     [RegisterComponent]
-    [Friend(typeof(RoguePointingSystem))]
+    [Access(typeof(RoguePointingSystem))]
     public sealed class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
     {
         [ViewVariables]

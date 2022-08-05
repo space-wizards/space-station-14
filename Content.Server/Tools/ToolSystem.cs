@@ -5,7 +5,9 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Audio;
+using Content.Shared.Item;
 using Content.Shared.Tools.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -23,7 +25,8 @@ namespace Content.Server.Tools
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedItemSystem _itemSystem = default!;
 
         public override void Initialize()
         {
@@ -244,8 +247,8 @@ namespace Content.Server.Tools
                 return;
 
             // Pass tool.Owner to Filter.Pvs to avoid a TryGetEntity call.
-            SoundSystem.Play(Filter.Pvs(tool.Owner), sound.GetSound(), uid,
-                AudioHelpers.WithVariation(0.175f).WithVolume(-5f));
+            SoundSystem.Play(sound.GetSound(), Filter.Pvs(tool.Owner),
+                uid, AudioHelpers.WithVariation(0.175f).WithVolume(-5f));
         }
 
         public override void Update(float frameTime)

@@ -3,33 +3,33 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
-using Content.Server.Tools;
 using Content.Server.Doors.Components;
+using Content.Server.Tools;
+using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Database;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Tag;
+using Content.Shared.Tools.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
-using Content.Server.Tools.Systems;
-using Content.Shared.Tools.Components;
 
 namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
-    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -37,6 +37,9 @@ public sealed class DoorSystem : SharedDoorSystem
 
         SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
+
+        // Mob prying doors
+        SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
 
         SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
@@ -110,7 +113,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
 
         // send the sound to players.
-        SoundSystem.Play(filter, sound, uid, audioParams);
+        SoundSystem.Play(sound, filter, uid, audioParams);
     }
 
 #region DoAfters
@@ -153,25 +156,43 @@ public sealed class DoorSystem : SharedDoorSystem
             SetState(uid, DoorState.Closed, component);
     }
 
+    private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality)) return;
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Text = "Pry door",
+            Impact = LogImpact.Low,
+            Act = () => TryPryDoor(uid, args.User, args.User, component, true),
+        });
+    }
+
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
+    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
     {
+        if (door.BeingPried) return false;
+
         if (door.State == DoorState.Welded)
             return false;
 
-        var canEv = new BeforeDoorPryEvent(user);
-        RaiseLocalEvent(target, canEv, false);
+        if (!force)
+        {
+            var canEv = new BeforeDoorPryEvent(user);
+            RaiseLocalEvent(target, canEv, false);
 
-        if (canEv.Cancelled)
-            // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
-            // under a windoor.
-            return true;
+            if (canEv.Cancelled)
+                // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
+                // under a windoor.
+                return true;
+        }
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
 
+        door.BeingPried = true;
         _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
                 new PryFinishedEvent(), new PryCancelledEvent(), target);
 
@@ -239,7 +260,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         var otherUid = args.OtherFixture.Body.Owner;
 
-        if (_tagSystem.HasTag(otherUid, "DoorBumpOpener"))
+        if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
     }
 
@@ -297,6 +318,18 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
             airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+    }
+
+    protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
+    {
+        if (component.BumpOpen)
+        {
+            foreach (var other in PhysicsSystem.GetCollidingEntities(body))
+            {
+                if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
+                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
+            }
+        }
     }
 }
 

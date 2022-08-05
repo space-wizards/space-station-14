@@ -97,11 +97,6 @@ public sealed partial class AdminLogManager
                 $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
         };
 
-        if (filter.LogsSent != 0)
-        {
-            query = query.Skip(filter.LogsSent);
-        }
-
         if (filter.Search != null)
         {
             query = query.Where(log => log.Message.Contains(filter.Search, StringComparison.OrdinalIgnoreCase));
@@ -135,6 +130,11 @@ public sealed partial class AdminLogManager
         if (filter.AllPlayers != null)
         {
             query = query.Where(log => filter.AllPlayers.All(filterPlayer => log.Players.Contains(filterPlayer)));
+        }
+
+        if (filter.LogsSent != 0)
+        {
+            query = query.Skip(filter.LogsSent);
         }
 
         if (filter.Limit != null)

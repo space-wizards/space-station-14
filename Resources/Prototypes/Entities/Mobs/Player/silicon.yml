@@ -96,8 +96,8 @@
     baseSprintSpeed : 5
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      60: !type:DeadMobState {}
+      0: Alive
+      60: Dead
   - type: Flashable
   - type: NoSlip
   - type: StatusEffects
@@ -107,10 +107,8 @@
     - SlowedDown
   - type: SlowOnDamage
     speedModifierThresholds:
-      20: 0.8
-      30: 0.6
-      40: 0.4
-      50: 0.2
+      30: 0.7
+      50: 0.5
   - type: Temperature
     heatDamageThreshold: 5000
     currentTemperature: 310.15
@@ -192,8 +190,8 @@
     baseSprintSpeed : 2
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      1000: !type:DeadMobState {}
+      0: Alive
+      1000: Dead
   - type: Sprite
     drawdepth: Mobs
     netsync: false
@@ -215,9 +213,10 @@
       layer:
       - LargeMobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      rotate: true
-      normal: onestar_boss
-      dead: onestar_boss_wrecked
+    rotate: true
+    states:
+      Alive:
+        Base: onestar_boss
+      Dead:
+        Base: onestar_boss_wrecked
   - type: CombatMode

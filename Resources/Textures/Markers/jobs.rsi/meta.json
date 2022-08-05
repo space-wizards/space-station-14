@@ -26,6 +26,9 @@
       "name": "botanist"
     },
     {
+      "name": "boxer"
+    },
+    {
       "name": "captain"
     },
     {
@@ -111,6 +114,9 @@
     },
     {
       "name": "mime"
+    },
+    {
+      "name": "reporter"
     },
     {
       "name": "paramedic"

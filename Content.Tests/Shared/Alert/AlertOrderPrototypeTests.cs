@@ -26,39 +26,44 @@ namespace Content.Tests.Shared.Alert
 
 - type: alert
   id: LowPressure
+  icons: []
   category: Pressure
 
 - type: alert
-  id: Overfed
-  category: Hunger
-
-- type: alert
   id: HighPressure
+  icons: []
   category: Pressure
 
 - type: alert
   id: Peckish
+  icons: []
   category: Hunger
 
 - type: alert
   id: Stun
+  icons: []
 
 - type: alert
   id: Handcuffed
+  icons: []
 
 - type: alert
   id: Hot
+  icons: []
   category: Temperature
 
 - type: alert
   id: Cold
+  icons: []
   category: Temperature
 
 - type: alert
   id: Weightless
+  icons: []
 
 - type: alert
   id: PilotingShuttle
+  icons: []
 ";
 
         [Test]
@@ -79,7 +84,6 @@ namespace Content.Tests.Shared.Alert
             expectedOrder.Add(AlertType.Handcuffed);
             expectedOrder.Add(AlertType.HighPressure);
             // stuff with only category + same category ordered by enum value
-            expectedOrder.Add(AlertType.Overfed);
             expectedOrder.Add(AlertType.Peckish);
             expectedOrder.Add(AlertType.Hot);
             expectedOrder.Add(AlertType.Stun);

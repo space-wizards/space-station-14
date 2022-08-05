@@ -47,8 +47,7 @@ namespace Content.Client.Decals
             {
                 if (zIndexDictionary.Count == 0) continue;
 
-                var gridUid = _mapManager.GetGridEuid(gridId);
-                var xform = xformQuery.GetComponent(gridUid);
+                var xform = xformQuery.GetComponent(gridId);
 
                 handle.SetTransform(_transform.GetWorldMatrix(xform, xformQuery));
 

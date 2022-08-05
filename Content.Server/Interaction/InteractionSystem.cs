@@ -1,14 +1,15 @@
 using Content.Server.Administration.Logs;
-using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
+using Content.Server.Weapon.Melee.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
@@ -32,6 +33,8 @@ namespace Content.Server.Interaction
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
+
 
         public override void Initialize()
         {
@@ -96,7 +99,7 @@ namespace Content.Server.Interaction
                 return;
 
             // trigger dragdrops on the dropped entity
-            RaiseLocalEvent(msg.Dropped, interactionArgs);
+            RaiseLocalEvent(msg.Dropped, interactionArgs, true);
 
             if (interactionArgs.Handled)
                 return;
@@ -197,6 +200,12 @@ namespace Content.Server.Interaction
                 if (!unobstructed)
                     return;
             }
+            else if (ContainerSystem.IsEntityInContainer(user))
+            {
+                // No wide attacking while in containers (holos, lockers, etc).
+                // Can't think of a valid case where you would want this.
+                return;
+            }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
             if (TryComp(user, out HandsComponent? hands))
@@ -206,7 +215,7 @@ namespace Content.Server.Interaction
                 if (!Deleted(item))
                 {
                     var meleeVee = new MeleeAttackAttemptEvent();
-                    RaiseLocalEvent(item.Value, ref meleeVee);
+                    RaiseLocalEvent(item.Value, ref meleeVee, true);
 
                     if (meleeVee.Cancelled) return;
 
@@ -243,7 +252,7 @@ namespace Content.Server.Interaction
                         }
                     }
                 }
-                else if (!wideAttack && target != null && HasComp<SharedItemComponent>(target.Value))
+                else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, target.Value);
@@ -253,17 +262,23 @@ namespace Content.Server.Interaction
 
             // TODO: Make this saner?
             // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
+
+            var used = user;
+
+            if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) && HasComp<MeleeWeaponComponent>(gloves))
+                used = (EntityUid) gloves;
+
             if (wideAttack)
             {
-                var ev = new WideAttackEvent(user, user, coordinates);
-                RaiseLocalEvent(user, ev, false);
+                var ev = new WideAttackEvent(used, user, coordinates);
+                RaiseLocalEvent(used, ev, false);
                 if (ev.Handled)
                     _adminLogger.Add(LogType.AttackUnarmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
             }
             else
             {
-                var ev = new ClickAttackEvent(user, user, coordinates, target);
-                RaiseLocalEvent(user, ev, false);
+                var ev = new ClickAttackEvent(used, user, coordinates, target);
+                RaiseLocalEvent(used, ev, false);
                 if (ev.Handled)
                 {
                     if (target != null)

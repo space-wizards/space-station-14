@@ -16,7 +16,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
   - type: Item
     size: 5
@@ -47,11 +47,35 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+
+- type: entity
+  name: raw carp fillet
+  parent: FoodMeatBase
+  # MeatFish?...
+  id: FoodMeatFish
+  description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: fish
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
 
 - type: entity
   name: raw bacon
@@ -73,8 +97,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 2
 
 - type: entity
   name: raw bear meat
@@ -91,8 +115,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutlet
@@ -112,8 +136,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletSlice
@@ -133,8 +157,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
@@ -154,8 +178,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatDuckCutlet
@@ -195,7 +219,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -213,8 +237,34 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
+
+- type: entity
+  name: dragon flesh
+  parent: FoodMeatBase
+  id: FoodMeatDragon
+  description: The dense meat of the space-era apex predator is oozing with it's mythical ichor. Ironically, best eaten raw.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    layers:
+    - state: dragon
+    - state: dragon_veins
+      shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Ichor
+        Quantity: 2
 
 - type: entity
   name: raw lizard meat
@@ -231,8 +281,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutlet
@@ -261,7 +311,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 20
 
 - type: entity
@@ -279,8 +329,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 20
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
@@ -300,7 +350,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 10
 
 - type: entity
@@ -318,7 +368,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -645,7 +695,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - reagentId: Protein
+        - ReagentId: Protein
           Quantity: 5
 
 - type: entity
@@ -739,8 +789,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw bear cutlet
@@ -761,8 +811,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw penguin cutlet
@@ -781,8 +831,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw chicken cutlet
@@ -801,8 +851,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw duck cutlet
@@ -821,8 +871,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw lizard cutlet
@@ -844,8 +894,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw spider cutlet
@@ -867,8 +917,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 20
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw xeno cutlet

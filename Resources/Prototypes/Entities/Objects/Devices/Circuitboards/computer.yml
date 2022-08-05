@@ -57,7 +57,7 @@
   description: A computer printed circuit board for a supply ordering console
   components:
     - type: ComputerBoard
-      prototype: ComputerSupplyOrdering
+      prototype: ComputerCargoOrders
     - type: StaticPrice
       price: 750
 
@@ -68,7 +68,7 @@
   description: A computer printed circuit board for a supply request console
   components:
     - type: ComputerBoard
-      prototype: ComputerSupplyRequest
+      prototype: ComputerCargoOrders
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -222,3 +222,12 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSyndie
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CloningConsoleComputerCircuitboard
+  name: cloning console computer board
+  description: A computer printed circuit board for a cloning console
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCloningConsole

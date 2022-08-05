@@ -11,6 +11,18 @@
     Dylovene: 3
 
 - type: reaction
+  id: Ethylredoxrazine
+  reactants:
+    Oxygen:
+      amount: 1
+    Dylovene:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Ethylredoxrazine: 3
+
+- type: reaction
   id: Cryptobiolin
   reactants:
     Potassium:

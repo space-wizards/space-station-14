@@ -259,11 +259,9 @@ namespace Content.Client.Audio
                         .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                         .WithMaxDistance(comp.Range);
 
-                    var stream = SoundSystem.Play(
+                    var stream = SoundSystem.Play(sound,
                         Filter.Local(),
-                        sound,
-                        comp.Owner,
-                        audioParams);
+                        comp.Owner, audioParams);
 
                     if (stream == null) continue;
 

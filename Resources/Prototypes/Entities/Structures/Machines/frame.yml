@@ -11,7 +11,6 @@
       noRot: true
     - type: Physics
       bodyType: Static
-      fixedRotation: false
     - type: Fixtures
       fixtures:
       - shape:
@@ -59,7 +58,6 @@
       noRot: true
     - type: Physics
       bodyType: Static
-      fixedRotation: false
     - type: Fixtures
       fixtures:
       - shape:
@@ -114,8 +112,6 @@
     - type: Construction
       graph: Machine
       node: destroyedMachineFrame
-    - type: Physics
-      fixedRotation: false
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic

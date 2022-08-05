@@ -51,6 +51,20 @@
         Blink: -1
 
 - type: entity
+  id: SmiteBook
+  name: smite spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: spellbook
+  - type: Spellbook
+    entitySpells:
+      Smite: -1
+
+- type: entity
   id: KnockSpellbook
   name: knock spellbook
   parent: BaseSpellbook
@@ -63,3 +77,17 @@
     - type: Spellbook
       instantSpells:
         Knock: -1
+
+- type: entity
+  id: FireballSpellbook
+  name: fireball spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    worldSpells:
+      Fireball: -1

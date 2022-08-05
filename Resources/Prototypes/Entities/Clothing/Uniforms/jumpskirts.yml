@@ -207,7 +207,7 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtMime
-  name: mime suit
+  name: mime jumpskirt
   description: ...
   components:
   - type: Sprite

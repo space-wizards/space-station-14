@@ -7,18 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 27
-
-- type: entity
-  id: BulletCaselessRifleFlash
-  name: bullet (.25 caseless flash)
-  parent: BaseBulletFlash
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
+        Piercing: 19
 
 - type: entity
   id: BulletCaselessRifleHighVelocity
@@ -29,7 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 32
+        Piercing: 22
 
 - type: entity
   id: BulletCaselessRiflePractice

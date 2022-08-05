@@ -96,7 +96,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             || !Resolve(uid, ref appearanceComponent, false))
             return;
 
-        var filledVolumePercent = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
+        var filledVolumePercent = Math.Min(1.0f, solution.CurrentVolume.Float() / solution.MaxVolume.Float());
         appearanceComponent.SetData(SolutionContainerVisuals.VisualState,
             new SolutionContainerVisualState(solution.Color, filledVolumePercent));
     }
@@ -124,7 +124,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         UpdateAppearance(uid, solutionHolder);
-        RaiseLocalEvent(uid, new SolutionChangedEvent());
+        RaiseLocalEvent(uid, new SolutionChangedEvent(), true);
     }
 
     public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)

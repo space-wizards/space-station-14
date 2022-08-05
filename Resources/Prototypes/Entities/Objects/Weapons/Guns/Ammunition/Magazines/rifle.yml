@@ -8,6 +8,8 @@
   - type: Tag
     tags:
       - MagazineRifle
+  - type: Item
+    size: 5
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -41,20 +43,6 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleFlash
-  name: "magazine (.20 rifle flash)"
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleFlash
-  - type: Sprite
-    layers:
-    - state: flash
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

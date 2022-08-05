@@ -10,6 +10,7 @@ using Content.Shared.Climbing;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -138,7 +139,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             return;
         if (user == uid)
         {
-            var othersMessage = Loc.GetString("comp-climbable-user-climbs-other", ("user", uid),
+            var othersMessage = Loc.GetString("comp-climbable-user-climbs-other", ("user", Identity.Entity(uid, EntityManager)),
                 ("climbable", climbable));
             uid.PopupMessageOtherClients(othersMessage);
 
@@ -147,11 +148,11 @@ public sealed class ClimbSystem : SharedClimbSystem
         }
         else
         {
-            var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other", ("user", user),
-                ("moved-user", uid), ("climbable", climbable));
+            var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other", ("user", Identity.Entity(user, EntityManager)),
+                ("moved-user", Identity.Entity(uid, EntityManager)), ("climbable", climbable));
             user.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", uid),
+            var selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", Identity.Entity(uid, EntityManager)),
                 ("climbable", climbable));
             user.PopupMessage(selfMessage);
         }
@@ -327,7 +328,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(
-            Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", args.Climber)), args.Climber,
+            Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", Identity.Entity(args.Climber, EntityManager))), args.Climber,
             Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
     }
 

@@ -3,7 +3,7 @@ namespace Content.Server.Tabletop.Components
     /// <summary>
     ///     Component for marking an entity as currently playing a tabletop.
     /// </summary>
-    [RegisterComponent, Friend(typeof(TabletopSystem))]
+    [RegisterComponent, Access(typeof(TabletopSystem))]
     public sealed class TabletopGamerComponent : Component
     {
         [DataField("tabletop")]

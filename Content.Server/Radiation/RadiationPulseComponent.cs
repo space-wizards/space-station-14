@@ -1,5 +1,4 @@
 using Content.Shared.Radiation;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -80,7 +79,7 @@ namespace Content.Server.Radiation
                 _endTime = currentTime + TimeSpan.FromSeconds(_duration);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), Sound.GetSound(), Owner);
+            SoundSystem.Play(Sound.GetSound(), Filter.Pvs(Owner), Owner);
 
             Dirty();
         }

@@ -252,7 +252,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         // Send a targetted event to all monitors.
         foreach (var monitor in component.ActiveMonitors)
         {
-            RaiseLocalEvent(monitor, ev);
+            RaiseLocalEvent(monitor, ev, true);
         }
 
         component.ActiveMonitors.Clear();

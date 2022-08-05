@@ -96,8 +96,8 @@ namespace Content.Server.Atmos.EntitySystems
                 if(_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
                 {
                     var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
-                    SoundSystem.Play(Filter.Pvs(coordinates), SpaceWindSound, coordinates,
-                        AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
+                    SoundSystem.Play(SpaceWindSound, Filter.Pvs(coordinates),
+                        coordinates, AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }
 
@@ -161,7 +161,6 @@ namespace Content.Server.Atmos.EntitySystems
                         xforms.GetComponent(entity),
                         body);
                 }
-
             }
         }
 

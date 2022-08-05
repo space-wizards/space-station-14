@@ -17,6 +17,8 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
+        public const string ContainerName = "paper_label";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,7 +33,7 @@ namespace Content.Server.Labels
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, component.Name, component.LabelSlot);
+            _itemSlotsSystem.AddItemSlot(uid, ContainerName, component.LabelSlot);
 
             if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;

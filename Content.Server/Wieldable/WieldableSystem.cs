@@ -22,6 +22,7 @@ namespace Content.Server.Wieldable
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedItemSystem _itemSystem = default!;
 
         public override void Initialize()
         {
@@ -167,17 +168,17 @@ namespace Content.Server.Wieldable
             if (!CanWield(uid, component, args.User.Value) || component.Wielded)
                 return;
 
-            if (TryComp<SharedItemComponent>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
-                component.OldInhandPrefix = item.EquippedPrefix;
-                item.EquippedPrefix = component.WieldedInhandPrefix;
+                component.OldInhandPrefix = item.HeldPrefix;
+                _itemSystem.SetHeldPrefix(uid, component.WieldedInhandPrefix, item);
             }
 
             component.Wielded = true;
 
             if (component.WieldSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(uid), component.WieldSound.GetSound());
+                SoundSystem.Play(component.WieldSound.GetSound(), Filter.Pvs(uid), uid);
             }
 
             for (var i = 0; i < component.FreeHandsRequired; i++)
@@ -196,9 +197,9 @@ namespace Content.Server.Wieldable
             if (!component.Wielded)
                 return;
 
-            if (TryComp<SharedItemComponent>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
-                item.EquippedPrefix = component.OldInhandPrefix;
+                _itemSystem.SetHeldPrefix(uid, component.OldInhandPrefix, item);
             }
 
             component.Wielded = false;
@@ -207,8 +208,7 @@ namespace Content.Server.Wieldable
             {
                 if (component.UnwieldSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(uid),
-                        component.UnwieldSound.GetSound());
+                    SoundSystem.Play(component.UnwieldSound.GetSound(), Filter.Pvs(uid), uid);
                 }
 
                 args.User.Value.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
@@ -222,7 +222,7 @@ namespace Content.Server.Wieldable
         {
             if (!component.Wielded || component.Owner != args.Unequipped)
                 return;
-            RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true));
+            RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true), true);
         }
 
         private void OnVirtualItemDeleted(EntityUid uid, WieldableComponent component, VirtualItemDeletedEvent args)

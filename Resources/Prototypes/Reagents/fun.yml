@@ -17,6 +17,14 @@
         type: Local
         messages: [ "carpetium-effect-blood-fibrous", "carpetium-effect-jumpsuit-insides" ]
         probability: 0.1
+      # Hail the madman logic, if it has CARP, means it helps against CARPs
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarpoToxin
+          min: 1
+        reagent: CarpoToxin
+        amount: -3
 
 - type: reagent
   id: Fiber
@@ -47,6 +55,7 @@
       effects:
       - !type:PopupMessage
         type: Local
+        visualType: MediumCaution
         messages:
         - "buzzochloricbees-effect-oh-god-bees"
         - "buzzochloricbees-effect-its-the-bees"
@@ -63,6 +72,7 @@
           tag: Bee
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages:
           - "buzzochloricbees-effect-histamine-bee-allergy"
           - "buzzochloricbees-effect-histamine-swells"
@@ -79,6 +89,7 @@
           tag: Bee
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages:
           - "buzzochloricbees-effect-licoxide-electrifying"
           - "buzzochloricbees-effect-licoxide-shocked-by-bee-facts"

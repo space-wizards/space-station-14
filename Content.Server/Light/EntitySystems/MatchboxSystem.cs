@@ -1,4 +1,5 @@
 using Content.Server.Light.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 
@@ -6,10 +7,12 @@ namespace Content.Server.Light.EntitySystems
 {
     public sealed class MatchboxSystem : EntitySystem
     {
+        [Dependency] private readonly MatchstickSystem _stickSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<MatchboxComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<MatchboxComponent, InteractUsingEvent>(OnInteractUsing, before: new[] { typeof(StorageSystem) });
         }
 
         private void OnInteractUsing(EntityUid uid, MatchboxComponent component, InteractUsingEvent args)
@@ -18,7 +21,7 @@ namespace Content.Server.Light.EntitySystems
                 && EntityManager.TryGetComponent<MatchstickComponent?>(args.Used, out var matchstick)
                 && matchstick.CurrentState == SmokableState.Unlit)
             {
-                Get<MatchstickSystem>().Ignite(matchstick, args.User);
+                _stickSystem.Ignite(matchstick, args.User);
                 args.Handled = true;
             }
         }

@@ -88,7 +88,7 @@ public sealed class SharpSystem : EntitySystem
         }
 
         _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
-            popupEnt, Filter.Entities(ev.User));
+            popupEnt, Filter.Entities(ev.User), PopupType.LargeCaution);
 
         if (TryComp<SharedBodyComponent>(ev.Entity, out var body))
         {
@@ -110,7 +110,7 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid uid, SharedButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (component.Type != ButcheringType.Knife)
+        if (component.Type != ButcheringType.Knife || args.Hands == null)
             return;
 
         bool disabled = false;

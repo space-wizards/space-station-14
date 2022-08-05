@@ -202,8 +202,8 @@ namespace Content.Client.LateJoin
                         var jobLabel = new Label
                         {
                             Text = job.Value != null ?
-                                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.Name), ("amount", job.Value)) :
-                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.Name))
+                                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.LocalizedName), ("amount", job.Value)) :
+                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.LocalizedName))
                         };
 
                         jobSelector.AddChild(jobLabel);

@@ -89,7 +89,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCentcom
-  name: centcom brand hat
+  name: CentCom brand hat
   description: "It's good to be the emperor."
   components:
   - type: Sprite
@@ -168,6 +168,17 @@
     sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hoshat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatOutlawHat
+  name: outlaw's hat
+  description: A hat that makes you look like you carry a notched pistol, numbered one and nineteen more.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/outlawhat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/outlawhat.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -448,6 +459,15 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadNurseHat
+  name: nurse hat
+  description: Somehow I feel I'm not supposed to leave this place.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/nursehat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/nursehat.rsi
+
   id: ClothingHeadBeretBlueShield
   name: beret blue shield
   description: ...
@@ -456,4 +476,3 @@
     sprite: Clothing/Head/Hats/beret_blue_shield.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_blue_shield.rsi
-

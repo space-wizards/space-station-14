@@ -7,18 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 32
-
-- type: entity
-  id: BulletMagnumFlash
-  name: bullet (.40 magnum flash)
-  parent: BaseBulletFlash
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
+        Piercing: 22
 
 - type: entity
   id: BulletMagnumHighVelocity
@@ -29,7 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 35
+        Piercing: 24
 
 - type: entity
   id: BulletMagnumPractice

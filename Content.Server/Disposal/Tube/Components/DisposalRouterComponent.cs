@@ -1,7 +1,6 @@
 using System.Text;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.UserInterface;
-using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
@@ -114,7 +113,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(_clickSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         protected override void OnRemove()

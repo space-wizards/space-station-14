@@ -1,16 +1,24 @@
+using System;
+using System.Collections.Generic;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
+using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -24,6 +32,8 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private const float MinimumFireStacks = -10f;
@@ -31,21 +41,36 @@ namespace Content.Server.Atmos.EntitySystems
         private const float UpdateTime = 1f;
 
         private const float MinIgnitionTemperature = 373.15f;
+        public const string FlammableFixtureID = "flammable";
 
         private float _timer = 0f;
 
         private Dictionary<FlammableComponent, float> _fireEvents = new();
 
-        // TODO: Port the rest of Flammable.
         public override void Initialize()
         {
             UpdatesAfter.Add(typeof(AtmosphereSystem));
 
+            SubscribeLocalEvent<FlammableComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsingEvent);
             SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollideEvent);
             SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFireEvent);
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
+            SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
+        }
+
+        private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
+        {
+            foreach (var entity in args.HitEntities)
+            {
+                if (!TryComp<FlammableComponent>(entity, out var flammable))
+                    continue;
+
+                flammable.FireStacks += component.FireStacks;
+                Ignite(entity, flammable);
+            }
+
         }
 
         private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, StartCollideEvent args)
@@ -59,13 +84,30 @@ namespace Content.Server.Atmos.EntitySystems
             Ignite(otherFixture, flammable);
         }
 
+        private void OnMapInit(EntityUid uid, FlammableComponent component, MapInitEvent args)
+        {
+            // Sets up a fixture for flammable collisions.
+            // TODO: Should this be generalized into a general non-hard 'effects' fixture or something? I can't think of other use cases for it.
+            // This doesn't seem great either (lots more collisions generated) but there isn't a better way to solve it either that I can think of.
+
+            if (!TryComp<PhysicsComponent>(uid, out var body))
+                return;
+
+            _fixture.TryCreateFixture(body, new Fixture(body, component.FlammableCollisionShape)
+            {
+                Hard = false,
+                ID = FlammableFixtureID,
+                CollisionMask = (int) CollisionGroup.FullTileLayer
+            });
+        }
+
         private void OnInteractUsingEvent(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
             var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(args.Used, isHotEvent, false);
+            RaiseLocalEvent(args.Used, isHotEvent);
 
             if (!isHotEvent.IsHot)
                 return;
@@ -77,6 +119,12 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnCollideEvent(EntityUid uid, FlammableComponent flammable, StartCollideEvent args)
         {
             var otherUid = args.OtherFixture.Body.Owner;
+
+            // Normal hard collisions, though this isn't generally possible since most flammable things are mobs
+            // which don't collide with one another, shouldn't work here.
+            if (args.OtherFixture.ID != FlammableFixtureID && args.OurFixture.ID != FlammableFixtureID)
+                return;
+
             if (!EntityManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))
                 return;
 
@@ -97,7 +145,8 @@ namespace Content.Server.Atmos.EntitySystems
                     otherFlammable.FireStacks += flammable.FireStacks;
                     Ignite(otherUid, otherFlammable);
                 }
-            } else if (otherFlammable.OnFire)
+            }
+            else if (otherFlammable.OnFire)
             {
                 otherFlammable.FireStacks /= 2;
                 flammable.FireStacks += otherFlammable.FireStacks;
@@ -257,7 +306,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                var air = _atmosphereSystem.GetTileMixture(transform.Coordinates);
+                var air = _atmosphereSystem.GetContainingMixture(uid);
 
                 // If we're in an oxygenless environment, put the fire out.
                 if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
@@ -266,7 +315,13 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                _atmosphereSystem.HotspotExpose(transform.Coordinates, 700f, 50f, true);
+                if(transform.GridUid != null)
+                {
+                    _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
+                        _transformSystem.GetGridOrMapTilePosition(uid, transform),
+                        700f, 50f, true);
+
+                }
 
                 foreach (var otherUid in flammable.Collided.ToArray())
                 {

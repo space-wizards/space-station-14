@@ -94,7 +94,7 @@ public sealed class EyeLerpingSystem : EntitySystem
             return;
 
         // We can't lerp if the mob can't move!
-        if (!TryComp(mob, out IMoverComponent? mover))
+        if (!TryComp(mob, out InputMoverComponent? mover))
             return;
 
         LerpEye(_eyeManager.CurrentEye, frameTime, mover.LastGridAngle, _playerActiveEye);
@@ -105,7 +105,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         if (!TryComp(uid, out TransformComponent? transform)
             || !TryComp(uid, out EyeComponent? eye)
             || eye.Eye == null
-            || !_mapManager.TryGetGrid(transform.GridID, out var grid))
+            || !_mapManager.TryGetGrid(transform.GridUid, out var grid))
         {
             _toRemove.Add(uid);
             return;

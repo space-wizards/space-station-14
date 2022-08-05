@@ -1,13 +1,13 @@
 # Leader
 - type: job
   id: ERTLeader
-  name: "ERT leader"
+  name: job-name-ertleader
   setPreference: false
   startingGear: ERTLeaderGearEVA
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -34,7 +34,6 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTLeaderFilled
     shoes: ClothingShoesBootsMag
-    head: ClothingHeadHelmetHardsuitERTLeader
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
@@ -49,17 +48,17 @@
 # Engineer
 - type: job
   id: ERTEngineer
-  name: "ERT engineer"
+  name: job-name-ertengineer
   setPreference: false
   startingGear: ERTEngineerGearEVA
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTEngineerGear
   equipment:
@@ -71,6 +70,7 @@
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
     pocket2:
@@ -81,30 +81,30 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTEngineerFilled
     shoes: ClothingShoesBootsMagAdv
-    head: ClothingHeadHelmetHardsuitERTEngineer
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterHardsuitERTEngineer
     suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
-    
+
 # Security
 - type: job
   id: ERTSecurity
-  name: "ERT security"
+  name: job-name-ertsecurity
   setPreference: false
   startingGear: ERTEngineerGearEVA
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTSecurityGear
   equipment:
@@ -116,6 +116,7 @@
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
     pocket2:
@@ -126,30 +127,30 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTSecurityFilled
     shoes: ClothingShoesBootsMag
-    head: ClothingHeadHelmetHardsuitERTSecurity
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTSecurity
     suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    
+
 # Medical
 - type: job
   id: ERTMedical
-  name: "ERT medic"
+  name: job-name-ertmedic
   setPreference: false
   startingGear: ERTMedicalGearEVA
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTMedicalGear
   equipment:
@@ -161,6 +162,7 @@
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltMedicalFilled
     pocket1: HandheldHealthAnalyzer
     pocket2: Flare
@@ -171,31 +173,31 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTMedicalFilled
     shoes: ClothingShoesBootsMag
-    head: ClothingHeadHelmetHardsuitERTMedical
     mask: ClothingMaskBreath
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTMedical
     suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltMedicalFilled
     pocket1: HandheldHealthAnalyzer
     pocket2: Flare
-    
+
 # Janitor
 - type: job
   id: ERTJanitor
-  name: "ERT janitor"
+  name: job-name-ertjanitor
   setPreference: false
   startingGear: ERTJanitorGearEVA
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTJanitorGear
   equipment:
@@ -206,6 +208,7 @@
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
     pocket2:
@@ -216,11 +219,11 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesBootsMag
-    head: ClothingHeadHelmetHardsuitERTJanitor
     mask: ClothingMaskBreath
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTJanitor
     suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
