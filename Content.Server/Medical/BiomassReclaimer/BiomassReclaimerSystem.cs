@@ -52,7 +52,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                             blood.AddReagent(reclaimer.BloodReagent, 50);
                             _spillableSystem.SpillAt(reclaimer.Owner, blood, "PuddleBlood");
                         }
-                        if (_robustRandom.Prob(0.2f) && reclaimer.SpawnedEntities.Count > 0)
+                        if (_robustRandom.Prob(0.1f) && reclaimer.SpawnedEntities.Count > 0)
                         {
                             var thrown = Spawn(_robustRandom.Pick(reclaimer.SpawnedEntities).PrototypeId, Transform(reclaimer.Owner).Coordinates);
                             Vector2 direction = (_robustRandom.Next(-30, 30), _robustRandom.Next(-30, 30));

@@ -509,8 +509,6 @@
       screen: dna
   - type: ApcPowerReceiver
     powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
-  - type: ExtensionCableProvider #See above
-    transferRange: 4
   - type: Computer
     board: CloningConsoleComputerCircuitboard
   - type: PointLight
