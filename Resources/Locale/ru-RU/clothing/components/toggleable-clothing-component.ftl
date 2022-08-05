@@ -1,1 +1,1 @@
-toggleable-clothing-remove-first = Сперва вам необходимо снять { $entity }.
+toggleable-clothing-remove-first = Сперва снимите { $entity }.

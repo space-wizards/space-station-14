@@ -10,4 +10,4 @@ pai-system-wipe-device-verb-text = Удалить пИИ
 pai-system-wiped-device = пИИ был стерт с устройства.
 pai-system-stop-searching-verb-text = Прекратить поиск
 pai-system-stopped-searching = Устройство прекратило поиск пИИ.
-pai-system-pai-name = { CAPITALIZE($owner) } пИИ
+pai-system-pai-name = пИИ { CAPITALIZE($owner) }

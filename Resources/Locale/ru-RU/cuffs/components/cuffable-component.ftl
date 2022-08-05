@@ -23,4 +23,4 @@ cuffable-component-remove-cuffs-partial-success-message =
     } в наручниках.
 cuffable-component-remove-cuffs-fail-message = Вам не удалось снять наручники.
 # UncuffVerb
-uncuff-verb-get-data-text = Расстегнуть
+uncuff-verb-get-data-text = Освободить

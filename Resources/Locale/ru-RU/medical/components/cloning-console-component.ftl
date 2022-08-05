@@ -1,27 +1,27 @@
 ## UI
 
-cloning-console-window-title = Cloning Console
-cloning-console-window-clone-button-text = Clone
+cloning-console-window-title = Консоль клонирования
+cloning-console-window-clone-button-text = Клонировать
 cloning-console-window-scanner-id = ID: [color=white]{ $scannerOccupantName }[/color]
 cloning-console-window-pod-id = ID: [color=white]{ $podOccupantName }[/color]
-cloning-console-window-no-patient-data-text = No patient data.
+cloning-console-window-no-patient-data-text = Нет данных о пациенте.
 cloning-console-window-id-blank = ID:
-cloning-console-window-scanner-details-label = Genetic Scanner Status
-cloning-console-window-pod-details-label = Cloning Pod Status
-cloning-console-window-no-scanner-detected-label = No Genetic Scanner Detected
-cloning-console-window-no-clone-pod-detected-label = No Cloning Pod Detected
-cloning-console-window-scanner-far-label = Genetic Scanner Too Far Away
-cloning-console-window-clone-pod-far-label = Cloning Pod Too Far Away
-cloning-console-eject-body-button = Eject Body
-cloning-console-neural-interface-label = Neural Interface:
-cloning-console-no-mind-activity-text = Neural Interface: [color=red]No Activity[/color]
-cloning-console-mind-present-text = Neural Interface: [color=green]Consciousness Detected[/color]
-cloning-console-component-msg-ready = Ready To Clone
-cloning-console-component-msg-empty = No Body Detected
-cloning-console-component-msg-scanner-occupant-alive = Not Ready: Scanner Occupant Living
-cloning-console-component-msg-already-alive = Not Ready: Metaphysical Conflict
-cloning-console-component-msg-occupied = Not Ready: The Pod Already Contains A Clone
-cloning-console-component-msg-already-cloning = Not Ready: Pod Network Conflict
-cloning-console-component-msg-incomplete = Not Ready: Cloning In Progress
-cloning-console-component-msg-no-cloner = Not Ready: No Cloner Detected
-cloning-console-component-msg-no-mind = Not Ready: No Soul Activity Detected
+cloning-console-window-scanner-details-label = Статус генетического сканера
+cloning-console-window-pod-details-label = Статус капсулы клонирования
+cloning-console-window-no-scanner-detected-label = Генетический сканер отсутствует
+cloning-console-window-no-clone-pod-detected-label = Капсула клонирования отсутствует
+cloning-console-window-scanner-far-label = Генетический сканер слишком далеко
+cloning-console-window-clone-pod-far-label = Капсула клонирования слишком далеко
+cloning-console-eject-body-button = Извлечь тело
+cloning-console-neural-interface-label = Нейроинтерфейс:
+cloning-console-no-mind-activity-text = Нейроинтерфейс: [color=red]Активность отсутствует[/color]
+cloning-console-mind-present-text = Нейроинтерфейс: [color=green]Сознание обнаружено[/color]
+cloning-console-component-msg-ready = Готов к клонированию
+cloning-console-component-msg-empty = Тело отсутствует
+cloning-console-component-msg-scanner-occupant-alive = Не готово: Тело в сканере живо
+cloning-console-component-msg-already-alive = Не готово: Метафизический конфликт
+cloning-console-component-msg-occupied = Не готово: В капсуле уже присутствует клон
+cloning-console-component-msg-already-cloning = Не готово: Конфликт сети капсул
+cloning-console-component-msg-incomplete = Не готово: Клонирование в процессе
+cloning-console-component-msg-no-cloner = Не готово: Клонер не обнаружен
+cloning-console-component-msg-no-mind = Не готово: Душа неактивна

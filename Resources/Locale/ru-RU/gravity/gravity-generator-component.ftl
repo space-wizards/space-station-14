@@ -23,7 +23,7 @@ gravity-generator-window-status-discharging = Разряжается
 
 gravity-generator-window-power-on = Вкл
 gravity-generator-window-power-off = Выкл
-gravity-generator-window-power-label = { $draw } / { $max } В
+gravity-generator-window-power-label = { $draw } / { $max } Вт
 
 ## UI ETA label
 

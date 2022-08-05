@@ -32,5 +32,5 @@ reagent-name-corpium = корпиум
 reagent-desc-corpium = Коктейль Синдиката, тщательно собранный из различных источников. Вы не захотите, чтобы это оказалось внутри вас.
 reagent-name-uncooked-animal-proteins = непрожаренные животные протеины
 reagent-desc-uncooked-animal-proteins = Крайне опасны для желудков более слабых форм жизни.
-reagent-name-allicin = allicin
-reagent-desc-allicin = An organosulfur compound found in alliums like garlic, onions, and related plants.
+reagent-name-allicin = аллицин
+reagent-desc-allicin = Сероорганическое соединение, содержащееся в растениях-аллиумах, таких как чеснок, лук и других.
