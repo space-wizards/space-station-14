@@ -70,3 +70,6 @@ ent-ShuttleConsoleCircuitboard = консоль шаттла (машинная �
 ent-SyndicateShuttleConsoleCircuitboard = консоль шаттла синдиката (машинная плата)
     .desc = { ent-BaseComputerCircuitboard.desc }
     .suffix = { "" }
+ent-CloningConsoleComputerCircuitboard = cloning console computer board
+    .desc = A computer printed circuit board for a cloning console
+    .suffix = { "" }

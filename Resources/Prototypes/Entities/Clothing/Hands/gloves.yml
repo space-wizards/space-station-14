@@ -250,3 +250,7 @@
     - type: Thieving
       stealTime: 1.5
       stealthy: true
+    - type: Fiber
+      fiberMaterial: fibers-synthetic
+      fiberColor: fibers-black
+    - type: FingerprintMask

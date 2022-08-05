@@ -70,3 +70,6 @@ ent-ShuttleConsoleCircuitboard = shuttle console board
 ent-SyndicateShuttleConsoleCircuitboard = syndicate shuttle console board
     .desc = A computer printed circuit board for a syndicate shuttle console
     .suffix = { "" }
+ent-CloningConsoleComputerCircuitboard = cloning console computer board
+    .desc = A computer printed circuit board for a cloning console
+    .suffix = { "" }

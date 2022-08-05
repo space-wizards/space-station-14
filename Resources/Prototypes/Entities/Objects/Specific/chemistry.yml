@@ -235,6 +235,8 @@
     injectOnly: false
   - type: Spillable
     solution: injector
+  - type: TrashOnEmpty
+    solution: injector
   - type: Appearance
     visuals:
       # this visualizer used for reagent inside
