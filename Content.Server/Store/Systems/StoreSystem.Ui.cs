@@ -25,13 +25,18 @@ public sealed partial class StoreSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
 
-    public void InitializeUi()
+    private void InitializeUi()
     {
         SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>((_,c,r) => UpdateUserInterface(r.CurrentBuyer, c));
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
     }
 
+    /// <summary>
+    /// Toggles the store Ui open and closed
+    /// </summary>
+    /// <param name="user">the person doing the toggling</param>
+    /// <param name="component">the store being toggled</param>
     public void ToggleUi(EntityUid user, StoreComponent component)
     {
         if (!TryComp<ActorComponent>(user, out var actor))
@@ -43,6 +48,12 @@ public sealed partial class StoreSystem : EntitySystem
         UpdateUserInterface(user, component, ui);
     }
 
+    /// <summary>
+    /// Updates the user interface for a store and refreshes the listings
+    /// </summary>
+    /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
+    /// <param name="component">The store component being refreshed.</param>
+    /// <param name="ui"></param>
     public void UpdateUserInterface(EntityUid? user, StoreComponent component, BoundUserInterface? ui = null)
     {
         if (ui == null)
@@ -79,9 +90,12 @@ public sealed partial class StoreSystem : EntitySystem
         ui.SetState(state);
     }
 
+    /// <summary>
+    /// Handles whenever a purchase was made.
+    /// </summary>
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
-        ListingData? listing = component.Listings.Where(x => x.Equals(msg.Listing)).FirstOrDefault();
+        ListingData? listing = component.Listings.FirstOrDefault(x => x.Equals(msg.Listing));
         if (listing == null) //make sure this listing actually exists
         {
             Logger.Debug("listing does not exist");
@@ -91,7 +105,7 @@ public sealed partial class StoreSystem : EntitySystem
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
             return;
-
+        //condition checking because why not
         if (listing.Conditions != null)
         {
             var args = new ListingConditionArgs(msg.Buyer, listing, EntityManager);
@@ -113,35 +127,39 @@ public sealed partial class StoreSystem : EntitySystem
                 return;
             }
         }
-
+        //subtract the cash
         foreach (var currency in listing.Cost)
             component.Balance[currency.Key] -= currency.Value;
 
+        //spawn entity
         if (listing.ProductEntity != null)
         {
             var product = Spawn(listing.ProductEntity, Transform(msg.Buyer).Coordinates);
             _hands.TryPickupAnyHand(msg.Buyer, product);
         }
 
+        //give action
         if (listing.ProductAction != null)
         {
             var action = new InstantAction(_proto.Index<InstantActionPrototype>(listing.ProductAction));
             _actions.AddAction(msg.Buyer, action, null);
         }
 
+        //broadcast event
         if (listing.ProductEvent != null)
         {
             RaiseLocalEvent(listing.ProductEvent);
         }
 
+        //log dat shit.
         if (TryComp<MindComponent>(msg.Buyer, out var mind))
         {
             _admin.Add(LogType.StorePurchase, LogImpact.Low,
                 $"{ToPrettyString(mind.Owner):player} purchased listing \"{listing.Name}\" from {ToPrettyString(uid)}");
         }
 
-        listing.PurchaseAmount++;
-        _audio.Play(component.BuySuccessSound, Filter.SinglePlayer(msg.Session), uid);
+        listing.PurchaseAmount++; //track how many times something has been purchased
+        _audio.Play(component.BuySuccessSound, Filter.SinglePlayer(msg.Session), uid); //cha-ching!
 
         UpdateUserInterface(msg.Buyer, component);
     }

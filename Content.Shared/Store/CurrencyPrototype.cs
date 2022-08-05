@@ -17,12 +17,21 @@ public sealed class CurrencyPrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
+    /// <summary>
+    /// The player-facing name of the currency. Supports Loc.
+    /// </summary>
     [DataField("name")]
     public string Name { get; } = string.Empty;
 
+    /// <summary>
+    /// The physical entity of the currency
+    /// </summary>
     [DataField("entityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? EntityId { get; } = null;
 
+    /// <summary>
+    /// Whether or not this currency can be withdrawn from a shop by a player. Requires a valid entityId.
+    /// </summary>
     [DataField("canWithdraw")]
     public bool CanWithdraw { get; } = true;
 }

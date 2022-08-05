@@ -12,9 +12,15 @@ namespace Content.Server.Store.Conditions;
 /// </summary>
 public sealed class StoreJobCondition : ListingCondition
 {
+    /// <summary>
+    /// A whitelist of jobs prototypes that can purchase this listing. Only one needs to be found.
+    /// </summary>
     [DataField("whitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
     public HashSet<string>? Whitelist;
 
+    /// <summary>
+    /// A blacklist of job prototypes that can purchase this listing. Only one needs to be found.
+    /// </summary>
     [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
     public HashSet<string>? Blacklist;
 
@@ -23,19 +29,17 @@ public sealed class StoreJobCondition : ListingCondition
         var ent = args.EntityManager;
 
         if (!ent.TryGetComponent<MindComponent>(args.User, out var mind) || mind.Mind == null)
-            return true;
+            return true; //this is for things like surplus crate
 
         if (Blacklist != null)
         {
             foreach (var role in mind.Mind.AllRoles)
             {
-                if (role.GetType() == typeof(Job))
-                {
-                    var job = (Job) role;
+                if (role is not Job job)
+                    continue;
 
-                    if (Blacklist.Contains(job.Prototype.ID))
-                        return false;
-                }
+                if (Blacklist.Contains(job.Prototype.ID))
+                    return false;
             }
         }
 
@@ -44,13 +48,11 @@ public sealed class StoreJobCondition : ListingCondition
             var found = false;
             foreach (var role in mind.Mind.AllRoles)
             {
-                if (role.GetType() == typeof(Job))
-                {
-                    var job = (Job) role;
+                if (role is not Job job)
+                    continue;
 
-                    if (Whitelist.Contains(job.Prototype.ID))
-                        found = true;
-                }
+                if (Whitelist.Contains(job.Prototype.ID))
+                    found = true;
             }
             if (!found)
                 return false;

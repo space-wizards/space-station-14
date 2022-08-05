@@ -7,9 +7,14 @@ using Content.Shared.Store;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.UserInterface;
 
 namespace Content.Server.Store.Systems;
 
+/// <summary>
+/// Manages general interactions with a store and different entities,
+/// getting listings for stores, and interfacing with the store UI.
+/// </summary>
 public sealed partial class StoreSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -58,6 +63,12 @@ public sealed partial class StoreSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Gets the value from an entity's currency component.
+    /// Scales with stacks.
+    /// </summary>
+    /// <param name="component"></param>
+    /// <returns>The value of the currency</returns>
     public Dictionary<string, FixedPoint2> GetCurrencyValue(CurrencyComponent component)
     {
         TryComp<StackComponent>(component.Owner, out var stack);
@@ -66,11 +77,23 @@ public sealed partial class StoreSystem : EntitySystem
         return component.Price.ToDictionary(v => v.Key, p => p.Value * amount);
     }
 
+    /// <summary>
+    /// Tries to add a currency to a store's balance.
+    /// </summary>
+    /// <param name="component">The currency to add</param>
+    /// <param name="store">The store to add it to</param>
+    /// <returns>Whether or not the currency was succesfully added</returns>
     public bool TryAddCurrency(CurrencyComponent component, StoreComponent store)
     {
         return TryAddCurrency(GetCurrencyValue(component), store);
     }
 
+    /// <summary>
+    /// Tries to add a currency to a store's balance
+    /// </summary>
+    /// <param name="currency">The value to add to the store</param>
+    /// <param name="store">The store to add it to</param>
+    /// <returns>Whether or not the currency was succesfully added</returns>
     public bool TryAddCurrency(Dictionary<string, FixedPoint2> currency, StoreComponent store)
     {
         //verify these before values are modified
@@ -92,7 +115,7 @@ public sealed partial class StoreSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, StoreComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !component.ActivateInHand)
             return;
 
         args.Handled = true;
@@ -100,11 +123,15 @@ public sealed partial class StoreSystem : EntitySystem
         ToggleUi(args.User, component);
     }
 
+    /// <summary>
+    /// Initializes a store based on a preset ID
+    /// </summary>
+    /// <param name="preset">The ID of a store preset prototype</param>
+    /// <param name="component">The store being initialized</param>
     public void InitializeFromPreset(string? preset, StoreComponent component)
     {
         if (preset == null)
             return;
-            
 
         if (!_proto.TryIndex<StorePresetPrototype>(preset, out var proto))
             return;
@@ -112,12 +139,20 @@ public sealed partial class StoreSystem : EntitySystem
         InitializeFromPreset(proto, component);
     }
 
+    /// <summary>
+    /// Initializes a store based on a given preset
+    /// </summary>
+    /// <param name="preset">The StorePresetPrototype</param>
+    /// <param name="component">The store being initialized</param>
     public void InitializeFromPreset(StorePresetPrototype preset, StoreComponent component)
     {
         component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
         component.ActivateInHand = preset.ActivateInHand;
         component.Categories.UnionWith(preset.Categories);
-        if (component.Balance == new Dictionary<string, FixedPoint2>()) //if we don't have a value stored, use the preset
+        if (component.Balance == new Dictionary<string, FixedPoint2>() && preset.InitialBalance != null) //if we don't have a value stored, use the preset
             TryAddCurrency(preset.InitialBalance, component);
+
+        var ui = component.Owner.GetUIOrNull(StoreUiKey.Key);
+        ui?.SetState(new StoreInitializeState(preset.StoreName));
     }
 }

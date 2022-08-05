@@ -7,6 +7,9 @@ namespace Content.Server.Store.Conditions;
 /// </summary>
 public sealed class StoreLimitedStockCondition : ListingCondition
 {
+    /// <summary>
+    /// The amount of times this listing can be purchased.
+    /// </summary>
     [DataField("stock", required: true)]
     public int Stock;
 

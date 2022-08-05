@@ -7,6 +7,10 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.Store.Components;
 
+/// <summary>
+/// This component manages a store which players can use to purchase different listings
+/// through the ui. The currency, listings, and categories are defined in yaml.
+/// </summary>
 [RegisterComponent]
 public sealed class StoreComponent : Component
 {
@@ -62,15 +66,27 @@ public sealed class StoreComponent : Component
     public HashSet<ListingData> LastAvailableListings = new();
 
     #region audio
+    /// <summary>
+    /// The sound played to the buyer when a purchase is succesfully made.
+    /// </summary>
     [ViewVariables]
     [DataField("buySuccessSound")]
     public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
 
+    /// <summary>
+    /// The sound played to the buyer when a purchase fails.
+    /// </summary>
     [ViewVariables]
     [DataField("insufficientFundsSound")]
     public SoundSpecifier InsufficientFundsSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
     #endregion
 }
 
+/// <summary>
+/// Event that is broadcast when a store is added to an entity
+/// </summary>
 public sealed class StoreAddedEvent : EntityEventArgs { };
+/// <summary>
+/// Event that is broadcast when a store is removed from an entity
+/// </summary>
 public sealed class StoreRemovedEvent : EntityEventArgs { };

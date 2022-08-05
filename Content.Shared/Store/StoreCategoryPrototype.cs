@@ -18,5 +18,5 @@ public sealed class StoreCategoryPrototype : IPrototype
     public string Name { get; } = string.Empty;
 
     [DataField("priority")]
-    public int Priority { get; } = 10;
+    public int Priority { get; } = 0;
 }

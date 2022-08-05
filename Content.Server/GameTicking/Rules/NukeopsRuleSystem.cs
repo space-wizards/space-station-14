@@ -24,6 +24,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
 using System.Data;
+using Content.Server.Traitor.Uplink;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -38,6 +39,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
@@ -279,6 +281,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             newMind.TransferTo(mob);
             _stationSpawningSystem.EquipStartingGear(mob, gear, null);
+            _uplink.AddUplink(mob, null);
 
             ev.PlayerPool.Remove(session);
             _aliveNukeops.Add(newMind, true);

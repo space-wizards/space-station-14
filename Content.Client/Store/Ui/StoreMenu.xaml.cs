@@ -29,12 +29,14 @@ public sealed partial class StoreMenu : DefaultWindow
     public Dictionary<string, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
 
-    public StoreMenu()
+    public StoreMenu(string name)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
+        if (Window != null)
+            Window.Title = name;
     }
 
     public void UpdateBalance(Dictionary<string, FixedPoint2> balance)

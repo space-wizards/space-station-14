@@ -13,15 +13,31 @@ namespace Content.Server.Traitor.Uplink
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly StoreSystem _store = default!;
 
+        public const string TelecrystalCurrencyPrototype = "TeleCrystal";
+
+        /// <summary>
+        ///     Gets the amount of TC on an "uplink"
+        ///     Mostly just here for legacy systems based on uplink.
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns>the amount of TC</returns>
         public int GetTCBalance(StoreComponent component)
         {
-            FixedPoint2? tcBalance = component.Balance.GetValueOrDefault("Telecrystal");
+            FixedPoint2? tcBalance = component.Balance.GetValueOrDefault(TelecrystalCurrencyPrototype);
             var emo = tcBalance != null ? tcBalance.Value.Int() : 0;
 
             return emo; //hey ma, that's me!
         }
 
-        public bool AddUplink(EntityUid user, FixedPoint2 balance, string uplinkPresetId = "StorePresetUplink", EntityUid? uplinkEntity = null)
+        /// <summary>
+        /// Adds an uplink to the target
+        /// </summary>
+        /// <param name="user">The person who is getting the uplink</param>
+        /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
+        /// <param name="uplinkPresetId">The id of the storepreset</param>
+        /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
+        /// <returns>Whether or not the uplink was added successfully</returns>
+        public bool AddUplink(EntityUid user, FixedPoint2? balance, string uplinkPresetId = "StorePresetUplink", EntityUid? uplinkEntity = null)
         {
             // Try to find target item
             if (uplinkEntity == null)
@@ -36,12 +52,12 @@ namespace Content.Server.Traitor.Uplink
             store.AccountOwner = user;
             store.Balance.Clear();
 
-            var currency = new Dictionary<string, FixedPoint2>
+            if (balance != null)
             {
-                { "Telecrystal", balance }
-            };
-
-            _store.TryAddCurrency(currency, store);
+                store.Balance.Clear();
+                _store.TryAddCurrency(
+                    new Dictionary<string, FixedPoint2>() { { TelecrystalCurrencyPrototype, balance.Value } }, store);
+            }
 
             if (!HasComp<PDAComponent>(uplinkEntity.Value))
                 store.ActivateInHand = true;

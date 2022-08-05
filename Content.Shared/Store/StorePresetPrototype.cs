@@ -6,9 +6,7 @@ using Content.Shared.FixedPoint;
 namespace Content.Shared.Store;
 
 /// <summary>
-///     Prototype used to define different types of currency for generic stores.
-///     Mainly used for antags, such as traitors, nukies, and revenants
-///     This is separate to the cargo ordering system.
+///     Specifies generic info for initializing a store.
 /// </summary>
 [Prototype("storePreset")]
 [DataDefinition]
@@ -18,18 +16,33 @@ public sealed class StorePresetPrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
+    /// <summary>
+    /// The name displayed at the top of the store window
+    /// </summary>
     [DataField("storeName", required: true)]
     public string StoreName { get; } = string.Empty;
 
+    /// <summary>
+    /// The categories that this store can access
+    /// </summary>
     [DataField("categories", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StoreCategoryPrototype>))]
     public HashSet<string> Categories { get; } = new();
 
+    /// <summary>
+    /// The inital balance that the store initializes with.
+    /// </summary>
     [DataField("initialBalance", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
-    public Dictionary<string, FixedPoint2> InitialBalance { get; } = new();
+    public Dictionary<string, FixedPoint2>? InitialBalance { get; }
 
+    /// <summary>
+    /// The currencies that are accepted in the store
+    /// </summary>
     [DataField("currencyWhitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<CurrencyPrototype>))]
     public HashSet<string> CurrencyWhitelist { get; } = new();
 
+    /// <summary>
+    /// Whether or not this store can be activated by using it in hand.
+    /// </summary>
     [DataField("activateInHand")]
     public bool ActivateInHand { get; } = true;
 }

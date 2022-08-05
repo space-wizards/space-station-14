@@ -12,9 +12,15 @@ namespace Content.Shared.Store.Conditions;
 /// </summary>
 public sealed class StoreAntagCondition : ListingCondition
 {
+    /// <summary>
+    /// A whitelist of antag roles that can purchase this listing. Only one needs to be found.
+    /// </summary>
     [DataField("whitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AntagPrototype>))]
     public HashSet<string>? Whitelist;
 
+    /// <summary>
+    /// A blacklist of antag roles that cannot purchase this listing. Only one needs to be found.
+    /// </summary>
     [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AntagPrototype>))]
     public HashSet<string>? Blacklist;
 
@@ -29,10 +35,8 @@ public sealed class StoreAntagCondition : ListingCondition
         {
             foreach (var role in mind.Mind.AllRoles)
             {
-                if (role.GetType() != typeof(TraitorRole))
+                if (role is not TraitorRole blacklistantag)
                     continue;
-
-                var blacklistantag = (TraitorRole) role;
 
                 if (Blacklist.Contains(blacklistantag.Prototype.ID))
                     return false;
@@ -44,13 +48,11 @@ public sealed class StoreAntagCondition : ListingCondition
             var found = false;
             foreach (var role in mind.Mind.AllRoles)
             {
-                if (role.GetType() == typeof(TraitorRole))
-                {
-                    var antag = (TraitorRole) role;
+                if (role is not TraitorRole antag)
+                    continue;
 
-                    if (Whitelist.Contains(antag.Prototype.ID))
-                        found = true;
-                }
+                if (Whitelist.Contains(antag.Prototype.ID))
+                    found = true;
             }
             if (!found)
                 return false;

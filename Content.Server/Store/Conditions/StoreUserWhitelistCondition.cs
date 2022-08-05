@@ -8,9 +8,15 @@ namespace Content.Server.Store.Conditions;
 /// </summary>
 public sealed class StoreUserWhitelistCondition : ListingCondition
 {
+    /// <summary>
+    /// A whitelist of tags or components.
+    /// </summary>
     [DataField("whitelist")]
     public EntityWhitelist? Whitelist;
 
+    /// <summary>
+    /// A blacklist of tags or components.
+    /// </summary>
     [DataField("blacklist")]
     public EntityWhitelist? Blacklist;
 
