@@ -491,7 +491,7 @@
   components:
   - type: Sprite
     layers:
-    - state: silver
     - state: idblueshield
+    - state: default
   - type: PresetIdCard
     job: BlueShield
