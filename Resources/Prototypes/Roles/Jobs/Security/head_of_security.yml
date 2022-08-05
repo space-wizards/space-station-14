@@ -1,7 +1,7 @@
 - type: job
   id: HeadOfSecurity
   name: job-name-hos
-  roleTimer: JobHeadOfSecurity
+  playTimeTracker: JobHeadOfSecurity
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden

@@ -1,7 +1,7 @@
 - type: job
   id: Scientist
   name: job-name-scientist
-  roleTimer: JobScientist
+  playTimeTracker: JobScientist
   startingGear: ScientistGear
   icon: "Scientist"
   supervisors: job-supervisors-rd

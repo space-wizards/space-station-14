@@ -2,8 +2,7 @@ using System.Linq;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
-using Content.Server.Players;
-using Content.Server.Players.PlayTimeTracking;
+using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState;
@@ -17,13 +16,13 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Roles;
+namespace Content.Server.Players.PlayTimeTracking;
 
 /// <summary>
 /// This handles issuing saves of role / overall times to the DB during the regular course of play.
 /// <see cref="PlayTimeTrackingManager"/> handles the actual data.
 /// </summary>
-public sealed class RoleTimerSystem : EntitySystem
+public sealed class PlayTimeTrackingSystem : EntitySystem
 {
     [Dependency] private readonly IAfkManager _afk = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;

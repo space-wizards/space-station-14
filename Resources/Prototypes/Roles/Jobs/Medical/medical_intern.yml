@@ -1,7 +1,7 @@
 ﻿- type: job
   id: MedicalIntern
   name: job-name-intern
-  roleTimer: JobMedicalIntern
+  playTimeTracker: JobMedicalIntern
   startingGear: MedicalInternGear
   icon: "MedicalIntern"
   supervisors: job-supervisors-medicine

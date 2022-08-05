@@ -1,7 +1,7 @@
 - type: job
   id: Chemist
   name: job-name-chemist
-  roleTimer: JobChemist
+  playTimeTracker: JobChemist
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Shared.Preferences;
@@ -16,7 +17,7 @@ public sealed partial class StationJobsSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleBanManager _roleBanManager = default!;
-    [Dependency] private readonly RoleTimerSystem _roleTimers = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -342,7 +343,7 @@ public sealed partial class StationJobsSystem
         {
             var roleBans = _roleBanManager.GetJobBans(player);
             var profileJobs = profile.JobPriorities.Keys.ToList();
-            _roleTimers.RemoveDisallowedJobs(player, ref profileJobs);
+            _playTime.RemoveDisallowedJobs(player, ref profileJobs);
 
             List<string>? availableJobs = null;
 

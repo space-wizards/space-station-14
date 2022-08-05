@@ -360,60 +360,13 @@ namespace Content.Server.Database
         #endregion
 
         #region Playtime
-        public async Task<(PlayTime, bool existed)> CreateOrGetRoleTimer(Guid player, string role)
-        {
-            await using var db = await GetDb();
-
-            PlayTime result;
-            var query = await db.DbContext.PlayTime
-                .Where(v => v.PlayerId == player)
-                .Where(v => v.Tracker == role)
-                .SingleOrDefaultAsync();
-
-            if (query != null)
-                return (query, true);
-
-            result = new PlayTime()
-            {
-                PlayerId = player,
-                Tracker = role,
-                TimeSpent = TimeSpan.Zero
-            };
-            db.DbContext.Add(result);
-            await db.DbContext.SaveChangesAsync();
-            return (result, false);
-        }
-
-        public async Task<List<PlayTime>> GetRoleTimers(Guid player)
+        public async Task<List<PlayTime>> GetPlayTimes(Guid player)
         {
             await using var db = await GetDb();
 
             return await db.DbContext.PlayTime
                 .Where(p => p.PlayerId == player)
                 .ToListAsync();
-        }
-
-        public async Task<PlayTime?> SetRoleTime(int id, TimeSpan time)
-        {
-            await using var db = await GetDb();
-
-            var newTimer = await db.DbContext.PlayTime
-                .SingleAsync(timer => timer.Id == id);
-            newTimer.TimeSpent = time;
-
-            await db.DbContext.SaveChangesAsync();
-            return newTimer;
-        }
-
-        public async Task<PlayTime?> AddRoleTime(int id, TimeSpan time)
-        {
-            await using var db = await GetDb();
-
-            var newTimer = await db.DbContext.PlayTime.SingleAsync(timer => timer.Id == id);
-            newTimer.TimeSpent += time;
-
-            await db.DbContext.SaveChangesAsync();
-            return newTimer;
         }
 
         public async Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)

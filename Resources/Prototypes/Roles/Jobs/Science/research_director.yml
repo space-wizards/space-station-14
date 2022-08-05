@@ -1,7 +1,7 @@
 - type: job
   id: ResearchDirector
   name: job-name-rd
-  roleTimer: JobResearchDirector
+  playTimeTracker: JobResearchDirector
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science

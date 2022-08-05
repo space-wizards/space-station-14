@@ -118,26 +118,11 @@ namespace Content.Server.Database
         #region Playtime
 
         /// <summary>
-        /// Get a role timer by player ID and role.
-        /// </summary>
-        /// <param name="player">The player to get the role timer from.</param>
-        /// <param name="role">The role that's being timed.</param>
-        /// <returns>A role timer for the passed role.</returns>
-        Task<PlayTime> CreateOrGetPlayTime(Guid player, string role);
-
-        /// <summary>
         /// Look up a player's role timers.
         /// </summary>
         /// <param name="player">The player to get the role timer information from.</param>
         /// <returns>All role timers belonging to the player.</returns>
         Task<List<PlayTime>> GetPlayTimes(Guid player);
-
-        /// <summary>
-        /// Set the time value of a RoleTimer database object.
-        /// </summary>
-        /// <param name="id">Numerical ID for the roletimer object</param>
-        /// <param name="time">New value for time spent on the role</param>
-        Task<PlayTime?> SetPlayTimes(int id, TimeSpan time);
 
         /// <summary>
         /// Update play time information in bulk.
@@ -400,39 +385,16 @@ namespace Content.Server.Database
 
         #region Playtime
 
-        public async Task<PlayTime> CreateOrGetPlayTime(Guid player, string role)
-        {
-            var (data, existed) = await _db.CreateOrGetRoleTimer(player, role);
-            if (existed)
-                DbReadOpsMetric.Inc();
-            else
-                DbWriteOpsMetric.Inc();
-
-            return data;
-        }
-
         public Task<List<PlayTime>> GetPlayTimes(Guid player)
         {
             DbReadOpsMetric.Inc();
-            return _db.GetRoleTimers(player);
-        }
-
-        public Task<PlayTime?> SetPlayTimes(int id, TimeSpan time)
-        {
-            DbWriteOpsMetric.Inc();
-            return _db.SetRoleTime(id, time);
+            return _db.GetPlayTimes(player);
         }
 
         public Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
         {
             DbWriteOpsMetric.Inc();
             return _db.UpdatePlayTimes(updates);
-        }
-
-        public Task<PlayTime?> AddPlayTimes(int id, TimeSpan time)
-        {
-            DbWriteOpsMetric.Inc();
-            return _db.AddRoleTime(id, time);
         }
 
         #endregion

@@ -7,7 +7,7 @@ namespace Content.Server.Roles
 {
     public sealed class Job : Role, IRoleTimer
     {
-        [ViewVariables] public string Timer => Prototype.RoleTimer;
+        [ViewVariables] public string Timer => Prototype.PlayTimeTracker;
 
         [ViewVariables]
         public JobPrototype Prototype { get; }

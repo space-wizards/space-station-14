@@ -1,7 +1,7 @@
 - type: job
   id: Bartender
   name: job-name-bartender
-  roleTimer: JobBartender
+  playTimeTracker: JobBartender
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian

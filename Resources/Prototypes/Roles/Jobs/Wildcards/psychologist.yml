@@ -1,7 +1,7 @@
 - type: job
   id: Psychologist
   name: job-name-psychologist
-  roleTimer: JobPsychologist
+  playTimeTracker: JobPsychologist
   startingGear: PsychologistGear
   icon: "Psychologist"
   supervisors: job-supervisors-cmo

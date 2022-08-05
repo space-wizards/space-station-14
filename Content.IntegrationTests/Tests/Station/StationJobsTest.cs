@@ -20,8 +20,11 @@ namespace Content.IntegrationTests.Tests.Station;
 public sealed class StationJobsTest
 {
     private const string Prototypes = @"
-- type: roleTimer
+- type: playTimeTracker
   id: Dummy
+
+- type: playTimeTracker
+  id: Overall
 
 - type: gameMap
   id: FooStation
@@ -41,26 +44,26 @@ public sealed class StationJobsTest
 
 - type: job
   id: TAssistant
-  roleTimer: Dummy
+  playTimeTracker: Dummy
 
 - type: job
   id: TMime
   weight: 20
-  roleTimer: Dummy
+  playTimeTracker: Dummy
 
 - type: job
   id: TClown
   weight: -10
-  roleTimer: Dummy
+  playTimeTracker: Dummy
 
 - type: job
   id: TCaptain
   weight: 10
-  roleTimer: Dummy
+  playTimeTracker: Dummy
 
 - type: job
   id: TChaplain
-  roleTimer: Dummy
+  playTimeTracker: Dummy
 ";
 
     private const int StationCount = 100;

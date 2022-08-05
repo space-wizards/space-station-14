@@ -1,7 +1,7 @@
 - type: job
   id: AtmosphericTechnician
   name: job-name-atmostech
-  roleTimer: JobAtmosphericTechnician
+  playTimeTracker: JobAtmosphericTechnician
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering

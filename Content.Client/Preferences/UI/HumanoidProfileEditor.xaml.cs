@@ -345,7 +345,7 @@ namespace Content.Client.Preferences.UI
             _jobCategories = new Dictionary<string, BoxContainer>();
 
             var firstCategory = true;
-            var roleTimers = IoCManager.Resolve<PlayTimeTrackingManager>();
+            var playTime = IoCManager.Resolve<PlayTimeTrackingManager>();
 
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
@@ -397,7 +397,7 @@ namespace Content.Client.Preferences.UI
                 {
                     var selector = new JobPrioritySelector(job);
 
-                    if (!roleTimers.IsAllowed(job, out var reason))
+                    if (!playTime.IsAllowed(job, out var reason))
                     {
                         selector.LockRequirements(reason);
                     }

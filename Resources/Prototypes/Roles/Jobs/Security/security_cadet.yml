@@ -1,7 +1,7 @@
 ﻿- type: job
   id: SecurityCadet
   name: job-name-cadet
-  roleTimer: JobSecurityCadet
+  playTimeTracker: JobSecurityCadet
   startingGear: SecurityCadetGear
   icon: "SecurityCadet"
   supervisors: job-supervisors-security

@@ -1,7 +1,7 @@
 - type: job
   id: Warden
   name: job-name-warden
-  roleTimer: JobWarden
+  playTimeTracker: JobWarden
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security

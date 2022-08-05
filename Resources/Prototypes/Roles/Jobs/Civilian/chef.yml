@@ -1,7 +1,7 @@
 - type: job
   id: Chef
   name: job-name-chef
-  roleTimer: JobChef
+  playTimeTracker: JobChef
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian

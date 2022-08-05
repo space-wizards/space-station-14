@@ -51,7 +51,7 @@ public sealed class PlayTimeTrackingManager
 
         _net.RegisterNetMessage<MsgPlayTime>();
 
-        _cfg.OnValueChanged(CCVars.GameRoleTimersSaveInterval, f => _saveInterval = TimeSpan.FromSeconds(f), true);
+        _cfg.OnValueChanged(CCVars.PlayTimeSaveInterval, f => _saveInterval = TimeSpan.FromSeconds(f), true);
     }
 
     public void Shutdown()
@@ -239,10 +239,10 @@ public sealed class PlayTimeTrackingManager
         var data = new PlayTimeInfo();
         _cachedPlayerData.Add(session, data);
 
-        var roleTimers = await _db.GetPlayTimes(session.UserId);
+        var playTimes = await _db.GetPlayTimes(session.UserId);
         cancel.ThrowIfCancellationRequested();
 
-        foreach (var timer in roleTimers)
+        foreach (var timer in playTimes)
         {
             data.Trackers.Add(timer.Tracker, timer.TimeSpent);
         }

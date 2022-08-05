@@ -1,7 +1,7 @@
 - type: job
   id: Quartermaster
   name: job-name-qm
-  roleTimer: JobQuartermaster
+  playTimeTracker: JobQuartermaster
   requirements:
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist

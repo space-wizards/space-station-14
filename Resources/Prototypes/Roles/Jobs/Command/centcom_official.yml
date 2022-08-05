@@ -1,7 +1,7 @@
 - type: job
   id: CentralCommandOfficial
   name: job-name-centcomoff
-  roleTimer: JobCentralCommandOfficial
+  playTimeTracker: JobCentralCommandOfficial
   setPreference: false
   startingGear: CentcomGear
   icon: "Nanotrasen"
