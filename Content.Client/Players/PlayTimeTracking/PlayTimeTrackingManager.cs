@@ -19,7 +19,7 @@ public sealed class PlayTimeTrackingManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
-    private Dictionary<string, TimeSpan> _roles = new();
+    private readonly Dictionary<string, TimeSpan> _roles = new();
 
     public void Initialize()
     {
@@ -39,7 +39,13 @@ public sealed class PlayTimeTrackingManager
 
     private void RxPlayTime(MsgPlayTime message)
     {
-        _roles = message.Trackers;
+        _roles.Clear();
+
+        // NOTE: do not assign _roles = message.Trackers due to implicit data sharing in integration tests.
+        foreach (var (tracker, time) in message.Trackers)
+        {
+            _roles[tracker] = time;
+        }
 
         /*var sawmill = Logger.GetSawmill("play_time");
         foreach (var (tracker, time) in _roles)
