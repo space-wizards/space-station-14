@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DefaultWindow xmlns="https://spacestation14.io"
+    MinWidth="360"
+    SetWidth="360"
+    Name="MainWindow">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="{Loc 'radio-window-frequency'}" HorizontalExpand="True" />
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" >
+                <LineEdit Name="RadioFrequency" HorizontalExpand="True" />
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="{Loc 'radio-window-audio'}" HorizontalExpand="True" />
+            <BoxContainer Orientation="Horizontal">
+                <!-- [LISTEN (ICON)] [BROADCAST (ICON)] [COMMAND (HIGLVOLUME)] [SUBSPACE TX] -->
+                <CheckBox Name="ListenToggle" Text="Listen" Access="Public"/>
+                <CheckBox Name="BroadcastToggle" Text="Broadcast" Access="Public"/>
+                <CheckBox Name="CommandAnnoyanceToggle" Text="Loudspeaker" Access="Public" Visible="False"/>
+                <!-- <Button Name="SubspaceToggle" Access="Public" Visible="False"/> (unused) -->
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'radio-window-channels'}" HorizontalExpand="True" />
+            <Label Name="RadioOptionsNoContent" Text="{Loc 'radio-window-channels-empty'}" VerticalAlignment="1"/>
+            <!-- equal spacing if this one \/ exist, else this text gets pushed /\ -->
+            <BoxContainer Name="RadioOptionsContainer" Orientation="Vertical" HorizontalExpand="True" Visible="False">
+                <!-- preview -->
+                <!-- <Label Text="TheChannel" />
+                <Button Text="✔" Access="Public" ToggleMode="True" /> -->
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

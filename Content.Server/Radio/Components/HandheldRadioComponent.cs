@@ -15,42 +15,15 @@ namespace Content.Server.Radio.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
         // handheld radios and wall radios are slightly more configurable than headsets (UI CONFIGURABLE)
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool TXOn
-        {
-            get => _txOn;
-            private set
-            {
-                _txOn = value;
-                Dirty();
-            }
-        }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("sendOn")] public bool TXOn = false;
 
-        [DataField("sendOn")]
-        private bool _txOn;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool RXOn
-        {
-            get => _rxOn;
-            private set
-            {
-                _rxOn = value;
-                Dirty();
-            }
-        }
-
-        [DataField("receiveOn")]
-        private bool _rxOn;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("receiveOn")] public bool RXOn = false;
 
         protected override void Initialize()
         {
             base.Initialize();
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
-
-            TXOn = false;
-            RXOn = false;
         }
 
         public bool CanListen(string message, EntityUid source, int? freq)

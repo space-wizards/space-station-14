@@ -24,7 +24,13 @@ public sealed class RadioKeyComponent : Component
     /// The frequency this unlocks
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public readonly List<int> UnlockedFrequency = new();
+    public readonly HashSet<int> UnlockedFrequency = new();
+
+    /// <summary>
+    /// The frequency we blocked. Yes, it is stored in the radiokey, not the radio.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public readonly HashSet<int> BlockedFrequency = new();
 
     // TODO flag these or something
     [ViewVariables]

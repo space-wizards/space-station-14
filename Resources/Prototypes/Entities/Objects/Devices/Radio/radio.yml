@@ -5,6 +5,12 @@
   abstract: true
   components:
     - type: Radio
+    - type: UserInterface
+      interfaces:
+        - key: enum.RadioUiKey.Key
+          type: RadioBoundUserInterface
+    - type: ActivatableUI
+      key: enum.RadioUiKey.Key
 
 - type: entity
   name: handheld radio

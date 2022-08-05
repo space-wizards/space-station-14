@@ -1,3 +1,4 @@
+using Content.Server.Radio.EntitySystems;
 using Content.Server.RadioKey.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
@@ -9,12 +10,20 @@ namespace Content.Server.Headset
     public sealed class HeadsetSystem : EntitySystem
     {
         [Dependency] private readonly SharedRadioSystem _sharedRadioSystem = default!;
+        [Dependency] private readonly RadioSystem _radioSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<HeadsetComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<HeadsetComponent, GetVerbsEvent<AlternativeVerb>>(OnAltClick);
+            SubscribeLocalEvent<HeadsetComponent, RadioChangeFrequency>(OnFrequencyChange);
+        }
+
+        private void OnFrequencyChange(EntityUid uid, HeadsetComponent component, RadioChangeFrequency args)
+        {
+            component.Frequency = _sharedRadioSystem.SanitizeFrequency(args.Frequency);
+            _radioSystem.UpdateUIState(uid, component);
         }
 
         private void OnAltClick(EntityUid uid, HeadsetComponent component, GetVerbsEvent<AlternativeVerb> args)

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Channels;
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
@@ -25,6 +24,7 @@ public sealed partial class RadioSystem : EntitySystem
     [Dependency] private readonly EntityManager _entMan = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
     // thats right, linking is based on NETWORK not manualy doing it anymore :D
     private readonly Dictionary<string, List<EntityUid>> _tcommsMachine = new();
@@ -35,6 +35,33 @@ public sealed partial class RadioSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<TelecommsMachine, ComponentInit>(OnTelecommsMachineInit);
         SubscribeLocalEvent<TelecommsMachine, ComponentShutdown>(OnTelecommsMachineDelete);
+        SubscribeLocalEvent<IRadio, MapInitEvent>(OnRadioInit);
+        SubscribeLocalEvent<HandheldRadioComponent, RadioToggleTX>(OnRadioToggleTx);
+        SubscribeLocalEvent<HandheldRadioComponent, RadioToggleRX>(OnRadioToggleRx);
+        SubscribeLocalEvent<HandheldRadioComponent, RadioChangeFrequency>(OnFrequencyChange);
+    }
+
+    private void OnFrequencyChange(EntityUid uid, HandheldRadioComponent component, RadioChangeFrequency args)
+    {
+        component.Frequency = _sharedRadioSystem.SanitizeFrequency(args.Frequency);
+        UpdateUIState(uid, component);
+    }
+
+    private void OnRadioInit(EntityUid uid, IRadio component, MapInitEvent args)
+    {
+        UpdateUIState(uid, component);
+    }
+
+    private void OnRadioToggleTx(EntityUid uid, HandheldRadioComponent component, RadioToggleTX args)
+    {
+        component.TXOn = !component.TXOn;
+        UpdateUIState(uid, component);
+    }
+
+    private void OnRadioToggleRx(EntityUid uid, HandheldRadioComponent component, RadioToggleRX args)
+    {
+        component.RXOn = !component.RXOn;
+        UpdateUIState(uid, component);
     }
 
     /*
@@ -63,45 +90,25 @@ public sealed partial class RadioSystem : EntitySystem
             return; // not intentional currently lazy.
         }
 
-        SpreadMessageSubspace(packet);
+        //SendToAllMachines<TelecommsReceiverComponent>(packet);
+        SendToAllMachines<TelecommsAllInOneComponent>(packet);
 
         // set_interval(callback(SpreadMessageLocal, packet), 2 SECONDS)
         Timer.Spawn(TimeSpan.FromSeconds(2), () =>
         {
-            SpreadMessageLocal(packet);
+            if (packet.IsFinished) return;
+            // handhelds exclusively
+            BroadcastMessage(packet, true);
+
+            packet.IsFinished = true;
         });
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        TelecommsMachineUpdate(frameTime);
-    }
-
-    private void SpreadMessageSubspace(MessagePacket packet)
-    {
-        //SendToAllMachines<TelecommsReceiverComponent>(packet);
-        SendToAllMachines<TelecommsAllInOneComponent>(packet);
-    }
-
-    /// <summary>
-    /// Backup transmission but for handheld radios. Headsets & any radios sends this
-    /// </summary>
-    /// <param name="packet"></param>
-    private void SpreadMessageLocal(MessagePacket packet)
-    {
-        if (packet.IsFinished) return;
-        // handhelds exclusively
-        BroadcastMessage(packet, true);
-
-        packet.IsFinished = true;
     }
 
     private void BroadcastMessage(MessagePacket packet, bool isLocal = false)
     {
         if (packet.Channel == null) return;
         var channelint = (int) packet.Channel;
-        var radio = new List<IRadio>();
+        var radio = new HashSet<IRadio>();
         if (isLocal)
         {
             foreach (var radioComponent in EntityManager.EntityQuery<HandheldRadioComponent>(true))
@@ -109,6 +116,7 @@ public sealed partial class RadioSystem : EntitySystem
                 if (!radioComponent.RXOn) continue;
                 radio.Add(radioComponent);
             }
+            radio.UnionWith(EntityManager.EntityQuery<GhostRadioComponent>(true));
         }
         else
         {
@@ -116,20 +124,40 @@ public sealed partial class RadioSystem : EntitySystem
             var hc = GetEntityQuery<HeadsetComponent>();
             var hr = GetEntityQuery<HandheldRadioComponent>();
             var rk = GetEntityQuery<RadioKeyComponent>();
+            var ghostRadio = GetEntityQuery<GhostRadioComponent>();
+            var outsideFreeFreq = _sharedRadioSystem.IsOutsideFreeFreq(channelint);
             foreach (var iRadio in EntityManager.EntityQuery<IRadio>(true))
             {
-                // if radio key exists, check it else check if its frequency is == to broadcasitng freq
-                if (rk.TryGetComponent(iRadio.Owner, out var radioKeyComponent) && !radioKeyComponent.UnlockedFrequency.Contains(channelint)) continue;
-                // radios always listen (atleast i think)
-                if (hc.TryGetComponent(iRadio.Owner, out var hccomponent) && hccomponent.Frequency != packet.Channel)
+                if (ghostRadio.HasComponent(iRadio.Owner))
+                {
+                    // bypass
+                    radio.Add(iRadio);
+                    continue;
+                }
+
+                // dont bother transmitting if the receiving end has no radiokey & it's outside free freq.
+                if (!outsideFreeFreq)
+                {
+                    // radios always listen (atleast i think)
+                    if (hc.TryGetComponent(iRadio.Owner, out var hccomponent) && hccomponent.Frequency != packet.Channel)
+                    {
+                        continue;
+                    }
+                    if (hr.TryGetComponent(iRadio.Owner, out var hrcomponent) &&
+                        (!hrcomponent.RXOn || hrcomponent.Frequency != packet.Channel))
+                    {
+                        continue;
+                    }
+                }
+                else if (!rk.HasComponent(iRadio.Owner))
                 {
                     continue;
                 }
-                if (hr.TryGetComponent(iRadio.Owner, out var hrcomponent) && hrcomponent.Frequency != packet.Channel)
-                {
-                    continue;
-                }
-                // ghost radios get resolved down the line
+                // do the radiokey processing
+                if (rk.TryGetComponent(iRadio.Owner, out var radioKeyComponent)
+                    && !radioKeyComponent.UnlockedFrequency.Contains(channelint)
+                    && radioKeyComponent.BlockedFrequency.Contains(channelint)) continue;
+
                 radio.Add(iRadio);
             }
         }
@@ -160,7 +188,7 @@ public sealed partial class RadioSystem : EntitySystem
     /// </summary>
     /// <param name="radioIn"></param>
     /// <param name="clientsOut"></param>
-    private void GetMobsInRadioRange(List<IRadio> radioIn, HashSet<ICommonSession> clientsOut)
+    private void GetMobsInRadioRange(HashSet<IRadio> radioIn, HashSet<ICommonSession> clientsOut)
     {
         var ghostRadio = GetEntityQuery<GhostRadioComponent>();
         var headset = GetEntityQuery<HeadsetComponent>();
@@ -208,6 +236,58 @@ public sealed partial class RadioSystem : EntitySystem
                 }
             }
         }
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        TelecommsMachineUpdate(frameTime);
+    }
+
+    public void UpdateUIState(EntityUid uid,
+        IRadio? radio = null,
+        RadioKeyComponent? key = null,
+        ServerUserInterfaceComponent? ui = null)
+    {
+        // we dont want ghost radios
+        if (!Resolve(uid, ref radio, ref ui, logMissing: false))
+            return;
+
+        // radio key is optional
+        key ??= CompOrNull<RadioKeyComponent>(uid);
+
+        if (_userInterfaceSystem.GetUiOrNull(uid, RadioUiKey.Key, ui) is not { } bui) return;
+        // bump type
+        var TX = false;
+        var RX = false;
+        var freq = 1459;
+        if (TryComp<HandheldRadioComponent>(uid, out var hrc))
+        {
+            TX = hrc.TXOn;
+            RX = hrc.RXOn;
+            freq = hrc.Frequency;
+        }
+        if (TryComp<HeadsetComponent>(uid, out var hc))
+        {
+            // always on
+            TX = true;
+            RX = true;
+            freq = hc.Frequency;
+        }
+
+        if (key != null)
+        {
+            // radio facts: you can only filter radios which you CAN send
+            var dict = new Dictionary<int, string>();
+            foreach (var freqint in key.UnlockedFrequency)
+            {
+                var freqProto = _sharedRadioSystem.GetChannel(freqint);
+                dict.Add(freqint, freqProto?.Name ?? _sharedRadioSystem.StringifyFrequency(freqint));
+            }
+            bui.SetState(new RadioBoundInterfaceState(TX, RX, freq, dict, key.BlockedFrequency));
+            return;
+        }
+        bui.SetState(new RadioBoundInterfaceState(TX, RX, freq, new Dictionary<int, string>(), new HashSet<int>()));
     }
 }
 

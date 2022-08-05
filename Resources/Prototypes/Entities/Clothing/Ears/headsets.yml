@@ -5,8 +5,6 @@
   name: headset
   description: An updated, modular intercom that fits over the head. Takes encryption keys.
   components:
-  - type: Headset
-  - type: RadioKey
   - type: Sprite
     state: icon
   - type: Clothing
@@ -14,6 +12,15 @@
     Slots:
     - ears
     sprite: Clothing/Ears/Headsets/base.rsi
+    # radio stuff
+  - type: Headset
+  - type: RadioKey
+  - type: UserInterface
+    interfaces:
+      - key: enum.RadioUiKey.Key
+        type: RadioBoundUserInterface
+  - type: ActivatableUI
+    key: enum.RadioUiKey.Key
 
 - type: entity
   parent: ClothingHeadset

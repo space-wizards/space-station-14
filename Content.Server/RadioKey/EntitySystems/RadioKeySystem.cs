@@ -1,4 +1,5 @@
 using Content.Server.Radio.Components;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.RadioKey.Components;
 using Content.Server.Tools;
 using Content.Shared.Examine;
@@ -13,6 +14,7 @@ namespace Content.Server.RadioKey.EntitySystems
     public sealed class RadioKeySystem : EntitySystem
     {
         [Dependency] private readonly SharedRadioSystem _sharedRadioSystem = default!;
+        [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
 
@@ -23,6 +25,7 @@ namespace Content.Server.RadioKey.EntitySystems
             SubscribeLocalEvent<RadioKeyHolderComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<RadioKeyComponent, InteractUsingEvent>(OnAfterRadioKeyInteract);
             //SubscribeLocalEvent<RadioKeyHolderComponent, InteractUsingEvent>(OnAfterInteract);
+            SubscribeLocalEvent<RadioKeyComponent, RadioToggleFrequencyFilter>(OnRadioToggleFrequencyFilter);
         }
 
         private void OnAfterRadioKeyInteract(EntityUid uid, RadioKeyComponent component, InteractUsingEvent args)
@@ -91,13 +94,26 @@ namespace Content.Server.RadioKey.EntitySystems
             radioKeyComponent.RadioKeyPrototype.Add(component.RadioKeyPrototype);
             radioKeyComponent.UpdateFrequencies();
             if (EntityManager.TryGetComponent(target, out IRadio? radioComponent)) {
-                // TODO: RETURN UI!!!
-                //_radioSystem.UpdateUIState(target, radioComponent, radioKeyComponent); // update if user adds keys while updating
+                _radioSystem.UpdateUIState(target, radioComponent, radioKeyComponent); // update if user adds keys while updating
             }
 
             EntityManager.QueueDeleteEntity(uid);
 
             args.Handled = true;
+        }
+
+        private void OnRadioToggleFrequencyFilter(EntityUid uid, RadioKeyComponent component,
+            RadioToggleFrequencyFilter args)
+        {
+            if (component.BlockedFrequency.Contains(args.Frequency))
+            {
+                component.BlockedFrequency.Remove(args.Frequency);
+            }
+            else
+            {
+                component.BlockedFrequency.Add(args.Frequency);
+            }
+            _radioSystem.UpdateUIState(uid, null, component);
         }
     }
 }
