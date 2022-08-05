@@ -109,7 +109,7 @@ namespace Content.Shared.Roles
 
                     reason = Loc.GetString(
                         "role-timer-department-insufficient",
-                        ("time", $"{deptDiff:0}"),
+                        ("time", deptDiff),
                         ("department", Loc.GetString(deptRequirement.Department)));
                     return false;
 
@@ -120,7 +120,7 @@ namespace Content.Shared.Roles
                     if (overallDiff <= 0 || overallTime >= overallRequirement.Time)
                         return true;
 
-                    reason = Loc.GetString("role-timer-overall-insufficient", ("time", $"{overallDiff:0}"));
+                    reason = Loc.GetString("role-timer-overall-insufficient", ("time", overallDiff));
                     return false;
 
                 case RoleTimeRequirement roleRequirement:
@@ -134,7 +134,7 @@ namespace Content.Shared.Roles
 
                     reason = Loc.GetString(
                         "role-timer-role-insufficient",
-                        ("time", $"{roleDiff:0}"),
+                        ("time", roleDiff),
                         ("job", Loc.GetString(proto)));
                     return false;
                 default:
