@@ -137,8 +137,6 @@ namespace Content.Server.Cloning.Systems
                 return false;
 
             podStorage.RemoveMaterial("Biomass", speciesPrototype.CloningCost * 50);
-            var biomassAmountAfter = podStorage.GetMaterialAmount("Biomass");
-            biomassAmountAfter /= 50;
 
             var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
             _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance);
