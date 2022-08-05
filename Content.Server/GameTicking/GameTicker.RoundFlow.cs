@@ -174,7 +174,7 @@ namespace Content.Server.GameTicking
 
         public bool PurchaseAvailable()
         {
-            return _stationSystem.Stations.All(x => Comp<StationJobsComponent>(x).PercentJobsRemaining < .1);
+            return _stationSystem.Stations.All(x => Comp<StationJobsComponent>(x).PercentJobsRemaining <= .5);
         }
 
 
