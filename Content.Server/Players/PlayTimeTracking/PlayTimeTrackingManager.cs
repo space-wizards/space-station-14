@@ -216,6 +216,8 @@ public sealed class PlayTimeTrackingManager
             return;
 
         await _db.UpdatePlayTimes(log);
+
+        _sawmill.Debug($"Saved {log.Count} trackers");
     }
 
     private async Task DoSaveSessionAsync(IPlayerSession session)
@@ -232,6 +234,8 @@ public sealed class PlayTimeTrackingManager
         data.DbTrackersDirty.Clear();
 
         await _db.UpdatePlayTimes(log);
+
+        _sawmill.Debug($"Saved {log.Count} trackers for {session.Name}");
     }
 
     public async Task LoadData(IPlayerSession session, CancellationToken cancel)
