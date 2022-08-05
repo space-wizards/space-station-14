@@ -39,6 +39,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 {
                     Text = $"{sensor.Name} ({sensor.Job})"
                 };
+                nameLabel.HorizontalExpand = true;
                 SensorsTable.AddChild(nameLabel);
                 _rowsContent.Add(nameLabel);
 

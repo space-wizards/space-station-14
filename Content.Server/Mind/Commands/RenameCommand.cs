@@ -51,15 +51,6 @@ public sealed class RenameCommand : IConsoleCommand
         {
             // Mind
             mind.Mind.CharacterName = name;
-
-            // Cloner entries
-            if (entSysMan.TryGetEntitySystem<CloningSystem>(out var cloningSystem)
-                && cloningSystem.MindToId.TryGetValue(mind.Mind, out var cloningId)
-                && cloningSystem.IdToDNA.ContainsKey(cloningId))
-            {
-                cloningSystem.IdToDNA[cloningId] =
-                    new ClonerDNAEntry(mind.Mind, cloningSystem.IdToDNA[cloningId].Profile.WithName(name));
-            }
         }
 
         // Id Cards

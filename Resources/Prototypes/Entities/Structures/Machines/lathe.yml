@@ -259,6 +259,7 @@
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
+      - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
       - GeneratorPlasmaMachineCircuitboard
