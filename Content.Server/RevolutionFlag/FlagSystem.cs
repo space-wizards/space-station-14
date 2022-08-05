@@ -7,7 +7,7 @@ using Content.Shared.Hands;
 using Content.Shared.StatusEffect;
 
 namespace Content.Server.RevolutionFlag;
-    internal sealed class FlagSystem : EntitySystem
+    public sealed class FlagSystem : EntitySystem
     {
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
