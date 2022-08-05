@@ -4,6 +4,7 @@
   mapPath: /Maps/atlas.yml
   minPlayers: 0
   maxPlayers: 35
+  votable: False
   stations:
     Atlas: 
       mapNameTemplate: '{0} Atlas {1}'
@@ -44,3 +45,4 @@
         MedicalIntern: [ 1, 1 ]
         ServiceWorker: [ 1, 1 ]
         SecurityCadet: [ 1, 1 ]
+        Detective: [ 1, 1 ]

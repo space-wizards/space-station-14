@@ -36,7 +36,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-        [Dependency] private readonly ClothingSystem _clothingSystem = default!;
+        [Dependency] private readonly ClothingVisualsSystem _clothingVisualsSystem = default!;
 
         public const int ButtonSize = 64;
         private const int ButtonSeparation = 4;
@@ -165,7 +165,7 @@ namespace Content.Client.Inventory
 
         private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
         {
-            _clothingSystem.InitClothing(uid, component);
+            _clothingVisualsSystem.InitClothing(uid, component);
 
             if (!TryGetUIElements(uid, out var window, out var bottomLeft, out var bottomRight, out var topQuick,
                     component))

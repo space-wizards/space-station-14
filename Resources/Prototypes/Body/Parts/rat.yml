@@ -12,28 +12,9 @@
     compatibility: Biological
     mechanisms:
     - OrganRatLungs
-    - OrganHumanStomach
-    - OrganHumanLiver
-    - OrganHumanHeart
-    - OrganHumanKidneys
+    - OrganRatStomach
+    - OrganAnimalLiver
+    - OrganAnimalHeart
+    - OrganAnimalKidneys
   - type: Damageable
     damageContainer: Biological
-
-- type: entity
-  id: OrganRatLungs
-  parent: BaseAnimalOrgan
-  name: lungs
-  noSpawn: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Lung
-  - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Rat ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0

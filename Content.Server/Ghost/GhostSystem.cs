@@ -44,7 +44,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
 
-            SubscribeLocalEvent<GhostOnMoveComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<GhostOnMoveComponent, MoveInputEvent>(OnRelayMoveInput);
 
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
@@ -77,7 +77,7 @@ namespace Content.Server.Ghost
             args.Handled = true;
         }
 
-        private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, RelayMoveInputEvent args)
+        private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
             // Let's not ghost if our mind is visiting...
             if (EntityManager.HasComponent<VisitingMindComponent>(uid)) return;

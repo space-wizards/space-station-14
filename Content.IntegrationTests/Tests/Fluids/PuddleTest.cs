@@ -90,6 +90,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             var sTileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var metaSystem = entityManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
 
             MapId sMapId = default;
             IMapGrid sGrid;
@@ -103,7 +104,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 sMapManager.SetMapPaused(sMapId, true);
                 sGrid = sMapManager.CreateGrid(sMapId);
                 sGridId = sGrid.GridEntityId;
-                entityManager.GetComponent<MetaDataComponent>(sGridId).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
+                metaSystem.SetEntityPaused(sGridId, true); // See https://github.com/space-wizards/RobustToolbox/issues/1444
 
                 var tileDefinition = sTileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -140,8 +141,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.NotNull(puddle);
 
                 evaporation = entityManager.GetComponent<EvaporationComponent>(puddle.Owner);
-
-                meta.EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
+                metaSystem.SetEntityPaused(puddle.Owner, true, meta); // See https://github.com/space-wizards/RobustToolbox/issues/1445
 
                 Assert.True(meta.EntityPaused);
 

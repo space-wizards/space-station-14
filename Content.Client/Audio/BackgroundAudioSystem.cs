@@ -1,24 +1,19 @@
-using System.Threading;
 using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
-using Content.Shared;
-using Content.Shared.Audio;
 using Content.Shared.CCVar;
-using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Client;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Audio
@@ -99,10 +94,8 @@ namespace Content.Client.Audio
             if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity ||
                !_timing.IsFirstTimePredicted) return;
 
-            if (!TryComp<TransformComponent>(message.Entity, out var xform)) return;
-
             // Check if we traversed to grid.
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (message.Transform.GridUid != null)
             {
                 if (_currentCollection == _stationAmbience) return;
                 ChangeAmbience(_stationAmbience);

@@ -184,4 +184,9 @@ namespace Content.Shared.SubFloor
         Covered, // is there a floor tile over this entity
         ScannerRevealed, // is this entity revealed by a scanner or some other entity?
     }
+
+    public enum SubfloorLayers : byte
+    {
+        FirstLayer
+    }
 }

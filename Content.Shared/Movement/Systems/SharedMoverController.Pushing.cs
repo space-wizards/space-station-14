@@ -22,18 +22,18 @@ public abstract partial class SharedMoverController
 
         if (_pushingEnabled)
         {
-            _physics.KinematicControllerCollision += OnMobCollision;
+            PhysicsSystem.KinematicControllerCollision += OnMobCollision;
         }
         else
         {
-            _physics.KinematicControllerCollision -= OnMobCollision;
+            PhysicsSystem.KinematicControllerCollision -= OnMobCollision;
         }
     }
 
     private void ShutdownPushing()
     {
         if (_pushingEnabled)
-            _physics.KinematicControllerCollision -= OnMobCollision;
+            PhysicsSystem.KinematicControllerCollision -= OnMobCollision;
 
         _configManager.UnsubValueChanged(CCVars.MobPushing, SetPushing);
     }
@@ -49,8 +49,8 @@ public abstract partial class SharedMoverController
 
         if (otherBody.BodyType != BodyType.Dynamic || !otherFixture.Hard) return;
 
-        if (!EntityManager.TryGetComponent(ourFixture.Body.Owner, out IMobMoverComponent? mobMover) || worldNormal == Vector2.Zero) return;
+        if (!EntityManager.TryGetComponent(ourFixture.Body.Owner, out MobMoverComponent? mobMover) || worldNormal == Vector2.Zero) return;
 
-        otherBody.ApplyLinearImpulse(-worldNormal * mobMover.PushStrength * frameTime);
+        otherBody.ApplyLinearImpulse(-worldNormal * mobMover.PushStrengthVV * frameTime);
     }
 }

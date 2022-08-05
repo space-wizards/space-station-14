@@ -1,6 +1,6 @@
 - type: job
   id: ChiefEngineer
-  name: "chief engineer"
+  name: job-name-ce
   weight: 10
   startingGear: ChiefEngineerGear
   departments:
@@ -8,7 +8,7 @@
   - Engineering
   icon: "ChiefEngineer"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Maintenance

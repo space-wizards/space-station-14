@@ -92,16 +92,20 @@
     - type: Sprite
       netsync: false
       sprite: Structures/conveyor.rsi
-      state: switch-off
+      layers:
+        - state: switch-off
+          map: ["enabled", "enum.TwoWayLeverState.Middle"]
     - type: TwoWayLever
     - type: UseDelay
       delay: 0.2 # prevent light-toggling auto-clickers.
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: TwoWayLeverVisualizer
-          state_forward: switch-fwd
-          state_off: switch-off
-          state_reversed: switch-rev
+        enum.TwoWayLeverVisuals.State:
+          enabled:
+            Right: { state: switch-fwd }
+            Middle: { state: switch-off }
+            Left: { state: switch-rev }
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic

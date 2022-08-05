@@ -261,7 +261,11 @@ namespace Content.Server.Cuffs.Components
                     }
                 }
 
-                CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
+                if (_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent))
+                    CanStillInteract = handsComponent.SortedHands.Count() > CuffedHandCount;
+                else
+                    CanStillInteract = true;
+
                 _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
                 var ev = new CuffedStateChangeEvent();
                 _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);

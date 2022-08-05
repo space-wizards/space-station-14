@@ -96,7 +96,9 @@ public sealed partial class ChatSystem
             message = message[1..].TrimStart();
         }
 
-        // for headsets using the `;` bind or it is an invalid freq
+        // Re-capitalize message since we removed the prefix.
+        message = SanitizeMessageCapital(source, message);
+
         if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
             TryComp(entityUid, out HeadsetComponent? headset))
         {

@@ -1,3 +1,20 @@
+- type: entity
+  id: MuzzleFlashEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_bullet
+  - type: EffectVisuals
+  - type: AnimationPlayer
+
 # One bullet to bring them all into the darkness and bind them
 - type: entity
   id: BaseBullet
@@ -29,11 +46,14 @@
       - Impassable
       - BulletImpassable
   - type: Projectile
+    impactEffect: BulletImpactEffect
     damage:
       types:
         Piercing: 14
     soundHit:
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+  - type: TimedDespawn
+    lifetime: 10
 
 - type: entity
   id: BaseBulletTrigger # Trigger-on-collide bullets
@@ -56,21 +76,6 @@
       mask:
       - Impassable
       - BulletImpassable
-
-- type: entity
-  id: BaseBulletFlash
-  name: base bullet flash
-  parent: BaseBulletTrigger
-  noSpawn: true
-  components:
-  - type: Projectile
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/snap.ogg
-  - type: FlashOnTrigger
-    range: 1
-  - type: EmitSoundOnTrigger
-    sound:
-      path: "/Audio/Effects/flash_bang.ogg"
 
 - type: entity
   id: BaseBulletHighVelocity
@@ -106,14 +111,13 @@
         Blunt: 3
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
-  - type: StunOnCollide
-    stunAmount: 2
-    knockdownAmount: 2
+  - type: StaminaDamageOnCollide
+    damage: 15
 
 # Energy projectiles
 - type: entity
-  name : taser bolt
-  id: BulletTaser
+  name : disabler bolt
+  id: BulletDisabler
   parent: BaseBullet
   noSpawn: true
   components:
@@ -123,34 +127,32 @@
       params:
         volume: 5
   - type: Sprite
-    noRot: true
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    color: "#ffff33"
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:
-    - state: spark
+    - state: omnilaser
       shader: unshaded
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
+        bounds: "-0.15,-0.3,0.15,0.3"
       hard: false
       id: projectile
       mask:
       - Impassable
       - BulletImpassable
   - type: Ammo
+  - type: StaminaDamageOnCollide
+    damage: 30
   - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
     damage:
       types:
         Heat: 5
     soundHit:
-      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+      path: "/Audio/Weapons/tap.ogg"
     soundForce: true
-  - type: StunOnCollide
-    stunAmount: 5
-    knockdownAmount: 5
 
 - type: entity
   name: emitter bolt
@@ -183,6 +185,29 @@
   - type: Tag
     tags:
     - EmitterBolt
+
+- type: entity
+  id: BulletKinetic
+  name: kinetic bolt
+  parent: BaseBulletHighVelocity
+  noSpawn: true
+  description: Not too bad, but you still don't want to get hit by it.
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 10
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.4
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
@@ -246,9 +271,8 @@
         Blunt: 1
     soundHit:
       path: /Audio/Effects/gen_hit.ogg
-  - type: StunOnCollide
-    stunAmount: 8
-    knockdownAmount: 8
+  - type: StaminaDamageOnCollide
+    damage: 80
 
 - type: entity
   id: BulletGrenadeBlast
@@ -263,13 +287,14 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 500 # a ~7 tile radius. This is pretty big.
-    maxIntensity: 10 # caps at 150 damage
+    totalIntensity: 150 # a ~2 tile radius
+    intensitySlope: 5
+    maxIntensity: 10
 
 - type: entity
   id: BulletGrenadeFlash
   name: flash grenade
-  parent: BaseBulletFlash
+  parent: BaseBulletTrigger
   noSpawn: true
   components:
   - type: Sprite
@@ -293,7 +318,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 64 # about a ~4 tile radius
+    totalIntensity: 175 # about a ~6 tile radius
+    intensitySlope: 1
+    maxIntensity: 10
 
 - type: entity
   id: BulletFoam

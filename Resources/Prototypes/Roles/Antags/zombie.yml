@@ -1,0 +1,13 @@
+- type: antag
+  id: InitialInfected
+  name: "Initial Infected"
+  antagonist: true
+  setPreference: true
+  objective: "Once you turn, infect as many other crew members as possible"
+
+- type: antag
+  id: Zombie
+  name: "Zombie"
+  antagonist: true
+  setPreference: false
+  objective: "Turn as many humans as possible into zombies."

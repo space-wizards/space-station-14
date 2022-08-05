@@ -16,7 +16,7 @@ namespace Content.Server.Gravity.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
         private Dictionary<EntityUid, uint> _gridsToShake = new();
 
@@ -83,7 +83,7 @@ namespace Content.Server.Gravity.EntitySystems
                 }
 
                 var kick = new Vector2(_random.NextFloat(), _random.NextFloat()) * GravityKick;
-                _cameraRecoil.KickCamera(player.AttachedEntity.Value, kick);
+                _sharedCameraRecoil.KickCamera(player.AttachedEntity.Value, kick);
             }
         }
     }

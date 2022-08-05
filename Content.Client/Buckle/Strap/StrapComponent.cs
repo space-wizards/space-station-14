@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Buckle.Strap
 {

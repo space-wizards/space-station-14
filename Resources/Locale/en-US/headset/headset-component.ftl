@@ -13,3 +13,14 @@ examine-headset-onechannel = use [color={$color}]:h[/color] or [color={$color}]:
 alt-click-headset = You toggle high-volume mode {$mode}.
 
 examine-headset-chat-prefix = Use {$prefix} for the currently tuned frequency.
+
+chat-radio-common = Common
+chat-radio-centcom = CentCom
+chat-radio-command = Command
+chat-radio-engineering = Engineering
+chat-radio-medical = Medical
+chat-radio-science = Science
+chat-radio-security = Security
+chat-radio-service = Service
+chat-radio-supply = Supply
+chat-radio-syndicate = Syndicate

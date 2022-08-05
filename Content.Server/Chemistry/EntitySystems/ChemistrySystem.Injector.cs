@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
@@ -9,11 +8,13 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using System.Threading;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -63,11 +64,18 @@ public sealed partial class ChemistrySystem
             else
             {
                 _popup.PopupEntity(Loc.GetString("injector-component-cannot-transfer-message",
-                    ("target", target)), component.Owner, Filter.Entities(user));
+                    ("target", Identity.Entity(target, EntityManager))), component.Owner, Filter.Entities(user));
             }
         }
         else if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Draw)
         {
+            /// Draw from a bloodstream, if the target has that
+            if (TryComp<BloodstreamComponent>(target, out var stream))
+            {
+                TryDraw(component, target, stream.BloodSolution, user, stream);
+                return;
+            }
+            /// Draw from an object (food, beaker, etc)
             if (_solutions.TryGetDrawableSolution(target, out var drawableSolution))
             {
                 TryDraw(component, target, drawableSolution, user);
@@ -75,7 +83,7 @@ public sealed partial class ChemistrySystem
             else
             {
                 _popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
-                    ("target", target)), component.Owner, Filter.Entities(user));
+                    ("target", Identity.Entity(target, EntityManager))), component.Owner, Filter.Entities(user));
             }
         }
     }
@@ -187,7 +195,7 @@ public sealed partial class ChemistrySystem
         if (user != target)
         {
             // Create a pop-up for the target
-            var userName = MetaData(user).EntityName;
+            var userName = Identity.Entity(user, EntityManager);
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
                 ("user", userName)), user, Filter.Entities(target));
 
@@ -249,7 +257,7 @@ public sealed partial class ChemistrySystem
 
         if (realTransferAmount <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", targetBloodstream.Owner)),
+            _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", Identity.Entity(targetBloodstream.Owner, EntityManager))),
                 component.Owner, Filter.Entities(user));
             return;
         }
@@ -263,7 +271,7 @@ public sealed partial class ChemistrySystem
 
         _popup.PopupEntity(Loc.GetString("injector-component-inject-success-message",
                 ("amount", removedSolution.TotalVolume),
-                ("target", targetBloodstream.Owner)), component.Owner, Filter.Entities(user));
+                ("target", Identity.Entity(targetBloodstream.Owner, EntityManager))), component.Owner, Filter.Entities(user));
 
         Dirty(component);
         AfterInject(component);
@@ -282,7 +290,7 @@ public sealed partial class ChemistrySystem
 
         if (realTransferAmount <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("injector-component-target-already-full-message", ("target", targetEntity)),
+            _popup.PopupEntity(Loc.GetString("injector-component-target-already-full-message", ("target", Identity.Entity(targetEntity, EntityManager))),
                 component.Owner, Filter.Entities(user));
             return;
         }
@@ -303,7 +311,7 @@ public sealed partial class ChemistrySystem
 
         _popup.PopupEntity(Loc.GetString("injector-component-transfer-success-message",
                 ("amount", removedSolution.TotalVolume),
-                ("target", targetEntity)), component.Owner, Filter.Entities(user));
+                ("target", Identity.Entity(targetEntity, EntityManager))), component.Owner, Filter.Entities(user));
 
         Dirty(component);
         AfterInject(component);
@@ -329,7 +337,7 @@ public sealed partial class ChemistrySystem
         }
     }
 
-    private void TryDraw(InjectorComponent component, EntityUid targetEntity, Solution targetSolution, EntityUid user)
+    private void TryDraw(InjectorComponent component, EntityUid targetEntity, Solution targetSolution, EntityUid user, BloodstreamComponent? stream = null)
     {
         if (!_solutions.TryGetSolution(component.Owner, InjectorComponent.SolutionName, out var solution)
             || solution.AvailableVolume == 0)
@@ -342,8 +350,15 @@ public sealed partial class ChemistrySystem
 
         if (realTransferAmount <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("injector-component-target-is-empty-message", ("target", targetEntity)),
+            _popup.PopupEntity(Loc.GetString("injector-component-target-is-empty-message", ("target", Identity.Entity(targetEntity, EntityManager))),
                 component.Owner, Filter.Entities(user));
+            return;
+        }
+
+        // We have some snowflaked behavior for streams.
+        if (stream != null)
+        {
+            DrawFromBlood(user, targetEntity, component, solution, stream, realTransferAmount);
             return;
         }
 
@@ -357,12 +372,36 @@ public sealed partial class ChemistrySystem
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
                 ("amount", removedSolution.TotalVolume),
-                ("target", targetEntity)), component.Owner, Filter.Entities(user));
+                ("target", Identity.Entity(targetEntity, EntityManager))), component.Owner, Filter.Entities(user));
 
         Dirty(component);
         AfterDraw(component);
     }
 
+    private void DrawFromBlood(EntityUid user, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, FixedPoint2 transferAmount)
+    {
+        var drawAmount = (float) transferAmount;
+        var bloodAmount = drawAmount;
+        var chemAmount = 0f;
+        if (stream.ChemicalSolution.CurrentVolume > 0f) // If they have stuff in their chem stream, we'll draw some of that
+        {
+            bloodAmount = drawAmount * 0.85f;
+            chemAmount = drawAmount * 0.15f;
+        }
+
+        var bloodTemp = stream.BloodSolution.SplitSolution(bloodAmount);
+        var chemTemp = stream.ChemicalSolution.SplitSolution(chemAmount);
+
+        _solutions.TryAddSolution(component.Owner, injectorSolution, bloodTemp);
+        _solutions.TryAddSolution(component.Owner, injectorSolution, chemTemp);
+
+        _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
+                ("amount", transferAmount),
+                ("target", Identity.Entity(target, EntityManager))), component.Owner, Filter.Entities(user));
+
+        Dirty(component);
+        AfterDraw(component);
+    }
     private sealed class InjectionCompleteEvent : EntityEventArgs
     {
         public InjectorComponent Component { get; init; } = default!;

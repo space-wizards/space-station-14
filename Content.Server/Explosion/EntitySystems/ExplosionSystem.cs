@@ -31,7 +31,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
-    [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
@@ -93,9 +93,9 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
     {
-        args.Resistance += component.GlobalResistance;
+        args.DamageCoefficient *= component.DamageCoefficient;
         if (component.Resistances.TryGetValue(args.ExplotionPrototype, out var resistance))
-            args.Resistance += resistance;
+            args.DamageCoefficient *= resistance;
     }
 
     /// <summary>

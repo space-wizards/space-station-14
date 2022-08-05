@@ -1,18 +1,15 @@
-using Content.Client.Items.Components;
-using Content.Shared.Item;
+using Content.Shared.Clothing.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Clothing
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedItemComponent))]
-    [ComponentReference(typeof(ItemComponent))]
-    [NetworkedComponent()]
-    public sealed class ClothingComponent : ItemComponent
+    [ComponentReference(typeof(SharedClothingComponent))]
+    public sealed class ClothingComponent : SharedClothingComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("femaleMask")]
-        public FemaleClothingMask FemaleMask { get; } = FemaleClothingMask.UniformFull;
+        public FemaleClothingMask FemaleMask = FemaleClothingMask.UniformFull;
 
         public string? InSlot;
     }

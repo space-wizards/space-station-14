@@ -132,7 +132,7 @@ namespace Content.Server.Singularity.EntitySystems
                    !EntityManager.HasComponent<GhostComponent>(entity) &&
                    (component.Level > 4 ||
                    !EntityManager.HasComponent<ContainmentFieldComponent>(entity) &&
-                   !(EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent>(entity, out var containFieldGen) && _fieldGeneratorSystem.CanRepel(component, containFieldGen)));
+                   !EntityManager.HasComponent<ContainmentFieldGeneratorComponent>(entity));
         }
 
         private void HandleDestroy(ServerSingularityComponent component, EntityUid entity)

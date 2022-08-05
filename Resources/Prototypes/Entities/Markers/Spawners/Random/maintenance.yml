@@ -13,6 +13,8 @@
         - CigarGold
         - ClothingNeckCloakHerald
         - ClothingHeadHelmetTemplar
+        - ClothingNeckCloakTrans
+        - ClothingNeckCloakAdmin
         - ToySkeleton
         - Basketball
         - Football
@@ -71,6 +73,7 @@
         - WeaponFlareGun
         - SheetSteel
         - SheetPlastic
+        - ResearchDisk
       chance: 0.6
       offset: 0.0
 
@@ -102,5 +105,6 @@
         - WeaponFlareGun
         - Spear
         - LidSalami
+        - ClothingEyesBlindfold
       chance: 0.6
       offset: 0.0

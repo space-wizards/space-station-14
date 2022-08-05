@@ -1,5 +1,5 @@
 using Content.Shared.Damage;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Weapon.Melee.Components
 {
@@ -9,6 +9,10 @@ namespace Content.Server.Weapon.Melee.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
         public SoundSpecifier? HitSound;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("noDamageSound")]
+        public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]

@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 
 namespace Content.Server.Administration.Managers
@@ -42,10 +40,7 @@ namespace Content.Server.Administration.Managers
 
         public IEnumerable<IPlayerSession> AllAdmins => _admins.Select(p => p.Key);
 
-        // If a command isn't in this list it's server-console only.
-        // if a command is in but the flags value is null it's available to everybody.
-        private readonly HashSet<string> _anyCommands = new();
-        private readonly Dictionary<string, AdminFlags[]> _adminCommands = new();
+        private readonly AdminCommandPermissions _commandPermissions = new();
 
         public bool IsAdmin(IPlayerSession session, bool includeDeAdmin = false)
         {
@@ -180,63 +175,19 @@ namespace Content.Server.Administration.Managers
 
                 if (flagsReq.Length != 0)
                 {
-                    _adminCommands.Add(cmdName, flagsReq);
+                    _commandPermissions.AdminCommands.Add(cmdName, flagsReq);
                 }
                 else
                 {
-                    _anyCommands.Add(cmdName);
+                    _commandPermissions.AnyCommands.Add(cmdName);
                 }
             }
 
             // Load flags for engine commands, since those don't have the attributes.
             if (_res.TryContentFileRead(new ResourcePath("/engineCommandPerms.yml"), out var efs))
             {
-                LoadPermissionsFromStream(efs);
+                _commandPermissions.LoadPermissionsFromStream(efs);
             }
-
-            // Load flags for client-only commands, those don't have the flag attributes, only "AnyCommand".
-            if (_res.TryContentFileRead(new ResourcePath("/clientCommandPerms.yml"), out var cfs))
-            {
-                LoadPermissionsFromStream(cfs);
-            }
-        }
-
-        private void LoadPermissionsFromStream(Stream fs)
-        {
-            using var reader = new StreamReader(fs, EncodingHelpers.UTF8);
-            var yStream = new YamlStream();
-            yStream.Load(reader);
-            var root = (YamlSequenceNode) yStream.Documents[0].RootNode;
-
-            foreach (var child in root)
-            {
-                var map = (YamlMappingNode) child;
-                var commands = map.GetNode<YamlSequenceNode>("Commands").Select(p => p.AsString());
-                if (map.TryGetNode("Flags", out var flagsNode))
-                {
-                    var flagNames = flagsNode.AsString().Split(",", StringSplitOptions.RemoveEmptyEntries);
-                    var flags = AdminFlagsHelper.NamesToFlags(flagNames);
-                    foreach (var cmd in commands)
-                    {
-                        if (!_adminCommands.TryGetValue(cmd, out var exFlags))
-                        {
-                            _adminCommands.Add(cmd, new[] {flags});
-                        }
-                        else
-                        {
-                            var newArr = new AdminFlags[exFlags.Length + 1];
-                            exFlags.CopyTo(newArr, 0);
-                            exFlags[^1] = flags;
-                            _adminCommands[cmd] = newArr;
-                        }
-                    }
-                }
-                else
-                {
-                    _anyCommands.UnionWith(commands);
-                }
-            }
-
         }
 
         public void PromoteHost(IPlayerSession player)
@@ -257,13 +208,13 @@ namespace Content.Server.Administration.Managers
         {
             var msg = new MsgUpdateAdminStatus();
 
-            var commands = new List<string>(_anyCommands);
+            var commands = new List<string>(_commandPermissions.AnyCommands);
 
             if (_admins.TryGetValue(session, out var adminData))
             {
                 msg.Admin = adminData.Data;
 
-                commands.AddRange(_adminCommands
+                commands.AddRange(_commandPermissions.AdminCommands
                     .Where(p => p.Value.Any(f => adminData.Data.HasFlag(f)))
                     .Select(p => p.Key));
             }
@@ -400,13 +351,13 @@ namespace Content.Server.Administration.Managers
 
         public bool CanCommand(IPlayerSession session, string cmdName)
         {
-            if (_anyCommands.Contains(cmdName))
+            if (_commandPermissions.AnyCommands.Contains(cmdName))
             {
                 // Anybody can use this command.
                 return true;
             }
 
-            if (!_adminCommands.TryGetValue(cmdName, out var flagsReq))
+            if (!_commandPermissions.AdminCommands.TryGetValue(cmdName, out var flagsReq))
             {
                 // Server-console only.
                 return false;

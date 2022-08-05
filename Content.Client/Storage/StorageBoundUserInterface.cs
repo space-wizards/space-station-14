@@ -31,7 +31,7 @@ namespace Content.Client.Storage
                 _window.StorageContainerButton.OnPressed += TouchedContainerButton;
 
                 _window.OnClose += Close;
-                _window.OpenCentered();
+                _window.OpenCenteredLeft();
             }
             else
             {
