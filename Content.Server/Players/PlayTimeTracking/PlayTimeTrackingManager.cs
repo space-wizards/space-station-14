@@ -212,6 +212,9 @@ public sealed class PlayTimeTrackingManager
             data.DbTrackersDirty.Clear();
         }
 
+        if (log.Count == 0)
+            return;
+
         await _db.UpdatePlayTimes(log);
     }
 
