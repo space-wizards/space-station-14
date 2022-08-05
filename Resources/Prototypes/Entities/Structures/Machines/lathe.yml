@@ -277,6 +277,7 @@
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/circuitprinter.ogg
+  - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
@@ -327,6 +328,7 @@
   - type: Machine
     board: SecurityTechFabCircuitboard
   - type: Lathe
+  - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
@@ -463,10 +465,12 @@
     board: UniformPrinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/uniformprinter.ogg
+  - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
         - RawMaterial
+        - Ingot
 
 - type: entity
   parent: Autolathe
@@ -503,7 +507,8 @@
         - SheetUranium1
         - IngotGold1
         - IngotSilver1
-    - type: Lathe
+    - type: MaterialStorage
       whitelist:
         tags:
           - Ore
+    - type: Lathe
