@@ -96,7 +96,7 @@ namespace Content.Shared.Roles
                     foreach (var other in jobs)
                     {
                         // The schema is stored on the Job role but we want to explode if the timer isn't found anyway.
-                        proto = "Job" + other;
+                        proto = prototypes.Index<JobPrototype>(other).RoleTimer;
 
                         playTimes.TryGetValue(proto, out var otherTime);
                         playtime += otherTime;
