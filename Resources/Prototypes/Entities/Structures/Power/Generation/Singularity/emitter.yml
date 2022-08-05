@@ -77,3 +77,4 @@
     board: EmitterCircuitboard
   - type: Lightning
     bodyPrototype: LightningBase
+    maxArc: 3

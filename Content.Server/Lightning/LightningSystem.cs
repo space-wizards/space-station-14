@@ -16,6 +16,7 @@ namespace Content.Server.Lightning;
 public sealed class LightningSystem : SharedLightningSystem
 {
     [Dependency] private readonly FixtureSystem _fixture = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -23,6 +24,11 @@ public sealed class LightningSystem : SharedLightningSystem
 
         SubscribeLocalEvent<LightningComponent, InteractHandEvent>(OnHandInteract);
         SubscribeLocalEvent<LightningComponent, LightningEvent>(OnLightning);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
     }
 
     //TODO: Make this a CreateLightning event or something
@@ -79,10 +85,13 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <summary>
     /// Gets the Target Data for the lightning
     /// </summary>
-    /// <param name="component"></param>
+    /// <param name="user"></param>
     /// <param name="target"></param>
-    public void GetTargetData(LightningComponent component, EntityUid target)
+    public void GetTargetData(EntityUid user, EntityUid target)
     {
+        if (!TryComp<LightningComponent>(user, out var component))
+            return;
+
         var compXForm = Transform(component.Owner);
         var compCoords = compXForm.Coordinates;
         var userXForm = Transform(target);
@@ -96,20 +105,51 @@ public sealed class LightningSystem : SharedLightningSystem
         var ev = new LightningEvent(userAngle, calculatedDistance, offset, offsetCorrection);
         RaiseLocalEvent(component.Owner, ev, true);
 
-        if (component.MaxArc > 0 && !component.ArcTargets.Contains(component.Owner) || !component.ArcTargets.Contains(target))
-        {
-            component.ArcTargets.Add(component.Owner);
-            component.ArcTargets.Add(target);
-            Arc(component, target);
-        }
+        component.ArcTargets.Add(user);
+        component.ArcTargets.Add(target);
     }
 
-    public void Arc(LightningComponent component, EntityUid target)
+    public void Arc(LightningComponent component, EntityUid user, EntityUid target)
     {
+
         if (HasComp<LightningComponent>(target) || target.ContainsPrototypeRecursive(component.BodyPrototype))
         {
             return;
         }
+
+        var targetXForm = Transform(target);
+
+        //TODO: Fire off a raycast in all 8 directions to look for a new target to fire to.
+        var directions = Enum.GetValues<Direction>().Length;
+        for (int i = 0; i < directions; i++)
+        {
+            var direction = (Direction)i;
+            var dirRad = direction.ToAngle() + targetXForm.GetWorldPositionRotation().WorldRotation;
+            var ray = new CollisionRay(targetXForm.GetWorldPositionRotation().WorldPosition, dirRad.ToVec(), (int)CollisionGroup.ItemMask);
+            var rayCastResults = _physics.IntersectRay(targetXForm.MapID, ray, component.MaxLength, target, false).ToList();
+            var lightningQuery = GetEntityQuery<LightningComponent>();
+
+            RayCastResults? closestResult = null;
+
+            foreach (var result in rayCastResults)
+            {
+                if (lightningQuery.HasComponent(result.HitEntity))
+                {
+                    continue;
+                }
+                closestResult = result;
+            }
+
+            if (closestResult == null)
+            {
+                return;
+            }
+
+            var ent = closestResult.Value.HitEntity;
+
+            GetTargetData(target, ent);
+        }
+
     }
 
     private void OnHandInteract(EntityUid uid, LightningComponent component, InteractHandEvent args)
@@ -117,7 +157,7 @@ public sealed class LightningSystem : SharedLightningSystem
         if (args.Handled)
             return;
 
-        GetTargetData(component, args.User);
+        GetTargetData(component.Owner, args.User);
 
         args.Handled = true;
     }
