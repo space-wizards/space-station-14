@@ -347,7 +347,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("database.engine", "sqlite", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabaseSqliteDbPath =
-            CVarDef.Create("database.sqlite_dbpath", "preferences.db", CVar.SERVERONLY);
+            CVarDef.Create("database.sqlite_dbpath", "preferences-or14.db", CVar.SERVERONLY);
 
         /// <summary>
         /// Milliseconds to asynchronously delay all SQLite database acquisitions with.

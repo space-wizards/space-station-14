@@ -24,7 +24,7 @@ namespace Content.Client.Viewport
 {
     public sealed class GameScreen : GameScreenBase, IMainViewportState
     {
-        public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
+        public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 27, EyeManager.PixelsPerMeter * 15);
 
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;

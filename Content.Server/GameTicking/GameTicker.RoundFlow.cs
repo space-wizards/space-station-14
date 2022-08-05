@@ -81,7 +81,8 @@ namespace Content.Server.GameTicking
         [AnyCommand]
         private void PurchaseShipCommand(IConsoleShell shell, string argstr, string[] args)
         {
-            if (!PurchaseAvailable()) return;
+            if (!PurchaseAvailable())
+                return;
 
             for (var i = 0; i < 128; i++)
             {
@@ -91,7 +92,16 @@ namespace Content.Server.GameTicking
                         Box2.CenteredAround(loc * WorldChunkSystem.ChunkSize, Vector2.One * 96)).Any())
                     continue;
 
-                LoadGameMap(_gameMapManager.GetSelectedMapChecked(true, true), DefaultMap, null);
+                //There's a hack here to get around loadmap crashing.
+                var (_, grids) = LoadGameMap(_gameMapManager.GetSelectedMapChecked(true, true), _mapManager.CreateMap(), null);
+
+                foreach (var grid in grids)
+                {
+                    var xform = Transform(grid);
+                    var offs = xform.Coordinates.Position + loc;
+                    var mid = _mapManager.GetMapEntityId(DefaultMap);
+                    xform.Coordinates = new EntityCoordinates(mid, offs);
+                }
             }
         }
 
