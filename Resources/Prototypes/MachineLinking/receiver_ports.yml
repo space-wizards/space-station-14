@@ -52,3 +52,13 @@
   id: Depressurize
   name: signal-port-name-depressurize
   description: signal-port-description-depressurize
+
+- type: receiverPort
+  id: CloningPodReceiver
+  name: signal-port-name-pod-receiver
+  description: signal-port-description-pod-receiver
+
+- type: receiverPort
+  id: MedicalScannerReceiver
+  name: signal-port-name-med-scanner-receiver
+  description: signal-port-description-med-scanner-receiver

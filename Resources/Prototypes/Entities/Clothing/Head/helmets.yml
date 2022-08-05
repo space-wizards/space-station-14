@@ -220,9 +220,6 @@
         Piercing: 0.95
         Heat: 0.65
         Radiation: 1
-  - type: PressureProtection
-    highPressureMultiplier: 0.65
-    lowPressureMultiplier: 1000
   - type: IdentityBlocker
 
 - type: entity

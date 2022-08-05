@@ -132,6 +132,15 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Weapons/pierce.ogg
+    range: 0.8
+    arcwidth: 30
+    arc: fist
+    damage:
+      types:
+        Piercing: 5
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
