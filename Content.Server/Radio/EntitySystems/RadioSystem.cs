@@ -116,7 +116,7 @@ public sealed partial class RadioSystem : EntitySystem
                 if (!radioComponent.RXOn) continue;
                 radio.Add(radioComponent);
             }
-            radio.UnionWith(EntityManager.EntityQuery<GhostRadioComponent>(true));
+            radio.UnionWith(EntityManager.EntityQuery<IntrinsicRadioComponent>(true));
         }
         else
         {
@@ -124,7 +124,7 @@ public sealed partial class RadioSystem : EntitySystem
             var hc = GetEntityQuery<HeadsetComponent>();
             var hr = GetEntityQuery<HandheldRadioComponent>();
             var rk = GetEntityQuery<RadioKeyComponent>();
-            var ghostRadio = GetEntityQuery<GhostRadioComponent>();
+            var ghostRadio = GetEntityQuery<IntrinsicRadioComponent>();
             var outsideFreeFreq = _sharedRadioSystem.IsOutsideFreeFreq(channelint);
             foreach (var iRadio in EntityManager.EntityQuery<IRadio>(true))
             {
@@ -190,7 +190,7 @@ public sealed partial class RadioSystem : EntitySystem
     /// <param name="clientsOut"></param>
     private void GetMobsInRadioRange(HashSet<IRadio> radioIn, HashSet<ICommonSession> clientsOut)
     {
-        var ghostRadio = GetEntityQuery<GhostRadioComponent>();
+        var ghostRadio = GetEntityQuery<IntrinsicRadioComponent>();
         var headset = GetEntityQuery<HeadsetComponent>();
         var xforms = GetEntityQuery<TransformComponent>();
 
@@ -210,7 +210,7 @@ public sealed partial class RadioSystem : EntitySystem
                 continue;
             }
 
-            zLevelWeCare.Add(_transformSystem.GetMapId(owner));
+            zLevelWeCare.Add(Transform(owner).MapID);
         }
 
         foreach (var mapId in zLevelWeCare)
@@ -223,9 +223,11 @@ public sealed partial class RadioSystem : EntitySystem
                 var playerPos = _transformSystem.GetWorldPosition(playerEntity, xforms);
                 foreach (var radio in radioIn)
                 {
+                    // TODO this
                     var range = 8f;
                     // ignore not the same id
-                    if (_transformSystem.GetMapId(radio.Owner) != mapId) continue;
+                    if (Transform(radio.Owner).MapID != mapId)
+                        continue;
                     //xform.WorldPosition - position.Position).Length < range,
                     if ((playerPos - _transformSystem.GetWorldPosition(radio.Owner, xforms)).Length > range)
                     {
