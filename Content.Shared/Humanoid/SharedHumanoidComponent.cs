@@ -40,9 +40,6 @@ public abstract class SharedHumanoidComponent : Component
         public Color Color { get; }
     }
 
-    [ViewVariables(VVAccess.ReadOnly]
-    public Dictionary<HumanoidVisualLayers, Color> CustomBaseLayerColors = new();
-
     /// <summary>
     ///     The initial sprites that this humanoid should
     ///     start with. Processed after the humanoid's
