@@ -44,6 +44,7 @@ namespace Content.Shared.Access.Components
             "Armory",
             "Atmospherics",
             "Bar",
+            "BlueShield",
             "Brig",
             // "Detective",
             "Captain",
