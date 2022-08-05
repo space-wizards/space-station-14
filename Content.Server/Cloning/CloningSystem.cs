@@ -5,6 +5,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Species;
+using Content.Shared.Damage;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.EUI;
@@ -15,6 +16,8 @@ using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MobState;
 using Content.Server.Lathe.Components;
+using Robust.Shared.Random;
+
 
 namespace Content.Server.Cloning.Systems
 {
@@ -29,6 +32,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -130,6 +134,7 @@ namespace Content.Server.Cloning.Systems
             if (!_prototype.TryIndex<SpeciesPrototype>(humanoid.Species, out var speciesPrototype))
                 return false;
 
+            // biomass checks
             var biomassAmount = podStorage.GetMaterialAmount("Biomass");
             biomassAmount /= 50; // the vol is hardcoded somewhere, I can't find where, and we have to do a shrimple conversion.
 
@@ -137,6 +142,21 @@ namespace Content.Server.Cloning.Systems
                 return false;
 
             podStorage.RemoveMaterial("Biomass", speciesPrototype.CloningCost * 50);
+            // end of biomass checks
+
+            // genetic damage checks
+            if (TryComp<DamageableComponent>(bodyToClone, out var damageable) &&
+                damageable.Damage.DamageDict.TryGetValue("Cellular", out var cellularDmg))
+            {
+                var chance = Math.Clamp((float) (cellularDmg / 100), 0, 1);
+                if (_robustRandom.Prob(chance))
+                {
+                    UpdateStatus(CloningPodStatus.Gore, clonePod);
+                    return true;
+                }
+            }
+            // end of genetic damage checks
+
 
             var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
             _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance);
@@ -169,6 +189,11 @@ namespace Content.Server.Cloning.Systems
             {
                 if (!_powerReceiverSystem.IsPowered(cloning.Owner))
                     continue;
+
+                if (cloning.failedClone)
+                {
+
+                }
 
                 if (cloning.BodyContainer.ContainedEntity != null)
                 {
