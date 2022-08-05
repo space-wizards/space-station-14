@@ -200,7 +200,6 @@
   - type: StorageFill
     contents:
       - id: WeaponDisabler
-      - id: PinpointerNuclear
       - id: ClothingUniformJumpskirtBlueShield
       - id: ClothingUniformJumpsuitBlueShield
       - id: ClothingEyesGlassesSunglasses
