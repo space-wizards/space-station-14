@@ -90,7 +90,7 @@ namespace Content.Server.GameTicking
 
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
 
-                    _prefsManager.OnClientDisconnected(session);
+                    _userDb.ClientDisconnected(session);
                     break;
                 }
             }
