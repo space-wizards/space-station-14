@@ -20,6 +20,7 @@ using Content.Server.MachineLinking.Events;
 using Content.Server.MobState;
 using Content.Server.Lathe.Components;
 using Content.Shared.Atmos;
+using Content.Server.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Components;
@@ -63,7 +64,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
         {
-            clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
+            clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name(uid)}-bodyContainer");
             _signalSystem.EnsureReceiverPorts(uid, CloningPodComponent.PodPort);
         }
 
@@ -158,18 +159,23 @@ namespace Content.Server.Cloning.Systems
             if (!_prototype.TryIndex<SpeciesPrototype>(humanoid.Species, out var speciesPrototype))
                 return false;
 
+            if (!TryComp<PhysicsComponent>(bodyToClone, out var physics))
+                return false;
+
+            int cloningCost = (int) physics.FixturesMass;
+
             // biomass checks
             var biomassAmount = podStorage.GetMaterialAmount("Biomass");
 
-            if (biomassAmount < speciesPrototype.CloningCost)
+            if (biomassAmount < cloningCost)
             {
                 if (clonePod.ConnectedConsole != null)
-                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", speciesPrototype.CloningCost)), InGameICChatType.Speak, false);
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", cloningCost)), InGameICChatType.Speak, false);
                 return false;
             }
 
-            podStorage.RemoveMaterial("Biomass", speciesPrototype.CloningCost);
-            clonePod.UsedBiomass = speciesPrototype.CloningCost;
+            podStorage.RemoveMaterial("Biomass", cloningCost);
+            clonePod.UsedBiomass = cloningCost;
             // end of biomass checks
 
             // genetic damage checks

@@ -53,20 +53,13 @@ public sealed class SpeciesPrototype : IPrototype
 
     [DataField("naming")]
     public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
-
-    /// <summary>
-    /// How much biomass it takes to clone. Should be equal to mass.
-    /// Finally being lower mass is a positive for something.
-    /// </summary>
-    [DataField("cloningCost")]
-    public int CloningCost = 70;
 }
 
 public enum SpeciesSkinColor : byte
 {
     HumanToned,
     Hues,
-    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
+    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range). 
 }
 
 public enum SpeciesNaming : byte
