@@ -483,3 +483,15 @@
   - type: Sprite
     layers:
     - state: syndie
+
+- type: entity
+  parent: IDCardStandard
+  id: BlueShieldIDCard
+  name: Blue Shield ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: idblueshield
+  - type: PresetIdCard
+    job: BlueShield
