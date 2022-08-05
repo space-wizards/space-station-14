@@ -693,6 +693,8 @@
   - type: Icon
     state: pda-detective
 
+- type: entity
+  parent: BasePDA
  id: BlueShieldPDA
   name: BlueShield PDA
   description: ...
