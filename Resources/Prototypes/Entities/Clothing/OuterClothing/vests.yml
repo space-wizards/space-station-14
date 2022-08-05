@@ -99,3 +99,24 @@
     sprite: Clothing/OuterClothing/Vests/vest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/vest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterBlueShieldVest
+  name: blue shield vest
+  description: ...
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/bsvests.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/bsvests.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.6
+        Piercing: 0.3
+        Heat: 0.9
+  - type: ExplosionResistance
+    resistance: 0.9
+
