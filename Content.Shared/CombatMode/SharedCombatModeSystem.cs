@@ -13,9 +13,6 @@ namespace Content.Shared.CombatMode
         {
             base.Initialize();
 
-            SubscribeNetworkEvent<CombatModeSystemMessages.SetCombatModeActiveMessage>(CombatModeActiveHandler);
-            SubscribeLocalEvent<CombatModeSystemMessages.SetCombatModeActiveMessage>(CombatModeActiveHandler);
-
             SubscribeLocalEvent<SharedCombatModeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<SharedCombatModeComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<SharedCombatModeComponent, ToggleCombatActionEvent>(OnActionPerform);
@@ -64,16 +61,6 @@ namespace Content.Shared.CombatMode
 
             component.IsInCombatMode = !component.IsInCombatMode;
             args.Handled = true;
-        }
-
-        private void CombatModeActiveHandler(CombatModeSystemMessages.SetCombatModeActiveMessage ev, EntitySessionEventArgs eventArgs)
-        {
-            var entity = eventArgs.SenderSession.AttachedEntity;
-
-            if (entity == null || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
-                return;
-
-            combatModeComponent.IsInCombatMode = ev.Active;
         }
     }
 

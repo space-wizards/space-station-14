@@ -15,16 +15,5 @@ namespace Content.Shared.CombatMode
 
             public TargetingZone TargetZone { get; }
         }
-
-        [Serializable, NetSerializable]
-        public sealed class SetCombatModeActiveMessage : EntityEventArgs
-        {
-            public SetCombatModeActiveMessage(bool active)
-            {
-                Active = active;
-            }
-
-            public bool Active { get; }
-        }
     }
 }
