@@ -1,3 +1,5 @@
+using Content.Shared.Storage;
+
 namespace Content.Server.Medical.BiomassReclaimer
 {
     [RegisterComponent]
@@ -5,6 +7,10 @@ namespace Content.Server.Medical.BiomassReclaimer
     {
         [DataField("accumulator")]
         public float Accumulator = 0f;
+
+        [DataField("randomMessAccumulator")]
+        public float RandomMessAccumulator = 0f;
+        public TimeSpan RandomMessInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// This gets set for each mob it processes.
@@ -17,6 +23,10 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// and adjusted for genetic damage too.
         /// </summary>
         public float CurrentExpectedYield = 28f;
+
+        public string BloodReagent = "Blood";
+
+        public List<EntitySpawnEntry> SpawnedEntities = new();
 
         /// <summary>
         /// How many units of biomass it produces for each unit of mass.

@@ -13,3 +13,10 @@
     netsync: false
   - type: BiomassReclaimer
   - type: Climbable
+    delay: 8
+  - type: AmbientSound
+    enabled: false
+    volume: -5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/reclaimer_ambience.ogg
