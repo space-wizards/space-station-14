@@ -445,3 +445,15 @@
     sprite: Clothing/Head/Hats/fishcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/fishcap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadBeretBlueShield
+  name: beret blue shield
+  description: ...
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_blue_shield.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_blue_shield.rsi
+
