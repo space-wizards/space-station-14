@@ -2,7 +2,7 @@ namespace Content.Server.Baseball
 {
 
     /// <summary>
-    /// This is used for...
+    /// Give this to a melee weapon with wide attack and it will be able to bat thrown objects
     /// </summary>
     [RegisterComponent]
     public sealed class BaseballBatComponent : Component

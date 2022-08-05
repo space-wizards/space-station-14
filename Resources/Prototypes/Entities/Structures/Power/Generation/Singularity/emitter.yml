@@ -75,3 +75,74 @@
     node: machine
   - type: Machine
     board: EmitterCircuitboard
+
+
+- type: entity
+  id: Emitter
+  name: ball launcher
+  description: a sports ball launcher
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          mass: 100
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: Transform
+      anchored: true
+    - type: Sprite
+      sprite: Structures/Power/Generation/Singularity/emitter.rsi
+      netsync: false
+      layers:
+        - state: emitter2
+        - state: beam
+          shader: unshaded
+          visible: false
+        - state: lock
+          shader: unshaded
+          visible: false
+    - type: BallLauncher
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 5
+                  max: 5
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: Anchorable
+    - type: Pullable
+    - type: Rotatable
+    - type: Appearance
+      visuals:
+        - type: EmitterVisualizer
+    - type: Lock
+      locked: false
+    - type: AccessReader
+      access: [[ "Engineering" ]]
+    - type: Construction
+      graph: Machine
+      node: machine
+    - type: Machine
+      board: EmitterCircuitboard

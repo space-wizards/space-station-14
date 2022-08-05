@@ -12,9 +12,6 @@ using Content.Shared.Weapons.Ranged.Systems;
 
 namespace Content.Server.Baseball
 {
-    /// <summary>
-    /// This handles...
-    /// </summary>
     public sealed class BaseballBatSystem : EntitySystem
     {
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
@@ -47,7 +44,8 @@ namespace Content.Server.Baseball
             //The melee system uses a collision raycast but apparently that doesnt work with items so GetEntitiesInArc it is!
             foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, 0.5f, diff.ToAngle(), 50f, LookupFlags.None))
             {
-                if (EntityManager.HasComponent<ItemComponent>(entity) && EntityManager.HasComponent<ThrownItemComponent>(entity))
+                //if (EntityManager.HasComponent<ItemComponent>(entity) && EntityManager.HasComponent<ThrownItemComponent>(entity))
+                if (EntityManager.HasComponent<ItemComponent>(entity))
                 {
 
                     var rand = _random.Next(1, 5); // random chance of fireball wack
