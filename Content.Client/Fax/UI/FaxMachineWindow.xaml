@@ -1,0 +1,28 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            MinSize="400 525"
+            Title="{Loc 'fax-bound-user-interface-title'}">
+    <BoxContainer Orientation="Vertical"
+                  Margin="5 5 5 5"
+                  SeparationOverride="10">
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+            <Control VerticalExpand="True">
+                <PanelContainer StyleClasses="PanelBackgroundBaseDark"></PanelContainer>
+                <BoxContainer Orientation="Vertical" Name="DeviceList" VerticalExpand="True" SeparationOverride="4">
+                    <Label Text="Central Command - Offline"></Label>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" VerticalExpand="False">
+                    <Button MinWidth="150" HorizontalExpand="True" Text="Send"></Button>
+                    <Button MinWidth="150" HorizontalExpand="True" Text="Read"></Button>
+                </BoxContainer>
+            </Control>
+        </ScrollContainer>
+        <BoxContainer Orientation="Horizontal" Margin="8 8 8 8">
+            <Label Name="DeviceCountLabel" Margin="16 0 0 0" MaxWidth="64"></Label>
+            <Control HorizontalExpand="True" />
+            <Button Name="ClearButton" Access="Public" Text="{Loc 'fax-ui-refresh-button'}"></Button>
+        </BoxContainer>
+
+    </BoxContainer>
+</DefaultWindow>

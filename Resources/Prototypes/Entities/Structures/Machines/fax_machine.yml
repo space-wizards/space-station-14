@@ -32,7 +32,7 @@
     - type: UserInterface
       interfaces:
         - key: enum.ChemMasterUiKey.Key
-          type: ChemMasterBoundUserInterface
+          type: FaxMachineBoundUserInterface
     - type: ApcPowerReceiver
       powerLoad: 250
 
