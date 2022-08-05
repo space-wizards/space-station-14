@@ -5,6 +5,10 @@
   id: Captain
 
 - type: accessLevel
+  id: BlueShield
+  name: Blue Shield
+
+- type: accessLevel
   id: HeadOfPersonnel
   name: Head of Personnel
 
