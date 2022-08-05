@@ -826,7 +826,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitBlueShield
-  name: blue shield suit
+  name: blue shield jumpsuit
   description: ...
   components:
   - type: Sprite
