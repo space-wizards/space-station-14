@@ -60,7 +60,7 @@
           Base: base
           BaseUnshaded: mouth
         Dead:
-          Base: dead
+          Base: base_dead
           BaseUnshaded: dead_mouth
     - type: Butcherable
       spawned:

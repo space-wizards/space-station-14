@@ -14,6 +14,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
+using Content.Shared.Examine;
 using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 
@@ -48,6 +49,7 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonRiftComponent, ComponentShutdown>(OnRiftShutdown);
             SubscribeLocalEvent<DragonRiftComponent, ComponentGetState>(OnRiftGetState);
             SubscribeLocalEvent<DragonRiftComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            SubscribeLocalEvent<DragonRiftComponent, ExaminedEvent>(OnRiftExamined);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRiftRoundEnd);
         }
@@ -94,6 +96,11 @@ namespace Content.Server.Dragon
         }
 
         #region Rift
+
+        private void OnRiftExamined(EntityUid uid, DragonRiftComponent component, ExaminedEvent args)
+        {
+            args.PushMarkup(Loc.GetString("carp-rift-examine", ("percentage", MathF.Round(component.Accumulator / component.MaxAccumulator * 100))));
+        }
 
         private void OnAnchorChange(EntityUid uid, DragonRiftComponent component, ref AnchorStateChangedEvent args)
         {

@@ -15,7 +15,7 @@ public sealed class DragonRiftComponent : SharedDragonRiftComponent
     /// <summary>
     /// How long the rift has been active.
     /// </summary>
-    [ViewVariables, DataField("accumulator")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("accumulator")]
     public float Accumulator = 0f;
 
     /// <summary>
