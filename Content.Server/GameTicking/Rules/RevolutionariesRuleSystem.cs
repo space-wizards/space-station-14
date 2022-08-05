@@ -44,7 +44,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
     {
         base.Initialize();        
 
-        //SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt); // Commented for testing purposes
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
