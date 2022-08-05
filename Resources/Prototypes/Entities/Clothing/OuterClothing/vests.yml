@@ -104,7 +104,7 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterBlueShieldVest
   name: blue shield vest
-  description: ...
+  description: This bulletproof vest perfectly withstands a shot and a knife cut, but don't rely on it too much.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/bsvests.rsi
