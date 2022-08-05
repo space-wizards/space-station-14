@@ -30,7 +30,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueShield
     head: ClothingHeadBeretBlueShield
-    back: ClothingBackpack
+    back: ClothingBackpackFilled
     shoes: ClothingShoesBlueShieldShoes
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
