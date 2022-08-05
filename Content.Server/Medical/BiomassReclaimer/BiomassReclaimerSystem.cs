@@ -149,7 +149,6 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             if (!TryComp<BiomassReclaimerComponent>(args.Reclaimer, out var reclaimer))
                 return;
-            Logger.Error("Cancelling cancel token...");
             reclaimer.CancelToken = null;
         }
         private void StartProcessing(EntityUid toProcess, BiomassReclaimerComponent component)
