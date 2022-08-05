@@ -697,7 +697,7 @@
   parent: BasePDA
   id: BlueShieldPDA
   name: BlueShield PDA
-  description: ...
+  description: This is a Blue Shield PDA. Blue so much that the bartender can mistake the owner for his guest.
   components:
   - type: PDA
     id: BlueShieldIDCard
