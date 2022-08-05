@@ -39,7 +39,7 @@ namespace Content.Server.Entry
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
         private ServerUpdateManager _updateManager = default!;
-        private PlayTimeTrackingManager _playTimeTracking = default!;
+        private PlayTimeTrackingManager? _playTimeTracking;
 
         /// <inheritdoc />
         public override void Init()
@@ -151,14 +151,14 @@ namespace Content.Server.Entry
 
                 case ModUpdateLevel.FramePostEngine:
                     _updateManager.Update();
-                    _playTimeTracking.Update();
+                    _playTimeTracking?.Update();
                     break;
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            _playTimeTracking.Shutdown();
+            _playTimeTracking?.Shutdown();
         }
     }
 }
