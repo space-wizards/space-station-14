@@ -557,7 +557,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtBlueShield
   name: blueshield jumpskirt
-  description: ...
+  description: Although it is comfortable and emphasizes you, but it is better not to wave your legs when fighting.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/blueshield.rsi
