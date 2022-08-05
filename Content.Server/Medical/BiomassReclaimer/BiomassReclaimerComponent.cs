@@ -1,10 +1,13 @@
 using Content.Shared.Storage;
+using System.Threading;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
     [RegisterComponent]
     public sealed class BiomassReclaimerComponent : Component
     {
+        public CancellationTokenSource? CancelToken;
+
         [DataField("accumulator")]
         public float Accumulator = 0f;
 
