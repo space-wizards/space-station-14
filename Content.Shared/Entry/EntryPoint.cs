@@ -37,12 +37,13 @@ namespace Content.Shared.Entry
             IoCManager.Resolve<MarkingManager>().Initialize();
 
             var configMan = IoCManager.Resolve<IConfigurationManager>();
-#if FULL_RELEASE
             configMan.OverrideDefault(CVars.NetInterpRatio, 2);
+#if FULL_RELEASE
+
 #else
-            configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
-            configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
-            configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
+            //configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
+            //configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
+            //configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
 
             // fake lag rand leads to messages arriving out of order. Sadly, networking is not robust enough, so for now
             // just leaving this disabled.

@@ -102,6 +102,8 @@ namespace Content.Server.GameTicking
                     var mid = _mapManager.GetMapEntityId(DefaultMap);
                     xform.Coordinates = new EntityCoordinates(mid, offs);
                 }
+
+                return;
             }
         }
 
