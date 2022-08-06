@@ -6,7 +6,7 @@ namespace Content.Server.Humanoid;
 
 public sealed class HumanoidComponent : SharedHumanoidComponent
 {
-    public MarkingSet? CurrentMarkings;
+    public MarkingSet CurrentMarkings = new();
 
     /// <summary>
     ///     Any custom base layers this humanoid might have. See:

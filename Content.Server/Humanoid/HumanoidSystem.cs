@@ -1,11 +1,14 @@
 using System.Linq;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
+using Content.Shared.Markings;
 
 namespace Content.Server.Humanoid;
 
 public sealed class HumanoidSystem : SharedHumanoidSystem
 {
+    [Dependency] private readonly MarkingManager _markingManager = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<HumanoidComponent, ComponentInit>(OnInit);
@@ -23,9 +26,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             component.CustomBaseLayers,
             component.SkinColor,
             component.HiddenLayers.ToList(),
-            component.CurrentMarkings != null
-                ? component.CurrentMarkings.GetForwardEnumerator().ToList()
-                : new());
+            component.CurrentMarkings.GetForwardEnumerator().ToList());
     }
 
     private void OnInit(EntityUid uid, HumanoidComponent humanoid, ComponentInit args)
@@ -68,21 +69,39 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 
     public void AddMarking(EntityUid uid, string marking, Color? color = null, HumanoidComponent? humanoid = null)
     {
-        if (!Resolve(uid, ref humanoid))
+        if (!Resolve(uid, ref humanoid)
+            || !_markingManager.Markings().TryGetValue(marking, out var prototype))
         {
             return;
         }
 
-        // TODO: Add marking
+        var markingObject = prototype.AsMarking();
+        if (color != null)
+        {
+            for (var i = 0; i < prototype.Sprites.Count; i++)
+            {
+                markingObject.SetColor(i, color.Value);
+            }
+        }
+
+        humanoid.CurrentMarkings.AddBack(prototype.MarkingCategory, markingObject);
     }
 
-    public void RemoveMarking(EntityUid uid, string marking, Color? color = null, HumanoidComponent? humanoid = null)
+    /// <summary>
+    ///     Remove a marking by ID. This will attempt to fetch
+    ///     the marking, removing it if possible.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="marking"></param>
+    /// <param name="humanoid"></param>
+    public void RemoveMarking(EntityUid uid, string marking, HumanoidComponent? humanoid = null)
     {
-        if (!Resolve(uid, ref humanoid))
+        if (!Resolve(uid, ref humanoid)
+            || !_markingManager.Markings().TryGetValue(marking, out var prototype))
         {
             return;
         }
 
-        // TODO: Remove marking
+        humanoid.CurrentMarkings.Remove(prototype.MarkingCategory, marking);
     }
 }
