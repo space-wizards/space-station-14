@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Dead bodies can no longer recover by lying in bed, type: Fix}
-  id: 1595
-  time: '2022-05-25T02:31:15.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug causing some pop-ups to only appear in the upper left corner
@@ -2939,3 +2934,9 @@ Entries:
       lockers and crates., type: Fix}
   id: 2094
   time: '2022-08-05T23:49:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Harvesting off of kitchen spikes now works with all sharp objects.,
+    type: Fix}
+  id: 2095
+  time: '2022-08-06T01:09:33.0000000+00:00'
