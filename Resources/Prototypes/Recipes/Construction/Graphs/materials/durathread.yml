@@ -7,7 +7,7 @@
         - to: MaterialDurathread
           completed:
             - !type:SetStackCount
-              amount: 1
+              amount: 5
           steps:
             - material: Cloth
               amount: 5
