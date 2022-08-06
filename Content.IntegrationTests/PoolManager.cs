@@ -48,7 +48,6 @@ public static class PoolManager
         (CCVars.NetPVS.Name, "false", true),
         (CCVars.NetInterp.Name, "false", true),
         (CCVars.NPCMaxUpdates.Name, "999999", true),
-        (CCVars.GameMapForced.Name, "true", true),
         (CCVars.SysWinTickPeriod.Name, "0", true),
         (CCVars.ContactMinimumThreads.Name, "1", true),
         (CCVars.ContactMultithreadThreshold.Name, "999", true),
@@ -57,6 +56,7 @@ public static class PoolManager
         (CCVars.VelocityConstraintMinimumThreads.Name, "1", true),
         (CCVars.VelocityConstraintsPerThread.Name, "999", true),
         (CCVars.ThreadParallelCount.Name, "1", true),
+        (CCVars.WorldGenEnabled.Name, "false", true)
     };
 
     private static int PairId = 0;
