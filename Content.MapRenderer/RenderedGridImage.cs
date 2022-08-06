@@ -10,7 +10,6 @@ public sealed class RenderedGridImage <T> where T : unmanaged, IPixel<T>
     public Image<T> Image;
     public Vector2 Offset { get; set; } = Vector2.Zero;
     public EntityUid? GridUid { get; set; }
-    public bool Base { get; set; } = false;
 
     public RenderedGridImage(Image<T> image)
     {

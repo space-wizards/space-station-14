@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.Painters;
+using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
 
@@ -41,11 +43,20 @@ namespace Content.MapRenderer
             {
                 Console.WriteLine($"Painting map {map}");
 
+                var mapViewerData = new MapViewerData()
+                {
+                    Id = map,
+                    Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(map)
+                };
+
+                mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax());
+                var directory = Path.Combine(arguments.OutputPath, map);
+                Directory.CreateDirectory(directory);
+
                 int i = 0;
                 await foreach (var renderedGrid in MapPainter.Paint(map))
                 {
                     var grid = renderedGrid.Image;
-                    var directory = DirectoryExtensions.MapImages().FullName;
                     Directory.CreateDirectory(directory);
 
                     var fileName = Path.GetFileNameWithoutExtension(map);
@@ -74,8 +85,16 @@ namespace Content.MapRenderer
 
                     grid.Dispose();
 
+                    mapViewerData.Grids.Add(new GridLayer(renderedGrid,  Path.Combine(map, Path.GetFileName(savePath))));
+
                     mapNames.Add(fileName);
                     i++;
+                }
+
+                if (arguments.ExportViewerJson)
+                {
+                    var json = JsonConvert.SerializeObject(mapViewerData);
+                    await File.WriteAllTextAsync(Path.Combine(arguments.OutputPath, map, "map.json"), json);
                 }
             }
 

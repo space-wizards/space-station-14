@@ -75,14 +75,12 @@ namespace Content.MapRenderer.Painters
             await PoolManager.RunTicksSync(pairTracker.Pair, 10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            Vector2? initialOffset = null;
-
             foreach (var grid in grids)
             {
                 // Skip empty grids
                 if (grid.LocalAABB.IsEmpty())
                 {
-                    Console.WriteLine($"Warning: Grid {grid.Index} was empty. Skipping image rendering.");
+                    Console.WriteLine($"Warning: Grid {grid.GridEntityId} was empty. Skipping image rendering.");
                     continue;
                 }
 
@@ -111,16 +109,7 @@ namespace Content.MapRenderer.Painters
 
                 var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas);
                 renderedImage.GridUid = grid.GridEntityId;
-
-                if (!initialOffset.HasValue)
-                {
-                    initialOffset = grid.WorldPosition;
-                    renderedImage.Base = true;
-                }
-                else
-                {
-                    renderedImage.Offset = grid.WorldPosition - initialOffset.Value;
-                }
+                renderedImage.Offset = grid.WorldPosition;
 
                 yield return renderedImage;
             }
