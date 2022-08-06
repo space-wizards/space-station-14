@@ -78,7 +78,7 @@
 
 
 - type: entity
-  id: Emitter
+  id: balllauncher
   name: ball launcher
   description: a sports ball launcher
   placement:
@@ -134,15 +134,3 @@
     - type: Anchorable
     - type: Pullable
     - type: Rotatable
-    - type: Appearance
-      visuals:
-        - type: EmitterVisualizer
-    - type: Lock
-      locked: false
-    - type: AccessReader
-      access: [[ "Engineering" ]]
-    - type: Construction
-      graph: Machine
-      node: machine
-    - type: Machine
-      board: EmitterCircuitboard
