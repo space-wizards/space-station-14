@@ -95,7 +95,8 @@ namespace Content.Server.GameTicking
                 var loc = _robustRandom.Pick(_world.SafeSpawnLocations);
 
                 if (_mapManager.FindGridsIntersecting(DefaultMap,
-                        Box2.CenteredAround((loc * WorldChunkSystem.ChunkSize) - (WorldChunkSystem.ChunkSize / 2), Vector2.One * (3.0f/4) * WorldChunkSystem.ChunkSize)).Any())
+                        Box2.CenteredAround((loc * WorldChunkSystem.ChunkSize) - (WorldChunkSystem.ChunkSize / 2),
+                            Vector2.One * (3.0f / 4) * WorldChunkSystem.ChunkSize)).Any())
                     continue;
 
                 //There's a hack here to get around loadmap crashing.
@@ -104,7 +105,7 @@ namespace Content.Server.GameTicking
                 foreach (var grid in grids)
                 {
                     var xform = Transform(grid);
-                    var offs = xform.Coordinates.Position + loc;
+                    var offs = xform.Coordinates.Position + ((loc * WorldChunkSystem.ChunkSize) - (WorldChunkSystem.ChunkSize / 2));
                     var mid = _mapManager.GetMapEntityId(DefaultMap);
                     xform.Coordinates = new EntityCoordinates(mid, offs);
                 }
