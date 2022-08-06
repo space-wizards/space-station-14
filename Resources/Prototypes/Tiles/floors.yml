@@ -826,6 +826,18 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  
+- type: tileAlias
+  id: floor_asteroid_coarse_sand1
+  target: floor_asteroid_coarse_sand0
+  
+- type: tileAlias
+  id: floor_asteroid_coarse_sand2
+  target: floor_asteroid_coarse_sand0
+  
+- type: tileAlias
+  id: floor_asteroid_coarse_sand3
+  target: floor_asteroid_coarse_sand0
 
 # Caves
 - type: tile
