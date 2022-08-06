@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles.Components;
@@ -6,7 +7,9 @@ using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
@@ -32,6 +35,7 @@ namespace Content.Server.Baseball
             //SubscribeLocalEvent<BallLauncherComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<BallLauncherComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<BallLauncherComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<BallLauncherComponent, GetVerbsEvent<Verb>>(OnOtherVerbs);
         }
 
         public override void Update(float frameTime)
@@ -63,12 +67,12 @@ namespace Content.Server.Baseball
             {
                 if (!component.IsOn)
                 {
-                    SwitchOn(component);
+                    component.IsOn = true;
                     _popupSystem.PopupEntity("Turned on", component.Owner, Filter.Pvs(component.Owner));
                 }
                 else
                 {
-                    SwitchOff(component);
+                    component.IsOn = false;
                     _popupSystem.PopupEntity("Turned off", component.Owner, Filter.Pvs(component.Owner));
 
                 }
@@ -121,22 +125,29 @@ namespace Content.Server.Baseball
 
         }
 
-        public void SwitchOff(BallLauncherComponent component)
+        private void OnOtherVerbs(EntityUid uid, BallLauncherComponent component, GetVerbsEvent<Verb> args)
         {
-            component.IsOn = false;
-            //if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer)) powerConsumer.DrawRate = 0;
-            //PowerOff(component);
-            //UpdateAppearance(component);
+            if (!args.CanInteract)
+                return;
+
+            Verb ejectItems = new();
+            ejectItems.Act = () => TryEjectAllItems(component, args.User);
+            ejectItems.Text = Loc.GetString("pneumatic-cannon-component-verb-eject-items-name");
+            args.Verbs.Add(ejectItems);
         }
 
-        public void SwitchOn(BallLauncherComponent component)
+        public void TryEjectAllItems(BallLauncherComponent component, EntityUid user)
         {
-            component.IsOn = true;
-            //if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer)) powerConsumer.DrawRate = component.PowerUseActive;
-            // Do not directly PowerOn().
-            // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
-            //UpdateAppearance(component);
-        }
+            if (!EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
+                return;
+            if (storage.StoredEntities == null)
+                return;
 
+            foreach (var entity in storage.StoredEntities.ToArray())
+            {
+                _storageSystem.RemoveAndDrop(component.Owner, entity, storage);
+            }
+            _popupSystem.PopupEntity(Loc.GetString("pneumatic-cannon-component-ejected-all", ("cannon", (component.Owner))), user, Filter.Local());
+        }
     }
 }
