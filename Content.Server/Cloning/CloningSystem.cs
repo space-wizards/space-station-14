@@ -228,25 +228,17 @@ namespace Content.Server.Cloning.Systems
                 if (!_powerReceiverSystem.IsPowered(cloning.Owner))
                     continue;
 
+                if (cloning.BodyContainer.ContainedEntity == null && !cloning.FailedClone)
+                    continue;
+
+                cloning.CloningProgress += frameTime;
+                if (cloning.CloningProgress < cloning.CloningTime)
+                    continue;
+
                 if (cloning.FailedClone)
-                {
-                    cloning.CloningProgress += frameTime;
-                    if (cloning.CloningProgress < cloning.CloningTime)
-                        continue;
-
                     EndFailedCloning(cloning.Owner, cloning);
-                }
-
-                if (cloning.BodyContainer.ContainedEntity != null)
-                {
-                    cloning.CloningProgress += frameTime;
-                    cloning.CloningProgress = MathHelper.Clamp(cloning.CloningProgress, 0f, cloning.CloningTime);
-                }
-
-                if (cloning.CapturedMind?.Session?.AttachedEntity == cloning.BodyContainer.ContainedEntity)
-                {
+                else
                     Eject(cloning.Owner, cloning);
-                }
             }
         }
 
