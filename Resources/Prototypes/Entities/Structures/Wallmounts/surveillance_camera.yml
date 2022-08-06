@@ -55,18 +55,12 @@
   suffix: Constructed
   components:
     - type: DeviceNetwork
-      deviceNetId: Wired
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: SurveillanceCamera
       setupAvailableNetworks:
-        - SurveillanceCameraEngineering
-        - SurveillanceCameraSecurity
-        - SurveillanceCameraService
-        - SurveillanceCameraSupply
-        - SurveillanceCameraScience
-        - SurveillanceCameraGeneral
-        - SurveillanceCameraMedical
-        - SurveillanceCameraCommand
+        - SurveillanceCameraEntertainment
 
 - type: entity
   parent: SurveillanceCameraBase

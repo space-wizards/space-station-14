@@ -1,0 +1,4 @@
+﻿- type: deviceFrequency
+  id: SurveillanceCameraEva
+  name: device-frequency-prototype-name-surveillance-camera-eva
+  frequency: 1999
