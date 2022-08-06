@@ -3,6 +3,7 @@
     "Elijahrane" = "Rane"
     "ZeroDayDaemon" = "Daemon"
     "ElectroJr" = "ElectroSR"
+    "Partmedia" = "notafet"
 }
 
 $ignore = @{
