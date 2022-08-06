@@ -1,4 +1,4 @@
-﻿action-spellbook-crumble = The book crumbles to dust.
+﻿action-spellbook-crumble = {CAPITALIZE(THE($book))} crumbles to dust.
 
 action-name-spell-rune-flash = Flash Rune
 action-description-spell-rune-flash = Summons a rune that flashes if used.

@@ -124,8 +124,8 @@ public sealed class MagicSystem : EntitySystem
             _actionsSystem.AddActions(ev.User, component.Spells, null);
         if (component.SingleUse)
         {
+            _popupSystem.PopupEntity(Loc.GetString("action-spellbook-crumble", ("book", uid)), ev.User, Filter.Entities(ev.User), PopupType.LargeCaution);
             EntityManager.DeleteEntity(uid);
-            _popupSystem.PopupEntity(Loc.GetString("action-spellbook-crumble"), ev.User, Filter.Entities(ev.User), PopupType.Large);
         }
     }
 
@@ -155,9 +155,7 @@ public sealed class MagicSystem : EntitySystem
                 var comp = EnsureComp<PreventCollideComponent>(ent);
                 comp.Uid = args.Performer;
             }
-
         }
-
         args.Handled = true;
     }
 

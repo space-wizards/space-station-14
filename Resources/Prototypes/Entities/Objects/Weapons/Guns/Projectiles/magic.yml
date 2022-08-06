@@ -118,7 +118,6 @@
   description: Insert raunchy finger bang joke here.
   components:
     - type: FlyBySound
-    - type: Clickable
     - type: Sprite
       netsync: false
       noRot: false
@@ -156,5 +155,5 @@
         toxin:
           maxVol: 25
           reagents:
-          - ReagentId: MuteToxin
+          - ReagentId: Silencer
             Quantity: 25
