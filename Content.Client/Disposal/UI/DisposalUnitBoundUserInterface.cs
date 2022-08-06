@@ -16,7 +16,7 @@ namespace Content.Client.Disposal.UI
     {
         public DisposalUnitWindow? Window;
 
-        public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
