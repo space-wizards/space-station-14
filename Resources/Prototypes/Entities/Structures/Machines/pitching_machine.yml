@@ -25,7 +25,7 @@
       sprite: Structures/Machines/pitching_machine.rsi
       netsync: true
       layers:
-        - state: pitching2
+        - state: pitching
     - type: BallLauncher
     - type: Damageable
       damageContainer: Inorganic
