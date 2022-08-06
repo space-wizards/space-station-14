@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from RamZ on discord at https://discord.com/channels/310555209753690112/346743671787356160/1005354388023431269",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "baseball"
+    },
+    {
+      "name": "baseball_dirty"
+    }
+  ]
+}

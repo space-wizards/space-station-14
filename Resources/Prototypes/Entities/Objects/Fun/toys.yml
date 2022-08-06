@@ -585,6 +585,18 @@
 
 - type: entity
   parent: BaseItem
+  id: Baseball
+  name: baseball
+  description: Hey batter batter!
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/baseballs.rsi
+      state: baseball
+    - type: Item
+      size: 5
+
+- type: entity
+  parent: BaseItem
   id: BalloonSyn
   name: syndie balloon
   description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
