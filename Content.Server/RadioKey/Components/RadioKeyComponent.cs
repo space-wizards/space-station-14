@@ -23,14 +23,12 @@ public sealed class RadioKeyComponent : Component
     /// <summary>
     /// The frequency this unlocks
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public readonly HashSet<int> UnlockedFrequency = new();
+    [ViewVariables(VVAccess.ReadWrite)] public readonly HashSet<int> UnlockedFrequency = new();
 
     /// <summary>
     /// The frequency we blocked. Yes, it is stored in the radiokey, not the radio.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public readonly HashSet<int> BlockedFrequency = new();
+    [ViewVariables(VVAccess.ReadWrite)] public readonly HashSet<int> BlockedFrequency = new();
 
     // TODO flag these or something
     [ViewVariables]
@@ -79,7 +77,8 @@ public sealed class RadioKeyComponent : Component
         foreach (var freq in newFreqTx)
         {
             // TODO just sanitize it on the prototype stupid
-            if (!radioSys.IsOutsideFreeFreq(freq)) continue; // dont let pubby channels get in here (exept ai sat ones?)
+            if (!radioSys.IsOutsideFreeFreq(freq))
+                continue; // dont let pubby channels get in here (exept ai sat ones?)
             UnlockedFrequency.Add(radioSys.SanitizeFrequency(freq, true));
         }
     }

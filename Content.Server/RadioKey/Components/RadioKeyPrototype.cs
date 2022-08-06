@@ -6,7 +6,7 @@ namespace Content.Server.RadioKey.Components;
 public sealed class RadioKeyPrototype : IPrototype
 {
     [ViewVariables]
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
 
     /// <summary>

@@ -9,8 +9,7 @@
     state: icon
   - type: Clothing
     quickEquip: false
-    Slots:
-    - ears
+    slots: [ears]
     sprite: Clothing/Ears/Headsets/base.rsi
     # radio stuff
   - type: Headset
@@ -20,6 +19,7 @@
       - key: enum.RadioUiKey.Key
         type: RadioBoundUserInterface
   - type: ActivatableUI
+    singleUser: true
     key: enum.RadioUiKey.Key
 
 - type: entity
@@ -43,7 +43,7 @@
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetCentCom
-  name: centcomm headset
+  name: centcom headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
   - type: Sprite
