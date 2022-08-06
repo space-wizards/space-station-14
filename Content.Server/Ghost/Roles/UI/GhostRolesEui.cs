@@ -8,8 +8,8 @@ namespace Content.Server.Ghost.Roles.UI
     {
         public override GhostRolesEuiState GetNewState()
         {
-            var system = EntitySystem.Get<GhostRoleSystem>();
-            return new(system.GetGhostRolesInfo(Player), system.LotteryStartTime, system.LotteryExpiresTime);
+            var manager = IoCManager.Resolve<GhostRoleManager>();
+            return new GhostRolesEuiState(manager.GetGhostRolesInfo(Player), manager.LotteryStartTime, manager.LotteryExpiresTime);
         }
 
         public override void HandleMessage(EuiMessageBase msg)
@@ -19,13 +19,13 @@ namespace Content.Server.Ghost.Roles.UI
             switch (msg)
             {
                 case GhostRoleTakeoverRequestMessage req:
-                    EntitySystem.Get<GhostRoleSystem>().TakeoverImmediate(Player, req.Identifier);
+                    IoCManager.Resolve<GhostRoleManager>().TakeoverImmediate(Player, req.Identifier);
                     break;
                 case GhostRoleLotteryRequestMessage req:
-                    EntitySystem.Get<GhostRoleSystem>().AddToRoleLottery(Player, req.Identifier);
+                    IoCManager.Resolve<GhostRoleManager>().AddPlayerRequest(Player, req.Identifier);
                     break;
                 case GhostRoleCancelLotteryRequestMessage req:
-                    EntitySystem.Get<GhostRoleSystem>().RemoveFromRoleLottery(Player, req.Identifier);
+                    IoCManager.Resolve<GhostRoleManager>().RemovePlayerRequest(Player, req.Identifier);
                     break;
                 case GhostRoleFollowRequestMessage req:
                     EntitySystem.Get<GhostRoleSystem>().Follow(Player, req.Identifier);

@@ -1,9 +1,10 @@
 ﻿using Content.Server.Mind.Commands;
+using Content.Server.PAI;
 using Robust.Server.Player;
 
 namespace Content.Server.Ghost.Roles.Components
 {
-    [Access(typeof(GhostRoleSystem))]
+    [Access(typeof(GhostRoleSystem), typeof(GhostRoleManager))]
     public abstract class GhostRoleComponent : Component
     {
         [DataField("name")] public string _roleName = "Unknown";
@@ -65,8 +66,8 @@ namespace Content.Server.Ghost.Roles.Components
             }
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [ViewVariables(VVAccess.ReadOnly)]
+        [Access(typeof(GhostRoleSystem), typeof(PAISystem), Other = AccessPermissions.Read)] // FIXME Friends
         public bool RoleUseLottery
         {
             get => _roleUseLottery;

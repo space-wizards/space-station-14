@@ -23,7 +23,7 @@ namespace Content.Client.Ghost.Roles.UI
                 _windowRules?.Close();
                 _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
                 {
-                    SendMessage(new GhostRoleTakeoverRequestMessage(info.Name));
+                    SendMessage(new GhostRoleTakeoverRequestMessage(info.Identifier));
                     _windowRules?.Close();
                 });
                 _windowRulesId = info.Name;
@@ -39,7 +39,7 @@ namespace Content.Client.Ghost.Roles.UI
                 _windowRules?.Close();
                 _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
                 {
-                    SendMessage(new GhostRoleLotteryRequestMessage(info.Name));
+                    SendMessage(new GhostRoleLotteryRequestMessage(info.Identifier));
                     _windowRules?.Close();
                 });
                 _windowRulesId = info.Name;
@@ -52,12 +52,12 @@ namespace Content.Client.Ghost.Roles.UI
 
             _window.OnRoleCancelled += info =>
             {
-               SendMessage(new GhostRoleCancelLotteryRequestMessage(info.Name));
+               SendMessage(new GhostRoleCancelLotteryRequestMessage(info.Identifier));
             };
 
             _window.OnRoleFollowed += info =>
             {
-                SendMessage(new GhostRoleFollowRequestMessage(info.Name));
+                SendMessage(new GhostRoleFollowRequestMessage(info.Identifier));
             };
 
             _window.OnClose += () =>
@@ -94,7 +94,7 @@ namespace Content.Client.Ghost.Roles.UI
                 _window.AddEntry(role);
             }
 
-            var closeRulesWindow = ghostState.GhostRoles.All(role => role.Name != _windowRulesId);
+            var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);
             if (closeRulesWindow)
             {
                 _windowRules?.Close();

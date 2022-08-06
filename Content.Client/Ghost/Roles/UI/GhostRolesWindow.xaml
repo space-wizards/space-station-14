@@ -13,6 +13,9 @@
                 <!-- Ghost role entries are added here by code -->
             </BoxContainer>
         </ScrollContainer>
-        <ProgressBar Name="TimeRemainingProgress" Margin="0 3" MaxHeight="10" VerticalAlignment="Bottom"/>
+        <BoxContainer Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0 3">
+            <Label Text="&#x231B;" Margin="10 0" VerticalAlignment="Center"/>
+            <ProgressBar Name="TimeRemainingProgress" VerticalAlignment="Center" HorizontalExpand="True" MaxHeight="10"/>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

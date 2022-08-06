@@ -10,6 +10,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
+using Content.Server.Ghost.Roles;
 using Content.Server.GhostKick;
 using Content.Server.Info;
 using Content.Server.Maps;
@@ -59,6 +60,7 @@ namespace Content.Server.IoC
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ISharedAdminLogManager, AdminLogManager>();
             IoCManager.Register<IAdminLogManager, AdminLogManager>();
+            IoCManager.Register<GhostRoleManager>();
         }
     }
 }

@@ -27,9 +27,6 @@ namespace Content.Server.Ghost.Roles.Components
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
             ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, Owner, this);
-
-            ghostRoleSystem.UnregisterGhostRole(this);
-
             return true;
         }
     }

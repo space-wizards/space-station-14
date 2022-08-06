@@ -6,6 +6,7 @@ namespace Content.Shared.Ghost.Roles
     [NetSerializable, Serializable]
     public struct GhostRoleInfo
     {
+        public string Identifier { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Rules { get; set; }

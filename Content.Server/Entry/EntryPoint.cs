@@ -10,6 +10,7 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
+using Content.Server.Ghost.Roles;
 using Content.Server.GhostKick;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
