@@ -196,6 +196,9 @@
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
+      - ProximitySensor
+      - LeftArmBorg
+      - RightArmBorg
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -237,6 +240,7 @@
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
+      - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
@@ -261,6 +265,7 @@
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
+      - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
       - GeneratorPlasmaMachineCircuitboard
@@ -382,6 +387,8 @@
   name: uniform printer
   description: Prints new or replacement uniforms.
   components:
+  - type: Transform
+    noRot: false
   - type: LatheDatabase
     static: true
     recipes:

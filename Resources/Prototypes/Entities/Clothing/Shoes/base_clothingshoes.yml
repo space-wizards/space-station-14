@@ -4,7 +4,7 @@
   id: ClothingShoesBase
   components:
   - type: Clothing
-    Slots:
+    slots:
     - FEET
   - type: Sprite
     state: icon

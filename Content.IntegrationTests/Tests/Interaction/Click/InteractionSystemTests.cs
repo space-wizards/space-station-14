@@ -5,6 +5,7 @@ using Content.Server.Interaction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Weapons.Melee;
 using NUnit.Framework;
 using Robust.Shared.Containers;
@@ -13,7 +14,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
-using ItemComponent = Content.Server.Clothing.Components.ItemComponent;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
 {
@@ -307,6 +307,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var mapManager = server.ResolveDependency<IMapManager>();
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
+            var conSystem = sysMan.GetEntitySystem<SharedContainerSystem>();
 
             var mapId = MapId.Nullspace;
             var coords = MapCoordinates.Nullspace;
@@ -332,7 +333,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
                 containerEntity = sEntities.SpawnEntity(null, coords);
-                container = containerEntity.EnsureContainer<Container>("InteractionTestContainer");
+                container = conSystem.EnsureContainer<Container>(containerEntity, "InteractionTestContainer");
             });
 
             await server.WaitRunTicks(1);

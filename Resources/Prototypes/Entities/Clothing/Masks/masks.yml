@@ -70,7 +70,7 @@
 - type: entity
   parent: ClothingMaskGasAtmos
   id: ClothingMaskGasCentcom
-  name: centcom gas mask
+  name: CentCom gas mask
   description: Oooh, gold and green. Fancy! This should help as you sit in your office.
   components:
   - type: Sprite
@@ -141,6 +141,7 @@
   - type: Clothing
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -165,6 +166,7 @@
   - type: Clothing
     sprite: Clothing/Mask/mime.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -209,3 +211,4 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.1
+  - type: IdentityBlocker

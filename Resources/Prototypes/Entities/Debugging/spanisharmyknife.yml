@@ -14,7 +14,7 @@
   - type: Clothing
     sprite: Objects/Tools/debug.rsi
     quickEquip: false
-    Slots:
+    slots:
       - Belt
   - type: MeleeWeapon
     damage:

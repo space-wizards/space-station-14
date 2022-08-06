@@ -1,6 +1,6 @@
-using Content.Shared.Sound;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Tools.Components

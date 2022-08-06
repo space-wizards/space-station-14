@@ -17,6 +17,7 @@
         Passenger: [ -1, -1 ]
         Bartender: [ 1, 2 ]
         Botanist: [ 2, 2 ]
+        Boxer: [ 2, 2 ] #Wildcard for this map
         Chef: [ 2, 3 ]
         Clown: [ 1, 1 ]
         Janitor: [ 1, 2 ]

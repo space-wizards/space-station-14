@@ -193,6 +193,15 @@
   icon: Objects/Tanks/Jetpacks/black.rsi/icon.png
   price: 5
 
+- type: uplinkListing
+  id: ReinforcementTeleporterSyndicate
+  category: Utility
+  itemId: ReinforcementTeleporterSyndicate
+  listingName: Reinforcement Teleporter
+  description: Teleport in an agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
+  icon: Objects/Devices/communication.rsi/old-radio.png
+  price: 25
+
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: uplinkListing
   id: UplinkHeadset
@@ -303,6 +312,27 @@
   category: Tools
   itemId: DehydratedSpaceCarp
   price: 3
+
+# Job Specific
+
+- type: uplinkListing
+  id: uplinkGatfruitSeeds
+  category: Job
+  itemId: GatfruitSeeds
+  description: And who says guns don't grow on trees?
+  price: 4
+  jobWhitelist:
+  - Botanist
+
+- type: uplinkListing
+  id: uplinkNecronomicon
+  category: Job
+  itemId: BibleNecronomicon
+  description: An unholy book capable of summoning a demonic familiar.
+  price: 6
+  surplus: false
+  jobWhitelist:
+  - Chaplain
 
 # Armor
 

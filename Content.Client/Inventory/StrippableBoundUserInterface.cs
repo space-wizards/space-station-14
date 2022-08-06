@@ -1,13 +1,8 @@
-using System.Collections.Generic;
 using Content.Client.Strip;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Inventory
 {
@@ -21,7 +16,7 @@ namespace Content.Client.Inventory
         [ViewVariables]
         private StrippingMenu? _strippingMenu;
 
-        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -33,7 +28,7 @@ namespace Content.Client.Inventory
             _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, entMan)))}");
 
             _strippingMenu.OnClose += Close;
-            _strippingMenu.OpenCentered();
+            _strippingMenu.OpenCenteredLeft();
             UpdateMenu();
         }
 

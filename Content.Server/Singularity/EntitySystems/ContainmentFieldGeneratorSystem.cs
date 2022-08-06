@@ -1,264 +1,415 @@
-﻿using Content.Server.ParticleAccelerator.Components;
-using Content.Server.Singularity.Components;
-using Content.Shared.Physics;
+﻿using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Construction.Components;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Content.Shared.Throwing;
 using Robust.Shared.Player;
 
-namespace Content.Server.Singularity.EntitySystems
+namespace Content.Server.Singularity.EntitySystems;
+
+public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 {
-    public sealed class ContainmentFieldGeneratorSystem : EntitySystem
+    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly TagSystem _tags = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ReAnchorEvent>(OnReanchorEvent);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var generator in EntityQuery<ContainmentFieldGeneratorComponent>())
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
-            SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
-            SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
-        }
-
-        private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
-        {
-            if (args.Handled)
+            if (generator.PowerBuffer <= 0) //don't drain power if there's no power, or if it's somehow less than 0.
                 return;
 
-            if (TryComp(component.Owner, out TransformComponent? transformComp) && transformComp.Anchored)
-            {
-                if (!component.Enabled)
-                    TurnOn(component);
-                else if (component.Enabled && component.IsConnected)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
-                    return;
-                }
-                else
-                    TurnOff(component);
-            }
+            generator.Accumulator += frameTime;
 
-            args.Handled = true;
-        }
-
-        private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component, UnanchorAttemptEvent args)
-        {
-            if (component.Enabled)
+            if (generator.Accumulator >= generator.Threshold)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
-                args.Cancel();
+                LosePower(generator.PowerLoss, generator);
+                generator.Accumulator -= generator.Threshold;
             }
         }
+    }
 
-        private void TurnOn(ContainmentFieldGeneratorComponent component)
+    #region Events
+
+    /// <summary>
+    /// A generator receives power from a source colliding with it.
+    /// </summary>
+    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
+    {
+        if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
         {
-            component.Enabled = true;
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
+            ReceivePower(component.PowerReceived, component);
+            component.Accumulator = 0f;
         }
+    }
 
-        private void TurnOff(ContainmentFieldGeneratorComponent component)
-        {
-            component.Enabled = false;
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
-        }
+    private void OnExamine(EntityUid uid, ContainmentFieldGeneratorComponent component, ExaminedEvent args)
+    {
+        if (component.Enabled)
+            args.PushMarkup(Loc.GetString("comp-containment-on"));
 
-        private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
-        {
-            component.Connection1?.Item2.Dispose();
-            component.Connection2?.Item2.Dispose();
-        }
+        else
+            args.PushMarkup(Loc.GetString("comp-containment-off"));
+    }
 
-        private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
+    private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (TryComp(component.Owner, out TransformComponent? transformComp) && transformComp.Anchored)
         {
-            if (!args.Anchored)
+            if (!component.Enabled)
+                TurnOn(component);
+            else if (component.Enabled && component.IsConnected)
             {
-                component.Connection1?.Item2.Dispose();
-                component.Connection2?.Item2.Dispose();
-            }
-        }
-
-        private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
-        {
-            if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
-            {
-                singularityGeneratorComponent.Power += component.State switch
-                {
-                    ParticleAcceleratorPowerState.Standby => 0,
-                    ParticleAcceleratorPowerState.Level0 => 1,
-                    ParticleAcceleratorPowerState.Level1 => 2,
-                    ParticleAcceleratorPowerState.Level2 => 4,
-                    ParticleAcceleratorPowerState.Level3 => 8,
-                    _ => 0
-                };
-
-                EntityManager.QueueDeleteEntity(uid);
-            }
-        }
-
-        private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
-        {
-            if (_tags.HasTag(args.OtherFixture.Body.Owner, "EmitterBolt"))
-            {
-                ReceivePower(6, component);
-            }
-        }
-
-        private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, StartCollideEvent args)
-        {
-            if (component.Parent == null)
-            {
-                EntityManager.QueueDeleteEntity(uid);
+                _popupSystem.PopupEntity(Loc.GetString("comp-containment-toggle-warning"), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
                 return;
             }
+            else
+                TurnOff(component);
+        }
+        args.Handled = true;
+    }
+
+    private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            RemoveConnections(component);
+    }
+
+    private void OnReanchorEvent(EntityUid uid, ContainmentFieldGeneratorComponent component, ref ReAnchorEvent args)
+    {
+        GridCheck(component);
+    }
+
+    private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component,
+        UnanchorAttemptEvent args)
+    {
+        if (component.Enabled)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
+            args.Cancel();
+        }
+    }
+
+    private void TurnOn(ContainmentFieldGeneratorComponent component)
+    {
+        component.Enabled = true;
+        ChangeFieldVisualizer(component);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
+    }
+
+    private void TurnOff(ContainmentFieldGeneratorComponent component)
+    {
+        component.Enabled = false;
+        ChangeFieldVisualizer(component);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
+    }
+
+    private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
+    {
+        RemoveConnections(component);
+    }
+
+    /// <summary>
+    /// Deletes the fields and removes the respective connections for the generators.
+    /// </summary>
+    private void RemoveConnections(ContainmentFieldGeneratorComponent component)
+    {
+        foreach (var (direction, value) in component.Connections)
+        {
+            foreach (var field in value.Item2)
+            {
+                QueueDel(field);
+            }
+            value.Item1.Connections.Remove(direction.GetOpposite());
+
+            if (value.Item1.Connections.Count == 0) //Change isconnected only if there's no more connections
+            {
+                value.Item1.IsConnected = false;
+                ChangeOnLightVisualizer(value.Item1);
+            }
+
+            ChangeFieldVisualizer(value.Item1);
+        }
+        component.Connections.Clear();
+        component.IsConnected = false;
+        ChangeOnLightVisualizer(component);
+        ChangeFieldVisualizer(component);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, Filter.Pvs(component.Owner), PopupType.LargeCaution);
+    }
+
+    #endregion
+
+    #region Connections
+
+    /// <summary>
+    /// Stores power in the generator. If it hits the threshold, it tries to establish a connection.
+    /// </summary>
+    /// <param name="power">The power that this generator received from the collision in <see cref="HandleGeneratorCollide"/></param>
+    public void ReceivePower(int power, ContainmentFieldGeneratorComponent component)
+    {
+        component.PowerBuffer += power;
+
+        var genXForm = Transform(component.Owner);
+
+        if (component.PowerBuffer >= component.PowerMinimum)
+        {
+            var directions = Enum.GetValues<Direction>().Length;
+            for (int i = 0; i < directions-1; i+=2)
+            {
+                var dir = (Direction)i;
+
+                if (component.Connections.ContainsKey(dir))
+                    continue; // This direction already has an active connection
+
+                TryGenerateFieldConnection(dir, component, genXForm);
+            }
         }
 
-        public void ReceivePower(int power, ContainmentFieldGeneratorComponent component)
-        {
-            var totalPower = power + component.PowerBuffer;
-            var powerPerConnection = totalPower / 2;
-            var newBuffer = totalPower % 2;
-            TryPowerConnection(ref component.Connection1, ref newBuffer, powerPerConnection, component);
-            TryPowerConnection(ref component.Connection2, ref newBuffer, powerPerConnection, component);
+        ChangePowerVisualizer(power, component);
+    }
 
-            component.PowerBuffer = newBuffer;
+    public void LosePower(int power, ContainmentFieldGeneratorComponent component)
+    {
+        component.PowerBuffer -= power;
+
+        if (component.PowerBuffer < component.PowerMinimum && component.Connections.Count != 0)
+        {
+            RemoveConnections(component);
         }
 
-        public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
+        ChangePowerVisualizer(power, component);
+    }
+
+    /// <summary>
+    /// This will attempt to establish a connection of fields between two generators.
+    /// If all the checks pass and fields spawn, it will store this connection on each respective generator.
+    /// </summary>
+    /// <param name="dir">The field generator establishes a connection in this direction.</param>
+    /// <param name="component">The field generator component</param>
+    /// <param name="gen1XForm">The transform component for the first generator</param>
+    /// <returns></returns>
+    private bool TryGenerateFieldConnection(Direction dir, ContainmentFieldGeneratorComponent component, TransformComponent gen1XForm)
+    {
+        if (!component.Enabled)
+            return false;
+
+        if (!gen1XForm.Anchored)
+            return false;
+
+        var genWorldPosRot = gen1XForm.GetWorldPositionRotation();
+        var dirRad = dir.ToAngle() + genWorldPosRot.WorldRotation; //needs to be like this for the raycast to work properly
+
+        var ray = new CollisionRay(genWorldPosRot.WorldPosition, dirRad.ToVec(), component.CollisionMask);
+        var rayCastResults = _physics.IntersectRay(gen1XForm.MapID, ray, component.MaxLength, component.Owner, false);
+        var genQuery = GetEntityQuery<ContainmentFieldGeneratorComponent>();
+
+        RayCastResults? closestResult = null;
+
+        foreach (var result in rayCastResults)
         {
-            if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
-            {
-                bool hasAnyConnection = (component.Connection1 != null) || (component.Connection2 != null);
-                pointLightComponent.Enabled = hasAnyConnection;
-            }
+            if (genQuery.HasComponent(result.HitEntity))
+                closestResult = result;
+
+            break;
         }
+        if (closestResult == null)
+            return false;
 
-        public void RemoveConnection(ContainmentFieldConnection? connection, ContainmentFieldGeneratorComponent component)
+        var ent = closestResult.Value.HitEntity;
+
+        if (!TryComp<ContainmentFieldGeneratorComponent?>(ent, out var otherFieldGeneratorComponent) ||
+            otherFieldGeneratorComponent == component ||
+            !TryComp<PhysicsComponent>(ent, out var collidableComponent) ||
+            collidableComponent.BodyType != BodyType.Static ||
+            gen1XForm.ParentUid != Transform(otherFieldGeneratorComponent.Owner).ParentUid)
         {
-            if (component.Connection1?.Item2 == connection)
-            {
-                component.Connection1 = null;
-                component.IsConnected = false;
-                UpdateConnectionLights(component);
-            }
-            else if (component.Connection2?.Item2 == connection)
-            {
-                component.Connection2 = null;
-                component.IsConnected = false;
-                UpdateConnectionLights(component);
-            }
-            else if (connection != null)
-            {
-                Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
-            }
-        }
-
-        private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple, ContainmentFieldGeneratorComponent component)
-        {
-            if (propertyFieldTuple != null) return false;
-            if (!component.Enabled) return false; //don't gen a field unless it's on
-            if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var xform) && !xform.Anchored) return false;
-
-            foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West })
-            {
-                if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
-
-                var dirVec = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.RotateVec(direction.ToVec());
-                var ray = new CollisionRay(EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(EntityManager.GetComponent<TransformComponent>(component.Owner).MapID, ray, 4.5f, component.Owner, false);
-
-                var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
-                if (!rayCastResults.Any()) continue;
-
-                RayCastResults? closestResult = null;
-                var smallestDist = 4.5f;
-                foreach (var res in rayCastResults)
-                {
-                    if (res.Distance > smallestDist) continue;
-
-                    smallestDist = res.Distance;
-                    closestResult = res;
-                }
-                if (closestResult == null) continue;
-                var ent = closestResult.Value.HitEntity;
-                if (!EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
-                    fieldGeneratorComponent.Owner == component.Owner ||
-                    !HasFreeConnections(fieldGeneratorComponent) ||
-                    IsConnectedWith(component, fieldGeneratorComponent) ||
-                    !EntityManager.TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
-                    collidableComponent.BodyType != BodyType.Static)
-                {
-                    continue;
-                }
-
-                var connection = new ContainmentFieldConnection(component, fieldGeneratorComponent);
-                propertyFieldTuple = new Tuple<Direction, ContainmentFieldConnection>(direction, connection);
-                if (fieldGeneratorComponent.Connection1 == null)
-                {
-                    fieldGeneratorComponent.Connection1 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
-                }
-                else if (fieldGeneratorComponent.Connection2 == null)
-                {
-                    fieldGeneratorComponent.Connection2 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
-                }
-                else
-                {
-                    Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
-                }
-
-                component.IsConnected = true;
-                UpdateConnectionLights(component);
-                return true;
-            }
-
             return false;
         }
 
-        private bool IsConnectedWith(ContainmentFieldGeneratorComponent comp, ContainmentFieldGeneratorComponent otherComp)
+        var fields = GenerateFieldConnection(component, otherFieldGeneratorComponent);
+
+        component.Connections[dir] = (otherFieldGeneratorComponent, fields);
+        otherFieldGeneratorComponent.Connections[dir.GetOpposite()] = (component, fields);
+        ChangeFieldVisualizer(otherFieldGeneratorComponent);
+
+        if (!component.IsConnected)
         {
-            return otherComp == comp || comp.Connection1?.Item2.Generator1 == otherComp || comp.Connection1?.Item2.Generator2 == otherComp ||
-                   comp.Connection2?.Item2.Generator1 == otherComp || comp.Connection2?.Item2.Generator2 == otherComp;
+            component.IsConnected = true;
+            ChangeOnLightVisualizer(component);
         }
 
-        public void TryPowerConnection(ref Tuple<Direction, ContainmentFieldConnection>? connectionProperty, ref int powerBuffer, int powerPerConnection, ContainmentFieldGeneratorComponent component)
+        if (!otherFieldGeneratorComponent.IsConnected)
         {
-            if (connectionProperty != null)
-            {
-                connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
-            }
-            else
-            {
-                if (TryGenerateFieldConnection(ref connectionProperty, component))
-                {
-                    connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
-                }
-                else
-                {
-                    powerBuffer += powerPerConnection;
-                }
-            }
+            otherFieldGeneratorComponent.IsConnected = true;
+            ChangeOnLightVisualizer(otherFieldGeneratorComponent);
         }
 
-        public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component) => component.Connection1?.Item2?.CanRepel(toRepel) == true ||
-                                                                     component.Connection2?.Item2?.CanRepel(toRepel) == true;
-
-        public bool HasFreeConnections(ContainmentFieldGeneratorComponent component)
-        {
-            return component.Connection1 == null || component.Connection2 == null;
-        }
-
-
+        ChangeFieldVisualizer(component);
+        UpdateConnectionLights(component);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-connected"), component.Owner, Filter.Pvs(component.Owner));
+        return true;
     }
+
+    /// <summary>
+    /// Spawns fields between two generators if the <see cref="TryGenerateFieldConnection"/> finds two generators to connect.
+    /// </summary>
+    /// <param name="firstGenComp">The source field generator</param>
+    /// <param name="secondGenComp">The second generator that the source is connected to</param>
+    /// <returns></returns>
+    private List<EntityUid> GenerateFieldConnection(ContainmentFieldGeneratorComponent firstGenComp, ContainmentFieldGeneratorComponent secondGenComp)
+    {
+        var fieldList = new List<EntityUid>();
+        var gen1Coords = Transform(firstGenComp.Owner).Coordinates;
+        var gen2Coords = Transform(secondGenComp.Owner).Coordinates;
+
+        var delta = (gen2Coords - gen1Coords).Position;
+        var dirVec = delta.Normalized;
+        var stopDist = delta.Length;
+        var currentOffset = dirVec;
+        while (currentOffset.Length < stopDist)
+        {
+            var currentCoords = gen1Coords.Offset(currentOffset);
+            var newField = Spawn(firstGenComp.CreatedField, currentCoords);
+
+            var fieldXForm = Transform(newField);
+            fieldXForm.AttachParent(firstGenComp.Owner);
+            if (dirVec.GetDir() == Direction.East || dirVec.GetDir() == Direction.West)
+            {
+                var angle = fieldXForm.LocalPosition.ToAngle();
+                var rotateBy90 = angle.Degrees + 90;
+                var rotatedAngle = Angle.FromDegrees(rotateBy90);
+
+                fieldXForm.LocalRotation = rotatedAngle;
+            }
+
+            fieldList.Add(newField);
+            currentOffset += dirVec;
+        }
+        return fieldList;
+    }
+
+    /// <summary>
+    /// Creates a light component for the spawned fields.
+    /// </summary>
+    public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
+    {
+        if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
+        {
+            bool hasAnyConnection = component.Connections != null;
+            pointLightComponent.Enabled = hasAnyConnection;
+        }
+    }
+
+    /// <summary>
+    /// Checks to see if this or the other gens connected to a new grid. If they did, remove connection.
+    /// </summary>
+    public void GridCheck(ContainmentFieldGeneratorComponent component)
+    {
+        var xFormQuery = GetEntityQuery<TransformComponent>();
+
+        foreach (var (_, generators) in component.Connections)
+        {
+            var gen1ParentGrid = xFormQuery.GetComponent(component.Owner).ParentUid;
+            var gent2ParentGrid = xFormQuery.GetComponent(generators.Item1.Owner).ParentUid;
+
+            if (gen1ParentGrid != gent2ParentGrid)
+                RemoveConnections(component);
+        }
+    }
+
+    #endregion
+
+    #region VisualizerHelpers
+    /// <summary>
+    /// Check if a fields power falls between certain ranges to update the field gen visual for power.
+    /// </summary>
+    /// <param name="power"></param>
+    /// <param name="component"></param>
+    private void ChangePowerVisualizer(int power, ContainmentFieldGeneratorComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        if(component.PowerBuffer == 0)
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.NoPower);
+
+        if (component.PowerBuffer > 0 && component.PowerBuffer < component.PowerMinimum)
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.LowPower);
+
+        if (component.PowerBuffer >= component.PowerMinimum && component.PowerBuffer < 25)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.MediumPower);
+        }
+
+        if (component.PowerBuffer == 25)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.HighPower);
+        }
+    }
+
+    /// <summary>
+    /// Check if a field has any or no connections and if it's enabled to toggle the field level light
+    /// </summary>
+    /// <param name="component"></param>
+    private void ChangeFieldVisualizer(ContainmentFieldGeneratorComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        if (component.Connections.Count == 0 && !component.Enabled)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.NoLevel);
+        }
+
+        if (component.Connections.Count == 0 && component.Enabled)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.On);
+        }
+
+        if (component.Connections.Count == 1)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.OneField);
+        }
+
+        if (component.Connections.Count > 1)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.MultipleFields);
+        }
+    }
+
+    private void ChangeOnLightVisualizer(ContainmentFieldGeneratorComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        appearance.SetData(ContainmentFieldGeneratorVisuals.OnLight, component.IsConnected);
+    }
+    #endregion
 }
