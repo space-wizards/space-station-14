@@ -207,6 +207,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             Offset = Vector2.One * 1000f,
         });
 
+        // Naughty, someone saved the shuttle as a map.
+        if (Deleted(outpost))
+        {
+            Logger.ErrorS("nukeops", $"Tried to load nukeops shuttle as a map, aborting.");
+            _mapManager.DeleteMap(mapId);
+            return;
+        }
+
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
