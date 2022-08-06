@@ -435,13 +435,14 @@
 #  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
 #  price: 4
 
-- type: uplinkListing
-  id: UplinkGigacancerScanner
-  category: Misc
-  itemId: HandheldHealthAnalyzerGigacancer
-  listingName: Ultragigacancer Health Analyzer
-  description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
-  price: 5
+# Disabled until rebalance post-biomass
+# - type: uplinkListing
+#   id: UplinkGigacancerScanner
+#   category: Misc
+#   itemId: HandheldHealthAnalyzerGigacancer
+#   listingName: Ultragigacancer Health Analyzer
+#   description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+#   price: 5
 
 - type: uplinkListing
   id: UplinkNocturineChemistryBottle

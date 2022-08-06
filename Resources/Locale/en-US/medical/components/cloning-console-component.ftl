@@ -26,4 +26,4 @@ cloning-console-component-msg-no-cloner = Not Ready: No Cloner Detected
 cloning-console-component-msg-no-mind = Not Ready: No Soul Activity Detected
 
 cloning-console-chat-error = ERROR: INSUFFICIENT BIOMASS. CLONING THIS BODY REQUIRES {$units} UNITS OF BIOMASS.
-cloning-console-cellular-warning = WARNING: GENEFSCK RETURNED CONFIDENCE SCORE BELOW 1. CLONING MAY HAVE UNEXPECTED RESULTS.
+cloning-console-cellular-warning = WARNING: GENEFSCK CONFIDENCE SCORE IS {$percent}%. CLONING MAY HAVE UNEXPECTED RESULTS.

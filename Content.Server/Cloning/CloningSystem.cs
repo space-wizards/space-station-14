@@ -204,10 +204,10 @@ namespace Content.Server.Cloning.Systems
             if (TryComp<DamageableComponent>(bodyToClone, out var damageable) &&
                 damageable.Damage.DamageDict.TryGetValue("Cellular", out var cellularDmg))
             {
-                if (cellularDmg > 0 && clonePod.ConnectedConsole != null)
-                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning"), InGameICChatType.Speak, false);
-
                 var chance = Math.Clamp((float) (cellularDmg / 100), 0, 1);
+                if (cellularDmg > 0 && clonePod.ConnectedConsole != null)
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning", ("percent", Math.Round(100 - (chance * 100)))), InGameICChatType.Speak, false);
+
                 if (_robustRandom.Prob(chance))
                 {
                     UpdateStatus(CloningPodStatus.Gore, clonePod);
