@@ -225,15 +225,15 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
-                        {
-                            _adminLogger.Add(LogType.AttackArmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             return;
-                        }
                     }
                     else
                     {
                         var ev = new ClickAttackEvent(item.Value, user, coordinates, target);
                         RaiseLocalEvent(item.Value, ev, false);
+
+                        if (ev.Handled)
+                            return;
                     }
                 }
                 else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
