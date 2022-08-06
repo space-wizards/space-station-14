@@ -1,3 +1,5 @@
+using Robust.Shared.Audio;
+
 namespace Content.Server.Baseball
 {
     /// <summary>
@@ -20,5 +22,9 @@ namespace Content.Server.Baseball
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentLauncherCooldown;
+
+        [DataField("fireSound")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Effects/thunk.ogg");
     }
 }

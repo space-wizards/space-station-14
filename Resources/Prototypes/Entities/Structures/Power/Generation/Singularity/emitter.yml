@@ -101,16 +101,10 @@
     - type: Transform
       anchored: true
     - type: Sprite
-      sprite: Structures/Power/Generation/Singularity/emitter.rsi
-      netsync: false
+      sprite: Structures/Machines/pitching_machine.rsi
+      netsync: true
       layers:
-        - state: emitter2
-        - state: beam
-          shader: unshaded
-          visible: false
-        - state: lock
-          shader: unshaded
-          visible: false
+        - state: pitching2
     - type: BallLauncher
     - type: Damageable
       damageContainer: Inorganic

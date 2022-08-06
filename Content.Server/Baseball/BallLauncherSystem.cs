@@ -4,8 +4,10 @@ using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
+using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Baseball
 {
@@ -16,6 +18,8 @@ namespace Content.Server.Baseball
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         /// <inheritdoc/>
         public override void Initialize()
@@ -23,6 +27,7 @@ namespace Content.Server.Baseball
             base.Initialize();
             //SubscribeLocalEvent<BallLauncherComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<BallLauncherComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<BallLauncherComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
         public override void Update(float frameTime)
@@ -67,6 +72,11 @@ namespace Content.Server.Baseball
 
         }
 
+        public void OnInteractUsing(EntityUid uid, BallLauncherComponent component, InteractUsingEvent args)
+        {
+
+        }
+
         private void Fire(EntityUid uid)
         {
             if (!TryComp<BallLauncherComponent>(uid, out var component))
@@ -82,7 +92,9 @@ namespace Content.Server.Baseball
 
             physicsComponent.BodyStatus = BodyStatus.InAir;
             */
-            var dir = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * 20f;
+            var dir = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * _robustRandom.NextFloat(20f, 50f);
+
+            _audioSystem.Play(_audioSystem.GetSound(component.FireSound), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
 
             _throwingSystem.TryThrow(projectile, dir, 10f, uid);
 
