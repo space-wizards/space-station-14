@@ -5,6 +5,7 @@ using Content.Server.Singularity.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
@@ -77,6 +78,14 @@ namespace Content.Server.Baseball
 
         public void OnInteractUsing(EntityUid uid, BallLauncherComponent component, InteractUsingEvent args)
         {
+            args.Handled = true;
+
+            if (EntityManager.TryGetComponent<ItemComponent?>(args.Used, out var item) && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
+            {
+                if (_storageSystem.CanInsert(component.Owner, args.Used, out _, storage))
+                {
+                    _storageSystem.Insert(component.Owner, args.Used, storage); }
+            }
 
         }
 
@@ -85,9 +94,18 @@ namespace Content.Server.Baseball
             if (!TryComp<BallLauncherComponent>(uid, out var component))
                 return;
 
+            if (!EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
+                return;
+
+            if (storage.StoredEntities == null)
+                return;
+            if (storage.StoredEntities.Count == 0)
+                return;
+
             _popupSystem.PopupEntity("fire", component.Owner, Filter.Pvs(component.Owner));
 
-            var projectile = EntityManager.SpawnEntity("Football", EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates);
+            var projectile = _robustRandom.Pick(storage.StoredEntities);
+            _storageSystem.RemoveAndDrop(uid, projectile, storage);
 
             /*
             if (!EntityManager.TryGetComponent<PhysicsComponent?>(projectile, out var physicsComponent))

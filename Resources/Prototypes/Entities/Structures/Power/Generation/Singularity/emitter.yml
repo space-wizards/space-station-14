@@ -128,3 +128,5 @@
     - type: Anchorable
     - type: Pullable
     - type: Rotatable
+    - type: Storage
+      capacity: 30
