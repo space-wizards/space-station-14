@@ -6,6 +6,7 @@ using Content.Server.Weapon.Ranged.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Vehicle.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -57,14 +58,14 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             for (var i = 0; i < cartridge.Count; i++)
                             {
-                                var uid = Spawn(cartridge.Prototype, fromCoordinates);
+                                var uid = Spawn(cartridge.Prototype, fromMap);
                                 ShootProjectile(uid, angles[i].ToVec(), user);
                                 shotProjectiles.Add(uid);
                             }
                         }
                         else
                         {
-                            var uid = Spawn(cartridge.Prototype, fromCoordinates);
+                            var uid = Spawn(cartridge.Prototype, fromMap);
                             ShootProjectile(uid, mapDirection, user);
                             shotProjectiles.Add(uid);
                         }
@@ -106,7 +107,17 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
-                    var rayCastResults = Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
+
+                    Func<EntityUid, bool>? predicate = uid => uid == user;
+
+                    if (TryComp<RiderComponent>(user, out var rider) && rider.Vehicle != null)
+                    {
+                        var comp = rider;
+                        predicate = uid => uid == user || uid == comp.Vehicle;
+                    }
+
+                    var rayCastResults =
+                        Physics.IntersectRayWithPredicate(fromMap.MapId, ray, hitscan.MaxLength, predicate).ToList();
 
                     if (rayCastResults.Count >= 1)
                     {

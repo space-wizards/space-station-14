@@ -4,6 +4,7 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Projectiles;
+using Content.Shared.Vehicle.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
@@ -15,10 +16,10 @@ namespace Content.Server.Projectiles
     [UsedImplicitly]
     public sealed class ProjectileSystem : SharedProjectileSystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly GunSystem _guns = default!;
+        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
         public override void Initialize()
         {
@@ -38,8 +39,19 @@ namespace Content.Server.Projectiles
             if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
                 return;
 
+            // Relay the projectile to the vehicle owner.
             var otherEntity = args.OtherFixture.Body.Owner;
 
+            if (TryComp<VehicleComponent>(otherEntity, out var vehicle) && vehicle.Rider != null)
+                otherEntity = vehicle.Rider.Value;
+
+            var direction = args.OurFixture.Body.LinearVelocity.Normalized;
+
+            Collide(component, otherEntity, direction);
+        }
+
+        private void Collide(ProjectileComponent component, EntityUid otherEntity, Vector2 direction)
+        {
             var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances);
             component.DamagedEntity = true;
 
@@ -55,15 +67,14 @@ namespace Content.Server.Projectiles
             // Damaging it can delete it
             if (HasComp<CameraRecoilComponent>(otherEntity))
             {
-                var direction = args.OurFixture.Body.LinearVelocity.Normalized;
                 _sharedCameraRecoil.KickCamera(otherEntity, direction);
             }
 
             if (component.DeleteOnCollide)
             {
-                QueueDel(uid);
+                QueueDel(component.Owner);
 
-                if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
+                if (component.ImpactEffect != null && TryComp<TransformComponent>(component.Owner, out var xform))
                 {
                     RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates));
                 }
