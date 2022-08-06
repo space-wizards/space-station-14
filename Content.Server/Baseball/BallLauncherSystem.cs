@@ -2,6 +2,8 @@ using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
+using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
@@ -20,6 +22,7 @@ namespace Content.Server.Baseball
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         /// <inheritdoc/>
         public override void Initialize()
