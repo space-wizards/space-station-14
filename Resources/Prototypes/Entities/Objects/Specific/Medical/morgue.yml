@@ -91,7 +91,12 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Materials/materials.rsi
+    noRot: true
     state: ash
   - type: Tag
     tags:
     - Trash
+  - type: Stack
+    stackType: Ash
+  - type: StackPrice
+    price: 0.1

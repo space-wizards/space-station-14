@@ -1,0 +1,5 @@
+- type: stack
+  id: Ash
+  name: ash
+  icon: Textures/Objects/Materials/materials.rsi
+  spawn: Ash

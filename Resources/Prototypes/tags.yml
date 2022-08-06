@@ -336,6 +336,9 @@
   id: PaintableAirlock
 
 - type: Tag
+  id: Paper # for Ignitable detection
+
+- type: Tag
   id: PercussionInstrument
 
 - type: Tag

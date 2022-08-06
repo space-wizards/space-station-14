@@ -21,6 +21,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
+using Content.Shared.Tag;
+
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -35,6 +37,8 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -112,6 +116,14 @@ namespace Content.Server.Atmos.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
+            // Only apply stacks to entities tagged with specific materials
+            // Otherwise  mobs would too easily be able to set each other on fire
+            // In future, support Wood, Fuel, Cloth, etc.
+            if (_tags.HasTag(uid, "Paper"))
+            {
+                flammable.FireStacks = 1;
+            }
+
             Ignite(uid, flammable);
             args.Handled = true;
         }
@@ -161,6 +173,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnTileFireEvent(EntityUid uid, FlammableComponent flammable, ref TileFireEvent args)
         {
+            // Don't set yourself on fire even more
+            // Limiting to specific tags for now since self extinguishing doesn't work if this is on
+            if (flammable.OnFire || !_tags.HasTag(uid, "Paper"))
+                return;
+
             var tempDelta = args.Temperature - MinIgnitionTemperature;
 
             var maxTemp = 0f;
@@ -317,9 +334,19 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if(transform.GridUid != null)
                 {
+                    var tile = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+                    var temperature = 700f;
+                    var volume = 50f;
                     _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
-                        _transformSystem.GetGridOrMapTilePosition(uid, transform),
-                        700f, 50f, true);
+                        tile,
+                        temperature, volume, true);
+
+                    // Spread the fire to other flammables on the same tile
+                    var fireEvent = new TileFireEvent(temperature, volume);
+                    foreach (var entity in _lookup.GetEntitiesIntersecting(transform.GridUid.Value, tile))
+                    {
+                        RaiseLocalEvent(entity, ref fireEvent, false);
+                    }
 
                 }
 
