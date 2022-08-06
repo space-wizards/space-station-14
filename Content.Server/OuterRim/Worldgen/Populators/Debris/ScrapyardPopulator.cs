@@ -15,8 +15,6 @@ public sealed class ScrapyardPopulator : DebrisPopulator
 
     public override void Populate(EntityUid gridEnt, IMapGrid grid)
     {
-        var entityManager = IoCManager.Resolve<IEntityManager>();
-        var random = IoCManager.Resolve<IRobustRandom>();
         var deferred = EntitySystem.Get<DeferredSpawnSystem>();
 
         foreach (var tile in grid.GetAllTiles())
@@ -28,7 +26,8 @@ public sealed class ScrapyardPopulator : DebrisPopulator
 
             foreach (var spawn in EntitySpawnCollection.GetSpawns(EntityTable[name]))
             {
-                deferred.SpawnEntityDeferred(spawn, coords);
+                if (spawn is not null)
+                    deferred.SpawnEntityDeferred(spawn, coords);
             }
         }
     }

@@ -84,16 +84,22 @@ namespace Content.Server.GameTicking
             if (!PurchaseAvailable())
                 return;
 
+            if (args.Length != 1)
+            {
+                shell.WriteError("You shouldn't be manually calling PurchaseShip, but for the record it takes one argument, a map ID.");
+                return;
+            }
+
             for (var i = 0; i < 128; i++)
             {
                 var loc = _robustRandom.Pick(_world.SafeSpawnLocations);
 
                 if (_mapManager.FindGridsIntersecting(DefaultMap,
-                        Box2.CenteredAround(loc * WorldChunkSystem.ChunkSize, Vector2.One * 96)).Any())
+                        Box2.CenteredAround((loc * WorldChunkSystem.ChunkSize) - (WorldChunkSystem.ChunkSize / 2), Vector2.One * (3.0f/4) * WorldChunkSystem.ChunkSize)).Any())
                     continue;
 
                 //There's a hack here to get around loadmap crashing.
-                var (_, grids) = LoadGameMap(_gameMapManager.GetSelectedMapChecked(true, true), _mapManager.CreateMap(), null);
+                var (_, grids) = LoadGameMap(_prototypeManager.Index<GameMapPrototype>(args[0]), _mapManager.CreateMap(), null);
 
                 foreach (var grid in grids)
                 {

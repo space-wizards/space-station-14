@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.GameTicking.Managers;
 using Content.Client.HUD.UI;
+using Content.Client.UserInterface;
 using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
@@ -13,7 +14,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
 {
-    public sealed class LateJoinGui : DefaultWindow
+    public sealed class LateJoinGui : FancyWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
@@ -25,7 +26,8 @@ namespace Content.Client.LateJoin
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
-        private readonly Button _purchaseShip = new() {Text = "Purchase new vessel"};
+        private readonly Button _purchaseShip = new() {Text = "Purchase a new vessel", HorizontalAlignment = HAlignment.Center, HorizontalExpand = false};
+        private readonly NewVesselGui _vesselPurchaseUi = new();
 
         public LateJoinGui()
         {
@@ -42,7 +44,7 @@ namespace Content.Client.LateJoin
                 Margin = new Thickness(0),
             };
 
-            Contents.AddChild(_base);
+            ContentsContainer.AddChild(_base);
 
             RebuildUI();
 
@@ -56,10 +58,16 @@ namespace Content.Client.LateJoin
 
             _purchaseShip.OnPressed += _ =>
             {
-                _consoleHost.ExecuteCommand("purchaseship");
+                _vesselPurchaseUi.OpenCenteredLeft();
             };
 
             gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
+        }
+
+        public override void Close()
+        {
+            _vesselPurchaseUi.Close();
+            base.Close();
         }
 
         private void RebuildUI()

@@ -9,13 +9,10 @@
       mapNameTemplate: '{0} Starlight {1}'
       nameGenerator:
         !type:IndependentNameGenerator
-        prefixCreator: '14'
+        prefixCreator: ''
       overflowJobs: []
       availableJobs:
         Captain: [ 1, 1 ]
         SalvageSpecialist: [ 3, 3 ]
-        MedicalDoctor: [ 2, 2 ]
-        ServiceWorker: [ 2, 2 ]
-        Janitor: [ 1, 1 ]
+        MedicalDoctor: [ 1, 1 ]
         Bartender: [ 1, 1 ]
-        StationEngineer: [ 2, 2 ]
