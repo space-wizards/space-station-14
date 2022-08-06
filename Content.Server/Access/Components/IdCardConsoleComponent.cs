@@ -74,8 +74,8 @@ namespace Content.Server.Access.Components
                 return;
 
             var cardSystem = EntitySystem.Get<IdCardSystem>();
-            cardSystem.TryChangeFullName(targetIdEntity, newFullName);
-            cardSystem.TryChangeJobTitle(targetIdEntity, newJobTitle);
+            cardSystem.TryChangeFullName(targetIdEntity, newFullName, player: player);
+            cardSystem.TryChangeJobTitle(targetIdEntity, newJobTitle, player: player);
 
             if (!newAccessList.TrueForAll(x => AccessLevels.Contains(x)))
             {
