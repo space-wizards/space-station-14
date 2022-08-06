@@ -9,7 +9,7 @@ namespace Content.Client.Traitor.Uplink
     {
         private UplinkMenu? _menu;
 
-        public UplinkBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public UplinkBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
 
         }
