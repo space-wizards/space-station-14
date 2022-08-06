@@ -8,7 +8,7 @@ public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
     private SurveillanceCameraSetupWindow? _window;
     private SurveillanceCameraSetupUiKey _type;
 
-    public SurveillanceCameraSetupBoundUi(ClientUserInterfaceComponent component, object uiKey) : base(component, uiKey)
+    public SurveillanceCameraSetupBoundUi(ClientUserInterfaceComponent component, Enum uiKey) : base(component, uiKey)
     {
         if (uiKey is not SurveillanceCameraSetupUiKey key)
         {

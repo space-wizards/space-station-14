@@ -271,7 +271,7 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-    
+
 - type: construction
   name: metal counter
   id: TableCounterMetal
@@ -288,7 +288,7 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-    
+
 - type: construction
   name: wood counter
   id: TableCounterWood
@@ -344,7 +344,7 @@
 
 - type: construction
   id: MedicalBed
-  name: Medical Bed
+  name: medical bed
   description: A hospital bed for patients to recover in. Resting here provides fairly slow healing.
   graph: bed
   startNode: start
@@ -393,7 +393,7 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-    
+
 - type: construction
   id: MeatSpike
   name: meat spike
