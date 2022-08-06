@@ -1,0 +1,7 @@
+﻿- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterEva
+  suffix: Eva
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraEva

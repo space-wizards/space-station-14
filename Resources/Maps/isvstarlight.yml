@@ -88,7 +88,7 @@ grids:
   - ind: 0,1
     tiles: OQAAABAAAAA5AAAAEAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAA5AAAAOQAAADkAAAA5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: 1,0
-    tiles: MwAAADMAAAEzAAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAA5AAAANQAAADUAAAA5AAAANQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADUAAAA1AAAAOQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA5AAAAOQAAABAAAAAQAAAAEAAAADkAAAA1AAAANQAAADkAAAA1AAAAOQAAADkAAAA5AAAAOQAAADkAAAA1AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAANQAAADUAAAA5AAAANQAAADMAAAA5AAAAMwAAADkAAAAzAAAANQAAADkAAAA5AAAAEAAAABAAAAAQAAAAOQAAADUAAAA1AAAANQAAADUAAAAzAAAAOQAAADMAAAA5AAAAMwAAADUAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAMwAAABAAAAAzAAAAEAAAADMAAAA1AAAAOQAAADkAAAAQAAAAEAAAABAAAAA5AAAAOQAAADkAAAA5AAAAOQAAADMAAAAQAAAAMwAAABAAAAAzAAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAAAAAAAA5AAAAEAAAADkAAAAQAAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAAAAAAAMwAAABAAAAAQAAAAEAAAADMAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAAAAAAAAAAAAAAAAAADMAAAAQAAAAEAAAABAAAAAzAAAAOQAAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAzAAAAEAAAABAAAAAQAAAAMwAAADkAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: MwAAADMAAAEzAAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAA5AAAANQAAADUAAAA5AAAANQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADUAAAA1AAAAOQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA5AAAAOQAAABAAAAAQAAAAEAAAADkAAAA1AAAANQAAADkAAAA1AAAAOQAAADkAAAA5AAAAOQAAADkAAAA1AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAANQAAADUAAAA5AAAANQAAADMAAAA5AAAAMwAAADkAAAAzAAAANQAAADkAAAA5AAAAEAAAABAAAAAQAAAAOQAAADUAAAA1AAAANQAAADUAAAAzAAAAOQAAADMAAAA5AAAAMwAAADUAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAMwAAABAAAAAzAAAAEAAAADMAAAA1AAAAOQAAADkAAAAQAAAAEAAAABAAAAA5AAAAOQAAADkAAAA5AAAAOQAAADMAAAAQAAAAMwAAABAAAAAzAAAAOQAAADkAAAA2AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAAAAAAAA5AAAAEAAAADkAAAAQAAAAOQAAADkAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA5AAAAOQAAADkAAAAAAAAAMwAAABAAAAAQAAAAEAAAADMAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAAAAAAAAAAAAAAAAAADMAAAAQAAAAEAAAABAAAAAzAAAAOQAAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAzAAAAEAAAABAAAAAQAAAAMwAAADkAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: -1,1
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: 2,-1
@@ -508,7 +508,8 @@ entities:
 - uid: 53
   type: ComputerId
   components:
-  - pos: 0.5,2.5
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,-2.5
     parent: 85
     type: Transform
   - containers:
@@ -529,7 +530,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 55
-  type: ComputerSurveillanceWirelessCameraMonitor
+  type: ComputerSurveillanceCameraMonitor
   components:
   - rot: -1.5707963267948966 rad
     pos: 2.5,-1.5
@@ -562,11 +563,15 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 58
-  type: Table
+  type: ComputerSurveillanceWirelessCameraMonitor
   components:
-  - pos: 2.5,-2.5
+  - pos: 0.5,2.5
     parent: 85
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 59
   type: Table
   components:
@@ -786,7 +791,7 @@ entities:
 - uid: 85
   components:
   - pos: 3.467125,15.0969925
-    parent: 1722
+    parent: 2936
     type: Transform
   - index: 0
     type: MapGrid
@@ -14406,9 +14411,11 @@ entities:
     parent: 85
     type: Transform
 - uid: 1722
+  type: LockerSalvageSpecialistFilled
   components:
-  - index: 2
-    type: Map
+  - pos: 21.5,5.5
+    parent: 85
+    type: Transform
 - uid: 1723
   type: LockerSalvageSpecialistFilled
   components:
@@ -14560,11 +14567,19 @@ entities:
     parent: 85
     type: Transform
 - uid: 1748
-  type: WallSolid
+  type: PoweredlightExterior
   components:
-  - pos: 23.5,7.5
+  - rot: 1.5707963267948966 rad
+    pos: 22.5,8.5
     parent: 85
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 1749
   type: Table
   components:
@@ -19764,7 +19779,7 @@ entities:
 - uid: 2405
   type: BoxPDA
   components:
-  - pos: 2.5768952,-3.0217438
+  - pos: 2.7367525,-3.4302711
     parent: 85
     type: Transform
   - canCollide: False
@@ -19798,24 +19813,31 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2408
-  type: AirlockMedicalGlassLocked
-  components:
-  - pos: -4.5,1.5
-    parent: 85
-    type: Transform
-- uid: 2409
-  type: VendingBarDrobe
-  components:
-  - pos: 7.5,-7.5
-    parent: 85
-    type: Transform
-- uid: 2410
   type: Morgue
   components:
   - rot: 3.141592653589793 rad
     pos: -12.5,-3.5
     parent: 85
     type: Transform
+- uid: 2409
+  type: Morgue
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -11.5,-3.5
+    parent: 85
+    type: Transform
+- uid: 2410
+  type: Crematorium
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -14.5,-1.5
+    parent: 85
+    type: Transform
+  - containers:
+      entity_storage: !type:Container
+        ents: []
+      morgue_tray: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 2411
   type: FoodBoxDonkpocket
   components:
@@ -23594,10 +23616,9 @@ entities:
     parent: 85
     type: Transform
 - uid: 2903
-  type: Morgue
+  type: LockerSalvageSpecialistFilled
   components:
-  - rot: 3.141592653589793 rad
-    pos: -11.5,-3.5
+  - pos: 21.5,6.5
     parent: 85
     type: Transform
 - uid: 2904
@@ -23683,117 +23704,63 @@ entities:
     parent: 85
     type: Transform
 - uid: 2915
-  type: Crematorium
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -14.5,-1.5
-    parent: 85
-    type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 2916
-  type: VendingMachineSalvage
-  components:
-  - name: Salvage Equipment
-    type: MetaData
-  - pos: 21.5,6.5
-    parent: 85
-    type: Transform
-- uid: 2917
   type: LockerEngineerFilled
   components:
   - pos: 31.5,4.5
     parent: 85
     type: Transform
+- uid: 2916
+  type: CableApcExtension
+  components:
+  - pos: 23.5,6.5
+    parent: 85
+    type: Transform
+- uid: 2917
+  type: CableApcExtension
+  components:
+  - pos: 23.5,7.5
+    parent: 85
+    type: Transform
 - uid: 2918
-  type: PotassiumChemistryBottle
+  type: CableApcExtension
   components:
-  - pos: -7.6686406,6.3267784
+  - pos: 23.5,8.5
     parent: 85
     type: Transform
-  - tags:
-    - Bottle
-    type: Tag
-  - canCollide: False
-    type: Physics
 - uid: 2919
-  type: PotassiumChemistryBottle
+  type: CableApcExtension
   components:
-  - pos: -7.4394736,6.6601124
+  - pos: 24.5,8.5
     parent: 85
     type: Transform
-  - tags:
-    - Bottle
-    type: Tag
-  - canCollide: False
-    type: Physics
 - uid: 2920
-  type: AirlockMedicalGlassLocked
+  type: CableApcExtension
   components:
-  - pos: -7.5,3.5
+  - pos: 25.5,8.5
     parent: 85
     type: Transform
 - uid: 2921
-  type: AirlockMedicalGlassLocked
+  type: CableApcExtension
   components:
-  - pos: -10.5,-1.5
+  - pos: 27.5,8.5
     parent: 85
     type: Transform
 - uid: 2922
-  type: AirlockMedicalGlassLocked
+  type: CableApcExtension
   components:
-  - pos: -10.5,2.5
+  - pos: 26.5,8.5
     parent: 85
     type: Transform
 - uid: 2923
-  type: VendingMachineMediDrobe
+  type: CableApcExtension
   components:
-  - pos: -5.5,-3.5
+  - pos: 22.5,8.5
     parent: 85
     type: Transform
 - uid: 2924
-  type: KitchenSpike
+  type: SurveillanceCameraWirelessRouterEva
   components:
-  - pos: -14.5,9.5
-    parent: 85
-    type: Transform
-- uid: 2925
-  type: Poweredlight
-  components:
-  - pos: -5.5,10.5
-    parent: 85
-    type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
-- uid: 2926
-  type: CableApcExtension
-  components:
-  - pos: 2.5,-1.5
-    parent: 85
-    type: Transform
-- uid: 2927
-  type: VendingMachineEngiDrobe
-  components:
-  - pos: 36.5,1.5
-    parent: 85
-    type: Transform
-- uid: 2928
-  type: VendingMachineTheater
-  components:
-  - pos: 21.5,-2.5
-    parent: 85
-    type: Transform
-- uid: 2929
-  type: SurveillanceCameraWirelessRouterConstructed
-  components:
-  - pos: -13.5,7.5
+  - pos: 27.5,8.5
     parent: 85
     type: Transform
   - containers:
@@ -23806,4 +23773,133 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 2925
+  type: SurveillanceCameraRouterGeneral
+  components:
+  - pos: 26.5,8.5
+    parent: 85
+    type: Transform
+  - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 2926
+  type: SurveillanceCameraCommand
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 22.5,8.5
+    parent: 85
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraCommand
+    nameSet: True
+    id: communications
+    type: SurveillanceCamera
+- uid: 2927
+  type: SurveillanceCameraCommand
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,2.5
+    parent: 85
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraCommand
+    nameSet: True
+    id: bridge
+    type: SurveillanceCamera
+- uid: 2928
+  type: VendingMachineSalvage
+  components:
+  - name: Salvage Equipment
+    type: MetaData
+  - pos: 21.5,4.5
+    parent: 85
+    type: Transform
+- uid: 2929
+  type: VendingMachineMediDrobe
+  components:
+  - pos: -13.5,3.5
+    parent: 85
+    type: Transform
+- uid: 2930
+  type: VendingMachineEngiDrobe
+  components:
+  - pos: 36.5,1.5
+    parent: 85
+    type: Transform
+- uid: 2931
+  type: SurveillanceCameraGeneral
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 13.5,-3.5
+    parent: 85
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: bar
+    type: SurveillanceCamera
+- uid: 2932
+  type: SurveillanceCameraGeneral
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,0.5
+    parent: 85
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: medbay
+    type: SurveillanceCamera
+- uid: 2933
+  type: SurveillanceCameraGeneral
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 34.5,3.5
+    parent: 85
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: engineering
+    type: SurveillanceCamera
+- uid: 2934
+  type: SurveillanceCameraGeneral
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 16.5,6.5
+    parent: 85
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: salvage internal
+    type: SurveillanceCamera
+- uid: 2935
+  type: SurveillanceCameraGeneral
+  components:
+  - pos: 15.5,12.5
+    parent: 85
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: salvage external
+    type: SurveillanceCamera
+- uid: 2936
+  components:
+  - index: 5
+    type: Map
+- uid: 2937
+  type: AirlockCommandLocked
+  components:
+  - pos: 23.5,7.5
+    parent: 85
+    type: Transform
 ...

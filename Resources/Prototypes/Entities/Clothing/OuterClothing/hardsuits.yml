@@ -116,6 +116,23 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
 
+  # HARDSUIT CAMERAS (ROUNDSTART VERSION)
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraSetupUiKey.Camera
+        type: SurveillanceCameraSetupBoundUi
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: Eye
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraEva
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    setupAvailableNetworks:
+      - SurveillanceCameraEva
+    networkSet: true
+
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitEngineeringWhite
@@ -286,6 +303,22 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
+  # HARDSUIT CAMERAS (LOOT VERSION)
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraSetupUiKey.Camera
+        type: SurveillanceCameraSetupBoundUi
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: Eye
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    setupAvailableNetworks:
+      - SurveillanceCameraEva
+
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSecurity
@@ -455,6 +488,22 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
 
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraSetupUiKey.Camera
+        type: SurveillanceCameraSetupBoundUi
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: Eye
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraEva
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    setupAvailableNetworks:
+      - SurveillanceCameraEva
+    networkSet: true
+
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitVoidParamed
@@ -588,7 +637,7 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: TemperatureProtection
-    coefficient: 0.001    
+    coefficient: 0.001
   - type: Armor
     modifiers:
       coefficients:
@@ -629,7 +678,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
-    
+
 - type: entity
   parent: ClothingOuterHardsuitERTLeader
   id: ClothingOuterHardsuitERTMedical
@@ -653,7 +702,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
-    
+
 - type: entity
   parent: ClothingOuterHardsuitERTLeader
   id: ClothingOuterHardsuitERTJanitor
