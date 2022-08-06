@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing some pop-ups to only appear in the upper left corner
-      of the screen., type: Fix}
-  id: 1596
-  time: '2022-05-25T02:33:48.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added shot glasses to the bar vendor., type: Tweak}
@@ -2940,3 +2934,9 @@ Entries:
     type: Fix}
   id: 2095
   time: '2022-08-06T01:09:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Asteroid rocks are no longer guaranteed to spawn ores each time they
+      are mined., type: Fix}
+  id: 2096
+  time: '2022-08-06T03:16:17.0000000+00:00'
