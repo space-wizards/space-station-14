@@ -94,7 +94,6 @@ public static class EntitySpawnCollection
         // collect groups together, create singular items that pass probability
         foreach (var entry in entries)
         {
-
             // Handle "Or" groups
             if (!string.IsNullOrEmpty(entry.GroupId))
             {
