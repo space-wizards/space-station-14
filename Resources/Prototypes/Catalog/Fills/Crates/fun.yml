@@ -135,3 +135,19 @@
           amount: 1
         - id: VehicleKeySyndicateSegway
           amount: 1
+
+- type: entity
+  id: CrateFunSportsBall
+  name: Sports Ball crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: PitchingMachine
+          amount: 1
+        - id: Baseball
+          amount: 4
+        - id: Football
+          amount: 2
+        - id: Basketball
+          amount: 1

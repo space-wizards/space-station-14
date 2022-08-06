@@ -69,3 +69,15 @@
   cost: 6000
   category: Fun
   group: market
+
+- type: cargoProduct
+  name: "Sports crate"
+  id: FunATV
+  description: "A collection of all of your favorite sports balls and sports ball accessories"
+  icon:
+    sprite: Objects/Fun/toys.rsi
+    state: football
+  product: CrateFunATV
+  cost: 6000
+  category: Fun
+  group: market

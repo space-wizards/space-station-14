@@ -1,7 +1,7 @@
 - type: entity
-  id: balllauncher
-  name: ball launcher
-  description: a sports ball launcher
+  id: PitchingMachine
+  name: pitching machine
+  description: A sports ball launcher
   placement:
     mode: SnapgridCenter
   components:
@@ -20,7 +20,7 @@
           layer:
             - MachineLayer
     - type: Transform
-      anchored: true
+      anchored: false
     - type: Sprite
       sprite: Structures/Machines/pitching_machine.rsi
       netsync: true
