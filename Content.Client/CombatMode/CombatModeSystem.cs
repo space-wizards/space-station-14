@@ -33,17 +33,17 @@ namespace Content.Client.CombatMode
 
         public bool IsInCombatMode()
         {
-            return EntityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out CombatModeComponent? combatMode) &&
-                   combatMode.IsInCombatMode;
+            var entity = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (entity == null)
+                return false;
+
+            return IsInCombatMode(entity.Value);
         }
 
         private void OnTargetingZoneChanged(TargetingZone obj)
         {
             EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
         }
-    }
-
-    public static class A
-    {
     }
 }
