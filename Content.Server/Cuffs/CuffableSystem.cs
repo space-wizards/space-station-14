@@ -1,7 +1,9 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Cuffs.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
@@ -19,6 +21,8 @@ namespace Content.Server.Cuffs
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly EntityManager _entities = default!;
 
         public override void Initialize()
         {
