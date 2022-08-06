@@ -269,10 +269,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (message.Length == 0)
             return;
 
-        message = TransformSpeech(source, message);
-        if (message.Length == 0)
-            return;
-
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
 
