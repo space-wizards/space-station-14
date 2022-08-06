@@ -158,3 +158,41 @@
           prob: 0.5
           amount: 1
           maxAmount: 2
+
+- type: entity
+  id: CrateSalvagePlants
+  suffix: Filled, Salvage Random Plants
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: ChiliSeeds
+          amount: 1
+          prob: 0.5
+        - id: CornSeeds
+          amount: 1
+          prob: 0.5
+        - id: EggplantSeeds
+          amount: 1
+          prob: 0.5
+        - id: TomatoSeeds
+          amount: 1
+          prob: 0.5
+        - id: WheatSeeds
+          amount: 1
+          prob: 0.5
+        - id: CarrotSeeds
+          amount: 1
+          prob: 0.5
+        - id: ChanterelleSeeds
+          amount: 1
+          prob: 0.5
+        - id: PotatoSeeds
+          amount: 1
+          prob: 0.5
+        - id: SugarcaneSeeds
+          amount: 1
+          prob: 0.5
+        - id: OnionSeeds
+          amount: 1
+          prob: 0.5
