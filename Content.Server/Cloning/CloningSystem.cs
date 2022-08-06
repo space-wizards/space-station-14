@@ -20,12 +20,12 @@ using Content.Server.MachineLinking.Events;
 using Content.Server.MobState;
 using Content.Server.Lathe.Components;
 using Content.Shared.Atmos;
-using Content.Server.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
+using Content.Server.Construction.Components;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -47,7 +47,6 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
 
-
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -55,6 +54,7 @@ namespace Content.Server.Cloning.Systems
             base.Initialize();
 
             SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<CloningPodComponent, MachineDeconstructedEvent>(OnDeconstruct);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
             SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
@@ -66,6 +66,28 @@ namespace Content.Server.Cloning.Systems
         {
             clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, "clonepod-bodyContainer");
             _signalSystem.EnsureReceiverPorts(uid, CloningPodComponent.PodPort);
+        }
+
+        private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
+        {
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage))
+                return;
+
+            var biomassAmount = storage.GetMaterialAmount("Biomass");
+            while (biomassAmount > 0)
+            {
+                if (biomassAmount > 100)
+                {
+                    Spawn("MaterialBiomass", Transform(uid).Coordinates);
+                    biomassAmount -= 100;
+                }
+                else
+                {
+                    var stack = Spawn("MaterialBiomass", Transform(uid).Coordinates);
+                    _stackSystem.SetCount(stack, biomassAmount);
+                    biomassAmount = 0;
+                }
+            }
         }
 
         private void UpdateAppearance(CloningPodComponent clonePod)

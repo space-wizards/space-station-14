@@ -133,7 +133,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: MaterialBiomass
-        amount: 6
+        amount: 3
 
 - type: entity
   id: LockerResearchDirectorFilled
