@@ -77,7 +77,7 @@
   icon:
     sprite: Objects/Fun/toys.rsi
     state: football
-  product: CrateFunATV
+  product: CrateFunSportsBall
   cost: 6000
   category: Fun
   group: market

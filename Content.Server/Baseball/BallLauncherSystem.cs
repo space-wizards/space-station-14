@@ -1,14 +1,11 @@
 using System.Linq;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
-using Content.Server.Projectiles.Components;
-using Content.Server.Singularity.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Popups;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
@@ -17,9 +14,6 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Baseball
 {
-    /// <summary>
-    /// This handles...
-    /// </summary>
     public sealed class BallLauncherSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -28,7 +22,6 @@ namespace Content.Server.Baseball
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
 
-        /// <inheritdoc/>
         public override void Initialize()
         {
             base.Initialize();
@@ -77,20 +70,25 @@ namespace Content.Server.Baseball
 
                 }
             }
-
         }
 
         public void OnInteractUsing(EntityUid uid, BallLauncherComponent component, InteractUsingEvent args)
         {
             args.Handled = true;
 
+            if (EntityManager.TryGetComponent<ToolComponent?>(args.Used, out var tool))
+            {
+                if (tool.Qualities.Contains("Anchoring"))
+                    return;
+            }
+
             if (EntityManager.TryGetComponent<ItemComponent?>(args.Used, out var item) && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
                 if (_storageSystem.CanInsert(component.Owner, args.Used, out _, storage))
                 {
-                    _storageSystem.Insert(component.Owner, args.Used, storage); }
+                    _storageSystem.Insert(component.Owner, args.Used, storage);
+                }
             }
-
         }
 
         private void Fire(EntityUid uid)
