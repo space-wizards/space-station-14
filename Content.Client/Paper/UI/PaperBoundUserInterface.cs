@@ -12,7 +12,7 @@ namespace Content.Client.Paper.UI
     {
         private PaperWindow? _window;
 
-        public PaperBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public PaperBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

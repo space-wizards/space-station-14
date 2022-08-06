@@ -14,7 +14,7 @@ namespace Content.Client.Chemistry.UI
     {
         private ChemMasterWindow? _window;
 
-        public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
 
         }

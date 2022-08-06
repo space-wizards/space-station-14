@@ -35,7 +35,6 @@ namespace Content.Server.Atmos.Components
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-                UserInterface.OnClosed += UserInterfaceOnClose;
             }
 
             _entities.TryGetComponent(Owner, out _appearance);
@@ -96,12 +95,7 @@ namespace Content.Server.Atmos.Components
             Resync();
         }
 
-        private void UserInterfaceOnClose(IPlayerSession obj)
-        {
-            UpdateAppearance(false);
-        }
-
-        private void UpdateAppearance(bool open)
+        public void UpdateAppearance(bool open)
         {
             _appearance?.SetData(GasAnalyzerVisuals.VisualState,
                 open ? GasAnalyzerVisualState.Working : GasAnalyzerVisualState.Off);
