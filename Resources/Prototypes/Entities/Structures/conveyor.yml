@@ -18,6 +18,9 @@
     drawdepth: FloorObjects
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
   - type: Conveyor
   - type: Appearance
   - type: GenericVisualizer

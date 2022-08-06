@@ -1,25 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Disabling lobby music now disables round-end music., type: Tweak}
-  id: 1593
-  time: '2022-05-24T21:45:17.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: HoP now has Brig access instead of Security access., type: Tweak}
-  id: 1594
-  time: '2022-05-24T21:53:49.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Dead bodies can no longer recover by lying in bed, type: Fix}
-  id: 1595
-  time: '2022-05-25T02:31:15.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing some pop-ups to only appear in the upper left corner
-      of the screen., type: Fix}
-  id: 1596
-  time: '2022-05-25T02:33:48.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added shot glasses to the bar vendor., type: Tweak}
@@ -2926,3 +2905,38 @@ Entries:
       insufficient resources., type: Fix}
   id: 2092
   time: '2022-08-04T23:19:31.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Sprite layers were added to the field gens to give them more soul, type: Add}
+  - {message: Field bouncing was added. Anything that collides with a field will be
+      thrown back a bit., type: Add}
+  - {message: Added examine text for players to check to see if a containment field
+      generator is toggled on or not., type: Add}
+  - {message: You now need less field generators to establish a full connection (4
+      instead of 8), type: Tweak}
+  - {message: 'Saltern''s singulo area now starts with less Emitters, Field Generators
+      and Rad Collectors.', type: Tweak}
+  - {message: Field Generators can now be put in a 1x1 pattern without any weird issues,
+    type: Fix}
+  - {message: Level 4 singulos can be contained without any weird escaping issues.,
+    type: Fix}
+  id: 2093
+  time: '2022-08-05T04:22:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You no longer automatically place down items when clicking on closed
+      lockers and crates., type: Fix}
+  id: 2094
+  time: '2022-08-05T23:49:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Harvesting off of kitchen spikes now works with all sharp objects.,
+    type: Fix}
+  id: 2095
+  time: '2022-08-06T01:09:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Asteroid rocks are no longer guaranteed to spawn ores each time they
+      are mined., type: Fix}
+  id: 2096
+  time: '2022-08-06T03:16:17.0000000+00:00'
