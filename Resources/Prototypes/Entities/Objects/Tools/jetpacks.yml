@@ -132,7 +132,6 @@
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/captain.rsi
   - type: Clothing
-    size: 30
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     slots:
       - Back
@@ -164,7 +163,6 @@
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
-      size: 50
       sprite: Objects/Tanks/Jetpacks/mini.rsi
       slots:
         - Back
