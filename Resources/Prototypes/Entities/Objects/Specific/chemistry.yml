@@ -144,7 +144,11 @@
         solution: beaker
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-        
+  - type: Tag
+    tags:
+    - GlassBeaker
+    - Cryobeaker
+
 - type: entity
   name: bluespace beaker
   parent: BaseBeaker
@@ -222,7 +226,7 @@
         map: ["enum.SolutionContainerLayers.Base"]
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    HeldPrefix: 0
+    heldPrefix: 0
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -230,6 +234,8 @@
   - type: Injector
     injectOnly: false
   - type: Spillable
+    solution: injector
+  - type: TrashOnEmpty
     solution: injector
   - type: Appearance
     visuals:
@@ -269,11 +275,16 @@
     solutions:
       food:
         maxVol: 50
+  - type: SolutionSpiker
+    sourceSolution: food
+  - type: DeleteOnTrigger
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: pill canister
   id: PillCanister
-  parent: BaseItem
+  parent: BaseStorageItem
   description: Holds up to 12 pills.
   components:
   - type: Sprite

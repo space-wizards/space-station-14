@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: true
+    netsync: false
     layers:
     - state: icon
     - state: light-icon
@@ -12,24 +12,31 @@
       visible: false
       map: [ "light" ]
   - type: Clothing
-    HeldPrefix: off
+    equippedPrefix: off
   - type: PointLight
+    netsync: false
     enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
     radius: 3
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
   - type: HandheldLight
-    addPrefix: true
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
+    addPrefix: false
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+      right:
+      - state: on-inhand-right
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMedium
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

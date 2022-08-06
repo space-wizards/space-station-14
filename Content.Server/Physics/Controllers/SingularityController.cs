@@ -1,9 +1,5 @@
-using System;
 using Content.Server.Singularity.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Random;
 

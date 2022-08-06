@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {
@@ -28,6 +22,11 @@ namespace Content.Shared.Verbs
         {
             var user = eventArgs.SenderSession.AttachedEntity;
             if (user == null)
+                return;
+
+            // It is possible that client-side prediction can cause this event to be raised after the target entity has
+            // been deleted. So we need to check that the entity still exists.
+            if (Deleted(args.Target) || Deleted(user))
                 return;
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
@@ -64,8 +63,10 @@ namespace Content.Shared.Verbs
             bool canAccess = false;
             if (force || target == user)
                 canAccess = true;
-            else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target))
+            else if (_interactionSystem.InRangeUnobstructed(user, target))
             {
+                // Note that being in a container does not count as an obstruction for InRangeUnobstructed
+                // Therefore, we need extra checks to ensure the item is actually accessible: 
                 if (ContainerSystem.IsInSameOrParentContainer(user, target))
                     canAccess = true;
                 else
@@ -95,7 +96,7 @@ namespace Content.Shared.Verbs
             if (types.Contains(typeof(InteractionVerb)))
             {
                 var verbEvent = new GetVerbsEvent<InteractionVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, verbEvent);
+                RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
@@ -104,28 +105,35 @@ namespace Content.Shared.Verbs
                 && @using != target)
             {
                 var verbEvent = new GetVerbsEvent<UtilityVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(@using.Value, verbEvent); // directed at used, not at target
+                RaiseLocalEvent(@using.Value, verbEvent, true); // directed at used, not at target
+                verbs.UnionWith(verbEvent.Verbs);
+            }
+
+            if (types.Contains(typeof(InnateVerb)))
+            {
+                var verbEvent = new GetVerbsEvent<InnateVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(user, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
             if (types.Contains(typeof(AlternativeVerb)))
             {
                 var verbEvent = new GetVerbsEvent<AlternativeVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, verbEvent);
+                RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
             if (types.Contains(typeof(ActivationVerb)))
             {
                 var verbEvent = new GetVerbsEvent<ActivationVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, verbEvent);
+                RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
             if (types.Contains(typeof(ExamineVerb)))
             {
                 var verbEvent = new GetVerbsEvent<ExamineVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, verbEvent);
+                RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
@@ -133,7 +141,7 @@ namespace Content.Shared.Verbs
             if (types.Contains(typeof(Verb)))
             {
                 var verbEvent = new GetVerbsEvent<Verb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, verbEvent);
+                RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 

@@ -6,8 +6,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -22,6 +20,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasPortableComponent, AnchorAttemptEvent>(OnPortableAnchorAttempt);
+            // Shouldn't need re-anchored event.
             SubscribeLocalEvent<GasPortableComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         }
 
@@ -31,7 +30,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // If we can't find any ports, cancel the anchoring.
-            if(!FindGasPortIn(transform.GridID, transform.Coordinates, out _))
+            if(!FindGasPortIn(transform.GridUid, transform.Coordinates, out _))
                 args.Cancel();
         }
 
@@ -51,14 +50,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private bool FindGasPortIn(GridId gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)
+        public bool FindGasPortIn(EntityUid? gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)
         {
             port = null;
 
-            if (!gridId.IsValid())
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
                 return false;
-
-            var grid = _mapManager.GetGrid(gridId);
 
             foreach (var entityUid in grid.GetLocal(coordinates))
             {

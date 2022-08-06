@@ -1,15 +1,13 @@
 using Content.Server.Buckle.Components;
+using Content.Server.Construction.Completions;
 using Content.Server.Interaction;
-using Content.Shared.Body.Components;
-using Content.Shared.MobState.Components;
+using Content.Shared.Destructible;
+using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Buckle.Systems
 {
@@ -24,6 +22,20 @@ namespace Content.Server.Buckle.Systems
 
             SubscribeLocalEvent<StrapComponent, GetVerbsEvent<InteractionVerb>>(AddStrapVerbs);
             SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
+            SubscribeLocalEvent<StrapComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<StrapComponent, DestructionEventArgs>((_,c,_) => RemoveAll(c));
+            SubscribeLocalEvent<StrapComponent, BreakageEventArgs>((_, c, _) => RemoveAll(c));
+            SubscribeLocalEvent<StrapComponent, ConstructionBeforeDeleteEvent>((_, c, _) => RemoveAll(c));
+            SubscribeLocalEvent<StrapComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnShutdown(EntityUid uid, StrapComponent component, ComponentShutdown args)
+        {
+            if (LifeStage(uid) > EntityLifeStage.MapInitialized)
+                return;
+
+            // Component is being removed, but entity is not shutting down.
+            component.RemoveAll();
         }
 
         private void OnInsertAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
@@ -31,6 +43,16 @@ namespace Content.Server.Buckle.Systems
             // If someone is attempting to put this item inside of a backpack, ensure that it has no entities strapped to it.
             if (HasComp<SharedStorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
                 args.Cancel();
+        }
+
+        private void OnInteractHand(EntityUid uid, StrapComponent component, InteractHandEvent args)
+        {
+            if (args.Handled) return;
+
+            if (!TryComp<BuckleComponent>(args.User, out var buckle))
+                return;
+
+            buckle.ToggleBuckle(args.User, uid);
         }
 
         // TODO ECS BUCKLE/STRAP These 'Strap' verbs are an incestuous mess of buckle component and strap component
@@ -111,6 +133,11 @@ namespace Content.Server.Buckle.Systems
 
                 args.Verbs.Add(verb);
             }
+        }
+
+        public void RemoveAll(StrapComponent component)
+        {
+            component.RemoveAll();
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using Robust.Client;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 
 namespace Content.Client.Launcher
@@ -70,6 +71,12 @@ namespace Content.Client.Launcher
 
         private void OnConnectFailed(object? _, NetConnectFailArgs args)
         {
+            if (args.RedialFlag)
+            {
+                // We've just *attempted* to connect and we've been told we need to redial, so do it.
+                // Result deliberately discarded.
+                Redial();
+            }
             ConnectFailReason = args.Reason;
             CurrentPage = Page.ConnectFailed;
         }
@@ -86,6 +93,27 @@ namespace Content.Client.Launcher
                 _baseClient.ConnectToServer(_gameController.LaunchState.ConnectEndpoint);
                 CurrentPage = Page.Connecting;
             }
+        }
+
+        public bool Redial()
+        {
+            try
+            {
+                if (_gameController.LaunchState.Ss14Address != null)
+                {
+                    _gameController.Redial(_gameController.LaunchState.Ss14Address);
+                    return true;
+                }
+                else
+                {
+                    Logger.InfoS("launcher-ui", $"Redial not possible, no Ss14Address");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorS("launcher-ui", $"Redial exception: {ex}");
+            }
+            return false;
         }
 
         public void Exit()

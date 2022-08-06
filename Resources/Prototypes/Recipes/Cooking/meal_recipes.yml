@@ -171,8 +171,8 @@
   time: 30
   solids:
     FoodDough: 1
-    FoodCheeseSlice: 4
-    FoodTomato: 1
+    FoodCheeseSlice: 1
+    FoodTomato: 4
 
 - type: microwaveMealRecipe
   id: RecipeMushroomPizza
@@ -393,6 +393,28 @@
 #    FoodMeat: 1
 
 - type: microwaveMealRecipe
+  id: RecipeCubanCarp
+  name: cuban carp recipe
+  result: FoodMealCubancarp
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodCheeseSlice: 2
+    FoodChili: 1
+    FoodMeatFish: 2
+
+- type: microwaveMealRecipe
+  id: RecipeSashimi
+  name: sashimi recipe
+  result: FoodMealCubancarp
+  time: 15
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodMeatFish: 2
+
+
+- type: microwaveMealRecipe
   id: RecipeMisoColaSoup
   name: salty sweet milocola soup recipe
   result: DisgustingSweptSoup
@@ -418,7 +440,7 @@
 #  result: FoodCandyCorn
 #  time: 5
 #  reagents:
-#    Glucose: 5
+#    Sugar: 5
 #  solids:
 #    FoodCorn: 1
 
@@ -603,3 +625,16 @@
   time: 10
   solids:
     FoodAloe: 1
+
+# Suppermatter
+- type: microwaveMealRecipe
+  id: RecipeSuppermatter
+  name: suppermatter recipe
+  result: FoodCakeSuppermatter
+  time: 30
+  solids:
+    FoodCakeBatter: 2
+  reagents:
+    Sugar: 30
+    Nitrogen: 10
+    Plasma: 10

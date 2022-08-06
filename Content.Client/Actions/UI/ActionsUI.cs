@@ -26,6 +26,8 @@ namespace Content.Client.Actions.UI
         private const float CustomTooltipDelay = 0.4f;
         internal readonly ActionsSystem System;
         private readonly IGameHud _gameHud;
+        private readonly IEntityManager _entMan;
+        private readonly IGameTiming _timing;
 
         /// <summary>
         ///     The action component of the currently attached entity.
@@ -79,6 +81,8 @@ namespace Content.Client.Actions.UI
             System = system;
             Component = component;
             _gameHud = IoCManager.Resolve<IGameHud>();
+            _timing = IoCManager.Resolve<IGameTiming>();
+            _entMan = IoCManager.Resolve<IEntityManager>();
             _menu = new ActionMenu(this);
 
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.End);
@@ -205,7 +209,7 @@ namespace Content.Client.Actions.UI
 
             for (byte i = 0; i < ActionsSystem.Slots; i++)
             {
-                var slot = new ActionSlot(this, _menu, i);
+                var slot = new ActionSlot(this, _menu, i, _timing, _entMan);
                 _slotContainer.AddChild(slot);
                 _slots[i] = slot;
             }

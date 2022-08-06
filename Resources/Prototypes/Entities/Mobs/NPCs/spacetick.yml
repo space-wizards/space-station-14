@@ -2,9 +2,11 @@
   name: space tick
   id: MobTick
   parent: SimpleSpaceMobBase
-  description: It's a space tick, watch out for its nasty bite. Centcomm reports that 90 percent of cargo leg amputations are due to space tick bites.
+  description: It's a space tick, watch out for its nasty bite. CentCom reports that 90 percent of cargo leg amputations are due to space tick bites.
   components:
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
@@ -27,37 +29,41 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.20
-      mass: 5
+      mass: 2.5
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      15: !type:DeadMobState {}
+      0: Alive
+      15: Dead
   - type: MovementIgnoreGravity
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: alive
-      dead: dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatXeno
       amount: 1
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: UnarmedCombat
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: MeleeWeapon
     range: 0.5
     arcwidth: 0
     arc: bite
     damage:
       groups:
         Brute: 2
-
   - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:
@@ -71,3 +77,23 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: GhostTakeoverAvailable
+    prob: 0.33
+    makeSentient: true
+    name: space tick
+    description: |
+      Wreak havoc on the station!
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
+  id: MobTickSalvage
+  parent: MobTick
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    name: space tick on salvage wreck
+    description: |
+      Defend the loot inside the salvage wreck!
+  - type: SalvageMobRestrictions
+

@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Content.Client.EscapeMenu.UI;
 using Content.Client.MainMenu.UI;
 using Robust.Client;
@@ -122,10 +123,15 @@ namespace Content.Client.MainMenu
 
         private void RunLevelChanged(object? obj, RunLevelChangedEventArgs args)
         {
-            if (args.NewLevel == ClientRunLevel.Initialize)
+            switch (args.NewLevel)
             {
-                _setConnectingState(false);
-                _netManager.ConnectFailed -= _onConnectFailed;
+                case ClientRunLevel.Connecting:
+                    _setConnectingState(true);
+                    break;
+                case ClientRunLevel.Initialize:
+                    _setConnectingState(false);
+                    _netManager.ConnectFailed -= _onConnectFailed;
+                    break;
             }
         }
 

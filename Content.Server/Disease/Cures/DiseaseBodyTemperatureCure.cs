@@ -15,7 +15,7 @@ namespace Content.Server.Disease.Cures
         public float Max = float.MaxValue;
         public override bool Cure(DiseaseEffectArgs args)
         {
-            if (!args.EntityManager.TryGetComponent(args.DiseasedEntity, out TemperatureComponent temp))
+            if (!args.EntityManager.TryGetComponent(args.DiseasedEntity, out TemperatureComponent? temp))
                 return false;
 
             return temp.CurrentTemperature > Min && temp.CurrentTemperature < float.MaxValue;

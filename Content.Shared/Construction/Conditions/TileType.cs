@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Maps;
+﻿using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Conditions

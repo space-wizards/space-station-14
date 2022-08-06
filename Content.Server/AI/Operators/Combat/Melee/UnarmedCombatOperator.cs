@@ -1,8 +1,6 @@
 using Content.Server.CombatMode;
 using Content.Server.Interaction;
 using Content.Server.Weapon.Melee.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
 {
@@ -15,7 +13,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
         private readonly EntityUid _owner;
         private readonly EntityUid _target;
-        private UnarmedCombatComponent? _unarmedCombat;
+        private MeleeWeaponComponent? _unarmedCombat;
 
         public UnarmedCombatOperator(EntityUid owner, EntityUid target, float burstTime = 1.0f)
         {
@@ -43,7 +41,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 combatModeComponent.IsInCombatMode = true;
             }
 
-            if (_entMan.TryGetComponent(_owner, out UnarmedCombatComponent? unarmedCombatComponent))
+            if (_entMan.TryGetComponent(_owner, out MeleeWeaponComponent? unarmedCombatComponent))
             {
                 _unarmedCombat = unarmedCombatComponent;
             }
@@ -70,18 +68,19 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
         public override Outcome Execute(float frameTime)
         {
+            if (_unarmedCombat == null ||
+                !_entMan.GetComponent<TransformComponent>(_target).Coordinates.TryDistance(_entMan, _entMan.GetComponent<TransformComponent>(_owner).Coordinates, out var distance) || distance >
+                _unarmedCombat.Range)
+            {
+                return Outcome.Failed;
+            }
+
             if (_burstTime <= _elapsedTime)
             {
                 return Outcome.Success;
             }
 
             if (_unarmedCombat?.Deleted ?? true)
-            {
-                return Outcome.Failed;
-            }
-
-            if ((_entMan.GetComponent<TransformComponent>(_target).Coordinates.Position - _entMan.GetComponent<TransformComponent>(_owner).Coordinates.Position).Length >
-                _unarmedCombat.Range)
             {
                 return Outcome.Failed;
             }

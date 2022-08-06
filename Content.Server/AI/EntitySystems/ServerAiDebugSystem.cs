@@ -1,7 +1,6 @@
 using Content.Server.AI.LoadBalancer;
 using Content.Shared.AI;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.EntitySystems
 {

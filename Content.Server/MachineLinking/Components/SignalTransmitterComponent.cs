@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using Content.Server.MachineLinking.System;
 
 namespace Content.Server.MachineLinking.Components
@@ -24,6 +19,7 @@ namespace Content.Server.MachineLinking.Components
     }
 
     [RegisterComponent]
+    [Access(typeof(SignalLinkerSystem))]
     public sealed class SignalTransmitterComponent : Component
     {
         /// <summary>
@@ -32,17 +28,11 @@ namespace Content.Server.MachineLinking.Components
         ///     on the same powernet.
         /// </summary>
         [DataField("transmissionRange")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float TransmissionRange = 30f;
 
         [DataField("outputs")]
-        private Dictionary<string, List<PortIdentifier>> _outputs = new();
-
-        [ViewVariables]
-        public IReadOnlyDictionary<string, List<PortIdentifier>> Outputs => _outputs;
-
-        public void AddPort(string name)
-        {
-            _outputs.Add(name, new());
-        }
+        [Access(typeof(SignalLinkerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+        public Dictionary<string, List<PortIdentifier>> Outputs = new();
     }
 }

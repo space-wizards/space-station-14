@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
@@ -20,10 +16,17 @@ namespace Content.Shared.VendingMachines
         [DataField("animationDuration")]
         public double AnimationDuration { get; }
 
+        // TODO make this a proper sprite specifier for yaml linting.
         [DataField("spriteName")]
         public string SpriteName { get; } = string.Empty;
 
         [DataField("startingInventory")]
         public Dictionary<string, uint> StartingInventory { get; } = new();
+
+        [DataField("emaggedInventory")]
+        public Dictionary<string, uint>? EmaggedInventory { get; }
+
+        [DataField("contrabandInventory")]
+        public Dictionary<string, uint>? ContrabandInventory { get; }
     }
 }

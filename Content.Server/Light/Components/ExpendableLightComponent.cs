@@ -1,6 +1,4 @@
 using Content.Shared.Light.Component;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Light.Components
 {

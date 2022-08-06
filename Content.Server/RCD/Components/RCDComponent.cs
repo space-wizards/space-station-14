@@ -1,8 +1,5 @@
 using System.Threading;
-using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.RCD.Components
 {

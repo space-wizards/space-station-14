@@ -73,7 +73,7 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
     {
         foreach (var (path, data) in ContentRoot.GetAllFiles())
         {
-            var msg = _serverNetManager.CreateNetMessage<NetworkResourceUploadMessage>();
+            var msg = new NetworkResourceUploadMessage();
             msg.RelativePath = path;
             msg.Data = data;
             e.Channel.SendMessage(msg);

@@ -1,7 +1,4 @@
-using System.Collections.Generic;
 using Content.Server.Power.NodeGroups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {

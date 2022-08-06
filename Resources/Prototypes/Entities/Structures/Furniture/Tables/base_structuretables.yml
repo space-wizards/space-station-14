@@ -15,12 +15,10 @@
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
+      mask: # tables should collide with other tables
+      - TableMask
       layer:
-      - VaultImpassable
-      mask:
-      - Impassable
-      - VaultImpassable # tables should collide with other tables
-      - SmallImpassable
+      - TableLayer
   - type: Sprite
     netsync: false
   - type: Icon

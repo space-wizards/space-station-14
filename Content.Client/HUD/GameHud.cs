@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using Content.Client.HUD.UI;
 using Content.Client.Info;
+using Content.Client.Administration;
+using Content.Client.Administration.Systems;
 using Content.Client.Resources;
 using Content.Client.Targeting;
 using Content.Shared.CCVar;
@@ -55,7 +57,6 @@ namespace Content.Client.HUD
 
     internal sealed partial class GameHud : IGameHud
     {
-        private RulesAndInfoWindow _rulesAndInfoWindow = default!;
         private TargetingDoll _targetingDoll = default!;
         private BoxContainer _combatPanelContainer = default!;
         private BoxContainer _topNotificationContainer = default!;
@@ -129,13 +130,10 @@ namespace Content.Client.HUD
             RootControl.AddChild(GenerateButtonBar(_resourceCache, _inputManager));
 
             InventoryButtonToggled += down =>  TopInventoryQuickButtonContainer.Visible = down;
-            InfoButtonToggled += _ => ButtonInfoOnOnToggled();
-
-            _rulesAndInfoWindow = new RulesAndInfoWindow();
-            _rulesAndInfoWindow.OnClose += () => InfoButtonDown = false;
+            InfoButtonPressed += () => ButtonInfoOnPressed();
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
-                InputCmdHandler.FromDelegate(s => ButtonInfoOnOnToggled()));
+                InputCmdHandler.FromDelegate(s => ButtonInfoOnPressed()));
 
             _combatPanelContainer = new BoxContainer
             {
@@ -256,25 +254,16 @@ namespace Content.Client.HUD
             LC.SetGrowVertical(VoteContainer, LC.GrowDirection.End);
         }
 
-        private void ButtonInfoOnOnToggled()
+        private void ButtonInfoOnPressed()
         {
-            if (_rulesAndInfoWindow.IsOpen)
+            var bwoinkSystem = EntitySystem.Get<BwoinkSystem>();
+            if (bwoinkSystem.IsOpen)
             {
-                if (!_rulesAndInfoWindow.IsAtFront())
-                {
-                    _rulesAndInfoWindow.MoveToFront();
-                    InfoButtonDown = true;
-                }
-                else
-                {
-                    _rulesAndInfoWindow.Close();
-                    InfoButtonDown = false;
-                }
+                bwoinkSystem.Close();
             }
             else
             {
-                _rulesAndInfoWindow.OpenCentered();
-                InfoButtonDown = true;
+                bwoinkSystem.Open();
             }
         }
 

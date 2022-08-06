@@ -138,7 +138,7 @@ public sealed partial class MappingSystem : EntitySystem
     }
 }
 
-public sealed class StartPlacementActionEvent : PerformActionEvent
+public sealed class StartPlacementActionEvent : InstantActionEvent
 {
     [DataField("entityType")]
     public string? EntityType;

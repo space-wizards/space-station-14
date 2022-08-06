@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     [TestOf(typeof(DeviceNetworkComponent))]
     [TestOf(typeof(WiredNetworkComponent))]
     [TestOf(typeof(WirelessNetworkComponent))]
-    public sealed class DeviceNetworkTest : ContentIntegrationTest
+    public sealed class DeviceNetworkTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -50,17 +50,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         [Test]
         public async Task NetworkDeviceSendAndReceive()
         {
-            var options = new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes,
-                ContentBeforeIoC = () => {
-                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-                }
-            };
-
-            var server = StartServer(options);
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -81,7 +72,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 ["testbool"] = true
             };
 
-            server.Assert(() => {
+            await server.WaitAssertion(() => {
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
 
                 device1 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
@@ -104,25 +95,17 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
-            server.Assert(() => {
+            await server.WaitAssertion(() => {
                 CollectionAssert.AreEquivalent(deviceNetTestSystem.LastPayload, payload);
             });
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
         public async Task WirelessNetworkDeviceSendAndReceive()
         {
-            var options = new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes,
-                ContentBeforeIoC = () => {
-                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-                }
-            };
-
-            var server = StartServer(options);
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -144,7 +127,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 ["testbool"] = true
             };
 
-            server.Assert(() => {
+            await server.WaitAssertion(() => {
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
 
                 device1 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
@@ -168,7 +151,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
-            server.Assert(() => {
+            await server.WaitAssertion(() => {
                 CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
 
                 payload = new NetworkPayload
@@ -184,27 +167,18 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
-            server.Assert(() => {
+            await server.WaitAssertion(() => {
                 CollectionAssert.AreNotEqual(deviceNetTestSystem.LastPayload, payload);
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
         public async Task WiredNetworkDeviceSendAndReceive()
         {
-            var options = new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes,
-                ContentBeforeIoC = () => {
-                   IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-                }
-            };
-
-            var server = StartServer(options);
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -230,7 +204,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
-            server.Assert(() => {
+            await server.WaitAssertion(() => {
                 var map = mapManager.CreateNewMapEntity(MapId.Nullspace);
                 grid = mapManager.CreateGrid(MapId.Nullspace);
 
@@ -255,7 +229,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
-            server.Assert(() => {
+            await server.WaitAssertion(() => {
                 //CollectionAssert.AreNotEqual(deviceNetTestSystem.LastPayload, payload);
 
                 entityManager.SpawnEntity("CableApcExtension", grid.MapToGrid(new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 1), MapId.Nullspace)));
@@ -266,11 +240,11 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
-            server.Assert(() => {
+            await server.WaitAssertion(() => {
                 CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

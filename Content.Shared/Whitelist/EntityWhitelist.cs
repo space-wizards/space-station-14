@@ -28,7 +28,7 @@ namespace Content.Shared.Whitelist
         [DataField("components")] public string[]? Components = null;
 
         [NonSerialized]
-        private List<IComponentRegistration>? _registrations = null;
+        private List<ComponentRegistration>? _registrations = null;
 
         /// <summary>
         ///     Tags that are allowed in the whitelist.
@@ -48,7 +48,7 @@ namespace Content.Shared.Whitelist
             if (Components == null) return;
 
             var compfact = IoCManager.Resolve<IComponentFactory>();
-            _registrations = new List<IComponentRegistration>();
+            _registrations = new List<ComponentRegistration>();
             foreach (var name in Components)
             {
                 var availability = compfact.GetComponentAvailability(name);

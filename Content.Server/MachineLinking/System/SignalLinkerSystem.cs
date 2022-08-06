@@ -7,8 +7,10 @@ using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.Utility;
 using Robust.Shared.Player;
+using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
+using Content.Shared.MachineLinking.Events;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -16,31 +18,21 @@ namespace Content.Server.MachineLinking.System
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-
-        private static readonly (string, string)[][] _defaultMappings =
-        {
-            new [] { ("Pressed", "Toggle") },
-            new [] { ("On", "On"), ("Off", "Off") },
-            new [] { ("On", "Open"), ("Off", "Close") },
-            new [] { ("On", "Forward"), ("Off", "Off") },
-            new [] { ("Left", "On"), ("Right", "On"), ("Middle", "Off") },
-            new [] { ("Left", "Open"), ("Right", "Open"), ("Middle", "Close") },
-            new [] { ("Left", "Forward"), ("Right", "Reverse"), ("Middle", "Off") },
-        };
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SignalTransmitterComponent, InvokePortEvent>(OnTransmitterInvokePort);
-
             SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(OnTransmitterStartup);
             SubscribeLocalEvent<SignalTransmitterComponent, ComponentRemove>(OnTransmitterRemoved);
             SubscribeLocalEvent<SignalTransmitterComponent, InteractUsingEvent>(OnTransmitterInteractUsing);
+            SubscribeLocalEvent<SignalTransmitterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetTransmitterVerbs);
 
             SubscribeLocalEvent<SignalReceiverComponent, ComponentStartup>(OnReceiverStartup);
             SubscribeLocalEvent<SignalReceiverComponent, ComponentRemove>(OnReceiverRemoved);
             SubscribeLocalEvent<SignalReceiverComponent, InteractUsingEvent>(OnReceiverInteractUsing);
+            SubscribeLocalEvent<SignalReceiverComponent, GetVerbsEvent<AlternativeVerb>>(OnGetReceiverVerbs);
 
             SubscribeLocalEvent<SignalLinkerComponent, SignalPortSelected>(OnSignalPortSelected);
             SubscribeLocalEvent<SignalLinkerComponent, LinkerClearSelected>(OnLinkerClearSelected);
@@ -48,9 +40,101 @@ namespace Content.Server.MachineLinking.System
             SubscribeLocalEvent<SignalLinkerComponent, BoundUIClosedEvent>(OnLinkerUIClosed);
         }
 
-        private void OnTransmitterInvokePort(EntityUid uid, SignalTransmitterComponent component, InvokePortEvent args)
+        /// <summary>
+        ///     Convenience function to add several ports to an entity.
+        /// </summary>
+        public void EnsureReceiverPorts(EntityUid uid, params string[] ports)
         {
-            foreach (var receiver in component.Outputs[args.Port])
+            var comp = EnsureComp<SignalReceiverComponent>(uid);
+            foreach (var port in ports)
+            {
+                comp.Inputs.TryAdd(port, new());
+            }
+        }
+
+        public void EnsureTransmitterPorts(EntityUid uid, params string[] ports)
+        {
+            var comp = EnsureComp<SignalTransmitterComponent>(uid);
+            foreach (var port in ports)
+            {
+                comp.Outputs.TryAdd(port, new());
+            }
+        }
+
+        /// <summary>
+        ///     Add an alt-click verb to allow users to link the default ports, without needing to open the UI.
+        /// </summary>
+        private void OnGetReceiverVerbs(EntityUid uid, SignalReceiverComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (!TryComp(args.Using, out SignalLinkerComponent? linker))
+                return;
+
+            AlternativeVerb verb = new()
+            {
+                Text = Loc.GetString("signal-linking-verb-text-link-default"),
+                IconEntity = args.Using
+            };
+            args.Verbs.Add(verb);
+
+            if (linker.SavedTransmitter != null)
+            {
+                verb.Act = () =>
+                {
+                    var msg = TryLinkDefaults(uid, linker.SavedTransmitter.Value, args.User, component)
+                        ? Loc.GetString("signal-linking-verb-success", ("machine", linker.SavedTransmitter.Value))
+                        : Loc.GetString("signal-linking-verb-fail", ("machine", linker.SavedTransmitter.Value));
+                    _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+                };
+                return;
+            }
+
+            verb.Disabled = true;
+            verb.Message = Loc.GetString("signal-linking-verb-disabled-no-transmitter");
+        }
+
+        private void OnGetTransmitterVerbs(EntityUid uid, SignalTransmitterComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (!TryComp(args.Using, out SignalLinkerComponent? linker))
+                return;
+
+            AlternativeVerb verb = new()
+            {
+                Text = Loc.GetString("signal-linking-verb-text-link-default"),
+                IconEntity = args.Using
+            };
+            args.Verbs.Add(verb);
+
+            if (linker.SavedReceiver != null)
+            {
+                verb.Act = () =>
+                {
+                    var msg = TryLinkDefaults(linker.SavedReceiver.Value, uid, args.User, null, component)
+                        ? Loc.GetString("signal-linking-verb-success", ("machine", linker.SavedReceiver.Value))
+                        : Loc.GetString("signal-linking-verb-fail", ("machine", linker.SavedReceiver.Value));
+                    _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+                };
+                return;
+            }
+
+            verb.Disabled = true;
+            verb.Message = Loc.GetString("signal-linking-verb-disabled-no-receiver");
+        }
+
+        public void InvokePort(EntityUid uid, string port, SignalTransmitterComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            if (!component.Outputs.TryGetValue(port, out var receivers))
+                return;
+
+            foreach (var receiver in receivers)
                 RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port), false);
         }
 
@@ -120,12 +204,12 @@ namespace Content.Server.MachineLinking.System
                 !TryComp(args.User, out ActorComponent? actor))
                 return;
 
-            linker.savedTransmitter = uid;
+            linker.SavedTransmitter = uid;
 
-            if (!TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver))
+            if (!TryComp(linker.SavedReceiver, out SignalReceiverComponent? receiver))
             {
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-saved", ("machine", uid)),
-                    Filter.Entities(args.User));
+                    Filter.Entities(args.User), PopupType.Medium);
                 args.Handled = true;
                 return;
             }
@@ -146,12 +230,12 @@ namespace Content.Server.MachineLinking.System
                 !TryComp(args.User, out ActorComponent? actor))
                 return;
 
-            linker.savedReceiver = uid;
+            linker.SavedReceiver = uid;
 
-            if (!TryComp(linker.savedTransmitter, out SignalTransmitterComponent? transmitter))
+            if (!TryComp(linker.SavedTransmitter, out SignalTransmitterComponent? transmitter))
             {
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-saved", ("machine", uid)),
-                    Filter.Entities(args.User));
+                    Filter.Entities(args.User), PopupType.Medium);
                 args.Handled = true;
                 return;
             }
@@ -193,60 +277,71 @@ namespace Content.Server.MachineLinking.System
 
         }
 
-        private bool TryLink(SignalTransmitterComponent transmitter, SignalReceiverComponent receiver, SignalPortSelected args, EntityUid? popupUid = null)
+        private bool TryLink(SignalTransmitterComponent transmitter, SignalReceiverComponent receiver, SignalPortSelected args, EntityUid user, bool quiet = false, bool checkRange = true)
         {
-            if (!transmitter.Outputs.TryGetValue(args.TransmitterPort, out var receivers) ||
-                !receiver.Inputs.TryGetValue(args.ReceiverPort, out var transmitters))
+            if (!transmitter.Outputs.TryGetValue(args.TransmitterPort, out var linkedReceivers) ||
+                !receiver.Inputs.TryGetValue(args.ReceiverPort, out var linkedTransmitters))
                 return false;
 
-            if (!IsInRange(transmitter, receiver))
+            // Does the link already exist? Under the assumption that nothing has broken, lets only check the
+            // transmitter ports.
+            foreach (var identifier in linkedTransmitters)
             {
-                if (popupUid.HasValue)
+                if (identifier.Uid == transmitter.Owner && identifier.Port == args.TransmitterPort)
+                    return true;
+            }
+
+            if (checkRange && !IsInRange(transmitter, receiver))
+            {
+                if (!quiet)
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"),
-                        Filter.Entities(popupUid.Value));
+                        Filter.Entities(user));
                 return false;
             }
 
             // allow other systems to refuse the connection
-            var linkAttempt = new LinkAttemptEvent(transmitter, args.TransmitterPort, receiver, args.ReceiverPort);
-            RaiseLocalEvent(transmitter.Owner, linkAttempt);
+            var linkAttempt = new LinkAttemptEvent(user, transmitter.Owner, args.TransmitterPort, receiver.Owner, args.ReceiverPort);
+            RaiseLocalEvent(transmitter.Owner, linkAttempt, true);
             if (linkAttempt.Cancelled)
             {
-                if (popupUid.HasValue)
+                if (!quiet)
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", transmitter.Owner)),
-                        Filter.Entities(popupUid.Value));
+                        Filter.Entities(user));
                 return false;
             }
-            RaiseLocalEvent(receiver.Owner, linkAttempt);
+            RaiseLocalEvent(receiver.Owner, linkAttempt, true);
             if (linkAttempt.Cancelled)
             {
-                if (popupUid.HasValue)
+                if (!quiet)
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", receiver.Owner)),
-                        Filter.Entities(popupUid.Value));
+                        Filter.Entities(user));
                 return false;
             }
 
-            receivers.Add(new(receiver.Owner, args.ReceiverPort));
-            transmitters.Add(new(transmitter.Owner, args.TransmitterPort));
-            if (popupUid.HasValue)
+            linkedReceivers.Add(new(receiver.Owner, args.ReceiverPort));
+            linkedTransmitters.Add(new(transmitter.Owner, args.TransmitterPort));
+            if (!quiet)
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-linked-port",
-                    ("machine1", transmitter.Owner), ("port1", args.TransmitterPort),
-                    ("machine2", receiver.Owner), ("port2", args.ReceiverPort)),
-                    Filter.Entities(popupUid.Value));
+                    ("machine1", transmitter.Owner), ("port1", PortName<TransmitterPortPrototype>(args.TransmitterPort)),
+                    ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
+                    Filter.Entities(user), PopupType.Medium);
+
+            var newLink = new NewLinkEvent(user, transmitter.Owner, args.TransmitterPort, receiver.Owner, args.ReceiverPort);
+            RaiseLocalEvent(receiver.Owner, newLink);
+            RaiseLocalEvent(transmitter.Owner, newLink);
 
             return true;
         }
 
         private void OnSignalPortSelected(EntityUid uid, SignalLinkerComponent linker, SignalPortSelected args)
         {
-            if (!TryComp(linker.savedTransmitter, out SignalTransmitterComponent? transmitter) ||
-                !TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver) ||
+            if (!TryComp(linker.SavedTransmitter, out SignalTransmitterComponent? transmitter) ||
+                !TryComp(linker.SavedReceiver, out SignalReceiverComponent? receiver) ||
                 !transmitter.Outputs.TryGetValue(args.TransmitterPort, out var receivers) ||
                 !receiver.Inputs.TryGetValue(args.ReceiverPort, out var transmitters))
                 return;
 
-            if (args.Session.AttachedEntity is not EntityUid attached || attached == default ||
-                !TryComp(attached, out ActorComponent? actor))
+            if (args.Session.AttachedEntity is not EntityUid { Valid: true} attached)
                 return;
 
             if (receivers.Contains(new(receiver.Owner, args.ReceiverPort)) ||
@@ -255,12 +350,12 @@ namespace Content.Server.MachineLinking.System
                 if (receivers.Remove(new(receiver.Owner, args.ReceiverPort)) &&
                     transmitters.Remove(new(transmitter.Owner, args.TransmitterPort)))
                 {
-                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(args.ReceiverPort));
-                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(args.TransmitterPort));
+                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(args.ReceiverPort), true);
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(args.TransmitterPort), true);
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-unlinked-port",
-                        ("machine1", transmitter.Owner), ("port1", args.TransmitterPort),
-                        ("machine2", receiver.Owner), ("port2", args.ReceiverPort)),
-                        Filter.Entities(attached));
+                        ("machine1", transmitter.Owner), ("port1", PortName<TransmitterPortPrototype>(args.TransmitterPort)),
+                        ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
+                        Filter.Entities(attached), PopupType.Medium);
                 }
                 else
                 { // something weird happened
@@ -275,53 +370,94 @@ namespace Content.Server.MachineLinking.System
             TryUpdateUI(linker, transmitter, receiver);
         }
 
+        /// <summary>
+        ///     Convenience function to retrieve the name of a port prototype.
+        /// </summary>
+        /// <param name="port"></param>
+        /// <returns></returns>
+        public string PortName<TPort>(string port) where TPort : MachinePortPrototype, IPrototype
+        {
+            if (!_protoMan.TryIndex<TPort>(port, out var proto))
+                return port;
+
+            return Loc.GetString(proto.Name);
+        }
+
         private void OnLinkerClearSelected(EntityUid uid, SignalLinkerComponent linker, LinkerClearSelected args)
         {
-            if (!TryComp(linker.savedTransmitter, out SignalTransmitterComponent? transmitter) ||
-                !TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver))
+            if (!TryComp(linker.SavedTransmitter, out SignalTransmitterComponent? transmitter) ||
+                !TryComp(linker.SavedReceiver, out SignalReceiverComponent? receiver))
                 return;
 
             foreach (var (port, receivers) in transmitter.Outputs)
                 if (receivers.RemoveAll(id => id.Uid == receiver.Owner) > 0)
-                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port), true);
 
             foreach (var (port, transmitters) in receiver.Inputs)
                 if (transmitters.RemoveAll(id => id.Uid == transmitter.Owner) > 0)
-                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
+                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port), true);
 
             TryUpdateUI(linker, transmitter, receiver);
         }
 
         private void OnLinkerLinkDefaultSelected(EntityUid uid, SignalLinkerComponent linker, LinkerLinkDefaultSelected args)
         {
-            if (!TryComp(linker.savedTransmitter, out SignalTransmitterComponent? transmitter) ||
-                !TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver) ||
-                args.Session.AttachedEntity is not EntityUid attached || attached == default ||
-                !TryComp(attached, out ActorComponent? actor))
+            if (!TryComp(linker.SavedTransmitter, out SignalTransmitterComponent? transmitter) ||
+                !TryComp(linker.SavedReceiver, out SignalReceiverComponent? receiver))
                 return;
 
-            if (_defaultMappings.TryFirstOrDefault(map => !map.ExceptBy(transmitter.Outputs.Keys, item => item.Item1).Any() &&
-                !map.ExceptBy(receiver.Inputs.Keys, item => item.Item2).Any(), out var mapping))
+            if (args.Session.AttachedEntity is not EntityUid { Valid: true } user)
+                return;
+
+            TryLinkDefaults(linker.SavedReceiver!.Value, linker.SavedTransmitter!.Value, user, receiver, transmitter);
+            TryUpdateUI(linker, transmitter, receiver);
+        }
+
+        /// <summary>
+        ///     Attempt to link all default ports connections. Returns true if all links succeeded. Otherwise returns
+        ///     false.
+        /// </summary>
+        public bool TryLinkDefaults(EntityUid receiverUid, EntityUid transmitterUid, EntityUid user,
+            SignalReceiverComponent? receiver = null, SignalTransmitterComponent? transmitter = null)
+        {
+            if (!Resolve(receiverUid, ref receiver, false) || !Resolve(transmitterUid, ref transmitter, false))
+                return false;
+
+            if (!IsInRange(transmitter, receiver))
+                return false;
+
+            var allLinksSucceeded = true;
+
+            // First, disconnect existing links.
+            foreach (var (port, receivers) in transmitter.Outputs)
+                if (receivers.RemoveAll(id => id.Uid == receiver.Owner) > 0)
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port), true);
+
+            foreach (var (port, transmitters) in receiver.Inputs)
+                if (transmitters.RemoveAll(id => id.Uid == transmitter.Owner) > 0)
+                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port), true);
+
+            // Then make any valid default connections.
+            foreach (var outPort in transmitter.Outputs.Keys)
             {
-                foreach (var (port, receivers) in transmitter.Outputs)
-                    if (receivers.RemoveAll(id => id.Uid == receiver.Owner) > 0)
-                        RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
+                var prototype = _protoMan.Index<TransmitterPortPrototype>(outPort);
+                if (prototype.DefaultLinks == null)
+                    continue;
 
-                foreach (var (port, transmitters) in receiver.Inputs)
-                    if (transmitters.RemoveAll(id => id.Uid == transmitter.Owner) > 0)
-                        RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
-
-                foreach (var (t, r) in mapping)
-                    TryLink(transmitter, receiver, new(t, r));
+                foreach (var inPort in prototype.DefaultLinks)
+                {
+                    if (receiver.Inputs.ContainsKey(inPort))
+                        allLinksSucceeded &= TryLink(transmitter, receiver, new(outPort, inPort), user, quiet: true, checkRange: false);
+                }
             }
 
-            TryUpdateUI(linker, transmitter, receiver);
+            return allLinksSucceeded;
         }
 
         private void OnLinkerUIClosed(EntityUid uid, SignalLinkerComponent component, BoundUIClosedEvent args)
         {
-            component.savedTransmitter = null;
-            component.savedReceiver = null;
+            component.SavedTransmitter = null;
+            component.SavedReceiver = null;
         }
 
         private bool IsInRange(SignalTransmitterComponent transmitterComponent, SignalReceiverComponent receiverComponent)

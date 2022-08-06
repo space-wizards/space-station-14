@@ -1,3 +1,4 @@
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.Markers
@@ -16,11 +17,31 @@ namespace Content.Client.Markers
             }
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<MarkerComponent, ComponentStartup>(OnStartup);
+        }
+
+        private void OnStartup(EntityUid uid, MarkerComponent marker, ComponentStartup args)
+        {
+            UpdateVisibility(marker);
+        }
+
+        private void UpdateVisibility(MarkerComponent marker)
+        {
+            if (EntityManager.TryGetComponent(marker.Owner, out SpriteComponent? sprite))
+            {
+                sprite.Visible = MarkersVisible;
+            }
+        }
+
         private void UpdateMarkers()
         {
             foreach (var markerComponent in EntityManager.EntityQuery<MarkerComponent>(true))
             {
-                markerComponent.UpdateVisibility();
+                UpdateVisibility(markerComponent);
             }
         }
     }

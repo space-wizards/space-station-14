@@ -76,3 +76,19 @@
         enum.ChemicalPayloadFilledSlots.Left: payload-chemical-left
         enum.ChemicalPayloadFilledSlots.Right: payload-chemical-right
         enum.ChemicalPayloadFilledSlots.Both: payload-chemical-armed
+
+- type: entity
+  name: flash payload
+  parent: BasePayload
+  id: FlashPayload
+  description: A single-use flash payload.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/payload.rsi
+      state: payload-flash-armed
+    - type: DeleteOnTrigger
+    - type: FlashOnTrigger
+      range: 6
+    - type: EmitSoundOnTrigger
+      sound:
+        path: "/Audio/Effects/flash_bang.ogg"

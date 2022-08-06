@@ -20,7 +20,7 @@
             </PanelContainer.PanelOverride>
             <Label Name="PointCost"
                    Access="Public"
-                   MinSize="40 32"
+                   MinSize="52 32"
                    Align="Right" />
         </PanelContainer>
     </BoxContainer>

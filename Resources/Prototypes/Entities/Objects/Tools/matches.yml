@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: SmallboxItem
-  parent: BaseItem
+  parent: BaseStorageItem
   abstract: true
   components:
   - type: Storage
@@ -17,9 +17,9 @@
   - type: Tag
     tags:
     - Matchstick
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/matches.rsi
@@ -27,7 +27,7 @@
       - state: match_unlit
   - type: Item
     sprite: Objects/Tools/matches.rsi
-    HeldPrefix: unlit
+    heldPrefix: unlit
     size: 1
   - type: Matchstick
     duration: 10
@@ -61,7 +61,7 @@
       - state: matchbox
   - type: Item
     sprite: Objects/Tools/matches.rsi
-    HeldPrefix: matchbox
+    heldPrefix: matchbox
   - type: StorageFill
     contents:
       - id: Matchstick
@@ -81,6 +81,6 @@
           - matchbox3
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage

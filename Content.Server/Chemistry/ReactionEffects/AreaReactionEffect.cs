@@ -1,21 +1,14 @@
-using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -120,7 +113,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             areaEffectComponent.TryAddSolution(splitSolution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
-            SoundSystem.Play(Filter.Pvs(args.SolutionEntity), _sound.GetSound(), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
         protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);

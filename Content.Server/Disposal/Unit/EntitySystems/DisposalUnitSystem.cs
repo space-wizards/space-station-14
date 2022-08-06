@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Content.Server.Atmos.EntitySystems;
@@ -7,21 +5,28 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -38,7 +43,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly DumpableSystem _dumpableSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
@@ -46,9 +54,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             base.Initialize();
 
+            // Shouldn't need re-anchoring.
             SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             // TODO: Predict me when hands predicted
-            SubscribeLocalEvent<DisposalUnitComponent, RelayMovementEntityEvent>(HandleMovement);
+            SubscribeLocalEvent<DisposalUnitComponent, ContainerRelayMovementEntityEvent>(HandleMovement);
             SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(HandlePowerChange);
 
             // Component lifetime
@@ -65,7 +74,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Verbs
             SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<InteractionVerb>>(AddInsertVerb);
-            SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddFlushEjectVerbs);
+            SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddDisposalAltVerbs);
             SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddClimbInsideVerb);
 
             // Units
@@ -75,25 +84,48 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
         }
 
-        private void AddFlushEjectVerbs(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)
+        private void AddDisposalAltVerbs(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || component.Container.ContainedEntities.Count == 0)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            // Verbs to flush the unit
-            AlternativeVerb flushVerb = new();
-            flushVerb.Act = () => Engage(component);
-            flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-            flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-            flushVerb.Priority = 1;
-            args.Verbs.Add(flushVerb);
+            // Behavior for if the disposals bin has items in it
+            if (component.Container.ContainedEntities.Count > 0)
+            {
+                // Verbs to flush the unit
+                AlternativeVerb flushVerb = new();
+                flushVerb.Act = () => Engage(component);
+                flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
+                flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
+                flushVerb.Priority = 1;
+                args.Verbs.Add(flushVerb);
 
-            // Verb to eject the contents
-            AlternativeVerb ejectVerb = new();
-            ejectVerb.Act = () => TryEjectContents(component);
-            ejectVerb.Category = VerbCategory.Eject;
-            ejectVerb.Text = Loc.GetString("disposal-eject-verb-contents");
-            args.Verbs.Add(ejectVerb);
+                // Verb to eject the contents
+                AlternativeVerb ejectVerb = new()
+                {
+                    Act = () => TryEjectContents(component),
+                    Category = VerbCategory.Eject,
+                    Text = Loc.GetString("disposal-eject-verb-contents")
+                };
+                args.Verbs.Add(ejectVerb);
+            }
+
+            // Behavior if using a trash bag & other dumpable containers
+            if (args.Using != null
+                && TryComp<DumpableComponent>(args.Using.Value, out var dumpable)
+                && TryComp<ServerStorageComponent>(args.Using.Value, out var storage)
+                && storage.StoredEntities is { Count: > 0 })
+            {
+                // Verb to dump held container into disposal unit
+                AlternativeVerb dumpVerb = new()
+                {
+                    Act = () => _dumpableSystem.StartDoAfter(args.Using.Value, args.Target, args.User, dumpable, storage),
+                    Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
+                    Priority = 2
+                };
+                args.Verbs.Add(dumpVerb);
+            }
+
         }
 
         private void AddClimbInsideVerb(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<Verb> args)
@@ -153,12 +185,19 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (!unit.Container.Insert(toInsert))
-            {
-                return;
-            }
+            if (unit.Container.Insert(toInsert))
+                AfterInsert(unit, toInsert);
+        }
 
-            AfterInsert(unit, toInsert);
+        public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, DisposalUnitComponent? disposal = null)
+        {
+            if (!Resolve(unit, ref disposal))
+                return;
+
+            if (!disposal.Container.Insert(toInsert))
+                return;
+
+            AfterInsert(disposal, toInsert);
         }
 
         public override void Update(float frameTime)
@@ -190,7 +229,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     break;
                 case SharedDisposalUnitComponent.UiButton.Power:
                     TogglePower(component);
-                    SoundSystem.Play(Filter.Pvs(component.Owner), "/Audio/Machines/machine_switch.ogg", component.Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play("/Audio/Machines/machine_switch.ogg", Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-2f));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -244,7 +283,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 return;
             }
-            
+
             if (!CanInsert(component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
             {
                 return;
@@ -337,7 +376,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        private void HandleMovement(EntityUid uid, DisposalUnitComponent component, RelayMovementEntityEvent args)
+        private void HandleMovement(EntityUid uid, DisposalUnitComponent component, ref ContainerRelayMovementEntityEvent args)
         {
             var currentTime = GameTiming.CurTime;
 
@@ -389,6 +428,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (component.Engaged)
                 {
                     TryFlush(component);
+                    state = component.State;
                 }
             }
 
@@ -415,7 +455,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
                     // Check for itemcomp as we won't just block the disposal unit "sleeping" for something it can't collide with anyway.
-                    if (!EntityManager.HasComponent<SharedItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
+                    if (!EntityManager.HasComponent<ItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
                     component.RecentlyEjected.RemoveAt(i);
                 }
             }
@@ -426,10 +466,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
 
-        public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid userId, DisposalUnitComponent? unit = null)
+        public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
         {
             if (!Resolve(unitId, ref unit))
                 return false;
+
+            if (userId.HasValue && !HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
+            {
+                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId.Value, Filter.Entities(userId.Value), PopupType.SmallCaution);
+                return false;
+            }
 
             if (!CanInsert(unit, toInsertId))
                 return false;
@@ -437,7 +483,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var delay = userId == toInsertId ? unit.EntryDelay : unit.DraggedEntryDelay;
             var ev = new DoInsertDisposalUnitEvent(userId, toInsertId, unitId);
 
-            if (delay <= 0)
+            if (delay <= 0 || userId == null)
             {
                 DoInsertDisposalUnit(ev);
                 return true;
@@ -445,7 +491,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Can't check if our target AND disposals moves currently so we'll just check target.
             // if you really want to check if disposals moves then add a predicate.
-            var doAfterArgs = new DoAfterEventArgs(userId, delay, default, toInsertId)
+            var doAfterArgs = new DoAfterEventArgs(userId.Value, delay, default, toInsertId)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
@@ -467,9 +513,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(component.Owner).GridID);
-            var coords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
-            var entry = grid.GetLocal(coords)
+            var xform = Transform(component.Owner);
+            if (!TryComp(xform.GridUid, out IMapGridComponent? grid))
+                return false;
+
+            var coords = xform.Coordinates;
+            var entry = grid.Grid.GetLocal(coords)
                 .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));
 
             if (entry == default)
@@ -479,8 +528,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             var air = component.Air;
             var entryComponent = EntityManager.GetComponent<DisposalEntryComponent>(entry);
+            var indices = _transformSystem.GetGridOrMapTilePosition(component.Owner, xform);
 
-            if (_atmosSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is {Temperature: > 0} environment)
+            if (_atmosSystem.GetTileMixture(xform.GridUid, xform.MapUid, indices, true) is {Temperature: > 0} environment)
             {
                 var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 

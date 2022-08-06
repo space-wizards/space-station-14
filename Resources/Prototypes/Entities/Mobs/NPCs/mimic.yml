@@ -7,7 +7,9 @@
   - type: Tag
     tags:
     - FootstepSound
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -27,20 +29,16 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-      mass: 100
+        bounds: "-0.35,-0.35,0.35,0.35"
+      mass: 500
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
-      - MobImpassable
+      - MachineLayer
   - type: CharacterInfo
   - type: HumanoidAppearance
   - type: AnimationPlayer
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: fist

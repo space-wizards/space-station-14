@@ -1,15 +1,11 @@
+using System;
 using System.Threading.Tasks;
 using Content.Client.Lobby;
 using Content.Client.Preferences;
-using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
-using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using NUnit.Framework;
 using Robust.Client.State;
-using Robust.Shared;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Lobby
@@ -17,47 +13,26 @@ namespace Content.IntegrationTests.Tests.Lobby
     [TestFixture]
     [TestOf(typeof(ClientPreferencesManager))]
     [TestOf(typeof(ServerPreferencesManager))]
-    public sealed class CharacterCreationTest : ContentIntegrationTest
+    public sealed class CharacterCreationTest
     {
         [Test]
         public async Task CreateDeleteCreateTest()
         {
-            var serverOptions = new ServerContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    [CCVars.GameDummyTicker.Name] = "false",
-                    [CCVars.GameLobbyEnabled.Name] = "true",
-                    [CVars.NetPVS.Name] = "false"
-                }
-            };
-
-            var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{InLobby = true});
+            var server = pairTracker.Pair.Server;
+            var client = pairTracker.Pair.Client;
 
             var clientNetManager = client.ResolveDependency<IClientNetManager>();
             var clientStateManager = client.ResolveDependency<IStateManager>();
             var clientPrefManager = client.ResolveDependency<IClientPreferencesManager>();
 
-            var serverConfig = server.ResolveDependency<IConfigurationManager>();
-            var serverTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
             var serverPrefManager = server.ResolveDependency<IServerPreferencesManager>();
 
-            await server.WaitIdleAsync();
-            await client.WaitIdleAsync();
-
-            await server.WaitAssertion(() =>
-            {
-                serverConfig.SetCVar(CCVars.GameDummyTicker, false);
-                serverConfig.SetCVar(CCVars.GameLobbyEnabled, true);
-                serverTicker.RestartRound();
-
-                Assert.That(serverTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
-            });
 
             // Need to run them in sync to receive the messages.
-            await RunTicksSync(client, server, 1);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 1);
 
-            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, 600);
+            await PoolManager.WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, 600);
 
             Assert.NotNull(clientNetManager.ServerChannel);
 
@@ -84,7 +59,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters[1].MemberwiseEquals(profile));
             });
 
-            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
+            await PoolManager.WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
 
             await server.WaitAssertion(() =>
             {
@@ -102,7 +77,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters, Is.EqualTo(1));
             });
 
-            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 1, maxTicks: 60);
+            await PoolManager.WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 1, maxTicks: 60);
 
             await server.WaitAssertion(() =>
             {
@@ -125,7 +100,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters[1].MemberwiseEquals(profile));
             });
 
-            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
+            await PoolManager.WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
 
             await server.WaitAssertion(() =>
             {
@@ -134,6 +109,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(serverCharacters.Count, Is.EqualTo(2));
                 Assert.That(serverCharacters[1].MemberwiseEquals(profile));
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

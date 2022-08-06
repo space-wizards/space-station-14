@@ -4,7 +4,7 @@
     sprite: Structures/conveyor.rsi
     state: conveyor_loose
   result: ConveyorBeltAssembly
-  completetime: 1000
+  completetime: 4
   materials:
     Steel: 500
     Plastic: 50

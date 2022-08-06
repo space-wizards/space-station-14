@@ -11,8 +11,8 @@
     description: Listen to your owner. Don't tank damage. Punch people hard.
   - type: Input
     context: "human"
-  - type: PlayerMobMover
-  - type: PlayerInputMover
+  - type: MobMover
+  - type: InputMover
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -43,35 +43,23 @@
         radius: 0.35
       mass: 10
       mask:
-      - VaultImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Damageable
     damageContainer: Biological
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
+      0: Alive
   - type: HeatResistance
   - type: CombatMode
-    disarmAction:
-      name: action-name-disarm
-      description: action-description-disarm
-      icon: Interface/Actions/disarmOff.png
-      iconOn: Interface/Actions/disarm.png
-      repeat: true
-      useDelay: 1.5
-      interactOnMiss: true
-      event: !type:DisarmActionEvent
-      canTargetSelf: false
-      whitelist:
-        components:
-        - Hands
-        - StatusEffects
   - type: Internals
   - type: Examiner
   - type: Speech
+  - type: TypingIndicator
+    proto: guardian
   - type: Pullable
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 2
     arcwidth: 30
     arc: fist
@@ -103,6 +91,8 @@
     description: Listen to your owner. Don't tank damage. Punch people hard.
   - type: NameIdentifier
     group: Holoparasite
+  - type: TypingIndicator
+    proto: holo
   - type: Sprite
     layers:
     - state: tech_base

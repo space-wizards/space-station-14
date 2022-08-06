@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.DragDrop;
+﻿namespace Content.Shared.DragDrop;
 
 public abstract class SharedDragDropSystem : EntitySystem
 {

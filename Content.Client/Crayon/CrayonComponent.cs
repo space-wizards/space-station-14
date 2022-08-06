@@ -8,7 +8,6 @@ namespace Content.Client.Crayon
     public sealed class CrayonComponent : SharedCrayonComponent
     {
         [ViewVariables(VVAccess.ReadWrite)] public bool UIUpdateNeeded;
-        [ViewVariables(VVAccess.ReadWrite)] public string Color => _color;
         [ViewVariables] public int Charges { get; set; }
         [ViewVariables] public int Capacity { get; set; }
     }

@@ -9,15 +9,24 @@
     tags:
     - Write
     - Crayon
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key
       type: CrayonBoundUserInterface
   - type: Crayon
     capacity: 5
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: MindbreakerToxin
+          Quantity: 2
 
 - type: entity
   parent: Crayon
@@ -30,7 +39,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: white
+    heldPrefix: white
   - type: Crayon
     color: white
     capacity: 5
@@ -53,7 +62,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: mime
+    heldPrefix: mime
   - type: Crayon
     color: white
     capacity: 5
@@ -62,6 +71,29 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonRainbow
+  name: rainbow crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: rainbow
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: rainbow
+  - type: Crayon
+    color: Red
+    selectableColor: true
+    capacity: 30
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
     - Recyclable
     - Trash
 
@@ -76,7 +108,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: black
+    heldPrefix: black
   - type: Crayon
     color: black
     capacity: 5
@@ -99,7 +131,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: red
+    heldPrefix: red
   - type: Crayon
     color: red
     capacity: 5
@@ -122,7 +154,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: orange
+    heldPrefix: orange
   - type: Crayon
     color: orange
     capacity: 5
@@ -145,7 +177,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: yellow
+    heldPrefix: yellow
   - type: Crayon
     color: yellow
     capacity: 5
@@ -168,7 +200,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: green
+    heldPrefix: green
   - type: Crayon
     color: green
     capacity: 5
@@ -191,7 +223,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: Crayon
     color: lightblue
     capacity: 5
@@ -214,7 +246,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: purple
+    heldPrefix: purple
   - type: Crayon
     color: purple
     capacity: 5
@@ -241,7 +273,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 7
-    HeldPrefix: box
+    heldPrefix: box
   - type: StorageFill
     contents:
     - id: CrayonRed

@@ -1,18 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Disposal.Unit.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Tube.Components
 {
     [Virtual]
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [ComponentReference(typeof(DisposalTubeComponent))]
     public class DisposalJunctionComponent : DisposalTubeComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;

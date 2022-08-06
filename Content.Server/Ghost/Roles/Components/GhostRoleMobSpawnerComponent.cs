@@ -1,14 +1,10 @@
-﻿using System;
-using Content.Server.Mind.Commands;
+﻿using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
+using Content.Server.Ghost.Roles.Events;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -43,6 +39,11 @@ namespace Content.Server.Ghost.Roles.Components
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
             var mob = _entMan.SpawnEntity(Prototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+            var xform = _entMan.GetComponent<TransformComponent>(mob);
+            xform.AttachToGridOrMap();
+
+            var spawnedEvent = new GhostRoleSpawnerUsedEvent(Owner, mob);
+            _entMan.EventBus.RaiseLocalEvent(mob, spawnedEvent, false);
 
             if (MakeSentient)
                 MakeSentientCommand.MakeSentient(mob, _entMan);
@@ -58,7 +59,7 @@ namespace Content.Server.Ghost.Roles.Components
             Taken = true;
 
             if (_deleteOnSpawn)
-                _entMan.DeleteEntity(Owner);
+                _entMan.QueueDeleteEntity(Owner);
 
             return true;
         }

@@ -3,8 +3,6 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Hands;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Shared.Item;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Inventory
 {
@@ -16,7 +14,7 @@ namespace Content.Server.AI.Utility.Considerations.Inventory
             // If not then check if we have a free hand
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(target))
+            if (target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(target))
             {
                 return 0.0f;
             }

@@ -5,8 +5,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Body.Commands

@@ -116,7 +116,7 @@
   parent: PosterBase
   id: PosterContrabandGreyTide
   name: "Grey Tide"
-  description: "A rebellious poster symbolizing assistant solidarity."
+  description: "A rebellious poster symbolizing passenger solidarity."
   components:
   - type: Sprite
     state: poster8_contraband
@@ -861,3 +861,95 @@
   components:
   - type: Sprite
     state: poster37_legit
+
+#maps
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapBagel
+  name: "Bagel Map"
+  description: "A map of Bagel Station."
+  components:
+  - type: Sprite
+    state: bagelmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapDelta
+  name: "Delta Map"
+  description: "A map of Delta Station."
+  components:
+  - type: Sprite
+    state: deltamap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapMarathon
+  name: "Marathon Map"
+  description: "A map of Marathon Station."
+  components:
+  - type: Sprite
+    state: marathonmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapMoose
+  name: "Moose Map"
+  description: "A map of Moose Station."
+  components:
+  - type: Sprite
+    state: moosemap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapPacked
+  name: "Packed Map"
+  description: "A map of Packed Station."
+  components:
+  - type: Sprite
+    state: packedmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapPillar
+  name: "Pillar Map"
+  description: "A map of NSS Pillar."
+  components:
+  - type: Sprite
+    state: pillarmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapSaltern
+  name: "Saltern Map"
+  description: "A map of Saltern Station."
+  components:
+  - type: Sprite
+    state: salternmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapSplit
+  name: "Split Station Map"
+  description: "A map of Split Station."
+  components:
+  - type: Sprite
+    state: splitmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapLighthouse
+  name: "Lighthouse Map"
+  description: "A map of Lighthouse."
+  components:
+  - type: Sprite
+    state: lighthousemap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapWaystation
+  name: "Waystation Map"
+  description: "A map of Waystation... wait isn't this packed upside down?"
+  components:
+  - type: Sprite
+    state: waystationmap

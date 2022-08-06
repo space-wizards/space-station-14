@@ -1,0 +1,12 @@
+- type: entity
+  id: LidSalami
+  parent: BaseItem
+  name: salami lid
+  description: Ain't gon' fit, won't fit.
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/lidsalami.rsi
+    layers:
+      - state: icon
+  - type: Item
+    size: 1001

@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.Pathfinding.Accessible;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Shared.Access.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.AI.Pathfinding
 {
@@ -121,7 +116,7 @@ namespace Content.Server.AI.Pathfinding
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             foreach (var reader in node.AccessReaders)
             {
-                if (!accessSystem.IsAllowed(reader, access))
+                if (!accessSystem.IsAllowed(access, reader))
                 {
                     return false;
                 }
@@ -165,7 +160,7 @@ namespace Content.Server.AI.Pathfinding
                 cameFrom.Remove(previousCurrent);
                 var pathfindingSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PathfindingSystem>();
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                var grid = mapManager.GetGrid(current.TileRef.GridIndex);
+                var grid = mapManager.GetGrid(current.TileRef.GridUid);
 
                 // Get all the intermediate nodes
                 while (true)

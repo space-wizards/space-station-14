@@ -1,7 +1,6 @@
-using Content.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {

@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Storage;
+using Content.Client.Animations;
 
 namespace Content.Client.Storage;
 
@@ -9,41 +10,28 @@ public sealed class StorageSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<StorageHeldItemsEvent>(OnStorageHeldItems);
-        SubscribeNetworkEvent<OpenStorageUIEvent>(OnOpenStorageUI);
-        SubscribeNetworkEvent<CloseStorageUIEvent>(OnCloseStorageUI);
-        SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(OnAnimateInsertingEntities);
+        SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
     }
 
-    private void OnStorageHeldItems(StorageHeldItemsEvent ev)
+    /// <summary>
+    /// Animate the newly stored entities in <paramref name="msg"/> flying towards this storage's position
+    /// </summary>
+    /// <param name="msg"></param>
+    public void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesEvent msg)
     {
-        if (TryComp<ClientStorageComponent>(ev.Storage, out var storage))
-        {
-            storage.HandleStorageMessage(ev);
-        }
-    }
+        if (!TryComp(msg.Storage, out ClientStorageComponent? storage))
+            return;
 
-    private void OnOpenStorageUI(OpenStorageUIEvent ev)
-    {
-        if (TryComp<ClientStorageComponent>(ev.Storage, out var storage))
-        {
-            storage.ToggleUI();
-        }
-    }
+        TryComp(msg.Storage, out TransformComponent? transformComp);
 
-    private void OnCloseStorageUI(CloseStorageUIEvent ev)
-    {
-        if (TryComp<ClientStorageComponent>(ev.Storage, out var storage))
+        for (var i = 0; msg.StoredEntities.Count > i; i++)
         {
-            storage.CloseUI();
-        }
-    }
-
-    private void OnAnimateInsertingEntities(AnimateInsertingEntitiesEvent ev)
-    {
-        if (TryComp<ClientStorageComponent>(ev.Storage, out var storage))
-        {
-            storage.HandleAnimatingInsertingEntities(ev);
+            var entity = msg.StoredEntities[i];
+            var initialPosition = msg.EntityPositions[i];
+            if (EntityManager.EntityExists(entity) && transformComp != null)
+            {
+                ReusableAnimations.AnimateEntityPickup(entity, initialPosition, transformComp.LocalPosition, EntityManager);
+            }
         }
     }
 }

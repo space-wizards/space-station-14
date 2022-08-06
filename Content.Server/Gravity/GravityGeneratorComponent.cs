@@ -1,14 +1,10 @@
 ﻿using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Gravity;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Gravity
 {
     [RegisterComponent]
-    [Friend(typeof(GravityGeneratorSystem))]
+    [Access(typeof(GravityGeneratorSystem))]
     public sealed class GravityGeneratorComponent : SharedGravityGeneratorComponent
     {
         // 1% charge per second.

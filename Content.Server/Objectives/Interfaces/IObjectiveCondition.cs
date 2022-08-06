@@ -1,5 +1,4 @@
-﻿using System;
-using Robust.Shared.Utility;
+﻿using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Interfaces
 {

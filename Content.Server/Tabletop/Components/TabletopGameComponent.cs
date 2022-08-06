@@ -1,15 +1,9 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Tabletop.Components
 {
     /// <summary>
     /// A component that makes an object playable as a tabletop game.
     /// </summary>
-    [RegisterComponent, Friend(typeof(TabletopSystem))]
+    [RegisterComponent, Access(typeof(TabletopSystem))]
     public sealed class TabletopGameComponent : Component
     {
         [DataField("boardName")]

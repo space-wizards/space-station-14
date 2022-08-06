@@ -1,6 +1,4 @@
 using Content.Shared.DragDrop;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Strip.Components
 {

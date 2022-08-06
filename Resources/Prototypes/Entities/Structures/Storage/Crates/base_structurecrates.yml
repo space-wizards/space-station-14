@@ -5,6 +5,7 @@
   name: crate
   description: A large container for items.
   components:
+  - type: ResistLocker
   - type: Transform
     noRot: true
   - type: Sprite
@@ -16,25 +17,22 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - Impassable
-      - SmallImpassable
+      - SmallMobMask #this is so they can go under plastic flaps
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MachineLayer
   - type: EntityStorage
-    Capacity: 500
-    CanWeldShut: true
+    capacity: 500
+  - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic
@@ -59,7 +57,10 @@
       whitelist:
         components:
         - Paper
-
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
 
 - type: entity
   id: CrateBaseSecure
@@ -79,25 +80,22 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - Impassable
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MachineLayer
   - type: EntityStorage
-    Capacity: 500
-    CanWeldShut: true
+    capacity: 500
+  - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic

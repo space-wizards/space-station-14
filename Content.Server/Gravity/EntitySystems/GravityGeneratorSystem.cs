@@ -1,13 +1,9 @@
-﻿using System;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Gravity.EntitySystems
 {
@@ -24,9 +20,26 @@ namespace Content.Server.Gravity.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentInit>(OnComponentInitialized);
+            SubscribeLocalEvent<GravityGeneratorComponent, ComponentShutdown>(OnComponentShutdown);
+            SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged); // Or just anchor changed?
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
+        }
+
+        private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)
+        {
+            // TODO consider stations with more than one generator.
+            if (component.GravityActive && TryComp(args.OldParent, out GravityComponent? gravity))
+                _gravitySystem.DisableGravity(gravity);
+
+            UpdateGravityActive(component, false);
+        }
+
+        private void OnComponentShutdown(EntityUid uid, GravityGeneratorComponent component, ComponentShutdown args)
+        {
+            component.GravityActive = false;
+            UpdateGravityActive(component, true);
         }
 
         public override void Update(float frameTime)
@@ -184,12 +197,11 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void UpdateGravityActive(GravityGeneratorComponent grav, bool shake)
         {
-            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridID;
-            if (gridId == GridId.Invalid)
+            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridUid;
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
                 return;
 
-            var grid = _mapManager.GetGrid(gridId);
-            var gravity = EntityManager.GetComponent<GravityComponent>(grid.GridEntityId);
+            var gravity = EntityManager.GetComponent<GravityComponent>(gridId.Value);
 
             if (grav.GravityActive)
                 _gravitySystem.EnableGravity(gravity);
@@ -197,7 +209,7 @@ namespace Content.Server.Gravity.EntitySystems
                 _gravitySystem.DisableGravity(gravity);
 
             if (shake)
-                _gravityShakeSystem.ShakeGrid(gridId, gravity);
+                _gravityShakeSystem.ShakeGrid(gridId.Value, gravity);
         }
 
         private void OnInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)

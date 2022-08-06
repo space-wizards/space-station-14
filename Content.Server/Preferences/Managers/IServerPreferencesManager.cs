@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Robust.Server.Player;

@@ -1,7 +1,7 @@
 - type: entity
   name: trash bag
   id: TrashBag
-  parent: BaseItem
+  parent: BaseStorageItem
   components:
   - type: Sprite
     netSync: false
@@ -9,14 +9,13 @@
     layers:
       - state: icon-0
         map: ["enum.StorageFillLayers.Fill"]
-  - type: Item
-    sprite: Objects/Specific/Janitorial/trashbag.rsi
-    size: 125
   - type: Storage
     capacity: 125
     quickInsert: true
     areaInsert: true
-    storageSoundCollection:
+    storageOpenSound:
+      collection: trashBagRustle
+    storageInsertSound:
       collection: trashBagRustle
     whitelist:
       tags:
@@ -30,6 +29,12 @@
   - type: StorageFillVisualizer
     maxFillLevels: 4
     fillBaseName: icon
+  - type: Dumpable
+  - type: Clothing
+    slots: [belt]
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+  - type: Item
+    size: 125
 
 - type: entity
   name: trash bag
@@ -41,7 +46,7 @@
       - state: blue-icon-0
         map: ["enum.StorageFillLayers.Fill"]
   - type: Item
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: StorageFillVisualizer
     fillBaseName: blue-icon
 
@@ -55,5 +60,3 @@
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1000
-    storageSoundCollection:
-      collection: trashBagRustle

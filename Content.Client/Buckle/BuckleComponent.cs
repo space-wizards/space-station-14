@@ -1,8 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Vehicle.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Buckle
 {
@@ -42,14 +41,23 @@ namespace Content.Client.Buckle
                 return;
             }
 
-            if (_buckled && buckle.DrawDepth.HasValue)
+            if (LastEntityBuckledTo != null && _entMan.HasComponent<VehicleComponent>(LastEntityBuckledTo))
             {
-                _originalDrawDepth ??= ownerSprite.DrawDepth;
-                ownerSprite.DrawDepth = buckle.DrawDepth.Value;
                 return;
             }
 
-            if (_originalDrawDepth.HasValue && !buckle.DrawDepth.HasValue)
+            // TODO when ECSing, make this a visualizer
+            if (_buckled &&
+                LastEntityBuckledTo != null &&
+                EntMan.GetComponent<TransformComponent>(LastEntityBuckledTo.Value).LocalRotation.GetCardinalDir() == Direction.North &&
+                EntMan.TryGetComponent<SpriteComponent>(LastEntityBuckledTo, out var buckledSprite))
+            {
+                _originalDrawDepth ??= ownerSprite.DrawDepth;
+                ownerSprite.DrawDepth = buckledSprite.DrawDepth - 1;
+                return;
+            }
+
+            if (_originalDrawDepth.HasValue && !_buckled)
             {
                 ownerSprite.DrawDepth = _originalDrawDepth.Value;
                 _originalDrawDepth = null;

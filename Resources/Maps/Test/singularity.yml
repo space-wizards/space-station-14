@@ -30,7 +30,7 @@ tilemap:
   23: floor_wood
   24: lattice
   25: plating
-  26: underplating
+  26: plating
 grids:
 - settings:
     chunksize: 16
@@ -1327,13 +1327,13 @@ entities:
     pos: 6.5,16.5
     type: Transform
 - uid: 148
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - parent: 0
     pos: 3.5,16.5
     type: Transform
 - uid: 149
-  type: SalternAPC
+  type: APCBasic
   components:
   - parent: 0
     pos: 3.5,17.5
@@ -1369,25 +1369,25 @@ entities:
     pos: 2.5,14.5
     type: Transform
 - uid: 155
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 0.5,16.5
     type: Transform
 - uid: 156
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 6.5,16.5
     type: Transform
 - uid: 157
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 5.5,16.5
     type: Transform
 - uid: 158
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 1.5,16.5
@@ -1453,61 +1453,61 @@ entities:
     pos: 5.5,10.5
     type: Transform
 - uid: 169
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - parent: 0
     pos: 1.5,10.5
     type: Transform
 - uid: 170
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - parent: 0
     pos: 0.5,10.5
     type: Transform
 - uid: 171
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - parent: 0
     pos: 5.5,10.5
     type: Transform
 - uid: 172
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - parent: 0
     pos: 6.5,10.5
     type: Transform
 - uid: 173
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 0.5,11.5
     type: Transform
 - uid: 174
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 0.5,12.5
     type: Transform
 - uid: 175
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 0.5,13.5
     type: Transform
 - uid: 176
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 6.5,13.5
     type: Transform
 - uid: 177
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 6.5,12.5
     type: Transform
 - uid: 178
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - parent: 0
     pos: 6.5,11.5

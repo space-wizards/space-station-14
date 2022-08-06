@@ -1,8 +1,6 @@
 using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
-using Content.Server.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Item;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 namespace Content.Server.Engineering.EntitySystems
@@ -20,7 +18,7 @@ namespace Content.Server.Engineering.EntitySystems
         }
         private void AddDisassembleVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess)
+            if (!args.CanInteract || !args.CanAccess || args.Hands == null)
                 return;
 
             AlternativeVerb verb = new()

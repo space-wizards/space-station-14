@@ -1,13 +1,9 @@
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Friend(typeof(SliceableFoodSystem))]
+    [RegisterComponent, Access(typeof(SliceableFoodSystem))]
     internal sealed class SliceableFoodComponent : Component
     {
         [DataField("slice")]

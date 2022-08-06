@@ -28,6 +28,8 @@
       state: miner
     - type: AtmosDevice
     - type: GasMiner
+      maxExternalPressure: 300
+      spawnAmount: 200
 
 - type: entity
   name: O2 gas miner
@@ -88,3 +90,23 @@
   components:
     - type: GasMiner
       spawnGas: WaterVapor
+
+- type: entity
+  name: Miasma gas miner
+  parent: GasMinerBase
+  id: GasMinerMiasma
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: Miasma
+
+- type: entity
+  name: Nitrous Oxide gas miner
+  parent: GasMinerBase
+  id: GasMinerNitrousOxide
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: NitrousOxide

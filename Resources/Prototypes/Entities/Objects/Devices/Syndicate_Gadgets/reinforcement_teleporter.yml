@@ -1,0 +1,16 @@
+- type: entity
+  parent: BaseItem
+  id: ReinforcementTeleporterSyndicate
+  name: syndicate reinforcement teleporter
+  description: Call in a syndicate agent of questionable quality, instantly! Only basic equipment provided.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
+    netsync: false
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSyndicateAgent
+    name: Syndicate Agent
+    description: Someone needs reinforcements. You, the first person the syndicate could find, will help them.
+    rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.

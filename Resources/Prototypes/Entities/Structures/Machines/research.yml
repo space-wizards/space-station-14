@@ -29,12 +29,13 @@
           SheetSteel1:
             min: 1
             max: 2
+  - type: DiseaseServer
   - type: AmbientSound
     volume: -9
     range: 5
     sound:
       path: /Audio/Ambience/Objects/server_fans.ogg
-      
+
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
   parent: BaseMachinePowered
@@ -48,6 +49,7 @@
     - state: rndpointsource
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: ResearchClient
   - type: ResearchPointSource
     pointspersecond: 100
     active: true

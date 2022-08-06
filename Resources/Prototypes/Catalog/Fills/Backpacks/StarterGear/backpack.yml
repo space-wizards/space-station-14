@@ -28,6 +28,7 @@
     contents:
       - id: BoxHug
       - id: RubberStampClown
+      - id: CrayonRainbow
 
 - type: entity
   noSpawn: true
@@ -36,7 +37,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalSecurity
       - id: Flash
 
 - type: entity
@@ -46,7 +47,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMedical
 
 - type: entity
   noSpawn: true
@@ -66,7 +67,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalEngineering
 
 - type: entity
   noSpawn: true
@@ -126,3 +127,89 @@
         - id: BoxSurvival
         - id: AcousticGuitarInstrument
         - id: SaxophoneInstrument
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackDetectiveFilled
+  components:
+    - type: StorageFill
+      contents:
+      - id: BoxSurvival
+      - id: Lighter
+      - id: CigPackBlack
+      - id: HandLabeler
+      - id: BoxForensicPad
+
+# ERT
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackERTLeaderFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: WeaponPulsePistol
+        - id: WeaponPistolMk58
+        - id: MagazinePistolHighCapacityRubber
+        - id: MagazinePistol
+        - id: Handcuffs
+
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTSecurity
+  id: ClothingBackpackERTSecurityFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: WeaponDisabler
+        - id: WeaponPulsePistol
+        - id: WeaponPulseCarbine
+        - id: BoxHandcuff
+        - id: Handcuffs
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTMedical
+  id: ClothingBackpackERTMedicalFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: WeaponPulseCarbine
+        - id: Hypospray
+        - id: MedkitAdvancedFilled
+
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTEngineer
+  id: ClothingBackpackERTEngineerFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: trayScanner
+        - id: WeaponPulseCarbine
+        - id: RCD
+        - id: RCDAmmo
+        - id: RCDAmmo
+        - id: RCDAmmo
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTJanitor
+  id: ClothingBackpackERTJanitorFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: WeaponPulsePistol
+        - id: MedkitFilled
+        - id: BoxLightMixed
+        - id: BoxLightMixed
+        - id: Soap

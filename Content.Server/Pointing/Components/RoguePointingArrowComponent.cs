@@ -1,14 +1,10 @@
 using Content.Server.Pointing.EntitySystems;
 using Content.Shared.Pointing.Components;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Pointing.Components
 {
     [RegisterComponent]
-    [Friend(typeof(RoguePointingSystem))]
+    [Access(typeof(RoguePointingSystem))]
     public sealed class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
     {
         [ViewVariables]

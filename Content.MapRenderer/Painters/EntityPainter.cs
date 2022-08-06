@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using TerraFX.Interop.Windows;
-using static Robust.Client.Graphics.RSI.State;
 using static Robust.UnitTesting.RobustIntegrationTest;
 
 namespace Content.MapRenderer.Painters;
@@ -116,7 +112,14 @@ public sealed class EntityPainter
 
             var (x, y, width, height) = GetRsiFrame(rsi, image, entity, layer, dir);
 
-            image.Mutate(o => o.Crop(new Rectangle(x, y, width, height)));
+            var rect = new Rectangle(x, y, width, height);
+            if (!new Rectangle(Point.Empty, image.Size()).Contains(rect))
+            {
+                Console.WriteLine($"Invalid layer {rsi!.Path}/{layer.RsiState.Name}.png for entity {_sEntityManager.ToPrettyString(entity.Sprite.Owner)} at ({entity.X}, {entity.Y})");
+                return;
+            }
+
+            image.Mutate(o => o.Crop(rect));
 
             var colorMix = entity.Sprite.Color * layer.Color;
             var imageColor = Color.FromRgba(colorMix.RByte, colorMix.GByte, colorMix.BByte, colorMix.AByte);

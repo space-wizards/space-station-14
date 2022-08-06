@@ -3,7 +3,6 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Shared.Chemistry.Reaction;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.EntitySystems
 {

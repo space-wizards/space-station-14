@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Content.Server.Inventory;
 using Content.Shared.Inventory;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -12,7 +11,7 @@ namespace Content.IntegrationTests.Tests
     // i.e. the interaction between uniforms and the pocket/ID slots.
     // and also how big items don't fit in pockets.
     [TestFixture]
-    public sealed class HumanInventoryUniformSlotsTest : ContentIntegrationTest
+    public sealed class HumanInventoryUniformSlotsTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -27,7 +26,8 @@ namespace Content.IntegrationTests.Tests
   id: UniformDummy
   components:
   - type: Clothing
-    Slots: [innerclothing]
+    slots: [innerclothing]
+  - type: Item
     size: 5
 
 - type: entity
@@ -35,8 +35,9 @@ namespace Content.IntegrationTests.Tests
   id: IDCardDummy
   components:
   - type: Clothing
-    Slots:
+    slots:
     - idcard
+  - type: Item
     size: 5
   - type: IdCard
 
@@ -57,8 +58,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             EntityUid human = default;
             EntityUid uniform = default;
@@ -67,7 +68,7 @@ namespace Content.IntegrationTests.Tests
 
             InventorySystem invSystem = default!;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
                 var mapMan = IoCManager.Resolve<IMapManager>();
@@ -103,9 +104,9 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(invSystem.TryUnequip(human, "jumpsuit"));
             });
 
-            server.RunTicks(2);
+            await server.WaitRunTicks(2);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Items have been dropped!
                 Assert.That(IsDescendant(uniform, human), Is.False);
@@ -118,7 +119,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(!invSystem.TryGetSlotEntity(human, "pocket1", out _));
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
 
         private static bool IsDescendant(EntityUid descendant, EntityUid parent)

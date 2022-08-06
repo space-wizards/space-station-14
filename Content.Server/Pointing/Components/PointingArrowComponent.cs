@@ -51,17 +51,7 @@ namespace Content.Server.Pointing.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("rogue")]
-        private bool _rogue = default;
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
-            {
-                sprite.DrawDepth = (int) DrawDepth.Overlays;
-            }
-        }
+        public bool Rogue = false;
 
         public void Update(float frameTime)
         {
@@ -73,7 +63,7 @@ namespace Content.Server.Pointing.Components
 
             if (_duration <= 0)
             {
-                if (_rogue)
+                if (Rogue)
                 {
                     _entMan.RemoveComponent<PointingArrowComponent>(Owner);
                     _entMan.AddComponent<RoguePointingArrowComponent>(Owner);

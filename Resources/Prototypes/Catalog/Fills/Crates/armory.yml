@@ -2,24 +2,24 @@
   id: CrateArmorySMG
   name: smg crate
   parent: CrateWeaponSecure
-  description: "Contains two high-powered, semiautomatic rifles with six mags. Requires Armory access to open."
+  description: "Contains two high-powered, semiautomatic rifles with four mags. Requires Armory access to open."
   components:
   - type: StorageFill
     contents:
-      - id: SmgDrozd
+      - id: WeaponSubMachineGunWt550
         amount: 2
-      - id: MagazineMagnumSmg
+      - id: MagazinePistolSubMachineGunTopMounted
         amount: 4
 
 - type: entity
   id: CrateArmoryShotgun
   name: shotgun crate
   parent: CrateWeaponSecure
-  description: "For when the enemy absolutely needs to be replaced with lead. Contains two Gladstone Combat Shotguns, and some standard shotgun shells. Requires Armory access to open."
+  description: "For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Combat Shotguns, and some standard shotgun shells. Requires Armory access to open."
   components:
   - type: StorageFill
     contents:
-      - id: ShotgunGladstone
+      - id: WeaponShotgunEnforcer
         amount: 2
       - id: BoxLethalshot
         amount: 3

@@ -23,18 +23,23 @@ namespace Content.Shared.DrawDepth
         /// <summary>
         ///     Things that are beneath regular floors.
         /// </summary>
-        BelowFloor = DrawDepthTag.Default - 5,
+        BelowFloor = DrawDepthTag.Default - 6,
 
         /// <summary>
         ///     Used for entities like carpets.
         /// </summary>
-        FloorTiles = DrawDepthTag.Default - 4,
+        FloorTiles = DrawDepthTag.Default - 5,
 
         /// <summary>
         ///     Things that are actually right on the floor, like puddles. This does not mean objects like
         ///     tables, even though they are technically "on the floor".
         /// </summary>
-        FloorObjects = DrawDepthTag.Default - 3,
+        FloorObjects = DrawDepthTag.Default - 4,
+
+        /// <summary>
+        ///     Allows small mobs like mice and drones to render under tables and chairs but above puddles and vents
+        /// </summary>
+        SmallMobs = DrawDepthTag.Default - 3,
 
         Walls = DrawDepthTag.Default - 2,
 

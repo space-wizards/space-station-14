@@ -2,14 +2,9 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -89,8 +84,8 @@ namespace Content.Server.Atmos.EntitySystems
                 // A few details on the audio parameters for fire.
                 // The greater the fire state, the lesser the pitch variation.
                 // The greater the fire state, the greater the volume.
-                SoundSystem.Play(Filter.Pvs(coordinates), HotspotSound, coordinates,
-                    AudioHelpers.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
+                SoundSystem.Play(HotspotSound, Filter.Pvs(coordinates),
+                    coordinates, AudioHelpers.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
             }
 
             if (_hotspotSoundCooldown > HotspotSoundCooldownCycles)

@@ -1,6 +1,6 @@
 using Content.Shared.Damage;
-using Content.Shared.Sound;
 using Content.Shared.Tools;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -73,24 +73,6 @@ public sealed class DoorComponent : Component, ISerializationHooks
     /// </summary>
     [DataField("partial")]
     public bool Partial;
-    #endregion
-
-    #region Welding
-    // TODO WELDING. Consider creating a WeldableComponent for use with doors, crates and lockers? Currently they all
-    // have their own welding logic.
-    [DataField("weldingQuality", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-    public string WeldingQuality = "Welding";
-
-    /// <summary>
-    /// Whether the door can ever be welded shut.
-    /// </summary>
-    [DataField("weldable")]
-    public bool Weldable = true;
-
-    /// <summary>
-    ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
-    /// </summary>
-    public bool BeingWelded;
     #endregion
 
     public bool BeingPried;
@@ -249,6 +231,7 @@ public enum DoorVisuals
     Powered,
     BoltLights,
     EmergencyLights,
+    BaseRSI,
 }
 
 [Serializable, NetSerializable]

@@ -1,105 +1,125 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Collections.Concurrent;
+using System.Threading;
 using System.Threading.Tasks;
-using Content.Shared;
+using Content.Client.Parallax.Data;
 using Content.Shared.CCVar;
-using Nett;
-using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Configuration;
-using Robust.Shared.ContentPack;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Utility;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
 
-namespace Content.Client.Parallax.Managers
+namespace Content.Client.Parallax.Managers;
+
+public sealed class ParallaxManager : IParallaxManager
 {
-    internal sealed class ParallaxManager : IParallaxManager
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
+    private ISawmill _sawmill = Logger.GetSawmill("parallax");
+
+    public Vector2 ParallaxAnchor { get; set; }
+
+    private readonly ConcurrentDictionary<string, ParallaxLayerPrepared[]> _parallaxesLQ = new();
+    private readonly ConcurrentDictionary<string, ParallaxLayerPrepared[]> _parallaxesHQ = new();
+
+    private readonly ConcurrentDictionary<string, CancellationTokenSource> _loadingParallaxes = new();
+
+    public bool IsLoaded(string name) => _parallaxesLQ.ContainsKey(name);
+
+    public ParallaxLayerPrepared[] GetParallaxLayers(string name)
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-        private static readonly ResourcePath ParallaxConfigPath = new("/parallax_config.toml");
-
-        // Both of these below are in the user directory.
-        private static readonly ResourcePath ParallaxCachedImagePath = new("/parallax_cache.png");
-        private static readonly ResourcePath PreviousParallaxConfigPath = new("/parallax_config_old");
-
-        public event Action<Texture>? OnTextureLoaded;
-        public Texture? ParallaxTexture { get; private set; }
-
-        public async void LoadParallax()
+        if (_configurationManager.GetCVar(CCVars.ParallaxLowQuality))
         {
-            if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
-                return;
-
-            var parallaxConfig = GetParallaxConfig();
-            if (parallaxConfig == null)
-                return;
-
-            var debugParallax = _configurationManager.GetCVar(CCVars.ParallaxDebug);
-
-            if (debugParallax
-                || !_resourceCache.UserData.TryReadAllText(PreviousParallaxConfigPath, out var previousParallaxConfig)
-                || previousParallaxConfig != parallaxConfig)
-            {
-                var table = Toml.ReadString(parallaxConfig);
-                await UpdateCachedTexture(table, debugParallax);
-
-                //Update the previous config
-                using var writer = _resourceCache.UserData.OpenWriteText(PreviousParallaxConfigPath);
-                writer.Write(parallaxConfig);
-            }
-
-            ParallaxTexture = GetCachedTexture();
-            OnTextureLoaded?.Invoke(ParallaxTexture);
+            return !_parallaxesLQ.TryGetValue(name, out var lq) ? Array.Empty<ParallaxLayerPrepared>() : lq;
         }
 
-        private async Task UpdateCachedTexture(TomlTable config, bool saveDebugLayers)
+        return !_parallaxesLQ.TryGetValue(name, out var hq) ? Array.Empty<ParallaxLayerPrepared>() : hq;
+    }
+
+    public void UnloadParallax(string name)
+    {
+        if (_loadingParallaxes.TryGetValue(name, out var loading))
         {
-            var debugImages = saveDebugLayers ? new List<Image<Rgba32>>() : null;
-
-            var sawmill = _logManager.GetSawmill("parallax");
-            // Generate the parallax in the thread pool.
-            using var newParallexImage = await Task.Run(() =>
-                ParallaxGenerator.GenerateParallax(config, new Size(1920, 1080), sawmill, debugImages));
-            // And load it in the main thread for safety reasons.
-
-            // Store it and CRC so further game starts don't need to regenerate it.
-            using var imageStream = _resourceCache.UserData.OpenWrite(ParallaxCachedImagePath);
-            newParallexImage.SaveAsPng(imageStream);
-
-            if (saveDebugLayers)
-            {
-                for (var i = 0; i < debugImages!.Count; i++)
-                {
-                    var debugImage = debugImages[i];
-                    using var debugImageStream = _resourceCache.UserData.OpenWrite(new ResourcePath($"/parallax_debug_{i}.png"));
-                    debugImage.SaveAsPng(debugImageStream);
-                }
-            }
+            loading.Cancel();
+            _loadingParallaxes.Remove(name, out _);
+            return;
         }
 
-        private Texture GetCachedTexture()
-        {
-            using var imageStream = _resourceCache.UserData.OpenRead(ParallaxCachedImagePath);
-            return Texture.LoadFromPNGStream(imageStream, "Parallax");
-        }
+        if (!_parallaxesLQ.ContainsKey(name)) return;
+        _parallaxesLQ.Remove(name, out _);
+        _parallaxesHQ.Remove(name, out _);
+    }
 
-        private string? GetParallaxConfig()
+    public async void LoadDefaultParallax()
+    {
+        await LoadParallaxByName("Default");
+    }
+
+    public async Task LoadParallaxByName(string name)
+    {
+        if (_parallaxesLQ.ContainsKey(name) || _loadingParallaxes.ContainsKey(name)) return;
+
+        // Cancel any existing load and setup the new cancellation token
+        var token = new CancellationTokenSource();
+        _loadingParallaxes[name] = token;
+        var cancel = token.Token;
+
+        // Begin (for real)
+        _sawmill.Info($"Loading parallax {name}");
+
+        try
         {
-            if (!_resourceCache.TryContentFileRead(ParallaxConfigPath, out var configStream))
+            var parallaxPrototype = _prototypeManager.Index<ParallaxPrototype>(name);
+
+            ParallaxLayerPrepared[][] layers;
+
+            if (parallaxPrototype.LayersLQUseHQ)
             {
-                Logger.ErrorS("parallax", "Parallax config not found.");
-                return null;
+                layers = new ParallaxLayerPrepared[2][];
+                layers[0] = layers[1] = await LoadParallaxLayers(parallaxPrototype.Layers, cancel);
+            }
+            else
+            {
+                layers = await Task.WhenAll(
+                    LoadParallaxLayers(parallaxPrototype.Layers, cancel),
+                    LoadParallaxLayers(parallaxPrototype.LayersLQ, cancel)
+                );
             }
 
-            using var configReader = new StreamReader(configStream, EncodingHelpers.UTF8);
-            return configReader.ReadToEnd().Replace(Environment.NewLine, "\n");
+            _loadingParallaxes.Remove(name, out _);
+
+            if (token.Token.IsCancellationRequested) return;
+
+            _parallaxesLQ[name] = layers[0];
+            _parallaxesHQ[name] = layers[1];
+
+            _sawmill.Info($"Loaded parallax {name}");
+
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to loaded parallax {name}: {ex}");
         }
     }
+
+    private async Task<ParallaxLayerPrepared[]> LoadParallaxLayers(List<ParallaxLayerConfig> layersIn, CancellationToken cancel = default)
+    {
+        // Because this is async, make sure it doesn't change (prototype reloads could muck this up)
+        // Since the tasks aren't awaited until the end, this should be fine
+        var tasks = new Task<ParallaxLayerPrepared>[layersIn.Count];
+        for (var i = 0; i < layersIn.Count; i++)
+        {
+            tasks[i] = LoadParallaxLayer(layersIn[i], cancel);
+        }
+        return await Task.WhenAll(tasks);
+    }
+
+    private async Task<ParallaxLayerPrepared> LoadParallaxLayer(ParallaxLayerConfig config, CancellationToken cancel = default)
+    {
+        return new ParallaxLayerPrepared()
+        {
+            Texture = await config.Texture.GenerateTexture(cancel),
+            Config = config
+        };
+    }
 }
+

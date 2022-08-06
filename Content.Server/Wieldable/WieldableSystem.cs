@@ -12,7 +12,8 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using System.Linq;
+using Content.Server.Actions.Events;
+
 
 namespace Content.Server.Wieldable
 {
@@ -21,6 +22,7 @@ namespace Content.Server.Wieldable
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedItemSystem _itemSystem = default!;
 
         public override void Initialize()
         {
@@ -32,8 +34,15 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
+            SubscribeLocalEvent<WieldableComponent, DisarmAttemptEvent>(OnDisarmAttemptEvent);
 
             SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
+        }
+
+        private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
+        {
+            if (component.Wielded)
+                args.Cancel();
         }
 
         private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -159,17 +168,17 @@ namespace Content.Server.Wieldable
             if (!CanWield(uid, component, args.User.Value) || component.Wielded)
                 return;
 
-            if (TryComp<SharedItemComponent>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
-                component.OldInhandPrefix = item.EquippedPrefix;
-                item.EquippedPrefix = component.WieldedInhandPrefix;
+                component.OldInhandPrefix = item.HeldPrefix;
+                _itemSystem.SetHeldPrefix(uid, component.WieldedInhandPrefix, item);
             }
 
             component.Wielded = true;
 
             if (component.WieldSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(uid), component.WieldSound.GetSound());
+                SoundSystem.Play(component.WieldSound.GetSound(), Filter.Pvs(uid), uid);
             }
 
             for (var i = 0; i < component.FreeHandsRequired; i++)
@@ -188,9 +197,9 @@ namespace Content.Server.Wieldable
             if (!component.Wielded)
                 return;
 
-            if (TryComp<SharedItemComponent>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
-                item.EquippedPrefix = component.OldInhandPrefix;
+                _itemSystem.SetHeldPrefix(uid, component.OldInhandPrefix, item);
             }
 
             component.Wielded = false;
@@ -199,8 +208,7 @@ namespace Content.Server.Wieldable
             {
                 if (component.UnwieldSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(uid),
-                        component.UnwieldSound.GetSound());
+                    SoundSystem.Play(component.UnwieldSound.GetSound(), Filter.Pvs(uid), uid);
                 }
 
                 args.User.Value.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
@@ -214,7 +222,7 @@ namespace Content.Server.Wieldable
         {
             if (!component.Wielded || component.Owner != args.Unequipped)
                 return;
-            RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true));
+            RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true), true);
         }
 
         private void OnVirtualItemDeleted(EntityUid uid, WieldableComponent component, VirtualItemDeletedEvent args)

@@ -1,12 +1,9 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Flash
 {
-    [NetworkedComponent, Friend(typeof(SharedFlashSystem))]
+    [NetworkedComponent, Access(typeof(SharedFlashSystem))]
     public abstract class SharedFlashableComponent : Component
     {
         public float Duration { get; set; }

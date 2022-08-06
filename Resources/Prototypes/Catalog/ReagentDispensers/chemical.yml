@@ -7,7 +7,7 @@
   - Copper
   - Ethanol
   - Fluorine
-  - Glucose
+  - Sugar
   - Hydrogen
   - Iodine
   - Iron
@@ -20,10 +20,7 @@
   - Radium
   - Silicon
   - Sodium
-  - Sugar
   - Sulfur
-  - SulfuricAcid
-  - Uranium
 
 - type: reagentDispenserInventory
   id: ChemDispenserEmaggedInventory

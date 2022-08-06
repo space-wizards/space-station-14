@@ -30,6 +30,6 @@ public sealed class DoorSystem : SharedDoorSystem
     protected override void PlaySound(EntityUid uid, string sound, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
     {
         if (GameTiming.InPrediction && GameTiming.IsFirstTimePredicted)
-            SoundSystem.Play(Filter.Local(), sound, uid, audioParams);
+            SoundSystem.Play(sound, Filter.Local(), uid, audioParams);
     }
 }

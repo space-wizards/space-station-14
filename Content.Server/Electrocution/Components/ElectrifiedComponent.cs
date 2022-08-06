@@ -1,5 +1,4 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Electrocution
 {
@@ -29,6 +28,9 @@ namespace Content.Server.Electrocution
 
         [DataField("requirePower")]
         public bool RequirePower { get; } = true;
+
+        [DataField("usesApcPower")]
+        public bool UsesApcPower { get; } = false;
 
         [DataField("highVoltageNode")]
         public string? HighVoltageNode { get; }
@@ -62,5 +64,14 @@ namespace Content.Server.Electrocution
 
         [DataField("siemensCoefficient")]
         public float SiemensCoefficient { get; } = 1f;
+
+        [DataField("shockNoises")]
+        public SoundSpecifier ShockNoises { get; } = new SoundCollectionSpecifier("sparks");
+
+        [DataField("playSoundOnShock")]
+        public bool PlaySoundOnShock { get; } = true;
+
+        [DataField("shockVolume")]
+        public float ShockVolume { get; } = 20;
     }
 }

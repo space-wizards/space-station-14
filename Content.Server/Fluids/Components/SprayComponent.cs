@@ -1,16 +1,13 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
-[Friend(typeof(SpraySystem))]
+[Access(typeof(SpraySystem))]
 public sealed class SprayComponent : Component
 {
     public const string SolutionName = "spray";
@@ -35,5 +32,6 @@ public sealed class SprayComponent : Component
     [DataField("impulse")] public float Impulse;
 
     [DataField("spraySound", required: true)]
+    [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SoundSpecifier SpraySound { get; } = default!;
 }

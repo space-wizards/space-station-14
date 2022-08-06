@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
@@ -8,27 +6,25 @@ using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
+using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cuffs.Components
 {
+    [ByRefEvent]
+    public readonly struct CuffedStateChangeEvent {}
+
     [RegisterComponent]
     [ComponentReference(typeof(SharedCuffableComponent))]
     public sealed class CuffableComponent : SharedCuffableComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
@@ -46,16 +42,12 @@ namespace Content.Server.Cuffs.Components
         [ViewVariables(VVAccess.ReadOnly)]
         public Container Container { get; set; } = default!;
 
-        // TODO: Make a component message
-        public event Action? OnCuffedStateChanged;
-
         private bool _uncuffing;
 
         protected override void Initialize()
         {
             base.Initialize();
-
-            Container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
+            Container = _sysMan.GetEntitySystem<ContainerSystem>().EnsureContainer<Container>(Owner, _componentFactory.GetComponentName(GetType()));
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 
@@ -115,17 +107,19 @@ namespace Content.Server.Cuffs.Components
             CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.Hands.Count() > CuffedHandCount;
             _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
-            OnCuffedStateChanged?.Invoke();
+            var ev = new CuffedStateChangeEvent();
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
             UpdateAlert();
             UpdateHeldItems();
-            Dirty();
+            Dirty(_entMan);
             return true;
         }
 
         public void CuffedStateChanged()
         {
             UpdateAlert();
-            OnCuffedStateChanged?.Invoke();
+            var ev = new CuffedStateChangeEvent();
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
         }
 
         /// <summary>
@@ -205,7 +199,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             var attempt = new UncuffAttemptEvent(user, Owner);
-            _entMan.EventBus.RaiseLocalEvent(user, attempt);
+            _entMan.EventBus.RaiseLocalEvent(user, attempt, true);
 
             if (attempt.Cancelled)
             {
@@ -222,17 +216,18 @@ namespace Content.Server.Cuffs.Components
 
             if (isOwner)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), cuff.StartBreakoutSound.GetSound(), Owner);
+                SoundSystem.Play(cuff.StartBreakoutSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner);
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound.GetSound(), Owner);
+                SoundSystem.Play(cuff.StartUncuffSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner);
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
             {
                 BreakOnUserMove = true,
+                BreakOnTargetMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = true
@@ -247,12 +242,10 @@ namespace Content.Server.Cuffs.Components
 
             if (result != DoAfterStatus.Cancelled)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
+                SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
                 Container.ForceRemove(cuffsToRemove.Value);
-                var transform = _entMan.GetComponent<TransformComponent>(cuffsToRemove.Value);
-                transform.AttachToGridOrMap();
-                transform.WorldPosition = _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
+                _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove.Value);
 
                 if (cuff.BreakOnRemove)
                 {
@@ -268,11 +261,16 @@ namespace Content.Server.Cuffs.Components
                     }
                 }
 
-                CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
+                if (_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent))
+                    CanStillInteract = handsComponent.SortedHands.Count() > CuffedHandCount;
+                else
+                    CanStillInteract = true;
+
                 _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
-                OnCuffedStateChanged?.Invoke();
+                var ev = new CuffedStateChangeEvent();
+                _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
                 UpdateAlert();
-                Dirty();
+                Dirty(_entMan);
 
                 if (CuffedHandCount == 0)
                 {

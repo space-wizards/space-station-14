@@ -1,11 +1,8 @@
-using System;
 using Content.Server.Holiday.Celebrate;
 using Content.Server.Holiday.Greet;
 using Content.Server.Holiday.Interfaces;
 using Content.Server.Holiday.ShouldCelebrate;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Holiday
 {

@@ -1,12 +1,7 @@
-﻿using System.Threading.Tasks;
-using Content.Server.Popups;
+﻿using Content.Server.Popups;
 using Content.Shared.Construction;
-using Content.Shared.Popups;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {

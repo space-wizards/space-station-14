@@ -1,6 +1,7 @@
 ﻿- type: entity
   abstract: true
   id: GasPipeBase
+  parent: BaseItem
   name: pipe
   description: Holds gas.
   placement:
@@ -8,32 +9,6 @@
   components:
   - type: Item
     size: 10
-  - type: Clickable
-  - type: InteractionOutline
-  - type: MovedByPressure
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
-  - type: CollisionWake
-  - type: TileFrictionModifier
-    modifier: 0.5
-  - type: Physics
-    bodyType: Dynamic
-    fixedRotation: false
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        mass: 5
-        mask:
-          - Impassable
-          - VaultImpassable
-        restitution: 0.3  # fite me
-        friction: 0.2
   - type: Transform
     anchored: true
   - type: Damageable
@@ -43,7 +18,6 @@
   - type: PipeAppearance
   - type: Anchorable
   - type: Rotatable
-  - type: Pullable
   - type: Destructible
     thresholds:
     - trigger:
@@ -56,17 +30,19 @@
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: ThinPipe
     netsync: false
+    visible: false
   - type: Appearance
-    visuals:
-    - type: PipeColorVisualizer
+  - type: PipeColorVisuals
   - type: NodeContainer
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
   - type: Tag
     tags:
     - Pipe
+  - type: Physics
+    canCollide: false
   - type: AmbientSound
-    enabled: true
+    enabled: false
     volume: -15
     range: 2
     sound:
@@ -89,7 +65,7 @@
   - type: Sprite
     layers:
       - state: pipeHalf
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: half
@@ -108,7 +84,7 @@
   - type: Sprite
     layers:
       - state: pipeStraight
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: straight
@@ -127,7 +103,7 @@
   - type: Sprite
     layers:
       - state: pipeBend
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: bend
@@ -146,7 +122,7 @@
   - type: Sprite
     layers:
       - state: pipeTJunction
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -167,7 +143,7 @@
   - type: Sprite
     layers:
       - state: pipeFourway
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: fourway

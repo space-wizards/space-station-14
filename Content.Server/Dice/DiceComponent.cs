@@ -1,12 +1,8 @@
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Dice
 {
-    [RegisterComponent, Friend(typeof(DiceSystem))]
+    [RegisterComponent, Access(typeof(DiceSystem))]
     public sealed class DiceComponent : Component
     {
         [ViewVariables]

@@ -1,4 +1,3 @@
-using Content.Server.Storage;
 using Content.Shared.Storage;
 
 namespace Content.Server.Drone.Components

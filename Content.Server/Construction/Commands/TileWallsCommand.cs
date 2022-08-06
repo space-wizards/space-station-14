@@ -1,10 +1,9 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
+using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -18,11 +17,14 @@ namespace Content.Server.Construction.Commands
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
+        public const string TilePrototypeID = "plating";
+        public const string WallTag = "Wall";
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            GridId gridId;
+            EntityUid? gridId;
 
             switch (args.Length)
             {
@@ -33,16 +35,16 @@ namespace Content.Server.Construction.Commands
                         return;
                     }
 
-                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridID;
+                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                     break;
                 case 1:
-                    if (!int.TryParse(args[0], out var id))
+                    if (!EntityUid.TryParse(args[0], out var id))
                     {
-                        shell.WriteLine($"{args[0]} is not a valid integer.");
+                        shell.WriteLine($"{args[0]} is not a valid entity.");
                         return;
                     }
 
-                    gridId = new GridId(id);
+                    gridId = id;
                     break;
                 default:
                     shell.WriteLine(Help);
@@ -63,8 +65,8 @@ namespace Content.Server.Construction.Commands
             }
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var underplating = tileDefinitionManager["underplating"];
+            var tagSystem = EntitySystem.Get<TagSystem>();
+            var underplating = tileDefinitionManager[TilePrototypeID];
             var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
             foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
@@ -74,18 +76,7 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                var prototype = entityManager.GetComponent<MetaDataComponent>(child).EntityPrototype;
-                while (true)
-                {
-                    if (prototype?.Parent == null)
-                    {
-                        break;
-                    }
-
-                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parent);
-                }
-
-                if (prototype?.ID != "base_wall")
+                if (!tagSystem.HasTag(child, WallTag))
                 {
                     continue;
                 }
@@ -100,7 +91,7 @@ namespace Content.Server.Construction.Commands
                 var tile = grid.GetTileRef(childTransform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
-                if (tileDef.ID == "underplating")
+                if (tileDef.ID == TilePrototypeID)
                 {
                     continue;
                 }

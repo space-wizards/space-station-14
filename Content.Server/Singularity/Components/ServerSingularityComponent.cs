@@ -1,12 +1,7 @@
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
 {
@@ -60,6 +55,7 @@ namespace Content.Server.Singularity.Components
                 _ => 0
             };
 
+        [DataField("moveAccumulator")]
         public float MoveAccumulator;
 
         // This is an interesting little workaround.
@@ -86,7 +82,7 @@ namespace Content.Server.Singularity.Components
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
             audioParams.Volume = 5;
-            SoundSystem.Play(Filter.Pvs(Owner), _singularityFormingSound.GetSound(), Owner);
+            SoundSystem.Play(_singularityFormingSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             _singularitySystem.ChangeSingularityLevel(this, 1);
         }
@@ -94,7 +90,7 @@ namespace Content.Server.Singularity.Components
         protected override void Shutdown()
         {
             base.Shutdown();
-            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+            SoundSystem.Play(_singularityCollapsingSound.GetSound(), Filter.Pvs(Owner), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
     }
 }

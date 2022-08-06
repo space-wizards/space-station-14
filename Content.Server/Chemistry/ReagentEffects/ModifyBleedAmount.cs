@@ -1,7 +1,6 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 

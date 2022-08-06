@@ -1,14 +1,14 @@
 - type: job
   id: ResearchDirector
-  name: "research director"
-  head: true
+  name: job-name-rd
+  weight: 10
   startingGear: ResearchDirectorGear
   departments:
   - Command
   - Science
   icon: "ResearchDirector"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Research
@@ -24,7 +24,7 @@
     shoes: ClothingShoesColorBrown
     outerClothing: ClothingOuterCoatLab
     id: RnDPDA
-    ears: ClothingHeadsetScience
+    ears: ClothingHeadsetRD
   innerclothingskirt: ClothingUniformJumpskirtResearchDirector
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled

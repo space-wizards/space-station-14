@@ -1,6 +1,6 @@
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
-using Content.Shared.Acts;
+using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
@@ -54,7 +54,7 @@ namespace Content.Server.Storage.EntitySystems
         /// </summary>
         /// <returns>True if item was hidden inside stash</returns>
         public bool TryHideItem(EntityUid uid, EntityUid userUid, EntityUid itemToHideUid,
-            SecretStashComponent? component = null, SharedItemComponent? item = null,
+            SecretStashComponent? component = null, ItemComponent? item = null,
             MetaDataComponent? itemMeta = null, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref component))

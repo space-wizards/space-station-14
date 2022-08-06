@@ -1,14 +1,13 @@
-using System.Collections.Generic;
 using Content.Shared.Shuttles.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    public sealed class ShuttleComponent : SharedShuttleComponent
+    public sealed class ShuttleComponent : Component
     {
+        [ViewVariables]
+        public bool Enabled = true;
+
         /// <summary>
         /// The cached thrust available for each cardinal direction
         /// </summary>
@@ -23,7 +22,7 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// The thrusters contributing to the angular impulse of the shuttle.
         /// </summary>
-        public readonly List<ThrusterComponent> AngularThrusters = new List<ThrusterComponent>();
+        public readonly List<ThrusterComponent> AngularThrusters = new();
 
         [ViewVariables]
         public float AngularThrust = 0f;

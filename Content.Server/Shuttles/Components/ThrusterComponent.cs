@@ -1,17 +1,10 @@
-using System.Collections.Generic;
-using Content.Server.Shuttles.EntitySystems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Damage;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    [Friend(typeof(ThrusterSystem))]
+    [Access(typeof(ThrusterSystem))]
     public sealed class ThrusterComponent : Component
     {
         /// <summary>

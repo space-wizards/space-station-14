@@ -7,21 +7,5 @@ namespace Content.Client.Markers
     [RegisterComponent]
     public sealed class MarkerComponent : Component
     {
-        protected override void Startup()
-        {
-            base.Startup();
-
-            UpdateVisibility();
-        }
-
-        public void UpdateVisibility()
-        {
-            var system = EntitySystem.Get<MarkerSystem>();
-
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ISpriteComponent? sprite))
-            {
-                sprite.Visible = system.MarkersVisible;
-            }
-        }
     }
 }

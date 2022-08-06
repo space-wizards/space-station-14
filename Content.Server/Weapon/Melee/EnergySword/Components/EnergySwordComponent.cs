@@ -1,9 +1,5 @@
-using System.Collections.Generic;
 using Content.Shared.Damage;
-using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Weapon.Melee.EnergySword
 {
@@ -15,14 +11,24 @@ namespace Content.Server.Weapon.Melee.EnergySword
         public bool Hacked = false;
 
         public bool Activated = false;
-        [DataField("hitSound")]
-        public SoundSpecifier HitSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/eblade1.ogg");
+
+        /// <summary>
+        ///     RGB cycle rate for hacked e-swords.
+        /// </summary>
+        [DataField("cycleRate")]
+        public float CycleRate = 1f;
 
         [DataField("activateSound")]
         public SoundSpecifier ActivateSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/ebladeon.ogg");
 
         [DataField("deActivateSound")]
         public SoundSpecifier DeActivateSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/ebladeoff.ogg");
+
+        [DataField("onHitOn")]
+        public SoundSpecifier OnHitOn { get; set; } = new SoundPathSpecifier("/Audio/Weapons/eblade1.ogg");
+
+        [DataField("onHitOff")]
+        public SoundSpecifier OnHitOff { get; set; } = new SoundPathSpecifier("/Audio/Weapons/genhit1.ogg");
 
         [DataField("colorOptions")]
         public List<Color> ColorOptions = new()
@@ -36,5 +42,8 @@ namespace Content.Server.Weapon.Melee.EnergySword
 
         [DataField("litDamageBonus", required: true)]
         public DamageSpecifier LitDamageBonus = default!;
+
+        [DataField("litDisarmMalus", required: true)]
+        public float litDisarmMalus = 0.6f;
     }
 }

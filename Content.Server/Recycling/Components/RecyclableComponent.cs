@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Recycling.Components
 {
-    [RegisterComponent, Friend(typeof(RecyclerSystem))]
+    [RegisterComponent, Access(typeof(RecyclerSystem))]
     public sealed class RecyclableComponent : Component
     {
         /// <summary>

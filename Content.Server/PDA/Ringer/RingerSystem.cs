@@ -1,16 +1,9 @@
 using Content.Server.UserInterface;
 using Content.Shared.PDA.Ringer;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Server.Player;
 using Robust.Shared.Player;
-using System;
-using System.Collections.Generic;
-using Content.Shared.Audio;
 using Content.Shared.PDA;
-using Content.Shared.Sound;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -113,11 +106,9 @@ namespace Content.Server.PDA.Ringer
                 ringer.TimeElapsed -= NoteDelay;
                 var ringerXform = Transform(ringer.Owner);
 
-                SoundSystem.Play(
+                SoundSystem.Play(GetSound(ringer.Ringtone[ringer.NoteCount]),
                     Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
-                    GetSound(ringer.Ringtone[ringer.NoteCount]),
-                    ringer.Owner,
-                    AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume));
+                    ringer.Owner, AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume));
 
                 ringer.NoteCount++;
 

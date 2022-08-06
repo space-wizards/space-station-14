@@ -1,16 +1,19 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -24,6 +27,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
 
     private void InitializeEquip()
     {
@@ -34,7 +38,7 @@ public abstract partial class InventorySystem
         SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
     }
 
-    protected void QuickEquip(EntityUid uid, SharedItemComponent component, UseInHandEvent args)
+    protected void QuickEquip(EntityUid uid, SharedClothingComponent component, UseInHandEvent args)
     {
         if (!TryComp(args.User, out InventoryComponent? inv)
             || !TryComp(args.User, out SharedHandsComponent? hands)
@@ -48,6 +52,10 @@ public abstract partial class InventorySystem
 
             if (TryGetSlotEntity(args.User, slotDef.Name, out var slotEntity, inv))
             {
+                // Item in slot has to be quick equipable as well
+                if (TryComp(slotEntity, out SharedClothingComponent? item) && !item.QuickEquip)
+                    continue;
+
                 if (!TryUnequip(args.User, slotDef.Name, true, inventory: inv))
                     continue;
 
@@ -73,10 +81,10 @@ public abstract partial class InventorySystem
             return;
 
         var unequippedEvent = new DidUnequipEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(uid, unequippedEvent);
+        RaiseLocalEvent(uid, unequippedEvent, true);
 
         var gotUnequippedEvent = new GotUnequippedEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(args.Entity, gotUnequippedEvent);
+        RaiseLocalEvent(args.Entity, gotUnequippedEvent, true);
     }
 
     private void OnEntInserted(EntityUid uid, InventoryComponent component, EntInsertedIntoContainerMessage args)
@@ -85,10 +93,10 @@ public abstract partial class InventorySystem
            return;
 
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(uid, equippedEvent);
+        RaiseLocalEvent(uid, equippedEvent, true);
 
         var gotEquippedEvent = new GotEquippedEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(args.Entity, gotEquippedEvent);
+        RaiseLocalEvent(args.Entity, gotEquippedEvent, true);
     }
 
     /// <summary>
@@ -110,15 +118,17 @@ public abstract partial class InventorySystem
         if (held != null && itemUid != null)
         {
             _interactionSystem.InteractUsing(actor, held.Value, itemUid.Value,
-                new EntityCoordinates());
+                Transform(itemUid.Value).Coordinates);
             return;
         }
 
-        // un-equip to hands
+        // unequip the item.
         if (itemUid != null)
         {
-            if (_handsSystem.CanPickupAnyHand(actor, itemUid.Value, handsComp: hands) && TryUnequip(actor, ev.Slot, inventory: inventory))
-                _handsSystem.TryPickup(actor, itemUid.Value, checkActionBlocker: false, handsComp: hands);
+            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory))
+                return;
+
+            _handsSystem.PickupOrDrop(actor, item.Value);
             return;
         }
 
@@ -134,23 +144,35 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (_handsSystem.TryDrop(actor, hands.ActiveHand!, doDropInteraction: false, handsComp: hands))
-            TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
-        }
+        if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
+            return;
+
+        var gotUnequipped = new GotUnequippedHandEvent(actor, held.Value, hands.ActiveHand!);
+        var didUnequip = new DidUnequipHandEvent(actor, held.Value, hands.ActiveHand!);
+        RaiseLocalEvent(held.Value, gotUnequipped, false);
+        RaiseLocalEvent(actor, didUnequip, true);
+        RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
+
+        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true);
+    }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
-        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, item);
+        InventoryComponent? inventory = null, SharedClothingComponent? clothing = null) =>
+        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing);
 
     public bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, SharedItemComponent? item = null)
+        InventoryComponent? inventory = null, SharedClothingComponent? clothing = null)
     {
-        if (!Resolve(target, ref inventory, false) || !Resolve(itemUid, ref item, false))
+        if (!Resolve(target, ref inventory, false))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
         }
+
+        // Not required to have, since pockets can take any item.
+        // CanEquip will still check, so we don't have to worry about it.
+        Resolve(itemUid, ref clothing, false);
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
@@ -159,7 +181,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, item))
+        if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
@@ -173,15 +195,22 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if(!silent && item.EquipSound != null && _gameTiming.IsFirstTimePredicted)
+        if(!silent && clothing != null && clothing.EquipSound != null && _gameTiming.IsFirstTimePredicted)
         {
-            var filter = Filter.Pvs(target);
+            Filter filter;
 
-            // don't play double audio for predicted interactions
-            if (predicted)
-                filter.RemoveWhereAttachedEntity(entity => entity == actor);
+            if (_netMan.IsClient)
+                filter = Filter.Local();
+            else
+            {
+                filter = Filter.Pvs(target);
 
-            SoundSystem.Play(filter, item.EquipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
+                // don't play double audio for predicted interactions
+                if (predicted)
+                    filter.RemoveWhereAttachedEntity(entity => entity == actor);
+            }
+
+            SoundSystem.Play(clothing.EquipSound.GetSound(), filter, target, clothing.EquipSound.Params.WithVolume(-2f));
         }
 
         inventory.Dirty();
@@ -193,6 +222,11 @@ public abstract partial class InventorySystem
 
     public bool CanAccess(EntityUid actor, EntityUid target, EntityUid itemUid)
     {
+        // if the item is something like a hardsuit helmet, it may be contained within the hardsuit.
+        // in that case, we check accesibility for the owner-entity instead.
+        if (TryComp(itemUid, out AttachedClothingComponent? attachedComp))
+            itemUid = attachedComp.AttachedUid;
+
         // Can the actor reach the target?
         if (actor != target && !(_interactionSystem.InRangeUnobstructed(actor, target) && _containerSystem.IsInSameOrParentContainer(actor, target)))
             return false;
@@ -215,14 +249,17 @@ public abstract partial class InventorySystem
 
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
         SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null,
-        SharedItemComponent? item = null) =>
-        CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, item);
+        SharedClothingComponent? clothing = null, ItemComponent? item = null) =>
+        CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, clothing, item);
 
-    public bool CanEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null, SharedItemComponent? item = null)
+    public bool CanEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason, SlotDefinition? slotDefinition = null,
+        InventoryComponent? inventory = null, SharedClothingComponent? clothing = null, ItemComponent? item = null)
     {
         reason = "inventory-component-can-equip-cannot";
-        if (!Resolve(target, ref inventory, false) || !Resolve(itemUid, ref item, false))
+        if (!Resolve(target, ref inventory, false))
             return false;
+
+        Resolve(itemUid, ref clothing, ref item, false);
 
         if (slotDefinition == null && !TryGetSlot(target, slot, out slotDefinition, inventory: inventory))
             return false;
@@ -230,7 +267,9 @@ public abstract partial class InventorySystem
         if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
             return false;
 
-        if(!item.SlotFlags.HasFlag(slotDefinition.SlotFlags) && (!slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) || item.Size > (int) ReferenceSizes.Pocket))
+        var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) && item is { Size: <= (int) ReferenceSizes.Pocket };
+        if (clothing == null && !fittingInPocket
+            || clothing != null && !clothing.Slots.HasFlag(slotDefinition.SlotFlags) && !fittingInPocket)
         {
             reason = "inventory-component-can-equip-does-not-fit";
             return false;
@@ -243,7 +282,7 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent);
+        RaiseLocalEvent(target, attemptEvent, true);
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
@@ -254,7 +293,7 @@ public abstract partial class InventorySystem
         {
             //reuse the event. this is gucci, right?
             attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent);
+            RaiseLocalEvent(actor, attemptEvent, true);
             if (attemptEvent.Cancelled)
             {
                 reason = attemptEvent.Reason ?? reason;
@@ -263,7 +302,7 @@ public abstract partial class InventorySystem
         }
 
         var itemAttemptEvent = new BeingEquippedAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(itemUid, itemAttemptEvent);
+        RaiseLocalEvent(itemUid, itemAttemptEvent, true);
         if (itemAttemptEvent.Cancelled)
         {
             reason = itemAttemptEvent.Reason ?? reason;
@@ -273,18 +312,18 @@ public abstract partial class InventorySystem
         return true;
     }
 
-    public bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false,
-        InventoryComponent? inventory = null) => TryUnequip(uid, uid, slot, silent, force, inventory);
+    public bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false, bool predicted = false,
+        InventoryComponent? inventory = null, SharedClothingComponent? clothing = null) => TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing);
 
     public bool TryUnequip(EntityUid actor, EntityUid target, string slot, bool silent = false,
-        bool force = false, InventoryComponent? inventory = null) =>
-        TryUnequip(actor, target, slot, out _, silent, force, inventory);
+        bool force = false, bool predicted = false, InventoryComponent? inventory = null, SharedClothingComponent? clothing = null) =>
+        TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing);
 
-    public bool TryUnequip(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false,
-        InventoryComponent? inventory = null) => TryUnequip(uid, uid, slot, out removedItem, silent, force, inventory);
+    public bool TryUnequip(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false, bool predicted = false,
+        InventoryComponent? inventory = null, SharedClothingComponent? clothing = null) => TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing);
 
     public bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false,
-        bool force = false, InventoryComponent? inventory = null)
+        bool force = false, bool predicted = false, InventoryComponent? inventory = null, SharedClothingComponent? clothing = null)
     {
         removedItem = null;
         if (!Resolve(target, ref inventory, false))
@@ -321,7 +360,7 @@ public abstract partial class InventorySystem
             if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
             {
                 //this recursive call might be risky
-                TryUnequip(actor, target, slotDef.Name, true, true, inventory);
+                TryUnequip(actor, target, slotDef.Name, true, true, predicted, inventory);
             }
         }
 
@@ -339,6 +378,24 @@ public abstract partial class InventorySystem
         }
 
         Transform(removedItem.Value).Coordinates = Transform(target).Coordinates;
+
+        if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null && _gameTiming.IsFirstTimePredicted)
+        {
+            Filter filter;
+
+            if (_netMan.IsClient)
+                filter = Filter.Local();
+            else
+            {
+                filter = Filter.Pvs(target);
+
+                // don't play double audio for predicted interactions
+                if (predicted)
+                    filter.RemoveWhereAttachedEntity(entity => entity == actor);
+            }
+
+            SoundSystem.Play(clothing.UnequipSound.GetSound(), filter, target, clothing.UnequipSound.Params.WithVolume(-2f));
+        }
 
         inventory.Dirty();
 
@@ -377,7 +434,7 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsUnequippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent);
+        RaiseLocalEvent(target, attemptEvent, true);
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
@@ -388,7 +445,7 @@ public abstract partial class InventorySystem
         {
             //reuse the event. this is gucci, right?
             attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent);
+            RaiseLocalEvent(actor, attemptEvent, true);
             if (attemptEvent.Cancelled)
             {
                 reason = attemptEvent.Reason ?? reason;
@@ -397,7 +454,7 @@ public abstract partial class InventorySystem
         }
 
         var itemAttemptEvent = new BeingUnequippedAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(itemUid, itemAttemptEvent);
+        RaiseLocalEvent(itemUid, itemAttemptEvent, true);
         if (itemAttemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;

@@ -12,12 +12,14 @@ namespace Content.Shared.Storage;
 [DataDefinition]
 public struct EntitySpawnEntry : IPopulateDefaultValues
 {
-    [DataField("id", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrototypeId;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? PrototypeId;
 
     /// <summary>
     ///     The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("prob")] public float SpawnProbability;
 
     /// <summary>
@@ -41,13 +43,24 @@ public struct EntitySpawnEntry : IPopulateDefaultValues
     /// </code>
     ///     </example>
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("orGroup")] public string? GroupId;
 
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("amount")] public int Amount;
+
+    /// <summary>
+    ///     How many of this can be spawned, in total.
+    ///     If this is lesser or equal to <see cref="Amount"/>, it will spawn <see cref="Amount"/> exactly.
+    ///     Otherwise, it chooses a random value between <see cref="Amount"/> and <see cref="MaxAmount"/> on spawn.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("maxAmount")] public int MaxAmount;
 
     public void PopulateDefaultValues()
     {
         Amount = 1;
+        MaxAmount = 1;
         SpawnProbability = 1;
     }
 }
@@ -70,12 +83,12 @@ public static class EntitySpawnCollection
     /// <param name="entries">The entity spawn entries.</param>
     /// <param name="random">Resolve param.</param>
     /// <returns>A list of entity prototypes that should be spawned.</returns>
-    public static List<string> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
+    public static List<string?> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
         IRobustRandom? random = null)
     {
         IoCManager.Resolve(ref random);
 
-        var spawned = new List<string>();
+        var spawned = new List<string?>();
         var orGroupedSpawns = new Dictionary<string, OrGroup>();
 
         // collect groups together, create singular items that pass probability
@@ -100,7 +113,12 @@ public static class EntitySpawnCollection
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (entry.SpawnProbability != 1f && !random.Prob(entry.SpawnProbability)) continue;
 
-            for (var i = 0; i < entry.Amount; i++)
+            var amount = entry.Amount;
+
+            if (entry.MaxAmount > amount)
+                amount = random.Next(amount, entry.MaxAmount);
+
+            for (var i = 0; i < amount; i++)
             {
                 spawned.Add(entry.PrototypeId);
             }
@@ -118,7 +136,13 @@ public static class EntitySpawnCollection
                 cumulative += entry.SpawnProbability;
                 if (diceRoll > cumulative) continue;
                 // Dice roll succeeded, add item and break loop
-                for (var index = 0; index < entry.Amount; index++)
+
+                var amount = entry.Amount;
+
+                if (entry.MaxAmount > amount)
+                    amount = random.Next(amount, entry.MaxAmount);
+
+                for (var index = 0; index < amount; index++)
                 {
                     spawned.Add(entry.PrototypeId);
                 }

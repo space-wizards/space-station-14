@@ -1,18 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Random;
 
 namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [ComponentReference(typeof(DisposalTubeComponent))]
     public sealed class DisposalEntryComponent : DisposalTubeComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;

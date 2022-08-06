@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Hands.Components;
 using Content.Server.PDA;
 using Content.Server.Players;
@@ -20,12 +19,9 @@ using Content.Shared.MobState.Components;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.Traitor.Uplink;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -41,6 +37,8 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MaxTimeRestartRuleSystem _restarter = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     public override string Prototype => "TraitorDeathMatch";
 
@@ -65,7 +63,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var session = ev.Player;
@@ -146,7 +144,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnGhostAttempt(GhostAttemptHandleEvent ev)
     {
-        if (!Enabled || ev.Handled)
+        if (!RuleAdded || ev.Handled)
             return;
 
         ev.Handled = true;
@@ -183,7 +181,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var lines = new List<string>();
@@ -248,10 +246,17 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
         _robustRandom.Shuffle(ents);
         var foundATarget = false;
         bestTarget = EntityCoordinates.Invalid;
-        var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
         foreach (var entity in ents)
         {
-            if (!atmosphereSystem.IsTileMixtureProbablySafe(Transform(entity).Coordinates))
+            var transform = Transform(entity);
+
+            if (transform.GridUid == null || transform.MapUid == null)
+                continue;
+
+            var position = _transformSystem.GetGridOrMapTilePosition(entity, transform);
+
+            if (!_atmosphereSystem.IsTileMixtureProbablySafe(transform.GridUid.Value, transform.MapUid.Value, position))
                 continue;
 
             var distanceFromNearest = float.PositiveInfinity;

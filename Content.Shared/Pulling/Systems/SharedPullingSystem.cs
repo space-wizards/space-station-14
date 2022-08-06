@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
@@ -7,16 +5,11 @@ using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
@@ -49,6 +42,7 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerInsert);
+            SubscribeLocalEvent<SharedPullableComponent, JointRemovedEvent>(OnJointRemoved);
 
             SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
             SubscribeLocalEvent<SharedPullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
@@ -60,9 +54,31 @@ namespace Content.Shared.Pulling
                 .Register<SharedPullingSystem>();
         }
 
+        private void OnJointRemoved(EntityUid uid, SharedPullableComponent component, JointRemovedEvent args)
+        {
+            if (component.Puller != args.OtherBody.Owner)
+                return;
+
+            // Do we have some other join with our Puller?
+            // or alternatively:
+            // TODO track the relevant joint.
+
+            if (TryComp(uid, out JointComponent? joints))
+            {
+                foreach (var jt in joints.GetJoints.Values)
+                {
+                    if (jt.BodyAUid == component.Puller || jt.BodyBUid == component.Puller)
+                        return;
+                }
+            }
+
+            // No more joints with puller -> force stop pull.
+            _pullSm.ForceDisconnectPullable(component);
+        }
+
         private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetVerbsEvent<Verb> args)
         {
-            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             // Are they trying to pull themselves up by their bootstraps?

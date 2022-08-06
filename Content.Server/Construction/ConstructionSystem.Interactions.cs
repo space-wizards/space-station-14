@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
 using Content.Shared.Construction;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Construction
 {
@@ -30,7 +28,7 @@ namespace Content.Server.Construction
             #endregion
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
-            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent);
+            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)});
         }
 
         /// <summary>

@@ -1,9 +1,6 @@
-using Content.Server.Station;
+using Content.Server.Station.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Station;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands.Station;
 
@@ -25,16 +22,18 @@ public sealed class ListStationJobsCommand : IConsoleCommand
         }
 
         var stationSystem = EntitySystem.Get<StationSystem>();
+        var stationJobs = EntitySystem.Get<StationJobsSystem>();
 
-        if (!uint.TryParse(args[0], out var station) || !stationSystem.StationInfo.ContainsKey(new StationId(station)))
+        if (!int.TryParse(args[0], out var station) || !stationSystem.Stations.Contains(new EntityUid(station)))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;
         }
 
-        foreach (var (job, amount) in stationSystem.StationInfo[new StationId(station)].JobList)
+        foreach (var (job, amount) in stationJobs.GetJobs(new EntityUid(station)))
         {
-            shell.WriteLine($"{job}: {amount}");
+            var amountText = amount is null ? "Infinite" : amount.ToString();
+            shell.WriteLine($"{job}: {amountText}");
         }
     }
 }

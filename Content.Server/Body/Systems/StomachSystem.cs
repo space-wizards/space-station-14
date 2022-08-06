@@ -3,8 +3,6 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
@@ -18,6 +16,7 @@ namespace Content.Server.Body.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<StomachComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         public override void Update(float frameTime)
@@ -75,6 +74,20 @@ namespace Content.Server.Body.Systems
                 _solutionContainerSystem.TryAddSolution((mech.Body).Owner, bodySolution, transferSolution);
             }
         }
+
+    private void OnApplyMetabolicMultiplier(EntityUid uid, StomachComponent component, ApplyMetabolicMultiplierEvent args)
+    {
+        if (args.Apply)
+        {
+            component.UpdateInterval *= args.Multiplier;
+            return;
+        }
+        // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+        component.UpdateInterval /= args.Multiplier;
+        // Reset the accumulator properly
+        if (component.AccumulatedFrameTime >= component.UpdateInterval)
+            component.AccumulatedFrameTime = component.UpdateInterval;
+    }
 
         private void OnComponentInit(EntityUid uid, StomachComponent component, ComponentInit args)
         {

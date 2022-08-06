@@ -77,6 +77,43 @@
         temperature: 293.15
 
 - type: entity
+  id: NitrogenTankFilled
+  parent: RedOxygenTankFilled
+  suffix: Filled
+  name: nitrogen tank
+  components:
+    - type: GasTank
+      outputPressure: 101.325
+      air:
+        volume: 70
+        moles:
+          - 0 # oxygen
+          - 22.6293856 # nitrogen
+        temperature: 293.15
+
+- type: entity
+  id: NitrousOxideTankFilled
+  parent: NitrousOxideTank
+  suffix: Filled
+  name: nitrous oxide tank
+  components:
+    - type: GasTank
+      outputPressure: 101.325
+      air:
+        volume: 70
+        moles:
+          - 20.5 # oxygen
+          - 0 # Nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 # Water vapor
+          - 0 # Miasma
+          - 2 # N2O
+        temperature: 293.15
+
+
+- type: entity
   id: PlasmaTankFilled
   parent: PlasmaTank
   name: plasma tank

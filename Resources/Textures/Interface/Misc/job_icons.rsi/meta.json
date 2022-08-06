@@ -17,6 +17,9 @@
             "name": "Botanist"
         },
         {
+            "name": "Boxer"
+        },
+        {
             "name": "AtmosphericTechnician"
         },
         {
@@ -83,7 +86,7 @@
             "name": "ShaftMiner"
         },
         {
-            "name": "Assistant"
+            "name": "Passenger"
         },
         {
             "name": "ChiefEngineer"
@@ -111,6 +114,24 @@
         },
         {
             "name": "Musician"
+        },
+        {
+            "name": "Reporter"
+        },
+        {
+            "name": "Psychologist"
+        },
+        {
+            "name": "MedicalIntern"
+        },
+        {
+            "name": "TechnicalAssistant"
+        },
+        {
+            "name": "ServiceWorker"
+        },
+        {
+            "name": "SecurityCadet"
         }
     ]
 }

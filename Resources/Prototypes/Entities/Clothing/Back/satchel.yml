@@ -7,17 +7,19 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 9999
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - back
-    sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
     capacity: 100
-    storageSoundCollection:
-      collection: storageRustle
-    
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+
 - type: entity
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelEngineering
@@ -25,8 +27,6 @@
   description: A tough satchel with extra pockets.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/engineering.rsi
-  - type: Clothing
     sprite: Clothing/Back/Satchels/engineering.rsi
 
 - type: entity
@@ -37,8 +37,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/medical.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/medical.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -47,8 +45,6 @@
   description: A sterile satchel with chemist colours.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/chemistry.rsi
-  - type: Clothing
     sprite: Clothing/Back/Satchels/chemistry.rsi
 
 - type: entity
@@ -59,8 +55,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/science.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/science.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -69,8 +63,6 @@
   description: A robust satchel for security related needs.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/security.rsi
-  - type: Clothing
     sprite: Clothing/Back/Satchels/security.rsi
 
 - type: entity
@@ -81,8 +73,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/captain.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/captain.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -91,8 +81,6 @@
   description: A satchel made of all natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/hydroponics.rsi
-  - type: Clothing
     sprite: Clothing/Back/Satchels/hydroponics.rsi
 
 - type: entity
@@ -108,7 +96,5 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/holding.rsi
   - type: Storage
     capacity: 10000

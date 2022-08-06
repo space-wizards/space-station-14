@@ -31,7 +31,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
     private void OnAppearanceChanged(EntityUid uid, SubFloorHideComponent component, ref AppearanceChangeEvent args)
     {
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (args.Sprite == null)
             return;
 
         args.Component.TryGetData(SubFloorVisuals.Covered, out bool covered);
@@ -43,7 +43,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         var transparency = scannerRevealed ? component.ScannerTransparency : 1f;
 
         // set visibility & color of each layer
-        foreach (var layer in sprite.AllLayers)
+        foreach (var layer in args.Sprite.AllLayers)
         {
             // pipe connection visuals are updated AFTER this, and may re-hide some layers
             layer.Visible = revealed; 
@@ -53,16 +53,19 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         }
 
         // Is there some layer that is always visible?
-        if (sprite.LayerMapTryGet(SubfloorLayers.FirstLayer, out var firstLayer))
+        var hasVisibleLayer = false;
+        foreach (var layerKey in component.VisibleLayers)
         {
-            var layer = sprite[firstLayer];
+            if (!args.Sprite.LayerMapTryGet(layerKey, out var layerIndex))
+                continue;
+
+            var layer = args.Sprite[layerIndex];
             layer.Visible = true;
             layer.Color = layer.Color.WithAlpha(1f);
-            sprite.Visible = true;
-            return;
+            hasVisibleLayer = true;
         }
 
-        sprite.Visible = revealed;
+        args.Sprite.Visible = hasVisibleLayer || revealed;
     }
 
     private void UpdateAll()
@@ -72,9 +75,4 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
             _appearanceSystem.MarkDirty(appearance);
         }
     }
-}
-
-public enum SubfloorLayers : byte
-{
-    FirstLayer, // always visible. E.g. vent part of a vent..
 }

@@ -52,9 +52,9 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 # Containers
 - type: entity

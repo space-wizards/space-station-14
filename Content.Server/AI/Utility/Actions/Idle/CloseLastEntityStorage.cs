@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Operators.Movement;
@@ -10,7 +8,6 @@ using Content.Server.AI.Utility.Considerations.State;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Inventory;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Idle
 {

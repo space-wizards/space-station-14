@@ -1,8 +1,6 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using System;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Radio;
 
 namespace Content.Server.Salvage
 {
@@ -34,6 +32,11 @@ namespace Content.Server.Salvage
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("magnetState")]
         public MagnetState MagnetState = MagnetState.Inactive;
+
+        [ViewVariables]
+        [DataField("salvageChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+        public string SalvageChannel = "Supply";
+
     }
     public record struct MagnetState(MagnetStateType StateType, TimeSpan Until)
     {

@@ -1,18 +1,12 @@
-using System;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-[Friend(typeof(ApcSystem))]
+[Access(typeof(ApcSystem))]
 public sealed class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]

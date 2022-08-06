@@ -1,9 +1,6 @@
 using Content.Server.Plants.Systems;
 using Content.Server.Storage.Components;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Plants.Components
 {
@@ -12,7 +9,7 @@ namespace Content.Server.Plants.Components
     ///     Gently rustle after each interaction with plant.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(PottedPlantHideSystem))]
+    [Access(typeof(PottedPlantHideSystem))]
     public sealed class PottedPlantHideComponent : Component
     {
         [DataField("rustleSound")]

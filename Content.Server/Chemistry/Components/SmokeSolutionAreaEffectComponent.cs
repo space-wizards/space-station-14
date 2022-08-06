@@ -5,8 +5,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -36,7 +34,7 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             if (_entMan.TryGetComponent(entity, out InternalsComponent? internals) &&
-                internals.AreInternalsWorking())
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InternalsSystem>().AreInternalsWorking(internals))
                 return;
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();

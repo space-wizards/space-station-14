@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using Content.Server.AI.Components;
 using Content.Shared.Damage;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 
 namespace Content.Server.AI.WorldState.States.Mobs
@@ -18,7 +15,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
             var result = new List<EntityUid>();
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(Owner, out AiControllerComponent? controller))
+            if (!entMan.TryGetComponent(Owner, out NPCComponent? controller))
             {
                 return result;
             }

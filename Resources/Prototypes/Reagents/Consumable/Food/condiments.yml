@@ -1,73 +1,80 @@
 - type: reagent
   id: Astrotame
-  name: Astrotame
+  name: reagent-name-astrotame
   group: Foods
-  desc: The sweetness of a thousand sugars but none of the calories.
-  physicalDesc: sugary
+  desc: reagent-desc-astrotame
+  physicalDesc: reagent-physical-desc-sugary
   color: aquamarine
 
 - type: reagent
   id: BbqSauce
-  name: BBQ sauce
+  name: reagent-name-bbq-sauce
   group: Foods
-  desc: Hand wipes not included.
-  physicalDesc: gloopy # splurgy
+  desc: reagent-desc-bbq-sauce
+  physicalDesc: reagent-physical-desc-gloopy
   color: darkred
 
 - type: reagent
   id: Cornoil
-  name: corn oil
+  name: reagent-name-cornoil
   group: Foods
-  desc: Corn oil, A delicious oil used in cooking. Made from corn.
-  physicalDesc: oily
+  desc: reagent-desc-cornoil
+  physicalDesc: reagent-physical-desc-oily
   color: yellow
 
 - type: reagent
   id: Frostoil
-  name: frostoil
+  name: reagent-name-frostoil
   group: Foods
-  desc: Leaves the tongue numb in its passage.
-  physicalDesc: cold
+  desc: reagent-desc-frostoil
+  physicalDesc: reagent-physical-desc-cold
   color: skyblue
 
 - type: reagent
   id: HorseradishSauce
-  name: horseradish sauce
+  name: reagent-name-horseradish-sauce
   group: Foods
-  desc: Smelly horseradish sauce.
-  physicalDesc: overpowering
+  desc: reagent-desc-horseradish-sauce
+  physicalDesc: reagent-physical-desc-overpowering
   color: gray
 
 - type: reagent
   id: Hotsauce
-  name: hotsauce
+  name: reagent-name-hotsauce
   group: Foods
-  desc: Burns so good.
-  physicalDesc: spicy
+  desc: reagent-desc-hotsauce
+  physicalDesc: reagent-physical-desc-spicy
   color: red
 
 - type: reagent
   id: Ketchup
-  name: ketchup
+  name: reagent-name-ketchup
   group: Foods
-  desc: Made from pureed tomatoes and flavored with spices.
-  physicalDesc: tangy
+  desc: reagent-desc-ketchup
+  physicalDesc: reagent-physical-desc-tangy
   color: red
 
 - type: reagent
   id: Soysauce
-  name: soy sauce
+  name: reagent-name-soysauce
   group: Foods
-  desc: A salty soy-based flavoring.
-  physicalDesc: salty
+  desc: reagent-desc-soysauce
+  physicalDesc: reagent-physical-desc-salty
   color: saddlebrown
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 0.5
+      - !type:SatiateThirst
+        factor: -0.5 # high salt content
 
 - type: reagent
   id: TableSalt
-  name: table salt
+  name: reagent-name-table-salt
   group: Foods
-  desc: Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
-  physicalDesc: grainy
+  desc: reagent-desc-table-salt
+  physicalDesc: reagent-physical-desc-grainy
   color: "#a1000b"
   boilingPoint: 1465.0
   meltingPoint: 800.7

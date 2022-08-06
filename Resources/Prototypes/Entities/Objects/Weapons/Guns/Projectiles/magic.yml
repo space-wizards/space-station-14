@@ -1,0 +1,113 @@
+﻿- type: entity
+  id: ProjectileFireball
+  name: fireball
+  description: You better GITTAH WEIGH.
+  parent: BulletRocket
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 40
+    intensitySlope: 6
+    totalIntensity: 200
+    maxTileBreak: 0
+
+- type: entity
+  id: ProjectilePolyboltBase
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: '#00FF00'
+  - type: Projectile
+    damage:
+      types:
+        Poison: 5
+
+- type: entity
+  id: ProjectilePolyboltCarp
+  parent: ProjectilePolyboltBase
+  name: carp polybolt
+  description: Nooo, I don't wanna be fish!
+  noSpawn: true
+  components:
+  - type: PolymorphOnCollide
+    polymorph: WizardForcedCarp
+    whitelist:
+      components:
+      - Body
+
+- type: entity
+  id: ProjectilePolyboltMonkey
+  parent: ProjectilePolyboltBase
+  name: monkey polybolt
+  description: Nooo, I don't wanna be monkey!
+  noSpawn: true
+  components:
+  - type: PolymorphOnCollide
+    polymorph: WizardForcedMonkey
+    whitelist:
+      components:
+      - Body
+
+- type: entity
+  id: ProjectilePolyboltDoor
+  parent: ProjectilePolyboltBase
+  name: door polybolt
+  description: Nooo, I don't wanna be door!
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: brown
+  - type: PolymorphOnCollide
+    polymorph: WizardWallDoor
+    whitelist:
+      components:
+      - Airlock
+      - Firelock
+      tags:
+      - Wall
+
+- type: entity
+  id: ProjectileHealingBolt
+  name: healing bolt
+  description: I COMMAND YOU TO LIVE!
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: white
+  - type: Projectile
+    damage:
+      groups: # good enough. Maybe make it call the rejuvenate command later.
+        Brute: -900
+        Burn: -900
+        Airloss: -600
+        Toxin: -600
+    ignoreResistances: true
+
+- type: entity
+  id: BulletInstakillMagic
+  name: magical lead cylinder
+  parent: BaseBulletHighVelocity
+  noSpawn: true
+  description: This looks familiar.
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 300
+    ignoreResistances: true

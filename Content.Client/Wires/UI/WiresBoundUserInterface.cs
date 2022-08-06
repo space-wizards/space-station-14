@@ -1,6 +1,6 @@
-﻿using Robust.Client.GameObjects;
+using Content.Shared.Wires;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Client.Wires.UI
 {
@@ -18,7 +18,7 @@ namespace Content.Client.Wires.UI
 
             _menu = new WiresMenu(this);
             _menu.OnClose += Close;
-            _menu.OpenCentered();
+            _menu.OpenCenteredLeft();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

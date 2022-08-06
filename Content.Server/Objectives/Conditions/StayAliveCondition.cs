@@ -1,7 +1,5 @@
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/ae2258d9235752ac6d80ec11e36553fe3b6ae59e, modified by Peptide",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+          "name": "normal-unshaded",
+          "delays": [
+            [
+              2.5,
+              0.1,
+              3.4,
+              0.1
+            ]
+          ]
+        },
+        {
+          "name": "broken"
+        },
+        {
+          "name": "off"
+        },
+        {
+          "name": "panel"
+        }
+    ]
+}

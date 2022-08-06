@@ -1,7 +1,5 @@
 using Content.Server.Explosion.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {

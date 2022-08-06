@@ -1,8 +1,3 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Kudzu;
 
 /// <summary>
@@ -10,7 +5,7 @@ namespace Content.Server.Kudzu;
 /// ONLY USE THIS FOR ANCHORED OBJECTS. An error will be logged if not anchored/static.
 /// Currently does not support growing in space.
 /// </summary>
-[RegisterComponent, Friend(typeof(SpreaderSystem))]
+[RegisterComponent, Access(typeof(SpreaderSystem))]
 public sealed class SpreaderComponent : Component
 {
     /// <summary>

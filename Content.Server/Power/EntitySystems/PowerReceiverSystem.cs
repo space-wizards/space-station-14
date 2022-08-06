@@ -60,7 +60,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverConnected(EntityUid uid, ApcPowerProviderComponent provider, ExtensionCableSystem.ReceiverConnectedEvent args)
         {
-            if (EntityManager.TryGetComponent(args.Receiver.Owner, out ApcPowerReceiverComponent receiver))
+            if (EntityManager.TryGetComponent(args.Receiver.Owner, out ApcPowerReceiverComponent? receiver))
             {
                 provider.AddReceiver(receiver);
             }
@@ -68,7 +68,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverDisconnected(EntityUid uid, ApcPowerProviderComponent provider, ExtensionCableSystem.ReceiverDisconnectedEvent args)
         {
-            if (EntityManager.TryGetComponent(args.Receiver.Owner, out ApcPowerReceiverComponent receiver))
+            if (EntityManager.TryGetComponent(args.Receiver.Owner, out ApcPowerReceiverComponent? receiver))
             {
                 provider.RemoveReceiver(receiver);
             }
@@ -78,10 +78,23 @@ namespace Content.Server.Power.EntitySystems
         {
             receiver.NetworkLoad.LinkedNetwork = default;
 
-            RaiseLocalEvent(receiver.Owner, new PowerChangedEvent(receiver.Powered, receiver.NetworkLoad.ReceivingPower));
+            RaiseLocalEvent(receiver.Owner, new PowerChangedEvent(receiver.Powered, receiver.NetworkLoad.ReceivingPower), true);
 
             if (TryComp(receiver.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(PowerDeviceVisuals.Powered, receiver.Powered);
+        }
+
+        /// <summary>
+        /// If this takes power, it returns whether it has power.
+        /// Otherwise, it returns 'true' because if something doesn't take power
+        /// it's effectively always powered.
+        /// </summary>
+        public bool IsPowered(EntityUid uid, ApcPowerReceiverComponent? receiver = null)
+        {
+            if (!Resolve(uid, ref receiver, false))
+                return true;
+
+            return receiver.Powered;
         }
     }
 }

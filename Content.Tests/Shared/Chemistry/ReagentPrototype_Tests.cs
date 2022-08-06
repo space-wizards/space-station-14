@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using NUnit.Framework;
 using Robust.Shared.IoC;
@@ -33,8 +32,8 @@ namespace Content.Tests.Shared.Chemistry
 
                 Assert.That(defType, Is.EqualTo("reagent"));
                 Assert.That(newReagent.ID, Is.EqualTo("H2"));
-                Assert.That(newReagent.Name, Is.EqualTo("Hydrogen"));
-                Assert.That(newReagent.Description, Is.EqualTo("A light, flammable gas."));
+                Assert.That(newReagent.LocalizedName, Is.EqualTo("Hydrogen"));
+                Assert.That(newReagent.LocalizedDescription, Is.EqualTo("A light, flammable gas."));
                 Assert.That(newReagent.SubstanceColor, Is.EqualTo(Color.Teal));
             }
         }

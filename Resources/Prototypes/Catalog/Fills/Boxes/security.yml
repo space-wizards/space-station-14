@@ -57,3 +57,17 @@
     layers:
       - state: box_security
       - state: ziptie
+
+- type: entity
+  name: forensic pad box
+  parent: BoxCardboard
+  id: BoxForensicPad
+  description: A box of forensic pads.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ForensicPad
+        amount: 10
+  - type: Sprite
+    layers:
+      - state: box_security

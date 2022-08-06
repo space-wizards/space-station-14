@@ -1,7 +1,4 @@
 using Content.Server.Traitor.Uplink.Components;
-using Content.Shared.Traitor.Uplink;
-using Robust.Server.Player;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Traitor.Uplink
 {

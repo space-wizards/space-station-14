@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+﻿using Robust.Shared.Map;
 
 namespace Content.Shared.Construction.Conditions
 {

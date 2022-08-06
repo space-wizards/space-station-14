@@ -1,9 +1,7 @@
-using Content.Shared.MobState.Components;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
-using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -19,15 +17,48 @@ namespace Content.Client.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, frameTime);
 
-            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player ||
-                !TryComp(player, out IMoverComponent? mover) ||
-                !TryComp(player, out PhysicsComponent? body) ||
+            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player)
+                return;
+
+            if (TryComp<RelayInputMoverComponent>(player, out var relayMover))
+            {
+                if (relayMover.RelayEntity != null)
+                    HandleClientsideMovement(relayMover.RelayEntity.Value, frameTime);
+            }
+
+            HandleClientsideMovement(player, frameTime);
+        }
+
+        private void HandleClientsideMovement(EntityUid player, float frameTime)
+        {
+            if (!TryComp(player, out InputMoverComponent? mover) ||
                 !TryComp(player, out TransformComponent? xform))
             {
                 return;
             }
 
-            if (xform.GridID != GridId.Invalid)
+            PhysicsComponent? body = null;
+            TransformComponent? xformMover = xform;
+
+            if (mover.ToParent && HasComp<RelayInputMoverComponent>(xform.ParentUid))
+            {
+                if (!TryComp(xform.ParentUid, out body) ||
+                    !TryComp(xform.ParentUid, out xformMover))
+                {
+                    return;
+                }
+
+                if (TryComp<InputMoverComponent>(xform.ParentUid, out var parentMover))
+                {
+                    mover.LastGridAngle = parentMover.LastGridAngle;
+                }
+            }
+            else if (!TryComp(player, out body))
+            {
+                return;
+            }
+
+            if (xform.GridUid != null)
                 mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
             // Essentially we only want to set our mob to predicted so every other entity we just interpolate
@@ -40,10 +71,13 @@ namespace Content.Client.Physics.Controllers
 
             if (TryComp(player, out JointComponent? jointComponent))
             {
-                foreach (var joint in jointComponent.GetJoints)
+                foreach (var joint in jointComponent.GetJoints.Values)
                 {
-                    joint.BodyA.Predict = true;
-                    joint.BodyB.Predict = true;
+                    if (TryComp(joint.BodyAUid, out PhysicsComponent? physics))
+                        physics.Predict = true;
+
+                    if (TryComp(joint.BodyBUid, out physics))
+                        physics.Predict = true;
                 }
             }
 
@@ -54,33 +88,17 @@ namespace Content.Client.Physics.Controllers
                 {
                     pullerBody.Predict = false;
                     body.Predict = false;
-                }
-            }
 
-            // If we're pulling a mob then make sure that isn't predicted so it doesn't fuck our velocity up.
-            if (TryComp(player, out SharedPullerComponent? pullerComp))
-            {
-                if (pullerComp.Pulling is {Valid: true} pulling &&
-                    HasComp<MobStateComponent>(pulling) &&
-                    TryComp(pulling, out PhysicsComponent? pullingBody))
-                {
-                    pullingBody.Predict = false;
+                    if (TryComp<SharedPullerComponent>(player, out var playerPuller) && playerPuller.Pulling != null &&
+                        TryComp<PhysicsComponent>(playerPuller.Pulling, out var pulledBody))
+                    {
+                        pulledBody.Predict = false;
+                    }
                 }
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            if (TryComp(player, out IMobMoverComponent? mobMover))
-            {
-                HandleMobMovement(mover, body, mobMover, xform);
-                return;
-            }
-
-            HandleKinematicMovement(mover, body);
-        }
-
-        protected override Filter GetSoundPlayers(EntityUid mover)
-        {
-            return Filter.Local();
+            HandleMobMovement(mover, body, xformMover, frameTime);
         }
 
         protected override bool CanSound()

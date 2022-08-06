@@ -1,13 +1,10 @@
-﻿using System;
-using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
@@ -36,7 +33,7 @@ namespace Content.Shared.Disposal
             var otherBody = args.BodyB.Owner;
 
             // Items dropped shouldn't collide but items thrown should
-            if (EntityManager.HasComponent<SharedItemComponent>(otherBody) &&
+            if (EntityManager.HasComponent<ItemComponent>(otherBody) &&
                 !EntityManager.HasComponent<ThrownItemComponent>(otherBody))
             {
                 args.Cancel();
@@ -63,7 +60,7 @@ namespace Content.Shared.Disposal
                 return false;
 
             // TODO: Probably just need a disposable tag.
-            if (!EntityManager.TryGetComponent(entity, out SharedItemComponent? storable) &&
+            if (!EntityManager.TryGetComponent(entity, out ItemComponent? storable) &&
                 !EntityManager.HasComponent<SharedBodyComponent>(entity))
             {
                 return false;

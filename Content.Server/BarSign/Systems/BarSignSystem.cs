@@ -1,12 +1,7 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Power.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -24,7 +19,8 @@ namespace Content.Server.BarSign.Systems
 
         private void UpdateBarSignVisuals(EntityUid owner, BarSignComponent component, PowerChangedEvent args)
         {
-            if (component.LifeStage is < ComponentLifeStage.Initialized or > ComponentLifeStage.Running) return;
+            var lifestage = MetaData(owner).EntityLifeStage;
+            if (lifestage is < EntityLifeStage.Initialized or >= EntityLifeStage.Terminating) return;
 
             if (!TryComp(owner, out SpriteComponent? sprite))
             {
@@ -76,8 +72,9 @@ namespace Content.Server.BarSign.Systems
             var newPrototype = _random.Pick(prototypes);
 
             var meta = Comp<MetaDataComponent>(owner);
-            meta.EntityName = newPrototype.Name != string.Empty ? newPrototype.Name : Loc.GetString("barsign-component-name");
-            meta.EntityDescription = newPrototype.Description;
+            var name = newPrototype.Name != string.Empty ? newPrototype.Name : "barsign-component-name";
+            meta.EntityName = Loc.GetString(name);
+            meta.EntityDescription = Loc.GetString(newPrototype.Description);
 
             component.CurrentSign = newPrototype.ID;
             return newPrototype;

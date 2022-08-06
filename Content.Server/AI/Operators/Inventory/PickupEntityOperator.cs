@@ -1,12 +1,7 @@
-using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -30,7 +25,7 @@ namespace Content.Server.AI.Operators.Inventory
             var handsSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
             if (entMan.Deleted(_target)
-                || !entMan.HasComponent<SharedItemComponent>(_target)
+                || !entMan.HasComponent<ItemComponent>(_target)
                 || _target.IsInContainer()
                 || !interactionSystem.InRangeUnobstructed(_owner, _target, popup: true))
             {
@@ -40,7 +35,7 @@ namespace Content.Server.AI.Operators.Inventory
             // select empty hand
             if (!handsSys.TrySelectEmptyHand(_owner))
                 return Outcome.Failed;
-            
+
             interactionSystem.InteractHand(_owner, _target);
             return Outcome.Success;
         }

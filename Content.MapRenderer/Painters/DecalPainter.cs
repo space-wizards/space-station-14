@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using Content.Shared.Decals;
-using Content.Shared.SubFloor;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using static Robust.Client.Graphics.RSI.State;
 using static Robust.UnitTesting.RobustIntegrationTest;
 
 namespace Content.MapRenderer.Painters;

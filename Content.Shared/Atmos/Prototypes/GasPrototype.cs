@@ -1,8 +1,6 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Atmos.Prototypes
 {
@@ -46,7 +44,10 @@ namespace Content.Shared.Atmos.Prototypes
         /// <summary>
         ///     Visibility for this gas will be max after this value.
         /// </summary>
-        public float GasMolesVisibleMax => GasMolesVisible * Atmospherics.FactorGasVisibleMax;
+        public float GasMolesVisibleMax => GasMolesVisible * GasVisibilityFactor;
+
+        [DataField("gasVisbilityFactor")]
+        public float GasVisibilityFactor = Atmospherics.FactorGasVisibleMax;
 
         /// <summary>
         ///     If this reagent is in gas form, this is the path to the overlay that will be used to make the gas visible.

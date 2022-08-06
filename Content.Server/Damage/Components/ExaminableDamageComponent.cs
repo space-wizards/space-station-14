@@ -1,6 +1,4 @@
 ﻿using Content.Shared.Damage.Prototypes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Damage.Components;

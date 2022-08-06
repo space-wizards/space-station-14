@@ -1,11 +1,10 @@
-using Content.Shared.Sound;
+using Content.Shared.Atmos;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using System.Collections.Generic;
-using Content.Shared.Atmos;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Maps
 {
@@ -13,8 +12,8 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
-        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<ContentTileDefinition>))]
-        public string? Parent { get; private set; }
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
+        public string[]? Parents { get; private set; }
 
         [NeverPushInheritance]
         [AbstractDataFieldAttribute]

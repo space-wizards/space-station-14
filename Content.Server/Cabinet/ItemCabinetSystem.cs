@@ -5,9 +5,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Cabinet
@@ -104,7 +101,7 @@ namespace Content.Server.Cabinet
                 return;
 
             cabinet.Opened = !cabinet.Opened;
-            SoundSystem.Play(Filter.Pvs(uid), cabinet.DoorSound.GetSound(), uid, AudioHelpers.WithVariation(0.15f));
+            SoundSystem.Play(cabinet.DoorSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.15f));
             _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
 
             UpdateAppearance(uid, cabinet);

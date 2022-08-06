@@ -1,10 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.AI.Components;
 using Content.Server.AI.Utils;
 using Content.Server.Weapon.Melee.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Combat.Nearby
 {
@@ -18,7 +15,7 @@ namespace Content.Server.AI.WorldState.States.Combat.Nearby
             var result = new List<EntityUid>();
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entMan.TryGetComponent(Owner, out AiControllerComponent? controller))
+            if (!entMan.TryGetComponent(Owner, out NPCComponent? controller))
             {
                 return result;
             }

@@ -21,7 +21,7 @@ namespace Content.Client.Nutrition.Visualizers
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent sprite))
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }

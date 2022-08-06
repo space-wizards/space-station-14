@@ -1,7 +1,9 @@
+using Content.Client.CombatMode;
 using Content.Client.Outline;
 using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
+using Content.Shared.CombatMode;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -35,8 +37,10 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly IConfigurationManager _cfgMan = default!;
         [Dependency] private readonly InteractionOutlineSystem _outline = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
@@ -71,11 +75,12 @@ namespace Content.Client.DragDrop
         private ShaderInstance? _dropTargetInRangeShader;
         private ShaderInstance? _dropTargetOutOfRangeShader;
 
-        private readonly List<ISpriteComponent> _highlightedSprites = new();
+        private readonly List<SpriteComponent> _highlightedSprites = new();
 
         public override void Initialize()
         {
             UpdatesOutsidePrediction = true;
+            UpdatesAfter.Add(typeof(EyeUpdateSystem));
 
             _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag);
             _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
@@ -124,7 +129,8 @@ namespace Content.Client.DragDrop
 
         private bool OnUseMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (args.Session?.AttachedEntity is not {Valid: true} dragger)
+            if (args.Session?.AttachedEntity is not {Valid: true} dragger ||
+                _combatMode.IsInCombatMode())
             {
                 return false;
             }
@@ -218,7 +224,8 @@ namespace Content.Client.DragDrop
 
         private bool OnContinueDrag(float frameTime)
         {
-            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged))
+            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged) ||
+                _combatMode.IsInCombatMode())
             {
                 return false;
             }
@@ -231,8 +238,6 @@ namespace Content.Client.DragDrop
                 return false;
             }
 
-            // keep dragged entity under mouse
-            var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
             // TODO: would use MapPosition instead if it had a setter, but it has no setter.
             // is that intentional, or should we add a setter for Transform.MapPosition?
             if (_dragShadow == default)
@@ -373,10 +378,10 @@ namespace Content.Client.DragDrop
             // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
+            var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
             foreach (var pvsEntity in pvsEntities)
             {
-                if (!EntityManager.TryGetComponent(pvsEntity, out ISpriteComponent? inRangeSprite) ||
+                if (!EntityManager.TryGetComponent(pvsEntity, out SpriteComponent? inRangeSprite) ||
                     !inRangeSprite.Visible ||
                     pvsEntity == _dragDropHelper.Dragged) continue;
 
@@ -393,6 +398,11 @@ namespace Content.Client.DragDrop
                         && _interactionSystem.InRangeUnobstructed(dropArgs.Target, dropArgs.Target);
                 }
 
+                if (inRangeSprite.PostShader != null &&
+                    inRangeSprite.PostShader != _dropTargetInRangeShader &&
+                    inRangeSprite.PostShader != _dropTargetOutOfRangeShader)
+                    return;
+
                 // highlight depending on whether its in or out of range
                 inRangeSprite.PostShader = valid.Value ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
                 inRangeSprite.RenderOrder = EntityManager.CurrentTick.Value;
@@ -404,6 +414,9 @@ namespace Content.Client.DragDrop
         {
             foreach (var highlightedSprite in _highlightedSprites)
             {
+                if (highlightedSprite.PostShader != _dropTargetInRangeShader && highlightedSprite.PostShader != _dropTargetOutOfRangeShader)
+                    continue;
+
                 highlightedSprite.PostShader = null;
                 highlightedSprite.RenderOrder = 0;
             }
@@ -426,7 +439,7 @@ namespace Content.Client.DragDrop
             // CanInteract() doesn't support checking a second "target" entity.
             // Doing so manually:
             var ev = new GettingInteractedWithAttemptEvent(eventArgs.User, eventArgs.Dragged);
-            RaiseLocalEvent(eventArgs.Dragged, ev);
+            RaiseLocalEvent(eventArgs.Dragged, ev, true);
             if (ev.Cancelled)
                 return false;
 

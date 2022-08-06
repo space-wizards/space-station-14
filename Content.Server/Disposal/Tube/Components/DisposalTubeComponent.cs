@@ -1,24 +1,16 @@
-using System;
 using System.Linq;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
-using Content.Shared.Acts;
 using Content.Shared.Construction.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Tube.Components
 {
-    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
+    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -33,11 +25,6 @@ namespace Content.Server.Disposal.Tube.Components
         /// </summary>
         [ViewVariables]
         public Container Contents { get; private set; } = default!;
-
-        [ViewVariables]
-        private bool Anchored =>
-            !_entMan.TryGetComponent(Owner, out PhysicsComponent? physics) ||
-            physics.BodyType == BodyType.Static;
 
         /// <summary>
         ///     The directions that this tube can connect to others from
@@ -73,7 +60,7 @@ namespace Content.Server.Disposal.Tube.Components
             return true;
         }
 
-        private void Disconnect()
+        public void Disconnect()
         {
             if (!_connected)
             {
@@ -107,8 +94,9 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            var state = Anchored
-                ? DisposalTubeVisualState.Anchored 
+            // TODO this should just generalized into some anchored-visuals system/comp, this has nothing to do with disposal tubes.
+            var state = _entMan.GetComponent<TransformComponent>(Owner).Anchored
+                ? DisposalTubeVisualState.Anchored
                 : DisposalTubeVisualState.Free;
 
             appearance.SetData(DisposalTubeVisuals.VisualState, state);
@@ -169,11 +157,6 @@ namespace Content.Server.Disposal.Tube.Components
         {
             base.OnRemove();
 
-            Disconnect();
-        }
-
-        void IBreakAct.OnBreak(BreakageEventArgs eventArgs)
-        {
             Disconnect();
         }
     }

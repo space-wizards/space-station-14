@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.AI.Components;
@@ -9,8 +7,6 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.AI;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.LoadBalancer
@@ -39,7 +35,7 @@ namespace Content.Server.AI.LoadBalancer
 
             var entity = _request.Context.GetState<SelfState>().GetValue();
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(entity))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<NPCComponent>(entity))
             {
                 return null;
             }

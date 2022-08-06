@@ -1,7 +1,5 @@
 using Content.Server.Electrocution;
 using Content.Shared.Construction;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {

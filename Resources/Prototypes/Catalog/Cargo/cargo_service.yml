@@ -23,6 +23,18 @@
   group: market
 
 - type: cargoProduct
+  name: "mousetraps crate"
+  id: MousetrapBoxes
+  description: "Mousetraps, for when all of service is being haunted by an entire horde of rats. Use sparingly... or not."
+  icon:
+    sprite: Objects/Devices/mousetrap.rsi
+    state: mousetrap
+  product: CrateMousetrapBoxes
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
   name: "lung cancer crate"
   id: ServiceSmokeables
   description: "Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!"
@@ -57,7 +69,7 @@
   cost: 1000
   category: Service
   group: market
-  
+
 - type: cargoProduct
   name: "personnel crate"
   id: ServicePersonnel

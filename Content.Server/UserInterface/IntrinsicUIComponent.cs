@@ -1,6 +1,4 @@
 ﻿using Content.Shared.Actions.ActionTypes;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 
@@ -17,9 +15,11 @@ public sealed class IntrinsicUIComponent : Component, ISerializationHooks
 
     void ISerializationHooks.AfterDeserialization()
     {
-        foreach (var ui in UIs)
+        for (var i = 0; i < UIs.Count; i++)
         {
+            var ui = UIs[i];
             ui.AfterDeserialization();
+            UIs[i] = ui;
         }
     }
 }

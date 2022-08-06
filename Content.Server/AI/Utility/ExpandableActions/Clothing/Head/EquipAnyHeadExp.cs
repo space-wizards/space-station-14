@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Clothing.Head;
 using Content.Server.AI.Utility.Considerations;
@@ -9,8 +7,6 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
 {
@@ -38,7 +34,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & SlotFlags.HEAD) != 0)
+                    (clothing.Slots & SlotFlags.HEAD) != 0)
                 {
                     yield return new EquipHead {Owner = owner, Target = entity, Bonus = Bonus};
                 }

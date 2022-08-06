@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Shiptest at https://github.com/shiptest-ss13/Shiptest/commit/0116c3dc37bece6ed865daf22bb7be4ac630d081",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+	{
+      "name": "equipped-NECK",
+      "directions": 4
+    }
+  ]
+}

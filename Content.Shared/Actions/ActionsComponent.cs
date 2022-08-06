@@ -6,10 +6,11 @@ namespace Content.Shared.Actions;
 
 [NetworkedComponent]
 [RegisterComponent]
-[Friend(typeof(SharedActionsSystem))]
+[Access(typeof(SharedActionsSystem))]
 public sealed class ActionsComponent : Component
 {
     [ViewVariables]
+    [Access(typeof(SharedActionsSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SortedSet<ActionType> Actions = new();
 }
 

@@ -40,6 +40,8 @@
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 20.5
 
 - type: entity
   id: PlasmaWindowDirectional
@@ -77,3 +79,5 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 20.5

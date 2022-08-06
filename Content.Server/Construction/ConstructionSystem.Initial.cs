@@ -14,9 +14,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Content.Shared.Stacks;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 

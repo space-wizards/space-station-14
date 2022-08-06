@@ -14,7 +14,7 @@
       "name": "ai"
     },
     {
-      "name": "assistant"
+      "name": "passenger"
     },
     {
       "name": "atmospherics"
@@ -24,6 +24,9 @@
     },
     {
       "name": "botanist"
+    },
+    {
+      "name": "boxer"
     },
     {
       "name": "captain"
@@ -62,6 +65,36 @@
       "name": "detective"
     },
     {
+      "name": "ertengineer"
+    },
+    {
+      "name": "ertengineereva"
+    },
+    {
+      "name": "ertjanitor"
+    },
+    {
+      "name": "ertjanitoreva"
+    },
+    {
+      "name": "ertleader"
+    },
+    {
+      "name": "ertleadereva"
+    },
+    {
+      "name": "ertmedical"
+    },
+    {
+      "name": "ertmedicaleva"
+    },
+    {
+      "name": "ertsecurity"
+    },
+    {
+      "name": "ertsecurityeva"
+    },
+    {
       "name": "geneticist"
     },
     {
@@ -81,6 +114,9 @@
     },
     {
       "name": "mime"
+    },
+    {
+      "name": "reporter"
     },
     {
       "name": "paramedic"

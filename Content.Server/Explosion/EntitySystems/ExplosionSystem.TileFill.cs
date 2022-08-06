@@ -22,7 +22,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <param name="maxIntensity">The maximum intensity that the explosion can have at any given tile. This
     /// effectively caps the damage that this explosion can do.</param>
     /// <returns>A list of tile-sets and a list of intensity values which describe the explosion.</returns>
-    private (int, List<float>, ExplosionSpaceTileFlood?, Dictionary<GridId, ExplosionGridTileFlood>, Matrix3)? GetExplosionTiles(
+    private (int, List<float>, ExplosionSpaceTileFlood?, Dictionary<EntityUid, ExplosionGridTileFlood>, Matrix3)? GetExplosionTiles(
         MapCoordinates epicenter,
         string typeID,
         float totalIntensity,
@@ -39,7 +39,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         Vector2i initialTile;
-        GridId? epicentreGrid = null;
+        EntityUid? epicentreGrid = null;
         var (localGrids, referenceGrid, maxDistance) = GetLocalGrids(epicenter, totalIntensity, slope, maxIntensity);
 
         // get the epicenter tile indices
@@ -47,7 +47,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef) &&
             !tileRef.Tile.IsEmpty)
         {
-            epicentreGrid = candidateGrid.Index;
+            epicentreGrid = candidateGrid.GridEntityId;
             initialTile = tileRef.GridIndices;
         }
         else if (referenceGrid != null)
@@ -64,7 +64,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         // Main data for the exploding tiles in space and on various grids
-        Dictionary<GridId, ExplosionGridTileFlood> gridData = new();
+        Dictionary<EntityUid, ExplosionGridTileFlood> gridData = new();
         ExplosionSpaceTileFlood? spaceData = null;
 
         // The intensity slope is how much the intensity drop over a one-tile distance. The actual algorithm step-size is half of thhat.
@@ -76,8 +76,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         HashSet<Vector2i> previousSpaceJump;
 
         // As above, but for space-based explosion propagating from space onto grids.
-        HashSet<GridId> encounteredGrids = new();
-        Dictionary<GridId, HashSet<Vector2i>>? previousGridJump;
+        HashSet<EntityUid> encounteredGrids = new();
+        Dictionary<EntityUid, HashSet<Vector2i>>? previousGridJump;
 
         // variables for transforming between grid and space-coordiantes
         var spaceMatrix = Matrix3.Identity;
@@ -256,7 +256,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     match a separate grid. This is done so that if you have something like a tiny suicide-bomb shuttle exploding
     ///     near a large station, the explosion will still orient to match the station, not the tiny shuttle.
     /// </remarks>
-    public (List<GridId>, GridId?, float) GetLocalGrids(MapCoordinates epicenter, float totalIntensity, float slope, float maxIntensity)
+    public (List<EntityUid>, EntityUid?, float) GetLocalGrids(MapCoordinates epicenter, float totalIntensity, float slope, float maxIntensity)
     {
         // Get the explosion radius (approx radius if it were in open-space). Note that if the explosion is confined in
         // some directions but not in others, the actual explosion may reach further than this distance from the
@@ -266,7 +266,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // to avoid a silly lookup for silly input numbers, cap the radius to half of the theoretical maximum (lookup area gets doubled later on).
         radius = Math.Min(radius, MaxIterations / 4);
 
-        GridId? referenceGrid = null;
+        EntityUid? referenceGrid = null;
         float mass = 0;
 
         // First attempt to find a grid that is relatively close to the explosion's center. Instead of looking in a
@@ -278,7 +278,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (TryComp(grid.GridEntityId, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.Index;
+                referenceGrid = grid.GridEntityId;
             }
         }
 
@@ -294,7 +294,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         radius *= 4;
         box = Box2.CenteredAround(epicenter.Position, (radius, radius));
         var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
-        var grids = mapGrids.Select(x => x.Index).ToList();
+        var grids = mapGrids.Select(x => x.GridEntityId).ToList();
 
         if (referenceGrid != null)
             return (grids, referenceGrid, radius);
@@ -305,7 +305,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (TryComp(grid.GridEntityId, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.Index;
+                referenceGrid = grid.GridEntityId;
             }
         }
 

@@ -1,0 +1,14 @@
+{
+   "copyright" : "Taken from https://github.com/tgstation/tgstation at commit a21274e56ae84b2c96e8b6beeca805df3d5402e8.",
+   "license" : "CC-BY-SA-3.0",
+   "size" : {
+      "x" : 32,
+      "y" : 32
+   },
+   "states" : [
+      {
+         "name" : "airlock_painter"
+      }
+   ],
+   "version" : 1
+}

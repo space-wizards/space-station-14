@@ -1,14 +1,11 @@
-using System.Collections.Generic;
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
+using Robust.Server.GameStates;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -20,7 +17,8 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
-
+        [Dependency] private readonly PVSOverrideSystem _pvs = default!;
+        [Dependency] private readonly ContainmentFieldGeneratorSystem _fieldGeneratorSystem = default!;
         /// <summary>
         /// How much energy the singulo gains from destroying a tile.
         /// </summary>
@@ -36,6 +34,14 @@ namespace Content.Server.Singularity.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<ServerSingularityComponent, StartCollideEvent>(OnCollide);
+            SubscribeLocalEvent<SingularityDistortionComponent, ComponentStartup>(OnDistortionStartup);
+        }
+
+        private void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent component, ComponentStartup args)
+        {
+            // to avoid distortion overlay pop-in, entities with distortion ignore PVS. Really this should probably be a
+            // PVS range-override, but this is good enough for now.
+            _pvs.AddGlobalOverride(uid);
         }
 
         protected override bool PreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
@@ -200,7 +206,7 @@ namespace Content.Server.Singularity.EntitySystems
 
                 if (vec.Length < destroyRange - 0.01f) continue;
 
-                var speed = vec.Length * component.Level * collidableComponent.Mass * 100f;
+                var speed = 1f / vec.Length * component.Level * collidableComponent.Mass * 10f;
 
                 // Because tile friction is so high we'll just multiply by mass so stuff like closets can even move.
                 collidableComponent.ApplyLinearImpulse(vec.Normalized * speed * frameTime);

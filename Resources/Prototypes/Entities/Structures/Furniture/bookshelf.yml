@@ -42,6 +42,7 @@
     - Wooden
   - type: Transform
     anchored: true
+    noRot: true
   - type: Physics
     bodyType: Static
   - type: Anchorable

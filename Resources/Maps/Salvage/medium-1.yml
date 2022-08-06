@@ -35,7 +35,7 @@ tilemap:
   28: floor_wood
   29: lattice
   30: plating
-  31: underplating
+  31: plating
 grids:
 - settings:
     chunksize: 16
@@ -1285,7 +1285,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 106
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 0.5,-2.5
     parent: 0
@@ -1363,7 +1363,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 114
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 1.5,2.5
     parent: 0

@@ -14,7 +14,7 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.Wires.SharedWiresComponent;
+using Robust.Shared.Random;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
@@ -267,6 +267,7 @@ namespace Content.Client.Wires.UI
 
 
             _statusContainer.RemoveAllChildren();
+
             foreach (var status in state.Statuses)
             {
                 if (status.Value is StatusLightData statusLightData)

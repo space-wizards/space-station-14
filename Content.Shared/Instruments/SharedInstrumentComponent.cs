@@ -1,15 +1,10 @@
-using System;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio.Midi;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Instruments;
 
-[NetworkedComponent, Friend(typeof(SharedInstrumentSystem))]
+[NetworkedComponent, Access(typeof(SharedInstrumentSystem))]
 public abstract class SharedInstrumentComponent : Component
 {
     [ViewVariables]
@@ -31,6 +26,7 @@ public abstract class SharedInstrumentComponent : Component
     public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    [Access(typeof(SharedInstrumentSystem), Other = AccessPermissions.ReadWrite)] // FIXME Friends
     public bool DirtyRenderer { get; set; }
 }
 

@@ -19,8 +19,8 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots: [innerclothing]
-    EquipSound:
+    slots: [innerclothing]
+    equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: Butcherable
     butcheringType: Knife
@@ -36,9 +36,9 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots: [innerclothing]
+    slots: [innerclothing]
     femaleMask: UniformTop
-    EquipSound:
+    equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: Butcherable
     butcheringType: Knife

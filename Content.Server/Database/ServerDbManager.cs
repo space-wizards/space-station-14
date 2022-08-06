@@ -195,6 +195,16 @@ namespace Content.Server.Database
         Task SetLastReadRules(NetUserId player, DateTime time);
 
         #endregion
+
+        #region Admin Notes
+
+        Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt);
+        Task<AdminNote?> GetAdminNote(int id);
+        Task<List<AdminNote>> GetAdminNotes(Guid player);
+        Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt);
+        Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt);
+
+        #endregion
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -483,6 +493,42 @@ namespace Content.Server.Database
         public Task SetLastReadRules(NetUserId player, DateTime time)
         {
             return _db.SetLastReadRules(player, time);
+        }
+
+        public Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt)
+        {
+            var note = new AdminNote
+            {
+                RoundId = roundId,
+                CreatedById = createdBy,
+                LastEditedById = createdBy,
+                PlayerUserId = player,
+                Message = message,
+                CreatedAt = createdAt,
+                LastEditedAt = createdAt
+            };
+
+            return _db.AddAdminNote(note);
+        }
+
+        public Task<AdminNote?> GetAdminNote(int id)
+        {
+            return _db.GetAdminNote(id);
+        }
+
+        public Task<List<AdminNote>> GetAdminNotes(Guid player)
+        {
+            return _db.GetAdminNotes(player);
+        }
+
+        public Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)
+        {
+            return _db.DeleteAdminNote(id, deletedBy, deletedAt);
+        }
+
+        public Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
+        {
+            return _db.EditAdminNote(id, message, editedBy, editedAt);
         }
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()

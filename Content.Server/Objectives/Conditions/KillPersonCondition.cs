@@ -1,8 +1,4 @@
 using Content.Server.Objectives.Interfaces;
-using Content.Server.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -33,7 +29,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-kill-person-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/mk58_wood.rsi"), "icon");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/viper.rsi"), "icon");
 
         public float Progress => (Target?.CharacterDeadIC ?? true) ? 1f : 0f;
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Robust.Server.Player;
 
 namespace Content.Server.Administration

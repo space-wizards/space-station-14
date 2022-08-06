@@ -3,10 +3,6 @@ using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using System;
 
 namespace Content.Server.Traitor.Uplink.Telecrystal
 {

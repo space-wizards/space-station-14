@@ -1,0 +1,19 @@
+- type: marking
+  id: CatEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/cat_parts.rsi
+    state: ears_cat_outer
+  - sprite: Mobs/Customization/cat_parts.rsi
+    state: ears_cat_inner
+
+- type: marking
+  id: CatTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/cat_parts.rsi
+    state: tail_cat

@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cannabis.rsi
   - type: Produce
-    seed: cannabis
+    seedId: cannabis
   - type: Food
   - type: SolutionContainerManager
     solutions:
@@ -71,7 +71,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
   - type: Produce
-    seed: tobacco
+    seedId: tobacco
 
 - type: entity
   name: dried tobacco leaves

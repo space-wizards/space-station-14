@@ -54,7 +54,7 @@ tilemap:
   47: floor_wood
   48: lattice
   49: plating
-  50: underplating
+  50: plating
 grids:
 - settings:
     chunksize: 16
@@ -1322,10 +1322,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 162
   type: Rack
   components:
@@ -1533,10 +1530,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 196
   type: ClosetMaintenanceFilledRandom
   components:
@@ -1545,10 +1539,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 197
   type: SalvageCanisterSpawner
   components:
@@ -1676,26 +1667,22 @@ entities:
     parent: 0
     type: Transform
 - uid: 217
-  type: PistolMandella
+  type: WeaponPistolCobra
   components:
   - parent: 207
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 218
     type: ContainerContainer
 - uid: 218
-  type: MagazineClRiflePistol
+  type: MagazinePistolCaselessRifle
   components:
   - parent: 217
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 ...

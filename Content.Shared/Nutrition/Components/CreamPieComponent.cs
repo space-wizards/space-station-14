@@ -1,13 +1,9 @@
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Nutrition.Components
 {
-    [Friend(typeof(SharedCreamPieSystem))]
+    [Access(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
     public sealed class CreamPieComponent : Component
     {
