@@ -1,4 +1,5 @@
 using Content.Server.Conveyor;
+using Content.Server.Gravity.EntitySystems;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
@@ -23,10 +24,9 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly GravitySystem _gravity = default!;
         [Dependency] private readonly RecyclerSystem _recycler = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public const string ConveyorFixture = "conveyor";
 
@@ -120,14 +120,16 @@ namespace Content.Server.Physics.Controllers
 
         public bool CanRun(ConveyorComponent component)
         {
-            return component.State != ConveyorState.Off &&
-                   !EntityManager.HasComponent<SharedItemComponent>(component.Owner) &&
-                   this.IsPowered(component.Owner, EntityManager);
+            return component.State != ConveyorState.Off && this.IsPowered(component.Owner, EntityManager);
         }
 
         private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
         {
-            if (!TryComp<PhysicsComponent>(uid, out var body)) return;
+            RemComp<ActiveConveyorComponent>(uid);
+
+            if (!TryComp<PhysicsComponent>(uid, out var body))
+                return;
+
             _fixtures.DestroyFixture(body, ConveyorFixture);
         }
 
@@ -138,14 +140,15 @@ namespace Content.Server.Physics.Controllers
             var conveyed = new HashSet<EntityUid>();
             // Don't use it directly in EntityQuery because we may be able to save getcomponents.
             var xformQuery = GetEntityQuery<TransformComponent>();
+            var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
             foreach (var (_, comp) in EntityQuery<ActiveConveyorComponent, ConveyorComponent>())
             {
-                Convey(comp, xformQuery, conveyed, frameTime);
+                Convey(comp, xformQuery, bodyQuery, conveyed, frameTime);
             }
         }
 
-        private void Convey(ConveyorComponent comp, EntityQuery<TransformComponent> xformQuery, HashSet<EntityUid> conveyed, float frameTime)
+        private void Convey(ConveyorComponent comp, EntityQuery<TransformComponent> xformQuery, EntityQuery<PhysicsComponent> bodyQuery, HashSet<EntityUid> conveyed, float frameTime)
         {
             // Use an event for conveyors to know what needs to run
             if (!CanRun(comp))
@@ -155,9 +158,13 @@ namespace Content.Server.Physics.Controllers
 
             var speed = comp.Speed;
 
-            if (speed <= 0f || !xformQuery.TryGetComponent(comp.Owner, out var xform)) return;
+            if (speed <= 0f ||
+                !xformQuery.TryGetComponent(comp.Owner, out var xform) ||
+                xform.GridUid == null)
+                return;
 
-            var (conveyorPos, conveyorRot) = xform.GetWorldPositionRotation();
+            var conveyorPos = xform.LocalPosition;
+            var conveyorRot = xform.LocalRotation;
 
             conveyorRot += comp.Angle;
 
@@ -168,21 +175,20 @@ namespace Content.Server.Physics.Controllers
 
             var direction = conveyorRot.ToWorldVec();
 
-            foreach (var (entity, transform) in GetEntitiesToMove(comp, xform, xformQuery))
+            foreach (var (entity, transform, body) in GetEntitiesToMove(comp, xform, xformQuery, bodyQuery))
             {
-                if (!conveyed.Add(entity)) continue;
+                if (!conveyed.Add(entity))
+                    continue;
 
-                var worldPos = transform.WorldPosition;
-                var itemRelative = conveyorPos - worldPos;
+                var localPos = transform.LocalPosition;
+                var itemRelative = conveyorPos - localPos;
 
-                worldPos += Convey(direction, speed, frameTime, itemRelative);
-                transform.WorldPosition = worldPos;
+                localPos += Convey(direction, speed, frameTime, itemRelative);
+                transform.LocalPosition = localPos;
 
-                if (TryComp<PhysicsComponent>(entity, out var body))
-                {
-                    body.Awake = true;
-                    body.SleepTime = 0f;
-                }
+                // Force it awake for collisionwake reasons.
+                body.Awake = true;
+                body.SleepTime = 0f;
             }
         }
 
@@ -215,44 +221,41 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        public IEnumerable<(EntityUid, TransformComponent)> GetEntitiesToMove(ConveyorComponent comp, TransformComponent xform, EntityQuery<TransformComponent> xformQuery)
+        private IEnumerable<(EntityUid, TransformComponent, PhysicsComponent)> GetEntitiesToMove(
+            ConveyorComponent comp,
+            TransformComponent xform,
+            EntityQuery<TransformComponent> xformQuery,
+            EntityQuery<PhysicsComponent> bodyQuery)
         {
-            if (xform.GridUid == null) yield break;
-
             // Check if the thing's centre overlaps the grid tile.
-            var gridMatrix = _transform.GetInvWorldMatrix(xform.GridUid.Value, xformQuery);
-            var grid = _mapManager.GetGrid(xform.GridUid.Value);
+            var grid = _mapManager.GetGrid(xform.GridUid!.Value);
             var tile = grid.GetTileRef(xform.Coordinates);
             var conveyorBounds = _lookup.GetLocalBounds(tile, grid.TileSize);
 
             foreach (var entity in comp.Intersecting)
             {
-                if (entity == comp.Owner ||
-                    Deleted(entity) ||
-                    HasComp<IMapGridComponent>(entity)) continue;
-
-                if (!TryComp(entity, out PhysicsComponent? physics) ||
-                    physics.BodyType == BodyType.Static ||
-                    physics.BodyStatus == BodyStatus.InAir ||
-                    entity.IsWeightless(physics, entityManager: EntityManager, mapManager: _mapManager))
+                if (!xformQuery.TryGetComponent(entity, out var entityXform) ||
+                    entityXform.ParentUid != grid.GridEntityId)
                 {
                     continue;
                 }
 
-                if (_container.IsEntityInContainer(entity))
+                if (!bodyQuery.TryGetComponent(entity, out var physics) ||
+                    physics.BodyType == BodyType.Static ||
+                    physics.BodyStatus == BodyStatus.InAir ||
+                    _gravity.IsWeightless(entity, physics, entityXform))
                 {
                     continue;
                 }
 
                 // Yes there's still going to be the occasional rounding issue where it stops getting conveyed
                 // When you fix the corner issue that will fix this anyway.
-                var transform = xformQuery.GetComponent(entity);
-                var gridPos = gridMatrix.Transform(_transform.GetWorldPosition(transform, xformQuery));
-                var gridAABB = new Box2(gridPos - 0.1f, gridPos + 0.1f);
+                var gridAABB = new Box2(entityXform.LocalPosition - 0.1f, entityXform.LocalPosition + 0.1f);
 
-                if (!conveyorBounds.Intersects(gridAABB)) continue;
+                if (!conveyorBounds.Intersects(gridAABB))
+                    continue;
 
-                yield return (entity, transform);
+                yield return (entity, entityXform, physics);
             }
         }
     }
