@@ -772,31 +772,6 @@
   heatCapacity: 10000
 
 - type: tile
-  id: floor_asteroid_coarse_sand1
-  name: asteroid coarse sand [DO NOT USE]
-  texture: Asteroid/asteroid_coarse_sand
-  variants: 3
-  placementVariants: [ 0, 1, 2 ]
-  base_turfs:
-  - space
-
-- type: tile
-  id: floor_asteroid_coarse_sand2
-  name: asteroid coarse sand [DO NOT USE]
-  texture: Asteroid/asteroid_coarse_sand
-  variants: 3
-  placementVariants: [ 0, 1, 2 ]
-  base_turfs:
-  - space
-  is_subfloor: false
-  can_crowbar: false
-  footstep_sounds:
-    collection: footstep_asteroid
-  friction: 0.30
-  thermalConductivity: 0.04
-  heatCapacity: 10000
-
-- type: tile
   id: floor_asteroid_coarse_sand_dug
   name: asteroid dug coarse sand
   texture: Asteroid/asteroid_coarse_sand_dug
@@ -865,18 +840,6 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
-- type: tileAlias
-  id: floor_asteroid_coarse_sand1
-  target: floor_asteroid_coarse_sand0
-  
-- type: tileAlias
-  id: floor_asteroid_coarse_sand2
-  target: floor_asteroid_coarse_sand0
-  
-- type: tileAlias
-  id: floor_asteroid_coarse_sand3
-  target: floor_asteroid_coarse_sand0
 
 # Caves
 - type: tile
