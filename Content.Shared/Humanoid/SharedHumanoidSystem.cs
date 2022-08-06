@@ -13,7 +13,7 @@ namespace Content.Shared.Humanoid;
 ///     you still need a local copy so that players can set up their
 ///     characters.
 /// </summary>
-public sealed class SharedHumanoidSystem : EntitySystem
+public abstract class SharedHumanoidSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 

@@ -18,14 +18,7 @@ public abstract class SharedHumanoidComponent : Component
     [DataField("species")]
     public string Species { get; set; } = default!;
 
-    /// <summary>
-    ///     Any custom base layers this humanoid might have. See:
-    ///     limb transplants (potentially), robotic arms, etc.
-    ///     Stored on the server, this is merged in the client into
-    ///     all layer settings.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
+
 
     [Serializable, NetSerializable]
     public sealed class CustomBaseLayerInfo
@@ -73,16 +66,6 @@ public abstract class SharedHumanoidComponent : Component
 
     // ^^^ Attempting this, let's see how well this goes
 
-    /* TODO: Goes in server
-    /// <summary>
-    ///     All current markings on this humanoid, by visual layer.
-    ///
-    ///     - This is updated on the client by OnChangeData
-    /// </summary>
-    [ViewVariables]
-    public MarkingSet CurrentMarkings = new();
-    */
-
     /// <summary>
     ///     Visual layers currently hidden. This will affect the base sprite
     ///     on this humanoid layer, and any markings that sit above it.
@@ -92,48 +75,8 @@ public abstract class SharedHumanoidComponent : Component
     [ViewVariables]
     public readonly HashSet<HumanoidVisualLayers> HiddenLayers = new();
 
-    // Appearance loaded from a player profile: this should eventually be removed
-    // and replaced with accessory layer set calls, accessory color set calls,
-    // layer color set calls, etc.
-    //
-    // The actual back-end part isn't being removed, though. That's fine.
-    public HumanoidCharacterAppearance Appearance = HumanoidCharacterAppearance.Default();
-
-    // these three could probably have their own components?
-    // i don't see these as being unique to human characters
-    // see: most animals having somebody classify this stuff
-
-    // also definable in component so that you can have mob variants
-    // of humanoids
     [DataField("sex")]
     public Sex Sex = Sex.Male;
-    [DataField("gender")]
-    public Gender Gender = Gender.Epicene;
-    [DataField("age")]
-    public int Age = HumanoidCharacterProfile.MinimumAge;
-
-}
-
-public sealed class HumanoidComponentState : ComponentState
-{
-    public HumanoidComponentState(string species, Color skinColor, MarkingsSet markings, Sex sex, Gender gender, int age, HashSet<HumanoidVisualLayers> hiddenLayers)
-    {
-        Species = species;
-        SkinColor = skinColor;
-        Markings = markings;
-        Sex = sex;
-        Gender = gender;
-        Age = age;
-        HiddenLayers = hiddenLayers.ToList();
-    }
-
-    public string Species { get; }
-    public Color SkinColor { get; }
-    public MarkingsSet Markings { get; }
-    public Sex Sex { get; }
-    public Gender Gender { get; }
-    public int Age { get; }
-    public List<HumanoidVisualLayers> HiddenLayers { get; }
 }
 
 [Prototype("humanoidMarkingStartingSet")]
