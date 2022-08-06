@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from discord idk",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pitching2",
+      "directions": 4
+    }
+  ]
+}
