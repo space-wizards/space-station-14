@@ -83,7 +83,7 @@ namespace Content.Server.Access.Systems
         /// </summary>
         /// <remarks>
         /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
-        /// </remarks
+        /// </remarks>
         public bool TryChangeJobTitle(EntityUid uid, string jobTitle, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
