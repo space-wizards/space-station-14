@@ -1,14 +1,14 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from discord idk",
+  "copyright": "Taken from Hyenh on discord at https://discord.com/channels/310555209753690112/346743671787356160/1004948292607692971",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "pitching2",
+      "name": "pitching",
       "directions": 4
     }
   ]
