@@ -131,7 +131,7 @@
   - type: Stack
     stackType: Biomass
     count: 100
-    maxCount: 100
+    max: 100
   - type: Sprite
     sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
