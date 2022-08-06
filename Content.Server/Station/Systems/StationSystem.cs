@@ -105,8 +105,11 @@ public sealed class StationSystem : EntitySystem
     }
 
     /// <summary>
-    ///     StationData entities are aren't really meant to move around. They really should be some transform-less data.
+    ///     If a station data entity is getting re-parented mid-round, this will log an error.
     /// </summary>
+    /// <remarks>
+    ///     This doesn't really achieve anything, it just for debugging any future station data bugs.
+    /// </remarks>
     private void OnParentChanged(EntityUid uid, StationDataComponent component, ref EntParentChangedMessage args)
     {
         if (_gameTicker.RunLevel != GameRunLevel.InRound ||
