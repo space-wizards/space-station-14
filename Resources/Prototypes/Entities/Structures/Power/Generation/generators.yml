@@ -156,7 +156,7 @@
   suffix: Plasma, 5kW
   components:
   - type: PowerSupplier
-    supplyRate: 5000 # 260 sec / sheet
+    supplyRate: 30000
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
@@ -179,7 +179,7 @@
   suffix: Uranium, 15kW
   components:
   - type: PowerSupplier
-    supplyRate: 15000 # 85 sec / sheet
+    supplyRate: 60000
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
