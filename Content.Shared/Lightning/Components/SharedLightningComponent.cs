@@ -10,18 +10,18 @@ public abstract class SharedLightningComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxArc")]
-    public int MaxArc;
+    public int MaxArc = 3;
 
     /// <summary>
     /// List of targets that this collided with already
     /// </summary>
     [ViewVariables]
-    [DataField("arcTargets")]
-    public HashSet<EntityUid> ArcTargets = new();
+    [DataField("arcTarget")]
+    public EntityUid ArcTarget;
 
     [ViewVariables]
-    [DataField("bodyPrototype", required: true)]
-    public string BodyPrototype = default!;
+    [DataField("bodyPrototype")]
+    public string BodyPrototype = "LightningBase";
 
     /// <summary>
     /// How far should this lightning go?
@@ -29,6 +29,8 @@ public abstract class SharedLightningComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxLength")]
     public float MaxLength = 5f;
+
+    public int Counter = 0;
 }
 
 [Serializable, NetSerializable]

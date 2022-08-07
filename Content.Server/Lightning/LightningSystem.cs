@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Server.Construction.Components;
 using Content.Server.Containers;
 using Content.Server.Lightning.Components;
 using Content.Shared.Interaction;
@@ -24,6 +25,16 @@ public sealed class LightningSystem : SharedLightningSystem
 
         SubscribeLocalEvent<LightningComponent, InteractHandEvent>(OnHandInteract);
         SubscribeLocalEvent<LightningComponent, LightningEvent>(OnLightning);
+        SubscribeLocalEvent<LightningComponent, StartCollideEvent>(OnCollide);
+    }
+
+    private void OnCollide(EntityUid uid, LightningComponent component, StartCollideEvent args)
+    {
+        if (component.MaxArc > 0 && component.Counter < component.MaxArc)
+        {
+            Arc(component, args.OtherFixture.Body.Owner, component.Owner);
+            GetTargetData(component.Owner, component.ArcTarget);
+        }
     }
 
     public override void Update(float frameTime)
@@ -104,19 +115,10 @@ public sealed class LightningSystem : SharedLightningSystem
 
         var ev = new LightningEvent(userAngle, calculatedDistance, offset, offsetCorrection);
         RaiseLocalEvent(component.Owner, ev, true);
-
-        component.ArcTargets.Add(user);
-        component.ArcTargets.Add(target);
     }
 
     public void Arc(LightningComponent component, EntityUid user, EntityUid target)
     {
-
-        if (HasComp<LightningComponent>(target) || target.ContainsPrototypeRecursive(component.BodyPrototype))
-        {
-            return;
-        }
-
         var targetXForm = Transform(target);
 
         //TODO: Fire off a raycast in all 8 directions to look for a new target to fire to.
@@ -128,12 +130,13 @@ public sealed class LightningSystem : SharedLightningSystem
             var ray = new CollisionRay(targetXForm.GetWorldPositionRotation().WorldPosition, dirRad.ToVec(), (int)CollisionGroup.ItemMask);
             var rayCastResults = _physics.IntersectRay(targetXForm.MapID, ray, component.MaxLength, target, false).ToList();
             var lightningQuery = GetEntityQuery<LightningComponent>();
+            var machineQuery = GetEntityQuery<MachineComponent>();
 
             RayCastResults? closestResult = null;
 
             foreach (var result in rayCastResults)
             {
-                if (lightningQuery.HasComponent(result.HitEntity))
+                if (lightningQuery.HasComponent(result.HitEntity) || machineQuery.HasComponent(result.HitEntity))
                 {
                     continue;
                 }
@@ -142,14 +145,12 @@ public sealed class LightningSystem : SharedLightningSystem
 
             if (closestResult == null)
             {
-                return;
+                continue;
             }
 
-            var ent = closestResult.Value.HitEntity;
-
-            GetTargetData(target, ent);
+            component.ArcTarget = closestResult.Value.HitEntity;
+            component.Counter++;
         }
-
     }
 
     private void OnHandInteract(EntityUid uid, LightningComponent component, InteractHandEvent args)

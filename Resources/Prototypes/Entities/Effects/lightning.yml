@@ -13,6 +13,7 @@
     enabled: false
   - type: Electrified
     requirePower: false
+  - type: Lightning
   - type: PointLight
     enabled: true
     color: "#4080FF"
