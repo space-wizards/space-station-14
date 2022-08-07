@@ -5,7 +5,7 @@
   minPlayers: 0
   fallback: true
   stations:
-    ISVStarlight:
+    ISVBioBubble:
       mapNameTemplate: '{0} BioBubble {1}'
       nameGenerator:
         !type:IndependentNameGenerator

@@ -127,6 +127,8 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
+  - id: ISVBioBubble
+    type: BecomesStation
 - uid: 2
   type: Thruster
   components:

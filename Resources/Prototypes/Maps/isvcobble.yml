@@ -5,7 +5,7 @@
   minPlayers: 0
   fallback: true
   stations:
-    ISVStarlight:
+    ISVCobble:
       mapNameTemplate: '{0} Cobble {1}'
       nameGenerator:
         !type:IndependentNameGenerator
