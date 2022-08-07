@@ -53,13 +53,14 @@ namespace Content.Server.DeviceNetwork.Systems
                 return false;
 
             if (device.Address == string.Empty)
-                return;
+                return false;
 
             frequency ??= device.TransmitFrequency;
 
-            if (frequency != null)
-                _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
+            if (frequency == null)
+                return false;
 
+            _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
             return true;
         }
         /// <summary>
@@ -127,6 +128,32 @@ namespace Content.Server.DeviceNetwork.Systems
                 device.AutoConnect = false;
 
             return GetNetwork(device.DeviceNetId).Remove(device);
+        }
+
+        /// <summary>
+        /// Checks if a device is already connected to its network
+        /// </summary>
+        /// <returns>True if the device was found in the network with its corresponding network id</returns>
+        public bool IsDeviceConnected(EntityUid uid, DeviceNetworkComponent? device)
+        {
+            if (!Resolve(uid, ref device, false))
+                return false;
+
+            if (!_networks.TryGetValue(device.DeviceNetId, out var deviceNet))
+                return false;
+
+            return deviceNet.Devices.ContainsValue(device);
+        }
+
+        /// <summary>
+        /// Checks if an address exists in the network with the given netId
+        /// </summary>
+        public bool IsAddressPresent(int netId, string? address)
+        {
+            if (address == null || !_networks.TryGetValue(netId, out var network))
+                return false;
+
+            return network.Devices.ContainsKey(address);
         }
 
         public void SetReceiveFrequency(EntityUid uid, uint? frequency, DeviceNetworkComponent? device = null)

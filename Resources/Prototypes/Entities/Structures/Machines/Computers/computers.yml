@@ -212,7 +212,7 @@
       deviceNetId: Wireless
       receiveFrequencyId: CrewMonitor
     - type: WirelessNetworkConnection
-      range: 500
+      range: 1200
 
 - type: entity
   parent: BaseComputer

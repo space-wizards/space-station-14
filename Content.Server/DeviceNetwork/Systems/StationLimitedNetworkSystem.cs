@@ -1,12 +1,17 @@
 using Content.Server.DeviceNetwork.Components;
+using Content.Server.Station.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
+    /// <summary>
+    /// This system requires the StationLimitedNetworkComponent to be on the the sending entity as well as the receiving entity
+    /// </summary>
     [UsedImplicitly]
     public sealed class StationLimitedNetworkSystem : EntitySystem
     {
+        [Dependency] private readonly StationSystem? _stationSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -16,9 +21,8 @@ namespace Content.Server.DeviceNetwork.Systems
 
         /// <summary>
         /// Sets the station id the device is limited to.
-        /// Uses the grid id until moonys station beacon system is implemented
         /// </summary>
-        public void SetStation(EntityUid uid, GridId? stationId, StationLimitedNetworkComponent? component = null)
+        public void SetStation(EntityUid uid, EntityUid? stationId, StationLimitedNetworkComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -31,8 +35,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnComponentInit(EntityUid uid, StationLimitedNetworkComponent networkComponent, ComponentInit args)
         {
-            //TODO: Change this to StationId after it's system got reworked
-            networkComponent.StationId = Transform(uid).GridID;
+            networkComponent.StationId = _stationSystem?.GetOwningStation(uid);
         }
 
         /// <summary>
@@ -40,16 +43,19 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, StationLimitedNetworkComponent component, BeforePacketSentEvent args)
         {
-            if (!CheckStationId(args.Sender, component.StationId))
+            if (!CheckStationId(args.Sender, component.AllowNonStationPackets, component.StationId))
             {
                 args.Cancel();
             }
         }
 
-        private bool CheckStationId(EntityUid senderUid, GridId? receiverStationId, StationLimitedNetworkComponent? sender = null)
+        private bool CheckStationId(EntityUid senderUid, bool allowNonStationPackets, EntityUid? receiverStationId, StationLimitedNetworkComponent? sender = null)
         {
-            if (!receiverStationId.HasValue || !Resolve(senderUid, ref sender))
+            if (!receiverStationId.HasValue)
                 return false;
+
+            if (!Resolve(senderUid, ref sender, false))
+                return allowNonStationPackets;
 
             return sender.StationId == receiverStationId;
         }

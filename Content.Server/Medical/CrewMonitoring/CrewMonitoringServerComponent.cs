@@ -4,7 +4,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Medical.CrewMonitoring;
 
 [RegisterComponent]
-[Friend(typeof(CrewMonitoringServerSystem))]
+[Access(typeof(CrewMonitoringServerSystem))]
 public sealed class CrewMonitoringServerComponent : Component
 {
 
@@ -25,8 +25,10 @@ public sealed class CrewMonitoringServerComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Available = true;
 
+
     /// <summary>
-    /// The id of the station the server is on.
+    ///     Whether the server is the currently active server for the station it's on
     /// </summary>
-    public GridId? StationId;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Active = true;
 }

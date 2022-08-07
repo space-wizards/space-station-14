@@ -8,9 +8,14 @@ namespace Content.Server.DeviceNetwork.Components
     {
         /// <summary>
         /// The station id the device is limited to.
-        /// Uses the grid id until moonys station beacon system is implemented
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public GridId? StationId;
+        public EntityUid? StationId;
+
+        /// <summary>
+        /// Whether the entity is allowed to receive packets from entities that are not tied to any station
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowNonStationPackets = false;
     }
 }

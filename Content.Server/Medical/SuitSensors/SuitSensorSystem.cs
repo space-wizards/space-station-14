@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
+using Content.Server.Station.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
@@ -25,6 +26,7 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly CrewMonitoringServerSystem _monitoringServerSystem = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -33,6 +35,7 @@ namespace Content.Server.Medical.SuitSensors
         {
             base.Initialize();
             SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<SuitSensorComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
@@ -54,7 +57,7 @@ namespace Content.Server.Medical.SuitSensors
             var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
             foreach (var (sensor, device) in sensors)
             {
-                if (device.TransmitFrequency is not uint frequency)
+                if (!device.TransmitFrequency.HasValue || !sensor.StationId.HasValue)
                     continue;
 
                 // check if sensor is ready to update
@@ -72,8 +75,7 @@ namespace Content.Server.Medical.SuitSensors
                 //Retrieve active server address if the sensor isn't connected to a server
                 if (sensor.ConnectedServer == null)
                 {
-                    var stationId = Transform(sensor.Owner).GridID;
-                    if (!_monitoringServerSystem.TryGetActiveServerAddress(stationId, out var address))
+                    if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId.Value, out var address))
                         continue;
 
                     sensor.ConnectedServer = address;
@@ -81,9 +83,15 @@ namespace Content.Server.Medical.SuitSensors
 
                 // Send it to the connected server
                 var payload = SuitSensorToPacket(status);
-                // Clear the connected server if sending the status failed
-                if (!_deviceNetworkSystem.QueuePacket(sensor.Owner, sensor.ConnectedServer, payload, device: device))
+
+                // Clear the connected server if its address isn't on the network
+                if (!_deviceNetworkSystem.IsAddressPresent(device.DeviceNetId, sensor.ConnectedServer))
+                {
                     sensor.ConnectedServer = null;
+                    continue;
+                }
+
+                _deviceNetworkSystem.QueuePacket(sensor.Owner, sensor.ConnectedServer, payload, device: device);
             }
         }
 
@@ -102,6 +110,11 @@ namespace Content.Server.Medical.SuitSensors
                 };
                 component.Mode = _random.Pick(modesDist);
             }
+        }
+
+        private void OnComponentInit(EntityUid uid, SuitSensorComponent component, ComponentInit args)
+        {
+            component.StationId = _stationSystem.GetOwningStation(uid);
         }
 
         private void OnEquipped(EntityUid uid, SuitSensorComponent component, GotEquippedEvent args)
@@ -273,7 +286,7 @@ namespace Content.Server.Medical.SuitSensors
         }
 
         /// <summary>
-        ///     Serialize suit sensor status into device network package.
+        ///     Serialize create a device network package from the suit sensors status.
         /// </summary>
         public NetworkPayload SuitSensorToPacket(SuitSensorStatus status)
         {
@@ -294,7 +307,7 @@ namespace Content.Server.Medical.SuitSensors
         }
 
         /// <summary>
-        ///     Try to deserialize device network message into suit sensor status
+        ///     Try to create the suit sensors status from the device network message
         /// </summary>
         public SuitSensorStatus? PacketToSuitSensor(NetworkPayload payload)
         {
