@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nukies now have a medic., type: Add}
-  id: 1600
-  time: '2022-05-25T19:42:02.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Buckets now hold 250u, type: Tweak}
@@ -2942,3 +2937,10 @@ Entries:
   - {message: Meat spikes can now be properly deconstructed., type: Fix}
   id: 2099
   time: '2022-08-07T01:11:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: New grass and dirt tiles coming to a station near you soon(TM)., type: Add}
+  - {message: 'Minor Splitstation QOL update, durathread for HoP, lv wire in cafe
+      fixed, altar for chaplain + cloner consoles in med.', type: Tweak}
+  id: 2100
+  time: '2022-08-07T01:13:35.0000000+00:00'
