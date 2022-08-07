@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Space clouds have cleared once again, and there are more stars than
-      before.', type: Add}
-  id: 1603
-  time: '2022-05-25T21:49:21.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Emergency lights don't have their light clip through walls anymore.,
@@ -2943,3 +2937,9 @@ Entries:
   - {message: Eggs from egg-plants now contain real eggs., type: Fix}
   id: 2102
   time: '2022-08-07T01:16:26.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Stun batons are back to having a distinct stun sound when stuning!,
+    type: Fix}
+  id: 2103
+  time: '2022-08-07T07:10:40.0000000+00:00'
