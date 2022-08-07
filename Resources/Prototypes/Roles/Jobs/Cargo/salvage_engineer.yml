@@ -2,8 +2,7 @@
   id: SalvageEngineer
   name: "salvage engineer"
   startingGear: CargoTechGear
-  departments:
-  - Cargo
+  playTimeTracker: JobSalvageEngineer
   icon: "CargoTechnician"
   supervisors: "the head of personnel" # TODO: Change this to include the QM when it gets in.
   accessGroups:
