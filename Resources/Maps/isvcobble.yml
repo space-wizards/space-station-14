@@ -113,6 +113,7 @@ entities:
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
+    enabled: True
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
@@ -2014,4 +2015,16 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 257
+  type: GravityGeneratorMini
+  components:
+  - pos: 8.5,0.5
+    parent: 3
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - powerLoad: 500
+    type: ApcPowerReceiver
+  - radius: 2.5
+    type: PointLight
 ...

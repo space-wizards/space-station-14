@@ -97,6 +97,7 @@ entities:
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
+    enabled: True
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
@@ -1716,11 +1717,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 198
-  type: Table
+  type: CircuitImprinterMachineCircuitboard
   components:
-  - pos: -7.5,-2.5
+  - pos: -8.593326,-2.609375
     parent: 1
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 199
   type: Table
   components:
@@ -1752,19 +1755,23 @@ entities:
 - uid: 203
   type: ProtolatheMachineCircuitboard
   components:
-  - pos: -7.9581385,-2.3640313
+  - pos: -8.499576,-2.265625
     parent: 1
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 204
-  type: CircuitImprinterMachineCircuitboard
+  type: GravityGeneratorMini
   components:
-  - pos: -7.9581385,-2.6140313
+  - pos: -7.5,-2.5
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
+  - enabled: False
+    type: AmbientSound
+  - powerLoad: 500
+    type: ApcPowerReceiver
+  - radius: 2.5
+    type: PointLight
 - uid: 205
   type: LockerBotanistFilled
   components:
