@@ -1,0 +1,20 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="Start Role Group">
+    <BoxContainer Orientation="Vertical" SeparationOverride="5">
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="RoleNameLabel" MinSize="150 0" Text="Role Name" />
+            <LineEdit Name="RoleName" MinSize="300 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="RoleDescriptionLabel" MinSize="150 0" Text="Role Description" />
+            <LineEdit Name="RoleDescription" MinSize="300 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="RoleRulesLabel" Text="Role Rules" />
+            <LineEdit Name="RoleRules" MinSize="300 0" HorizontalExpand="True" Text="{Loc ghost-role-component-default-rules}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="StartButton" Text="Start" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

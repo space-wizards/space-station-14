@@ -7,10 +7,21 @@
     <PanelContainer StyleClasses="HighDivider"></PanelContainer>
     <RichTextLabel Name="Description"
                    Margin="0 4"/>
-    <BoxContainer HorizontalAlignment="Left"
-                  Orientation="Horizontal"
-                  SeparationOverride="5">
-        <Button Name="RequestButton" Text="Request"/>
-        <Button Name="CancelButton" Text="Cancel" StyleClasses="Caution"/>
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer HorizontalAlignment="Left"
+                      Orientation="Horizontal"
+                      SeparationOverride="5">
+            <Button Name="RequestButton" Text="Request"/>
+            <Button Name="CancelButton" Text="Cancel" StyleClasses="Caution"/>
+        </BoxContainer>
+        <BoxContainer Name="AdminControls"
+                      HorizontalAlignment="Right"
+                      Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      SeparationOverride="5">
+            <Button Name="ReleaseButton" Text="Release" HorizontalAlignment="Right"/>
+            <Button Name="DeleteButton" Text="Delete" StyleClasses="Caution" HorizontalAlignment="Right"/>
+        </BoxContainer>
     </BoxContainer>
+
 </BoxContainer>

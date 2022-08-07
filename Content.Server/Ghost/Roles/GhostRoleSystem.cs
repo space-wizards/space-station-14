@@ -328,12 +328,68 @@ namespace Content.Server.Ghost.Roles
     {
         public string Command => "ghostrolegroups";
         public string Description => "Manage ghost role groups.";
-        public string Help => $"${Command} start | release";
+        public string Help => @$"${Command}
+start <name> <description> <rules>
+delete <deleteEntities> <groupIdentifier>
+release [groupIdentifier]";
+
+        private void ExecuteStart(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+        {
+            if (args.Length < 4)
+                return;
+
+            var manager = IoCManager.Resolve<GhostRoleManager>();
+
+            var name = args[1];
+            var description = args[2];
+            var rules = args[3];
+
+            var id = manager.StartGhostRoleGroup(player, name, description, rules);
+            shell.WriteLine($"Role group start: {id}");
+        }
+
+        private void ExecuteDelete(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+        {
+            var manager = IoCManager.Resolve<GhostRoleManager>();
+            if (args.Length != 3)
+                return;
+
+            var deleteEntities = bool.Parse(args[1]);
+            var identifier = uint.Parse(args[2]);
+
+            manager.DeleteGhostRoleGroup(player, identifier, deleteEntities);
+        }
+
+        private void ExecuteRelease(IConsoleShell shell,  IPlayerSession player, string argStr, string[] args)
+        {
+            var manager = IoCManager.Resolve<GhostRoleManager>();
+
+            switch (args.Length)
+            {
+                case > 2:
+                    shell.WriteLine(Help);
+                    break;
+                case 2:
+                {
+                    var identifier = uint.Parse(args[1]);
+                    manager.ReleaseGhostRoleGroup(player, identifier);
+                    break;
+                }
+                default:
+                {
+                    var identifier = manager.GetActiveGhostRoleGroupOrNull(player);
+                    if(identifier != null)
+                        manager.ReleaseGhostRoleGroup(player, identifier.Value);
+                    break;
+                }
+            }
+        }
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player == null)
             {
-                shell.WriteLine("You can only manage ghostrolegroups on a client.");
+                shell.WriteLine("You can only manage ghost role groups on a client.");
                 return;
             }
 
@@ -344,33 +400,17 @@ namespace Content.Server.Ghost.Roles
             }
 
             var player = (IPlayerSession) shell.Player;
-            var manager = IoCManager.Resolve<GhostRoleManager>();
 
             switch (args[0])
             {
                 case "start":
-                    manager.StartGhostRoleGroup((IPlayerSession)shell.Player);
+                    ExecuteStart(shell, player, argStr, args);
                     break;
                 case "release":
-                    switch (args.Length)
-                    {
-                        case > 2:
-                            shell.WriteLine($"Usage: {Command} release [identifier]");
-                            break;
-                        case 2:
-                        {
-                            var identifier = uint.Parse(args[1]);
-                            manager.ReleaseGhostRoleGroup(player, identifier);
-                            break;
-                        }
-                        default:
-                        {
-                            var identifier = manager.GetActiveGhostRoleGroupOrNull(player);
-                            if(identifier != null)
-                                manager.ReleaseGhostRoleGroup(player, identifier.Value);
-                            break;
-                        }
-                    }
+                    ExecuteRelease(shell, player, argStr, args);
+                    break;
+                case "delete":
+                    ExecuteDelete(shell, player, argStr, args);
                     break;
                 default:
                     shell.WriteLine($"Usage: {Help}");

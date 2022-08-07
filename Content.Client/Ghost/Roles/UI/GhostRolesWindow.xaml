@@ -17,5 +17,8 @@
             <Label Text="&#x231B;" Margin="10 0" VerticalAlignment="Center"/>
             <ProgressBar Name="TimeRemainingProgress" VerticalAlignment="Center" HorizontalExpand="True" MaxHeight="10"/>
         </BoxContainer>
+        <BoxContainer Name="AdminControls" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="StartGroupButton" Text="Start Group"/>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

@@ -1,3 +1,4 @@
+using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
@@ -9,11 +10,14 @@ namespace Content.Server.Ghost.Roles.UI
         public override GhostRolesEuiState GetNewState()
         {
             var manager = IoCManager.Resolve<GhostRoleManager>();
+            var adminManager = IoCManager.Resolve<IAdminManager>();
+
             return new GhostRolesEuiState(
                 manager.GetGhostRoleGroupsInfo(Player),
                 manager.GetGhostRolesInfo(Player),
                 manager.LotteryStartTime,
-                manager.LotteryExpiresTime);
+                manager.LotteryExpiresTime,
+                adminManager.IsAdmin(Player));
         }
 
         public override void HandleMessage(EuiMessageBase msg)

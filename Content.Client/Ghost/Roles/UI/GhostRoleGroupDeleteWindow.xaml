@@ -1,0 +1,11 @@
+<DefaultWindow Title="Delete Role Group"
+               xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical" SeparationOverride="5">
+        <Label Text="Deleting the role group will void all lottery requests. All entities will be released."/>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="DeleteEntitiesLabel" Text="Delete Entities?"/>
+            <CheckBox Name="DeleteEntitiesCheckbox" />
+        </BoxContainer>
+        <Button Name="DeleteButton" HorizontalAlignment="Right" StyleClasses="Caution" Text="Delete"></Button>
+    </BoxContainer>
+</DefaultWindow>

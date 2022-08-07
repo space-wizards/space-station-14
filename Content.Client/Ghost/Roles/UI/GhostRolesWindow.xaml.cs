@@ -20,12 +20,18 @@ namespace Content.Client.Ghost.Roles.UI
 
         public event Action<GhostRoleGroupInfo>? OnGroupRequested;
         public event Action<GhostRoleGroupInfo>? OnGroupCancelled;
+        public event Action<GhostRoleGroupInfo>? OnGroupDelete;
+        public event Action<GhostRoleGroupInfo>? OnGroupRelease;
+        public event Action? OnGroupStart;
 
         public GhostRolesWindow()
         {
             RobustXamlLoader.Load(this);
 
             TimeRemainingProgress.ForegroundStyleBoxOverride = new StyleBoxFlat(StyleNano.NanoGold);
+
+            StartGroupButton.OnPressed += _ => OnGroupStart?.Invoke();
+
         }
 
         public void SetLotteryTime(TimeSpan lotteryStart, TimeSpan lotteryEnd)
@@ -54,13 +60,16 @@ namespace Content.Client.Ghost.Roles.UI
             EntryContainer.AddChild(entry);
         }
 
-        public void AddGroupEntry(GhostRoleGroupInfo group)
+        public void AddGroupEntry(GhostRoleGroupInfo group, bool adminControls)
         {
             NoRolesMessage.Visible = false;
 
-            var entry = new GhostRoleGroupEntry(group);
+            var entry = new GhostRoleGroupEntry(group, adminControls);
             entry.OnGroupSelected +=  OnGroupRequested;
             entry.OnGroupCancelled += OnGroupCancelled;
+            entry.OnGroupRelease += OnGroupRelease;
+            entry.OnGroupDelete += OnGroupDelete;
+
             EntryContainer.AddChild(entry);
         }
 
@@ -69,6 +78,11 @@ namespace Content.Client.Ghost.Roles.UI
             base.FrameUpdate(args);
 
             TimeRemainingProgress.Value = (float) -_gameTiming.CurTime.TotalSeconds;
+        }
+
+        public void SetAdminControlsVisible(bool showAdminControls)
+        {
+            AdminControls.Visible = showAdminControls;
         }
     }
 }

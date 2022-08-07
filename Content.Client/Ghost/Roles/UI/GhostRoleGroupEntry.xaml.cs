@@ -11,7 +11,10 @@ public sealed partial class GhostRoleGroupEntry : BoxContainer
     public event Action<GhostRoleGroupInfo>? OnGroupSelected;
     public event Action<GhostRoleGroupInfo>? OnGroupCancelled;
 
-    public GhostRoleGroupEntry(GhostRoleGroupInfo group)
+    public event Action<GhostRoleGroupInfo>? OnGroupDelete;
+    public event Action<GhostRoleGroupInfo>? OnGroupRelease;
+
+    public GhostRoleGroupEntry(GhostRoleGroupInfo group, bool adminControls)
     {
         RobustXamlLoader.Load(this);
 
@@ -25,7 +28,13 @@ public sealed partial class GhostRoleGroupEntry : BoxContainer
 
         RequestButton.Visible = ready && !group.IsRequested;
         CancelButton.Visible = ready && group.IsRequested;
+
+        AdminControls.Visible = adminControls;
+        ReleaseButton.Visible = group.Status == "Editing";
+
         RequestButton.OnPressed += _ => OnGroupSelected?.Invoke(group);
         CancelButton.OnPressed += _ => OnGroupCancelled?.Invoke(group);
+        ReleaseButton.OnPressed += _ => OnGroupRelease?.Invoke(group);
+        DeleteButton.OnPressed += _ => OnGroupDelete?.Invoke(group);
     }
 }

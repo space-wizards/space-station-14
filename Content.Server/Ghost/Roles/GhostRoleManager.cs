@@ -218,27 +218,29 @@ public sealed class GhostRoleManager
         SendGhostRolesChangedEvent(player);
     }
 
-    public void StartGhostRoleGroup(IPlayerSession session)
+    public uint? StartGhostRoleGroup(IPlayerSession session, string name, string description, string rules)
     {
         if (!_adminManager.IsAdmin(session))
-            return;
+            return null;
 
         if (_roleGroupEntries.FirstOrNull(kv => kv.Value.Owner == session) != null)
-            return;
+            return null;
 
         var identifier = NextIdentifier;
         var entry = new RoleGroupEntry()
         {
             Owner = session,
             Identifier = identifier,
-            RoleName = $"Role Group [{identifier}]",
-            RoleDescription = "Custom role group",
+            RoleName = name,
+            RoleDescription = description,
             IsActive = true,
         };
 
         // TODO: Multiple role group entries per player.
 
         _roleGroupEntries.Add(identifier, entry);
+        SendGhostRolesChangedEvent(session);
+        return identifier;
     }
 
     public void ReleaseGhostRoleGroup(IPlayerSession session, uint identifier)
@@ -253,6 +255,30 @@ public sealed class GhostRoleManager
             return;
 
         entry.Status = GhostRoleGroupStatus.Releasing;
+        SendGhostRolesChangedEvent(session);
+    }
+
+    public void DeleteGhostRoleGroup(IPlayerSession session, uint identifier, bool deleteEntities)
+    {
+        if (!_adminManager.IsAdmin(session))
+            return;
+
+        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
+            return;
+
+        if (entry.Owner != session)
+            return;
+
+        _roleGroupEntries.Remove(identifier);
+        if (!deleteEntities)
+            return;
+
+        foreach (var entity in entry.Entities)
+        {
+            // TODO: Exempt certain entities from this.
+            _entityManager.QueueDeleteEntity(entity);
+        }
+        SendGhostRolesChangedEvent(session);
     }
 
     public uint? GetActiveGhostRoleGroupOrNull(IPlayerSession session)
@@ -402,9 +428,9 @@ public sealed class GhostRoleManager
                 AvailableCount = group.Entities.Count,
                 Name = group.RoleName,
                 Description = group.RoleDescription,
-                Rules = "Test",
                 Status = group.Status.ToString(),
-                IsRequested = group.Requests.Contains(session)
+                IsRequested = group.Requests.Contains(session),
+                IsOwner = group.Owner == session,
             });
         }
 

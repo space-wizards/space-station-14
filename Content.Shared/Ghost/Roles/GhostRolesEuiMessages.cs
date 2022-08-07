@@ -24,6 +24,7 @@ namespace Content.Shared.Ghost.Roles
         public string Description { get; set; }
         public string Rules { get; set; }
         public string Status { get; set; }
+        public bool IsOwner { get; set; }
         public bool IsRequested { get; set; }
         public int AvailableCount { get; set; }
     }
@@ -35,13 +36,15 @@ namespace Content.Shared.Ghost.Roles
         public GhostRoleInfo[] GhostRoles { get; }
         public TimeSpan LotteryStart { get; }
         public TimeSpan LotteryEnd { get; }
+        public bool ShowAdminControls { get; }
 
-        public GhostRolesEuiState(GhostRoleGroupInfo[] ghostRoleGroups, GhostRoleInfo[] ghostRoles, TimeSpan lotteryStart, TimeSpan lotteryEnd)
+        public GhostRolesEuiState(GhostRoleGroupInfo[] ghostRoleGroups, GhostRoleInfo[] ghostRoles, TimeSpan lotteryStart, TimeSpan lotteryEnd, bool showAdminControls)
         {
             GhostRoleGroups = ghostRoleGroups;
             GhostRoles = ghostRoles;
             LotteryStart = lotteryStart;
             LotteryEnd = lotteryEnd;
+            ShowAdminControls = showAdminControls;
         }
     }
 
