@@ -1,0 +1,16 @@
+﻿- type: gameMap
+  id: ISVBioBubble
+  mapName: 'ISV BioBubble'
+  mapPath: /Maps/isvbiobubble.yml
+  minPlayers: 0
+  fallback: true
+  stations:
+    ISVStarlight:
+      mapNameTemplate: '{0} BioBubble {1}'
+      nameGenerator:
+        !type:IndependentNameGenerator
+        prefixCreator: ''
+      overflowJobs: []
+      availableJobs:
+        Botanist: [ 3, 3 ]
+        SalvageSpecialist: [ 1, 1 ]

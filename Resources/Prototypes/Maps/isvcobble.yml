@@ -1,18 +1,15 @@
 ﻿- type: gameMap
-  id: ISVStarlight
-  mapName: 'ISV Starlight'
-  mapPath: /Maps/isvstarlight.yml
+  id: ISVCobble
+  mapName: 'ISV Cobble'
+  mapPath: /Maps/isvcobble.yml
   minPlayers: 0
   fallback: true
   stations:
     ISVStarlight:
-      mapNameTemplate: '{0} Starlight {1}'
+      mapNameTemplate: '{0} Cobble {1}'
       nameGenerator:
         !type:IndependentNameGenerator
         prefixCreator: ''
       overflowJobs: []
       availableJobs:
-        Captain: [ 1, 1 ]
         SalvageSpecialist: [ 3, 3 ]
-        MedicalDoctor: [ 1, 1 ]
-        Bartender: [ 1, 1 ]
