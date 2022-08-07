@@ -1,16 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Buckets now hold 250u, type: Tweak}
-  id: 1601
-  time: '2022-05-25T19:45:12.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Nanotrasen has finally found a manufacturer for mousetraps. We will
-      begin supplying your stations with these to help the battle against the mouse
-      menace!, type: Add}
-  id: 1602
-  time: '2022-05-25T20:16:34.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Space clouds have cleared once again, and there are more stars than
@@ -2944,3 +2932,14 @@ Entries:
       fixed, altar for chaplain + cloner consoles in med.', type: Tweak}
   id: 2100
   time: '2022-08-07T01:13:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The durathread crafting recipe now gives the proper amount (5, not
+      1).', type: Fix}
+  id: 2101
+  time: '2022-08-07T01:15:32.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Eggs from egg-plants now contain real eggs., type: Fix}
+  id: 2102
+  time: '2022-08-07T01:16:26.0000000+00:00'
