@@ -56,10 +56,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-1-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-1-
 
 - type: entity
   name: bottle
@@ -74,10 +73,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-2-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-2-
 
 - type: entity
   name: bottle
@@ -92,10 +90,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-3-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-3-
 
 - type: entity
   name: bottle
@@ -110,10 +107,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-4-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-4-
 
 - type: entity
   id: EpinephrineChemistryBottle
