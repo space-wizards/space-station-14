@@ -75,6 +75,5 @@
     node: machine
   - type: Machine
     board: EmitterCircuitboard
-  - type: Lightning
+  - type: Beam
     bodyPrototype: LightningBase
-    maxArc: 3

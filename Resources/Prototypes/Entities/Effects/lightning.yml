@@ -20,3 +20,4 @@
     radius: 3.5
     softness: 1
     autoRot: true
+  - type: Beam

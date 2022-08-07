@@ -19,9 +19,7 @@ public abstract class SharedLightningComponent : Component
     [DataField("arcTarget")]
     public EntityUid ArcTarget;
 
-    [ViewVariables]
-    [DataField("bodyPrototype")]
-    public string BodyPrototype = "LightningBase";
+    public int Counter = 0;
 
     /// <summary>
     /// How far should this lightning go?
@@ -29,23 +27,4 @@ public abstract class SharedLightningComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxLength")]
     public float MaxLength = 5f;
-
-    public int Counter = 0;
-}
-
-[Serializable, NetSerializable]
-public sealed class LightningEvent : EntityEventArgs
-{
-    public Angle Angle;
-    public Vector2 CalculatedDistance;
-    public EntityCoordinates Offset;
-    public Vector2 OffsetCorrection;
-
-    public LightningEvent(Angle angle, Vector2 calculatedDistance, EntityCoordinates offset, Vector2 offsetCorrection)
-    {
-        Angle = angle;
-        CalculatedDistance = calculatedDistance;
-        Offset = offset;
-        OffsetCorrection = offsetCorrection;
-    }
 }
