@@ -1083,5 +1083,11 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+
+        /// <summary>
+        /// The time each ghost role lottery lasts. In seconds.
+        /// </summary>
+        public static readonly CVarDef<float> GhostRoleLotteryTime =
+            CVarDef.Create("ghost.role_lottery_time", 30f, CVar.SERVERONLY);
     }
 }

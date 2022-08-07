@@ -3,9 +3,11 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Players;
+using Content.Shared.CCVar;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -76,12 +78,11 @@ public sealed class PlayerTakeoverCompleteEventArgs
 [UsedImplicitly]
 public sealed class GhostRoleManager
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
-
-    private readonly TimeSpan _lotteryElapseTime = TimeSpan.FromSeconds(30);
     public TimeSpan LotteryStartTime { get; private set; } = TimeSpan.Zero;
     public TimeSpan LotteryExpiresTime { get; private set; } = TimeSpan.Zero;
 
@@ -463,8 +464,10 @@ public sealed class GhostRoleManager
         }
         _queuedGhostRoleComponents.Clear();
 
+        var elapseTime = TimeSpan.FromSeconds(_cfgManager.GetCVar<float>(CCVars.GhostRoleLotteryTime));
+
         LotteryStartTime = _gameTiming.CurTime;
-        LotteryExpiresTime = LotteryStartTime + _lotteryElapseTime;
+        LotteryExpiresTime = LotteryStartTime + elapseTime;
         SendGhostRolesChangedEvent();
     }
 
