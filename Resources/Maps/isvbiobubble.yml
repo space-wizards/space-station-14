@@ -114,8 +114,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 0
-      - 0
+      - 21.824879
+      - 82.10312
       - 0
       - 0
       - 0
@@ -1642,4 +1642,75 @@ entities:
   - pos: -4.5,-2.5
     parent: 1
     type: Transform
+- uid: 208
+  type: Poweredlight
+  components:
+  - pos: -0.5,2.5
+    parent: 1
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 209
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,-3.5
+    parent: 1
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 210
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -9.5,-1.5
+    parent: 1
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 211
+  type: Table
+  components:
+  - pos: -9.5,-1.5
+    parent: 1
+    type: Transform
+- uid: 212
+  type: KitchenMicrowave
+  components:
+  - pos: -9.5,-1.5
+    parent: 1
+    type: Transform
+  - containers:
+      microwave_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 213
+  type: PortableScrubber
+  components:
+  - pos: -10.5,-1.5
+    parent: 1
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 ...

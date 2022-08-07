@@ -1849,4 +1849,18 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
+- uid: 256
+  type: PortableScrubber
+  components:
+  - pos: 9.5,-3.5
+    parent: 3
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 ...
