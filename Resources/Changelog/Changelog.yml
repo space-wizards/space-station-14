@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Enhances the HQ parallax., type: Tweak}
-  id: 1605
-  time: '2022-05-26T08:38:11.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fix action icons sometimes being blank when first joining the game.,
@@ -2943,3 +2938,8 @@ Entries:
       their solution contents in beautiful Technicolor.', type: Add}
   id: 2104
   time: '2022-08-07T08:50:52.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo shuttle calls work again., type: Fix}
+  id: 2105
+  time: '2022-08-07T23:22:46.0000000+00:00'
