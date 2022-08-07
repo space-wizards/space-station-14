@@ -52,8 +52,12 @@ namespace Content.Shared.Weapon.Melee.Components
         [DataField("clickAttackEffect")]
         public bool ClickAttackEffect { get; set; } = true;
 
-        public TimeSpan LastAttackTime;
-        public TimeSpan CooldownEnd;
+        // TODO: When we can predict comp changes just make this a cooldown accumulator on an active component.
+        /// <summary>
+        /// Next time the weapon can attack.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("nextAttackTime")]
+        public TimeSpan NextAttackTime;
 
         [DataField("damage", required:true)]
         [ViewVariables(VVAccess.ReadWrite)]

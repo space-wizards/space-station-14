@@ -52,19 +52,6 @@ namespace Content.Shared.CombatMode
                 if (CombatToggleAction != null)
                     EntitySystem.Get<SharedActionsSystem>().SetToggled(CombatToggleAction, _isInCombatMode);
                 Dirty();
-
-                // Regenerate physics contacts -> Can probably just selectively check
-                /* Still a bit jank so left disabled for now.
-                if (Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
-                {
-                    if (value)
-                    {
-                        physicsComponent.WakeBody();
-                    }
-
-                    physicsComponent.RegenerateContacts();
-                }
-                */
             }
         }
 
@@ -77,36 +64,6 @@ namespace Content.Shared.CombatMode
                 if (_activeZone == value) return;
                 _activeZone = value;
                 Dirty();
-            }
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not CombatModeComponentState state)
-                return;
-
-            IsInCombatMode = state.IsInCombatMode;
-            ActiveZone = state.TargetingZone;
-        }
-
-
-        public override ComponentState GetComponentState()
-        {
-            return new CombatModeComponentState(IsInCombatMode, ActiveZone);
-        }
-
-        [Serializable, NetSerializable]
-        protected sealed class CombatModeComponentState : ComponentState
-        {
-            public bool IsInCombatMode { get; }
-            public TargetingZone TargetingZone { get; }
-
-            public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
-            {
-                IsInCombatMode = isInCombatMode;
-                TargetingZone = targetingZone;
             }
         }
     }

@@ -4,6 +4,7 @@ using Content.Shared.Targeting;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
@@ -23,6 +24,16 @@ namespace Content.Client.CombatMode
 
             SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
             SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
+            SubscribeLocalEvent<SharedCombatModeComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnHandleState(EntityUid uid, SharedCombatModeComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not CombatModeComponentState state)
+                return;
+
+            component.IsInCombatMode = state.IsInCombatMode;
+            component.ActiveZone = state.TargetingZone;
         }
 
         public override void Shutdown()

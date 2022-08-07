@@ -1,6 +1,8 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Targeting;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.CombatMode
 {
@@ -61,6 +63,19 @@ namespace Content.Shared.CombatMode
 
             component.IsInCombatMode = !component.IsInCombatMode;
             args.Handled = true;
+        }
+
+        [Serializable, NetSerializable]
+        protected sealed class CombatModeComponentState : ComponentState
+        {
+            public bool IsInCombatMode { get; }
+            public TargetingZone TargetingZone { get; }
+
+            public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
+            {
+                IsInCombatMode = isInCombatMode;
+                TargetingZone = targetingZone;
+            }
         }
     }
 

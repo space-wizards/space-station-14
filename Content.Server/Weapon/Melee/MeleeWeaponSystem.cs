@@ -47,26 +47,7 @@ namespace Content.Server.Weapon.Melee
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)
         {
-            var curTime = _gameTiming.CurTime;
-            var cool = TimeSpan.FromSeconds(comp.CooldownTime * 0.5f);
-
-            if (curTime < comp.CooldownEnd)
-            {
-                if (comp.CooldownEnd - curTime < cool)
-                {
-                    comp.LastAttackTime = curTime;
-                    comp.CooldownEnd += cool;
-                }
-                else
-                    return;
-            }
-            else
-            {
-                comp.LastAttackTime = curTime;
-                comp.CooldownEnd = curTime + cool;
-            }
-
-            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
+            SetAttackCooldown(uid, _gameTiming.CurTime + TimeSpan.FromSeconds(comp.CooldownTime * 0.5f), comp);
         }
 
         private void OnClickAttack(EntityUid owner, MeleeWeaponComponent comp, ClickAttackEvent args)
@@ -74,7 +55,7 @@ namespace Content.Server.Weapon.Melee
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
-            if (curTime < comp.CooldownEnd ||
+            if (curTime < comp.NextAttackTime ||
                 args.Target == null ||
                 args.Target == owner ||
                 args.User == args.Target)
@@ -122,10 +103,7 @@ namespace Content.Server.Weapon.Melee
                 SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
             }
 
-            comp.LastAttackTime = curTime;
-            SetAttackCooldown(owner, comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime), comp);
-
-            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
+            SetAttackCooldown(owner, curTime + TimeSpan.FromSeconds(comp.CooldownTime), comp);
         }
 
         /// <summary>
@@ -134,10 +112,10 @@ namespace Content.Server.Weapon.Melee
         public void SetAttackCooldown(EntityUid uid, TimeSpan endTime, MeleeWeaponComponent? component = null)
         {
             // Some other system may want to artificially inflate melee weapon CD.
-            if (!Resolve(uid, ref component) || component.CooldownEnd > endTime) return;
+            if (!Resolve(uid, ref component) || component.NextAttackTime > endTime) return;
 
-            component.CooldownEnd = endTime;
-            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd));
+            component.NextAttackTime = endTime;
+            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.NextAttackTime - TimeSpan.FromSeconds(component.CooldownTime), component.NextAttackTime));
         }
 
         private void OnWideAttack(EntityUid owner, MeleeWeaponComponent comp, WideAttackEvent args)
@@ -147,7 +125,7 @@ namespace Content.Server.Weapon.Melee
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
-            if (curTime < comp.CooldownEnd)
+            if (curTime < comp.NextAttackTime)
             {
                 return;
             }
@@ -218,9 +196,7 @@ namespace Content.Server.Weapon.Melee
                 }
             }
 
-            comp.LastAttackTime = curTime;
-            comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
-            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
+            SetAttackCooldown(owner, curTime + TimeSpan.FromSeconds(comp.CooldownTime), comp);
         }
 
         public static string? GetHighestDamageSound(DamageSpecifier modifiedDamage, IPrototypeManager protoManager)

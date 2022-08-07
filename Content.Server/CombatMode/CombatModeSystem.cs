@@ -15,6 +15,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Physics;
@@ -37,6 +38,12 @@ namespace Content.Server.CombatMode
             base.Initialize();
 
             SubscribeLocalEvent<SharedCombatModeComponent, DisarmActionEvent>(OnEntityActionPerform);
+            SubscribeLocalEvent<SharedCombatModeComponent, ComponentGetState>(OnGetState);
+        }
+
+        private void OnGetState(EntityUid uid, SharedCombatModeComponent component, ref ComponentGetState args)
+        {
+            args.State = new CombatModeComponentState(component.IsInCombatMode, component.ActiveZone);
         }
 
         private void OnEntityActionPerform(EntityUid uid, SharedCombatModeComponent component, DisarmActionEvent args)
@@ -57,7 +64,7 @@ namespace Content.Server.CombatMode
 
             EntityUid? inTargetHand = null;
 
-            if (TryComp<HandsComponent>(args.Target, out HandsComponent? targetHandsComponent)
+            if (TryComp(args.Target, out HandsComponent? targetHandsComponent)
                 && targetHandsComponent.ActiveHand != null
                 && !targetHandsComponent.ActiveHand.IsEmpty)
             {
