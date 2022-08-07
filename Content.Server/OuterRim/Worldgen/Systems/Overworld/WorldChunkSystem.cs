@@ -135,7 +135,7 @@ public sealed partial class WorldChunkSystem : EntitySystem
 
         foreach (var v in lastLoaded)
         {
-            _unloadQueue.Enqueue(v);
+            //_unloadQueue.Enqueue(v);
         }
 
         foreach (var v in toLoad)
