@@ -1,6 +1,8 @@
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
@@ -9,6 +11,8 @@ namespace Content.Client.Weapons.Melee;
 
 public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 {
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
@@ -34,43 +38,42 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 
         if (_inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down)
         {
-            if (weapon.WindupAccumulator > 0)
+            if (weapon.WindupAccumulator > 0f)
             {
-                EntityManager.RaisePredictiveEvent(new ReleaseAttackEvent()
+                if (weapon.WindupAccumulator < weapon.WindupTime)
                 {
-                    Weapon = weapon.Owner,
-                    AsAttack = true,
-                });
+                    EntityManager.RaisePredictiveEvent(new StopAttackEvent()
+                    {
+                        Weapon = weapon.Owner,
+                    });
+                }
+                else
+                {
+                    var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                    EntityCoordinates coordinates;
+
+                    // Bro why would I want a ternary here
+                    // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+                    if (MapManager.TryFindGridAt(mousePos, out var grid))
+                    {
+                        coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                    }
+                    else
+                    {
+                        coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                    }
+
+                    EntityManager.RaisePredictiveEvent(new ReleaseAttackEvent()
+                    {
+                        Weapon = weapon.Owner,
+                        Coordinates = coordinates,
+                    });
+                }
             }
 
             return;
         }
 
         weapon.WindupAccumulator = MathF.Min(weapon.WindupTime, weapon.WindupAccumulator + frameTime);
-
-        if (weapon.NextFire > Timing.CurTime)
-            return;
-
-        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-        EntityCoordinates coordinates;
-
-        // Bro why would I want a ternary here
-        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-        if (MapManager.TryFindGridAt(mousePos, out var grid))
-        {
-            coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
-        }
-        else
-        {
-            coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
-        }
-
-        Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
-
-        EntityManager.RaisePredictiveEvent(new RequestShootEvent
-        {
-            Coordinates = coordinates,
-            Gun = weapon.Owner,
-        });
     }
 }

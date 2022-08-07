@@ -5,6 +5,7 @@ using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -14,6 +15,7 @@ namespace Content.Shared.Weapons.Melee;
 public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
 
     protected ISawmill Sawmill = default!;
@@ -25,6 +27,9 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
         SubscribeLocalEvent<NewMeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<NewMeleeWeaponComponent, ComponentHandleState>(OnHandleState);
+        SubscribeAllEvent<StartAttackEvent>(OnAttackStart);
+        SubscribeAllEvent<ReleaseAttackEvent>(OnReleaseAttack);
+        SubscribeAllEvent<StopAttackEvent>(StopAttack);
     }
 
     /// <summary>
@@ -37,17 +42,22 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     }
 
     /// <summary>
-    /// Raised when an attack hold is ended, via attack or release.
+    /// Raised when an attack hold is ended after windup.
     /// </summary>
     [Serializable, NetSerializable]
     protected sealed class ReleaseAttackEvent : EntityEventArgs
     {
         public EntityUid Weapon;
+        public EntityCoordinates Coordinates;
+    }
 
-        /// <summary>
-        /// Did we release the attack as an attack or just to stop the windup.
-        /// </summary>
-        public bool AsAttack;
+    /// <summary>
+    /// Raised when an attack is stopped and no attack should occur.
+    /// </summary>
+    [Serializable, NetSerializable]
+    protected sealed class StopAttackEvent : EntityEventArgs
+    {
+        public EntityUid Weapon;
     }
 
     [Serializable, NetSerializable]
@@ -56,7 +66,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         public TimeSpan NextAttack;
     }
 
-    private void OnAttackStart(StartAttackEvent msg, EntitySessionEventArgs args)
+    protected virtual void OnAttackStart(StartAttackEvent msg, EntitySessionEventArgs args)
     {
         var user = args.SenderSession.AttachedEntity;
 
@@ -69,23 +79,42 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
             return;
 
         Sawmill.Debug($"Started weapon attack");
-        AttemptShoot(user.Value, weapon);
     }
 
-    private void OnStopShootRequest(ReleaseAttackEvent ev, EntitySessionEventArgs args)
+    private void OnReleaseAttack(ReleaseAttackEvent ev, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity == null ||
-            !TryComp<NewMeleeWeaponComponent>(ev.Weapon, out var gun))
+            !TryComp<NewMeleeWeaponComponent>(ev.Weapon, out var weapon))
         {
             return;
         }
 
-        var userGun = GetWeapon(args.SenderSession.AttachedEntity.Value);
+        var userWeapon = GetWeapon(args.SenderSession.AttachedEntity.Value);
 
-        if (userGun != gun)
+        if (userWeapon != weapon)
             return;
 
-        StopShooting(gun);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, ev.Coordinates);
+    }
+
+    private void StopAttack(StopAttackEvent ev, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity == null ||
+            !TryComp<NewMeleeWeaponComponent>(ev.Weapon, out var weapon))
+        {
+            return;
+        }
+
+        var userWeapon = GetWeapon(args.SenderSession.AttachedEntity.Value);
+
+        if (userWeapon != weapon)
+            return;
+
+        if (weapon.WindupAccumulator <= 0f)
+            return;
+
+        weapon.WindupAccumulator = 0f;
+        Dirty(weapon);
     }
 
     private void OnGetState(EntityUid uid, NewMeleeWeaponComponent component, ref ComponentGetState args)
@@ -98,7 +127,8 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
     private void OnHandleState(EntityUid uid, NewMeleeWeaponComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not NewMeleeWeaponComponentState state) return;
+        if (args.Current is not NewMeleeWeaponComponentState state)
+            return;
 
         component.NextAttack = state.NextAttack;
     }
@@ -120,20 +150,12 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         return gun;
     }
 
-    private void StopShooting(NewMeleeWeaponComponent weapon)
+    private void AttemptAttack(EntityUid user, NewMeleeWeaponComponent weapon, EntityCoordinates coordinates)
     {
-        if (weapon.WindupAccumulator <= 0f)
+        if (weapon.WindupAccumulator < weapon.WindupTime)
             return;
 
-        weapon.WindupAccumulator = 0f;
-        Dirty(weapon);
-    }
-
-    private void AttemptShoot(EntityUid user, NewMeleeWeaponComponent gun)
-    {
-        if (gun.FireRate <= 0f) return;
-
-        var toCoordinates = gun.ShootCoordinates;
+        var toCoordinates = weapon.ShootCoordinates;
 
         if (toCoordinates == null) return;
 
@@ -147,36 +169,36 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
-        if (gun.NextFire > curTime) return;
+        if (weapon.NextFire > curTime) return;
 
         // First shot
-        if (gun.ShotCounter == 0 && gun.NextFire < curTime)
-            gun.NextFire = curTime;
+        if (weapon.ShotCounter == 0 && weapon.NextFire < curTime)
+            weapon.NextFire = curTime;
 
         var shots = 0;
-        var lastFire = gun.NextFire;
-        var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
+        var lastFire = weapon.NextFire;
+        var fireRate = TimeSpan.FromSeconds(1f / weapon.FireRate);
 
-        while (gun.NextFire <= curTime)
+        while (weapon.NextFire <= curTime)
         {
-            gun.NextFire += fireRate;
+            weapon.NextFire += fireRate;
             shots++;
         }
 
         // Get how many shots we're actually allowed to make, due to clip size or otherwise.
         // Don't do this in the loop so we still reset NextFire.
-        switch (gun.SelectedMode)
+        switch (weapon.SelectedMode)
         {
             case SelectiveFire.SemiAuto:
-                shots = Math.Min(shots, 1 - gun.ShotCounter);
+                shots = Math.Min(shots, 1 - weapon.ShotCounter);
                 break;
             case SelectiveFire.Burst:
-                shots = Math.Min(shots, 3 - gun.ShotCounter);
+                shots = Math.Min(shots, 3 - weapon.ShotCounter);
                 break;
             case SelectiveFire.FullAuto:
                 break;
             default:
-                throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.SelectedMode}!");
+                throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {weapon.SelectedMode}!");
         }
 
         var fromCoordinates = Transform(user).Coordinates;
@@ -185,15 +207,15 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
         // Listen it just makes the other code around it easier if shots == 0 to do this.
         if (shots > 0)
-            RaiseLocalEvent(gun.Owner, ev, false);
+            RaiseLocalEvent(weapon.Owner, ev, false);
 
         DebugTools.Assert(ev.Ammo.Count <= shots);
         DebugTools.Assert(shots >= 0);
-        UpdateAmmoCount(gun.Owner);
+        UpdateAmmoCount(weapon.Owner);
 
         // Even if we don't actually shoot update the ShotCounter. This is to avoid spamming empty sounds
         // where the gun may be SemiAuto or Burst.
-        gun.ShotCounter += shots;
+        weapon.ShotCounter += shots;
 
         if (ev.Ammo.Count <= 0)
         {
@@ -203,9 +225,9 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
             {
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
-                gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-                PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
-                Dirty(gun);
+                weapon.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, weapon.NextFire.TotalSeconds));
+                PlaySound(weapon.Owner, weapon.SoundEmpty?.GetSound(Random, ProtoManager), user);
+                Dirty(weapon);
                 return;
             }
 
@@ -213,7 +235,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         }
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
-        Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
-        Dirty(gun);
+        Shoot(weapon, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        Dirty(weapon);
     }
 }
