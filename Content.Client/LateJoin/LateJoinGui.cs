@@ -65,7 +65,7 @@ namespace Content.Client.LateJoin
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
 
-            if (gameTicker.StationNames.Count == 0)
+            if (!gameTicker.DisallowedLateJoin && gameTicker.StationNames.Count == 0)
                 Logger.Warning("No stations exist, nothing to display in late-join GUI");
 
             foreach (var (id, name) in gameTicker.StationNames)
