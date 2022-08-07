@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             if (plantHolderComp.Seed.Potency < 100)
             {
                 plantHolderComp.EnsureUniqueSeed();
-                plantHolderComp.Seed.Potency += 3;
+                plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + 3, 100);
             }
             else if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
             {
