@@ -1,10 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Emergency lights don't have their light clip through walls anymore.,
-    type: Fix}
-  id: 1604
-  time: '2022-05-26T04:56:16.0000000+00:00'
 - author: moony
   changes:
   - {message: Enhances the HQ parallax., type: Tweak}
@@ -2943,3 +2937,9 @@ Entries:
     type: Fix}
   id: 2103
   time: '2022-08-07T07:10:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Buckets, mop buckets, and the janitorial trolley now properly visualize
+      their solution contents in beautiful Technicolor.', type: Add}
+  id: 2104
+  time: '2022-08-07T08:50:52.0000000+00:00'
