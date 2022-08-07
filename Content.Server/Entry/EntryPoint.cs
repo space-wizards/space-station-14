@@ -14,9 +14,9 @@ using Content.Server.GhostKick;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
-using Content.Server.LandMines;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
@@ -25,7 +25,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Robust.Server;
 using Robust.Server.Bql;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Server.ServerStatus;
 using Robust.Shared.ContentPack;
@@ -40,6 +39,7 @@ namespace Content.Server.Entry
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
         private ServerUpdateManager _updateManager = default!;
+        private PlayTimeTrackingManager? _playTimeTracking;
 
         /// <inheritdoc />
         public override void Init()
@@ -78,8 +78,7 @@ namespace Content.Server.Entry
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
-
-                var playerManager = IoCManager.Resolve<IPlayerManager>();
+                _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
 
                 var logManager = IoCManager.Resolve<ILogManager>();
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
@@ -96,6 +95,7 @@ namespace Content.Server.Entry
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
+                _playTimeTracking.Initialize();
             }
         }
 
@@ -151,8 +151,14 @@ namespace Content.Server.Entry
 
                 case ModUpdateLevel.FramePostEngine:
                     _updateManager.Update();
+                    _playTimeTracking?.Update();
                     break;
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _playTimeTracking?.Shutdown();
         }
     }
 }

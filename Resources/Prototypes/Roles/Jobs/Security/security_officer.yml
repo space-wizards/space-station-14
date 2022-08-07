@@ -1,9 +1,12 @@
 - type: job
   id: SecurityOfficer
   name: job-name-security
+  playTimeTracker: JobSecurityOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 1800
   startingGear: SecurityOfficerGear
-  departments:
-  - Security
   icon: "SecurityOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false
