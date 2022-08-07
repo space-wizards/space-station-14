@@ -112,7 +112,9 @@ namespace Content.Server.Weapon.Melee
                     }
                     else
                     {
-                        SoundSystem.Play(comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
                     }
                 }
             }
@@ -208,7 +210,9 @@ namespace Content.Server.Weapon.Melee
                     }
                     else
                     {
-                        SoundSystem.Play(comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
                     }
                 }
                 else
