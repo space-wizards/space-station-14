@@ -23,9 +23,6 @@ namespace Content.Server.Sports
         public override void Initialize()
         {
             base.Initialize();
-            //SubscribeLocalEvent<PitchingMachineComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
-            //SubscribeLocalEvent<PitchingMachineComponent, InteractHandEvent>(OnInteractHand);
-            //SubscribeLocalEvent<PitchingMachineComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PitchingMachineComponent, GetVerbsEvent<Verb>>(AddEjectVerb);
             SubscribeLocalEvent<PitchingMachineComponent, GetVerbsEvent<AlternativeVerb>>(AddPowerVerb);
         }
@@ -66,60 +63,33 @@ namespace Content.Server.Sports
                 }
             }
         }
-/*
-        public void OnInteractUsing(EntityUid uid, PitchingMachineComponent component, InteractUsingEvent args)
-        {
-            args.Handled = true;
 
-            if (EntityManager.TryGetComponent<ToolComponent?>(args.Used, out var tool))
-            {
-                if (tool.Qualities.Contains("Anchoring"))
-                    return;
-            }
-
-            if (EntityManager.TryGetComponent<ItemComponent?>(args.Used, out var item) && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
-            {
-                if (_storageSystem.CanInsert(component.Owner, args.Used, out _, storage))
-                {
-                    _storageSystem.Insert(component.Owner, args.Used, storage);
-                }
-            }
-
-        }
-*/
         private void Fire(EntityUid uid)
         {
             if (!TryComp<PitchingMachineComponent>(uid, out var component))
                 return;
-
             if (!EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
                 return;
-
             if (storage.StoredEntities == null)
                 return;
-
             if (storage.StoredEntities.Count == 0)
                 return;
 
             var projectile = _robustRandom.Pick(storage.StoredEntities);
             _storageSystem.RemoveAndDrop(uid, projectile, storage);
 
-            /*
-            if (!EntityManager.TryGetComponent<PhysicsComponent?>(projectile, out var physicsComponent))
-                return;
-
-            physicsComponent.BodyStatus = BodyStatus.InAir;
-            */
             var dir = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * _robustRandom.NextFloat(component.ShootDistanceMin, component.ShootDistanceMax);
 
             _audioSystem.Play(_audioSystem.GetSound(component.FireSound), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
-
             _throwingSystem.TryThrow(projectile, dir, 10f, uid);
 
         }
 
         private void AddPowerVerb(EntityUid uid, PitchingMachineComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
+            if (!args.CanInteract || args.Hands == null)
+                return;
+
             // You don't get to toggle power if it's unanchored
             if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var transformComponent) && !transformComponent.Anchored)
                 return;
@@ -131,7 +101,7 @@ namespace Content.Server.Sports
 
         private void AddEjectVerb(EntityUid uid, PitchingMachineComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanInteract)
+            if (!args.CanInteract || args.Hands == null)
                 return;
 
             Verb ejectItems = new();

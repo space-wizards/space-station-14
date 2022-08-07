@@ -1,4 +1,5 @@
 using Content.Server.Sports.Components;
+using Content.Server.Weapon.Melee.Components;
 using Content.Server.Weapon.Ranged.Systems;
 using Content.Shared.Item;
 using Content.Shared.Projectiles;
@@ -9,6 +10,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Timing;
 
 
 namespace Content.Server.Sports
@@ -20,8 +22,8 @@ namespace Content.Server.Sports
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly GunSystem _gunSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        /// <inheritdoc/>
         public override void Initialize()
         {
             base.Initialize();
@@ -30,38 +32,49 @@ namespace Content.Server.Sports
 
         public void OnBatAttack(EntityUid uid, BaseballBatComponent component, WideAttackEvent args)
         {
+            args.Handled = true;
+
+            if (!EntityManager.TryGetComponent<MeleeWeaponComponent>(component.Owner, out var meleeWeaponComponent))
+                return;
+            if (_gameTiming.CurTime < meleeWeaponComponent.CooldownEnd)
+                return;
 
             var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
-            var diff = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
+            var dir = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
+
+            var hitStrength = _random.NextFloat(component.WackForceMultiplierMin, component.WackForceMultiplierMax);
 
 
-            //if (!EntityManager.TryGetComponent<ThrownItemComponent>(args.User, out var thrownItemComponent))
-            //    return;
-
-            //EntityManager.RemoveComponent<ThrownItemComponent>(args.User);
-
-            var dir = args.ClickLocation.ToMapPos(EntityManager) - EntityManager.GetComponent<TransformComponent>(args.User).WorldPosition.Normalized;
-
-            //The melee system uses a collision raycast but apparently that doesnt work with items so GetEntitiesInArc it is!
-            foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, 0.5f, diff.ToAngle(), 50f, LookupFlags.None))
+            //The melee system uses a collision raycast but apparently that doesnt work with items so im using GetEntitiesInArc
+            foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, meleeWeaponComponent.Range, dir.ToAngle(), meleeWeaponComponent.ArcWidth))
             {
-                if (EntityManager.HasComponent<ItemComponent>(entity) && EntityManager.HasComponent<ThrownItemComponent>(entity))
+                //Checking to see if the items are actually throwable
+                if (!EntityManager.HasComponent<ItemComponent>(entity))
+                    return;
+                if (EntityManager.TryGetComponent<TransformComponent>(entity, out var transformComponent) && transformComponent.Anchored)
+                    return;
+
+                if (EntityManager.HasComponent<ThrownItemComponent>(entity) || !component.OnlyHitThrown)
                 {
 
-                    var rand = _random.Next(1, 5); // random chance of fireball wack
+                    var rand = _random.Next(1, component.FireballChance + 1); // Rolling to see if we'll get the fireball
 
-                    if (rand < 4)
+                    if (rand != component.FireballChance)
                     {
-                        _throwingSystem.TryThrow(entity, diff + _random.NextAngle(10f, 180f).ToVec(), 10f * _random.NextFloat(2, component.WackForceMultiplier), uid);
-                        if (EntityManager.HasComponent<ThrownItemComponent>(entity))
-                            _audioSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
+                        _throwingSystem.TryThrow(entity, dir * hitStrength, 10f, uid);
+                        if (hitStrength < 1) //More pathetic sound if you're hit is pathetic
+                        {
+                            _audioSystem.Play(component.BadHitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
+                            return;
+                        }
+                        _audioSystem.Play(component.GoodHitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
                         return;
                     }
 
                     //just shoots a wizard fireball
                     var fireball = Spawn("ProjectileFireball", EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     EntityManager.DeleteEntity(entity);
-                    _gunSystem.ShootProjectile(fireball, diff, args.User);
+                    _gunSystem.ShootProjectile(fireball, dir, args.User);
                     _audioSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
                 }
             }

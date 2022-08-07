@@ -30,7 +30,7 @@
       interfaces:
         - key: enum.StorageUiKey.Key
           type: StorageBoundUserInterface
-    - type: BallLauncher
+    - type: PitchingMachine
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
