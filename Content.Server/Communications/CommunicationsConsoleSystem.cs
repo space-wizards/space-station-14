@@ -254,10 +254,14 @@ namespace Content.Server.Communications
             if (comp.AnnounceGlobal)
             {
                 _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
+
+                if (message.Session.AttachedEntity != null)
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following global announcement: {msg}");
+                
                 return;
             }
             _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
-            
+
             if (message.Session.AttachedEntity != null)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following station announcement: {msg}");
         }
