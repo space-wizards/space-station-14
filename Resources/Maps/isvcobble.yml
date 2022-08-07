@@ -288,6 +288,8 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
+  - id: ISVCobble
+    type: BecomesStation
 - uid: 4
   type: WallReinforced
   components:
