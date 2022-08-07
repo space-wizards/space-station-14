@@ -26,8 +26,8 @@ public sealed class LightningSystem : SharedLightningSystem
     {
         if (component.MaxArc > 0 && component.Counter < component.MaxArc)
         {
-            Arc(component, args.OtherFixture.Body.Owner, component.Owner);
-            _beam.GetTargetData(component.Owner, component.ArcTarget);
+            Arc(component, component.Owner, args.OtherFixture.Body.Owner);
+            _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase");
         }
     }
 
@@ -36,11 +36,12 @@ public sealed class LightningSystem : SharedLightningSystem
         base.Update(frameTime);
     }
 
+    //TODO: Currently has the potential to spawn off map in NaN and potentially infinte loop.
     public void Arc(LightningComponent component, EntityUid user, EntityUid target)
     {
         var targetXForm = Transform(target);
 
-        //TODO: Fire off a raycast in all 8 directions to look for a new target to fire to.
+        //TODO: Raycast works in all directions but might want to change how it works
         var directions = Enum.GetValues<Direction>().Length;
         for (int i = 0; i < directions; i++)
         {

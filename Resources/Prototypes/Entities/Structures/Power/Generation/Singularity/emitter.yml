@@ -32,7 +32,7 @@
     - state: lock
       shader: unshaded
       visible: false
-  #- type: Emitter
+  - type: Emitter
   - type: PowerConsumer
     voltage: Medium
   - type: NodeContainer
@@ -75,5 +75,3 @@
     node: machine
   - type: Machine
     board: EmitterCircuitboard
-  - type: Beam
-    bodyPrototype: LightningBase

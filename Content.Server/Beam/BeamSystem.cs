@@ -20,27 +20,27 @@ public sealed class BeamSystem : SharedBeamSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BeamComponent, InteractHandEvent>(OnHandInteract);
         SubscribeLocalEvent<BeamComponent, BeamEvent>(OnBeam);
     }
 
     private void OnBeam(EntityUid uid, BeamComponent component, BeamEvent ev)
     {
-        CreateBeam(component, ev.Angle, ev.CalculatedDistance, ev.Offset, ev.OffsetCorrection);
+        //CreateBeam(component, ev.Angle, ev.CalculatedDistance, ev.Offset, ev.OffsetCorrection);
     }
 
     /// <summary>
-    /// Called where the target data spawns lightning from user to target
+    /// Creates the beam.
     /// </summary>
-    /// <param name="component"></param>
+    /// <param name="user"></param>
+    /// <param name="prototype"></param>
     /// <param name="userAngle"></param>
     /// <param name="calculatedDistance"></param>
     /// <param name="lightningOffset"></param>
     /// <param name="offsetCorrection"></param>
-    public void CreateBeam(BeamComponent component, Angle userAngle, Vector2 calculatedDistance, EntityCoordinates lightningOffset, Vector2 offsetCorrection)
+    public void CreateBeam(EntityUid user, string prototype, Angle userAngle, Vector2 calculatedDistance, EntityCoordinates lightningOffset, Vector2 offsetCorrection)
     {
         var offset = lightningOffset;
-        var ent = Spawn(component.BodyPrototype, offset);
+        var ent = Spawn(prototype, offset);
         var shape = new EdgeShape(offsetCorrection, new Vector2(0,0));
         var distanceLength = offsetCorrection.Length;
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
@@ -60,12 +60,13 @@ public sealed class BeamSystem : SharedBeamSystem
 
             var entXForm = Transform(ent);
 
-            entXForm.AttachParent(component.Owner);
+            //TODO: This is fine until the entity starts moving....
+            entXForm.AttachParent(user);
 
             for (int i = 0; i < distanceLength-1; i++)
             {
                 offset = offset.Offset(calculatedDistance.Normalized);
-                var newEnt = Spawn(component.BodyPrototype, offset);
+                var newEnt = Spawn(prototype, offset);
                 if (!TryComp<SpriteComponent>(newEnt, out var newSprites))
                     return;
                 newSprites.Rotation = userAngle;
@@ -75,16 +76,14 @@ public sealed class BeamSystem : SharedBeamSystem
     }
 
     /// <summary>
-    /// Gets the Target Data for the lightning
+    /// Tries to create the beam
     /// </summary>
     /// <param name="user"></param>
     /// <param name="target"></param>
-    public void GetTargetData(EntityUid user, EntityUid target)
+    /// <param name="bodyPrototype"></param>
+    public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype)
     {
-        if (!TryComp<BeamComponent>(user, out var component))
-            return;
-
-        var compXForm = Transform(component.Owner);
+        var compXForm = Transform(user);
         var compCoords = compXForm.Coordinates;
         var userXForm = Transform(target);
 
@@ -94,17 +93,6 @@ public sealed class BeamSystem : SharedBeamSystem
         var offset = compCoords.Offset(calculatedDistance.Normalized);
         var offsetCorrection = (calculatedDistance / calculatedDistance.Length) * (calculatedDistance.Length - 1);
 
-        var ev = new BeamEvent(userAngle, calculatedDistance, offset, offsetCorrection);
-        RaiseLocalEvent(component.Owner, ev, true);
-    }
-
-    private void OnHandInteract(EntityUid uid, BeamComponent component, InteractHandEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        GetTargetData(component.Owner, args.User);
-
-        args.Handled = true;
+        CreateBeam(user, bodyPrototype, userAngle, calculatedDistance, offset, offsetCorrection);
     }
 }

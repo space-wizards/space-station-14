@@ -10,7 +10,7 @@ public abstract class SharedBeamComponent : Component
     public string BodyPrototype = "LightningBase";
 
     /// <summary>
-    /// How far should this lightning go?
+    /// How far should this beam go?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxLength")]
