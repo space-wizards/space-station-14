@@ -32,19 +32,16 @@ namespace Content.Server.Sports
             base.Update(frameTime);
             foreach (var ballLauncher in EntityQuery<PitchingMachineComponent>())
             {
-                if (!ballLauncher.IsOn)
-                    return;
-
                 ballLauncher.AccumulatedFrametime += frameTime;
 
                 if (ballLauncher.AccumulatedFrametime < ballLauncher.CurrentLauncherCooldown)
                     continue;
 
                 ballLauncher.AccumulatedFrametime -= ballLauncher.CurrentLauncherCooldown;
-                ballLauncher.CurrentLauncherCooldown = ballLauncher.ShootSpeed;
+                ballLauncher.CurrentLauncherCooldown = ballLauncher.ShootCooldown;
 
-
-                Fire(ballLauncher.Owner);
+                if (ballLauncher.IsOn)
+                    Fire(ballLauncher.Owner);
             }
         }
         public void TogglePower(EntityUid uid, PitchingMachineComponent component)

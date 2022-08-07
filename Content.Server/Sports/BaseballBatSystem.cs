@@ -44,7 +44,6 @@ namespace Content.Server.Sports
 
             var hitStrength = _random.NextFloat(component.WackForceMultiplierMin, component.WackForceMultiplierMax);
 
-
             //The melee system uses a collision raycast but apparently that doesnt work with items so im using GetEntitiesInArc
             foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, meleeWeaponComponent.Range, dir.ToAngle(), meleeWeaponComponent.ArcWidth))
             {

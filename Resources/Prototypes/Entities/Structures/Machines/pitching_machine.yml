@@ -8,7 +8,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
-      bodyType: Static
+      bodyType: Dynamic
     - type: Fixtures
       fixtures:
         - shape:
@@ -20,7 +20,7 @@
           layer:
             - MachineLayer
     - type: Transform
-      anchored: true
+      anchored: false
     - type: Sprite
       sprite: Structures/Machines/pitching_machine.rsi
       netsync: true

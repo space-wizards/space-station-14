@@ -16,14 +16,14 @@ namespace Content.Server.Sports.Components
 
         [DataField("shootDistanceMax")]
         [ViewVariables]
-        public float ShootDistanceMax = 15f;
+        public float ShootDistanceMax = 12f;
 
         /// <summary>
-        /// The amount of time between each shooting attempt, in seconds.
+        /// The amount of time between each shooting attempt
         /// </summary>
         [DataField("shootSpeed")]
         [ViewVariables]
-        public float ShootSpeed = 10f;
+        public float ShootCooldown = 10f;
 
         [DataField("accumulatedFrametime")] public float AccumulatedFrametime;
 
