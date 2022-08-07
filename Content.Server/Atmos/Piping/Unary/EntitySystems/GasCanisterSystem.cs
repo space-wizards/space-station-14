@@ -131,7 +131,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 && containerManager.TryGetContainer(canister.ContainerName, out var container))
                 impact = container.ContainedEntities.Count != 0 ? LogImpact.Medium : LogImpact.High;
 
-            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState}");
+            var containedGasDict = new Dictionary<Gas, float>();
+            var containedGasArray = Gas.GetValues(typeof(Gas));
+
+            for (int i = 0; i < containedGasArray.Length; i++)
+            {
+                containedGasDict.Add((Gas)i, canister.Air.Moles[i]);
+            }
+
+            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
 
             canister.ReleaseValve = args.Valve;
             DirtyUI(uid, canister);
