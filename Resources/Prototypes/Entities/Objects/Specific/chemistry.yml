@@ -41,10 +41,9 @@
   - type: Drink
     isOpen: true
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: beaker
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -111,10 +110,9 @@
       beaker:
         maxVol: 100
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: beakerlarge
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beakerlarge
 
 - type: entity
   name: cryostasis beaker
@@ -204,10 +202,9 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 1
-      fillBaseName: dropper
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: dropper
 
 - type: entity
   name: syringe
@@ -238,18 +235,9 @@
   - type: TrashOnEmpty
     solution: injector
   - type: Appearance
-    visuals:
-      # this visualizer used for reagent inside
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 4
-      fillBaseName: syringe
-      # this one for syrigine itself (plunger)
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 4
-      fillBaseName: syringe_base
-      emptySpriteName: syringe_base0
-      layer: Base
-      changeColor: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: syringe
 
 - type: entity
   name: pill

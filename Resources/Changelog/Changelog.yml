@@ -1,64 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: HoP now has Brig access instead of Security access., type: Tweak}
-  id: 1594
-  time: '2022-05-24T21:53:49.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Dead bodies can no longer recover by lying in bed, type: Fix}
-  id: 1595
-  time: '2022-05-25T02:31:15.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing some pop-ups to only appear in the upper left corner
-      of the screen., type: Fix}
-  id: 1596
-  time: '2022-05-25T02:33:48.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added shot glasses to the bar vendor., type: Tweak}
-  id: 1597
-  time: '2022-05-25T02:34:08.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added a crate of mice to cargo., type: Add}
-  id: 1598
-  time: '2022-05-25T03:06:34.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: NSS_Pillar minor map update. See Github PR 8386 for changelog., type: Tweak}
-  id: 1599
-  time: '2022-05-25T09:35:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nukies now have a medic., type: Add}
-  id: 1600
-  time: '2022-05-25T19:42:02.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Buckets now hold 250u, type: Tweak}
-  id: 1601
-  time: '2022-05-25T19:45:12.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Nanotrasen has finally found a manufacturer for mousetraps. We will
-      begin supplying your stations with these to help the battle against the mouse
-      menace!, type: Add}
-  id: 1602
-  time: '2022-05-25T20:16:34.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Space clouds have cleared once again, and there are more stars than
-      before.', type: Add}
-  id: 1603
-  time: '2022-05-25T21:49:21.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Emergency lights don't have their light clip through walls anymore.,
-    type: Fix}
-  id: 1604
-  time: '2022-05-26T04:56:16.0000000+00:00'
 - author: moony
   changes:
   - {message: Enhances the HQ parallax., type: Tweak}
@@ -2938,3 +2878,68 @@ Entries:
     type: Fix}
   id: 2093
   time: '2022-08-05T04:22:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You no longer automatically place down items when clicking on closed
+      lockers and crates., type: Fix}
+  id: 2094
+  time: '2022-08-05T23:49:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Harvesting off of kitchen spikes now works with all sharp objects.,
+    type: Fix}
+  id: 2095
+  time: '2022-08-06T01:09:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Asteroid rocks are no longer guaranteed to spawn ores each time they
+      are mined., type: Fix}
+  id: 2096
+  time: '2022-08-06T03:16:17.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plants correctly metabolize clonexadone., type: Fix}
+  id: 2097
+  time: '2022-08-07T01:09:52.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Containment Fields throw entities less further now to prevent clipping
+      issues., type: Tweak}
+  - {message: Fields won't spawn through singularity generators anymore., type: Fix}
+  id: 2098
+  time: '2022-08-07T01:10:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Meat spikes can now be properly deconstructed., type: Fix}
+  id: 2099
+  time: '2022-08-07T01:11:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: New grass and dirt tiles coming to a station near you soon(TM)., type: Add}
+  - {message: 'Minor Splitstation QOL update, durathread for HoP, lv wire in cafe
+      fixed, altar for chaplain + cloner consoles in med.', type: Tweak}
+  id: 2100
+  time: '2022-08-07T01:13:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The durathread crafting recipe now gives the proper amount (5, not
+      1).', type: Fix}
+  id: 2101
+  time: '2022-08-07T01:15:32.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Eggs from egg-plants now contain real eggs., type: Fix}
+  id: 2102
+  time: '2022-08-07T01:16:26.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Stun batons are back to having a distinct stun sound when stuning!,
+    type: Fix}
+  id: 2103
+  time: '2022-08-07T07:10:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Buckets, mop buckets, and the janitorial trolley now properly visualize
+      their solution contents in beautiful Technicolor.', type: Add}
+  id: 2104
+  time: '2022-08-07T08:50:52.0000000+00:00'

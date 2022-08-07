@@ -75,10 +75,7 @@ namespace Content.Server.Contests
         /// <summary>
         public float StaminaContest(EntityUid roller, EntityUid target, StaminaComponent? rollerStamina = null, StaminaComponent? targetStamina = null)
         {
-            if (!Resolve(roller, ref rollerStamina) || !Resolve(target, ref targetStamina))
-                return 1f;
-
-            if (rollerStamina == null || targetStamina == null)
+            if (!Resolve(roller, ref rollerStamina, false) || !Resolve(target, ref targetStamina, false))
                 return 1f;
 
             var rollerDamageScore= rollerStamina.StaminaDamage / rollerStamina.CritThreshold;

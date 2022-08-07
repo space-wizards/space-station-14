@@ -1,5 +1,6 @@
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
+using Content.Server.Station.Components;
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
@@ -130,6 +131,7 @@ namespace Content.Server.Singularity.EntitySystems
             return entity != component.Owner &&
                    !EntityManager.HasComponent<IMapGridComponent>(entity) &&
                    !EntityManager.HasComponent<GhostComponent>(entity) &&
+                   !EntityManager.HasComponent<StationDataComponent>(entity) && // these SHOULD be in null-space... but just in case. Also, maybe someone moves a singularity there.. 
                    (component.Level > 4 ||
                    !EntityManager.HasComponent<ContainmentFieldComponent>(entity) &&
                    !EntityManager.HasComponent<ContainmentFieldGeneratorComponent>(entity));
