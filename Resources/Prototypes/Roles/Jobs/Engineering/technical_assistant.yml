@@ -1,10 +1,8 @@
 ﻿- type: job
   id: TechnicalAssistant
   name: job-name-assistant
+  playTimeTracker: JobTechnicalAssistant
   startingGear: TechnicalAssistantGear
-  departments:
-  - Civilian
-  - Engineering
   icon: "TechnicalAssistant"
   supervisors: job-supervisors-engineering
   canBeAntag: false

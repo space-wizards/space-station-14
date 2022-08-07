@@ -33,6 +33,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<PlayTime> PlayTime { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
 
@@ -93,6 +94,10 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<AdminLog>()
                 .HasIndex(log => log.Date);
+
+            modelBuilder.Entity<PlayTime>()
+                .HasIndex(v => new { v.PlayerId, Role = v.Tracker })
+                .IsUnique();
 
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasOne(player => player.Player)
@@ -499,6 +504,20 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
+    }
+
+    [Table("play_time")]
+    public sealed class PlayTime
+    {
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required, ForeignKey("player")]
+        public Guid PlayerId { get; set; }
+
+        public string Tracker { get; set; } = null!;
+
+        public TimeSpan TimeSpent { get; set; }
     }
 
     [Table("uploaded_resource_log")]
