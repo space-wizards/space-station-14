@@ -143,7 +143,7 @@ public sealed class PlayTimeGetOverallCommand : IConsoleCommand
         var userName = args[0];
         if (!_playerManager.TryGetSessionByUsername(userName, out var player))
         {
-            shell.WriteError(Loc.GetString("parser-session-fail", ("username", userName)));
+            shell.WriteError(Loc.GetString("parse-session-fail", ("username", userName)));
             return;
         }
 
@@ -188,7 +188,7 @@ public sealed class PlayTimeGetRoleCommand : IConsoleCommand
         var userName = args[0];
         if (!_playerManager.TryGetSessionByUsername(userName, out var session))
         {
-            shell.WriteError(Loc.GetString("parser-session-fail", ("username", userName)));
+            shell.WriteError(Loc.GetString("parse-session-fail", ("username", userName)));
             return;
         }
 
