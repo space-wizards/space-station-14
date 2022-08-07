@@ -39,6 +39,6 @@ job-name-ertsecurity = офицер безопасности ОБР
 job-name-ertmedic = медик ОБР
 job-name-ertjanitor = уборщик ОБР
 # Role timers - Make these alphabetical or I cut you
-JobAtmosphericTechnician = atmospheric technician
-JobSalvageSpecialist = salvage specialist
-JobWarden = warden
+JobAtmosphericTechnician = атмосферный техник
+JobSalvageSpecialist = утилизатор
+JobWarden = смотритель
