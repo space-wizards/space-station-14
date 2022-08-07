@@ -19,6 +19,7 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -270,7 +271,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         RaiseLocalEvent(source, ev);
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
-        if (!TryComp(source, out MindComponent? mind))
+        if (!TryComp(source, out ActorComponent? mind))
             return;
 
         if (originalMessage == message)

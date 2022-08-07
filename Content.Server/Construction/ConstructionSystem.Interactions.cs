@@ -166,7 +166,7 @@ namespace Content.Server.Construction
                 ChangeNode(uid, user, edge.Target, true, construction);
 
                 if (ev is ConstructionDoAfterComplete event1 && event1.WrappedEvent is InteractUsingEvent event2)
-                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(event2.User):player} changed {EntityManager.ToPrettyString(uid):entity}'s node to {edge.Target}");
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(event2.User):player} changed {ToPrettyString(uid):entity}'s node to {edge.Target}");
             }
 
             return HandleResult.True;

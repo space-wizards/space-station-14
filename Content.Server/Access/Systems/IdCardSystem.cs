@@ -24,7 +24,6 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly EntityManager _entities = default!;
 
         public override void Initialize()
         {
@@ -98,7 +97,7 @@ namespace Content.Server.Access.Systems
 
             if (player != null)
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                $"{_entities.ToPrettyString(player.Value):player} has changed the job title of {_entities.ToPrettyString(id.Owner):entity} to {jobTitle} ");
+                $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(id.Owner):entity} to {jobTitle} ");
             return true;
         }
 
@@ -123,7 +122,7 @@ namespace Content.Server.Access.Systems
 
             if (player != null)
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                $"{_entities.ToPrettyString(player.Value):player} has changed the name of {_entities.ToPrettyString(id.Owner):entity} to {fullName} ");
+                $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(id.Owner):entity} to {fullName} ");
             return true;
         }
 

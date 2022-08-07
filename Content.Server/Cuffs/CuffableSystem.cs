@@ -21,8 +21,6 @@ namespace Content.Server.Cuffs
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly EntityManager _entities = default!;
 
         public override void Initialize()
         {

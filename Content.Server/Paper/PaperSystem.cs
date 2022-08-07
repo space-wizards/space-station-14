@@ -19,7 +19,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly EntityManager _entities = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -116,7 +116,7 @@ namespace Content.Server.Paper
 
             if (args.Session.AttachedEntity != null)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"{_entities.ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {_entities.ToPrettyString(uid):entity} the following text: {args.Text}");
+                    $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
 
             UpdateUserInterface(uid, paperComp);
         }
