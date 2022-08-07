@@ -18,6 +18,9 @@ namespace Content.Client.Ghost.Roles.UI
         public event Action<GhostRoleInfo>? OnRoleCancelled;
         public event Action<GhostRoleInfo>? OnRoleFollowed;
 
+        public event Action<GhostRoleGroupInfo>? OnGroupRequested;
+        public event Action<GhostRoleGroupInfo>? OnGroupCancelled;
+
         public GhostRolesWindow()
         {
             RobustXamlLoader.Load(this);
@@ -44,11 +47,20 @@ namespace Content.Client.Ghost.Roles.UI
             NoRolesMessage.Visible = false;
 
             var entry = new GhostRolesEntry(role);
-            entry.Name = $"GhostRoleEntry.{role.Name}";
             entry.OnRoleTake += OnRoleTake;
             entry.OnRoleSelected += OnRoleRequested;
             entry.OnRoleCancelled += OnRoleCancelled;
             entry.OnRoleFollowed += OnRoleFollowed;
+            EntryContainer.AddChild(entry);
+        }
+
+        public void AddGroupEntry(GhostRoleGroupInfo group)
+        {
+            NoRolesMessage.Visible = false;
+
+            var entry = new GhostRoleGroupEntry(group);
+            entry.OnGroupSelected +=  OnGroupRequested;
+            entry.OnGroupCancelled += OnGroupCancelled;
             EntryContainer.AddChild(entry);
         }
 

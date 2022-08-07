@@ -39,7 +39,5 @@ namespace Content.Client.Ghost.Roles.UI
             CancelButton.OnPressed += _ => OnRoleCancelled?.Invoke(role);
             FollowButton.OnPressed += _ => OnRoleFollowed?.Invoke(role);
         }
-
-
     }
 }

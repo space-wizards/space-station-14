@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.AI.Components;
+using Content.Server.AI.EntitySystems;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
@@ -15,6 +17,7 @@ using Content.Shared.Ghost;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -32,6 +35,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly GhostRoleManager _ghostRoleManager = default!;
+        [Dependency] private readonly NPCSystem _npcSystem = default!;
 
         private bool _needsUpdateGhostRoles = true;
         private bool _needsUpdateGhostRoleCount = true;
@@ -52,11 +56,22 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
+            SubscribeLocalEvent<GhostRoleComponent, EntityPlacedEvent>(OnEntityPlaced);
             SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
             _ghostRoleManager.OnGhostRolesChanged += OnGhostRolesChanged;
             _ghostRoleManager.OnPlayerTakeoverComplete += OnPlayerTakeoverComplete;
+        }
+
+        private void OnEntityPlaced(EntityUid uid, GhostRoleComponent component, EntityPlacedEvent args)
+        {
+            if (_ghostRoleManager.TryAttachToActiveGhostRoleGroup(args.PlacedBy, component))
+            {
+                Logger.Debug($"Added {ToPrettyString(args.Placed)} to role group.");
+                if(TryComp<NPCComponent>(uid, out var npc))
+                    _npcSystem.SleepNPC(npc); // Prevent mobs moving about while setting up event.
+            }
         }
 
         private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
@@ -91,7 +106,7 @@ namespace Content.Server.Ghost.Roles
         private void OnPlayerTakeoverComplete(PlayerTakeoverCompleteEventArgs e)
         {
             if (e.Session.AttachedEntity != null)
-                _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{e.Session:player} took the {e.Component.RoleName:roleName} ghost role {ToPrettyString(e.Session.AttachedEntity.Value):entity}");
+                _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{e.Session:player} took the {e.RoleName:roleName} ghost role {ToPrettyString(e.Session.AttachedEntity.Value):entity}");
 
             _ghostRoleManager.ClearPlayerRequests(e.Session);
             CloseEui(e.Session);
@@ -305,6 +320,62 @@ namespace Content.Server.Ghost.Roles
                 EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.");
+        }
+    }
+
+    [AnyCommand]
+    public sealed class GhostRoleGroupsCommand : IConsoleCommand
+    {
+        public string Command => "ghostrolegroups";
+        public string Description => "Manage ghost role groups.";
+        public string Help => $"${Command} start | release";
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (shell.Player == null)
+            {
+                shell.WriteLine("You can only manage ghostrolegroups on a client.");
+                return;
+            }
+
+            if (args.Length < 1)
+            {
+                shell.WriteLine($"Usage: {Help}");
+                return;
+            }
+
+            var player = (IPlayerSession) shell.Player;
+            var manager = IoCManager.Resolve<GhostRoleManager>();
+
+            switch (args[0])
+            {
+                case "start":
+                    manager.StartGhostRoleGroup((IPlayerSession)shell.Player);
+                    break;
+                case "release":
+                    switch (args.Length)
+                    {
+                        case > 2:
+                            shell.WriteLine($"Usage: {Command} release [identifier]");
+                            break;
+                        case 2:
+                        {
+                            var identifier = uint.Parse(args[1]);
+                            manager.ReleaseGhostRoleGroup(player, identifier);
+                            break;
+                        }
+                        default:
+                        {
+                            var identifier = manager.GetActiveGhostRoleGroupOrNull(player);
+                            if(identifier != null)
+                                manager.ReleaseGhostRoleGroup(player, identifier.Value);
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    shell.WriteLine($"Usage: {Help}");
+                    break;
+            }
         }
     }
 }

@@ -60,6 +60,16 @@ namespace Content.Client.Ghost.Roles.UI
                 SendMessage(new GhostRoleFollowRequestMessage(info.Identifier));
             };
 
+            _window.OnGroupRequested += info =>
+            {
+                SendMessage(new GhostRoleGroupLotteryRequestMessage(info.GroupIdentifier));
+            };
+
+            _window.OnGroupCancelled += info =>
+            {
+                SendMessage(new GhostRoleGroupCancelLotteryMessage(info.GroupIdentifier));
+            };
+
             _window.OnClose += () =>
             {
                 SendMessage(new GhostRoleWindowCloseMessage());
@@ -88,6 +98,11 @@ namespace Content.Client.Ghost.Roles.UI
 
             _window.SetLotteryTime(ghostState.LotteryStart, ghostState.LotteryEnd);
             _window.ClearEntries();
+
+            foreach (var group in ghostState.GhostRoleGroups)
+            {
+                _window.AddGroupEntry(group);
+            }
 
             foreach (var role in ghostState.GhostRoles)
             {

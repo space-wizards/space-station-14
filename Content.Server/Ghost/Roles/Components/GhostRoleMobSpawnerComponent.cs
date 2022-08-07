@@ -25,6 +25,8 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables]
         private int _currentTakeovers = 0;
 
+        public int AvailableTakeovers => Math.Max(0,_availableTakeovers - _currentTakeovers);
+
         [CanBeNull]
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

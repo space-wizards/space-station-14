@@ -16,14 +16,29 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
+    public struct GhostRoleGroupInfo
+    {
+        public uint GroupIdentifier { get; set; }
+        public string Identifier { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Rules { get; set; }
+        public string Status { get; set; }
+        public bool IsRequested { get; set; }
+        public int AvailableCount { get; set; }
+    }
+
+    [NetSerializable, Serializable]
     public sealed class GhostRolesEuiState : EuiStateBase
     {
+        public GhostRoleGroupInfo[] GhostRoleGroups { get; }
         public GhostRoleInfo[] GhostRoles { get; }
         public TimeSpan LotteryStart { get; }
         public TimeSpan LotteryEnd { get; }
 
-        public GhostRolesEuiState(GhostRoleInfo[] ghostRoles, TimeSpan lotteryStart, TimeSpan lotteryEnd)
+        public GhostRolesEuiState(GhostRoleGroupInfo[] ghostRoleGroups, GhostRoleInfo[] ghostRoles, TimeSpan lotteryStart, TimeSpan lotteryEnd)
         {
+            GhostRoleGroups = ghostRoleGroups;
             GhostRoles = ghostRoles;
             LotteryStart = lotteryStart;
             LotteryEnd = lotteryEnd;
@@ -69,6 +84,28 @@ namespace Content.Shared.Ghost.Roles
         public string Identifier { get; }
 
         public GhostRoleFollowRequestMessage(string identifier)
+        {
+            Identifier = identifier;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public sealed class GhostRoleGroupLotteryRequestMessage : EuiMessageBase
+    {
+        public uint Identifier { get; }
+
+        public GhostRoleGroupLotteryRequestMessage(uint identifier)
+        {
+            Identifier = identifier;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public sealed class GhostRoleGroupCancelLotteryMessage : EuiMessageBase
+    {
+        public uint Identifier { get; }
+
+        public GhostRoleGroupCancelLotteryMessage(uint identifier)
         {
             Identifier = identifier;
         }

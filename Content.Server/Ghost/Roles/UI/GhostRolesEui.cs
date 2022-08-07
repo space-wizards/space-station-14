@@ -9,7 +9,11 @@ namespace Content.Server.Ghost.Roles.UI
         public override GhostRolesEuiState GetNewState()
         {
             var manager = IoCManager.Resolve<GhostRoleManager>();
-            return new GhostRolesEuiState(manager.GetGhostRolesInfo(Player), manager.LotteryStartTime, manager.LotteryExpiresTime);
+            return new GhostRolesEuiState(
+                manager.GetGhostRoleGroupsInfo(Player),
+                manager.GetGhostRolesInfo(Player),
+                manager.LotteryStartTime,
+                manager.LotteryExpiresTime);
         }
 
         public override void HandleMessage(EuiMessageBase msg)
@@ -22,13 +26,19 @@ namespace Content.Server.Ghost.Roles.UI
                     IoCManager.Resolve<GhostRoleManager>().TakeoverImmediate(Player, req.Identifier);
                     break;
                 case GhostRoleLotteryRequestMessage req:
-                    IoCManager.Resolve<GhostRoleManager>().AddPlayerRequest(Player, req.Identifier);
+                    IoCManager.Resolve<GhostRoleManager>().AddGhostRoleLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleCancelLotteryRequestMessage req:
-                    IoCManager.Resolve<GhostRoleManager>().RemovePlayerRequest(Player, req.Identifier);
+                    IoCManager.Resolve<GhostRoleManager>().RemoveGhostRoleLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleFollowRequestMessage req:
                     EntitySystem.Get<GhostRoleSystem>().Follow(Player, req.Identifier);
+                    break;
+                case GhostRoleGroupLotteryRequestMessage req:
+                    IoCManager.Resolve<GhostRoleManager>().AddRoleGroupLotteryRequest(Player, req.Identifier);
+                    break;
+                case GhostRoleGroupCancelLotteryMessage req:
+                    IoCManager.Resolve<GhostRoleManager>().RemoveRoleGroupLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleWindowCloseMessage _:
                     Closed();
