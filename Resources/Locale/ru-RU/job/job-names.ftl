@@ -30,7 +30,7 @@ job-name-bartender = бармен
 job-name-passenger = пассажир
 job-name-salvagespec = утилизатор
 job-name-qm = квартирмейстер
-job-name-cargoteh = грузчик
+job-name-cargotech = грузчик
 job-name-chef = шеф-повар
 job-name-clown = клоун
 job-name-ertleader = лидер ОБР
@@ -38,3 +38,7 @@ job-name-ertengineer = инженер ОБР
 job-name-ertsecurity = офицер безопасности ОБР
 job-name-ertmedic = медик ОБР
 job-name-ertjanitor = уборщик ОБР
+# Role timers - Make these alphabetical or I cut you
+JobAtmosphericTechnician = atmospheric technician
+JobSalvageSpecialist = salvage specialist
+JobWarden = warden
