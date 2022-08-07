@@ -2,6 +2,10 @@
   id: Detective
   name: job-name-detective
   playTimeTracker: JobDetective
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 3600
   startingGear: DetectiveGear
   icon: "Detective"
   supervisors: job-supervisors-hos
