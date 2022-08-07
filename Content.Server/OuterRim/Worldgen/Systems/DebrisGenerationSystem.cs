@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.OuterRim.Worldgen.Systems;
 
-public class DebrisGenerationSystem : EntitySystem
+public sealed class DebrisGenerationSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ITileDefinitionManager _tileDefinition = default!;
@@ -15,7 +15,7 @@ public class DebrisGenerationSystem : EntitySystem
 
     public EntityUid GenerateDebris(DebrisPrototype proto, MapCoordinates location)
     {
-        var (grid, gridEnt) = GenerateFloorplan(proto, location);
+        var (_, gridEnt) = GenerateFloorplan(proto, location);
         var unpop = AddComp<UnpopulatedComponent>(gridEnt);
         unpop.Populator = proto.Populator;
         return gridEnt;
@@ -32,6 +32,7 @@ public class DebrisGenerationSystem : EntitySystem
 
         var identity = EnsureComp<GridIdentityComponent>(grid.GridEntityId);
         identity.GridColor = proto.DebrisRadarColor;
+        identity.ShowIff = false;
 
         switch (proto.FloorplanStyle)
         {

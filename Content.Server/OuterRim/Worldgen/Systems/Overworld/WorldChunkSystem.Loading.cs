@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.OuterRim.Worldgen.Components;
 using Content.Server.OuterRim.Worldgen.Prototypes;
 using Robust.Shared.Map;
@@ -93,6 +94,14 @@ public partial class WorldChunkSystem
         if (ShouldClipChunk(chunk))
         {
             ForceEmptyChunk(chunk);
+            return;
+        }
+
+        if (_random.Prob(_pointOfInterestChance))
+        {
+            ForceEmptyChunk(chunk);
+            var poi = _random.Pick(_prototypeManager.EnumeratePrototypes<PointOfInterestPrototype>().ToList());
+            poi.Generator.Generate(chunk);
             return;
         }
 

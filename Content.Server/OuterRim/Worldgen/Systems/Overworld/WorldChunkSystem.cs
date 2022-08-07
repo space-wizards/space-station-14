@@ -40,6 +40,7 @@ public sealed partial class WorldChunkSystem : EntitySystem
     private BiomePrototype _defaultBiome = default!;
     private bool _enabled;
     private float _maxDebrisLoadTimeMs;
+    private float _pointOfInterestChance;
 
     public override void Initialize()
     {
@@ -49,6 +50,7 @@ public sealed partial class WorldChunkSystem : EntitySystem
         }, true);
         _configuration.OnValueChanged(CCVars.WorldGenEnabled, e => _enabled = e, true);
         _configuration.OnValueChanged(CCVars.MaxDebrisLoadTimeMs, t => _maxDebrisLoadTimeMs = t, true);
+        _configuration.OnValueChanged(CCVars.PointOfInterestChance, t => _pointOfInterestChance = t, true);
 
         ResetNoise();
         InitBiomeCache();
@@ -135,7 +137,7 @@ public sealed partial class WorldChunkSystem : EntitySystem
 
         foreach (var v in lastLoaded)
         {
-            //_unloadQueue.Enqueue(v);
+            _unloadQueue.Enqueue(v);
         }
 
         foreach (var v in toLoad)

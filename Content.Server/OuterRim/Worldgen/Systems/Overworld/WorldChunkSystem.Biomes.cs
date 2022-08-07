@@ -94,7 +94,7 @@ public partial class WorldChunkSystem
         return (_densityController.GetPerlin(scaled.X, scaled.Y) + 1) / 2; // Scale it to be between 0 and 1.
     }
 
-    private float GetChunkDensity(Vector2i chunk)
+    public float GetChunkDensity(Vector2i chunk)
     {
         return MaxDensity + (GetDensityValue(chunk) * DensityScale);
     }

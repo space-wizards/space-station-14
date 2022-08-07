@@ -1,0 +1,335 @@
+meta:
+  format: 2
+  name: DemoStation
+  author: Space-Wizards
+  postmapinit: false
+tilemap:
+  0: space
+  1: FloorArcadeBlue
+  2: FloorArcadeBlue2
+  3: FloorArcadeRed
+  4: FloorAsteroidIronsand1
+  5: FloorAsteroidIronsand2
+  6: FloorAsteroidIronsand3
+  7: FloorAsteroidIronsand4
+  8: FloorBoxing
+  9: FloorCarpetClown
+  10: FloorCarpetOffice
+  11: FloorCave
+  12: FloorCaveDrought
+  13: FloorDirt
+  14: FloorEighties
+  15: FloorGrassDark
+  16: FloorGrassJungle
+  17: FloorGrassLight
+  18: FloorGym
+  19: FloorMetalDiamond
+  20: FloorShuttleBlue
+  21: FloorShuttleOrange
+  22: FloorShuttlePurple
+  23: FloorShuttleRed
+  24: FloorShuttleWhite
+  25: floor_asteroid_coarse_sand0
+  26: floor_asteroid_coarse_sand_dug
+  27: floor_asteroid_sand
+  28: floor_asteroid_tile
+  29: floor_bar
+  30: floor_blue
+  31: floor_blue_circuit
+  32: floor_clown
+  33: floor_dark
+  34: floor_elevator_shaft
+  35: floor_freezer
+  36: floor_glass
+  37: floor_gold
+  38: floor_grass
+  39: floor_green_circuit
+  40: floor_hydro
+  41: floor_kitchen
+  42: floor_laundry
+  43: floor_lino
+  44: floor_mime
+  45: floor_mono
+  46: floor_reinforced
+  47: floor_rglass
+  48: floor_rock_vault
+  49: floor_showroom
+  50: floor_silver
+  51: floor_snow
+  52: floor_steel
+  53: floor_steel_dirty
+  54: floor_techmaint
+  55: floor_white
+  56: floor_wood
+  57: lattice
+  58: plating
+grids:
+- settings:
+    chunksize: 16
+    tilesize: 1
+  chunks:
+  - ind: -1,-1
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAAA==
+  - ind: -1,0
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+entities:
+- uid: 0
+  components:
+  - pos: 1.9375,3.140625
+    parent: null
+    type: Transform
+  - index: 0
+    type: MapGrid
+  - angularDamping: 0.05
+    linearDamping: 0.05
+    fixedRotation: False
+    bodyType: Dynamic
+    type: Physics
+  - fixtures: []
+    type: Fixtures
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
+  - chunkCollection: {}
+    type: DecalGrid
+  - tiles:
+      -2,-2: 0
+      -2,-1: 0
+      -1,-7: 0
+      -1,-6: 0
+      -1,-5: 0
+      -1,-4: 0
+      -1,-3: 0
+      -1,-2: 0
+      -1,-1: 0
+    uniqueMixes:
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: GridAtmosphere
+- uid: 1
+  type: WallShuttle
+  components:
+  - pos: -4.5,0.5
+    parent: 0
+    type: Transform
+- uid: 2
+  type: WallShuttle
+  components:
+  - pos: -4.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 3
+  type: WallShuttle
+  components:
+  - pos: -4.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 4
+  type: WallShuttle
+  components:
+  - pos: -4.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 5
+  type: WallShuttle
+  components:
+  - pos: -4.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 6
+  type: WallShuttle
+  components:
+  - pos: -4.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 7
+  type: WallShuttle
+  components:
+  - pos: -4.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 8
+  type: WallShuttle
+  components:
+  - pos: -4.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 9
+  type: WallShuttle
+  components:
+  - pos: -0.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 10
+  type: WallShuttle
+  components:
+  - pos: -0.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 11
+  type: WallShuttle
+  components:
+  - pos: -0.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 12
+  type: WallShuttle
+  components:
+  - pos: -0.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 13
+  type: WallShuttle
+  components:
+  - pos: -0.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 14
+  type: WallShuttle
+  components:
+  - pos: -0.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 15
+  type: WallShuttle
+  components:
+  - pos: -0.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 16
+  type: WallShuttle
+  components:
+  - pos: -0.5,0.5
+    parent: 0
+    type: Transform
+- uid: 17
+  type: WallShuttle
+  components:
+  - pos: -1.5,0.5
+    parent: 0
+    type: Transform
+- uid: 18
+  type: WallShuttle
+  components:
+  - pos: -2.5,0.5
+    parent: 0
+    type: Transform
+- uid: 19
+  type: WallShuttle
+  components:
+  - pos: -3.5,0.5
+    parent: 0
+    type: Transform
+- uid: 20
+  type: ShuttersNormal
+  components:
+  - pos: -1.5,-6.5
+    parent: 0
+    type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 21
+  type: ShuttersNormal
+  components:
+  - pos: -2.5,-6.5
+    parent: 0
+    type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 22
+  type: ShuttersNormal
+  components:
+  - pos: -3.5,-6.5
+    parent: 0
+    type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 23
+  type: CrateNPCCow
+  components:
+  - pos: -3.5,-0.5
+    parent: 0
+    type: Transform
+  - containers:
+    - EntityStorageComponent
+    type: Construction
+  - isPlaceable: False
+    type: PlaceableSurface
+- uid: 24
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -1.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 25
+  type: CrateFoodPizza
+  components:
+  - pos: -2.5,-0.5
+    parent: 0
+    type: Transform
+  - containers:
+    - EntityStorageComponent
+    type: Construction
+  - isPlaceable: False
+    type: PlaceableSurface
+- uid: 26
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -3.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 27
+  type: SpawnMobBearSalvage
+  components:
+  - pos: -2.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 28
+  type: CrateNPCDuck
+  components:
+  - pos: -1.5,-0.5
+    parent: 0
+    type: Transform
+  - containers:
+    - EntityStorageComponent
+    type: Construction
+  - isPlaceable: False
+    type: PlaceableSurface
+- uid: 29
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -2.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 30
+  type: SpawnMobBearSalvage
+  components:
+  - pos: -2.5,-1.5
+    parent: 0
+    type: Transform
+...

@@ -1087,6 +1087,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> MaxDebrisLoadTimeMs =
             CVarDef.Create("worldgen.max_debris_load_time_ms", 4f, CVar.SERVERONLY);
 
+        public static readonly CVarDef<float> PointOfInterestChance =
+            CVarDef.Create("worldgen.point_of_interest_chance", (4f/100f), CVar.SERVERONLY);
+
         /*
          * Controls
          */

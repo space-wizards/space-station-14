@@ -1,0 +1,24 @@
+﻿- type: pointOfInterest
+  id: LostCargo1
+  generator:
+    !type:ScatteredDebrisPoI
+    maps:
+      - /Maps/PoiLostShipment/lost_container_animals.yml
+      - /Maps/PoiLostShipment/lost_container_empty.yml
+      - /Maps/PoiLostShipment/lost_container_junk.yml
+      - /Maps/PoiLostShipment/lost_container_rnd.yml
+      - /Maps/PoiLostShipment/lost_container_valuable_junk.yml
+
+- type: pointOfInterest
+  id: LostCargo2
+  generator:
+    !type:ScatteredDebrisPoI
+    maps:
+      - /Maps/PoiLostShipment/lost_container_empty.yml
+      - /Maps/PoiLostShipment/lost_container_junk.yml
+      - /Maps/PoiLostShipment/lost_container_junk.yml
+      - /Maps/PoiLostShipment/lost_container_junk.yml
+      - /Maps/PoiLostShipment/lost_container_junk.yml
+      - /Maps/PoiLostShipment/lost_container_rnd.yml
+      - /Maps/PoiLostShipment/lost_container_valuable_junk.yml
+      - /Maps/PoiLostShipment/lost_container_animals.yml
