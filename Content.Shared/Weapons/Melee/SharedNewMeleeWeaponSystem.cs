@@ -95,6 +95,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         if (userWeapon != weapon)
             return;
 
+        Sawmill.Debug("Released weapon attack");
         AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, ev.Coordinates);
     }
 
@@ -114,6 +115,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         if (weapon.WindupAccumulator <= 0f)
             return;
 
+        Sawmill.Debug("Stopped weapon attack");
         weapon.WindupAccumulator = 0f;
         Dirty(weapon);
     }

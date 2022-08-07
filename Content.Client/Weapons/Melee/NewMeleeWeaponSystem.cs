@@ -75,6 +75,15 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
             return;
         }
 
+        // Started a windup
+        if (weapon.WindupAccumulator.Equals(0f))
+        {
+            EntityManager.RaisePredictiveEvent(new StartAttackEvent()
+            {
+                Weapon = weapon.Owner,
+            });
+        }
+
         weapon.WindupAccumulator = MathF.Min(weapon.WindupTime, weapon.WindupAccumulator + frameTime);
     }
 

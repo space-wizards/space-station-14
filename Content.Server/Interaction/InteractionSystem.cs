@@ -266,6 +266,9 @@ namespace Content.Server.Interaction
 
             var used = user;
 
+            // TODO: Unfuck this.
+            return;
+
             if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) && HasComp<MeleeWeaponComponent>(gloves))
                 used = (EntityUid) gloves;
 
