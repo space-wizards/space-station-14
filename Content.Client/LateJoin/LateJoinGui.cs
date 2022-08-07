@@ -64,6 +64,10 @@ namespace Content.Client.LateJoin
             _jobCategories.Clear();
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
+
+            if (!gameTicker.DisallowedLateJoin && gameTicker.StationNames.Count == 0)
+                Logger.Warning("No stations exist, nothing to display in late-join GUI");
+
             foreach (var (id, name) in gameTicker.StationNames)
             {
                 var jobList = new BoxContainer
