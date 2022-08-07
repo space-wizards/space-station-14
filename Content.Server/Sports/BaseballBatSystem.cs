@@ -1,3 +1,4 @@
+using Content.Server.Sports.Components;
 using Content.Server.Weapon.Ranged.Systems;
 using Content.Shared.Item;
 using Content.Shared.Projectiles;
@@ -10,7 +11,7 @@ using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Systems;
 
 
-namespace Content.Server.Baseball
+namespace Content.Server.Sports
 {
     public sealed class BaseballBatSystem : EntitySystem
     {

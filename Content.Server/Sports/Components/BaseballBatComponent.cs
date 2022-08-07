@@ -1,4 +1,4 @@
-namespace Content.Server.Baseball
+namespace Content.Server.Sports.Components
 {
 
     /// <summary>

@@ -1,20 +1,18 @@
 using System.Linq;
 using Content.Server.Popups;
+using Content.Server.Sports.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Throwing;
-using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Baseball
+namespace Content.Server.Sports
 {
-    public sealed class BallLauncherSystem : EntitySystem
+    public sealed class PitchingMachineSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
@@ -25,16 +23,17 @@ namespace Content.Server.Baseball
         public override void Initialize()
         {
             base.Initialize();
-            //SubscribeLocalEvent<BallLauncherComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
-            SubscribeLocalEvent<BallLauncherComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<BallLauncherComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<BallLauncherComponent, GetVerbsEvent<Verb>>(OnOtherVerbs);
+            //SubscribeLocalEvent<PitchingMachineComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
+            //SubscribeLocalEvent<PitchingMachineComponent, InteractHandEvent>(OnInteractHand);
+            //SubscribeLocalEvent<PitchingMachineComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PitchingMachineComponent, GetVerbsEvent<Verb>>(AddEjectVerb);
+            SubscribeLocalEvent<PitchingMachineComponent, GetVerbsEvent<AlternativeVerb>>(AddPowerVerb);
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var ballLauncher in EntityQuery<BallLauncherComponent>())
+            foreach (var ballLauncher in EntityQuery<PitchingMachineComponent>())
             {
                 if (!ballLauncher.IsOn)
                     return;
@@ -51,28 +50,24 @@ namespace Content.Server.Baseball
                 Fire(ballLauncher.Owner);
             }
         }
-
-        public void OnInteractHand(EntityUid uid, BallLauncherComponent component, InteractHandEvent args)
+        public void TogglePower(EntityUid uid, PitchingMachineComponent component)
         {
-            args.Handled = true;
-
             if (EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!component.IsOn)
                 {
                     component.IsOn = true;
-                    _popupSystem.PopupEntity("Turned on", component.Owner, Filter.Pvs(component.Owner));
+                    _popupSystem.PopupEntity(Loc.GetString("comp-emitter-turned-on", ("target", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
                 }
                 else
                 {
                     component.IsOn = false;
-                    _popupSystem.PopupEntity("Turned off", component.Owner, Filter.Pvs(component.Owner));
-
+                    _popupSystem.PopupEntity(Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
                 }
             }
         }
-
-        public void OnInteractUsing(EntityUid uid, BallLauncherComponent component, InteractUsingEvent args)
+/*
+        public void OnInteractUsing(EntityUid uid, PitchingMachineComponent component, InteractUsingEvent args)
         {
             args.Handled = true;
 
@@ -89,11 +84,12 @@ namespace Content.Server.Baseball
                     _storageSystem.Insert(component.Owner, args.Used, storage);
                 }
             }
-        }
 
+        }
+*/
         private void Fire(EntityUid uid)
         {
-            if (!TryComp<BallLauncherComponent>(uid, out var component))
+            if (!TryComp<PitchingMachineComponent>(uid, out var component))
                 return;
 
             if (!EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
@@ -101,10 +97,9 @@ namespace Content.Server.Baseball
 
             if (storage.StoredEntities == null)
                 return;
+
             if (storage.StoredEntities.Count == 0)
                 return;
-
-            _popupSystem.PopupEntity("fire", component.Owner, Filter.Pvs(component.Owner));
 
             var projectile = _robustRandom.Pick(storage.StoredEntities);
             _storageSystem.RemoveAndDrop(uid, projectile, storage);
@@ -115,7 +110,7 @@ namespace Content.Server.Baseball
 
             physicsComponent.BodyStatus = BodyStatus.InAir;
             */
-            var dir = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * _robustRandom.NextFloat(20f, 50f);
+            var dir = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * _robustRandom.NextFloat(component.ShootDistanceMin, component.ShootDistanceMax);
 
             _audioSystem.Play(_audioSystem.GetSound(component.FireSound), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
 
@@ -123,7 +118,18 @@ namespace Content.Server.Baseball
 
         }
 
-        private void OnOtherVerbs(EntityUid uid, BallLauncherComponent component, GetVerbsEvent<Verb> args)
+        private void AddPowerVerb(EntityUid uid, PitchingMachineComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            // You don't get to toggle power if it's unanchored
+            if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var transformComponent) && !transformComponent.Anchored)
+                return;
+            AlternativeVerb togglePower = new();
+            togglePower.Act = () => TogglePower(uid, component);
+            togglePower.Text = Loc.GetString("Toggle Power");
+            args.Verbs.Add(togglePower);
+        }
+
+        private void AddEjectVerb(EntityUid uid, PitchingMachineComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanInteract)
                 return;
@@ -134,7 +140,7 @@ namespace Content.Server.Baseball
             args.Verbs.Add(ejectItems);
         }
 
-        public void TryEjectAllItems(BallLauncherComponent component, EntityUid user)
+        public void TryEjectAllItems(PitchingMachineComponent component, EntityUid user)
         {
             if (!EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
                 return;

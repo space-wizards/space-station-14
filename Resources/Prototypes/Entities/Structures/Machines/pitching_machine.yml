@@ -20,12 +20,16 @@
           layer:
             - MachineLayer
     - type: Transform
-      anchored: false
+      anchored: true
     - type: Sprite
       sprite: Structures/Machines/pitching_machine.rsi
       netsync: true
       layers:
         - state: pitching
+    - type: UserInterface
+      interfaces:
+        - key: enum.StorageUiKey.Key
+          type: StorageBoundUserInterface
     - type: BallLauncher
     - type: Damageable
       damageContainer: Inorganic
@@ -50,4 +54,7 @@
     - type: Pullable
     - type: Rotatable
     - type: Storage
+      blacklist:
+        tags:
+          - Wrench
       capacity: 30
