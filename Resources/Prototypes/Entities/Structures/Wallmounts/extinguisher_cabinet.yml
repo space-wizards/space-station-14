@@ -23,7 +23,7 @@
       cabinetSlot:
         ejectOnInteract: true
         whitelist:
-          components:
+          tags:
           - FireExtinguisher
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
@@ -52,7 +52,7 @@
       ejectOnInteract: true
       startingItem: FireExtinguisher
       whitelist:
-        components:
+        tags:
         - FireExtinguisher
 
 - type: entity

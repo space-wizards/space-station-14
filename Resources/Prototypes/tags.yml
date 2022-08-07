@@ -187,6 +187,9 @@
   id: FireAxe
 
 - type: Tag
+  id: FireExtinguisher
+
+- type: Tag
   id: FirelockElectronics
 
 - type: Tag
