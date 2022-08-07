@@ -28,8 +28,8 @@ public sealed class NewMeleeWeaponComponent : Component
     /// <summary>
     /// Cooldown from ending one attack and starting another.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("cooldown")]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(0.5);
+    // [ViewVariables(VVAccess.ReadWrite), DataField("cooldown")]
+    // public TimeSpan Cooldown = TimeSpan.FromSeconds(0.5);
 
     // Sounds
     [ViewVariables(VVAccess.ReadWrite), DataField("soundMiss")]

@@ -1,11 +1,11 @@
 using Content.Shared.Weapons.Melee;
-using Content.Shared.Weapons.Ranged.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -71,9 +71,18 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                 }
             }
 
+            weapon.WindupAccumulator = 0f;
             return;
         }
 
         weapon.WindupAccumulator = MathF.Min(weapon.WindupTime, weapon.WindupAccumulator + frameTime);
+    }
+
+    protected override void Popup(string message, EntityUid? uid, EntityUid? user)
+    {
+        if (!Timing.IsFirstTimePredicted || uid == null)
+            return;
+
+        PopupSystem.PopupEntity(message, uid.Value, Filter.Local());
     }
 }
