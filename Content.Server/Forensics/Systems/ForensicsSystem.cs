@@ -1,3 +1,4 @@
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Robust.Shared.Random;
@@ -10,13 +11,22 @@ namespace Content.Server.Forensics
         [Dependency] private readonly InventorySystem _inventory = default!;
         public override void Initialize()
         {
-            SubscribeLocalEvent<FingerprintComponent, UserInteractedWithItemEvent>(OnInteract);
+            SubscribeLocalEvent<FingerprintComponent, InteractHandEvent>(OnHandInteract);
+            SubscribeLocalEvent<FingerprintComponent, AfterInteractEvent>(OnInteract);
             SubscribeLocalEvent<FingerprintComponent, ComponentInit>(OnInit);
         }
 
-        private void OnInteract(EntityUid uid, FingerprintComponent component, UserInteractedWithItemEvent args)
+        private void OnHandInteract(EntityUid uid, FingerprintComponent component, InteractHandEvent args)
         {
-            ApplyEvidence(args.User, args.Item);
+            ApplyEvidence(args.User, args.Target);
+        }
+
+        private void OnInteract(EntityUid uid, FingerprintComponent component, AfterInteractEvent args)
+        {
+            if (args.Target == null)
+                return;
+
+            ApplyEvidence(args.User, args.Target.Value);
         }
 
         private void OnInit(EntityUid uid, FingerprintComponent component, ComponentInit args)

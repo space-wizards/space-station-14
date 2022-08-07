@@ -44,7 +44,7 @@ namespace Content.Server.Disease
             base.Initialize();
             SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
-            SubscribeLocalEvent<DiseasedComponent, UserInteractedWithItemEvent>(OnUserInteractDiseased);
+            SubscribeLocalEvent<DiseasedComponent, AfterInteractEvent>(OnUserInteractDiseased);
             SubscribeLocalEvent<DiseasedComponent, ItemInteractedWithEvent>(OnTargetInteractDiseased);
             SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
@@ -249,9 +249,11 @@ namespace Content.Server.Disease
         /// <summary>
         /// When a diseased person interacts with something, check infection.
         /// </summary>
-        private void OnUserInteractDiseased(EntityUid uid, DiseasedComponent component, UserInteractedWithItemEvent args)
+        private void OnUserInteractDiseased(EntityUid uid, DiseasedComponent component, AfterInteractEvent args)
         {
-            InteractWithDiseased(args.User, args.Item);
+            if (args.Target == null)
+                return;
+            InteractWithDiseased(args.User, args.Target.Value);
         }
 
         /// <summary>
