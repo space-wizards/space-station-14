@@ -1,3 +1,4 @@
+using Content.Shared.Weapon.Melee;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Player;
 

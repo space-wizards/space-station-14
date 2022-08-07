@@ -1,3 +1,4 @@
+using Content.Shared.Weapon.Melee;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -13,8 +14,21 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        var overlay = _overlayManager.AddOverlay(new MeleeWindupOverlay());
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _overlayManager.RemoveOverlay<MeleeWindupOverlay>();
+    }
 
     public override void Update(float frameTime)
     {
@@ -82,6 +96,8 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
             {
                 Weapon = weapon.Owner,
             });
+
+            EnsureComp<ActiveNewMeleeWeaponComponent>(weapon.Owner);
         }
 
         weapon.WindupAccumulator = MathF.Min(weapon.WindupTime, weapon.WindupAccumulator + frameTime);
