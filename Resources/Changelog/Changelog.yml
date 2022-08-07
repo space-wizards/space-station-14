@@ -1,16 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: Added shot glasses to the bar vendor., type: Tweak}
-  id: 1597
-  time: '2022-05-25T02:34:08.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added a crate of mice to cargo., type: Add}
-  id: 1598
-  time: '2022-05-25T03:06:34.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: NSS_Pillar minor map update. See Github PR 8386 for changelog., type: Tweak}
   id: 1599
   time: '2022-05-25T09:35:26.0000000+00:00'
@@ -2940,3 +2930,15 @@ Entries:
       are mined., type: Fix}
   id: 2096
   time: '2022-08-06T03:16:17.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plants correctly metabolize clonexadone., type: Fix}
+  id: 2097
+  time: '2022-08-07T01:09:52.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Containment Fields throw entities less further now to prevent clipping
+      issues., type: Tweak}
+  - {message: Fields won't spawn through singularity generators anymore., type: Fix}
+  id: 2098
+  time: '2022-08-07T01:10:37.0000000+00:00'
