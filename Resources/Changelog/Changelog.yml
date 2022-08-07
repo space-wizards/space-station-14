@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: NSS_Pillar minor map update. See Github PR 8386 for changelog., type: Tweak}
-  id: 1599
-  time: '2022-05-25T09:35:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nukies now have a medic., type: Add}
@@ -2942,3 +2937,8 @@ Entries:
   - {message: Fields won't spawn through singularity generators anymore., type: Fix}
   id: 2098
   time: '2022-08-07T01:10:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Meat spikes can now be properly deconstructed., type: Fix}
+  id: 2099
+  time: '2022-08-07T01:11:55.0000000+00:00'
