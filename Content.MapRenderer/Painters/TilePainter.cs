@@ -43,7 +43,7 @@ namespace Content.MapRenderer.Painters
             {
                 var x = (int) (tile.X + xOffset);
                 var y = (int) (tile.Y + yOffset);
-                var sprite = _sTileDefinitionManager[tile.Tile.TypeId].SpriteName;
+                var sprite = _sTileDefinitionManager[tile.Tile.TypeId].Sprite?.ToString() ?? "";
                 var image = images[sprite][tile.Tile.Variant];
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
@@ -66,7 +66,7 @@ namespace Content.MapRenderer.Painters
 
             foreach (var definition in tileDefinitionManager)
             {
-                var sprite = definition.SpriteName;
+                var sprite = definition.Sprite?.ToString() ?? "";
                 images[sprite] = new List<Image>(definition.Variants);
 
                 if (string.IsNullOrEmpty(sprite))
