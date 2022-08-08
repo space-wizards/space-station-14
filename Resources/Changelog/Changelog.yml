@@ -1,9 +1,4 @@
 Entries:
-- author: wrexbe
-  changes:
-  - {message: Singulo will eat containment generators if they can't handle it., type: Fix}
-  id: 1607
-  time: '2022-05-27T00:35:19.0000000+00:00'
 - author: keronshb
   changes:
   - {message: You can now resist out of locked/welded crates!, type: Fix}
@@ -2946,3 +2941,8 @@ Entries:
   - {message: Holoparasites and carps can now spawn with varying colors., type: Tweak}
   id: 2106
   time: '2022-08-08T00:18:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: PA controls now much less jank., type: Fix}
+  id: 2107
+  time: '2022-08-08T00:31:53.0000000+00:00'
