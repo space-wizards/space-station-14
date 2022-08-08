@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: NSS_Pillar minor fixes. Now with filing cabinets., type: Tweak}
-  id: 1616
-  time: '2022-05-27T16:00:05.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Spationaut suit sprite has been modified to keep it more in line
@@ -2949,3 +2944,8 @@ Entries:
   - {message: Zombies now groan when they are hit., type: Add}
   id: 2115
   time: '2022-08-08T03:16:43.0000000+00:00'
+- author: LarryRussian
+  changes:
+  - {message: now HoS has combat gloves from the beginning of the round, type: Add}
+  id: 2116
+  time: '2022-08-08T03:22:38.0000000+00:00'
