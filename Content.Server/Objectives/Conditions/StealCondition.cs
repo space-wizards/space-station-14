@@ -40,7 +40,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string Title =>
             _owner == null
-                ? Loc.GetString("objective-condition-steal-title-no-owner", ("owner", ("itemName", Loc.GetString(PrototypeName))))
+                ? Loc.GetString("objective-condition-steal-title-no-owner", ("itemName", Loc.GetString(PrototypeName)))
                 : Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(_owner)), ("itemName", Loc.GetString(PrototypeName)));
 
         public string Description => Loc.GetString("objective-condition-steal-description",("itemName", Loc.GetString(PrototypeName)));
