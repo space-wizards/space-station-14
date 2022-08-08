@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fix action icons sometimes being blank when first joining the game.,
-    type: Fix}
-  id: 1606
-  time: '2022-05-26T08:47:03.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: Singulo will eat containment generators if they can't handle it., type: Fix}
@@ -2943,3 +2937,12 @@ Entries:
   - {message: Cargo shuttle calls work again., type: Fix}
   id: 2105
   time: '2022-08-07T23:22:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Dragons are now a proper station event and can spawn additional rifts.,
+    type: Add}
+  - {message: Space mobs are now subject to weightlessness movement but aren't required
+      to be touching the grid., type: Tweak}
+  - {message: Holoparasites and carps can now spawn with varying colors., type: Tweak}
+  id: 2106
+  time: '2022-08-08T00:18:14.0000000+00:00'
