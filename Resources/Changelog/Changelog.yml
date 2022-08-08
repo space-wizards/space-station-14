@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Every member of their crew now receives their Centcomm-mandated one
-      minute in space before dying., type: Tweak}
-  id: 1618
-  time: '2022-05-28T01:19:32.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Ghosts now ignore obstructions for some interactions. Useful for admins
@@ -2949,3 +2943,8 @@ Entries:
       a FTL jump., type: Add}
   id: 2117
   time: '2022-08-08T04:27:30.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'Ointments heal 5 points of Burn damage per use, instead of 3.33', type: Fix}
+  id: 2118
+  time: '2022-08-08T08:47:15.0000000+00:00'
