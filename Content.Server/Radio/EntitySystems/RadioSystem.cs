@@ -155,8 +155,9 @@ public sealed partial class RadioSystem : EntitySystem
                 }
                 // do the radiokey processing
                 if (rk.TryGetComponent(iRadio.Owner, out var radioKeyComponent)
-                    && !radioKeyComponent.UnlockedFrequency.Contains(channelint)
-                    && radioKeyComponent.BlockedFrequency.Contains(channelint)) continue;
+                    && (!radioKeyComponent.UnlockedFrequency.Contains(channelint)
+                        || radioKeyComponent.BlockedFrequency.Contains(channelint)))
+                    continue;
 
                 radio.Add(iRadio);
             }

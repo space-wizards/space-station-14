@@ -1,5 +1,7 @@
 using Content.Server.Radio.EntitySystems;
+using Content.Server.RadioKey.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Radio;
 
 namespace Content.Server.Radio.Components
 {
@@ -9,21 +11,30 @@ namespace Content.Server.Radio.Components
     [ComponentReference(typeof(IListen))]
     public sealed class HandheldRadioComponent : Component, IListen, IRadio
     {
-        private RadioSystem _radioSystem = default!;
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("frequency")] public int Frequency = 1459;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
+        private RadioSystem _radioSystem = default!;
+        private SharedRadioSystem _sharedRadioSystem = default!;
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("frequency")]
+        public int Frequency = 1459;
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")]
+        public int ListenRange { get; private set; } = 7;
 
         // handheld radios and wall radios are slightly more configurable than headsets (UI CONFIGURABLE)
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("sendOn")] public bool TXOn = false;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("sendOn")]
+        public bool TXOn;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("receiveOn")] public bool RXOn = false;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("receiveOn")]
+        public bool RXOn;
 
         protected override void Initialize()
         {
             base.Initialize();
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
+            _sharedRadioSystem = EntitySystem.Get<SharedRadioSystem>();
         }
 
         public bool CanListen(string message, EntityUid source, int? freq)
@@ -40,6 +51,22 @@ namespace Content.Server.Radio.Components
 
         public void Broadcast(MessagePacket message)
         {
+            var channel = message.Channel ?? Frequency;
+
+            if (_sharedRadioSystem.IsOutsideFreeFreq(channel))
+            {
+                if (_entMan.TryGetComponent<RadioKeyComponent>(Owner, out var comp))
+                {
+                    if (!comp.UnlockedFrequency.Contains(channel) || (message.Channel == 1213 && comp is { Syndie: false }))
+                    {
+                        message.Channel = Frequency;
+                    }
+                }
+                else
+                {
+                    message.Channel = Frequency;
+                }
+            }
             _radioSystem.SpreadMessage(message);
         }
 

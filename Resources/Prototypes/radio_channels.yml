@@ -22,7 +22,7 @@
   color: "#b88646"
 
 - type: radioChannel
-  id: Service
+  id: service
   name: "Service"
   keycode: 'v'
   frequency: 1349

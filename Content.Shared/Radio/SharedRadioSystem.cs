@@ -6,20 +6,34 @@ namespace Content.Shared.Radio;
 public sealed class SharedRadioSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private readonly Dictionary<int, RadioChannelPrototype?> _prototypeCache = new();
 
     public static int MinFreeFreq = 1201;
     public static int MinFreq = 1441;
     public static int MaxFreq  = 1489;
     public static int MaxFreeFreq  = 1599;
 
+    public override void Shutdown()
+    {
+        _prototypeCache.Clear();
+        base.Shutdown();
+    }
+
     /// <summary>
     /// Returns a valid chanel with the specified frequency or else null.
     /// </summary>
     /// <param name="freq"></param>
     /// <returns></returns>
-    public RadioChannelPrototype? GetChannel(int freq) {
-        var possibleChannel = _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>().Where(x => x.Frequency == freq).ToList();
-        return !possibleChannel.Any() ? null : possibleChannel.First();
+    public RadioChannelPrototype? GetChannel(int freq)
+    {
+        if (_prototypeCache.TryGetValue(freq, out var chan))
+        {
+            return chan;
+        }
+        var possibleChannel = _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>().Where(x => x.Frequency == freq).ToHashSet();
+        var returnValue = !possibleChannel.Any() ? null : possibleChannel.First();
+        _prototypeCache.Add(freq, returnValue);
+        return returnValue;
     }
 
     /// <summary>
@@ -34,7 +48,7 @@ public sealed class SharedRadioSystem : EntitySystem
         {
             return Math.Floor(freq / 10F) + "." + (freq % 10);
         }
-        return Loc.GetString("known-frequency-" + chan.ID);
+        return Loc.GetString("known-frequency-" + chan.ID.ToLower());
     }
 
     /// <summary>

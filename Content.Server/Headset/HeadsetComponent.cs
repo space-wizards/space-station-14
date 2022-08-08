@@ -20,8 +20,10 @@ namespace Content.Server.Headset
 
         public bool RadioRequested { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("frequency")] public int Frequency = 1459;
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("command")] public bool Command = false;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("frequency")]
+        public int Frequency = 1459;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("command")]
+        public bool Command = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("loudMode")]
@@ -57,12 +59,23 @@ namespace Content.Server.Headset
 
         public void Broadcast(MessagePacket message)
         {
-            var hasRKC = _entMan.TryGetComponent<RadioKeyComponent>(Owner, out var comp);
             var channel = message.Channel ?? Frequency;
+
             // wtf hasRKC is true so that means you got the component hello?
-            if (_sharedRadioSystem.IsOutsideFreeFreq(channel) && hasRKC && comp != null && !comp.UnlockedFrequency.Contains(channel))
+            if (_sharedRadioSystem.IsOutsideFreeFreq(channel))
             {
-                message.Channel = Frequency; // reset to common
+                // if comp is null reset it to common still
+                if (_entMan.TryGetComponent<RadioKeyComponent>(Owner, out var comp))
+                {
+                    if (!comp.UnlockedFrequency.Contains(channel) || (message.Channel == 1213 && comp is { Syndie: false }))
+                    {
+                        message.Channel = Frequency;
+                    }
+                }
+                else
+                {
+                    message.Channel = Frequency; // reset to common
+                }
             }
 
             _radioSystem.SpreadMessage(message);
