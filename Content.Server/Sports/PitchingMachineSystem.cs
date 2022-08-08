@@ -44,20 +44,18 @@ namespace Content.Server.Sports
                     Fire(ballLauncher.Owner);
             }
         }
+
         public void TogglePower(EntityUid uid, PitchingMachineComponent component)
         {
-            if (EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
+            if (!component.IsOn)
             {
-                if (!component.IsOn)
-                {
-                    component.IsOn = true;
-                    _popupSystem.PopupEntity(Loc.GetString("comp-emitter-turned-on", ("target", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
-                }
-                else
-                {
-                    component.IsOn = false;
-                    _popupSystem.PopupEntity(Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
-                }
+                component.IsOn = true;
+                _popupSystem.PopupEntity(Loc.GetString("comp-emitter-turned-on", ("target", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
+            }
+            else
+            {
+                component.IsOn = false;
+                _popupSystem.PopupEntity(Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
             }
         }
 
@@ -87,9 +85,6 @@ namespace Content.Server.Sports
             if (!args.CanInteract || args.Hands == null)
                 return;
 
-            // You don't get to toggle power if it's unanchored
-            if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var transformComponent) && !transformComponent.Anchored)
-                return;
             AlternativeVerb togglePower = new();
             togglePower.Act = () => TogglePower(uid, component);
             togglePower.Text = Loc.GetString("Toggle Power");

@@ -9,20 +9,42 @@ namespace Content.Server.Sports.Components
     [RegisterComponent]
     public sealed class BaseballBatComponent : Component
     {
+        /// <summary>
+        /// The minimum amount of extra distance from that the item being hit will travel.
+        /// </summary>
         [DataField("wackForceMultiplierMin")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WackForceMultiplierMin {get; set; } = 0.75f;
+        public float WackForceMultiplierMin {get; set; } = 0.7f;
 
+        /// <summary>
+        /// The maximum amount of extra distance from that the item being hit will travel.
+        /// </summary>
         [DataField("wackForceMultiplierMax")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float WackForceMultiplierMax {get; set; } = 5f;
 
         /// <summary>
+        /// The minimum amount of velocity that the item being hit should be given
+        /// </summary>
+        [DataField("wackStrengthMin")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float WackStrengthMin {get; set; } = 5f;
+
+        /// <summary>
+        /// The maximum amount of velocity that the item being hit should be given
+        /// </summary>
+        [DataField("wackStrengthMax")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float WackStrengthMax {get; set; } = 15f;
+
+
+        /// <summary>
         /// If set to true then the bat can only hit items being thrown
+        /// In case someone wants to make a syndicate bat that can just wack items around or something
         /// </summary>
         [DataField("onlyHitThrown")]
         [ViewVariables(VVAccess.ReadOnly)]
-        public bool OnlyHitThrown = false;
+        public bool OnlyHitThrown = true;
 
         /// <summary>
         /// Sound that plays when you have a bad hit.
@@ -38,7 +60,7 @@ namespace Content.Server.Sports.Components
         /// </summary>
         [DataField("goodHitSound")]
         [ViewVariables(VVAccess.ReadOnly)]
-        public SoundSpecifier GoodHitSound = new SoundPathSpecifier("/Audio/Effects/hit_kick.ogg");
+        public SoundSpecifier GoodHitSound = new SoundPathSpecifier("/Audio/Effects/baseball-hit.ogg");
 
         /// <summary>
         /// Chances of the item being hit turning into a fireball.
@@ -46,6 +68,6 @@ namespace Content.Server.Sports.Components
         /// </summary>
         [DataField("fireballChance")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public int FireballChance {get; set; } = 10;
+        public int FireballChance {get; set; } = 500;
     }
 }

@@ -42,7 +42,9 @@ namespace Content.Server.Sports
             var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
             var dir = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
 
-            var hitStrength = _random.NextFloat(component.WackForceMultiplierMin, component.WackForceMultiplierMax);
+            var dirForceMultiplier = _random.NextFloat(component.WackForceMultiplierMin, component.WackForceMultiplierMax);
+
+            var hitStrength = _random.NextFloat(component.WackStrengthMin, component.WackStrengthMax);
 
             //The melee system uses a collision raycast but apparently that doesnt work with items so im using GetEntitiesInArc
             foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, meleeWeaponComponent.Range, dir.ToAngle(), meleeWeaponComponent.ArcWidth))
@@ -53,6 +55,9 @@ namespace Content.Server.Sports
                 if (EntityManager.TryGetComponent<TransformComponent>(entity, out var transformComponent) && transformComponent.Anchored)
                     return;
 
+                if (!EntityManager.TryGetComponent<PhysicsComponent>(entity, out var physicsComponent))
+                    return;
+
                 if (EntityManager.HasComponent<ThrownItemComponent>(entity) || !component.OnlyHitThrown)
                 {
 
@@ -60,7 +65,9 @@ namespace Content.Server.Sports
 
                     if (rand != component.FireballChance)
                     {
-                        _throwingSystem.TryThrow(entity, dir * hitStrength, 10f, uid);
+                        physicsComponent.Momentum = Vector2.Zero; //stopping the item so we get a clean throw
+
+                        _throwingSystem.TryThrow(entity, dir * dirForceMultiplier, hitStrength, uid);
                         if (hitStrength < 1) //More pathetic sound if you're hit is pathetic
                         {
                             _audioSystem.Play(component.BadHitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
