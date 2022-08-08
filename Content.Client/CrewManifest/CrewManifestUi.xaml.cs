@@ -66,7 +66,10 @@ public sealed partial class CrewManifestUi : DefaultWindow
         {
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
-                entryDict[department.ID].Add(entry);
+                if (department.Roles.Contains(entry.JobPrototype))
+                {
+                    entryDict[department.ID].Add(entry);
+                }
             }
         }
 
