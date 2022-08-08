@@ -38,7 +38,7 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="calculatedDistance"></param>
     /// <param name="beamOffset"></param>
     /// <param name="offsetCorrection"></param>
-    public void CreateBeam(EntityUid user, string prototype, Angle userAngle, Vector2 calculatedDistance, EntityCoordinates beamOffset, Vector2 offsetCorrection)
+    public void CreateBeam(EntityUid user, string prototype, Angle userAngle, Vector2 calculatedDistance, EntityCoordinates beamOffset, Vector2 offsetCorrection, string? bodyState = null)
     {
         var offset = beamOffset;
         var ent = Spawn(prototype, offset);
@@ -48,6 +48,11 @@ public sealed class BeamSystem : SharedBeamSystem
             TryComp<TransformComponent>(ent, out var xForm))
         {
             sprites.Rotation = userAngle;
+            if (bodyState != null)
+            {
+                sprites.LayerSetState(0, bodyState);
+                sprites.LayerSetShader(0, "unshaded");
+            }
             var fixture = new Fixture(physics, shape)
             {
                 ID = "BeamBody",
@@ -66,6 +71,11 @@ public sealed class BeamSystem : SharedBeamSystem
                 if (!TryComp<SpriteComponent>(newEnt, out var newSprites))
                     return;
                 newSprites.Rotation = userAngle;
+                if (bodyState != null)
+                {
+                    newSprites.LayerSetState(0, bodyState);
+                    newSprites.LayerSetShader(0, "unshaded");
+                }
                 Transform(newEnt).AttachParent(ent);
             }
         }
@@ -77,7 +87,8 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="user"></param>
     /// <param name="target"></param>
     /// <param name="bodyPrototype"></param>
-    public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype)
+    /// <param name="bodyState"></param>
+    public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype, string? bodyState = null)
     {
         var compXForm = Transform(user);
         var compCoords = compXForm.Coordinates;
@@ -94,6 +105,6 @@ public sealed class BeamSystem : SharedBeamSystem
 
         var offsetCorrection = (calculatedDistance / calculatedDistance.Length) * (calculatedDistance.Length - 1);
 
-        CreateBeam(user, bodyPrototype, userAngle, calculatedDistance, offset, offsetCorrection);
+        CreateBeam(user, bodyPrototype, userAngle, calculatedDistance, offset, offsetCorrection, bodyState);
     }
 }

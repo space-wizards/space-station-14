@@ -7,6 +7,7 @@ using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
 
@@ -14,6 +15,7 @@ public sealed class LightningSystem : SharedLightningSystem
 {
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -26,8 +28,13 @@ public sealed class LightningSystem : SharedLightningSystem
     {
         if (component.MaxArc > 0 && component.Counter < component.MaxArc)
         {
-            //Arc(component, component.Owner, args.OtherFixture.Body.Owner);
-            //_beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase");
+            Arc(component, component.Owner, args.OtherFixture.Body.Owner);
+
+            var spriteStateNumber = _random.Next(1, 12);
+
+            var spriteState = ("lightning_" + spriteStateNumber);
+
+            _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase", spriteState);
         }
     }
 
