@@ -2,12 +2,14 @@ using Content.Client.Audio;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
 using Content.Client.Viewport;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -19,6 +21,7 @@ namespace Content.Client.GameTicking.Managers
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         [ViewVariables] private bool _initialized;
         private Dictionary<EntityUid, Dictionary<string, uint?>>  _jobsAvailable = new();
@@ -146,6 +149,12 @@ namespace Content.Client.GameTicking.Managers
         {
             if (string.IsNullOrEmpty(RestartSound))
                 return;
+
+            if (!_configManager.GetCVar(CCVars.RestartSoundsEnabled))
+            {
+                RestartSound = null;
+                return;
+            }
 
             SoundSystem.Play(RestartSound, Filter.Empty());
 

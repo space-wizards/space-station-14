@@ -55737,7 +55737,7 @@ entities:
       toggleable-clothing: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6357
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: -36.449944,-9.475628
     parent: 30
@@ -55745,7 +55745,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6358
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: -35.512444,-9.460003
     parent: 30

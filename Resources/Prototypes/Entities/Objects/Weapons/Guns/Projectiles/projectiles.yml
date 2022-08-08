@@ -179,6 +179,7 @@
       - Impassable
       - Opaque
   - type: Projectile
+#   soundHit:  Waiting on serv3
     damage:
       types:
         Heat: 14

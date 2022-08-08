@@ -176,14 +176,20 @@
       - Nugget
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
-    state: tendie
-    netsync: true
-  - type: RandomSpriteState
-    spriteStates:
-      - tendie
-      - lizard
-      - star
-      - corgi
+    layers:
+      - state: tendie
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+    netsync: false
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          tendie: ""
+      - enum.DamageStateVisualLayers.Base:
+          lizard: ""
+      - enum.DamageStateVisualLayers.Base:
+          star: ""
+      - enum.DamageStateVisualLayers.Base:
+          corgi: ""
   - type: SolutionContainerManager
     solutions:
       food:

@@ -12418,7 +12418,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 632
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: 23.524204,-7.450146
     parent: 0
