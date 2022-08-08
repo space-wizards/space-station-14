@@ -27,8 +27,6 @@ namespace Content.Client.Inventory
             var entMan = IoCManager.Resolve<IEntityManager>();
             _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, entMan)))}");
 
-            Logger.Debug("Test?");
-
             _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCenteredLeft();
 
@@ -99,7 +97,7 @@ namespace Content.Client.Inventory
 
             if (_strippingMenu != null)
             {
-                _strippingMenu.SetHeight = (Inventory.Count + Hands.Count + Handcuffs.Count) * 36 + _strippingMenu.MinHeight;
+                _strippingMenu.SetHeight = (Inventory.Count + Hands.Count + Handcuffs.Count) *  + _strippingMenu.MinHeight;
             }
 
             UpdateMenu();

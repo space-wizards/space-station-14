@@ -1,4 +1,4 @@
-﻿using Content.Shared.DragDrop;
+using Content.Shared.DragDrop;
 using Content.Shared.Strip.Components;
 using Robust.Shared.GameObjects;
 
