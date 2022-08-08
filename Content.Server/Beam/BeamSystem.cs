@@ -52,8 +52,8 @@ public sealed class BeamSystem : SharedBeamSystem
                 ID = "LightningBody",
                 Hard = false,
                 Body = { BodyType = BodyType.Dynamic},
-                CollisionMask = (int)CollisionGroup.ItemMask,
-                CollisionLayer = (int)CollisionGroup.SlipLayer
+                CollisionMask = (int)CollisionGroup.ItemMask, //Change to MobMask
+                CollisionLayer = (int)CollisionGroup.SlipLayer //Change to WallLayer
             };
 
             _fixture.TryCreateFixture(physics, fixture);
@@ -91,6 +91,11 @@ public sealed class BeamSystem : SharedBeamSystem
         var userAngle = calculatedDistance.ToWorldAngle();
 
         var offset = compCoords.Offset(calculatedDistance.Normalized);
+
+        //Don't divide by zero
+        if (calculatedDistance.Length == 0)
+            return;
+
         var offsetCorrection = (calculatedDistance / calculatedDistance.Length) * (calculatedDistance.Length - 1);
 
         CreateBeam(user, bodyPrototype, userAngle, calculatedDistance, offset, offsetCorrection);
