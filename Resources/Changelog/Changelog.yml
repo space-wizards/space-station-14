@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: You can now resist out of locked/welded crates!, type: Fix}
-  id: 1608
-  time: '2022-05-27T01:05:36.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The China Lake and RPG no longer blow up in your face., type: Fix}
@@ -2946,3 +2941,8 @@ Entries:
   - {message: PA controls now much less jank., type: Fix}
   id: 2107
   time: '2022-08-08T00:31:53.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Gas canisters can now be sold for money., type: Add}
+  id: 2108
+  time: '2022-08-08T01:49:06.0000000+00:00'
