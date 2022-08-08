@@ -213,13 +213,17 @@ namespace Content.Server.Atmos.EntitySystems
             UpdateUserInterface(component);
         }
 
-        public void DisconnectFromInternals(GasTankComponent component, EntityUid? owner = null)
+        public void DisconnectFromInternals(GasTankComponent component)
         {
-            if (!component.IsConnected) return;
+            if (component.User == null)
+                return;
+
+            var internals = GetInternalsComponent(component);
             component.User = null;
+
             _actions.SetToggled(component.ToggleAction, false);
 
-            _internals.DisconnectTank(GetInternalsComponent(component, owner));
+            _internals.DisconnectTank(internals);
             component.DisconnectStream?.Stop();
 
             if (component.DisconnectSound != null)
@@ -230,6 +234,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private InternalsComponent? GetInternalsComponent(GasTankComponent component, EntityUid? owner = null)
         {
+            owner ??= component.User;
             if (Deleted(component.Owner)) return null;
             if (owner != null) return CompOrNull<InternalsComponent>(owner.Value);
             return _containers.TryGetContainingContainer(component.Owner, out var container)

@@ -17,6 +17,7 @@ using Content.Client.MainMenu;
 using Content.Client.MobState.Overlays;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation;
 using Content.Client.Sandbox;
@@ -125,6 +126,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<ViewportManager>().Initialize();
             IoCManager.Resolve<GhostKickManager>().Initialize();
             IoCManager.Resolve<ExtendedDisconnectInformationManager>().Initialize();
+            IoCManager.Resolve<PlayTimeTrackingManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
