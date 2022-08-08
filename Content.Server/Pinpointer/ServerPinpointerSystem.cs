@@ -28,8 +28,7 @@ namespace Content.Server.Pinpointer
             // This feels kind of expensive, but it only happens once per hyperspace jump
             foreach (var uid in ActivePinpointers)
             {
-                TryComp<PinpointerComponent>(uid, out var component);
-                if (component != null)
+                if (TryComp<PinpointerComponent>(uid, out var component))
                 {
                     LocateTarget(uid, component);
                 }
