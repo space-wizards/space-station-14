@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Options.UI.Tabs
 {

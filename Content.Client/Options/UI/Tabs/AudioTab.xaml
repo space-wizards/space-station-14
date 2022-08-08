@@ -1,8 +1,7 @@
-﻿<tabs:AudioTab xmlns="https://spacestation14.io"
-          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-          xmlns:s="clr-namespace:Content.Client.Stylesheets"
-          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-          xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs">
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:s="clr-namespace:Content.Client.Stylesheets"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
             <Label Text="{Loc 'ui-options-volume-label'}"
@@ -36,8 +35,33 @@
                     <Label Name="MidiVolumeLabel" MinSize="48 0" Align="Right" />
                     <Control MinSize="4 0"/>
                 </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
+                    <Label Text="{Loc 'ui-options-ambience-volume'}" />
+                    <Control MinSize="8 0" />
+                    <Slider Name="AmbienceVolumeSlider"
+                            MinValue="0"
+                            MaxValue="300"
+                            HorizontalExpand="True"
+                            MinSize="80 0"
+                            Rounded="True" />
+                    <Control MinSize="8 0" />
+                    <Label Name="AmbienceVolumeLabel" MinSize="48 0" Align="Right" />
+                    <Control MinSize="4 0"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
+                    <Label Text="{Loc 'ui-options-ambience-max-sounds'}" />
+                    <Control MinSize="8 0" />
+                    <Slider Name="AmbienceSoundsSlider"
+                            MinValue="0"
+                            MaxValue="1"
+                            HorizontalExpand="True"
+                            MinSize="80 0"
+                            Rounded="True" />
+                    <Control MinSize="8 0" />
+                    <Label Name="AmbienceSoundsLabel" MinSize="48 0" Align="Right" />
+                    <Control MinSize="4 0"/>
+                </BoxContainer>
                 <Control MinSize="0 8" />
-                <CheckBox Name="AmbienceCheckBox" Text="{Loc 'ui-options-ambient-hum'}" />
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
                 <CheckBox Name="RestartSoundsCheckBox" Text="{Loc 'ui-options-restart-sounds'}" />
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />
@@ -64,4 +88,4 @@
             </BoxContainer>
         </controls:StripeBack>
     </BoxContainer>
-</tabs:AudioTab>
+</Control>
