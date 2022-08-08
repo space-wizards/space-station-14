@@ -355,10 +355,10 @@ namespace Content.Shared.Movement.Systems
                 return true;
             }
 
-            return TryGetFootstepSound(coordinates, out sound);
+            return TryGetFootstepSound(coordinates, shoes != null, out sound);
         }
 
-        private bool TryGetFootstepSound(EntityCoordinates coordinates, [NotNullWhen(true)] out SoundSpecifier? sound)
+        private bool TryGetFootstepSound(EntityCoordinates coordinates, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
             var gridUid = coordinates.GetGridUid(EntityManager);
@@ -393,7 +393,7 @@ namespace Content.Shared.Movement.Systems
 
             // Walking on a tile.
             var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            sound = def.FootstepSounds;
+            sound = haveShoes ? def.FootstepSounds : def.BarestepSounds;
             return sound != null;
         }
     }

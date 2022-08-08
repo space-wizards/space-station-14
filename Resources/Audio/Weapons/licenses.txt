@@ -11,3 +11,5 @@ BoxingPunch 1, 2, and 3 taken from Ryan Conway at https://freesound.org/people/r
 boxingbell.ogg taken from Herkules92 at https://freesound.org/people/Herkules92/sounds/520998/ under CC0 1.0
 
 block_metal1.ogg taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/31c5996a5db8cce0cb431cb1dc20d99cac83f268 under CC BY-SA 3.0
+
+pierce.ogg taken from: https://github.com/tgstation/tgstation/commit/106cd26fc00851a51dd362f3131120318d848a53
