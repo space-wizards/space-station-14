@@ -1,10 +1,4 @@
 Entries:
-- author: efzapa
-  changes:
-  - {message: Added a BRB sign so to let people know you are out doing something.,
-    type: Add}
-  id: 1621
-  time: '2022-05-29T00:09:29.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'Adds Magic! Learn spells with spellbooks. Spells including: Blink -
@@ -2947,3 +2941,8 @@ Entries:
       Captain's Jetpack", type: Fix}
   id: 2120
   time: '2022-08-08T08:55:51.0000000+00:00'
+- author: Anthemic
+  changes:
+  - {message: Holofan projectors can now be printed in protolathes., type: Add}
+  id: 2121
+  time: '2022-08-08T08:57:39.0000000+00:00'
