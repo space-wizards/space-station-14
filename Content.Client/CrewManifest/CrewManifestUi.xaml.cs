@@ -57,17 +57,18 @@ public sealed partial class CrewManifestUi : DefaultWindow
     {
         var entryDict = new Dictionary<string, List<CrewManifestEntry>>();
 
-        foreach (var department in _crewManifestSystem.Departments)
-        {
-            entryDict.Add(department, new());
-        }
-
         foreach (var entry in entries.Entries)
         {
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
+                // this is a little expensive, and could be better
                 if (department.Roles.Contains(entry.JobPrototype))
                 {
+                    if (!entryDict.ContainsKey(department.ID))
+                    {
+                        entryDict.Add(department.ID, new());
+                    }
+
                     entryDict[department.ID].Add(entry);
                 }
             }
@@ -77,11 +78,6 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
         foreach (var (section, listing) in entryDict)
         {
-            if (listing.Count == 0)
-            {
-                continue;
-            }
-
             entryList.Add((section, listing));
         }
 
