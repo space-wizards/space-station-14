@@ -1,8 +1,6 @@
 - type: entity
   id: BaseThruster
   parent: BaseStructureDynamic
-  name: thruster
-  description: It goes nyooooooom.
   abstract: true
   components:
     - type: AmbientSound
@@ -44,8 +42,6 @@
 - type: entity
   id: Thruster
   parent: BaseThruster
-  name: thruster
-  description: It goes nyooooooom.
   components:
   - type: Thruster
   - type: Sprite
@@ -64,9 +60,7 @@
 - type: entity
   id: DebugThruster
   parent: BaseThruster
-  name: thruster
   suffix: DEBUG
-  description: It goes nyooooooom. It doesn't need power nor space.
   components:
   - type: Thruster
     requireSpace: false
@@ -89,8 +83,6 @@
 - type: entity
   id: Gyroscope
   parent: BaseThruster
-  name: Gyroscope
-  description: Increases the shuttle's potential angular rotation.
   components:
   - type: Thruster
     thrusterType: Angular
@@ -122,9 +114,7 @@
 - type: entity
   id: DebugGyroscope
   parent: Gyroscope
-  name: gyroscope
   suffix: DEBUG
-  description: Increases the shuttle's potential angular rotation.
   components:
     - type: Thruster
       requireSpace: false
