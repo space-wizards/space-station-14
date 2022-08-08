@@ -61,7 +61,6 @@ namespace Content.Client.Strip
             });
 
 
-            SetHeight += 36;
         }
     }
 }

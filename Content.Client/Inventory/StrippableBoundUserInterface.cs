@@ -27,9 +27,13 @@ namespace Content.Client.Inventory
             var entMan = IoCManager.Resolve<IEntityManager>();
             _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, entMan)))}");
 
+            Logger.Debug("Test?");
+
             _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCenteredLeft();
-            UpdateMenu();
+
+            // This is removed on purpose.
+            //UpdateMenu();
         }
 
         protected override void Dispose(bool disposing)
@@ -56,6 +60,7 @@ namespace Content.Client.Inventory
                         SendMessage(new StrippingInventoryButtonPressed(slot.ID));
                     });
                 }
+
             }
 
             if (Hands != null)
@@ -80,7 +85,6 @@ namespace Content.Client.Inventory
                 }
             }
 
-
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -92,6 +96,11 @@ namespace Content.Client.Inventory
             Inventory = stripState.Inventory;
             Hands = stripState.Hands;
             Handcuffs = stripState.Handcuffs;
+
+            if (_strippingMenu != null)
+            {
+                _strippingMenu.SetHeight = (Inventory.Count + Hands.Count + Handcuffs.Count) * 36 + _strippingMenu.MinHeight;
+            }
 
             UpdateMenu();
         }
