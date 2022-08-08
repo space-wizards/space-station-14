@@ -29,6 +29,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
             "BleedersBite",
             "Ultragigacancer",
             "MemeticAmirmir",
+            "TongueTwister",
             "AMIV"
         };
 
