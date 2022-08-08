@@ -587,7 +587,7 @@
   parent: BaseItem
   id: Baseball
   name: baseball
-  description: Hey batter batter!
+  description: Take this out to the ball game.
   components:
     - type: Sprite
       sprite: Objects/Fun/baseballs.rsi

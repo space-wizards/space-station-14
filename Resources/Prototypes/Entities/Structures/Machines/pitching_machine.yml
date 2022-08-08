@@ -1,7 +1,7 @@
 - type: entity
   id: PitchingMachine
   name: pitching machine
-  description: A sports ball launcher
+  description: Hey batter batter! Swing!
   placement:
     mode: SnapgridCenter
   components:
