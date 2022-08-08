@@ -41,41 +41,44 @@ namespace Content.Server.Sports
 
             var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
             var dir = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
-
             var dirForceMultiplier = _random.NextFloat(component.WackForceMultiplierMin, component.WackForceMultiplierMax);
 
             var hitStrength = _random.NextFloat(component.WackStrengthMin, component.WackStrengthMax);
+
+            var transformQuery = GetEntityQuery<TransformComponent>();
+            var physicsQuery = GetEntityQuery<PhysicsComponent>();
+            var itemQuery = GetEntityQuery<ItemComponent>();
+            var thrownItemQuery = GetEntityQuery<ThrownItemComponent>();
+
 
             //The melee system uses a collision raycast but apparently that doesnt work with items so im using GetEntitiesInArc
             foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, meleeWeaponComponent.Range, dir.ToAngle(), meleeWeaponComponent.ArcWidth))
             {
                 //Checking to see if the items are actually throwable
-                if (!EntityManager.HasComponent<ItemComponent>(entity))
+                if (!itemQuery.HasComponent(entity))
                     return;
-                if (EntityManager.TryGetComponent<TransformComponent>(entity, out var transformComponent) && transformComponent.Anchored)
+                if (transformQuery.TryGetComponent(entity, out var transformComponent) && transformComponent.Anchored)
                     return;
-                if (!EntityManager.TryGetComponent<PhysicsComponent>(entity, out var physicsComponent))
+                if (!physicsQuery.TryGetComponent(entity, out var physicsComponent))
                     return;
+                if (!thrownItemQuery.HasComponent(entity) && component.OnlyHitThrown)
+                    continue;
 
-                if (EntityManager.HasComponent<ThrownItemComponent>(entity) || !component.OnlyHitThrown)
+                var rand = _random.Next(1, component.FireballChance + 1); // Rolling to see if we'll get the fireball
+
+                if (rand != component.FireballChance)
                 {
-
-                    var rand = _random.Next(1, component.FireballChance + 1); // Rolling to see if we'll get the fireball
-
-                    if (rand != component.FireballChance)
-                    {
-                        physicsComponent.Momentum = Vector2.Zero; //stopping the item so we get a clean throw
-                        _throwingSystem.TryThrow(entity, dir * dirForceMultiplier, hitStrength, uid);
-                        _audioSystem.Play(component.HitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
-                        return;
-                    }
-
-                    //just shoots a wizard fireball
-                    var fireball = Spawn("ProjectileFireball", EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                    EntityManager.DeleteEntity(entity);
-                    _gunSystem.ShootProjectile(fireball, dir, args.User);
-                    _audioSystem.Play("/Audio/Effects/baseball-hit-extreme.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
+                    physicsComponent.Momentum = Vector2.Zero; //stopping the item so we get a clean throw
+                    _throwingSystem.TryThrow(entity, dir * dirForceMultiplier, hitStrength, uid);
+                    _audioSystem.Play(component.HitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
+                    return;
                 }
+
+                //just shoots a wizard fireball
+                var fireball = Spawn("ProjectileFireball", EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+                EntityManager.DeleteEntity(entity);
+                _gunSystem.ShootProjectile(fireball, dir, args.User);
+                _audioSystem.Play("/Audio/Effects/baseball-hit-extreme.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
             }
         }
     }
