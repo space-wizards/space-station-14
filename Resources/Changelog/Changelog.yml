@@ -1,14 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'Adds Magic! Learn spells with spellbooks. Spells including: Blink -
-      a teleport spell. Knock - a spell that unlocks and opens doors. Force Wall -
-      a spell that creates a force field in front of you. Runes - magic drawings on
-      the ground. And a Summon Magi-Carp spell!', type: Add}
-  - {message: Adds a way to prevent a specified entity from colliding with another.,
-    type: Add}
-  id: 1622
-  time: '2022-05-29T06:29:10.0000000+00:00'
 - author: Morb0
   changes:
   - {message: New NanoTrasen alert levels - Gamma & Epsilon, type: Add}
@@ -2946,3 +2936,8 @@ Entries:
   - {message: Holofan projectors can now be printed in protolathes., type: Add}
   id: 2121
   time: '2022-08-08T08:57:39.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added bare footstep sounds for different surfaces, type: Add}
+  id: 2122
+  time: '2022-08-08T09:03:56.0000000+00:00'
