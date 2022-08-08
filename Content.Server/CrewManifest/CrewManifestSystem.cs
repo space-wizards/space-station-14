@@ -59,6 +59,7 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnPrototypesReload(PrototypesReloadedEventArgs args)
     {
+        _jobDepartments.Clear();
         BuildDepartmentListing();
     }
 
