@@ -11,7 +11,7 @@
   id: MailingUnitElectronics
   icon: Objects/Misc/module.rsi/net_wired.png
   result: MailingUnitElectronics
-  completetime: 500
+  completetime: 4
   materials:
     Steel: 50
     Plastic: 50
