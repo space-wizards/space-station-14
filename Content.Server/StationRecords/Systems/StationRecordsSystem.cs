@@ -118,12 +118,11 @@ public sealed class StationRecordsSystem : EntitySystem
             Age = age,
             JobTitle = jobPrototype.Name,
             JobIcon = jobPrototype.Icon,
+            JobPrototype = jobId,
             Species = species,
             Gender = gender,
             DisplayPriority = jobPrototype.Weight
         };
-
-        record.Departments.AddRange(jobPrototype.Departments);
 
         var key = records.Records.AddRecord(station);
         records.Records.AddRecordEntry(key, record);

@@ -33,6 +33,9 @@ public sealed class GeneralStationRecord
     [ViewVariables]
     public string JobIcon = string.Empty;
 
+    [ViewVariables]
+    public string JobPrototype = string.Empty;
+
     /// <summary>
     ///     Species tied to this station record.
     /// </summary>
@@ -45,24 +48,6 @@ public sealed class GeneralStationRecord
     /// <remarks>Sex should be placed in a medical record, not a general record.</remarks>
     [ViewVariables]
     public Gender Gender = Gender.Neuter;
-
-    /// <summary>
-    ///     The departments that this person is in.
-    ///     Useful for displaying this person in specific
-    ///     departments. This can be empty, and it
-    ///     should be handled properly. Should be assigned
-    ///     at round start/player spawn when the job prototype
-    ///     ID is accessed.
-    /// </summary>
-    /// <remarks>
-    ///     This probably shouldn't be user-settable, otherwise you
-    ///     run the risk of users having the ability to duplicate
-    ///     themselves across departments. Have any custom jobs just
-    ///     be renames of an existing job so that department information
-    ///     is preserved.
-    /// </remarks>
-    [ViewVariables]
-    public List<string> Departments = new();
 
     /// <summary>
     ///     The priority to display this record at.
