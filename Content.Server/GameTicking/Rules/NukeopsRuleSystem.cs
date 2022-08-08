@@ -23,7 +23,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
-using System.Data;
+using Content.Shared.Sound;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -43,6 +45,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private bool _opsWon;
 
     public override string Prototype => "Nukeops";
+
+    private readonly SoundSpecifier _greetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 
     private const string NukeopsPrototypeId = "Nukeops";
     private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
@@ -207,6 +211,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             Offset = Vector2.One * 1000f,
         });
 
+        // Naughty, someone saved the shuttle as a map.
+        if (Deleted(outpost))
+        {
+            Logger.ErrorS("nukeops", $"Tried to load nukeops shuttle as a map, aborting.");
+            _mapManager.DeleteMap(mapId);
+            return;
+        }
+
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
@@ -285,6 +297,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
+
+        SoundSystem.Play(_greetSound.GetSound(), Filter.Empty().AddWhere(s =>
+        {
+            var mind = ((IPlayerSession) s).Data.ContentData()?.Mind;
+            return mind != null && _aliveNukeops.ContainsKey(mind);
+        }), AudioParams.Default);
     }
 
     //For admins forcing someone to nukeOps.

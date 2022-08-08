@@ -1,4 +1,5 @@
 using Content.Server.AI.Steering;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Operators.Movement
@@ -7,7 +8,6 @@ namespace Content.Server.AI.Operators.Movement
     {
         // TODO: This and steering need to support InRangeUnobstructed now
         private readonly EntityUid _owner;
-        private EntityTargetSteeringRequest? _request;
         private readonly EntityUid _target;
         // For now we'll just get as close as we can because we're not doing LOS checks to be able to pick up at the max interaction range
         public float ArrivalDistance { get; }
@@ -36,9 +36,9 @@ namespace Content.Server.AI.Operators.Movement
                 return true;
             }
 
-            var steering = EntitySystem.Get<AiSteeringSystem>();
-            _request = new EntityTargetSteeringRequest(_target, ArrivalDistance, PathfindingProximity, _requiresInRangeUnobstructed);
-            steering.Register(_owner, _request);
+            var steering = EntitySystem.Get<NPCSteeringSystem>();
+            var comp = steering.Register(_owner, new EntityCoordinates(_target, Vector2.Zero));
+            comp.Range = ArrivalDistance;
             return true;
         }
 
@@ -47,24 +47,23 @@ namespace Content.Server.AI.Operators.Movement
             if (!base.Shutdown(outcome))
                 return false;
 
-            var steering = EntitySystem.Get<AiSteeringSystem>();
+            var steering = EntitySystem.Get<NPCSteeringSystem>();
             steering.Unregister(_owner);
             return true;
         }
 
         public override Outcome Execute(float frameTime)
         {
-            switch (_request?.Status)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<NPCSteeringComponent>(_owner, out var steering))
+                return Outcome.Failed;
+
+            switch (steering.Status)
             {
-                case SteeringStatus.Pending:
-                    DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));
-                    return Outcome.Continuing;
                 case SteeringStatus.NoPath:
                     return Outcome.Failed;
-                case SteeringStatus.Arrived:
+                case SteeringStatus.InRange:
                     return Outcome.Success;
                 case SteeringStatus.Moving:
-                    DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));
                     return Outcome.Continuing;
                 default:
                     throw new ArgumentOutOfRangeException();
