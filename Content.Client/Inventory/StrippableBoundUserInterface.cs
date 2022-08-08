@@ -30,8 +30,7 @@ namespace Content.Client.Inventory
             _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCenteredLeft();
 
-            // This is removed on purpose.
-            //UpdateMenu();
+            UpdateMenu();
         }
 
         protected override void Dispose(bool disposing)
@@ -95,12 +94,13 @@ namespace Content.Client.Inventory
             Hands = stripState.Hands;
             Handcuffs = stripState.Handcuffs;
 
-            if (_strippingMenu != null)
-            {
-                _strippingMenu.SetHeight = (Inventory.Count + Hands.Count + Handcuffs.Count) * 36 + _strippingMenu.MinHeight;
-            }
 
             UpdateMenu();
+
+            if (_strippingMenu != null)
+            {
+                _strippingMenu.SetHeight = (Inventory.Count + Hands.Count + Handcuffs.Count) * 34 + _strippingMenu.MinHeight;
+            }
         }
     }
 }
