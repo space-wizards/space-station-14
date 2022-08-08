@@ -52,16 +52,15 @@ namespace Content.Server.Sports
             foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, meleeWeaponComponent.Range, dir.ToAngle(), meleeWeaponComponent.ArcWidth))
             {
                 //Checking to see if the items are actually thrown
-                if (!physicsQuery.TryGetComponent(entity, out var physicsComponent))
-                    continue;
                 if (!thrownItemQuery.HasComponent(entity))
                     continue;
 
+                var physics = physicsQuery.GetComponent(entity);
                 var rand = _random.Next(1, component.FireballChance + 1); // Rolling to see if we'll get the fireball
 
                 if (rand != component.FireballChance)
                 {
-                    physicsComponent.Momentum = Vector2.Zero; //stopping the item so we get a clean throw
+                    physics.Momentum = Vector2.Zero; //stopping the item so we get a clean throw
                     _throwingSystem.TryThrow(entity, dir * dirForceMultiplier, hitStrength, uid);
                     _audioSystem.Play(component.HitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
                     return;
