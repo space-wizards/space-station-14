@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.Alerts;
 
-public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayState>
+public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<ClientAlertsSystem>
 {
     [UISystemDependency] private readonly ClientAlertsSystem? _alertsSystem = default;
 
@@ -29,39 +29,16 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
             UI?.SyncControls(system, system.AlertOrder, e);
     }
 
-    public override void OnSystemLoaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case ClientAlertsSystem alerts:
-                BindToSystem(alerts);
-                break;
-        }
-    }
-
-    public override void OnSystemUnloaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case ClientAlertsSystem:
-                UnbindFromSystem();
-                break;
-        }
-    }
-
-    private void BindToSystem(ClientAlertsSystem system)
+    public void OnSystemLoaded(ClientAlertsSystem system)
     {
         system.SyncAlerts += SystemOnSyncAlerts;
         system.ClearAlerts += SystemOnClearAlerts;
     }
 
-    private void UnbindFromSystem()
+    public void OnSystemUnloaded(ClientAlertsSystem system)
     {
-        if (_alertsSystem is null)
-            throw new InvalidOperationException();
-
-        _alertsSystem.SyncAlerts -= SystemOnSyncAlerts;
-        _alertsSystem.ClearAlerts -= SystemOnClearAlerts;
+        system.SyncAlerts -= SystemOnSyncAlerts;
+        system.ClearAlerts -= SystemOnClearAlerts;
     }
 
     public void OnStateEntered(GameplayState state)

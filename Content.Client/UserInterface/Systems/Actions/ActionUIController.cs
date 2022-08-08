@@ -26,7 +26,7 @@ using static Robust.Client.UserInterface.Controls.TextureRect;
 
 namespace Content.Client.UserInterface.Systems.Actions;
 
-public sealed class ActionUIController : UIController, IOnStateEntered<GameplayState>
+public sealed class ActionUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<ActionsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -468,28 +468,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         _container = null;
     }
 
-    public override void OnSystemLoaded(IEntitySystem system)
-    {
-        if (system is ActionsSystem)
-        {
-            ActionSystemStart();
-        }
-    }
-
-    public override void OnSystemUnloaded(IEntitySystem system)
-    {
-        if (system is ActionsSystem)
-        {
-            ActionSystemShutdown();
-        }
-    }
-
-    public override void FrameUpdate(FrameEventArgs args)
-    {
-        _menuDragHelper.Update(args.DeltaSeconds);
-    }
-
-    private void ActionSystemStart()
+    public void OnSystemLoaded(ActionsSystem system)
     {
         _actionsSystem.OnLinkActions += OnComponentLinked;
         _actionsSystem.OnUnlinkActions += OnComponentUnlinked;
@@ -497,12 +476,17 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         _actionsSystem.AssignSlot += AssignSlots;
     }
 
-    private void ActionSystemShutdown()
+    public void OnSystemUnloaded(ActionsSystem system)
     {
         _actionsSystem.OnLinkActions -= OnComponentLinked;
         _actionsSystem.OnUnlinkActions -= OnComponentUnlinked;
         _actionsSystem.ClearAssignments -= ClearActions;
         _actionsSystem.AssignSlot -= AssignSlots;
+    }
+
+    public override void FrameUpdate(FrameEventArgs args)
+    {
+        _menuDragHelper.Update(args.DeltaSeconds);
     }
 
     private void OnComponentLinked(ActionsComponent component)

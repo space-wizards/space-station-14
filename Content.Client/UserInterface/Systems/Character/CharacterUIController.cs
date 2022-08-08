@@ -15,7 +15,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Character;
 
-public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>
+public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
@@ -32,35 +32,16 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             .Register<CharacterUIController>();
     }
 
-    public override void OnSystemLoaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case CharacterInfoSystem characterInterface:
-                OnCharacterInfoSystemLoaded(characterInterface);
-                break;
-        }
-    }
-
-    public override void OnSystemUnloaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case CharacterInfoSystem characterInterface:
-                OnCharacterInfoSystemUnloaded(characterInterface);
-                break;
-        }
-    }
-
-    private void OnCharacterInfoSystemLoaded(CharacterInfoSystem system)
+    public void OnSystemLoaded(CharacterInfoSystem system)
     {
         system.OnCharacterUpdate += CharacterUpdated;
         system.OnCharacterDetached += CharacterDetached;
     }
 
-    private void OnCharacterInfoSystemUnloaded(CharacterInfoSystem system)
+    public void OnSystemUnloaded(CharacterInfoSystem system)
     {
         system.OnCharacterUpdate -= CharacterUpdated;
+        system.OnCharacterDetached -= CharacterDetached;
     }
 
     private void CharacterUpdated(CharacterData data)

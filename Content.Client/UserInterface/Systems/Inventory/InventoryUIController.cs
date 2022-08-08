@@ -14,7 +14,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Inventory;
 
-public sealed partial class InventoryUIController : UIController, IOnStateEntered<GameplayState>
+public sealed partial class InventoryUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<ClientInventorySystem>
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     private ClientInventoryComponent? _playerInventory;
@@ -85,28 +85,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         InventoryButton.Pressed = false;
     }
 
-    //Neuron Activation
-    public override void OnSystemLoaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case ClientInventorySystem:
-                OnInventorySystemActivate();
-                break;
-        }
-    }
-    //Neuron Deactivation
-    public override void OnSystemUnloaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case ClientInventorySystem:
-                OnInventorySystemDeactivate();
-                break;
-        }
-    }
-
-    private void OnInventorySystemActivate()
+    // Neuron Activation
+    public void OnSystemLoaded(ClientInventorySystem system)
     {
         _inventorySystem.OnSlotAdded += AddSlot;
         _inventorySystem.OnSlotRemoved += RemoveSlot;
@@ -115,7 +95,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         _inventorySystem.OnSpriteUpdate += SpriteUpdated;
     }
 
-    private void OnInventorySystemDeactivate()
+    // Neuron Deactivation
+    public void OnSystemUnloaded(ClientInventorySystem system)
     {
         _inventorySystem.OnSlotAdded -= AddSlot;
         _inventorySystem.OnSlotRemoved -= RemoveSlot;

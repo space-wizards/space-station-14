@@ -12,6 +12,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Client.UserInterface.Controllers.Implementations;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -20,7 +21,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Sandbox;
 
 // TODO hud refactor should part of this be in engine?
-public sealed class SandboxUIController : UIController, IOnStateEntered<GameplayState>
+public sealed class SandboxUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<SandboxSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
@@ -34,7 +35,7 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
 
     private SandboxWindow? _window;
 
-    // TODO hud refactor BEFORE MERGE cache
+    // TODO hud refactor cache
     private EntitySpawningUIController EntitySpawningController => UIManager.GetUIController<EntitySpawningUIController>();
     private TileSpawningUIController TileSpawningController => UIManager.GetUIController<TileSpawningUIController>();
     private DecalPlacerUIController DecalPlacerController => UIManager.GetUIController<DecalPlacerUIController>();
@@ -60,30 +61,16 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
             .Register<SandboxSystem>();
     }
 
-    public override void OnSystemLoaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case SandboxSystem sandbox:
-                SandboxSystemEnabled(sandbox);
-                break;
-        }
-    }
-
-    public override void OnSystemUnloaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case SandboxSystem sandbox:
-                SandboxSystemEnabled(sandbox);
-                break;
-        }
-    }
-
-    private void SandboxSystemEnabled(SandboxSystem system)
+    public void OnSystemLoaded(SandboxSystem system)
     {
         system.SandboxEnabled += CheckStatus;
         system.SandboxDisabled += CheckStatus;
+    }
+
+    public void OnSystemUnloaded(SandboxSystem system)
+    {
+        system.SandboxEnabled -= CheckStatus;
+        system.SandboxDisabled -= CheckStatus;
     }
 
     private void SandboxButtonPressed(ButtonEventArgs args)

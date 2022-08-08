@@ -10,31 +10,21 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Client.UserInterface.Systems.Info;
 
-public sealed class InfoUIController : UIController, IOnStateEntered<GameplayState>
+public sealed class InfoUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<BwoinkSystem>
 {
     private RulesAndInfoWindow? _window;
     private MenuButton InfoButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InfoButton;
 
-    public override void OnSystemLoaded(IEntitySystem system)
+    public void OnSystemLoaded(BwoinkSystem system)
     {
-        switch (system)
-        {
-            case BwoinkSystem bwoink:
-                bwoink.AdminReceivedAHelp += AdminReceivedAHelp;
-                bwoink.AdminOpenedAHelp += AdminOpenedAHelp;
-                break;
-        }
+        system.AdminReceivedAHelp += AdminReceivedAHelp;
+        system.AdminOpenedAHelp += AdminOpenedAHelp;
     }
 
-    public override void OnSystemUnloaded(IEntitySystem system)
+    public void OnSystemUnloaded(BwoinkSystem system)
     {
-        switch (system)
-        {
-            case BwoinkSystem bwoink:
-                bwoink.AdminReceivedAHelp -= AdminReceivedAHelp;
-                bwoink.AdminOpenedAHelp -= AdminOpenedAHelp;
-                break;
-        }
+        system.AdminReceivedAHelp -= AdminReceivedAHelp;
+        system.AdminOpenedAHelp -= AdminOpenedAHelp;
     }
 
     private void AdminReceivedAHelp()

@@ -13,7 +13,7 @@ using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Systems.Hands;
 
-public sealed class HandsUIController : UIController, IOnStateEntered<GameplayState>
+public sealed class HandsUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<HandsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -28,27 +28,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private HandsGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HandsGui>();
 
-    public override void OnSystemLoaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case HandsSystem:
-                OnHandsSystemActivate();
-                break;
-        }
-    }
-
-    public override void OnSystemUnloaded(IEntitySystem system)
-    {
-        switch (system)
-        {
-            case HandsSystem:
-                OnHandsSystemDeactivate();
-                break;
-        }
-    }
-
-    private void OnHandsSystemActivate()
+    public void OnSystemLoaded(HandsSystem system)
     {
         _handsSystem.OnAddHand += AddHand;
         _handsSystem.OnItemAdded += OnItemAdded;
@@ -61,7 +41,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         _handsSystem.OnHandUnblocked += HandUnblocked;
     }
 
-    private void OnHandsSystemDeactivate()
+    public void OnSystemUnloaded(HandsSystem system)
     {
         _handsSystem.OnAddHand -= AddHand;
         _handsSystem.OnItemAdded -= OnItemAdded;

@@ -8,7 +8,7 @@ using Robust.Client.UserInterface.Controllers;
 namespace Content.Client.UserInterface.Systems.Ghost;
 
 // TODO hud refactor BEFORE MERGE fix ghost gui being too far up
-public sealed class GhostUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
+public sealed class GhostUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<GhostSystem>
 {
     [Dependency] private readonly IEntityNetworkManager _net = default!;
 
@@ -16,36 +16,24 @@ public sealed class GhostUIController : UIController, IOnStateEntered<GameplaySt
 
     private GhostGui? Gui => UIManager.GetActiveUIWidgetOrNull<GhostGui>();
 
-    public override void OnSystemLoaded(IEntitySystem system)
+    public void OnSystemLoaded(GhostSystem system)
     {
-        base.OnSystemLoaded(system);
-
-        switch (system)
-        {
-            case GhostSystem ghost:
-                ghost.PlayerRemoved += OnPlayerRemoved;
-                ghost.PlayerUpdated += OnPlayerUpdated;
-                ghost.PlayerAttached += OnPlayerAttached;
-                ghost.PlayerDetached += OnPlayerDetached;
-                ghost.GhostWarpsResponse += OnWarpsResponse;
-                ghost.GhostRoleCountUpdated += OnRoleCountUpdated;
-                break;
-        }
+        system.PlayerRemoved += OnPlayerRemoved;
+        system.PlayerUpdated += OnPlayerUpdated;
+        system.PlayerAttached += OnPlayerAttached;
+        system.PlayerDetached += OnPlayerDetached;
+        system.GhostWarpsResponse += OnWarpsResponse;
+        system.GhostRoleCountUpdated += OnRoleCountUpdated;
     }
 
-    public override void OnSystemUnloaded(IEntitySystem system)
+    public void OnSystemUnloaded(GhostSystem system)
     {
-        switch (system)
-        {
-            case GhostSystem ghost:
-                ghost.PlayerRemoved -= OnPlayerRemoved;
-                ghost.PlayerUpdated -= OnPlayerUpdated;
-                ghost.PlayerAttached -= OnPlayerAttached;
-                ghost.PlayerDetached -= OnPlayerDetached;
-                ghost.GhostWarpsResponse -= OnWarpsResponse;
-                ghost.GhostRoleCountUpdated -= OnRoleCountUpdated;
-                break;
-        }
+        system.PlayerRemoved -= OnPlayerRemoved;
+        system.PlayerUpdated -= OnPlayerUpdated;
+        system.PlayerAttached -= OnPlayerAttached;
+        system.PlayerDetached -= OnPlayerDetached;
+        system.GhostWarpsResponse -= OnWarpsResponse;
+        system.GhostRoleCountUpdated -= OnRoleCountUpdated;
     }
 
     private void UpdateGui()
