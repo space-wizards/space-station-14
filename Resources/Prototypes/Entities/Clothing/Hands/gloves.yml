@@ -240,6 +240,7 @@
 - type: entity
   parent: ClothingHandsBase
   id: ThievingGloves
+  suffix: Thieving
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
   description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
   components:
