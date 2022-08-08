@@ -1,6 +1,5 @@
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -141,9 +140,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
         _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
 
         Dirty(hands);
-
-        var pickMsg = new PickedUpEvent(uid);
-        RaiseLocalEvent(entity, pickMsg, true);
 
         var didEquip = new DidEquipHandEvent(uid, entity, hand);
         RaiseLocalEvent(uid, didEquip, false);

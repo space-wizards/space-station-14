@@ -4,6 +4,7 @@ using Content.Server.Sound.Components;
 using Content.Server.Throwing;
 using Content.Server.UserInterface;
 using Content.Server.Popups;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -59,7 +60,7 @@ namespace Content.Server.Sound
             SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
             SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
             SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
-            SubscribeLocalEvent<EmitSoundOnPickupComponent, PickedUpEvent>(HandleEmitSoundOnPickup);
+            SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(HandleEmitSoundOnPickup);
             SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(HandleEmitSoundOnDrop);
         }
 
@@ -109,7 +110,7 @@ namespace Content.Server.Sound
             TryEmitSound(component);
         }
 
-        private void HandleEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, PickedUpEvent args)
+        private void HandleEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, GotEquippedHandEvent args)
         {
             TryEmitSound(component);
         }
