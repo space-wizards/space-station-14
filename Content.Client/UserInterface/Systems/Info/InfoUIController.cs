@@ -64,7 +64,7 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
 
     private void CreateWindow()
     {
-        _window = UIManager.CreateNamedWindow<RulesAndInfoWindow>("RulesAndInfo");
+        _window = UIManager.CreateWindow<RulesAndInfoWindow>();
 
         if (_window == null)
             return;

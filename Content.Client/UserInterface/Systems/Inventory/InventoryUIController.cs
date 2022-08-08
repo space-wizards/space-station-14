@@ -41,7 +41,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
     {
         if (clientInv == null) return;
 
-        _inventoryWindow = UIManager.CreateNamedWindow<InventoryWindow>("Inventory");
+        _inventoryWindow = UIManager.CreateWindow<InventoryWindow>();
         if (_inventoryWindow == null)
             return;
 

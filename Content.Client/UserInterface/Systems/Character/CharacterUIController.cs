@@ -1,7 +1,9 @@
 ﻿using Content.Client.CharacterInfo;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
+using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -9,9 +11,6 @@ using Robust.Client.Utility;
 using Robust.Shared.Input.Binding;
 using static Content.Client.CharacterInfo.CharacterInfoSystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using CharacterObjectiveControl = Content.Client.UserInterface.Systems.Character.Controls.CharacterObjectiveControl;
-using ObjectiveBriefingControl = Content.Client.UserInterface.Systems.Objectives.Controls.ObjectiveBriefingControl;
-using ObjectiveConditionsControl = Content.Client.UserInterface.Systems.Objectives.Controls.ObjectiveConditionsControl;
 
 namespace Content.Client.UserInterface.Systems.Character;
 
@@ -124,7 +123,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     private void CreateWindow()
     {
-        _window = UIManager.CreateNamedWindow<CharacterWindow>("Character");
+        _window = UIManager.CreateWindow<CharacterWindow>();
 
         if (_window == null)
             return;

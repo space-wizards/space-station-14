@@ -28,7 +28,7 @@ public sealed class ChannelSelectorButton : Button
         EnableAllKeybinds = true;
         ToggleMode = true;
         OnToggled += OnSelectorButtonToggled;
-        _channelSelectorPopup = UserInterfaceManager.CreatePopupOfType<ChannelSelectorPopup>();
+        _channelSelectorPopup = UserInterfaceManager.CreatePopup<ChannelSelectorPopup>();
         _channelSelectorPopup.Selected += OnChannelSelected;
         _channelSelectorPopup.OnVisibilityChanged += OnPopupVisibilityChanged;
 

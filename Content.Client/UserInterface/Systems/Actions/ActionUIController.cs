@@ -162,7 +162,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     private void CreateWindow()
     {
-        _window = UIManager.CreateNamedWindow<ActionsWindow>("Actions");
+        _window = UIManager.CreateWindow<ActionsWindow>();
 
         if (_window == null)
             return;

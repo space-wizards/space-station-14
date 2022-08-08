@@ -15,7 +15,7 @@ public sealed partial class HandsGui : UIWidget
     {
         RobustXamlLoader.Load(this);
 
-        StatusPanel = UserInterfaceManager.CreateNamedPopup<ItemStatusPanel>("HandsItemStatusPanel", (0, 0)) ??
+        StatusPanel = UserInterfaceManager.CreatePopup<ItemStatusPanel>() ??
                       throw new NullReferenceException("Tried to add hands item status panel while one already exists");
         StatusPanel.Update(null);
 

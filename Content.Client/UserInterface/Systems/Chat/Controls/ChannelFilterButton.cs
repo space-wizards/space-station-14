@@ -36,7 +36,7 @@ public sealed class ChannelFilterButton : ContainerButton
         );
         ToggleMode = true;
         OnToggled += OnFilterButtonToggled;
-        ChatFilterPopup = UserInterfaceManager.CreatePopupOfType<ChannelFilterPopup>();
+        ChatFilterPopup = UserInterfaceManager.CreatePopup<ChannelFilterPopup>();
         ChatFilterPopup.OnVisibilityChanged += PopupVisibilityChanged;
 
         _chatUIController.FilterableChannelsChanged += ChatFilterPopup.SetChannels;
