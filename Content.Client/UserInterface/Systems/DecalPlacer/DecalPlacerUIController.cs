@@ -1,6 +1,6 @@
 ﻿using Content.Client.Decals.UI;
 using Content.Shared.Decals;
-using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Systems.DecalPlacer;

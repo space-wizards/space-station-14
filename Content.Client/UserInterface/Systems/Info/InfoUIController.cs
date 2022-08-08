@@ -4,7 +4,7 @@ using Content.Client.Info;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character;
 using Content.Shared.Input;
-using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 

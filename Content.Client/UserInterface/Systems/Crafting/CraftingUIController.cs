@@ -1,7 +1,7 @@
 ﻿using Content.Client.Construction.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
-using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.Crafting;
 

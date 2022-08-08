@@ -8,6 +8,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Systems.Hands;

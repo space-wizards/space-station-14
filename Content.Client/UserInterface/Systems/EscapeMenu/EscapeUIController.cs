@@ -7,6 +7,7 @@ using Content.Client.UserInterface.Controls;
 using Robust.Client.Console;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using static Robust.Client.UserInterface.Controls.BaseButton;

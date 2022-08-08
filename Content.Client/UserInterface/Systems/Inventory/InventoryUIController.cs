@@ -6,6 +6,7 @@ using Content.Client.UserInterface.Systems.Inventory.Windows;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using static Content.Client.Inventory.ClientInventorySystem;

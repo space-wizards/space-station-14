@@ -3,6 +3,7 @@ using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.Alerts;
 
