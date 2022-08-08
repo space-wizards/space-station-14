@@ -38,6 +38,8 @@ namespace Content.Server.Dragon
         /// </summary>
         private const int RiftRange = 15;
 
+        private const int RiftsAllowed = 3;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -80,7 +82,7 @@ namespace Content.Server.Dragon
                 }
 
                 // At max rifts
-                if (comp.Rifts.Count >= 3)
+                if (comp.Rifts.Count >= RiftsAllowed)
                 {
                     continue;
                 }
@@ -202,7 +204,7 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            if (component.Rifts.Count >= 3)
+            if (component.Rifts.Count >= RiftsAllowed)
             {
                 _popupSystem.PopupEntity(Loc.GetString("carp-rift-max"), uid, Filter.Entities(uid));
                 return;

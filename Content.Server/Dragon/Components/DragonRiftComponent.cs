@@ -27,13 +27,13 @@ public sealed class DragonRiftComponent : SharedDragonRiftComponent
     /// Accumulation of the spawn timer.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("spawnAccumulator")]
-    public float SpawnAccumulator = 60f;
+    public float SpawnAccumulator = 30f;
 
     /// <summary>
     /// How long it takes for a new spawn to be added.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("spawnCooldown")]
-    public float SpawnCooldown = 60f;
+    public float SpawnCooldown = 30f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("spawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnPrototype = "MobCarpDragon";
