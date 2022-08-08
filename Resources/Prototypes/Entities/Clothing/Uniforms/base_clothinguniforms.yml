@@ -19,7 +19,6 @@
   abstract: true
   parent: UnsensoredClothingUniformBase
   id: UnsensoredClothingUniformSkirtBase
-  description: Not legal in Japan
   components:
   - type: Clothing
     slots: [innerclothing]
