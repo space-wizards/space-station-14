@@ -17,21 +17,6 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ExplosionSystem _explosion = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<RoguePointingArrowComponent, ComponentStartup>(OnStartup);
-        }
-
-        private void OnStartup(EntityUid uid, RoguePointingArrowComponent component, ComponentStartup args)
-        {
-            if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
-            {
-                sprite.DrawDepth = (int) DrawDepth.Overlays;
-            }
-        }
-
         private EntityUid? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref component, ref transform))

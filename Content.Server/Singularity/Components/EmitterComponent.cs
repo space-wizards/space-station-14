@@ -1,6 +1,5 @@
 using System.Threading;
-using Content.Shared.Sound;
-
+using Robust.Shared.Audio;
 
 namespace Content.Server.Singularity.Components
 {

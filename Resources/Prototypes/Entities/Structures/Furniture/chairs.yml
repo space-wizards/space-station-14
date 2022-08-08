@@ -70,6 +70,8 @@
   - type: Construction
     graph: Seat
     node: stool
+  - type: RandomMetadata
+    nameSet: stool
 
 - type: entity
   name: bar stool

@@ -1,15 +1,14 @@
 ﻿- type: entity
-  parent: MobHumanBase
-  id: MobVoxBase
-  noSpawn: true
+  parent: BaseMobOrganic
+  id: BaseMobVox
+  abstract: true
   components:
+  - type: Hunger
+  - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Vox/parts.rsi
     state: vox_m
   - type: Sprite
-    netsync: false
-    noRot: true
-    drawdepth: Mobs
     layers:
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         sprite: Mobs/Species/Vox/parts.rsi

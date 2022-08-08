@@ -44,7 +44,7 @@
             "directions": 4
         },
         {
-            "name": "cart_water_1",
+            "name": "cart_water-1",
             "directions": 4,
             "delays": [
                 [
@@ -70,7 +70,7 @@
             ]
         },
         {
-            "name": "cart_water_2",
+            "name": "cart_water-2",
             "directions": 4,
             "delays": [
                 [
@@ -96,7 +96,7 @@
             ]
         },
         {
-            "name": "cart_water_3",
+            "name": "cart_water-3",
             "directions": 4,
             "delays": [
                 [

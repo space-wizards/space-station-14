@@ -7,7 +7,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -113,7 +112,9 @@ namespace Content.Server.Weapon.Melee
                     }
                     else
                     {
-                        SoundSystem.Play(comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
                     }
                 }
             }
@@ -209,7 +210,9 @@ namespace Content.Server.Weapon.Melee
                     }
                     else
                     {
-                        SoundSystem.Play(comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
                     }
                 }
                 else
