@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Ghosts now ignore obstructions for some interactions. Useful for admins
-      and mappers., type: Tweak}
-  id: 1619
-  time: '2022-05-28T01:46:17.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Tweaked gas heater & freezer stats. Better lasers now actually improve
       minimum temperatures., type: Tweak}
   id: 1620
@@ -2948,3 +2942,8 @@ Entries:
   - {message: 'Ointments heal 5 points of Burn damage per use, instead of 3.33', type: Fix}
   id: 2118
   time: '2022-08-08T08:47:15.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Robust harvest is significantly more effective., type: Tweak}
+  id: 2119
+  time: '2022-08-08T08:51:41.0000000+00:00'
