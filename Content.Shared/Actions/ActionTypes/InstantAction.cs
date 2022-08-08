@@ -26,11 +26,14 @@ public class InstantAction : ActionType
     {
         base.CopyFrom(objectToClone);
 
+        // Server doesn't serialize events to us.
+        // As such we don't want them to bulldoze any events we may have gotten locally.
         if (objectToClone is not InstantAction toClone)
             return;
 
         // Events should be re-usable, and shouldn't be modified during prediction.
-        Event = toClone.Event;
+        if (toClone.Event != null)
+            Event = toClone.Event;
     }
 
     public override object Clone()

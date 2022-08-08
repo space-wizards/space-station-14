@@ -148,6 +148,7 @@
       amount: -5
     - !type:PlantAdjustHealth
       amount: 5
+    - !type:PlantClonexadone {}
 
 - type: reagent
   id: Dermaline

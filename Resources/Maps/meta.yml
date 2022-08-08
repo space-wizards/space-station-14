@@ -24099,7 +24099,7 @@ entities:
       -30,-67: 0
       -30,-66: 0
       -30,-65: 0
-      -29,-75: 7
+      -29,-75: 11
       -29,-74: 0
       -29,-73: 0
       -29,-72: 0
@@ -24110,7 +24110,7 @@ entities:
       -29,-67: 0
       -29,-66: 0
       -29,-65: 0
-      -28,-75: 11
+      -28,-75: 12
       -28,-74: 0
       -28,-73: 0
       -28,-72: 0
@@ -24121,7 +24121,7 @@ entities:
       -28,-67: 0
       -28,-66: 0
       -28,-65: 0
-      -27,-75: 9
+      -27,-75: 13
       -27,-74: 0
       -27,-73: 0
       -27,-72: 0
@@ -25691,10 +25691,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 190.47139
+      temperature: 189.43431
       moles:
-      - 14.109443
-      - 53.078384
+      - 14.031516
+      - 52.78523
       - 0
       - 0
       - 0
@@ -25706,10 +25706,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 169.1982
+      temperature: 168.67966
       moles:
-      - 12.510941
-      - 47.064972
+      - 12.471977
+      - 46.918396
       - 0
       - 0
       - 0
@@ -25721,10 +25721,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 189.54955
+      temperature: 189.4199
       moles:
-      - 14.0401745
-      - 52.817802
+      - 14.030434
+      - 52.78116
       - 0
       - 0
       - 0
@@ -25751,10 +25751,40 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 169.1982
+      temperature: 189.43433
       moles:
-      - 12.5109415
-      - 47.064972
+      - 14.031516
+      - 52.785233
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 168.67966
+      moles:
+      - 12.471978
+      - 46.918396
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 189.41992
+      moles:
+      - 14.030434
+      - 52.78116
       - 0
       - 0
       - 0
@@ -32892,7 +32922,7 @@ entities:
     type: Transform
 - uid: 951
   components:
-  - index: 4
+  - index: 5
     type: Map
 - uid: 952
   type: CableApcExtension
@@ -40303,6 +40333,7 @@ entities:
       machine_parts: !type:Container
         ents: []
       System.Func`3[Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.MetaDataComponent,System.String]-bodyContainer: !type:ContainerSlot {}
+      clonepod-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
   - inputs:
       CloningPodReceiver: []
@@ -40481,6 +40512,20 @@ entities:
   - pos: -38.5,7.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -49165,6 +49210,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - tags: []
+    type: Tag
 - uid: 3171
   type: SpawnPointChef
   components:
@@ -50617,6 +50664,20 @@ entities:
   - pos: -38.5,6.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54331,6 +54392,20 @@ entities:
     pos: -34.5,5.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54843,6 +54918,20 @@ entities:
     pos: -42.5,19.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54861,6 +54950,20 @@ entities:
     pos: -43.5,19.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54879,6 +54982,20 @@ entities:
     pos: -44.5,19.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54897,6 +55014,20 @@ entities:
     pos: -45.5,19.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54915,6 +55046,20 @@ entities:
     pos: -45.5,15.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54933,6 +55078,20 @@ entities:
     pos: -44.5,15.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54951,6 +55110,20 @@ entities:
     pos: -43.5,15.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -54969,6 +55142,20 @@ entities:
     pos: -42.5,15.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -55904,6 +56091,20 @@ entities:
     pos: -35.5,5.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -55922,6 +56123,20 @@ entities:
     pos: -36.5,5.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -55983,6 +56198,20 @@ entities:
   - pos: -38.5,8.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -93620,11 +93849,16 @@ entities:
     parent: 0
     type: Transform
 - uid: 9158
-  type: AirlockEngineeringGlassLocked
+  type: FirelockEdge
   components:
-  - pos: 59.5,12.5
+  - rot: 1.5707963267948966 rad
+    pos: 13.5,-7.5
     parent: 0
     type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 9159
   type: AirlockEngineeringGlassLocked
   components:
@@ -95341,6 +95575,20 @@ entities:
   - pos: -40.5,41.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -95396,6 +95644,20 @@ entities:
   - pos: -40.5,42.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -95413,6 +95675,20 @@ entities:
   - pos: -40.5,43.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -95554,6 +95830,20 @@ entities:
   - pos: -40.5,40.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -95571,6 +95861,20 @@ entities:
   - pos: -40.5,39.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -95588,6 +95892,47 @@ entities:
   - pos: -40.5,38.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.2,-0.2
+        - 0.2,0.2
+        - -0.2,0.2
+        - -0.2,-0.2
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      hard: False
+      id: brrt
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      layer:
+      - BulletImpassable
+      - Opaque
+      id: collision
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -96312,6 +96657,20 @@ entities:
   - pos: -40.5,44.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+      id: conveyor
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -136932,6 +137291,12 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 15042
+  type: AirlockEngineeringLocked
+  components:
+  - pos: 59.5,12.5
+    parent: 0
+    type: Transform
+- uid: 15043
   type: MedicalScanner
   components:
   - pos: -17.5,-44.5
@@ -136950,34 +137315,9 @@ entities:
     type: ContainerContainer
   - inputs:
       MedicalScannerReceiver:
-      - port: CloningPodSender
-        uid: 15043
       - port: MedicalScannerSender
-        uid: 15043
+        uid: 15047
     type: SignalReceiver
-- uid: 15043
-  type: ComputerCloningConsole
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -16.5,-44.5
-    parent: 0
-    type: Transform
-  - outputs:
-      MedicalScannerSender:
-      - port: MedicalScannerReceiver
-        uid: 15042
-      - port: CloningPodReceiver
-        uid: 15047
-      CloningPodSender:
-      - port: MedicalScannerReceiver
-        uid: 15042
-      - port: CloningPodReceiver
-        uid: 15047
-    type: SignalTransmitter
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 15044
   type: AirlockMaintMedLocked
   components:
@@ -137002,30 +137342,24 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 15047
-  type: CloningPod
+  type: ComputerCloningConsole
   components:
-  - pos: -15.5,-44.5
+  - rot: 3.141592653589793 rad
+    pos: -16.5,-44.5
     parent: 0
     type: Transform
+  - outputs:
+      MedicalScannerSender:
+      - port: MedicalScannerReceiver
+        uid: 15043
+      CloningPodSender:
+      - port: CloningPodReceiver
+        uid: 23409
+    type: SignalTransmitter
   - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      CloningPod-bodyContainer: !type:ContainerSlot {}
-      machine_board: !type:Container
+      board: !type:Container
         ents: []
-      machine_parts: !type:Container
-        ents: []
-      System.Func`3[Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.MetaDataComponent,System.String]-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
-  - inputs:
-      CloningPodReceiver:
-      - port: CloningPodSender
-        uid: 15043
-      - port: MedicalScannerSender
-        uid: 15043
-    type: SignalReceiver
 - uid: 15048
   type: SignCloning
   components:
@@ -160586,6 +160920,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - tags: []
+    type: Tag
 - uid: 18399
   type: Beaker
   components:
@@ -196584,11 +196920,27 @@ entities:
     parent: 0
     type: Transform
 - uid: 23409
-  type: AirlockEngineeringGlassLocked
+  type: CloningPod
   components:
-  - pos: 57.5,13.5
+  - pos: -15.5,-44.5
     parent: 0
     type: Transform
+  - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
+  - containers:
+      clonepod-bodyContainer: !type:ContainerSlot {}
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+  - inputs:
+      CloningPodReceiver:
+      - port: CloningPodSender
+        uid: 15047
+    type: SignalReceiver
 - uid: 23410
   type: SignRadiationMed
   components:
@@ -196803,9 +197155,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 23442
-  type: ContainmentFieldGenerator
+  type: AirlockEngineeringLocked
   components:
-  - pos: 64.5,20.5
+  - pos: 57.5,13.5
     parent: 0
     type: Transform
 - uid: 23443
@@ -196815,11 +197167,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 23444
-  type: ContainmentFieldGenerator
+  type: FirelockGlass
   components:
-  - pos: 68.5,24.5
+  - pos: 24.5,1.5
     parent: 0
     type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 23445
   type: ContainmentFieldGenerator
   components:
@@ -196827,11 +197183,16 @@ entities:
     parent: 0
     type: Transform
 - uid: 23446
-  type: ContainmentFieldGenerator
+  type: FirelockEdge
   components:
-  - pos: 72.5,20.5
+  - rot: -1.5707963267948966 rad
+    pos: -18.5,-7.5
     parent: 0
     type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 23447
   type: ContainmentFieldGenerator
   components:
@@ -196839,11 +197200,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 23448
-  type: ContainmentFieldGenerator
+  type: FirelockGlass
   components:
-  - pos: 68.5,16.5
+  - pos: 25.5,1.5
     parent: 0
     type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 23449
   type: ContainmentFieldGenerator
   components:
@@ -198622,38 +198987,26 @@ entities:
     parent: 0
     type: Transform
 - uid: 23736
-  type: Emitter
+  type: FirelockGlass
   components:
-  - rot: 3.141592653589793 rad
-    pos: 68.5,12.5
+  - pos: 18.5,-2.5
     parent: 0
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 23737
-  type: Emitter
+  type: FirelockEdge
   components:
-  - pos: 68.5,28.5
+  - rot: -1.5707963267948966 rad
+    pos: -18.5,-8.5
     parent: 0
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 23738
   type: Emitter
   components:
@@ -198689,22 +199042,15 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 23740
-  type: Emitter
+  type: FirelockGlass
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 75.5,20.5
+  - pos: 18.5,-3.5
     parent: 0
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 23741
   type: CableMV
   components:
@@ -202258,4 +202604,51 @@ entities:
   - pos: -31.5,-4.5
     parent: 0
     type: Transform
+- uid: 24199
+  type: CableApcExtension
+  components:
+  - pos: -10.5,-65.5
+    parent: 0
+    type: Transform
+- uid: 24200
+  type: CableApcExtension
+  components:
+  - pos: -11.5,-65.5
+    parent: 0
+    type: Transform
+- uid: 24201
+  type: CableApcExtension
+  components:
+  - pos: -12.5,-65.5
+    parent: 0
+    type: Transform
+- uid: 24202
+  type: CableApcExtension
+  components:
+  - pos: -16.5,-65.5
+    parent: 0
+    type: Transform
+- uid: 24203
+  type: CableApcExtension
+  components:
+  - pos: -15.5,-65.5
+    parent: 0
+    type: Transform
+- uid: 24204
+  type: SolarTracker
+  components:
+  - pos: -32.5,70.5
+    parent: 0
+    type: Transform
+- uid: 24205
+  type: FirelockEdge
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 13.5,-8.5
+    parent: 0
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 ...
