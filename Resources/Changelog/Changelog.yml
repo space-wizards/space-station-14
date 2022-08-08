@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: The Spationaut suit sprite has been modified to keep it more in line
-      with the game's artstyle., type: Tweak}
-  id: 1617
-  time: '2022-05-27T16:02:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Every member of their crew now receives their Centcomm-mandated one
       minute in space before dying., type: Tweak}
   id: 1618
@@ -2949,3 +2943,9 @@ Entries:
   - {message: now HoS has combat gloves from the beginning of the round, type: Add}
   id: 2116
   time: '2022-08-08T03:22:38.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Activated pinpointers now automatically target the disk after completing
+      a FTL jump., type: Add}
+  id: 2117
+  time: '2022-08-08T04:27:30.0000000+00:00'
