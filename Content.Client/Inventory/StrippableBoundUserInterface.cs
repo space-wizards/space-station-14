@@ -79,6 +79,8 @@ namespace Content.Client.Inventory
                     });
                 }
             }
+
+
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

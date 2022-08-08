@@ -13,7 +13,7 @@ namespace Content.Client.Strip
 
         public StrippingMenu(string title)
         {
-            MinSize = SetSize = (400, 640);
+            MinSize = SetSize = (400, 10);
             Title = title;
 
             _vboxContainer = new BoxContainer
@@ -59,6 +59,9 @@ namespace Content.Client.Strip
                     button,
                 }
             });
+
+
+            SetHeight += 36;
         }
     }
 }
