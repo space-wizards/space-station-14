@@ -33,6 +33,13 @@ namespace Content.Server.Dragon
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
+        /// <summary>
+        /// Minimum distance between 2 rifts allowed.
+        /// </summary>
+        private const int RiftRange = 15;
+
+        private const int RiftsAllowed = 3;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -75,7 +82,7 @@ namespace Content.Server.Dragon
                 }
 
                 // At max rifts
-                if (comp.Rifts.Count >= 3)
+                if (comp.Rifts.Count >= RiftsAllowed)
                 {
                     continue;
                 }
@@ -121,7 +128,7 @@ namespace Content.Server.Dragon
 
                 comp.SpawnAccumulator += frameTime;
 
-                if (comp.State < DragonRiftState.AlmostFinished && comp.SpawnAccumulator > comp.MaxAccumulator / 2f)
+                if (comp.State < DragonRiftState.AlmostFinished && comp.Accumulator > comp.MaxAccumulator / 2f)
                 {
                     comp.State = DragonRiftState.AlmostFinished;
                     Dirty(comp);
@@ -197,7 +204,7 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            if (component.Rifts.Count >= 3)
+            if (component.Rifts.Count >= RiftsAllowed)
             {
                 _popupSystem.PopupEntity(Loc.GetString("carp-rift-max"), uid, Filter.Entities(uid));
                 return;
@@ -216,6 +223,15 @@ namespace Content.Server.Dragon
             {
                 _popupSystem.PopupEntity(Loc.GetString("carp-rift-anchor"), uid, Filter.Entities(uid));
                 return;
+            }
+
+            foreach (var (_, riftXform) in EntityQuery<DragonRiftComponent, TransformComponent>(true))
+            {
+                if (riftXform.Coordinates.InRange(EntityManager, xform.Coordinates, RiftRange))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, Filter.Entities(uid));
+                    return;
+                }
             }
 
             var carpUid = Spawn(component.RiftPrototype, xform.MapPosition);
@@ -244,6 +260,13 @@ namespace Content.Server.Dragon
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
 
                 component.DragonStomach.EmptyContainer();
+
+                foreach (var rift in component.Rifts)
+                {
+                    QueueDel(rift);
+                }
+
+                component.Rifts.Clear();
             }
         }
 
