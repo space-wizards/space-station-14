@@ -1,10 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Certain jobs now get "extended" access levels if the station is running
-      on a low crew count., type: Add}
-  id: 1614
-  time: '2022-05-27T04:01:07.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Admins have a whole bunch more smites. Like, a lot. You may die.',
@@ -2949,3 +2943,8 @@ Entries:
     type: Tweak}
   id: 2113
   time: '2022-08-08T02:38:04.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Tranquilizer shell now can be printed in security techfab, type: Add}
+  id: 2114
+  time: '2022-08-08T02:52:15.0000000+00:00'
