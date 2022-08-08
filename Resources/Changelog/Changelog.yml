@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'The singulo is now much, much more dangerous (it no longer bounces
-      off the station for no reason).', type: Fix}
-  id: 1610
-  time: '2022-05-27T02:29:34.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed some buttons in the lobby not being accessible on some resolutions.,
@@ -2946,3 +2940,9 @@ Entries:
   - {message: Added a ton of instruments., type: Add}
   id: 2109
   time: '2022-08-08T02:21:54.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: 'Now the nuke ops will definitely remember their task, thanks to new
+      spawn sound.', type: Add}
+  id: 2110
+  time: '2022-08-08T02:27:08.0000000+00:00'
