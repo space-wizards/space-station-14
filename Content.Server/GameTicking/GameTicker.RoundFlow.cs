@@ -177,6 +177,13 @@ namespace Content.Server.GameTicking
                 readyPlayers = _playersInLobby.Keys.ToList();
             }
 
+#if DEBUG
+            foreach (var player in readyPlayers)
+            {
+                DebugTools.Assert(_userDb.IsLoadComplete(player), $"Player was readied up but didn't have user DB data loaded yet??");
+            }
+#endif
+
             readyPlayers.RemoveAll(p =>
             {
                 if (_roleBanManager.GetRoleBans(p.UserId) != null)

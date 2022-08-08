@@ -34,6 +34,11 @@ namespace Content.Server.AI.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+            // Makes physics etc debugging easier.
+#if DEBUG
+            _configurationManager.OverrideDefault(CCVars.NPCEnabled, false);
+#endif
+
             _sawmill = Logger.GetSawmill("npc");
             InitializeUtility();
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
