@@ -97,7 +97,7 @@ namespace Content.Client.Inventory
 
             if (_strippingMenu != null)
             {
-                _strippingMenu.SetHeight = (Inventory.Count + Hands.Count + Handcuffs.Count) *  + _strippingMenu.MinHeight;
+                _strippingMenu.SetHeight = (Inventory.Count + Hands.Count + Handcuffs.Count) * 36 + _strippingMenu.MinHeight;
             }
 
             UpdateMenu();
