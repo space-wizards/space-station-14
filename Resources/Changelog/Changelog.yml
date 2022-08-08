@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Tweaked gas heater & freezer stats. Better lasers now actually improve
-      minimum temperatures., type: Tweak}
-  id: 1620
-  time: '2022-05-28T19:10:37.0000000+00:00'
 - author: efzapa
   changes:
   - {message: Added a BRB sign so to let people know you are out doing something.,
@@ -2947,3 +2941,9 @@ Entries:
   - {message: Robust harvest is significantly more effective., type: Tweak}
   id: 2119
   time: '2022-08-08T08:51:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The objective to steal the Captain's jetpack no longer says "Captain's
+      Captain's Jetpack", type: Fix}
+  id: 2120
+  time: '2022-08-08T08:55:51.0000000+00:00'
