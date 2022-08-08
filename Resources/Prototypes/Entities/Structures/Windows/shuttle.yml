@@ -38,9 +38,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     base: swindow
-  - type: Construction
-    graph: Window
-    node: shuttleWindow
   - type: Appearance
     visuals:
     - type: DamageVisualizer

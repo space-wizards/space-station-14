@@ -58,7 +58,7 @@ namespace Content.Server.Drone
             if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
                 args.Cancel();
 
-            if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
+            if (HasComp<ItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
             {
                 if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
                     args.Cancel();

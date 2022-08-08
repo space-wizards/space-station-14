@@ -139,7 +139,7 @@
         Piercing: 1
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
     - Idle
@@ -307,6 +307,7 @@
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
+    netsync: false
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
@@ -327,16 +328,10 @@
       0: Alive
       5: Critical
       10: Dead
-  - type: RandomSpriteColor
-    state: butterfly
-    colors:
-      blue: "#1861d5"
-      red: "#951710"
-      pink: "#d5188d"
-      brown: "#a05212"
-      green: "#0e7f1b"
-      cyan: "#18a2d5"
-      yellow: "#d58c18"
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          butterfly: Rainbow
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -670,7 +665,7 @@
         Blunt: 10
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -746,8 +741,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: mouse
-    description: A hungry and mischievous mouse.
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -756,12 +751,13 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
-    HeldPrefix: 0
-    Slots:
+    equippedPrefix: 0
+    slots:
     - HEAD
   - type: Physics
   - type: Fixtures
@@ -861,7 +857,7 @@
       state: mouse-1
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -887,7 +883,7 @@
       state: mouse-2
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1151,7 +1147,7 @@
     baseSprintSpeed : 7
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -1319,14 +1315,14 @@
         - Xeno
     - type: InputMover
     - type: MobMover
-    - type: UtilityAI
+    - type: UtilityNPC
       behaviorSets:
         - Idle
         - UnarmedAttackHostiles
     - type: GhostTakeoverAvailable
       makeSentient: true
-      name: giant spider
-      description: Wreak havoc on the station's inhabitants!
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
 
 - type: entity
   name: possum

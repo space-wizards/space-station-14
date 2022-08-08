@@ -23,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
+using System.Data;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -114,7 +115,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
         foreach (var player in everyone)
         {
-            if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
             if (!ev.Profiles.ContainsKey(player.UserId))
             {
                 continue;
@@ -207,6 +207,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             Offset = Vector2.One * 1000f,
         });
 
+        // Naughty, someone saved the shuttle as a map.
+        if (Deleted(outpost))
+        {
+            Logger.ErrorS("nukeops", $"Tried to load nukeops shuttle as a map, aborting.");
+            _mapManager.DeleteMap(mapId);
+            return;
+        }
+
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
@@ -285,6 +293,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
+    }
+
+    //For admins forcing someone to nukeOps.
+    public void MakeLoneNukie(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(NukeopsPrototypeId)));
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

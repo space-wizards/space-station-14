@@ -110,8 +110,38 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
+
+- type: entity
+  id: MobRatKingBuff
+  parent: MobRatKing
+  suffix: Buff
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/buffrat.rsi
+    scale: 1.2, 1.2
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat  
+  - type: MobState
+    thresholds:
+      0: Alive
+      300: Critical
+      350: Dead
+  - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 0
+    arc: fist
+    damage:
+      types:
+        Blunt: 50 #oof ouch owie my bones
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      200: 0.7
+      250: 0.5
 
 - type: entity
   name: Rat Servant
@@ -125,7 +155,7 @@
     baseSprintSpeed : 3.5
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
@@ -192,6 +222,7 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: Vocal
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg

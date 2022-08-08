@@ -6,6 +6,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
@@ -148,7 +149,6 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
-        
         var count = 0;
         foreach (var entity in ev.Contents)
         {
@@ -233,6 +233,9 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!Resolve(target, ref component))
             return false;
 
+        if (!HasComp<SharedHandsComponent>(user))
+            return false;
+
         if (component.IsWeldedShut)
         {
             if (!silent && !component.Contents.Contains(user))
@@ -302,10 +305,10 @@ public sealed class EntityStorageSystem : EntitySystem
             return false;
 
         var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
-        var storageIsItem = HasComp<SharedItemComponent>(container);
+        var storageIsItem = HasComp<ItemComponent>(container);
 
         var allowedToEat = whitelist == null
-            ? HasComp<SharedItemComponent>(toInsert)
+            ? HasComp<ItemComponent>(toInsert)
             : whitelist.IsValid(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
@@ -354,13 +357,12 @@ public sealed class EntityStorageSystem : EntitySystem
         }
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var surface))
-            _placeableSurface.SetPlaceable(uid, true, surface);
+            _placeableSurface.SetPlaceable(uid, component.Open, surface);
 
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
             appearance.SetData(StorageVisuals.Open, component.Open);
-            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
+            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Any());
         }
-            
     }
 }

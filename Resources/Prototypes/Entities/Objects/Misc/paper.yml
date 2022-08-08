@@ -73,7 +73,7 @@
     state: pen
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
-    HeldPrefix: pen
+    heldPrefix: pen
     size: 2
 
 - type: entity
@@ -102,7 +102,7 @@
       collection: Screwdriver
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
-    HeldPrefix: overpriced_pen
+    heldPrefix: overpriced_pen
     size: 2
 
 - type: entity

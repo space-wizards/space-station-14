@@ -1,7 +1,7 @@
 ﻿- type: entity
   save: false
   name: Vox
-  parent: MobVoxBase
+  parent: BaseMobVox
   id: MobVox
   components:
     - type: CombatMode

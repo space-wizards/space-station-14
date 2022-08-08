@@ -47,7 +47,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledShotgun
-  name: Bojevic bundle
+  name: Bulldog bundle
   description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
@@ -128,7 +128,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
-  name: Centcom official costume duffel bag
+  name: CentCom official costume duffel bag
   description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key."
   components:
   - type: StorageFill
@@ -237,7 +237,6 @@
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
       - id: WeaponPistolViper
-      - id: BaseUplinkRadio40TC
       - id: PinpointerNuclear
 
 
@@ -255,8 +254,8 @@
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
-      - id: BaseUplinkRadio40TC
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
       - id: WeaponPistolViper
       - id: PinpointerNuclear
+      - id: HandheldHealthAnalyzer

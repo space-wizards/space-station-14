@@ -7,6 +7,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -222,10 +223,6 @@ public sealed partial class StationJobsSystem : EntitySystem
                 UpdateJobsAvailable();
                 return true;
             case true:
-                // Job is unlimited so just say we adjusted it and do nothing.
-                if (jobList[jobPrototypeId] == null)
-                    return true;
-
                 stationJobs.TotalJobs += amount - (int)jobList[jobPrototypeId]!.Value;
 
                 jobList[jobPrototypeId] = (uint)amount;

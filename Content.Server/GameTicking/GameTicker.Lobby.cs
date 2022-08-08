@@ -67,7 +67,7 @@ namespace Content.Server.GameTicking
         private TickerLobbyStatusEvent GetStatusMsg(IPlayerSession session)
         {
             _playersInLobby.TryGetValue(session, out var status);
-            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground,status == LobbyPlayerStatus.Ready, _roundStartTime, Paused);
+            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground,status == LobbyPlayerStatus.Ready, _roundStartTime, _roundStartTimeSpan, Paused);
         }
 
         private void SendStatusToAll()
@@ -123,12 +123,11 @@ namespace Content.Server.GameTicking
 
         public void ToggleReady(IPlayerSession player, bool ready)
         {
-            if (!_playersInLobby.ContainsKey(player)) return;
-
-            if (!_prefsManager.HavePreferencesLoaded(player))
-            {
+            if (!_playersInLobby.ContainsKey(player))
                 return;
-            }
+
+            if (!_userDb.IsLoadComplete(player))
+                return;
 
             var status = ready ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
             _playersInLobby[player] = ready ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;

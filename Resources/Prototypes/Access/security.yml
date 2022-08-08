@@ -4,12 +4,15 @@
 
 - type: accessLevel
   id: Security
+  name: Security
 
 - type: accessLevel
   id: Armory
+  name: Armory
 
 - type: accessLevel
   id: Brig
+  name: Brig
 
 #- type: accessLevel
 #  id: Detective

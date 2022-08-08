@@ -20,7 +20,7 @@
   - type: Item
     size: 10
     sprite: Objects/Tools/welder.rsi
-    HeldPrefix: off
+    heldPrefix: off
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -68,7 +68,7 @@
         - ReagentId: WeldingFuel
           Quantity: 250
         maxVol: 250
-        
+
 - type: entity
   name: advanced industrial welding tool
   parent: WelderIndustrial
