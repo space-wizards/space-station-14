@@ -35,12 +35,6 @@ public sealed class CrewManifestSystem : EntitySystem
     /// </summary>
     private readonly Dictionary<EntityUid, CrewManifestEntries> _cachedEntries = new();
 
-    /// <summary>
-    ///     Not-so-fun way of caching departments that jobs exist in. Only populates on init
-    ///     or prototype reload. This could probably be put into the client
-    /// </summary>
-    private readonly Dictionary<string, List<string>> _jobDepartments = new();
-
     private readonly Dictionary<EntityUid, Dictionary<IPlayerSession, CrewManifestEui>> _openEuis = new();
 
     public override void Initialize()
@@ -51,16 +45,6 @@ public sealed class CrewManifestSystem : EntitySystem
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
-
-        BuildDepartmentListing();
-
-        _prototypeManager.PrototypesReloaded += OnPrototypesReload;
-    }
-
-    private void OnPrototypesReload(PrototypesReloadedEventArgs args)
-    {
-        _jobDepartments.Clear();
-        BuildDepartmentListing();
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -74,7 +58,6 @@ public sealed class CrewManifestSystem : EntitySystem
         }
 
         _openEuis.Clear();
-        _jobDepartments.Clear();
     }
 
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
@@ -214,23 +197,6 @@ public sealed class CrewManifestSystem : EntitySystem
         }
     }
 
-    private void BuildDepartmentListing()
-    {
-        foreach (var prototype in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
-        {
-            foreach (var job in prototype.Roles)
-            {
-                if (!_jobDepartments.TryGetValue(job, out var list))
-                {
-                    list = new();
-                    _jobDepartments.Add(job, list);
-                }
-
-                list.Add(job);
-            }
-        }
-    }
-
     /// <summary>
     ///     Builds the crew manifest for a station. Stores it in the cache afterwards.
     /// </summary>
@@ -254,31 +220,9 @@ public sealed class CrewManifestSystem : EntitySystem
             }
 
             var record = recordObject.Value.Item2;
-            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.DisplayPriority);
+            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.JobPrototype);
 
-            if (_jobDepartments.TryGetValue(record.JobPrototype, out var departments))
-            {
-                foreach (var department in departments)
-                {
-                    if (!entries.Entries.TryGetValue(department, out var entryList))
-                    {
-                        entryList = new();
-                        entries.Entries.Add(department, entryList);
-                    }
-
-                    entryList.Add(entry);
-                }
-            }
-            else
-            {
-                if (!entries.Entries.TryGetValue("Unknown", out var unknownList))
-                {
-                    unknownList = new();
-                    entries.Entries.Add("Unknown", unknownList);
-                }
-
-                unknownList.Add(entry);
-            }
+            entries.Entries.Add(entry);
         }
 
         if (_cachedEntries.ContainsKey(station))

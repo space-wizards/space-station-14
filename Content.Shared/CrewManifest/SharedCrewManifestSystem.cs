@@ -42,7 +42,8 @@ public sealed class CrewManifestEntries
     /// <summary>
     ///     Entries in the crew manifest. Goes by department ID.
     /// </summary>
-    public Dictionary<string, List<CrewManifestEntry>> Entries = new();
+    // public Dictionary<string, List<CrewManifestEntry>> Entries = new();
+    public List<CrewManifestEntry> Entries = new();
 }
 
 [Serializable, NetSerializable]
@@ -54,14 +55,14 @@ public sealed class CrewManifestEntry
 
     public string JobIcon { get; }
 
-    public int DisplayPriority { get; }
+    public string JobPrototype { get; }
 
-    public CrewManifestEntry(string name, string jobTitle, string jobIcon, int displayPriority)
+    public CrewManifestEntry(string name, string jobTitle, string jobIcon, string jobPrototype)
     {
         Name = name;
         JobTitle = jobTitle;
         JobIcon = jobIcon;
-        DisplayPriority = displayPriority;
+        JobPrototype = jobPrototype;
     }
 }
 
