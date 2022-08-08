@@ -1,5 +1,4 @@
 using Content.Shared.Damage;
-using Content.Shared.MobState.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
@@ -20,7 +19,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
 using Content.Server.Weapon.Melee.Components;
-using Robust.Shared.Containers;
 using Content.Shared.Movement.Components;
 using Content.Shared.MobState;
 using Robust.Shared.Prototypes;
@@ -30,10 +28,6 @@ using Content.Shared.Zombies;
 using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
 using Content.Server.IdentityManagement;
-using Content.Shared.Audio;
-using Content.Shared.Sound;
-using Robust.Shared.Random;
-using Content.Server.Speech;
 using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Zombies
