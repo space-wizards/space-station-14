@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Delta's arrivals shuttle no longer has thrusters or an accessible power
-      room., type: Tweak}
-  id: 1613
-  time: '2022-05-27T03:22:38.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Certain jobs now get "extended" access levels if the station is running
@@ -2945,3 +2939,13 @@ Entries:
   - {message: The game no longer has a 50% chance of calling a chair a chr., type: Fix}
   id: 2112
   time: '2022-08-08T02:29:31.0000000+00:00'
+- author: Level10Cybermancer
+  changes:
+  - {message: Blunt melee weapons now deal stamina damage, type: Add}
+  - {message: 'After new research has demonstrated that most security personnel lack
+      the mental capability to operate the big red "on/off" button on their issued
+      stun batons, NanoTrasen has made some fundamental tweaks to their design. Disabled
+      stun batons now deal twice as much stamina damage as they do blunt damage.',
+    type: Tweak}
+  id: 2113
+  time: '2022-08-08T02:38:04.0000000+00:00'

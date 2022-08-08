@@ -1,7 +1,7 @@
-﻿using Content.Shared.Storage;
-using Content.Client.Animations;
+﻿using Content.Client.Animations;
+using Content.Shared.Storage;
 
-namespace Content.Client.Storage;
+namespace Content.Client.Storage.Systems;
 
 // TODO kill this is all horrid.
 public sealed class StorageSystem : EntitySystem
