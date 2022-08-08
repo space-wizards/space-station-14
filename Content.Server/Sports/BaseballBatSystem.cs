@@ -66,14 +66,8 @@ namespace Content.Server.Sports
                     if (rand != component.FireballChance)
                     {
                         physicsComponent.Momentum = Vector2.Zero; //stopping the item so we get a clean throw
-
                         _throwingSystem.TryThrow(entity, dir * dirForceMultiplier, hitStrength, uid);
-                        if (hitStrength < 1) //More pathetic sound if you're hit is pathetic
-                        {
-                            _audioSystem.Play(component.BadHitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
-                            return;
-                        }
-                        _audioSystem.Play(component.GoodHitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
+                        _audioSystem.Play(component.HitSound, Filter.Pvs(args.User), args.User, AudioParams.Default);
                         return;
                     }
 

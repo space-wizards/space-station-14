@@ -71,9 +71,9 @@
   group: market
 
 - type: cargoProduct
-  name: "Sports crate"
+  name: "Baseball Crate"
   id: FunATV
-  description: "A collection of all of your favorite sports balls and sports ball accessories"
+  description: "A collection of everything you need to host your own Baseball game"
   icon:
     sprite: Objects/Fun/toys.rsi
     state: football

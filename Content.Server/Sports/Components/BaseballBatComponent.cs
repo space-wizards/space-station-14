@@ -14,21 +14,21 @@ namespace Content.Server.Sports.Components
         /// </summary>
         [DataField("wackForceMultiplierMin")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WackForceMultiplierMin {get; set; } = 0.5f;
+        public float WackForceMultiplierMin {get; set; } = 1f;
 
         /// <summary>
         /// The maximum amount of extra distance from that the item being hit will travel.
         /// </summary>
         [DataField("wackForceMultiplierMax")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WackForceMultiplierMax {get; set; } = 5f;
+        public float WackForceMultiplierMax {get; set; } = 8f;
 
         /// <summary>
         /// The minimum amount of velocity that the item being hit should be given
         /// </summary>
         [DataField("wackStrengthMin")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WackStrengthMin {get; set; } = 5f;
+        public float WackStrengthMin {get; set; } = 10f;
 
         /// <summary>
         /// The maximum amount of velocity that the item being hit should be given
@@ -46,20 +46,12 @@ namespace Content.Server.Sports.Components
         public bool OnlyHitThrown = true;
 
         /// <summary>
-        /// Sound that plays when you have a bad hit.
-        /// A good hit is when the item is going to go less far than the target
-        /// </summary>
-        [DataField("badHitSound")]
-        [ViewVariables(VVAccess.ReadOnly)]
-        public SoundSpecifier BadHitSound = new SoundPathSpecifier("/Audio/Effects/hit_kick.ogg");
-
-        /// <summary>
         /// Sound that plays when you have a good hit.
         /// A good hit is when the item is going to go at least as far as the target
         /// </summary>
-        [DataField("goodHitSound")]
+        [DataField("hitSound")]
         [ViewVariables(VVAccess.ReadOnly)]
-        public SoundSpecifier GoodHitSound = new SoundPathSpecifier("/Audio/Effects/baseball-hit.ogg");
+        public SoundSpecifier HitSound = new SoundPathSpecifier("/Audio/Effects/baseball-hit.ogg");
 
         /// <summary>
         /// Chances of the item being hit turning into a fireball.

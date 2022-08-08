@@ -137,8 +137,8 @@
           amount: 1
 
 - type: entity
-  id: CrateFunSportsBall
-  name: Sports Ball crate
+  id: CrateFunBaseball
+  name: Baseball crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
@@ -146,8 +146,7 @@
         - id: PitchingMachine
           amount: 1
         - id: Baseball
-          amount: 4
-        - id: Football
+          amount: 6
+        - id: BaseBallBat
           amount: 2
-        - id: Basketball
-          amount: 1
+
