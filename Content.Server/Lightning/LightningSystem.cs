@@ -26,8 +26,8 @@ public sealed class LightningSystem : SharedLightningSystem
     {
         if (component.MaxArc > 0 && component.Counter < component.MaxArc)
         {
-            Arc(component, component.Owner, args.OtherFixture.Body.Owner);
-            _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase");
+            //Arc(component, component.Owner, args.OtherFixture.Body.Owner);
+            //_beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase");
         }
     }
 

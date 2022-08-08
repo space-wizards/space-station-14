@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Beam;
 
@@ -35,11 +36,11 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="prototype"></param>
     /// <param name="userAngle"></param>
     /// <param name="calculatedDistance"></param>
-    /// <param name="lightningOffset"></param>
+    /// <param name="beamOffset"></param>
     /// <param name="offsetCorrection"></param>
-    public void CreateBeam(EntityUid user, string prototype, Angle userAngle, Vector2 calculatedDistance, EntityCoordinates lightningOffset, Vector2 offsetCorrection)
+    public void CreateBeam(EntityUid user, string prototype, Angle userAngle, Vector2 calculatedDistance, EntityCoordinates beamOffset, Vector2 offsetCorrection)
     {
-        var offset = lightningOffset;
+        var offset = beamOffset;
         var ent = Spawn(prototype, offset);
         var shape = new EdgeShape(offsetCorrection, new Vector2(0,0));
         var distanceLength = offsetCorrection.Length;
@@ -49,7 +50,7 @@ public sealed class BeamSystem : SharedBeamSystem
             sprites.Rotation = userAngle;
             var fixture = new Fixture(physics, shape)
             {
-                ID = "LightningBody",
+                ID = "BeamBody",
                 Hard = false,
                 Body = { BodyType = BodyType.Dynamic},
                 CollisionMask = (int)CollisionGroup.ItemMask, //Change to MobMask
@@ -57,11 +58,6 @@ public sealed class BeamSystem : SharedBeamSystem
             };
 
             _fixture.TryCreateFixture(physics, fixture);
-
-            var entXForm = Transform(ent);
-
-            //TODO: This is fine until the entity starts moving....
-            entXForm.AttachParent(user);
 
             for (int i = 0; i < distanceLength-1; i++)
             {
