@@ -177,6 +177,12 @@ namespace Content.Shared.CCVar
             GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
 
         /// <summary>
+        /// If roles should be restricted based on time.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =
@@ -265,7 +271,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.max_traitors", 12); // Assuming average server maxes somewhere from like 50-80 people
 
         public static readonly CVarDef<int> TraitorPlayersPerTraitor =
-            CVarDef.Create("traitor.players_per_traitor", 5);
+            CVarDef.Create("traitor.players_per_traitor", 10);
 
         public static readonly CVarDef<int> TraitorCodewordCount =
             CVarDef.Create("traitor.codeword_count", 4);
@@ -436,6 +442,14 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> EventMusicEnabled =
             CVarDef.Create("ambience.event_music_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
+         * Specific Sounds
+         */
+        // Round  end sound (APC Destroyed)
+        public static readonly CVarDef<bool> RestartSoundsEnabled =
+            CVarDef.Create("ambience.restart_sounds_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
 
         /*
          * Admin sounds
@@ -887,6 +901,12 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        /// Is the emergency shuttle allowed to be early launched.
+        /// </summary>
+        public static readonly CVarDef<bool> EmergencyEarlyLaunchAllowed =
+            CVarDef.Create("shuttle.emergency_early_launch_allowed", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// How long the emergency shuttle remains docked with the station, in seconds.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleDockTime =
@@ -1077,5 +1097,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+
+        /*
+         * PLAYTIME
+         */
+
+
+        /// <summary>
+        /// Time between play time autosaves, in seconds.
+        /// </summary>
+        public static readonly CVarDef<float>
+            PlayTimeSaveInterval = CVarDef.Create("playtime.save_interval", 900f, CVar.SERVERONLY);
     }
 }

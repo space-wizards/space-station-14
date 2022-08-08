@@ -6,6 +6,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Shared.Chunking;
 
@@ -77,7 +78,12 @@ public sealed class ChunkingSystem : EntitySystem
 
         foreach (var viewerUid in viewers)
         {
-            var xform = xformQuery.GetComponent(viewerUid);
+            if (!xformQuery.TryGetComponent(viewerUid, out var xform))
+            {
+                Logger.Error($"Player has deleted viewer entities? Viewers: {string.Join(", ", viewers.Select(x => ToPrettyString(x)))}");
+                continue;
+            }
+
             var pos = _transform.GetWorldPosition(xform, xformQuery);
             var bounds = _baseViewBounds.Translated(pos).Enlarged(viewEnlargement);
 

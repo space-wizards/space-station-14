@@ -32,7 +32,9 @@
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     layers:
     - state: mopbucket
-    - state: mopbucket_water
+    - state: mopbucket_water-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
     drawdepth: Objects
   - type: InteractionOutline
   - type: SolutionContainerManager
@@ -46,6 +48,8 @@
   - type: DrainableSolution
     solution: bucket
   - type: RefillableSolution
+    solution: bucket
+  - type: ExaminableSolution
     solution: bucket
   - type: Tag
     tags:
@@ -67,6 +71,10 @@
   - type: Pullable
   - type: Drink
     isOpen: true
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: mopbucket_water-
 
 - type: entity
   name: wet floor sign
@@ -96,8 +104,9 @@
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
       layers:
         - state: cart
-        - state: cart_water_1
+        - state: cart_water-1
           map: ["enum.SolutionContainerLayers.Fill"]
+          visible: false
     - type: Rotatable
     - type: InteractionOutline
     - type: Storage
@@ -198,14 +207,11 @@
           whitelist:
             tags:
               - WetFloorSign
+      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: Appearance
-      visuals:
-        - type: MappedItemVisualizer
-          sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
-        - type: SolutionContainerVisualizer
-          maxFillLevels: 3
-          fillBaseName: cart_water_
-          changeColor: false
+    - type: SolutionContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: cart_water-
     - type: UserInterface
       interfaces:
       - key: enum.StorageUiKey.Key

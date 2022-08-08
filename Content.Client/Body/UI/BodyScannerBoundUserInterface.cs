@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Body.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;

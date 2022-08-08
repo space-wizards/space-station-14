@@ -1,5 +1,4 @@
 using Content.Shared.Damage;
-using Content.Shared.MobState.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
@@ -20,7 +19,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
 using Content.Server.Weapon.Melee.Components;
-using Robust.Shared.Containers;
 using Content.Shared.Movement.Components;
 using Content.Shared.MobState;
 using Robust.Shared.Prototypes;
@@ -110,6 +108,11 @@ namespace Content.Server.Zombies
             ///in an attempt to make an entity not attack. This is the easiest way to do it.
             RemComp<CombatModeComponent>(target);
             AddComp<CombatModeComponent>(target);
+
+            var vocal = EnsureComp<VocalComponent>(target);
+            var scream = new SoundCollectionSpecifier ("ZombieScreams");
+            vocal.FemaleScream = scream;
+            vocal.MaleScream = scream;
 
             ///This is the actual damage of the zombie. We assign the visual appearance
             ///and range here because of stuff we'll find out later

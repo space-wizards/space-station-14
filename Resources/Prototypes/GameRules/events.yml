@@ -33,6 +33,17 @@
     maxOccurrences: 3
 
 - type: gameRule
+  id: Dragon
+  config:
+    !type:StationEventRuleConfiguration
+    id: Dragon
+    weight: 10
+    endAfter: 2
+    earliestStart: 15
+    maxOccurrences: 7
+    minimumPlayers: 15
+
+- type: gameRule
   id: FalseAlarm
   config:
     !type:StationEventRuleConfiguration

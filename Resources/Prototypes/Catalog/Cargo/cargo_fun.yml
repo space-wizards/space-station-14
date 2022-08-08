@@ -15,7 +15,7 @@
   id: FunBrass
   description: "Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play."
   icon:
-    sprite: Structures/Furniture/instruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
   product: CrateFunBrass
   cost: 3500
