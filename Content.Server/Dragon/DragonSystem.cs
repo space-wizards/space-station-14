@@ -15,15 +15,19 @@ using Content.Server.GameTicking.Rules;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
 using Content.Shared.Examine;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Server.Dragon
 {
     public sealed partial class DragonSystem : GameRuleSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -37,6 +41,11 @@ namespace Content.Server.Dragon
         /// Minimum distance between 2 rifts allowed.
         /// </summary>
         private const int RiftRange = 15;
+
+        /// <summary>
+        /// Radius of tiles
+        /// </summary>
+        private const int RiftTileRadius = 2;
 
         private const int RiftsAllowed = 3;
 
@@ -219,7 +228,7 @@ namespace Content.Server.Dragon
             var xform = Transform(uid);
 
             // Have to be on a grid fam
-            if (xform.GridUid == null)
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("carp-rift-anchor"), uid, Filter.Entities(uid));
                 return;
@@ -232,6 +241,15 @@ namespace Content.Server.Dragon
                     _popupSystem.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, Filter.Entities(uid));
                     return;
                 }
+            }
+
+            foreach (var tile in grid.GetTilesIntersecting(new Circle(xform.WorldPosition, RiftTileRadius), false))
+            {
+                if (!tile.IsSpace(_tileDef))
+                    continue;
+
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-space-proximity", ("proximity", RiftTileRadius)), uid, Filter.Entities(uid));
+                return;
             }
 
             var carpUid = Spawn(component.RiftPrototype, xform.MapPosition);
