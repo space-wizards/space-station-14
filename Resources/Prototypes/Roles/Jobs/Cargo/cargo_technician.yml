@@ -1,9 +1,8 @@
 - type: job
   id: CargoTechnician
-  name: job-name-cargoteh
+  name: job-name-cargotech
+  playTimeTracker: JobCargoTechnician
   startingGear: CargoTechGear
-  departments:
-  - Cargo
   icon: "CargoTechnician"
   supervisors: job-supervisors-hop-qm
   access:

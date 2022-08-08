@@ -39,3 +39,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Mojave-Sun, taken at commit 0587dd16e28108bdf0b0a28e2caae4319845e861"
   source: "https://github.com/Mojave-Sun/mojave-sun-13"
+  
+- files: ["grassdark.png", "grasslight.png", "dirt.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Fortuna commit 2a9408a47e2f83d945335e4feeeeafb552173e6f, grasslight and dirt by Peptide based on grassdark.png and dirt."
+  source: "https://github.com/FortunaSS13/Fortuna"
