@@ -239,6 +239,7 @@
     - ComputerTelevisionCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
+    - HolofanProjector
 
 - type: technology
   name: technologies-material-sheet-printing

@@ -199,6 +199,7 @@
       - ProximitySensor
       - LeftArmBorg
       - RightArmBorg
+      - HolofanProjector
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
