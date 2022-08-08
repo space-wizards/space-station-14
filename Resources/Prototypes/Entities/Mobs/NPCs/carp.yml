@@ -148,7 +148,7 @@
   name: space carp
   id: MobCarpDragon
   suffix: DragonBrood
-  parent: MobCarp
+  parent: BaseMobCarp
   components:
     - type: GhostTakeoverAvailable
       makeSentient: true

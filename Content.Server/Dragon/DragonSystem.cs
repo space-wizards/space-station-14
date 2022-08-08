@@ -15,15 +15,19 @@ using Content.Server.GameTicking.Rules;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
 using Content.Shared.Examine;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Server.Dragon
 {
     public sealed partial class DragonSystem : GameRuleSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -32,6 +36,18 @@ namespace Content.Server.Dragon
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
+        /// <summary>
+        /// Minimum distance between 2 rifts allowed.
+        /// </summary>
+        private const int RiftRange = 15;
+
+        /// <summary>
+        /// Radius of tiles
+        /// </summary>
+        private const int RiftTileRadius = 2;
+
+        private const int RiftsAllowed = 3;
 
         public override void Initialize()
         {
@@ -75,7 +91,7 @@ namespace Content.Server.Dragon
                 }
 
                 // At max rifts
-                if (comp.Rifts.Count >= 3)
+                if (comp.Rifts.Count >= RiftsAllowed)
                 {
                     continue;
                 }
@@ -121,7 +137,7 @@ namespace Content.Server.Dragon
 
                 comp.SpawnAccumulator += frameTime;
 
-                if (comp.State < DragonRiftState.AlmostFinished && comp.SpawnAccumulator > comp.MaxAccumulator / 2f)
+                if (comp.State < DragonRiftState.AlmostFinished && comp.Accumulator > comp.MaxAccumulator / 2f)
                 {
                     comp.State = DragonRiftState.AlmostFinished;
                     Dirty(comp);
@@ -197,7 +213,7 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            if (component.Rifts.Count >= 3)
+            if (component.Rifts.Count >= RiftsAllowed)
             {
                 _popupSystem.PopupEntity(Loc.GetString("carp-rift-max"), uid, Filter.Entities(uid));
                 return;
@@ -212,9 +228,27 @@ namespace Content.Server.Dragon
             var xform = Transform(uid);
 
             // Have to be on a grid fam
-            if (xform.GridUid == null)
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("carp-rift-anchor"), uid, Filter.Entities(uid));
+                return;
+            }
+
+            foreach (var (_, riftXform) in EntityQuery<DragonRiftComponent, TransformComponent>(true))
+            {
+                if (riftXform.Coordinates.InRange(EntityManager, xform.Coordinates, RiftRange))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, Filter.Entities(uid));
+                    return;
+                }
+            }
+
+            foreach (var tile in grid.GetTilesIntersecting(new Circle(xform.WorldPosition, RiftTileRadius), false))
+            {
+                if (!tile.IsSpace(_tileDef))
+                    continue;
+
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-space-proximity", ("proximity", RiftTileRadius)), uid, Filter.Entities(uid));
                 return;
             }
 
@@ -244,6 +278,13 @@ namespace Content.Server.Dragon
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
 
                 component.DragonStomach.EmptyContainer();
+
+                foreach (var rift in component.Rifts)
+                {
+                    QueueDel(rift);
+                }
+
+                component.Rifts.Clear();
             }
         }
 
