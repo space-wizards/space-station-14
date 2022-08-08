@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The China Lake and RPG no longer blow up in your face., type: Fix}
-  id: 1609
-  time: '2022-05-27T01:18:57.0000000+00:00'
 - author: moony
   changes:
   - {message: 'The singulo is now much, much more dangerous (it no longer bounces
@@ -2946,3 +2941,8 @@ Entries:
   - {message: Gas canisters can now be sold for money., type: Add}
   id: 2108
   time: '2022-08-08T01:49:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a ton of instruments., type: Add}
+  id: 2109
+  time: '2022-08-08T02:21:54.0000000+00:00'
