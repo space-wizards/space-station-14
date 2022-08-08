@@ -54,7 +54,6 @@ namespace Content.Server.Sports
                     return;
                 if (EntityManager.TryGetComponent<TransformComponent>(entity, out var transformComponent) && transformComponent.Anchored)
                     return;
-
                 if (!EntityManager.TryGetComponent<PhysicsComponent>(entity, out var physicsComponent))
                     return;
 
@@ -75,7 +74,7 @@ namespace Content.Server.Sports
                     var fireball = Spawn("ProjectileFireball", EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     EntityManager.DeleteEntity(entity);
                     _gunSystem.ShootProjectile(fireball, dir, args.User);
-                    _audioSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
+                    _audioSystem.Play("/Audio/Effects/baseball-hit-extreme.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
                 }
             }
         }

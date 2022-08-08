@@ -41,3 +41,5 @@ The following sounds are taken from TGstation github (licensed under CC by 3.0):
 pop.ogg licensed under CC0 1.0 by mirrorcult
 
 baseball-hit.ogg taken from https://freesound.org/people/CGEffex/sounds/93136/ and trimmed - CC BY 4.0
+
+baseball-hit-extreme.ogg taken from https://freesound.org/people/PhonosUPF/sounds/488991/ and edited CC0 1.0
