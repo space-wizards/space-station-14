@@ -63,7 +63,7 @@ namespace Content.Server.Sports
         {
             if (!TryComp<PitchingMachineComponent>(uid, out var component))
                 return;
-            if (!EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
+            if (!TryComp<ServerStorageComponent?>(component.Owner, out var storage))
                 return;
             if (storage.StoredEntities == null)
                 return;
@@ -73,7 +73,7 @@ namespace Content.Server.Sports
             var projectile = _robustRandom.Pick(storage.StoredEntities);
             _storageSystem.RemoveAndDrop(uid, projectile, storage);
 
-            var dir = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * _robustRandom.NextFloat(component.ShootDistanceMin, component.ShootDistanceMax);
+            var dir = Comp<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * _robustRandom.NextFloat(component.ShootDistanceMin, component.ShootDistanceMax);
 
             _audioSystem.Play(_audioSystem.GetSound(component.FireSound), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
             _throwingSystem.TryThrow(projectile, dir, 10f, uid);
@@ -104,7 +104,7 @@ namespace Content.Server.Sports
 
         public void TryEjectAllItems(PitchingMachineComponent component, EntityUid user)
         {
-            if (!EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
+            if (!TryComp<ServerStorageComponent?>(component.Owner, out var storage))
                 return;
             if (storage.StoredEntities == null)
                 return;

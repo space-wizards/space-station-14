@@ -30,7 +30,7 @@ namespace Content.Server.Sports
             if (currentTime < component.CooldownEnd)
                 return;
 
-            if (args.Target == null || args.Target == args.User || EntityManager.HasComponent<PitchingMachineComponent>(args.Target))
+            if (args.Target == null || args.Target == args.User || HasComp<PitchingMachineComponent>(args.Target))
                 return;
 
             component.LastUseTime = currentTime;

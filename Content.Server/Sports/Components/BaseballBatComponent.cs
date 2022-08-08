@@ -38,14 +38,6 @@ namespace Content.Server.Sports.Components
         public float WackStrengthMax {get; set; } = 15f;
 
         /// <summary>
-        /// If set to true then the bat can only hit items being thrown
-        /// In case someone wants to make a syndicate bat that can just wack items around or something
-        /// </summary>
-        [DataField("onlyHitThrown")]
-        [ViewVariables(VVAccess.ReadOnly)]
-        public bool OnlyHitThrown = true;
-
-        /// <summary>
         /// Sound that plays when you have a good hit.
         /// A good hit is when the item is going to go at least as far as the target
         /// </summary>

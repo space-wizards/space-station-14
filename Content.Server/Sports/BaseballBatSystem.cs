@@ -34,34 +34,27 @@ namespace Content.Server.Sports
         {
             args.Handled = true;
 
-            if (!EntityManager.TryGetComponent<MeleeWeaponComponent>(component.Owner, out var meleeWeaponComponent))
+            if (!TryComp<MeleeWeaponComponent>(component.Owner, out var meleeWeaponComponent))
                 return;
             if (_gameTiming.CurTime < meleeWeaponComponent.CooldownEnd)
                 return;
 
-            var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
+            var location = Comp<TransformComponent>(args.User).Coordinates;
             var dir = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
             var dirForceMultiplier = _random.NextFloat(component.WackForceMultiplierMin, component.WackForceMultiplierMax);
 
             var hitStrength = _random.NextFloat(component.WackStrengthMin, component.WackStrengthMax);
 
-            var transformQuery = GetEntityQuery<TransformComponent>();
             var physicsQuery = GetEntityQuery<PhysicsComponent>();
-            var itemQuery = GetEntityQuery<ItemComponent>();
             var thrownItemQuery = GetEntityQuery<ThrownItemComponent>();
-
 
             //The melee system uses a collision raycast but apparently that doesnt work with items so im using GetEntitiesInArc
             foreach (var entity in _entityLookupSystem.GetEntitiesInArc(location, meleeWeaponComponent.Range, dir.ToAngle(), meleeWeaponComponent.ArcWidth))
             {
-                //Checking to see if the items are actually throwable
-                if (!itemQuery.HasComponent(entity))
-                    return;
-                if (transformQuery.TryGetComponent(entity, out var transformComponent) && transformComponent.Anchored)
-                    return;
+                //Checking to see if the items are actually thrown
                 if (!physicsQuery.TryGetComponent(entity, out var physicsComponent))
-                    return;
-                if (!thrownItemQuery.HasComponent(entity) && component.OnlyHitThrown)
+                    continue;
+                if (!thrownItemQuery.HasComponent(entity))
                     continue;
 
                 var rand = _random.Next(1, component.FireballChance + 1); // Rolling to see if we'll get the fireball
@@ -75,8 +68,8 @@ namespace Content.Server.Sports
                 }
 
                 //just shoots a wizard fireball
-                var fireball = Spawn("ProjectileFireball", EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                EntityManager.DeleteEntity(entity);
+                var fireball = Spawn("ProjectileFireball", Comp<TransformComponent>(entity).Coordinates);
+                Del(entity);
                 _gunSystem.ShootProjectile(fireball, dir, args.User);
                 _audioSystem.Play("/Audio/Effects/baseball-hit-extreme.ogg", Filter.Pvs(args.User), args.User, AudioParams.Default);
             }
