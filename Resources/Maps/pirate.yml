@@ -5454,7 +5454,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 617
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: 1.6834307,2.5188363
     parent: 25

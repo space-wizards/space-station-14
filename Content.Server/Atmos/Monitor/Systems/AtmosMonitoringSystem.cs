@@ -139,7 +139,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 coords = coords.Offset(rotPos);
                 transform.Coordinates = coords;
 
-                appearance.SetData("offset", - new Vector2i(0, -1));
+                appearance.SetData(AtmosMonitorVisuals.Offset, - new Vector2i(0, -1));
 
                 transform.Anchored = true;
             }
@@ -192,7 +192,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (component.DisplayMaxAlarmInNet)
             {
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
-                    appearanceComponent.SetData("alarmType", component.HighestAlarmInNetwork);
+                    appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, component.HighestAlarmInNetwork);
 
                 if (component.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, component);
             }
@@ -227,10 +227,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
 
             if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
-            {
-                appearanceComponent.SetData("powered", args.Powered);
-                appearanceComponent.SetData("alarmType", component.LastAlarmState);
-            }
+                appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, component.LastAlarmState);
         }
 
         private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
@@ -341,7 +338,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!Resolve(uid, ref monitor)) return;
             monitor.LastAlarmState = state;
             if (EntityManager.TryGetComponent(monitor.Owner, out AppearanceComponent? appearanceComponent))
-                appearanceComponent.SetData("alarmType", monitor.LastAlarmState);
+                appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, monitor.LastAlarmState);
 
             BroadcastAlertPacket(monitor, alarms);
 

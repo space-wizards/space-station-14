@@ -306,7 +306,7 @@
   - type: AmbientSound
     sound:
       path: /Audio/Ambience/Objects/alarm.ogg
-    volume: -18
+    volume: -12
     range: 5
     enabled: false
   placement:

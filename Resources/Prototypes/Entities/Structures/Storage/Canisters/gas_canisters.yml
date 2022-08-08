@@ -80,6 +80,8 @@
           volume: 1
     - type: GasPortable
     - type: GasCanister
+    - type: StaticPrice
+      price: 1000
 
 - type: entity
   parent: GasCanister

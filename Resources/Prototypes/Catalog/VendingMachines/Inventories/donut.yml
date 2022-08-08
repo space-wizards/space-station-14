@@ -1,0 +1,11 @@
+- type: vendingMachineInventory
+  id: DonutInventory
+  name: Donut
+  spriteName: donut
+  startingInventory:
+    FoodDonutChocolate: 5
+    FoodDonutApple: 3
+    FoodDonutPink: 3
+    FoodDonutBungo: 3
+  emaggedInventory:
+    FoodDonutPoison: 1
