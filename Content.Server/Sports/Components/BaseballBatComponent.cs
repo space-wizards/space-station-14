@@ -14,7 +14,7 @@ namespace Content.Server.Sports.Components
         /// </summary>
         [DataField("wackForceMultiplierMin")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WackForceMultiplierMin {get; set; } = 0.7f;
+        public float WackForceMultiplierMin {get; set; } = 0.5f;
 
         /// <summary>
         /// The maximum amount of extra distance from that the item being hit will travel.
@@ -68,6 +68,6 @@ namespace Content.Server.Sports.Components
         /// </summary>
         [DataField("fireballChance")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public int FireballChance {get; set; } = 500;
+        public int FireballChance {get; set; } = 5000;
     }
 }

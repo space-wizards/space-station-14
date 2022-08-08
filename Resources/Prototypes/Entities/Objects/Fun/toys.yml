@@ -594,6 +594,8 @@
       state: baseball
     - type: Item
       size: 5
+    - type: BallTag
+    - type: ItemCooldown
 
 - type: entity
   parent: BaseItem

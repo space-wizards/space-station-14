@@ -23,7 +23,7 @@ namespace Content.Server.Sports.Components
         /// </summary>
         [DataField("shootSpeed")]
         [ViewVariables]
-        public float ShootCooldown = 10f;
+        public float ShootCooldown = 6f;
 
         [DataField("accumulatedFrametime")] public float AccumulatedFrametime;
 
