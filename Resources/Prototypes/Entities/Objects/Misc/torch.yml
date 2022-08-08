@@ -76,6 +76,3 @@
           startValue: 6.0
           endValue: 1.0
           property: Radius
-    - type: Tag
-      tags:
-        - Trash
