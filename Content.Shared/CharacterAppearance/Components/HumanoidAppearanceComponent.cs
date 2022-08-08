@@ -24,6 +24,9 @@ namespace Content.Shared.CharacterAppearance.Components
         [ViewVariables]
         public string Species { get; set; } = SpeciesManager.DefaultSpecies;
 
+        [ViewVariables]
+        public float Height { get; set; } = 1f;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public int Age { get; set; } = HumanoidCharacterProfile.MinimumAge;
 
@@ -59,18 +62,21 @@ namespace Content.Shared.CharacterAppearance.Components
         public Sex Sex { get; }
         public Gender Gender { get; }
         public string Species { get; }
+        public float Height { get; }
         public int Age { get; }
 
         public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance,
             Sex sex,
             Gender gender,
             string species,
+            float height,
             int age)
         {
             Appearance = appearance;
             Sex = sex;
             Gender = gender;
             Species = species;
+            Height = height;
             Age = age;
         }
     }

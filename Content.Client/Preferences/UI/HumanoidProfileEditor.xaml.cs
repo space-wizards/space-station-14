@@ -212,6 +212,15 @@ namespace Content.Client.Preferences.UI
 
             #endregion Species
 
+            #region Height
+
+            CHeight.OnValueChanged += args =>
+            {
+                SetHeight(args.Value);
+            };
+
+            #endregion Height
+
             #region Skin
 
             // 0 - 100, 0 being gold/yellowish and 100 being dark
@@ -706,6 +715,12 @@ namespace Content.Client.Preferences.UI
             IsDirty = true;
         }
 
+        private void SetHeight(float height)
+        {
+            Profile = Profile?.WithHeight(height);
+            IsDirty = true;
+        }
+
         private void SetName(string newName)
         {
             Profile = Profile?.WithName(newName);
@@ -864,6 +879,19 @@ namespace Content.Client.Preferences.UI
             CSpeciesButton.Select(_speciesList.FindIndex(x => x.ID == Profile.Species));
         }
 
+        private void UpdateHeightControls()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+
+            var species = _speciesList.Find(x => x.ID == Profile.Species)!;
+            CHeight.MaxValue = species.MaxSize;
+            CHeight.MinValue = species.MinSize;
+            CHeight.Value = Math.Clamp(Profile.Height, species.MinSize, species.MaxSize);
+        }
+
         private void UpdateGenderControls()
         {
             if (Profile == null)
@@ -952,6 +980,7 @@ namespace Content.Client.Preferences.UI
             UpdateGenderControls();
             UpdateSkinColor();
             UpdateSpecies();
+            UpdateHeightControls();
             UpdateClothingControls();
             UpdateBackpackControls();
             UpdateAgeEdit();

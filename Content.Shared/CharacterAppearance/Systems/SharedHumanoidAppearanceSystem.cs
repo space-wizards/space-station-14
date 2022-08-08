@@ -19,7 +19,7 @@ namespace Content.Shared.CharacterAppearance.Systems
         public void UpdateFromProfile(EntityUid uid, ICharacterProfile profile, HumanoidAppearanceComponent? appearance=null)
         {
             var humanoid = (HumanoidCharacterProfile) profile;
-            UpdateAppearance(uid, humanoid.Appearance, humanoid.Sex, humanoid.Gender, humanoid.Species, humanoid.Age, appearance);
+            UpdateAppearance(uid, humanoid.Appearance, humanoid.Sex, humanoid.Gender, humanoid.Species, humanoid.Height, humanoid.Age, appearance);
         }
 
         // The magic mirror otherwise wouldn't work. (it directly modifies the component server-side)
@@ -29,7 +29,7 @@ namespace Content.Shared.CharacterAppearance.Systems
             component.Dirty();
         }
 
-        private void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender, string species, int age, HumanoidAppearanceComponent? component = null)
+        private void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender, string species, float height, int age, HumanoidAppearanceComponent? component = null)
         {
             if (!Resolve(uid, ref component)) return;
 
@@ -37,6 +37,7 @@ namespace Content.Shared.CharacterAppearance.Systems
             component.Sex = sex;
             component.Gender = gender;
             component.Species = species;
+            component.Height = height;
             component.Age = age;
 
             if (EntityManager.TryGetComponent(uid, out GrammarComponent? g))
@@ -44,7 +45,7 @@ namespace Content.Shared.CharacterAppearance.Systems
 
             component.Dirty();
 
-            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender, species), true);
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender, species, height), true);
         }
 
         public void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, HumanoidAppearanceComponent? component = null)
@@ -55,7 +56,7 @@ namespace Content.Shared.CharacterAppearance.Systems
 
             component.Dirty();
 
-            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, component.Sex, component.Gender, component.Species), true);
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, component.Sex, component.Gender, component.Species, component.Height), true);
         }
 
         public void UpdateSexGender(EntityUid uid, Sex sex, Gender gender, HumanoidAppearanceComponent? component = null)
@@ -66,12 +67,12 @@ namespace Content.Shared.CharacterAppearance.Systems
             component.Gender = gender;
 
             component.Dirty();
-            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(component.Appearance, component.Sex, component.Gender, component.Species), true);
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(component.Appearance, component.Sex, component.Gender, component.Species, component.Height), true);
         }
 
         private void OnAppearanceGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
         {
-            args.State = new HumanoidAppearanceComponentState(component.Appearance, component.Sex, component.Gender, component.Species, component.Age);
+            args.State = new HumanoidAppearanceComponentState(component.Appearance, component.Sex, component.Gender, component.Species, component.Height, component.Age);
         }
 
         private void OnAppearanceHandleState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentHandleState args)
@@ -79,7 +80,7 @@ namespace Content.Shared.CharacterAppearance.Systems
             if (args.Current is not HumanoidAppearanceComponentState state)
                 return;
 
-            UpdateAppearance(uid, state.Appearance, state.Sex, state.Gender, state.Species, state.Age);
+            UpdateAppearance(uid, state.Appearance, state.Sex, state.Gender, state.Species, state.Height, state.Age);
         }
 
         // Scaffolding until Body is moved to ECS.
@@ -127,6 +128,7 @@ namespace Content.Shared.CharacterAppearance.Systems
             public Sex Sex { get; }
             public Gender Gender { get; }
             public string Species { get; }
+            public float Height { get; }
 
             public ChangedHumanoidAppearanceEvent(HumanoidCharacterProfile profile)
             {
@@ -134,14 +136,16 @@ namespace Content.Shared.CharacterAppearance.Systems
                 Sex = profile.Sex;
                 Gender = profile.Gender;
                 Species = profile.Species;
+                Height = profile.Height;
             }
 
-            public ChangedHumanoidAppearanceEvent(HumanoidCharacterAppearance appearance, Sex sex, Gender gender, string species)
+            public ChangedHumanoidAppearanceEvent(HumanoidCharacterAppearance appearance, Sex sex, Gender gender, string species, float height)
             {
                 Appearance = appearance;
                 Sex = sex;
                 Gender = gender;
                 Species = species;
+                Height = Height;
             }
         }
     }

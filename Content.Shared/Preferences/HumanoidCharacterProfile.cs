@@ -33,6 +33,7 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
+            float height,
             int age,
             Sex sex,
             Gender gender,
@@ -46,6 +47,7 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             Species = species;
+            Height = height;
             Age = age;
             Sex = sex;
             Gender = gender;
@@ -62,7 +64,7 @@ namespace Content.Shared.Preferences
             HumanoidCharacterProfile other,
             Dictionary<string, JobPriority> jobPriorities,
             List<string> antagPreferences)
-            : this(other.Name, other.FlavorText, other.Species, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
+            : this(other.Name, other.FlavorText, other.Species, other.Height, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
                 jobPriorities, other.PreferenceUnavailable, antagPreferences)
         {
         }
@@ -77,6 +79,7 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
+            float height,
             int age,
             Sex sex,
             Gender gender,
@@ -86,7 +89,7 @@ namespace Content.Shared.Preferences
             IReadOnlyDictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             IReadOnlyList<string> antagPreferences)
-            : this(name, flavortext, species, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
+            : this(name, flavortext, species, height, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
                 preferenceUnavailable, new List<string>(antagPreferences))
         {
         }
@@ -97,6 +100,7 @@ namespace Content.Shared.Preferences
                 "John Doe",
                 "",
                 SpeciesManager.DefaultSpecies,
+                1f,
                 MinimumAge,
                 Sex.Male,
                 Gender.Male,
@@ -117,14 +121,16 @@ namespace Content.Shared.Preferences
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var species = random.Pick(prototypeManager
-                .EnumeratePrototypes<SpeciesPrototype>().Where(x => x.RoundStart).ToArray()).ID;
+                .EnumeratePrototypes<SpeciesPrototype>().Where(x => x.RoundStart).ToArray());
+            var speciesName = species.ID;
+            var height = random.NextFloat(species.MinSize, species.MaxSize);
             var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-            var name = sex.GetName(species, prototypeManager, random);
+            var name = sex.GetName(speciesName, prototypeManager, random);
             var age = random.Next(MinimumAge, MaximumAge);
 
-            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
+            return new HumanoidCharacterProfile(name, "", speciesName, height, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
@@ -134,6 +140,7 @@ namespace Content.Shared.Preferences
         public string Name { get; private set; }
         public string FlavorText { get; private set; }
         public string Species { get; private set; }
+        public float Height { get; private set; }
         public int Age { get; private set; }
         public Sex Sex { get; private set; }
         public Gender Gender { get; private set; }
@@ -175,6 +182,10 @@ namespace Content.Shared.Preferences
             return new(this) { Species = species };
         }
 
+        public HumanoidCharacterProfile WithHeight(float height)
+        {
+            return new(this) {Height = height};
+        }
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {

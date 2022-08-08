@@ -3,6 +3,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.Species;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -58,6 +59,10 @@ namespace Content.Client.CharacterAppearance.Systems
                     }
                 }
             }
+
+            var species = _prototypeManager.Index<SpeciesPrototype>(component.Species);
+            var height = Math.Clamp(component.Height, species.MinSize, species.MaxSize);
+            sprite.Scale = new Vector2(height, height);
 
             // Like body parts some stuff may not have hair.
             if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hairLayer))

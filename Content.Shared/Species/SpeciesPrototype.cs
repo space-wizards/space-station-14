@@ -42,6 +42,18 @@ public sealed class SpeciesPrototype : IPrototype
     [DataField("skinColoration", required: true)]
     public SpeciesSkinColor SkinColoration { get; }
 
+    /// <summary>
+    /// The maximum size players can set their characters to.
+    /// </summary>
+    [DataField("maxSize")]
+    public float MaxSize { get; } = 1f;
+
+    /// <summary>
+    /// The minimum size players can set their characters to.
+    /// </summary>
+    [DataField("minSize")]
+    public float MinSize { get; } = 1f;
+
     [DataField("maleFirstNames")]
     public string MaleFirstNames { get; } = "names_first_male";
 
@@ -59,7 +71,7 @@ public enum SpeciesSkinColor : byte
 {
     HumanToned,
     Hues,
-    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range). 
+    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
 }
 
 public enum SpeciesNaming : byte

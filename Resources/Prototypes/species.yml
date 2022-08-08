@@ -5,6 +5,8 @@
   prototype: MobHuman
   dollPrototype: MobHumanDummy
   skinColoration: HumanToned
+  maxSize: 1.1
+  minSize: 0.9
 
 - type: species
   id: Dwarf
@@ -13,6 +15,8 @@
   prototype: MobDwarf
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
+  maxSize: 0.9
+  minSize: 0.7
 
 - type: species
   id: Reptilian
@@ -24,6 +28,8 @@
   maleFirstNames: names_reptilian_male
   femaleFirstNames: names_reptilian_female
   naming: FirstDashFirst
+  maxSize: 1.1
+  minSize: 0.9
 
 - type: species
   id: SlimePerson
@@ -32,6 +38,8 @@
   prototype: MobSlimePerson
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+  maxSize: 1.1
+  minSize: 0.9
 
 - type: species
   id: Skeleton

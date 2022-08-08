@@ -95,6 +95,13 @@
                                     <BoxContainer Name="CRgbSkinColorContainer" Visible="False" Orientation="Vertical" HorizontalExpand="True"></BoxContainer>
                                 </BoxContainer>
                             </prefUi:HighlightedContainer>
+                            <!-- Height -->
+                            <prefUi:HighlightedContainer>
+                                <BoxContainer HorizontalExpand="True" Orientation="Vertical">
+                                    <Label Text="{Loc 'humanoid-profile-editor-height-label'}" />
+                                    <Slider HorizontalExpand="True" Name="CHeight" MinValue="0.9" MaxValue="1.1" Value="1.0" />
+                                </BoxContainer>
+                            </prefUi:HighlightedContainer>
                             <!-- Hair -->
                             <prefUi:HighlightedContainer>
                                 <BoxContainer Orientation="Horizontal">
