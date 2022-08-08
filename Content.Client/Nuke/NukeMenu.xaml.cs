@@ -104,9 +104,9 @@ namespace Content.Client.Nuke
             SecondStatusLabel.Text = secondMsg;
 
             EjectButton.Disabled = !state.DiskInserted || state.Status == NukeStatus.ARMED;
-            AnchorButton.Disabled = !state.DiskInserted;
+            AnchorButton.Disabled = state.Status == NukeStatus.ARMED;
             AnchorButton.Pressed = state.IsAnchored;
-            ArmButton.Disabled = !state.AllowArm;
+            ArmButton.Disabled = !state.AllowArm || !state.IsAnchored;
         }
 
         private string VisualizeCode(int codeLength, int maxLength)

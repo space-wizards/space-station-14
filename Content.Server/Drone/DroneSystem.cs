@@ -20,9 +20,11 @@ using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Drone
 {
@@ -56,7 +58,7 @@ namespace Content.Server.Drone
             if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
                 args.Cancel();
 
-            if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
+            if (HasComp<ItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
             {
                 if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
                     args.Cancel();
@@ -111,7 +113,8 @@ namespace Content.Server.Drone
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
-            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid,
+                Filter.Pvs(uid), PopupType.Large);
 
             if (drone.AlreadyAwoken == false)
             {
@@ -182,7 +185,7 @@ namespace Content.Server.Drone
                     if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", entity)), uid, Filter.Entities(uid));
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, Filter.Entities(uid));
                     return true;
                 }
             }

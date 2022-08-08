@@ -16,6 +16,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -24,7 +25,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleSystem
 {
    /*
-    * Handles the escape shuttle + Centcomm.
+    * Handles the escape shuttle + CentCom.
     */
 
    [Dependency] private readonly IAdminLogManager _logger = default!;
@@ -37,8 +38,8 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly DockingSystem _dockSystem = default!;
    [Dependency] private readonly StationSystem _station = default!;
 
-   private MapId? _centcommMap;
-   private EntityUid? _centcomm;
+   private MapId? _centComMap;
+   private EntityUid? _centCom;
 
    /// <summary>
    /// Used for multiple shuttle spawn offsets.
@@ -95,7 +96,7 @@ public sealed partial class ShuttleSystem
            !TryComp<StationDataComponent>(_station.GetOwningStation(player.Value), out var stationData) ||
            !TryComp<ShuttleComponent>(stationData.EmergencyShuttle, out var shuttle)) return;
 
-       var targetGrid = GetLargestGrid(stationData);
+       var targetGrid = _station.GetLargestGrid(stationData);
        if (targetGrid == null) return;
        var config = GetDockingConfig(shuttle, targetGrid.Value);
        if (config == null) return;
@@ -131,7 +132,6 @@ public sealed partial class ShuttleSystem
        var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
 
        var validDockConfigs = new List<DockingConfig>();
-       SetPilotable(component, false);
 
        if (shuttleDocks.Count > 0)
        {
@@ -164,7 +164,7 @@ public sealed partial class ShuttleSystem
                    if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
                            dockedBounds).Any(o => o.GridEntityId != targetGrid))
                    {
-                       break;
+                       continue;
                    }
 
                    // Alright well the spawn is valid now to check how many we can connect
@@ -242,7 +242,7 @@ public sealed partial class ShuttleSystem
            !TryComp<TransformComponent>(stationData.EmergencyShuttle, out var xform) ||
            !TryComp<ShuttleComponent>(stationData.EmergencyShuttle, out var shuttle)) return;
 
-      var targetGrid = GetLargestGrid(stationData);
+      var targetGrid = _station.GetLargestGrid(stationData);
 
        // UHH GOOD LUCK
        if (targetGrid == null)
@@ -254,20 +254,49 @@ public sealed partial class ShuttleSystem
            return;
        }
 
-       if (TryHyperspaceDock(shuttle, targetGrid.Value))
+       var xformQuery = GetEntityQuery<TransformComponent>();
+
+       if (TryFTLDock(shuttle, targetGrid.Value))
        {
+           if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
+           {
+               var angle = GetAngle(xform, targetXform, xformQuery);
+               _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
+           }
+
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} docked with stations");
-           _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}")), playDefaultSound: false);
            // TODO: Need filter extensions or something don't blame me.
            SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
        }
        else
        {
+           if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
+           {
+               var angle = GetAngle(xform, targetXform, xformQuery);
+               _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-nearby", ("direction", angle.GetDir())), playDefaultSound: false);
+           }
+
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} unable to find a valid docking port for {ToPrettyString(stationUid.Value)}");
-           _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-nearby"), playDefaultSound: false);
            // TODO: Need filter extensions or something don't blame me.
            SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
        }
+   }
+
+   private Angle GetAngle(TransformComponent xform, TransformComponent targetXform, EntityQuery<TransformComponent> xformQuery)
+   {
+       var (shuttlePos, shuttleRot) = xform.GetWorldPositionRotation(xformQuery);
+       var (targetPos, targetRot) = targetXform.GetWorldPositionRotation(xformQuery);
+
+       var shuttleCOM = Robust.Shared.Physics.Transform.Mul(new Transform(shuttlePos, shuttleRot),
+           Comp<PhysicsComponent>(xform.Owner).LocalCenter);
+       var targetCOM = Robust.Shared.Physics.Transform.Mul(new Transform(targetPos, targetRot),
+           Comp<PhysicsComponent>(targetXform.Owner).LocalCenter);
+
+       var mapDiff = shuttleCOM - targetCOM;
+       var targetRotation = targetRot;
+       var angle = mapDiff.ToWorldAngle();
+       angle -= targetRotation;
+       return angle;
    }
 
    /// <summary>
@@ -338,8 +367,8 @@ public sealed partial class ShuttleSystem
        _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
        EmergencyShuttleArrived = true;
 
-       if (_centcommMap != null)
-         _mapManager.SetMapPaused(_centcommMap.Value, false);
+       if (_centComMap != null)
+         _mapManager.SetMapPaused(_centComMap.Value, false);
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
        {
@@ -347,27 +376,6 @@ public sealed partial class ShuttleSystem
        }
 
        _commsConsole.UpdateCommsConsoleInterface();
-   }
-
-   /// <summary>
-   /// Gets the largest member grid from a station.
-   /// </summary>
-   private EntityUid? GetLargestGrid(StationDataComponent component)
-   {
-       EntityUid? largestGrid = null;
-       Box2 largestBounds = new Box2();
-
-       foreach (var gridUid in component.Grids)
-       {
-           if (!TryComp<IMapGridComponent>(gridUid, out var grid)) continue;
-
-           if (grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared) continue;
-
-           largestBounds = grid.Grid.LocalAABB;
-           largestGrid = gridUid;
-       }
-
-       return largestGrid;
    }
 
    private List<DockingComponent> GetDocks(EntityUid uid)
@@ -386,22 +394,25 @@ public sealed partial class ShuttleSystem
 
    private void SetupEmergencyShuttle()
    {
-       if (!_emergencyShuttleEnabled || _centcommMap != null && _mapManager.MapExists(_centcommMap.Value)) return;
+       if (!_emergencyShuttleEnabled || _centComMap != null && _mapManager.MapExists(_centComMap.Value)) return;
 
-       _centcommMap = _mapManager.CreateMap();
-       _mapManager.SetMapPaused(_centcommMap.Value, true);
+       _centComMap = _mapManager.CreateMap();
+       _mapManager.SetMapPaused(_centComMap.Value, true);
 
-       // Load Centcomm
-       var centcommPath = _configManager.GetCVar(CCVars.CentcommMap);
+       // Load CentCom
+       var centComPath = _configManager.GetCVar(CCVars.CentcommMap);
 
-       if (!string.IsNullOrEmpty(centcommPath))
+       if (!string.IsNullOrEmpty(centComPath))
        {
-           var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/centcomm.yml");
-           _centcomm = centcomm;
+           var (_, centcomm) = _loader.LoadBlueprint(_centComMap.Value, "/Maps/centcomm.yml");
+           _centCom = centcomm;
+
+           if (_centCom != null)
+               AddFTLDestination(_centCom.Value, false);
        }
        else
        {
-           _sawmill.Info("No centcomm map found, skipping setup.");
+           _sawmill.Info("No CentCom map found, skipping setup.");
        }
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
@@ -412,12 +423,12 @@ public sealed partial class ShuttleSystem
 
    private void AddEmergencyShuttle(StationDataComponent component)
    {
-       if (!_emergencyShuttleEnabled || _centcommMap == null || component.EmergencyShuttle != null) return;
+       if (!_emergencyShuttleEnabled || _centComMap == null || component.EmergencyShuttle != null) return;
 
        // Load escape shuttle
-       var (_, shuttle) = _loader.LoadBlueprint(_centcommMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
+       var (_, shuttle) = _loader.LoadBlueprint(_centComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
        {
-           // Should be far enough... right? I'm too lazy to bounds check centcomm rn.
+           // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
            Offset = new Vector2(500f + _shuttleIndex, 0f)
        });
 
@@ -441,13 +452,13 @@ public sealed partial class ShuttleSystem
 
        _shuttleIndex = 0f;
 
-       if (_centcommMap == null || !_mapManager.MapExists(_centcommMap.Value))
+       if (_centComMap == null || !_mapManager.MapExists(_centComMap.Value))
        {
-           _centcommMap = null;
+           _centComMap = null;
            return;
        }
 
-       _mapManager.DeleteMap(_centcommMap.Value);
+       _mapManager.DeleteMap(_centComMap.Value);
    }
 
    /// <summary>

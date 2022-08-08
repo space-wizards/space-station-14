@@ -157,11 +157,6 @@ namespace Content.Server.Sandbox
             void UpgradeId(EntityUid id)
             {
                 _access.TrySetTags(id, allAccess);
-
-                if (TryComp<SpriteComponent>(id, out var sprite))
-                {
-                    sprite.LayerSetState(0, "gold");
-                }
             }
 
             EntityUid CreateFreshId()

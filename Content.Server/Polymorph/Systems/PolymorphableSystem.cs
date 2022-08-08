@@ -39,6 +39,7 @@ namespace Content.Server.Polymorph.Systems
             SubscribeLocalEvent<PolymorphableComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
 
+            InitializeCollide();
             InitializeMap();
         }
 
@@ -84,6 +85,10 @@ namespace Content.Server.Polymorph.Systems
             /// This is the big papa function. This handles the transformation, moving the old entity
             /// logic and conditions specified in the prototype, and everything else that may be needed.
             /// I am clinically insane - emo
+
+            // if it's already morphed, don't allow it again with this condition active.
+            if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(target))
+                return null;
 
             // mostly just for vehicles
             if (TryComp<BuckleComponent>(target, out var buckle))

@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.Cargo.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -23,6 +24,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
@@ -36,6 +38,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasCanisterComponent, InteractUsingEvent>(OnCanisterInteractUsing);
             SubscribeLocalEvent<GasCanisterComponent, EntInsertedIntoContainerMessage>(OnCanisterContainerInserted);
             SubscribeLocalEvent<GasCanisterComponent, EntRemovedFromContainerMessage>(OnCanisterContainerRemoved);
+            SubscribeLocalEvent<GasCanisterComponent, PriceCalculationEvent>(CalculateCanisterPrice);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterHoldingTankEjectMessage>(OnHoldingTankEjectMessage);
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleasePressureMessage>(OnCanisterChangeReleasePressure);
@@ -131,7 +134,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 && containerManager.TryGetContainer(canister.ContainerName, out var container))
                 impact = container.ContainedEntities.Count != 0 ? LogImpact.Medium : LogImpact.High;
 
-            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState}");
+            var containedGasDict = new Dictionary<Gas, float>();
+            var containedGasArray = Gas.GetValues(typeof(Gas));
+
+            for (int i = 0; i < containedGasArray.Length; i++)
+            {
+                containedGasDict.Add((Gas)i, canister.Air.Moles[i]);
+            }
+
+            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
 
             canister.ReleaseValve = args.Valve;
             DirtyUI(uid, canister);
@@ -150,18 +161,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (portNode.NodeGroup is PipeNet {NodeCount: > 1} net)
             {
-                var buffer = new GasMixture(net.Air.Volume + canister.Air.Volume);
-
-                _atmosphereSystem.Merge(buffer, net.Air);
-                _atmosphereSystem.Merge(buffer, canister.Air);
-
-                net.Air.Clear();
-                _atmosphereSystem.Merge(net.Air, buffer);
-                net.Air.Multiply(net.Air.Volume / buffer.Volume);
-
-                canister.Air.Clear();
-                _atmosphereSystem.Merge(canister.Air, buffer);
-                canister.Air.Multiply(canister.Air.Volume / buffer.Volume);
+                MixContainerWithPipeNet(canister.Air, net.Air);
             }
 
             ContainerManagerComponent? containerManager = null;
@@ -274,6 +274,46 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             appearance.SetData(GasCanisterVisuals.TankInserted, false);
+        }
+
+        /// <summary>
+        /// Mix air from a gas container into a pipe net.
+        /// Useful for anything that uses connector ports.
+        /// </summary>
+        public void MixContainerWithPipeNet(GasMixture containerAir, GasMixture pipeNetAir)
+        {
+            var buffer = new GasMixture(pipeNetAir.Volume + containerAir.Volume);
+
+            _atmosphereSystem.Merge(buffer, pipeNetAir);
+            _atmosphereSystem.Merge(buffer, containerAir);
+
+            pipeNetAir.Clear();
+            _atmosphereSystem.Merge(pipeNetAir, buffer);
+            pipeNetAir.Multiply(pipeNetAir.Volume / buffer.Volume);
+
+            containerAir.Clear();
+            _atmosphereSystem.Merge(containerAir, buffer);
+            containerAir.Multiply(containerAir.Volume / buffer.Volume);
+        }
+
+        private void CalculateCanisterPrice(EntityUid uid, GasCanisterComponent component, ref PriceCalculationEvent args)
+        {
+            float basePrice = 0; // moles of gas * price/mole
+            float totalMoles = 0; // total number of moles in can
+            float maxComponent = 0; // moles of the dominant gas
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                basePrice += component.Air.Moles[i] * _atmosphereSystem.GetGas(i).PricePerMole;
+                totalMoles += component.Air.Moles[i];
+                maxComponent = Math.Max(maxComponent, component.Air.Moles[i]);
+            }
+
+            // Pay more for gas canisters that are more pure
+            float purity = 1;
+            if (totalMoles > 0) {
+                purity = maxComponent / totalMoles;
+            }
+            args.Price += basePrice * purity;
         }
     }
 }

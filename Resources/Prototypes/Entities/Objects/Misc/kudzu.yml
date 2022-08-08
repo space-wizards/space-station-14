@@ -73,7 +73,7 @@
       growthResult: Kudzu
       chance: 1
     - type: GrowingKudzu
-      growthTickSkipChance: 0.1666
+      growthTickSkipChance: 0.6666
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2

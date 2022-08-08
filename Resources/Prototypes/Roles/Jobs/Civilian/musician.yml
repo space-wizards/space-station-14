@@ -1,9 +1,8 @@
 - type: job
   id: Musician
   name: job-name-musician
+  playTimeTracker: JobMusician
   startingGear: MusicianGear
-  departments:
-  - Civilian
   icon: "Musician"
   supervisors: job-supervisors-hire
   access:

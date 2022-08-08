@@ -27,7 +27,7 @@
       - state: match_unlit
   - type: Item
     sprite: Objects/Tools/matches.rsi
-    HeldPrefix: unlit
+    heldPrefix: unlit
     size: 1
   - type: Matchstick
     duration: 10
@@ -61,7 +61,7 @@
       - state: matchbox
   - type: Item
     sprite: Objects/Tools/matches.rsi
-    HeldPrefix: matchbox
+    heldPrefix: matchbox
   - type: StorageFill
     contents:
       - id: Matchstick

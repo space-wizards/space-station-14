@@ -1,10 +1,10 @@
-using System.Linq;
 using Content.Server.AI.Components;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 
 namespace Content.Server.AI.EntitySystems
 {
@@ -12,120 +12,108 @@ namespace Content.Server.AI.EntitySystems
     ///     Handles NPCs running every tick.
     /// </summary>
     [UsedImplicitly]
-    internal sealed class NPCSystem : EntitySystem
+    public sealed partial class NPCSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
-        /// <summary>
-        ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
-        /// </summary>
-        private readonly HashSet<AiControllerComponent> _awakeNPCs = new();
+        private ISawmill _sawmill = default!;
 
         /// <summary>
         /// Whether any NPCs are allowed to run at all.
         /// </summary>
         public bool Enabled { get; set; } = true;
 
+        private int _maxUpdates;
+
+        private int _count;
+
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<AiControllerComponent, MobStateChangedEvent>(OnMobStateChange);
-            SubscribeLocalEvent<AiControllerComponent, ComponentInit>(OnNPCInit);
-            SubscribeLocalEvent<AiControllerComponent, ComponentShutdown>(OnNPCShutdown);
+            // Makes physics etc debugging easier.
+#if DEBUG
+            _configurationManager.OverrideDefault(CCVars.NPCEnabled, false);
+#endif
+
+            _sawmill = Logger.GetSawmill("npc");
+            InitializeUtility();
+            SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
+            SubscribeLocalEvent<NPCComponent, ComponentInit>(OnNPCInit);
+            SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);
             _configurationManager.OnValueChanged(CCVars.NPCEnabled, SetEnabled, true);
-
-            var maxUpdates = _configurationManager.GetCVar(CCVars.NPCMaxUpdates);
-
-            if (maxUpdates < 1024)
-                _awakeNPCs.EnsureCapacity(maxUpdates);
+            _configurationManager.OnValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates, true);
         }
 
+        private void SetMaxUpdates(int obj) => _maxUpdates = obj;
         private void SetEnabled(bool value) => Enabled = value;
 
         public override void Shutdown()
         {
             base.Shutdown();
             _configurationManager.UnsubValueChanged(CCVars.NPCEnabled, SetEnabled);
+            _configurationManager.UnsubValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates);
         }
 
-        private void OnNPCInit(EntityUid uid, AiControllerComponent component, ComponentInit args)
+        private void OnNPCInit(EntityUid uid, NPCComponent component, ComponentInit args)
         {
-            if (!component.Awake) return;
-
-            _awakeNPCs.Add(component);
+            WakeNPC(component);
         }
 
-        private void OnNPCShutdown(EntityUid uid, AiControllerComponent component, ComponentShutdown args)
+        private void OnNPCShutdown(EntityUid uid, NPCComponent component, ComponentShutdown args)
         {
-            _awakeNPCs.Remove(component);
+            SleepNPC(component);
+        }
+
+        /// <summary>
+        /// Is the NPC awake and updating?
+        /// </summary>
+        public bool IsAwake(NPCComponent component, ActiveNPCComponent? active = null)
+        {
+            return Resolve(component.Owner, ref active, false);
         }
 
         /// <summary>
         /// Allows the NPC to actively be updated.
         /// </summary>
-        /// <param name="component"></param>
-        public void WakeNPC(AiControllerComponent component)
+        public void WakeNPC(NPCComponent component)
         {
-            _awakeNPCs.Add(component);
+            _sawmill.Debug($"Waking {ToPrettyString(component.Owner)}");
+            EnsureComp<ActiveNPCComponent>(component.Owner);
         }
 
         /// <summary>
         /// Stops the NPC from actively being updated.
         /// </summary>
-        /// <param name="component"></param>
-        public void SleepNPC(AiControllerComponent component)
+        public void SleepNPC(NPCComponent component)
         {
-            _awakeNPCs.Remove(component);
+            _sawmill.Debug($"Sleeping {ToPrettyString(component.Owner)}");
+            RemComp<ActiveNPCComponent>(component.Owner);
         }
 
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
+            base.Update(frameTime);
             if (!Enabled) return;
 
-            var cvarMaxUpdates = _configurationManager.GetCVar(CCVars.NPCMaxUpdates);
-
-            if (cvarMaxUpdates <= 0) return;
-
-            var npcs = _awakeNPCs.ToArray();
-            var startIndex = 0;
-
-            // If we're overcap we'll just update randomly so they all still at least do something
-            // Didn't randomise the array (even though it'd probably be better) because god damn that'd be expensive.
-            if (npcs.Length > cvarMaxUpdates)
-            {
-                startIndex = _robustRandom.Next(npcs.Length);
-            }
-
-            for (var i = 0; i < npcs.Length; i++)
-            {
-                MetaDataComponent? metadata = null;
-                var index = (i + startIndex) % npcs.Length;
-                var npc = npcs[index];
-
-                if (Deleted(npc.Owner, metadata))
-                    continue;
-
-                // Probably gets resolved in deleted for us already
-                if (Paused(npc.Owner, metadata))
-                    continue;
-
-                npc.Update(frameTime);
-            }
+            _count = 0;
+            UpdateUtility(frameTime);
         }
 
-        private void OnMobStateChange(EntityUid uid, AiControllerComponent component, MobStateChangedEvent args)
+        private void OnMobStateChange(EntityUid uid, NPCComponent component, MobStateChangedEvent args)
         {
             switch (args.CurrentMobState)
             {
                 case DamageState.Alive:
-                    component.Awake = true;
+                    WakeNPC(component);
                     break;
                 case DamageState.Critical:
                 case DamageState.Dead:
-                    component.Awake = false;
+                    SleepNPC(component);
                     break;
             }
         }

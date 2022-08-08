@@ -334,11 +334,13 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 return new(this, resourceCache, name, state);
             }
+
+            UpdateUI(false, false, false, false);
         }
 
         private bool StrengthSpinBoxValid(int n)
         {
-            return (n >= 0 && n <= 4 && !_blockSpinBox);
+            return (n >= 0 && n <= 3 && !_blockSpinBox);
         }
 
         private void PowerStateChanged(object? sender, ValueChangedEventArgs e)
@@ -358,13 +360,15 @@ namespace Content.Client.ParticleAccelerator.UI
                 case 3:
                     newState = ParticleAcceleratorPowerState.Level2;
                     break;
-                case 4:
-                    newState = ParticleAcceleratorPowerState.Level3;
-                    break;
+                // They can't reach this level anyway and I just want to fix the bugginess for now.
+                //case 4:
+                //    newState = ParticleAcceleratorPowerState.Level3;
+                //    break;
                 default:
                     return;
             }
 
+            _stateSpinBox.SetButtonDisabled(true);
             Owner.SendPowerStateMessage(newState);
         }
 

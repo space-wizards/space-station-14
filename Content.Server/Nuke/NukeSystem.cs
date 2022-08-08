@@ -13,7 +13,7 @@ using Content.Shared.Audio;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
-using Content.Shared.Sound;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -127,8 +127,8 @@ namespace Content.Server.Nuke
 
         private void CheckAnchorAttempt(EntityUid uid, NukeComponent component, BaseAnchoredAttemptEvent args)
         {
-            // cancel any anchor attempt without nuke disk
-            if (!component.DiskSlot.HasItem)
+            // cancel any anchor attempt if armed
+            if (component.Status == NukeStatus.ARMED)
             {
                 var msg = Loc.GetString("nuke-component-cant-anchor");
                 _popups.PopupEntity(msg, uid, Filter.Entities(args.User));
@@ -140,6 +140,13 @@ namespace Content.Server.Nuke
         private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateUserInterface(uid, component);
+
+            if (args.Anchored == false && component.Status == NukeStatus.ARMED && component.RemainingTime > component.DisarmDoafterLength)
+            {
+                // yes, this means technically if you can find a way to unanchor the nuke, you can disarm it
+                // without the doafter. but that takes some effort, and it won't allow you to disarm a nuke that can't be disarmed by the doafter.
+                DisarmBomb(uid, component);
+            }
         }
 
         #endregion
@@ -201,7 +208,7 @@ namespace Content.Server.Nuke
             if (!component.DiskSlot.HasItem)
                 return;
 
-            if (component.Status == NukeStatus.AWAIT_ARM)
+            if (component.Status == NukeStatus.AWAIT_ARM && Transform(uid).Anchored)
             {
                 ArmBomb(uid, component);
             }
@@ -418,18 +425,25 @@ namespace Content.Server.Nuke
             // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
             if (stationUid != null)
             {
-                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, false, true, true, true);
+                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
             }
+
+            var nukeXform = Transform(uid);
+            var pos =  nukeXform.MapPosition;
+            var x = (int) pos.X;
+            var y = (int) pos.Y;
+            var posText = $"({x}, {y})";
 
             // warn a crew
             var announcement = Loc.GetString("nuke-component-announcement-armed",
-                ("time", (int) component.RemainingTime));
+                ("time", (int) component.RemainingTime), ("position", posText));
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, Color.Red);
+            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, null, Color.Red);
 
             NukeArmedAudio(component);
 
             _itemSlots.SetLock(uid, component.DiskSlot, true);
+            nukeXform.Anchored = true;
             component.Status = NukeStatus.ARMED;
             UpdateUserInterface(uid, component);
         }
@@ -540,7 +554,8 @@ namespace Content.Server.Nuke
             };
 
             _doAfterSystem.DoAfter(doafter);
-            _popups.PopupEntity(Loc.GetString("nuke-component-doafter-warning"), user, Filter.Entities(user));
+            _popups.PopupEntity(Loc.GetString("nuke-component-doafter-warning"), user,
+                Filter.Entities(user), PopupType.LargeCaution);
         }
 
         private void NukeArmedAudio(NukeComponent component)
