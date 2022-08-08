@@ -74,6 +74,12 @@ namespace Content.Server.Dragon
                     }
                 }
 
+                // At max rifts
+                if (comp.Rifts.Count >= 3)
+                {
+                    continue;
+                }
+
                 // If there's an active rift don't accumulate.
                 if (comp.Rifts.Count > 0)
                 {
