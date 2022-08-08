@@ -1,16 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed some buttons in the lobby not being accessible on some resolutions.,
-    type: Fix}
-  id: 1611
-  time: '2022-05-27T02:33:12.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'The miniature gravity generator, bringing Newton''s finest to a station
-      near you.', type: Add}
-  id: 1612
-  time: '2022-05-27T03:08:05.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta's arrivals shuttle no longer has thrusters or an accessible power
@@ -2946,3 +2934,14 @@ Entries:
       spawn sound.', type: Add}
   id: 2110
   time: '2022-08-08T02:27:08.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'Red oxygen tanks were removed, red color is now reserved for nitrogen
+      tanks.', type: Remove}
+  id: 2111
+  time: '2022-08-08T02:28:52.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The game no longer has a 50% chance of calling a chair a chr., type: Fix}
+  id: 2112
+  time: '2022-08-08T02:29:31.0000000+00:00'
