@@ -3,6 +3,7 @@ using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
 using Content.Client.Flash;
+using Content.Client.GhostKick;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
@@ -10,6 +11,7 @@ using Content.Client.Launcher;
 using Content.Client.MainMenu;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation;
 using Content.Client.Screenshot;
@@ -62,6 +64,9 @@ namespace Content.Client.Entry
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
         [Dependency] private readonly NetworkResourceManager _networkResources = default!;
+        [Dependency] private readonly GhostKickManager _ghostKick = default!;
+        [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
         public override void Init()
         {
@@ -121,6 +126,9 @@ namespace Content.Client.Entry
             _changelogManager.Initialize();
             _rulesManager.Initialize();
             _viewportManager.Initialize();
+            _ghostKick.Initialize();
+            _extendedDisconnectInformation.Initialize();
+            _playTimeTracking.Initialize();
             _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
 
             //AUTOSCALING default Setup!

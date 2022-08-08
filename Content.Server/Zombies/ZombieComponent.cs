@@ -17,14 +17,14 @@ namespace Content.Server.Zombies
         /// <summary>
         /// The baseline infection chance you have if you are completely nude
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float MaxZombieInfectionChance = 0.75f;
 
         /// <summary>
         /// The minimum infection chance possible. This is simply to prevent
         /// being invincible by bundling up.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float MinZombieInfectionChance = 0.1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -33,19 +33,19 @@ namespace Content.Server.Zombies
         /// <summary>
         /// The skin color of the zombie
         /// </summary>
-        [ViewVariables, DataField("skinColor")]
+        [DataField("skinColor")]
         public Color SkinColor = new(0.45f, 0.51f, 0.29f);
 
         /// <summary>
         /// The eye color of the zombie
         /// </summary>
-        [ViewVariables, DataField("eyeColor")]
+        [DataField("eyeColor")]
         public Color EyeColor = new(0.96f, 0.13f, 0.24f);
 
         /// <summary>
         /// The attack arc of the zombie
         /// </summary>
-        [ViewVariables, DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<MeleeWeaponAnimationPrototype>))]
+        [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<MeleeWeaponAnimationPrototype>))]
         public string AttackArc = "claw";
 
         /// <summary>

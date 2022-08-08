@@ -1,8 +1,6 @@
 ﻿using Content.Shared.Audio;
-using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -12,7 +10,6 @@ namespace Content.Shared.Blocking;
 
 public sealed class BlockingUserSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly BlockingSystem _blockingSystem = default!;
 

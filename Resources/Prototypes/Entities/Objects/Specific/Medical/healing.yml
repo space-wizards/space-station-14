@@ -26,7 +26,7 @@
     damageContainer: Biological
     damage:
       groups:
-        Burn: -10 # 5 for each type in the group
+        Burn: -15 # 5 for each type in the group
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:

@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "packaged antimatter reactor crate"
   id: EngineAmeShielding
-  description: "9 parts for the main body of an antimatter reactor, or for expanding an existing one."
   icon:
     sprite: Objects/Power/AME/ame_part.rsi
     state: box
@@ -11,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: "antimatter containment jar crate"
   id: EngineAmeJar
-  description: "3 antimatter jars, for fuelling an antimatter reactor."
   icon:
     sprite: Objects/Power/AME/ame_jar.rsi
     state: jar
@@ -23,9 +19,7 @@
   group: market
 
 - type: cargoProduct
-  name: "antimatter control unit crate"
   id: EngineAmeControl
-  description: "The control unit of an antimatter reactor."
   icon:
     sprite: Structures/Power/Generation/ame.rsi
     state: control
@@ -35,9 +29,7 @@
   group: market
 
 - type: cargoProduct
-  name: "singularity generator crate"
   id: EngineSingularityGenerator
-  description: "Contains a singularity generator. The mother of the beast."
   icon:
     sprite: Structures/Power/Generation/Singularity/generator.rsi
     state: icon
@@ -47,9 +39,7 @@
   group: market
 
 - type: cargoProduct
-  name: "singularity containment crate"
   id: EngineSingularityContainment
-  description: "Contains a singularity containment field generator."
   icon:
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
@@ -71,9 +61,7 @@
 #  group: market
 
 - type: cargoProduct
-  name: "radiation collector crate"
   id: EngineSingularityCollector
-  description: "Contains a radiation collector. Safety first!"
   icon:
     sprite: Structures/Power/Generation/Singularity/collector.rsi
     state: ca_on
@@ -83,9 +71,7 @@
   group: market
 
 - type: cargoProduct
-  name: "particle accelerator crate"
   id: EngineParticleAccelerator
-  description: "Contains all the boards needed to construct a Particle Accelerator."
   icon:
     sprite: Structures/Power/Generation/PA/control_box.rsi
     state: boxc
@@ -93,11 +79,9 @@
   cost: 10000
   category: Engineering
   group: market
-  
+
 - type: cargoProduct
-  name: "solar assembly parts"
   id: EngineSolar
-  description: "Parts for constructing solar panels and trackers."
   icon:
     sprite: Objects/Power/solar_parts.rsi
     state: solar_assembly_parts

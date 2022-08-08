@@ -204,7 +204,7 @@ namespace Content.Server.Atmos.Miasma
         }
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
-            if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            if (TryComp<PerishableComponent>(args.Entity, out var perishable) && !Terminating(uid))
             {
                 ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);
