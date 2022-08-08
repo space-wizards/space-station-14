@@ -33,12 +33,9 @@ namespace Content.Client.Ghost
 
                 _ghostVisibility = value;
 
-                foreach (var ghost in EntityManager.GetAllComponents(typeof(GhostComponent), true))
+                foreach (var ghost in EntityQuery<GhostComponent, SpriteComponent>(true))
                 {
-                    if (EntityManager.TryGetComponent(ghost.Owner, out SpriteComponent? sprite))
-                    {
-                        sprite.Visible = value;
-                    }
+                    ghost.Item2.Visible = true;
                 }
             }
         }

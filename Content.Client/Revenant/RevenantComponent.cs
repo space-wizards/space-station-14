@@ -1,7 +1,9 @@
+using Content.Shared.Revenant;
+
 namespace Content.Client.Revenant;
 
 [RegisterComponent]
-public sealed class RevenantVisualsComponent : Component
+public sealed class RevenantComponent : SharedRevenantComponent
 {
     [DataField("state")]
     public string State = "idle";

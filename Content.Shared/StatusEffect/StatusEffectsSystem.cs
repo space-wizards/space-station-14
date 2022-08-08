@@ -449,7 +449,7 @@ namespace Content.Shared.StatusEffect
         }
     }
 
-    public sealed class StatusEffectAddedEvent : EntityEventArgs
+    public readonly struct StatusEffectAddedEvent
     {
         public readonly EntityUid Uid;
 
@@ -462,7 +462,7 @@ namespace Content.Shared.StatusEffect
         }
     }
 
-    public sealed class StatusEffectEndedEvent : EntityEventArgs
+    public readonly struct StatusEffectEndedEvent
     {
         public readonly EntityUid Uid;
 

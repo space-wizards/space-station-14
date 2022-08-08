@@ -39,7 +39,6 @@
   - type: Damageable
     damageContainer: Biological
   - type: Appearance
-  - type: RevenantVisuals
   - type: Examiner
   - type: NoSlip
   - type: Actions
@@ -64,6 +63,8 @@
     - key: enum.RevenantUiKey.Key
       type: RevenantBoundUserInterface
   - type: MobState
+  - type: Visibility
+    layer: 2 #ghost vis layer
 
 - type: entity
   parent: BaseItem

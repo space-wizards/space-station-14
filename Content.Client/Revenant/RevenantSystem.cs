@@ -3,9 +3,16 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Revenant;
 
-public sealed class RevenantVisualsSystem : VisualizerSystem<RevenantVisualsComponent>
+public sealed class RevenantSystem : EntitySystem
 {
-    protected override void OnAppearanceChange(EntityUid uid, RevenantVisualsComponent component, ref AppearanceChangeEvent args)
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<RevenantComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
+
+    private void OnAppearanceChange(EntityUid uid, RevenantComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;

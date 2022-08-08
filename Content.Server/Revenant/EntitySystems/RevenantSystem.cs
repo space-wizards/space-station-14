@@ -16,6 +16,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
 using Content.Server.Polymorph.Systems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Player;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Maps;
@@ -47,7 +48,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RevenantComponent, ComponentStartup>(OnInit);
+        SubscribeLocalEvent<RevenantComponent, ComponentStartup>(OnStartup);
 
         SubscribeLocalEvent<RevenantComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
@@ -58,7 +59,7 @@ public sealed partial class RevenantSystem : EntitySystem
         InitializeShop();
     }
 
-    private void OnInit(EntityUid uid, RevenantComponent component, ComponentStartup args)
+    private void OnStartup(EntityUid uid, RevenantComponent component, ComponentStartup args)
     {
         //update the icon
         ChangeEssenceAmount(uid, 0, component);
@@ -71,20 +72,13 @@ public sealed partial class RevenantSystem : EntitySystem
             app.SetData(RevenantVisuals.Stunned, false);
         }
 
-        //give ghost vis flags
-        var visibility = EntityManager.EnsureComponent<VisibilityComponent>(component.Owner);
-
-        _visibility.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
-        _visibility.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
-        _visibility.RefreshVisibility(visibility);
-
         //ghost vision
         if (TryComp(component.Owner, out EyeComponent? eye))
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
 
         //get all the abilities
         foreach (var listing in _proto.EnumeratePrototypes<RevenantStoreListingPrototype>())
-            component.Listings.Add(listing);
+            component.Listings.Add(listing, true);
 
         var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
         _action.AddAction(uid, shopaction, null);
@@ -115,7 +109,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Examiner == args.Examined)
         {
             args.PushMarkup(Loc.GetString("revenant-essence-amount",
-                ("current", Math.Round(component.Essence)), ("max", Math.Round(component.EssenceRegenCap))));
+                ("current", component.Essence.Int()), ("max", component.EssenceRegenCap.Int())));
         }
     }
 
@@ -128,7 +122,7 @@ public sealed partial class RevenantSystem : EntitySystem
         ChangeEssenceAmount(uid, essenceDamage, component);
     }
 
-    public bool ChangeEssenceAmount(EntityUid uid, float amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false)
+    public bool ChangeEssenceAmount(EntityUid uid, FixedPoint2 amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -139,9 +133,9 @@ public sealed partial class RevenantSystem : EntitySystem
         component.Essence += amount;
 
         if (regenCap)
-            component.Essence = Math.Min(component.Essence, component.EssenceRegenCap);
+            FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
 
-        _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Clamp(Math.Round(component.Essence / 10f), 0, 16));
+        _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Clamp(Math.Round(component.Essence.Float() / 10f), 0, 16));
 
         if (component.Essence <= 0)
         {
@@ -153,9 +147,9 @@ public sealed partial class RevenantSystem : EntitySystem
         return true;
     }
 
-    private bool CanUseAbility(EntityUid uid, RevenantComponent component, float abilityCost, Vector2 debuffs)
+    private bool TryUseAbility(EntityUid uid, RevenantComponent component, FixedPoint2 abilityCost, Vector2 debuffs)
     {
-        if (!ChangeEssenceAmount(uid, abilityCost, component, false))
+        if (component.Essence <= abilityCost)
         {
             _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, Filter.Entities(uid));
             return false;
@@ -171,6 +165,8 @@ public sealed partial class RevenantSystem : EntitySystem
             }
         }
 
+        ChangeEssenceAmount(uid, abilityCost, component, false);
+
         _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(debuffs.Y), false);
         _stun.TryStun(uid, TimeSpan.FromSeconds(debuffs.X), false);
 
@@ -185,13 +181,13 @@ public sealed partial class RevenantSystem : EntitySystem
         {
             rev.Accumulator += frameTime;
 
-            if (rev.Accumulator <= rev.TickDuration)
+            if (rev.Accumulator <= 1)
                 continue;
-            rev.Accumulator -= rev.TickDuration;
+            rev.Accumulator -= 1;
 
             if (rev.Essence < rev.EssenceRegenCap)
             {
-                ChangeEssenceAmount(rev.Owner, rev.EssencePerTick, rev, regenCap: true);
+                ChangeEssenceAmount(rev.Owner, rev.EssencePerSecond, rev, regenCap: true);
             }
         }
     }

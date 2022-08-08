@@ -24,6 +24,7 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.MobState;
 using Content.Server.Explosion.EntitySystems;
 using System.Linq;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -54,9 +55,6 @@ public sealed partial class RevenantSystem : EntitySystem
         if (target == args.User)
             return;
 
-        if (!_interact.InRangeUnobstructed(uid, target))
-            return;
-
         if (HasComp<PoweredLightComponent>(args.Target))
         {
             var ev = new GhostBooEvent();
@@ -66,6 +64,9 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         if (!HasComp<MobStateComponent>(target) || HasComp<RevenantComponent>(target))
+            return;
+
+        if (!_interact.InRangeUnobstructed(uid, target))
             return;
 
         args.Handled = true;
@@ -84,7 +85,8 @@ public sealed partial class RevenantSystem : EntitySystem
     public void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant, EssenceComponent essence)
     {
         _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, Filter.Entities(uid), PopupType.Medium);
-        var searchDoAfter = new DoAfterEventArgs(uid, revenant.SoulSearchDuration, target: target)
+        revenant.SoulSearchCancelToken = new();
+        var searchDoAfter = new DoAfterEventArgs(uid, revenant.SoulSearchDuration, revenant.SoulSearchCancelToken.Token, target)
         {
             BreakOnUserMove = true,
             DistanceThreshold = 2,
@@ -145,7 +147,7 @@ public sealed partial class RevenantSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("revenant-soul-begin-harvest", ("target", target)),
             target, Filter.Pvs(target), PopupType.Large);
 
-        CanUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
+        TryUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
         _doAfter.DoAfter(doAfter);
     }
 
@@ -164,22 +166,22 @@ public sealed partial class RevenantSystem : EntitySystem
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
         component.StolenEssence += essence.EssenceAmount;
 
+        if (!TryComp<MobStateComponent>(args.Target, out var mobstate))
+            return;
+
         if (_mobState.IsAlive(args.Target) || _mobState.IsCritical(args.Target))
         {
             _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, Filter.Entities(uid));
             component.EssenceRegenCap += component.MaxEssenceUpgradeAmount;
         }
 
-        if (TryComp<MobStateComponent>(args.Target, out var mobstate))
-        {
-            var damage = _mobState.GetEarliestDeadState(mobstate, 0)?.threshold;
-            if (damage != null)
-            {
-                DamageSpecifier dspec = new();
-                dspec.DamageDict.Add("Cellular", damage.Value);
-                _damage.TryChangeDamage(args.Target, dspec, true);
-            }
-        }
+        //KILL THEMMMM
+        var damage = _mobState.GetEarliestDeadState(mobstate, 0)?.threshold;
+        if (damage == null)
+            return;
+        DamageSpecifier dspec = new();
+        dspec.DamageDict.Add("Cellular", damage.Value);
+        _damage.TryChangeDamage(args.Target, dspec, true);
     }
 
     private void OnHarvestCancelled(EntityUid uid, RevenantComponent component, HarvestDoAfterCancelled args)
@@ -193,28 +195,38 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!CanUseAbility(uid, component, component.DefileCost, component.DefileDebuffs))
+        if (!TryUseAbility(uid, component, component.DefileCost, component.DefileDebuffs))
             return;
 
         args.Handled = true;
 
-        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Anchored);
+        //var coords = Transform(uid).Coordinates;
+        //var gridId = coords.GetGridUid(EntityManager);
+        var xform = Transform(uid);
+        if (!_mapManager.TryGetGrid(xform.GridUid, out var map))
+            return;
+        var tiles = map.GetTilesIntersecting(Box2.CenteredAround(xform.WorldPosition,
+            (component.DefileRadius*2, component.DefileRadius))).ToArray();
+
+        _random.Shuffle(tiles);
 
         for (var i = 0; i < component.DefileTilePryAmount; i++)
         {
-            //get random coordinates in the radius (technically a square but shut up)
-            var coords = new EntityCoordinates(uid,
-                (_random.NextFloat(-component.DefileRadius, component.DefileRadius), _random.NextFloat(-component.DefileRadius, component.DefileRadius)));
-
-            var gridID = coords.GetGridUid(EntityManager);
-            if (_mapManager.TryGetGrid(gridID, out var map))
-                map.GetTileRef(coords).PryTile(_mapManager, entityManager: EntityManager, robustRandom: _random);
+            if (!tiles.TryGetValue(i, out var value))
+                continue;
+            value.PryTile();
         }
+
+        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Anchored);
+        var tags = GetEntityQuery<TagComponent>();
+        var entityStorage = GetEntityQuery<EntityStorageComponent>();
+        var items = GetEntityQuery<ItemComponent>();
+        var lights = GetEntityQuery<PoweredLightComponent>();
 
         foreach (var ent in lookup)
         {
             //break windows
-            if (HasComp<TagComponent>(ent) && _tag.HasAnyTag(ent, "Window"))
+            if (tags.HasComponent(ent) && _tag.HasAnyTag(ent, "Window"))
             {
                 //hardcoded damage specifiers til i die.
                 var dspec = new DamageSpecifier();
@@ -222,17 +234,20 @@ public sealed partial class RevenantSystem : EntitySystem
                 _damage.TryChangeDamage(ent, dspec);
             }
 
+            if (!_random.Prob(component.DefileEffectChance))
+                continue;
+
             //randomly opens some lockers and such.
-            if (_random.Prob(component.DefileEffectChance) && HasComp<EntityStorageComponent>(ent))
-                _entityStorage.OpenStorage(ent);
+            if (entityStorage.TryGetComponent(ent, out var entstorecomp))
+                _entityStorage.OpenStorage(ent, entstorecomp);
 
             //chucks shit
-            if (_random.Prob(component.DefileEffectChance) && HasComp<ItemComponent>(ent) &&
+            if (items.HasComponent(ent) &&
                 TryComp<PhysicsComponent>(ent, out var phys) && phys.BodyType != BodyType.Static)
                 _throwing.TryThrow(ent, _random.NextAngle().ToWorldVec());
 
             //flicker lights
-            if (_random.Prob(component.DefileEffectChance) && HasComp<PoweredLightComponent>(ent))
+            if (lights.HasComponent(ent))
                 RaiseLocalEvent(ent, new GhostBooEvent());
         }
     }
@@ -242,13 +257,13 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!CanUseAbility(uid, component, component.OverloadCost, component.OverloadDebuffs))
+        if (!TryUseAbility(uid, component, component.OverloadCost, component.OverloadDebuffs))
             return;
 
         args.Handled = true;
 
         var poweredLights = GetEntityQuery<PoweredLightComponent>();
-        var lookup = _lookup.GetEntitiesInRange(uid, 5).ToArray();
+        var lookup = _lookup.GetEntitiesInRange(uid, component.OverloadRadius).ToArray();
 
         for (var i = 0; i < lookup.Length; i++)
         {
@@ -273,7 +288,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!CanUseAbility(uid, component, component.BlightCost, component.BlightDebuffs))
+        if (!TryUseAbility(uid, component, component.BlightCost, component.BlightDebuffs))
             return;
 
         args.Handled = true;
@@ -290,7 +305,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!CanUseAbility(uid, component, component.MalfuncitonCost, component.MalfunctionDebuffs))
+        if (!TryUseAbility(uid, component, component.MalfunctionCost, component.MalfunctionDebuffs))
             return;
 
         args.Handled = true;

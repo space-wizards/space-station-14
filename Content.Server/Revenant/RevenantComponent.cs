@@ -3,40 +3,38 @@ using Content.Shared.Revenant;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using System.Threading;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Revenant;
 
 [RegisterComponent]
-public sealed class RevenantComponent : Component
+public sealed class RevenantComponent : SharedRevenantComponent
 {
     /// <summary>
     /// The total amount of Essence the revenant has. Functions
     /// as health and is regenerated.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Essence = 75;
+    public FixedPoint2 Essence = 75;
 
     /// <summary>
     /// Used for purchasing shop items.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float StolenEssence = 0;
+    public FixedPoint2 StolenEssence = 0;
 
     /// <summary>
     /// The entity's current max amount of essence. Can be increased
     /// through harvesting player souls.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxEssence")]
-    public float EssenceRegenCap = 75;
+    public FixedPoint2 EssenceRegenCap = 75;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("damageToEssenceCoefficient")]
     public float DamageToEssenceCoefficient = 1f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("essencePerSecond")]
-    public float EssencePerTick = 0.25f;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("tickDuration")]
-    public float TickDuration = 1;
+    public FixedPoint2 EssencePerSecond = 0.25f;
 
     [ViewVariables]
     public float Accumulator = 0;
@@ -51,12 +49,13 @@ public sealed class RevenantComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("maxEssenceUpgradeAmount")]
     public float MaxEssenceUpgradeAmount = 10;
 
+    public CancellationTokenSource? SoulSearchCancelToken;
     public CancellationTokenSource? HarvestCancelToken;
     #endregion
 
     #region Defile Ability
     [ViewVariables(VVAccess.ReadWrite), DataField("defileCost")]
-    public float DefileCost = -30;
+    public FixedPoint2 DefileCost = -30;
 
     [ViewVariables, DataField("defileDebuffs")]
     public Vector2 DefileDebuffs = (1, 4);
@@ -73,7 +72,7 @@ public sealed class RevenantComponent : Component
 
     #region Overload Lights Ability
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadCost")]
-    public float OverloadCost = -40;
+    public FixedPoint2 OverloadCost = -40;
 
     [ViewVariables, DataField("overloadDebuffs")]
     public Vector2 OverloadDebuffs = (3, 8);
@@ -83,9 +82,6 @@ public sealed class RevenantComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadBreakChance")]
     public float OverloadBreakChance = 0.5f;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("overloadProjectileId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string OverloadProjectileId = "ProjectileElectricZap";
     #endregion
 
     #region Blight Ability
@@ -104,7 +100,7 @@ public sealed class RevenantComponent : Component
 
     #region Malfunction Ability
     [ViewVariables(VVAccess.ReadWrite), DataField("malfunctionCost")]
-    public float MalfuncitonCost = -60;
+    public FixedPoint2 MalfunctionCost = -60;
 
     [ViewVariables, DataField("malfunctionDebuffs")]
     public Vector2 MalfunctionDebuffs = (2, 8);
@@ -120,7 +116,7 @@ public sealed class RevenantComponent : Component
     /// Stores all of the currently unlockable abilities in the shop.
     /// </summary>
     [ViewVariables]
-    public List<RevenantStoreListingPrototype> Listings = new();
+    public Dictionary<RevenantStoreListingPrototype, bool> Listings = new ();
 }
 
 public sealed class SoulSearchDoAfterComplete : EntityEventArgs

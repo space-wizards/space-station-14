@@ -11,7 +11,7 @@ public sealed class EssenceComponent : Component
 
     /// <summary>
     /// Whether or not a revenant has searched this entity
-    /// for it's soul yet.
+    /// for its soul yet.
     /// </summary>
     [ViewVariables]
     public bool SearchComplete = false;

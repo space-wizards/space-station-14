@@ -18,7 +18,7 @@ public sealed partial class RevenantListingControl : Control
         RevenantItemName.Text = itemName;
         RevenantItemDescription.SetMessage(itemDescription);
 
-        RevenantItemBuyButton.Text = $"{itemPrice} Essence";
+        RevenantItemBuyButton.Text = Loc.GetString("revenant-user-interface-cost", ("price", itemPrice));
         RevenantItemBuyButton.Disabled = !canBuy;
 
         RevenantItemTexture.Texture = texture;

@@ -706,12 +706,8 @@ namespace Content.Shared.Interaction
 
             var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used, activateMsg, true);
-            if (activateMsg.Handled)
-            {
-                _useDelay.BeginDelay(used, delayComponent);
-                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
-                return true;
-            }
+            if (!activateMsg.Handled)
+                return false;
 
             _useDelay.BeginDelay(used, delayComponent);
             _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
