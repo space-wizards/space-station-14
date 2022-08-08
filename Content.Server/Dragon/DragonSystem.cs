@@ -33,6 +33,11 @@ namespace Content.Server.Dragon
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
+        /// <summary>
+        /// Minimum distance between 2 rifts allowed.
+        /// </summary>
+        private const int RiftRange = 15;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -121,7 +126,7 @@ namespace Content.Server.Dragon
 
                 comp.SpawnAccumulator += frameTime;
 
-                if (comp.State < DragonRiftState.AlmostFinished && comp.SpawnAccumulator > comp.MaxAccumulator / 2f)
+                if (comp.State < DragonRiftState.AlmostFinished && comp.Accumulator > comp.MaxAccumulator / 2f)
                 {
                     comp.State = DragonRiftState.AlmostFinished;
                     Dirty(comp);
@@ -218,6 +223,15 @@ namespace Content.Server.Dragon
                 return;
             }
 
+            foreach (var (_, riftXform) in EntityQuery<DragonRiftComponent, TransformComponent>(true))
+            {
+                if (riftXform.Coordinates.InRange(EntityManager, xform.Coordinates, RiftRange))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, Filter.Entities(uid));
+                    return;
+                }
+            }
+
             var carpUid = Spawn(component.RiftPrototype, xform.MapPosition);
             component.Rifts.Add(carpUid);
             Comp<DragonRiftComponent>(carpUid).Dragon = uid;
@@ -244,6 +258,13 @@ namespace Content.Server.Dragon
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
 
                 component.DragonStomach.EmptyContainer();
+
+                foreach (var rift in component.Rifts)
+                {
+                    QueueDel(rift);
+                }
+
+                component.Rifts.Clear();
             }
         }
 
