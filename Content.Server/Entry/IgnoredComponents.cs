@@ -16,6 +16,7 @@ namespace Content.Server.Entry
             "ClientEntitySpawner",
             "CharacterInfo",
             "HandheldGPS",
+            "CableVisualizer",
         };
     }
 }
