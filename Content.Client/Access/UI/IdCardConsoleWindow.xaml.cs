@@ -100,7 +100,7 @@ namespace Content.Client.Access.UI
                 return;
             }
 
-            JobTitleLineEdit.Text = job.Name;
+            JobTitleLineEdit.Text = Loc.GetString(job.Name);
 
             ClearAllAccess();
 
