@@ -43,10 +43,6 @@ namespace Content.Server.Radio.EntitySystems
 
             foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
             {
-                //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
-                //^ technically done, but now it's just done dependent on the implementation
-                //  radio is getting a refactor (apparently?) as of writing, so the implementer of that should just
-                //  account for identity at this point
                 radio.Receive(message, channel, speaker);
             }
 
