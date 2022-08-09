@@ -1,9 +1,11 @@
 using Content.Server.Popups;
 using Content.Server.Sports.Components;
+using Content.Server.Weapon.Ranged.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -35,10 +37,10 @@ namespace Content.Server.Sports
             {
                 ballLauncher.AccumulatedFrametime += frameTime;
 
-                if (!gunQuery.TryGetComponent(ballLauncher.Owner, out var gunComponent))
+                if (ballLauncher.AccumulatedFrametime < ballLauncher.CurrentLauncherCooldown)
                     continue;
 
-                if (ballLauncher.AccumulatedFrametime < ballLauncher.CurrentLauncherCooldown)
+                if (!gunQuery.TryGetComponent(ballLauncher.Owner, out var gunComponent))
                     continue;
 
                 ballLauncher.AccumulatedFrametime -= ballLauncher.CurrentLauncherCooldown;
@@ -85,13 +87,13 @@ namespace Content.Server.Sports
 
             var dir = Comp<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * _robustRandom.NextFloat(component.ShootDistanceMin, component.ShootDistanceMax);
 
+            //manually shooting it because guns can't seem to shoot themselves
             ammoProviderComponent.Entities.Remove(projectile);
             ammoProviderComponent.Container.Remove(projectile);
 
             _audioSystem.Play(_audioSystem.GetSound(component.FireSound), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
 
-            _throwingSystem.TryThrow(projectile, dir, 10f); //using throw because guncode is hardcoded to absolutely yeet it, impossible to actually hit with a bat
-
+            _throwingSystem.TryThrow(projectile, dir, 10f); //using throw because guncode shootprojectile is hardcoded to absolutely yeet it, impossible to actually hit with a bat
         }
 
         private void AddPowerVerb(EntityUid uid, PitchingMachineComponent component, GetVerbsEvent<AlternativeVerb> args)
