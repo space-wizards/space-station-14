@@ -77,7 +77,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                         coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
                     }
 
-                    EntityManager.RaisePredictiveEvent(new ReleaseAttackEvent()
+                    EntityManager.RaisePredictiveEvent(new ReleaseWideAttackEvent()
                     {
                         Weapon = weapon.Owner,
                         Coordinates = coordinates,
@@ -85,7 +85,6 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                 }
             }
 
-            weapon.WindupAccumulator = 0f;
             return;
         }
 
@@ -96,11 +95,9 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
             {
                 Weapon = weapon.Owner,
             });
-
-            EnsureComp<ActiveNewMeleeWeaponComponent>(weapon.Owner);
         }
 
-        weapon.WindupAccumulator = MathF.Min(weapon.WindupTime, weapon.WindupAccumulator + frameTime);
+        base.Update(frameTime);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

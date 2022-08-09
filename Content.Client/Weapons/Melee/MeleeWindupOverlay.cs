@@ -2,12 +2,14 @@ using Content.Shared.Weapon.Melee;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Melee;
 
 public sealed class MeleeWindupOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     private readonly SharedTransformSystem _transform;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -22,6 +24,8 @@ public sealed class MeleeWindupOverlay : Overlay
     {
         var handle = args.WorldHandle;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        var tickTime = (float) _timing.TickPeriod.TotalSeconds;
+        var tickFraction = _timing.TickFraction / (float) ushort.MaxValue * tickTime;
 
         foreach (var (_, comp) in _entManager.EntityQuery<ActiveNewMeleeWeaponComponent, NewMeleeWeaponComponent>())
         {
@@ -50,7 +54,9 @@ public sealed class MeleeWindupOverlay : Overlay
                 color = Color.White;
             }
 
-            handle.DrawCircle(worldPos, 0.25f * comp.WindupAccumulator / comp.WindupTime, color.WithAlpha(0.25f));
+            var lerp = fraction.Equals(0f) ? 0f : tickFraction;
+
+            handle.DrawCircle(worldPos, 0.25f * MathF.Min(1f, (comp.WindupAccumulator / comp.WindupTime + lerp)), color.WithAlpha(0.25f));
         }
     }
 }

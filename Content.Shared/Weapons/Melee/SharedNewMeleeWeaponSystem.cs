@@ -2,6 +2,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Content.Shared.Weapon.Melee;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -28,8 +29,19 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<NewMeleeWeaponComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeAllEvent<StartAttackEvent>(OnAttackStart);
-        SubscribeAllEvent<ReleaseAttackEvent>(OnReleaseAttack);
+        SubscribeAllEvent<ReleaseWideAttackEvent>(OnReleaseAttack);
         SubscribeAllEvent<StopAttackEvent>(StopAttack);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        // Anything that's active is assumed to be winding up so.
+        foreach (var (_, comp) in EntityQuery<ActiveNewMeleeWeaponComponent, NewMeleeWeaponComponent>())
+        {
+            comp.WindupAccumulator = MathF.Min(comp.WindupTime, comp.WindupAccumulator + frameTime);
+        }
     }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
@@ -46,11 +58,21 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     /// <summary>
     /// Raised when an attack hold is ended after windup.
     /// </summary>
-    [Serializable, NetSerializable]
-    protected sealed class ReleaseAttackEvent : EntityEventArgs
+    protected abstract class ReleaseAttackEvent : EntityEventArgs
     {
         public EntityUid Weapon;
+    }
+
+    [Serializable, NetSerializable]
+    protected sealed class ReleaseWideAttackEvent : ReleaseAttackEvent
+    {
         public EntityCoordinates Coordinates;
+    }
+
+    [Serializable, NetSerializable]
+    protected sealed class ReleasePreciseAttackEvent : ReleaseAttackEvent
+    {
+        public EntityUid Target;
     }
 
     /// <summary>
@@ -66,6 +88,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     protected sealed class NewMeleeWeaponComponentState : ComponentState
     {
         public TimeSpan NextAttack;
+        public float WindupAccumulator;
     }
 
     protected virtual void OnAttackStart(StartAttackEvent msg, EntitySessionEventArgs args)
@@ -80,10 +103,11 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         if (weapon?.Owner != msg.Weapon)
             return;
 
+        EnsureComp<ActiveNewMeleeWeaponComponent>(msg.Weapon);
         Sawmill.Debug($"Started weapon attack");
     }
 
-    protected virtual void OnReleaseAttack(ReleaseAttackEvent ev, EntitySessionEventArgs args)
+    protected virtual void OnReleaseAttack(ReleaseWideAttackEvent ev, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity == null ||
             !TryComp<NewMeleeWeaponComponent>(ev.Weapon, out var weapon))
@@ -98,10 +122,12 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
         Sawmill.Debug("Released weapon attack");
         AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, ev.Coordinates);
+        RemComp<ActiveNewMeleeWeaponComponent>(ev.Weapon);
     }
 
     protected virtual void StopAttack(StopAttackEvent ev, EntitySessionEventArgs args)
     {
+        // TODO: This is janky as fuck. Might need the status effect prediction PR.
         if (args.SenderSession.AttachedEntity == null ||
             !TryComp<NewMeleeWeaponComponent>(ev.Weapon, out var weapon))
         {
@@ -118,6 +144,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
         Sawmill.Debug("Stopped weapon attack");
         weapon.WindupAccumulator = 0f;
+        RemComp<ActiveNewMeleeWeaponComponent>(ev.Weapon);
         Dirty(weapon);
     }
 
@@ -126,6 +153,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         args.State = new NewMeleeWeaponComponentState
         {
             NextAttack = component.NextAttack,
+            WindupAccumulator = component.WindupAccumulator,
         };
     }
 
@@ -135,6 +163,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
             return;
 
         component.NextAttack = state.NextAttack;
+        component.WindupAccumulator = state.WindupAccumulator;
     }
 
     public NewMeleeWeaponComponent? GetWeapon(EntityUid entity)
@@ -157,25 +186,28 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
-    private void AttemptAttack(EntityUid user, NewMeleeWeaponComponent weapon, EntityCoordinates coordinates)
+    private void AttemptAttack(EntityUid user, NewMeleeWeaponComponent weapon, ReleaseAttackEvent attack)
     {
         if (weapon.WindupAccumulator < weapon.WindupTime)
             return;
-
-        var toCoordinates = coordinates;
-
-        if (TagSystem.HasTag(user, "GunsDisabled"))
-        {
-            Popup(Loc.GetString("gun-disabled"), user, user);
-            return;
-        }
-
-        var fromCoordinates = Transform(user).Coordinates;
 
         // Attack confirmed
         // TODO: Do the swing on client and server
         // TODO: If attack hits on server send the hit thing
         // TODO: Play the animation on shared (client for you + server for others)
+        List<EntityUid> hit;
+
+        switch (attack)
+        {
+            case ReleasePreciseAttackEvent precise:
+                break;
+            case ReleaseWideAttackEvent wide:
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+
+        // TODO: Play the hit effect on each hit entity lerped.
 
         weapon.WindupAccumulator = 0f;
         Dirty(weapon);
