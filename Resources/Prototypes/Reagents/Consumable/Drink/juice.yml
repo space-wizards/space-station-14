@@ -135,7 +135,7 @@
   physicalDesc: reagent-physical-desc-tropical
   color: yellow
 
-  - type: reagent
+- type: reagent
   id: JuicePlum
   name: reagent-name-juice-plum
   parent: BaseDrink
@@ -151,7 +151,7 @@
   physicalDesc: reagent-physical-desc-starchy
   color: "#302000"
 
-  - type: reagent
+- type: reagent
   id: JuicePumpkin
   name: reagent-name-juice-pumpkin
   parent: BaseDrink
