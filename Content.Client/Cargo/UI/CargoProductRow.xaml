@@ -23,5 +23,9 @@
                    MinSize="52 32"
                    Align="Right" />
         </PanelContainer>
+        <Tooltip Name="Description"
+            Access="Public"
+            Visible="False"
+            Text=""/>
     </BoxContainer>
 </PanelContainer>

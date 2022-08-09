@@ -6,6 +6,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -68,13 +69,20 @@ namespace Content.Client.Cargo.BUI
             {
                 if (args.Button.Parent is not CargoProductRow row)
                     return;
+
+                if (row.Description.Text != null)
+                {
+                    var Description = new RichTextLabel();
+                    _orderMenu.Description.SetMessage(row.Description.Text);
+                };
+
                 _product = row.Product;
-                _orderMenu.ProductName.Text = _product.Name;
-                _orderMenu.Description.Text = _product.Description;
-                _orderMenu.PointCost.Text = string._product.PointCost;
+                _orderMenu.ProductName.Text = row.ProductName.Text;
+                _orderMenu.PointCost.Text = row.PointCost.Text;
                 _orderMenu.Requester.Text = orderRequester;
                 _orderMenu.Reason.Text = "";
                 _orderMenu.Amount.Value = 1;
+//                 _orderMenu.SetHeight = _orderMenu.GetRequiredHeight() + _orderMenu.MinHeight;
                 _orderMenu.OpenCentered();
             };
             _menu.OnOrderApproved += ApproveOrder;
