@@ -89,7 +89,7 @@ entities:
     type: Transform
 - uid: 1
   components:
-  - index: 2
+  - index: 3
     type: Map
 - uid: 2
   components:
@@ -3207,17 +3207,33 @@ entities:
     parent: 2
     type: Transform
 - uid: 392
-  type: SheetPlasma10
+  type: OreProcessor
   components:
-  - pos: -7.604093,-12.262065
+  - pos: -0.5,-11.5
     parent: 2
     type: Transform
-  - canCollide: False
-    type: Physics
+  - materialWhiteList:
+    - Steel
+    - Glass
+    - Plasma
+    - Uranium
+    - Gold
+    - Silver
+    type: Lathe
+  - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 393
-  type: SheetPlasma10
+  type: SheetPlasma
   components:
-  - pos: -7.307218,-12.43394
+  - pos: -7.2798014,-12.437248
     parent: 2
     type: Transform
   - canCollide: False
@@ -4462,4 +4478,12 @@ entities:
       - port: Toggle
         uid: 64
     type: SignalTransmitter
+- uid: 529
+  type: SheetPlasma
+  components:
+  - pos: -7.6383953,-12.247375
+    parent: 2
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...

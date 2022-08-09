@@ -87,7 +87,7 @@ entities:
     type: Transform
 - uid: 2
   components:
-  - index: 2
+  - index: 4
     type: Map
 - uid: 3
   components:
@@ -740,6 +740,34 @@ entities:
   type: LockerSalvageSpecialistFilled
   components:
   - pos: 8.5,-4.5
+    parent: 3
+    type: Transform
+- uid: 57
+  type: SheetPlasma
+  components:
+  - pos: 8.522657,-3.0632906
+    parent: 3
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 58
+  type: SheetPlasma
+  components:
+  - pos: 8.607031,-3.4008436
+    parent: 3
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 59
+  type: LockerSalvageSpecialistFilled
+  components:
+  - pos: 4.5,-1.5
+    parent: 3
+    type: Transform
+- uid: 60
+  type: LockerSalvageSpecialistFilled
+  components:
+  - pos: 13.5,-2.5
     parent: 3
     type: Transform
 - uid: 97

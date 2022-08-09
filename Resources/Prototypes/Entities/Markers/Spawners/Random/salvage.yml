@@ -18,7 +18,6 @@
         - CrateSalvageRDParts
         - CrateSalvageChemistry
         - CrateFoodMRE
-        - AMEJar
         - CrateSalvagePlants
       rareChance: 0.2
       prototypes:

@@ -61,7 +61,10 @@
       - id: SalvageHumanCorpse
         prob: 0.1
       - id: LidSalami
-        prob: 0.1
+        prob: 0.01
+        # Handy (5%)
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.05
         # Interesting (1%)
         #  - Ammo
       - id: MagazineBoxMagnum
