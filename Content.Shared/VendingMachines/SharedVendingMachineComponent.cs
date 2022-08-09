@@ -8,112 +8,79 @@ namespace Content.Shared.VendingMachines
     [NetworkedComponent()]
     public abstract class SharedVendingMachineComponent : Component
     {
+        /// <summary>
+        /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
+        /// </summary>
         [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]
         public string PackPrototypeId = string.Empty;
 
-        public TimeSpan AnimationDuration = TimeSpan.Zero;
+        /// <summary>
+        /// Used by the server to determine how long the vending machine stays in the "Deny" state.
+        /// Used by the client to determine how long the deny animation should be played.
+        /// </summary>
+        [DataField("denyDelay")]
+        public float DenyDelay = 2.0f;
 
-        [ViewVariables] public List<VendingMachineInventoryEntry> Inventory = new();
-        [ViewVariables] public List<VendingMachineInventoryEntry> EmaggedInventory = new();
-        [ViewVariables] public List<VendingMachineInventoryEntry> ContrabandInventory = new();
+        /// <summary>
+        /// Used by the server to determine how long the vending machine stays in the "Eject" state.
+        /// The selected item is dispensed afer this delay.
+        /// Used by the client to determine how long the deny animation should be played.
+        /// </summary>
+        [DataField("ejectDelay")]
+        public float EjectDelay = 1.2f;
 
-        public List<VendingMachineInventoryEntry> AllInventory
-        {
-            get
-            {
-                var inventory = new List<VendingMachineInventoryEntry>(Inventory);
+        [ViewVariables]
+        public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
 
-                if (Emagged) inventory.AddRange(EmaggedInventory);
-                if (Contraband) inventory.AddRange(ContrabandInventory);
+        [ViewVariables]
+        public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
 
-                return inventory;
-            }
-        }
+        [ViewVariables]
+        public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
         public bool Emagged;
         public bool Contraband;
+    }
 
-        [Serializable, NetSerializable]
-        public enum VendingMachineVisuals
+    [Serializable, NetSerializable]
+    public sealed class VendingMachineInventoryEntry
+    {
+        [ViewVariables(VVAccess.ReadWrite)]
+        public InventoryType Type;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string ID;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public uint Amount;
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
         {
-            VisualState,
-            Inventory,
+            Type = type;
+            ID = id;
+            Amount = amount;
         }
+    }
 
-        [Serializable, NetSerializable]
-        public enum VendingMachineVisualState
-        {
-            Normal,
-            Off,
-            Broken,
-            Eject,
-            Deny,
-        }
+    [Serializable, NetSerializable]
+    public enum InventoryType : byte
+    {
+        Regular,
+        Emagged,
+        Contraband
+    }
 
-        [Serializable, NetSerializable]
-        public sealed class VendingMachineEjectMessage : BoundUserInterfaceMessage
-        {
-            public readonly InventoryType Type;
-            public readonly string ID;
-            public VendingMachineEjectMessage(InventoryType type, string id)
-            {
-                Type = type;
-                ID = id;
-            }
-        }
+    [Serializable, NetSerializable]
+    public enum VendingMachineVisuals
+    {
+        VisualState
+    }
 
-        [Serializable, NetSerializable]
-        public enum VendingMachineUiKey
-        {
-            Key,
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class InventorySyncRequestMessage : BoundUserInterfaceMessage
-        {
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class VendingMachineInventoryMessage : BoundUserInterfaceMessage
-        {
-            public readonly List<VendingMachineInventoryEntry> Inventory;
-            public VendingMachineInventoryMessage(List<VendingMachineInventoryEntry> inventory)
-            {
-                Inventory = inventory;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class VendingMachineInventoryEntry
-        {
-            [ViewVariables(VVAccess.ReadWrite)] public InventoryType Type;
-            [ViewVariables(VVAccess.ReadWrite)]
-            public string ID;
-            [ViewVariables(VVAccess.ReadWrite)]
-            public uint Amount;
-            public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
-            {
-                Type = type;
-                ID = id;
-                Amount = amount;
-            }
-        }
-        [Serializable, NetSerializable]
-        public enum VendingMachineWireStatus : byte
-        {
-            Power,
-            Access,
-            Advertisement,
-            Limiter
-        }
-
-        [Serializable, NetSerializable]
-        public enum InventoryType : byte
-        {
-            Regular,
-            Emagged,
-            Contraband
-        }
+    [Serializable, NetSerializable]
+    public enum VendingMachineVisualState
+    {
+        Normal,
+        Off,
+        Broken,
+        Eject,
+        Deny,
     }
 
     [Serializable, NetSerializable]

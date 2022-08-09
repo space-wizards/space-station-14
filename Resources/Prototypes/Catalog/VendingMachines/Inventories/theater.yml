@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: AutoDrobeInventory
-  name: AutoDrobe
-  spriteName: theater
   startingInventory:
     ClothingOuterWinterClown: 1
     ClothingOuterWinterMime: 1
