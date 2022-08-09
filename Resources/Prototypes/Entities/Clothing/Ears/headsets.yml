@@ -30,6 +30,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
+  - type: RadioKey
+    radioKeyPrototype: [cargo_cypherkey]
 
 - type: entity
   parent: ClothingHeadset
@@ -57,6 +59,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
+  - type: RadioKey
+    radioKeyPrototype: [com_cypherkey]
 
 - type: entity
   parent: ClothingHeadset
@@ -66,6 +70,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: RadioKey
+    radioKeyPrototype: [eng_cypherkey]
 
 - type: entity
   parent: ClothingHeadset
@@ -75,6 +81,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: RadioKey
+    radioKeyPrototype: [ce_cypherkey]
 
 - type: entity
   parent: ClothingHeadset
@@ -84,6 +92,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
+  - type: RadioKey
+    radioKeyPrototype: [med_cypherkey]
 
 - type: entity
   parent: ClothingHeadset
@@ -93,6 +103,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medicalscience.rsi
+  - type: RadioKey
+    radioKeyPrototype: [medsci_cypherkey]
 
 - type: entity
   parent: ClothingHeadset
@@ -111,6 +123,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/robotics.rsi
+  - type: RadioKey
+    radioKeyPrototype: [sci_cypherkey] # same key
 
 - type: entity
   parent: ClothingHeadset
@@ -120,6 +134,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
+  - type: RadioKey
+    radioKeyPrototype: [sci_cypherkey]
 
 - type: entity
   parent: ClothingHeadset
@@ -129,6 +145,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
+  - type: RadioKey
+    radioKeyPrototype: [rd_cypherkey]
 
 - type: entity
   parent: ClothingHeadset
@@ -138,6 +156,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
+  - type: RadioKey
+    radioKeyPrototype: [sec_cypherkey]
 
 - type: entity
   parent: ClothingHeadset

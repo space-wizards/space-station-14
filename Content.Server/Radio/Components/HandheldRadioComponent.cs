@@ -24,10 +24,10 @@ namespace Content.Server.Radio.Components
 
         // handheld radios and wall radios are slightly more configurable than headsets (UI CONFIGURABLE)
         [ViewVariables(VVAccess.ReadWrite)] [DataField("sendOn")]
-        public bool TXOn;
+        public bool Send;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("receiveOn")]
-        public bool RXOn;
+        public bool Receive;
 
         protected override void Initialize()
         {
@@ -40,7 +40,7 @@ namespace Content.Server.Radio.Components
         public bool CanListen(string message, EntityUid source, int? freq)
         {
             // iirc radios have one radiokey but its only being used for nukeop borgs for some reason. Didnt implement that here.
-            return TXOn &&
+            return Send &&
                    EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 

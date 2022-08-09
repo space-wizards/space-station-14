@@ -17,6 +17,71 @@
       heldPrefix: walkietalkie
 
 - type: entity
+  name: security radio encryption key
+  parent: BaseRadioKey
+  id: syn_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: sec_cypherkey
+
+- type: entity
+  name: security radio encryption key
+  parent: BaseRadioKey
+  id: sec_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: sec_cypherkey
+
+- type: entity
+  name: engineering radio encryption key
+  parent: BaseRadioKey
+  id: eng_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: eng_cypherkey
+
+- type: entity
+  name: medical radio encryption key
+  parent: BaseRadioKey
+  id: med_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: med_cypherkey
+
+- type: entity
+  name: science radio encryption key
+  parent: BaseRadioKey
+  id: sci_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: sci_cypherkey
+
+- type: entity
+  name: medical research radio encryption key
+  parent: BaseRadioKey
+  id: medsci_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: medsci_cypherkey
+
+- type: entity
+  name: supply radio encryption key
+  parent: BaseRadioKey
+  id: cargo_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: cargo_cypherkey
+
+# Command
+- type: entity
+  name: command radio encryption key
+  parent: BaseRadioKey
+  id: com_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: com_cypherkey
+
+- type: entity
   name: the captain's encryption key
   parent: BaseRadioKey
   id: cap_cypherkey
@@ -25,9 +90,25 @@
       radioKeyPrototype: cap_cypherkey
 
 - type: entity
+  name: the research director's encryption key
+  parent: BaseRadioKey
+  id: rd_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: rd_cypherkey
+
+- type: entity
   name: the head of security's encryption key
   parent: BaseRadioKey
   id: hos_cypherkey
   components:
     - type: RadioKeyHolder
       radioKeyPrototype: hos_cypherkey
+
+- type: entity
+  name: the chief engineer's encryption key
+  parent: BaseRadioKey
+  id: ce_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: ce_cypherkey

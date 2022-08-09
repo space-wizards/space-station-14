@@ -19,6 +19,7 @@
 - type: radioKey
   id: med_cypherkey
   frequency: [1355]
+
 - type: radioKey
   id: sci_cypherkey
   frequency: [1351]
@@ -26,6 +27,18 @@
 - type: radioKey
   id: medsci_cypherkey
   frequency: [1351, 1355]
+
+- type: radioKey
+  id: cargo_cypherkey
+  frequency: [1347]
+
+- type: radioKey
+  id: mining_cypherkey
+  frequency: [1347, 1351]
+
+- type: radioKey
+  id: srv_cypherkey
+  frequency: [1349]
 
 # Command
 
@@ -44,3 +57,19 @@
 - type: radioKey
   id: hos_cypherkey
   frequency: [1353, 1359]
+
+- type: radioKey
+  id: ce_cypherkey
+  frequency: [1353, 1357]
+
+- type: radioKey
+  id: cmo_cypherkey
+  frequency: [1353, 1355]
+
+- type: radioKey
+  id: hop_cypherkey
+  frequency: [1353, 1349, 1347]
+
+- type: radioKey
+  id: cent_cypherkey
+  frequency: [1337]

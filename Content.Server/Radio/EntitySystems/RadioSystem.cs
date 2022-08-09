@@ -54,13 +54,13 @@ public sealed partial class RadioSystem : EntitySystem
 
     private void OnRadioToggleTx(EntityUid uid, HandheldRadioComponent component, RadioToggleTX args)
     {
-        component.TXOn = !component.TXOn;
+        component.Send = !component.Send;
         UpdateUIState(uid, component);
     }
 
     private void OnRadioToggleRx(EntityUid uid, HandheldRadioComponent component, RadioToggleRX args)
     {
-        component.RXOn = !component.RXOn;
+        component.Receive = !component.Receive;
         UpdateUIState(uid, component);
     }
 
@@ -106,14 +106,15 @@ public sealed partial class RadioSystem : EntitySystem
 
     private void BroadcastMessage(MessagePacket packet, bool isLocal = false)
     {
-        if (packet.Channel == null) return;
+        if (packet.IsFinished || packet.Channel == null)
+            return;
         var channelint = (int) packet.Channel;
         var radio = new HashSet<IRadio>();
         if (isLocal)
         {
             foreach (var radioComponent in EntityManager.EntityQuery<HandheldRadioComponent>(true))
             {
-                if (!radioComponent.RXOn) continue;
+                if (!radioComponent.Receive) continue;
                 radio.Add(radioComponent);
             }
             radio.UnionWith(EntityManager.EntityQuery<IntrinsicRadioComponent>(true));
@@ -144,7 +145,7 @@ public sealed partial class RadioSystem : EntitySystem
                         continue;
                     }
                     if (hr.TryGetComponent(iRadio.Owner, out var hrcomponent) &&
-                        (!hrcomponent.RXOn || hrcomponent.Frequency != packet.Channel))
+                        (!hrcomponent.Receive || hrcomponent.Frequency != packet.Channel))
                     {
                         continue;
                     }
@@ -153,11 +154,14 @@ public sealed partial class RadioSystem : EntitySystem
                 {
                     continue;
                 }
-                // do the radiokey processing
-                if (rk.TryGetComponent(iRadio.Owner, out var radioKeyComponent)
-                    && (!radioKeyComponent.UnlockedFrequency.Contains(channelint)
-                        || radioKeyComponent.BlockedFrequency.Contains(channelint)))
-                    continue;
+                else
+                {
+                    // do the radiokey processing
+                    if (rk.TryGetComponent(iRadio.Owner, out var radioKeyComponent)
+                        && (!radioKeyComponent.UnlockedFrequency.Contains(channelint)
+                            || radioKeyComponent.BlockedFrequency.Contains(channelint)))
+                        continue;
+                }
 
                 radio.Add(iRadio);
             }
@@ -266,8 +270,8 @@ public sealed partial class RadioSystem : EntitySystem
         var freq = 1459;
         if (TryComp<HandheldRadioComponent>(uid, out var hrc))
         {
-            TX = hrc.TXOn;
-            RX = hrc.RXOn;
+            TX = hrc.Send;
+            RX = hrc.Receive;
             freq = hrc.Frequency;
         }
         if (TryComp<HeadsetComponent>(uid, out var hc))
@@ -295,7 +299,7 @@ public sealed partial class RadioSystem : EntitySystem
 }
 
 /// <summary>
-/// Used for logging in telecomms machine and also used for routing through simulated telecomms
+/// Used for routing through simulated telecomms. Also stops duped sends
 /// </summary>
 public sealed class MessagePacket
 {
