@@ -521,7 +521,7 @@ namespace Content.Server.Nuke
 
             RaiseLocalEvent(new NukeExplodedEvent()
             {
-                OwningStation = Transform(uid).GridUid,
+                OwningStation = transform.GridUid,
             });
 
             _soundSystem.StopStationEventMusic(component.Owner, StationEventMusicType.Nuke);

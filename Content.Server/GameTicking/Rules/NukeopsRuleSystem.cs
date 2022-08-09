@@ -123,8 +123,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
             else
             {
-                if (_targetStation != null
-                    && TryComp(_targetStation, out StationDataComponent? data))
+                if (TryComp(_targetStation, out StationDataComponent? data))
                 {
                     foreach (var grid in data.Grids)
                     {
@@ -195,14 +194,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        foreach (var nuke in EntityManager.EntityQuery<NukeComponent>())
+        foreach (var (nuke, nukeTransform) in EntityManager.EntityQuery<NukeComponent, TransformComponent>(true))
         {
             if (nuke.Status != NukeStatus.ARMED)
             {
                 continue;
             }
-
-            var nukeTransform = Transform(nuke.Owner);
 
             // UH OH
             if (nukeTransform.MapID == _shuttleSystem.CentComMap)
@@ -248,9 +245,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _winConditions.Add(WinCondition.SomeNukiesAlive);
 
         var diskAtCentCom = false;
-        foreach (var comp in EntityManager.EntityQuery<NukeDiskComponent>())
+        foreach (var (comp, transform) in EntityManager.EntityQuery<NukeDiskComponent, TransformComponent>())
         {
-            var diskMapId = Transform(comp.Owner).MapID;
+            var diskMapId = transform.MapID;
             diskAtCentCom = _shuttleSystem.CentComMap == diskMapId;
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
