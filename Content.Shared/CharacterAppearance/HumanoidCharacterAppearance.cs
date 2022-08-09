@@ -118,18 +118,20 @@ namespace Content.Shared.CharacterAppearance
 
         public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species)
         {
+            /*
             var mgr = IoCManager.Resolve<SpriteAccessoryManager>();
-            var hairStyleId = appearance.HairStyleId;
             if (!mgr.IsValidAccessoryInCategory(hairStyleId, SpriteAccessoryCategories.HumanHair))
             {
                 hairStyleId = HairStyles.DefaultHairStyle;
             }
 
-            var facialHairStyleId = appearance.FacialHairStyleId;
             if (!mgr.IsValidAccessoryInCategory(facialHairStyleId, SpriteAccessoryCategories.HumanFacialHair))
             {
                 facialHairStyleId = HairStyles.DefaultFacialHairStyle;
             }
+            */
+            var hairStyleId = appearance.HairStyleId;
+            var facialHairStyleId = appearance.FacialHairStyleId;
 
             var hairColor = ClampColor(appearance.HairColor);
             var facialHairColor = ClampColor(appearance.FacialHairColor);
