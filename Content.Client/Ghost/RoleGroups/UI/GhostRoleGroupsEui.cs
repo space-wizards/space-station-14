@@ -36,10 +36,9 @@ public sealed class GhostRoleGroupsEui : BaseEui
             _windowDeleteRoleGroup.OpenCentered();
         };
 
-        _window.OnGroupRelease += info =>
-        {
-            OnGroupRelease(info.GroupIdentifier);
-        };
+        _window.OnGroupActivate += info => OnGroupActivate(info.GroupIdentifier);
+
+        _window.OnGroupRelease += info => OnGroupRelease(info.GroupIdentifier);
 
         _window.OnEntityGoto += OnEntityGoto;
     }
@@ -68,6 +67,19 @@ public sealed class GhostRoleGroupsEui : BaseEui
 
             _consoleHost.ExecuteCommand(player.Session, startGhostRoleGroupCommand);
         _windowStartRoleGroup?.Close();
+    }
+
+    private void OnGroupActivate(uint identifier)
+    {
+        var player = _playerManager.LocalPlayer;
+        if (player == null)
+            return;
+
+        var activateGhostRoleGroupCommand =
+            $"ghostrolegroups activate " +
+            $"\"{CommandParsing.Escape(identifier.ToString())}\"";
+
+        _consoleHost.ExecuteCommand(player.Session, activateGhostRoleGroupCommand);
     }
 
     private void OnGroupDelete(uint identifier, bool deleteEntities)

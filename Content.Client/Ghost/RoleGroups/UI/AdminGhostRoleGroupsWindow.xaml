@@ -1,6 +1,6 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                Title="Manage Ghost Role Groups"
-               MinSize="375 275">
+               MinSize="432 275">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <Label Name="NoRoleGroupsMessage"
                Text="No ghost role groups have been created yet."

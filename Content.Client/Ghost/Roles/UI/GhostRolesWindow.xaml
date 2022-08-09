@@ -1,6 +1,6 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'ghost-roles-window-title'}"
-            MinSize="375 275">
+            MinSize="375 360">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right" Name="AdminControls" Margin="0 8">
             <Button Name="OpenGhostRoleGroupsButton" Text="Manage Role Groups" HorizontalAlignment="Right"/>

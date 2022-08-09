@@ -31,8 +31,6 @@ internal sealed class RoleGroupEntry
     public string RoleName { get; init; } = default!;
     public string RoleDescription { get; init; } = default!;
 
-    public bool IsActive;
-
     public GhostRoleGroupStatus Status = GhostRoleGroupStatus.Editing;
 
     public readonly List<EntityUid> Entities = new();
@@ -107,6 +105,7 @@ public sealed class GhostRoleManager
 
     private readonly Dictionary<string, GhostRolesEntry> _ghostRoleEntries = new();
     private readonly Dictionary<uint, RoleGroupEntry> _roleGroupEntries = new();
+    private readonly Dictionary<IPlayerSession, uint> _roleGroupActiveGroups = new();
 
 
 
@@ -243,9 +242,6 @@ public sealed class GhostRoleManager
         if (!_adminManager.IsAdmin(session))
             return null;
 
-        if (_roleGroupEntries.FirstOrNull(kv => kv.Value.Owner == session) != null)
-            return null;
-
         var identifier = NextIdentifier;
         var entry = new RoleGroupEntry()
         {
@@ -253,12 +249,12 @@ public sealed class GhostRoleManager
             Identifier = identifier,
             RoleName = name,
             RoleDescription = description,
-            IsActive = true,
         };
 
-        // TODO: Multiple role group entries per player.
-
         _roleGroupEntries.Add(identifier, entry);
+        if(!_roleGroupActiveGroups.ContainsKey(session))
+            _roleGroupActiveGroups.Add(session, entry.Identifier);
+
         SendGhostRoleGroupChangedEvent(false);
         return identifier;
     }
@@ -302,15 +298,33 @@ public sealed class GhostRoleManager
         }
     }
 
+    /// <summary>
+    ///     Set the players active role group. If the role group is already active, it is
+    ///     deactivated instead.
+    /// </summary>
+    /// <param name="player">The session to activate the role group for.</param>
+    /// <param name="identifier">The role group to activate/deactivate.</param>
+    public void ToggleActivePlayerRoleGroup(IPlayerSession player, uint identifier)
+    {
+        if (!_roleGroupEntries.ContainsKey(identifier))
+            return;
+
+        if (_roleGroupActiveGroups.Remove(player))
+        {
+            SendGhostRoleGroupChangedEvent();
+            return;
+        }
+
+        _roleGroupActiveGroups[player] = identifier;
+        SendGhostRoleGroupChangedEvent();
+    }
+
     public uint? GetActiveGhostRoleGroupOrNull(IPlayerSession session)
     {
         if (!_adminManager.IsAdmin(session))
             return null;
 
-        if (!_roleGroupEntries.TryFirstOrNull(kv => kv.Value.Owner == session && kv.Value.IsActive, out var entry))
-            return null;
-
-        return entry.Value.Value.Identifier;
+        return _roleGroupActiveGroups.GetValueOrDefault(session);
     }
 
     public bool AttachToGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity, GhostRoleComponent? component = null)
@@ -509,6 +523,7 @@ public sealed class GhostRoleManager
                 Description = entry.RoleDescription,
                 Status = entry.Status.ToString(),
                 Entities = entry.Entities.ToArray(),
+                IsActive = _roleGroupActiveGroups.GetValueOrDefault(session) == entry.Identifier,
             };
 
             groups.Add(group);

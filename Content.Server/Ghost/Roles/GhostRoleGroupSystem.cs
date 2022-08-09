@@ -175,6 +175,17 @@ open";
         EntitySystem.Get<GhostRoleGroupSystem>().OpenEui(player);
     }
 
+    private void ExecuteActivate(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    {
+        var manager = IoCManager.Resolve<GhostRoleManager>();
+        if (args.Length != 2)
+            return;
+
+        var identifier = uint.Parse(args[1]);
+
+        manager.ToggleActivePlayerRoleGroup(player, identifier);
+    }
+
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player == null)
@@ -195,6 +206,9 @@ open";
         {
             case "start":
                 ExecuteStart(shell, player, argStr, args);
+                break;
+            case "activate":
+                ExecuteActivate(shell, player, argStr, args);
                 break;
             case "release":
                 ExecuteRelease(shell, player, argStr, args);

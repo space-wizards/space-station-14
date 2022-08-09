@@ -8,6 +8,7 @@ namespace Content.Client.Ghost.RoleGroups.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AdminGhostRoleGroupsWindow : DefaultWindow
 {
+    public event Action<AdminGhostRoleGroupInfo>? OnGroupActivate;
     public event Action<AdminGhostRoleGroupInfo>? OnGroupRelease;
     public event Action<AdminGhostRoleGroupInfo>? OnGroupDelete;
     public event Action<EntityUid>? OnEntityGoto;
@@ -31,6 +32,7 @@ public sealed partial class AdminGhostRoleGroupsWindow : DefaultWindow
 
         var entry = new GhostRoleGroupAdminEntry(group);
 
+        entry.OnGroupActivate += OnGroupActivate;
         entry.OnGroupRelease += OnGroupRelease;
         entry.OnGroupDelete += OnGroupDelete;
         entry.OnEntityGoto += OnEntityGoto;

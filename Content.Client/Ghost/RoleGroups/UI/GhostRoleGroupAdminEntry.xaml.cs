@@ -10,6 +10,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
+    public event Action<AdminGhostRoleGroupInfo>? OnGroupActivate;
     public event Action<AdminGhostRoleGroupInfo>? OnGroupRelease;
     public event Action<AdminGhostRoleGroupInfo>? OnGroupDelete;
     public event Action<EntityUid>? OnEntityGoto;
@@ -35,6 +36,17 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
             NoRoleGroupEntitiesLabel.Visible = false;
         }
 
+        ActivateButton.Text = group.IsActive ? "Deactivate" : "Activate";
+        switch (group.IsActive)
+        {
+            case true:
+                ActivateButton.StyleClasses.Add("Caution");
+                break;
+            case false:
+                ActivateButton.StyleClasses.Remove("Caution");
+                break;
+        }
+
         ReleaseButton.Disabled = group.Status != "Editing";
         ReleaseButton.Text = group.Status switch
         {
@@ -44,6 +56,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
             _ => "Release"
         };
 
+        ActivateButton.OnPressed += _ => OnGroupActivate?.Invoke(group);
         ReleaseButton.OnPressed += _ => OnGroupRelease?.Invoke(group);
         DeleteButton.OnPressed += _ => OnGroupDelete?.Invoke(group);
         DetailsButton.OnPressed += _ =>
