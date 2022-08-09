@@ -260,8 +260,11 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
         }
 
+        var nameEv = new TransformSpeakerNameEvent(source, Name(source));
+        RaiseLocalEvent(source, nameEv);
+
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
-            ("entityName", Name(source)));
+            ("entityName", nameEv.Name));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
 
@@ -287,8 +290,12 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var transformSource = Transform(source);
         var sourceCoords = transformSource.Coordinates;
+
+        var nameEv = new TransformSpeakerNameEvent(source, Name(source));
+        RaiseLocalEvent(source, nameEv);
+
         var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", Name(source)));
+            ("entityName", nameEv.Name));
 
         var xforms = GetEntityQuery<TransformComponent>();
         var ghosts = GetEntityQuery<GhostComponent>();
@@ -506,6 +513,18 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     #endregion
+}
+
+public sealed class TransformSpeakerNameEvent : EntityEventArgs
+{
+    public EntityUid Sender;
+    public string Name;
+
+    public TransformSpeakerNameEvent(EntityUid sender, string name)
+    {
+        Sender = sender;
+        Name = name;
+    }
 }
 
 /// <summary>
