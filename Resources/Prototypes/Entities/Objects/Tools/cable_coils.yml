@@ -62,6 +62,19 @@
     count: 1
 
 - type: entity
+  parent: CableHVStack
+  id: CableHVStack10
+  suffix: 1
+  components:
+    - type: Sprite
+      state: coilhv-10
+    - type: Item
+      size: 10
+    - type: Stack
+      count: 10
+
+
+- type: entity
   parent: CableStack
   id: CableMVStack
   name: MV cable coil
@@ -98,6 +111,19 @@
     count: 1
 
 - type: entity
+  parent: CableMVStack
+  id: CableMVStack10
+  suffix: 10
+  components:
+    - type: Sprite
+      state: coilmv-10
+    - type: Item
+      size: 10
+    - type: Stack
+      count: 10
+
+
+- type: entity
   parent: CableStack
   id: CableApcStack
   name: LV cable coil
@@ -131,3 +157,15 @@
     size: 3
   - type: Stack
     count: 1
+
+- type: entity
+  parent: CableApcStack
+  id: CableApcStack10
+  suffix: 10
+  components:
+    - type: Sprite
+      state: coillv-10
+    - type: Item
+      size: 10
+    - type: Stack
+      count: 10

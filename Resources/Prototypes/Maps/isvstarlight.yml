@@ -4,6 +4,7 @@
   mapPath: /Maps/isvstarlight.yml
   minPlayers: 0
   fallback: true
+  votable: false
   stations:
     ISVStarlight:
       mapNameTemplate: '{0} Starlight {1}'
