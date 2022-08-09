@@ -5,9 +5,7 @@ instrument-component-finger-cramps-max-message = Your fingers cramp up from play
 instruments-component-menu-no-midi-support = MIDI support is currently not
                                              available on your system.
                                              If on Linux, you may need to install
-                                             FluidSynth or a development package
-                                             for FluidSynth.
+                                             'fluidsynth' or 'libfluidsynth-dev'.
 
 # SwappableInstrumentComponent
 swappable-instrument-component-style-set = Style set to "{$style}"
-
