@@ -51,7 +51,7 @@ public sealed class CryopodSystem : EntitySystem
         if (args.SpawnResult != null)
             return;
 
-        var validPods = EntityQuery<CryopodComponent>().Where(c => !IsOccupied(c) && c.DoSpawns && _stationSystem.GetOwningStation(c.Owner) == args.Station).ToArray();
+        var validPods = EntityQuery<CryopodComponent>().Where(c => c.DoSpawns && _stationSystem.GetOwningStation(c.Owner) == args.Station).ToArray();
         _random.Shuffle(validPods);
         if (!validPods.Any())
             return;
@@ -62,6 +62,8 @@ public sealed class CryopodSystem : EntitySystem
         args.SpawnResult = _stationSpawning.SpawnPlayerMob(xform.Coordinates, args.Job, args.HumanoidCharacterProfile, args.Station);
 
         _audio.PlayPvs(pod.ArrivalSound, pod.Owner);
+        if (IsOccupied(pod))
+            EjectBody(pod.Owner, pod);
         InsertBody(args.SpawnResult.Value, pod, true);
         var duration = _random.NextFloat(pod.InitialSleepDurationRange.X, pod.InitialSleepDurationRange.Y);
         _statusEffects.TryAddStatusEffect<SleepingComponent>(args.SpawnResult.Value, "ForcedSleep", TimeSpan.FromSeconds(duration), false);
