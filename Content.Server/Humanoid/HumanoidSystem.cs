@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
 using Content.Shared.Markings;
@@ -12,6 +13,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
     public override void Initialize()
     {
         SubscribeLocalEvent<HumanoidComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<HumanoidComponent, PlayerSpawnCompleteEvent>(OnSpawnComplete);
     }
 
     private void Synchronize(EntityUid uid, HumanoidComponent? component = null)
@@ -37,7 +39,27 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
     }
 
-    public void SetSkinColor(EntityUid uid, Color skinColor, HumanoidComponent? humanoid = null)
+    private void OnSpawnComplete(EntityUid uid, HumanoidComponent humanoid, PlayerSpawnCompleteEvent args)
+    {
+        humanoid.Species = args.Profile.Species;
+        humanoid.Sex = args.Profile.Sex;
+
+        SetSkinColor(uid, args.Profile.Appearance.SkinColor, false);
+
+        // Hair/facial hair - this may eventually be deprecated.
+
+        AddMarking(uid, args.Profile.Appearance.HairStyleId, args.Profile.Appearance.HairColor, false);
+        AddMarking(uid, args.Profile.Appearance.FacialHairStyleId, args.Profile.Appearance.FacialHairColor, false);
+
+        foreach (var marking in args.Profile.Appearance.Markings)
+        {
+            AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
+        }
+
+        Synchronize(uid);
+    }
+
+    public void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
         {
@@ -45,7 +67,9 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
 
         humanoid.SkinColor = skinColor;
-        Synchronize(uid, humanoid);
+
+        if (sync)
+            Synchronize(uid, humanoid);
     }
 
     public void ToggleHiddenLayer(EntityUid uid, HumanoidVisualLayers layer, HumanoidComponent? humanoid = null)
@@ -67,7 +91,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         Synchronize(uid, humanoid);
     }
 
-    public void AddMarking(EntityUid uid, string marking, Color? color = null, HumanoidComponent? humanoid = null)
+    public void AddMarking(EntityUid uid, string marking, Color? color = null, bool sync = true, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid)
             || !_markingManager.Markings().TryGetValue(marking, out var prototype))
@@ -85,6 +109,23 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
 
         humanoid.CurrentMarkings.AddBack(prototype.MarkingCategory, markingObject);
+
+        if (sync)
+            Synchronize(uid, humanoid);
+    }
+
+    public void AddMarking(EntityUid uid, string marking, IReadOnlyList<Color> colors, bool sync = true, HumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid)
+            || !_markingManager.Markings().TryGetValue(marking, out var prototype))
+        {
+            return;
+        }
+
+        humanoid.CurrentMarkings.AddBack(prototype.MarkingCategory, new Marking(marking, colors));
+
+        if (sync)
+            Synchronize(uid, humanoid);
     }
 
     /// <summary>
@@ -94,7 +135,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
     /// <param name="uid"></param>
     /// <param name="marking"></param>
     /// <param name="humanoid"></param>
-    public void RemoveMarking(EntityUid uid, string marking, HumanoidComponent? humanoid = null)
+    public void RemoveMarking(EntityUid uid, string marking, bool sync = true, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid)
             || !_markingManager.Markings().TryGetValue(marking, out var prototype))
@@ -103,5 +144,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
 
         humanoid.CurrentMarkings.Remove(prototype.MarkingCategory, marking);
+
+        if (sync)
+            Synchronize(uid, humanoid);
     }
 }
