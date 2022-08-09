@@ -237,7 +237,6 @@
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
       - id: WeaponPistolViper
-      - id: BaseUplinkRadio40TC
       - id: PinpointerNuclear
 
 
@@ -255,8 +254,8 @@
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
-      - id: BaseUplinkRadio40TC
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
       - id: WeaponPistolViper
       - id: PinpointerNuclear
+      - id: HandheldHealthAnalyzer

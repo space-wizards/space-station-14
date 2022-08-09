@@ -24,6 +24,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> RulesFile =
             CVarDef.Create("server.rules_file", "Rules.txt", CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        ///     A loc string for what should be displayed as the title on the Rules window.
+        /// </summary>
+        public static readonly CVarDef<string> RulesHeader =
+            CVarDef.Create("server.rules_header", "ui-rules-header", CVar.REPLICATED | CVar.SERVER);
+
         /*
          * Ambience
          */
@@ -177,6 +183,12 @@ namespace Content.Shared.CCVar
             GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
 
         /// <summary>
+        /// If roles should be restricted based on time.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =
@@ -246,7 +258,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("suspicion.min_traitors", 2);
 
         public static readonly CVarDef<int> SuspicionPlayersPerTraitor =
-            CVarDef.Create("suspicion.players_per_traitor", 5);
+            CVarDef.Create("suspicion.players_per_traitor", 6);
 
         public static readonly CVarDef<int> SuspicionStartingBalance =
             CVarDef.Create("suspicion.starting_balance", 20);
@@ -262,10 +274,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.min_players", 5);
 
         public static readonly CVarDef<int> TraitorMaxTraitors =
-            CVarDef.Create("traitor.max_traitors", 7);
+            CVarDef.Create("traitor.max_traitors", 12); // Assuming average server maxes somewhere from like 50-80 people
 
         public static readonly CVarDef<int> TraitorPlayersPerTraitor =
-            CVarDef.Create("traitor.players_per_traitor", 5);
+            CVarDef.Create("traitor.players_per_traitor", 10);
 
         public static readonly CVarDef<int> TraitorCodewordCount =
             CVarDef.Create("traitor.codeword_count", 4);
@@ -436,6 +448,14 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> EventMusicEnabled =
             CVarDef.Create("ambience.event_music_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
+         * Specific Sounds
+         */
+        // Round  end sound (APC Destroyed)
+        public static readonly CVarDef<bool> RestartSoundsEnabled =
+            CVarDef.Create("ambience.restart_sounds_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
 
         /*
          * Admin sounds
@@ -793,6 +813,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> WhitelistEnabled =
             CVarDef.Create("whitelist.enabled", false, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     The loc string to display as a disconnect reason when someone is not whitelisted.
+        /// </summary>
+        public static readonly CVarDef<string> WhitelistReason =
+            CVarDef.Create("whitelist.reason", "whitelist-not-whitelisted", CVar.SERVERONLY);
+
         /*
          * VOTE
          */
@@ -887,6 +913,12 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        /// Is the emergency shuttle allowed to be early launched.
+        /// </summary>
+        public static readonly CVarDef<bool> EmergencyEarlyLaunchAllowed =
+            CVarDef.Create("shuttle.emergency_early_launch_allowed", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// How long the emergency shuttle remains docked with the station, in seconds.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleDockTime =
@@ -922,6 +954,37 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> CentcommMap =
             CVarDef.Create("shuttle.centcomm_map", "/Maps/centcomm.yml", CVar.SERVERONLY);
+
+        /*
+         * Crew Manifests
+         */
+
+        /// <summary>
+        ///     Setting this allows a crew manifest to be opened from any window
+        ///     that has a crew manifest button, and sends the correct message.
+        ///     If this is false, only in-game entities will allow you to see
+        ///     the crew manifest, if the functionality is coded in.
+        ///     Having administrator priveledge ignores this, but will still
+        ///     hide the button in UI windows.
+        /// </summary>
+        public static readonly CVarDef<bool> CrewManifestWithoutEntity =
+            CVarDef.Create("crewmanifest.no_entity", true, CVar.REPLICATED);
+
+        /// <summary>
+        ///     Setting this allows the crew manifest to be viewed from 'unsecure'
+        ///     entities, such as the PDA.
+        /// </summary>
+        public static readonly CVarDef<bool> CrewManifestUnsecure =
+            CVarDef.Create("crewmanifest.unsecure", true, CVar.REPLICATED);
+
+        /// <summary>
+        ///     Dictates the order the crew manifest will appear in, in terms of its sections.
+        ///     Sections not in this list will appear at the end of the list, in no
+        ///     specific order.
+        /// </summary>
+        public static readonly CVarDef<string> CrewManifestOrdering =
+            CVarDef.Create("crewmanifest.ordering", "Command,Security,Science,Medical,Engineering,Cargo,Civilian,Unknown",
+                CVar.REPLICATED);
 
         /*
          * VIEWPORT
@@ -1077,5 +1140,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+
+        /*
+         * PLAYTIME
+         */
+
+
+        /// <summary>
+        /// Time between play time autosaves, in seconds.
+        /// </summary>
+        public static readonly CVarDef<float>
+            PlayTimeSaveInterval = CVarDef.Create("playtime.save_interval", 900f, CVar.SERVERONLY);
     }
 }

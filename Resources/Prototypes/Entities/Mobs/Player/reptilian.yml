@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: MobReptilianBase
+  parent: BaseMobReptilian
   id: MobReptilian
   description: A miserable pile of scales.
   components:

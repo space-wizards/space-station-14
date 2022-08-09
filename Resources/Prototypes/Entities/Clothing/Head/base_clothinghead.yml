@@ -4,7 +4,7 @@
   id: ClothingHeadBase
   components:
   - type: Clothing
-    Slots:
+    slots:
     - HEAD
   - type: Sprite
     state: icon
@@ -18,7 +18,7 @@
   id: HatBase
   components:
   - type: Clothing
-    Slots:
+    slots:
     - HEAD
   - type: Sprite
     state: icon
@@ -26,10 +26,46 @@
 - type: entity
   abstract: true
   parent: ClothingHeadBase
+  id: ClothingHeadLightBase
+  name: base helmet with light
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+      map: [ "light" ]
+  - type: Clothing
+    heldPrefix: off
+  - type: ToggleableLightVisuals
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 6
+    energy: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: Appearance
+    visuals:
+    - type: FlashLightVisualizer
+  - type: HandheldLight
+    addPrefix: true
+  - type: Battery
+    maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
-  - type: Clothing
+  - type: Item
     size: 10
   - type: PressureProtection
     highPressureMultiplier: 0.6
@@ -46,18 +82,21 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHeadBase
+  # No parent since we aren't actually an item.
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
   noSpawn: true
   components:
+  - type: Sprite
+    state: icon # default state used by most inheritors
+  - type: Clickable
+  - type: InteractionOutline
   - type: Clothing
     #Apparently the hardsuit helmet equip sound is from a walking mech?
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
-    size: 15
-    canPickup: false # attached to suit.
     quickEquip: false
+    slots: [ HEAD ]
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -94,7 +133,7 @@
       visible: false
       map: [ "light" ]
   - type: Clothing
-    HeldPrefix: off
+    equippedPrefix: off
   - type: ToggleableLightVisuals
   - type: PointLight
     netsync: false

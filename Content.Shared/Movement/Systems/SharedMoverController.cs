@@ -1,16 +1,12 @@
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
-using Content.Shared.MobState.Components;
 using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -18,9 +14,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -39,6 +35,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
         [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -221,9 +218,12 @@ namespace Content.Shared.Movement.Systems
                     TryGetSound(weightless, mover, mobMover, xform, out var sound))
                 {
                     var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingAddedVolumeMultiplier;
-                    SoundSystem.Play(sound.GetSound(),
-                        GetSoundPlayers(mover.Owner),
-                        mover.Owner, sound.Params.WithVolume(FootstepVolume * soundModifier));
+
+                    var audioParams = sound.Params
+                        .WithVolume(FootstepVolume * soundModifier)
+                        .WithVariation(sound.Params.Variation ?? FootstepVariation);
+
+                    _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
                 }
             }
 
@@ -311,9 +311,6 @@ namespace Content.Shared.Movement.Systems
             return false;
         }
 
-        // TODO: Predicted audio moment.
-        protected abstract Filter GetSoundPlayers(EntityUid mover);
-
         protected abstract bool CanSound();
 
         private bool TryGetSound(bool weightless, InputMoverComponent mover, MobMoverComponent mobMover, TransformComponent xform, [NotNullWhen(true)] out SoundSpecifier? sound)
@@ -358,10 +355,10 @@ namespace Content.Shared.Movement.Systems
                 return true;
             }
 
-            return TryGetFootstepSound(coordinates, out sound);
+            return TryGetFootstepSound(coordinates, shoes != null, out sound);
         }
 
-        private bool TryGetFootstepSound(EntityCoordinates coordinates, [NotNullWhen(true)] out SoundSpecifier? sound)
+        private bool TryGetFootstepSound(EntityCoordinates coordinates, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
             var gridUid = coordinates.GetGridUid(EntityManager);
@@ -396,7 +393,7 @@ namespace Content.Shared.Movement.Systems
 
             // Walking on a tile.
             var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            sound = def.FootstepSounds;
+            sound = haveShoes ? def.FootstepSounds : def.BarestepSounds;
             return sound != null;
         }
     }

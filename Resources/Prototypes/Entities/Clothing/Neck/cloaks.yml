@@ -2,11 +2,9 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakCap
   name: captain's cloak
-  description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other posessions, it sure is fancy.
+  description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other possessions, it sure is fancy.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/cap.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/cap.rsi
 
 - type: entity
@@ -17,8 +15,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hos.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/hos.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -28,9 +24,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ce.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/ce.rsi
-
 
 - type: entity
   parent: ClothingNeckBase
@@ -39,8 +32,6 @@
   description: A sterile blue cloak with a green cross, radiating with a sense of duty and willingness to help others.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/cmo.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/cmo.rsi
 
 - type: entity
@@ -51,8 +42,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/rd.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/rd.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -61,8 +50,6 @@
   description: A strong brown cloak with a reflective stripe, while not as fancy as others, it does show your managing skills.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/qm.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/qm.rsi
 
 - type: entity
@@ -73,18 +60,14 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hop.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/hop.rsi
 
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakHerald
-  name: Herald's cloak
+  name: herald's cloak
   description: An evil-looking red cloak with spikes on its shoulders.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/herald.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/herald.rsi
 
 - type: entity
@@ -95,9 +78,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakCapFormal
@@ -106,27 +87,30 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAdmin
-  name: Admin Cloak
+  name: admin cloak
   description: Weh!
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admin.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/admin.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakMiner
-  name: Miner's Cloak
+  name: miner's cloak
   description: Worn by the most skilled miners, for one who has moved mountains and filled valleys.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/miner.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/miner.rsi    
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakTrans
+  name: vampire cloak
+  description: Worn by high ranking vampires of the transylvanian society of vampires.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/trans.rsi

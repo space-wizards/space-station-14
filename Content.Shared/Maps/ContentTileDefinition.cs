@@ -1,9 +1,10 @@
-using Content.Shared.Sound;
+using Content.Shared.Atmos;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Content.Shared.Atmos;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Maps
 {
@@ -11,8 +12,8 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
-        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<ContentTileDefinition>))]
-        public string? Parent { get; private set; }
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
+        public string[]? Parents { get; private set; }
 
         [NeverPushInheritance]
         [AbstractDataFieldAttribute]
@@ -35,6 +36,8 @@ namespace Content.Shared.Maps
         [DataField("can_crowbar")] public bool CanCrowbar { get; private set; }
 
         [DataField("footstep_sounds")] public SoundSpecifier? FootstepSounds { get; }
+
+        [DataField("barestep_sounds")] public SoundSpecifier? BarestepSounds { get; } = new SoundCollectionSpecifier("barestep_hard");
 
         [DataField("friction")] public float Friction { get; set; }
 

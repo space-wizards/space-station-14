@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructureDynamic
+  parent: BaseStructure
   id: NuclearBomb
   name: nuclear fission explosive
   description: You probably shouldn't stick around to see if this is armed.
@@ -45,8 +45,9 @@
     interfaces:
     - key: enum.NukeUiKey.Key
       type: NukeBoundUserInterface
-  - type: StaticPrice # TODO: Make absolutely certain cargo cannot sell this, that'd be horrible. Presumably, add an export ban component so only the yarrs get a deal here.
+  - type: StaticPrice
     price: 50000 # YOU STOLE A NUCLEAR FISSION EXPLOSIVE?!
+  - type: CargoSellBlacklist
 
 - type: entity
   parent: NuclearBomb

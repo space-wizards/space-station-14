@@ -1,11 +1,11 @@
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
-using Content.Shared.Sound;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Content.Shared.Materials;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Lathe.Components
 {
@@ -29,13 +29,10 @@ namespace Content.Server.Lathe.Components
         /// <summary>
         /// The lathe's construction queue
         /// </summary>
-        [ViewVariables]
-        public Queue<LatheRecipePrototype> Queue { get; } = new();
-        /// <summary>
-        /// The recipe the lathe is currently producing
-        /// </summary>
-        [ViewVariables]
-        public LatheRecipePrototype? ProducingRecipe;
+        [DataField("queue", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
+        public List<string> Queue { get; } = new();
+        // TODO queue serializer.
+
         /// <summary>
         /// How long the inserting animation will play
         /// </summary>
@@ -46,12 +43,6 @@ namespace Content.Server.Lathe.Components
         /// </suummary>
         [DataField("insertionAccumulator")]
         public float InsertionAccumulator = 0f;
-        /// <summary>
-        /// Production accumulator for the production time.
-        /// </summary>
-        [ViewVariables]
-        [DataField("producingAccumulator")]
-        public float ProducingAccumulator = 0f;
 
         /// <summary>
         /// The sound that plays when the lathe is producing an item, if any

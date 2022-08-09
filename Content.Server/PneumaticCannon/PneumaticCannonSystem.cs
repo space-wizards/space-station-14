@@ -134,7 +134,7 @@ namespace Content.Server.PneumaticCannon
             // this overrides the ServerStorageComponent's insertion stuff because
             // it's not event-based yet and I can't cancel it, so tools and stuff
             // will modify mode/power then get put in anyway
-            if (EntityManager.TryGetComponent<SharedItemComponent?>(args.Used, out var item)
+            if (EntityManager.TryGetComponent<ItemComponent?>(args.Used, out var item)
                 && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
                 if (_storageSystem.CanInsert(component.Owner, args.Used, out _, storage))

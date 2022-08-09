@@ -1,9 +1,11 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -25,6 +27,7 @@ namespace Content.Server.Cuffs.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
@@ -261,7 +264,11 @@ namespace Content.Server.Cuffs.Components
                     }
                 }
 
-                CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
+                if (_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent))
+                    CanStillInteract = handsComponent.SortedHands.Count() > CuffedHandCount;
+                else
+                    CanStillInteract = true;
+
                 _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
                 var ev = new CuffedStateChangeEvent();
                 _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
@@ -276,6 +283,16 @@ namespace Content.Server.Cuffs.Components
                     {
                         user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message", ("otherName", user)));
                     }
+
+                    if (user == Owner)
+                    {
+                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entMan.ToPrettyString(user):player} has successfully uncuffed themselves");
+                    }
+                    else
+                    {
+                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entMan.ToPrettyString(user):player} has successfully uncuffed {_entMan.ToPrettyString(Owner):player}");
+                    }
+
                 }
                 else
                 {

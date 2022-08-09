@@ -15,10 +15,11 @@
   - type: Icon
     sprite: Objects/Devices/pda.rsi
     state: pda
+  - type: Item
+    size: 10
   - type: Clothing
     quickEquip: false
-    size: 10
-    Slots:
+    slots:
     - idcard
     - Belt
   - type: UnpoweredFlashlight
@@ -64,6 +65,8 @@
       whitelist:
         components:
         - IdCard
+  - type: CrewManifestViewer
+    unsecure: true
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -178,7 +181,7 @@
   - type: PDA
     id: ClownIDCard
     penSlot:
-      startingItem: CrayonOrange # no pink crayon?!? 
+      startingItem: CrayonOrange # no pink crayon?!?
       # ^ Still unacceptable.
       ejectSound: /Audio/Items/bikehorn.ogg
       priority: -1
@@ -661,6 +664,21 @@
         state: pda-reporter
   - type: Icon
     state: pda-reporter
+
+- type: entity
+  parent: BasePDA
+  id: BoxerPDA
+  name: boxer PDA
+  description: Float like a butterfly, ringtone like a bee.
+  components:
+  - type: PDA
+    id: BoxerIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-boxer
+  - type: Icon
+    state: pda-boxer
 
 - type: entity
   parent: BasePDA

@@ -1,5 +1,5 @@
 - type: construction
-  name: Modular Grenade
+  name: modular grenade
   id: ModularGrenadeRecipe
   graph: ModularGrenadeGraph
   startNode: start
@@ -12,7 +12,7 @@
   objectType: Item
 
 - type: construction
-  name: Modular Mine
+  name: modular mine
   id: ModularMineRecipe
   graph: ModularMineGraph
   startNode: start

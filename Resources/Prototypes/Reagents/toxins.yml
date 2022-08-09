@@ -45,6 +45,37 @@
 
 
 - type: reagent
+  id: ChloralHydrate
+  name: reagent-name-chloral-hydrate
+  group: Toxins
+  desc: reagent-desc-chloral-hydrate
+  color: "#000067"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 15
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 20
+        damage:
+          types:
+            Poison: 1.5
+
+- type: reagent
   id: Mold
   name: reagent-name-mold
   group: Toxins
@@ -69,6 +100,8 @@
           - SpaceFlu
           - BirdFlew
           - Plague
+          - TongueTwister
+          - MemeticAmirmir
 
 - type: reagent
   id: PolytrinicAcid
@@ -389,3 +422,22 @@
           type: Animal
         reagent: Protein
         amount: 0.5
+
+- type: reagent
+  id: Allicin
+  name: reagent-name-allicin
+  desc: reagent-desc-allicin
+  physicalDesc: reagent-physical-desc-pungent
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 6

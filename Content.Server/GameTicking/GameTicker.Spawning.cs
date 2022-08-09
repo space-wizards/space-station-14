@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
-using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -18,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Job = Content.Server.Roles.Job;
 
 namespace Content.Server.GameTicking
 {
@@ -27,6 +27,12 @@ namespace Content.Server.GameTicking
 
         [ViewVariables(VVAccess.ReadWrite), Obsolete("Due for removal when observer spawning is refactored.")]
         private EntityCoordinates _spawnPoint;
+
+        /// <summary>
+        /// How many players have joined the round through normal methods.
+        /// Useful for game rules to look at. Doesn't count observers, people in lobby, etc.
+        /// </summary>
+        public int PlayersJoinedRoundNormally = 0;
 
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
@@ -86,7 +92,10 @@ namespace Content.Server.GameTicking
             var character = GetPlayerProfile(player);
 
             var jobBans = _roleBanManager.GetJobBans(player.UserId);
-            if (jobBans == null || (jobId != null && jobBans.Contains(jobId)))
+            if (jobBans == null || jobId != null && jobBans.Contains(jobId))
+                return;
+
+            if (jobId != null && !_playTimeTrackings.IsAllowed(player, jobId))
                 return;
             SpawnPlayer(player, character, station, jobId, lateJoin);
         }
@@ -124,9 +133,18 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            // Figure out job restrictions
+            var restrictedRoles = new HashSet<string>();
+
+            var getDisallowed = _playTimeTrackings.GetDisallowedJobs(player);
+            restrictedRoles.UnionWith(getDisallowed);
+
+            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            if(jobBans != null) restrictedRoles.UnionWith(jobBans);
+
             // Pick best job best on prefs.
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station, character.JobPriorities, true,
-                _roleBanManager.GetJobBans(player.UserId));
+                restrictedRoles);
             // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {
@@ -154,6 +172,8 @@ namespace Content.Server.GameTicking
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
             newMind.AddRole(job);
+
+            _playTimeTrackings.PlayerRolesChanged(player);
 
             if (lateJoin)
             {
@@ -193,7 +213,8 @@ namespace Content.Server.GameTicking
             }
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
-            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, station, character);
+            PlayersJoinedRoundNormally++;
+            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, PlayersJoinedRoundNormally, station, character);
             RaiseLocalEvent(mob, aev, true);
         }
 
@@ -210,12 +231,11 @@ namespace Content.Server.GameTicking
 
         public void MakeJoinGame(IPlayerSession player, EntityUid station, string? jobId = null)
         {
-            if (!_playersInLobby.ContainsKey(player)) return;
-
-            if (!_prefsManager.HavePreferencesLoaded(player))
-            {
+            if (!_playersInLobby.ContainsKey(player))
                 return;
-            }
+
+            if (!_userDb.IsLoadComplete(player))
+                return;
 
             SpawnPlayer(player, station, jobId);
         }
@@ -317,7 +337,10 @@ namespace Content.Server.GameTicking
         public EntityUid Station { get; }
         public HumanoidCharacterProfile Profile { get; }
 
-        public PlayerSpawnCompleteEvent(EntityUid mob, IPlayerSession player, string? jobId, bool lateJoin, EntityUid station, HumanoidCharacterProfile profile)
+        // Ex. If this is the 27th person to join, this will be 27.
+        public int JoinOrder { get; }
+
+        public PlayerSpawnCompleteEvent(EntityUid mob, IPlayerSession player, string? jobId, bool lateJoin, int joinOrder, EntityUid station, HumanoidCharacterProfile profile)
         {
             Mob = mob;
             Player = player;
@@ -325,6 +348,7 @@ namespace Content.Server.GameTicking
             LateJoin = lateJoin;
             Station = station;
             Profile = profile;
+            JoinOrder = joinOrder;
         }
     }
 }

@@ -45,6 +45,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: footstep_duck
+      params:
+        variation: 0.07
 
 - type: entity
   parent: ClothingShoesBase
