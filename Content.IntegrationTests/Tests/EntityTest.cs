@@ -101,6 +101,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
+                "StationData", // errors when removed mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
             };
 
@@ -195,6 +196,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
+                "StationData", // errors when deleted mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
             };
 

@@ -135,13 +135,13 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
-            KitchenSpikeComponent? component = null, UtensilComponent? utensil = null)
+            KitchenSpikeComponent? component = null, SharpComponent? sharp = null)
         {
             if (!Resolve(uid, ref component) || component.PrototypesToSpawn == null || component.PrototypesToSpawn.Count == 0)
                 return false;
 
             // Is using knife
-            if (!Resolve(used, ref utensil, false) || (utensil.Types & UtensilType.Knife) == 0)
+            if (!Resolve(used, ref sharp, false) )
             {
                 return false;
             }

@@ -45,7 +45,8 @@ namespace Content.Client.ParticleAccelerator.UI
         {
             base.Dispose(disposing);
 
-            _menu?.Close();
+            _menu?.Dispose();
+            _menu = null;
         }
     }
 }
