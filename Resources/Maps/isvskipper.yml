@@ -4486,4 +4486,28 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 530
+  type: CableApcExtension
+  components:
+  - pos: -4.5,-1.5
+    parent: 2
+    type: Transform
+- uid: 531
+  type: CableApcExtension
+  components:
+  - pos: -5.5,-1.5
+    parent: 2
+    type: Transform
+- uid: 532
+  type: CableApcExtension
+  components:
+  - pos: 4.5,-1.5
+    parent: 2
+    type: Transform
+- uid: 533
+  type: CableApcExtension
+  components:
+  - pos: 3.5,-1.5
+    parent: 2
+    type: Transform
 ...
