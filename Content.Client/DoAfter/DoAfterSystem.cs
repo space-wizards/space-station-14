@@ -1,12 +1,8 @@
-using System.Linq;
-using Content.Client.DoAfter.UI;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -43,9 +39,14 @@ namespace Content.Client.DoAfter
             base.Initialize();
             UpdatesOutsidePrediction = true;
             SubscribeNetworkEvent<CancelledDoAfterMessage>(OnCancelledDoAfter);
-            SubscribeLocalEvent<DoAfterComponent, ComponentStartup>(OnDoAfterStartup);
-            SubscribeLocalEvent<DoAfterComponent, ComponentShutdown>(OnDoAfterShutdown);
             SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+            IoCManager.Resolve<IOverlayManager>().AddOverlay(new DoAfterOverlay());
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            IoCManager.Resolve<IOverlayManager>().RemoveOverlay<DoAfterOverlay>();
         }
 
         private void OnDoAfterHandleState(EntityUid uid, DoAfterComponent component, ref ComponentHandleState args)
@@ -86,24 +87,6 @@ namespace Content.Client.DoAfter
 
                 component.DoAfters.Add(doAfter.ID, doAfter);
             }
-
-            if (component.Gui == null || component.Gui.Disposed)
-                return;
-
-            foreach (var (_, doAfter) in component.DoAfters)
-            {
-                component.Gui.AddDoAfter(doAfter);
-            }
-        }
-
-        private void OnDoAfterStartup(EntityUid uid, DoAfterComponent component, ComponentStartup args)
-        {
-            Enable(component);
-        }
-
-        private void OnDoAfterShutdown(EntityUid uid, DoAfterComponent component, ComponentShutdown args)
-        {
-            Disable(component);
         }
 
         private void OnCancelledDoAfter(CancelledDoAfterMessage ev)
@@ -111,33 +94,6 @@ namespace Content.Client.DoAfter
             if (!TryComp<DoAfterComponent>(ev.Uid, out var doAfter)) return;
 
             Cancel(doAfter, ev.ID);
-        }
-
-        /// <summary>
-        ///     For handling PVS so we dispose of controls if they go out of range
-        /// </summary>
-        public void Enable(DoAfterComponent component)
-        {
-            if (component.Gui?.Disposed == false)
-                return;
-
-            component.Gui = new DoAfterGui {AttachedEntity = component.Owner};
-
-            foreach (var (_, doAfter) in component.DoAfters)
-            {
-                component.Gui.AddDoAfter(doAfter);
-            }
-
-            foreach (var (_, cancelled) in component.CancelledDoAfters)
-            {
-                component.Gui.CancelDoAfter(cancelled.ID);
-            }
-        }
-
-        public void Disable(DoAfterComponent component)
-        {
-            component.Gui?.Dispose();
-            component.Gui = null;
         }
 
         /// <summary>
@@ -164,8 +120,6 @@ namespace Content.Client.DoAfter
 
             if (!found)
                 component.DoAfters.Remove(clientDoAfter.ID);
-
-            component.Gui?.RemoveDoAfter(clientDoAfter.ID);
         }
 
         /// <summary>
@@ -185,7 +139,6 @@ namespace Content.Client.DoAfter
 
             var doAfterMessage = component.DoAfters[id];
             component.CancelledDoAfters.Add((_gameTiming.CurTime, doAfterMessage));
-            component.Gui?.CancelDoAfter(id);
         }
 
         // TODO move this to an overlay
@@ -217,7 +170,6 @@ namespace Content.Client.DoAfter
 
                 if (doAfters.Count == 0 || xform.MapID != entXform.MapID)
                 {
-                    Disable(comp);
                     continue;
                 }
 
@@ -225,7 +177,6 @@ namespace Content.Client.DoAfter
 
                 if (!viewbox.Contains(compPos))
                 {
-                    Disable(comp);
                     continue;
                 }
 
@@ -240,11 +191,8 @@ namespace Content.Client.DoAfter
                         (comp.Owner, attached), predicate,
                         entMan: EntityManager))
                 {
-                    Disable(comp);
                     continue;
                 }
-
-                Enable(comp);
 
                 var userGrid = xform.Coordinates;
                 var toRemove = new RemQueue<ClientDoAfter>();
