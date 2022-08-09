@@ -18,12 +18,6 @@
   components: *oxyTankFill
 
 - type: entity
-  id: RedOxygenTankFilled
-  parent: RedOxygenTank
-  suffix: Filled
-  components: *oxyTankFill
-
-- type: entity
   id: EmergencyOxygenTankFilled
   parent: EmergencyOxygenTank
   suffix: Filled
@@ -78,7 +72,7 @@
 
 - type: entity
   id: NitrogenTankFilled
-  parent: RedOxygenTankFilled
+  parent: NitrogenTank
   suffix: Filled
   name: nitrogen tank
   components:

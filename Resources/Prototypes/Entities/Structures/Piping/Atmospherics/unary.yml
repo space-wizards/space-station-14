@@ -163,7 +163,7 @@
           map: [ "enum.SubfloorLayers.FirstLayer" ]
         - state: injector-unshaded
           shader: unshaded
-          map: [ "unshaded" ]
+          map: [ "enum.LightLayers.Unshaded" ]
           color: "#990000"
     - type: GenericVisualizer
       visuals:
@@ -181,7 +181,7 @@
     - type: SubFloorHide
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
-      - unshaded
+      - enum.LightLayers.Unshaded
 
 - type: entity
   parent: BaseMachinePowered

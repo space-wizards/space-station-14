@@ -20,7 +20,13 @@ namespace Content.Shared.Research.Prototypes
         /// </summary>
         [ViewVariables]
         [DataField("name")]
-        public string Name { get; } = string.Empty;
+        public string Name
+        {
+            get => (_name is not null) ? _name : ID;
+            private set => _name = Loc.GetString(value);
+        }
+
+        private string? _name;
 
         /// <summary>
         ///     An icon that represent this technology.
@@ -33,7 +39,13 @@ namespace Content.Shared.Research.Prototypes
         /// </summary>
         [ViewVariables]
         [DataField("description")]
-        public string Description { get; } = string.Empty;
+        public string Description
+        {
+            get => (_description is not null) ? _description : "";
+            private set => _description = Loc.GetString(value);
+        }
+
+        private string? _description;
 
         /// <summary>
         ///    The required research points to unlock this technology.

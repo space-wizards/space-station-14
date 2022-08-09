@@ -131,7 +131,7 @@ The ban reason is: ""{ban.Reason}""
                 && await _db.GetWhitelistStatusAsync(userId) == false
                 && adminData is null)
             {
-                return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-not-whitelisted"), null);
+                return (ConnectionDenyReason.Whitelist, Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason)), null);
             }
 
             return null;

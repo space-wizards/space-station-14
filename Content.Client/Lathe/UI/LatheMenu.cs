@@ -39,7 +39,7 @@ namespace Content.Client.Lathe.UI
 
             Owner = owner;
 
-            Title = "Lathe Menu"; // TODO Replace this with the name of the lathe itself
+            Title = Loc.GetString("lathe-menu-title"); // TODO Replace this with the name of the lathe itself
 
             var vBox = new BoxContainer
             {
@@ -58,21 +58,21 @@ namespace Content.Client.Lathe.UI
 
             QueueButton = new Button()
             {
-                Text = "Queue",
+                Text = Loc.GetString("lathe-menu-queue"),
                 TextAlign = Label.AlignMode.Center,
                 SizeFlagsStretchRatio = 1,
             };
 
             ServerConnectButton = new Button()
             {
-                Text = "Server list",
+                Text = Loc.GetString("lathe-menu-server-list"),
                 TextAlign = Label.AlignMode.Center,
                 SizeFlagsStretchRatio = 1,
             };
 
             ServerSyncButton  = new Button()
             {
-                Text = "Sync",
+                Text = Loc.GetString("lathe-menu-sync"),
                 TextAlign = Label.AlignMode.Center,
                 SizeFlagsStretchRatio = 1,
             };
@@ -93,7 +93,7 @@ namespace Content.Client.Lathe.UI
 
             _searchBar = new LineEdit()
             {
-                PlaceHolder = "Search Designs",
+                PlaceHolder = Loc.GetString("lathe-menu-search-designs"),
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 3
             };
@@ -102,7 +102,7 @@ namespace Content.Client.Lathe.UI
 
             var filterButton = new Button()
             {
-                Text = "Filter",
+                Text = Loc.GetString("lathe-menu-search-filter"),
                 TextAlign = Label.AlignMode.Center,
                 SizeFlagsStretchRatio = 1,
                 Disabled = true,
@@ -127,7 +127,7 @@ namespace Content.Client.Lathe.UI
 
             _amountLineEdit = new LineEdit()
             {
-                PlaceHolder = "Amount",
+                PlaceHolder = Loc.GetString("lathe-menu-search-amount"),
                 Text = "1",
                 HorizontalExpand = true,
             };
