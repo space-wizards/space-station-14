@@ -1,7 +1,3 @@
-using Content.Server.Cloning.Components;
-using Content.Server.Mind.Components;
-using Content.Server.Power.EntitySystems;
-using Content.Server.Atmos.EntitySystems;
 using Content.Shared.GameTicking;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.CharacterAppearance.Components;
@@ -9,23 +5,30 @@ using Content.Shared.Species;
 using Content.Shared.Damage;
 using Content.Shared.Stacks;
 using Content.Shared.Examine;
-using Robust.Server.Player;
-using Robust.Shared.Prototypes;
-using Content.Server.EUI;
-using Robust.Shared.Containers;
-using Robust.Server.Containers;
 using Content.Shared.Cloning;
+using Content.Shared.Atmos;
+using Content.Shared.CCVar;
+using Content.Server.Cloning.Components;
+using Content.Server.Mind.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.EUI;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MobState;
 using Content.Server.Lathe.Components;
-using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
-using Robust.Shared.Random;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction.Components;
+using Robust.Server.GameObjects;
+using Robust.Server.Containers;
+using Robust.Server.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Configuration;
+using Robust.Shared.Containers;
+
 
 namespace Content.Server.Cloning.Systems
 {
@@ -46,8 +49,10 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly SharedStackSystem _stackSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
+        public const float EasyModeCloningCost = 0.7f;
 
         public override void Initialize()
         {
@@ -185,6 +190,9 @@ namespace Content.Server.Cloning.Systems
                 return false;
 
             int cloningCost = (int) physics.FixturesMass;
+
+            if (_configManager.GetCVar(CCVars.BiomassEasyMode))
+                cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
 
             // biomass checks
             var biomassAmount = podStorage.GetMaterialAmount("Biomass");
