@@ -1,8 +1,13 @@
 using System.Linq;
 using Content.Server.Access.Systems;
+using Content.Server.Station.Systems;
+using Content.Server.StationRecords;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.StationRecords;
+using Content.Server.Administration.Logs;
+using Content.Shared.Database;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Access.Components
@@ -12,6 +17,7 @@ namespace Content.Server.Access.Components
     public sealed class IdCardConsoleComponent : SharedIdCardConsoleComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
 
@@ -26,6 +32,7 @@ namespace Content.Server.Access.Components
             {
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
+
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -38,7 +45,7 @@ namespace Content.Server.Access.Components
             switch (obj.Message)
             {
                 case WriteToTargetIdMessage msg:
-                    TryWriteToTargetId(msg.FullName, msg.JobTitle, msg.AccessList);
+                    TryWriteToTargetId(msg.FullName, msg.JobTitle, msg.AccessList, player);
                     UpdateUserInterface();
                     break;
             }
@@ -60,17 +67,17 @@ namespace Content.Server.Access.Components
         }
 
         /// <summary>
-        /// Called when the "Submit" button in the UI gets pressed.
+        /// Called whenever an access button is pressed, adding or removing that access from the target ID card.
         /// Writes data passed from the UI into the ID stored in <see cref="TargetIdSlot"/>, if present.
         /// </summary>
-        private void TryWriteToTargetId(string newFullName, string newJobTitle, List<string> newAccessList)
+        private void TryWriteToTargetId(string newFullName, string newJobTitle, List<string> newAccessList, EntityUid player)
         {
             if (TargetIdSlot.Item is not {Valid: true} targetIdEntity || !PrivilegedIdIsAuthorized())
                 return;
 
             var cardSystem = EntitySystem.Get<IdCardSystem>();
-            cardSystem.TryChangeFullName(targetIdEntity, newFullName);
-            cardSystem.TryChangeJobTitle(targetIdEntity, newJobTitle);
+            cardSystem.TryChangeFullName(targetIdEntity, newFullName, player: player);
+            cardSystem.TryChangeJobTitle(targetIdEntity, newJobTitle, player: player);
 
             if (!newAccessList.TrueForAll(x => AccessLevels.Contains(x)))
             {
@@ -80,6 +87,31 @@ namespace Content.Server.Access.Components
 
             var accessSystem = EntitySystem.Get<AccessSystem>();
             accessSystem.TrySetTags(targetIdEntity, newAccessList);
+
+            /*TODO: ECS IdCardConsoleComponent and then log on card ejection, together with the save.
+            This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                $"{_entities.ToPrettyString(player):player} has modified {_entities.ToPrettyString(targetIdEntity):entity} with the following accesses: [{string.Join(", ", newAccessList)}]");
+
+            UpdateStationRecord(targetIdEntity, newFullName, newJobTitle);
+        }
+
+        private void UpdateStationRecord(EntityUid idCard, string newFullName, string newJobTitle)
+        {
+            var station = EntitySystem.Get<StationSystem>().GetOwningStation(Owner);
+            var recordSystem = EntitySystem.Get<StationRecordsSystem>();
+            if (station == null
+                || !_entities.TryGetComponent(idCard, out StationRecordKeyStorageComponent? keyStorage)
+                || keyStorage.Key == null
+                || !recordSystem.TryGetRecord(station.Value, keyStorage.Key.Value, out GeneralStationRecord? record))
+            {
+                return;
+            }
+
+            record.Name = newFullName;
+            record.JobTitle = newJobTitle;
+
+            recordSystem.Synchronize(station.Value);
         }
 
         public void UpdateUserInterface()

@@ -133,7 +133,9 @@ public sealed partial class ExplosionSystem : EntitySystem
             {
                 // Ensure the system does not get stuck in an error-loop.
                 _activeExplosion = null;
-                throw e;
+                RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, int.MaxValue));
+                _nodeGroupSystem.Snoozing = false;
+                throw;
             }
 #endif
         }

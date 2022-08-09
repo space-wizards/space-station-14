@@ -1,6 +1,5 @@
 - type: entity
   id: CrateMedicalDefib
-  name:  defibrillator crate
   parent: CrateMedical
   components:
   - type: StorageFill
@@ -10,7 +9,6 @@
 
 - type: entity
   id: CrateMedicalSupplies
-  name: medical supplies crate
   parent: CrateMedical
   components:
   - type: StorageFill
@@ -28,7 +26,6 @@
 
 - type: entity
   id: CrateChemistrySupplies
-  name: chemistry supplies crate
   parent: CrateMedical
   components:
   - type: StorageFill
@@ -44,7 +41,6 @@
 
 - type: entity
   id: CrateMedicalSurgery
-  name: surgical supplies crate
   parent: CrateSurgery
   components:
   - type: StorageFill
@@ -66,7 +62,6 @@
 
 - type: entity
   id: CrateMedicalScrubs
-  name: medical scrubs crate
   parent: CrateMedical
   components:
   - type: StorageFill

@@ -73882,7 +73882,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 8740
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: -32.388412,-27.529545
     parent: 852
