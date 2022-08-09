@@ -49,16 +49,16 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var enumerator = _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
 
-        if (enumerator == null)
-        {
-            _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
-            return;
-        }
-
         var listing = new Dictionary<StationRecordKey, string>();
         foreach (var pair in enumerator)
         {
-            listing.Add(pair.Value.Item1, pair.Value.Item2.Name);
+            listing.Add(pair.Item1, pair.Item2.Name);
+        }
+
+        if (listing.Count == 0)
+        {
+            _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
+            return;
         }
 
         GeneralStationRecord? record = null;
