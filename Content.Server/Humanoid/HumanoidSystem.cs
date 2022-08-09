@@ -3,11 +3,14 @@ using Content.Server.GameTicking;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
 using Content.Shared.Markings;
+using Content.Shared.Species;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Humanoid;
 
 public sealed class HumanoidSystem : SharedHumanoidSystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
 
     public override void Initialize()
@@ -33,10 +36,29 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 
     private void OnInit(EntityUid uid, HumanoidComponent humanoid, ComponentInit args)
     {
-        if (!string.IsNullOrEmpty(humanoid.Species))
+        if (string.IsNullOrEmpty(humanoid.Species))
         {
-            Synchronize(uid, humanoid);
+            // this is an invalid state
+            return;
         }
+
+        if (!string.IsNullOrEmpty(humanoid.Initial)
+            && _prototypeManager.TryIndex(humanoid.Initial, out HumanoidMarkingStartingSet? startingSet))
+        {
+            foreach (var marking in startingSet.Markings)
+            {
+                AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
+            }
+
+            foreach (var (layer, id) in startingSet.CustomBaseLayers)
+            {
+                humanoid.CustomBaseLayers.Add(layer, new SharedHumanoidComponent.CustomBaseLayerInfo(id, humanoid.SkinColor));
+            }
+        }
+
+        EnsureDefaultMarkings(uid, humanoid);
+
+        Synchronize(uid, humanoid);
     }
 
     private void OnSpawnComplete(EntityUid uid, HumanoidComponent humanoid, PlayerSpawnCompleteEvent args)
@@ -55,6 +77,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         {
             AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
         }
+
+        EnsureDefaultMarkings(uid, humanoid);
 
         Synchronize(uid);
     }
@@ -147,5 +171,15 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 
         if (sync)
             Synchronize(uid, humanoid);
+    }
+
+    private void EnsureDefaultMarkings(EntityUid uid, HumanoidComponent? humanoid)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        humanoid.CurrentMarkings.EnsureDefault(humanoid.SkinColor, _markingManager);
     }
 }
