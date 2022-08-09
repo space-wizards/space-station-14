@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: 'Waystation has been faithfully ported to SS14, and will succeed Packed
-      Station''s role as a low to midpop map.', type: Add}
-  id: 1624
-  time: '2022-05-29T16:18:16.0000000+00:00'
 - author: youarereadingthis
   changes:
   - {message: Examine text for anchors., type: Add}
@@ -2941,3 +2935,10 @@ Entries:
   - {message: Fixed broken names in traitor steal conditions., type: Fix}
   id: 2123
   time: '2022-08-09T00:32:17.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has finally bought a license for SpaceDB, and is sharing
+      it with its stations for crew record management. We only have the one license.
+      Don''t tell them what we''re doing.', type: Add}
+  id: 2124
+  time: '2022-08-09T05:10:01.0000000+00:00'
