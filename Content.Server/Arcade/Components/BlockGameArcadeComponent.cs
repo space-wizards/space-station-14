@@ -48,7 +48,7 @@ namespace Content.Server.Arcade.Components
             UpdatePlayerStatus(temp);
         }
 
-        public void UnRegisterPlayerSession(IPlayerSession session)
+        private void UnRegisterPlayerSession(IPlayerSession session)
         {
             if (_player == session)
             {
@@ -72,6 +72,7 @@ namespace Content.Server.Arcade.Components
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                UserInterface.OnClosed += UnRegisterPlayerSession;
             }
             _game = new BlockGame(this);
         }

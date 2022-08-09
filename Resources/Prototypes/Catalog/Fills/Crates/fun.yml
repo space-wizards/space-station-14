@@ -1,6 +1,5 @@
 - type: entity
   id: CrateFunPlushie
-  name: plushie crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -30,8 +29,6 @@
 
 - type: entity
   id: CrateFunInstruments
-  name: big band instrument collection
-  description: Get your sad station movin' and groovin' with this fine collection! Contains thirteen different instruments.
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -65,8 +62,6 @@
 
 - type: entity
   id: CrateFunBrass
-  name: brass instrument ensemble crate
-  description: Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play.
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -84,7 +79,6 @@
 
 - type: entity
   id: CrateFunArtSupplies
-  name: art supplies
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -96,7 +90,6 @@
 
 - type: entity
   id: CrateFunBoardGames
-  name: board game crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -114,7 +107,6 @@
 
 - type: entity
   id: CrateFunATV
-  name: ATV crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -126,7 +118,6 @@
 
 - type: entity
   id: CrateFunSyndicateSegway
-  name: syndicate segway crate
   parent: CrateLivestock
   components:
     - type: StorageFill

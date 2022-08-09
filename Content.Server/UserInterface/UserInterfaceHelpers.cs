@@ -4,10 +4,9 @@ namespace Content.Server.UserInterface
 {
     public static class UserInterfaceHelpers
     {
-        [Obsolete("Use UserInterfaceSystem")]
-        public static BoundUserInterface? GetUIOrNull(this EntityUid entity, Enum uiKey)
+        public static BoundUserInterface? GetUIOrNull(this EntityUid entity, object uiKey)
         {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<UserInterfaceSystem>().GetUiOrNull(entity, uiKey);
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ServerUserInterfaceComponent>(entity)?.GetBoundUserInterfaceOrNull(uiKey);
         }
     }
 }

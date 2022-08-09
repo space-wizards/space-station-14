@@ -1,14 +1,13 @@
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Foldable;
 
 [UsedImplicitly]
 public abstract class SharedFoldableSystem : EntitySystem
 {
-    private const string FoldKey = "FoldedState";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -50,12 +49,18 @@ public abstract class SharedFoldableSystem : EntitySystem
         Dirty(component);
 
         if (TryComp(component.Owner, out AppearanceComponent? appearance))
-            appearance.SetData(FoldKey, folded);
+            appearance.SetData(FoldedVisuals.State, folded);
     }
 
     private void OnInsertEvent(EntityUid uid, FoldableComponent component, ContainerGettingInsertedAttemptEvent args)
     {
         if (!component.IsFolded)
             args.Cancel();
+    }
+
+    [Serializable, NetSerializable]
+    public enum FoldedVisuals : byte
+    {
+        State
     }
 }
