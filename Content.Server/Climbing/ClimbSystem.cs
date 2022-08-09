@@ -93,6 +93,10 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, DragDropEvent args)
     {
+        if (args.Handled)
+            return;
+        args.Handled = true;
+
         TryMoveEntity(component, args.User, args.Dragged, args.Target);
     }
 

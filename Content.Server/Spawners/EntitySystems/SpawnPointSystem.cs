@@ -20,6 +20,9 @@ public sealed class SpawnPointSystem : EntitySystem
 
     private void OnSpawnPlayer(PlayerSpawningEvent args)
     {
+        if (args.SpawnResult != null)
+            return;
+
         // TODO: Cache all this if it ends up important.
         var points = EntityQuery<SpawnPointComponent>().ToList();
         _random.Shuffle(points);
