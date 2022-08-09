@@ -52,9 +52,9 @@ public sealed class CryopodSystem : EntitySystem
             return;
 
         var validPods = EntityQuery<CryopodComponent>().Where(c => c.DoSpawns && _stationSystem.GetOwningStation(c.Owner) == args.Station).ToArray();
-        _random.Shuffle(validPods);
         if (!validPods.Any())
             return;
+        _random.Shuffle(validPods);
 
         var pod = validPods.First();
         var xform = Transform(pod.Owner);
