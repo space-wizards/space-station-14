@@ -26,6 +26,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
         SubscribeLocalEvent<NewMeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<NewMeleeWeaponComponent, ComponentHandleState>(OnHandleState);
+
         SubscribeAllEvent<StartAttackEvent>(OnAttackStart);
         SubscribeAllEvent<ReleaseAttackEvent>(OnReleaseAttack);
         SubscribeAllEvent<StopAttackEvent>(StopAttack);
