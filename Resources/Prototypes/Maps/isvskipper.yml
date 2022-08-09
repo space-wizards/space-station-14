@@ -1,0 +1,17 @@
+﻿- type: gameMap
+  id: ISVSkipper
+  mapName: 'ISV Skipper'
+  mapPath: /Maps/isvskipper.yml
+  minPlayers: 0
+  fallback: true
+  stations:
+    IsvSkipper:
+      mapNameTemplate: '{0} Skipper {1}'
+      nameGenerator:
+        !type:IndependentNameGenerator
+        prefixCreator: ''
+      overflowJobs: []
+      availableJobs:
+        MedicalDoctor: [ 2, 2 ]
+        SalvageSpecialist: [ 1, 1 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
