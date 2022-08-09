@@ -65,7 +65,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Item
-    icon: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -86,7 +85,6 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
     - type: Item
-      icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
     - type: BallisticAmmoProvider
       whitelist:
         tags:

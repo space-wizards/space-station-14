@@ -4,6 +4,8 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Clothing.Components;
 using Content.Server.Fluids.Components;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -56,7 +58,7 @@ public sealed class SpillableSystem : EntitySystem
 
         // check if entity was actually used as clothing
         // not just taken in pockets or something
-        var isCorrectSlot = clothing.SlotFlags.HasFlag(args.SlotFlags);
+        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
         if (!isCorrectSlot) return;
 
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
@@ -109,6 +111,9 @@ public sealed class SpillableSystem : EntitySystem
             return;
 
         if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target, out var solution))
+            return;
+
+        if (TryComp<DrinkComponent>(args.Target, out var drink) && (!drink.Opened))
             return;
 
         if (solution.DrainAvailable == FixedPoint2.Zero)

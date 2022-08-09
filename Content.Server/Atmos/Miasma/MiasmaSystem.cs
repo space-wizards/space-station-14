@@ -45,7 +45,8 @@ namespace Content.Server.Atmos.Miasma
             "VanAusdallsRobovirus",
             "BleedersBite",
             "Plague",
-            "TongueTwister"
+            "TongueTwister",
+            "MemeticAmirmir"
         };
 
         /// <summary>
@@ -99,11 +100,14 @@ namespace Content.Server.Atmos.Miasma
 
                 EnsureComp<FliesComponent>(perishable.Owner);
 
-                DamageSpecifier damage = new();
-                damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
-                damage.DamageDict.Add("Cellular", 0.3); // Cloning rework might use this eventually
+                if (rotting.DealDamage)
+                {
+                    DamageSpecifier damage = new();
+                    damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
+                    damage.DamageDict.Add("Cellular", 0.3); // Cloning rework might use this eventually
 
-                _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true);
+                    _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true);
+                }
 
                 if (!TryComp<PhysicsComponent>(perishable.Owner, out var physics))
                     continue;
@@ -200,7 +204,7 @@ namespace Content.Server.Atmos.Miasma
         }
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
-            if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            if (TryComp<PerishableComponent>(args.Entity, out var perishable) && !Terminating(uid))
             {
                 ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);

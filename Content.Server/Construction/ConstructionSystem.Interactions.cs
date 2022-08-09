@@ -1,8 +1,10 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
 using Content.Shared.Construction;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 
@@ -10,6 +12,8 @@ namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
         private readonly HashSet<EntityUid> _constructionUpdateQueue = new();
 
         private void InitializeInteractions()
@@ -38,7 +42,7 @@ namespace Content.Server.Construction
         /// <remarks>When <see cref="validation"/> is true, this method will simply return whether the interaction
         ///          would be handled by the entity or not. It essentially becomes a pure method that modifies nothing.</remarks>
         /// <returns>The result of this interaction with the entity.</returns>
-        private HandleResult HandleEvent(EntityUid uid, object ev, bool validation, ConstructionComponent? construction = null)
+        private HandleResult HandleEvent(EntityUid uid, object ev, bool validation, ConstructionComponent? construction = null, InteractUsingEvent? args = null)
         {
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
@@ -160,6 +164,9 @@ namespace Content.Server.Construction
 
                 // We change the node now.
                 ChangeNode(uid, user, edge.Target, true, construction);
+
+                if (ev is ConstructionDoAfterComplete event1 && event1.WrappedEvent is InteractUsingEvent event2)
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(event2.User):player} changed {ToPrettyString(uid):entity}'s node to {edge.Target}");
             }
 
             return HandleResult.True;

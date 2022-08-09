@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McHands
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobHuman
   description: A miserable pile of secrets.
   components:
@@ -188,3 +188,15 @@
     state: ertjanitoreva
   - type: Loadout
     prototype: ERTJanitorGearEVA
+
+
+#Syndie
+- type: entity
+  parent: MobHuman
+  id: MobHumanSyndicateAgent
+  name: Syndicate Agent
+  components:
+  - type: Loadout
+    prototype: SyndicateOperativeGearExtremelyBasic
+  - type: RandomMetadata
+    nameSet: names_death_commando

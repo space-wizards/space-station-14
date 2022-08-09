@@ -305,10 +305,10 @@ public sealed class EntityStorageSystem : EntitySystem
             return false;
 
         var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
-        var storageIsItem = HasComp<SharedItemComponent>(container);
+        var storageIsItem = HasComp<ItemComponent>(container);
 
         var allowedToEat = whitelist == null
-            ? HasComp<SharedItemComponent>(toInsert)
+            ? HasComp<ItemComponent>(toInsert)
             : whitelist.IsValid(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
@@ -357,12 +357,12 @@ public sealed class EntityStorageSystem : EntitySystem
         }
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var surface))
-            _placeableSurface.SetPlaceable(uid, true, surface);
+            _placeableSurface.SetPlaceable(uid, component.Open, surface);
 
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
             appearance.SetData(StorageVisuals.Open, component.Open);
-            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
+            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Any());
         }
     }
 }

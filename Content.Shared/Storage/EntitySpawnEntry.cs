@@ -13,8 +13,8 @@ namespace Content.Shared.Storage;
 public struct EntitySpawnEntry : IPopulateDefaultValues
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("id", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrototypeId;
+    [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? PrototypeId;
 
     /// <summary>
     ///     The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
@@ -83,12 +83,12 @@ public static class EntitySpawnCollection
     /// <param name="entries">The entity spawn entries.</param>
     /// <param name="random">Resolve param.</param>
     /// <returns>A list of entity prototypes that should be spawned.</returns>
-    public static List<string> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
+    public static List<string?> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
         IRobustRandom? random = null)
     {
         IoCManager.Resolve(ref random);
 
-        var spawned = new List<string>();
+        var spawned = new List<string?>();
         var orGroupedSpawns = new Dictionary<string, OrGroup>();
 
         // collect groups together, create singular items that pass probability

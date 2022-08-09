@@ -44,7 +44,10 @@ namespace Content.Shared.Atmos.Prototypes
         /// <summary>
         ///     Visibility for this gas will be max after this value.
         /// </summary>
-        public float GasMolesVisibleMax => GasMolesVisible * Atmospherics.FactorGasVisibleMax;
+        public float GasMolesVisibleMax => GasMolesVisible * GasVisibilityFactor;
+
+        [DataField("gasVisbilityFactor")]
+        public float GasVisibilityFactor = Atmospherics.FactorGasVisibleMax;
 
         /// <summary>
         ///     If this reagent is in gas form, this is the path to the overlay that will be used to make the gas visible.
@@ -77,5 +80,8 @@ namespace Content.Shared.Atmos.Prototypes
         public string? Reagent { get; } = default!;
 
         [DataField("color")] public string Color { get; } = string.Empty;
+
+        [DataField("pricePerMole")]
+        public float PricePerMole { get; set; } = 0;
     }
 }

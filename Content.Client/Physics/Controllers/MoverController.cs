@@ -71,10 +71,13 @@ namespace Content.Client.Physics.Controllers
 
             if (TryComp(player, out JointComponent? jointComponent))
             {
-                foreach (var joint in jointComponent.GetJoints)
+                foreach (var joint in jointComponent.GetJoints.Values)
                 {
-                    joint.BodyA.Predict = true;
-                    joint.BodyB.Predict = true;
+                    if (TryComp(joint.BodyAUid, out PhysicsComponent? physics))
+                        physics.Predict = true;
+
+                    if (TryComp(joint.BodyBUid, out physics))
+                        physics.Predict = true;
                 }
             }
 
@@ -96,11 +99,6 @@ namespace Content.Client.Physics.Controllers
 
             // Server-side should just be handled on its own so we'll just do this shizznit
             HandleMobMovement(mover, body, xformMover, frameTime);
-        }
-
-        protected override Filter GetSoundPlayers(EntityUid mover)
-        {
-            return Filter.Local();
         }
 
         protected override bool CanSound()
