@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: shuttle thruster
   id: ShuttleThruster
-  description: A thruster that allows a shuttle to move.
   icon:
     sprite: Structures/Shuttles/thruster.rsi
     state: base
@@ -11,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: shuttle gyroscope
   id: ShuttleGyroscope
-  description: A gyroscope for use in rotating a shuttle.
   icon:
     sprite: Structures/Shuttles/gyroscope.rsi
     state: base
@@ -23,9 +19,7 @@
   group: market
 
 # - type: cargoProduct
-  # name: shuttle powering crate
   # id: ShuttlePowerKit
-  # description: Contains boards for wallmounted power utilities.
   # icon:
     # sprite: Structures/Machines/computers.rsi
     # state: avionics-systems

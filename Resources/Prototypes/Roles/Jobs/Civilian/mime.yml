@@ -1,9 +1,8 @@
 - type: job
   id: Mime
   name: job-name-mime
+  playTimeTracker: JobMime
   startingGear: MimeGear
-  departments:
-  - Civilian
   icon: "Mime"
   supervisors: job-supervisors-hop
   access:

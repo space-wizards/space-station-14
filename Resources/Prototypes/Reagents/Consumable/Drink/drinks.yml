@@ -240,7 +240,7 @@
   parent: BaseDrink
   desc: reagent-desc-water
   physicalDesc: reagent-physical-desc-translucent
-  color: "#c0e0ff20"
+  color: "#75b1f0"
   boilingPoint: 100.0
   meltingPoint: 0.0
   metabolisms:
