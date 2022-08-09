@@ -29,28 +29,6 @@
     - Document
   - type: Appearance
   - type: PaperVisuals
-  - type: StepTrigger
-    intersectRatio: 0.2
-    requiredTriggeredSpeed: 0
-  - type: CollisionWake
-    enabled: false
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 5
-      mask:
-      - ItemMask
   - type: Flammable
     fireSpread: true
     canResistFire: false
@@ -67,7 +45,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 10
+        damage: 15
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:

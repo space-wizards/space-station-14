@@ -21,8 +21,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
-using Content.Shared.Tag;
-using Content.Shared.StepTrigger.Systems;
 
 
 namespace Content.Server.Atmos.EntitySystems
@@ -38,7 +36,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -62,8 +59,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFireEvent);
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
-            SubscribeLocalEvent<FlammableComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
-            SubscribeLocalEvent<FlammableComponent, StepTriggeredEvent>(HandleStepTrigger);
         }
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
@@ -120,7 +115,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.Ignitable)
             {
-                flammable.FireStacks = Math.Max(1, flammable.FireStacks);
+                flammable.FireStacks = Math.Max(2, flammable.FireStacks);
             }
 
             Ignite(uid, flammable);
@@ -188,19 +183,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             appearance.SetData(FireVisuals.OnFire, flammable.OnFire);
             appearance.SetData(FireVisuals.FireStacks, flammable.FireStacks);
-        }
-
-        private void HandleAttemptCollide(
-            EntityUid uid,
-            FlammableComponent component,
-            ref StepTriggerAttemptEvent args)
-        {
-            args.Continue |= component.OnFire;
-        }
-
-        private void HandleStepTrigger(EntityUid uid, FlammableComponent component, ref StepTriggeredEvent args)
-        {
-            Logger.Debug("WE DID IT!");
         }
 
         public void AdjustFireStacks(EntityUid uid, float relativeFireStacks, FlammableComponent? flammable = null)
@@ -309,8 +291,6 @@ namespace Content.Server.Atmos.EntitySystems
                     _alertsSystem.ClearAlert(uid, AlertType.Fire);
                     continue;
                 }
-                Logger.Debug($"IM ON FIRE!? {physics.Awake}");
-                _broadphase.RegenerateContacts(PhysicsComponent);
 
                 _alertsSystem.ShowAlert(uid, AlertType.Fire, null, null);
 
