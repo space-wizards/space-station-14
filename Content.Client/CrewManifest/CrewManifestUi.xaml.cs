@@ -64,12 +64,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
                 // this is a little expensive, and could be better
                 if (department.Roles.Contains(entry.JobPrototype))
                 {
-                    if (!entryDict.ContainsKey(department.ID))
-                    {
-                        entryDict.Add(department.ID, new());
-                    }
-
-                    entryDict[department.ID].Add(entry);
+                    entryDict.GetOrNew(department.ID).Add(entry);
                 }
             }
         }

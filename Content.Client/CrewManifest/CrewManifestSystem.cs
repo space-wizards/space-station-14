@@ -22,6 +22,11 @@ public sealed class CrewManifestSystem : EntitySystem
         _prototypeManager.PrototypesReloaded += OnPrototypesReload;
     }
 
+    public override void Shutdown()
+    {
+        _prototypeManager.PrototypesReloaded -= OnPrototypesReload;
+    }
+
     /// <summary>
     ///     Requests a crew manifest from the server.
     /// </summary>
@@ -64,7 +69,7 @@ public sealed class CrewManifestSystem : EntitySystem
         {
             return -1;
         }
-        
+
         if (!_jobDepartmentLookup.TryGetValue(jobPrototype, out var departments))
         {
             return -1;

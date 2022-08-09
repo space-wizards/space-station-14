@@ -58,6 +58,7 @@ public sealed class CrewManifestSystem : EntitySystem
         }
 
         _openEuis.Clear();
+        _cachedEntries.Clear();
     }
 
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)

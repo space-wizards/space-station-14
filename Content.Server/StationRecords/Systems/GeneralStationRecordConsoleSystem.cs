@@ -41,7 +41,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
 
 
-        if (owningStation == null || !TryComp<StationRecordsComponent>(owningStation, out var stationRecordsComponent))
+        if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecordsComponent))
         {
             _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
             return;
