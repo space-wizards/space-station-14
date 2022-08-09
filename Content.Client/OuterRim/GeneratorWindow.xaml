@@ -1,0 +1,24 @@
+﻿<fw:FancyWindow xmlns:fw="clr-namespace:Content.Client.UserInterface"
+                xmlns="https://spacestation14.io"
+                MinSize="270 130"
+                SetSize="360 180"
+                Title="Generator">
+    <BoxContainer Margin="4 0" Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
+            <GridContainer Margin="2 0 0 0" Columns="2">
+                <!-- Power -->
+                <Label Text="Target Power (KW):"/>
+                <SpinBox Name="TargetPower"/>
+                <Label Text="Efficiency:"/>
+                <Label Name="Efficiency" Text="???%"/>
+                <Label Text="Fuel use:"/>
+                <ProgressBar Name="FuelFraction" MinValue="0" MaxValue="1"/>
+                <Label Text="Fuel left:"/>
+                <Label Name="FuelLeft" Text="0"/>
+            </GridContainer>
+        </BoxContainer>
+        <PanelContainer Margin="12 0 0 0" StyleClasses="Inset" VerticalAlignment="Center">
+            <SpriteView Name="EntityView" SetSize="64 64" Scale="2 2" OverrideDirection="South" />
+        </PanelContainer>
+    </BoxContainer>
+</fw:FancyWindow>

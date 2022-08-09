@@ -157,6 +157,13 @@
   components:
   - type: PowerSupplier
     supplyRate: 30000
+  - type: Generator
+  - type: ActivatableUI
+    key: enum.GeneratorComponentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneratorComponentUiKey.Key
+        type: GeneratorBoundUserInterface
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
