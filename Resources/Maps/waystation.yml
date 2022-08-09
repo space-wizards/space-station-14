@@ -36532,7 +36532,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2639
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: 5.5,36.5
     parent: 82
@@ -72980,7 +72980,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6915
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: 20.538078,-30.484762
     parent: 82

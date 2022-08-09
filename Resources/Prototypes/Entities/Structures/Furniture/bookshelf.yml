@@ -9,15 +9,21 @@
     layers:
       - state: base
       - state: book-0
-  - type: RandomSpriteState
-    spriteLayer: 1
-    spriteStates:
-      - book-0
-      - book-1
-      - book-2
-      - book-3
-      - book-4
-      - book-5
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          book-0: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-1: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-2: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-3: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-4: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-5: ""
   - type: Damageable
     damageModifierSet: Wood
     damageContainer: Inorganic

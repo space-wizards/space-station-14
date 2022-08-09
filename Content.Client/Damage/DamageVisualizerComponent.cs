@@ -13,7 +13,7 @@ namespace Content.Client.Damage
     [RegisterComponent]
     public sealed class DamageVisualizerDataComponent : Component
     {
-        public List<object> TargetLayerMapKeys = new();
+        public List<Enum> TargetLayerMapKeys = new();
         public bool Disabled = false;
         public bool Valid = true;
         public FixedPoint2 LastDamageThreshold = FixedPoint2.Zero;
