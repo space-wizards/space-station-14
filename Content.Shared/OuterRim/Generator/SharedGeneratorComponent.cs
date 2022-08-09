@@ -16,7 +16,7 @@ public sealed class SharedGeneratorComponent : Component
     [DataField("optimalPower"), ViewVariables(VVAccess.ReadWrite)]
     public float OptimalPower = 15_000.0f;
     [DataField("optimalBurnRate"), ViewVariables(VVAccess.ReadWrite)]
-    public float OptimalBurnRate = 1 / 4.0f; // Once every 45 seconds.
+    public float OptimalBurnRate = 1 / 45.0f; // Once every 45 seconds.
 
     [DataField("fuelMaterial"), ViewVariables(VVAccess.ReadWrite)]
     public string FuelMaterial = "Plasma";
