@@ -14,4 +14,4 @@
     pack: BoozeDispenserInventory
     emagPack: BoozeDispenserEmagInventory
   - type: Transform
-    noRot: false 
+    noRot: false

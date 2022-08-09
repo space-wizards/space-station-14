@@ -7,14 +7,6 @@
   color: "#422912"
 
 - type: reagent
-  id: ChangelingSting
-  name: reagent-name-changeling-sting
-  parent: BaseSoda
-  desc: reagent-desc-changeling-sting
-  physicalDesc: reagent-physical-desc-fizzy
-  color: "#2E6671"
-
-- type: reagent
   id: DrGibb
   name: reagent-name-dr-gibb
   parent: BaseSoda
