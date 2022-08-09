@@ -206,21 +206,11 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         var iter = _recordsSystem.GetRecordsOfType<GeneralStationRecord>(station);
 
-        if (iter == null)
-        {
-            return;
-        }
-
         var entries = new CrewManifestEntries();
 
         foreach (var recordObject in iter)
         {
-            if (recordObject == null)
-            {
-                continue;
-            }
-
-            var record = recordObject.Value.Item2;
+            var record = recordObject.Item2;
             var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.JobPrototype);
 
             entries.Entries.Add(entry);

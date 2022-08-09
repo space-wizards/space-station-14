@@ -198,7 +198,7 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         if (!Resolve(station, ref records))
         {
-            return null;
+            return new (StationRecordKey, T)[]{};
         }
 
         return records.Records.GetRecordsOfType<T>();
