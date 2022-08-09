@@ -11,5 +11,5 @@
     You are thankfully, not nearly close enough to be within the danger zone of the pulsar, and as a result it only visible as a bright spot within the background.
 
 [color=#a4885c]2.[/color] The respawn button allows you to go back to the lobby, however, you cannot rejoin as the same character if you use it, and must join as a different character. If you wish to keep paying one character, get cloned.
-
+    - This does not apply between rounds, do not worry. This is not a permadeath server, this simply avoids having three copies of one character.
 [color=#a4885c]3.[/color] Don't mindlessly screw over your fellows. Conflict, however, is accepted, but please don't make me write escalation rules.
