@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: New NanoTrasen alert levels - Gamma & Epsilon, type: Add}
-  id: 1623
-  time: '2022-05-29T08:35:08.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: 'Waystation has been faithfully ported to SS14, and will succeed Packed
@@ -2941,3 +2936,8 @@ Entries:
   - {message: Added bare footstep sounds for different surfaces, type: Add}
   id: 2122
   time: '2022-08-08T09:03:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed broken names in traitor steal conditions., type: Fix}
+  id: 2123
+  time: '2022-08-09T00:32:17.0000000+00:00'
