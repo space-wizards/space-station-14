@@ -40,6 +40,7 @@ namespace Content.Server.Projectiles
                 return;
 
             // Relay the projectile to the vehicle owner.
+            // See note in shared about other relays.
             var otherEntity = args.OtherFixture.Body.Owner;
 
             if (TryComp<VehicleComponent>(otherEntity, out var vehicle) && vehicle.Rider != null)

@@ -17,6 +17,9 @@ namespace Content.Shared.Projectiles
 
         private void PreventCollision(EntityUid uid, SharedProjectileComponent component, PreventCollideEvent args)
         {
+            // Relay it to the rider if in vehicle
+            // Note that if mechs (for WHATEVER REASON) decide to use their own system again they will also need
+            // to consider this.
             if (component.IgnoreShooter && args.BodyB.Owner == component.Shooter ||
                 TryComp<VehicleComponent>(args.BodyB.Owner, out var vehicle) && component.Shooter == vehicle.Rider)
             {

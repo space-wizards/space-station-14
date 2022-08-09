@@ -109,7 +109,6 @@ public sealed partial class GunSystem : SharedGunSystem
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
 
                     Func<EntityUid, bool>? predicate = uid => uid == user;
-
                     if (TryComp<RiderComponent>(user, out var rider) && rider.Vehicle != null)
                     {
                         var comp = rider;
@@ -117,41 +116,49 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
 
                     var rayCastResults =
-                        Physics.IntersectRayWithPredicate(fromMap.MapId, ray, hitscan.MaxLength, predicate).ToList();
+                        Physics.IntersectRayWithPredicate(fromMap.MapId, ray, hitscan.MaxLength, predicate, false).ToList();
 
                     if (rayCastResults.Count >= 1)
                     {
                         var result = rayCastResults[0];
+                        var hitEntity = result.HitEntity;
+
+                        // If you need ANYTHING ELSE to do this then for the love of god use the eventbus or I will shank you
+                        if (TryComp<VehicleComponent>(result.HitEntity, out var vehicle) && vehicle.Rider != null)
+                        {
+                            hitEntity = vehicle.Rider.Value;
+                        }
+
                         var distance = result.Distance;
-                        FireEffects(fromCoordinates, distance, entityDirection.ToAngle(), hitscan, result.HitEntity);
+                        FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
 
                         if (hitscan.StaminaDamage > 0f)
-                            _stamina.TakeStaminaDamage(result.HitEntity, hitscan.StaminaDamage);
+                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage);
 
                         var dmg = hitscan.Damage;
 
                         if (dmg != null)
-                            dmg = Damageable.TryChangeDamage(result.HitEntity, dmg);
+                            dmg = Damageable.TryChangeDamage(hitEntity, dmg);
 
                         if (dmg != null)
                         {
-                            PlayImpactSound(result.HitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                            PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
 
                             if (user != null)
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"{ToPrettyString(user.Value):user} hit {ToPrettyString(result.HitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"{ToPrettyString(user.Value):user} hit {ToPrettyString(hitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
                             }
                             else
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"Hit {ToPrettyString(result.HitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"Hit {ToPrettyString(hitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
                             }
                         }
                     }
                     else
                     {
-                        FireEffects(fromCoordinates, hitscan.MaxLength, entityDirection.ToAngle(), hitscan);
+                        FireEffects(fromCoordinates, hitscan.MaxLength, mapDirection.ToAngle(), hitscan);
                     }
                     PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                     break;
@@ -271,14 +278,28 @@ public sealed partial class GunSystem : SharedGunSystem
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
 
-    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle angle, HitscanPrototype hitscan, EntityUid? hitEntity = null)
+    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, HitscanPrototype hitscan, EntityUid? hitEntity = null)
     {
         // Lord
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
         var sprites = new List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
+        var gridUid = fromCoordinates.GetGridUid(EntityManager);
+        var angle = mapDirection;
 
         // We'll get the effects relative to the grid / map of the firer
+        // Look you could probably optimise this a bit with redundant transforms at this point.
+        if (TryComp<TransformComponent>(gridUid, out var gridXform))
+        {
+            var (_, gridRot, gridInvMatrix) = gridXform.GetWorldPositionRotationInvMatrix();
+
+            fromCoordinates = new EntityCoordinates(gridUid.Value,
+                gridInvMatrix.Transform(fromCoordinates.ToMapPos(EntityManager)));
+
+            // Use the fallback angle I guess?
+            angle -= gridRot;
+        }
+
         if (distance >= 1f)
         {
             if (hitscan.MuzzleFlash != null)
