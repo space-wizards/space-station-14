@@ -136,7 +136,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         foreach (var i in dirtyMarkings)
         {
-            if (!_markingManager.IsValidMarking(newMarkings[i], out var dirtyMarking))
+            if (!_markingManager.TryGetMarking(newMarkings[i], out var dirtyMarking))
             {
                 continue;
             }
@@ -192,7 +192,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        if (!_markingManager.IsValidMarking(marking, out var prototype))
+        if (!_markingManager.TryGetMarking(marking, out var prototype))
         {
             return;
         }
@@ -227,7 +227,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         foreach (var marking in new ReverseMarkingEnumerator(markings))
         {
-            if (!_markingManager.IsValidMarking(marking, out var markingPrototype))
+            if (!_markingManager.TryGetMarking(marking, out var markingPrototype))
             {
                 continue;
             }

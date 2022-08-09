@@ -118,7 +118,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
     public void AddMarking(EntityUid uid, string marking, Color? color = null, bool sync = true, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid)
-            || !_markingManager.Markings().TryGetValue(marking, out var prototype))
+            || !_markingManager.Markings.TryGetValue(marking, out var prototype))
         {
             return;
         }
@@ -141,7 +141,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
     public void AddMarking(EntityUid uid, string marking, IReadOnlyList<Color> colors, bool sync = true, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid)
-            || !_markingManager.Markings().TryGetValue(marking, out var prototype))
+            || !_markingManager.Markings.TryGetValue(marking, out var prototype))
         {
             return;
         }
@@ -162,7 +162,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
     public void RemoveMarking(EntityUid uid, string marking, bool sync = true, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid)
-            || !_markingManager.Markings().TryGetValue(marking, out var prototype))
+            || !_markingManager.Markings.TryGetValue(marking, out var prototype))
         {
             return;
         }

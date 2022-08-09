@@ -67,7 +67,7 @@ public sealed class MarkingSet
 
         foreach (var marking in markings)
         {
-            if (!markingManager.IsValidMarking(marking, out var prototype))
+            if (!markingManager.TryGetMarking(marking, out var prototype))
             {
                 continue;
             }
@@ -88,7 +88,7 @@ public sealed class MarkingSet
 
         foreach (var marking in markings)
         {
-            if (!markingManager.IsValidMarking(marking, out var prototype))
+            if (!markingManager.TryGetMarking(marking, out var prototype))
             {
                 continue;
             }
@@ -122,7 +122,7 @@ public sealed class MarkingSet
         {
             foreach (var marking in list)
             {
-                if (!markingManager.IsValidMarking(marking, out var prototype)
+                if (!markingManager.TryGetMarking(marking, out var prototype)
                     || prototype.SpeciesRestrictions != null
                     && !prototype.SpeciesRestrictions.Contains(species))
                 {
@@ -141,7 +141,7 @@ public sealed class MarkingSet
         {
             for (var i = 0; i < list.Count; i++)
             {
-                if (!markingManager.IsValidMarking(list[i], out var marking))
+                if (!markingManager.TryGetMarking(list[i], out var marking))
                 {
                     toRemove.Add(i);
                     continue;
@@ -174,7 +174,7 @@ public sealed class MarkingSet
             var index = 0;
             while (points.Points > 0 || index < points.DefaultMarkings.Count)
             {
-                if (markingManager.Markings().TryGetValue(points.DefaultMarkings[index], out var prototype))
+                if (markingManager.Markings.TryGetValue(points.DefaultMarkings[index], out var prototype))
                 {
                     Marking marking;
                     if (skinColor == null)
@@ -660,7 +660,7 @@ public class MarkingsSet : IEnumerable, IEquatable<MarkingsSet>
         for (var i = set._markings.Count - 1; i >= 0; i--)
         {
             var marking = set._markings[i];
-            if (manager.IsValidMarking(marking, out var markingProto))
+            if (manager.TryGetMarking(marking, out var markingProto))
             {
                 if (marking.MarkingColors.Count != markingProto.Sprites.Count)
                 {

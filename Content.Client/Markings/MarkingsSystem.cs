@@ -67,7 +67,7 @@ namespace Content.Client.Markings
             while (markingsEnumerator.MoveNext())
             {
                 var marking = (Marking) markingsEnumerator.Current;
-                if (!_markingManager.IsValidMarking(marking, out MarkingPrototype? markingPrototype))
+                if (!_markingManager.TryGetMarking(marking, out MarkingPrototype? markingPrototype))
                 {
                     continue;
                 }

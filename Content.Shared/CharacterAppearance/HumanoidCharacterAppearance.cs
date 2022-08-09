@@ -139,12 +139,12 @@ namespace Content.Shared.CharacterAppearance
             var proto = IoCManager.Resolve<IPrototypeManager>();
             var markingManager = IoCManager.Resolve<MarkingManager>();
 
-            if (!markingManager.Markings().ContainsKey(hairStyleId))
+            if (!markingManager.MarkingsByCategory(MarkingCategories.Hair).ContainsKey(hairStyleId))
             {
                 hairStyleId = HairStyles.DefaultHairStyle;
             }
 
-            if (!markingManager.Markings().ContainsKey(facialHairStyleId))
+            if (!markingManager.MarkingsByCategory(MarkingCategories.FacialHair).ContainsKey(facialHairStyleId))
             {
                 hairStyleId = HairStyles.DefaultFacialHairStyle;
             }
