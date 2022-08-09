@@ -71,6 +71,8 @@ public sealed class StepTriggerSystem : EntitySystem
         if (!ourAabb.Intersects(otherAabb))
             return true;
 
+        Logger.Debug("Intersects!");
+
         if (otherPhysics.LinearVelocity.Length < component.RequiredTriggerSpeed
             || component.CurrentlySteppedOn.Contains(otherUid)
             || otherAabb.IntersectPercentage(ourAabb) < component.IntersectRatio

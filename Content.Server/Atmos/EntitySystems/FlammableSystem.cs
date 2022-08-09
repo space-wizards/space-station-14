@@ -22,6 +22,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Content.Shared.Tag;
+using Content.Shared.StepTrigger.Systems;
 
 
 namespace Content.Server.Atmos.EntitySystems
@@ -37,8 +38,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly TagSystem _tags = default!;
-        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -62,6 +62,8 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFireEvent);
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<FlammableComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
+            SubscribeLocalEvent<FlammableComponent, StepTriggeredEvent>(HandleStepTrigger);
         }
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
@@ -116,12 +118,9 @@ namespace Content.Server.Atmos.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            // Only apply stacks to entities tagged with specific materials
-            // Otherwise  mobs would too easily be able to set each other on fire
-            // In future, support Wood, Fuel, Cloth, etc.
-            if (_tags.HasTag(uid, "Paper"))
+            if (flammable.Ignitable)
             {
-                flammable.FireStacks = 1;
+                flammable.FireStacks = Math.Max(1, flammable.FireStacks);
             }
 
             Ignite(uid, flammable);
@@ -173,11 +172,6 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnTileFireEvent(EntityUid uid, FlammableComponent flammable, ref TileFireEvent args)
         {
-            // Don't set yourself on fire even more
-            // Limiting to specific tags for now since self extinguishing doesn't work if this is on
-            if (flammable.OnFire || !_tags.HasTag(uid, "Paper"))
-                return;
-
             var tempDelta = args.Temperature - MinIgnitionTemperature;
 
             var maxTemp = 0f;
@@ -194,6 +188,19 @@ namespace Content.Server.Atmos.EntitySystems
 
             appearance.SetData(FireVisuals.OnFire, flammable.OnFire);
             appearance.SetData(FireVisuals.FireStacks, flammable.FireStacks);
+        }
+
+        private void HandleAttemptCollide(
+            EntityUid uid,
+            FlammableComponent component,
+            ref StepTriggerAttemptEvent args)
+        {
+            args.Continue |= component.OnFire;
+        }
+
+        private void HandleStepTrigger(EntityUid uid, FlammableComponent component, ref StepTriggeredEvent args)
+        {
+            Logger.Debug("WE DID IT!");
         }
 
         public void AdjustFireStacks(EntityUid uid, float relativeFireStacks, FlammableComponent? flammable = null)
@@ -287,7 +294,7 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent>())
+            foreach (var (flammable, physics, transform, PhysicsComponent) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent, PhysicsComponent>())
             {
                 var uid = flammable.Owner;
 
@@ -302,6 +309,8 @@ namespace Content.Server.Atmos.EntitySystems
                     _alertsSystem.ClearAlert(uid, AlertType.Fire);
                     continue;
                 }
+                Logger.Debug($"IM ON FIRE!? {physics.Awake}");
+                _broadphase.RegenerateContacts(PhysicsComponent);
 
                 _alertsSystem.ShowAlert(uid, AlertType.Fire, null, null);
 
@@ -334,20 +343,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if(transform.GridUid != null)
                 {
-                    var tile = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                    var temperature = 700f;
-                    var volume = 50f;
                     _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
-                        tile,
-                        temperature, volume, true);
-
-                    // Spread the fire to other flammables on the same tile
-                    var fireEvent = new TileFireEvent(temperature, volume);
-                    foreach (var entity in _lookup.GetEntitiesIntersecting(transform.GridUid.Value, tile))
-                    {
-                        RaiseLocalEvent(entity, ref fireEvent, false);
-                    }
-
+                        _transformSystem.GetGridOrMapTilePosition(uid, transform),
+                        700f, 50f, true);
                 }
 
                 foreach (var otherUid in flammable.Collided.ToArray())

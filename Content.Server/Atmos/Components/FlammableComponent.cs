@@ -35,5 +35,12 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("flammableCollisionShape")]
         public IPhysShape FlammableCollisionShape = new PhysShapeCircle() { Radius = 0.35f };
+
+        /// <summary>
+        ///     Should the component be set on fire by interactions with isHot entities
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("ignitable")]
+        public bool Ignitable { get; private set; } = false;
     }
 }

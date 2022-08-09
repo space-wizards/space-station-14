@@ -27,12 +27,34 @@
   - type: Tag
     tags:
     - Document
-    - Paper
   - type: Appearance
   - type: PaperVisuals
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      id: "slips"
+      hard: false
+      layer:
+      - SlipLayer
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 5
+      mask:
+      - ItemMask
   - type: Flammable
     fireSpread: true
     canResistFire: false
+    ignitable: true
     damage:
       types:
         Heat: 1 #per second, scales with number of fire 'stacks'
@@ -45,7 +67,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
