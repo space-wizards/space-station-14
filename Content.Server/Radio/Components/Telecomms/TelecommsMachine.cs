@@ -9,7 +9,7 @@ public abstract class TelecommsMachine : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("network")]
-    public string Network { get; set; } = default!;
+    public string Network { get; set; } = "tcommsat";
 
     /// <summary>
     /// How much traffic to lose per tick (50 gigabytes/second * netspeed)
