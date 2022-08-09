@@ -59,8 +59,19 @@ namespace Content.Client.Strip
                     button,
                 }
             });
+        }
 
+        public float GetRequiredHeight()
+        {
+            float sum = 0;
+            for(int i = 0; i < _vboxContainer.ChildCount; i++)
+            {
+                _vboxContainer.GetChild(i).Measure((5000, 5000));
 
+                sum += _vboxContainer.GetChild(i).DesiredSize.Y + _vboxContainer.SeparationOverride ?? 0;
+            }
+
+            return sum;
         }
     }
 }

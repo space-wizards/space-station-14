@@ -94,12 +94,11 @@ namespace Content.Client.Inventory
             Hands = stripState.Hands;
             Handcuffs = stripState.Handcuffs;
 
-
             UpdateMenu();
 
             if (_strippingMenu != null)
             {
-                _strippingMenu.SetHeight = (Inventory.Count + Hands.Count + Handcuffs.Count) * 34 + _strippingMenu.MinHeight;
+                _strippingMenu.SetHeight = _strippingMenu.GetRequiredHeight() + _strippingMenu.MinHeight;
             }
         }
     }
