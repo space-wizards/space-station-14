@@ -123,8 +123,8 @@ namespace Content.Server.Construction
                     !body.CanCollide)
                     continue;
 
-                if ((body.CollisionMask & anchorBody.CollisionLayer) == 0x0 &&
-                    (body.CollisionLayer & anchorBody.CollisionMask) == 0x0)
+                if ((body.CollisionMask & anchorBody.CollisionLayer) != 0x0 ||
+                    (body.CollisionLayer & anchorBody.CollisionMask) != 0x0)
                 {
                     return false;
                 }
