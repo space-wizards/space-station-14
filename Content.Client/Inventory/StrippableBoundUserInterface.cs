@@ -29,7 +29,6 @@ namespace Content.Client.Inventory
 
             _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCenteredLeft();
-
             UpdateMenu();
         }
 
@@ -57,7 +56,6 @@ namespace Content.Client.Inventory
                         SendMessage(new StrippingInventoryButtonPressed(slot.ID));
                     });
                 }
-
             }
 
             if (Hands != null)
@@ -81,7 +79,6 @@ namespace Content.Client.Inventory
                     });
                 }
             }
-
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
