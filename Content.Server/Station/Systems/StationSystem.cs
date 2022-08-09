@@ -94,7 +94,7 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
     {
-        if (_stations.Contains(uid) && // Was not deleted via DeleteStation() 
+        if (_stations.Contains(uid) && // Was not deleted via DeleteStation()
             _gameTicker.RunLevel == GameRunLevel.InRound) // And not due to a round restart
         {
             throw new InvalidOperationException($"Station entity {ToPrettyString(uid)} is getting deleted mid-round.");
@@ -204,6 +204,27 @@ public sealed class StationSystem : EntitySystem
     }
 
     #endregion Event handlers
+
+    /// <summary>
+    /// Gets the largest member grid from a station.
+    /// </summary>
+    public EntityUid? GetLargestGrid(StationDataComponent component)
+    {
+        EntityUid? largestGrid = null;
+        Box2 largestBounds = new Box2();
+
+        foreach (var gridUid in component.Grids)
+        {
+            if (!TryComp<IMapGridComponent>(gridUid, out var grid) ||
+                grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                continue;
+
+            largestBounds = grid.Grid.LocalAABB;
+            largestGrid = gridUid;
+        }
+
+        return largestGrid;
+    }
 
     public Filter GetInStation(EntityUid source, float range = 32f)
     {

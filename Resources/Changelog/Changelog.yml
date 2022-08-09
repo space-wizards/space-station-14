@@ -1,122 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Enhances the HQ parallax., type: Tweak}
-  id: 1605
-  time: '2022-05-26T08:38:11.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix action icons sometimes being blank when first joining the game.,
-    type: Fix}
-  id: 1606
-  time: '2022-05-26T08:47:03.0000000+00:00'
-- author: wrexbe
-  changes:
-  - {message: Singulo will eat containment generators if they can't handle it., type: Fix}
-  id: 1607
-  time: '2022-05-27T00:35:19.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: You can now resist out of locked/welded crates!, type: Fix}
-  id: 1608
-  time: '2022-05-27T01:05:36.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The China Lake and RPG no longer blow up in your face., type: Fix}
-  id: 1609
-  time: '2022-05-27T01:18:57.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The singulo is now much, much more dangerous (it no longer bounces
-      off the station for no reason).', type: Fix}
-  id: 1610
-  time: '2022-05-27T02:29:34.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some buttons in the lobby not being accessible on some resolutions.,
-    type: Fix}
-  id: 1611
-  time: '2022-05-27T02:33:12.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'The miniature gravity generator, bringing Newton''s finest to a station
-      near you.', type: Add}
-  id: 1612
-  time: '2022-05-27T03:08:05.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta's arrivals shuttle no longer has thrusters or an accessible power
-      room., type: Tweak}
-  id: 1613
-  time: '2022-05-27T03:22:38.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Certain jobs now get "extended" access levels if the station is running
-      on a low crew count., type: Add}
-  id: 1614
-  time: '2022-05-27T04:01:07.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Admins have a whole bunch more smites. Like, a lot. You may die.',
-    type: Add}
-  id: 1615
-  time: '2022-05-27T07:41:18.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: NSS_Pillar minor fixes. Now with filing cabinets., type: Tweak}
-  id: 1616
-  time: '2022-05-27T16:00:05.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Spationaut suit sprite has been modified to keep it more in line
-      with the game's artstyle., type: Tweak}
-  id: 1617
-  time: '2022-05-27T16:02:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Every member of their crew now receives their Centcomm-mandated one
-      minute in space before dying., type: Tweak}
-  id: 1618
-  time: '2022-05-28T01:19:32.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Ghosts now ignore obstructions for some interactions. Useful for admins
-      and mappers., type: Tweak}
-  id: 1619
-  time: '2022-05-28T01:46:17.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Tweaked gas heater & freezer stats. Better lasers now actually improve
-      minimum temperatures., type: Tweak}
-  id: 1620
-  time: '2022-05-28T19:10:37.0000000+00:00'
-- author: efzapa
-  changes:
-  - {message: Added a BRB sign so to let people know you are out doing something.,
-    type: Add}
-  id: 1621
-  time: '2022-05-29T00:09:29.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: 'Adds Magic! Learn spells with spellbooks. Spells including: Blink -
-      a teleport spell. Knock - a spell that unlocks and opens doors. Force Wall -
-      a spell that creates a force field in front of you. Runes - magic drawings on
-      the ground. And a Summon Magi-Carp spell!', type: Add}
-  - {message: Adds a way to prevent a specified entity from colliding with another.,
-    type: Add}
-  id: 1622
-  time: '2022-05-29T06:29:10.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: New NanoTrasen alert levels - Gamma & Epsilon, type: Add}
-  id: 1623
-  time: '2022-05-29T08:35:08.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: 'Waystation has been faithfully ported to SS14, and will succeed Packed
-      Station''s role as a low to midpop map.', type: Add}
-  id: 1624
-  time: '2022-05-29T16:18:16.0000000+00:00'
 - author: youarereadingthis
   changes:
   - {message: Examine text for anchors., type: Add}
@@ -2943,3 +2825,120 @@ Entries:
       their solution contents in beautiful Technicolor.', type: Add}
   id: 2104
   time: '2022-08-07T08:50:52.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo shuttle calls work again., type: Fix}
+  id: 2105
+  time: '2022-08-07T23:22:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Dragons are now a proper station event and can spawn additional rifts.,
+    type: Add}
+  - {message: Space mobs are now subject to weightlessness movement but aren't required
+      to be touching the grid., type: Tweak}
+  - {message: Holoparasites and carps can now spawn with varying colors., type: Tweak}
+  id: 2106
+  time: '2022-08-08T00:18:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: PA controls now much less jank., type: Fix}
+  id: 2107
+  time: '2022-08-08T00:31:53.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Gas canisters can now be sold for money., type: Add}
+  id: 2108
+  time: '2022-08-08T01:49:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a ton of instruments., type: Add}
+  id: 2109
+  time: '2022-08-08T02:21:54.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: 'Now the nuke ops will definitely remember their task, thanks to new
+      spawn sound.', type: Add}
+  id: 2110
+  time: '2022-08-08T02:27:08.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'Red oxygen tanks were removed, red color is now reserved for nitrogen
+      tanks.', type: Remove}
+  id: 2111
+  time: '2022-08-08T02:28:52.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The game no longer has a 50% chance of calling a chair a chr., type: Fix}
+  id: 2112
+  time: '2022-08-08T02:29:31.0000000+00:00'
+- author: Level10Cybermancer
+  changes:
+  - {message: Blunt melee weapons now deal stamina damage, type: Add}
+  - {message: 'After new research has demonstrated that most security personnel lack
+      the mental capability to operate the big red "on/off" button on their issued
+      stun batons, NanoTrasen has made some fundamental tweaks to their design. Disabled
+      stun batons now deal twice as much stamina damage as they do blunt damage.',
+    type: Tweak}
+  id: 2113
+  time: '2022-08-08T02:38:04.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Tranquilizer shell now can be printed in security techfab, type: Add}
+  id: 2114
+  time: '2022-08-08T02:52:15.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombies now have proper groaning sounds when they scream., type: Add}
+  - {message: Zombies will occasionally audibly groan or say a voice line., type: Add}
+  - {message: Zombies now groan when they are hit., type: Add}
+  id: 2115
+  time: '2022-08-08T03:16:43.0000000+00:00'
+- author: LarryRussian
+  changes:
+  - {message: now HoS has combat gloves from the beginning of the round, type: Add}
+  id: 2116
+  time: '2022-08-08T03:22:38.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Activated pinpointers now automatically target the disk after completing
+      a FTL jump., type: Add}
+  id: 2117
+  time: '2022-08-08T04:27:30.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'Ointments heal 5 points of Burn damage per use, instead of 3.33', type: Fix}
+  id: 2118
+  time: '2022-08-08T08:47:15.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Robust harvest is significantly more effective., type: Tweak}
+  id: 2119
+  time: '2022-08-08T08:51:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The objective to steal the Captain's jetpack no longer says "Captain's
+      Captain's Jetpack", type: Fix}
+  id: 2120
+  time: '2022-08-08T08:55:51.0000000+00:00'
+- author: Anthemic
+  changes:
+  - {message: Holofan projectors can now be printed in protolathes., type: Add}
+  id: 2121
+  time: '2022-08-08T08:57:39.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added bare footstep sounds for different surfaces, type: Add}
+  id: 2122
+  time: '2022-08-08T09:03:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed broken names in traitor steal conditions., type: Fix}
+  id: 2123
+  time: '2022-08-09T00:32:17.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has finally bought a license for SpaceDB, and is sharing
+      it with its stations for crew record management. We only have the one license.
+      Don''t tell them what we''re doing.', type: Add}
+  id: 2124
+  time: '2022-08-09T05:10:01.0000000+00:00'
