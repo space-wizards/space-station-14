@@ -1,7 +1,5 @@
 - type: entity
   id: CrateServiceJanitorialSupplies
-  name: janitorial supplies crate
-  description: Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag.
   parent: CratePlastic
   components:
   - type: StorageFill
@@ -23,8 +21,6 @@
 
 - type: entity
   id: CrateServiceReplacementLights
-  name: replacement lights crate
-  description: May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs.
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -36,8 +32,6 @@
 
 - type: entity
   id: CrateMousetrapBoxes
-  name: mousetraps crate
-  description: Mousetraps, for when all of service is being haunted by an entire horde of rats. Use sparingly... or not.
   parent: CrateGenericSteel
   components:
     - type: StorageFill
@@ -47,8 +41,6 @@
 
 - type: entity
   id: CrateServiceSmokeables
-  name: smokeables crate
-  description: "Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!"
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -73,8 +65,6 @@
 
 - type: entity
   id: CrateServiceCustomSmokable
-  name: DIY smokeables crate
-  description: Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own cigarettes.
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -88,8 +78,6 @@
 
 - type: entity
   id: CrateServiceBureaucracy
-  name: bureaucracy crate
-  description: Several stacks of paper and a few pens, what more can you ask for.
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -105,8 +93,6 @@
 
 - type: entity
   id: CrateServicePersonnel
-  name: personnel crate
-  description: Contains a box of blank ID cards and PDAs.
   parent: CrateCommandSecure
   components:
   - type: StorageFill

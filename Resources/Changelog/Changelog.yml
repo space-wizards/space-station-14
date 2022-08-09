@@ -1,43 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Every member of their crew now receives their Centcomm-mandated one
-      minute in space before dying., type: Tweak}
-  id: 1618
-  time: '2022-05-28T01:19:32.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Ghosts now ignore obstructions for some interactions. Useful for admins
-      and mappers., type: Tweak}
-  id: 1619
-  time: '2022-05-28T01:46:17.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Tweaked gas heater & freezer stats. Better lasers now actually improve
-      minimum temperatures., type: Tweak}
-  id: 1620
-  time: '2022-05-28T19:10:37.0000000+00:00'
-- author: efzapa
-  changes:
-  - {message: Added a BRB sign so to let people know you are out doing something.,
-    type: Add}
-  id: 1621
-  time: '2022-05-29T00:09:29.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: 'Adds Magic! Learn spells with spellbooks. Spells including: Blink -
-      a teleport spell. Knock - a spell that unlocks and opens doors. Force Wall -
-      a spell that creates a force field in front of you. Runes - magic drawings on
-      the ground. And a Summon Magi-Carp spell!', type: Add}
-  - {message: Adds a way to prevent a specified entity from colliding with another.,
-    type: Add}
-  id: 1622
-  time: '2022-05-29T06:29:10.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: New NanoTrasen alert levels - Gamma & Epsilon, type: Add}
-  id: 1623
-  time: '2022-05-29T08:35:08.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: 'Waystation has been faithfully ported to SS14, and will succeed Packed
@@ -2949,3 +2910,34 @@ Entries:
       a FTL jump., type: Add}
   id: 2117
   time: '2022-08-08T04:27:30.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'Ointments heal 5 points of Burn damage per use, instead of 3.33', type: Fix}
+  id: 2118
+  time: '2022-08-08T08:47:15.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Robust harvest is significantly more effective., type: Tweak}
+  id: 2119
+  time: '2022-08-08T08:51:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The objective to steal the Captain's jetpack no longer says "Captain's
+      Captain's Jetpack", type: Fix}
+  id: 2120
+  time: '2022-08-08T08:55:51.0000000+00:00'
+- author: Anthemic
+  changes:
+  - {message: Holofan projectors can now be printed in protolathes., type: Add}
+  id: 2121
+  time: '2022-08-08T08:57:39.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added bare footstep sounds for different surfaces, type: Add}
+  id: 2122
+  time: '2022-08-08T09:03:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed broken names in traitor steal conditions., type: Fix}
+  id: 2123
+  time: '2022-08-09T00:32:17.0000000+00:00'
