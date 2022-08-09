@@ -194,7 +194,7 @@ public sealed class StationRecordsSystem : EntitySystem
     /// <param name="records">Station records component.</param>
     /// <typeparam name="T">Type of record to fetch</typeparam>
     /// <returns>Enumerable of pairs with a station record key, and the entry in question of type T.</returns>
-    public IEnumerable<(StationRecordKey, T)?>? GetRecordsOfType<T>(EntityUid station, StationRecordsComponent? records = null)
+    public IEnumerable<(StationRecordKey, T)> GetRecordsOfType<T>(EntityUid station, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
         {

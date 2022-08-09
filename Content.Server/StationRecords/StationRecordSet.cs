@@ -24,11 +24,11 @@ public sealed class StationRecordSet
     /// </summary>
     /// <typeparam name="T">The type of record to fetch.</typeparam>
     /// <returns>An enumerable object that contains a pair of both a station key, and the record associated with it.</returns>
-    public IEnumerable<(StationRecordKey, T)?> GetRecordsOfType<T>()
+    public IEnumerable<(StationRecordKey, T)> GetRecordsOfType<T>()
     {
         if (!_tables.ContainsKey(typeof(T)))
         {
-            yield return null;
+            yield break;
         }
 
         foreach (var (key, entry) in _tables[typeof(T)])

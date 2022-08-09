@@ -58,11 +58,6 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         var listing = new Dictionary<StationRecordKey, string>();
         foreach (var pair in enumerator)
         {
-            if (pair == null)
-            {
-                return;
-            }
-
             listing.Add(pair.Value.Item1, pair.Value.Item2.Name);
         }
 
