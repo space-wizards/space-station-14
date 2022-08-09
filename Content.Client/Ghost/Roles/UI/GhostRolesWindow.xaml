@@ -2,6 +2,9 @@
             Title="{Loc 'ghost-roles-window-title'}"
             MinSize="375 275">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right" Name="AdminControls" Margin="0 8">
+            <Button Name="OpenGhostRoleGroupsButton" Text="Manage Role Groups" HorizontalAlignment="Right"/>
+        </BoxContainer>
         <Label Name="NoRolesMessage"
                Text="{Loc 'ghost-roles-window-no-roles-available-label'}"
                VerticalAlignment="Top" />
@@ -16,9 +19,6 @@
         <BoxContainer Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0 3">
             <Label Text="&#x231B;" Margin="10 0" VerticalAlignment="Center"/>
             <ProgressBar Name="TimeRemainingProgress" VerticalAlignment="Center" HorizontalExpand="True" MaxHeight="10"/>
-        </BoxContainer>
-        <BoxContainer Name="AdminControls" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Name="StartGroupButton" Text="Start Group"/>
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

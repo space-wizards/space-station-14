@@ -42,6 +42,9 @@ internal sealed class RoleGroupEntry
 
 public sealed class GhostRolesChangedEventArgs
 {
+    /// <summary>
+    ///     Indicates only this player session needs to be updated.
+    /// </summary>
     public readonly IPlayerSession? UpdateSession = default!;
 
     public GhostRolesChangedEventArgs(IPlayerSession? session = null)
@@ -75,6 +78,19 @@ public sealed class PlayerTakeoverCompleteEventArgs
     }
 }
 
+public struct GhostRoleGroupChangedEventArgs
+{
+    /// <summary>
+    ///     Has the role group been released, allowing players to enter its lottery?
+    /// </summary>
+    public bool WasReleased { get; init; }
+
+    /// <summary>
+    ///     Has the role group been deleted?
+    /// </summary>
+    public bool WasDeleted { get; init; }
+}
+
 [UsedImplicitly]
 public sealed class GhostRoleManager
 {
@@ -94,7 +110,9 @@ public sealed class GhostRoleManager
 
 
 
-    public int AvailableRolesCount => _ghostRoleEntries.Sum(ent => ent.Value.Lottery.Count + ent.Value.Takeover.Count);
+    public int AvailableRolesCount =>
+        _ghostRoleEntries.Sum(ent => ent.Value.Lottery.Count + ent.Value.Takeover.Count) +
+        _roleGroupEntries.Sum(ent => ent.Value.Status == GhostRoleGroupStatus.Released ?  ent.Value.Entities.Count : 0);
 
     public string[] AvailableRoles => _ghostRoleEntries.Keys.ToArray();
 
@@ -106,6 +124,8 @@ public sealed class GhostRoleManager
 
     public event Action<GhostRolesChangedEventArgs>? OnGhostRolesChanged;
     public event Action<PlayerTakeoverCompleteEventArgs>? OnPlayerTakeoverComplete;
+
+    public event Action<GhostRoleGroupChangedEventArgs>? OnGhostRoleGroupChanged;
 
 
     public void QueueGhostRole(GhostRoleComponent component)
@@ -218,7 +238,7 @@ public sealed class GhostRoleManager
         SendGhostRolesChangedEvent(player);
     }
 
-    public uint? StartGhostRoleGroup(IPlayerSession session, string name, string description, string rules)
+    public uint? StartGhostRoleGroup(IPlayerSession session, string name, string description)
     {
         if (!_adminManager.IsAdmin(session))
             return null;
@@ -239,7 +259,7 @@ public sealed class GhostRoleManager
         // TODO: Multiple role group entries per player.
 
         _roleGroupEntries.Add(identifier, entry);
-        SendGhostRolesChangedEvent(session);
+        SendGhostRoleGroupChangedEvent(false);
         return identifier;
     }
 
@@ -255,7 +275,7 @@ public sealed class GhostRoleManager
             return;
 
         entry.Status = GhostRoleGroupStatus.Releasing;
-        SendGhostRolesChangedEvent(session);
+        SendGhostRoleGroupChangedEvent();
     }
 
     public void DeleteGhostRoleGroup(IPlayerSession session, uint identifier, bool deleteEntities)
@@ -270,6 +290,8 @@ public sealed class GhostRoleManager
             return;
 
         _roleGroupEntries.Remove(identifier);
+        SendGhostRoleGroupChangedEvent(wasDeleted: false);
+
         if (!deleteEntities)
             return;
 
@@ -278,7 +300,6 @@ public sealed class GhostRoleManager
             // TODO: Exempt certain entities from this.
             _entityManager.QueueDeleteEntity(entity);
         }
-        SendGhostRolesChangedEvent(session);
     }
 
     public uint? GetActiveGhostRoleGroupOrNull(IPlayerSession session)
@@ -292,7 +313,7 @@ public sealed class GhostRoleManager
         return entry.Value.Value.Identifier;
     }
 
-    private bool InternalAttachToGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity)
+    public bool AttachToGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity, GhostRoleComponent? component = null)
     {
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
             return false;
@@ -303,25 +324,34 @@ public sealed class GhostRoleManager
         if (entry.Entities.Contains(entity))
             return true;
 
+        if (component != null || _entityManager.TryGetComponent(entity, out component))
+            _queuedGhostRoleComponents.Remove(component);
+
         entry.Entities.Add(entity);
+        SendGhostRoleGroupChangedEvent();
         return true;
     }
 
-    public bool TryAttachToActiveGhostRoleGroup(IPlayerSession session, GhostRoleComponent component)
+    public void DetachFromGhostRoleGroup(uint identifier, EntityUid uid)
     {
-        if (!_adminManager.IsAdmin(session))
+        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
+            return;
+
+        var removed = entry.Entities.Remove(uid);
+        if(removed)
+            SendGhostRoleGroupChangedEvent();
+    }
+
+    public bool RemoveEntityFromGhostRoleGroup(uint identifier, EntityUid uid)
+    {
+        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
             return false;
 
-        if (!_roleGroupEntries.TryFirstOrNull(e => e.Value.Owner == session && e.Value.IsActive, out var entry))
-            return false;
+        var removed = entry.Entities.Remove(uid);
+        if(removed)
+            SendGhostRoleGroupChangedEvent();
 
-        var group = entry.Value.Value;
-
-        var result = InternalAttachToGhostRoleGroup(session, group.Identifier, component.Owner);
-        if (result)
-            _queuedGhostRoleComponents.Remove(component);
-
-        return result;
+        return removed;
     }
 
     private bool TryPopTakeoverGhostComponent(string roleIdentifier, [MaybeNullWhen(false)] out GhostRoleComponent component)
@@ -413,12 +443,10 @@ public sealed class GhostRoleManager
 
     public GhostRoleGroupInfo[] GetGhostRoleGroupsInfo(IPlayerSession session)
     {
-        var isAdmin = _adminManager.IsAdmin(session);
-
         var groups = new List<GhostRoleGroupInfo>(_roleGroupEntries.Count);
         foreach (var (_, group) in _roleGroupEntries)
         {
-            if (group.Status != GhostRoleGroupStatus.Released && !isAdmin)
+            if (group.Status != GhostRoleGroupStatus.Released)
                 continue;
 
             groups.Add(new GhostRoleGroupInfo()
@@ -430,7 +458,6 @@ public sealed class GhostRoleManager
                 Description = group.RoleDescription,
                 Status = group.Status.ToString(),
                 IsRequested = group.Requests.Contains(session),
-                IsOwner = group.Owner == session,
             });
         }
 
@@ -467,6 +494,29 @@ public sealed class GhostRoleManager
         return roles.ToArray();
     }
 
+    public AdminGhostRoleGroupInfo[] GetAdminGhostRoleGroupInfo(IPlayerSession session)
+    {
+        var groups = new List<AdminGhostRoleGroupInfo>(_ghostRoleEntries.Count);
+        if (!_adminManager.IsAdmin(session))
+            return groups.ToArray();
+
+        foreach (var (_, entry) in _roleGroupEntries)
+        {
+            var group = new AdminGhostRoleGroupInfo()
+            {
+                GroupIdentifier = entry.Identifier,
+                Name = entry.RoleName,
+                Description = entry.RoleDescription,
+                Status = entry.Status.ToString(),
+                Entities = entry.Entities.ToArray(),
+            };
+
+            groups.Add(group);
+        }
+
+        return groups.ToArray();
+    }
+
     public void Update()
     {
         if (_gameTiming.CurTime < LotteryExpiresTime)
@@ -480,7 +530,10 @@ public sealed class GhostRoleManager
         foreach (var (_, group) in _roleGroupEntries)
         {
             if (group.Status == GhostRoleGroupStatus.Releasing)
+            {
                 group.Status = GhostRoleGroupStatus.Released;
+                SendGhostRoleGroupChangedEvent(true);
+            }
         }
 
         // Add pending components.
@@ -660,5 +713,10 @@ public sealed class GhostRoleManager
     private void SendPlayerTakeoverCompleteEvent(IPlayerSession session, string roleName, EntityUid entity)
     {
         OnPlayerTakeoverComplete?.Invoke(new PlayerTakeoverCompleteEventArgs(session, roleName, entity));
+    }
+
+    private void SendGhostRoleGroupChangedEvent(bool wasReleased = false, bool wasDeleted = false)
+    {
+        OnGhostRoleGroupChanged?.Invoke(new GhostRoleGroupChangedEventArgs() { WasReleased = wasReleased});
     }
 }

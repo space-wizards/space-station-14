@@ -1,0 +1,12 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Horizontal"
+              HorizontalExpand="True"
+              SeparationOverride="5"
+              Margin="0 0 8 8">
+    <BoxContainer Orientation="Horizontal">
+        <Label Name="EntityNameLabel" MaxWidth="200"/>
+    </BoxContainer>
+    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right" HorizontalExpand="True">
+        <Button Name="GotoButton" Text="Go To" HorizontalAlignment="Right"/>
+    </BoxContainer>
+</BoxContainer>

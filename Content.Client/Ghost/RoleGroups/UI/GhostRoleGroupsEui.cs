@@ -6,10 +6,10 @@ using Robust.Client.Console;
 using Robust.Client.Player;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Ghost.Roles.UI;
+namespace Content.Client.Ghost.RoleGroups.UI;
 
 [UsedImplicitly]
-public class GhostRoleGroupsEui : BaseEui
+public sealed class GhostRoleGroupsEui : BaseEui
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
@@ -18,7 +18,7 @@ public class GhostRoleGroupsEui : BaseEui
     private GhostRoleGroupStartWindow? _windowStartRoleGroup;
     private GhostRoleGroupDeleteWindow? _windowDeleteRoleGroup;
 
-    public GhostRoleGroupsEUI()
+    public GhostRoleGroupsEui()
     {
         _window = new AdminGhostRoleGroupsWindow();
 
@@ -40,23 +40,33 @@ public class GhostRoleGroupsEui : BaseEui
         {
             OnGroupRelease(info.GroupIdentifier);
         };
+
+        _window.OnEntityGoto += OnEntityGoto;
     }
 
-    private void OnGroupStart(string name, string description, string rules)
+    private void OnEntityGoto(EntityUid entity)
     {
         var player = _playerManager.LocalPlayer;
         if (player == null)
-        {
             return;
-        }
+
+        var gotoEntityCommand = $"tpto \"{entity}\"";
+        _consoleHost.ExecuteCommand(player.Session, gotoEntityCommand);
+    }
+
+    private void OnGroupStart(string name, string description)
+    {
+        var player = _playerManager.LocalPlayer;
+        if (player == null)
+            return;
+
 
         var startGhostRoleGroupCommand =
             $"ghostrolegroups start " +
             $"\"{CommandParsing.Escape(name)}\"" +
-            $"\"{CommandParsing.Escape(description)}\"" +
-            $"\"{CommandParsing.Escape(rules)}\"";
+            $"\"{CommandParsing.Escape(description)}\"";
 
-        _consoleHost.ExecuteCommand(player.Session, startGhostRoleGroupCommand);
+            _consoleHost.ExecuteCommand(player.Session, startGhostRoleGroupCommand);
         _windowStartRoleGroup?.Close();
     }
 

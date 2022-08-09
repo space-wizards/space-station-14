@@ -6,6 +6,7 @@ using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -35,7 +36,6 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly GhostRoleManager _ghostRoleManager = default!;
-        [Dependency] private readonly NPCSystem _npcSystem = default!;
 
         private bool _needsUpdateGhostRoles = true;
         private bool _needsUpdateGhostRoleCount = true;
@@ -56,22 +56,13 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
-            SubscribeLocalEvent<GhostRoleComponent, EntityPlacedEvent>(OnEntityPlaced);
             SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
+
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
             _ghostRoleManager.OnGhostRolesChanged += OnGhostRolesChanged;
+            _ghostRoleManager.OnGhostRoleGroupChanged += OnGhostRoleGroupsChanged;
             _ghostRoleManager.OnPlayerTakeoverComplete += OnPlayerTakeoverComplete;
-        }
-
-        private void OnEntityPlaced(EntityUid uid, GhostRoleComponent component, EntityPlacedEvent args)
-        {
-            if (_ghostRoleManager.TryAttachToActiveGhostRoleGroup(args.PlacedBy, component))
-            {
-                Logger.Debug($"Added {ToPrettyString(args.Placed)} to role group.");
-                if(TryComp<NPCComponent>(uid, out var npc))
-                    _npcSystem.SleepNPC(npc); // Prevent mobs moving about while setting up event.
-            }
         }
 
         private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
@@ -103,6 +94,15 @@ namespace Content.Server.Ghost.Roles
             _needsUpdateGhostRoleCount = true;
         }
 
+        private void OnGhostRoleGroupsChanged(GhostRoleGroupChangedEventArgs e)
+        {
+            if (!e.WasReleased && !e.WasDeleted)
+                return;
+
+            _needsUpdateGhostRoles = true;
+            _needsUpdateGhostRoleCount = true;
+        }
+
         private void OnPlayerTakeoverComplete(PlayerTakeoverCompleteEventArgs e)
         {
             if (e.Session.AttachedEntity != null)
@@ -117,6 +117,9 @@ namespace Content.Server.Ghost.Roles
             base.Shutdown();
 
             _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
+            _ghostRoleManager.OnGhostRolesChanged -= OnGhostRolesChanged;
+            _ghostRoleManager.OnGhostRoleGroupChanged -= OnGhostRoleGroupsChanged;
+            _ghostRoleManager.OnPlayerTakeoverComplete -= OnPlayerTakeoverComplete;
         }
 
         public void OpenEui(IPlayerSession session)
@@ -320,102 +323,6 @@ namespace Content.Server.Ghost.Roles
                 EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.");
-        }
-    }
-
-    [AnyCommand]
-    public sealed class GhostRoleGroupsCommand : IConsoleCommand
-    {
-        public string Command => "ghostrolegroups";
-        public string Description => "Manage ghost role groups.";
-        public string Help => @$"${Command}
-start <name> <description> <rules>
-delete <deleteEntities> <groupIdentifier>
-release [groupIdentifier]";
-
-        private void ExecuteStart(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
-        {
-            if (args.Length < 4)
-                return;
-
-            var manager = IoCManager.Resolve<GhostRoleManager>();
-
-            var name = args[1];
-            var description = args[2];
-            var rules = args[3];
-
-            var id = manager.StartGhostRoleGroup(player, name, description, rules);
-            shell.WriteLine($"Role group start: {id}");
-        }
-
-        private void ExecuteDelete(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
-        {
-            var manager = IoCManager.Resolve<GhostRoleManager>();
-            if (args.Length != 3)
-                return;
-
-            var deleteEntities = bool.Parse(args[1]);
-            var identifier = uint.Parse(args[2]);
-
-            manager.DeleteGhostRoleGroup(player, identifier, deleteEntities);
-        }
-
-        private void ExecuteRelease(IConsoleShell shell,  IPlayerSession player, string argStr, string[] args)
-        {
-            var manager = IoCManager.Resolve<GhostRoleManager>();
-
-            switch (args.Length)
-            {
-                case > 2:
-                    shell.WriteLine(Help);
-                    break;
-                case 2:
-                {
-                    var identifier = uint.Parse(args[1]);
-                    manager.ReleaseGhostRoleGroup(player, identifier);
-                    break;
-                }
-                default:
-                {
-                    var identifier = manager.GetActiveGhostRoleGroupOrNull(player);
-                    if(identifier != null)
-                        manager.ReleaseGhostRoleGroup(player, identifier.Value);
-                    break;
-                }
-            }
-        }
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            if (shell.Player == null)
-            {
-                shell.WriteLine("You can only manage ghost role groups on a client.");
-                return;
-            }
-
-            if (args.Length < 1)
-            {
-                shell.WriteLine($"Usage: {Help}");
-                return;
-            }
-
-            var player = (IPlayerSession) shell.Player;
-
-            switch (args[0])
-            {
-                case "start":
-                    ExecuteStart(shell, player, argStr, args);
-                    break;
-                case "release":
-                    ExecuteRelease(shell, player, argStr, args);
-                    break;
-                case "delete":
-                    ExecuteDelete(shell, player, argStr, args);
-                    break;
-                default:
-                    shell.WriteLine($"Usage: {Help}");
-                    break;
-            }
         }
     }
 }

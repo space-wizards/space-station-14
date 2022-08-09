@@ -1,3 +1,4 @@
+using Content.Client.Administration.Managers;
 using Content.Client.Ghost.UI;
 using Content.Client.HUD;
 using Content.Shared.Ghost;
@@ -13,6 +14,7 @@ namespace Content.Client.Ghost
     public sealed class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
 
         // Changes to this value are manually propagated.
@@ -83,7 +85,7 @@ namespace Content.Client.Ghost
             // I hate UI I hate UI I Hate UI
             if (component.Gui == null)
             {
-                component.Gui = new GhostGui(component, this, EntityManager.EntityNetManager!);
+                component.Gui = new GhostGui(component, this, EntityManager.EntityNetManager!, _adminManager.IsActive());
                 component.Gui.Update();
             }
 

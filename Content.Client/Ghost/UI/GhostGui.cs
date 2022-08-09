@@ -19,7 +19,7 @@ namespace Content.Client.Ghost.UI
 
         public GhostTargetWindow? TargetWindow { get; }
 
-        public GhostGui(GhostComponent owner, GhostSystem system, IEntityNetworkManager eventBus)
+        public GhostGui(GhostComponent owner, GhostSystem system, IEntityNetworkManager eventBus, bool isAdmin)
         {
             IoCManager.InjectDependencies(this);
 

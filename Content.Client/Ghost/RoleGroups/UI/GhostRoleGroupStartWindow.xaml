@@ -10,10 +10,6 @@
             <LineEdit Name="RoleDescription" MinSize="300 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Name="RoleRulesLabel" Text="Role Rules" />
-            <LineEdit Name="RoleRules" MinSize="300 0" HorizontalExpand="True" Text="{Loc ghost-role-component-default-rules}" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
             <Button Name="StartButton" Text="Start" />
         </BoxContainer>
     </BoxContainer>
