@@ -83,18 +83,18 @@ namespace Content.Shared.CharacterAppearance
             );
         }
 
-        public static HumanoidCharacterAppearance Random(Sex sex)
+        public static HumanoidCharacterAppearance Random(string species, Sex sex)
         {
             var random = IoCManager.Resolve<IRobustRandom>();
-            var prototypes = IoCManager.Resolve<SpriteAccessoryManager>();
-            var hairStyles = prototypes.AccessoriesForCategory(SpriteAccessoryCategories.HumanHair);
-            var facialHairStyles = prototypes.AccessoriesForCategory(SpriteAccessoryCategories.HumanHair);
+            var markingManager = IoCManager.Resolve<MarkingManager>();
+            var hairStyles = markingManager.MarkingsByCategoryAndSpecies(MarkingCategories.Hair, species).Keys.ToList();
+            var facialHairStyles = markingManager.MarkingsByCategoryAndSpecies(MarkingCategories.FacialHair, species).Keys.ToList();
 
-            var newHairStyle = random.Pick(hairStyles).ID;
+            var newHairStyle = random.Pick(hairStyles);
 
             var newFacialHairStyle = sex == Sex.Female
                 ? HairStyles.DefaultFacialHairStyle
-                : random.Pick(facialHairStyles).ID;
+                : random.Pick(facialHairStyles);
 
             var newHairColor = random.Pick(HairStyles.RealisticHairColors);
             newHairColor = newHairColor
@@ -118,18 +118,6 @@ namespace Content.Shared.CharacterAppearance
 
         public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species)
         {
-            /*
-            var mgr = IoCManager.Resolve<SpriteAccessoryManager>();
-            if (!mgr.IsValidAccessoryInCategory(hairStyleId, SpriteAccessoryCategories.HumanHair))
-            {
-                hairStyleId = HairStyles.DefaultHairStyle;
-            }
-
-            if (!mgr.IsValidAccessoryInCategory(facialHairStyleId, SpriteAccessoryCategories.HumanFacialHair))
-            {
-                facialHairStyleId = HairStyles.DefaultFacialHairStyle;
-            }
-            */
             var hairStyleId = appearance.HairStyleId;
             var facialHairStyleId = appearance.FacialHairStyleId;
 

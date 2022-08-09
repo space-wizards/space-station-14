@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.Power.Pow3r;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
 using Content.Shared.Markings;
+using Content.Shared.Preferences;
 using Content.Shared.Species;
 using Robust.Shared.Prototypes;
 
@@ -63,17 +65,27 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 
     private void OnSpawnComplete(EntityUid uid, HumanoidComponent humanoid, PlayerSpawnCompleteEvent args)
     {
-        humanoid.Species = args.Profile.Species;
-        humanoid.Sex = args.Profile.Sex;
+        LoadProfile(uid, args.Profile, humanoid);
+    }
 
-        SetSkinColor(uid, args.Profile.Appearance.SkinColor, false);
+    public void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        humanoid.Species = profile.Species;
+        humanoid.Sex = profile.Sex;
+
+        SetSkinColor(uid, profile.Appearance.SkinColor, false);
 
         // Hair/facial hair - this may eventually be deprecated.
 
-        AddMarking(uid, args.Profile.Appearance.HairStyleId, args.Profile.Appearance.HairColor, false);
-        AddMarking(uid, args.Profile.Appearance.FacialHairStyleId, args.Profile.Appearance.FacialHairColor, false);
+        AddMarking(uid, profile.Appearance.HairStyleId, profile.Appearance.HairColor, false);
+        AddMarking(uid, profile.Appearance.FacialHairStyleId, profile.Appearance.FacialHairColor, false);
 
-        foreach (var marking in args.Profile.Appearance.Markings)
+        foreach (var marking in profile.Appearance.Markings)
         {
             AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
         }
