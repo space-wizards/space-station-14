@@ -12,5 +12,7 @@
         prefixCreator: ''
       overflowJobs: []
       availableJobs:
-        Botanist: [ 3, 3 ]
+        Botanist: [ 1, 1 ]
+        Bartender: [ 1, 1 ]
+        Chef: [ 1, 1 ]
         SalvageSpecialist: [ 1, 1 ]
