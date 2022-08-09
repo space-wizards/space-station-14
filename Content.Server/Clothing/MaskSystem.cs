@@ -13,6 +13,7 @@ using Content.Server.Disease.Components;
 using Content.Server.IdentityManagement;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
+using Content.Server.VoiceMask;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
 using Robust.Shared.Player;
@@ -87,6 +88,8 @@ namespace Content.Server.Clothing
                 _clothing.SetEquippedPrefix(uid, mask.IsToggled ? "toggled" : null, clothing);
             }
 
+            // shouldn't this be an event?
+
             // toggle ingestion blocking
             if (TryComp<IngestionBlockerComponent>(uid, out var blocker))
                 blocker.Enabled = !mask.IsToggled;
@@ -98,6 +101,10 @@ namespace Content.Server.Clothing
             // toggle identity
             if (TryComp<IdentityBlockerComponent>(uid, out var identity))
                 identity.Enabled = !mask.IsToggled;
+
+            // toggle voice masking
+            if (TryComp<VoiceMaskComponent>(uid, out var voiceMask))
+                voiceMask.Enabled = !mask.IsToggled;
 
             // toggle breath tool connection (skip during equip since that is handled in LungSystem)
             if (isEquip || !TryComp<BreathToolComponent>(uid, out var breathTool))
