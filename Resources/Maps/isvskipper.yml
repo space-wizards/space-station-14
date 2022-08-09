@@ -89,7 +89,7 @@ entities:
     type: Transform
 - uid: 1
   components:
-  - index: 6
+  - index: 2
     type: Map
 - uid: 2
   components:
@@ -820,7 +820,9 @@ entities:
   - inputs:
       Open: []
       Close: []
-      Toggle: []
+      Toggle:
+      - port: Pressed
+        uid: 528
     type: SignalReceiver
 - uid: 63
   type: BlastDoor
@@ -832,7 +834,9 @@ entities:
   - inputs:
       Open: []
       Close: []
-      Toggle: []
+      Toggle:
+      - port: Pressed
+        uid: 528
     type: SignalReceiver
 - uid: 64
   type: BlastDoor
@@ -844,7 +848,9 @@ entities:
   - inputs:
       Open: []
       Close: []
-      Toggle: []
+      Toggle:
+      - port: Pressed
+        uid: 528
     type: SignalReceiver
 - uid: 65
   type: FirelockEdge
@@ -4415,4 +4421,45 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 524
+  type: CableMV
+  components:
+  - pos: -3.5,-1.5
+    parent: 2
+    type: Transform
+- uid: 525
+  type: CableMV
+  components:
+  - pos: -3.5,-0.5
+    parent: 2
+    type: Transform
+- uid: 526
+  type: CableMV
+  components:
+  - pos: -3.5,0.5
+    parent: 2
+    type: Transform
+- uid: 527
+  type: CableMV
+  components:
+  - pos: -2.5,-5.5
+    parent: 2
+    type: Transform
+- uid: 528
+  type: SignalButton
+  components:
+  - pos: -1.5,-10.5
+    parent: 2
+    type: Transform
+  - fixtures: []
+    type: Fixtures
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 62
+      - port: Toggle
+        uid: 63
+      - port: Toggle
+        uid: 64
+    type: SignalTransmitter
 ...
