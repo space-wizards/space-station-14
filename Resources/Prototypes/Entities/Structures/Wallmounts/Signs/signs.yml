@@ -13,7 +13,7 @@
   parent: BaseSign
   id: SignDirectionalBar
   name: bar sign
-  description: A direction sign, pointing out which way the Bar is.
+  description: A direction sign, pointing out which way the bar is.
   components:
   - type: Sprite
     state: direction_bar
@@ -103,7 +103,7 @@
   parent: BaseSign
   id: SignDirectionalHop
   name: hop sign
-  description: A direction sign, pointing out which way Head of Personel's office is.
+  description: A direction sign, pointing out which way Head of Personnel's office is.
   components:
   - type: Sprite
     state: direction_hop
