@@ -24,26 +24,25 @@ public sealed class LightningSystem : SharedLightningSystem
         SubscribeLocalEvent<LightningComponent, StartCollideEvent>(OnCollide);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+    }
+
     private void OnCollide(EntityUid uid, LightningComponent component, StartCollideEvent args)
     {
         if (component.MaxArc > 0 && component.Counter < component.MaxArc)
         {
             Arc(component, component.Owner, args.OtherFixture.Body.Owner);
 
+            //When the lightning is made with TryCreateBeam, spawns random sprites for each beam to make it look nicer.
             var spriteStateNumber = _random.Next(1, 12);
-
             var spriteState = ("lightning_" + spriteStateNumber);
 
             _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase", spriteState);
         }
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-    }
-
-    //TODO: Currently has the potential to spawn off map in NaN and potentially infinte loop.
     public void Arc(LightningComponent component, EntityUid user, EntityUid target)
     {
         var targetXForm = Transform(target);

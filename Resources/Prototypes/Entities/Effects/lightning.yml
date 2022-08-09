@@ -20,4 +20,5 @@
     radius: 3.5
     softness: 1
     autoRot: true
+    castShadows: false
   - type: Beam
