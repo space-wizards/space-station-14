@@ -53,8 +53,8 @@
     - type: Anchorable
     - type: Pullable
     - type: Rotatable
-    - type: Storage
-      blacklist:
-        tags:
-          - Wrench
       capacity: 30
+    - type: Gun
+      fireRate: 4
+    - type: BallisticAmmoProvider
+      capacity: 5

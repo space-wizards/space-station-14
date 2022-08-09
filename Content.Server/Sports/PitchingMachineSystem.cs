@@ -1,12 +1,10 @@
-using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Sports.Components;
-using Content.Server.Storage.Components;
-using Content.Server.Storage.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -18,31 +16,46 @@ namespace Content.Server.Sports
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<PitchingMachineComponent, GetVerbsEvent<Verb>>(AddEjectVerb);
             SubscribeLocalEvent<PitchingMachineComponent, GetVerbsEvent<AlternativeVerb>>(AddPowerVerb);
+            SubscribeLocalEvent<PitchingMachineComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            var gunQuery = GetEntityQuery<GunComponent>();
+
             foreach (var ballLauncher in EntityQuery<PitchingMachineComponent>())
             {
                 ballLauncher.AccumulatedFrametime += frameTime;
+
+                if (!gunQuery.TryGetComponent(ballLauncher.Owner, out var gunComponent))
+                    continue;
 
                 if (ballLauncher.AccumulatedFrametime < ballLauncher.CurrentLauncherCooldown)
                     continue;
 
                 ballLauncher.AccumulatedFrametime -= ballLauncher.CurrentLauncherCooldown;
-                ballLauncher.CurrentLauncherCooldown = ballLauncher.ShootCooldown;
+                ballLauncher.CurrentLauncherCooldown = gunComponent.FireRate;
 
                 if (ballLauncher.IsOn)
                     Fire(ballLauncher.Owner);
             }
+        }
+
+        private void OnInteractUsing(EntityUid uid, PitchingMachineComponent component, InteractUsingEvent args)
+        {
+            if (!TryComp<BallisticAmmoProviderComponent>(component.Owner, out var ammoProviderComponent))
+                return;
+
+            ammoProviderComponent.Entities.Add(args.Used);
+            ammoProviderComponent.Container.Insert(args.Used);
         }
 
         public void TogglePower(EntityUid uid, PitchingMachineComponent component)
@@ -63,20 +76,21 @@ namespace Content.Server.Sports
         {
             if (!TryComp<PitchingMachineComponent>(uid, out var component))
                 return;
-            if (!TryComp<ServerStorageComponent?>(component.Owner, out var storage))
+            if (!TryComp<BallisticAmmoProviderComponent>(component.Owner, out var ammoProviderComponent))
                 return;
-            if (storage.StoredEntities == null)
-                return;
-            if (storage.StoredEntities.Count == 0)
+            if (ammoProviderComponent.Container.ContainedEntities.Count == 0 || ammoProviderComponent.Entities.Count == 0)
                 return;
 
-            var projectile = _robustRandom.Pick(storage.StoredEntities);
-            _storageSystem.RemoveAndDrop(uid, projectile, storage);
+            var projectile = _robustRandom.Pick(ammoProviderComponent.Container.ContainedEntities);
 
             var dir = Comp<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * _robustRandom.NextFloat(component.ShootDistanceMin, component.ShootDistanceMax);
 
+            ammoProviderComponent.Entities.Remove(projectile);
+            ammoProviderComponent.Container.Remove(projectile);
+
             _audioSystem.Play(_audioSystem.GetSound(component.FireSound), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
-            _throwingSystem.TryThrow(projectile, dir, 10f, uid);
+
+            _throwingSystem.TryThrow(projectile, dir, 10f); //using throw because guncode is hardcoded to absolutely yeet it, impossible to actually hit with a bat
 
         }
 
@@ -104,16 +118,18 @@ namespace Content.Server.Sports
 
         public void TryEjectAllItems(PitchingMachineComponent component, EntityUid user)
         {
-            if (!TryComp<ServerStorageComponent?>(component.Owner, out var storage))
+            if (!TryComp<BallisticAmmoProviderComponent?>(component.Owner, out var ammoProviderComponent))
                 return;
-            if (storage.StoredEntities == null)
+            if (ammoProviderComponent.Entities.Count == 0)
                 return;
 
-            foreach (var entity in storage.StoredEntities.ToArray())
+            foreach (var entity in ammoProviderComponent.Entities.ToArray())
             {
-                _storageSystem.RemoveAndDrop(component.Owner, entity, storage);
+                ammoProviderComponent.Entities.Remove(entity);
+                ammoProviderComponent.Container.Remove(entity);
             }
             _popupSystem.PopupEntity(Loc.GetString("pneumatic-cannon-component-ejected-all", ("cannon", (component.Owner))), user, Filter.Local());
         }
+
     }
 }
