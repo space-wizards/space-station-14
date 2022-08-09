@@ -25,6 +25,7 @@ public sealed class CryopodSystem : EntitySystem
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
@@ -50,8 +51,7 @@ public sealed class CryopodSystem : EntitySystem
         if (args.SpawnResult != null)
             return;
 
-        var validPods = EntityQuery<CryopodComponent>().Where(c => !IsOccupied(c) && c.DoSpawns).ToArray();
-        Logger.Debug($"{validPods.Length}");
+        var validPods = EntityQuery<CryopodComponent>().Where(c => !IsOccupied(c) && c.DoSpawns && _stationSystem.GetOwningStation(c.Owner) == args.Station).ToArray();
         _random.Shuffle(validPods);
         if (!validPods.Any())
             return;
@@ -114,7 +114,7 @@ public sealed class CryopodSystem : EntitySystem
         if (args.Victim != component.BodyContainer.ContainedEntity)
             return;
 
-        EntityManager.DeleteEntity(args.Victim);
+        QueueDel(args.Victim);
         _audio.PlayPvs(component.LeaveSound, uid);
         args.SetHandled(SuicideKind.Special);
     }
