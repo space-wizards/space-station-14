@@ -48,8 +48,14 @@ public sealed class EscapeInventorySystem : EntitySystem
         // Contested
         if (_handsSystem.IsHolding(container.Owner, uid, out var inHand))
         {
-            var contestResults = 1 / (_contests.MassContest(uid, container.Owner));
-            Logger.Error("Result: " + contestResults);
+            var contestResults = _contests.MassContest(uid, container.Owner);
+
+            // Inverse if we aren't going to divide by 0, otherwise just use a default multiplier of 1.
+            if (contestResults != 0)
+                contestResults = 1 / contestResults;
+            else
+                contestResults = 1;
+
             if (contestResults >= MaximumMassDisadvantage)
                 return;
 
@@ -101,8 +107,7 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnDropped(EntityUid uid, CanEscapeInventoryComponent component, DroppedEvent args)
     {
-        if (component.CancelToken != null)
-            component.CancelToken.Cancel();
+        component.CancelToken?.Cancel();
     }
 
     private sealed class EscapeDoAfterComplete : EntityEventArgs { }
