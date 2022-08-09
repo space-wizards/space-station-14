@@ -96,7 +96,7 @@ public sealed partial class ShuttleSystem
            !TryComp<StationDataComponent>(_station.GetOwningStation(player.Value), out var stationData) ||
            !TryComp<ShuttleComponent>(stationData.EmergencyShuttle, out var shuttle)) return;
 
-       var targetGrid = GetLargestGrid(stationData);
+       var targetGrid = _station.GetLargestGrid(stationData);
        if (targetGrid == null) return;
        var config = GetDockingConfig(shuttle, targetGrid.Value);
        if (config == null) return;
@@ -242,7 +242,7 @@ public sealed partial class ShuttleSystem
            !TryComp<TransformComponent>(stationData.EmergencyShuttle, out var xform) ||
            !TryComp<ShuttleComponent>(stationData.EmergencyShuttle, out var shuttle)) return;
 
-      var targetGrid = GetLargestGrid(stationData);
+      var targetGrid = _station.GetLargestGrid(stationData);
 
        // UHH GOOD LUCK
        if (targetGrid == null)
@@ -376,27 +376,6 @@ public sealed partial class ShuttleSystem
        }
 
        _commsConsole.UpdateCommsConsoleInterface();
-   }
-
-   /// <summary>
-   /// Gets the largest member grid from a station.
-   /// </summary>
-   private EntityUid? GetLargestGrid(StationDataComponent component)
-   {
-       EntityUid? largestGrid = null;
-       Box2 largestBounds = new Box2();
-
-       foreach (var gridUid in component.Grids)
-       {
-           if (!TryComp<IMapGridComponent>(gridUid, out var grid)) continue;
-
-           if (grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared) continue;
-
-           largestBounds = grid.Grid.LocalAABB;
-           largestGrid = gridUid;
-       }
-
-       return largestGrid;
    }
 
    private List<DockingComponent> GetDocks(EntityUid uid)

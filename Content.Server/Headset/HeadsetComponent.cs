@@ -1,3 +1,4 @@
+using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.VoiceMask;
@@ -23,6 +24,7 @@ namespace Content.Server.Headset
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
 
+        private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
 
         [DataField("channels", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
@@ -41,6 +43,7 @@ namespace Content.Server.Headset
         {
             base.Initialize();
 
+            _chatSystem = EntitySystem.Get<ChatSystem>();
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
@@ -63,6 +66,10 @@ namespace Content.Server.Headset
             {
                 name = Identity.Name(source, _entMan);
             }
+
+            message = _chatSystem.TransformSpeech(source, message);
+            if (message.Length == 0)
+                return;
 
             var msg = new MsgChatMessage
             {

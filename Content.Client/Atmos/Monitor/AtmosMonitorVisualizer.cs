@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Power;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
@@ -40,7 +41,7 @@ namespace Content.Client.Atmos.Monitor
             if (!sprite.LayerMapTryGet(_layerMap, out int layer))
                 return;
 
-            if (component.TryGetData<bool>("powered", out var powered))
+            if (component.TryGetData<bool>(PowerDeviceVisuals.Powered, out var powered))
             {
                 if (_hideOnDepowered != null)
                     foreach (var visLayer in _hideOnDepowered)
@@ -53,12 +54,12 @@ namespace Content.Client.Atmos.Monitor
                             sprite.LayerSetState(setStateLayer, new RSI.StateId(state));
             }
 
-            if (component.TryGetData<Vector2>("offset", out Vector2 offset))
+            if (component.TryGetData<Vector2>(AtmosMonitorVisuals.Offset, out Vector2 offset))
             {
                 sprite.Offset = offset;
             }
 
-            if (component.TryGetData<AtmosMonitorAlarmType>("alarmType", out var alarmType)
+            if (component.TryGetData<AtmosMonitorAlarmType>(AtmosMonitorVisuals.AlarmType, out var alarmType)
                 && powered)
                 if (_alarmStates.TryGetValue(alarmType, out var state))
                     sprite.LayerSetState(layer, new RSI.StateId(state));

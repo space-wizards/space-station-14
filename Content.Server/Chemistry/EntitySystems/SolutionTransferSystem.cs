@@ -1,9 +1,11 @@
+using Content.Server.Administration.Logs;
 using Content.Shared.Verbs;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -14,6 +16,7 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed class SolutionTransferSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         /// <summary>
         ///     Default transfer amounts for the set-transfer verb.
@@ -180,6 +183,9 @@ namespace Content.Server.Chemistry.EntitySystems
             var solutionSystem = Get<SolutionContainerSystem>();
             var solution = solutionSystem.Drain(sourceEntity, source, actualAmount);
             solutionSystem.Refill(targetEntity, target, solution);
+
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                $"{EntityManager.ToPrettyString(user):player} transferred {string.Join(", ", solution.Contents)} to {EntityManager.ToPrettyString(targetEntity):entity}, which now contains {string.Join(", ", target.Contents)}");
 
             return actualAmount;
         }
