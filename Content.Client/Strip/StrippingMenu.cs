@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,7 +13,7 @@ namespace Content.Client.Strip
 
         public StrippingMenu(string title)
         {
-            MinSize = SetSize = (400, 600);
+            MinSize = SetSize = (400, 47);
             Title = title;
 
             _vboxContainer = new BoxContainer
@@ -59,6 +59,13 @@ namespace Content.Client.Strip
                     button,
                 }
             });
+        }
+
+        public float GetRequiredHeight()
+        {
+            _vboxContainer.Measure((5000, 5000));
+
+            return _vboxContainer.DesiredSize.Y;
         }
     }
 }

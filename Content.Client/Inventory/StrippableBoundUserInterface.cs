@@ -92,6 +92,11 @@ namespace Content.Client.Inventory
             Handcuffs = stripState.Handcuffs;
 
             UpdateMenu();
+
+            if (_strippingMenu != null)
+            {
+                _strippingMenu.SetHeight = _strippingMenu.GetRequiredHeight() + _strippingMenu.MinHeight;
+            }
         }
     }
 }
