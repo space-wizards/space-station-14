@@ -62,7 +62,7 @@ public sealed class CryopodSystem : EntitySystem
         args.SpawnResult = _stationSpawning.SpawnPlayerMob(xform.Coordinates, args.Job, args.HumanoidCharacterProfile, args.Station);
 
         _audio.PlayPvs(pod.ArrivalSound, pod.Owner);
-        InsertBody(args.SpawnResult.Value, pod);
+        InsertBody(args.SpawnResult.Value, pod, true);
         var duration = _random.NextFloat(pod.InitialSleepDurationRange.X, pod.InitialSleepDurationRange.Y);
         _statusEffects.TryAddStatusEffect<SleepingComponent>(args.SpawnResult.Value, "ForcedSleep", TimeSpan.FromSeconds(duration), false);
     }
@@ -72,7 +72,7 @@ public sealed class CryopodSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = InsertBody(args.Dragged, component);
+        args.Handled = InsertBody(args.Dragged, component, false);
     }
 
     private void AddAlternativeVerbs(EntityUid uid, CryopodComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -98,7 +98,7 @@ public sealed class CryopodSystem : EntitySystem
         {
             AlternativeVerb verb = new()
             {
-                Act = () => InsertBody(args.User, component),
+                Act = () => InsertBody(args.User, component, false),
                 Category = VerbCategory.Insert,
                 Text = Loc.GetString("medical-scanner-verb-enter")
             };
@@ -128,12 +128,12 @@ public sealed class CryopodSystem : EntitySystem
         args.PushMarkup(Loc.GetString(message));
     }
 
-    public bool InsertBody(EntityUid? toInsert, CryopodComponent component)
+    public bool InsertBody(EntityUid? toInsert, CryopodComponent component, bool force)
     {
         if (toInsert == null)
             return false;
 
-        if (IsOccupied(component))
+        if (IsOccupied(component) && !force)
             return false;
 
         if (!HasComp<MobStateComponent>(toInsert.Value))
