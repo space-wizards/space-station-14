@@ -53,7 +53,7 @@ public sealed class LightningSystem : SharedLightningSystem
         {
             var direction = (Direction)i;
             var dirRad = direction.ToAngle() + targetXForm.GetWorldPositionRotation().WorldRotation;
-            var ray = new CollisionRay(targetXForm.GetWorldPositionRotation().WorldPosition, dirRad.ToVec(), (int)CollisionGroup.ItemMask);
+            var ray = new CollisionRay(targetXForm.GetWorldPositionRotation().WorldPosition, dirRad.ToVec(), component.CollisionMask);
             var rayCastResults = _physics.IntersectRay(targetXForm.MapID, ray, component.MaxLength, target, false).ToList();
             var lightningQuery = GetEntityQuery<LightningComponent>();
             var machineQuery = GetEntityQuery<MachineComponent>();

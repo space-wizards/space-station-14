@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Physics;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -27,4 +28,11 @@ public abstract class SharedLightningComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxLength")]
     public float MaxLength = 5f;
+
+    /// <summary>
+    /// What should this arc to?
+    /// </summary>
+    [ViewVariables]
+    [DataField("collisionMask")]
+    public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.MachineMask);
 }
