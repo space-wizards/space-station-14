@@ -200,6 +200,7 @@ public sealed partial class RadioSystem : EntitySystem
         var xforms = GetEntityQuery<TransformComponent>();
 
         var zLevelWeCare = new HashSet<MapId>();
+        var radioXFormsCache = new Dictionary<EntityUid, TransformComponent>();
 
         foreach (var radio in radioIn)
         {
@@ -209,13 +210,15 @@ public sealed partial class RadioSystem : EntitySystem
             // snowflake for headsets/ghost headsets. pass owners directly
             if (ghostRadio.HasComponent(owner) || headset.HasComponent(owner))
             {
-                if (!owner.TryGetContainer(out var container)) continue;
-                if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor)) continue;
+                if (!owner.TryGetContainer(out var container))
+                    continue;
+                if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor))
+                    continue;
                 clientsOut.Add(actor.PlayerSession);
                 continue;
             }
-
-            zLevelWeCare.Add(Transform(owner).MapID);
+            radioXFormsCache.Add(owner, xforms.GetComponent(owner));
+            zLevelWeCare.Add(radioXFormsCache.GetValueOrDefault(owner, xforms.GetComponent(owner)).MapID);
         }
 
         foreach (var mapId in zLevelWeCare)
@@ -231,10 +234,11 @@ public sealed partial class RadioSystem : EntitySystem
                     // TODO this
                     var range = 8f;
                     // ignore not the same id
-                    if (Transform(radio.Owner).MapID != mapId)
+                    var owner = radio.Owner;
+                    if (radioXFormsCache.GetValueOrDefault(owner, xforms.GetComponent(owner)).MapID != mapId)
                         continue;
                     //xform.WorldPosition - position.Position).Length < range,
-                    if ((playerPos - _transformSystem.GetWorldPosition(radio.Owner, xforms)).Length > range)
+                    if ((playerPos - radioXFormsCache.GetValueOrDefault(owner, xforms.GetComponent(owner)).WorldPosition).Length > range)
                     {
                         continue;
                     }
