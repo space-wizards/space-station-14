@@ -1,4 +1,4 @@
-﻿using Content.Shared.Audio;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
@@ -54,10 +54,25 @@ public sealed class BlockingUserSystem : EntitySystem
 
     private void OnDamageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)
     {
-        if (component.BlockingItem != null)
+        if (component.BlockingItem != null && IsDamageValid(args))
         {
             RaiseLocalEvent(component.BlockingItem.Value, args);
         }
+    }
+
+    /// <summary>
+    /// This method ensures that the damage being done to the sheild is in fact valid for damaging the sheild. E.G: Sheild should take damage to asphyxiation, radiation, etc. just Slash, Blunt, and Piercing.
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns>Bool: True when valid damage type, false when not valid damage or the damageDelta is null.</returns>
+    private bool IsDamageValid(DamageChangedEvent args)
+    {
+        if (args.DamageDelta == null)
+        {
+            return false;
+        }
+
+        return args.DamageDelta.DamageDict.ContainsKey("Slash") || args.DamageDelta.DamageDict.ContainsKey("Blunt") || args.DamageDelta.DamageDict.ContainsKey("Piercing");
     }
 
     private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
