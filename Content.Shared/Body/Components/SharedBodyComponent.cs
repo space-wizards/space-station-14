@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Standing;
@@ -135,7 +134,8 @@ namespace Content.Shared.Body.Components
 
             var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
+            // TODO: Body refactor. Somebody is doing it
+            // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
             foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartAdded>(Owner).ToArray())
             {
                 component.BodyPartAdded(argsAdded);
@@ -163,7 +163,8 @@ namespace Content.Shared.Body.Components
             var args = new BodyPartRemovedEventArgs(slot.Id, part);
 
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(Owner, args);
+            // TODO: Body refactor. Somebody is doing it
+            // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(Owner, args);
             foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartRemoved>(Owner))
             {
                 component.BodyPartRemoved(args);

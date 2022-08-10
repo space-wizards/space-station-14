@@ -1,12 +1,12 @@
 ﻿using System.Linq;
+using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid.Species;
 using Content.Shared.Markings;
-using Content.Shared.Species;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.CharacterAppearance
+namespace Content.Shared.Humanoid
 {
     [Serializable, NetSerializable]
     public sealed class HumanoidCharacterAppearance : ICharacterAppearance

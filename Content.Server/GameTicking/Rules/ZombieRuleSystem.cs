@@ -3,6 +3,7 @@ using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
@@ -146,7 +147,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     private void CheckRoundEnd(EntityUid target)
     {
         //we only care about players, not monkeys and such.
-        if (!HasComp<HumanoidAppearanceComponent>(target))
+        if (!HasComp<HumanoidComponent>(target))
             return;
 
         var percent = GetInfectedPercentage(out var num);
@@ -195,7 +196,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private float GetInfectedPercentage(out List<EntityUid> livingHumans)
     {
-        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>(true);
+        var allPlayers = EntityQuery<HumanoidComponent, MobStateComponent>(true);
         var allZombers = GetEntityQuery<ZombieComponent>();
 
         var totalPlayers = new List<EntityUid>();

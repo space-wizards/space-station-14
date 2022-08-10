@@ -35,7 +35,6 @@ namespace Content.Shared.Entry
             base.PostInit();
 
             _initTileDefinitions();
-            IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
             IoCManager.Resolve<MarkingManager>().Initialize();
 
             var configMan = IoCManager.Resolve<IConfigurationManager>();

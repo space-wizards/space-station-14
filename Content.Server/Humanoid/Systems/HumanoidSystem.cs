@@ -1,12 +1,10 @@
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Power.Pow3r;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Species;
 using Content.Shared.Markings;
 using Content.Shared.Preferences;
-using Content.Shared.Species;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Humanoid;
@@ -95,6 +93,23 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         EnsureDefaultMarkings(uid, humanoid);
 
         Synchronize(uid);
+    }
+
+    public void CloneAppearance(EntityUid source, EntityUid target, HumanoidComponent? sourceHumanoid = null,
+        HumanoidComponent? targetHumanoid = null)
+    {
+        if (!Resolve(source, ref sourceHumanoid) || !Resolve(target, ref targetHumanoid))
+        {
+            return;
+        }
+
+        targetHumanoid.Species = sourceHumanoid.Species;
+        targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
+        targetHumanoid.Sex = sourceHumanoid.Sex;
+        targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
+        targetHumanoid.CurrentMarkings = new(sourceHumanoid.CurrentMarkings);
+
+        Synchronize(target, targetHumanoid);
     }
 
     public void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, HumanoidComponent? humanoid = null)

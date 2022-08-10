@@ -1,5 +1,6 @@
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Dataset;
+using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;

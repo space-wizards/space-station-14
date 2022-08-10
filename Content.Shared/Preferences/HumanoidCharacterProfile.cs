@@ -3,10 +3,10 @@ using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Species;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
-using Content.Shared.Species;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -97,7 +97,7 @@ namespace Content.Shared.Preferences
             return new(
                 "John Doe",
                 "",
-                SpeciesManager.DefaultSpecies,
+                SharedHumanoidSystem.DefaultSpecies,
                 MinimumAge,
                 Sex.Male,
                 Gender.Male,

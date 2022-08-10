@@ -1,10 +1,9 @@
 ﻿using Content.Shared.Dataset;
 using Content.Shared.Humanoid.Species;
-using Content.Shared.Species;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Shared.CharacterAppearance
+namespace Content.Shared.Humanoid
 {
     public enum Sex : byte
     {

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Species;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 

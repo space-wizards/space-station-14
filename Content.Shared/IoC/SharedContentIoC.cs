@@ -7,7 +7,6 @@ namespace Content.Shared.IoC
     {
         public static void Register()
         {
-            IoCManager.Register<SpriteAccessoryManager, SpriteAccessoryManager>();
             IoCManager.Register<MarkingManager, MarkingManager>();
         }
     }

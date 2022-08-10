@@ -11,6 +11,7 @@ using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Species;
 using Content.Shared.Markings;
 using Content.Shared.Preferences;

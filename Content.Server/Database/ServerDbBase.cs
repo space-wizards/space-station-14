@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
+using Content.Shared.Humanoid;
 using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;

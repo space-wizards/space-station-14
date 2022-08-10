@@ -1,13 +1,11 @@
 ﻿using Content.Server.CharacterAppearance.Components;
-using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Preferences;
 
-namespace Content.Server.CharacterAppearance.Systems;
+namespace Content.Server.Humanoid.Systems;
 
 public sealed class RandomHumanoidAppearanceSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
+    [Dependency] private readonly HumanoidSystem _humanoid = default!;
 
     public override void Initialize()
     {
@@ -18,16 +16,13 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RandomHumanoidAppearanceComponent component, MapInitEvent args)
     {
-        if (TryComp<HumanoidAppearanceComponent>(uid, out var appearance))
-        {
-            var profile = HumanoidCharacterProfile.Random();
-            _humanoidAppearance.UpdateFromProfile(uid, profile, appearance);
+        var profile = HumanoidCharacterProfile.Random();
+        _humanoid.LoadProfile(uid, profile);
 
-            if (component.RandomizeName)
-            {
-                var meta = MetaData(uid);
-                meta.EntityName = profile.Name;
-            }
+        if (component.RandomizeName)
+        {
+            var meta = MetaData(uid);
+            meta.EntityName = profile.Name;
         }
     }
 }

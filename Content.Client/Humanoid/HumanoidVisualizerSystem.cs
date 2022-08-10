@@ -3,7 +3,6 @@ using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Species;
 using Content.Shared.Markings;
-using Content.Shared.Species;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameStates;

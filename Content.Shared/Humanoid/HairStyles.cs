@@ -14,18 +14,5 @@ namespace Content.Shared.CharacterAppearance
             Color.Wheat,
             Color.Gray
         };
-
-        // These comparers put the default hair style (shaved/bald) at the very top.
-        // For in the hair style pickers.
-
-        public static readonly IComparer<SpriteAccessoryPrototype> SpriteAccessoryComparer =
-            Comparer<SpriteAccessoryPrototype>.Create((a, b) =>
-            {
-                var cmp = -a.Priority.CompareTo(b.Priority);
-                if (cmp != 0)
-                    return cmp;
-
-                return string.Compare(a.Name, b.Name, StringComparison.CurrentCulture);
-            });
     }
 }

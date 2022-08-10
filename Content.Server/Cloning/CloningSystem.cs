@@ -2,18 +2,17 @@ using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.GameTicking;
-using Content.Shared.CharacterAppearance.Systems;
-using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.Species;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.EUI;
+using Content.Server.Humanoid;
 using Robust.Shared.Containers;
 using Robust.Server.Containers;
 using Content.Shared.Cloning;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MobState;
+using Content.Shared.Humanoid.Species;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -24,7 +23,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly EuiManager _euiManager = null!;
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
-        [Dependency] private readonly SharedHumanoidAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
@@ -120,13 +119,12 @@ namespace Content.Server.Cloning.Systems
             if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
                 return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
-            if (!TryComp<HumanoidAppearanceComponent>(bodyToClone, out var humanoid))
+            if (!TryComp<HumanoidComponent>(bodyToClone, out var humanoid))
                 return false; // whatever body was to be cloned, was not a humanoid
 
             var speciesProto = _prototype.Index<SpeciesPrototype>(humanoid.Species).Prototype;
             var mob = Spawn(speciesProto, Transform(clonePod.Owner).MapPosition);
-            _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance);
-            _appearanceSystem.UpdateSexGender(mob, humanoid.Sex, humanoid.Gender);
+            _humanoidSystem.CloneAppearance(bodyToClone, mob);
 
             MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
 
