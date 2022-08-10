@@ -224,6 +224,10 @@ namespace Content.Server.Tools
                     SoundSystem.Play(welder.WelderRefill.GetSound(), Filter.Pvs(uid), uid);
                     target.PopupMessage(args.User, Loc.GetString("welder-component-after-interact-refueled-message"));
                 }
+                else if (welderSolution.AvailableVolume <= 0)
+                {
+                    target.PopupMessage(args.User, Loc.GetString("welder-component-already-full"));
+                }
                 else
                 {
                     target.PopupMessage(args.User, Loc.GetString("welder-component-no-fuel-in-tank", ("owner", args.Target)));
