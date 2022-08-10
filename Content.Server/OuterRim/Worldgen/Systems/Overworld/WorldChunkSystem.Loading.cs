@@ -13,6 +13,21 @@ public partial class WorldChunkSystem
 
     private readonly Stopwatch _debrisLoadStopwatch = new();
 
+    private readonly HashSet<Vector2i> _takenPoIChunks = new();
+
+    public const float MaximumPoILocationMagnitude = 6;
+
+    public Vector2i GetCleanPoILocation()
+    {
+        Vector2i loc;
+        do
+        {
+            loc = _random.NextVector2(MaximumPoILocationMagnitude).Floored();
+        } while (_takenPoIChunks.Contains(loc));
+
+        return loc;
+    }
+
     public void ForceEmptyChunk(Vector2i chunk)
     {
         if (_chunks.ContainsKey(chunk))

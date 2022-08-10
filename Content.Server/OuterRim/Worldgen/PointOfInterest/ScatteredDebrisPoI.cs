@@ -1,5 +1,6 @@
 ﻿using Content.Server.OuterRim.Worldgen.Systems.Overworld;
 using Content.Server.OuterRim.Worldgen.Tools;
+using Content.Shared.OuterRim.Worldgen.Components;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -28,11 +29,15 @@ public sealed class ScatteredDebrisPoI : PointOfInterestGenerator
 
         foreach (var point in debrisPoints)
         {
-            mapLoader.LoadBlueprint(worldChunkSys.WorldMap, random.Pick(Maps), new MapLoadOptions()
+            var (_, grid) = mapLoader.LoadBlueprint(worldChunkSys.WorldMap, random.Pick(Maps), new MapLoadOptions()
             {
                 Offset = center + point,
                 Rotation = random.NextAngle()
             });
+            var comp = entityManager.AddComponent<GridIdentityComponent>(grid!.Value);
+            comp.ShowIff = false;
         }
+
+
     }
 }

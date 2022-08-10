@@ -64,8 +64,12 @@ public sealed partial class WorldChunkSystem : EntitySystem
         if (ev.Old != GameRunLevel.PreRoundLobby || ev.New != GameRunLevel.InRound)
             return;
 
+        ResetNoise();
+
         WorldMap = _gameTicker.DefaultMap;
         ForceEmptyChunk((0, 0));
+        _takenPoIChunks.Clear();
+        RaiseLocalEvent(new WorldgenConfiguredEvent());
     }
 
     private void OnDebrisMoved(EntityUid uid, WorldManagedComponent component, ref MoveEvent args)
