@@ -17,6 +17,8 @@ public abstract class SharedHumanoidSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
+    public const string DefaultSpecies = "Human";
+
     public void SetAppearance(EntityUid uid,
         string species,
         Dictionary<HumanoidVisualLayers, SharedHumanoidComponent.CustomBaseLayerInfo> customBaseLayer,

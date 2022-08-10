@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CCVar;
+using Content.Shared.Humanoid.Species;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Species;

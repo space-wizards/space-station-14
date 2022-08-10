@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Actions;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.Humanoid.Species;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;
 using Content.Shared.Species;

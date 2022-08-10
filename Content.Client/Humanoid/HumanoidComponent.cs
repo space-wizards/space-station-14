@@ -1,5 +1,6 @@
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Species;
 using Content.Shared.Markings;
 using Content.Shared.Species;
 

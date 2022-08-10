@@ -5,6 +5,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Cloning;
+using Content.Shared.Humanoid.Species;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;

@@ -1,10 +1,9 @@
 using Content.Shared.CharacterAppearance;
-using Content.Shared.Markings;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Species;
+namespace Content.Shared.Humanoid.Species;
 
 [Prototype("species")]
 public sealed class SpeciesPrototype : IPrototype
@@ -12,7 +11,7 @@ public sealed class SpeciesPrototype : IPrototype
     /// <summary>
     /// Prototype ID of the species.
     /// </summary>
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
 
     /// <summary>

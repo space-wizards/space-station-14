@@ -3,6 +3,7 @@ using Content.Client.Info;
 using Content.Client.Lobby.UI;
 using Content.Client.Resources;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.Humanoid.Species;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Species;
