@@ -1,14 +1,26 @@
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Dataset;
 using Content.Shared.Roles;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Configurations;
 
 public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
 {
     public override string Id => "Nukeops";
+
+    [DataField("minPlayers")]
+    public int MinPlayers = 15;
+
+    [DataField("playersPerOperative")]
+    public int PlayersPerOperative = 5;
+
+    [DataField("maxOps")]
+    public int MaxOperatives = 5;
 
     [DataField("spawnEntityProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnEntityPrototype = "MobHumanNukeOp";
@@ -40,9 +52,12 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     [DataField("normalNames", customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
     public string NormalNames = "SyndicateNamesNormal";
 
-    [DataField("outpostMap")]
-    public string NukieOutpostMap = "/Maps/nukieplanet.yml";
+    [DataField("outpostMap", customTypeSerializer: typeof(ResourcePathSerializer))]
+    public ResourcePath? NukieOutpostMap = new("/Maps/nukieplanet.yml");
 
-    [DataField("shuttleMap")]
-    public string NukieShuttleMap = "/Maps/infiltrator.yml";
+    [DataField("shuttleMap", customTypeSerializer: typeof(ResourcePathSerializer))]
+    public ResourcePath? NukieShuttleMap = new("/Maps/infiltrator.yml");
+
+    [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
+    public SoundSpecifier? GreetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 }

@@ -13,7 +13,6 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using Content.Shared.Dataset;
 using Content.Shared.Roles;
@@ -25,7 +24,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
-using Job = Content.Server.Roles.Job;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -42,6 +40,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
@@ -67,7 +66,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
     private readonly Dictionary<EntityUid, string> _operativeMindPendingData = new();
-    private readonly SoundSpecifier _greetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 
     public override void Initialize()
     {
@@ -128,8 +126,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _aliveNukeops.Clear();
 
         // Basically copied verbatim from traitor code
-        var playersPerOperative = _cfg.GetCVar(CCVars.NukeopsPlayersPerOp);
-        var maxOperatives = _cfg.GetCVar(CCVars.NukeopsMaxOps);
+        var playersPerOperative = _nukeopsRuleConfig.PlayersPerOperative;
+        var maxOperatives = _nukeopsRuleConfig.MaxOperatives;
 
         var everyone = new List<IPlayerSession>(ev.PlayerPool);
         var prefList = new List<IPlayerSession>();
@@ -219,6 +217,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             ev.PlayerPool.Remove(session);
             GameTicker.PlayerJoinGame(session);
         }
+
+        if (_nukeopsRuleConfig.GreetSound == null)
+            return;
+
+        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayers(operatives), AudioParams.Default);
     }
 
     private void OnPlayersGhostSpawning(EntityUid uid, NukeOperativeComponent component, GhostRoleSpawnerUsedEvent args)
@@ -246,6 +249,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
         _operativeMindPendingData.Remove(uid);
+
+        if (_nukeopsRuleConfig.GreetSound == null)
+            return;
+
+        if (_nukeopsRuleConfig.GreetSound == null || mind.Session == null)
+            return;
+
+        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(mind.Session), AudioParams.Default);
     }
 
     private bool SpawnMap()
@@ -255,9 +266,23 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var path = _nukeopsRuleConfig.NukieOutpostMap;
         var shuttlePath = _nukeopsRuleConfig.NukieShuttleMap;
+        if (path == null)
+        {
+            Logger.ErrorS("nukies", "No station map specified for nukeops!");
+            return false;
+        }
+
+        if (shuttlePath == null)
+        {
+            Logger.ErrorS("nukies", "No shuttle map specified for nukeops!");
+            return false;
+        }
+
         var mapId = _mapManager.CreateMap();
 
-        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, path);
+
+
+        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, path.ToString());
         if (outpost == null)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
@@ -265,7 +290,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
+        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath.ToString(), new MapLoadOptions()
         {
             Offset = Vector2.One * 1000f,
         });
@@ -275,7 +300,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             Logger.ErrorS("nukeops", $"Tried to load nukeops shuttle as a map, aborting.");
             _mapManager.DeleteMap(mapId);
-            return;
+            return false;
         }
 
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
@@ -345,11 +370,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             if (meta.EntityPrototype?.ID != _nukeopsRuleConfig.SpawnPointPrototype)
                 continue;
 
-            if (_nukieOutpost != null && xform.ParentUid == _nukieOutpost)
-            {
-                spawns.Add(xform.Coordinates);
-                break;
-            }
+            if (xform.ParentUid != _nukieOutpost)
+                continue;
+
+            spawns.Add(xform.Coordinates);
+            break;
         }
 
         if (spawns.Count == 0)
@@ -397,20 +422,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _aliveNukeops.Clear();
 
         // Basically copied verbatim from traitor code
-        var playersPerOperative = _cfg.GetCVar(CCVars.NukeopsPlayersPerOp);
-        var maxOperatives = _cfg.GetCVar(CCVars.NukeopsMaxOps);
+        var playersPerOperative = _nukeopsRuleConfig.PlayersPerOperative;
+        var maxOperatives = _nukeopsRuleConfig.MaxOperatives;
 
         var playerPool = _playerSystem.ServerSessions.ToList();
         var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
 
         var operatives = new List<IPlayerSession>();
         SpawnOperatives(numNukies, operatives, true);
-
-        SoundSystem.Play(_greetSound.GetSound(), Filter.Empty().AddWhere(s =>
-        {
-            var mind = ((IPlayerSession) s).Data.ContentData()?.Mind;
-            return mind != null && _aliveNukeops.ContainsKey(mind);
-        }), AudioParams.Default);
     }
 
     //For admins forcing someone to nukeOps.
@@ -428,7 +447,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var minPlayers = _cfg.GetCVar(CCVars.NukeopsMinPlayers);
+        var minPlayers = _nukeopsRuleConfig.MinPlayers;
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-not-enough-ready-players", ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
@@ -436,12 +455,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        if (ev.Players.Length == 0)
-        {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
-            ev.Cancel();
+        if (ev.Players.Length != 0)
             return;
-        }
+
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
+        ev.Cancel();
     }
 
     public override void Started()
