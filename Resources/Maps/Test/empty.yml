@@ -29,11 +29,11 @@ tilemap:
   22: FloorSteel
   23: FloorSteelDirty
   24: FloorTechMaint
-  25: floor_warning1
-  26: floor_warning2
+  25: FloorWarning1
+  26: FloorWarning2
   27: FloorWhite
-  28: FloorWhite_warning1
-  29: FloorWhite_warning2
+  28: FloorWhiteWarning1
+  29: FloorWhiteWarning2
   30: FloorWood
   31: Lattice
   32: Plating
