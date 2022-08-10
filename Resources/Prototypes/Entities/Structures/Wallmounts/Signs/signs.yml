@@ -125,6 +125,15 @@
   components:
   - type: Sprite
     state: direction_janitor
+    
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalLibrary
+  name: janitor sign
+  description: A direction sign, pointing out which way the library is.
+  components:
+  - type: Sprite
+    state: direction_library
 
 - type: entity
   parent: BaseSign
