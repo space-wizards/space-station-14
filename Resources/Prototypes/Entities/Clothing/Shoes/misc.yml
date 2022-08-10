@@ -44,7 +44,7 @@
     sprite: Clothing/Shoes/Misc/duck-slippers.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: footstep_duck
+      collection: FootstepDuck
       params:
         variation: 0.07
 
