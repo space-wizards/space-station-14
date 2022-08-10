@@ -1,9 +1,4 @@
 Entries:
-- author: youarereadingthis
-  changes:
-  - {message: Examine text for anchors., type: Add}
-  id: 1625
-  time: '2022-05-30T08:55:54.0000000+00:00'
 - author: vulppine
   changes:
   - {message: NanoTrasen has finally installed surveillance camera systems into our
@@ -2942,3 +2937,10 @@ Entries:
       Don''t tell them what we''re doing.', type: Add}
   id: 2124
   time: '2022-08-09T05:10:01.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Escape inventory doafter bars now stop after you are set down., type: Fix}
+  - {message: Escape inventory doafter length when held in a hand is now based on
+      relative mass. Escaping from anything but hands remains the same length., type: Tweak}
+  id: 2125
+  time: '2022-08-10T08:37:21.0000000+00:00'
