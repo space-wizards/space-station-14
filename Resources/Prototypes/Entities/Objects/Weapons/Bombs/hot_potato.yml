@@ -1,6 +1,6 @@
 - type: entity
   name: hot potato
-  description: A label on the side of this potato reads "Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.
+  description: A label on the side of this potato reads "Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures."
   parent: BaseItem
   id: HotPotato
   components:

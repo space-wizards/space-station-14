@@ -40,7 +40,7 @@ public sealed class HotPotatoSystem : EntitySystem
     private void OnRemoveAttempt(EntityUid uid, HotPotatoComponent component, ContainerGettingRemovedAttemptEvent args)
     {
         if (HasComp<UnremoveableComponent>(component.Owner))
-            _popupSystem.PopupEntity("YOU CAN'T LET GO!", uid, Filter.Pvs(uid), PopupType.MediumCaution);
+            _popupSystem.PopupEntity(Loc.GetString("hot-potato-drop-fail", ("item", component.Owner)), uid, Filter.Entities(args.Container.Owner), PopupType.MediumCaution);
     }
 
     private void OnUseInHand(EntityUid uid, HotPotatoComponent component, UseInHandEvent args)
@@ -48,6 +48,7 @@ public sealed class HotPotatoSystem : EntitySystem
         if (!component.IsActivated)
         {
             EnsureComp<UnremoveableComponent>(component.Owner);
+            _popupSystem.PopupEntity(Loc.GetString("hot-potato-activate", ("user", args.User), ("item", component.Owner)), args.User, Filter.Pvs(args.User), PopupType.LargeCaution);
             component.IsActivated = true;
         }
     }
@@ -89,7 +90,7 @@ public sealed class HotPotatoSystem : EntitySystem
 
         if (!_handsSystem.TryGetEmptyHand(targetHandsComponent.Owner, out var emptyHand)) // Check if the person has an empty hand
         {
-            _popupSystem.PopupEntity(Loc.GetString("hot-potato-give-fail", ("item", component.Owner), ("target", args.Target)), args.User, Filter.Pvs(args.User), PopupType.MediumCaution);
+            _popupSystem.PopupEntity(Loc.GetString("hot-potato-give-fail", ("item", component.Owner), ("target", args.Target)), args.User, Filter.Entities(args.User), PopupType.MediumCaution);
             return;
         }
 
