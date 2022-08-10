@@ -50,7 +50,7 @@ public abstract class SharedItemSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Copy in-hand and clothing visuals from another item.
+    ///     Copy all item specific visuals from another item.
     /// </summary>
     public void CopyVisuals(EntityUid uid, ItemComponent otherItem, ItemComponent? item = null)
     {

@@ -52,5 +52,22 @@ public sealed class ClothingSystem : EntitySystem
         Dirty(clothing);
     }
 
+    /// <summary>
+    ///     Copy all clothing specific visuals from another item.
+    /// </summary>
+    public void CopyVisuals(EntityUid uid, SharedClothingComponent otherClothing, SharedClothingComponent? clothing = null)
+    {
+        if (!Resolve(uid, ref clothing))
+            return;
+
+        clothing.ClothingVisuals = otherClothing.ClothingVisuals;
+        clothing.EquippedPrefix = otherClothing.EquippedPrefix;
+        clothing.RsiPath = otherClothing.RsiPath;
+        clothing.FemaleMask = otherClothing.FemaleMask;
+
+        _itemSys.VisualsChanged(uid);
+        Dirty(clothing);
+    }
+
     #endregion
 }

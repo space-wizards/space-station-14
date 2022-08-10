@@ -1,5 +1,6 @@
 ﻿using Content.Client.Items.Systems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -10,6 +11,7 @@ public sealed class ChameleonClothingVisualizerSystem : VisualizerSystem<Chamele
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, ChameleonClothingComponent component, ref AppearanceChangeEvent args)
@@ -28,11 +30,18 @@ public sealed class ChameleonClothingVisualizerSystem : VisualizerSystem<Chamele
             sprite.CopyFrom(otherSprite);
         }
 
-        // clothing and in-hand sprite icon
-        if (TryComp(uid, out ItemComponent? clothing) &&
-            proto.TryGetComponent(out ItemComponent? otherClothing, _factory))
+        // item sprite logic
+        if (TryComp(uid, out ItemComponent? item) &&
+            proto.TryGetComponent(out ItemComponent? otherItem, _factory))
         {
-            _itemSystem.CopyVisuals(uid, otherClothing, clothing);
+            _itemSystem.CopyVisuals(uid, otherItem, item);
+        }
+
+        // clothing sprite logic
+        if (TryComp(uid, out ClothingComponent? clothing) &&
+            proto.TryGetComponent(out ClothingComponent? otherClothing, _factory))
+        {
+            _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
     }
 }
