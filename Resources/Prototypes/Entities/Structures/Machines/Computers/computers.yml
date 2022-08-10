@@ -624,3 +624,39 @@
             - TabletopMachineMask
           layer:
             - TabletopMachineLayer
+
+- type: entity
+  parent: BaseComputer
+  id: BaseComputerTurret
+  name: turret console
+  description: Used to control ship guns.
+  abstract: true
+  components:
+    - type: TurretConsole
+    - type: ActivatableUI
+      key: enum.ShuttleConsoleUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.ShuttleConsoleUiKey.Key
+          type: ShuttleConsoleBoundUserInterface
+    - type: RadarConsole
+    - type: ExtensionCableReceiver
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#43ccb5"
+    - type: Rotatable
+      rotateWhileAnchored: true
+
+- type: entity
+  parent: BaseComputerTurret
+  id: ComputerTurret
+  name: turret console
+  description: Used to control ship guns.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: generic_key
+          screen: shuttle

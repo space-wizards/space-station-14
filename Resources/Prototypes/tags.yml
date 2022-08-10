@@ -46,6 +46,9 @@
   id: Carpet
 
 - type: Tag
+  id: CanUseShipGuns
+
+- type: Tag
   id: CanPilot
 
 - type: Tag

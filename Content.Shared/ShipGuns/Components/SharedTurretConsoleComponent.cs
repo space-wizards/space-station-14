@@ -1,23 +1,19 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.ShipGuns.Components;
 
 /// <summary>
-/// This is used for...
+/// Interact with to use ship guns.
 /// </summary>
+[NetworkedComponent]
 public abstract class SharedTurretConsoleComponent : Component
 {
 
 }
 
-/// <summary>
-/// Contains network state for SharedTurretControlComponent.
-/// </summary>
 [Serializable, NetSerializable]
-public sealed class SharedTurretConsoleComponentState : ComponentState
+public enum TurretConsoleUiKey : byte
 {
-    public SharedTurretConsoleComponentState(SharedTurretConsoleComponent component)
-    {
-
-    }
+    Key,
 }

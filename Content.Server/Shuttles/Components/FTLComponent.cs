@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Shuttles.Components;
 
 /// <summary>
-/// Added to a component when it is queued or is travelling via FTL.
+/// Added to an entity when it is queued or is travelling via FTL.
 /// </summary>
 [RegisterComponent]
 public sealed class FTLComponent : Component

@@ -17,6 +17,7 @@
           MeatLaserImpact
   - type: Tag
     tags:
+    - CanUseShipGuns
     - CanPilot
     - FootstepSound
     - DoorBumpOpener
