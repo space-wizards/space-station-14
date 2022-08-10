@@ -589,6 +589,8 @@
             Quantity: 5
           - ReagentId: Vitamin
             Quantity: 4
+          - ReagentId: Allicin
+            Quantity: 3
 # Tastes like hot peppers.
 
 - type: entity
@@ -633,6 +635,8 @@
             Quantity: 5
           - ReagentId: Vitamin
             Quantity: 4
+          - ReagentId: Allicin
+            Quantity: 3
 # Tastes like tomato, hot peppers, clown feet, kind of funny, someone's parents.
 
 - type: entity
@@ -858,6 +862,8 @@
           - ReagentId: Nutriment
             Quantity: 1
           - ReagentId: Vitamin
+            Quantity: 5
+          - ReagentId: Allicin
             Quantity: 5
 # Tastes like onion, france.
 
