@@ -26,6 +26,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
 using Job = Content.Server.Roles.Job;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -38,7 +40,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
 
@@ -66,6 +67,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
     private readonly Dictionary<EntityUid, string> _operativeMindPendingData = new();
+    private readonly SoundSpecifier _greetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 
     public override void Initialize()
     {
@@ -268,6 +270,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             Offset = Vector2.One * 1000f,
         });
 
+        // Naughty, someone saved the shuttle as a map.
+        if (Deleted(outpost))
+        {
+            Logger.ErrorS("nukeops", $"Tried to load nukeops shuttle as a map, aborting.");
+            _mapManager.DeleteMap(mapId);
+            return;
+        }
+
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
@@ -395,6 +405,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var operatives = new List<IPlayerSession>();
         SpawnOperatives(numNukies, operatives, true);
+
+        SoundSystem.Play(_greetSound.GetSound(), Filter.Empty().AddWhere(s =>
+        {
+            var mind = ((IPlayerSession) s).Data.ContentData()?.Mind;
+            return mind != null && _aliveNukeops.ContainsKey(mind);
+        }), AudioParams.Default);
     }
 
     //For admins forcing someone to nukeOps.
