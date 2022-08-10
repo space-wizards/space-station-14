@@ -887,6 +887,72 @@
     energy: 1.6
     color: "#ffe599"
 
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSalvage
+  name: salvage vendor
+  description: A dwarves best friend!
+  components:
+  - type: VendingMachine
+    pack: SalvageEquipmentInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/mining.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      eject: true
+      ejectUnshaded: false
+      denyUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#9dc5c9"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineDonut
+  name: Monkin' Donuts
+  description: A donut vendor provided by Robust Industries, LLC.
+  components:
+  - type: VendingMachine
+    pack: DonutInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+  - type: Advertise
+    pack: DonutAds
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/donut.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#d4ab33"
+
 # job clothing
 
 - type: entity

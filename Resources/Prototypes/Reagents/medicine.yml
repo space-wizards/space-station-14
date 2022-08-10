@@ -148,6 +148,7 @@
       amount: -5
     - !type:PlantAdjustHealth
       amount: 5
+    - !type:PlantClonexadone {}
 
 - type: reagent
   id: Dermaline
@@ -395,15 +396,14 @@
     Medicine:
       effects:
       - !type:HealthChange
+        probability: 0.3
         damage:
           types:
-            Poison: 1
-          groups:
-            Brute: -1.5
+            Heat: 0.5
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
-            min: 15
+            min: 30
         damage:
           types:
             Poison: 3

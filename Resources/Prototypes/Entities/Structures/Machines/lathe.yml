@@ -199,6 +199,7 @@
       - ProximitySensor
       - LeftArmBorg
       - RightArmBorg
+      - HolofanProjector
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -265,6 +266,7 @@
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
+      - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
       - GeneratorPlasmaMachineCircuitboard
@@ -319,6 +321,7 @@
       - ShellShotgun
       - ShellShotgunBeanbag
       - ShellShotgunFlare
+      - ShellTranquilizer
       - CartridgeLightRifle
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
@@ -363,7 +366,6 @@
       - ClothingMaskSterile
       - DiseaseSwab
       - HandheldCrewMonitor
-      - ShellTranquilizer
       - Scalpel
       - Retractor
       - Cautery
@@ -386,6 +388,8 @@
   name: uniform printer
   description: Prints new or replacement uniforms.
   components:
+  - type: Transform
+    noRot: false
   - type: LatheDatabase
     static: true
     recipes:
