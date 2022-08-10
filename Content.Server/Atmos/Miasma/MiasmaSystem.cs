@@ -188,8 +188,16 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
         {
-            if (component.Rotting)
+            if (!component.Rotting)
+                return;
+
+            // can't be a switch because these aren't constants
+            if (component.DeathAccumulator < 2 * component.RotAfter.TotalSeconds)
                 args.PushMarkup(Loc.GetString("miasma-rotting"));
+            else if (component.DeathAccumulator < 3 * component.RotAfter.TotalSeconds)
+                args.PushMarkup(Loc.GetString("miasma-bloated"));
+            else
+                args.PushMarkup(Loc.GetString("miasma-extremely-bloated"));
         }
 
         /// Containers
