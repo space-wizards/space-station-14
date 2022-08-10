@@ -57,6 +57,9 @@ namespace Content.Server.Sports
             if (HasComp<ToolComponent>(args.Used))
                 return;
 
+            if (ammoProviderComponent.Capacity == ammoProviderComponent.Entities.Count + 1)
+                return;
+
             ammoProviderComponent.Entities.Add(args.Used);
             ammoProviderComponent.Container.Insert(args.Used);
         }

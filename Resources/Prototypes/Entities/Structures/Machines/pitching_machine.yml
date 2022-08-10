@@ -56,6 +56,6 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: Gun
-      fireRate: 4
+      fireRate: 7
     - type: BallisticAmmoProvider
-      capacity: 5
+      capacity: 6
