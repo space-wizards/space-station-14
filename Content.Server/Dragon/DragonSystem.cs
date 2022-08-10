@@ -22,8 +22,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.Projectiles;
 using Content.Server.Projectiles.Components;
-using Content.Shared.Movement.Systems;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Dragon
@@ -42,7 +40,6 @@ namespace Content.Server.Dragon
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly ProjectileSystem _projectileSystem = default!;
         [Dependency] private readonly IGameTiming _timingSystem = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
         [Dependency] private readonly IRobustRandom _randomSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
@@ -57,10 +54,6 @@ namespace Content.Server.Dragon
         private const int RiftTileRadius = 2;
 
         private const int RiftsAllowed = 3;
-
-        private readonly Dictionary<EntityUid, DragonFirebreath> _pendingBreathAttacks = new();
-
-        private const string DefaultProjectilePrototype = "DragonProjectileFireball";
 
 
         public override void Initialize()
@@ -91,35 +84,10 @@ namespace Content.Server.Dragon
         {
             base.Update(frameTime);
 
-            foreach (var (uid, breath) in _pendingBreathAttacks)
-            {
-                if (breath.NextBreath > _timingSystem.CurTime)
-                    continue;
-
-                if (!TryComp<TransformComponent>(uid, out var xform))  // TODO: xform query
-                    return;
-
-                var random = _randomSystem.NextFloat(-1.0f, 1.0f);
-                var spread = Angle.FromDegrees(25f * random);
-                var angle = breath.MapDirection.ToWorldAngle() + spread;
-                var direction = angle.ToWorldVec();
-
-                var breathSpawn = xform.MapPosition.Offset(direction * 0.8f);
-                var breathProjectileUid = Spawn(breath.BreathPrototype, breathSpawn);
-                ShootBreathProjectile(breathProjectileUid, direction, uid, breath.Speed);
-
-                breath.NextBreath = _timingSystem.CurTime + breath.Delay;
-                breath.BreathsRemaining--;
-
-                if (breath.BreathsRemaining <= 0)
-                    _pendingBreathAttacks.Remove(uid);
-
-                // TODO: Only need to run this for first and last breath.
-                _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
-            }
-
             foreach (var comp in EntityQuery<DragonComponent>())
             {
+                UpdateFireBreath(comp);
+
                 if (comp.WeakenedAccumulator > 0f)
                 {
                     comp.WeakenedAccumulator -= frameTime;
@@ -369,14 +337,6 @@ namespace Content.Server.Dragon
                 _audioSystem.Play(component.SoundRoar, Filter.Pvs(component.Owner, 4f, EntityManager), component.Owner, component.SoundRoar.Params);
         }
 
-        private void OnDragonRefreshMovespeed(EntityUid uid, DragonComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            if (!_pendingBreathAttacks.ContainsKey(uid))
-                return;
-
-            args.ModifySpeed(0.5f, 0.5f);
-        }
-
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
         {
             //Dragon doesn't actually chew, since he sends targets right into his stomach.
@@ -455,26 +415,59 @@ namespace Content.Server.Dragon
             });
         }
 
-        private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
-            DragonBreatheFireActionEvent args)
+        private void UpdateFireBreath(DragonComponent component)
         {
-            if (args.Handled || component.BreatheFireAction == null || _pendingBreathAttacks.ContainsKey(dragonuid))
+            if (component.FireBreathCurrent == null || component.FireBreathCurrent.NextBreath > _timingSystem.CurTime)
                 return;
 
-            var dragonXform = Transform(dragonuid);
+            if (component.BreathProjectilePrototype == null)
+                return;
+
+            var xform = Transform(component.Owner);
+
+            var random = _randomSystem.NextFloat(-1.0f, 1.0f);
+            var spread = Angle.FromDegrees(25f * random);
+            var angle = component.FireBreathCurrent.MapDirection.ToWorldAngle() + spread;
+            var direction = angle.ToWorldVec();
+
+            var breathSpawn = xform.MapPosition.Offset(direction * 0.8f);
+            var breathProjectileUid = Spawn(component.FireBreathCurrent.BreathPrototype, breathSpawn);
+            ShootBreathProjectile(breathProjectileUid, direction, component.Owner, component.FireBreathCurrent.Speed);
+
+            component.FireBreathCurrent.NextBreath = _timingSystem.CurTime + component.FireBreathCurrent.Delay;
+            component.FireBreathCurrent.BreathsRemaining--;
+
+            if (component.FireBreathCurrent.BreathsRemaining <= 0)
+                component.FireBreathCurrent = null;
+        }
+
+        private void OnDragonBreathFire(EntityUid uid, DragonComponent component,
+            DragonBreatheFireActionEvent args)
+        {
+            if (args.Handled || component.BreatheFireAction == null || component.BreathProjectilePrototype == null)
+                return;
+
+            var dragonXform = Transform(uid);
             var dragonPos = dragonXform.MapPosition;
 
             var breathDirection = (args.Target.Position - dragonPos.Position);
             if (breathDirection == Vector2.Zero || breathDirection == Vector2.NaN)
                 return;
 
-            _pendingBreathAttacks.Add(dragonuid, new DragonFirebreath()
-                    { BreathsRemaining = 5, MapDirection = breathDirection.Normalized, NextBreath = TimeSpan.Zero, BreathPrototype = component.BreathProjectilePrototype ?? DefaultProjectilePrototype});
+            component.FireBreathCurrent = new DragonFirebreath
+            {
+                NextBreath = TimeSpan.Zero,
+                BreathsRemaining = 5,
+                MapDirection = breathDirection.Normalized,
+                Speed = 5f,
+                Delay = TimeSpan.FromSeconds(0.3f),
+                BreathPrototype = component.BreathProjectilePrototype
+            };
 
             args.Handled = true;
 
             if (component.SoundBreathFire != null)
-                _audioSystem.PlayPvs(component.SoundBreathFire, dragonuid, component.SoundBreathFire.Params);
+                _audioSystem.PlayPvs(component.SoundBreathFire, uid, component.SoundBreathFire.Params);
         }
 
         private void ShootBreathProjectile(EntityUid uid, Vector2 direction, EntityUid user, float speed)
@@ -487,21 +480,6 @@ namespace Content.Server.Dragon
             _projectileSystem.SetShooter(projectile, user);
 
             Transform(uid).WorldRotation = direction.ToWorldAngle();
-        }
-
-        private sealed class DragonFirebreath
-        {
-            public TimeSpan NextBreath;
-
-            public int BreathsRemaining;
-
-            public Vector2 MapDirection;
-
-            public float Speed = 6.5f;
-
-            public TimeSpan Delay = TimeSpan.FromMilliseconds(200);
-
-            public string BreathPrototype = DefaultProjectilePrototype;
         }
 
         private sealed class DragonDevourComplete : EntityEventArgs

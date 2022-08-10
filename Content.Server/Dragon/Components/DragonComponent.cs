@@ -11,6 +11,21 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Dragon
 {
+    public class DragonFirebreath
+    {
+        public TimeSpan NextBreath;
+
+        public int BreathsRemaining;
+
+        public Vector2 MapDirection;
+
+        public float Speed;
+
+        public TimeSpan Delay;
+
+        public string? BreathPrototype;
+    }
+
     [RegisterComponent]
     public sealed class DragonComponent : Component
     {
@@ -25,9 +40,6 @@ namespace Content.Server.Dragon
         /// </summary>
         [DataField("devourHealRate")]
         public float DevourHealRate = 15f;
-
-        [DataField("breathProjectileProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? BreathProjectilePrototype = "DragonProjectileFireball";
 
         [DataField("devourActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
         public string DevourActionId = "DragonDevour";
@@ -72,12 +84,16 @@ namespace Content.Server.Dragon
         [ViewVariables(VVAccess.ReadWrite), DataField("riftPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string RiftPrototype = "CarpRift";
 
+        [DataField("breathProjectileProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? BreathProjectilePrototype = "DragonProjectileFireball";
+
         [DataField("breatheFireActionId", customTypeSerializer: typeof(PrototypeIdSerializer<WorldTargetActionPrototype>))]
         public string BreathFireActionId = "DragonBreatheFire";
 
         [DataField("breatheFireAction")]
         public WorldTargetAction? BreatheFireAction;
 
+        public DragonFirebreath? FireBreathCurrent = default!;
 
 
         /// <summary>
@@ -146,8 +162,6 @@ namespace Content.Server.Dragon
     public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
 
     public sealed class DragonSpawnRiftActionEvent : InstantActionEvent {}
-
-    public sealed class DragonSpawnActionEvent : InstantActionEvent {}
 
     public sealed class DragonBreatheFireActionEvent : WorldTargetActionEvent {}
 }
