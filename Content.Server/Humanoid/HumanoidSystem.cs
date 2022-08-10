@@ -79,6 +79,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         humanoid.Sex = profile.Sex;
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
+        SetBaseLayerColor(uid, HumanoidVisualLayers.Eyes, profile.Appearance.EyeColor, false);
 
         // Hair/facial hair - this may eventually be deprecated.
 
@@ -103,6 +104,50 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
 
         humanoid.SkinColor = skinColor;
+
+        if (sync)
+            Synchronize(uid, humanoid);
+    }
+
+    public void SetBaseLayerId(EntityUid uid, HumanoidVisualLayers layer, string id, bool sync = true,
+        HumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid)
+            || !_prototypeManager.HasIndex<HumanoidSpeciesSpriteLayer>(id))
+        {
+            return;
+        }
+
+        if (humanoid.CustomBaseLayers.TryGetValue(layer, out var info))
+        {
+            humanoid.CustomBaseLayers[layer] = new(id, info.Color);
+        }
+        else
+        {
+            var layerInfo = new SharedHumanoidComponent.CustomBaseLayerInfo(id, humanoid.SkinColor);
+            humanoid.CustomBaseLayers.Add(layer, layerInfo);
+        }
+
+        if (sync)
+            Synchronize(uid, humanoid);
+    }
+
+    public void SetBaseLayerColor(EntityUid uid, HumanoidVisualLayers layer, Color color, bool sync = true, HumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        if (humanoid.CustomBaseLayers.TryGetValue(layer, out var info))
+        {
+            humanoid.CustomBaseLayers[layer] = new(info.ID, color);
+        }
+        else
+        {
+            var layerInfo = new SharedHumanoidComponent.CustomBaseLayerInfo(string.Empty, color);
+            humanoid.CustomBaseLayers.Add(layer, layerInfo);
+        }
 
         if (sync)
             Synchronize(uid, humanoid);
