@@ -9,7 +9,7 @@ public struct AdminGhostRoleGroupInfo
     public uint GroupIdentifier { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public string Status { get; set; }
+    public GhostRoleGroupStatus Status { get; set; }
     public bool IsActive { get; set; }
     public EntityUid[] Entities { get; set; }
 }

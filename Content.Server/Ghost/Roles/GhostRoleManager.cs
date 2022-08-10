@@ -15,12 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost.Roles;
 
-public enum GhostRoleGroupStatus : byte
-{
-    Editing = 0,
-    Releasing = 1,
-    Released = 2,
-}
+
 
 internal record GhostRolesEntry(string RoleIdentifier, List<uint> Takeover, List<uint> Lottery, HashSet<IPlayerSession> Requests);
 
@@ -285,8 +280,15 @@ public sealed class GhostRoleManager
         if (entry.Owner != session)
             return;
 
+        // Clear active group roles.
+        foreach (var (k, v) in _roleGroupActiveGroups)
+        {
+            if (v == identifier)
+                _roleGroupActiveGroups.Remove(k);
+        }
+
         _roleGroupEntries.Remove(identifier);
-        SendGhostRoleGroupChangedEvent(wasDeleted: false);
+        SendGhostRoleGroupChangedEvent(wasDeleted: true);
 
         if (!deleteEntities)
             return;
@@ -304,12 +306,12 @@ public sealed class GhostRoleManager
     /// </summary>
     /// <param name="player">The session to activate the role group for.</param>
     /// <param name="identifier">The role group to activate/deactivate.</param>
-    public void ToggleActivePlayerRoleGroup(IPlayerSession player, uint identifier)
+    public void ToggleOrSetActivePlayerRoleGroup(IPlayerSession player, uint identifier)
     {
         if (!_roleGroupEntries.ContainsKey(identifier))
             return;
 
-        if (_roleGroupActiveGroups.Remove(player))
+        if (_roleGroupActiveGroups.Remove(player, out var current) && current == identifier)
         {
             SendGhostRoleGroupChangedEvent();
             return;
@@ -521,7 +523,7 @@ public sealed class GhostRoleManager
                 GroupIdentifier = entry.Identifier,
                 Name = entry.RoleName,
                 Description = entry.RoleDescription,
-                Status = entry.Status.ToString(),
+                Status = entry.Status,
                 Entities = entry.Entities.ToArray(),
                 IsActive = _roleGroupActiveGroups.GetValueOrDefault(session) == entry.Identifier,
             };

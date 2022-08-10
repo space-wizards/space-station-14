@@ -183,7 +183,7 @@ open";
 
         var identifier = uint.Parse(args[1]);
 
-        manager.ToggleActivePlayerRoleGroup(player, identifier);
+        manager.ToggleOrSetActivePlayerRoleGroup(player, identifier);
     }
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)

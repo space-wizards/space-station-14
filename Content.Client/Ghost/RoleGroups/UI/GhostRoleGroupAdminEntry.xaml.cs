@@ -36,6 +36,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
             NoRoleGroupEntitiesLabel.Visible = false;
         }
 
+        ActivateButton.Visible = group.Status == GhostRoleGroupStatus.Editing;
         ActivateButton.Text = group.IsActive ? "Deactivate" : "Activate";
         switch (group.IsActive)
         {
@@ -47,14 +48,16 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
                 break;
         }
 
-        ReleaseButton.Disabled = group.Status != "Editing";
+        ReleaseButton.Disabled = group.Status != GhostRoleGroupStatus.Editing;
         ReleaseButton.Text = group.Status switch
         {
-            "Editing" => "Release",
-            "Releasing" => "Releasing...",
-            "Released" => "Released",
+            GhostRoleGroupStatus.Editing => "Release",
+            GhostRoleGroupStatus.Releasing => "Releasing...",
+            GhostRoleGroupStatus.Released => "Released",
             _ => "Release"
         };
+
+        DeleteButton.Visible = group.Status == GhostRoleGroupStatus.Editing;
 
         ActivateButton.OnPressed += _ => OnGroupActivate?.Invoke(group);
         ReleaseButton.OnPressed += _ => OnGroupRelease?.Invoke(group);
