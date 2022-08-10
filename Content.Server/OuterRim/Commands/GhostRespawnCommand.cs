@@ -28,7 +28,7 @@ public sealed class GhostRespawnCommand : IConsoleCommand
         if (!_entityManager.TryGetComponent<GhostComponent>(shell.Player.AttachedEntity, out var ghost))
             return;
 
-        var time = ( _gameTiming.RealTime - ghost.TimeOfDeath);
+        var time = ( _gameTiming.CurTime - ghost.TimeOfDeath);
         var respawnTime = _configurationManager.GetCVar(CCVars.RespawnTime);
 
         if (respawnTime > time.TotalSeconds)

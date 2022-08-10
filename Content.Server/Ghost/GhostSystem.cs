@@ -101,7 +101,7 @@ namespace Content.Server.Ghost
                 eye.VisibilityMask |= (uint) VisibilityFlags.Ghost;
             }
 
-            component.TimeOfDeath = _gameTiming.RealTime;
+            component.TimeOfDeath = _gameTiming.CurTime;
 
             _actions.AddAction(uid, component.Action, null);
         }
@@ -131,7 +131,7 @@ namespace Content.Server.Ghost
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
         {
-            var timeSinceDeath = _gameTiming.RealTime.Subtract(component.TimeOfDeath);
+            var timeSinceDeath = _gameTiming.CurTime.Subtract(component.TimeOfDeath);
             var deathTimeInfo = timeSinceDeath.Minutes > 0
                 ? Loc.GetString("comp-ghost-examine-time-minutes", ("minutes", timeSinceDeath.Minutes))
                 : Loc.GetString("comp-ghost-examine-time-seconds", ("seconds", timeSinceDeath.Seconds));

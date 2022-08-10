@@ -74,7 +74,7 @@ namespace Content.Client.Ghost.UI
 
         public void UpdateRespawn()
         {
-            var time = ( _gameTiming.ServerTime - _owner.TimeOfDeath);
+            var time = ( _gameTiming.CurTime - _owner.TimeOfDeath);
             var respawnTime = _configurationManager.GetCVar(CCVars.RespawnTime);
             _respawn.Disabled =  respawnTime > time.TotalSeconds;
             _respawn.Text = _respawn.Disabled
