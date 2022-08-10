@@ -72,6 +72,8 @@ public sealed class DoAfterOverlay : Overlay
                 handle.SetTransform(matty);
                 var offset = _barTexture.Height / scale * index;
 
+                // Use the sprite itself if we know its bounds. This means short or tall sprites don't get overlapped
+                // by the bar.
                 float yOffset;
                 if (spriteQuery.TryGetComponent(comp.Owner, out var sprite))
                 {
@@ -82,6 +84,8 @@ public sealed class DoAfterOverlay : Overlay
                     yOffset = 0.5f;
                 }
 
+                // Position above the entity (we've already applied the matrix transform to the entity itself)
+                // Offset by the texture size for every do_after we have.
                 var position = new Vector2(-_barTexture.Width / 2f / EyeManager.PixelsPerMeter,
                     yOffset / scale + offset / EyeManager.PixelsPerMeter * scale);
 
@@ -93,6 +97,7 @@ public sealed class DoAfterOverlay : Overlay
                 Color color;
                 const float flashTime = 0.125f;
 
+                // if we're cancelled then flick red / off.
                 if (cancelled)
                 {
                     var flash = Math.Floor(doAfter.CancelledAccumulator / flashTime) % 2 == 0;
@@ -108,8 +113,7 @@ public sealed class DoAfterOverlay : Overlay
                 const float endX = 22f;
 
                 var xProgress = (endX - startX) * displayRatio + startX;
-
-                // handle.UseShader(_shader);
+                
                 var box = new Box2(new Vector2(startX, 3f) / EyeManager.PixelsPerMeter, new Vector2(xProgress, 4f) / EyeManager.PixelsPerMeter);
                 box = box.Translated(position);
                 handle.DrawRect(box, color);
