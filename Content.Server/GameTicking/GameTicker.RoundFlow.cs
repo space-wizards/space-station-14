@@ -177,6 +177,13 @@ namespace Content.Server.GameTicking
                 readyPlayers = _playersInLobby.Keys.ToList();
             }
 
+#if DEBUG
+            foreach (var player in readyPlayers)
+            {
+                DebugTools.Assert(_userDb.IsLoadComplete(player), $"Player was readied up but didn't have user DB data loaded yet??");
+            }
+#endif
+
             readyPlayers.RemoveAll(p =>
             {
                 if (_roleBanManager.GetRoleBans(p.UserId) != null)
@@ -212,7 +219,7 @@ namespace Content.Server.GameTicking
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
 
-            _roundStartTimeSpan = _gameTiming.RealTime;
+            _roundStartTimeSpan = _gameTiming.CurTime;
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
@@ -475,7 +482,7 @@ namespace Content.Server.GameTicking
 
         public TimeSpan RoundDuration()
         {
-            return _gameTiming.RealTime.Subtract(_roundStartTimeSpan);
+            return _gameTiming.CurTime.Subtract(_roundStartTimeSpan);
         }
 
         private void AnnounceRound()

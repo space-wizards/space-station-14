@@ -37,6 +37,8 @@ namespace Content.Shared.Maps
 
         [DataField("footstep_sounds")] public SoundSpecifier? FootstepSounds { get; }
 
+        [DataField("barestep_sounds")] public SoundSpecifier? BarestepSounds { get; } = new SoundCollectionSpecifier("barestep_hard");
+
         [DataField("friction")] public float Friction { get; set; }
 
         [DataField("variants")] public byte Variants { get; set; } = 1;

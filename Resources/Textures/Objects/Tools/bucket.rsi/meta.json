@@ -11,6 +11,15 @@
       "name": "icon"
     },
     {
+      "name": "fill-1"
+    },
+    {
+      "name": "fill-2"
+    },
+    {
+      "name": "fill-3"
+    },
+    {
       "name": "equipped-HELMET",
       "directions": 4
     },

@@ -101,3 +101,30 @@
   - /Audio/Effects/Footsteps/grass2.ogg
   - /Audio/Effects/Footsteps/grass3.ogg
   - /Audio/Effects/Footsteps/grass4.ogg
+
+- type: soundCollection
+  id: barestep_hard
+  files:
+  - /Audio/Effects/Footsteps/hardbarefoot1.ogg
+  - /Audio/Effects/Footsteps/hardbarefoot2.ogg
+  - /Audio/Effects/Footsteps/hardbarefoot3.ogg
+  - /Audio/Effects/Footsteps/hardbarefoot4.ogg
+  - /Audio/Effects/Footsteps/hardbarefoot5.ogg
+
+- type: soundCollection
+  id: barestep_carpet
+  files:
+  - /Audio/Effects/Footsteps/carpetbarefoot1.ogg
+  - /Audio/Effects/Footsteps/carpetbarefoot2.ogg
+  - /Audio/Effects/Footsteps/carpetbarefoot3.ogg
+  - /Audio/Effects/Footsteps/carpetbarefoot4.ogg
+  - /Audio/Effects/Footsteps/carpetbarefoot5.ogg
+
+- type: soundCollection
+  id: barestep_wood
+  files:
+  - /Audio/Effects/Footsteps/woodbarefoot1.ogg
+  - /Audio/Effects/Footsteps/woodbarefoot2.ogg
+  - /Audio/Effects/Footsteps/woodbarefoot3.ogg
+  - /Audio/Effects/Footsteps/woodbarefoot4.ogg
+  - /Audio/Effects/Footsteps/woodbarefoot5.ogg
