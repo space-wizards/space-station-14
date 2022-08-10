@@ -28,7 +28,7 @@ namespace Content.Shared.Maps
 
         [DataField("name")] public string Name { get; } = string.Empty;
 
-        [DataField("sprite")] public SpriteSpecifier? Sprite { get; }
+        [DataField("sprite")] public ResourcePath? Sprite { get; }
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 

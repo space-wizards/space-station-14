@@ -80,7 +80,7 @@ public sealed partial class MappingSystem : EntitySystem
 
             var tileIcon = contentTileDef.IsSpace
                 ? _spaceIcon
-                : contentTileDef.Sprite;
+                : new SpriteSpecifier.Texture(contentTileDef.Sprite!);
 
             ev.Action = new InstantAction()
             {

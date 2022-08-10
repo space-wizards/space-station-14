@@ -49,7 +49,7 @@ namespace Content.MapRenderer.Painters
 
                 var x = (int) (tile.X + xOffset);
                 var y = (int) (tile.Y + yOffset);
-                var path = sprite.GetPath().ToString();
+                var path = sprite.ToString();
                 var image = images[path][tile.Tile.Variant];
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
@@ -77,7 +77,7 @@ namespace Content.MapRenderer.Painters
                 if (sprite == null)
                     continue;
 
-                var path = sprite.GetPath().ToString();
+                var path = sprite.ToString();
                 images[path] = new List<Image>(definition.Variants);
 
                 using var stream = resourceCache.ContentFileRead(path);
