@@ -1,6 +1,9 @@
 ﻿using System.Linq;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Clothing.Systems;
@@ -24,6 +27,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<ChameleonClothingComponent, ComponentHandleState>(HandleState);
 
         PrepareAllVariants();
         _proto.PrototypesReloaded += OnProtoReloaded;
@@ -38,6 +42,30 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     private void OnProtoReloaded(PrototypesReloadedEventArgs _)
     {
         PrepareAllVariants();
+    }
+
+    private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ChameleonClothingComponentState state)
+            return;
+        component.SelectedId = state.SelectedId;
+
+        UpdateVisuals(uid, component);
+    }
+
+    protected override void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
+    {
+        base.UpdateVisuals(uid, component);
+        if (string.IsNullOrEmpty(component.SelectedId)
+            || !_proto.TryIndex(component.SelectedId, out EntityPrototype? proto))
+            return;
+
+        // world sprite icon
+        if (TryComp(uid, out SpriteComponent? sprite)
+            && proto.TryGetComponent(out SpriteComponent? otherSprite, _factory))
+        {
+            sprite.CopyFrom(otherSprite);
+        }
     }
 
     /// <summary>

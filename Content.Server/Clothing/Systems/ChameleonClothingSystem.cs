@@ -2,6 +2,7 @@
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Clothing.Systems;
@@ -10,12 +11,12 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ChameleonClothingComponent, ComponentGetState>(GetState);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
     }
@@ -23,6 +24,14 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     private void OnInit(EntityUid uid, ChameleonClothingComponent component, ComponentInit args)
     {
         SetSelectedPrototype(uid, component.SelectedId, true, component);
+    }
+
+    private void GetState(EntityUid uid, ChameleonClothingComponent component, ref ComponentGetState args)
+    {
+        args.State = new ChameleonClothingComponentState
+        {
+            SelectedId = component.SelectedId
+        };
     }
 
     private void OnVerb(EntityUid uid, ChameleonClothingComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -82,15 +91,8 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
         component.SelectedId = protoId;
 
-        // copy name and description
-        var meta = MetaData(uid);
-        meta.EntityName = proto.Name;
-        meta.EntityDescription = proto.Description;
-
-        // world, in hand and clothing sprite will be set by visualizer
-        _appearance.SetData(uid, ChameleonVisuals.ClothingId, protoId);
-
-        // also update ui state
+        UpdateVisuals(uid, component);
         UpdateUi(uid, component);
+        Dirty(component);
     }
 }
