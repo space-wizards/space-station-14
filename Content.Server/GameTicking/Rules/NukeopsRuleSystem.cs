@@ -24,6 +24,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
+using Content.Shared.MobState.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -42,7 +43,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
-    private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
 
     private MapId? _nukiePlanet;
@@ -67,6 +67,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     /// </summary>
     private readonly Dictionary<EntityUid, string> _operativeMindPendingData = new();
 
+    /// <summary>
+    ///     Players who played as an operative at some point in the round.
+    /// </summary>
+    private readonly HashSet<IPlayerSession> _operativePlayers = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -78,6 +83,24 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
         SubscribeLocalEvent<NukeOperativeComponent, GhostRoleSpawnerUsedEvent>(OnPlayersGhostSpawning);
         SubscribeLocalEvent<NukeOperativeComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<NukeOperativeComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<NukeOperativeComponent, ComponentRemove>(OnComponentRemove);
+    }
+
+    private void OnComponentInit(EntityUid uid, NukeOperativeComponent component, ComponentInit args)
+    {
+        // If entity has a prior mind attached, add them to the players list.
+        if (!TryComp<MindComponent>(uid, out var mindComponent) || !RuleAdded)
+            return;
+
+        var session = mindComponent.Mind?.Session;
+        if (session != null)
+            _operativePlayers.Add(session);
+    }
+
+    private void OnComponentRemove(EntityUid uid, NukeOperativeComponent component, ComponentRemove args)
+    {
+        CheckOperativesAreDead();
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
@@ -96,34 +119,32 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
         ev.AddLine(Loc.GetString("nukeops-list-start"));
-        foreach (var nukeop in _aliveNukeops)
+        foreach (var nukeop in _operativePlayers)
         {
-            ev.AddLine($"- {nukeop.Key?.Session?.Name}");
+            ev.AddLine($"- {nukeop.Name}");
         }
     }
 
-    private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
+    private void CheckOperativesAreDead()
     {
         if (!RuleAdded)
             return;
 
-        if (!_aliveNukeops.TryFirstOrNull(x => x.Key?.OwnedEntity == ev.Entity, out var op))
-            return;
-
-        _aliveNukeops[op.Value.Key] = !op.Value.Key.CharacterDeadIC;
-
-        if (_aliveNukeops.Values.All(x => !x))
-        {
+        var query = EntityQuery<NukeOperativeComponent, MobStateComponent>(true);
+        if(query.All(ent => ent.Item2.CurrentState == DamageState.Dead || !ent.Item1.Running))
             _roundEndSystem.EndRound();
-        }
+    }
+
+    private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
+    {
+        if(ev.CurrentMobState == DamageState.Dead)
+            CheckOperativesAreDead();
     }
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
         if (!RuleAdded)
             return;
-
-        _aliveNukeops.Clear();
 
         // Basically copied verbatim from traitor code
         var playersPerOperative = _nukeopsRuleConfig.PlayersPerOperative;
@@ -216,6 +237,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             ev.PlayerPool.Remove(session);
             GameTicker.PlayerJoinGame(session);
+            _operativePlayers.Add(session);
         }
 
         if (_nukeopsRuleConfig.GreetSound == null)
@@ -242,21 +264,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
 
         var mind = mindComponent.Mind;
-        _aliveNukeops.Add(mindComponent.Mind, !mind.CharacterDeadIC);
 
-        if (!_operativeMindPendingData.TryGetValue(uid, out var role))
+        if (_operativeMindPendingData.TryGetValue(uid, out var role))
+        {
+            mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
+            _operativeMindPendingData.Remove(uid);
+        }
+
+        if (!mind.TryGetSession(out var playerSession))
             return;
 
-        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
-        _operativeMindPendingData.Remove(uid);
+        _operativePlayers.Add(playerSession);
 
-        if (_nukeopsRuleConfig.GreetSound == null)
-            return;
-
-        if (_nukeopsRuleConfig.GreetSound == null || mind.Session == null)
-            return;
-
-        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(mind.Session), AudioParams.Default);
+        if (_nukeopsRuleConfig.GreetSound != null)
+            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession), AudioParams.Default);
     }
 
     private bool SpawnMap()
@@ -419,8 +440,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void SpawnOperativesForGhostRoles()
     {
-        _aliveNukeops.Clear();
-
         // Basically copied verbatim from traitor code
         var playersPerOperative = _nukeopsRuleConfig.PlayersPerOperative;
         var maxOperatives = _nukeopsRuleConfig.MaxOperatives;
@@ -471,6 +490,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _startingGearPrototypes.Clear();
         _operativeNames.Clear();
         _operativeMindPendingData.Clear();
+        _operativePlayers.Clear();
 
         if (Configuration is not NukeopsRuleConfiguration)
             return;
@@ -496,6 +516,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             Logger.InfoS("nukies", "Failed to load map for nukeops");
             return;
+        }
+
+        // Add pre-existing nuke operatives to the credit list.
+        var query = EntityQuery<NukeOperativeComponent, MindComponent>(true);
+        foreach (var (_, mindComp) in query)
+        {
+            if (mindComp?.Mind?.TryGetSession(out var session) == true)
+                _operativePlayers.Add(session);
         }
 
         if (GameTicker.RunLevel == GameRunLevel.InRound)
