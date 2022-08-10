@@ -159,15 +159,46 @@ namespace Content.Server.Chemistry.Components
             UserInterface?.SetState(state);
         }
 
+        private void DiscardReagent(string id, FixedPoint2 amount, Solution solution)
+        {
+            foreach (var reagent in solution.Contents)
+            {
+                if (reagent.ReagentId == id)
+                {
+                    FixedPoint2 actualAmount;
+                    if (amount == FixedPoint2.New(-1)) //amount is FixedPoint2.New(-1) when the client sends a message requesting to remove all solution from the container
+                    {
+                        actualAmount = reagent.Quantity;
+                    }
+                    else
+                    {
+                        actualAmount = FixedPoint2.Min(reagent.Quantity, amount);
+                    }
+                    solution.RemoveReagent(id, actualAmount);
+                    return;
+                }
+            }
+        }
+
         private void TransferReagent(string id, FixedPoint2 amount, bool isBuffer)
         {
-            if (!BeakerSlot.HasItem && _bufferModeTransfer)
+            if (!_bufferModeTransfer && isBuffer)
+            {
+                DiscardReagent(id, amount, BufferSolution);
                 return;
+            }
 
-            if (BeakerSlot.Item is not {Valid: true} beaker ||
+            if (!BeakerSlot.HasItem ||
+                BeakerSlot.Item is not {Valid: true} beaker ||
                 !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
                 return;
+
+            if (!_bufferModeTransfer)
+            {
+                DiscardReagent(id, amount, beakerSolution);
+                return;
+            }
 
             if (isBuffer)
             {
@@ -189,13 +220,8 @@ namespace Content.Server.Chemistry.Components
 
 
                         BufferSolution.RemoveReagent(id, actualAmount);
-                        if (_bufferModeTransfer)
-                        {
-                            EntitySystem.Get<SolutionContainerSystem>()
-                                .TryAddReagent(beaker, beakerSolution, id, actualAmount, out var _);
-                            // beakerSolution.Solution.AddReagent(id, actualAmount);
-                        }
-
+                        EntitySystem.Get<SolutionContainerSystem>()
+                            .TryAddReagent(beaker, beakerSolution, id, actualAmount, out var _);
                         break;
                     }
                 }
