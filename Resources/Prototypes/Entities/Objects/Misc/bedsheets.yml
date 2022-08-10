@@ -15,10 +15,11 @@
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
     netsync: false
-  - type: Clothing
+  - type: Item
     size: 10
+  - type: Clothing
     quickEquip: true
-    Slots:
+    slots:
     - neck
 
 - type: entity
@@ -29,7 +30,6 @@
   - type: Sprite
     state: sheetblack
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/black.rsi
 
 - type: entity
@@ -40,7 +40,6 @@
   - type: Sprite
     state: sheetblue
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/blue.rsi
 
 - type: entity
@@ -51,7 +50,6 @@
   - type: Sprite
     state: sheetbrown
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/brown.rsi
 
 - type: entity
@@ -63,7 +61,6 @@
   - type: Sprite
     state: sheetcaptain
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/captain.rsi
 
 - type: entity
@@ -75,19 +72,17 @@
   - type: Sprite
     state: sheetce
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/ce.rsi
 
 - type: entity
   id: BedsheetCentcom
   parent: BedsheetBase
-  name: Centcom bedsheet
+  name: CentCom bedsheet
   description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
   components:
   - type: Sprite
     state: sheetcentcom
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/centcom.rsi
 
 - type: entity
@@ -99,7 +94,6 @@
   - type: Sprite
     state: sheetclown
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/rainbow.rsi
 
 - type: entity
@@ -111,7 +105,6 @@
   - type: Sprite
     state: sheetcmo
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/cmo.rsi
 
 - type: entity
@@ -123,7 +116,6 @@
   - type: Sprite
     state: sheetcosmos
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/cosmos.rsi
 
 - type: entity
@@ -135,7 +127,6 @@
   - type: Sprite
     state: sheetcult
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/cult.rsi
 
 - type: entity
@@ -146,7 +137,6 @@
   - type: Sprite
     state: sheetgreen
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/green.rsi
 
 - type: entity
@@ -157,7 +147,6 @@
   - type: Sprite
     state: sheetgrey
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/grey.rsi
 
 - type: entity
@@ -169,7 +158,6 @@
   - type: Sprite
     state: sheethop
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/hop.rsi
 
 - type: entity
@@ -181,7 +169,6 @@
   - type: Sprite
     state: sheethos
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/hos.rsi
 
 - type: entity
@@ -192,7 +179,6 @@
   - type: Sprite
     state: sheetian
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/ian.rsi
 
 - type: entity
@@ -204,7 +190,6 @@
   - type: Sprite
     state: sheetmedical
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/medical.rsi
 
 - type: entity
@@ -216,7 +201,6 @@
   - type: Sprite
     state: sheetmime
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/mime.rsi
 
 - type: entity
@@ -228,7 +212,6 @@
   - type: Sprite
     state: sheetNT
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/NT.rsi
 
 - type: entity
@@ -239,7 +222,6 @@
   - type: Sprite
     state: sheetorange
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/orange.rsi
 
 - type: entity
@@ -250,7 +232,6 @@
   - type: Sprite
     state: sheetpurple
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/purple.rsi
 
 - type: entity
@@ -261,7 +242,6 @@
   - type: Sprite
     state: sheetqm
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/qm.rsi
 
 - type: entity
@@ -272,7 +252,6 @@
   - type: Sprite
     state: sheetrainbow
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/rainbow.rsi
 
 - type: entity
@@ -284,7 +263,6 @@
   - type: Sprite
     state: sheetrd
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/rd.rsi
 
 - type: entity
@@ -295,7 +273,6 @@
   - type: Sprite
     state: sheetred
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/red.rsi
 
 - type: entity
@@ -307,7 +284,6 @@
   - type: Sprite
     state: sheetsyndie
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/syndie.rsi
 
 - type: entity
@@ -318,7 +294,6 @@
   - type: Sprite
     state: sheetUSA
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/USA.rsi
 
 - type: entity
@@ -329,7 +304,6 @@
   - type: Sprite
     state: sheetwhite
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/white.rsi
 
 - type: entity
@@ -341,7 +315,6 @@
   - type: Sprite
     state: sheetwiz
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/wiz.rsi
 
 - type: entity
@@ -352,5 +325,4 @@
   - type: Sprite
     state: sheetyellow
   - type: Clothing
-    size: 10
     sprite: Clothing/Neck/Bedsheets/yellow.rsi

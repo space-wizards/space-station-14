@@ -61,7 +61,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             // one item can be placed in several buckets
             foreach (var slot in Slots)
             {
-                if (!item.SlotFlags.HasFlag(slot))
+                if (!item.Slots.HasFlag(slot))
                     continue;
 
                 if (!_data.ContainsKey(slot))

@@ -1,0 +1,7 @@
+- type: bodyPreset
+  name: "animal preset"
+  id: RatPreset
+  partIDs:
+    legs: LegsAnimal
+    feet: FeetAnimal
+    torso: TorsoRat

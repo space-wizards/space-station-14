@@ -131,10 +131,6 @@ namespace Content.Client.Actions
 
         private void HandleState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
-            // Client only needs to care about local player.
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
-
             if (args.Current is not ActionsComponentState state)
                 return;
 
@@ -207,14 +203,14 @@ namespace Content.Client.Actions
 
         public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
-
             if (!Resolve(uid, ref comp, false))
                 return;
 
             base.AddAction(uid, action, provider, comp, dirty);
-            UIDirty = true;
+
+
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                UIDirty = true;
         }
 
         public override void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
@@ -527,7 +523,7 @@ namespace Content.Client.Actions
             }
 
             if (action.Sound != null)
-                 SoundSystem.Play(Filter.Local(), action.Sound.GetSound(), user, action.AudioParams);
+                 SoundSystem.Play(action.Sound.GetSound(), Filter.Local(), user, action.AudioParams);
 
             return performedAction;
         }

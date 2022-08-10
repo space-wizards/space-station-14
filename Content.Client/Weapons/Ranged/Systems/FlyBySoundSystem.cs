@@ -33,6 +33,6 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         if (args.OurFixture.ID != FlyByFixture ||
             !_random.Prob(component.Prob)) return;
 
-        SoundSystem.Play(Filter.Local(), component.Sound.GetSound(), uid, component.Sound.Params);
+        SoundSystem.Play(component.Sound.GetSound(), Filter.Local(), uid, component.Sound.Params);
     }
 }

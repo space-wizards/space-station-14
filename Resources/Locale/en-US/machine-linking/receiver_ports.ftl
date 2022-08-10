@@ -27,3 +27,21 @@ signal-port-description-order-sender = Cargo console order sender
 
 signal-port-name-order-receiver = Order receiver
 signal-port-description-order-receiver = Cargo console order receiver
+
+signal-port-name-pressurize = Pressurize
+signal-port-description-pressurize = Causes the device to starts releasing air until some target pressure is reached.
+
+signal-port-name-depressurize = Depressurize
+signal-port-description-depressurize = Causes the device to starts siphoning air until some target pressure is reached.
+
+signal-port-name-pod-sender = Cloning pod
+signal-port-description-pod-sender = Cloning pod signal sender
+
+signal-port-name-pod-receiver = Cloning pod
+signal-port-description-pod-receiver = Cloning pod signal receiver
+
+signal-port-name-med-scanner-sender = Medical scanner
+signal-port-description-med-scanner-sender = Medical scanner signal sender
+
+signal-port-name-med-scanner-receiver = Medical scanner
+signal-port-description-med-scanner-receiver = Medical scanner signal receiver

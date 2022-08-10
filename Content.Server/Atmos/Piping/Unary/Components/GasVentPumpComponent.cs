@@ -1,5 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.MachineLinking;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
@@ -17,7 +19,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
-        public string InletName { get; set; } = "pipe";
+        public string Inlet { get; set; } = "pipe";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("outlet")]
+        public string Outlet { get; set; } = "pipe";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("pumpDirection")]
@@ -26,6 +32,17 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("pressureChecks")]
         public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("underPressureLockout")]
+        public bool UnderPressureLockout { get; set; } = false;
+
+        /// <summary>
+        ///     In releasing mode, do not pump when environment pressure is below this limit.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("underPressureLockoutThreshold")]
+        public float UnderPressureLockoutThreshold = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("externalPressureBound")]
@@ -71,6 +88,28 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("targetPressureChange")]
         public float TargetPressureChange = Atmospherics.OneAtmosphere;
+
+        #region Machine Linking
+        /// <summary>
+        ///     Whether or not machine linking is enabled for this component.
+        /// </summary>
+        [DataField("canLink")]
+        public readonly bool CanLink = false;
+
+        [DataField("pressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string PressurizePort = "Pressurize";
+
+        [DataField("depressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string DepressurizePort = "Depressurize";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("pressurizePressure")]
+        public float PressurizePressure = Atmospherics.OneAtmosphere;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("depressurizePressure")]
+        public float DepressurizePressure = 0;
+        #endregion
 
         public GasVentPumpData ToAirAlarmData()
         {

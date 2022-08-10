@@ -1,12 +1,10 @@
 ﻿- type: job
   id: SecurityCadet
-  name: "security cadet"
+  name: job-name-cadet
+  playTimeTracker: JobSecurityCadet
   startingGear: SecurityCadetGear
-  departments:
-  - Civilian
-  - Security
   icon: "SecurityCadet"
-  supervisors: "security officers, the warden, and the head of security"
+  supervisors: job-supervisors-security
   canBeAntag: false
   access:
   - Security

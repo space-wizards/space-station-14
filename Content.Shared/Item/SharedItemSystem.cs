@@ -5,91 +5,123 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Item
+namespace Content.Shared.Item;
+
+public abstract class SharedItemSystem : EntitySystem
 {
-    public abstract class SharedItemSystem : EntitySystem
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<SharedItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
+        SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
+        SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
 
-            SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
-            SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
-            SubscribeLocalEvent<SharedItemComponent, InteractHandEvent>(OnHandInteract);
+        SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
+    }
 
-            SubscribeLocalEvent<SharedItemComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<SharedItemComponent, ComponentHandleState>(OnHandleState);
-        }
+    #region Public API
 
-        private void OnHandInteract(EntityUid uid, SharedItemComponent component, InteractHandEvent args)
-        {
-            if (args.Handled || !component.CanPickup)
-                return;
+    public void SetSize(EntityUid uid, int size, ItemComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
 
-            args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
-        }
+        component.Size = size;
+        Dirty(component);
+    }
 
-        private void OnHandleState(EntityUid uid, SharedItemComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not ItemComponentState state)
-                return;
+    public void SetHeldPrefix(EntityUid uid, string? heldPrefix, ItemComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
 
-            component.Size = state.Size;
-            component.EquippedPrefix = state.EquippedPrefix;
-        }
+        if (component.HeldPrefix == heldPrefix)
+            return;
 
-        private void OnGetState(EntityUid uid, SharedItemComponent component, ref ComponentGetState args)
-        {
-            args.State = new ItemComponentState(component.Size, component.EquippedPrefix);
-        }
+        component.HeldPrefix = heldPrefix;
+        Dirty(component);
+        VisualsChanged(uid);
+    }
 
-        // Although netsync is being set to false for items client can still update these
-        // Realistically:
-        // Container should already hide these
-        // Client is the only thing that matters.
+    #endregion
 
-        private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
-        {
-            component.Visible = true;
-        }
+    private void OnHandInteract(EntityUid uid, ItemComponent component, InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
 
-        private void OnEquipped(EntityUid uid, SharedSpriteComponent component, GotEquippedEvent args)
-        {
-            component.Visible = false;
-        }
+        args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
+    }
 
-        private void AddPickupVerb(EntityUid uid, SharedItemComponent component, GetVerbsEvent<InteractionVerb> args)
-        {
-            if (args.Hands == null ||
-                args.Using != null ||
-                !args.CanAccess ||
-                !args.CanInteract ||
-                !component.CanPickup ||
-                !_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component))
-                return;
+    private void OnHandleState(EntityUid uid, ItemComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ItemComponentState state)
+            return;
 
-            InteractionVerb verb = new();
-            verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false, handsComp: args.Hands, item: component);
-            verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
+        component.Size = state.Size;
+        SetHeldPrefix(uid, state.HeldPrefix, component);
+    }
 
-            // if the item already in a container (that is not the same as the user's), then change the text.
-            // this occurs when the item is in their inventory or in an open backpack
-            args.User.TryGetContainer(out var userContainer);
-            if (args.Target.TryGetContainer(out var container) && container != userContainer)
-                verb.Text = Loc.GetString("pick-up-verb-get-data-text-inventory");
-            else
-                verb.Text = Loc.GetString("pick-up-verb-get-data-text");
+    private void OnGetState(EntityUid uid, ItemComponent component, ref ComponentGetState args)
+    {
+        args.State = new ItemComponentState(component.Size, component.HeldPrefix);
+    }
 
-            args.Verbs.Add(verb);
-        }
+    // Although netsync is being set to false for items client can still update these
+    // Realistically:
+    // Container should already hide these
+    // Client is the only thing that matters.
 
-        /// <summary>
-        ///     Notifies any entity that is holding or wearing this item that they may need to update their sprite.
-        /// </summary>
-        public virtual void VisualsChanged(EntityUid owner, SharedItemComponent? item = null)
-        { }
+    private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
+    {
+        component.Visible = true;
+    }
+
+    private void OnEquipped(EntityUid uid, SharedSpriteComponent component, GotEquippedEvent args)
+    {
+        component.Visible = false;
+    }
+
+    private void AddPickupVerb(EntityUid uid, ItemComponent component, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (args.Hands == null ||
+            args.Using != null ||
+            !args.CanAccess ||
+            !args.CanInteract) //||
+            //!_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component))
+            return;
+
+        InteractionVerb verb = new();
+        // TODO ITEM
+        //verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false,
+        //    handsComp: args.Hands, item: component);
+        verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
+
+        // if the item already in a container (that is not the same as the user's), then change the text.
+        // this occurs when the item is in their inventory or in an open backpack
+        _container.TryGetContainingContainer(args.User, out var userContainer);
+        if (_container.TryGetContainingContainer(args.Target, out var container) && container != userContainer)
+            verb.Text = Loc.GetString("pick-up-verb-get-data-text-inventory");
+        else
+            verb.Text = Loc.GetString("pick-up-verb-get-data-text");
+
+        args.Verbs.Add(verb);
+    }
+
+    /// <summary>
+    ///     Notifies any entity that is holding or wearing this item that they may need to update their sprite.
+    /// </summary>
+    /// <remarks>
+    ///     This is used for updating both inhand sprites and clothing sprites, but it's here just cause it needs to
+    ///     be in one place.
+    /// </remarks>
+    public virtual void VisualsChanged(EntityUid owner)
+    {
     }
 }

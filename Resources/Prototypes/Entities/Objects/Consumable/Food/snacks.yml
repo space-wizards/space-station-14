@@ -18,7 +18,7 @@
           Quantity: 10
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
     size: 3
 # Snacks
 
@@ -34,7 +34,6 @@
   - type: Sprite
     state: boritos
   - type: Item
-    color: blue
   - type: Food
     trash: FoodPacketBoritosTrash
 
@@ -47,7 +46,6 @@
   - type: Sprite
     state: cheesiehonkers
   - type: Item
-    color: orange
   - type: Food
     trash: FoodPacketCheesieTrash
 
@@ -60,35 +58,28 @@
   - type: Sprite
     state: chips
   - type: Item
-    color: green
   - type: Food
     trash: FoodPacketChipsTrash
 
 - type: entity
   name: chocolate bar
-  parent: FoodSnackBase
+  parent: BaseItem
   id: FoodSnackChocolate
   description: Tastes like cardboard.
   components:
   - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
     state: chocolatebar
+    netsync: false
   - type: Item
-    HeldPrefix: chocolatebar
+    heldPrefix: chocolatebar
+    size: 3
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketChocolateTrash
       - id: FoodSnackChocolateBar
     sound:
       path: /Audio/Effects/unwrap.ogg
-  - type: SolutionContainerManager #seems like you can eat it unwrapped
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Theobromine
-          Quantity: 3
 
 - type: entity
   name: chocolate bar
@@ -99,7 +90,6 @@
   - type: Sprite
     state: chocolatebar-open
   - type: Item
-    color: brown
   - type: SolutionContainerManager
     solutions:
       food:
@@ -119,7 +109,6 @@
   - type: Sprite
     state: energybar
   - type: Item
-    color: lime
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketEnergyTrash
@@ -136,7 +125,6 @@
   - type: Sprite
     state: energybar-open
   - type: Item
-    color: yellow
 
 - type: entity
   name: popcorn
@@ -147,7 +135,7 @@
   - type: Sprite
     state: popcorn
   - type: Item
-    HeldPrefix: popcorn
+    heldPrefix: popcorn
   - type: Food
     trash: FoodPacketPopcornTrash
 
@@ -160,7 +148,6 @@
   - type: Sprite
     state: raisins
   - type: Item
-    color: red
   - type: Food
     trash: FoodPacketRaisinsTrash
 
@@ -173,7 +160,6 @@
   - type: Sprite
     state: susjerky
   - type: Item
-    color: red
   - type: Food
     trash: FoodPacketSusTrash
 
@@ -186,10 +172,9 @@
   - type: Sprite
     state: syndicakes
   - type: Item
-    color: white
   - type: Food
     trash: FoodPacketSyndiTrash
-    
+
 - type: entity
   name: chow mein
   parent: FoodSnackBase
@@ -199,7 +184,6 @@
   - type: Sprite
     state: chinese1
   - type: Item
-    color: red
   - type: SolutionContainerManager
     solutions:
       food:
@@ -211,7 +195,7 @@
           Quantity: 2
   - type: Food
     trash: FoodPacketChowMeinTrash
-          
+
 - type: entity
   name: dan dan noodles
   parent: FoodSnackBase
@@ -252,27 +236,41 @@
           Quantity: 1
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
     size: 1
   - type: Food
     trash: FoodCookieFortune
 
 - type: entity
-  name: nutribrick
-  parent: FoodSnackBase
   id: FoodSnackNutribrick
+  parent: BaseItem
+  name: nutribrick
   description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
   components:
   - type: Item
     size: 10
   - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
+    netsync: false
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketMRETrash
       - id: FoodSnackNutribrickOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: FoodSnackNutribrickOpen
+  parent: FoodSnackBase
+  name: nutribrick
+  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    state: nutribrick-open
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -282,30 +280,32 @@
           Quantity: 25
 
 - type: entity
-  name: nutribrick
-  parent: FoodSnackNutribrick
-  id: FoodSnackNutribrickOpen
-  components:
-  - type: Sprite
-    state: nutribrick-open
-  - type: Food
-
-- type: entity
-  name: brownie
-  parent: FoodSnackBase
   id: FoodSnackMREBrownie
+  parent: BaseItem
+  name: brownie
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
-  - type: Item
-    size: 10
   - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
     state: mre-brownie
+    netsync: false
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketMRETrash
       - id: FoodSnackMREBrownieOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
+
+
+- type: entity
+  id: FoodSnackMREBrownieOpen
+  parent: FoodSnackBase
+  name: brownie
+  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  components:
+  - type: Sprite
+    state: mre-brownie-open
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -315,15 +315,6 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
-
-- type: entity
-  name: brownie
-  parent: FoodSnackMREBrownie
-  id: FoodSnackMREBrownieOpen
-  components:
-  - type: Sprite
-    state: mre-brownie-open
-  - type: Food
 
 # Trash
 
@@ -338,7 +329,7 @@
     netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
   - type: Tag
     tags:
     - Trash
@@ -354,7 +345,6 @@
   - type: Sprite
     state: boritos-trash
   - type: Item
-    color: blue
 
 - type: entity
   noSpawn: true
@@ -365,7 +355,6 @@
   - type: Sprite
     state: cheesiehonkers-trash
   - type: Item
-    color: orange
 
 - type: entity
   noSpawn: true
@@ -376,7 +365,6 @@
   - type: Sprite
     state: chips-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -387,7 +375,6 @@
   - type: Sprite
     state: chocolatebar-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -398,7 +385,6 @@
   - type: Sprite
     state: energybar-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -409,7 +395,6 @@
   - type: Sprite
     state: pistachio-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -420,7 +405,6 @@
   - type: Sprite
     state: popcorn-trash
   - type: Item
-    state: blue
 
 - type: entity
   noSpawn: true
@@ -431,7 +415,6 @@
   - type: Sprite
     state: raisins-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -442,7 +425,6 @@
   - type: Sprite
     state: semki-trash
   - type: Item
-    color: orange
 
 - type: entity
   noSpawn: true
@@ -453,7 +435,6 @@
   - type: Sprite
     state: susjerky-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -464,7 +445,6 @@
   - type: Sprite
     state: syndicakes-trash
   - type: Item
-    color: white
 
 - type: entity
   noSpawn: true
@@ -475,8 +455,7 @@
   - type: Sprite
     state: chinese1
   - type: Item
-    color: red
-    
+
 - type: entity
   noSpawn: true
   parent: FoodPacketTrash
@@ -486,8 +465,7 @@
   - type: Sprite
     state: chinese2
   - type: Item
-    color: white
-    
+
 - type: entity
   noSpawn: true
   parent: FoodPacketTrash
@@ -498,7 +476,6 @@
   - type: Sprite
     state: fortune
   - type: Item
-    color: white
 
 - type: entity
   noSpawn: true

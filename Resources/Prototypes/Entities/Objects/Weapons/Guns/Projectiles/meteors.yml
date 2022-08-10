@@ -25,7 +25,6 @@
     maxIntensity: 45
   - type: Physics
     bodyType: Dynamic
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:

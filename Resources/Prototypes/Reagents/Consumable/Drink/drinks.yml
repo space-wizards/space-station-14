@@ -240,7 +240,7 @@
   parent: BaseDrink
   desc: reagent-desc-water
   physicalDesc: reagent-physical-desc-translucent
-  color: "#c0e0ff20"
+  color: "#75b1f0"
   boilingPoint: 100.0
   meltingPoint: 0.0
   metabolisms:
@@ -317,3 +317,12 @@
   physicalDesc: strong-smelling
   color: "#485000"
   spritePath: rewriter.rsi
+
+- type: reagent
+  id: Kvass
+  name: reagent-name-kvass
+  parent: BaseDrink
+  desc: reagent-desc-kvass
+  physicalDesc: reagent-physical-desc-bubbly
+  color: "#381600"
+  spritePath: kvass.rsi

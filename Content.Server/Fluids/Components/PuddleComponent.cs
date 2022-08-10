@@ -1,6 +1,6 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Fluids.Components
 {
@@ -8,7 +8,7 @@ namespace Content.Server.Fluids.Components
     /// Puddle on a floor
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(PuddleSystem))]
+    [Access(typeof(PuddleSystem))]
     public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";

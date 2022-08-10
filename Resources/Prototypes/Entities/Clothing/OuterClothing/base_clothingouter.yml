@@ -4,10 +4,24 @@
   id: ClothingOuterBase
   components:
   - type: Clothing
-    Slots:
+    slots:
     - outerClothing
   - type: Sprite
     state: icon
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: ClothingOuterBaseLarge
+  components:
+  - type: Item
+    size: 80
+  - type: Clothing
+    slots:
+    - outerClothing
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
 
 - type: entity
   abstract: true
@@ -35,8 +49,8 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.4
     sprintModifier: 0.6
-  - type: Clothing
-    size: 50
+  - type: Item
+    size: 121
   - type: Armor
     modifiers:
       coefficients:
@@ -63,7 +77,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
-  - type: Clothing
-    size: 30
+  - type: Item
+    size: 80
   - type: DiseaseProtection
     protection: 0.05

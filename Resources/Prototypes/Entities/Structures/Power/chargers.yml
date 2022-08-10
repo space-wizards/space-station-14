@@ -53,6 +53,7 @@
         components:
         - HitscanBatteryAmmoProvider
         - ProjectileBatteryAmmoProvider
+        - Stunbaton
 
 - type: entity
   name: wall recharger

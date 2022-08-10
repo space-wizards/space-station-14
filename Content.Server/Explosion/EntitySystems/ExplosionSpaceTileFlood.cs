@@ -19,11 +19,11 @@ public sealed class ExplosionSpaceTileFlood : ExplosionTileFlood
     ///     After every iteration, this data set will store all the grid-tiles that were reached as a result of the
     ///     explosion expanding in space.
     /// </summary>
-    public Dictionary<GridId, HashSet<Vector2i>> GridJump = new();
+    public Dictionary<EntityUid, HashSet<Vector2i>> GridJump = new();
 
     public ushort TileSize = ExplosionSystem.DefaultTileSize;
 
-    public ExplosionSpaceTileFlood(ExplosionSystem system, MapCoordinates epicentre, GridId? referenceGrid, List<GridId> localGrids, float maxDistance)
+    public ExplosionSpaceTileFlood(ExplosionSystem system, MapCoordinates epicentre, EntityUid? referenceGrid, List<EntityUid> localGrids, float maxDistance)
     {
         (_gridBlockMap, TileSize) = system.TransformGridEdges(epicentre, referenceGrid, localGrids, maxDistance);
         system.GetUnblockedDirections(_gridBlockMap, TileSize);

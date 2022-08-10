@@ -73,19 +73,13 @@ namespace Content.Server.Traitor.Uplink.Account
             purchasedItem = null;
 
             if (!_listingSystem.TryGetListing(itemId, out var listing))
-            {
                 return false;
-            }
 
             if (acc.Balance < listing.Price)
-            {
                 return false;
-            }
 
             if (!RemoveFromBalance(acc, listing.Price))
-            {
                 return false;
-            }
 
             purchasedItem = EntityManager.SpawnEntity(listing.ItemId, spawnCoords);
             return true;

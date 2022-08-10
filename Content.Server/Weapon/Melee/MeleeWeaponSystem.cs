@@ -5,9 +5,10 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
+using Content.Server.Damage.Components;
+using Content.Server.Damage.Systems;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -29,6 +30,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly StaminaSystem _staminaSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -74,7 +76,10 @@ namespace Content.Server.Weapon.Melee
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
-            if (curTime < comp.CooldownEnd || args.Target == null)
+            if (curTime < comp.CooldownEnd ||
+                args.Target == null ||
+                args.Target == owner ||
+                args.User == args.Target)
                 return;
 
             var location = Transform(args.User).Coordinates;
@@ -84,7 +89,7 @@ namespace Content.Server.Weapon.Melee
             if (args.Target is {Valid: true} target)
             {
                 // Raise event before doing damage so we can cancel damage if the event is handled
-                var hitEvent = new MeleeHitEvent(new List<EntityUid>() { target }, args.User);
+                var hitEvent = new MeleeHitEvent(new List<EntityUid>() { target }, args.User, comp.Damage);
                 RaiseLocalEvent(owner, hitEvent, false);
 
                 if (!hitEvent.Handled)
@@ -92,38 +97,64 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
-                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
                     var damageResult = _damageableSystem.TryChangeDamage(target, modifiedDamage);
 
-                    if (damageResult != null)
+                    if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
+                        FixedPoint2 bluntDamage;
+                        // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
+                        if (damageResult.DamageDict.TryGetValue("Blunt", out bluntDamage))
+                        {
+                            _staminaSystem.TakeStaminaDamage(target, (bluntDamage * comp.BluntStaminaDamageFactor).Float());
+                        }
+
                         if (args.Used == args.User)
                             _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
                         else
                             _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
-                    }
 
-                    PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, comp.HitSound);
+                        PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, comp.HitSound);
+                    }
+                    else
+                    {
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                    }
                 }
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(owner, entityManager: EntityManager), comp.MissSound.GetSound(), args.User);
-                return;
+                SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
             }
 
             comp.LastAttackTime = curTime;
-            comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
+            SetAttackCooldown(owner, comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime), comp);
 
-            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
+            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
+        }
+
+        /// <summary>
+        /// Set the melee weapon cooldown's end to the specified value. Will use the maximum of the existing cooldown or the new one.
+        /// </summary>
+        public void SetAttackCooldown(EntityUid uid, TimeSpan endTime, MeleeWeaponComponent? component = null)
+        {
+            // Some other system may want to artificially inflate melee weapon CD.
+            if (!Resolve(uid, ref component) || component.CooldownEnd > endTime) return;
+
+            component.CooldownEnd = endTime;
+            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd));
         }
 
         private void OnWideAttack(EntityUid owner, MeleeWeaponComponent comp, WideAttackEvent args)
         {
+            if (string.IsNullOrEmpty(comp.Arc)) return;
+
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
@@ -152,34 +183,25 @@ namespace Content.Server.Weapon.Melee
             }
 
             // Raise event before doing damage so we can cancel damage if handled
-            var hitEvent = new MeleeHitEvent(hitEntities, args.User);
+            var hitEvent = new MeleeHitEvent(hitEntities, args.User, comp.Damage);
             RaiseLocalEvent(owner, hitEvent, false);
             SendAnimation(comp.Arc, angle, args.User, owner, hitEntities);
 
             if (!hitEvent.Handled)
             {
                 var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
-
-                if (entities.Count != 0)
-                {
-                    var target = entities.First();
-                    TryComp<MeleeWeaponComponent>(target, out var meleeWeapon);
-
-                    PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, meleeWeapon?.HitSound);
-                }
-                else
-                {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), Transform(args.User).Coordinates);
-                }
+                var appliedDamage = new DamageSpecifier();
 
                 foreach (var entity in hitEntities)
                 {
-                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
 
-                    if (damageResult != null)
+                    if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
+                        appliedDamage += damageResult;
+
                         if (args.Used == args.User)
                             _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using their hands and dealt {damageResult.Total:damage} damage");
@@ -188,12 +210,30 @@ namespace Content.Server.Weapon.Melee
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
                 }
+
+                if (entities.Count != 0)
+                {
+                    if (appliedDamage.Total > FixedPoint2.Zero)
+                    {
+                        var target = entities.First();
+                        PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, comp.HitSound);
+                    }
+                    else
+                    {
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                    }
+                }
+                else
+                {
+                    SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                }
             }
 
             comp.LastAttackTime = curTime;
             comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.ArcCooldownTime);
-
-            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
+            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
         }
 
         public static string? GetHighestDamageSound(DamageSpecifier modifiedDamage, IPrototypeManager protoManager)
@@ -227,17 +267,17 @@ namespace Content.Server.Weapon.Melee
             {
                 if (type == null && damageSoundComp.NoDamageSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundComp.NoDamageSound.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundComp.NoDamageSound.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (type != null && damageSoundComp.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundType!.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundType.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (type != null && damageSoundComp.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundGroup!.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundGroup.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
             }
@@ -247,12 +287,12 @@ namespace Content.Server.Weapon.Melee
             {
                 if (hitSoundOverride != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), hitSoundOverride.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(hitSoundOverride.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (hitSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), hitSound.GetSound(), target);
+                    SoundSystem.Play(hitSound.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target);
                     playedSound = true;
                 }
             }
@@ -266,14 +306,14 @@ namespace Content.Server.Weapon.Melee
                     case "Burn":
                     case "Heat":
                     case "Cold":
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Items/welder.ogg", target);
+                        SoundSystem.Play("/Audio/Items/welder.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                     // No damage, fallback to tappies
                     case null:
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Weapons/tap.ogg", target);
+                        SoundSystem.Play("/Audio/Weapons/tap.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                     case "Brute":
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Weapons/smash.ogg", target);
+                        SoundSystem.Play("/Audio/Weapons/smash.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                 }
             }
@@ -353,6 +393,11 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeHitEvent : HandledEntityEventArgs
     {
         /// <summary>
+        ///     The base amount of damage dealt by the melee hit.
+        /// </summary>
+        public readonly DamageSpecifier BaseDamage = new();
+
+        /// <summary>
         ///     Modifier sets to apply to the hit event when it's all said and done.
         ///     This should be modified by adding a new entry to the list.
         /// </summary>
@@ -382,10 +427,11 @@ namespace Content.Server.Weapon.Melee
         /// </summary>
         public EntityUid User { get; }
 
-        public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user)
+        public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, DamageSpecifier baseDamage)
         {
             HitEntities = hitEntities;
             User = user;
+            BaseDamage = baseDamage;
         }
     }
 }

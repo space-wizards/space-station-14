@@ -113,8 +113,8 @@ namespace Content.Server.RCD.Systems
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
-                    mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager["floor_steel"].TileId));
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} {snapPos} to floor_steel");
+                    mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager["FloorSteel"].TileId));
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} {snapPos} to FloorSteel");
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
@@ -149,7 +149,7 @@ namespace Content.Server.RCD.Systems
                     return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), rcd.SuccessSound.GetSound(), rcd.Owner);
+            SoundSystem.Play(rcd.SuccessSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), rcd.Owner);
             rcd.CurrentAmmo--;
             args.Handled = true;
         }
@@ -240,7 +240,7 @@ namespace Content.Server.RCD.Systems
 
         private void NextMode(EntityUid uid, RCDComponent rcd, EntityUid user)
         {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), rcd.SwapModeSound.GetSound(), uid);
+            SoundSystem.Play(rcd.SwapModeSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
 
             var mode = (int) rcd.Mode;
             mode = ++mode % RCDModeCount;

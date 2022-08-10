@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Jittering
 {
-    [Friend(typeof(SharedJitteringSystem))]
+    [Access(typeof(SharedJitteringSystem))]
     [RegisterComponent, NetworkedComponent]
     public sealed class JitteringComponent : Component
     {

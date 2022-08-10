@@ -24,8 +24,14 @@ namespace Content.Server.Repairable
             if (!EntityManager.TryGetComponent(component.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
+            float delay = component.DoAfterDelay;
+
+            // Add a penalty to how long it takes if the user is repairing itself
+            if (args.User == args.Target)
+                delay *= component.SelfRepairPenalty;
+
             // Can the tool actually repair this, does it have enough fuel?
-            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
+            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, delay, component.QualityNeeded))
                 return;
 
             if (component.Damage != null)

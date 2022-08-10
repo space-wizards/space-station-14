@@ -30,6 +30,9 @@
       "name": "pda-bartender"
     },
     {
+      "name": "pda-boxer"
+    },
+    {
       "name": "pda-captain"
     },
     {
@@ -144,6 +147,9 @@
     },
     {
       "name": "pda-musician"
+    },
+    {
+      "name": "pda-reporter"
     },
     {
       "name": "pda-interncadet"

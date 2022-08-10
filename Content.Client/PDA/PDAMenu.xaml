@@ -8,9 +8,12 @@
                       HorizontalExpand="True"
                       MinSize="50 50">
             <RichTextLabel Name="PdaOwnerLabel" Access="Public" />
+            <RichTextLabel Name="IdInfoLabel"
+                           Access="Public"
+                           HorizontalExpand="True" />
             <PanelContainer>
                 <BoxContainer Orientation="Horizontal">
-                    <RichTextLabel Name="IdInfoLabel"
+                    <RichTextLabel Name="StationNameLabel"
                                    Access="Public"
                                    HorizontalExpand="True" />
                     <Button Name="EjectIdButton"
@@ -34,6 +37,10 @@
                     Access="Public"
                     Text="{Loc 'comp-pda-ui-toggle-flashlight-button'}"
                     ToggleMode="True" />
+            <Button Name="CrewManifestButton"
+                    Access="Public"
+                    Text="{Loc 'crew-manifest-button-label'}"
+                    Visible="False" />
             <Button Name="ActivateUplinkButton"
                     Access="Public"
                     Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}" />

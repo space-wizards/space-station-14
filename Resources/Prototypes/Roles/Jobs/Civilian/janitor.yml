@@ -1,11 +1,10 @@
 - type: job
   id: Janitor
-  name: "janitor"
+  name: job-name-janitor
+  playTimeTracker: JobJanitor
   startingGear: JanitorGear
-  departments:
-  - Civilian
   icon: "Janitor"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Janitor
   - Maintenance
@@ -25,5 +24,18 @@
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
   innerclothingskirt: ClothingUniformJumpskirtJanitor
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+- type: startingGear
+  id: JanitorMaidGear
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJanimaid
+    back: ClothingBackpackFilled
+    id: JanitorPDA
+    head: ClothingHeadHatCatEars
+    ears: ClothingHeadsetService
+    belt: ClothingBeltJanitorFilled
+  innerclothingskirt: ClothingUniformJumpskirtJanimaid
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

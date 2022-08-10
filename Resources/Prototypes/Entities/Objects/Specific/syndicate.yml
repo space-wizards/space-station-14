@@ -16,6 +16,8 @@
     max: 999999 # todo: add support for unlimited stacks
     stackType: Telecrystal
   - type: Telecrystal
+  - type: StackPrice
+    price: 200
 
 - type: entity
   parent: Telecrystal
@@ -56,7 +58,7 @@
     netsync: false
   - type: Item
     sprite: Objects/Devices/communication.rsi
-    HeldPrefix: old-radio
+    heldPrefix: old-radio
   - type: UserInterface
     interfaces:
     - key: enum.UplinkUiKey.Key

@@ -21,3 +21,6 @@ reagent-desc-space-drugs = An illegal compound which induces a number of effects
 
 reagent-name-nocturine = nocturine
 reagent-desc-nocturine = Makes you feel very tired and unable to stand up. Basically, it's bone hurting juice.
+
+reagent-name-mute-toxin = mute toxin
+reagent-desc-mute-toxin = Makes you unable to talk while metabolizing.

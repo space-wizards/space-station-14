@@ -1,4 +1,5 @@
-﻿using Content.Shared.Inventory;
+﻿using Content.Shared.Clothing.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -23,9 +24,9 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         // check if it's valid clothing
-        if (!proto.TryGetComponent("Clothing", out SharedItemComponent? clothing))
+        if (!proto.TryGetComponent("Clothing", out SharedClothingComponent? clothing))
             return false;
-        if (!clothing.SlotFlags.HasFlag(chameleonSlot))
+        if (!clothing.Slots.HasFlag(chameleonSlot))
             return false;
 
         return true;

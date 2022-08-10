@@ -1,5 +1,7 @@
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
+using Content.Shared.Camera;
+using Content.Shared.Spawners.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -9,6 +11,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
+using Robust.Shared.Animations;
 using Robust.Shared.Audio;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
@@ -24,19 +27,54 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
-    [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
+
+    public bool SpreadOverlay
+    {
+        get => _spreadOverlay;
+        set
+        {
+            if (_spreadOverlay == value) return;
+            _spreadOverlay = value;
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+
+            if (_spreadOverlay)
+            {
+                overlayManager.AddOverlay(new GunSpreadOverlay(
+                    EntityManager,
+                    _eyeManager,
+                    Timing,
+                    _inputManager,
+                    _player,
+                    this));
+            }
+            else
+            {
+                overlayManager.RemoveOverlay<GunSpreadOverlay>();
+            }
+        }
+    }
+
+    private bool _spreadOverlay;
 
     public override void Initialize()
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
         SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
+        SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
 
         // Plays animated effects on the client.
         SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
 
+        InitializeMagazineVisuals();
         InitializeSpentAmmo();
+    }
+
+    private void OnMuzzleFlash(MuzzleFlashEvent args)
+    {
+        CreateEffect(args.Uid, args);
     }
 
     private void OnHitscan(HitscanEvent ev)
@@ -134,6 +172,8 @@ public sealed partial class GunSystem : SharedGunSystem
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
         // This also means any ammo specific stuff can be grabbed as necessary.
+        var direction = fromCoordinates.ToMapPos(EntityManager) - toCoordinates.ToMapPos(EntityManager);
+
         foreach (var ent in ammo)
         {
             switch (ent)
@@ -144,6 +184,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
                         PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                        Recoil(user, direction);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
                         //    Del(cartridge.Owner);
@@ -160,6 +201,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 case AmmoComponent newAmmo:
                     MuzzleFlash(gun.Owner, newAmmo, user);
                     PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                    Recoil(user, direction);
                     if (newAmmo.Owner.IsClientSide())
                         Del(newAmmo.Owner);
                     else
@@ -167,15 +209,22 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case HitscanPrototype:
                     PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                    Recoil(user, direction);
                     break;
             }
         }
     }
 
+    private void Recoil(EntityUid? user, Vector2 recoil)
+    {
+        if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero) return;
+        _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f);
+    }
+
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
     {
-        if (sound == null || user == null || !Timing.IsFirstTimePredicted) return;
-        SoundSystem.Play(Filter.Local(), sound, gun);
+        if (string.IsNullOrEmpty(sound) || user == null || !Timing.IsFirstTimePredicted) return;
+        SoundSystem.Play(sound, Filter.Local(), gun);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
@@ -184,8 +233,82 @@ public sealed partial class GunSystem : SharedGunSystem
         PopupSystem.PopupEntity(message, uid.Value, Filter.Entities(user.Value));
     }
 
-    protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)
+    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        _effects.CreateEffect(message);
+        if (!Timing.IsFirstTimePredicted || !TryComp<TransformComponent>(uid, out var xform)) return;
+        var ent = Spawn(message.Prototype, xform.Coordinates);
+
+        var effectXform = Transform(ent);
+        effectXform.LocalRotation -= MathF.PI / 2;
+        effectXform.LocalPosition += new Vector2(0f, -0.5f);
+
+        var lifetime = 0.4f;
+
+        if (TryComp<TimedDespawnComponent>(uid, out var despawn))
+        {
+            lifetime = despawn.Lifetime;
+        }
+
+        var anim = new Animation()
+        {
+            Length = TimeSpan.FromSeconds(lifetime),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Color),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(1f), 0),
+                        new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(0f), lifetime)
+                    }
+                }
+            }
+        };
+
+        _animPlayer.Play(ent, anim, "muzzle-flash");
+        var light = EnsureComp<PointLightComponent>(uid);
+
+        light.Enabled = true;
+        light.Color = Color.FromHex("#cc8e2b");
+        light.Radius = 2f;
+        light.Energy = 5f;
+
+        var animTwo = new Animation()
+        {
+            Length = TimeSpan.FromSeconds(lifetime),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(PointLightComponent),
+                    Property = nameof(PointLightComponent.Energy),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(5f, 0),
+                        new AnimationTrackProperty.KeyFrame(0f, lifetime)
+                    }
+                },
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(PointLightComponent),
+                    Property = nameof(PointLightComponent.Enabled),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(true, 0),
+                        new AnimationTrackProperty.KeyFrame(false, lifetime)
+                    }
+                }
+            }
+        };
+
+        var uidPlayer = EnsureComp<AnimationPlayerComponent>(uid);
+
+        _animPlayer.Stop(uid, uidPlayer, "muzzle-flash-light");
+        _animPlayer.Play(uid, uidPlayer, animTwo,"muzzle-flash-light");
     }
 }

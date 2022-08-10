@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Construction;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Destructible;
@@ -11,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Popups;
+using Content.Server.Hands.Systems;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -18,12 +20,14 @@ namespace Content.Server.Kitchen.EntitySystems
     internal sealed class MicrowaveSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly HandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
-            SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[]{typeof(AnchorableSystem)});
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
         }
@@ -93,6 +97,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnInteractUsing(EntityUid uid, MicrowaveComponent component, InteractUsingEvent args)
         {
+            if(args.Handled) return;
             if (!component.Powered)
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, Filter.Entities(args.User));
@@ -105,13 +110,14 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
-            if (!HasComp<SharedItemComponent>(args.Used))
+            if (!HasComp<ItemComponent>(args.Used))
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, Filter.Entities(args.User));
                 return;
             }
 
-            component.Storage.Insert(args.Used);
+            args.Handled = true;
+            _handsSystem.TryDropIntoContainer(args.User, args.Used, component.Storage);
             component.DirtyUi();
         }
 

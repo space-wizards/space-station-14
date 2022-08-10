@@ -4,6 +4,9 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Throwing;
@@ -17,35 +20,45 @@ using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
 namespace Content.Server.VendingMachines
 {
-    public sealed class VendingMachineSystem : EntitySystem
+    public sealed class VendingMachineSystem : SharedVendingMachineSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _action = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<VendingMachineComponent, ComponentInit>(OnComponentInit);
+
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineComponent, InventorySyncRequestMessage>(OnInventoryRequestMessage);
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamage);
+
+            SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
         }
 
-        private void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
+        protected override void OnComponentInit(EntityUid uid, SharedVendingMachineComponent sharedComponent, ComponentInit args)
         {
-            base.Initialize();
+            base.OnComponentInit(uid, sharedComponent, args);
+
+            var component = (VendingMachineComponent) sharedComponent;
 
             if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver))
             {
                 TryUpdateVisualState(uid, null, component);
             }
 
-            InitializeFromPrototype(uid, component);
+            if (component.Action != null)
+            {
+                var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.Action));
+                _action.AddAction(uid, action, uid);
+            }
         }
 
         private void OnInventoryRequestMessage(EntityUid uid, VendingMachineComponent component, InventorySyncRequestMessage args)
@@ -91,66 +104,23 @@ namespace Content.Server.VendingMachines
             component.Emagged = true;
             args.Handled = true;
         }
-
-        public void InitializeFromPrototype(EntityUid uid, VendingMachineComponent? vendComponent = null)
+        
+        private void OnDamage(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
         {
-            if (!Resolve(uid, ref vendComponent))
+            if (component.DispenseOnHitChance == null || args.DamageDelta == null)
                 return;
 
-            if (string.IsNullOrEmpty(vendComponent.PackPrototypeId)) { return; }
-
-            if (!_prototypeManager.TryIndex(vendComponent.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
-            {
-                return;
-            }
-
-            MetaData(uid).EntityName = packPrototype.Name;
-            vendComponent.AnimationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
-            vendComponent.SpriteName = packPrototype.SpriteName;
-            if (!string.IsNullOrEmpty(vendComponent.SpriteName))
-            {
-                if (TryComp<SpriteComponent>(vendComponent.Owner, out var spriteComp)) {
-                    const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
-                    spriteComp.BaseRSIPath = string.Format(vendingMachineRSIPath, vendComponent.SpriteName);
-                }
-            }
-
-            AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, vendComponent);
-            AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, vendComponent);
-            AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, vendComponent);
+            if (args.DamageDelta.Total >= component.DispenseOnHitThreshold && _random.Prob(component.DispenseOnHitChance.Value))
+                EjectRandom(uid, true, component);
         }
 
-        private void AddInventoryFromPrototype(EntityUid uid, Dictionary<string, uint>? entries,
-            InventoryType type,
-            VendingMachineComponent? component = null)
+        private void OnSelfDispense(EntityUid uid, VendingMachineComponent component, VendingMachineSelfDispenseEvent args)
         {
-            if (!Resolve(uid, ref component) || entries == null)
-            {
+            if (args.Handled)
                 return;
-            }
 
-            var inventory = new List<VendingMachineInventoryEntry>();
-
-            foreach (var (id, amount) in entries)
-            {
-                if (_prototypeManager.HasIndex<EntityPrototype>(id))
-                {
-                    inventory.Add(new VendingMachineInventoryEntry(type, id, amount));
-                }
-            }
-
-            switch (type)
-            {
-                case InventoryType.Regular:
-                    component.Inventory.AddRange(inventory);
-                    break;
-                case InventoryType.Emagged:
-                    component.EmaggedInventory.AddRange(inventory);
-                    break;
-                case InventoryType.Contraband:
-                    component.ContrabandInventory.AddRange(inventory);
-                    break;
-            }
+            args.Handled = true;
+            EjectRandom(uid, true, component);
         }
 
         public void Deny(EntityUid uid, VendingMachineComponent? vendComponent = null)
@@ -158,7 +128,7 @@ namespace Content.Server.VendingMachines
             if (!Resolve(uid, ref vendComponent))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(vendComponent.Owner), vendComponent.SoundDeny.GetSound(), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(vendComponent.SoundDeny.GetSound(), Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
             // Play the Deny animation
             TryUpdateVisualState(uid, VendingMachineVisualState.Deny, vendComponent);
             //TODO: This duration should be a distinct value specific to the deny animation
@@ -240,7 +210,7 @@ namespace Content.Server.VendingMachines
                     _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
                 }
             });
-            SoundSystem.Play(Filter.Pvs(vendComponent.Owner), vendComponent.SoundVend.GetSound(), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(vendComponent.SoundVend.GetSound(), Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)

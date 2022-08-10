@@ -1,18 +1,24 @@
 using Content.Client.Message;
+using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.CrewManifest;
 using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Configuration;
 
 namespace Content.Client.PDA
 {
     [UsedImplicitly]
     public sealed class PDABoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
+
         private PDAMenu? _menu;
 
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
+            IoCManager.InjectDependencies(this);
         }
 
         protected override void Open()
@@ -20,12 +26,21 @@ namespace Content.Client.PDA
             base.Open();
             SendMessage(new PDARequestUpdateInterfaceMessage());
             _menu = new PDAMenu();
-            _menu.OpenToLeft();
+            _menu.OpenCenteredLeft();
             _menu.OnClose += Close;
             _menu.FlashLightToggleButton.OnToggled += _ =>
             {
                 SendMessage(new PDAToggleFlashlightMessage());
             };
+
+            if (_configManager.GetCVar(CCVars.CrewManifestUnsecure))
+            {
+                _menu.CrewManifestButton.Visible = true;
+                _menu.CrewManifestButton.OnPressed += _ =>
+                {
+                    SendMessage(new CrewManifestOpenUiMessage());
+                };
+            }
 
             _menu.EjectIdButton.OnPressed += _ =>
             {
@@ -79,13 +94,15 @@ namespace Content.Client.PDA
                     if (msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null)
                     {
                         _menu.IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                            ("Owner",msg.PDAOwnerInfo.IdOwner ?? "Unknown"),
-                            ("JobTitle",msg.PDAOwnerInfo.JobTitle ?? "Unassigned")));
+                            ("Owner",msg.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
+                            ("JobTitle",msg.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
                     }
                     else
                     {
                         _menu.IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui-blank"));
                     }
+
+                    _menu.StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station", ("Station",msg.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
 
                     _menu.EjectIdButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
                     _menu.EjectPenButton.Visible = msg.HasPen;

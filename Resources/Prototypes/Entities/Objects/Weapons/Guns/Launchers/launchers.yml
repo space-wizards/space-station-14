@@ -8,7 +8,7 @@
   - type: Sprite
     netsync: false
   - type: Item
-    size: 24
+    size: 60
 
 - type: entity
   name: china lake
@@ -22,7 +22,6 @@
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: Gun
     fireRate: 1
@@ -55,7 +54,6 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 0.5
@@ -69,12 +67,11 @@
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
   name: multiple rocket launcher
@@ -90,7 +87,6 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 6
@@ -106,9 +102,8 @@
     proto: CartridgeRocketSlow
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true

@@ -1,0 +1,192 @@
+- type: entity
+  save: false
+  abstract: true
+  id: MobSiliconBase
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Bloodstream
+    bloodReagent: Oil
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 20
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 4
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    netsync: false
+  - type: Recyclable
+    safe: false
+  - type: UtilityNPC
+    behaviorSets:
+    - Idle
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: KinematicController # Same for all inheritors
+  - type: DrawableSolution
+    solution: bloodstream
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: Repairable
+    fuelcost: 15
+    doAfterDelay: 8
+  - type: Pullable
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: MobState
+    thresholds:
+      0: Alive
+      120: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Input
+    context: "human"
+  - type: InputMover
+  - type: MobMover
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobHonkBot
+  name: honkbot
+  description: Horrifying.
+  components:
+  - type: SpamEmitSound
+    sound:
+      collection: BikeHorn
+  - type: UtilityNPC
+    behaviorSets:
+    - Idle
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/honkbot.rsi
+    state: honkbot
+  - type: Slippery
+    launchForwardsMultiplier: 6.0
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 8
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+      - SlipLayer
+  - type: Construction
+    graph: HonkBot
+    node: bot
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: honkbot
+    description: An artificial being of pure evil.
+  - type: InteractionPopup
+    interactSuccessString: petting-success-honkbot
+    interactFailureString: petting-failure-honkbot
+    interactSuccessSound:
+      path: /Audio/Items/bikehorn.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobCleanBot
+  name: cleanbot
+  description: The creep of automation now threatening space janitors.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/cleanbot.rsi
+    state: cleanbot
+  - type: UtilityNPC
+    behaviorSets:
+    - CleanBot
+  - type: Drain
+    range: 1
+    unitsDestroyedPerSecond: 6
+  - type: Construction
+    graph: CleanBot
+    node: bot
+  - type: SentienceTarget
+    flavorKind: mechanical
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 30
+  - type: DrainableSolution
+    solution: drainBuffer
+  - type: InteractionPopup
+    interactSuccessString: petting-success-cleanbot
+    interactFailureString: petting-failure-cleanbot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobMedibot
+  name: medibot
+  description: No substitute for a doctor, but better than nothing.
+  components:
+  - type: UtilityNPC
+    behaviorSets:
+    - MediBot
+  - type: Medibot
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/medibot.rsi
+    state: medibot
+  - type: Speech
+  - type: Construction
+    graph: MediBot
+    node: bot
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medibot
+    interactFailureString: petting-failure-medibot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg

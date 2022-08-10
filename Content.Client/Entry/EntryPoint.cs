@@ -5,6 +5,7 @@ using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
+using Content.Client.Eye.Blinding;
 using Content.Client.Flash;
 using Content.Client.GhostKick;
 using Content.Client.HUD;
@@ -16,12 +17,12 @@ using Content.Client.MainMenu;
 using Content.Client.MobState.Overlays;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
+using Content.Client.Radiation;
 using Content.Client.Sandbox;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
-using Content.Client.StationEvents;
-using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
@@ -70,15 +71,14 @@ namespace Content.Client.Entry
             factory.DoAutoRegistrations();
             factory.IgnoreMissingComponents();
 
-            factory.RegisterClass<SharedResearchConsoleComponent>();
+            // Do not add to these, they are legacy.
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
-            factory.RegisterClass<SharedVendingMachineComponent>();
-            factory.RegisterClass<SharedCargoConsoleComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
+            // Do not add to the above, they are legacy
 
             prototypes.RegisterIgnore("accent");
             prototypes.RegisterIgnore("material");
@@ -126,6 +126,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<ViewportManager>().Initialize();
             IoCManager.Resolve<GhostKickManager>().Initialize();
             IoCManager.Resolve<ExtendedDisconnectInformationManager>().Initialize();
+            IoCManager.Resolve<PlayTimeTrackingManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
@@ -182,19 +183,16 @@ namespace Content.Client.Entry
             ContentContexts.SetupContexts(inputMan.Contexts);
 
             IoCManager.Resolve<IGameHud>().Initialize();
-            IoCManager.Resolve<IParallaxManager>().LoadParallax(); // Have to do this later because prototypes are needed.
+            IoCManager.Resolve<IParallaxManager>().LoadDefaultParallax(); // Have to do this later because prototypes are needed.
 
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
-            overlayMgr.AddOverlay(new ParallaxOverlay());
+
             overlayMgr.AddOverlay(new SingularityOverlay());
-            overlayMgr.AddOverlay(new CritOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.
-            overlayMgr.AddOverlay(new CircleMaskOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();

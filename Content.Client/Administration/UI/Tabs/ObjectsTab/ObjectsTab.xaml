@@ -1,0 +1,16 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:pt="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label HorizontalExpand="True" SizeFlagsStretchRatio="0.50"
+                   Text="{Loc Object type:}" />
+            <OptionButton Name="ObjectTypeOptions" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"/>
+        </BoxContainer>
+        <cc:HSeparator/>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" Name="ObjectList">
+            </BoxContainer>
+        </ScrollContainer>
+    </BoxContainer>
+</Control>

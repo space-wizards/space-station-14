@@ -1,18 +1,16 @@
+using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    [Friend(typeof(GasOutletInjectorSystem))]
+    [Access(typeof(GasOutletInjectorSystem))]
     public sealed class GasOutletInjectorComponent : Component
     {
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Injecting { get; set; } = false;
 
         /// <summary>
         ///     Target volume to transfer. If <see cref="WideNet"/> is enabled, actual transfer rate will be much higher.
@@ -31,7 +29,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public float MaxTransferRate = Atmospherics.MaxTransferRate;
 
         [DataField("maxPressure")]
-        public float MaxPressure { get; set; } = 2 * Atmospherics.MaxOutputPressure;
+        public float MaxPressure { get; set; } = GasVolumePumpComponent.DefaultHigherThreshold;
 
         [DataField("inlet")]
         public string InletName { get; set; } = "pipe";

@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Components;
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
-[Friend(typeof(FluidSpreaderSystem))]
+[Access(typeof(FluidSpreaderSystem))]
 public sealed class FluidSpreaderComponent : Component
 {
     [ViewVariables]

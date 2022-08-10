@@ -1,5 +1,4 @@
-using Content.Shared.Sound;
-using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -15,8 +14,8 @@ public class AmmoComponent : Component, IShootable
 {
     // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 
-    [ViewVariables, DataField("muzzleFlash")]
-    public ResourcePath? MuzzleFlash = new ResourcePath("Objects/Weapons/Guns/Projectiles/projectiles.rsi/muzzle_bullet.png");
+    [ViewVariables(VVAccess.ReadWrite), DataField("muzzleFlash", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? MuzzleFlash = "MuzzleFlashEffect";
 }
 
 /// <summary>
@@ -35,7 +34,7 @@ public sealed class CartridgeAmmoComponent : AmmoComponent
     /// How much the ammo spreads when shot, in degrees. Does nothing if count is 0.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("spread")]
-    public float Spread = 10f;
+    public Angle Spread = Angle.FromDegrees(5);
 
     /// <summary>
     /// How many prototypes are spawned when shot.

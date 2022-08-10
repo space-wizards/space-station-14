@@ -47,9 +47,13 @@ namespace Content.Server.Interaction
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var playerGrid = _entities.GetComponent<TransformComponent>(attached).GridID;
-            var mapGrid = mapManager.GetGrid(playerGrid);
-            var playerPosition = _entities.GetComponent<TransformComponent>(attached).Coordinates;
+            var xform = _entities.GetComponent<TransformComponent>(attached);
+            var playerGrid = xform.GridUid;
+
+            if (!mapManager.TryGetGrid(playerGrid, out var mapGrid))
+                return;
+
+            var playerPosition = xform.Coordinates;
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
             for (var i = -radius; i <= radius; i++)
@@ -62,8 +66,8 @@ namespace Content.Server.Interaction
 
                     if (!tileDef.CanCrowbar) continue;
 
-                    var underplating = tileDefinitionManager["underplating"];
-                    mapGrid.SetTile(coordinates, new Robust.Shared.Map.Tile(underplating.TileId));
+                    var underplating = tileDefinitionManager["UnderPlating"];
+                    mapGrid.SetTile(coordinates, new Tile(underplating.TileId));
                 }
             }
         }

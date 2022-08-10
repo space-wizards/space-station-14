@@ -72,7 +72,8 @@ namespace Content.Server.Mind
         ///     The time of death for this Mind.
         ///     Can be null - will be null if the Mind is not considered "dead".
         /// </summary>
-        [ViewVariables] public TimeSpan? TimeOfDeath { get; set; } = null;
+        [ViewVariables]
+        public TimeSpan? TimeOfDeath { get; set; } = null;
 
         /// <summary>
         ///     The component currently owned by this mind.
@@ -177,10 +178,10 @@ namespace Content.Server.Mind
             _roles.Add(role);
             role.Greet();
 
-            var message = new RoleAddedEvent(role);
+            var message = new RoleAddedEvent(this, role);
             if (OwnedEntity != null)
             {
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
             }
 
             return role;
@@ -202,11 +203,11 @@ namespace Content.Server.Mind
 
             _roles.Remove(role);
 
-            var message = new RoleRemovedEvent(role);
+            var message = new RoleRemovedEvent(this, role);
 
             if (OwnedEntity != null)
             {
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
             }
         }
 
@@ -278,7 +279,7 @@ namespace Content.Server.Mind
 
             if (entity != null)
             {
-                if (!entMan.TryGetComponent<MindComponent>(entity.Value, out component))
+                if (!entMan.TryGetComponent(entity.Value, out component))
                 {
                     component = entMan.AddComponent<MindComponent>(entity.Value);
                 }
@@ -308,10 +309,18 @@ namespace Content.Server.Mind
             if(OwnedComponent != null)
                 mindSystem.InternalAssignMind(OwnedComponent.Owner, this, OwnedComponent);
 
-            if (VisitingEntity != null
-                && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
-                    || !entMan.TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
-                    || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
+            // Don't do the full deletion cleanup if we're transferring to our visitingentity
+            if (alreadyAttached)
+            {
+                // Set VisitingEntity null first so the removal of VisitingMind doesn't get through Unvisit() and delete what we're visiting.
+                // Yes this control flow sucks.
+                VisitingEntity = null;
+                IoCManager.Resolve<IEntityManager>().RemoveComponent<VisitingMindComponent>(entity!.Value);
+            }
+            else if (VisitingEntity != null
+                  && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
+                      || !entMan.TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                      || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
             {
                 RemoveVisitingEntity();
             }
@@ -401,12 +410,8 @@ namespace Content.Server.Mind
             DebugTools.AssertNotNull(oldVisitingEnt);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.HasComponent<VisitingMindComponent>(oldVisitingEnt))
-            {
-                entities.RemoveComponent<VisitingMindComponent>(oldVisitingEnt);
-            }
-
-            entities.EventBus.RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage());
+            entities.RemoveComponent<VisitingMindComponent>(oldVisitingEnt);
+            entities.EventBus.RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage(), true);
         }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)

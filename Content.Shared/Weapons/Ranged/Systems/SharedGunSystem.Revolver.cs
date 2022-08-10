@@ -54,12 +54,7 @@ public partial class SharedGunSystem
 
         var oldIndex = component.CurrentIndex;
         component.CurrentIndex = state.CurrentIndex;
-
-        component.AmmoSlots.EnsureCapacity(state.AmmoSlots.Count);
-        component.AmmoSlots.Clear();
         component.Chambers = new bool?[state.Chambers.Length];
-
-        DebugTools.Assert(component.AmmoSlots.Count == component.Chambers.Length);
 
         // Need to copy across the state rather than the ref.
         for (var i = 0; i < component.AmmoSlots.Count; i++)
@@ -103,7 +98,7 @@ public partial class SharedGunSystem
 
     private void OnRevolverVerbs(EntityUid uid, RevolverAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract) return;
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null) return;
 
         args.Verbs.Add(new Verb()
         {
@@ -225,7 +220,9 @@ public partial class SharedGunSystem
     private void UpdateRevolverAppearance(RevolverAmmoProviderComponent component)
     {
         if (!TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
-        appearance.SetData(AmmoVisuals.AmmoCount, GetRevolverCount(component));
+        var count = GetRevolverCount(component);
+        appearance.SetData(AmmoVisuals.HasAmmo, count != 0);
+        appearance.SetData(AmmoVisuals.AmmoCount, count);
         appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 
@@ -322,6 +319,8 @@ public partial class SharedGunSystem
                 component.Chambers[i] = true;
             }
         }
+
+        DebugTools.Assert(component.AmmoSlots.Count == component.Capacity);
     }
 
     [Serializable, NetSerializable]

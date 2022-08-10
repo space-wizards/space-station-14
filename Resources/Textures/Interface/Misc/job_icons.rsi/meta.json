@@ -17,6 +17,9 @@
             "name": "Botanist"
         },
         {
+            "name": "Boxer"
+        },
+        {
             "name": "AtmosphericTechnician"
         },
         {
@@ -111,6 +114,12 @@
         },
         {
             "name": "Musician"
+        },
+        {
+            "name": "Reporter"
+        },
+        {
+            "name": "Psychologist"
         },
         {
             "name": "MedicalIntern"

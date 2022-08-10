@@ -27,7 +27,8 @@ public sealed class AlertLevelComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public bool IsLevelLocked = false;
 
-    [ViewVariables] public const float Delay = 300;
+    [ViewVariables] public const float Delay = 30;
+
     [ViewVariables] public float CurrentDelay = 0;
     [ViewVariables] public bool ActiveDelay;
 

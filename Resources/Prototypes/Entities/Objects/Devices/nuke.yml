@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructureDynamic
+  parent: BaseStructure
   id: NuclearBomb
   name: nuclear fission explosive
   description: You probably shouldn't stick around to see if this is armed.
@@ -23,12 +23,10 @@
       layer:
       - HalfWallLayer
   - type: Nuke
-    # ~50 tile radius in open space
-    # close to defaulkt max cap.
     explosionType: Default
     maxIntensity: 100
     intensitySlope: 5
-    totalIntensity: 500000
+    totalIntensity: 5000000
     diskSlot:
       name: Disk
       insertSound:
@@ -47,6 +45,9 @@
     interfaces:
     - key: enum.NukeUiKey.Key
       type: NukeBoundUserInterface
+  - type: StaticPrice
+    price: 50000 # YOU STOLE A NUCLEAR FISSION EXPLOSIVE?!
+  - type: CargoSellBlacklist
 
 - type: entity
   parent: NuclearBomb
@@ -87,3 +88,5 @@
           Quantity: 3000
   - type: ReagentTank
     transferAmount: 100
+  - type: StaticPrice
+    price: 5000 # That's a pretty fancy keg you got there.

@@ -1,9 +1,7 @@
 using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
-using Content.Server.Station.Components;
+using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
-using Content.Shared.AlertLevel;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -13,7 +11,7 @@ namespace Content.Server.AlertLevel;
 public sealed class AlertLevelSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
@@ -52,7 +50,7 @@ public sealed class AlertLevelSystem : EntitySystem
                 continue;
             }
 
-            alert.CurrentDelay--;
+            alert.CurrentDelay -= time;
         }
     }
 
@@ -175,7 +173,8 @@ public sealed class AlertLevelSystem : EntitySystem
         {
             if (detail.Sound != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), detail.Sound.GetSound());
+                var filter = _stationSystem.GetInStation(station);
+                SoundSystem.Play(detail.Sound.GetSound(), filter, detail.Sound.Params);
             }
             else
             {
@@ -185,12 +184,11 @@ public sealed class AlertLevelSystem : EntitySystem
 
         if (announce)
         {
-
-            _chatManager.DispatchStationAnnouncement(announcementFull, playDefaultSound: playDefault,
+            _chatSystem.DispatchStationAnnouncement(station, announcementFull, playDefaultSound: playDefault,
                 colorOverride: detail.Color, sender: stationName);
         }
 
-        RaiseLocalEvent(new AlertLevelChangedEvent(level));
+        RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
     }
 }
 
@@ -202,10 +200,12 @@ public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs
 
 public sealed class AlertLevelChangedEvent : EntityEventArgs
 {
+    public EntityUid Station { get; }
     public string AlertLevel { get; }
 
-    public AlertLevelChangedEvent(string alertLevel)
+    public AlertLevelChangedEvent(EntityUid station, string alertLevel)
     {
+        Station = station;
         AlertLevel = alertLevel;
     }
 }

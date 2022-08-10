@@ -74,7 +74,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <param name="data">The data to send to the device.</param>
         public void SetData(EntityUid uid, string address, IAtmosDeviceData data)
         {
-            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
                 && !monitor.NetEnabled)
                 return;
 
@@ -93,7 +93,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// </summary>
         public void SyncAllDevices(EntityUid uid)
         {
-            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
                 && !monitor.NetEnabled)
                 return;
 
@@ -111,7 +111,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <param name="address">The address of the device.</param>
         public void SyncDevice(EntityUid uid, string address)
         {
-            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
                 && !monitor.NetEnabled)
                 return;
 
@@ -130,7 +130,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <param name="mode">The mode to sync with the rest of the network.</param>
         public void SyncMode(EntityUid uid, AirAlarmMode mode)
         {
-            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
                 && !monitor.NetEnabled)
                 return;
 
@@ -196,7 +196,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (EntityManager.TryGetComponent(uid, out WiresComponent wire) && wire.IsPanelOpen)
+            if (EntityManager.TryGetComponent(uid, out WiresComponent? wire) && wire.IsPanelOpen)
             {
                 args.Handled = false;
                 return;
@@ -227,7 +227,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args)
         {
             string addr = string.Empty;
-            if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)) addr = netConn.Address;
+            if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)) addr = netConn.Address;
             if (AccessCheck(uid, args.Session.AttachedEntity, component))
                 SetMode(uid, addr, args.Mode, true, false);
             else
@@ -255,7 +255,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent reader) || user == null)
+            if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent? reader) || user == null)
                 return false;
 
             if (!_accessSystem.IsAllowed(user.Value, reader))
@@ -276,7 +276,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
 
             string addr = string.Empty;
-            if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)) addr = netConn.Address;
+            if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)) addr = netConn.Address;
 
 
             if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)

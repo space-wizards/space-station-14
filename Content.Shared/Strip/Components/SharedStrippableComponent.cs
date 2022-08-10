@@ -1,6 +1,7 @@
 ﻿using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Strip.Components
@@ -75,6 +76,25 @@ namespace Content.Shared.Strip.Components
             Inventory = inventory;
             Hands = hands;
             Handcuffs = handcuffs;
+        }
+    }
+
+    /// <summary>
+    /// Used to modify strip times.
+    /// </summary>
+    [NetSerializable, Serializable]
+    public sealed class BeforeStripEvent : EntityEventArgs, IInventoryRelayEvent
+    {
+        public readonly float InitialTime;
+        public float Time;
+        public float Additive = 0;
+        public bool Stealth;
+
+        public SlotFlags TargetSlots { get; } = SlotFlags.GLOVES;
+
+        public BeforeStripEvent(float initialTime)
+        {
+            InitialTime = Time = initialTime;
         }
     }
 }

@@ -12,6 +12,8 @@
       tags:
         - CartridgePistol
     capacity: 10
+  - type: Item
+    size: 5
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -23,12 +25,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
 
 - type: entity
   id: BaseMagazinePistolHighCapacity
@@ -44,6 +45,8 @@
       tags:
         - CartridgePistol
     capacity: 16
+  - type: Item
+    size: 5
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -55,12 +58,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 7
-      zeroVisible: false
 
 - type: entity
   id: BaseMagazinePistolSubMachineGun  # Yeah it's weird but it's pistol caliber
@@ -76,6 +78,8 @@
       tags:
         - CartridgePistol
     capacity: 35
+  - type: Item
+    size: 10
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -87,13 +91,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
-
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
@@ -116,12 +118,11 @@
       - state: mag-unshaded-1
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
   - type: Appearance
-    visuals:
-      - type: MagVisualizer
-        magState: mag
-        steps: 6
-        zeroVisible: false
 
 - type: entity
   id: MagazinePistolCalicoTopMounted
@@ -138,12 +139,11 @@
     layers:
     - state: icon
       map: ["enum.GunVisualLayers.Base"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: false
 
 - type: entity
   id: MagazinePistol
@@ -155,20 +155,6 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazinePistolFlash
-  name: pistol magazine (.35 auto flash)
-  parent: BaseMagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolFlash
-  - type: Sprite
-    layers:
-    - state: flash
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -235,7 +221,7 @@
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolHighVelocity
   - type: Sprite
     layers:
     - state: high_velocity
@@ -287,20 +273,6 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazinePistolSubMachineGunFlash
-  name: SMG magazine (.35 auto flash)
-  parent: BaseMagazinePistolSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolFlash
-  - type: Sprite
-    layers:
-    - state: flash
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

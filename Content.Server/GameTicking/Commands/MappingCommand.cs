@@ -4,9 +4,12 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Server.Player;
+using Robust.Server.Console.Commands;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using Robust.Shared.ContentPack;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Commands
 {
@@ -16,14 +19,29 @@ namespace Content.Server.GameTicking.Commands
         [Dependency] private readonly IEntityManager _entities = default!;
 
         public string Command => "mapping";
-        public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} <MapID> <Path>";
+        public string Description => Loc.GetString("cmd-mapping-desc");
+        public string Help => Loc.GetString("cmd-mapping-help");
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            switch (args.Length)
+            {
+                case 1:
+                    return CompletionResult.FromHint(Loc.GetString("cmd-hint-mapping-id"));
+                case 2:
+                    var res = IoCManager.Resolve<IResourceManager>();
+                    var opts = CompletionHelper.UserFilePath(args[1], res.UserData)
+                        .Concat(CompletionHelper.ContentFilePath(args[1], res));
+                    return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-hint-mapping-path"));
+            }
+            return CompletionResult.Empty;
+        }
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not IPlayerSession player)
             {
-                shell.WriteError("Only players can use this command");
+                shell.WriteError(Loc.GetString("cmd-savemap-server"));
                 return;
             }
 
@@ -34,7 +52,7 @@ namespace Content.Server.GameTicking.Commands
             }
 
 #if DEBUG
-            shell.WriteError("WARNING: The server is using a debug build. You are risking losing your changes.");
+            shell.WriteError(Loc.GetString("cmd-mapping-warning"));
 #endif
 
             var mapManager = IoCManager.Resolve<IMapManager>();
@@ -43,25 +61,33 @@ namespace Content.Server.GameTicking.Commands
             // Get the map ID to use
             if (args.Length is 1 or 2)
             {
-                if (!int.TryParse(args[0], out var id))
+
+                if (!int.TryParse(args[0], out var intMapId))
                 {
-                    shell.WriteError($"{args[0]} is not a valid integer.");
+                    shell.WriteError(Loc.GetString("cmd-mapping-failure-integer", ("arg", args[0])));
                     return;
                 }
 
-                mapId = new MapId(id);
-                if (mapManager.MapExists(mapId))
+                mapId = new MapId(intMapId);
+
+                // no loading null space
+                if (mapId == MapId.Nullspace)
                 {
-                    shell.WriteError($"Map {mapId} already exists");
+                    shell.WriteError(Loc.GetString("cmd-mapping-nullspace"));
                     return;
                 }
+
+                if (mapManager.MapExists(mapId))
+                {
+                    shell.WriteError(Loc.GetString("cmd-mapping-exists", ("mapId", mapId)));
+                    return;
+                }
+
             }
             else
             {
                 mapId = mapManager.NextMapId();
             }
-
-            DebugTools.Assert(args.Length <= 2);
 
             // either load a map or create a new one.
             if (args.Length <= 1)
@@ -72,7 +98,7 @@ namespace Content.Server.GameTicking.Commands
             // was the map actually created?
             if (!mapManager.MapExists(mapId))
             {
-                shell.WriteError($"An error occurred when creating the new map.");
+                shell.WriteError(Loc.GetString("cmd-mapping-error"));
                 return;
             }
 
@@ -89,9 +115,9 @@ namespace Content.Server.GameTicking.Commands
             mapManager.SetMapPaused(mapId, true);
 
             if (args.Length == 2)
-                shell.WriteLine($"Created uninitialized map from file {args[1]} with id {mapId}.");
+                shell.WriteLine(Loc.GetString("cmd-mapping-success-load",("mapId",mapId),("path", args[1])));
             else
-                shell.WriteLine($"Created a new uninitialized map with id {mapId}.");
+                shell.WriteLine(Loc.GetString("cmd-mapping-success", ("mapId", mapId)));
         }
     }
 }

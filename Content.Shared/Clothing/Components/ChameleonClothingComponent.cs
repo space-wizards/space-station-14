@@ -10,7 +10,7 @@ namespace Content.Shared.Clothing.Components;
 ///     Allow players to change clothing sprite to any other clothing prototype.
 /// </summary>
 [RegisterComponent]
-[Friend(typeof(SharedChameleonClothingSystem))]
+[Access(typeof(SharedChameleonClothingSystem))]
 public sealed class ChameleonClothingComponent : Component
 {
     /// <summary>

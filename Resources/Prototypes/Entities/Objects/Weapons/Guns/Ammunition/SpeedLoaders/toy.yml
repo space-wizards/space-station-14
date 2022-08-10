@@ -16,12 +16,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-6
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 7
-      zeroVisible: false
 
 - type: entity
   id: SpeedLoaderCap

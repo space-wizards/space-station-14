@@ -1,11 +1,10 @@
 - type: job
   id: Scientist
-  name: "scientist"
+  name: job-name-scientist
+  playTimeTracker: JobScientist
   startingGear: ScientistGear
-  departments:
-  - Science
   icon: "Scientist"
-  supervisors: "the research director"
+  supervisors: job-supervisors-rd
   access:
   - Research
   - Maintenance

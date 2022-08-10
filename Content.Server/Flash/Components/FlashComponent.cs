@@ -1,8 +1,8 @@
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Flash.Components
 {
-    [RegisterComponent, Friend(typeof(FlashSystem))]
+    [RegisterComponent, Access(typeof(FlashSystem))]
     public sealed class FlashComponent : Component
     {
         [DataField("duration")]

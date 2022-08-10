@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Server.Tools;
 using Content.Shared.Construction.Components;
@@ -10,22 +11,24 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.Construction
 {
     public sealed class AnchorableSystem : SharedAnchorableSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<AnchorableComponent, TryAnchorCompletedEvent>(OnAnchorComplete2);
-            SubscribeLocalEvent<AnchorableComponent, TryAnchorCancelledEvent>(OnAnchorCancelled2);
-            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete2);
-            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCancelledEvent>(OnUnanchorCancelled2);
+            SubscribeLocalEvent<AnchorableComponent, TryAnchorCompletedEvent>(OnAnchorComplete);
+            SubscribeLocalEvent<AnchorableComponent, TryAnchorCancelledEvent>(OnAnchorCancelled);
+            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete);
+            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCancelledEvent>(OnUnanchorCancelled);
             SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
         }
 
@@ -36,21 +39,21 @@ namespace Content.Server.Construction
             args.PushMarkup(Loc.GetString(messageId, ("target", uid)));
         }
 
-        private void OnUnanchorCancelled2(EntityUid uid, AnchorableComponent component, TryUnanchorCancelledEvent args)
+        private void OnUnanchorCancelled(EntityUid uid, AnchorableComponent component, TryUnanchorCancelledEvent args)
         {
             component.CancelToken = null;
         }
 
-        private void OnUnanchorComplete2(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
+        private void OnUnanchorComplete(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
         {
             component.CancelToken = null;
             var xform = Transform(uid);
 
             RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using), false);
-
             xform.Anchored = false;
-
             RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using), false);
+
+            _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid, Filter.Pvs(uid, entityManager: EntityManager));
 
             _adminLogger.Add(
                 LogType.Action,
@@ -59,12 +62,12 @@ namespace Content.Server.Construction
             );
         }
 
-        private void OnAnchorCancelled2(EntityUid uid, AnchorableComponent component, TryAnchorCancelledEvent args)
+        private void OnAnchorCancelled(EntityUid uid, AnchorableComponent component, TryAnchorCancelledEvent args)
         {
             component.CancelToken = null;
         }
 
-        private void OnAnchorComplete2(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
+        private void OnAnchorComplete(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
         {
             component.CancelToken = null;
             var xform = Transform(uid);
@@ -82,10 +85,10 @@ namespace Content.Server.Construction
                 xform.Coordinates = xform.Coordinates.SnapToGrid();
 
             RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, args.Using), false);
-
             xform.Anchored = true;
-
             RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using), false);
+
+            _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid, Filter.Pvs(uid, entityManager: EntityManager));
 
             _adminLogger.Add(
                 LogType.Action,

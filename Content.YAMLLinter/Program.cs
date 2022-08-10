@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.YAMLLinter
 {
-    internal class Program : ContentIntegrationTest
+    internal class Program
     {
         private static int Main(string[] args)
         {
@@ -45,45 +45,36 @@ namespace Content.YAMLLinter
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
-            var client = StartClient(new ClientContentIntegrationOption()
-            {
-                FailureLogLevel = null,
-            });
-
-            await client.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{DummyTicker = true, Disconnected = true});
+            var client = pairTracker.Pair.Client;
 
             var cPrototypeManager = client.ResolveDependency<IPrototypeManager>();
             var clientErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
-            await client.WaitAssertion(() =>
+            await client.WaitPost(() =>
             {
                 clientErrors = cPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
             });
 
-            client.Stop();
+            await pairTracker.CleanReturnAsync();
 
             return clientErrors;
         }
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
         {
-            var server = StartServer(new ServerContentIntegrationOption()
-            {
-                FailureLogLevel = null,
-                CVarOverrides = { {CCVars.GameDummyTicker.Name, "true"} }
-            });
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{DummyTicker = true, Disconnected = true});
+            var server = pairTracker.Pair.Server;
 
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var serverErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
-            await server.WaitAssertion(() =>
+            await server.WaitPost(() =>
             {
                 serverErrors = sPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
             });
 
-            server.Stop();
+            await pairTracker.CleanReturnAsync();
 
             return serverErrors;
         }
@@ -92,21 +83,33 @@ namespace Content.YAMLLinter
         {
             var allErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
-            var tasks = await Task.WhenAll(ValidateClient(), ValidateServer());
-            var clientErrors = tasks[0];
-            var serverErrors = tasks[1];
+            var serverErrors = await ValidateServer();
+            var clientErrors = await ValidateClient();
 
             foreach (var (key, val) in serverErrors)
             {
+                // Include all server errors marked as always relevant
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
-                if (clientErrors.TryGetValue(key, out var clientVal))
-                {
-                    newErrors.UnionWith(val.Intersect(clientVal));
-                    newErrors.UnionWith(clientVal.Where(n => n.AlwaysRelevant));
-                }
 
-                if (newErrors.Count == 0) continue;
-                allErrors[key] = newErrors;
+                // We include sometimes-relevant errors if they exist both for the client & server
+                if (clientErrors.TryGetValue(key, out var clientVal))
+                    newErrors.UnionWith(val.Intersect(clientVal));
+
+                if (newErrors.Count != 0)
+                    allErrors[key] = newErrors;
+            }
+
+            // Finally add any always-relevant client errors.
+            foreach (var (key, val) in clientErrors)
+            {
+                var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
+                if (newErrors.Count == 0)
+                    continue;
+
+                if (allErrors.TryGetValue(key, out var errors))
+                    errors.UnionWith(val.Where(n => n.AlwaysRelevant));
+                else
+                    allErrors[key] = newErrors;
             }
 
             return allErrors;

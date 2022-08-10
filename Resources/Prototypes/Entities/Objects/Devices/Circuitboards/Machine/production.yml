@@ -157,6 +157,21 @@
     node: heater
 
 - type: entity
+  id: PortableScrubberMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: portable scrubber machine board
+  description: A PCB for a portable scrubber.
+  components:
+  - type: MachineBoard
+    prototype: PortableScrubber
+    requirements:
+      MatterBin: 3
+      Laser: 2
+      ScanningModule: 1
+    materialRequirements:
+      Cable: 5
+
+- type: entity
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: cloning pod machine board
@@ -396,6 +411,20 @@
       materialRequirements:
         Glass: 2
         Cable: 2
+
+- type: entity
+  id: EmitterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: emitter machine board
+  components:
+    - type: MachineBoard
+      prototype: Emitter
+      requirements:
+        Capacitor: 1
+        Laser: 1
+      materialRequirements:
+        CableHV: 5
+        Glass: 2
 
 - type: entity
   id: SurveillanceCameraRouterCircuitboard

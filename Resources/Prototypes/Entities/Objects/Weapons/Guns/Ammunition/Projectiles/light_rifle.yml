@@ -7,18 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 28
-
-- type: entity
-  id: BulletLightRifleFlash
-  name: bullet (.20 rifle flash)
-  parent: BaseBulletFlash
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
+        Piercing: 19
 
 - type: entity
   id: BulletLightRifleHighVelocity
@@ -29,7 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 30
+        Piercing: 21
 
 - type: entity
   id: BulletLightRiflePractice

@@ -29,18 +29,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
+      - name: Checkout Master
+        uses: actions/checkout@v2
+
+      - name: Setup Submodule
+        run: |
+          git submodule update --init --recursive
+
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
+
+      - name: Update Engine Submodules
+        run: |
+          cd RobustToolbox/
+          git submodule update --init --recursive
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.100
+          dotnet-version: 6.0.x
 
-      - name: Get Engine Tag
-        run: |
-          cd RobustToolbox
-          git fetch --depth=1
+      - name: Install dependencies
+        run: dotnet restore
 
       - name: Package client
         run: |

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
@@ -15,13 +15,13 @@ namespace Content.IntegrationTests.Tests.Fluids;
 
 [TestFixture]
 [TestOf(typeof(FluidSpreaderSystem))]
-public sealed class FluidSpill : ContentIntegrationTest
+public sealed class FluidSpill
 {
     private static PuddleComponent? GetPuddle(IEntityManager entityManager, IMapGrid mapGrid, Vector2i pos)
     {
         foreach (var uid in mapGrid.GetAnchoredEntities(pos))
         {
-            if (entityManager.TryGetComponent(uid, out PuddleComponent puddleComponent))
+            if (entityManager.TryGetComponent(uid, out PuddleComponent? puddleComponent))
                 return puddleComponent;
         }
 
@@ -46,22 +46,21 @@ public sealed class FluidSpill : ContentIntegrationTest
     [Test]
     public async Task SpillEvenlyTest()
     {
-        // --- Setup
-        var server = StartServer();
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+        var server = pairTracker.Pair.Server;
 
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
-        GridId gridId = default;
+        EntityUid gridId = default;
 
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
             var grid = mapManager.CreateGrid(mapId);
-            gridId = grid.Index;
+            gridId = grid.GridEntityId;
 
             for (var x = 0; x < 3; x++)
             {
@@ -85,7 +84,7 @@ public sealed class FluidSpill : ContentIntegrationTest
         var sTimeToWait = (int) Math.Ceiling(2f * gameTiming.TickRate);
         await server.WaitRunTicks(sTimeToWait);
 
-        server.Assert(() =>
+        await server.WaitAssertion(() =>
         {
             var grid = mapManager.GetGrid(gridId);
             var puddle = GetPuddle(entityManager, grid, _origin);
@@ -102,23 +101,22 @@ public sealed class FluidSpill : ContentIntegrationTest
             }
         });
 
-        await server.WaitIdleAsync();
+        await pairTracker.CleanReturnAsync();
     }
 
 
     [Test]
     public async Task SpillSmallOverflowTest()
     {
-        // --- Setup
-        var server = StartServer();
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient();
+        var server = pairTracker.Pair.Server;
 
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
-        GridId gridId = default;
+        EntityUid gridId = default;
 
         await server.WaitPost(() =>
         {
@@ -133,7 +131,7 @@ public sealed class FluidSpill : ContentIntegrationTest
                 }
             }
 
-            gridId = grid.Index;
+            gridId = grid.GridEntityId;
         });
 
         await server.WaitAssertion(() =>
@@ -147,9 +145,9 @@ public sealed class FluidSpill : ContentIntegrationTest
         });
 
         var sTimeToWait = (int) Math.Ceiling(2f * gameTiming.TickRate);
-        await server.WaitRunTicks(sTimeToWait);
+        await PoolManager.RunTicksSync(pairTracker.Pair, sTimeToWait);
 
-        server.Assert(() =>
+        await server.WaitAssertion(() =>
         {
             var grid = mapManager.GetGrid(gridId);
             var puddle = GetPuddle(entityManager, grid, _origin);
@@ -178,6 +176,6 @@ public sealed class FluidSpill : ContentIntegrationTest
             Assert.That(fullField, Is.EqualTo(1));
         });
 
-        await server.WaitIdleAsync();
+        await pairTracker.CleanReturnAsync();
     }
 }

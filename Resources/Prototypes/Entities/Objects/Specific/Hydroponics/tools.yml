@@ -58,10 +58,11 @@
     damage:
       types:
         Slash: 10
+  - type: Item
+    size: 20
   - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
-    size: 20
-    Slots:
+    slots:
     - back
 
 - type: entity
@@ -119,12 +120,11 @@
     netsync: false
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     state: icon
+  - type: Item
   - type: Clothing
-    sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     quickEquip: false
-    Slots:
+    slots:
     - belt
-    size: 200
   - type: Storage
     capacity: 200
     quickInsert: true

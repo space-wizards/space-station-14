@@ -7,18 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 24
-
-- type: entity
-  id: BulletPistolFlash
-  name: bullet (.35 auto flash)
-  parent: BaseBulletFlash
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
+        Piercing: 16
 
 - type: entity
   id: BulletPistolHighVelocity
@@ -29,7 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 28
+        Piercing: 19
 
 - type: entity
   id: BulletPistolPractice

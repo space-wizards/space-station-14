@@ -1,5 +1,8 @@
 using Content.Server.MachineLinking.Components;
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -27,6 +30,8 @@ namespace Content.Server.MachineLinking.System
 
             component.State = !component.State;
             _signalSystem.InvokePort(uid, component.State ? component.OnPort : component.OffPort);
+            SoundSystem.Play(component.ClickSound.GetSound(), Filter.Pvs(component.Owner), component.Owner,
+                AudioHelpers.WithVariation(0.125f).WithVolume(8f));
 
             args.Handled = true;
         }

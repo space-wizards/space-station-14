@@ -1,13 +1,13 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Fluids.Components;
 
 /// <summary>
 /// For entities that can clean up puddles
 /// </summary>
-[RegisterComponent, Friend(typeof(MoppingSystem))]
+[RegisterComponent, Access(typeof(MoppingSystem))]
 public sealed class AbsorbentComponent : Component
 {
     public const string SolutionName = "absorbed";

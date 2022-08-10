@@ -9,14 +9,14 @@ public abstract class SharedPowerCellSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
+    public const string CellSlotContainer = "cell_slot";
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<PowerCellSlotComponent, ComponentInit>(OnCellSlotInit);
         SubscribeLocalEvent<PowerCellSlotComponent, ComponentRemove>(OnCellSlotRemove);
-
-        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnSlotExamined);
 
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
@@ -31,7 +31,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
         if (args.Container.ID != component.CellSlot.ID)
             return;
 
-        if (!TryComp(args.EntityUid, out PowerCellComponent? cell) || cell.CellSize != component.SlotSize)
+        if (!HasComp<PowerCellComponent>(args.EntityUid))
         {
             args.Cancel();
         }
@@ -58,48 +58,17 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
     private void OnCellSlotInit(EntityUid uid, PowerCellSlotComponent component, ComponentInit args)
     {
-        _itemSlotsSystem.AddItemSlot(uid, "cellslot_cell_container", component.CellSlot);
+        _itemSlotsSystem.AddItemSlot(uid, CellSlotContainer, component.CellSlot);
 
         if (string.IsNullOrWhiteSpace(component.CellSlot.Name) &&
             !string.IsNullOrWhiteSpace(component.SlotName))
         {
             component.CellSlot.Name = component.SlotName;
         }
-
-        if (component.StartEmpty)
-            return;
-
-        if (!string.IsNullOrWhiteSpace(component.CellSlot.StartingItem))
-            return;
-
-        // set default starting cell based on cell-type
-        component.CellSlot.StartingItem = component.SlotSize switch
-        {
-            PowerCellSize.Small => "PowerCellSmallStandard",
-            PowerCellSize.Medium => "PowerCellMediumStandard",
-            PowerCellSize.Large => "PowerCellLargeStandard",
-            _ => throw new ArgumentOutOfRangeException()
-        };
     }
 
     private void OnCellSlotRemove(EntityUid uid, PowerCellSlotComponent component, ComponentRemove args)
     {
         _itemSlotsSystem.RemoveItemSlot(uid, component.CellSlot);
-    }
-
-    private void OnSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange || string.IsNullOrWhiteSpace(component.DescFormatString))
-            return;
-
-        var sizeText = Loc.GetString(component.SlotSize switch
-        {
-            PowerCellSize.Small => "power-cell-slot-component-description-size-small",
-            PowerCellSize.Medium => "power-cell-slot-component-description-size-medium",
-            PowerCellSize.Large => "power-cell-slot-component-description-size-large",
-            _ => "???"
-        });
-
-        args.PushMarkup(Loc.GetString(component.DescFormatString, ("size", sizeText)));
     }
 }

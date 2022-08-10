@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.MobState.Components;
@@ -21,7 +21,7 @@ namespace Content.Server.Objectives.Conditions
                 if (entity == default)
                     return false;
 
-                return entityMgr.TryGetComponent(entity, out MobStateComponent mobState) &&
+                return entityMgr.TryGetComponent(entity, out MobStateComponent? mobState) &&
                        mobState.IsAlive() &&
                        mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();

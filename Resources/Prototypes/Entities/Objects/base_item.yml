@@ -5,6 +5,8 @@
   components:
   - type: Item
     size: 5
+  - type: StaticPrice
+    price: 5
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -46,3 +48,4 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+

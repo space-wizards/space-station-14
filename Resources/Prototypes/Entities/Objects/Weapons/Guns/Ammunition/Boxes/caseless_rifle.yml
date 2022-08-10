@@ -10,18 +10,19 @@
         - CartridgeCaselessRifle
     proto: CartridgeCaselessRifle
     capacity: 60
+  - type: Item
+    size: 5
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/caseless_rifle.rsi
     netsync: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 # Boxes
 - type: entity
@@ -38,12 +39,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag10-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag10
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag10
-      steps: 2
-      zeroVisible: false
 
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
@@ -59,12 +59,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: magb-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: magb
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: magb
-      steps: 2
-      zeroVisible: false
 
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
@@ -81,12 +80,11 @@
     - state: magb-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: rubber-b
+  - type: MagazineVisuals
+    magState: magb
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: magb
-      steps: 2
-      zeroVisible: false
 
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
@@ -101,21 +99,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifleFlash
-  name: ammunition box (.25 caseless flash)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleFlash
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: flash
 
 - type: entity
   parent: BaseMagazineBoxCaselessRifle

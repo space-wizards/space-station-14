@@ -9,6 +9,8 @@
     sprite: Objects/Materials/ingots.rsi
   - type: Item
     sprite: Objects/Materials/ingots.rsi
+  - type: StaticPrice
+    price: 0
   - type: ItemStatus
   - type: Tag
     tags:
@@ -39,7 +41,7 @@
   - type: Sprite
     state: gold_3
   - type: Item
-    HeldPrefix: gold
+    heldPrefix: gold
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -73,7 +75,7 @@
   - type: Sprite
     state: silver_3
   - type: Item
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: Appearance
     visuals:
     - type: StackVisualizer

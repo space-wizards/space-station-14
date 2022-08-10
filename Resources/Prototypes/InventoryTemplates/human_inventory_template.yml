@@ -4,18 +4,21 @@
     - name: shoes
       slotTexture: shoes
       slotFlags: FEET
+      stripTime: 2
       uiContainer: Top
       uiWindowPos: 1,3
       displayName: Shoes
     - name: jumpsuit
       slotTexture: uniform
       slotFlags: INNERCLOTHING
+      stripTime: 5
       uiContainer: Top
       uiWindowPos: 0,2
       displayName: Jumpsuit
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
+      stripTime: 5
       uiContainer: Top
       uiWindowPos: 1,2
       displayName: Suit
@@ -40,12 +43,14 @@
     - name: eyes
       slotTexture: glasses
       slotFlags: EYES
+      stripTime: 2
       uiContainer: Top
       uiWindowPos: 0,0
       displayName: Eyes
     - name: ears
       slotTexture: ears
       slotFlags: EARS
+      stripTime: 2
       uiContainer: Top
       uiWindowPos: 2,0
       displayName: Ears
@@ -58,20 +63,25 @@
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
+      stripTime: 2
       uiContainer: BottomRight
       uiWindowPos: 0,3
       dependsOn: jumpsuit
       displayName: Pocket 1
+      stripHidden: true
     - name: pocket2
       slotTexture: pocket
       slotFlags: POCKET
+      stripTime: 2
       uiContainer: BottomRight
       uiWindowPos: 2,3
       dependsOn: jumpsuit
       displayName: Pocket 2
+      stripHidden: true
     - name: suitstorage
       slotTexture: suit_storage
       slotFlags:   SUITSTORAGE
+      stripTime: 2
       uiContainer: BottomLeft
       uiWindowPos: 2,0
       dependsOn: outerClothing
@@ -79,6 +89,7 @@
     - name: id
       slotTexture: id
       slotFlags: IDCARD
+      stripTime: 5
       uiContainer: BottomRight
       uiWindowPos: 2,1
       dependsOn: jumpsuit
@@ -86,12 +97,14 @@
     - name: belt
       slotTexture: belt
       slotFlags: BELT
+      stripTime: 5
       uiContainer: BottomLeft
       uiWindowPos: 3,1
       displayName: Belt
     - name: back
       slotTexture: back
       slotFlags: BACK
+      stripTime: 5
       uiContainer: BottomLeft
       uiWindowPos: 3,0
       displayName: Back

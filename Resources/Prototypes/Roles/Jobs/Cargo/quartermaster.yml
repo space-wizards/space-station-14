@@ -1,12 +1,18 @@
 - type: job
   id: Quartermaster
-  name: "quartermaster"
+  name: job-name-qm
+  playTimeTracker: JobQuartermaster
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 18000
   weight: 10
   startingGear: QuartermasterGear
-  departments:
-  - Cargo
   icon: "QuarterMaster"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   canBeAntag: false
   access:
   - Cargo
@@ -14,6 +20,7 @@
   - Quartermaster
   - Maintenance
   - External
+  - Command
 
 - type: startingGear
   id: QuartermasterGear
@@ -23,7 +30,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
-    ears: ClothingHeadsetCargo
+    ears: ClothingHeadsetQM
   innerclothingskirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

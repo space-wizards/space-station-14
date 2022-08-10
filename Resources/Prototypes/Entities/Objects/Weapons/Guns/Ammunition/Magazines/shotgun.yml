@@ -14,6 +14,8 @@
     capacity: 8
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+  - type: Item
+    size: 5
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -25,12 +27,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 - type: entity
   id: MagazineShotgun

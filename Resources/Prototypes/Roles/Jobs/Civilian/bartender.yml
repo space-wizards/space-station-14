@@ -1,11 +1,14 @@
 - type: job
   id: Bartender
-  name: "bartender"
+  name: job-name-bartender
+  playTimeTracker: JobBartender
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 1800
   startingGear: BartenderGear
-  departments:
-  - Civilian
   icon: "Bartender"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance

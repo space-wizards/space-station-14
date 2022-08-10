@@ -5,6 +5,7 @@
   name: cloth
   icon: /Textures/Objects/Materials/materials.rsi/cloth.png
   color: "#e7e7de"
+  price: 0.005
 
 - type: material
   id: Durathread
@@ -12,6 +13,7 @@
   name: durathread
   icon: /Textures/Objects/Materials/materials.rsi/durathread.png
   color: "#8291a1"
+  price: 0.0175 # 1-1 mix of plastic and cloth.
 
 - type: material
   id: Plasma
@@ -19,6 +21,7 @@
   name: plasma
   icon: Objects/Materials/Sheets/other.rsi/plasma.png
   color: "#7e009e"
+  price: 0.1
 
 - type: material
   id: Plastic
@@ -26,6 +29,7 @@
   name: plastic
   icon: Objects/Materials/Sheets/other.rsi/plastic.png
   color: "#d9d9d9"
+  price: 0.0125
 
 - type: material
   id: Wood
@@ -33,10 +37,12 @@
   name: wood
   icon: Objects/Materials/materials.rsi/wood.png
   color: "#966F33"
-  
+  price: 0.01
+
 - type: material
   id: Uranium
   stack: Uranium
   name: uranium
   icon: Objects/Materials/Sheets/other.rsi/uranium.png
   color: "#32a852"
+  price: 0.05

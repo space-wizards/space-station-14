@@ -4,7 +4,7 @@ namespace Content.Client.Hands
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandsComponent))]
-    [Friend(typeof(HandsSystem))]
+    [Access(typeof(HandsSystem))]
     public sealed class HandsComponent : SharedHandsComponent
     {
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Content.Client.Items.Systems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -28,8 +29,8 @@ public sealed class ChameleonClothingVisualizerSystem : VisualizerSystem<Chamele
         }
 
         // clothing and in-hand sprite icon
-        if (TryComp(uid, out ClothingComponent? clothing) &&
-            proto.TryGetComponent(out ClothingComponent? otherClothing, _factory))
+        if (TryComp(uid, out ItemComponent? clothing) &&
+            proto.TryGetComponent(out ItemComponent? otherClothing, _factory))
         {
             _itemSystem.CopyVisuals(uid, otherClothing, clothing);
         }

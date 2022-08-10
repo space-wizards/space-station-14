@@ -16,7 +16,7 @@ namespace Content.Client.Inventory
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(InventoryComponent))]
-    [Friend(typeof(ClientInventorySystem))]
+    [Access(typeof(ClientInventorySystem))]
     public sealed class ClientInventoryComponent : InventoryComponent
     {
         public Control BottomLeftButtons = default!;
@@ -34,6 +34,7 @@ namespace Content.Client.Inventory
         ///     Data about the current layers that have been added to the players sprite due to the items in each equipment slot.
         /// </summary>
         [ViewVariables]
+        [Access(typeof(ClientInventorySystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public readonly Dictionary<string, HashSet<string>> VisualLayerKeys = new();
 
         public bool AttachedToGameHud;

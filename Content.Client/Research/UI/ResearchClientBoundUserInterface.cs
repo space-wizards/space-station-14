@@ -1,6 +1,5 @@
+using Content.Shared.Research.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using static Content.Shared.Research.Components.SharedResearchClientComponent;
 
 namespace Content.Client.Research.UI
 {

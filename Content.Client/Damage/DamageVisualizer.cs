@@ -82,7 +82,7 @@ namespace Content.Client.Damage
         ///     completely invisible.
         /// </remarks>
         [DataField("targetLayers")]
-        private List<string>? _targetLayers;
+        private List<Enum>? _targetLayers;
 
         /// <summary>
         ///     The actual sprites for every damage group
@@ -383,18 +383,8 @@ namespace Content.Client.Damage
                 //
                 // If the layer doesn't have a base state, or
                 // the layer key just doesn't exist, we skip it.
-                foreach (var keyString in _targetLayers)
+                foreach (var key in _targetLayers)
                 {
-                    object key;
-                    if (IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(keyString, out var @enum))
-                    {
-                        key = @enum;
-                    }
-                    else
-                    {
-                        key = keyString;
-                    }
-
                     if (!spriteComponent.LayerMapTryGet(key, out int index)
                         || spriteComponent.LayerGetState(index).ToString() == null)
                     {
@@ -505,7 +495,7 @@ namespace Content.Client.Damage
         public override void OnChangeData(AppearanceComponent component)
         {
             var entities = _entityManager;
-            if (!entities.TryGetComponent(component.Owner, out DamageVisualizerDataComponent damageData))
+            if (!entities.TryGetComponent(component.Owner, out DamageVisualizerDataComponent? damageData))
                 return;
 
             if (!damageData.Valid)
@@ -527,8 +517,8 @@ namespace Content.Client.Damage
         private void HandleDamage(AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
             var entities = _entityManager;
-            if (!entities.TryGetComponent(component.Owner, out SpriteComponent spriteComponent)
-                || !entities.TryGetComponent(component.Owner, out DamageableComponent damageComponent))
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? spriteComponent)
+                || !entities.TryGetComponent(component.Owner, out DamageableComponent? damageComponent))
                 return;
 
             if (_targetLayers != null && _damageOverlayGroups != null)
@@ -562,20 +552,11 @@ namespace Content.Client.Damage
         /// </summary>
         private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
-            foreach (object layer in damageData.TargetLayerMapKeys)
+            foreach (var layer in damageData.TargetLayerMapKeys)
             {
                 bool? layerStatus = null;
-                switch (layer)
-                {
-                    case Enum layerEnum:
-                        if (component.TryGetData<bool>(layerEnum, out var layerStateEnum))
-                            layerStatus = layerStateEnum;
-                        break;
-                    case string layerString:
-                        if (component.TryGetData<bool>(layerString, out var layerStateString))
-                            layerStatus = layerStateString;
-                        break;
-                }
+                if (component.TryGetData<bool>(layer, out var layerStateEnum))
+                    layerStatus = layerStateEnum;
 
                 if (layerStatus == null)
                     continue;
