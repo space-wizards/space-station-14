@@ -11,6 +11,7 @@
 *.userprefs
 
 Content.ServerSecret/Code
+Resources/ServerPrototypes
 
 # Build results
 [Dd]ebug/
