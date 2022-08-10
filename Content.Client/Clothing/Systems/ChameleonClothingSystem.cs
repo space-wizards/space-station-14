@@ -24,6 +24,19 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        PrepareAllVariants();
+        _proto.PrototypesReloaded += OnProtoReloaded;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _proto.PrototypesReloaded -= OnProtoReloaded;
+    }
+
+    private void OnProtoReloaded(PrototypesReloadedEventArgs _)
+    {
         PrepareAllVariants();
     }
 
