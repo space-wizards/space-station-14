@@ -99,7 +99,7 @@ namespace Content.IntegrationTests.Tests
             return task.GetAwaiter().GetResult();
         }
 
-        [Test, TestCaseSource(nameof(GetMapNames))]
+        [Test, TestCaseSource(nameof(GetMapNames)), Parallelizable(ParallelScope.Children)]
         public async Task MapsLoadableTest(string mapName)
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
