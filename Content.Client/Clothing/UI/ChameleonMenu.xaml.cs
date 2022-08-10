@@ -16,7 +16,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
     public event Action<string>? OnIdSelected;
 
     private IEnumerable<string> _possibleIds = Enumerable.Empty<string>();
-    private string _selectedId = "";
+    private string? _selectedId;
     private string _searchFilter = "";
 
     public ChameleonMenu()
@@ -27,7 +27,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
         Search.OnTextChanged += OnSearchEntered;
     }
 
-    public void UpdateState(IEnumerable<string> possibleIds, string selectedId)
+    public void UpdateState(IEnumerable<string> possibleIds, string? selectedId)
     {
         _possibleIds = possibleIds;
         _selectedId = selectedId;

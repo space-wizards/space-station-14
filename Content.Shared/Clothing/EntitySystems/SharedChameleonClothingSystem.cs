@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 

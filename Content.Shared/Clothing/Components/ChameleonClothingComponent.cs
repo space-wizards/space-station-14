@@ -25,16 +25,16 @@ public sealed class ChameleonClothingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("default", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SelectedId = "";
+    public string? SelectedId;
 }
 
 [Serializable, NetSerializable]
 public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
-    public readonly string SelectedId;
+    public readonly string? SelectedId;
 
-    public ChameleonBoundUserInterfaceState(SlotFlags slot, string selectedId)
+    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId)
     {
         Slot = slot;
         SelectedId = selectedId;

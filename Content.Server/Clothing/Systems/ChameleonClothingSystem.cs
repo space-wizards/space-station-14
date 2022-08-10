@@ -63,7 +63,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     /// <summary>
     ///     Change chameleon items name, description and sprite to mimic other entity prototype.
     /// </summary>
-    public void SetSelectedPrototype(EntityUid uid, string protoId, bool forceUpdate = false,
+    public void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
         ChameleonClothingComponent? component = null, AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref appearance, ref component, false))
