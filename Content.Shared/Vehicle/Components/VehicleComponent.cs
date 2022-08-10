@@ -56,6 +56,13 @@ namespace Content.Shared.Vehicle.Components
         };
 
         /// <summary>
+        /// Percentage of damage dealt to the vehicle that will be dealt to the rider.
+        /// </summary>
+        [ViewVariables]
+        [DataField("damageShare")]
+        public float DamageShare { get; set; } = 1f;
+
+        /// <summary>
         /// Whether the vehicle has a key currently inside it or not.
         /// </summary>
         public bool HasKey = false;

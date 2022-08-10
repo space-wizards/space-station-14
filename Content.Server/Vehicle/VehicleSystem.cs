@@ -8,6 +8,7 @@ using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Server.Light.Components;
 using Content.Server.Hands.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
@@ -26,6 +27,7 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         private const string KeySlot = "key_slot";
 
@@ -39,6 +41,7 @@ namespace Content.Server.Vehicle
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+            SubscribeLocalEvent<VehicleComponent, DamageChangedEvent>(OnVehicleDamageChanged);
         }
 
         /// <summary>
@@ -128,6 +131,16 @@ namespace Content.Server.Vehicle
             // Reset component
             component.HasRider = false;
             component.Rider = null;
+        }
+
+        /// <summary>
+        /// Will pass through damage the vehicle receives to the player
+        /// </summary>
+        private void OnVehicleDamageChanged(EntityUid uid, VehicleComponent component, DamageChangedEvent args)
+        {
+            if (args.DamageDelta == null)
+                return;
+            _damageableSystem.TryChangeDamage(component.Rider, args.DamageDelta * component.DamageShare);
         }
 
         /// <summary>
