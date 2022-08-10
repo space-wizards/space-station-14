@@ -10,6 +10,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -64,9 +65,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     ///     Change chameleon items name, description and sprite to mimic other entity prototype.
     /// </summary>
     public void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
-        ChameleonClothingComponent? component = null, AppearanceComponent? appearance = null)
+        ChameleonClothingComponent? component = null)
     {
-        if (!Resolve(uid, ref appearance, ref component, false))
+        if (!Resolve(uid, ref component, false))
             return;
 
         // check that wasn't already selected
@@ -87,7 +88,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         meta.EntityDescription = proto.Description;
 
         // world, in hand and clothing sprite will be set by visualizer
-        appearance.SetData(ChameleonVisuals.ClothingId, protoId);
+        _appearance.SetData(uid, ChameleonVisuals.ClothingId, protoId);
 
         // also update ui state
         UpdateUi(uid, component);
