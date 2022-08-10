@@ -1,7 +1,6 @@
 using Content.Server.Containers;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -47,15 +46,9 @@ namespace Content.Server.Objectives.Conditions
         {
             get
             {
-                if (_mind?.OwnedEntity is not {Valid: true} owned) return 0f;
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(owned, out var containerManagerComponent)) return 0f;
-
-                // slightly ugly but fixing it would just be duplicating it with a different return value
-                float count = containerManagerComponent.CountPrototypeOccurencesRecursive(_prototypeId);
-                if (count >= 1)
-                    return 1;
-                else
-                    return 0;
+                if (_mind?.OwnedEntity is not {Valid: true} owned)
+                    return 0f;
+                return owned.ContainsPrototypeRecursive(_prototypeId)? 1f : 0f;
             }
         }
 

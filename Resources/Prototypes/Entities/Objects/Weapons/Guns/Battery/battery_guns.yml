@@ -79,9 +79,6 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
-  - type: Construction
-    graph: MakeshiftLaser
-    node: makeshiftLaser
 
 - type: entity
   name: laser gun
@@ -263,11 +260,11 @@
         - state: mag-unshaded-0
           map: ["enum.GunVisualLayers.MagUnshaded"]
           shader: unshaded
-    - type: Clothing
-      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    - type: Item
       size: 10
+    - type: Clothing
       quickEquip: false
-      Slots:
+      slots:
         - Belt
     - type: Gun
       fireRate: 2
@@ -301,13 +298,13 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+  - type: Item
     size: 10
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - Belt
-    HeldPrefix: taser4
+    heldPrefix: taser4
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg

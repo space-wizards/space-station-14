@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Content.Client.Parallax.Managers;
 using Content.Client.Parallax;
 using Robust.Shared.Maths;
@@ -6,13 +8,30 @@ namespace Content.IntegrationTests
 {
     public sealed class DummyParallaxManager : IParallaxManager
     {
-        public string ParallaxName { get; set; } = "";
         public Vector2 ParallaxAnchor { get; set; }
-        public ParallaxLayerPrepared[] ParallaxLayers { get; } = {};
-
-        public void LoadParallax()
+        public bool IsLoaded(string name)
         {
-            ParallaxName = "default";
+            return true;
+        }
+
+        public ParallaxLayerPrepared[] GetParallaxLayers(string name)
+        {
+            return Array.Empty<ParallaxLayerPrepared>();
+        }
+
+        public void LoadDefaultParallax()
+        {
+            return;
+        }
+
+        public Task LoadParallaxByName(string name)
+        {
+            return Task.CompletedTask;
+        }
+
+        public void UnloadParallax(string name)
+        {
+            return;
         }
     }
 }

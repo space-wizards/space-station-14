@@ -48,7 +48,7 @@ namespace Content.IntegrationTests.Tests.AI
             {
                 foreach (var entity in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!entity.TryGetComponent<UtilityAi>("UtilityAI", out var npcNode)) continue;
+                    if (!entity.TryGetComponent<UtilityNPCComponent>("UtilityAI", out var npcNode)) continue;
 
                     foreach (var entry in npcNode.BehaviorSets)
                     {

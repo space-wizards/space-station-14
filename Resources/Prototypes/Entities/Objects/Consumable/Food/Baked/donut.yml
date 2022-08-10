@@ -69,7 +69,7 @@
   - type: Sprite
     state: homer
   - type: Item
-    HeldPrefix: pink
+    heldPrefix: pink
 
 - type: entity
   name: chaos donut
@@ -100,7 +100,7 @@
   - type: Sprite
     state: pink
   - type: Item
-    HeldPrefix: pink
+    heldPrefix: pink
 
 - type: entity
   name: spaceman's donut
@@ -202,7 +202,7 @@
   - type: Sprite
     state: jelly-homer
   - type: Item
-    HeldPrefix: pink
+    heldPrefix: pink
   - type: SolutionContainerManager
     solutions:
       food:
@@ -222,7 +222,7 @@
   - type: Sprite
     state: jelly-pink
   - type: Item
-    HeldPrefix: pink
+    heldPrefix: pink
   - type: SolutionContainerManager
     solutions:
       food:
@@ -405,3 +405,16 @@
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, fizzy tutti frutti.
+
+# Poison donut
+- type: entity
+  parent: FoodDonutPink
+  id: FoodDonutPoison
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 10

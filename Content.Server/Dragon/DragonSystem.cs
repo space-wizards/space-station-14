@@ -6,8 +6,6 @@ using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
-using Content.Shared.Tag;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
@@ -21,6 +19,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -40,10 +39,10 @@ namespace Content.Server.Dragon
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead
-            if (args.CurrentMobState.IsDead())
+            if (args.CurrentMobState == DamageState.Dead)
             {
                 if (component.SoundDeath != null)
-                    SoundSystem.Play(component.SoundDeath.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, component.SoundDeath.Params);
+                    _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
 
                 component.DragonStomach.EmptyContainer();
             }
@@ -75,7 +74,7 @@ namespace Content.Server.Dragon
             component.DragonStomach.Insert(args.Target);
 
             if (component.SoundDevour != null)
-                SoundSystem.Play(component.SoundDevour.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, component.SoundDevour.Params);
+                _audioSystem.PlayPvs(component.SoundDevour, uid, component.SoundDevour.Params);
         }
 
         private void OnDragonStructureDevourComplete(EntityUid uid, DragonComponent component, DragonStructureDevourComplete args)
@@ -85,7 +84,7 @@ namespace Content.Server.Dragon
             EntityManager.QueueDeleteEntity(args.Target);
 
             if (component.SoundDevour != null)
-                SoundSystem.Play(component.SoundDevour.GetSound(), Filter.Pvs(args.User, entityManager: EntityManager), uid, component.SoundDevour.Params);
+                _audioSystem.PlayPvs(component.SoundDevour, uid, component.SoundDevour.Params);
         }
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
@@ -103,7 +102,7 @@ namespace Content.Server.Dragon
                 _actionsSystem.AddAction(uid, component.SpawnAction, null);
 
             if (component.SoundRoar != null)
-                SoundSystem.Play(component.SoundRoar.GetSound(), Filter.Pvs(uid, 4f, EntityManager), uid, component.SoundRoar.Params);
+                _audioSystem.Play(component.SoundRoar, Filter.Pvs(uid, 4f, EntityManager), uid, component.SoundRoar.Params);
         }
 
         /// <summary>
@@ -113,7 +112,11 @@ namespace Content.Server.Dragon
         {
             if (component.CancelToken != null ||
                 args.Handled ||
-                component.DevourWhitelist?.IsValid(args.Target, EntityManager) != true) return;
+                component.DevourWhitelist?.IsValid(args.Target, EntityManager) != true)
+            {
+                return;
+            }
+
 
             args.Handled = true;
             var target = args.Target;
@@ -147,7 +150,7 @@ namespace Content.Server.Dragon
             _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, Filter.Entities(uid));
 
             if (component.SoundStructureDevour != null)
-                SoundSystem.Play(component.SoundStructureDevour.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, component.SoundStructureDevour.Params);
+                _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);
 
             component.CancelToken = new CancellationTokenSource();
 
@@ -163,7 +166,8 @@ namespace Content.Server.Dragon
 
         private void OnDragonSpawnAction(EntityUid dragonuid, DragonComponent component, DragonSpawnActionEvent args)
         {
-            if (component.SpawnPrototype == null) return;
+            if (component.SpawnPrototype == null)
+                return;
 
             // If dragon has spawns then add one.
             if (component.SpawnsLeft > 0)

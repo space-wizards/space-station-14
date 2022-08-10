@@ -1,8 +1,8 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.Sound;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Tools.Components

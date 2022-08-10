@@ -4,6 +4,7 @@
   mapPath: /Maps/waystation.yml
   minPlayers: 15
   maxPlayers: 50
+  votable: false
   stations:
     Waystation:
       mapNameTemplate: '{0} Waystation {1}'

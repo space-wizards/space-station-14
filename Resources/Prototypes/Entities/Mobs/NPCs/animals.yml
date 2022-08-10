@@ -139,7 +139,7 @@
         Piercing: 1
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
     - Idle
@@ -670,7 +670,7 @@
         Blunt: 10
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -756,12 +756,13 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
-    HeldPrefix: 0
-    Slots:
+    equippedPrefix: 0
+    slots:
     - HEAD
   - type: Physics
   - type: Fixtures
@@ -861,7 +862,7 @@
       state: mouse-1
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -887,7 +888,7 @@
       state: mouse-2
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1151,7 +1152,7 @@
     baseSprintSpeed : 7
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -1319,7 +1320,7 @@
         - Xeno
     - type: InputMover
     - type: MobMover
-    - type: UtilityAI
+    - type: UtilityNPC
       behaviorSets:
         - Idle
         - UnarmedAttackHostiles
