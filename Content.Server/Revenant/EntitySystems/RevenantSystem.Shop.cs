@@ -4,8 +4,6 @@ using Content.Server.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Content.Shared.Actions.ActionTypes;
-using Robust.Shared.Prototypes;
-using Serilog;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -14,13 +12,13 @@ namespace Content.Server.Revenant.EntitySystems;
 // 8/7/22 -emo (bully me if this exists in the future)
 public sealed partial class RevenantSystem : EntitySystem
 {
-    public void InitializeShop()
+    private void InitializeShop()
     {
         SubscribeLocalEvent<RevenantComponent, RevenantShopActionEvent>(OnShop);
         SubscribeLocalEvent<RevenantComponent, RevenantBuyListingMessage>(OnBuy);
     }
 
-    public void OnShop(EntityUid uid, RevenantComponent component, RevenantShopActionEvent args)
+    private void OnShop(EntityUid uid, RevenantComponent component, RevenantShopActionEvent args)
     {
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;

@@ -42,7 +42,6 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly VisibilitySystem _visibility = default!;
 
     public override void Initialize()
     {
@@ -65,12 +64,9 @@ public sealed partial class RevenantSystem : EntitySystem
         ChangeEssenceAmount(uid, 0, component);
 
         //default the visuals
-        if (TryComp<AppearanceComponent>(uid, out var app))
-        {
-            app.SetData(RevenantVisuals.Corporeal, false);
-            app.SetData(RevenantVisuals.Harvesting, false);
-            app.SetData(RevenantVisuals.Stunned, false);
-        }
+        _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
+        _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
+        _appearance.SetData(uid, RevenantVisuals.Stunned, false);
 
         //ghost vision
         if (TryComp(component.Owner, out EyeComponent? eye))
@@ -86,20 +82,14 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnStatusAdded(EntityUid uid, RevenantComponent component, StatusEffectAddedEvent args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var app))
-            return;
-
         if (args.Key == "Stun")
-            app.SetData(RevenantVisuals.Stunned, true);
+            _appearance.SetData(uid, RevenantVisuals.Stunned, true);
     }
 
     private void OnStatusEnded(EntityUid uid, RevenantComponent component, StatusEffectEndedEvent args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var app))
-            return;
-
         if (args.Key == "Stun")
-            app.SetData(RevenantVisuals.Stunned, false);
+            _appearance.SetData(uid, RevenantVisuals.Stunned, false);
         else if (args.Key == "Corporeal")
             _movement.RefreshMovementSpeedModifiers(uid);
     }
