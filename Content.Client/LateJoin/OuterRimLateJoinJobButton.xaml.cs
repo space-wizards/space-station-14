@@ -32,7 +32,7 @@ public sealed partial class OuterRimLateJoinJobButton : Button
 
     protected override void Dispose(bool disposing)
     {
-        base.Dispose();
+        base.Dispose(disposing);
         _gameTicker.LobbyJobsAvailableUpdated -= UpdateButton;
     }
 

@@ -71,7 +71,6 @@ public sealed partial class OuterRimLateJoinGui : FancyWindow
             foreach (var (_, button) in _buttons)
             {
                 JobList.RemoveChild(button);
-                button.Dispose();
             }
             _buttons.Clear();
         }
