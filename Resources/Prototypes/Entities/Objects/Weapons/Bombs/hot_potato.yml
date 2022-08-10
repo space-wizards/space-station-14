@@ -19,11 +19,11 @@
     - type: HotPotato
     - type: TriggerOnSignal
     - type: SignalReceiver
-    - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
+    - type: Explosive
       explosionType: DemolitionCharge
-      totalIntensity: 60
-      intensitySlope: 5
-      maxIntensity: 30
+      totalIntensity: 25
+      intensitySlope: 4
+      maxIntensity: 13
       canCreateVacuum: false
     - type: ExplodeOnTrigger
     - type: Damageable
@@ -45,3 +45,4 @@
           states:
             enum.Trigger.TriggerVisualState.Primed: primed
             enum.Trigger.TriggerVisualState.Unprimed: complete
+    - type: ItemCooldown
