@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: NanoTrasen has finally installed surveillance camera systems into our
-      stations. Be aware that you are now being watched onboard our fine stations!,
-    type: Add}
-  id: 1626
-  time: '2022-05-31T08:44:57.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Added the handheld health analyzer to the regular, advanced and combat
@@ -2944,3 +2937,8 @@ Entries:
       relative mass. Escaping from anything but hands remains the same length., type: Tweak}
   id: 2125
   time: '2022-08-10T08:37:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: IFF labels on the shuttle console now look fancier., type: Tweak}
+  id: 2126
+  time: '2022-08-10T17:48:32.0000000+00:00'
