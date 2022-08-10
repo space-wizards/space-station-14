@@ -21,7 +21,7 @@ public abstract class SharedHumanoidSystem : EntitySystem
 
     public void SetAppearance(EntityUid uid,
         string species,
-        Dictionary<HumanoidVisualLayers, SharedHumanoidComponent.CustomBaseLayerInfo> customBaseLayer,
+        Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayer,
         Color skinColor,
         List<HumanoidVisualLayers> visLayers,
         List<Marking> markings)

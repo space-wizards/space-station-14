@@ -12,7 +12,7 @@ public enum HumanoidVisualizerKey
 [Serializable, NetSerializable]
 public sealed class HumanoidVisualizerData
 {
-    public HumanoidVisualizerData(string species, Dictionary<HumanoidVisualLayers, SharedHumanoidComponent.CustomBaseLayerInfo> customBaseLayerInfo, Color skinColor, List<HumanoidVisualLayers> layerVisibility, List<Marking> markings)
+    public HumanoidVisualizerData(string species, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayerInfo, Color skinColor, List<HumanoidVisualLayers> layerVisibility, List<Marking> markings)
     {
         Species = species;
         CustomBaseLayerInfo = customBaseLayerInfo;
@@ -22,7 +22,7 @@ public sealed class HumanoidVisualizerData
     }
 
     public string Species { get; }
-    public Dictionary<HumanoidVisualLayers, SharedHumanoidComponent.CustomBaseLayerInfo> CustomBaseLayerInfo { get; }
+    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayerInfo { get; }
     public Color SkinColor { get; }
     public List<HumanoidVisualLayers> LayerVisibility { get; }
     public List<Marking> Markings { get; }

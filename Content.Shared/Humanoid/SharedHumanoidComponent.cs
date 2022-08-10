@@ -20,18 +20,7 @@ public abstract class SharedHumanoidComponent : Component
 
 
 
-    [Serializable, NetSerializable]
-    public sealed class CustomBaseLayerInfo
-    {
-        public CustomBaseLayerInfo(string id, Color color)
-        {
-            ID = id;
-            Color = color;
-        }
 
-        public string ID { get; }
-        public Color Color { get; }
-    }
 
     /// <summary>
     ///     The initial sprites that this humanoid should
@@ -86,8 +75,24 @@ public sealed class HumanoidMarkingStartingSet : IPrototype
     public string ID { get; } = default!;
 
     [DataField("customBaseLayers")]
-    public Dictionary<HumanoidVisualLayers, string> CustomBaseLayers = new();
+    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
 
     [DataField("markings")]
     public List<Marking> Markings = new();
+}
+
+[DataDefinition]
+[Serializable, NetSerializable]
+public sealed class CustomBaseLayerInfo
+{
+    public CustomBaseLayerInfo(string id, Color color)
+    {
+        ID = id;
+        Color = color;
+    }
+
+    [DataField("id")]
+    public string ID { get; }
+    [DataField("color")]
+    public Color Color { get; }
 }

@@ -15,7 +15,6 @@ namespace Content.Client.Humanoid;
 public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private SpriteSystem _spriteSystem = default!;
     [Dependency] private MarkingManager _markingManager = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, HumanoidComponent component, ref AppearanceChangeEvent args)
@@ -28,7 +27,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        if (!_prototypeManager.TryIndex(data.Species, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
+        if (!_prototypeManager.TryIndex(data.Species, out SpeciesPrototype? speciesProto)
+            || !_prototypeManager.TryIndex(speciesProto.SpriteSet, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
         {
             return;
         }
@@ -335,7 +335,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
     }
 
     private void MergeCustomBaseSprites(EntityUid uid, Dictionary<HumanoidVisualLayers, string> baseSprites,
-        Dictionary<HumanoidVisualLayers, SharedHumanoidComponent.CustomBaseLayerInfo>? customBaseSprites,
+        Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>? customBaseSprites,
         HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))

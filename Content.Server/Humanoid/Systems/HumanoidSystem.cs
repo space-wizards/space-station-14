@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.Power.Pow3r;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Species;
 using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Species;
@@ -52,9 +53,9 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
                 AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
             }
 
-            foreach (var (layer, id) in startingSet.CustomBaseLayers)
+            foreach (var (layer, info) in startingSet.CustomBaseLayers)
             {
-                humanoid.CustomBaseLayers.Add(layer, new SharedHumanoidComponent.CustomBaseLayerInfo(id, humanoid.SkinColor));
+                humanoid.CustomBaseLayers.Add(layer, info);
             }
         }
 
@@ -124,7 +125,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
         else
         {
-            var layerInfo = new SharedHumanoidComponent.CustomBaseLayerInfo(id, humanoid.SkinColor);
+            var layerInfo = new CustomBaseLayerInfo(id, humanoid.SkinColor);
             humanoid.CustomBaseLayers.Add(layer, layerInfo);
         }
 
@@ -145,7 +146,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
         else
         {
-            var layerInfo = new SharedHumanoidComponent.CustomBaseLayerInfo(string.Empty, color);
+            var layerInfo = new CustomBaseLayerInfo(string.Empty, color);
             humanoid.CustomBaseLayers.Add(layer, layerInfo);
         }
 

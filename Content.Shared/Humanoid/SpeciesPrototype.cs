@@ -104,23 +104,6 @@ public sealed class SpeciesPrototype : IPrototype
     public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
 }
 
-[Prototype("speciesSprites")]
-public sealed class HumanoidSpeciesSpritesPrototype : IPrototype
-{
-    [IdDataField]
-    public string ID { get; } = default!;
-
-    [DataField("baseSprites", required: true)]
-    public string BaseSprites { get; } = default!;
-
-    /* Might be redundant: the Body component deals with this already.
-     * Unfortunately, this means that we'll have to add the Body component
-     * to every single derived humanoid. Not exactly the best...
-    [DataField("partSprites", required: true)]
-    public string PartSprites { get; } = default!;
-    */
-}
-
 /// <summary>
 ///     Base sprites for a species (e.g., what replaces the empty tagged layer,
 ///     or settings per layer)
