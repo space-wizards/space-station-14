@@ -2,7 +2,6 @@ using System.Threading;
 using Content.Shared.MobState.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Audio;
-using Content.Shared.Stacks;
 using Content.Shared.Jittering;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Throwing;
@@ -19,6 +18,7 @@ using Content.Server.Body.Components;
 using Content.Server.Climbing;
 using Content.Server.DoAfter;
 using Content.Server.Mind.Components;
+using Content.Server.Stack;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
@@ -29,8 +29,8 @@ namespace Content.Server.Medical.BiomassReclaimer
     public sealed class BiomassReclaimerSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedStackSystem _stackSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
         [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
@@ -76,9 +76,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 }
                 reclaimer.Accumulator = 0;
 
-                var stackEnt = EntityManager.SpawnEntity("MaterialBiomass1", Transform(reclaimer.Owner).Coordinates);
-                if (TryComp<SharedStackComponent>(stackEnt, out var stack))
-                    _stackSystem.SetCount(stackEnt, (int) Math.Round(reclaimer.CurrentExpectedYield));
+                _stackSystem.SpawnMultiple((int) reclaimer.CurrentExpectedYield, 100, "Biomass", Transform(reclaimer.Owner).Coordinates);
 
                 reclaimer.SpawnedEntities.Clear();
                 RemCompDeferred<ActiveBiomassReclaimerComponent>(reclaimer.Owner);
@@ -179,7 +177,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             }
 
             component.CurrentExpectedYield = CalculateYield(toProcess, component);
-            component.CurrentProcessingTime = component.CurrentExpectedYield / component.YieldPerUnitMass;
+            component.CurrentProcessingTime = component.CurrentExpectedYield / component.YieldPerUnitMass * component.ProcessingSpeedMultiplier;
             EntityManager.QueueDeleteEntity(toProcess);
         }
         private float CalculateYield(EntityUid uid, BiomassReclaimerComponent component)

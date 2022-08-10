@@ -21,6 +21,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction.Components;
+using Content.Server.Stack;
 using Robust.Server.GameObjects;
 using Robust.Server.Containers;
 using Robust.Server.Player;
@@ -47,6 +48,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedStackSystem _stackSystem = default!;
+        [Dependency] private readonly StackSystem _serverStackSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
@@ -78,21 +80,7 @@ namespace Content.Server.Cloning.Systems
             if (!TryComp<MaterialStorageComponent>(uid, out var storage))
                 return;
 
-            var biomassAmount = storage.GetMaterialAmount("Biomass");
-            while (biomassAmount > 0)
-            {
-                if (biomassAmount > 100)
-                {
-                    Spawn("MaterialBiomass", Transform(uid).Coordinates);
-                    biomassAmount -= 100;
-                }
-                else
-                {
-                    var stack = Spawn("MaterialBiomass", Transform(uid).Coordinates);
-                    _stackSystem.SetCount(stack, biomassAmount);
-                    biomassAmount = 0;
-                }
-            }
+            _serverStackSystem.SpawnMultiple(storage.GetMaterialAmount("Biomass"), 100, "Biomass", Transform(uid).Coordinates);
         }
 
         private void UpdateAppearance(CloningPodComponent clonePod)

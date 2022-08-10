@@ -38,6 +38,13 @@ namespace Content.Server.Medical.BiomassReclaimer
         public float YieldPerUnitMass = 0.4f;
 
         /// <summary>
+        /// Lower number = faster processing.
+        /// Good for machine upgrading I guess.
+        /// </summmary>
+        public float ProcessingSpeedMultiplier = 0.5f;
+
+
+        /// <summary>
         /// Will this refuse to gib a living mob?
         /// </summary>
         [DataField("safetyEnabled")]
