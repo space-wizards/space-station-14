@@ -9,8 +9,8 @@
     netsync: false
     state: icon
   - type: Item
-  - type: Clothing
     size: 10
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     quickEquip: false
     slots:

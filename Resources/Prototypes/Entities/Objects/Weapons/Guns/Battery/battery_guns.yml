@@ -6,8 +6,8 @@
   - type: Sprite
     netsync: false
   - type: Item
-  - type: Clothing
     size: 50
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     quickEquip: false
     slots:
@@ -41,7 +41,6 @@
     quickEquip: false
     slots:
     - Belt
-  - type: Item
 
 - type: entity
   name: retro laser gun

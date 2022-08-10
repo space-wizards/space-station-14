@@ -8,8 +8,8 @@
   - type: Sprite
     netsync: false
   - type: Item
-  - type: Clothing
     size: 60
+  - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     quickEquip: false
     slots:

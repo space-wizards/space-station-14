@@ -8,8 +8,8 @@
   - type: Sprite
     netsync: false
   - type: Item
-  - type: Clothing
     size: 30
+  - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
     quickEquip: false
     slots:

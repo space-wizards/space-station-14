@@ -8,12 +8,12 @@
   - type: Sprite
     netsync: false
   - type: Clothing
-    size: 60
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     quickEquip: false
     slots:
     - Back
   - type: Item
+    size: 60
 
 - type: entity
   name: china lake

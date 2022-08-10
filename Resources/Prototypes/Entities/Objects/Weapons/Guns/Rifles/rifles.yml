@@ -8,8 +8,8 @@
   - type: Sprite
     netsync: false
   - type: Item
-  - type: Clothing
     size: 50
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     quickEquip: false
     slots:
