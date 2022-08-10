@@ -1,12 +1,16 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using Content.Server.Administration.Logs;
+using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
+using Content.Shared.Database;
 // using Content.Server.WireHacking;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 // using static Content.Shared.Wires.SharedWiresComponent;
@@ -25,6 +29,7 @@ namespace Content.Server.ParticleAccelerator.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ParticleAcceleratorControlBoxUiKey.Key);
@@ -143,7 +148,7 @@ namespace Content.Server.ParticleAccelerator.Components
                     break;
 
                 case ParticleAcceleratorSetPowerStateMessage stateMessage:
-                    SetStrength(stateMessage.State);
+                    SetStrength(stateMessage.State, obj.Session);
                     break;
 
                 case ParticleAcceleratorRescanPartsMessage _:
@@ -501,7 +506,7 @@ namespace Content.Server.ParticleAccelerator.Components
             UpdatePartVisualStates();
         }
 
-        public void SetStrength(ParticleAcceleratorPowerState state)
+        public void SetStrength(ParticleAcceleratorPowerState state, IPlayerSession? playerSession = null)
         {
             if (_wireStrengthCut)
             {
@@ -516,6 +521,12 @@ namespace Content.Server.ParticleAccelerator.Components
             _selectedStrength = state;
             UpdateAppearance();
             UpdatePartVisualStates();
+
+            // Logging
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindComponent? mindComponent);
+            var humanReadableState = _isEnabled ? "Turned On" : "Turned Off";
+            if(mindComponent != null && state == MaxPower)
+                _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set the strength of the Particle Accelerator to a dangerous level while the PA was {humanReadableState}");
 
             if (_isEnabled)
             {

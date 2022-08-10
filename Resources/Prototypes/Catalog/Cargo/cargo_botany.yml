@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "exotic seeds crate"
   id: HydroponicsSeedsExotic
-  description: "Any entrepreneuring botanist's dream. Contains many different exotic seeds. Requires Hydroponics access to open."
   icon:
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: seed
@@ -11,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Medicinal seeds crate"
   id: HydroponicsSeedsMedicinal
-  description: "A wannabe chemist's dream! Contains many different medicinal seeds. Requires Hydroponics access to open."
   icon:
     sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
     state: seed
@@ -23,9 +19,7 @@
   group: market
 
 - type: cargoProduct
-  name: "hydroponics crate"
   id: HydroponicsTools
-  description: "Supplies for growing a great garden! Contains two bottles of ammonia, two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, as well as a pair of leather gloves and a botanist's apron."
   icon:
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
@@ -35,9 +29,7 @@
   group: market
 
 - type: cargoProduct
-  name: "seeds crate"
   id: HydroponicsSeeds
-  description: "Big things have small beginnings. Contains nine different seeds."
   icon:
     sprite: Objects/Specific/Hydroponics/apple.rsi
     state: seed

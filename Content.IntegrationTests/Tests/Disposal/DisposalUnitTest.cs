@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             foreach (var entity in entities)
             {
                 Assert.That(system.CanInsert(unit, entity), Is.EqualTo(result));
-                system.TryInsert(unit.Owner, entity, entity);
+                system.TryInsert(unit.Owner, entity, null);
             }
         }
 

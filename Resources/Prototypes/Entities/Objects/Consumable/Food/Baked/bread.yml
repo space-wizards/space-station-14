@@ -445,6 +445,8 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
+        - ReagentId: Allicin
+          Quantity: 2
 # Tastes like garlic, Italy.
 
 - type: entity

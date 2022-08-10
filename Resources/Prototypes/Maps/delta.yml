@@ -3,6 +3,7 @@
   mapName: 'Delta Station'
   mapPath: /Maps/delta.yml
   minPlayers: 60
+  votable: False
   stations:
     Delta:
       mapNameTemplate: '{0} Delta Station {1}'

@@ -11,6 +11,7 @@ using Content.Client.Items.Managers;
 using Content.Client.Launcher;
 using Content.Client.Module;
 using Content.Client.Parallax.Managers;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Screenshot;
 using Content.Client.Stylesheets;
@@ -47,6 +48,7 @@ namespace Content.Client.IoC
             IoCManager.Register<ISharedAdminLogManager, SharedAdminLogManager>();
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ExtendedDisconnectInformationManager>();
+            IoCManager.Register<PlayTimeTrackingManager>();
         }
     }
 }
