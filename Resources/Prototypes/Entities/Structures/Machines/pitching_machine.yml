@@ -30,7 +30,6 @@
       interfaces:
         - key: enum.StorageUiKey.Key
           type: StorageBoundUserInterface
-    - type: PitchingMachine
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -53,7 +52,9 @@
     - type: Anchorable
     - type: Pullable
     - type: Rotatable
-      capacity: 30
+    - type: PitchingMachine
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
     - type: Gun
       fireRate: 4
     - type: BallisticAmmoProvider

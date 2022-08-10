@@ -1,8 +1,10 @@
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.Sports.Components;
 using Content.Server.Weapon.Ranged.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -25,22 +27,18 @@ namespace Content.Server.Sports
             SubscribeLocalEvent<PitchingMachineComponent, GetVerbsEvent<Verb>>(AddEjectVerb);
             SubscribeLocalEvent<PitchingMachineComponent, GetVerbsEvent<AlternativeVerb>>(AddPowerVerb);
             SubscribeLocalEvent<PitchingMachineComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PitchingMachineComponent, PowerChangedEvent>(OnPowerChanged);
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            var gunQuery = GetEntityQuery<GunComponent>();
-
-            foreach (var ballLauncher in EntityQuery<PitchingMachineComponent>())
+            foreach (var (ballLauncher, gunComponent) in EntityQuery<PitchingMachineComponent, GunComponent>())
             {
                 ballLauncher.AccumulatedFrametime += frameTime;
 
                 if (ballLauncher.AccumulatedFrametime < ballLauncher.CurrentLauncherCooldown)
-                    continue;
-
-                if (!gunQuery.TryGetComponent(ballLauncher.Owner, out var gunComponent))
                     continue;
 
                 ballLauncher.AccumulatedFrametime -= ballLauncher.CurrentLauncherCooldown;
@@ -56,12 +54,26 @@ namespace Content.Server.Sports
             if (!TryComp<BallisticAmmoProviderComponent>(component.Owner, out var ammoProviderComponent))
                 return;
 
+            if (HasComp<ToolComponent>(args.Used))
+                return;
+
             ammoProviderComponent.Entities.Add(args.Used);
             ammoProviderComponent.Container.Insert(args.Used);
         }
 
+        private void OnPowerChanged(EntityUid uid, PitchingMachineComponent component, PowerChangedEvent args)
+        {
+            if (!args.Powered)
+            {
+                component.IsOn = false;
+            }
+        }
+
         public void TogglePower(EntityUid uid, PitchingMachineComponent component)
         {
+            if (!TryComp<ApcPowerReceiverComponent>(component.Owner, out var powerReceiverComponent) || !powerReceiverComponent.Powered)
+                return;
+
             if (!component.IsOn)
             {
                 component.IsOn = true;
