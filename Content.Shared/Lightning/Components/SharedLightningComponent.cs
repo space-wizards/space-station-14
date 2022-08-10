@@ -29,6 +29,9 @@ public abstract class SharedLightningComponent : Component
     [DataField("maxLength")]
     public float MaxLength = 5f;
 
+    [ViewVariables]
+    public HashSet<EntityUid> ArcTargets = new();
+
     /// <summary>
     /// What should this arc to?
     /// </summary>

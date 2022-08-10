@@ -40,8 +40,7 @@ public sealed class BeamSystem : SharedBeamSystem
         var ent = Spawn(prototype, offset);
         var shape = new EdgeShape(offsetCorrection, new Vector2(0,0));
         var distanceLength = offsetCorrection.Length;
-        if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
-            TryComp<TransformComponent>(ent, out var xForm))
+        if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics))
         {
             sprites.Rotation = userAngle;
             if (bodyState != null)
@@ -55,7 +54,7 @@ public sealed class BeamSystem : SharedBeamSystem
                 Hard = false,
                 Body = { BodyType = BodyType.Dynamic},
                 CollisionMask = (int)CollisionGroup.ItemMask, //Change to MobMask
-                CollisionLayer = (int)CollisionGroup.SlipLayer //Change to WallLayer
+                CollisionLayer = (int)CollisionGroup.MobLayer //Change to WallLayer
             };
 
             _fixture.TryCreateFixture(physics, fixture);
@@ -75,6 +74,7 @@ public sealed class BeamSystem : SharedBeamSystem
                     newSprites.LayerSetState(0, bodyState);
                     newSprites.LayerSetShader(0, shader);
                 }
+
                 Transform(newEnt).AttachParent(ent);
 
                 Dirty(newEnt);

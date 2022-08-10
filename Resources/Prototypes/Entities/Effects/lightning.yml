@@ -22,5 +22,3 @@
     autoRot: true
     castShadows: false
   - type: Beam
-  - type: TimedDespawn
-    lifetime: 2
