@@ -231,6 +231,11 @@ public sealed partial class GunSystem : SharedGunSystem
         // 3. Nothing
         var playedSound = false;
 
+        // woops the other entity is deleted
+        // someone needs to handle this better. for now i'm just gonna make it not crash the server -rane
+        if (!HasComp<TransformComponent>(otherEntity))
+            return;
+
         if (!forceWeaponSound && modifiedDamage != null && modifiedDamage.Total > 0 && TryComp<RangedDamageSoundComponent>(otherEntity, out var rangedSound))
         {
             var type = MeleeWeaponSystem.GetHighestDamageSound(modifiedDamage, ProtoManager);

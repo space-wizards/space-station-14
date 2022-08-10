@@ -163,9 +163,6 @@
   id: Donut
 
 - type: Tag
-  id: Drone
-
-- type: Tag
   id: DroneUsable
 
 - type: Tag
@@ -230,6 +227,9 @@
 
 - type: Tag
   id: Hoe
+
+- type: Tag #Drop this innate tool instead of deleting it.
+  id: InnateDontDelete
 
 - type: Tag
   id: Ingot
