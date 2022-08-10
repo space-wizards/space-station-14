@@ -2,3 +2,6 @@
 	path = RobustToolbox
 	url = https://github.com/space-wizards/RobustToolbox.git
 	branch = master
+[submodule "Secrets"]
+	path = Secrets
+	url = git@github.com:moonheart08/outer-rim-14-secrets.git

@@ -108,6 +108,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Fi
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.ServerSecret", "Content.ServerSecret\Content.ServerSecret.csproj", "{6103CA6A-4C12-49FE-A1D6-093E166D49A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -241,6 +243,10 @@ Global
 		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6103CA6A-4C12-49FE-A1D6-093E166D49A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6103CA6A-4C12-49FE-A1D6-093E166D49A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6103CA6A-4C12-49FE-A1D6-093E166D49A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6103CA6A-4C12-49FE-A1D6-093E166D49A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
