@@ -28,21 +28,19 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     }
 
     /// <summary>
-    ///     Get a list of valid chameleon targets for this slots.
+    ///     Get a list of valid chameleon targets for these slots.
     /// </summary>
-    public List<string> GetValidTargets(SlotFlags slot)
+    public IEnumerable<string> GetValidTargets(SlotFlags slot)
     {
-        var list = new List<string>();
+        var set = new HashSet<string>();
         foreach (var availableSlot in _data.Keys)
         {
             if (slot.HasFlag(availableSlot))
             {
-                list.AddRange(_data[availableSlot]);
+                set.UnionWith(_data[availableSlot]);
             }
         }
-
-        // remove duplicates because some clothing can have multiple slots
-        return list.Distinct().ToList();
+        return set;
     }
 
     private void PrepareAllVariants()
