@@ -1,0 +1,6 @@
+﻿<Button xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal">
+    <TextureRect Name="JobIcon" TextureScale="2 2" Stretch="KeepCentered"/>
+    <Label Name="JobText"/>
+    </BoxContainer>
+</Button>

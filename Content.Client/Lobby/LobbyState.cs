@@ -97,7 +97,7 @@ namespace Content.Client.Lobby
                     return;
                 }
 
-                new LateJoinGui().OpenCentered();
+                new OuterRimLateJoinGui().OpenCentered();
             };
 
             _lobby.ReadyButton.OnToggled += args =>

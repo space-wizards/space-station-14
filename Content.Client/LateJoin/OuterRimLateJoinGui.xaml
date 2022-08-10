@@ -1,0 +1,22 @@
+﻿<cui:FancyWindow xmlns:cui="clr-namespace:Content.Client.UserInterface"
+                 xmlns="https://spacestation14.io"
+                 xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                 xmlns:lateJoin="clr-namespace:Content.Client.LateJoin"
+                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                 Title="Join Game"
+                 SetSize="600 500">
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical" Margin="4 4" HorizontalExpand="True" SizeFlagsStretchRatio="1">
+            <lateJoin:VesselListControl Name="VesselSelection" VerticalExpand="True"/>
+            <Button HorizontalAlignment="Center" Name="PurchaseButton" Disabled="True" Text="Purchase new..."/>
+        </BoxContainer>
+        <cc:VSeparator StyleClasses="LowDivider"/>
+        <BoxContainer Name="JobList" Orientation="Vertical" Margin="4 4" HorizontalExpand="True" SizeFlagsStretchRatio="1">
+            <Button Name="CrewManifestButton" Text="Crew Manifest" HorizontalAlignment="Center" Visible="False"/>
+        </BoxContainer>
+        <!--<cc:VSeparator StyleClasses="LowDivider"/>
+        <BoxContainer Orientation="Vertical" Margin="4 4" HorizontalExpand="True" SizeFlagsStretchRatio="1">
+            <RichTextLabel Name="ShipDescription"/>
+        </BoxContainer>-->
+    </BoxContainer>
+</cui:FancyWindow>

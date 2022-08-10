@@ -1,0 +1,14 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical">
+    <Control MinSize="0 5" />
+    <LineEdit Name="FilterLineEdit"
+              MinSize="100 0"
+              HorizontalExpand="True"
+              PlaceHolder="{Loc Filter}"/>
+    <ItemList Name="VesselItemList"
+              Access="Public"
+              SelectMode="Single"
+              VerticalExpand="True"
+              HorizontalExpand="True"
+              MinSize="100 100" />
+</BoxContainer>
