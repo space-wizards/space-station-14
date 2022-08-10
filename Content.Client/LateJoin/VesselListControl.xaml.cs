@@ -55,6 +55,7 @@ public sealed partial class VesselListControl : BoxContainer
 
     private void UpdateUi(IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> obj)
     {
+        VesselItemList.Clear();
         foreach (var (key, name) in _gameTicker.StationNames)
         {
             var item = new ItemList.Item(VesselItemList)
