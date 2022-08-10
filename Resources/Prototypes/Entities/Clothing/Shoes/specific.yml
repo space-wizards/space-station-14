@@ -21,7 +21,7 @@
     sprite: Clothing/Shoes/Specific/clown.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: footstep_clown
+      collection: FootstepClown
 
 - type: entity
   parent: ClothingShoesBase
@@ -35,13 +35,13 @@
     sprite: Clothing/Shoes/Specific/bling.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: footstep_clown
+      collection: FootstepClown
   - type: PointLight
     netsync: false
-    enabled: true 
+    enabled: true
     radius: 3
     energy: 2
-    color: "#FFD800"   
+    color: "#FFD800"
 
 - type: entity
   parent: ClothingShoesBase

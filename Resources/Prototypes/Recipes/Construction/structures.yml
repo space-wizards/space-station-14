@@ -281,9 +281,9 @@
     - !type:TileNotBlocked
     - !type:TileType
       targets:
-        - lattice
-        - plating
-        - underplating
+        - Lattice
+        - Plating
+        - UnderPlating
   icon:
     sprite: Structures/catwalk.rsi
     state: catwalk_preview

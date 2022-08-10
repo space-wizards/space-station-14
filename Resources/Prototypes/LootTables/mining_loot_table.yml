@@ -1,43 +1,47 @@
 - type: entityLootTable
   id: MiningLootTable
   entries:
+  - prob: 0.5 #null value, doesn't drop anything
+    orGroup: Asteroid
   - id: SteelOre1
-    prob: 0.25
+    prob: 0.125
     orGroup: Asteroid
   - id: GoldOre1
-    prob: 0.05
+    prob: 0.025
     orGroup: Asteroid
   - id: SpaceQuartz1
-    prob: 0.20
-    orGroup: Asteroid
-  - id: PlasmaOre1
     prob: 0.10
     orGroup: Asteroid
+  - id: PlasmaOre1
+    prob: 0.05
+    orGroup: Asteroid
   - id: SilverOre1
-    prob: 0.025
+    prob: 0.0125
     orGroup: Asteroid
   - id: UraniumOre1
-    prob: 0.025
+    prob: 0.0125
     orGroup: Asteroid
     
 - type: entityLootTable
   id: MiningLootTableLowYield
   entries:
+  - prob: 0.75 #null value, doesn't drop anything
+    orGroup: Asteroid
   - id: SteelOre1
-    prob: 0.05
+    prob: 0.0125
     orGroup: Asteroid
   - id: GoldOre1
-    prob: 0.01
+    prob: 0.0025
     orGroup: Asteroid
   - id: SpaceQuartz1
-    prob: 0.05
+    prob: 0.0125
     orGroup: Asteroid
   - id: PlasmaOre1
-    prob: 0.025
+    prob: 0.00625
     orGroup: Asteroid
   - id: SilverOre1
-    prob: 0.02
+    prob: 0.005
     orGroup: Asteroid
   - id: UraniumOre1
-    prob: 0.02
+    prob: 0.005
     orGroup: Asteroid
