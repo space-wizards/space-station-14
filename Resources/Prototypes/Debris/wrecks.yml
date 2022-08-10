@@ -4,10 +4,10 @@
   floorPlacements: 24
   radius: 4
   floorTiles:
-    - 'plating'
-    - 'plating'
-    - 'floor_steel'
-    - 'lattice'
+    - 'Plating'
+    - 'Plating'
+    - 'FloorSteel'
+    - 'Lattice'
   populator:
     !type:ScrapyardPopulator
     entityTable:
@@ -56,10 +56,10 @@
   floorPlacements: 48
   radius: 6
   floorTiles:
-    - 'plating'
-    - 'plating'
-    - 'floor_steel'
-    - 'lattice'
+    - 'Plating'
+    - 'Plating'
+    - 'FloorSteel'
+    - 'Lattice'
   populator:
     !type:ScrapyardPopulator
     entityTable:

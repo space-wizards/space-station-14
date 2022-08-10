@@ -5,6 +5,8 @@
   description: What?
   abstract: true
   components:
+    - type: PersistenceControl
+      mode: Delete
     - type: Sprite
       netsync: false
       sprite: Objects/Misc/stock_parts.rsi

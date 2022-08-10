@@ -29,3 +29,35 @@
 - type: tileAlias
   id: UnderPlating
   target: Plating
+
+- type: tileAlias
+  id: space
+  target: Space
+
+- type: tileAlias
+  id: plating
+  target: Plating
+
+- type: tileAlias
+  id: lattice
+  target: Lattice
+
+- type: tileAlias
+  id: floor_steel
+  target: FloorSteel
+
+- type: tileAlias
+  id: floor_wood
+  target: FloorWood
+
+- type: tileAlias
+  id: floor_white
+  target: FloorWhite
+
+- type: tileAlias
+  id: floor_freezer
+  target: FloorFreezer
+
+- type: tileAlias
+  id: floor_techmaint
+  target: FloorTechMaint

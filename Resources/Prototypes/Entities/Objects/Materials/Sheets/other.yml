@@ -4,6 +4,8 @@
   id: SheetOtherBase
   description: A sheet of material, used often on the station in various applications.
   components:
+  - type: PersistenceControl
+    mode: Delete
   - type: Sprite
     netsync: false
     sprite: Objects/Materials/Sheets/other.rsi

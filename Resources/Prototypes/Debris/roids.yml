@@ -4,9 +4,7 @@
   floorPlacements: 12
   radius: 4
   floorTiles:
-    - 'floor_asteroid_coarse_sand0'
-    - 'floor_asteroid_coarse_sand1'
-    - 'floor_asteroid_coarse_sand2'
+    - 'FloorAsteroidCoarseSand0'
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockMining
@@ -17,9 +15,7 @@
   floorPlacements: 24
   radius: 6
   floorTiles:
-    - 'floor_asteroid_coarse_sand0'
-    - 'floor_asteroid_coarse_sand1'
-    - 'floor_asteroid_coarse_sand2'
+    - 'FloorAsteroidCoarseSand0'
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockMining
@@ -30,9 +26,7 @@
   floorPlacements: 75
   radius: 9
   floorTiles:
-    - 'floor_asteroid_coarse_sand0'
-    - 'floor_asteroid_coarse_sand1'
-    - 'floor_asteroid_coarse_sand2'
+    - 'FloorAsteroidCoarseSand0'
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockMining
@@ -43,9 +37,7 @@
   floorPlacements: 12
   radius: 4
   floorTiles:
-    - 'floor_asteroid_coarse_sand0'
-    - 'floor_asteroid_coarse_sand1'
-    - 'floor_asteroid_coarse_sand2'
+    - 'FloorAsteroidCoarseSand0'
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockIce
@@ -57,9 +49,7 @@
   floorPlacements: 24
   radius: 6
   floorTiles:
-    - 'floor_asteroid_coarse_sand0'
-    - 'floor_asteroid_coarse_sand1'
-    - 'floor_asteroid_coarse_sand2'
+    - 'FloorAsteroidCoarseSand0'
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockIce
@@ -71,9 +61,7 @@
   floorPlacements: 75
   radius: 9
   floorTiles:
-    - 'floor_asteroid_coarse_sand0'
-    - 'floor_asteroid_coarse_sand1'
-    - 'floor_asteroid_coarse_sand2'
+    - 'FloorAsteroidCoarseSand0'
   populator:
     !type:FillDebrisPopulator
     fillerEntity: AsteroidRockIce
