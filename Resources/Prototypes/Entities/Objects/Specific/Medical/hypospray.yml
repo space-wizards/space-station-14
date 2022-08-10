@@ -18,6 +18,29 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  name: gorlax hypospray
+  parent: BaseItem
+  description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for gorlax marauder operatives.
+  id: SyndiHypo
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/syndihypo.rsi
+    state: hypo
+  - type: Item
+    sprite: Objects/Specific/Medical/syndihypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 20
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
 
 - type: entity
   name: chemical medipen
@@ -33,7 +56,7 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
-    size: 5
+    size: 3
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -44,17 +67,23 @@
     solutionName: pen
     transferAmount: 15
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 1
-      changeColor: false
-      emptySpriteName: medipen_empty
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: medipen_empty
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: StaticPrice
+    price: 75 # These are limited supply items.
 
 - type: entity
-  name: epinephrine medipen
+  name: emergency medipen
   parent: ChemicalMedipen
-  id: EpinephrineMedipen
-  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine.
+  id: EmergencyMedipen
+  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine and tranexmic acid.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -62,4 +91,82 @@
         maxVol: 15
         reagents:
         - ReagentId: Epinephrine
-          Quantity: 15
+          Quantity: 12
+        - ReagentId: TranexamicAcid
+          Quantity: 3
+
+
+- type: entity
+  name: anti-poison medipen
+  parent: ChemicalMedipen
+  id: AntiPoisonMedipen
+  description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ultravasculine
+          Quantity: 10
+        - ReagentId: Epinephrine
+          Quantity: 5
+
+- type: entity
+  name: space medipen
+  parent: ChemicalMedipen
+  id: SpaceMedipen
+  description: Contains a mix of chemicals that protect you from the deadly effects of space.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    netsync: false
+    layers:
+    - state: hypovolemic
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: hypovolemic_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+          - ReagentId: Leporazine
+            Quantity: 10
+          - ReagentId: Barozine
+            Quantity: 20
+
+- type: entity
+  name: pen
+  suffix: Hypopen
+  parent: BaseItem
+  description: A dark ink pen.
+  id: Hypopen
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+    netsync: false
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    heldPrefix: pen
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+  - type: Tag
+    tags:
+    - Write
+  - type: StaticPrice
+    price: 75

@@ -32,6 +32,8 @@ namespace Content.Client.Chat.Managers
             public SpeechBubble.SpeechType Type;
         }
 
+        private ISawmill _sawmill = default!;
+
         /// <summary>
         ///     The max amount of chars allowed to fit in a single speech bubble.
         /// </summary>
@@ -130,6 +132,8 @@ namespace Content.Client.Chat.Managers
 
         public void Initialize()
         {
+            _sawmill = Logger.GetSawmill("chat");
+            _sawmill.Level = LogLevel.Info;
             _netManager.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
 
             _speechBubbleRoot = new LayoutContainer();
@@ -138,6 +142,8 @@ namespace Content.Client.Chat.Managers
             _speechBubbleRoot.SetPositionFirst();
             _stateManager.OnStateChanged += _ => UpdateChannelPermissions();
         }
+
+        public IReadOnlyDictionary<EntityUid, List<SpeechBubble>> GetSpeechBubbles() => _activeSpeechBubbles;
 
         public void PostInject()
         {
@@ -188,6 +194,8 @@ namespace Content.Client.Chat.Managers
             // can always send/recieve OOC
             SelectableChannels |= ChatSelectChannel.OOC;
             FilterableChannels |= ChatChannel.OOC;
+            SelectableChannels |= ChatSelectChannel.LOOC;
+            FilterableChannels |= ChatChannel.LOOC;
 
             // can always hear server (nobody can actually send server messages).
             FilterableChannels |= ChatChannel.Server;
@@ -196,6 +204,7 @@ namespace Content.Client.Chat.Managers
             {
                 // can always hear local / radio / emote when in the game
                 FilterableChannels |= ChatChannel.Local;
+                FilterableChannels |= ChatChannel.Whisper;
                 FilterableChannels |= ChatChannel.Radio;
                 FilterableChannels |= ChatChannel.Emotes;
 
@@ -204,6 +213,7 @@ namespace Content.Client.Chat.Managers
                 if (!IsGhost)
                 {
                     SelectableChannels |= ChatSelectChannel.Local;
+                    SelectableChannels |= ChatSelectChannel.Whisper;
                     SelectableChannels |= ChatSelectChannel.Radio;
                     SelectableChannels |= ChatSelectChannel.Emotes;
                 }
@@ -231,7 +241,9 @@ namespace Content.Client.Chat.Managers
             ChatPermissionsUpdated?.Invoke(new ChatPermissionsUpdatedEventArgs {OldSelectableChannels = oldSelectable});
         }
 
-        public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
+        public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntity is {} uid &&
+                               uid.IsValid() &&
+                               _entityManager.HasComponent<GhostComponent>(uid);
 
         public void FrameUpdate(FrameEventArgs delta)
         {
@@ -241,11 +253,11 @@ namespace Content.Client.Chat.Managers
                 return;
             }
 
-            foreach (var (entityUid, queueData) in _queuedSpeechBubbles.ShallowClone())
+            foreach (var (entity, queueData) in _queuedSpeechBubbles.ShallowClone())
             {
-                if (!_entityManager.TryGetEntity(entityUid, out var entity))
+                if (!_entityManager.EntityExists(entity))
                 {
-                    _queuedSpeechBubbles.Remove(entityUid);
+                    _queuedSpeechBubbles.Remove(entity);
                     continue;
                 }
 
@@ -257,7 +269,7 @@ namespace Content.Client.Chat.Managers
 
                 if (queueData.MessageQueue.Count == 0)
                 {
-                    _queuedSpeechBubbles.Remove(entityUid);
+                    _queuedSpeechBubbles.Remove(entity);
                     continue;
                 }
 
@@ -316,6 +328,10 @@ namespace Content.Client.Chat.Managers
                     _consoleHost.ExecuteCommand(text.ToString());
                     break;
 
+                case ChatSelectChannel.LOOC:
+                    _consoleHost.ExecuteCommand($"looc \"{CommandParsing.Escape(str)}\"");
+                    break;
+
                 case ChatSelectChannel.OOC:
                     _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(str)}\"");
                     break;
@@ -334,7 +350,7 @@ namespace Content.Client.Chat.Managers
                     else if (_adminMgr.HasFlag(AdminFlags.Admin))
                         _consoleHost.ExecuteCommand($"dsay \"{CommandParsing.Escape(str)}\"");
                     else
-                        Logger.WarningS("chat", "Tried to speak on deadchat without being ghost or admin.");
+                        _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                     break;
 
                 case ChatSelectChannel.Radio:
@@ -343,6 +359,10 @@ namespace Content.Client.Chat.Managers
 
                 case ChatSelectChannel.Local:
                     _consoleHost.ExecuteCommand($"say \"{CommandParsing.Escape(str)}\"");
+                    break;
+
+                case ChatSelectChannel.Whisper:
+                    _consoleHost.ExecuteCommand($"whisper \"{CommandParsing.Escape(str)}\"");
                     break;
 
                 default:
@@ -377,7 +397,7 @@ namespace Content.Client.Chat.Managers
 
                 if (!storedMessage.Read)
                 {
-                    Logger.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
+                    _sawmill.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
                     if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
                         count = 0;
 
@@ -397,6 +417,10 @@ namespace Content.Client.Chat.Managers
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
                     break;
 
+                case ChatChannel.Whisper:
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Whisper);
+                    break;
+
                 case ChatChannel.Dead:
                     if (!IsGhost)
                         break;
@@ -412,9 +436,9 @@ namespace Content.Client.Chat.Managers
 
         private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)
         {
-            if (!_entityManager.TryGetEntity(msg.SenderEntity, out var entity))
+            if (!_entityManager.EntityExists(msg.SenderEntity))
             {
-                Logger.WarningS("chat", "Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
+                _sawmill.Debug("Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
                 return;
             }
 
@@ -422,7 +446,7 @@ namespace Content.Client.Chat.Managers
 
             foreach (var message in messages)
             {
-                EnqueueSpeechBubble(entity, message, speechType);
+                EnqueueSpeechBubble(msg.SenderEntity, message, speechType);
             }
         }
 
@@ -472,16 +496,16 @@ namespace Content.Client.Chat.Managers
             return messages;
         }
 
-        private void EnqueueSpeechBubble(IEntity entity, string contents, SpeechBubble.SpeechType speechType)
+        private void EnqueueSpeechBubble(EntityUid entity, string contents, SpeechBubble.SpeechType speechType)
         {
             // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
-            if (entity.Transform.MapID != _eyeManager.CurrentMap)
+            if (_entityManager.GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 return;
 
-            if (!_queuedSpeechBubbles.TryGetValue(entity.Uid, out var queueData))
+            if (!_queuedSpeechBubbles.TryGetValue(entity, out var queueData))
             {
                 queueData = new SpeechBubbleQueueData();
-                _queuedSpeechBubbles.Add(entity.Uid, queueData);
+                _queuedSpeechBubbles.Add(entity, queueData);
             }
 
             queueData.MessageQueue.Enqueue(new SpeechBubbleData
@@ -491,23 +515,23 @@ namespace Content.Client.Chat.Managers
             });
         }
 
-        private void CreateSpeechBubble(IEntity entity, SpeechBubbleData speechData)
+        private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
         {
             var bubble =
-                SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this);
+                SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this, _entityManager);
 
-            if (_activeSpeechBubbles.TryGetValue(entity.Uid, out var existing))
+            if (_activeSpeechBubbles.TryGetValue(entity, out var existing))
             {
                 // Push up existing bubbles above the mob's head.
                 foreach (var existingBubble in existing)
                 {
-                    existingBubble.VerticalOffset += bubble.ContentHeight;
+                    existingBubble.VerticalOffset += bubble.ContentSize.Y;
                 }
             }
             else
             {
                 existing = new List<SpeechBubble>();
-                _activeSpeechBubbles.Add(entity.Uid, existing);
+                _activeSpeechBubbles.Add(entity, existing);
             }
 
             existing.Add(bubble);

@@ -3,6 +3,8 @@
   name: extinguisher cabinet
   description: A small wall mounted cabinet designed to hold a fire extinguisher.
   components:
+    - type: WallMount
+      arc: 360
     - type: Transform
       anchored: true
     - type: Clickable
@@ -26,10 +28,9 @@
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
     - type: Appearance
-      visuals:
-        - type: ItemCabinetVisualizer
-          openState: open
-          closedState: closed
+    - type: ItemCabinetVisuals
+      openState: open
+      closedState: closed
   placement:
     mode: SnapgridCenter
 

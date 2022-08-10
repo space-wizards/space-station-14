@@ -1,6 +1,6 @@
 namespace Content.Server.AI.Operators.Generic
 {
-    public class WaitOperator : AiOperator
+    public sealed class WaitOperator : AiOperator
     {
         private readonly float _waitTime;
         private float _accumulatedTime = 0.0f;

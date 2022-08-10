@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using NUnit.Framework;
 using Robust.Shared.IoC;
@@ -12,7 +11,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Tests.Shared.Chemistry
 {
     [TestFixture, TestOf(typeof(ReagentPrototype))]
-    public class ReagentPrototype_Tests : ContentUnitTest
+    public sealed class ReagentPrototype_Tests : ContentUnitTest
     {
         [Test]
         public void DeserializeReagentPrototype()
@@ -29,12 +28,12 @@ namespace Content.Tests.Shared.Chemistry
                 var serializationManager = IoCManager.Resolve<ISerializationManager>();
                 serializationManager.Initialize();
 
-                var newReagent = serializationManager.ReadValue<ReagentPrototype>(new MappingDataNode(proto));
+                var newReagent = serializationManager.Read<ReagentPrototype>(new MappingDataNode(proto));
 
                 Assert.That(defType, Is.EqualTo("reagent"));
                 Assert.That(newReagent.ID, Is.EqualTo("H2"));
-                Assert.That(newReagent.Name, Is.EqualTo("Hydrogen"));
-                Assert.That(newReagent.Description, Is.EqualTo("A light, flammable gas."));
+                Assert.That(newReagent.LocalizedName, Is.EqualTo("Hydrogen"));
+                Assert.That(newReagent.LocalizedDescription, Is.EqualTo("A light, flammable gas."));
                 Assert.That(newReagent.SubstanceColor, Is.EqualTo(Color.Teal));
             }
         }
@@ -43,6 +42,7 @@ namespace Content.Tests.Shared.Chemistry
   id: H2
   name: Hydrogen
   desc: A light, flammable gas.
+  physicalDesc: A light, flammable gas.
   color: " + "\"#008080\"";
     }
 }

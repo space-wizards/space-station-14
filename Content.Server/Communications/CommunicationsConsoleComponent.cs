@@ -1,124 +1,62 @@
-using System;
-using System.Globalization;
-using System.Threading;
-using Content.Server.Chat.Managers;
-using Content.Server.PDA;
-using Content.Server.Power.Components;
-using Content.Server.RoundEnd;
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
-using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
+    public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        public float UIUpdateAccumulator = 0f;
 
-        private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
+        /// <summary>
+        /// Remaining cooldown between making announcements.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float AnnouncementCooldownRemaining;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
+        /// <summary>
+        /// Fluent ID for the announcement title
+        /// If a Fluent ID isn't found, just uses the raw string
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("title", required: true)]
+        public string AnnouncementDisplayName = "comms-console-announcement-title-station";
 
-        public TimeSpan LastAnnounceTime { get; private set; } = TimeSpan.Zero;
-        public TimeSpan AnnounceCooldown { get; } = TimeSpan.FromSeconds(90);
-        private CancellationTokenSource _announceCooldownEndedTokenSource = new();
+        /// <summary>
+        /// Announcement color
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("color")]
+        public Color AnnouncementColor = Color.Gold;
 
-        protected override void Initialize()
-        {
-            base.Initialize();
+        /// <summary>
+        /// Time in seconds between announcement delays on a per-console basis
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("delay")]
+        public int DelayBetweenAnnouncements = 90;
 
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
+        /// <summary>
+        /// Can call or recall the shuttle
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canShuttle")]
+        public bool CanCallShuttle = true;
 
-            RoundEndSystem.OnRoundEndCountdownStarted += UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownCancelled += UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownFinished += UpdateBoundInterface;
-            RoundEndSystem.OnCallCooldownEnded += UpdateBoundInterface;
-        }
+        /// <summary>
+        /// Announce on all grids (for nukies)
+        /// </summary>
+        [DataField("global")]
+        public bool AnnounceGlobal = false;
 
-        protected override void Startup()
-        {
-            base.Startup();
+        /// <summary>
+        /// Announce sound file path
+        /// </summary>
+        [DataField("sound")]
+        public SoundSpecifier AnnouncementSound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
-            UpdateBoundInterface();
-        }
-
-        private void UpdateBoundInterface()
-        {
-            if (!Deleted)
-            {
-                var system = RoundEndSystem;
-
-                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(CanAnnounce(), system.CanCall(), system.ExpectedCountdownEnd));
-            }
-        }
-
-        public bool CanAnnounce()
-        {
-            if (LastAnnounceTime == TimeSpan.Zero)
-            {
-                return true;
-            }
-            return _gameTiming.CurTime >= LastAnnounceTime + AnnounceCooldown;
-        }
-
-        protected override void OnRemove()
-        {
-            RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownFinished -= UpdateBoundInterface;
-            base.OnRemove();
-        }
-
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
-        {
-            switch (obj.Message)
-            {
-                case CommunicationsConsoleCallEmergencyShuttleMessage _:
-                    RoundEndSystem.RequestRoundEnd(obj.Session.AttachedEntity);
-                    break;
-
-                case CommunicationsConsoleRecallEmergencyShuttleMessage _:
-                    RoundEndSystem.CancelRoundEndCountdown(obj.Session.AttachedEntity);
-                    break;
-                case CommunicationsConsoleAnnounceMessage msg:
-                    if (!CanAnnounce())
-                    {
-                        return;
-                    }
-                    _announceCooldownEndedTokenSource.Cancel();
-                    _announceCooldownEndedTokenSource = new CancellationTokenSource();
-                    LastAnnounceTime = _gameTiming.CurTime;
-                    Timer.Spawn(AnnounceCooldown, UpdateBoundInterface, _announceCooldownEndedTokenSource.Token);
-                    UpdateBoundInterface();
-
-                    var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";
-
-                    var author = "Unknown";
-                    var mob = obj.Session.AttachedEntity;
-                    if (mob != null && mob.TryGetHeldId(out var id))
-                    {
-                        author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
-                    }
-
-                    message += $"\nSent by {author}";
-                    _chatManager.DispatchStationAnnouncement(message, "Communications Console");
-                    break;
-            }
-        }
+        public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
     }
 }

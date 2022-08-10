@@ -1,54 +1,62 @@
-using System;
+using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Audio;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasFilterSystem : EntitySystem
+    public sealed class GasFilterSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<GasFilterComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceUpdateEvent>(OnFilterUpdated);
+            SubscribeLocalEvent<GasFilterComponent, AtmosDeviceDisabledEvent>(OnFilterLeaveAtmosphere);
             SubscribeLocalEvent<GasFilterComponent, InteractHandEvent>(OnFilterInteractHand);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
+
+        }
+
+        private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
+        {
+            UpdateAppearance(uid, filter);
         }
 
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, AtmosDeviceUpdateEvent args)
         {
-            var appearance = filter.Owner.GetComponentOrNull<AppearanceComponent>();
-
             if (!filter.Enabled
-            || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-            || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
-            || !nodeContainer.TryGetNode(filter.InletName, out PipeNode? inletNode)
-            || !nodeContainer.TryGetNode(filter.FilterName, out PipeNode? filterNode)
-            || !nodeContainer.TryGetNode(filter.OutletName, out PipeNode? outletNode)
-            || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
+                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
+                || !nodeContainer.TryGetNode(filter.InletName, out PipeNode? inletNode)
+                || !nodeContainer.TryGetNode(filter.FilterName, out PipeNode? filterNode)
+                || !nodeContainer.TryGetNode(filter.OutletName, out PipeNode? outletNode)
+                || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
             {
-                appearance?.SetData(FilterVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(filter.Owner, false);
                 return;
             }
 
@@ -57,7 +65,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (transferRatio <= 0)
             {
-                appearance?.SetData(FilterVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(filter.Owner, false);
                 return;
             }
 
@@ -65,29 +73,39 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (filter.FilteredGas.HasValue)
             {
-                appearance?.SetData(FilterVisuals.Enabled, true);
-
                 var filteredOut = new GasMixture() {Temperature = removed.Temperature};
 
                 filteredOut.SetMoles(filter.FilteredGas.Value, removed.GetMoles(filter.FilteredGas.Value));
                 removed.SetMoles(filter.FilteredGas.Value, 0f);
 
                 var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
-                target.AssumeAir(filteredOut);
+                _atmosphereSystem.Merge(target.Air, filteredOut);
+                _ambientSoundSystem.SetAmbience(filter.Owner, filteredOut.TotalMoles > 0f);
             }
 
-            outletNode.AssumeAir(removed);
+            _atmosphereSystem.Merge(outletNode.Air, removed);
         }
 
-        private void OnFilterInteractHand(EntityUid uid, GasFilterComponent component, InteractHandEvent args)
+        private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, AtmosDeviceDisabledEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            filter.Enabled = false;
+
+            UpdateAppearance(uid, filter);
+            _ambientSoundSystem.SetAmbience(filter.Owner, false);
+
+            DirtyUI(uid, filter);
+            _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
+        }
+
+        private void OnFilterInteractHand(EntityUid uid, GasFilterComponent filter, InteractHandEvent args)
+        {
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (component.Owner.Transform.Anchored)
+            if (EntityManager.GetComponent<TransformComponent>(filter.Owner).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
-                DirtyUI(uid, component);
+                DirtyUI(uid, filter);
             }
             else
             {
@@ -99,23 +117,35 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void DirtyUI(EntityUid uid, GasFilterComponent? filter)
         {
-
             if (!Resolve(uid, ref filter))
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(filter.Owner.Name, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(filter.Owner).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+        }
+
+        private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null, AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref filter, ref appearance, false))
+                return;
+
+            appearance.SetData(FilterVisuals.Enabled, filter.Enabled);
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)
         {
             filter.Enabled = args.Enabled;
+            _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, filter);
+            UpdateAppearance(uid, filter);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
         {
-            filter.TransferRate = Math.Clamp(args.Rate, 0f, Atmospherics.MaxTransferRate);
+            filter.TransferRate = Math.Clamp(args.Rate, 0f, filter.MaxTransferRate);
+            _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
             DirtyUI(uid, filter);
 
         }

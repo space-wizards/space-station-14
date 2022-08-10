@@ -1,0 +1,11 @@
+- type: bodyTemplate
+  id: DroneTemplate
+  name: "drone"
+  centerSlot: "torso"
+  slots:
+    hand 1: hand
+    hand 2: hand
+    hand 3: hand
+    hand 4: hand
+    hand 5: hand
+    hand 6: hand

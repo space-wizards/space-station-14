@@ -1,0 +1,40 @@
+{
+    "version": 1,
+
+    "license": "CC0-1.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/obj/assemblies/new_assemblies.dmi",
+
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "payload-empty",
+            "directions": 1
+        },
+        {
+            "name": "payload-chemical-left",
+            "directions": 1
+        },
+        {
+            "name": "payload-chemical-right",
+            "directions": 1
+        },
+        {
+            "name": "payload-chemical-armed",
+            "directions": 1,
+            "delays": [ [ 0.2, 0.2, 0.2 ] ]
+        },
+        {
+            "name": "payload-explosive-armed",
+            "directions": 1,
+            "delays": [ [ 0.2, 0.2, 0.2 ] ]
+        },
+        {
+            "name": "payload-flash-armed",
+            "directions": 1,
+            "delays": [ [ 0.2, 0.2, 0.2 ] ]
+        }
+    ]
+}

@@ -1,10 +1,9 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
-    public class TriggerOnCollideComponent : Component
+    public sealed class TriggerOnCollideComponent : Component
     {
-        public override string Name => "TriggerOnCollide";
+		[DataField("fixtureID", required: true)]
+		public string FixtureID = String.Empty;
     }
 }

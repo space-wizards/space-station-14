@@ -1,9 +1,0 @@
-- type: accessLevel
-  id: Command
-
-- type: accessLevel
-  id: Captain
-
-- type: accessLevel
-  id: HeadOfPersonnel
-  name: Head of Personnel

@@ -1,89 +1,135 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Message;
 using Content.Shared.GameTicking;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Localization;
-using static Content.Shared.GameTicking.SharedGameTicker;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.RoundEnd
 {
-    public sealed class RoundEndSummaryWindow : SS14Window
+    public sealed class RoundEndSummaryWindow : DefaultWindow
     {
-        private BoxContainer RoundEndSummaryTab { get; }
-        private BoxContainer PlayerManifestoTab { get; }
-        private TabContainer RoundEndWindowTabs { get; }
+        private readonly IEntityManager _entityManager;
 
-        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, RoundEndMessageEvent.RoundEndPlayerInfo[] info)
+        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId,
+            RoundEndMessageEvent.RoundEndPlayerInfo[] info, IEntityManager entityManager)
         {
+            _entityManager = entityManager;
+
             MinSize = SetSize = (520, 580);
 
             Title = Loc.GetString("round-end-summary-window-title");
 
-            //Round End Window is split into two tabs, one about the round stats
-            //and the other is a list of RoundEndPlayerInfo for each player.
-            //This tab would be a good place for things like: "x many people died.",
-            //"clown slipped the crew x times.", "x shots were fired this round.", etc.
-            //Also good for serious info.
-            RoundEndSummaryTab = new BoxContainer
+            // The round end window is split into two tabs, one about the round stats
+            // and the other is a list of RoundEndPlayerInfo for each player.
+            // This tab would be a good place for things like: "x many people died.",
+            // "clown slipped the crew x times.", "x shots were fired this round.", etc.
+            // Also good for serious info.
+
+            var roundEndTabs = new TabContainer();
+            roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
+            roundEndTabs.AddChild(MakePlayerManifestoTab(info));
+
+            Contents.AddChild(roundEndTabs);
+
+            OpenCentered();
+            MoveToFront();
+        }
+
+        private BoxContainer MakeRoundEndSummaryTab(string gamemode, string roundEnd, TimeSpan roundDuration, int roundId)
+        {
+            var roundEndSummaryTab = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
                 Name = Loc.GetString("round-end-summary-window-round-end-summary-tab-title")
             };
 
-            //Tab for listing  unique info per player.
-            PlayerManifestoTab = new BoxContainer
+            var roundEndSummaryContainerScrollbox = new ScrollContainer
             {
-                Orientation = LayoutOrientation.Vertical,
-                Name = Loc.GetString("round-end-summary-window-player-manifesto-tab-title")
+                VerticalExpand = true
             };
-
-            RoundEndWindowTabs = new TabContainer();
-            RoundEndWindowTabs.AddChild(RoundEndSummaryTab);
-            RoundEndWindowTabs.AddChild(PlayerManifestoTab);
-
-            Contents.AddChild(RoundEndWindowTabs);
+            var roundEndSummaryContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
-            gamemodeLabel.SetMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode",gm)));
-            RoundEndSummaryTab.AddChild(gamemodeLabel);
+            var gamemodeMessage = new FormattedMessage();
+            gamemodeMessage.AddMarkup(Loc.GetString("round-end-summary-window-round-id-label", ("roundId", roundId)));
+            gamemodeMessage.AddText(" ");
+            gamemodeMessage.AddMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
+            gamemodeLabel.SetMessage(gamemodeMessage);
+            roundEndSummaryContainer.AddChild(gamemodeLabel);
+
+            //Duration
+            var roundTimeLabel = new RichTextLabel();
+            roundTimeLabel.SetMarkup(Loc.GetString("round-end-summary-window-duration-label",
+                                                   ("hours", roundDuration.Hours),
+                                                   ("minutes", roundDuration.Minutes),
+                                                   ("seconds", roundDuration.Seconds)));
+            roundEndSummaryContainer.AddChild(roundTimeLabel);
 
             //Round end text
             if (!string.IsNullOrEmpty(roundEnd))
             {
                 var roundEndLabel = new RichTextLabel();
-                roundEndLabel.SetMarkup(Loc.GetString(roundEnd));
-                RoundEndSummaryTab.AddChild(roundEndLabel);
+                roundEndLabel.SetMarkup(roundEnd);
+                roundEndSummaryContainer.AddChild(roundEndLabel);
             }
 
-            //Duration
-            var roundTimeLabel = new RichTextLabel();
-            roundTimeLabel.SetMarkup(Loc.GetString("round-end-summary-window-duration-label",
-                                                   ("hours",roundTimeSpan.Hours),
-                                                   ("minutes",roundTimeSpan.Minutes),
-                                                   ("seconds",roundTimeSpan.Seconds)));
-            RoundEndSummaryTab.AddChild(roundTimeLabel);
+            roundEndSummaryContainerScrollbox.AddChild(roundEndSummaryContainer);
+            roundEndSummaryTab.AddChild(roundEndSummaryContainerScrollbox);
 
-            //Initialize what will be the list of players display.
-            var scrollContainer = new ScrollContainer
+            return roundEndSummaryTab;
+        }
+
+        private BoxContainer MakePlayerManifestoTab(RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
+        {
+            var playerManifestTab = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Name = Loc.GetString("round-end-summary-window-player-manifesto-tab-title")
+            };
+
+            var playerInfoContainerScrollbox = new ScrollContainer
             {
                 VerticalExpand = true
             };
-            var innerScrollContainer = new BoxContainer
+            var playerInfoContainer = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical
             };
 
             //Put observers at the bottom of the list. Put antags on top.
-            var manifestSortedList = info.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);
+            var sortedPlayersInfo = playersInfo.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);
+
             //Create labels for each player info.
-            foreach (var playerInfo in manifestSortedList)
+            foreach (var playerInfo in sortedPlayersInfo)
             {
-                var playerInfoText = new RichTextLabel();
+                var hBox = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                };
+
+                var playerInfoText = new RichTextLabel
+                {
+                    VerticalAlignment = VAlignment.Center,
+                    VerticalExpand = true,
+                };
+
+                if (_entityManager.TryGetComponent(playerInfo.PlayerEntityUid, out ISpriteComponent? sprite))
+                {
+                    hBox.AddChild(new SpriteView
+                    {
+                        Sprite = sprite,
+                        OverrideDirection = Direction.South,
+                        VerticalAlignment = VAlignment.Center,
+                        VerticalExpand = true,
+                    });
+                }
 
                 if (playerInfo.PlayerICName != null)
                 {
@@ -91,7 +137,7 @@ namespace Content.Client.RoundEnd
                     {
                         playerInfoText.SetMarkup(
                             Loc.GetString("round-end-summary-window-player-info-if-observer-text",
-                                          ("playerOOCName",playerInfo.PlayerOOCName),
+                                          ("playerOOCName", playerInfo.PlayerOOCName),
                                           ("playerICName", playerInfo.PlayerICName)));
                     }
                     else
@@ -103,20 +149,18 @@ namespace Content.Client.RoundEnd
                             Loc.GetString("round-end-summary-window-player-info-if-not-observer-text",
                                 ("playerOOCName", playerInfo.PlayerOOCName),
                                 ("icNameColor", icNameColor),
-                                ("playerICName",playerInfo.PlayerICName),
+                                ("playerICName", playerInfo.PlayerICName),
                                 ("playerRole", Loc.GetString(playerInfo.Role))));
                     }
                 }
-                innerScrollContainer.AddChild(playerInfoText);
+                hBox.AddChild(playerInfoText);
+                playerInfoContainer.AddChild(hBox);
             }
 
-            scrollContainer.AddChild(innerScrollContainer);
-            //Attach the entire ScrollContainer that holds all the playerinfo.
-            PlayerManifestoTab.AddChild(scrollContainer);
+            playerInfoContainerScrollbox.AddChild(playerInfoContainer);
+            playerManifestTab.AddChild(playerInfoContainerScrollbox);
 
-            //Finally, display the window.
-            OpenCentered();
-            MoveToFront();
+            return playerManifestTab;
         }
     }
 

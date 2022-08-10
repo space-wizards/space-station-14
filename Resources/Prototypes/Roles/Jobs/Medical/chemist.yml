@@ -1,24 +1,27 @@
 - type: job
   id: Chemist
-  name: "chemist"
+  name: job-name-chemist
+  playTimeTracker: JobChemist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 1800
   startingGear: ChemistGear
-  departments:
-  - Medical
   icon: "Chemist"
-  supervisors: "the chief medical officer"
+  supervisors: job-supervisors-cmo
   access:
   - Medical
   - Chemistry
   - Maintenance
-  
+
 - type: startingGear
   id: ChemistGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitChemistry
-    backpack: ClothingBackpackChemistryFilled
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    back: ClothingBackpackChemistryFilled
     shoes: ClothingShoesColorWhite
-    outerclothing: ClothingOuterCoatLabChem
-    idcard: ChemistryPDA
+    outerClothing: ClothingOuterCoatLabChem
+    id: ChemistryPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedical
     pocket1: HandLabeler

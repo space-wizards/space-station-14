@@ -1,9 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -11,16 +7,15 @@ using Robust.Shared.Network;
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
-    class NetworkIdsMatchTest : ContentIntegrationTest
+    sealed class NetworkIdsMatchTest
     {
         [Test]
         public async Task TestConnect()
         {
-            var client = StartClient();
-            var server = StartServer();
+            await using var pairTracker = await PoolManager.GetServerClient();
+            var server = pairTracker.Pair.Server;
+            var client = pairTracker.Pair.Client;
 
-            await ConnectNetworking(client, server);
-            
             var clientCompFactory = client.ResolveDependency<IComponentFactory>();
             var serverCompFactory = server.ResolveDependency<IComponentFactory>();
 
@@ -38,29 +33,7 @@ namespace Content.IntegrationTests.Tests.Networking
             {
                 Assert.That(clientNetComps[netId].Name, Is.EqualTo(serverNetComps[netId].Name));
             }
-        }
-
-        private static async Task ConnectNetworking(ClientIntegrationInstance client, ServerIntegrationInstance server)
-        {
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-
-            // Connect.
-
-            client.SetConnectTarget(server);
-
-            client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
-
-            // Run some ticks for the handshake to complete and such.
-
-            for (var i = 0; i < 10; i++)
-            {
-                server.RunTicks(1);
-                await server.WaitIdleAsync();
-                client.RunTicks(1);
-                await client.WaitIdleAsync();
-            }
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

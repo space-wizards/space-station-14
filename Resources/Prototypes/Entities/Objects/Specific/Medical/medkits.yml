@@ -1,7 +1,7 @@
 - type: entity
   name: first aid kit
   description: It's an emergency medical kit for those serious boo-boos.
-  parent: BaseItem
+  parent: BaseStorageItem
   id: Medkit
   components:
   - type: Sprite
@@ -9,22 +9,25 @@
     netsync: false
     state: firstaid
   - type: Storage
-    capacity: 50
+    capacity: 30
   - type: Item
-    size: 5
+    size: 30
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    HeldPrefix: firstaid
+    heldPrefix: firstaid
+  - type: Tag
+    tags:
+    - Medkit
 
 - type: entity
   name: burn treatment kit
-  description: "A specialized medical kit for when the toxins lab *spontaneously* burns down."
+  description: "A specialized medical kit for when the toxins lab spontaneously burns down."
   parent: Medkit
   id: MedkitBurn
   components:
   - type: Sprite
     state: burnkit
   - type: Item
-    HeldPrefix: burnkit
+    heldPrefix: burnkit
 
 - type: entity
   name: toxin treatment kit
@@ -35,7 +38,7 @@
   - type: Sprite
     state: toxinkit
   - type: Item
-    HeldPrefix: toxinkit
+    heldPrefix: toxinkit
 
 - type: entity
   name: oxygen deprivation treatment kit
@@ -46,7 +49,7 @@
   - type: Sprite
     state: o2kit
   - type: Item
-    HeldPrefix: o2kit
+    heldPrefix: o2kit
 
 - type: entity
   name: brute trauma treatment kit
@@ -57,7 +60,7 @@
   - type: Sprite
     state: brutekit
   - type: Item
-    HeldPrefix: brutekit
+    heldPrefix: brutekit
 
 - type: entity
   name: advanced first aid kit
@@ -68,7 +71,7 @@
   - type: Sprite
     state: advkit
   - type: Item
-    HeldPrefix: advkit
+    heldPrefix: advkit
 
 - type: entity
   name: radiation treatment kit
@@ -79,7 +82,7 @@
   - type: Sprite
     state: radkit
   - type: Item
-    HeldPrefix: radkit
+    heldPrefix: radkit
 
 - type: entity
   name: combat medical kit
@@ -90,4 +93,4 @@
   - type: Sprite
     state: blackkit
   - type: Item
-    HeldPrefix: blackkit
+    heldPrefix: blackkit

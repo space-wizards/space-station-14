@@ -131,7 +131,7 @@
             ]
         },
         {
-            "name":"spark",
+            "name":"sparks",
             "directions":4,
             "delays":[
                 [
@@ -163,6 +163,10 @@
         {
             "name":"secure_underlay",
             "directions":4
+        },
+        {
+            "name": "emergency_unlit",
+            "directions": 4
         }
     ]
 }

@@ -1,0 +1,9 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingEyesBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    slots: [eyes]

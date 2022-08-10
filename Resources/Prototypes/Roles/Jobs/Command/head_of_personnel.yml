@@ -1,33 +1,49 @@
 - type: job
   id: HeadOfPersonnel
-  name: "head of personnel"
+  name: job-name-hop
+  playTimeTracker: JobHeadOfPersonnel
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 3600
+    - !type:OverallPlaytimeRequirement
+      time: 54000
+  weight: 20
   startingGear: HoPGear
-  departments:
-  - Command
-  - Civilian
   icon: "HeadOfPersonnel"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Command
   - HeadOfPersonnel
-  - Security # HoPcurity strikes again
+  - Brig
   - Service
+  - Quartermaster
+  - Salvage
   - Cargo
   - Maintenance
   - Janitor
   - Theatre
+  - Kitchen
+  - Chapel
+  - Hydroponics
   # I mean they'll give themselves the rest of the access levels *anyways*.
 
 - type: startingGear
   id: HoPGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitHoP
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitHoP
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHatHopcap
-    idcard: HoPPDA
+    id: HoPPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtHoP
   satchel: ClothingBackpackSatchelFilled

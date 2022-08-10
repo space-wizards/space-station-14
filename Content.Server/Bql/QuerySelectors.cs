@@ -1,20 +1,16 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Tag;
 using Robust.Server.Bql;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Bql
 {
-    public class QuerySelectors
+    public sealed class QuerySelectors
     {
         [RegisterBqlQuerySelector]
-        public class MindfulQuerySelector : BqlQuerySelector
+        public sealed class MindfulQuerySelector : BqlQuerySelector
         {
             public override string Token => "mindful";
 
@@ -26,7 +22,7 @@ namespace Content.Server.Bql
                 return input.Where(e =>
                 {
                     if (entityManager.TryGetComponent<MindComponent>(e, out var mind))
-                        return (mind.Mind?.VisitingEntity?.Uid == e) ^ isInverted;
+                        return (mind.Mind?.VisitingEntity == e) ^ isInverted;
 
                     return isInverted;
                 });
@@ -36,13 +32,13 @@ namespace Content.Server.Bql
             {
 
                 return DoSelection(
-                    entityManager.EntityQuery<MindComponent>().Select(x => x.Owner.Uid),
+                    entityManager.EntityQuery<MindComponent>().Select(x => x.Owner),
                     arguments, isInverted, entityManager);
             }
         }
 
         [RegisterBqlQuerySelector]
-        public class TaggedQuerySelector : BqlQuerySelector
+        public sealed class TaggedQuerySelector : BqlQuerySelector
         {
             public override string Token => "tagged";
 
@@ -57,14 +53,14 @@ namespace Content.Server.Bql
 
             public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return DoSelection(entityManager.EntityQuery<TagComponent>().Select(x => x.Owner.Uid), arguments,
+                return DoSelection(entityManager.EntityQuery<TagComponent>().Select(x => x.Owner), arguments,
                     isInverted, entityManager);
 
             }
         }
 
         [RegisterBqlQuerySelector]
-        public class AliveQuerySelector : BqlQuerySelector
+        public sealed class AliveQuerySelector : BqlQuerySelector
         {
             public override string Token => "alive";
 
@@ -79,13 +75,13 @@ namespace Content.Server.Bql
 
             public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return DoSelection(entityManager.EntityQuery<MindComponent>().Select(x => x.Owner.Uid), arguments,
+                return DoSelection(entityManager.EntityQuery<MindComponent>().Select(x => x.Owner), arguments,
                     isInverted, entityManager);
             }
         }
 
         [RegisterBqlQuerySelector]
-        public class HasReagentQuerySelector : BqlQuerySelector
+        public sealed class HasReagentQuerySelector : BqlQuerySelector
         {
             public override string Token => "hasreagent";
 
@@ -108,13 +104,13 @@ namespace Content.Server.Bql
 
             public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return DoSelection(entityManager.EntityQuery<SolutionContainerManagerComponent>().Select(x => x.Owner.Uid), arguments,
+                return DoSelection(entityManager.EntityQuery<SolutionContainerManagerComponent>().Select(x => x.Owner), arguments,
                     isInverted, entityManager);
             }
         }
 
         [RegisterBqlQuerySelector]
-        public class ApcPoweredQuerySelector : BqlQuerySelector
+        public sealed class ApcPoweredQuerySelector : BqlQuerySelector
         {
             public override string Token => "apcpowered";
 
@@ -130,7 +126,7 @@ namespace Content.Server.Bql
 
             public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return DoSelection(entityManager.EntityQuery<ApcPowerReceiverComponent>().Select(x => x.Owner.Uid), arguments,
+                return DoSelection(entityManager.EntityQuery<ApcPowerReceiverComponent>().Select(x => x.Owner), arguments,
                     isInverted, entityManager);
             }
         }

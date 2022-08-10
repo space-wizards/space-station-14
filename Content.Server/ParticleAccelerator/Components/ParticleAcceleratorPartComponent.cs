@@ -1,6 +1,3 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.ParticleAccelerator.Components
 {
     public abstract class ParticleAcceleratorPartComponent : Component
@@ -12,7 +9,7 @@ namespace Content.Server.ParticleAccelerator.Components
             base.Initialize();
             // FIXME: this has to be an entity system, full stop.
 
-            Owner.Transform.Anchored = true;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored = true;
         }
 
         public void OnAnchorChanged()

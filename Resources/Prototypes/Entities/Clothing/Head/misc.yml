@@ -30,6 +30,7 @@
     sprite: Clothing/Head/Misc/chickenhead.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/chickenhead.rsi
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -52,6 +53,7 @@
       sprite: Clothing/Head/Misc/pumpkin.rsi
     - type: Clothing
       sprite: Clothing/Head/Misc/pumpkin.rsi
+    - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -74,6 +76,7 @@
     sprite: Clothing/Head/Misc/richard.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/richard.rsi
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -85,28 +88,7 @@
     sprite: Clothing/Head/Misc/skubhead.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/skubhead.rsi
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatXenoMom
-  name: xeno matriarch helmet
-  description: Hiss hiss hiss!
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/xenom.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/xenom.rsi
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatXeno
-  name: xenos helmet
-  description: Hiss hiss hiss!
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/xenos.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/xenos.rsi
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -118,3 +100,42 @@
     sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCone
+  name: warning cone
+  description: This cone is trying to warn you of something!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/cone.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/cone.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFancyCrown
+  name: fancy crown
+  description: It smells like dead rat. Lets you speak like one!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: MobPrice
+    price: 3000
+  - type: AddAccentClothing
+    accent: MobsterAccent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCatEars
+  name: cat ears
+  description: "NYAH!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: AddAccentClothing
+    accent: OwOAccent

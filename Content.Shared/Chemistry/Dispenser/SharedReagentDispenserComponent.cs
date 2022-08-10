@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Dispenser
 {
@@ -15,9 +10,10 @@ namespace Content.Shared.Chemistry.Dispenser
     /// <para>This is useful for machines such as the chemical dispensers, booze dispensers, or soda dispensers.</para>
     /// <para>The chemicals which may be dispensed are defined by specifying a reagent pack. See <see cref="ReagentDispenserInventoryPrototype"/> for more information on that.</para>
     /// </summary>
+    [Virtual]
     public class SharedReagentDispenserComponent : Component
     {
-        public override string Name => "ReagentDispenser";
+        public const string BeakerSlotId = "ReagentDispenser-beaker";
 
         [DataField("beakerSlot")]
         public ItemSlot BeakerSlot = new();
@@ -25,10 +21,10 @@ namespace Content.Shared.Chemistry.Dispenser
         /// <summary>
         /// A list of reagents which this may dispense. Defined in yaml prototype, see <see cref="ReagentDispenserInventoryPrototype"/>.
         /// </summary>
-        protected readonly List<ReagentDispenserInventoryEntry> Inventory = new();
+        public readonly List<ReagentDispenserInventoryEntry> Inventory = new();
 
         [Serializable, NetSerializable]
-        public class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly bool HasPower;
             public readonly bool HasBeaker;
@@ -65,7 +61,7 @@ namespace Content.Shared.Chemistry.Dispenser
         /// Message data sent from client to server when a dispenser ui button is pressed.
         /// </summary>
         [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
             public readonly int DispenseIndex; //Index of dispense button / reagent being pressed. Only used when a dispense button is pressed.
@@ -88,7 +84,6 @@ namespace Content.Shared.Chemistry.Dispenser
         /// </summary>
         public enum UiButton
         {
-            Eject,
             Clear,
             SetDispenseAmount1,
             SetDispenseAmount5,

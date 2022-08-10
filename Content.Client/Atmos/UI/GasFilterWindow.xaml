@@ -1,15 +1,15 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
             MinSize="480 400" Title="Filter">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-filter-ui-filter-status} "/>
+            <Label Text="{Loc comp-gas-filter-ui-filter-status}"/>
             <Button Name="ToggleStatusButton"/>
         </BoxContainer>
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-filter-ui-filter-transfer-rate} "/>
+            <Label Text="{Loc comp-gas-filter-ui-filter-transfer-rate}"/>
             <LineEdit Name="FilterTransferRateInput" MinSize="40 0" />
             <Button Name="SetFilterRate" Text="{Loc comp-gas-filter-ui-filter-set-rate}" Disabled="True"/>
         </BoxContainer>
@@ -25,4 +25,4 @@
             <Button Name="SelectGasButton" Text="{Loc comp-gas-filter-ui-filter-gas-confirm}" HorizontalExpand="True" Disabled="True" />
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

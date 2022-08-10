@@ -1,7 +1,5 @@
 using JetBrains.Annotations;
 using Lidgren.Network;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Chat
@@ -52,6 +50,7 @@ namespace Content.Shared.Chat
             switch (Channel)
             {
                 case ChatChannel.Local:
+                case ChatChannel.Whisper:
                 case ChatChannel.Dead:
                 case ChatChannel.Admin:
                 case ChatChannel.Emotes:
@@ -71,6 +70,7 @@ namespace Content.Shared.Chat
             switch (Channel)
             {
                 case ChatChannel.Local:
+                case ChatChannel.Whisper:
                 case ChatChannel.Dead:
                 case ChatChannel.Admin:
                 case ChatChannel.Emotes:

@@ -1,9 +1,5 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Cooldown
 {
@@ -14,8 +10,6 @@ namespace Content.Shared.Cooldown
     [NetworkedComponent()]
     public sealed class ItemCooldownComponent : Component
     {
-        public override string Name => "ItemCooldown";
-
         private TimeSpan? _cooldownEnd;
         private TimeSpan? _cooldownStart;
 

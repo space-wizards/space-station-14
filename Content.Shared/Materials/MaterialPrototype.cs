@@ -1,10 +1,8 @@
 using Content.Shared.Stacks;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Materials
 {
@@ -13,18 +11,18 @@ namespace Content.Shared.Materials
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
     [Prototype("material")]
-    public class MaterialPrototype : IPrototype, IInheritingPrototype
+    public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("parent")]
-        public string? Parent { get; } = null;
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
+        public string[]? Parents { get; }
 
         [ViewVariables]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; } = false;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]
@@ -45,5 +43,11 @@ namespace Content.Shared.Materials
         [ViewVariables]
         [DataField("icon")]
         public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
+
+        /// <summary>
+        /// The price per cm3.
+        /// </summary>
+        [DataField("price", required: true)]
+        public double Price = 0;
     }
 }

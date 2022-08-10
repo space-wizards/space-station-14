@@ -19,16 +19,14 @@ namespace Content.Client.DragDrop
     /// If for any reason the drag is ended, OnEndDrag is invoked.
     /// </summary>
     /// <typeparam name="T">thing being dragged and dropped</typeparam>
-    public class DragDropHelper<T>
+    public sealed class DragDropHelper<T>
     {
-        private const float DefaultDragDeadzone = 2f;
-
         private readonly IInputManager _inputManager;
 
         private readonly OnBeginDrag _onBeginDrag;
         private readonly OnEndDrag _onEndDrag;
         private readonly OnContinueDrag _onContinueDrag;
-        private readonly float _deadzone;
+        public float Deadzone = 2f;
 
         /// <summary>
         /// Convenience method, current mouse screen position as provided by inputmanager.
@@ -67,9 +65,8 @@ namespace Content.Client.DragDrop
         /// <param name="deadzone">drag will be triggered when mouse leaves
         ///     this deadzone around the mousedown position</param>
         public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag,
-            OnEndDrag onEndDrag, float deadzone = DefaultDragDeadzone)
+            OnEndDrag onEndDrag)
         {
-            _deadzone = deadzone;
             _inputManager = IoCManager.Resolve<IInputManager>();
             _onBeginDrag = onBeginDrag;
             _onEndDrag = onEndDrag;
@@ -128,7 +125,7 @@ namespace Content.Client.DragDrop
                 case DragState.MouseDown:
                 {
                     var screenPos = _inputManager.MouseScreenPosition;
-                    if ((_mouseDownScreenPos.Position - screenPos.Position).Length > _deadzone)
+                    if ((_mouseDownScreenPos.Position - screenPos.Position).Length > Deadzone)
                     {
                         StartDragging();
                     }

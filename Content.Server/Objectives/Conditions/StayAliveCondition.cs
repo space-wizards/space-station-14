@@ -1,14 +1,12 @@
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class StayAliveCondition : IObjectiveCondition
+    public sealed class StayAliveCondition : IObjectiveCondition
     {
         private Mind.Mind? _mind;
 
@@ -21,11 +19,11 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-stay-alive-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/skub.rsi"), "icon"); //didn't know what else would have been a good icon for staying alive
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/bureaucracy.rsi"), "folder-white");
 
         public float Progress => (_mind?.CharacterDeadIC ?? false) ? 0f : 1f;
 
-        public float Difficulty => 1f;
+        public float Difficulty => 1.25f;
 
         public bool Equals(IObjectiveCondition? other)
         {

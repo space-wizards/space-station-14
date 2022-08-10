@@ -1,7 +1,5 @@
-using System;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.Considerations.State
 {
@@ -27,8 +25,8 @@ namespace Content.Server.AI.Utility.Considerations.State
                 return 0;
             }
 
-            context.GetStoredState(stateData, out StoredStateData<IEntity> state);
-            return state.GetValue() == null ? 1.0f : 0.0f;
+            context.GetStoredState(stateData, out StoredStateData<EntityUid> state);
+            return !state.GetValue().IsValid() ? 1.0f : 0.0f;
         }
     }
 }

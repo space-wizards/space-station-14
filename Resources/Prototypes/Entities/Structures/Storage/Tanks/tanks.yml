@@ -3,10 +3,10 @@
 - type: entity
   id: WeldingFuelTank
   parent: StorageTank
-  name: fuel tank
   suffix: Empty
-  description: A fuel tank. It is used to store high amounts of fuel.
   components:
+  - type: StaticPrice
+    price: 1200
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: fueltank
@@ -19,20 +19,16 @@
       types:
         Heat: 10
   - type: Explosive
-    # The explosive component is independent of the stored liquid :/
-    # I dream of a day where all grenades/explosives will be reagent dependent.
-    devastationRange: 0
-    heavyImpactRange: 2
-    lightImpactRange: 6
-    flashRange: 5
+    explosionType: Default
+    totalIntensity: 120 # ~ 5 tile radius
 
 - type: entity
   id: WeldingFuelTankFull
   parent: WeldingFuelTank
-  name: fuel tank
   suffix: Full
-  description: A storage tank containing welding fuel.
   components:
+  - type: StaticPrice
+    price: 1200
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -45,10 +41,10 @@
 - type: entity
   id: WaterTank
   parent: StorageTank
-  name: water tank
   suffix: Empty
-  description: "A water tank. It is used to store high amounts of water."
   components:
+  - type: StaticPrice
+    price: 1200
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: watertank
@@ -58,9 +54,67 @@
   id: WaterTankFull
   suffix: Full
   components:
+  - type: StaticPrice
+    price: 1200
   - type: SolutionContainerManager
     solutions:
       tank:
         reagents:
         - ReagentId: Water
           Quantity: 1500
+
+- type: entity
+  parent: WaterTankFull
+  id: WaterCooler
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: watercooler
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
+
+- type: entity
+  parent: StorageTank
+  id: WaterTankHighCapacity
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: highwatertank
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+#         This is *100, 000* on /tg/
+          Quantity: 10000
+        maxVol: 10000
+#   It's pressurized...
+  - type: ReagentTank
+    transferAmount: 100
+
+# Kvass
+- type: entity
+  id: KvassTank
+  parent: StorageTank
+  suffix: Empty
+  components:
+    - type: Sprite
+      sprite: Structures/Storage/kvass.rsi
+      state: kvass
+
+- type: entity
+  parent: KvassTank
+  id: KvassTankFull
+  suffix: Full
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Kvass
+              Quantity: 1500

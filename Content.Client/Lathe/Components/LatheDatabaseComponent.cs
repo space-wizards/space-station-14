@@ -8,7 +8,7 @@ namespace Content.Client.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    public class LatheDatabaseComponent : SharedLatheDatabaseComponent
+    public sealed class LatheDatabaseComponent : SharedLatheDatabaseComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -20,9 +20,9 @@ namespace Content.Client.Lathe.Components
 
             Clear();
 
-            foreach (var ID in state.Recipes)
+            foreach (var id in state.Recipes)
             {
-                if (!_prototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe)) continue;
+                if (!_prototypeManager.TryIndex(id, out LatheRecipePrototype? recipe)) continue;
                 AddRecipe(recipe);
             }
         }

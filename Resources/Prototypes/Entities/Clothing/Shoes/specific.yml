@@ -21,7 +21,27 @@
     sprite: Clothing/Shoes/Specific/clown.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: footstep_clown
+      collection: FootstepClown
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBling
+  name: bling clown shoes
+  description: Made of refined bananium and shined with the pulp of a fresh banana peel. These make a flashy statement.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/bling.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/bling.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  - type: PointLight
+    netsync: false
+    enabled: true
+    radius: 3
+    energy: 2
+    color: "#FFD800"
 
 - type: entity
   parent: ClothingShoesBase
@@ -48,7 +68,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesSNinja
+  id: ClothingShoesSpaceNinja
   name: space ninja shoes
   description: A pair of nano-enhanced boots with built-in magnetic suction cups.
   components:
@@ -83,7 +103,8 @@
 - type: entity
   parent: ClothingShoesColorBlack
   id: ClothingShoesChameleonNoSlips
-  name: no-slip shoes
-  description: These protect you from slips while looking like normal sneakers.
+  name: black shoes #actual name and description in uplink_catalog.yml
+  suffix: no-slip
+  description: Stylish black shoes.
   components:
   - type: NoSlip

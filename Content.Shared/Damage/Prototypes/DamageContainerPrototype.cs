@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Damage.Prototypes
 {
@@ -18,10 +14,10 @@ namespace Content.Shared.Damage.Prototypes
     /// </remarks>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public class DamageContainerPrototype : IPrototype
+    public sealed class DamageContainerPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

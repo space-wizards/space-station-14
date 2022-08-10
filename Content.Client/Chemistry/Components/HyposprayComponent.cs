@@ -46,7 +46,7 @@ namespace Content.Client.Chemistry.Components
                 _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
                 AddChild(_label);
 
-                parent._uiUpdateNeeded = true;
+                Update();
             }
 
             /// <inheritdoc />
@@ -57,6 +57,11 @@ namespace Content.Client.Chemistry.Components
                 {
                     return;
                 }
+                Update();
+            }
+
+            public void Update()
+            {
 
                 _parent._uiUpdateNeeded = false;
 

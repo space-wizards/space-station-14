@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io">
+<DefaultWindow xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
@@ -29,4 +29,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

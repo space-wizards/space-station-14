@@ -1,7 +1,0 @@
-# .import files are made by Godot because the assets are exposed if using symlinks.
-# IF you need to persist a .import file because of something used Godot-side (GUI-side),
-# you can do a negation with !.
-*.import
-# Negation would be like this:
-#!/Textures/Interface/handsbox.png.import
-/I_MADE_THE_SYMLINK

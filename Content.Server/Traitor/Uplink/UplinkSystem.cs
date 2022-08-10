@@ -1,31 +1,30 @@
 using System.Linq;
-using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
-using Content.Server.PDA;
+using Content.Server.Mind.Components;
+using Content.Server.Roles;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 
 namespace Content.Server.Traitor.Uplink
 {
-    public class UplinkSystem : EntitySystem
+    public sealed class UplinkSystem : EntitySystem
     {
         [Dependency]
         private readonly UplinkAccountsSystem _accounts = default!;
         [Dependency]
         private readonly UplinkListingSytem _listing = default!;
+
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -33,7 +32,7 @@ namespace Content.Server.Traitor.Uplink
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<UplinkComponent, UseInHandEvent>(OnUseHand);
+            SubscribeLocalEvent<UplinkComponent, ActivateInWorldEvent>(OnActivate);
 
             // UI events
             SubscribeLocalEvent<UplinkComponent, UplinkBuyListingMessage>(OnBuy);
@@ -56,7 +55,7 @@ namespace Content.Server.Traitor.Uplink
 
         private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
         {
-            RaiseLocalEvent(uid, new UplinkInitEvent(component));
+            RaiseLocalEvent(uid, new UplinkInitEvent(component), true);
 
             // if component has a preset info (probably spawn by admin)
             // create a new account and register it for this uplink
@@ -70,10 +69,10 @@ namespace Content.Server.Traitor.Uplink
 
         private void OnRemove(EntityUid uid, UplinkComponent component, ComponentRemove args)
         {
-            RaiseLocalEvent(uid, new UplinkRemovedEvent());
+            RaiseLocalEvent(uid, new UplinkRemovedEvent(), true);
         }
 
-        private void OnUseHand(EntityUid uid, UplinkComponent component, UseInHandEvent args)
+        private void OnActivate(EntityUid uid, UplinkComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled)
                 return;
@@ -84,11 +83,7 @@ namespace Content.Server.Traitor.Uplink
             if (component.UplinkAccount == null)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
-                return;
-
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-            if (!actionBlocker.CanInteract(uid) || !actionBlocker.CanUse(uid))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             ToggleUplinkUI(component, actor.PlayerSession);
@@ -113,27 +108,22 @@ namespace Content.Server.Traitor.Uplink
 
         private void OnBuy(EntityUid uid, UplinkComponent uplink, UplinkBuyListingMessage message)
         {
-            var player = message.Session.AttachedEntity;
-            if (player == null) return;
+            if (message.Session.AttachedEntity is not { Valid: true } player) return;
             if (uplink.UplinkAccount == null) return;
 
             if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
-                player.Transform.Coordinates, out var entity))
+                EntityManager.GetComponent<TransformComponent>(player).Coordinates, out var entity))
             {
-                SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.InsufficientFundsSound.GetSound(),
-                    uplink.Owner, AudioParams.Default);
+                SoundSystem.Play(uplink.InsufficientFundsSound.GetSound(),
+                    Filter.SinglePlayer(message.Session), uplink.Owner, AudioParams.Default);
                 RaiseNetworkEvent(new UplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                 return;
             }
 
-            if (player.TryGetComponent(out HandsComponent? hands) &&
-                entity.TryGetComponent(out ItemComponent? item))
-            {
-                hands.PutInHandOrDrop(item);
-            }
+            _handsSystem.PickupOrDrop(player, entity.Value);
 
-            SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.BuySuccessSound.GetSound(),
-                uplink.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(uplink.BuySuccessSound.GetSound(),
+                Filter.SinglePlayer(message.Session), uplink.Owner, AudioParams.Default.WithVolume(-8f));
 
             RaiseNetworkEvent(new UplinkBuySuccessMessage(), message.Session.ConnectedClient);
         }
@@ -144,21 +134,19 @@ namespace Content.Server.Traitor.Uplink
             if (acc == null)
                 return;
 
-            var player = args.Session.AttachedEntity;
-            if (player == null) return;
-            var cords = player.Transform.Coordinates;
+            if (args.Session.AttachedEntity is not { Valid: true } player) return;
+            var cords = EntityManager.GetComponent<TransformComponent>(player).Coordinates;
 
             // try to withdraw TCs from account
             if (!_accounts.TryWithdrawTC(acc, args.TC, cords, out var tcUid))
                 return;
 
             // try to put it into players hands
-            if (player.TryGetComponent(out SharedHandsComponent? hands))
-                hands.TryPutInAnyHand(EntityManager.GetEntity(tcUid.Value));
+            _handsSystem.PickupOrDrop(player, tcUid.Value);
 
             // play buying sound
-            SoundSystem.Play(Filter.SinglePlayer(args.Session), uplink.BuySuccessSound.GetSound(),
-                    uplink.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(uplink.BuySuccessSound.GetSound(),
+                    Filter.SinglePlayer(args.Session), uplink.Owner, AudioParams.Default.WithVolume(-8f));
 
             UpdateUserInterface(uplink);
         }
@@ -177,19 +165,66 @@ namespace Content.Server.Traitor.Uplink
             if (ui == null)
                 return;
 
-            var listings = _listing.GetListings().Values.ToArray();
+            var listings = _listing.GetListings().Values.ToList();
             var acc = component.UplinkAccount;
 
             UplinkAccountData accData;
             if (acc != null)
-                accData = new UplinkAccountData(acc.AccountHolder, acc.Balance);
-            else
-                accData = new UplinkAccountData(null, 0);
+            {
+                // if we don't have a jobwhitelist stored, get a new one
+                if (component.JobWhitelist == null &&
+                    acc.AccountHolder != null &&
+                    TryComp<MindComponent>(acc.AccountHolder, out var mind) &&
+                    mind.Mind != null)
+                {
+                    HashSet<string>? jobList = new();
+                    foreach (var role in mind.Mind.AllRoles.ToList())
+                    {
+                        if (role.GetType() == typeof(Job))
+                        {
+                            var job = (Job) role;
+                            jobList.Add(job.Prototype.ID);
+                        }
+                    }
+                    component.JobWhitelist = jobList;
+                }
 
-            ui.SetState(new UplinkUpdateState(accData, listings));
+                // filter out items not on the whitelist
+                for (var i = 0; i < listings.Count; i++)
+                {
+                    var entry = listings[i];
+                    if (entry.JobWhitelist != null)
+                    {
+                        var found = false;
+                        if (component.JobWhitelist != null)
+                        {
+                            foreach (var job in component.JobWhitelist)
+                            {
+                                if (entry.JobWhitelist.Contains(job))
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!found)
+                        {
+                            listings.Remove(entry);
+                            i--;
+                        }
+                    }
+                }
+                accData = new UplinkAccountData(acc.AccountHolder, acc.Balance);
+            }
+            else
+            {
+                accData = new UplinkAccountData(null, 0);
+            }
+
+            ui.SetState(new UplinkUpdateState(accData, listings.ToArray()));
         }
 
-        public bool AddUplink(IEntity user, UplinkAccount account, IEntity? uplinkEntity = null)
+        public bool AddUplink(EntityUid user, UplinkAccount account, EntityUid? uplinkEntity = null)
         {
             // Try to find target item
             if (uplinkEntity == null)
@@ -199,31 +234,37 @@ namespace Content.Server.Traitor.Uplink
                     return false;
             }
 
-            var uplink = uplinkEntity.EnsureComponent<UplinkComponent>();
+            var uplink = uplinkEntity.Value.EnsureComponent<UplinkComponent>();
             SetAccount(uplink, account);
+
+            if (!HasComp<PDAComponent>(uplinkEntity.Value))
+                uplink.ActivatesInHands = true;
+
+            // TODO add BUI. Currently can't be done outside of yaml -_-
 
             return true;
         }
 
-        private IEntity? FindUplinkTarget(IEntity user)
+        private EntityUid? FindUplinkTarget(EntityUid user)
         {
             // Try to find PDA in inventory
-            if (user.TryGetComponent(out InventoryComponent? inventory))
+
+            if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
             {
-                var foundPDA = inventory.LookupItems<PDAComponent>().FirstOrDefault();
-                if (foundPDA != null)
-                    return foundPDA.Owner;
+                while (containerSlotEnumerator.MoveNext(out var pdaUid))
+                {
+                    if (!pdaUid.ContainedEntity.HasValue) continue;
+
+                    if (HasComp<PDAComponent>(pdaUid.ContainedEntity.Value))
+                        return pdaUid.ContainedEntity.Value;
+                }
             }
 
             // Also check hands
-            if (user.TryGetComponent(out HandsComponent? hands))
+            foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                var heldItems = hands.GetAllHeldItems();
-                foreach (var item in heldItems)
-                {
-                    if (item.Owner.HasComponent<PDAComponent>())
-                        return item.Owner;
-                }
+                if (HasComp<PDAComponent>(item))
+                    return item;
             }
 
             return null;

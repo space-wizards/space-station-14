@@ -1,17 +1,11 @@
-﻿using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+﻿using Content.Shared.FixedPoint;
 
 
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public class ReagentTankComponent : Component
+    public sealed class ReagentTankComponent : Component
     {
-        public override string Name => "ReagentTank";
-
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(10);

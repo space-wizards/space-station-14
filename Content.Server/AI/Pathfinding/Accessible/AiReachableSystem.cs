@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
+using Content.Shared.Access.Systems;
 using Content.Shared.AI;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -52,7 +46,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// Regions are groups of nodes with the same profile (for pathfinding purposes)
         /// i.e. same collision, not-space, same access, etc.
         /// </summary>
-        private readonly Dictionary<GridId, Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>> _regions =
+        private readonly Dictionary<EntityUid, Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>> _regions =
             new();
 
         /// <summary>
@@ -83,11 +77,11 @@ namespace Content.Server.AI.Pathfinding.Accessible
         {
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PathfindingChunkUpdateMessage>(RecalculateNodeRegions);
+            SubscribeLocalEvent<GridRemovalEvent>(GridRemoved);
 #if DEBUG
             SubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>(HandleSubscription);
             SubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>(HandleUnsubscription);
 #endif
-            _mapManager.OnGridRemoved += GridRemoved;
         }
 
         public override void Shutdown()
@@ -99,12 +93,11 @@ namespace Content.Server.AI.Pathfinding.Accessible
             _cachedAccessible.Clear();
             _queuedCacheDeletions.Clear();
 
-            _mapManager.OnGridRemoved -= GridRemoved;
         }
 
-        private void GridRemoved(MapId mapId, GridId gridId)
+        private void GridRemoved(GridRemovalEvent ev)
         {
-            _regions.Remove(gridId);
+            _regions.Remove(ev.EntityUid);
         }
 
         public override void Update(float frameTime)
@@ -171,22 +164,23 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <param name="target"></param>
         /// <param name="range"></param>
         /// <returns></returns>
-        public bool CanAccess(IEntity entity, IEntity target, float range = 0.0f)
+        public bool CanAccess(EntityUid entity, EntityUid target, float range = 0.0f)
         {
+            var xform = EntityManager.GetComponent<TransformComponent>(target);
             // TODO: Handle this gracefully instead of just failing.
-            if (!target.Transform.GridID.IsValid())
+            if (xform.GridUid == null)
                 return false;
 
-            var targetTile = _mapManager.GetGrid(target.Transform.GridID).GetTileRef(target.Transform.Coordinates);
+            var targetTile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(xform.Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
 
-            var access = _accessReader.FindAccessTags(entity.Uid);
+            var access = _accessReader.FindAccessTags(entity);
 
             // We'll do a quick traversable check before going through regions
             // If we can't access it we'll try to get a valid node in range (this is essentially an early-out)
@@ -198,7 +192,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
                     return false;
                 }
 
-                var pathfindingArgs = new PathfindingArgs(entity.Uid, access, collisionMask, default, targetTile, range);
+                var pathfindingArgs = new PathfindingArgs(entity, access, collisionMask, default, targetTile, range);
                 foreach (var node in BFSPathfinder.GetNodesInRange(pathfindingArgs, false))
                 {
                     targetNode = node;
@@ -208,14 +202,14 @@ namespace Content.Server.AI.Pathfinding.Accessible
             return CanAccess(entity, targetNode);
         }
 
-        public bool CanAccess(IEntity entity, PathfindingNode targetNode)
+        public bool CanAccess(EntityUid entity, PathfindingNode targetNode)
         {
-            if (entity.Transform.GridID != targetNode.TileRef.GridIndex)
-            {
-                return false;
-            }
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
+            if (xform.GridUid != targetNode.TileRef.GridUid || xform.GridUid == null)
+                return false;
+
+            var entityTile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(xform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             var entityRegion = GetRegion(entityNode);
             var targetRegion = GetRegion(targetNode);
@@ -423,14 +417,16 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public PathfindingRegion? GetRegion(IEntity entity)
+        public PathfindingRegion? GetRegion(EntityUid entity)
         {
-            if (!entity.Transform.GridID.IsValid())
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+
+            if (xform.GridUid == null)
             {
                 return null;
             }
 
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
+            var entityTile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(xform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
         }
@@ -713,7 +709,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         }
 
 #if DEBUG
-        private void SendRegionsDebugMessage(GridId gridId)
+        private void SendRegionsDebugMessage(EntityUid gridId)
         {
             if (_subscribedSessions.Count == 0) return;
             var grid = _mapManager.GetGrid(gridId);
@@ -761,7 +757,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <param name="gridId"></param>
         /// <param name="regions"></param>
         /// <param name="cached"></param>
-        private void SendRegionCacheMessage(GridId gridId, IEnumerable<PathfindingRegion> regions, bool cached)
+        private void SendRegionCacheMessage(EntityUid gridId, IEnumerable<PathfindingRegion> regions, bool cached)
         {
             if (_subscribedSessions.Count == 0) return;
 

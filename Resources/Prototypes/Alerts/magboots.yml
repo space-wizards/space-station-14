@@ -1,5 +1,7 @@
 ﻿- type: alert
-  alertType: Magboots
-  icon: { sprite: "/Textures/Clothing/Shoes/Boots/magboots.rsi", state: "icon-on" }
+  id: Magboots
+  icons:
+  - sprite: /Textures/Clothing/Shoes/Boots/magboots.rsi
+    state: icon-on
   name: "Magboots"
-  description: You are immume to airflow, but slightly slower.
+  description: You are immune to airflow, but slightly slower.

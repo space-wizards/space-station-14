@@ -1,10 +1,7 @@
-using System;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Nutrition.EntitySystems
 {
@@ -31,8 +28,6 @@ namespace Content.Shared.Nutrition.EntitySystems
             creamPie.Splatted = true;
 
             SplattedCreamPie(uid, creamPie);
-
-            EntityManager.QueueDeleteEntity(uid);
         }
 
         protected virtual void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie) {}
@@ -62,13 +57,13 @@ namespace Content.Shared.Nutrition.EntitySystems
 
         private void OnCreamPiedHitBy(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
-            if (args.Thrown.Deleted || !args.Thrown.TryGetComponent(out CreamPieComponent? creamPie)) return;
+            if (!EntityManager.EntityExists(args.Thrown) || !EntityManager.TryGetComponent(args.Thrown, out CreamPieComponent? creamPie)) return;
 
             SetCreamPied(uid, creamPied, true);
 
             CreamedEntity(uid, creamPied, args);
 
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(creamPie.ParalyzeTime));
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(creamPie.ParalyzeTime), true);
         }
 
         protected virtual void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args) {}

@@ -19,3 +19,36 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsSalvage
+  name: salvage boots
+  description: Steel-toed salvage boots for salvaging in hazardous environments.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/explorer.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/explorer.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsPerformer
+  name: performer's boots
+  description: These boots provide great traction for when you're up on stage.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/performer.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/performer.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsCombat
+  name: combat boots
+  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/jackboots.rsi

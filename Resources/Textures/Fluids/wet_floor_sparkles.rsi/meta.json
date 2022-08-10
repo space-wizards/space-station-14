@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/commit/505e4414959d598c0d677a9bc734067a7bb513cd",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sparkles",
+      "directions": 1,
+      "delays": [
+        [
+          0.14,
+          0.14,
+          0.14,
+          0.14,
+          0.14,
+          5
+        ]
+      ]
+    }
+  ]
+}

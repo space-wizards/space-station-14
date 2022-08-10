@@ -1,15 +1,18 @@
-<SS14Window
+<DefaultWindow
     xmlns="https://spacestation14.io"
-    Title="{Loc 'admin-announce-title'}"
+    Title="{Loc admin-announce-title}"
     MinWidth="500">
     <GridContainer Columns="1">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <LineEdit Name="Announcer" Access="Public" PlaceHolder="{Loc 'announcer-placeholder'}" Text="{Loc 'Central Command'}" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+            <LineEdit Name="Announcer" Access="Public" PlaceHolder="{Loc admin-announce-announcer-placeholder}" Text="{Loc admin-announce-announcer-default}" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
             <OptionButton Name="AnnounceMethod" Access="Public" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
         </BoxContainer>
-        <LineEdit Name="Announcement" Access="Public" PlaceHolder="{Loc 'announcement-placeholder'}"/>
+        <LineEdit Name="Announcement" Access="Public" PlaceHolder="{Loc admin-announce-announcement-placeholder}"/>
 
-        <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc 'Announce'}" HorizontalAlignment="Center"/>
+        <GridContainer Rows="1">
+            <CheckBox Name="KeepWindowOpen" Access="Public" Text="{Loc 'admin-announce-keep-open'}" />
+            <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc admin-announce-button}" HorizontalAlignment="Center"/>
+        </GridContainer>
     </GridContainer>
-</SS14Window>
+</DefaultWindow>

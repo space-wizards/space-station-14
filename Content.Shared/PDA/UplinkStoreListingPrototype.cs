@@ -1,18 +1,19 @@
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
 {
     [Prototype("uplinkListing")]
-    public class UplinkStoreListingPrototype : IPrototype
+    public sealed class UplinkStoreListingPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("itemId")]
+        [DataField("itemId", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ItemId { get; } = string.Empty;
 
         [DataField("price")]
@@ -29,5 +30,11 @@ namespace Content.Shared.PDA
 
         [DataField("icon")]
         public SpriteSpecifier? Icon { get; } = null;
+
+        [DataField("jobWhitelist", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
+        public HashSet<string>? JobWhitelist;
+
+        [DataField("surplus")]
+        public bool CanSurplus = true;
     }
 }

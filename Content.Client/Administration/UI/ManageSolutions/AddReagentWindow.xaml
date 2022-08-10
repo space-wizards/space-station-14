@@ -1,4 +1,4 @@
-<SS14Window
+<DefaultWindow
     SetSize="250 300"
     Margin="4 0"
     xmlns="https://spacestation14.io">
@@ -10,4 +10,4 @@
         <ItemList Name="ReagentList" SelectMode="Single" VerticalExpand="True"  Margin ="0 4"/>
         <Button Name="AddButton" HorizontalExpand="True" Margin ="0 4" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

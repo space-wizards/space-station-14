@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Shared.Fluids;
 using JetBrains.Annotations;
@@ -10,24 +10,26 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-
 namespace Content.Client.Fluids
 {
     [UsedImplicitly]
-    public class PuddleVisualizer : AppearanceVisualizer
+    public sealed class PuddleVisualizer : AppearanceVisualizer
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
         // Whether the underlying solution color should be used
         [DataField("recolor")] public bool Recolor;
 
-        public override void InitializeEntity(IEntity entity)
+        // Whether the puddle has a unique sprite we don't want to overwrite
+        [DataField("customPuddleSprite")] public bool CustomPuddleSprite;
+
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out SpriteComponent? spriteComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? spriteComponent))
             {
-                Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity.Uid}");
+                Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity}");
                 return;
             }
 
@@ -46,15 +48,17 @@ namespace Content.Client.Fluids
         {
             base.OnChangeData(component);
 
+            var entities = IoCManager.Resolve<IEntityManager>();
             if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&
-                component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+                entities.TryGetComponent<SpriteComponent>(component.Owner, out var spriteComponent))
             {
+                component.TryGetData<bool>(PuddleVisuals.ForceWetFloorSprite, out var forceWetFloorSprite);
                 var cappedScale = Math.Min(1.0f, volumeScale * 0.75f +0.25f);
-                UpdateVisual(component, spriteComponent, cappedScale);
+                UpdateVisual(component, spriteComponent, cappedScale, forceWetFloorSprite);
             }
         }
 
-        private void UpdateVisual(AppearanceComponent component, SpriteComponent spriteComponent, float cappedScale)
+        private void UpdateVisual(AppearanceComponent component, SpriteComponent spriteComponent, float cappedScale, bool forceWetFloorSprite)
         {
             Color newColor;
             if (Recolor && component.TryGetData<Color>(PuddleVisuals.SolutionColor, out var solutionColor))
@@ -67,7 +71,19 @@ namespace Content.Client.Fluids
             }
 
             spriteComponent.Color = newColor;
+
+            if (forceWetFloorSprite)
+            {
+                //Change the puddle's sprite to the wet floor sprite
+                spriteComponent.LayerSetState(0, "sparkles", "Fluids/wet_floor_sparkles.rsi");
+                spriteComponent.Color = spriteComponent.Color.WithAlpha(0.25f); //should be mostly transparent.
+            }
+            else if(!CustomPuddleSprite)
+            {
+                spriteComponent.LayerSetState(0, "smear-0", "Fluids/smear.rsi"); // TODO: need a way to implement the random smears again when the mop creates new puddles.
+            }
+
         }
     }
-    
+
 }

@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'ui-transfer-amount-title'}"
             Resizable="False">
 
@@ -8,4 +8,4 @@
         </BoxContainer>
         <Button Name="ApplyButton" Access="Public" Text="{Loc 'ui-transfer-amount-apply'}"/>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

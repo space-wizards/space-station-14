@@ -35,10 +35,10 @@ namespace Content.Client.Damage
     ///     of the sprite layer, and then passing in a bool value
     ///     (true to enable, false to disable).
     /// </summary>
-    public class DamageVisualizer : AppearanceVisualizer
+    public sealed class DamageVisualizer : AppearanceVisualizer
     {
-        [Dependency] IPrototypeManager _prototypeManager = default!;
-        [Dependency] IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private const string _name = "DamageVisualizer";
         /// <summary>
@@ -82,7 +82,7 @@ namespace Content.Client.Damage
         ///     completely invisible.
         /// </remarks>
         [DataField("targetLayers")]
-        private List<string>? _targetLayers;
+        private List<Enum>? _targetLayers;
 
         /// <summary>
         ///     The actual sprites for every damage group
@@ -161,7 +161,7 @@ namespace Content.Client.Damage
         // deals with the edge case of human damage visuals not
         // being in color without making a Dict<Dict<Dict<Dict<Dict<Dict...
         [DataDefinition]
-        internal class DamageVisualizerSprite
+        internal sealed class DamageVisualizerSprite
         {
             /// <summary>
             ///     The RSI path for the damage visualizer
@@ -195,7 +195,7 @@ namespace Content.Client.Damage
             public readonly string? Color;
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
@@ -207,7 +207,7 @@ namespace Content.Client.Damage
                 InitializeVisualizer(entity, damageData);
         }
 
-        private void VerifyVisualizerSetup(IEntity entity, DamageVisualizerDataComponent damageData)
+        private void VerifyVisualizerSetup(EntityUid entity, DamageVisualizerDataComponent damageData)
         {
             if (_thresholds.Count < 1)
             {
@@ -289,11 +289,11 @@ namespace Content.Client.Damage
             }
         }
 
-        private void InitializeVisualizer(IEntity entity, DamageVisualizerDataComponent damageData)
+        private void InitializeVisualizer(EntityUid entity, DamageVisualizerDataComponent damageData)
         {
-            if (!entity.TryGetComponent<SpriteComponent>(out SpriteComponent? spriteComponent)
-                || !entity.TryGetComponent<DamageableComponent>(out var damageComponent)
-                || !entity.HasComponent<AppearanceComponent>())
+            if (!_entityManager.TryGetComponent(entity, out SpriteComponent? spriteComponent)
+                || !_entityManager.TryGetComponent<DamageableComponent?>(entity, out var damageComponent)
+                || !_entityManager.HasComponent<AppearanceComponent>(entity))
                 return;
 
             _thresholds.Add(FixedPoint2.Zero);
@@ -383,18 +383,8 @@ namespace Content.Client.Damage
                 //
                 // If the layer doesn't have a base state, or
                 // the layer key just doesn't exist, we skip it.
-                foreach (var keyString in _targetLayers)
+                foreach (var key in _targetLayers)
                 {
-                    object key;
-                    if (IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(keyString, out var @enum))
-                    {
-                        key = @enum;
-                    }
-                    else
-                    {
-                        key = keyString;
-                    }
-
                     if (!spriteComponent.LayerMapTryGet(key, out int index)
                         || spriteComponent.LayerGetState(index).ToString() == null)
                     {
@@ -504,7 +494,8 @@ namespace Content.Client.Damage
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (!component.Owner.TryGetComponent<DamageVisualizerDataComponent>(out var damageData))
+            var entities = _entityManager;
+            if (!entities.TryGetComponent(component.Owner, out DamageVisualizerDataComponent? damageData))
                 return;
 
             if (!damageData.Valid)
@@ -525,8 +516,9 @@ namespace Content.Client.Damage
 
         private void HandleDamage(AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
-            if (!component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent)
-                || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
+            var entities = _entityManager;
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? spriteComponent)
+                || !entities.TryGetComponent(component.Owner, out DamageableComponent? damageComponent))
                 return;
 
             if (_targetLayers != null && _damageOverlayGroups != null)
@@ -546,9 +538,9 @@ namespace Content.Client.Damage
             {
                 UpdateDamageVisuals(damageComponent, spriteComponent, damageData);
             }
-            else if (component.TryGetData<List<string>>(DamageVisualizerKeys.DamageUpdateGroups, out List<string>? delta))
+            else if (component.TryGetData(DamageVisualizerKeys.DamageUpdateGroups, out DamageVisualizerGroupData data))
             {
-                UpdateDamageVisuals(delta, damageComponent, spriteComponent, damageData);
+                UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageData);
             }
         }
 
@@ -560,20 +552,11 @@ namespace Content.Client.Damage
         /// </summary>
         private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
-            foreach (object layer in damageData.TargetLayerMapKeys)
+            foreach (var layer in damageData.TargetLayerMapKeys)
             {
                 bool? layerStatus = null;
-                switch (layer)
-                {
-                    case Enum layerEnum:
-                        if (component.TryGetData<bool>(layerEnum, out var layerStateEnum))
-                            layerStatus = layerStateEnum;
-                        break;
-                    case string layerString:
-                        if (component.TryGetData<bool>(layerString, out var layerStateString))
-                            layerStatus = layerStateString;
-                        break;
-                }
+                if (component.TryGetData<bool>(layer, out var layerStateEnum))
+                    layerStatus = layerStateEnum;
 
                 if (layerStatus == null)
                     continue;

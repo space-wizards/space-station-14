@@ -1,25 +1,32 @@
 - type: job
   id: Chef
-  name: "chef"
+  name: job-name-chef
+  playTimeTracker: JobChef
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 1800
   startingGear: ChefGear
-  departments:
-  - Civilian
   icon: "Chef"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance
+  - Kitchen
+  extendedAccess:
+  - Hydroponics
+  - Bar
 
 - type: startingGear
   id: ChefGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitChef
+    jumpsuit: ClothingUniformJumpsuitChef
     head: ClothingHeadHatChef
-    backpack: ClothingBackpackFilled
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
-    idcard: ChefPDA
+    id: ChefPDA
     ears: ClothingHeadsetService
-    outerclothing: ClothingOuterApronChef
+    outerClothing: ClothingOuterApronChef
   innerclothingskirt: ClothingUniformJumpskirtChef
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

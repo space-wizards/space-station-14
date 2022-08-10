@@ -1,11 +1,6 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Shuttles.Components
 {
@@ -16,7 +11,6 @@ namespace Content.Shared.Shuttles.Components
     [NetworkedComponent]
     public sealed class PilotComponent : Component
     {
-        public override string Name => "Pilot";
         [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
 
         /// <summary>
@@ -26,41 +20,14 @@ namespace Content.Shared.Shuttles.Components
 
         public const float BreakDistance = 0.25f;
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not PilotComponentState state) return;
+        public Vector2 CurTickStrafeMovement = Vector2.Zero;
+        public float CurTickRotationMovement;
+        public float CurTickBraking;
 
-            if (state.Console == null)
-            {
-                Console = null;
-                return;
-            }
+        public GameTick LastInputTick = GameTick.Zero;
+        public ushort LastInputSubTick = 0;
 
-            if (!Owner.EntityManager.TryGetEntity(state.Console.Value, out var consoleEnt) ||
-                !consoleEnt.TryGetComponent(out SharedShuttleConsoleComponent? shuttleConsoleComponent))
-            {
-                Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");
-                return;
-            }
-
-            Console = shuttleConsoleComponent;
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new PilotComponentState(Console?.OwnerUid);
-        }
-
-        [Serializable, NetSerializable]
-        private sealed class PilotComponentState : ComponentState
-        {
-            public EntityUid? Console { get; }
-
-            public PilotComponentState(EntityUid? uid)
-            {
-                Console = uid;
-            }
-        }
+        [ViewVariables]
+        public ShuttleButtons HeldButtons = ShuttleButtons.None;
     }
 }

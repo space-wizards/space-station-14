@@ -1,4 +1,5 @@
 using Content.Client.IoC;
+using Content.Client.MobState;
 using Content.Client.Resources;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
@@ -13,11 +14,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.HealthOverlay.UI
 {
-    public class HealthOverlayGui : BoxContainer
+    public sealed class HealthOverlayGui : BoxContainer
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
-        public HealthOverlayGui(IEntity entity)
+        public HealthOverlayGui(EntityUid entity)
         {
             IoCManager.InjectDependencies(this);
             IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(this);
@@ -62,7 +64,7 @@ namespace Content.Client.HealthOverlay.UI
 
         public HealthOverlayBar CritBar { get; }
 
-        public IEntity Entity { get; }
+        public EntityUid Entity { get; }
 
         public void SetVisibility(bool val)
         {
@@ -72,24 +74,25 @@ namespace Content.Client.HealthOverlay.UI
 
         private void MoreFrameUpdate(FrameEventArgs args)
         {
-            if (Entity.Deleted)
+            if (_entities.Deleted(Entity))
             {
                 return;
             }
 
-            if (!Entity.TryGetComponent(out MobStateComponent? mobState) ||
-                !Entity.TryGetComponent(out DamageableComponent? damageable))
+            if (!_entities.TryGetComponent(Entity, out MobStateComponent? mobState) ||
+                !_entities.TryGetComponent(Entity, out DamageableComponent? damageable))
             {
                 CritBar.Visible = false;
                 HealthBar.Visible = false;
                 return;
             }
 
+            var mobStateSystem = _entities.EntitySysManager.GetEntitySystem<MobStateSystem>();
             FixedPoint2 threshold;
 
             if (mobState.IsAlive())
             {
-                if (!mobState.TryGetEarliestCriticalState(damageable.TotalDamage, out _, out threshold))
+                if (!mobStateSystem.TryGetEarliestCriticalState(mobState, damageable.TotalDamage, out _, out threshold))
                 {
                     CritBar.Visible = false;
                     HealthBar.Visible = false;
@@ -106,8 +109,8 @@ namespace Content.Client.HealthOverlay.UI
                 HealthBar.Ratio = 0;
                 HealthBar.Visible = false;
 
-                if (!mobState.TryGetPreviousCriticalState(damageable.TotalDamage, out _, out var critThreshold) ||
-                    !mobState.TryGetEarliestDeadState(damageable.TotalDamage, out _, out var deadThreshold))
+                if (!mobStateSystem.TryGetPreviousCriticalState(mobState, damageable.TotalDamage, out _, out var critThreshold) ||
+                    !mobStateSystem.TryGetEarliestDeadState(mobState, damageable.TotalDamage, out _, out var deadThreshold))
                 {
                     CritBar.Visible = false;
                     return;
@@ -138,8 +141,7 @@ namespace Content.Client.HealthOverlay.UI
 
             MoreFrameUpdate(args);
 
-            if (Entity.Deleted ||
-                _eyeManager.CurrentMap != Entity.Transform.MapID)
+            if (_entities.Deleted(Entity) || _eyeManager.CurrentMap != _entities.GetComponent<TransformComponent>(Entity).MapID)
             {
                 Visible = false;
                 return;
@@ -147,7 +149,7 @@ namespace Content.Client.HealthOverlay.UI
 
             Visible = true;
 
-            var screenCoordinates = _eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates);
+            var screenCoordinates = _eyeManager.CoordinatesToScreen(_entities.GetComponent<TransformComponent>(Entity).Coordinates);
             var playerPosition = UserInterfaceManager.ScreenToUIPosition(screenCoordinates);
             LayoutContainer.SetPosition(this, new Vector2(playerPosition.X - Width / 2, playerPosition.Y - Height - 30.0f));
         }

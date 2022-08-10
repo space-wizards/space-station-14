@@ -1,13 +1,12 @@
-# Available to everybody
-- Commands:
-  - disconnect
-  - help
-  - list
-
 - Flags: VAREDIT
   Commands:
   - addcomp
+  - addcompc
   - rmcomp
+  - rmcompc
+  - vv
+  - scale
+  - spin
 
 - Flags: DEBUG
   Commands:
@@ -21,12 +20,48 @@
   - netaudit
   - querymappaused
   - physics
+  - showislands
   - showtime
+  - showspritebb
+  - cldbglyr
   - togglefov
   - togglehardfov
   - togglelight
+  - togglelightbuf
   - toggleshadows
   - testbed
+  - lightbb
+  - vv
+  - szr_stats
+  - addview
+  - removeview
+  - hwid
+  - showpos
+  - showray
+  - showchunkbb
+  - showgridnodes
+  - entfo
+  - sggcell
+  - ldrsc
+  - rldrsc
+  - rldshader
+  - rldloc
+  - guidump
+  - uitest
+  - chunkinfo
+  - showanchored
+  - dmetamem
+  - launchauth
+  - lsmonitor
+  - monitorinfo
+  - watch
+  - sendgarbage
+  - setinputcontext
+  - showvelocities
+  - tilelookup
+  - net_entityreport
+  - scene
+
 
 - Flags: MAPPING
   Commands:
@@ -41,6 +76,8 @@
   - savebp
   - savemap
   - tpgrid
+  - gridtc
+  - togglespritenetsync
 
 - Flags: ADMIN
   Commands:
@@ -62,6 +99,7 @@
 - Flags: SPAWN
   Commands:
   - spawn
+  - cspawn
 
 - Flags: HOST
   Commands:
@@ -71,6 +109,13 @@
   - saveconfig
   - testlog
   - sudo
+  - scsi
+  - csi
+  - lsasm
+  - cvar
+  - gcf
+  - getcomponentregistration
+  - fuck
 
 - Flags: QUERY
   Commands:

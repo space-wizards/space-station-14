@@ -1,13 +1,12 @@
-using Content.Server.Hands.Components;
-using Robust.Shared.GameObjects;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.AI.Operators.Inventory
 {
-    public class DropEntityOperator : AiOperator
+    public sealed class DropEntityOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _entity;
-        public DropEntityOperator(IEntity owner, IEntity entity)
+        private readonly EntityUid _owner;
+        private readonly EntityUid _entity;
+        public DropEntityOperator(EntityUid owner, EntityUid entity)
         {
             _owner = owner;
             _entity = entity;
@@ -20,12 +19,7 @@ namespace Content.Server.AI.Operators.Inventory
         /// <returns></returns>
         public override Outcome Execute(float frameTime)
         {
-            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
-            {
-                return Outcome.Failed;
-            }
-
-            return handsComponent.Drop(_entity) ? Outcome.Success : Outcome.Failed;
+            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedHandsSystem>().TryDrop(_owner, _entity) ? Outcome.Success : Outcome.Failed;
         }
     }
 }

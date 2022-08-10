@@ -17,6 +17,9 @@ namespace Content.Client.Chat
             inputManager.SetInputCommand(ContentKeyFunctions.FocusLocalChat,
                 InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(chatBox, ChatSelectChannel.Local)));
 
+            inputManager.SetInputCommand(ContentKeyFunctions.FocusWhisperChat,
+                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(chatBox, ChatSelectChannel.Whisper)));
+
             inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
                 InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(chatBox, ChatSelectChannel.OOC)));
 

@@ -1,6 +1,3 @@
-using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.AI.WorldState
@@ -10,7 +7,7 @@ namespace Content.Server.AI.WorldState
     /// </summary>
     public interface IAiState
     {
-        void Setup(IEntity owner);
+        void Setup(EntityUid owner);
     }
 
     public interface IPlanningState
@@ -32,9 +29,9 @@ namespace Content.Server.AI.WorldState
     public abstract class StateData<T> : IAiState
     {
         public abstract string Name { get; }
-        protected IEntity Owner { get; private set; } = default!;
+        protected EntityUid Owner { get; private set; } = default!;
 
-        public void Setup(IEntity owner)
+        public void Setup(EntityUid owner)
         {
             Owner = owner;
         }
@@ -51,11 +48,11 @@ namespace Content.Server.AI.WorldState
     {
         // Probably not the best class name but couldn't think of anything better
         public abstract string Name { get; }
-        private IEntity? Owner { get; set; }
+        private EntityUid Owner { get; set; }
 
         private T? _value;
 
-        public void Setup(IEntity owner)
+        public void Setup(EntityUid owner)
         {
             Owner = owner;
         }
@@ -79,10 +76,10 @@ namespace Content.Server.AI.WorldState
     public abstract class PlanningStateData<T> : IAiState, IPlanningState
     {
         public abstract string Name { get; }
-        protected IEntity? Owner { get; private set; }
+        protected EntityUid Owner { get; private set; }
         protected T? Value;
 
-        public void Setup(IEntity owner)
+        public void Setup(EntityUid owner)
         {
             Owner = owner;
         }
@@ -108,7 +105,7 @@ namespace Content.Server.AI.WorldState
     public abstract class CachedStateData<T> : IAiState, ICachedState
     {
         public abstract string Name { get; }
-        protected IEntity Owner { get; private set; } = default!;
+        protected EntityUid Owner { get; private set; } = default!;
         private bool _cached;
         protected T Value = default!;
         private TimeSpan _lastCache = TimeSpan.Zero;
@@ -117,7 +114,7 @@ namespace Content.Server.AI.WorldState
         /// </summary>
         protected double CacheTime { get; set; } = 2.0f;
 
-        public void Setup(IEntity owner)
+        public void Setup(EntityUid owner)
         {
             Owner = owner;
         }

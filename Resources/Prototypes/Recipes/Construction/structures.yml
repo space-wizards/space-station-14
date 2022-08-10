@@ -1,7 +1,7 @@
 - type: construction
   name: girder
-  id: girder
-  graph: girder
+  id: Girder
+  graph: Girder
   startNode: start
   targetNode: girder
   category: Structures
@@ -14,12 +14,12 @@
   canRotate: false
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked { }
+    - !type:TileNotBlocked
 
 - type: construction
   name: wall
-  id: wall
-  graph: girder
+  id: Wall
+  graph: Girder
   startNode: start
   targetNode: wall
   category: Structures
@@ -32,12 +32,12 @@
   canRotate: false
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: reinforced wall
-  id: reinforcedWall
-  graph: girder
+  id: ReinforcedWall
+  graph: Girder
   startNode: start
   targetNode: reinforcedWall
   category: Structures
@@ -50,12 +50,12 @@
   canRotate: false
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: grille
   id: Grille
-  graph: grille
+  graph: Grille
   startNode: start
   targetNode: grille
   category: Structures
@@ -72,15 +72,15 @@
 - type: construction
   name: window
   id: Window
-  graph: window
+  graph: Window
   startNode: start
   targetNode: window
   category: Structures
   description: Clear.
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/window.rsi
     state: full
@@ -91,15 +91,15 @@
 - type: construction
   name: reinforced window
   id: ReinforcedWindow
-  graph: window
+  graph: Window
   startNode: start
   targetNode: reinforcedWindow
   category: Structures
   description: Clear but tough.
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/reinforced_window.rsi
     state: full
@@ -108,17 +108,36 @@
   canRotate: false
 
 - type: construction
+  name: tinted window
+  id: TintedWindow
+  graph: Window
+  startNode: start
+  targetNode: tintedWindow
+  category: Structures
+  description: Not clear but tough.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/tinted_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: plasma window
   id: PlasmaWindow
-  graph: window
+  graph: Window
   startNode: start
   targetNode: plasmaWindow
   category: Structures
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/plasma_window.rsi
     state: full
@@ -129,15 +148,15 @@
 - type: construction
   name: reinforced plasma window
   id: ReinforcedPlasmaWindow
-  graph: window
+  graph: Window
   startNode: start
   targetNode: reinforcedPlasmaWindow
   category: Structures
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/reinforced_plasma_window.rsi
     state: full
@@ -148,15 +167,15 @@
 - type: construction
   name: directional window
   id: WindowDirectional
-  graph: windowDirectional
+  graph: WindowDirectional
   startNode: start
   targetNode: windowDirectional
   category: Structures
   description: Clear.
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
     state: window
@@ -166,15 +185,15 @@
 - type: construction
   name: directional reinforced window
   id: WindowReinforcedDirectional
-  graph: windowDirectional
+  graph: WindowDirectional
   startNode: start
   targetNode: windowReinforcedDirectional
   category: Structures
   description: Clear but tough.
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
@@ -184,15 +203,15 @@
 - type: construction
   name: directional plasma window
   id: PlasmaWindowDirectional
-  graph: windowDirectional
+  graph: WindowDirectional
   startNode: start
   targetNode: plasmaWindowDirectional
   category: Structures
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
@@ -202,15 +221,15 @@
 - type: construction
   name: directional reinforced plasma window
   id: PlasmaReinforcedWindowDirectional
-  graph: windowDirectional
+  graph: WindowDirectional
   startNode: start
   targetNode: plasmaReinforcedWindowDirectional
   category: Structures
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
     state: plasma_reinforced_window
@@ -232,7 +251,23 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+
+- type: construction
+  name: shutter
+  id: Shutters
+  graph: Shutters
+  startNode: start
+  targetNode: Shutters
+  category: Structures
+  description: This is a shutter - connect it to a button to open and close it.
+  icon:
+    sprite: Structures/Doors/Shutters/shutters.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
 
 - type: construction
   name: catwalk
@@ -243,12 +278,12 @@
   category: Structures
   description: Just like a lattice. Except it looks better.
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
     - !type:TileType
       targets:
-        - lattice
-        - plating
-        - underplating
+        - Lattice
+        - Plating
+        - UnderPlating
   icon:
     sprite: Structures/catwalk.rsi
     state: catwalk_preview
@@ -259,7 +294,7 @@
 - type: construction
   name: wooden barricade
   id: Barricade
-  graph: barricade
+  graph: Barricade
   startNode: start
   targetNode: barricadewooden
   category: Structures
@@ -271,12 +306,63 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+
+- type: construction
+  name: railing
+  id: Railing
+  graph: Railing
+  startNode: start
+  targetNode: railing
+  category: Structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: side
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: railing corner
+  id: RailingCorner
+  graph: Railing
+  startNode: start
+  targetNode: railingCorner
+  category: Structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: railing corner small
+  id: RailingCornerSmall
+  graph: Railing
+  startNode: start
+  targetNode: railingCornerSmall
+  category: Structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: corner_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   name: airlock
-  id: airlock
-  graph: airlock
+  id: Airlock
+  graph: Airlock
   startNode: start
   targetNode: airlock
   category: Structures
@@ -288,12 +374,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: windoor
-  id: windoor
-  graph: windoor
+  id: Windoor
+  graph: Windoor
   startNode: start
   targetNode: windoor
   category: Structures
@@ -305,12 +391,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-  - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: secure windoor
-  id: secureWindoor
-  graph: windoor
+  id: SecureWindoor
+  graph: Windoor
   startNode: start
   targetNode: windoorSecure
   category: Structures
@@ -322,4 +408,198 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-  - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+
+
+#lighting
+- type: construction
+  name: wall light
+  id: LightTubeFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: tubeLight
+  category: Structures
+  description: A wall light fixture. Use light tubes.
+  icon:
+    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  # Need an *additional* condition here that forces there to be a wall in the opposite direction to the one used for placement.
+  # Also see below. Didn't add it b/c construction ECS work going on. Cheers, - 20kdc
+    - !type:TileNotBlocked
+
+- type: construction
+  name: small wall light
+  id: LightSmallFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: bulbLight
+  category: Structures
+  description: A wall light fixture. Use light bulbs.
+  icon:
+    sprite: Structures/Wallmounts/Lighting/light_small.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  # Same here. - 20kdc
+    - !type:TileNotBlocked
+
+- type: construction
+  name: ground light post
+  id: LightGroundFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: groundLight
+  category: Structures
+  description: A ground light fixture. Use light bulbs.
+  icon:
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+#conveyor
+- type: construction
+  name: conveyor belt
+  id: ConveyorBelt
+  graph: ConveyorGraph
+  startNode: start
+  targetNode: entity
+  category: Structures
+  description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/conveyor.rsi
+    state: conveyor_stopped_cw
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: metal door
+  id: MetalDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: metalDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/metal_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: wooden door
+  id: WoodDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: woodDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plasma door
+  id: PlasmaDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: plasmaDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/plasma_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: gold door
+  id: GoldDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: goldDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/gold_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: silver door
+  id: SilverDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: silverDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/silver_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: paper door
+  id: PaperDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: paperDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/paper_door.rsi
+    state: closed
+
+- type: construction
+  name: plastic flaps
+  id: PlasticFlapsClear
+  graph: PlasticFlapsGraph
+  startNode: start
+  targetNode: plasticFlaps
+  category: Structures
+  placementMode: SnapgridCenter
+  description: A plastic flap to let items through and keep people out.
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/plastic_flaps.rsi
+    state: plasticflaps
+  conditions:
+    - !type:TileNotBlocked

@@ -1,8 +1,9 @@
 ﻿- type: reagent
   id: Desoxyephedrine
-  name: desoxyephedrine
-  desc: Desoxyephedrine is a potent stimulant with dangerous side-effects if too much is consumed.
-  physicalDesc: translucent
+  name: reagent-name-desoxyephedrine
+  group: Narcotics
+  desc: reagent-desc-desoxyephedrine
+  physicalDesc: reagent-physical-desc-translucent
   color: "#FAFAFA"
   boilingPoint: 212.0  # Dexosyephedrine vape when?
   meltingPoint: 170.0
@@ -12,7 +13,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 1.5
+            Poison: 0.75
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -24,26 +25,27 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.3
-        sprintSpeedModifier: 1.3
+        walkSpeedModifier: 1.35
+        sprintSpeedModifier: 1.35
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
       - !type:GenericStatusEffect
         key: Stun
-        time: 1
+        time: 3
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 1
+        time: 3
         type: Remove
 
 - type: reagent
   id: Ephedrine
-  name: ephedrine
-  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
-  physicalDesc: Bone white
+  name: reagent-name-ephedrine
+  group: Narcotics
+  desc: reagent-desc-ephedrine
+  physicalDesc: reagent-physical-desc-powdery
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
@@ -51,8 +53,8 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.2
-        sprintSpeedModifier: 1.2
+        walkSpeedModifier: 1.25
+        sprintSpeedModifier: 1.25
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -64,56 +66,133 @@
       - !type:Jitter
       - !type:GenericStatusEffect
         key: Stun
-        time: 0.25
+        time: 1
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 0.25
+        time: 1
         type: Remove
       - !type:PopupMessage
+        visualType: Medium
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
         type: Local
         probability: 0.05
 
 - type: reagent
   id: THC
-  name: THC
-  desc: The main psychoactive compound in cannabis.
+  name: reagent-name-thc
+  group: Narcotics
+  desc: reagent-desc-thc
   color: "#808080"
-  physicalDesc: crystalline
+  physicalDesc: reagent-physical-desc-crystalline
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: -5
   - !type:PlantAdjustHealth
     amount: -1
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
 
 - type: reagent
   id: THCOil
-  name: THC oil
-  desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
-  physicalDesc: skunky
+  name: reagent-name-thc-oil
+  group: Narcotics
+  desc: reagent-desc-thc-oil
+  physicalDesc: reagent-physical-desc-skunky
   color: "#DAA520"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
 
 - type: reagent
   id: Nicotine
-  name: Nicotine
-  desc: Dangerous and highly addictive.
+  name: reagent-name-nicotine
+  group: Narcotics
+  desc: reagent-desc-nicotine
   color: "#C0C0C0"
-  physicalDesc: strong smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
 
 - type: reagent
   id: Impedrezene
-  name: impedrezene
-  desc: A narcotic that impedes one's ability by slowing down the higher brain cell functions. Causes massive brain damage.
-  physicalDesc: acrid
+  name: reagent-name-impedrezene
+  group: Narcotics
+  desc: reagent-desc-impedrezene
+  physicalDesc: reagent-physical-desc-acrid
   color: "#215263"
 
 - type: reagent
   id: SpaceDrugs
-  name: space drugs
-  desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
-  physicalDesc: syrupy
+  name: reagent-name-space-drugs
+  group: Narcotics
+  desc: reagent-desc-space-drugs
+  physicalDesc: reagent-physical-desc-syrupy
   color: "#63806e"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+
+# Probably replace this one with sleeping chem when putting someone in a comatose state is easier
+- type: reagent
+  id: Nocturine
+  name: reagent-name-nocturine
+  group: Narcotics
+  desc: reagent-desc-nocturine
+  physicalDesc: reagent-physical-desc-powdery
+  color: "#128e80"
+  boilingPoint: 444.0
+  meltingPoint: 128.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 60
+        damage:
+          types:
+            Poison: 1
+      - !type:Paralyze
+        paralyzeTime: 1.2
+        refresh: false
+      - !type:GenericStatusEffect
+        key: Stutter
+        time: 1
+        component: StutteringAccent
+
+- type: reagent
+  id: MuteToxin
+  name: reagent-name-mute-toxin
+  group: Narcotics
+  desc: reagent-desc-mute-toxin
+  physicalDesc: reagent-physical-desc-syrupy
+  color: "#000000"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted

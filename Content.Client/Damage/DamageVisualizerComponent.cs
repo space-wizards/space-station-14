@@ -11,11 +11,9 @@ namespace Content.Client.Damage
     // store it in the entity itself as a separate,
     // dynamically added component.
     [RegisterComponent]
-    public class DamageVisualizerDataComponent : Component
+    public sealed class DamageVisualizerDataComponent : Component
     {
-        public override string Name => "DamageVisualizerData";
-
-        public List<object> TargetLayerMapKeys = new();
+        public List<Enum> TargetLayerMapKeys = new();
         public bool Disabled = false;
         public bool Valid = true;
         public FixedPoint2 LastDamageThreshold = FixedPoint2.Zero;

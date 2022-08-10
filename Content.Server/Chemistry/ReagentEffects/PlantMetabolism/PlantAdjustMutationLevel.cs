@@ -1,11 +1,8 @@
-﻿using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
-    public class PlantAdjustMutationLevel : PlantAdjustAttribute
+    public sealed class PlantAdjustMutationLevel : PlantAdjustAttribute
     {
         public override void Effect(ReagentEffectArgs args)
         {

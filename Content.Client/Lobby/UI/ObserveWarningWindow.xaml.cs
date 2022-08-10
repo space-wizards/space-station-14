@@ -9,7 +9,7 @@ namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    internal sealed partial class ObserveWarningWindow : SS14Window
+    internal sealed partial class ObserveWarningWindow : DefaultWindow
     {
         public ObserveWarningWindow()
         {

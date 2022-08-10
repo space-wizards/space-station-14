@@ -1,21 +1,27 @@
-﻿using Content.Shared.Clothing;
-using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
+using Content.Shared.Clothing;
+using Robust.Shared.GameStates;
+using static Content.Shared.Clothing.MagbootsComponent;
 
-namespace Content.Client.Clothing
+namespace Content.Client.Clothing;
+
+public sealed class MagbootsSystem : SharedMagbootsSystem
 {
-    public class MagbootsSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
-        }
+        SubscribeLocalEvent<MagbootsComponent, ComponentHandleState>(OnHandleState);
+    }
 
-        private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
-        }
+    private void OnHandleState(EntityUid uid, MagbootsComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not MagbootsComponentState componentState)
+            return;
+
+        if (component.On == componentState.On) return;
+        
+        component.On = componentState.On;
+        OnChanged(component);
     }
 }
+

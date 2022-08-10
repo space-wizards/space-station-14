@@ -6,7 +6,7 @@ using Robust.Client.Physics;
 namespace Content.Client.Pulling
 {
     [UsedImplicitly]
-    public class PullingSystem : SharedPullingSystem
+    public sealed class PullingSystem : SharedPullingSystem
     {
         public override void Initialize()
         {

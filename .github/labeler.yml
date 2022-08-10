@@ -1,0 +1,12 @@
+﻿"Changes: Sprites":
+- '**/*.rsi/*.png'
+
+"Changes: Map":
+- 'Resources/Maps/*.yml'
+- 'Resources/Prototypes/Maps/*.yml'
+
+"Changes: UI":
+- '**/*.xaml*'
+
+"No C#":
+- all: ["!**/*.cs"]

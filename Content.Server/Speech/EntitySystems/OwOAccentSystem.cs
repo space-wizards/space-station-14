@@ -1,12 +1,9 @@
-using System.Collections.Generic;
 using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public class OwOAccentSystem : EntitySystem
+    public sealed class OwOAccentSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

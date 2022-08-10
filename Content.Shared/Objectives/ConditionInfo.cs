@@ -1,11 +1,10 @@
-﻿using System;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Objectives
 {
     [Serializable, NetSerializable]
-    public class ConditionInfo
+    public sealed class ConditionInfo
     {
         public string Title { get; }
         public string Description { get; }

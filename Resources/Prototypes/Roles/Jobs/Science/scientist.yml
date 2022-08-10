@@ -1,11 +1,10 @@
 - type: job
   id: Scientist
-  name: "scientist"
+  name: job-name-scientist
+  playTimeTracker: JobScientist
   startingGear: ScientistGear
-  departments:
-  - Science
   icon: "Scientist"
-  supervisors: "the research director"
+  supervisors: job-supervisors-rd
   access:
   - Research
   - Maintenance
@@ -13,11 +12,11 @@
 - type: startingGear
   id: ScientistGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitScientist
-    backpack: ClothingBackpackScienceFilled
+    jumpsuit: ClothingUniformJumpsuitScientist
+    back: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorWhite
-    outerclothing: ClothingOuterCoatLab
-    idcard: SciencePDA
+    outerClothing: ClothingOuterCoatLab
+    id: SciencePDA
     ears: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtScientist
   satchel: ClothingBackpackSatchelScienceFilled

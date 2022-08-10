@@ -1,35 +1,23 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Content.Shared.Research.Prototypes;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Research.Components
 {
     [NetworkedComponent()]
-    public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
+    public abstract class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
     {
-        public override string Name => "TechnologyDatabase";
-
         [DataField("technologies")] private List<string> _technologyIds = new();
 
-        protected List<TechnologyPrototype> _technologies = new();
-
-        /// <summary>
-        ///     A read-only list of unlocked technologies.
-        /// </summary>
-        public IReadOnlyList<TechnologyPrototype> Technologies => _technologies;
+        public List<TechnologyPrototype> Technologies = new();
 
         void ISerializationHooks.BeforeSerialization()
         {
             var techIds = new List<string>();
 
-            foreach (var tech in _technologies)
+            foreach (var tech in Technologies)
             {
                 techIds.Add(tech.ID);
             }
@@ -45,7 +33,7 @@ namespace Content.Shared.Research.Components
             {
                 if (prototypeManager.TryIndex(id, out TechnologyPrototype? tech))
                 {
-                    _technologies.Add(tech);
+                    Technologies.Add(tech);
                 }
             }
         }
@@ -68,7 +56,7 @@ namespace Content.Shared.Research.Components
         {
             List<string> techIds = new List<string>();
 
-            foreach (var tech in _technologies)
+            foreach (var tech in Technologies)
             {
                 techIds.Add(tech.ID);
             }
@@ -83,7 +71,7 @@ namespace Content.Shared.Research.Components
         /// <returns>Whether it is unlocked or not</returns>
         public bool IsTechnologyUnlocked(TechnologyPrototype technology)
         {
-            return _technologies.Contains(technology);
+            return Technologies.Contains(technology);
         }
 
         /// <summary>
@@ -110,7 +98,7 @@ namespace Content.Shared.Research.Components
     }
 
     [Serializable, NetSerializable]
-    public class TechnologyDatabaseState : ComponentState
+    public sealed class TechnologyDatabaseState : ComponentState
     {
         public List<string> Technologies;
         public TechnologyDatabaseState(List<string> technologies)

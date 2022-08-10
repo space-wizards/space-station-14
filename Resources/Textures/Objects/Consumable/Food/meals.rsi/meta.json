@@ -8,6 +8,19 @@
   },
   "states": [
     {
+      "name": "amanita-jelly",
+      "delays": [
+      [
+        5,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        1
+      ]
+     ]
+    },
+    {
       "name": "bearsteak",
       "delays": [
         [
@@ -111,6 +124,9 @@
     {
       "name": "poutine"
     },
+	{
+	  "name": "queso"
+	},
     {
       "name": "sashimi"
     },

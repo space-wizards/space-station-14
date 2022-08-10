@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "emergency pizza crate"
   id: FoodPizza
-  description: Help do your part to end station hunger by distributing pizza to underfunded departments!
   icon:
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: margherita
@@ -9,3 +7,34 @@
   cost: 1000
   category: Food
   group: market
+
+- type: cargoProduct
+  id: FoodMRE
+  icon:
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: nutribrick
+  product: CrateFoodMRE
+  cost: 4000
+  category: Food
+  group: market
+
+- type: cargoProduct
+  id: FoodCook
+  icon:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: flour-big
+  product: CrateFoodCooking
+  cost: 5000
+  category: Food
+  group: market
+
+- type: cargoProduct
+  id: FoodCrateKvassTank
+  icon:
+    sprite: Structures/Storage/kvass.rsi
+    state: kvass
+  product: CrateFoodKvassTank
+  cost: 2000
+  category: Food
+  group: market
+

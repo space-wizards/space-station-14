@@ -72,6 +72,7 @@ namespace Content.Client.DoAfter.UI
         {
             IoCManager.InjectDependencies(this);
             _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
+            VerticalAlignment = VAlignment.Center;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

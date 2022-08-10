@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
     [UsedImplicitly]
-    public class AtmosDeviceSystem : EntitySystem
+    public sealed class AtmosDeviceSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -26,24 +22,30 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentInit>(OnDeviceInitialize);
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentShutdown>(OnDeviceShutdown);
+            // Re-anchoring should be handled by the parent change.
             SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
             SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
 
-        private bool CanJoinAtmosphere(AtmosDeviceComponent component)
+        private bool CanJoinAtmosphere(AtmosDeviceComponent component, TransformComponent transform)
         {
-            return !component.RequireAnchored || component.Owner.Transform.Anchored;
+            return (!component.RequireAnchored || transform.Anchored) && transform.GridUid != null;
         }
 
         public void JoinAtmosphere(AtmosDeviceComponent component)
         {
-            if (!CanJoinAtmosphere(component))
+            var transform = Transform(component.Owner);
+
+            if (!CanJoinAtmosphere(component, transform))
             {
                 return;
             }
 
+            // TODO: low-hanging fruit for perf improvements around here
+
+            // GridUid is not null because we can join atmosphere.
             // We try to add the device to a valid atmosphere, and if we can't, try to add it to the entity system.
-            if (!_atmosphereSystem.AddAtmosDevice(component))
+            if (!_atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component))
             {
                 if (component.JoinSystem)
                 {
@@ -59,13 +61,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             component.LastProcess = _gameTiming.CurTime;
 
-            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceEnabledEvent(), false);
+            RaiseLocalEvent(component.Owner, new AtmosDeviceEnabledEvent(), false);
         }
 
         public void LeaveAtmosphere(AtmosDeviceComponent component)
         {
             // Try to remove the component from an atmosphere, and if not
-            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component))
+            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component.JoinedGrid.Value, component))
             {
                 // The grid might have been removed but not us... This usually shouldn't happen.
                 component.JoinedGrid = null;
@@ -79,7 +81,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             }
 
             component.LastProcess = TimeSpan.Zero;
-            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceDisabledEvent(), false);
+            RaiseLocalEvent(component.Owner, new AtmosDeviceDisabledEvent(), false);
         }
 
         public void RejoinAtmosphere(AtmosDeviceComponent component)
@@ -104,7 +106,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.RequireAnchored)
                 return;
 
-            if(component.Owner.Transform.Anchored)
+            if (args.Anchored)
                 JoinAtmosphere(component);
             else
                 LeaveAtmosphere(component);
@@ -127,7 +129,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             var time = _gameTiming.CurTime;
             foreach (var device in _joinedDevices)
             {
-                RaiseLocalEvent(device.Owner.Uid, _updateEvent, false);
+                RaiseLocalEvent(device.Owner, _updateEvent, false);
                 device.LastProcess = time;
             }
         }

@@ -1,0 +1,34 @@
+- type: entity
+  id: SalvageMagnet
+  parent: BaseMachine
+  name: salvage magnet
+  description: "Pulls in salvage."
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Structures/Machines/salvage.rsi
+        state: salvage-magnet
+        # Ideally, there'd be lights indicating power usage and a big red lamp indicating loss
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: IntrinsicRadio
+    channels:
+    - Supply
+  - type: SalvageMagnet
+    offset: 0, -32
+  - type: ApcPowerReceiver
+    powerLoad: 2500 # TODO change this to a HV power draw that really hits the grid hard WHEN active
+
+# For Knightship
+- type: entity
+  id: SalvageLocator
+  parent: SalvageMagnet
+  name: salvage locator
+  description: "Locates salvage."
+  components:
+  - type: SalvageMagnet
+    offset: 0, -12
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+

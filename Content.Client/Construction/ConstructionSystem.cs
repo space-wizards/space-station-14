@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Input;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction;
+using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-
 
 namespace Content.Client.Construction
 {
@@ -24,10 +18,11 @@ namespace Content.Client.Construction
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    public class ConstructionSystem : SharedConstructionSystem
+    public sealed class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
@@ -111,7 +106,7 @@ namespace Content.Client.Construction
 
         private void HandlePlayerAttached(PlayerAttachSysMessage msg)
         {
-            var available = IsCrafingAvailable(msg.AttachedEntity);
+            var available = IsCraftingAvailable(msg.AttachedEntity);
             UpdateCraftingAvailability(available);
         }
 
@@ -131,9 +126,9 @@ namespace Content.Client.Construction
             CraftingEnabled = available;
         }
 
-        private static bool IsCrafingAvailable(IEntity? entity)
+        private static bool IsCraftingAvailable(EntityUid? entity)
         {
-            if (entity == null)
+            if (entity == default)
                 return false;
 
             // TODO: Decide if entity can craft, using capabilities or something
@@ -145,9 +140,7 @@ namespace Content.Client.Construction
             if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
                 return false;
 
-            var entity = EntityManager.GetEntity(args.EntityUid);
-
-            if (!entity.TryGetComponent<ConstructionGhostComponent>(out var ghostComp))
+            if (!EntityManager.TryGetComponent<ConstructionGhostComponent?>(args.EntityUid, out var ghostComp))
                 return false;
 
             TryStartConstruction(ghostComp.GhostId);
@@ -159,10 +152,18 @@ namespace Content.Client.Construction
         /// </summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
         {
-            var user = _playerManager.LocalPlayer?.ControlledEntity;
+            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+                !user.IsValid())
+            {
+                return;
+            }
+
+            if (GhostPresent(loc)) return;
 
             // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
-            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker: prototype.CanBuildInImpassable)) return;
+            var predicate = GetPredicate(prototype.CanBuildInImpassable, loc.ToMap(EntityManager));
+            if (!_interactionSystem.InRangeUnobstructed(user, loc, 20f, predicate: predicate))
+                return;
 
             foreach (var condition in prototype.Conditions)
             {
@@ -171,17 +172,20 @@ namespace Content.Client.Construction
             }
 
             var ghost = EntityManager.SpawnEntity("constructionghost", loc);
-            var comp = ghost.GetComponent<ConstructionGhostComponent>();
+            var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost);
             comp.Prototype = prototype;
             comp.GhostId = _nextId++;
-            ghost.Transform.LocalRotation = dir.ToAngle();
+            EntityManager.GetComponent<TransformComponent>(ghost).LocalRotation = dir.ToAngle();
             _ghosts.Add(comp.GhostId, comp);
-            var sprite = ghost.GetComponent<SpriteComponent>();
+            var sprite = EntityManager.GetComponent<SpriteComponent>(ghost);
             sprite.Color = new Color(48, 255, 48, 128);
             sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
             sprite.LayerSetSprite(0, prototype.Icon);
             sprite.LayerSetShader(0, "unshaded");
             sprite.LayerSetVisible(0, true);
+
+            if (prototype.CanBuildInImpassable)
+                EnsureComp<WallMountComponent>(ghost).Arc = new(Math.Tau);
         }
 
         /// <summary>
@@ -191,7 +195,7 @@ namespace Content.Client.Construction
         {
             foreach (var ghost in _ghosts)
             {
-                if (ghost.Value.Owner.Transform.Coordinates.Equals(loc)) return true;
+                if (EntityManager.GetComponent<TransformComponent>(ghost.Value.Owner).Coordinates.Equals(loc)) return true;
             }
 
             return false;
@@ -206,7 +210,7 @@ namespace Content.Client.Construction
                 throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
             }
 
-            var transform = ghost.Owner.Transform;
+            var transform = EntityManager.GetComponent<TransformComponent>(ghost.Owner);
             var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
@@ -226,7 +230,7 @@ namespace Content.Client.Construction
         {
             if (_ghosts.TryGetValue(ghostId, out var ghost))
             {
-                ghost.Owner.QueueDelete();
+                EntityManager.QueueDeleteEntity(ghost.Owner);
                 _ghosts.Remove(ghostId);
             }
         }
@@ -238,14 +242,14 @@ namespace Content.Client.Construction
         {
             foreach (var (_, ghost) in _ghosts)
             {
-                ghost.Owner.QueueDelete();
+                EntityManager.QueueDeleteEntity(ghost.Owner);
             }
 
             _ghosts.Clear();
         }
     }
 
-    public class CraftingAvailabilityChangedArgs : EventArgs
+    public sealed class CraftingAvailabilityChangedArgs : EventArgs
     {
         public bool Available { get; }
 

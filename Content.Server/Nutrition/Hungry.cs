@@ -8,8 +8,10 @@ using Robust.Shared.Console;
 namespace Content.Server.Nutrition
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class Hungry : IConsoleCommand
+    public sealed class Hungry : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "hungry";
         public string Description => "Makes you hungry.";
         public string Help => $"{Command}";
@@ -23,13 +25,13 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            if (player.AttachedEntity is not {Valid: true} playerEntity)
             {
                 shell.WriteLine("You cannot use this command without an entity.");
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out HungerComponent? hunger))
+            if (!_entities.TryGetComponent(playerEntity, out HungerComponent? hunger))
             {
                 shell.WriteLine($"Your entity does not have a {nameof(HungerComponent)} component.");
                 return;

@@ -4,7 +4,6 @@ using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Interaction
@@ -13,8 +12,10 @@ namespace Content.Server.Interaction
     /// <see cref="TilePryingComponent.TryPryTile"/>
     /// </summary>
     [AdminCommand(AdminFlags.Debug)]
-    class TilePryCommand : IConsoleCommand
+    sealed class TilePryCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "tilepry";
         public string Description => "Pries up all tiles in a radius around the user.";
         public string Help => $"Usage: {Command} <radius>";
@@ -22,7 +23,7 @@ namespace Content.Server.Interaction
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (player?.AttachedEntity == null)
+            if (player?.AttachedEntity is not {} attached)
             {
                 return;
             }
@@ -46,9 +47,13 @@ namespace Content.Server.Interaction
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var playerGrid = player.AttachedEntity.Transform.GridID;
-            var mapGrid = mapManager.GetGrid(playerGrid);
-            var playerPosition = player.AttachedEntity.Transform.Coordinates;
+            var xform = _entities.GetComponent<TransformComponent>(attached);
+            var playerGrid = xform.GridUid;
+
+            if (!mapManager.TryGetGrid(playerGrid, out var mapGrid))
+                return;
+
+            var playerPosition = xform.Coordinates;
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
             for (var i = -radius; i <= radius; i++)
@@ -61,8 +66,8 @@ namespace Content.Server.Interaction
 
                     if (!tileDef.CanCrowbar) continue;
 
-                    var underplating = tileDefinitionManager["underplating"];
-                    mapGrid.SetTile(coordinates, new Robust.Shared.Map.Tile(underplating.TileId));
+                    var underplating = tileDefinitionManager["UnderPlating"];
+                    mapGrid.SetTile(coordinates, new Tile(underplating.TileId));
                 }
             }
         }

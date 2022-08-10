@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Storage.EntitySystems
 {
+    /// <summary>
+    /// <c>ItemMapperSystem</c> is a system that on each initialization, insertion, removal of an entity from
+    /// given <see cref="ItemMapperComponent"/> (with appropriate storage attached) will check each stored item to see
+    /// if its tags/component, and overall quantity match <see cref="ItemMapperComponent.MapLayers"/>.
+    /// </summary>
     [UsedImplicitly]
     public abstract class SharedItemMapperSystem : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -20,7 +26,12 @@ namespace Content.Shared.Storage.EntitySystems
 
         private void InitLayers(EntityUid uid, ItemMapperComponent component, ComponentInit args)
         {
-            if (component.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            foreach (var (layerName, val) in component.MapLayers)
+            {
+                val.Layer = layerName;
+            }
+
+            if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
             {
                 var list = new List<string>(component.MapLayers.Keys);
                 appearanceComponent.SetData(StorageMapVisuals.InitLayers, new ShowLayerData(list));
@@ -30,7 +41,7 @@ namespace Content.Shared.Storage.EntitySystems
         private void MapperEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
             EntRemovedFromContainerMessage args)
         {
-            if (itemMapper.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)
+            if (EntityManager.TryGetComponent(itemMapper.Owner, out AppearanceComponent? appearanceComponent)
                 && TryGetLayers(args, itemMapper, out var containedLayers))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
@@ -40,15 +51,43 @@ namespace Content.Shared.Storage.EntitySystems
         private void MapperEntityInserted(EntityUid uid, ItemMapperComponent itemMapper,
             EntInsertedIntoContainerMessage args)
         {
-            if (itemMapper.Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)
+            if (EntityManager.TryGetComponent(itemMapper.Owner, out AppearanceComponent? appearanceComponent)
                 && TryGetLayers(args, itemMapper, out var containedLayers))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
             }
         }
 
-        protected abstract bool TryGetLayers(ContainerModifiedMessage msg,
+        /// <summary>
+        /// Method that iterates over storage of the entity in <paramref name="msg"/> and sets <paramref name="containedLayers"/> according to
+        /// <paramref name="itemMapper"/> definition. It will have O(n*m) time behavior (n - number of entities in container, and m - number of
+        /// definitions in <paramref name="containedLayers"/>.
+        /// </summary>
+        /// <param name="msg">event with EntityUid used to search the storage</param>
+        /// <param name="itemMapper">component that contains definition used to map <see cref="Content.Shared.Whitelist.EntityWhitelist">whitelist</see> in
+        /// <c>mapLayers</c> to string.
+        /// </param>
+        /// <param name="containedLayers">list of <paramref name="itemMapper"/> layers that should be visible</param>
+        /// <returns>false if <c>msg.Container.Owner</c> is not a storage, true otherwise.</returns>
+        private bool TryGetLayers(ContainerModifiedMessage msg,
             ItemMapperComponent itemMapper,
-            out IReadOnlyList<string> containedLayers);
+            out IReadOnlyList<string> showLayers)
+        {
+            var containedLayers = _container.GetAllContainers(msg.Container.Owner)
+                .SelectMany(cont => cont.ContainedEntities).ToArray();
+
+            var list = new List<string>();
+            foreach (var mapLayerData in itemMapper.MapLayers.Values)
+            {
+                var count = containedLayers.Count(uid => mapLayerData.ServerWhitelist.IsValid(uid));
+                if (count >= mapLayerData.MinCount && count <= mapLayerData.MaxCount)
+                {
+                    list.Add(mapLayerData.Layer);
+                }
+            }
+
+            showLayers = list;
+            return true;
+        }
     }
 }

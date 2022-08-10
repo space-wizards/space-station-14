@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Flash
 {
-    public class FlashSystem : SharedFlashSystem
+    public sealed class FlashSystem : SharedFlashSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -27,7 +27,7 @@ namespace Content.Client.Flash
                 return;
 
             // Yes, this code is awful. I'm just porting it to an entity system so don't blame me.
-            if (_playerManager.LocalPlayer != null && _playerManager.LocalPlayer.Session.AttachedEntityUid != uid)
+            if (_playerManager.LocalPlayer != null && _playerManager.LocalPlayer.Session.AttachedEntity != uid)
             {
                 return;
             }

@@ -1,8 +1,10 @@
 - type: entity
   id: ToolboxBase
-  parent: BaseItem
+  parent: BaseStorageItem
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/toolbox_drop.ogg
@@ -17,6 +19,9 @@
         Blunt: 10
     hitSound:
       path: "/Audio/Weapons/smash.ogg"
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: emergency toolbox
@@ -77,10 +82,12 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
+  - type: Storage
+    capacity: 120
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 15
+        Blunt: 20
 
 - type: entity
   name: golden toolbox

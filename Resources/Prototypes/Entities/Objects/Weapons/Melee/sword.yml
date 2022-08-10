@@ -4,6 +4,7 @@
   id: CaptainSabre
   description: A ceremonial weapon belonging to the captain of the station.
   components:
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
     state: icon
@@ -17,6 +18,7 @@
   - type: Tag
     tags:
     - CaptainSabre
+  - type: DisarmMalus
 
 - type: entity
   name: katana
@@ -24,6 +26,7 @@
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
+  - type: Sharp
   - type: Tag
     tags:
     - Katana
@@ -37,6 +40,7 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/katana.rsi
+  - type: DisarmMalus
 
 - type: entity
   name: machete
@@ -44,6 +48,7 @@
   id: Machete
   description: A large, vicious looking blade.
   components:
+  - type: Sharp
   - type: Tag
     tags:
     - Machete
@@ -57,6 +62,7 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/machete.rsi
+  - type: DisarmMalus
 
 - type: entity
   name: claymore
@@ -64,6 +70,7 @@
   id: Claymore
   description: An ancient war blade.
   components:
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/claymore.rsi
     state: icon
@@ -71,8 +78,10 @@
     damage:
       types:
         Slash: 25
-  - type: Clothing
+  - type: Item
     size: 20
+  - type: Clothing
     sprite: Objects/Weapons/Melee/claymore.rsi
-    Slots:
+    slots:
     - back
+  - type: DisarmMalus

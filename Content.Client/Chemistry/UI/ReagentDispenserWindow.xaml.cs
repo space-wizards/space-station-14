@@ -20,7 +20,7 @@ namespace Content.Client.Chemistry.UI
     /// Client-side UI used to control a <see cref="SharedReagentDispenserComponent"/>
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class ReagentDispenserWindow : SS14Window
+    public sealed partial class ReagentDispenserWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -61,7 +61,7 @@ namespace Content.Client.Chemistry.UI
             {
                 if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype? proto))
                 {
-                    ChemicalList.AddChild(new Button {Text = proto.Name});
+                    ChemicalList.AddChild(new Button {Text = proto.LocalizedName});
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace Content.Client.Chemistry.UI
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
-                    name = proto.Name;
+                    name = proto.LocalizedName;
                 }
 
                 //Check if the reagent is being moused over. If so, color it green.

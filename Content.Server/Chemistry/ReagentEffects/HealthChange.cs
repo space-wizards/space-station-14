@@ -1,6 +1,5 @@
+using System.Text.Json.Serialization;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -11,11 +10,12 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Default metabolism for medicine reagents.
     /// </summary>
     [UsedImplicitly]
-    public class HealthChange : ReagentEffect
+    public sealed class HealthChange : ReagentEffect
     {
         /// <summary>
         /// Damage to apply every metabolism cycle. Damage Ignores resistances.
         /// </summary>
+        [JsonPropertyName("damage")]
         [DataField("damage", required: true)]
         public DamageSpecifier Damage = default!;
 
@@ -23,10 +23,12 @@ namespace Content.Server.Chemistry.ReagentEffects
         ///     Should this effect scale the damage by the amount of chemical in the solution?
         ///     Useful for touch reactions, like styptic powder or acid.
         /// </summary>
+        [JsonPropertyName("scaleByQuantity")]
         [DataField("scaleByQuantity")]
         public bool ScaleByQuantity = false;
 
         [DataField("ignoreResistances")]
+        [JsonPropertyName("ignoreResistances")]
         public bool IgnoreResistances = true;
 
         public override void Effect(ReagentEffectArgs args)

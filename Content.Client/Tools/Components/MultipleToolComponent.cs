@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
-    public class MultipleToolComponent : SharedMultipleToolComponent, IItemStatus
+    public sealed class MultipleToolComponent : SharedMultipleToolComponent, IItemStatus
     {
         private string? _behavior;
         [DataField("statusShowBehavior")]
@@ -47,7 +47,7 @@ namespace Content.Client.Tools.Components
                 _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
                 AddChild(_label);
 
-                parent._uiUpdateNeeded = true;
+                UpdateDraw();
             }
 
             protected override void FrameUpdate(FrameEventArgs args)
@@ -58,7 +58,11 @@ namespace Content.Client.Tools.Components
                 {
                     return;
                 }
+                Update();
+            }
 
+            public void Update()
+            {
                 _parent._uiUpdateNeeded = false;
 
                 _label.SetMarkup(_parent.StatusShowBehavior ? _parent.Behavior ?? string.Empty : string.Empty);

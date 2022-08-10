@@ -17,7 +17,7 @@
   graph: makeshifthandcuffs
   startNode: start
   targetNode: cuffscable
-  category: Utility
+  category: Tools
   description: "Homemade handcuffs crafted from spare cables."
   icon: Objects/Misc/cablecuffs.rsi/cuff.png
   objectType: Item
@@ -34,3 +34,29 @@
   icon:
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     state: pneumaticCannon
+
+- type: construction
+  name: gauze
+  id: gauze
+  graph: Gauze
+  startNode: start
+  targetNode: gauze
+  category: Tools
+  objectType: Item
+  description: When you've really got nothing left.
+  icon:
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: gauze
+
+- type: construction
+  name: blindfold
+  id: blindfold
+  graph: Blindfold
+  startNode: start
+  targetNode: blindfold
+  category: Tools
+  objectType: Item
+  description: Better hope everyone turns a blind eye to you crafting this sussy item...
+  icon:
+    sprite: Clothing/Eyes/Misc/blindfold.rsi
+    state: icon

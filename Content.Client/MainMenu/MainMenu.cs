@@ -1,5 +1,5 @@
-using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Content.Client.EscapeMenu.UI;
 using Content.Client.MainMenu.UI;
 using Robust.Client;
@@ -8,9 +8,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using UsernameHelpers = Robust.Shared.AuthLib.UsernameHelpers;
@@ -21,10 +18,8 @@ namespace Content.Client.MainMenu
     ///     Main menu screen that is the first screen to be displayed when the game starts.
     /// </summary>
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
-    public class MainScreen : Robust.Client.State.State
+    public sealed class MainScreen : Robust.Client.State.State
     {
-        private const string PublicServerAddress = "server.spacestation14.io";
-
         [Dependency] private readonly IBaseClient _client = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
@@ -48,7 +43,6 @@ namespace Content.Client.MainMenu
             _mainMenuControl.QuitButton.OnPressed += QuitButtonPressed;
             _mainMenuControl.OptionsButton.OnPressed += OptionsButtonPressed;
             _mainMenuControl.DirectConnectButton.OnPressed += DirectConnectButtonPressed;
-            _mainMenuControl.JoinPublicServerButton.OnPressed += JoinPublicServerButtonPressed;
             _mainMenuControl.AddressBox.OnTextEntered += AddressBoxEntered;
 
             _client.RunLevelChanged += RunLevelChanged;
@@ -80,11 +74,6 @@ namespace Content.Client.MainMenu
         {
             var input = _mainMenuControl.AddressBox;
             TryConnect(input.Text);
-        }
-
-        private void JoinPublicServerButtonPressed(BaseButton.ButtonEventArgs args)
-        {
-            TryConnect(PublicServerAddress);
         }
 
         private void AddressBoxEntered(LineEdit.LineEditEventArgs args)
@@ -134,10 +123,15 @@ namespace Content.Client.MainMenu
 
         private void RunLevelChanged(object? obj, RunLevelChangedEventArgs args)
         {
-            if (args.NewLevel == ClientRunLevel.Initialize)
+            switch (args.NewLevel)
             {
-                _setConnectingState(false);
-                _netManager.ConnectFailed -= _onConnectFailed;
+                case ClientRunLevel.Connecting:
+                    _setConnectingState(true);
+                    break;
+                case ClientRunLevel.Initialize:
+                    _setConnectingState(false);
+                    _netManager.ConnectFailed -= _onConnectFailed;
+                    break;
             }
         }
 
@@ -190,9 +184,6 @@ namespace Content.Client.MainMenu
         {
             _isConnecting = state;
             _mainMenuControl.DirectConnectButton.Disabled = state;
-#if FULL_RELEASE
-            _mainMenuControl.JoinPublicServerButton.Disabled = state;
-#endif
         }
     }
 }

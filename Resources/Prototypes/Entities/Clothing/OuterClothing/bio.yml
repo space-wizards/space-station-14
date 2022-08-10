@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterBioGeneral
   name: bio suit
   suffix: Generic
@@ -9,9 +9,11 @@
     sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/general.rsi
+  - type: DiseaseProtection
+    protection: 0.2
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterBioCmo
   name: bio suit
   suffix: CMO
@@ -21,9 +23,11 @@
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
+  - type: DiseaseProtection
+    protection: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioJanitor
   name: bio suit
   suffix: Janitor
@@ -35,7 +39,7 @@
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioScientist
   name: bio suit
   suffix: Science
@@ -47,7 +51,7 @@
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioSecurity
   name: bio suit
   suffix: Security
@@ -59,7 +63,7 @@
     sprite: Clothing/OuterClothing/Bio/security.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBioCmo
   id: ClothingOuterBioVirology
   name: bio suit
   suffix: Virology

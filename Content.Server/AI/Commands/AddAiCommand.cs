@@ -1,18 +1,19 @@
 ﻿using Content.Server.Administration;
 using Content.Server.AI.Components;
+using Content.Server.AI.EntitySystems;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Shared.Administration;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddAiCommand : IConsoleCommand
+    public sealed class AddAiCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "addai";
         public string Description => "Add an ai component with a given processor to an entity.";
         public string Help => "Usage: addai <entityId> <behaviorSet1> <behaviorSet2>..."
@@ -29,34 +30,28 @@ namespace Content.Server.AI.Commands
 
             var entId = new EntityUid(int.Parse(args[0]));
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entId, out var ent))
+            if (!_entities.EntityExists(entId))
             {
                 shell.WriteLine($"Unable to find entity with uid {entId}");
                 return;
             }
 
-            if (ent.HasComponent<AiControllerComponent>())
+            if (_entities.HasComponent<NPCComponent>(entId))
             {
                 shell.WriteLine("Entity already has an AI component.");
                 return;
             }
 
-            // TODO: IMover refffaaccctttooorrr
-            if (ent.HasComponent<IMoverComponent>())
-            {
-                ent.RemoveComponent<IMoverComponent>();
-            }
-
-            var comp = ent.AddComponent<UtilityAi>();
-            var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
+            var comp = _entities.AddComponent<UtilityNPCComponent>(entId);
+            var npcSystem = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<NPCSystem>();
 
             for (var i = 1; i < args.Length; i++)
             {
                 var bSet = args[i];
-                behaviorManager.AddBehaviorSet(comp, bSet, false);
+                npcSystem.AddBehaviorSet(comp, bSet, false);
             }
 
-            behaviorManager.RebuildActions(comp);
+            npcSystem.RebuildActions(comp);
             shell.WriteLine("AI component added.");
         }
     }

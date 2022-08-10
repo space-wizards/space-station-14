@@ -1,6 +1,7 @@
 ﻿- type: entity
   name: pointing arrow
   id: pointingarrow
+  save: false
   components:
   - type: Tag
     tags:
@@ -9,6 +10,7 @@
     netsync: false
     sprite: Interface/Misc/pointing.rsi
     state: pointing
+    drawDepth: Overlays
   - type: PointingArrow
     duration: 4
     step: 0.5

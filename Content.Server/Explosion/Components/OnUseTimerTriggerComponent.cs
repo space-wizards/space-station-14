@@ -1,33 +1,42 @@
-﻿using System;
-using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Trigger;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
-    public class OnUseTimerTriggerComponent : Component, IUse
+    public sealed class OnUseTimerTriggerComponent : Component
     {
-        public override string Name => "OnUseTimerTrigger";
-
         [DataField("delay")]
-        private float _delay = 0f;
+        public float Delay = 1f;
 
-        // TODO: Need to split this out so it's a generic "OnUseTimerTrigger" component.
-        public void Trigger(IEntity user)
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
+        /// <summary>
+        ///     If not null, a user can use verbs to configure the delay to one of these options.
+        /// </summary>
+        [DataField("delayOptions")]
+        public List<float>? DelayOptions = null;
 
-            EntitySystem.Get<TriggerSystem>().HandleTimerTrigger(TimeSpan.FromSeconds(_delay), Owner, user);
-        }
+        /// <summary>
+        ///     If not null, this timer will periodically play this sound wile active.
+        /// </summary>
+        [DataField("beepSound")]
+        public SoundSpecifier? BeepSound;
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            Trigger(eventArgs.User);
-            return true;
-        }
+        /// <summary>
+        ///     Time before beeping starts. Defaults to a single beep interval. If set to zero, will emit a beep immediately after use.
+        /// </summary>
+        [DataField("initialBeepDelay")]
+        public float? InitialBeepDelay;
+
+        [DataField("beepInterval")]
+        public float BeepInterval = 1;
+
+        [DataField("beepParams")]
+        public AudioParams BeepParams = AudioParams.Default.WithVolume(-2f);
+
+        /// <summary>
+        ///     Should timer be started when it was stuck to another entity.
+        ///     Used for C4 charges and similar behaviour.
+        /// </summary>
+        [DataField("startOnStick")]
+        public bool StartOnStick;
     }
 }

@@ -1,21 +1,12 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stacks
 {
-    [NetworkedComponent, Friend(typeof(SharedStackSystem))]
-    public abstract class SharedStackComponent : Component, ISerializationHooks
+    [NetworkedComponent, Access(typeof(SharedStackSystem))]
+    public abstract class SharedStackComponent : Component
     {
-        public sealed override string Name => "Stack";
-
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         public string StackTypeId { get; private set; } = string.Empty;

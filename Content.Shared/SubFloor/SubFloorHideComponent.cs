@@ -1,56 +1,62 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.SubFloor
 {
     /// <summary>
     /// Simple component that automatically hides the sibling
-    /// <see cref="ISpriteComponent" /> when the tile it's on is not a sub floor
+    /// <see cref="SpriteComponent" /> when the tile it's on is not a sub floor
     /// (plating).
     /// </summary>
     /// <seealso cref="P:Content.Shared.Maps.ContentTileDefinition.IsSubFloor" />
     [NetworkedComponent]
     [RegisterComponent]
+    [Access(typeof(SharedSubFloorHideSystem))]
     public sealed class SubFloorHideComponent : Component
     {
-        /// <inheritdoc />
-        public override string Name => "SubFloorHide";
+        /// <summary>
+        ///     Whether the entity's current position has a "Floor-type" tile above its current position.
+        /// </summary>
+        [ViewVariables]
+        public bool IsUnderCover { get; set; } = false;
 
         /// <summary>
-        ///     Whether the entity will be hid when not in subfloor.
+        ///     Whether interactions with this entity should be blocked while it is under floor tiles.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
-        public bool Enabled { get; set; } = true;
+        /// <remarks>
+        ///     Useful for entities like vents, which are only partially hidden. Anchor attempts will still be blocked.
+        /// </remarks>
+        [DataField("blockInteractions")]
+        public bool BlockInteractions { get; set; } = true;
 
         /// <summary>
-        ///     This entity needs to be anchored to be hid when not in subfloor.
+        /// Whether this entity's ambience should be disabled when underneath the floor.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("requireAnchored")]
-        public bool RequireAnchored { get; set; } = true;
+        /// <remarks>
+        /// Useful for cables and piping, gives maint it's distinct noise.
+        /// </remarks>
+        [DataField("blockAmbience")]
+        public bool BlockAmbience { get; set; } = true;
 
-        public override ComponentState GetComponentState()
-        {
-            return new SubFloorHideComponentState(Enabled, RequireAnchored);
-        }
-    }
+        /// <summary>
+        ///     When revealed using some scanning tool, what transparency should be used to draw this item?
+        /// </summary>
+        [DataField("scannerTransparency")]
+        public float ScannerTransparency = 0.8f;
 
-    [Serializable, NetSerializable]
-    public class SubFloorHideComponentState : ComponentState
-    {
-        public bool Enabled { get; }
-        public bool RequireAnchored { get; }
+        /// <summary>
+        ///     Sprite layer keys for the layers that are always visible, even if the entity is below a floor tile. E.g.,
+        ///     the vent part of a vent is always visible, even though the piping is hidden.
+        /// </summary>
+        [DataField("visibleLayers")]
+        public HashSet<Enum> VisibleLayers = new() { SubfloorLayers.FirstLayer };
 
-        public SubFloorHideComponentState(bool enabled, bool requireAnchored)
-        {
-            Enabled = enabled;
-            RequireAnchored = requireAnchored;
-        }
+        /// <summary>
+        ///     The entities this subfloor is revealed by.
+        /// </summary>
+        [ViewVariables]
+        [Access(typeof(SharedSubFloorHideSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        public HashSet<EntityUid> RevealedBy { get; set; } = new();
     }
 }

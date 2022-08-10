@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Utility.Actions
@@ -36,7 +33,7 @@ namespace Content.Server.AI.Utility.Actions
         public const float CombatBonus = 30.0f;
         public const float DangerBonus = 50.0f;
 
-        public IEntity Owner { get; set; }
+        public EntityUid Owner { get; set; }
 
         /// <summary>
         /// All the considerations are multiplied together to get the final score; a consideration of 0.0 means the action is not possible.

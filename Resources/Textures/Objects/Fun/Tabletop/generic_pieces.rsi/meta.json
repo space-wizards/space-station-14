@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Zumorica, Fishfish458",
+    "size": {
+        "x": 24,
+        "y": 24
+    },
+    "states": [
+        {
+            "name": "red"
+        },
+        {
+            "name": "green"
+        },
+        {
+            "name": "yellow"
+        },
+        {
+            "name": "blue"
+        },
+        {
+            "name": "white"
+        },
+        {
+            "name": "black"
+        }
+    ]
+}

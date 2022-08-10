@@ -5,19 +5,17 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry
 {
     [UsedImplicitly]
-    public class ReactiveSystem : EntitySystem
+    public sealed class ReactiveSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public void ReactionEntity(EntityUid uid, ReactionMethod method, Solution solution)
         {
@@ -64,9 +62,9 @@ namespace Content.Shared.Chemistry
 
                         if (effect.ShouldLog)
                         {
-                            var entity = EntityManager.GetEntity(args.SolutionEntity);
-                            _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Reactive effect {effect.GetType().Name} of reagent {reagent.ID:reagent} with method {method} applied on entity {entity} at {entity.Transform.Coordinates}");
+                            var entity = args.SolutionEntity;
+                            _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
+                                $"Reactive effect {effect.GetType().Name:effect} of reagent {reagent.ID:reagent} with method {method} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);
@@ -92,9 +90,9 @@ namespace Content.Shared.Chemistry
 
                         if (effect.ShouldLog)
                         {
-                            var entity = EntityManager.GetEntity(args.SolutionEntity);
-                            _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Reactive effect {effect.GetType().Name} of {entity} using reagent {reagent.ID} with method {method} at {entity.Transform.Coordinates}");
+                            var entity = args.SolutionEntity;
+                            _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
+                                $"Reactive effect {effect.GetType().Name:effect} of {ToPrettyString(entity):entity} using reagent {reagent.ID:reagent} with method {method} at {Transform(entity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);

@@ -8,9 +8,9 @@ using Robust.Shared.Localization;
 namespace Content.Client.Kitchen.UI
 {
     [GenerateTypedNameReferences]
-    public partial class MicrowaveMenu : SS14Window
+    public sealed partial class MicrowaveMenu : DefaultWindow
     {
-        public class MicrowaveCookTimeButton : Button
+        public sealed class MicrowaveCookTimeButton : Button
         {
             public uint CookTime;
         }

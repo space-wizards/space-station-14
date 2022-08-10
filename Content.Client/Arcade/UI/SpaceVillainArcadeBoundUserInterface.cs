@@ -5,7 +5,7 @@ using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 
 namespace Content.Client.Arcade.UI
 {
-    public class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
+    public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
     {
         [ViewVariables] private SpaceVillainArcadeMenu? _menu;
 

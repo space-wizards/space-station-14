@@ -1,25 +1,25 @@
 - type: job
-  id: CentralCommandOffical
-  name: "centcom official"
+  id: CentralCommandOfficial
+  name: job-name-centcomoff
+  playTimeTracker: JobCentralCommandOfficial
+  setPreference: false
   startingGear: CentcomGear
-  departments:
-    - Command
   icon: "Nanotrasen"
-  supervisors: "the head of security"
-  access:
-  - Command
-  - Maintenance
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
 
 - type: startingGear
   id: CentcomGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitCentcomOfficial
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
-    outerclothing: ClothingOuterVestKevlar
-    idcard: CentcomPDA
+    outerClothing: ClothingOuterVestKevlar
+    id: CentcomPDA
     ears: ClothingHeadsetAltCommand
     pocket1: Paper
     pocket2: Pen

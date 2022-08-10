@@ -1,11 +1,10 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Components
 {
-    public partial class Solution
+    public sealed partial class Solution
     {
 
         /// <summary>
@@ -48,5 +47,45 @@ namespace Content.Shared.Chemistry.Components
 
         [ViewVariables]
         public FixedPoint2 CurrentVolume => TotalVolume;
+
+        /// <summary>
+        ///     The total heat capacity of all reagents in the solution.
+        /// </summary>
+        [ViewVariables]
+        public float HeatCapacity => GetHeatCapacity();
+
+        /// <summary>
+        ///     The average specific heat of all reagents in the solution.
+        /// </summary>
+        [ViewVariables]
+        public float SpecificHeat => HeatCapacity / (float) TotalVolume;
+
+        /// <summary>
+        ///     The total thermal energy of the reagents in the solution.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ThermalEnergy {
+            get { return Temperature * HeatCapacity; }
+            set { Temperature = ((HeatCapacity == 0.0f) ? 0.0f : (value / HeatCapacity)); }
+        }
+
+        /// <summary>
+        ///     Returns the total heat capacity of the reagents in this solution.
+        /// </summary>
+        /// <returns>The total heat capacity of the reagents in this solution.</returns>
+        private float GetHeatCapacity()
+        {
+            var heatCapacity = 0.0f;
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            foreach(var reagent in Contents)
+            {
+                if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
+                    proto = new ReagentPrototype();
+
+                heatCapacity += (float) reagent.Quantity * proto.SpecificHeat;
+            }
+
+            return heatCapacity;
+        }
     }
 }

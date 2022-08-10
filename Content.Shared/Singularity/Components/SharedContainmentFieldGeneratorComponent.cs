@@ -1,9 +1,30 @@
-using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.Singularity.Components
+namespace Content.Shared.Singularity.Components;
+public abstract class SharedContainmentFieldGeneratorComponent : Component { }
+
+[Serializable, NetSerializable]
+public enum ContainmentFieldGeneratorVisuals : byte
 {
-    public abstract class SharedContainmentFieldGeneratorComponent : Component
-    {
-        public override string Name => "ContainmentFieldGenerator";
-    }
+    PowerLight,
+    FieldLight,
+    OnLight,
+}
+
+[Serializable, NetSerializable]
+public enum PowerLevelVisuals : byte
+{
+    NoPower,
+    LowPower,
+    MediumPower,
+    HighPower,
+}
+
+[Serializable, NetSerializable]
+public enum FieldLevelVisuals : byte
+{
+    NoLevel,
+    On,
+    OneField,
+    MultipleFields,
 }

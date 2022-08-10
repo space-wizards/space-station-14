@@ -8,7 +8,7 @@ using Robust.Shared.Reflection;
 namespace Content.IntegrationTests.Tests.DeviceNetwork
 {
     [Reflect(false)]
-    public class DeviceNetworkTestSystem : EntitySystem
+    public sealed class DeviceNetworkTestSystem : EntitySystem
     {
         public NetworkPayload LastPayload = default;
 
@@ -16,10 +16,10 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DeviceNetworkComponent, PacketSentEvent>(OnPacketReceived);
+            SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         }
 
-        private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, PacketSentEvent args)
+        private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, DeviceNetworkPacketEvent args)
         {
             LastPayload = args.Data;
         }

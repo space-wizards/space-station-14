@@ -1,20 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Content.Shared.Construction;
+﻿using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ContainerEmpty : IGraphCondition
+    public sealed class ContainerEmpty : IGraphCondition
     {
         [DataField("container")]
         public string Container { get; } = string.Empty;
@@ -44,7 +39,7 @@ namespace Content.Server.Construction.Conditions
 
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ContainerManagerComponent? containerManager) ||
                 !containerManager.TryGetContainer(Container, out var container)) return false;
 
             if (container.ContainedEntities.Count == 0)

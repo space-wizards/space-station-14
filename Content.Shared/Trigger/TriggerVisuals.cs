@@ -1,18 +1,29 @@
-﻿using System;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Trigger
 {
-    [NetSerializable]
-    [Serializable]
-    public enum TriggerVisuals
+    [Serializable, NetSerializable]
+    public enum ProximityTriggerVisuals : byte
+    {
+        Off,
+        Inactive,
+        Active,
+    }
+
+    [Serializable, NetSerializable]
+    public enum ProximityTriggerVisualState : byte
+    {
+        State,
+    }
+
+    [Serializable, NetSerializable]
+    public enum TriggerVisuals : byte
     {
         VisualState,
     }
 
-    [NetSerializable]
-    [Serializable]
-    public enum TriggerVisualState
+    [Serializable, NetSerializable]
+    public enum TriggerVisualState : byte
     {
         Primed,
         Unprimed,

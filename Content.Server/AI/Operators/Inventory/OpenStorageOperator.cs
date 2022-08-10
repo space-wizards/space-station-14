@@ -1,10 +1,9 @@
-﻿using Content.Server.AI.Utility;
+using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -13,10 +12,10 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public sealed class OpenStorageOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
 
-        public OpenStorageOperator(IEntity owner, IEntity target)
+        public OpenStorageOperator(EntityUid owner, EntityUid target)
         {
             _owner = owner;
             _target = target;
@@ -29,12 +28,12 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Success;
             }
 
-            if (!_owner.InRangeUnobstructed(container, popup: true))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(_owner, container.Owner, popup: true))
             {
                 return Outcome.Failed;
             }
 
-            if (!container.Owner.TryGetComponent(out EntityStorageComponent? storageComponent) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out EntityStorageComponent? storageComponent) ||
                 storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;
@@ -42,8 +41,7 @@ namespace Content.Server.AI.Operators.Inventory
 
             if (!storageComponent.Open)
             {
-                var activateArgs = new ActivateEventArgs(_owner, _target);
-                storageComponent.Activate(activateArgs);
+                IoCManager.Resolve<EntityStorageSystem>().ToggleOpen(_owner, _target, storageComponent);
             }
 
             var blackboard = UtilityAiHelpers.GetBlackboard(_owner);

@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class HideMechanismsCommand : IConsoleCommand
+    public sealed class HideMechanismsCommand : IConsoleCommand
     {
         public string Command => "hidemechanisms";
         public string Description => $"Reverts the effects of {ShowMechanismsCommand.CommandName}";
@@ -17,11 +17,11 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanisms = entityManager.EntityQuery<SharedMechanismComponent>(true);
+            var mechanisms = entityManager.EntityQuery<MechanismComponent>(true);
 
             foreach (var mechanism in mechanisms)
             {
-                if (!mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
+                if (!entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
                 {
                     continue;
                 }

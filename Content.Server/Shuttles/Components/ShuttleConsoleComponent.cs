@@ -1,22 +1,17 @@
-using System.Collections.Generic;
-using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedShuttleConsoleComponent))]
-    internal sealed class ShuttleConsoleComponent : SharedShuttleConsoleComponent
+    public sealed class ShuttleConsoleComponent : SharedShuttleConsoleComponent
     {
         [ViewVariables]
-        public List<PilotComponent> SubscribedPilots = new();
+        public readonly List<PilotComponent> SubscribedPilots = new();
 
         /// <summary>
-        /// Whether the console can be used to pilot. Toggled whenever it gets powered / unpowered.
+        /// How much should the pilot's eye be zoomed by when piloting using this console?
         /// </summary>
-        [ViewVariables]
-        public bool Enabled { get; set; } = false;
+        [DataField("zoom")]
+        public Vector2 Zoom = new(1.5f, 1.5f);
     }
 }

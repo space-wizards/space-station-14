@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c",
   "states": [
     {
       "name": "ai",
@@ -89,6 +89,14 @@
     },
     {
       "name": "atmos_plasma",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "atmos_tritium",
       "delays": [
         [
           1
@@ -373,6 +381,168 @@
     },
     {
       "name": "direction_sec",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_brig",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_chapel",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_hydro",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_dorms",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_cryo",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_gravity",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_salvage",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_solar",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_wash",
       "directions": 4,
       "delays": [
         [
@@ -758,7 +928,7 @@
       ]
     },
     {
-      "name": "toxin_res",
+      "name": "toxins2",
       "delays": [
         [
           1
@@ -799,6 +969,134 @@
     },
     {
       "name": "xenolab",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "zomlab",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "small_secure_red",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "small_secure",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_secure_red",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_blank",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_magnetics",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_danger",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_explosives",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_cryogenics",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_electrical",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_biohazard",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_radiation",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_flammable",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_laser",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_secure",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "atmominsky",
       "delays": [
         [
           1

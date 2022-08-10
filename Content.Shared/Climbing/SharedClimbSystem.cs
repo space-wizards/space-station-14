@@ -1,20 +1,29 @@
+using Content.Shared.DragDrop;
 using Content.Shared.Movement;
-using Robust.Shared.GameObjects;
+using Content.Shared.Movement.Events;
 
-namespace Content.Shared.Climbing
+namespace Content.Shared.Climbing;
+
+public abstract class SharedClimbSystem : EntitySystem
 {
-    public abstract class SharedClimbSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<SharedClimbingComponent, MovementAttemptEvent>(HandleMoveAttempt);
-        }
+        base.Initialize();
+        SubscribeLocalEvent<SharedClimbingComponent, UpdateCanMoveEvent>(HandleMoveAttempt);
+        SubscribeLocalEvent<SharedClimbableComponent, CanDragDropOnEvent>(OnCanDragDropOn);
+    }
 
-        private void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, MovementAttemptEvent args)
-        {
-            if (component.OwnerIsTransitioning)
-                args.Cancel();
-        }
+    private static void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, UpdateCanMoveEvent args)
+    {
+        if (component.LifeStage > ComponentLifeStage.Running)
+            return;
+
+        if (component.OwnerIsTransitioning)
+            args.Cancel();
+    }
+
+    protected virtual void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, CanDragDropOnEvent args)
+    {
+        args.CanDrop = HasComp<SharedClimbingComponent>(args.Dragged);
     }
 }

@@ -39,7 +39,7 @@ namespace Content.Client.CombatMode
 
         public void PlayerAttached()
         {
-            _gameHud.CombatPanelVisible = true;
+            _gameHud.CombatPanelVisible = false; // TODO BOBBY SYSTEM Make the targeting doll actually do something.
             UpdateHud();
         }
 

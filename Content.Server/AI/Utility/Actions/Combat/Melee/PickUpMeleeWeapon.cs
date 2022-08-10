@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.Operators.Sequences;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
@@ -8,14 +6,12 @@ using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Combat;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class PickUpMeleeWeapon : UtilityAction
     {
-        public IEntity Target { get; set; } = default!;
+        public EntityUid Target { get; set; } = default!;
 
         public override void SetupOperators(Blackboard context)
         {

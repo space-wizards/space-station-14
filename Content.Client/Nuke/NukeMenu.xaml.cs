@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Nuke
 {
     [GenerateTypedNameReferences]
-    public partial class NukeMenu : SS14Window
+    public sealed partial class NukeMenu : DefaultWindow
     {
         public event Action<int>? OnKeypadButtonPressed;
         public event Action? OnClearButtonPressed;
@@ -88,6 +88,11 @@ namespace Content.Client.Nuke
                     secondMsg = Loc.GetString("nuke-user-interface-second-status-time",
                         ("time", state.RemainingTime));
                     break;
+                case NukeStatus.COOLDOWN:
+                    firstMsg = Loc.GetString("nuke-user-interface-first-status-device-cooldown");
+                    secondMsg = Loc.GetString("nuke-user-interface-second-status-cooldown-time",
+                        ("time", state.CooldownTime));
+                    break;
                 default:
                     // shouldn't normally be here
                     firstMsg = Loc.GetString("nuke-user-interface-status-error");
@@ -98,10 +103,10 @@ namespace Content.Client.Nuke
             FirstStatusLabel.Text = firstMsg;
             SecondStatusLabel.Text = secondMsg;
 
-            EjectButton.Disabled = !state.DiskInserted;
-            AnchorButton.Disabled = !state.DiskInserted;
+            EjectButton.Disabled = !state.DiskInserted || state.Status == NukeStatus.ARMED;
+            AnchorButton.Disabled = state.Status == NukeStatus.ARMED;
             AnchorButton.Pressed = state.IsAnchored;
-            ArmButton.Disabled = !state.AllowArm;
+            ArmButton.Disabled = !state.AllowArm || !state.IsAnchored;
         }
 
         private string VisualizeCode(int codeLength, int maxLength)

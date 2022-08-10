@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
+using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -12,200 +10,155 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
 {
     [UsedImplicitly]
-    public class RespiratorSystem : EntitySystem
+    public sealed class RespiratorSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
-        [Dependency] private readonly AdminLogSystem _logSys = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            // We want to process lung reagents before we inhale new reagents.
+            UpdatesAfter.Add(typeof(MetabolizerSystem));
+            SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var (respirator, blood, body) in
-                     EntityManager.EntityQuery<RespiratorComponent, BloodstreamComponent, SharedBodyComponent>())
+            foreach (var (respirator, body) in
+                     EntityManager.EntityQuery<RespiratorComponent, SharedBodyComponent>())
             {
-                var uid = respirator.OwnerUid;
+                var uid = respirator.Owner;
                 if (!EntityManager.TryGetComponent<MobStateComponent>(uid, out var state) ||
                     state.IsDead())
                 {
-                    return;
+                    continue;
                 }
 
                 respirator.AccumulatedFrametime += frameTime;
 
-                if (respirator.AccumulatedFrametime < 1)
+                if (respirator.AccumulatedFrametime < respirator.CycleDelay)
+                    continue;
+                respirator.AccumulatedFrametime -= respirator.CycleDelay;
+                UpdateSaturation(respirator.Owner, -respirator.CycleDelay, respirator);
+
+                if (!state.IsIncapacitated()) // cannot breathe in crit.
                 {
-                    return;
+                    switch (respirator.Status)
+                    {
+                        case RespiratorStatus.Inhaling:
+                            Inhale(uid, body);
+                            respirator.Status = RespiratorStatus.Exhaling;
+                            break;
+                        case RespiratorStatus.Exhaling:
+                            Exhale(uid, body);
+                            respirator.Status = RespiratorStatus.Inhaling;
+                            break;
+                    }
                 }
 
-                ProcessGases(uid, respirator, frameTime, blood, body);
-
-                respirator.AccumulatedFrametime -= 1;
-
-                if (SuffocatingPercentage(respirator) > 0)
+                if (respirator.Saturation < respirator.SuffocationThreshold)
                 {
+                    if (_gameTiming.CurTime >= respirator.LastGaspPopupTime + respirator.GaspPopupCooldown)
+                    {
+                        respirator.LastGaspPopupTime = _gameTiming.CurTime;
+                        _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid, Filter.Pvs(uid));
+                    }
+
                     TakeSuffocationDamage(uid, respirator);
-                    return;
-                }
-
-                StopSuffocation(uid, respirator);
-            }
-        }
-
-
-        private Dictionary<Gas, float> NeedsAndDeficit(RespiratorComponent respirator, float frameTime)
-        {
-            var needs = new Dictionary<Gas, float>(respirator.NeedsGases);
-            foreach (var (gas, amount) in respirator.DeficitGases)
-            {
-                var newAmount = (needs.GetValueOrDefault(gas) + amount) * frameTime;
-                needs[gas] = newAmount;
-            }
-
-            return needs;
-        }
-
-        private void ClampDeficit(RespiratorComponent respirator)
-        {
-            var deficitGases = new Dictionary<Gas, float>(respirator.DeficitGases);
-
-            foreach (var (gas, deficit) in deficitGases)
-            {
-                if (!respirator.NeedsGases.TryGetValue(gas, out var need))
-                {
-                    respirator.DeficitGases.Remove(gas);
+                    respirator.SuffocationCycles += 1;
                     continue;
                 }
 
-                if (deficit > need)
-                {
-                    respirator.DeficitGases[gas] = need;
-                }
+                StopSuffocation(uid, respirator);
+                respirator.SuffocationCycles = 0;
             }
         }
-
-        private float SuffocatingPercentage(RespiratorComponent respirator)
+        public void Inhale(EntityUid uid, SharedBodyComponent? body=null)
         {
-            var total = 0f;
-
-            foreach (var (gas, deficit) in respirator.DeficitGases)
-            {
-                var lack = 1f;
-                if (respirator.NeedsGases.TryGetValue(gas, out var needed))
-                {
-                    lack = deficit / needed;
-                }
-
-                total += lack / Atmospherics.TotalNumberOfGases;
-            }
-
-            return total;
-        }
-
-        private float GasProducedMultiplier(RespiratorComponent respirator, Gas gas, float usedAverage)
-        {
-            if (!respirator.ProducesGases.TryGetValue(gas, out var produces))
-            {
-                return 0;
-            }
-
-            if (!respirator.NeedsGases.TryGetValue(gas, out var needs))
-            {
-                needs = 1;
-            }
-
-            return needs * produces * usedAverage;
-        }
-
-        private Dictionary<Gas, float> GasProduced(RespiratorComponent respirator, float usedAverage)
-        {
-            return respirator.ProducesGases.ToDictionary(pair => pair.Key, pair => GasProducedMultiplier(respirator, pair.Key, usedAverage));
-        }
-
-        private void ProcessGases(EntityUid uid, RespiratorComponent respirator, float frameTime,
-            BloodstreamComponent? bloodstream,
-            SharedBodyComponent? body)
-        {
-            if (!Resolve(uid, ref bloodstream, ref body, false))
+            if (!Resolve(uid, ref body, false))
                 return;
 
-            var lungs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body).ToArray();
+            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
 
-            var needs = NeedsAndDeficit(respirator, frameTime);
-            var used = 0f;
+            // Inhale gas
+            var ev = new InhaleLocationEvent();
+            RaiseLocalEvent(uid, ev, false);
 
-            foreach (var (lung, mech) in lungs)
+            if (ev.Gas == null)
             {
-                _lungSystem.UpdateLung(lung.OwnerUid, frameTime, lung, mech);
+                ev.Gas = _atmosSys.GetContainingMixture(uid, false, true);
+                if (ev.Gas == null) return;
             }
 
-            foreach (var (gas, amountNeeded) in needs)
+            var ratio = (Atmospherics.BreathVolume / ev.Gas.Volume);
+            var actualGas = ev.Gas.RemoveRatio(ratio);
+
+            var lungRatio = 1.0f / organs.Count;
+            var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+            foreach (var (lung, _) in organs)
             {
-                var bloodstreamAmount = bloodstream.Air.GetMoles(gas);
-                var deficit = 0f;
+                // Merge doesn't remove gas from the giver.
+                _atmosSys.Merge(lung.Air, gas);
+                _lungSystem.GasToReagent(lung.Owner, lung);
+            }
+        }
 
-                if (bloodstreamAmount < amountNeeded)
-                {
-                    if (!EntityManager.GetComponent<MobStateComponent>(uid).IsCritical())
-                    {
-                        // Panic inhale
-                        foreach (var (lung, mech) in lungs)
-                        {
-                            _lungSystem.Gasp(lung.OwnerUid, lung, mech);
-                        }
-                    }
+        public void Exhale(EntityUid uid, SharedBodyComponent? body=null)
+        {
+            if (!Resolve(uid, ref body, false))
+                return;
 
-                    bloodstreamAmount = bloodstream.Air.GetMoles(gas);
+            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body).ToArray();
 
-                    deficit = Math.Max(0, amountNeeded - bloodstreamAmount);
+            // exhale gas
 
-                    if (deficit > 0)
-                    {
-                        bloodstream.Air.SetMoles(gas, 0);
-                    }
-                    else
-                    {
-                        bloodstream.Air.AdjustMoles(gas, -amountNeeded);
-                    }
-                }
-                else
-                {
-                    bloodstream.Air.AdjustMoles(gas, -amountNeeded);
-                }
+            var ev = new ExhaleLocationEvent();
+            RaiseLocalEvent(uid, ev, false);
 
-                respirator.DeficitGases[gas] = deficit;
+            if (ev.Gas == null)
+            {
+                ev.Gas = _atmosSys.GetContainingMixture(uid, false, true);
 
-                used += (amountNeeded - deficit) / amountNeeded;
+                // Walls and grids without atmos comp return null. I guess it makes sense to not be able to exhale in walls,
+                // but this also means you cannot exhale on some grids.
+                ev.Gas ??= GasMixture.SpaceGas;
             }
 
-            var produced = GasProduced(respirator, used / needs.Count);
-
-            foreach (var (gas, amountProduced) in produced)
+            var outGas = new GasMixture(ev.Gas.Volume);
+            foreach (var (lung, _) in organs)
             {
-                bloodstream.Air.AdjustMoles(gas, amountProduced);
+                _atmosSys.Merge(outGas, lung.Air);
+                lung.Air.Clear();
+                lung.LungSolution.RemoveAllSolution();
             }
 
-            ClampDeficit(respirator);
+            _atmosSys.Merge(ev.Gas, outGas);
         }
 
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
-            if (!respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{EntityManager.GetEntity(uid)} started suffocating");
+            if (respirator.SuffocationCycles == 2)
+                _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
 
-            respirator.Suffocating = true;
-
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
+            if (respirator.SuffocationCycles >= respirator.SuffocationCycleThreshold)
             {
-                alertsComponent.ShowAlert(AlertType.LowOxygen);
+                _alertsSystem.ShowAlert(uid, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
@@ -213,49 +166,53 @@ namespace Content.Server.Body.Systems
 
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
-            if (respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{EntityManager.GetEntity(uid)} stopped suffocating");
+            if (respirator.SuffocationCycles >= 2)
+                _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
 
-            respirator.Suffocating = false;
-
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ClearAlert(AlertType.LowOxygen);
-            }
+            _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);
         }
 
-        public GasMixture Clean(EntityUid uid, RespiratorComponent respirator, BloodstreamComponent bloodstream)
+        public void UpdateSaturation(EntityUid uid, float amount,
+            RespiratorComponent? respirator = null)
         {
-            var gasMixture = new GasMixture(bloodstream.Air.Volume)
+            if (!Resolve(uid, ref respirator, false))
+                return;
+
+            respirator.Saturation += amount;
+            respirator.Saturation =
+                Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);
+        }
+
+        private void OnApplyMetabolicMultiplier(EntityUid uid, RespiratorComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            if (args.Apply)
             {
-                Temperature = bloodstream.Air.Temperature
-            };
-
-            for (Gas gas = 0; gas < (Gas) Atmospherics.TotalNumberOfGases; gas++)
-            {
-                float amount;
-                var molesInBlood = bloodstream.Air.GetMoles(gas);
-
-                if (!respirator.NeedsGases.TryGetValue(gas, out var needed))
-                {
-                    amount = molesInBlood;
-                }
-                else
-                {
-                    var overflowThreshold = needed * 5f;
-
-                    amount = molesInBlood > overflowThreshold
-                        ? molesInBlood - overflowThreshold
-                        : 0;
-                }
-
-                gasMixture.AdjustMoles(gas, amount);
-                bloodstream.Air.AdjustMoles(gas, -amount);
+                component.CycleDelay *= args.Multiplier;
+                component.Saturation *= args.Multiplier;
+                component.MaxSaturation *= args.Multiplier;
+                component.MinSaturation *= args.Multiplier;
+                return;
             }
-
-            return gasMixture;
+            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+            component.CycleDelay /= args.Multiplier;
+            component.Saturation /= args.Multiplier;
+            component.MaxSaturation /= args.Multiplier;
+            component.MinSaturation /= args.Multiplier;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrametime >= component.CycleDelay)
+                component.AccumulatedFrametime = component.CycleDelay;
         }
     }
+}
+
+public sealed class InhaleLocationEvent : EntityEventArgs
+{
+    public GasMixture? Gas;
+}
+
+public sealed class ExhaleLocationEvent : EntityEventArgs
+{
+    public GasMixture? Gas;
 }

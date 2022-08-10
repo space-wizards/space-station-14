@@ -1,0 +1,38 @@
+- type: entity
+  parent: BaseStorageItem
+  id: DiceBag
+  name: bag of dice
+  description: Contains all the luck you'll ever need.
+  components:
+  - type: StorageFill
+    contents:
+      - id: d4Dice
+      - id: d6Dice
+      - id: d8Dice
+      - id: d10Dice
+      - id: d12Dice
+      - id: d20Dice
+      - id: d100Dice
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/dice.rsi
+    state: dicebag
+  - type: Item
+  - type: Storage
+    capacity: 18
+    size: 5
+    whitelist:
+      tags:
+        - Dice
+
+- type: entity
+  parent: DiceBag
+  id: MagicDiceBag
+  name: bag of dice
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/dice.rsi
+    state: magicdicebag
+  - type: Storage
+    capacity: 30

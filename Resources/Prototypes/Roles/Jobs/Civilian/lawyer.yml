@@ -1,0 +1,22 @@
+- type: job
+  id: Lawyer
+  name: job-name-lawyer
+  playTimeTracker: JobLawyer
+  startingGear: LawyerGear
+  icon: "Lawyer"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Brig
+  - Maintenance
+
+- type: startingGear
+  id: LawyerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack  # TODO change jumpsuit to randomiser of the 4 variants
+    back: ClothingBackpackBriefcaseFilled
+    shoes: ClothingShoesColorBlack
+    id: LawyerPDA
+    ears: ClothingHeadsetSecurity
+    # TODO add copy of space law
+

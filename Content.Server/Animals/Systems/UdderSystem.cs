@@ -1,23 +1,21 @@
-using System;
 using Content.Server.Animals.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
-using Content.Shared.Nutrition.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
-using Robust.Shared.Localization;
+using Content.Server.Nutrition.Components;
+using Content.Server.Popups;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
-using Content.Server.Popups;
 
 namespace Content.Server.Animals.Systems
 {
     /// <summary>
     ///     Gives ability to living beings with acceptable hunger level to produce milkable reagents.
     /// </summary>
-    internal class UdderSystem : EntitySystem
+    internal sealed class UdderSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -27,7 +25,7 @@ namespace Content.Server.Animals.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UdderComponent, GetAlternativeVerbsEvent>(AddMilkVerb);
+            SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
             SubscribeLocalEvent<UdderComponent, MilkingFinishedEvent>(OnMilkingFinished);
             SubscribeLocalEvent<UdderComponent, MilkingFailEvent>(OnMilkingFailed);
         }
@@ -38,25 +36,28 @@ namespace Content.Server.Animals.Systems
             {
                 udder.AccumulatedFrameTime += frameTime;
 
-                if (udder.AccumulatedFrameTime < udder.UpdateRate)
-                    continue;
-
-                // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-                if (udder.Owner.TryGetComponent<HungerComponent>(out var hunger))
+                while (udder.AccumulatedFrameTime > udder.UpdateRate)
                 {
-                    hunger.HungerThresholds.TryGetValue(HungerThreshold.Peckish, out var targetThreshold);
+                    udder.AccumulatedFrameTime -= udder.UpdateRate;
 
-                    // Is there enough nutrition to produce reagent?
-                    if (hunger.CurrentHunger < targetThreshold)
+                    // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
+                    if (EntityManager.TryGetComponent<HungerComponent?>(udder.Owner, out var hunger))
+                    {
+                        hunger.HungerThresholds.TryGetValue(HungerThreshold.Peckish, out var targetThreshold);
+
+                        // Is there enough nutrition to produce reagent?
+                        if (hunger.CurrentHunger < targetThreshold)
+                            continue;
+                    }
+
+                    if (!_solutionContainerSystem.TryGetSolution(udder.Owner, udder.TargetSolutionName,
+                            out var solution))
                         continue;
+
+                    //TODO: toxins from bloodstream !?
+                    _solutionContainerSystem.TryAddReagent(udder.Owner, solution, udder.ReagentId,
+                        udder.QuantityPerUpdate, out var accepted);
                 }
-
-                if (!_solutionContainerSystem.TryGetSolution(udder.OwnerUid, udder.TargetSolutionName, out var solution))
-                    continue;
-
-                //TODO: toxins from bloodstream !?
-                _solutionContainerSystem.TryAddReagent(udder.OwnerUid, solution, udder.ReagentId, udder.QuantityPerUpdate, out var accepted);
-                udder.AccumulatedFrameTime = 0;
             }
         }
 
@@ -110,8 +111,8 @@ namespace Content.Server.Animals.Systems
             var split = _solutionContainerSystem.SplitSolution(uid, solution, quantity);
             _solutionContainerSystem.TryAddSolution(ev.ContainerUid, targetSolution, split);
 
-            var container = EntityManager.GetEntity(ev.ContainerUid);
-            _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", container)), uid, Filter.Entities(ev.UserUid));
+            _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(ev.ContainerUid, EntityManager))), uid,
+                Filter.Entities(ev.UserUid), PopupType.Medium);
         }
 
         private void OnMilkingFailed(EntityUid uid, UdderComponent component, MilkingFailEvent ev)
@@ -119,24 +120,26 @@ namespace Content.Server.Animals.Systems
             component.BeingMilked = false;
         }
 
-        private void AddMilkVerb(EntityUid uid, UdderComponent component, GetAlternativeVerbsEvent args)
+        private void AddMilkVerb(EntityUid uid, UdderComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (args.Using == null ||
                  !args.CanInteract ||
-                 !args.Using.HasComponent<RefillableSolutionComponent>())
+                 !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
                 return;
 
-            Verb verb = new();
-            verb.Act = () =>
+            AlternativeVerb verb = new()
             {
-                AttemptMilk(uid, args.User.Uid, args.Using.Uid, component);
+                Act = () =>
+                {
+                    AttemptMilk(uid, args.User, args.Using.Value, component);
+                },
+                Text = Loc.GetString("udder-system-verb-milk"),
+                Priority = 2
             };
-            verb.Text = Loc.GetString("udder-system-verb-milk");
-            verb.Priority = 2;
             args.Verbs.Add(verb);
         }
 
-        private class MilkingFinishedEvent : EntityEventArgs
+        private sealed class MilkingFinishedEvent : EntityEventArgs
         {
             public EntityUid UserUid;
             public EntityUid ContainerUid;
@@ -148,7 +151,7 @@ namespace Content.Server.Animals.Systems
             }
         }
 
-        private class MilkingFailEvent : EntityEventArgs
+        private sealed class MilkingFailEvent : EntityEventArgs
         { }
     }
 }

@@ -1,14 +1,11 @@
-using System;
-using System.Linq;
 using Content.Server.Stunnable;
 using Content.Server.UserInterface;
 using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Instruments;
 
@@ -17,6 +14,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
     public override void Initialize()
     {
@@ -28,7 +26,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentStartMidiEvent>(OnMidiStart);
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
 
-        SubscribeLocalEvent<InstrumentComponent, ActivatableUIPlayerChangedEvent>(InstrumentNeedsClean);
+        SubscribeLocalEvent<InstrumentComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+        SubscribeLocalEvent<InstrumentComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
     }
 
     private void OnMidiStart(InstrumentStartMidiEvent msg, EntitySessionEventArgs args)
@@ -65,6 +64,30 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         ShutdownCVars();
     }
 
+    private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
+    {
+        if (args.UiKey is not InstrumentUiKey)
+            return;
+
+        if (HasComp<ActiveInstrumentComponent>(uid)
+            && _userInterfaceSystem.TryGetUi(uid, args.UiKey, out var bui)
+            && bui.SubscribedSessions.Count == 0)
+        {
+            RemComp<ActiveInstrumentComponent>(uid);
+        }
+
+        Clean(uid, component);
+    }
+
+    private void OnBoundUIOpened(EntityUid uid, InstrumentComponent component, BoundUIOpenedEvent args)
+    {
+        if (args.UiKey is not InstrumentUiKey)
+            return;
+
+        EnsureComp<ActiveInstrumentComponent>(uid);
+        Clean(uid, component);
+    }
+
     public void Clean(EntityUid uid, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
@@ -82,24 +105,35 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         instrument.Dirty();
     }
 
-    private void InstrumentNeedsClean(EntityUid uid, InstrumentComponent component, ActivatableUIPlayerChangedEvent ev)
-    {
-        Clean(uid, component);
-    }
-
     private void OnMidiEventRx(InstrumentMidiEventEvent msg, EntitySessionEventArgs args)
     {
         var uid = msg.Uid;
 
-        if (!EntityManager.TryGetComponent(uid, out InstrumentComponent? instrument))
+        if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
-        if (!instrument.Playing || args.SenderSession != instrument.InstrumentPlayer || instrument.InstrumentPlayer == null)
+        if (!instrument.Playing
+            || args.SenderSession != instrument.InstrumentPlayer
+            || instrument.InstrumentPlayer == null
+            || args.SenderSession.AttachedEntity is not {} attached)
             return;
 
         var send = true;
 
-        var minTick = msg.MidiEvent.Min(x => x.Tick);
+        var minTick = uint.MaxValue;
+        var maxTick = uint.MinValue;
+
+        for (var i = 0; i < msg.MidiEvent.Length; i++)
+        {
+            var tick = msg.MidiEvent[i].Tick;
+
+            if (tick < minTick)
+                minTick = tick;
+
+            if (tick > maxTick)
+                maxTick = tick;
+        }
+
         if (instrument.LastSequencerTick > minTick)
         {
             instrument.LaggedBatches++;
@@ -108,11 +142,11 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             {
                 if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (1 / 3d) + 1))
                 {
-                    instrument.InstrumentPlayer.AttachedEntity?.PopupMessage(
+                    attached.PopupMessage(
                         Loc.GetString("instrument-component-finger-cramps-light-message"));
                 } else if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (2 / 3d) + 1))
                 {
-                    instrument.InstrumentPlayer.AttachedEntity?.PopupMessage(
+                    attached.PopupMessage(
                         Loc.GetString("instrument-component-finger-cramps-serious-message"));
                 }
             }
@@ -136,7 +170,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             RaiseNetworkEvent(msg);
         }
 
-        var maxTick = msg.MidiEvent.Max(x => x.Tick);
         instrument.LastSequencerTick = Math.Max(maxTick, minTick);
     }
 
@@ -144,24 +177,28 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     {
         base.Update(frameTime);
 
-        foreach (var instrument in EntityManager.EntityQuery<InstrumentComponent>(true))
+        foreach (var (_, instrument) in EntityManager.EntityQuery<ActiveInstrumentComponent, InstrumentComponent>(true))
         {
-            if ((instrument.BatchesDropped >= MaxMidiBatchesDropped
-                 || instrument.LaggedBatches >= MaxMidiLaggedBatches)
-                && instrument.InstrumentPlayer != null && instrument.RespectMidiLimits)
+            if (instrument.DirtyRenderer)
             {
-                var mob = instrument.InstrumentPlayer.AttachedEntity;
+                Dirty(instrument);
+                instrument.DirtyRenderer = false;
+            }
+
+            if (instrument.RespectMidiLimits &&
+                (instrument.BatchesDropped >= MaxMidiBatchesDropped
+                 || instrument.LaggedBatches >= MaxMidiLaggedBatches))
+            {
+                if (instrument.InstrumentPlayer?.AttachedEntity is {Valid: true} mob)
+                {
+                    _stunSystem.TryParalyze(mob, TimeSpan.FromSeconds(1), true);
+
+                    instrument.Owner.PopupMessage(mob, Loc.GetString("instrument-component-finger-cramps-max-message"));
+                }
 
                 // Just in case
-                Clean(instrument.OwnerUid);
+                Clean((instrument).Owner);
                 instrument.UserInterface?.CloseAll();
-
-                if (mob != null)
-                {
-                    _stunSystem.TryParalyze(mob.Uid, TimeSpan.FromSeconds(1));
-
-                    instrument.Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
-                }
             }
 
             instrument.Timer += frameTime;
@@ -173,5 +210,14 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             instrument.LaggedBatches = 0;
             instrument.BatchesDropped = 0;
         }
+    }
+
+    public void ToggleInstrumentUi(EntityUid uid, IPlayerSession session, InstrumentComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var ui = uid.GetUIOrNull(InstrumentUiKey.Key);
+        ui?.Toggle(session);
     }
 }

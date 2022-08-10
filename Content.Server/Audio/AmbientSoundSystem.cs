@@ -1,7 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Audio
 {
@@ -19,7 +18,7 @@ namespace Content.Server.Audio
             if (!EntityManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambientSound)) return;
             if (ambientSound.Enabled == args.Supply) return;
             ambientSound.Enabled = args.Supply;
-            ambientSound.Dirty();
+            Dirty(ambientSound);
         }
 
         private void HandlePowerChange(EntityUid uid, AmbientOnPoweredComponent component, PowerChangedEvent args)
@@ -27,7 +26,7 @@ namespace Content.Server.Audio
             if (!EntityManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambientSound)) return;
             if (ambientSound.Enabled == args.Powered) return;
             ambientSound.Enabled = args.Powered;
-            ambientSound.Dirty();
+            Dirty(ambientSound);
         }
     }
 }

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2303f6a892919abe3a11f9f53a02a8e1fea67442#diff-5928a46e62778e2e4e9c49608f2b1a2092e9af6840c1b1d09e1cb0cb5d7943b0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "chapel",
+      "directions": 1
+    }
+  ]
+}

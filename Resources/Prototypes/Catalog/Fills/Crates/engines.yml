@@ -2,8 +2,6 @@
 
 - type: entity
   id: CrateEngineeringAMEShielding
-  name: packaged antimatter reactor crate
-  description: "9 parts for the main body of an antimatter reactor, or for expanding an existing one."
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -13,8 +11,6 @@
 
 - type: entity
   id: CrateEngineeringAMEJar
-  name: antimatter containment jar crate
-  description: "3 antimatter jars, for fuelling an antimatter reactor."
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -24,8 +20,6 @@
 
 - type: entity
   id: CrateEngineeringAMEControl
-  name: antimatter control unit crate
-  description: "The control unit of an antimatter reactor."
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -37,8 +31,6 @@
 
 - type: entity
   id: CrateEngineeringSingularityEmitter
-  name: emitter crate
-  description: "An emitter, best used for singularity engines."
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -48,8 +40,6 @@
 
 - type: entity
   id: CrateEngineeringSingularityCollector
-  name: radiation collector crate
-  description: "A radiation collector, best used for singularity engines."
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -59,8 +49,6 @@
 
 - type: entity
   id: CrateEngineeringSingularityContainment
-  name: containment field generator crate
-  description: "A containment field generator, keeps the singulo in submission."
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -70,8 +58,6 @@
 
 - type: entity
   id: CrateEngineeringSingularityGenerator
-  name: singularity generator crate
-  description: "A singularity generator, the mother of the beast."
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -83,8 +69,6 @@
 
 - type: entity
   id: CrateEngineeringParticleAccelerator
-  name: PA crate
-  description: "Complex to setup, but rewarding as fuck."
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -119,7 +103,6 @@
 
 - type: entity
   id: CrateEngineeringGenerator
-  name: generator crate
   parent: CrateEngineering
   components:
   - type: StorageFill
@@ -129,10 +112,24 @@
 
 - type: entity
   id: CrateEngineeringSolar
-  name: solar assembly crate
   parent: CrateEngineering
   components:
   - type: StorageFill
     contents:
       - id: SolarAssemblyPart
         amount: 6
+
+- type: entity
+  id: CrateEngineeringShuttle
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WallmountSubstationElectronics
+        amount: 1
+      - id: WallmountGeneratorAPUElectronics
+        amount: 1
+      - id: HandheldGPSBasic
+        amount: 1
+      - id: InflatableDoorStack1
+        amount: 1

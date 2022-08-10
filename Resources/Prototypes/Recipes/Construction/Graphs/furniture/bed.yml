@@ -1,0 +1,74 @@
+- type: constructionGraph
+  id: bed
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: bed
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+        - to: dogbed
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 10
+              doAfter: 1
+        - to: medicalbed
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+            - material: Durathread
+              amount: 2
+              doAfter: 1
+    - node: bed
+      entity: Bed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+    - node: dogbed
+      entity: DogBed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 10
+          steps:
+            - tool: Screwing
+              doAfter: 1
+    - node: medicalbed
+      entity: MedicalBed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialDurathread1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1

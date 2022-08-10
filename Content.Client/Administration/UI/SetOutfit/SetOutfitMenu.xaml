@@ -1,4 +1,4 @@
-<SS14Window
+<DefaultWindow
     xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
@@ -12,4 +12,4 @@
             <Button Name="ConfirmButton" HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

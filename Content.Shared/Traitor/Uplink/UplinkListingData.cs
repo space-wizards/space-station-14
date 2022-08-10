@@ -1,13 +1,11 @@
 using Content.Shared.PDA;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
 
 namespace Content.Shared.Traitor.Uplink
 {
     [Serializable, NetSerializable]
-    public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
+    public sealed class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
     {
         public readonly string ItemId;
         public readonly int Price;
@@ -15,10 +13,11 @@ namespace Content.Shared.Traitor.Uplink
         public readonly string Description;
         public readonly string ListingName;
         public readonly SpriteSpecifier? Icon;
+        public readonly HashSet<string>? JobWhitelist;
 
         public UplinkListingData(string listingName, string itemId,
             int price, UplinkCategory category,
-            string description, SpriteSpecifier? icon)
+            string description, SpriteSpecifier? icon, HashSet<string>? jobWhitelist)
         {
             ListingName = listingName;
             Price = price;
@@ -26,6 +25,7 @@ namespace Content.Shared.Traitor.Uplink
             Description = description;
             ItemId = itemId;
             Icon = icon;
+            JobWhitelist = jobWhitelist;
         }
 
         public bool Equals(UplinkListingData? other)

@@ -1,9 +1,13 @@
-# TODO: Add description (1)
 - type: entity
   parent: BaseItem
   id: BaseLightbulb
   abstract: true
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: Sprite
     netsync: false
     sprite: Objects/Power/light_bulb.rsi
@@ -21,6 +25,12 @@
         Blunt: 5
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -47,6 +57,11 @@
   - type: Appearance
     visuals:
     - type: LightBulbVisualizer
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -55,11 +70,14 @@
   parent: BaseLightbulb
   name: incandescent light bulb
   id: LightBulb
-  description: That's a light bulb.
+  description: A light bulb.
   components:
   - type: LightBulb
     bulb: Bulb
     color: "#FFD1A3" # 4000K color temp
+    lightEnergy: 1.0
+    lightRadius: 6
+    lightSoftness: 1.1
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     state: normal
@@ -68,11 +86,14 @@
   parent: BaseLightbulb
   name: fluorescent light tube
   id: LightTube
-  description: That's a light fixture.
+  description: A light fixture.
   components:
   - type: LightBulb
     bulb: Tube
     color: "#FFE4CE" # 5000K color temp
+    lightEnergy: 0.8
+    lightRadius: 10
+    lightSoftness: 1
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
@@ -80,13 +101,53 @@
 - type: entity
   parent: BaseLightbulb
   name: led light tube
+  description: A high power high energy bulb.
   id: LedLightTube
   components:
   - type: LightBulb
     bulb: Tube
     color: "#EEEEFF"
+    lightEnergy: 2.5
+    lightRadius: 10
+    lightSoftness: 0.9
     BurningTemperature: 350
-    PowerUse: 9
+    PowerUse: 25
+  - type: Sprite
+    sprite:  Objects/Power/light_tube.rsi
+    state: normal
+
+- type: entity
+  parent: BaseLightbulb
+  name: exterior light tube
+  description: A high power high energy bulb for the depths of space. May contain mercury.
+  id: ExteriorLightTube
+  components:
+  - type: LightBulb
+    bulb: Tube
+    color: "#B4FCF0"
+    lightEnergy: 4.5
+    lightRadius: 12
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 100
+  - type: Sprite
+    sprite:  Objects/Power/light_tube.rsi
+    state: normal
+
+- type: entity
+  parent: BaseLightbulb
+  name: sodium light tube
+  description: A high power high energy bulb for the depths of space. Salty.
+  id: SodiumLightTube
+  components:
+  - type: LightBulb
+    bulb: Tube
+    color: "#FFAF38"
+    lightEnergy: 4
+    lightRadius: 10
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 100
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal

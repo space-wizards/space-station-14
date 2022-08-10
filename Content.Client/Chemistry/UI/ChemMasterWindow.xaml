@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             MinSize="400 525"
@@ -115,4 +115,4 @@
             </PanelContainer>
         </PanelContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

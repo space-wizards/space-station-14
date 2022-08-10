@@ -4,19 +4,39 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: steel
   result: SheetSteel1
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 100
+    
+- type: latheRecipe
+  id: SheetSteel30
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: steel_3
+  result: SheetSteel
+  completetime: 2
+  materials:
+    Steel: 3000
 
 - type: latheRecipe
-  id: GlassStack
+  id: SheetGlass1
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
     state: glass
   result: SheetGlass1
-  completetime: 500
+  completetime: 2
   materials:
     Glass: 100
+    
+- type: latheRecipe
+  id: SheetGlass30
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: glass_3
+  result: SheetGlass
+  completetime: 2
+  materials:
+    Glass: 3000
 
 - type: latheRecipe
   id: SheetRGlass
@@ -24,10 +44,84 @@
     sprite: Objects/Materials/Sheets/glass.rsi
     state: rglass
   result: SheetRGlass1
-  completetime: 500
+  completetime: 2
   materials:
     Glass: 100
     Steel: 50
+    
+- type: latheRecipe
+  id: SheetRGlass30
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: rglass_3
+  result: SheetRGlass
+  completetime: 2
+  materials:
+    Glass: 3000
+    Steel: 1500
+
+- type: latheRecipe
+  id: SheetPGlass30
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: pglass_3
+  result: SheetPGlass
+  completetime: 2
+  materials:
+    Glass: 3000
+    Plasma: 3000
+    
+- type: latheRecipe
+  id: SheetRPGlass30
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: rpglass_3
+  result: SheetRPGlass
+  completetime: 2
+  materials:
+    Glass: 3000
+    Plasma: 3000
+    Steel: 1500
+    
+- type: latheRecipe
+  id: SheetPlasma30
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: plasma_3
+  result: SheetPlasma
+  completetime: 2
+  materials:
+    Plasma: 3000
+
+- type: latheRecipe
+  id: SheetUranium1
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: uranium
+  result: SheetUranium1
+  completetime: 2
+  materials:
+    Uranium: 500
+    
+- type: latheRecipe
+  id: IngotGold1
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: gold
+  result: IngotGold1
+  completetime: 2
+  materials:
+    Gold: 500
+
+- type: latheRecipe
+  id: IngotSilver1
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: silver
+  result: IngotSilver1
+  completetime: 2
+  materials:
+    Silver: 500
 
 - type: latheRecipe
   id: SheetPlastic
@@ -35,6 +129,6 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: plastic
   result: SheetPlastic1
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 100

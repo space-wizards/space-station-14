@@ -3,6 +3,7 @@
 - type: stack
   id: Pancake
   name: pancake
+  spawn: FoodBakedPancake
 
 # Food Containers
 
@@ -17,23 +18,29 @@
 - type: stack
   id: PaperRolling
   name: paper rolling
+  spawn: PaperRolling
 
 - type: stack
   id: CigaretteFilter
   name: cigarette filter
+  spawn: CigaretteFilter
 
 - type: stack
   id: GroundTobacco
   name: ground tobacco
+  spawn: GroundTobacco
 
 - type: stack
   id: GroundCannabis
   name: ground cannabis
+  spawn: GroundCannabis
 
 - type: stack
   id: LeavesTobaccoDried
   name: dried tobacco leaves
+  spawn: LeavesTobaccoDried
 
 - type: stack
   id: LeavesCannabisDried
   name: dried cannabis leaves
+  spawn: LeavesCannabisDried

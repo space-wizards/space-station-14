@@ -1,0 +1,31 @@
+- type: alarmThreshold
+  id: stationTemperature
+  upperBound: 1465.75 # T20C * 5
+  lowerBound: 193.15 # T20C - 100
+  upperWarnAround: 0.25
+  lowerWarnAround: 1.1
+
+- type: alarmThreshold
+  id: stationPressure
+  upperBound: 550 # as defined in Atmospherics.cs
+  lowerBound: 20 # as defined in Atmospherics.cs
+  upperWarnAround: 0.7
+  lowerWarnAround: 2.5
+
+- type: alarmThreshold
+  id: stationOxygen
+  lowerBound: 0.0010
+  lowerWarnAround: 1.5
+
+- type: alarmThreshold
+  id: stationCO2
+  upperBound: 0.0025
+  upperWarnAround: 0.5
+
+- type: alarmThreshold
+  id: ignore # just ignore nitrogen??? ??? ???
+  ignore: true
+
+- type: alarmThreshold
+  id: danger # just any gas you don't want at all
+  upperBound: 0.0001

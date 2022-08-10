@@ -1,11 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Server.Body.Systems;
-using Content.Shared.Body.Components;
+﻿using Content.Server.Body.Systems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
@@ -14,11 +9,9 @@ namespace Content.Server.Body.Components
     /// <summary>
     ///     Handles metabolizing various reagents with given effects.
     /// </summary>
-    [RegisterComponent, Friend(typeof(MetabolizerSystem))]
-    public class MetabolizerComponent : Component
+    [RegisterComponent, Access(typeof(MetabolizerSystem))]
+    public sealed class MetabolizerComponent : Component
     {
-        public override string Name => "Metabolizer";
-
         public float AccumulatedFrametime = 0.0f;
 
         /// <summary>
@@ -32,7 +25,7 @@ namespace Content.Server.Body.Components
         ///     From which solution will this metabolizer attempt to metabolize chemicals
         /// </summary>
         [DataField("solution")]
-        public string SolutionName { get; set; } = BloodstreamSystem.DefaultSolutionName;
+        public string SolutionName { get; set; } = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Does this component use a solution on it's parent entity (the body) or itself
@@ -47,6 +40,7 @@ namespace Content.Server.Body.Components
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
         [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<MetabolizerTypePrototype>))]
+        [Access(typeof(MetabolizerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public HashSet<string>? MetabolizerTypes = null;
 
         /// <summary>
@@ -76,7 +70,7 @@ namespace Content.Server.Body.Components
     ///     This allows metabolizers to remove certain groups much faster, or not at all.
     /// </summary>
     [DataDefinition]
-    public class MetabolismGroupEntry
+    public sealed class MetabolismGroupEntry
     {
         [DataField("id", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
         public string Id = default!;

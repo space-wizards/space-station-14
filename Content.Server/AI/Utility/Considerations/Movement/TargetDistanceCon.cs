@@ -8,14 +8,16 @@ namespace Content.Server.AI.Utility.Considerations.Movement
         protected override float GetScore(Blackboard context)
         {
             var self = context.GetState<SelfState>().GetValue();
-            var target = context.GetState<TargetEntityState>().GetValue();
-            if (target == null || target.Deleted || target.Transform.GridID != self?.Transform.GridID)
+            var entities = IoCManager.Resolve<IEntityManager>();
+
+            if (context.GetState<TargetEntityState>().GetValue() is not {Valid: true} target || entities.Deleted(target) ||
+                entities.GetComponent<TransformComponent>(target).GridUid != entities.GetComponent<TransformComponent>(self).GridUid)
             {
                 return 0.0f;
             }
 
             // Anything further than 100 tiles gets clamped
-            return (target.Transform.Coordinates.Position - self.Transform.Coordinates.Position).Length / 100;
+            return (entities.GetComponent<TransformComponent>(target).Coordinates.Position - entities.GetComponent<TransformComponent>(self).Coordinates.Position).Length / 100;
         }
     }
 }

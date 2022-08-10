@@ -1,18 +1,16 @@
-using System;
 using Content.Server.Nutrition.Components;
-using Content.Shared.Nutrition.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.AI.WorldState.States.Nutrition
 {
     [UsedImplicitly]
-    public class ThirstyState : StateData<bool>
+    public sealed class ThirstyState : StateData<bool>
     {
         public override string Name => "Thirsty";
 
         public override bool GetValue()
         {
-            if (!Owner.TryGetComponent(out ThirstComponent? thirstComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ThirstComponent? thirstComponent))
             {
                 return false;
             }

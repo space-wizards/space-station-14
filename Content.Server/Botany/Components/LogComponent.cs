@@ -1,37 +1,16 @@
-using System.Threading.Tasks;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Random.Helpers;
-using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
+using Content.Server.Botany.Systems;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Botany.Components
+namespace Content.Server.Botany.Components;
+// TODO: This should probably be merged with SliceableFood somehow or made into a more generic Choppable.
+
+[RegisterComponent]
+[Access(typeof(LogSystem))]
+public sealed class LogComponent : Component
 {
-    [RegisterComponent]
-    public class LogComponent : Component, IInteractUsing
-    {
-        public override string Name => "Log";
+    [DataField("spawnedPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string SpawnedPrototype = "MaterialWoodPlank1";
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
-                return false;
-
-            if (eventArgs.Using.HasTag("BotanySharp"))
-            {
-                for (var i = 0; i < 2; i++)
-                {
-                    var plank = Owner.EntityManager.SpawnEntity("MaterialWoodPlank1", Owner.Transform.Coordinates);
-                    plank.RandomOffset(0.25f);
-                }
-
-                Owner.QueueDelete();
-
-                return true;
-            }
-
-            return false;
-        }
-    }
+    [DataField("spawnCount")] public int SpawnCount = 2;
 }

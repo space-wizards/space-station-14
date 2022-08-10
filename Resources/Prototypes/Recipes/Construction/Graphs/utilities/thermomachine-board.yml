@@ -1,0 +1,18 @@
+﻿- type: constructionGraph
+  id: ThermomachineBoard
+  start: freezer
+  graph:
+  - node: freezer
+    entity: ThermomachineFreezerMachineCircuitBoard
+    edges:
+    - to: heater
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: heater
+    entity: ThermomachineHeaterMachineCircuitBoard
+    edges:
+    - to: freezer
+      steps:
+      - tool: Screwing
+        doAfter: 2

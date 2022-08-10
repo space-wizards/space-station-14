@@ -13,46 +13,41 @@ using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototy
 
 namespace Content.IntegrationTests.Tests.Destructible
 {
-    public class DestructibleDestructionTest : ContentIntegrationTest
+    public sealed class DestructibleDestructionTest
     {
         [Test]
         public async Task Test()
         {
-            var server = StartServer(new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
-            await server.WaitIdleAsync();
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
-            var sMapManager = server.ResolveDependency<IMapManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            IEntity sDestructibleEntity = null;
-            DamageableComponent sDamageableComponent = null;
+            EntityUid sDestructibleEntity = default;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
 
             await server.WaitPost(() =>
             {
-                var gridId = GetMainGrid(sMapManager).GridEntityId;
-                var coordinates = new EntityCoordinates(gridId, 0, 0);
+                var coordinates = testMap.GridCoords;
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
-                sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
+                sTestThresholdListenerSystem.ThresholdsReached.Clear();
             });
 
             await server.WaitAssertion(() =>
             {
-                var coordinates = sDestructibleEntity.Transform.Coordinates;
+                var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sDestructibleEntity).Coordinates;
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
                 DamageSpecifier bruteDamage = new(bruteDamageGroup,50);
 
                 Assert.DoesNotThrow(() =>
                 {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity.Uid, bruteDamage, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
                 });
 
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -68,17 +63,17 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(spawnEntitiesBehavior.Spawn.Keys.Single(), Is.EqualTo(SpawnedEntityId));
                 Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax {Min = 1, Max = 1}));
 
-                var entitiesInRange = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(coordinates, 2);
+                var entitiesInRange = EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(coordinates, 2);
                 var found = false;
 
                 foreach (var entity in entitiesInRange)
                 {
-                    if (entity.Prototype == null)
+                    if (sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
                     {
                         continue;
                     }
 
-                    if (entity.Prototype.Name != SpawnedEntityId)
+                    if (sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype?.Name != SpawnedEntityId)
                     {
                         continue;
                     }
@@ -89,6 +84,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 Assert.That(found, Is.True);
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'uplink-user-interface-withdraw-title'}"
             MinSize="256 128">
     <BoxContainer Orientation="Vertical"
@@ -19,4 +19,4 @@
                     HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

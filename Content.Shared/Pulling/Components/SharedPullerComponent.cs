@@ -1,26 +1,22 @@
-﻿using Content.Shared.Pulling;
-using Content.Shared.Movement.Components;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Log;
-using Component = Robust.Shared.GameObjects.Component;
-
-namespace Content.Shared.Pulling.Components
+﻿namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
-    [Friend(typeof(SharedPullingStateManagementSystem))]
-    public class SharedPullerComponent : Component
+    [Access(typeof(SharedPullingStateManagementSystem))]
+    public sealed class SharedPullerComponent : Component
     {
-        public override string Name => "Puller";
-
         // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
-        public float WalkSpeedModifier => Pulling == null ? 1.0f : 0.75f;
+        public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.9f;
 
-        public float SprintSpeedModifier => Pulling == null ? 1.0f : 0.75f;
+        public float SprintSpeedModifier => Pulling == default ? 1.0f : 0.9f;
 
         [ViewVariables]
-        public IEntity? Pulling { get; set; }
+        public EntityUid? Pulling { get; set; }
+
+        /// <summary>
+        ///     Does this entity need hands to be able to pull something?
+        /// </summary>
+        [DataField("needsHands")]
+        public bool NeedsHands = true;
 
         protected override void Shutdown()
         {
@@ -30,7 +26,7 @@ namespace Content.Shared.Pulling.Components
 
         protected override void OnRemove()
         {
-            if (Pulling != null)
+            if (Pulling != default)
             {
                 // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
                 Logger.ErrorS("c.go.c.pulling", "PULLING STATE CORRUPTION IMMINENT IN PULLER {0} - OnRemove called when Pulling is set!", Owner);

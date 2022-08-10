@@ -26,7 +26,7 @@ namespace Content.Client.Administration.UI
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
         private readonly Menu _menu;
-        private readonly List<SS14Window> _subWindows = new();
+        private readonly List<DefaultWindow> _subWindows = new();
 
         private Dictionary<int, PermissionsEuiState.AdminRankData> _ranks =
             new();
@@ -105,14 +105,14 @@ namespace Content.Client.Administration.UI
 
         private void RemoveButtonPressed(EditAdminWindow window)
         {
-            SendMessage(new RemoveAdmin {UserId = window.SourceData!.Value.UserId});
+            SendMessage(new RemoveAdmin { UserId = window.SourceData!.Value.UserId });
 
             window.Close();
         }
 
         private void RemoveRankButtonPressed(EditAdminRankWindow window)
         {
-            SendMessage(new RemoveAdminRank {Id = window.SourceId!.Value});
+            SendMessage(new RemoveAdminRank { Id = window.SourceId!.Value });
 
             window.Close();
         }
@@ -201,14 +201,14 @@ namespace Content.Client.Administration.UI
             _ranks = s.AdminRanks;
 
             _menu.AdminsList.RemoveAllChildren();
-            foreach (var admin in s.Admins)
+            foreach (var admin in s.Admins.OrderBy(d => d.UserName))
             {
                 var al = _menu.AdminsList;
                 var name = admin.UserName ?? admin.UserId.ToString();
 
-                al.AddChild(new Label {Text = name});
+                al.AddChild(new Label { Text = name });
 
-                var titleControl = new Label {Text = admin.Title ?? Loc.GetString("permissions-eui-edit-admin-title-control-text").ToLowerInvariant()};
+                var titleControl = new Label { Text = admin.Title ?? Loc.GetString("permissions-eui-edit-admin-title-control-text").ToLowerInvariant() };
                 if (admin.Title == null) // none
                 {
                     titleControl.StyleClasses.Add(StyleBase.StyleClassItalic);
@@ -232,7 +232,7 @@ namespace Content.Client.Administration.UI
                     rank = Loc.GetString("permissions-eui-edit-no-rank-text").ToLowerInvariant();
                 }
 
-                var rankControl = new Label {Text = rank};
+                var rankControl = new Label { Text = rank };
                 if (italic)
                 {
                     rankControl.StyleClasses.Add(StyleBase.StyleClassItalic);
@@ -249,7 +249,7 @@ namespace Content.Client.Administration.UI
                     HorizontalAlignment = Control.HAlignment.Center,
                 });
 
-                var editButton = new Button {Text = Loc.GetString("permissions-eui-edit-title-button") };
+                var editButton = new Button { Text = Loc.GetString("permissions-eui-edit-title-button") };
                 editButton.OnPressed += _ => OnEditPressed(admin);
                 al.AddChild(editButton);
 
@@ -265,14 +265,14 @@ namespace Content.Client.Administration.UI
             {
                 var rank = kv.Value;
                 var flagsText = string.Join(' ', AdminFlagsHelper.FlagsToNames(rank.Flags).Select(f => $"+{f}"));
-                _menu.AdminRanksList.AddChild(new Label {Text = rank.Name});
+                _menu.AdminRanksList.AddChild(new Label { Text = rank.Name });
                 _menu.AdminRanksList.AddChild(new Label
                 {
                     Text = flagsText,
                     HorizontalExpand = true,
                     HorizontalAlignment = Control.HAlignment.Center,
                 });
-                var editButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-rank-button") };
+                var editButton = new Button { Text = Loc.GetString("permissions-eui-edit-admin-rank-button") };
                 editButton.OnPressed += _ => OnEditRankPressed(kv);
                 _menu.AdminRanksList.AddChild(editButton);
 
@@ -289,7 +289,7 @@ namespace Content.Client.Administration.UI
             OpenRankEditWindow(rank);
         }
 
-        private sealed class Menu : SS14Window
+        private sealed class Menu : DefaultWindow
         {
             private readonly PermissionsEui _ui;
             public readonly GridContainer AdminsList;
@@ -316,19 +316,19 @@ namespace Content.Client.Administration.UI
                     HorizontalAlignment = HAlignment.Right
                 };
 
-                AdminsList = new GridContainer {Columns = 5, VerticalExpand = true};
+                AdminsList = new GridContainer { Columns = 5, VerticalExpand = true };
                 var adminVBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    Children = {new ScrollContainer(){VerticalExpand = true, Children = { AdminsList }}, AddAdminButton},
+                    Children = { new ScrollContainer() { VerticalExpand = true, Children = { AdminsList } }, AddAdminButton },
                 };
                 TabContainer.SetTabTitle(adminVBox, Loc.GetString("permissions-eui-menu-admins-tab-title"));
 
-                AdminRanksList = new GridContainer {Columns = 3, VerticalExpand = true};
+                AdminRanksList = new GridContainer { Columns = 3, VerticalExpand = true };
                 var rankVBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    Children = { new ScrollContainer(){VerticalExpand = true, Children = {AdminRanksList}}, AddAdminRankButton}
+                    Children = { new ScrollContainer() { VerticalExpand = true, Children = { AdminRanksList } }, AddAdminRankButton }
                 };
                 TabContainer.SetTabTitle(rankVBox, Loc.GetString("permissions-eui-menu-admin-ranks-tab-title"));
 
@@ -341,7 +341,7 @@ namespace Content.Client.Administration.UI
             protected override Vector2 ContentsMinimumSize => (600, 400);
         }
 
-        private sealed class EditAdminWindow : SS14Window
+        private sealed class EditAdminWindow : DefaultWindow
         {
             public readonly PermissionsEuiState.AdminData? SourceData;
             public readonly LineEdit? NameEdit;
@@ -355,7 +355,7 @@ namespace Content.Client.Administration.UI
 
             public EditAdminWindow(PermissionsEui ui, PermissionsEuiState.AdminData? data)
             {
-                SetSize = MinSize = (600, 400);
+                MinSize = (600, 400);
                 SourceData = data;
 
                 Control nameControl;
@@ -366,18 +366,18 @@ namespace Content.Client.Administration.UI
                     Title = Loc.GetString("permissions-eui-edit-admin-window-edit-admin-label",
                                           ("admin", name));
 
-                    nameControl = new Label {Text = name};
+                    nameControl = new Label { Text = name };
                 }
                 else
                 {
                     Title = Loc.GetString("permissions-eui-menu-add-admin-button");
 
-                    nameControl = NameEdit = new LineEdit {PlaceHolder = Loc.GetString("permissions-eui-edit-admin-window-name-edit-placeholder") };
+                    nameControl = NameEdit = new LineEdit { PlaceHolder = Loc.GetString("permissions-eui-edit-admin-window-name-edit-placeholder") };
                 }
 
-                TitleEdit = new LineEdit {PlaceHolder = Loc.GetString("permissions-eui-edit-admin-window-title-edit-placeholder") };
+                TitleEdit = new LineEdit { PlaceHolder = Loc.GetString("permissions-eui-edit-admin-window-title-edit-placeholder") };
                 RankButton = new OptionButton();
-                SaveButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-window-save-button"), HorizontalAlignment = HAlignment.Right};
+                SaveButton = new Button { Text = Loc.GetString("permissions-eui-edit-admin-window-save-button"), HorizontalAlignment = HAlignment.Right };
 
                 RankButton.AddItem(Loc.GetString("permissions-eui-edit-admin-window-no-rank-button"), NoRank);
                 foreach (var (rId, rank) in ui._ranks)
@@ -407,21 +407,21 @@ namespace Content.Client.Administration.UI
                     var inherit = new Button
                     {
                         Text = "I",
-                        StyleClasses = {StyleBase.ButtonOpenRight},
+                        StyleClasses = { StyleBase.ButtonOpenRight },
                         Disabled = disable,
                         Group = group,
                     };
                     var sub = new Button
                     {
                         Text = "-",
-                        StyleClasses = {StyleBase.ButtonOpenBoth},
+                        StyleClasses = { StyleBase.ButtonOpenBoth },
                         Disabled = disable,
                         Group = group
                     };
                     var plus = new Button
                     {
                         Text = "+",
-                        StyleClasses = {StyleBase.ButtonOpenLeft},
+                        StyleClasses = { StyleBase.ButtonOpenLeft },
                         Disabled = disable,
                         Group = group
                     };
@@ -446,7 +446,7 @@ namespace Content.Client.Administration.UI
                         inherit.Pressed = true;
                     }
 
-                    permGrid.AddChild(new Label {Text = flagName});
+                    permGrid.AddChild(new Label { Text = flagName });
                     permGrid.AddChild(inherit);
                     permGrid.AddChild(sub);
                     permGrid.AddChild(plus);
@@ -461,7 +461,7 @@ namespace Content.Client.Administration.UI
                 if (data != null)
                 {
                     // show remove button.
-                    RemoveButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-window-remove-flag-button") };
+                    RemoveButton = new Button { Text = Loc.GetString("permissions-eui-edit-admin-window-remove-flag-button") };
                     bottomButtons.AddChild(RemoveButton);
                 }
 
@@ -522,7 +522,7 @@ namespace Content.Client.Administration.UI
             }
         }
 
-        private sealed class EditAdminRankWindow : SS14Window
+        private sealed class EditAdminRankWindow : DefaultWindow
         {
             public readonly int? SourceId;
             public readonly LineEdit NameEdit;
@@ -533,7 +533,7 @@ namespace Content.Client.Administration.UI
             public EditAdminRankWindow(PermissionsEui ui, KeyValuePair<int, PermissionsEuiState.AdminRankData>? data)
             {
                 Title = Loc.GetString("permissions-eui-edit-admin-rank-window-title");
-                MinSize = SetSize = (600, 400);
+                MinSize = (600, 400);
                 SourceId = data?.Key;
 
                 NameEdit = new LineEdit
@@ -546,10 +546,11 @@ namespace Content.Client.Administration.UI
                     NameEdit.Text = data.Value.Value.Name;
                 }
 
-                SaveButton = new Button {
+                SaveButton = new Button
+                {
                     Text = Loc.GetString("permissions-eui-menu-save-admin-rank-button"),
                     HorizontalAlignment = HAlignment.Right,
-                    HorizontalExpand = true
+                    HorizontalExpand = true,
                 };
                 var flagsBox = new BoxContainer
                 {
@@ -585,7 +586,7 @@ namespace Content.Client.Administration.UI
                 if (data != null)
                 {
                     // show remove button.
-                    RemoveButton = new Button {Text = Loc.GetString("permissions-eui-menu-remove-admin-rank-button") };
+                    RemoveButton = new Button { Text = Loc.GetString("permissions-eui-menu-remove-admin-rank-button") };
                     bottomButtons.AddChild(RemoveButton);
                 }
 

@@ -1,20 +1,16 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Warps;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class WarpCommand : IConsoleCommand
+    public sealed class WarpCommand : IConsoleCommand
     {
         public string Command => "warp";
         public string Description => "Teleports you to predefined areas on the map.";
@@ -42,37 +38,32 @@ namespace Content.Server.Administration.Commands
             var location = args[0];
             if (location == "?")
             {
-                var locations = string.Join(", ",
-                    entMan.EntityQuery<WarpPointComponent>(true)
-                        .Select(p => p.Location)
-                        .Where(p => p != null)
-                        .OrderBy(p => p)
-                        .Distinct());
+                var locations = string.Join(", ", GetWarpPointNames(entMan));
 
                 shell.WriteLine(locations);
             }
             else
             {
-                if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
+                if (player.Status != SessionStatus.InGame || player.AttachedEntity is not {Valid: true} playerEntity)
                 {
                     shell.WriteLine("You are not in-game!");
                     return;
                 }
 
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                var currentMap = player.AttachedEntity.Transform.MapID;
-                var currentGrid = player.AttachedEntity.Transform.GridID;
+                var currentMap = entMan.GetComponent<TransformComponent>(playerEntity).MapID;
+                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridUid;
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
-                    .Select(p => p.Owner.Transform.Coordinates)
+                    .Select(p => entMan.GetComponent<TransformComponent>(p.Owner).Coordinates)
                     .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = a.GetGridId(entMan);
-                        var bGrid = b.GetGridId(entMan);
+                        var aGrid = a.GetGridUid(entMan);
+                        var bGrid = b.GetGridUid(entMan);
 
                         if (aGrid == bGrid)
                         {
@@ -89,8 +80,8 @@ namespace Content.Server.Administration.Commands
                             return 1;
                         }
 
-                        var mapA = mapManager.GetGrid(aGrid).ParentMapId;
-                        var mapB = mapManager.GetGrid(bGrid).ParentMapId;
+                        var mapA = a.GetMapId(entMan);
+                        var mapB = a.GetMapId(entMan);
 
                         if (mapA == mapB)
                         {
@@ -111,10 +102,11 @@ namespace Content.Server.Administration.Commands
                     }))
                     .FirstOrDefault();
 
-                if (found.GetGridId(entMan) != GridId.Invalid)
+                var entityUid = found.GetGridUid(entMan);
+                if (entityUid != EntityUid.Invalid)
                 {
-                    player.AttachedEntity.Transform.Coordinates = found;
-                    if (player.AttachedEntity.TryGetComponent(out IPhysBody? physics))
+                    entMan.GetComponent<TransformComponent>(playerEntity).Coordinates = found;
+                    if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))
                     {
                         physics.LinearVelocity = Vector2.Zero;
                     }
@@ -124,6 +116,28 @@ namespace Content.Server.Administration.Commands
                     shell.WriteLine("That location does not exist!");
                 }
             }
+        }
+
+        private static IEnumerable<string> GetWarpPointNames(IEntityManager entMan)
+        {
+            return entMan.EntityQuery<WarpPointComponent>(true)
+                .Select(p => p.Location)
+                .Where(p => p != null)
+                .OrderBy(p => p)
+                .Distinct()!;
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                var ent = IoCManager.Resolve<IEntityManager>();
+                var options = new[] { "?" }.Concat(GetWarpPointNames(ent));
+
+                return CompletionResult.FromHintOptions(options, "<warp point | ?>");
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }

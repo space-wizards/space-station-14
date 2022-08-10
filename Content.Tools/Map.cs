@@ -1,6 +1,5 @@
-﻿using System.IO;
+using System.IO;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using YamlDotNet.Core;
 using Robust.Shared.Utility;
@@ -8,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Tools
 {
-    public class Map
+    public sealed class Map
     {
         public Map(string path)
         {
@@ -22,9 +21,9 @@ namespace Content.Tools
             Root = stream.Documents[0].RootNode;
             TilemapNode = (YamlMappingNode) Root["tilemap"];
             GridsNode = (YamlSequenceNode) Root["grids"];
-            _entitiesNode = (YamlSequenceNode) Root["entities"];
+            EntitiesNode = (YamlSequenceNode) Root["entities"];
 
-            foreach (var entity in _entitiesNode)
+            foreach (var entity in EntitiesNode)
             {
                 var uid = uint.Parse(entity["uid"].AsString());
                 if (uid >= NextAvailableEntityId)
@@ -47,7 +46,7 @@ namespace Content.Tools
 
         // Entities lookup
 
-        private YamlSequenceNode _entitiesNode { get; }
+        private YamlSequenceNode EntitiesNode { get; }
 
         public Dictionary<uint, YamlMappingNode> Entities { get; } = new Dictionary<uint, YamlMappingNode>();
 
@@ -60,9 +59,9 @@ namespace Content.Tools
         public void Save(string fileName)
         {
             // Update entities node
-            _entitiesNode.Children.Clear();
+            EntitiesNode.Children.Clear();
             foreach (var kvp in Entities)
-                _entitiesNode.Add(kvp.Value);
+                EntitiesNode.Add(kvp.Value);
 
             using var writer = new StreamWriter(fileName);
             var document = new YamlDocument(Root);

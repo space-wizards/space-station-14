@@ -1,35 +1,33 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using Content.Client.CrewManifest;
+using Content.Client.Eui;
 using Content.Client.GameTicking.Managers;
 using Content.Client.HUD.UI;
+using Content.Shared.CCVar;
+using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
-using Content.Shared.Station;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
 {
-    public sealed class LateJoinGui : SS14Window
+    public sealed class LateJoinGui : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
-        public event Action<(StationId, string)> SelectedId;
+        public event Action<(EntityUid, string)> SelectedId;
 
-        private readonly Dictionary<StationId, Dictionary<string, JobButton>> _jobButtons = new();
-        private readonly Dictionary<StationId, Dictionary<string, BoxContainer>> _jobCategories = new();
+        private readonly Dictionary<EntityUid, Dictionary<string, JobButton>> _jobButtons = new();
+        private readonly Dictionary<EntityUid, Dictionary<string, BoxContainer>> _jobCategories = new();
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
@@ -57,7 +55,7 @@ namespace Content.Client.LateJoin
             {
                 var (station, jobId) = x;
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
-                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station.Id}");
+                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
                 Close();
             };
 
@@ -72,6 +70,10 @@ namespace Content.Client.LateJoin
             _jobCategories.Clear();
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
+
+            if (!gameTicker.DisallowedLateJoin && gameTicker.StationNames.Count == 0)
+                Logger.Warning("No stations exist, nothing to display in late-join GUI");
+
             foreach (var (id, name) in gameTicker.StationNames)
             {
                 var jobList = new BoxContainer
@@ -113,6 +115,21 @@ namespace Content.Client.LateJoin
                         }
                     }
                 });
+
+                if (_configManager.GetCVar<bool>(CCVars.CrewManifestWithoutEntity))
+                {
+                    var crewManifestButton = new Button()
+                    {
+                        Text = Loc.GetString("crew-manifest-button-label")
+                    };
+                    crewManifestButton.OnPressed += args =>
+                    {
+                        EntitySystem.Get<CrewManifestSystem>().RequestCrewManifest(id);
+                    };
+
+                    _base.AddChild(crewManifestButton);
+                }
+
                 var jobListScroll = new ScrollContainer()
                 {
                     VerticalExpand = true,
@@ -138,54 +155,61 @@ namespace Content.Client.LateJoin
 
                 var firstCategory = true;
 
-                foreach (var job in gameTicker.JobsAvailable[id].OrderBy(x => x.Key))
+                foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
                 {
-                    var prototype = _prototypeManager.Index<JobPrototype>(job.Key);
-                    foreach (var department in prototype.Departments)
+                    var departmentName = Loc.GetString($"department-{department.ID}");
+                    _jobCategories[id] = new Dictionary<string, BoxContainer>();
+                    _jobButtons[id] = new Dictionary<string, JobButton>();
+                    var stationAvailable = gameTicker.JobsAvailable[id];
+
+                    var category = new BoxContainer
                     {
-                        if (!_jobCategories.TryGetValue(id, out var _))
-                            _jobCategories[id] = new Dictionary<string, BoxContainer>();
-                        if (!_jobButtons.TryGetValue(id, out var _))
-                            _jobButtons[id] = new Dictionary<string, JobButton>();
-                        if (!_jobCategories[id].TryGetValue(department, out var category))
+                        Orientation = LayoutOrientation.Vertical,
+                        Name = department.ID,
+                        ToolTip = Loc.GetString("late-join-gui-jobs-amount-in-department-tooltip",
+                            ("departmentName", departmentName))
+                    };
+
+                    if (firstCategory)
+                    {
+                        firstCategory = false;
+                    }
+                    else
+                    {
+                        category.AddChild(new Control
                         {
-                            category = new BoxContainer
-                            {
-                                Orientation = LayoutOrientation.Vertical,
-                                Name = department,
-                                ToolTip = Loc.GetString("late-join-gui-jobs-amount-in-department-tooltip",
-                                                        ("departmentName", department))
-                            };
+                            MinSize = new Vector2(0, 23),
+                        });
+                    }
 
-                            if (firstCategory)
+                    category.AddChild(new PanelContainer
+                    {
+                        Children =
+                        {
+                            new Label
                             {
-                                firstCategory = false;
+                                StyleClasses = { "LabelBig" },
+                                Text = Loc.GetString("late-join-gui-department-jobs-label", ("departmentName", departmentName))
                             }
-                            else
-                            {
-                                category.AddChild(new Control
-                                {
-                                    MinSize = new Vector2(0, 23),
-                                });
-                            }
-
-                            category.AddChild(new PanelContainer
-                            {
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        StyleClasses = { "LabelBig" },
-                                        Text = Loc.GetString("late-join-gui-department-jobs-label", ("departmentName", department))
-                                    }
-                                }
-                            });
-
-                            _jobCategories[id][department] = category;
-                            jobList.AddChild(category);
                         }
+                    });
 
-                        var jobButton = new JobButton(prototype.ID, job.Value);
+                    _jobCategories[id][department.ID] = category;
+                    jobList.AddChild(category);
+                    var jobsAvailable = new List<JobPrototype>();
+
+                    foreach (var jobId in department.Roles)
+                    {
+                        if (!stationAvailable.ContainsKey(jobId)) continue;
+                        jobsAvailable.Add(_prototypeManager.Index<JobPrototype>(jobId));
+                    }
+
+                    jobsAvailable.Sort((x, y) => -string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCultureIgnoreCase));
+
+                    foreach (var prototype in jobsAvailable)
+                    {
+                        var value = stationAvailable[prototype.ID];
+                        var jobButton = new JobButton(prototype.ID, value);
 
                         var jobSelector = new BoxContainer
                         {
@@ -209,9 +233,9 @@ namespace Content.Client.LateJoin
 
                         var jobLabel = new Label
                         {
-                            Text = job.Value >= 0 ?
-                                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.Name), ("amount", job.Value)) :
-                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.Name))
+                            Text = value != null ?
+                                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.LocalizedName), ("amount", value)) :
+                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.LocalizedName))
                         };
 
                         jobSelector.AddChild(jobLabel);
@@ -223,7 +247,7 @@ namespace Content.Client.LateJoin
                             SelectedId?.Invoke((id, jobButton.JobId));
                         };
 
-                        if (job.Value == 0)
+                        if (value == 0)
                         {
                             jobButton.Disabled = true;
                         }
@@ -234,7 +258,7 @@ namespace Content.Client.LateJoin
             }
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<StationId, Dictionary<string, int>> _)
+        private void JobsAvailableUpdated(IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> _)
         {
             RebuildUI();
         }
@@ -252,12 +276,12 @@ namespace Content.Client.LateJoin
         }
     }
 
-    class JobButton : ContainerButton
+    sealed class JobButton : ContainerButton
     {
         public string JobId { get; }
-        public int Amount { get; }
+        public uint? Amount { get; }
 
-        public JobButton(string jobId, int amount)
+        public JobButton(string jobId, uint? amount)
         {
             JobId = jobId;
             Amount = amount;

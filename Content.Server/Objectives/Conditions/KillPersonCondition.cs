@@ -1,5 +1,4 @@
 using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -9,11 +8,28 @@ namespace Content.Server.Objectives.Conditions
         protected Mind.Mind? Target;
         public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
 
-        public string Title => Loc.GetString("objective-condition-kill-person-title", ("targetName", Target?.CharacterName ?? Target?.OwnedEntity?.Name ?? string.Empty));
+        public string Title
+        {
+            get
+            {
+                var targetName = string.Empty;
+                var jobName = Target?.CurrentJob?.Name ?? "Unknown";
+
+                if (Target == null)
+                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
+
+                if (Target.CharacterName != null)
+                    targetName = Target.CharacterName;
+                else if (Target.OwnedEntity is {Valid: true} owned)
+                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
+
+                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
+            }
+        }
 
         public string Description => Loc.GetString("objective-condition-kill-person-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/mk58_wood.rsi"), "icon");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/viper.rsi"), "icon");
 
         public float Progress => (Target?.CharacterDeadIC ?? true) ? 1f : 0f;
 

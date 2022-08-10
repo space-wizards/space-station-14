@@ -1,19 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Content.Shared.Construction;
+﻿using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class EntityAnchored : IGraphCondition
+    public sealed class EntityAnchored : IGraphCondition
     {
         [DataField("anchored")] public bool Anchored { get; private set; } = true;
 
@@ -27,12 +21,14 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
+            var anchored = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Anchored;
+
             switch (Anchored)
             {
-                case true when !entity.Transform.Anchored:
+                case true when !anchored:
                     args.PushMarkup(Loc.GetString("construction-examine-condition-entity-anchored"));
                     return true;
-                case false when entity.Transform.Anchored:
+                case false when anchored:
                     args.PushMarkup(Loc.GetString("construction-examine-condition-entity-unanchored"));
                     return true;
             }

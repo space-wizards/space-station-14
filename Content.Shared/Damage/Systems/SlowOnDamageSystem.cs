@@ -1,13 +1,10 @@
-﻿using System;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
-using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Damage
 {
-    public class SlowOnDamageSystem : EntitySystem
+    public sealed class SlowOnDamageSystem : EntitySystem
     {
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 
@@ -32,7 +29,7 @@ namespace Content.Shared.Damage
             var total = damage.TotalDamage;
             foreach (var thres in component.SpeedModifierThresholds)
             {
-                if (FixedPoint2.Dist(thres.Key, total) < FixedPoint2.Dist(closest, total))
+                if (total >= thres.Key && thres.Key > closest)
                     closest = thres.Key;
             }
 

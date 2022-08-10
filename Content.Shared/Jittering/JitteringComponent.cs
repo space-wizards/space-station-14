@@ -1,19 +1,12 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Jittering
 {
-    [Friend(typeof(SharedJitteringSystem))]
+    [Access(typeof(SharedJitteringSystem))]
     [RegisterComponent, NetworkedComponent]
-    public class JitteringComponent : Component
+    public sealed class JitteringComponent : Component
     {
-        public override string Name => "Jittering";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public float Amplitude { get; set; }
 
@@ -25,7 +18,7 @@ namespace Content.Shared.Jittering
     }
 
     [Serializable, NetSerializable]
-    public class JitteringComponentState : ComponentState
+    public sealed class JitteringComponentState : ComponentState
     {
         public float Amplitude { get; }
         public float Frequency { get; }

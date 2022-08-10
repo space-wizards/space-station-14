@@ -1,12 +1,10 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public class EntityUidConverter : AdminLogConverter<EntityUid>
+public sealed class EntityUidConverter : AdminLogConverter<EntityUid>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -16,9 +14,9 @@ public class EntityUidConverter : AdminLogConverter<EntityUid>
 
         writer.WriteNumber("id", (int) value);
 
-        if (entities.TryGetEntity(value, out var entity))
+        if (entities.TryGetComponent(value, out MetaDataComponent? metaData))
         {
-            writer.WriteString("name", entity.Name);
+            writer.WriteString("name", metaData.EntityName);
         }
 
         if (entities.TryGetComponent(value, out ActorComponent? actor))

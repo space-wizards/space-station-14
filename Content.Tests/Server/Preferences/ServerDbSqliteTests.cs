@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
+using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Tests.Server.Preferences
 {
     [TestFixture]
-    public class ServerDbSqliteTests : ContentUnitTest
+    public sealed class ServerDbSqliteTests : ContentUnitTest
     {
         private const string Prototypes = @"
 - type: dataset
@@ -42,6 +43,8 @@ namespace Content.Tests.Server.Preferences
         {
             return new(
                 "Charlie Charlieson",
+                "The biggest boy around.",
+                "Human",
                 21,
                 Sex.Male,
                 Gender.Epicene,
@@ -51,7 +54,8 @@ namespace Content.Tests.Server.Preferences
                     "Shaved",
                     Color.Aquamarine,
                     Color.Azure,
-                    Color.Beige
+                    Color.Beige,
+                    new MarkingsSet()
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,
@@ -66,7 +70,7 @@ namespace Content.Tests.Server.Preferences
 
         private static ServerDbSqlite GetDb()
         {
-            var builder = new DbContextOptionsBuilder<ServerDbContext>();
+            var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);

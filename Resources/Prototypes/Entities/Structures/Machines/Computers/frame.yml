@@ -10,23 +10,21 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
+        bounds: "-0.25,-0.5,0.25,0.5"
       mass: 25
       mask:
-        - MobImpassable
+      - MachineMask
       layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
-        - VaultImpassable
+      - MachineLayer
   - type: InteractionOutline
   - type: Rotatable
   - type: Anchorable
   - type: Construction
-    graph: computer
+    graph: Computer
     node: frameUnsecured
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
+    drawdepth: Objects
     state: 0
   - type: Damageable
     damageContainer: Inorganic
@@ -52,10 +50,11 @@
   description: This computer has seen better days.
   components:
   - type: Construction
-    graph: computer
+    graph: Computer
     node: monitorBroken
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
+    drawdepth: Objects
     state: broken
   - type: Destructible
     thresholds:

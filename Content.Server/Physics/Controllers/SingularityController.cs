@@ -1,8 +1,5 @@
 using Content.Server.Singularity.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Random;
 
@@ -12,7 +9,8 @@ namespace Content.Server.Physics.Controllers
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        private const float MaxMoveCooldown = 10f;
+        // SS13 has 10s but that's quite a while
+        private const float MaxMoveCooldown = 5f;
         private const float MinMoveCooldown = 2f;
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -21,14 +19,14 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var (singularity, physics) in EntityManager.EntityQuery<ServerSingularityComponent, PhysicsComponent>())
             {
-                if (singularity.Owner.HasComponent<ActorComponent>() ||
+                if (EntityManager.HasComponent<ActorComponent>(singularity.Owner) ||
                     singularity.BeingDeletedByAnotherSingularity) continue;
 
                 singularity.MoveAccumulator -= frameTime;
 
                 if (singularity.MoveAccumulator > 0f) continue;
 
-                singularity.MoveAccumulator = MinMoveCooldown + (MaxMoveCooldown - MinMoveCooldown) * _robustRandom.NextFloat();
+                singularity.MoveAccumulator = _robustRandom.NextFloat(MinMoveCooldown, MaxMoveCooldown);
 
                 MoveSingulo(singularity, physics);
             }
@@ -44,13 +42,12 @@ namespace Content.Server.Physics.Controllers
             }
 
             // TODO: Could try gradual changes instead
-            var pushVector = new Vector2(_robustRandom.Next(-10, 10), _robustRandom.Next(-10, 10));
-
-            if (pushVector == Vector2.Zero) return;
+            var pushAngle = _robustRandom.NextAngle();
+            var pushStrength = _robustRandom.NextFloat(0.75f, 1.0f);
 
             physics.LinearVelocity = Vector2.Zero;
             physics.BodyStatus = BodyStatus.InAir;
-            physics.ApplyLinearImpulse(pushVector.Normalized + 1f / singularity.Level * physics.Mass);
+            physics.ApplyLinearImpulse(pushAngle.ToVec() * (pushStrength + 10f / Math.Min(singularity.Level, 4) * physics.Mass));
             // TODO: Speedcap it probably?
         }
     }

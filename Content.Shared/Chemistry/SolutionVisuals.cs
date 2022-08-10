@@ -1,5 +1,3 @@
-﻿using System;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
@@ -11,27 +9,34 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public class SolutionContainerVisualState
+    public sealed class SolutionContainerVisualState : ICloneable
     {
         public readonly Color Color;
 
-        /// <summary>
-        ///     Represents how full the container is, as a fraction equivalent to <see cref="FilledVolumeFraction"/>/<see cref="byte.MaxValue"/>.
-        /// </summary>
         public readonly byte FilledVolumeFraction;
 
         // do we really need this just to save three bytes?
+        // This does seem silly
         public float FilledVolumePercent => (float) FilledVolumeFraction / byte.MaxValue;
 
         /// <summary>
         ///     Sets the solution state of a container.
         /// </summary>
-        /// <param name="color"></param>
-        /// <param name="filledVolumeFraction">The fraction of the container's volume that is filled.</param>
-        public SolutionContainerVisualState(Color color, float filledVolumeFraction)
+        public SolutionContainerVisualState(Color color, float filledVolumePercent)
         {
             Color = color;
-            FilledVolumeFraction = (byte) (byte.MaxValue * filledVolumeFraction);
+            FilledVolumeFraction = (byte) (byte.MaxValue * filledVolumePercent);
+        }
+
+        public SolutionContainerVisualState(Color color, byte filledVolumeFraction)
+        {
+            Color = color;
+            FilledVolumeFraction = filledVolumeFraction;
+        }
+
+        public object Clone()
+        {
+            return new SolutionContainerVisualState(Color, FilledVolumeFraction);
         }
     }
 

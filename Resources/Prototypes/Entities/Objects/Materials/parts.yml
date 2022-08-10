@@ -10,6 +10,20 @@
   - type: Item
     sprite: Objects/Materials/parts.rsi
   - type: ItemStatus
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: PartBase
@@ -22,9 +36,9 @@
   - type: Sprite
     state: rods_5
 #  - type: Item
-#    HeldPrefix: rods
+#    heldPrefix: rods
   - type: Construction
-    graph: metalRod
+    graph: MetalRod
     node: MetalRod
   - type: Appearance
     visuals:
@@ -37,8 +51,8 @@
       - rods_5
   - type: FloorTile
     outputs:
-    - lattice
-    - floor_reinforced
+    - Lattice
+    - FloorReinforced
 
 - type: entity
   parent: PartRodMetal
@@ -49,6 +63,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - DroneUsable
   - type: Sprite
     state: rods
   - type: Stack

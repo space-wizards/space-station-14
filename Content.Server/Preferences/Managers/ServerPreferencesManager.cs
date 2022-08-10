@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -22,7 +18,7 @@ namespace Content.Server.Preferences.Managers
     /// Sends <see cref="MsgPreferencesAndSettings"/> before the client joins the lobby.
     /// Receives <see cref="MsgSelectCharacter"/> and <see cref="MsgUpdateCharacter"/> at any time.
     /// </summary>
-    public class ServerPreferencesManager : IServerPreferencesManager
+    public sealed class ServerPreferencesManager : IServerPreferencesManager
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -48,7 +44,7 @@ namespace Content.Server.Preferences.Managers
             var index = message.SelectedCharacterIndex;
             var userId = message.MsgChannel.UserId;
 
-            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
                 return;
@@ -88,7 +84,7 @@ namespace Content.Server.Preferences.Managers
                 return;
             }
 
-            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
                 return;
@@ -121,7 +117,7 @@ namespace Content.Server.Preferences.Managers
             var slot = message.Slot;
             var userId = message.MsgChannel.UserId;
 
-            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
                 return;
@@ -168,14 +164,15 @@ namespace Content.Server.Preferences.Managers
             }
         }
 
-        public async void OnClientConnected(IPlayerSession session)
+        // Should only be called via UserDbDataManager.
+        public async Task LoadData(IPlayerSession session, CancellationToken cancel)
         {
             if (!ShouldStorePrefs(session.ConnectedClient.AuthType))
             {
                 // Don't store data for guests.
                 var prefsData = new PlayerPrefData
                 {
-                    PrefsLoaded = Task.CompletedTask,
+                    PrefsLoaded = true,
                     Prefs = new PlayerPreferences(
                         new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Random())},
                         0, Color.Transparent)
@@ -187,7 +184,6 @@ namespace Content.Server.Preferences.Managers
             {
                 var prefsData = new PlayerPrefData();
                 var loadTask = LoadPrefs();
-                prefsData.PrefsLoaded = loadTask;
                 _cachedPlayerPrefs[session.UserId] = prefsData;
 
                 await loadTask;
@@ -196,8 +192,9 @@ namespace Content.Server.Preferences.Managers
                 {
                     var prefs = await GetOrCreatePreferencesAsync(session.UserId);
                     prefsData.Prefs = prefs;
+                    prefsData.PrefsLoaded = true;
 
-                    var msg = _netManager.CreateNetMessage<MsgPreferencesAndSettings>();
+                    var msg = new MsgPreferencesAndSettings();
                     msg.Preferences = prefs;
                     msg.Settings = new GameSettings
                     {
@@ -208,7 +205,6 @@ namespace Content.Server.Preferences.Managers
             }
         }
 
-
         public void OnClientDisconnected(IPlayerSession session)
         {
             _cachedPlayerPrefs.Remove(session.UserId);
@@ -217,11 +213,6 @@ namespace Content.Server.Preferences.Managers
         public bool HavePreferencesLoaded(IPlayerSession session)
         {
             return _cachedPlayerPrefs.ContainsKey(session.UserId);
-        }
-
-        public Task WaitPreferencesLoaded(IPlayerSession session)
-        {
-            return _cachedPlayerPrefs[session.UserId].PrefsLoaded;
         }
 
         /// <summary>
@@ -262,13 +253,22 @@ namespace Content.Server.Preferences.Managers
                 {
                     case HumanoidCharacterProfile hp:
                     {
+                        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                        var selectedSpecies = SpeciesManager.DefaultSpecies;
+
+                        if (prototypeManager.TryIndex<SpeciesPrototype>(hp.Species, out var species) && species.RoundStart)
+                        {
+                            selectedSpecies = hp.Species;
+                        }
+
                         newProf = hp
                             .WithJobPriorities(
                                 hp.JobPriorities.Where(job =>
                                     _protos.HasIndex<JobPrototype>(job.Key)))
                             .WithAntagPreferences(
                                 hp.AntagPreferences.Where(antag =>
-                                    _protos.HasIndex<AntagPrototype>(antag)));
+                                    _protos.HasIndex<AntagPrototype>(antag)))
+                            .WithSpecies(selectedSpecies);
                         break;
                     }
                     default:
@@ -299,7 +299,7 @@ namespace Content.Server.Preferences.Managers
 
         private sealed class PlayerPrefData
         {
-            public Task PrefsLoaded = default!;
+            public bool PrefsLoaded;
             public PlayerPreferences? Prefs;
         }
     }

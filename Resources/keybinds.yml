@@ -17,9 +17,6 @@ binds:
   type: State
   key: MouseLeft
   canFocus: true
-- function: WideAttack
-  type: State
-  key: Space
 - function: ShowDebugMonitors
   type: Toggle
   key: F3
@@ -42,6 +39,29 @@ binds:
 - function: Walk
   type: State
   key: Shift
+# Shuttle
+- function: ShuttleStrafeUp
+  type: State
+  key: W
+- function: ShuttleStrafeLeft
+  type: State
+  key: A
+- function: ShuttleStrafeRight
+  type: State
+  key: D
+- function: ShuttleStrafeDown
+  type: State
+  key: S
+- function: ShuttleRotateLeft
+  type: State
+  key: Q
+- function: ShuttleRotateRight
+  type: State
+  key: E
+- function: ShuttleBrake
+  type: State
+  key: Space
+
 - function: CameraRotateLeft
   type: State
   key: NumpadNum7
@@ -65,6 +85,9 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusWhisperChatWindow
+  type: State
+  key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon
@@ -101,6 +124,9 @@ binds:
 - function: EditorRotateObject
   type: State
   key: MouseMiddle
+- function: EditorCopyObject
+  type: State
+  key: P
 - function: SwapHands
   type: State
   key: X
@@ -288,6 +314,16 @@ binds:
 - function: TextHistoryNext
   type: State
   key: Down
+- function: TextCompleteNext
+  type: State
+  key: Down
+  priority: 1
+  canRepeat: true
+- function: TextCompletePrev
+  type: State
+  key: Up
+  priority: 1
+  canRepeat: true
 - function: TextReleaseFocus
   type: State
   key: Escape
@@ -311,6 +347,9 @@ binds:
 - function: OpenAdminMenu
   type: State
   key: F7
+- function: OpenDecalSpawnWindow
+  type: State
+  key: F8
 - function: OpenSandboxWindow
   type: State
   key: B

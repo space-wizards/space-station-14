@@ -1,13 +1,11 @@
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking.Commands
 {
-    class RespawnCommand : IConsoleCommand
+    sealed class RespawnCommand : IConsoleCommand
     {
         public string Command => "respawn";
         public string Description => "Respawns a player, kicking them back to the lobby.";

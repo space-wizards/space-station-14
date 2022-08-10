@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         private void ExcitedGroupAddTile(ExcitedGroup excitedGroup, TileAtmosphere tile)
         {
@@ -87,7 +87,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 Merge(combined, tile.Air);
 
-                if (!ExcitedGroupsSpaceIsAllConsuming || !tile.Air.Immutable)
+                if (!ExcitedGroupsSpaceIsAllConsuming || !tile.Space)
                     continue;
 
                 combined.Clear();

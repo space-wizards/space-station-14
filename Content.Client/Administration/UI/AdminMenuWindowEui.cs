@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI
 {
-    public class AdminAnnounceEui : BaseEui
+    public sealed class AdminAnnounceEui : BaseEui
     {
         private readonly AdminAnnounceWindow _window;
 
@@ -22,7 +22,7 @@ namespace Content.Client.Administration.UI
                 Announcement = _window.Announcement.Text,
                 Announcer =  _window.Announcer.Text,
                 AnnounceType =  (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
-                CloseAfter = true,
+                CloseAfter = !_window.KeepWindowOpen.Pressed,
             });
 
         }

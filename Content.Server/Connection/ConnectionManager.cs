@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Threading.Tasks;
-using Content.Server.Administration.Managers;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 
@@ -63,6 +60,35 @@ The ban reason is: ""{ban.Reason}""
 
         private async Task NetMgrOnConnecting(NetConnectingArgs e)
         {
+            var deny = await ShouldDeny(e);
+
+            var addr = e.IP.Address;
+            var userId = e.UserId;
+
+            if (deny != null)
+            {
+                var (reason, msg, banHits) = deny.Value;
+
+                var id = await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId, reason);
+                if (banHits is { Count: > 0 })
+                    await _db.AddServerBanHitsAsync(id, banHits);
+
+                e.Deny(msg);
+            }
+            else
+            {
+                await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId, null);
+
+                if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
+                    return;
+
+                await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, e.UserData.HWId);
+            }
+        }
+
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ShouldDeny(
+            NetConnectingArgs e)
+        {
             // Check if banned.
             var addr = e.IP.Address;
             var userId = e.UserId;
@@ -74,26 +100,41 @@ The ban reason is: ""{ban.Reason}""
                 hwId = null;
             }
 
-            if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && await _dbManager.GetAdminDataForAsync(e.UserId) is null)
+            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+
+            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
             {
-                e.Deny("The server is full!");
-                return;
+                var record = await _dbManager.GetPlayerRecordByUserId(userId);
+                if ((record is null ||
+                    record.FirstSeenTime.CompareTo(DateTimeOffset.Now - TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.PanicBunkerMinAccountAge))) < 0)
+                    && !await _db.GetWhitelistStatusAsync(userId)
+                    )
+                {
+                    return (ConnectionDenyReason.Panic, Loc.GetString("panic-bunker-account-denied"), null);
+                }
             }
 
-            var ban = await _db.GetServerBanAsync(addr, userId, hwId);
-            if (ban != null)
+            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) && ticker.PlayersInGame.Contains(userId);
+            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame)
             {
-                e.Deny(ban.DisconnectMessage);
-                return;
+                return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
 
-            if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
+            var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false);
+            if (bans.Count > 0)
             {
-                return;
+                var firstBan = bans[0];
+                return (ConnectionDenyReason.Ban, firstBan.DisconnectMessage, bans);
             }
 
-            await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, e.UserData.HWId);
-            await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId);
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled)
+                && await _db.GetWhitelistStatusAsync(userId) == false
+                && adminData is null)
+            {
+                return (ConnectionDenyReason.Whitelist, Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason)), null);
+            }
+
+            return null;
         }
 
         private async Task<NetUserId?> AssignUserIdCallback(string name)

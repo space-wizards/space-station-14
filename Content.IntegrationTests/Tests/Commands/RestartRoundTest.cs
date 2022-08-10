@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Commands;
-using Content.Shared;
 using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Shared.Configuration;
@@ -13,33 +12,27 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(RestartRoundNowCommand))]
-    public class RestartRoundNowTest : ContentIntegrationTest
+    public sealed class RestartRoundNowTest
     {
         [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task RestartRoundAfterStart(bool lobbyEnabled)
         {
-            var (_, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    [CCVars.GameMap.Name] = "saltern"
-                }
-            });
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings(){Dirty = true});
+            var server = pairTracker.Pair.Server;
 
             var configManager = server.ResolveDependency<IConfigurationManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
 
-            await server.WaitRunTicks(30);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
             GameTick tickBeforeRestart = default;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
+                Assert.That(configManager.GetCVar<bool>(CCVars.GameLobbyEnabled), Is.EqualTo(false));
                 configManager.SetCVar(CCVars.GameLobbyEnabled, lobbyEnabled);
 
                 Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
@@ -55,17 +48,17 @@ namespace Content.IntegrationTests.Tests.Commands
                 }
             });
 
-            await server.WaitIdleAsync();
-            await server.WaitRunTicks(5);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 15);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var tickAfterRestart = entityManager.CurrentTick;
 
                 Assert.That(tickBeforeRestart < tickAfterRestart);
             });
 
-            await server.WaitRunTicks(60);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

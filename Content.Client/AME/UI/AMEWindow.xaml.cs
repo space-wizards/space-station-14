@@ -12,7 +12,7 @@ using static Content.Shared.AME.SharedAMEControllerComponent;
 namespace Content.Client.AME.UI
 {
     [GenerateTypedNameReferences]
-    public partial class AMEWindow : SS14Window
+    public sealed partial class AMEWindow : DefaultWindow
     {
         public AMEWindow(AMEControllerBoundUserInterface ui)
         {

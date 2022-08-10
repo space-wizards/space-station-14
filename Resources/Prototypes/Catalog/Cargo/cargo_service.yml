@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "janitorial supplies crate"
   id: ServiceJanitorial
-  description: "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, a single mop and bucket, spray cleaner, and soap."
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: cleaner
@@ -11,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: "replacement lights crate"
   id: ServiceLightsReplacement
-  description: "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
@@ -23,9 +19,17 @@
   group: market
 
 - type: cargoProduct
-  name: "lung cancer crate"
+  id: MousetrapBoxes
+  icon:
+    sprite: Objects/Devices/mousetrap.rsi
+    state: mousetrap
+  product: CrateMousetrapBoxes
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: ServiceSmokeables
-  description: "Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!"
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     state: closed
@@ -35,13 +39,31 @@
   group: market
 
 - type: cargoProduct
-  name: "DIY lung cancer crate"
   id: ServiceCustomSmokable
-  description: "Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own Cigarettes."
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     state: closed
   product: CrateServiceCustomSmokable
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceBureaucracy
+  icon:
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+  product: CrateServiceBureaucracy
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServicePersonnel
+  icon:
+    sprite: Objects/Misc/id_cards.rsi
+    state: default
+  product: CrateServicePersonnel
   cost: 1000
   category: Service
   group: market

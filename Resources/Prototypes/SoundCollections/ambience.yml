@@ -1,4 +1,11 @@
 - type: soundCollection
-  id: AmbienceBase
+  id: StationAmbienceBase
   files:
     - /Audio/Ambience/shipambience.ogg
+
+- type: soundCollection
+  id: SpaceAmbienceBase
+  files:
+    - /Audio/Ambience/starlight.ogg
+    - /Audio/Ambience/constellations.ogg
+    - /Audio/Ambience/drifting.ogg

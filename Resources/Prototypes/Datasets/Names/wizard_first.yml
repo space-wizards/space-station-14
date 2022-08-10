@@ -1,40 +1,33 @@
 ﻿- type: dataset
   id: names_wizard_first
   values:
-  - Alatar
-  - Archchancellor
-  - Boccob
+  - Ashenzari
+  - Chancellor
+  - Cleric
   - Circe
   - Doctor
-  - Dumbledor
-  - Elminister
-  - Gandalf
+  - Dithmenos
+  - Elyvilon
+  - Faustus
   - Grimm
-  - Gulstaff
-  - Houdini
+  - Gozag
   - Jim
-  - Kaschei
-  - Khelben
+  - Jiyva
+  - Lirazel
+  - Lugonu
+  - Koschei
   - Kreol
   - Lina
   - Merlin
-  - Mogan
-  - Mordenkainen
   - Morgan
-  - Mystryl
-  - Nihilus
-  - Palando
-  - Prospero
-  - Radagast
-  - Raistlin
+  - Nemelex
   - Rasputin
-  - Saruman
-  - Tenser
-  - Terefi
-  - Tzeentch
-  - Urza
-  - Vaarsuvius
-  - Vecna
-  - Yoda
-  - Zagyg
-  - Zul
+  - Ru
+  - Sif
+  - Trivia
+  - Trog
+  - Uskayaw
+  - Vehumet
+  - Xom
+  - Yredelemnul
+  - Zin

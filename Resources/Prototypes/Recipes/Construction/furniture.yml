@@ -1,7 +1,8 @@
+#chairs
 - type: construction
   name: chair
   id: Chair
-  graph: seat
+  graph: Seat
   startNode: start
   targetNode: chair
   category: Furniture
@@ -13,12 +14,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: stool
   id: Stool
-  graph: seat
+  graph: Seat
   startNode: start
   targetNode: stool
   category: Furniture
@@ -30,12 +31,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: bar stool
   id: StoolBar
-  graph: seat
+  graph: Seat
   startNode: start
   targetNode: stoolBar
   category: Furniture
@@ -47,12 +48,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: office chair
   id: ChairOfficeLight
-  graph: seat
+  graph: Seat
   startNode: start
   targetNode: chairOffice
   category: Furniture
@@ -64,12 +65,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: dark office chair
   id: ChairOfficeDark
-  graph: seat
+  graph: Seat
   startNode: start
   targetNode: chairOfficeDark
   category: Furniture
@@ -81,12 +82,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: comfy chair
   id: ChairComfy
-  graph: seat
+  graph: Seat
   startNode: start
   targetNode: chairComfy
   category: Furniture
@@ -98,12 +99,29 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+
+- type: construction
+  name: pilots chair
+  id: chairPilotSeat
+  graph: Seat
+  startNode: start
+  targetNode: chairPilotSeat
+  category: Furniture
+  description: Fit for a captain.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: shuttle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 - type: construction
   name: wooden chair
   id: ChairWood
-  graph: seat
+  graph: Seat
   startNode: start
   targetNode: chairWood
   category: Furniture
@@ -115,4 +133,280 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+
+- type: construction
+  name: ritual chair
+  id: ChairRitual
+  graph: RitualSeat
+  startNode: start
+  targetNode: chairRitual
+  category: Furniture
+  description: A strangely carved chair.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: ritual
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+#tables
+- type: construction
+  name: steel table
+  id: Table
+  graph: Table
+  startNode: start
+  targetNode: Table
+  category: Furniture
+  description: A square piece of metal standing on four metal legs.
+  icon:
+    sprite: Structures/Furniture/Tables/generic.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: reinforced steel table
+  id: TableReinforced
+  graph: Table
+  startNode: start
+  targetNode: TableReinforced
+  category: Furniture
+  description: A square piece of metal standing on four metal legs. Extra robust.
+  icon:
+    sprite: Structures/Furniture/Tables/reinforced.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: glass table
+  id: TableGlass
+  graph: Table
+  startNode: start
+  targetNode: TableGlass
+  category: Furniture
+  description: A square piece of glass, standing on four metal legs.
+  icon:
+    sprite: Structures/Furniture/Tables/glass.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: reinforced glass table
+  id: TableReinforcedGlass
+  graph: Table
+  startNode: start
+  targetNode: TableReinforcedGlass
+  category: Furniture
+  description: A square piece of glass, standing on four metal legs. Extra robust.
+  icon:
+    sprite: Structures/Furniture/Tables/r_glass.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plasma glass table
+  id: TablePlasmaGlass
+  graph: Table
+  startNode: start
+  targetNode: TablePlasmaGlass
+  category: Furniture
+  description: A square piece of plasma glass, standing on four metal legs. Pretty!
+  icon:
+    sprite: Structures/Furniture/Tables/plasma.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: wood table
+  id: TableWood
+  graph: Table
+  startNode: start
+  targetNode: TableWood
+  category: Furniture
+  description: Do not apply fire to this. Rumour says it burns easily.
+  icon:
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: poker table
+  id: TableCarpet
+  graph: Table
+  startNode: start
+  targetNode: TableCarpet
+  category: Furniture
+  description: A square piece of wood standing on four legs covered by a cloth. (What did you expect?)
+  icon:
+    sprite: Structures/Furniture/Tables/carpet.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: metal counter
+  id: TableCounterMetal
+  graph: Table
+  startNode: start
+  targetNode: CounterMetal
+  category: Furniture
+  description: Looks like a good place to put a drink down.
+  icon:
+    sprite: Structures/Furniture/Tables/countermetal.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: wood counter
+  id: TableCounterWood
+  graph: Table
+  startNode: start
+  targetNode: CounterWood
+  category: Furniture
+  description: Do not apply fire to this. Rumour says it burns easily.
+  icon:
+    sprite: Structures/Furniture/Tables/counterwood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+#bathroom
+- type: construction
+  name: toilet
+  id: ToiletEmpty
+  graph: Toilet
+  startNode: start
+  targetNode: toilet
+  category: Furniture
+  description: A human excrement flushing apparatus
+  icon:
+    sprite: Structures/Furniture/toilet.rsi
+    state: closed_toilet_seat_up
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+#beds
+- type: construction
+  id: Bed
+  name: bed
+  description: This is used to lie in, sleep in or strap on. Resting here provides extremely slow healing.
+  graph: bed
+  startNode: start
+  targetNode: bed
+  category: Furniture
+  icon:
+    sprite: Structures/Furniture/furniture.rsi
+    state: bed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: MedicalBed
+  name: medical bed
+  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing.
+  graph: bed
+  startNode: start
+  targetNode: medicalbed
+  category: Furniture
+  icon:
+    sprite: Structures/Furniture/furniture.rsi
+    state: bed-MED
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: DogBed
+  name: dog bed
+  description: A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off.
+  graph: bed
+  startNode: start
+  targetNode: dogbed
+  category: Furniture
+  icon:
+    sprite: Structures/Furniture/furniture.rsi
+    state: dogbed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+#racks
+- type: construction
+  id: Rack
+  name: rack
+  description: A rack for storing things on.
+  graph: Rack
+  startNode: start
+  targetNode: Rack
+  category: Furniture
+  icon:
+    sprite: Structures/Furniture/furniture.rsi
+    state: rack
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: MeatSpike
+  name: meat spike
+  description: A spike found in kitchens butchering animals.
+  graph: MeatSpike
+  startNode: start
+  targetNode: MeatSpike
+  category: Furniture
+  icon:
+    sprite: Structures/meat_spike.rsi
+    state: spike
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

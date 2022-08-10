@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Spawners
@@ -8,13 +9,14 @@ namespace Content.Client.Spawners
     ///     Spawns a set of entities on the client only, and removes them when this component is removed.
     /// </summary>
     [RegisterComponent]
-    public class ClientEntitySpawnerComponent : Component
+    [ComponentProtoName("ClientEntitySpawner")]
+    public sealed class ClientEntitySpawnerComponent : Component
     {
-        public override string Name => "ClientEntitySpawner";
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         [DataField("prototypes")] private List<string> _prototypes =  new() { "HVDummyWire" };
 
-        private readonly List<IEntity> _entity = new();
+        private readonly List<EntityUid> _entity = new();
 
         protected override void Initialize()
         {
@@ -32,7 +34,7 @@ namespace Content.Client.Spawners
         {
             foreach (var proto in _prototypes)
             {
-                var entity = Owner.EntityManager.SpawnEntity(proto, Owner.Transform.Coordinates);
+                var entity = _entMan.SpawnEntity(proto, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 _entity.Add(entity);
             }
         }
@@ -41,7 +43,7 @@ namespace Content.Client.Spawners
         {
             foreach (var entity in _entity)
             {
-                Owner.EntityManager.DeleteEntity(entity);
+                _entMan.DeleteEntity(entity);
             }
         }
     }

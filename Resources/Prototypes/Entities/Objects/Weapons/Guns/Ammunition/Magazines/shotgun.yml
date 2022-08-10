@@ -1,53 +1,90 @@
 - type: entity
-  id: MagazineShotgunBase
+  id: BaseMagazineShotgun
   name: ammo drum (.50 shells)
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Shotgun
-    magazineType: Rifle
+  - type: Tag
+    tags:
+    - MagazineShotgun
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - ShellShotgun
     capacity: 8
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+  - type: Item
+    size: 5
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 - type: entity
   id: MagazineShotgun
   name: ammo drum (.50 pellet)
-  parent: MagazineShotgunBase
+  parent: BaseMagazineShotgun
   components:
-  - type: RangedMagazine
-    fillPrototype: ShellShotgun
+  - type: BallisticAmmoProvider
+    proto: ShellShotgun
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
+    layers:
+    - state: pellets
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShotgunBeanbag
   name: ammo drum (.50 beanbags)
-  parent: MagazineShotgunBase
+  parent: BaseMagazineShotgun
   components:
-  - type: RangedMagazine
-    fillPrototype: ShellShotgunBeanbag
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
+    layers:
+    - state: beanbag
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShotgunSlug
   name: ammo drum (.50 slug)
-  parent: MagazineShotgunBase
+  parent: BaseMagazineShotgun
   components:
-  - type: RangedMagazine
-    fillPrototype: ShellShotgunSlug
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunSlug
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
+    layers:
+    - state: slug
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShotgunIncendiary
+  name: ammo drum (.50 incendiary)
+  parent: BaseMagazineShotgun
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunIncendiary
+  - type: Sprite
+    layers:
+    - state: slug
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

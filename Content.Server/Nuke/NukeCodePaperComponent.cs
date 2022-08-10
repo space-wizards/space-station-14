@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.Nuke
 {
     /// <summary>
@@ -7,8 +5,7 @@ namespace Content.Server.Nuke
     ///     Can be used in mapping or admins spawn.
     /// </summary>
     [RegisterComponent]
-    public class NukeCodePaperComponent : Component
+    public sealed class NukeCodePaperComponent : Component
     {
-        public override string Name => "NukeCodePaper";
     }
 }

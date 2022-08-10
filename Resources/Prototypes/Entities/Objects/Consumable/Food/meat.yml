@@ -16,7 +16,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
   - type: Item
     size: 5
@@ -47,11 +47,35 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+
+- type: entity
+  name: raw carp fillet
+  parent: FoodMeatBase
+  # MeatFish?...
+  id: FoodMeatFish
+  description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: fish
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
 
 - type: entity
   name: raw bacon
@@ -63,18 +87,20 @@
     tags:
     - Raw
   - type: Sprite
-    netsync: true
+    netsync: false
     state: bacon
-  - type: RandomSpriteState
-    spriteStates:
-    - bacon
-    - bacon2
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          bacon: ""
+      - enum.DamageStateVisualLayers.Base:
+          bacon2: ""
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 2
 
 - type: entity
   name: raw bear meat
@@ -91,8 +117,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutlet
@@ -112,8 +138,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletSlice
@@ -133,11 +159,52 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
+
+- type: entity
+  name: raw duck meat
+  parent: FoodMeatBase
+  id: FoodMeatDuck
+  description: A slab of raw duck. Remember to wash your hands!
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: bird
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDuckCutlet
+
+- type: entity
+  name: prime-cut corgi meat
+  parent: FoodMeatBase
+  id: FoodMeatCorgi
+  description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: corgi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 20
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   name: raw crab meat
@@ -154,7 +221,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -172,8 +239,34 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
+
+- type: entity
+  name: dragon flesh
+  parent: FoodMeatBase
+  id: FoodMeatDragon
+  description: The dense meat of the space-era apex predator is oozing with it's mythical ichor. Ironically, best eaten raw.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    layers:
+    - state: dragon
+    - state: dragon_veins
+      shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Ichor
+        Quantity: 2
 
 - type: entity
   name: raw lizard meat
@@ -190,8 +283,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutlet
@@ -220,7 +313,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 20
 
 - type: entity
@@ -238,8 +331,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 20
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
@@ -259,7 +352,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 10
 
 - type: entity
@@ -277,7 +370,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -345,13 +438,25 @@
   name: meatball
   parent: FoodMeatBase
   id: FoodMeatMeatball
-  description: A raw ball of meat. Not a homosexual.
+  description: A raw ball of meat. Meat ball.
   components:
   - type: Tag
     tags:
     - Raw
   - type: Sprite
     state: meatball
+
+- type: entity
+  name: slimeball
+  parent: FoodMeatBase
+  id: FoodMeatSlime
+  description: A gelatinous shaping of slime jelly.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: slime
 
 # Cooked
 
@@ -375,7 +480,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutletCooked
@@ -396,17 +503,21 @@
     layers:
     - state: plate-meat
     - state: bacon-cooked
-  - type: RandomSpriteState
-    spriteLayer: 1
-    spriteStates:
-    - bacon-cooked
-    - bacon2-cooked
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          bacon-cooked: ""
+      - enum.DamageStateVisualLayers.Base:
+          bacon2-cooked: ""
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: cooked bear
@@ -428,7 +539,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutletCooked
@@ -453,7 +566,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletCooked
@@ -478,7 +593,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutletCooked
@@ -495,18 +612,51 @@
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
-    netsync: true
-    state: chicken-fried
-  - type: RandomSpriteState
-    spriteStates:
-    - chicken-fried
-    - chicken2-fried
+    netsync: false
+    layers:
+    - state: chicken-fried
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          chicken-fried: ""
+      - enum.DamageStateVisualLayers.Base:
+          chicken2-fried: ""
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+
+- type: entity
+  name: cooked duck
+  parent: FoodMeatBase
+  id: FoodMeatDuckCooked
+  description: A cooked piece of duck. Best used in other recipes.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-meat
+    - state: bird-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDuckCutletCooked
 
 - type: entity
   name: cooked crab
@@ -528,7 +678,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: goliath steak
@@ -550,7 +702,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: lizard steak
@@ -572,7 +726,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutletCooked
@@ -597,7 +753,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: meatball
@@ -615,7 +773,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 # Cutlets
 
@@ -637,8 +797,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw bear cutlet
@@ -659,8 +819,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw penguin cutlet
@@ -679,8 +839,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw chicken cutlet
@@ -699,8 +859,28 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+
+- type: entity
+  name: raw duck cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDuckCutlet
+  description: A cutlet of raw duck. Remember to wash your hands!
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Cutlet
+  - type: Sprite
+    state: cutlet
+    color: white
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw lizard cutlet
@@ -722,8 +902,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw spider cutlet
@@ -745,8 +925,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 20
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw xeno cutlet
@@ -801,7 +981,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
 
 # Cooked
 
@@ -822,7 +1004,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: bear cutlet
@@ -844,7 +1028,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: penguin cutlet
@@ -864,7 +1050,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: chicken cutlet
@@ -884,8 +1072,31 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
+- type: entity
+  name: duck cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDuckCutletCooked
+  description: A cutlet of cooked duck. Remember to wash your hands!
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+  - type: Sprite
+    state: cutlet-cooked
+    color: white
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: lizard cutlet
@@ -906,7 +1117,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: spider cutlet
@@ -929,7 +1142,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
 
 - type: entity
   name: xeno cutlet
@@ -952,4 +1167,6 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1

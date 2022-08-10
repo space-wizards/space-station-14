@@ -1,16 +1,10 @@
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Flash.Components
 {
-    [RegisterComponent, Friend(typeof(FlashSystem))]
-    public class FlashComponent : Component
+    [RegisterComponent, Access(typeof(FlashSystem))]
+    public sealed class FlashComponent : Component
     {
-        public override string Name => "Flash";
-
         [DataField("duration")]
         [ViewVariables(VVAccess.ReadWrite)]
         public int FlashDuration { get; set; } = 5000;

@@ -12,4 +12,4 @@
         - TraitorDMRedemptionMachine
       chance: 1.0
       gameRules:
-        - RuleTraitorDeathMatch
+        - TraitorDeathMatch

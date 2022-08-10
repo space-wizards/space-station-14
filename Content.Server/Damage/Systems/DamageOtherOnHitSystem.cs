@@ -1,18 +1,16 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Systems
 {
-    public class DamageOtherOnHitSystem : EntitySystem
+    public sealed class DamageOtherOnHitSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
         public override void Initialize()
         {
@@ -21,9 +19,11 @@ namespace Content.Server.Damage.Systems
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
-            var dmg = _damageableSystem.TryChangeDamage(args.Target.Uid, component.Damage, component.IgnoreResistances);
-            if (dmg != null)
-                _logSystem.Add(LogType.ThrowHit, $"{args.Target} received {dmg.Total} damage from collision");
+            var dmg = _damageableSystem.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances);
+
+            // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
+            if (dmg != null && HasComp<MobStateComponent>(args.Target))
+                _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
         }
     }
 }

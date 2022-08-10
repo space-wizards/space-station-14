@@ -6,17 +6,18 @@
   abstract: true
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 36
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
           Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
   - type: SliceableFood
     count: 6
   - type: Item
@@ -31,7 +32,6 @@
   abstract: true
   components:
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
@@ -43,6 +43,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 0.8
   - type: Item
     size: 1
   - type: Tag
@@ -55,11 +57,10 @@
   name: margherita pizza
   parent: FoodPizzaBase
   id: FoodPizzaMargherita
-  description: The cheesiest pizza in the galaxy.
+  description: The flavor of Italy.
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: margherita
   - type: SliceableFood
     slice: FoodPizzaMargheritaSlice
@@ -68,11 +69,10 @@
   name: slice of margherita pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaMargheritaSlice
-  description: A slice of the cheesiest pizza in the galaxy.
+  description: A slice of Italy.
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: margherita-slice
 # Tastes like crust, tomato, cheese.
 
@@ -84,7 +84,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: meat
   - type: SliceableFood
     slice: FoodPizzaMeatSlice
@@ -97,7 +96,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: meat-slice
 # Tastes like crust, tomato, cheese, meat.
 
@@ -109,7 +107,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: mushroom
   - type: SliceableFood
     slice: FoodPizzaMushroomSlice
@@ -122,7 +119,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: mushroom-slice
 # Tastes like crust, tomato, cheese, mushroom.
 
@@ -134,7 +130,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: vegetable
   - type: SliceableFood
     slice: FoodPizzaVegetableSlice
@@ -147,7 +142,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: vegetable-slice
 # Tastes like crust, tomato, cheese, carrot.
 
@@ -159,10 +153,21 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: donkpocket
   - type: SliceableFood
     slice: FoodPizzaDonkpocketSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 27
+        - ReagentId: Vitamin
+          Quantity: 6
+        - ReagentId: Omnizine
+          Quantity: 9
+
 
 - type: entity
   name: slice of donk-pocket pizza
@@ -172,8 +177,18 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: donkpocket-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4.5
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Omnizine
+          Quantity: 1.5
 # Tastes like crust, tomato, cheese, meat, laziness.
 
 - type: entity
@@ -184,10 +199,20 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: dank
   - type: SliceableFood
     slice: FoodPizzaDankSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: DoctorsDelight
+          Quantity: 6
 
 - type: entity
   name: slice of dank pizza
@@ -197,8 +222,18 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: dank-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4.2
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: DoctorsDelight
+          Quantity: 1
 # Tastes like crust, tomato, cheese, meat, satisfaction.
 
 - type: entity
@@ -209,7 +244,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: sassysage
   - type: SliceableFood
     slice: FoodPizzaSassysageSlice
@@ -222,7 +256,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: sassysage-slice
 # Tastes like crust, tomato, cheese, sausage, sass.
 
@@ -234,7 +267,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: pineapple
   - type: SliceableFood
     slice: FoodPizzaPineappleSlice
@@ -247,7 +279,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: pineapple-slice
 # Tastes like crust, tomato, cheese, pineapple, ham.
 
@@ -260,10 +291,22 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: arnold
   - type: SliceableFood
     slice: FoodPizzaArnoldSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 85
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Iron
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 30
 
 - type: entity
   name: slice of Arnold's pizza
@@ -273,8 +316,20 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: arnold-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: Iron
+          Quantity: 1.6
+        - ReagentId: Omnizine
+          Quantity: 5
 # Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
 
 #TODO: Make this do poison damage and make cut pizza slices eventually rot into this.
@@ -286,7 +341,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: moldy-slice
   - type: SolutionContainerManager
     solutions:
@@ -296,6 +350,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Toxin
+        - ReagentId: Mold
           Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like stale crust, rancid cheese, mushroom.

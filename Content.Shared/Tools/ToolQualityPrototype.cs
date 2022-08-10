@@ -1,15 +1,13 @@
-using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools
 {
     [Prototype("tool")]
-    public class ToolQualityPrototype : IPrototype
+    public sealed class ToolQualityPrototype : IPrototype
     {
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

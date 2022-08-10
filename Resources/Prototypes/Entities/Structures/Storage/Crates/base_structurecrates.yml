@@ -1,0 +1,125 @@
+- type: entity
+  id: CrateGeneric
+  parent: BaseStructureDynamic
+  noSpawn: true
+  name: crate
+  description: A large container for items.
+  components:
+  - type: ResistLocker
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/Crates/generic.rsi
+    layers:
+    - state: crate
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.29"
+      mass: 25
+      mask:
+      - SmallMobMask #this is so they can go under plastic flaps
+      layer:
+      - MachineLayer
+  - type: EntityStorage
+    capacity: 500
+  - type: Weldable
+  - type: PlaceableSurface
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: crate_open
+      state_closed: crate_door
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+
+- type: entity
+  id: CrateBaseSecure
+  parent: BaseStructureDynamic
+  noSpawn: true
+  name: crate
+  description: A large container for items.
+  components:
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/Crates/generic.rsi
+    layers:
+    - state: crate
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.29"
+      mass: 25
+      mask:
+      - SmallMobMask
+      layer:
+      - MachineLayer
+  - type: EntityStorage
+    capacity: 500
+  - type: Weldable
+  - type: PlaceableSurface
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: crate_open
+      state_closed: crate_door
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+  - type: Construction
+    graph: CrateSecure
+    node: cratesecure

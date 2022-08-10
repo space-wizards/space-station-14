@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Content.Shared.Administration
+﻿namespace Content.Shared.Administration
 {
     /// <summary>
     ///     Permissions that admins can have.
@@ -74,6 +72,21 @@ namespace Content.Shared.Administration
         ///     Lets you use BQL queries.
         /// </summary>
         Query = 1 << 11,
+
+        /// <summary>
+        ///     Lets you use the admin help system.
+        /// </summary>
+        Adminhelp = 1 << 12,
+
+        /// <summary>
+        ///     Lets you view admin notes.
+        /// </summary>
+        ViewNotes = 1 << 13,
+
+        /// <summary>
+        ///     Lets you create, edit and delete admin notes.
+        /// </summary>
+        EditNotes = 1 << 14,
 
         /// <summary>
         ///     Dangerous host permissions like scsi.

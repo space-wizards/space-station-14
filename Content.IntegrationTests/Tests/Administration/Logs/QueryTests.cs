@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using NUnit.Framework;
@@ -15,26 +14,18 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public class QueryTests : ContentIntegrationTest
+public sealed class QueryTests
 {
     [Test]
     public async Task QuerySingleLog()
     {
-        var serverOptions = new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            }
-        };
-        var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions);
-
-        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+        await using var pairTracker = await PoolManager.GetServerClient();
+        var server = pairTracker.Pair.Server;
 
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var date = DateTime.UtcNow;
@@ -53,19 +44,21 @@ public class QueryTests : ContentIntegrationTest
         {
             Round = sGamerTicker.RoundId,
             Search = guid.ToString(),
-            Types = new List<LogType> {LogType.Unknown},
+            Types = new HashSet<LogType> {LogType.Unknown},
             After = date,
             AnyPlayers = new[] {player.UserId.UserId}
         };
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
-            await foreach (var _ in sAdminLogSystem.All(filter))
+            foreach (var _ in await sAdminLogSystem.All(filter))
             {
                 return true;
             }
 
             return false;
         });
+
+        await pairTracker.CleanReturnAsync();
     }
 }

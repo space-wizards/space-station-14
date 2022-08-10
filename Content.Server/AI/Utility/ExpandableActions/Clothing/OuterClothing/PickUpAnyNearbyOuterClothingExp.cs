@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Clothing.OuterClothing;
 using Content.Server.AI.Utility.Considerations;
@@ -9,7 +7,6 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Clothing;
 using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Clothing.OuterClothing
 {
@@ -23,9 +20,9 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.OuterClothing
 
             return new[]
             {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.OUTERCLOTHING, context)
+                considerationsManager.Get<ClothingInSlotCon>().Slot("outerClothing", context)
                     .InverseBoolCurve(context),
-                considerationsManager.Get<ClothingInInventoryCon>().Slot(EquipmentSlotDefines.SlotFlags.OUTERCLOTHING, context)
+                considerationsManager.Get<ClothingInInventoryCon>().Slot(SlotFlags.OUTERCLOTHING, context)
                     .InverseBoolCurve(context)
             };
         }
@@ -36,8 +33,8 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.OuterClothing
 
             foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
             {
-                if (entity.TryGetComponent(out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.OUTERCLOTHING) != 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
+                    (clothing.Slots & SlotFlags.OUTERCLOTHING) != 0)
                 {
                     yield return new PickUpOuterClothing {Owner = owner, Target = entity, Bonus = Bonus};
                 }

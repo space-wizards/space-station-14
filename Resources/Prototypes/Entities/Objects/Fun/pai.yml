@@ -6,33 +6,55 @@
   name: personal ai device
   description: Your electronic pal who's fun to be with!
   components:
+  - type: Instrument
+    allowPercussion: false
+    handheld: false
+    bank: 1
+    program: 2
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
   - type: Sprite
     netsync: false
-    sprite: Objects/Devices/pda.rsi
+    sprite: Objects/Fun/pai.rsi
     layers:
-    - state: pda-lawyer # nobody's using this one
-    - state: pai_off_overlay
+    - state: pai-base
+    - state: pai-off-overlay
       shader: unshaded
   - type: Input
     context: "human"
   - type: PAI
+    midiAction:
+      name: action-name-pai-play-midi
+      checkCanInteract: false
+      icon: Interface/Actions/pai-midi.png
+      description: action-description-pai-play-midi
+      event: !type:OpenUiActionEvent
+        key: enum.InstrumentUiKey.Key
   - type: Examiner
-  - type: GhostRadio
+  - type: IntrinsicRadio
+    channels:
+    - Common
   - type: DoAfter
   - type: Actions
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechSounds: Pai
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
     # Note that the personal AI never "dies".
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
+      0: Alive
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer
         key: enum.PAIVisuals.Status
         layer: 1
         states:
-          enum.PAIStatus.Off: pai_off_overlay
-          enum.PAIStatus.Searching: pda-r
-          enum.PAIStatus.On: pai_overlay
+          enum.PAIStatus.Off: pai-off-overlay
+          enum.PAIStatus.Searching: pai-searching-overlay
+          enum.PAIStatus.On: pai-on-overlay
 

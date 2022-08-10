@@ -1,13 +1,9 @@
-using System.Collections.Generic;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reaction
 {
@@ -15,10 +11,10 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction definitions
     /// </summary>
     [Prototype("reaction")]
-    public class ReactionPrototype : IPrototype
+    public sealed class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]
@@ -29,6 +25,18 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         [DataField("reactants", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReactantPrototype, ReagentPrototype>))]
         public Dictionary<string, ReactantPrototype> Reactants = new();
+
+        /// <summary>
+        ///     The minimum temperature the reaction can occur at.
+        /// </summary>
+        [DataField("minTemp")]
+        public float MinimumTemperature = 0.0f;
+
+        /// <summary>
+        ///     The maximum temperature the reaction can occur at.
+        /// </summary>
+        [DataField("maxTemp")]
+        public float MaximumTemperature = float.PositiveInfinity;
 
         /// <summary>
         /// Reagents created when the reaction occurs.
@@ -55,13 +63,40 @@ namespace Content.Shared.Chemistry.Reaction
         /// enough reactants, the reaction does not occur. Useful for spawn-entity reactions (e.g. creating cheese).
         /// </summary>
         [DataField("quantized")] public bool Quantized = false;
+
+        /// <summary>
+        /// Determines the order in which reactions occur. This should used to ensure that (in general) descriptive /
+        /// pop-up generating and explosive reactions occur before things like foam/area effects.
+        /// </summary>
+        [DataField("priority")]
+        public int Priority;
+
+        /// <summary>
+        ///     Comparison for creating a sorted set of reactions. Determines the order in which reactions occur.
+        /// </summary>
+        public int CompareTo(ReactionPrototype? other)
+        {
+            if (other == null)
+                return -1;
+
+            if (Priority != other.Priority)
+                return other.Priority - Priority;
+
+            // Prioritize reagents that don't generate products. This should reduce instances where a solution
+            // temporarily overflows and discards products simply due to the order in which the reactions occurred.
+            // Basically: Make space in the beaker before adding new products.
+            if (Products.Count != other.Products.Count)
+                return Products.Count - other.Products.Count;
+
+            return ID.CompareTo(other.ID);
+        }
     }
 
     /// <summary>
     /// Prototype for chemical reaction reactants.
     /// </summary>
     [DataDefinition]
-    public class ReactantPrototype
+    public sealed class ReactantPrototype
     {
         [DataField("amount")]
         private FixedPoint2 _amount = FixedPoint2.New(1);

@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Gravity.UI
 {
     [UsedImplicitly]
-    public class GravityGeneratorBoundUserInterface : BoundUserInterface
+    public sealed class GravityGeneratorBoundUserInterface : BoundUserInterface
     {
         private GravityGeneratorWindow? _window;
 

@@ -1,18 +1,12 @@
 using Content.Server.Damage.Systems;
 using Content.Shared.Damage;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
-    [Friend(typeof(DamageOtherOnHitSystem))]
+    [Access(typeof(DamageOtherOnHitSystem))]
     [RegisterComponent]
-    public class DamageOtherOnHitComponent : Component
+    public sealed class DamageOtherOnHitComponent : Component
     {
-        public override string Name => "DamageOtherOnHit";
-
         [DataField("ignoreResistances")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IgnoreResistances = false;

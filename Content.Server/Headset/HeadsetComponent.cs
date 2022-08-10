@@ -1,17 +1,14 @@
-using System.Collections.Generic;
+using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
-using Content.Shared.Examine;
+using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Headset
 {
@@ -19,27 +16,24 @@ namespace Content.Server.Headset
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
 #pragma warning disable 618
-    public class HeadsetComponent : Component, IListen, IRadio, IExamine
+    public sealed class HeadsetComponent : Component, IListen, IRadio
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
 
-        public override string Name => "Headset";
-
+        private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
 
-        [DataField("channels")]
-        private List<int> _channels = new(){1459};
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("broadcastChannel")]
-        private int BroadcastFrequency { get; set; } = 1459;
+        [DataField("channels", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+        public HashSet<string> Channels = new()
+        {
+            "Common"
+        };
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
         public int ListenRange { get; private set; }
-
-        public IReadOnlyList<int> Channels => _channels;
 
         public bool RadioRequested { get; set; }
 
@@ -47,51 +41,49 @@ namespace Content.Server.Headset
         {
             base.Initialize();
 
+            _chatSystem = EntitySystem.Get<ChatSystem>();
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        public bool CanListen(string message, IEntity source)
+        public bool CanListen(string message, EntityUid source, RadioChannelPrototype prototype)
         {
-            return RadioRequested;
+            return Channels.Contains(prototype.ID) && RadioRequested;
         }
 
-        public void Receive(string message, int channel, IEntity source)
+        public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
         {
-            if (Owner.TryGetContainer(out var container))
+            if (!Channels.Contains(channel.ID) || !Owner.TryGetContainer(out var container)) return;
+
+            if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor)) return;
+
+            var playerChannel = actor.PlayerSession.ConnectedClient;
+
+            message = _chatSystem.TransformSpeech(source, message);
+            if (message.Length == 0)
+                return;
+
+            var msg = new MsgChatMessage
             {
-                if (!container.Owner.TryGetComponent(out ActorComponent? actor))
-                    return;
-
-                var playerChannel = actor.PlayerSession.ConnectedClient;
-
-                var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-
-                msg.Channel = ChatChannel.Radio;
-                msg.Message = message;
+                Channel = ChatChannel.Radio,
+                Message = message,
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", source.Name));
-                _netManager.ServerSendMessage(msg, playerChannel);
-            }
+                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(source).EntityName))
+            };
+
+            _netManager.ServerSendMessage(msg, playerChannel);
         }
 
-        public void Listen(string message, IEntity speaker)
+        public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
-            Broadcast(message, speaker);
+            Broadcast(message, speaker, channel);
         }
 
-        public void Broadcast(string message, IEntity speaker)
+        public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
-            _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
+            if (!Channels.Contains(channel.ID)) return;
+
+            _radioSystem.SpreadMessage(this, speaker, message, channel);
             RadioRequested = false;
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddText(Loc.GetString("examine-radio-frequency", ("frequency", BroadcastFrequency)));
-            message.AddText("\n");
-            message.AddText(Loc.GetString("examine-headset"));
-            message.AddText("\n");
-            message.AddText(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
         }
     }
 }

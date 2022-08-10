@@ -4,7 +4,7 @@ using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
 
 namespace Content.Client.Atmos.UI
 {
-    public class GasAnalyzerBoundUserInterface : BoundUserInterface
+    public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
     {
         public GasAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {

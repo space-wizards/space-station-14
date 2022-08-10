@@ -1,15 +1,16 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Throwing
+﻿namespace Content.Shared.Throwing
 {
-    public class ThrowAttemptEvent : CancellableEntityEventArgs
+    public sealed class ThrowAttemptEvent : CancellableEntityEventArgs
     {
-        public ThrowAttemptEvent(EntityUid uid)
+        public ThrowAttemptEvent(EntityUid uid, EntityUid itemUid)
         {
             Uid = uid;
+            ItemUid = itemUid;
         }
 
         public EntityUid Uid { get; }
+
+        public EntityUid ItemUid { get; }
     }
 
     /// <summary>

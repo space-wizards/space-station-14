@@ -1,29 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
-using Content.Server.Disposal.Tube;
-using Content.Server.Disposal.Unit.EntitySystems;
-using Content.Server.Items;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Unit.Components
 {
     // TODO: Add gas
     [RegisterComponent]
-    public class DisposalHolderComponent : Component, IGasMixtureHolder
+    public sealed class DisposalHolderComponent : Component, IGasMixtureHolder
     {
-        public override string Name => "DisposalHolder";
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public Container Container = null!;
 
@@ -68,7 +57,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         [ViewVariables]
         [DataField("air")]
-        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
+        public GasMixture Air { get; set; } = new (70);
 
         protected override void Initialize()
         {
@@ -77,25 +66,25 @@ namespace Content.Server.Disposal.Unit.Components
             Container = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
         }
 
-        private bool CanInsert(IEntity entity)
+        private bool CanInsert(EntityUid entity)
         {
             if (!Container.CanInsert(entity))
             {
                 return false;
             }
 
-            return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<SharedBodyComponent>();
+            return _entMan.HasComponent<ItemComponent>(entity) ||
+                   _entMan.HasComponent<SharedBodyComponent>(entity);
         }
 
-        public bool TryInsert(IEntity entity)
+        public bool TryInsert(EntityUid entity)
         {
             if (!CanInsert(entity) || !Container.Insert(entity))
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            if (_entMan.TryGetComponent(entity, out IPhysBody? physics))
             {
                 physics.CanCollide = false;
             }

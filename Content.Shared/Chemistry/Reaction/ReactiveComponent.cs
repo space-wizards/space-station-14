@@ -1,17 +1,12 @@
-using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Chemistry.Reaction;
 
 [RegisterComponent]
-public class ReactiveComponent : Component
+public sealed class ReactiveComponent : Component
 {
-    public override string Name => "Reactive";
-
     /// <summary>
     ///     A dictionary of reactive groups -> methods that work on them.
     /// </summary>
@@ -29,7 +24,7 @@ public class ReactiveComponent : Component
 }
 
 [DataDefinition]
-public class ReactiveReagentEffectEntry
+public sealed class ReactiveReagentEffectEntry
 {
     [DataField("methods")]
     public HashSet<ReactionMethod> Methods = default!;
@@ -39,7 +34,8 @@ public class ReactiveReagentEffectEntry
 
     [DataField("effects", required: true)]
     public List<ReagentEffect> Effects = default!;
-    [DataField("groups", required: true, readOnly: true, serverOnly: true,
+
+    [DataField("groups", readOnly: true, serverOnly: true,
         customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<ReactionMethod>, ReactiveGroupPrototype>))]
     public Dictionary<string, HashSet<ReactionMethod>> ReactiveGroups { get; } = default!;
 }

@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
                 return 0.0f;
             }
 
-            return equipped.HasComponent<MeleeWeaponComponent>() ? 1.0f : 0.0f;
+            return IoCManager.Resolve<IEntityManager>().HasComponent<MeleeWeaponComponent>(equipped) ? 1.0f : 0.0f;
         }
     }
 }

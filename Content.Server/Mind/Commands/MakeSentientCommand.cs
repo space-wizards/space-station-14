@@ -7,14 +7,11 @@ using Content.Shared.Examine;
 using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class MakeSentientCommand : IConsoleCommand
+    public sealed class MakeSentientCommand : IConsoleCommand
     {
         public string Command => "makesentient";
         public string Description => "Makes an entity sentient (able to be controlled by a player)";
@@ -47,13 +44,12 @@ namespace Content.Server.Mind.Commands
 
         public static void MakeSentient(EntityUid uid, IEntityManager entityManager)
         {
-            if(entityManager.HasComponent<AiControllerComponent>(uid))
-                entityManager.RemoveComponent<AiControllerComponent>(uid);
-
+            entityManager.RemoveComponent<NPCComponent>(uid);
 
             entityManager.EnsureComponent<MindComponent>(uid);
-            entityManager.EnsureComponent<SharedPlayerInputMoverComponent>(uid);
-            entityManager.EnsureComponent<SharedPlayerMobMoverComponent>(uid);
+            entityManager.EnsureComponent<InputMoverComponent>(uid);
+            entityManager.EnsureComponent<MobMoverComponent>(uid);
+            entityManager.EnsureComponent<MovementSpeedModifierComponent>(uid);
             entityManager.EnsureComponent<SharedSpeechComponent>(uid);
             entityManager.EnsureComponent<SharedEmotingComponent>(uid);
             entityManager.EnsureComponent<ExaminerComponent>(uid);

@@ -1,16 +1,12 @@
-using System;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Electrocution
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class ElectrocuteCommand : IConsoleCommand
+    public sealed class ElectrocuteCommand : IConsoleCommand
     {
         public string Command => "electrocute";
         public string Description => Loc.GetString("electrocute-command-description");
@@ -52,7 +48,7 @@ namespace Content.Server.Electrocution
             }
 
             entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>()
-                .TryDoElectrocution(uid, null, damage, TimeSpan.FromSeconds(seconds));
+                .TryDoElectrocution(uid, null, damage, TimeSpan.FromSeconds(seconds), true);
         }
     }
 }

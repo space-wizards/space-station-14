@@ -1,23 +1,19 @@
-using System;
-using Content.Shared.Whitelist;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Pinpointer
 {
+    /// <summary>
+    /// Displays a sprite on the item that points towards the target component.
+    /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    [Friend(typeof(SharedPinpointerSystem))]
-    public class PinpointerComponent : Component
+    [Access(typeof(SharedPinpointerSystem))]
+    public sealed class PinpointerComponent : Component
     {
-        public override string Name => "Pinpointer";
-
-        [DataField("whitelist")]
-        public EntityWhitelist? Whitelist;
+        // TODO: Type serializer oh god
+        [DataField("component")]
+        public string? Component;
 
         [DataField("mediumDistance")]
         public float MediumDistance = 16f;

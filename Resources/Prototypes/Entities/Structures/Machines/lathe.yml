@@ -6,33 +6,35 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
+    netsync: false
     layers:
     - state: icon
-      map: ["enum.AutolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
-      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-    - state: icon
-      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+  - type: LatheVisuals
+    idleState: icon
+    runningState: building
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.4,-0.4,0.4,0.4"
       mass: 25
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
+      - MachineLayer
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -53,22 +55,21 @@
   - type: LatheDatabase
     static: true
     recipes:
-      - Brutepack
-      - Ointment
       - Wirecutter
       - Screwdriver
       - Welder
       - Wrench
       - Crowbar
       - Multitool
+      - AirlockPainter
       - MiniHoe
       - Shovel
       - Spade
       - CableStack
-  - type: Appearance
-    visuals:
-    - type: AutolatheVisualizer
-    - type: WiresVisualizer
+      - HandheldGPSBasic
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
@@ -77,6 +78,11 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
 
 - type: entity
   parent: BaseMachinePowered
@@ -86,34 +92,36 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    netsync: false
     layers:
     - state: icon
-      map: ["enum.ProtolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
-      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
-    - state: icon
-      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+  - type: LatheVisuals
+    idleState: icon
+    runningState: building
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.4,-0.4,0.4,0.4"
       mass: 25
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
+      - MachineLayer
   - type: ResearchClient
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -137,52 +145,42 @@
       - LightTube
       - LightBulb
       - SheetSteel
-      - GlassStack
+      - SheetGlass1
       - SheetRGlass
       - SheetPlastic
       - CableStack
       - CableMVStack
       - CableHVStack
-      - ConveyorAssembly
-      - RCD
+      - ConveyorBeltAssembly
       - RCDAmmo
-      - Scythe
-      - Hatchet
+      - HydroponicsToolScythe
+      - HydroponicsToolHatchet
       - Shovel
+      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
       - Drill
-      - BoneSaw
+      - Saw
       - Hemostat
       - Beaker
       - LargeBeaker
       - CryostasisBeaker
       - Dropper
       - Syringe
+      - PillCanister
+      - Drone
       - Flash
-      - Handcuffs
-      - Stunbaton
-      - CartridgePistolBase
-      - ShellShotgunBase
-      - CartridgeLRifleBase
-      - CartridgeMagnumBase
-      - FirelockElectronics
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
+      - FirelockElectronics
       - DoorElectronics
       - APCElectronics
-      - CloningPodMachineCircuitboard
-      - MedicalScannerMachineCircuitboard
-      - ChemMasterMachineCircuitboard
-      - ChemDispenserMachineCircuitboard
-      - HydroponicsTrayMachineCircuitboard
-      - SolarControlComputerCircuitboard
-      - AutolatheMachineCircuitboard
-      - ProtolatheMachineCircuitboard
+      - AirAlarmElectronics
+      - FireAlarmElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -190,17 +188,323 @@
       - KitchenKnife
       - ButchCleaver
       - FlashlightLantern
+      - TimerTrigger
+      - ChemicalPayload
+      - FlashPayload
+      - Signaller
+      - SignalTrigger
+      - PowerCellSmall
+      - PowerCellMedium
+      - PowerCellHigh
+      - ProximitySensor
+      - LeftArmBorg
+      - RightArmBorg
+      - HolofanProjector
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
       type: LatheBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
-  - type: Appearance
-    visuals:
-    - type: ProtolatheVisualizer
-    - type: WiresVisualizer
   - type: Transform
     anchored: true
   - type: Pullable
   - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+
+- type: entity
+  parent: Protolathe
+  id: CircuitImprinter
+  name: circuit imprinter
+  description: Prints circuit boards for machines.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/circuit_imprinter.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - ThermomachineFreezerMachineCircuitBoard
+      - PortableScrubberMachineCircuitBoard
+      - CloningPodMachineCircuitboard
+      - MedicalScannerMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - VaccinatorMachineCircuitboard
+      - DiagnoserMachineCircuitboard
+      - ChemMasterMachineCircuitboard
+      - ChemDispenserMachineCircuitboard
+      - SurveillanceCameraRouterCircuitboard
+      - SurveillanceCameraMonitorCircuitboard
+      - SurveillanceWirelessCameraMonitorCircuitboard
+      - SurveillanceCameraWirelessRouterCircuitboard
+      - ComputerTelevisionCircuitboard
+      - SurveillanceWirelessCameraMovableCircuitboard
+      - SurveillanceWirelessCameraAnchoredCircuitboard
+      - HydroponicsTrayMachineCircuitboard
+      - SolarControlComputerCircuitboard
+      - AutolatheMachineCircuitboard
+      - ProtolatheMachineCircuitboard
+      - ReagentGrinderMachineCircuitboard
+      - MicrowaveMachineCircuitboard
+      - UniformPrinterMachineCircuitboard
+      - ShuttleConsoleCircuitboard
+      - CircuitImprinterMachineCircuitboard
+      - DawInstrumentMachineCircuitboard
+      - CloningConsoleComputerCircuitboard
+      - StasisBedMachineCircuitboard
+      - OreProcessorMachineCircuitboard
+      - GeneratorPlasmaMachineCircuitboard
+      - GeneratorUraniumMachineCircuitboard
+      - WallmountGeneratorElectronics
+      - WallmountGeneratorAPUElectronics
+      - EmitterCircuitboard
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/circuitprinter.ogg
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+
+- type: entity
+  parent: Protolathe
+  id: SecurityTechFab
+  name: security techfab
+  description: Prints equipment for use by security crew.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/techfab.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: LatheVisuals
+    idleState: icon
+    runningState: icon
+  - type: LatheDatabase
+    static: true
+    recipes:
+      - Flash
+      - FlashPayload
+      - Handcuffs
+      - Stunbaton
+      - RiotShield
+      - CartridgePistol
+      - CartridgeMagnum
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - ShellShotgun
+      - ShellShotgunBeanbag
+      - ShellShotgunFlare
+      - ShellTranquilizer
+      - CartridgeLightRifle
+      - CartridgeCaselessRifleRubber
+      - CartridgeLightRifleRubber
+      - CartridgeRifleRubber
+  - type: Machine
+    board: SecurityTechFabCircuitboard
+  - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+
+- type: entity
+  parent: Protolathe
+  id: MedicalTechFab
+  name: medical techfab
+  description: Prints equipment for use by the medbay.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/techfab.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: med
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: LatheVisuals
+    idleState: icon
+    runningState: icon
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - HandheldHealthAnalyzer
+      - ClothingHandsGlovesLatex
+      - ClothingHandsGlovesNitrile
+      - ClothingMaskSterile
+      - DiseaseSwab
+      - HandheldCrewMonitor
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - Saw
+      - Hemostat
+      - Beaker
+      - LargeBeaker
+      - CryostasisBeaker
+      - Dropper
+      - Syringe
+      - PillCanister
+      - BodyBag
+  - type: Machine
+    board: MedicalTechFabCircuitboard
+
+- type: entity
+  parent: Autolathe
+  id: UniformPrinter
+  name: uniform printer
+  description: Prints new or replacement uniforms.
+  components:
+  - type: Transform
+    noRot: false
+  - type: LatheDatabase
+    static: true
+    recipes:
+      - ClothingUniformJumpsuitColorGrey
+      - ClothingUniformJumpskirtColorGrey
+      - ClothingUniformJumpsuitBartender
+      - ClothingUniformJumpskirtBartender
+      - ClothingUniformJumpsuitCaptain
+      - ClothingUniformJumpskirtCaptain
+      - ClothingUniformJumpsuitCargo
+      - ClothingUniformJumpskirtCargo
+      - ClothingUniformJumpsuitSalvageSpecialist
+      - ClothingUniformJumpsuitChiefEngineer
+      - ClothingUniformJumpskirtChiefEngineer
+      - ClothingUniformJumpsuitChaplain
+      - ClothingUniformJumpskirtChaplain
+      - ClothingUniformJumpsuitChef
+      - ClothingUniformJumpskirtChef
+      - ClothingUniformJumpsuitChemistry
+      - ClothingUniformJumpskirtChemistry
+      - ClothingUniformJumpsuitClown
+      - ClothingUniformJumpsuitCMO
+      - ClothingUniformJumpskirtCMO
+      - ClothingUniformJumpsuitDetective
+      - ClothingUniformJumpskirtDetective
+      - ClothingUniformJumpsuitEngineering
+      - ClothingUniformJumpskirtEngineering
+      - ClothingUniformJumpsuitHoP
+      - ClothingUniformJumpskirtHoP
+      - ClothingUniformJumpsuitHoS
+      - ClothingUniformJumpskirtHoS
+      - ClothingUniformJumpsuitHydroponics
+      - ClothingUniformJumpskirtHydroponics
+      - ClothingUniformJumpsuitJanitor
+      - ClothingUniformJumpskirtJanitor
+      - ClothingUniformJumpsuitLawyerBlack
+      - ClothingUniformJumpsuitLibrarian
+      - ClothingUniformJumpskirtColorLightBrown
+      - ClothingUniformJumpsuitMedicalDoctor
+      - ClothingUniformJumpskirtMedicalDoctor
+      - ClothingUniformJumpsuitMime
+      - ClothingUniformJumpskirtMime
+      - ClothingUniformJumpsuitLawyerPurple
+      - ClothingUniformJumpsuitParamedic
+      - ClothingUniformJumpskirtParamedic
+      - ClothingUniformJumpsuitPrisoner
+      - ClothingUniformJumpskirtPrisoner
+      - ClothingUniformJumpsuitQM
+      - ClothingUniformJumpskirtQM
+      - ClothingUniformJumpsuitResearchDirector
+      - ClothingUniformJumpskirtResearchDirector
+      - ClothingUniformJumpsuitScientist
+      - ClothingUniformJumpskirtScientist
+      - ClothingUniformJumpsuitSec
+      - ClothingUniformJumpskirtSec
+      - ClothingUniformJumpsuitWarden
+      - ClothingUniformJumpskirtWarden
+      - ClothingOuterWinterCap
+      - ClothingOuterWinterCE
+      - ClothingOuterWinterCMO
+      - ClothingOuterWinterHoP
+      - ClothingOuterWinterHoS
+      - ClothingOuterWinterQM
+      - ClothingOuterWinterRD
+  - type: Sprite
+    sprite: Structures/Machines/uniform_printer.rsi
+    netsync: false
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+  - type: Machine
+    board: UniformPrinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/uniformprinter.ogg
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+
+- type: entity
+  parent: Autolathe
+  id: OreProcessor
+  name: ore processor
+  description: It produces sheets and ingots using ores.
+  components:
+    - type: LatheVisuals
+      ignoreColor: true
+    - type: Sprite
+      sprite: Structures/Machines/ore_processor.rsi
+      netsync: false
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.LatheVisualLayers.IsInserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Machine
+      board: AutolatheMachineCircuitboard
+    - type: LatheDatabase
+      static: true
+      recipes:
+        - SheetSteel30
+        - SheetGlass30
+        - SheetRGlass30
+        - SheetPlasma30
+        - SheetPGlass30
+        - SheetRPGlass30
+        - SheetUranium1
+        - IngotGold1
+        - IngotSilver1
+    - type: Lathe
+      whitelist:
+        tags:
+          - Ore

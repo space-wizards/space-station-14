@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.Kitchen.UI
 {
     [GenerateTypedNameReferences]
-    public partial class LabelledContentBox : BoxContainer
+    public sealed partial class LabelledContentBox : BoxContainer
     {
         public string? LabelText { get => Label.Text; set => Label.Text = value; }
         public string? ButtonText { get => EjectButton.Text; set => EjectButton.Text = value; }

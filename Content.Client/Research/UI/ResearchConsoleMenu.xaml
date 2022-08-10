@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'research-console-menu-title'}"
             MinSize="800 400"
             SetSize="800 400">
@@ -84,4 +84,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

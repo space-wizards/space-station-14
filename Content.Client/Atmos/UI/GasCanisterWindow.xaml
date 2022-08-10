@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
             MinSize="480 400" Title="Canister">
@@ -37,7 +37,7 @@
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="15 0 0 15" SeparationOverride="5">
                     <Slider Name="ReleasePressureSlider" HorizontalExpand="True"/>
-                    <Label Name="ReleasePressureLabel" Align="Center" HorizontalExpand="True"/>
+                    <FloatSpinBox Name="ReleasePressure" MaxWidth="150" Align="Center"/>
                 </BoxContainer>
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">
@@ -49,4 +49,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

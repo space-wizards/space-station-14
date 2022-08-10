@@ -11,8 +11,17 @@
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 2
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300 #excess damage (nuke?). Avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 150
@@ -30,7 +39,7 @@
   - type: IconSmooth
     base: rwindow
   - type: Construction
-    graph: window
+    graph: Window
     node: reinforcedWindow
   - type: Appearance
     visuals:
@@ -40,6 +49,29 @@
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 0.75
+
+- type: entity
+  parent: ReinforcedWindow
+  id: TintedWindow
+  name: tinted window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: IconSmooth
+    base: twindow
+  - type: Construction
+    graph: Window
+    node: tintedWindow
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+  - type: StaticPrice
+    price: 0.75
 
 - type: entity
   id: WindowReinforcedDirectional
@@ -53,15 +85,16 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: windowReinforcedDirectional
+  - type: Damageable
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
@@ -78,3 +111,5 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 0.75

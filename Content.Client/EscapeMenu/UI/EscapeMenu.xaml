@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:changelog="clr-namespace:Content.Client.Changelog"
             xmlns:ui="clr-namespace:Content.Client.Voting.UI"
             Title="{Loc 'ui-escape-title'}"
@@ -8,8 +8,9 @@
         <changelog:ChangelogButton />
         <ui:VoteCallMenuButton />
         <Button Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
-        <Button Name="AHelpButton" Text="{Loc 'ui-escape-ahelp'}" />
+        <Button Name="RulesButton" Text="{Loc 'ui-escape-rules'}" />
+        <Button Name="WikiButton" Text="{Loc 'ui-escape-wiki'}" />
         <Button Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
         <Button Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

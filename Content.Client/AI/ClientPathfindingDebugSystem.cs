@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
@@ -16,8 +16,13 @@ using Robust.Shared.Timing;
 namespace Content.Client.AI
 {
 #if DEBUG
-    public class ClientPathfindingDebugSystem : EntitySystem
+    public sealed class ClientPathfindingDebugSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+
         private PathfindingDebugMode _modes = PathfindingDebugMode.None;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
         private DebugPathfindingOverlay? _overlay;
@@ -91,7 +96,7 @@ namespace Content.Client.AI
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            _overlay = new DebugPathfindingOverlay {Modes = _modes};
+            _overlay = new DebugPathfindingOverlay(EntityManager, _eyeManager, _playerManager, _prototypeManager) {Modes = _modes};
             overlayManager.AddOverlay(_overlay);
 
             return _overlay;
@@ -179,6 +184,7 @@ namespace Content.Client.AI
     {
         private readonly IEyeManager _eyeManager;
         private readonly IPlayerManager _playerManager;
+        private readonly IEntityManager _entities;
 
         // TODO: Add a box like the debug one and show the most recent path stuff
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -191,17 +197,17 @@ namespace Content.Client.AI
         private readonly Dictionary<int, Color> _graphColors = new();
 
         // Cached regions
-        public readonly Dictionary<GridId, Dictionary<int, List<Vector2>>> CachedRegions =
+        public readonly Dictionary<EntityUid, Dictionary<int, List<Vector2>>> CachedRegions =
                     new();
 
-        private readonly Dictionary<GridId, Dictionary<int, Color>> _cachedRegionColors =
+        private readonly Dictionary<EntityUid, Dictionary<int, Color>> _cachedRegionColors =
                      new();
 
         // Regions
-        public readonly Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
+        public readonly Dictionary<EntityUid, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
                     new();
 
-        private readonly Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>> _regionColors =
+        private readonly Dictionary<EntityUid, Dictionary<int, Dictionary<int, Color>>> _regionColors =
                      new();
 
         // Route debugging
@@ -209,11 +215,12 @@ namespace Content.Client.AI
         public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new();
         public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new();
 
-        public DebugPathfindingOverlay()
+        public DebugPathfindingOverlay(IEntityManager entities, IEyeManager eyeManager, IPlayerManager playerManager, IPrototypeManager prototypeManager)
         {
-            _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
-            _eyeManager = IoCManager.Resolve<IEyeManager>();
-            _playerManager = IoCManager.Resolve<IPlayerManager>();
+            _entities = entities;
+            _eyeManager = eyeManager;
+            _playerManager = playerManager;
+            _shader = prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
         }
 
         #region Graph
@@ -253,7 +260,7 @@ namespace Content.Client.AI
 
         #region Regions
         //Server side debugger should increment every region
-        public void UpdateCachedRegions(GridId gridId, Dictionary<int, List<Vector2>> messageRegions, bool cached)
+        public void UpdateCachedRegions(EntityUid gridId, Dictionary<int, List<Vector2>> messageRegions, bool cached)
         {
             if (!CachedRegions.ContainsKey(gridId))
             {
@@ -286,8 +293,8 @@ namespace Content.Client.AI
 
         private void DrawCachedRegions(DrawingHandleScreen screenHandle, Box2 viewport)
         {
-            var attachedEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (attachedEntity == null || !CachedRegions.TryGetValue(attachedEntity.Transform.GridID, out var entityRegions))
+            var transform = _entities.GetComponentOrNull<TransformComponent>(_playerManager.LocalPlayer?.ControlledEntity);
+            if (transform == null || transform.GridUid == null || !CachedRegions.TryGetValue(transform.GridUid.Value, out var entityRegions))
             {
                 return;
             }
@@ -305,12 +312,12 @@ namespace Content.Client.AI
                         screenTile.X + 15.0f,
                         screenTile.Y + 15.0f);
 
-                    screenHandle.DrawRect(box, _cachedRegionColors[attachedEntity.Transform.GridID][region]);
+                    screenHandle.DrawRect(box, _cachedRegionColors[transform.GridUid.Value][region]);
                 }
             }
         }
 
-        public void UpdateRegions(GridId gridId, Dictionary<int, Dictionary<int, List<Vector2>>> messageRegions)
+        public void UpdateRegions(EntityUid gridId, Dictionary<int, Dictionary<int, List<Vector2>>> messageRegions)
         {
             if (!Regions.ContainsKey(gridId))
             {
@@ -328,7 +335,7 @@ namespace Content.Client.AI
                 {
                     Regions[gridId][chunk].Add(region, nodes);
                     _regionColors[gridId][chunk][region] = new Color(robustRandom.NextFloat(), robustRandom.NextFloat(),
-                        robustRandom.NextFloat(), 0.3f);
+                        robustRandom.NextFloat(), 0.5f);
                 }
             }
         }
@@ -336,7 +343,9 @@ namespace Content.Client.AI
         private void DrawRegions(DrawingHandleScreen screenHandle, Box2 viewport)
         {
             var attachedEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (attachedEntity == null || !Regions.TryGetValue(attachedEntity.Transform.GridID, out var entityRegions))
+            if (!_entities.TryGetComponent(attachedEntity, out TransformComponent? transform) ||
+                transform.GridUid == null ||
+                !Regions.TryGetValue(transform.GridUid.Value, out var entityRegions))
             {
                 return;
             }
@@ -356,7 +365,7 @@ namespace Content.Client.AI
                             screenTile.X + 15.0f,
                             screenTile.Y + 15.0f);
 
-                        screenHandle.DrawRect(box, _regionColors[attachedEntity.Transform.GridID][chunk][region]);
+                        screenHandle.DrawRect(box, _regionColors[transform.GridUid.Value][chunk][region]);
                     }
                 }
             }
@@ -473,7 +482,7 @@ namespace Content.Client.AI
 
             var screenHandle = args.ScreenHandle;
             screenHandle.UseShader(_shader);
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
 
             if ((Modes & PathfindingDebugMode.Route) != 0)
             {

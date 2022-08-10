@@ -1,0 +1,151 @@
+﻿- type: constructionGraph
+  id: Computer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frameUnsecured
+          completed:
+            - !type:SetAnchor
+              value: false
+          steps:
+            - material: Steel
+              amount: 5
+
+    - node: frameUnsecured
+      actions:
+        - !type:SpriteStateChange
+          state: "0"
+      entity: ComputerFrame
+      edges:
+        - to: boardUnsecured
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - component: ComputerBoard
+              store: board
+              name: any computer circuit board
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "id_mod"
+
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: boardUnsecured
+      actions:
+        - !type:SpriteStateChange
+          state: "1"
+      edges:
+        - to: missingWires
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+
+        - to: frameUnsecured
+          conditions:
+            - !type:EntityAnchored { }
+          completed:
+            - !type:EmptyAllContainers {}
+            - !type:SpriteStateChange
+              state: 0
+          steps:
+            - tool: Prying
+
+    - node: missingWires
+      actions:
+        - !type:SpriteStateChange
+          state: "2"
+      edges:
+        - to: monitorMissing
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              amount: 5
+
+        - to: boardUnsecured
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+
+    - node: monitorMissing
+      entity: ComputerFrame
+      actions:
+        - !type:SetAnchor { }
+        - !type:SpriteStateChange
+          state: "3"
+      edges:
+        - to: monitorUnsecured
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Glass
+              amount: 2
+
+        - to: missingWires
+          conditions:
+            - !type:EntityAnchored { }
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 5
+          steps:
+            - tool: Cutting
+
+    - node: monitorUnsecured
+      actions:
+        - !type:SpriteStateChange
+          state: "4"
+      entity: ComputerFrame
+      edges:
+        - to: computer
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:BuildComputer
+              container: board
+          steps:
+            - tool: Screwing
+
+        - to: monitorMissing
+          conditions:
+            - !type:EntityAnchored { }
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 2
+          steps:
+            - tool: Prying
+
+    - node: computer
+      edges:
+        - to: monitorUnsecured
+          steps:
+            - tool: Screwing
+
+    - node: monitorBroken
+      entity: ComputerBroken
+      edges:
+        - to: monitorMissing
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ShardGlass
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 2

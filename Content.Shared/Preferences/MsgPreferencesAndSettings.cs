@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Lidgren.Network;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -9,7 +8,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     /// The server sends this before the client joins the lobby.
     /// </summary>
-    public class MsgPreferencesAndSettings : NetMessage
+    public sealed class MsgPreferencesAndSettings : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 

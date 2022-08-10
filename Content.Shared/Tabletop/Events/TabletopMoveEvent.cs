@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.Tabletop.Components;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Tabletop.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -8,10 +6,10 @@ namespace Content.Shared.Tabletop.Events
 {
     /// <summary>
     /// An event that is sent to the server every so often by the client to tell where an entity with a
-    /// <see cref="SharedTabletopDraggableComponent"/> has been moved.
+    /// <see cref="TabletopDraggableComponent"/> has been moved.
     /// </summary>
     [Serializable, NetSerializable]
-    public class TabletopMoveEvent : EntityEventArgs
+    public sealed class TabletopMoveEvent : EntityEventArgs
     {
         /// <summary>
         /// The UID of the entity being moved.

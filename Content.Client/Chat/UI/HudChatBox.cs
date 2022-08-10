@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Chat.UI
 {
-    public class HudChatBox : ChatBox
+    public sealed class HudChatBox : ChatBox
     {
         // TODO: Revisit the resizing stuff after https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
         // Probably not "supposed" to inject IClyde, but I give up.

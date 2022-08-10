@@ -1,22 +1,24 @@
 using Content.Server.CombatMode;
 using Content.Server.Interaction;
 using Content.Server.Weapon.Melee.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
 {
     public sealed class UnarmedCombatOperator : AiOperator
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private readonly float _burstTime;
         private float _elapsedTime;
 
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
-        private UnarmedCombatComponent? _unarmedCombat;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
+        private MeleeWeaponComponent? _unarmedCombat;
 
-        public UnarmedCombatOperator(IEntity owner, IEntity target, float burstTime = 1.0f)
+        public UnarmedCombatOperator(EntityUid owner, EntityUid target, float burstTime = 1.0f)
         {
+            IoCManager.InjectDependencies(this);
+
             _owner = owner;
             _target = target;
             _burstTime = burstTime;
@@ -29,7 +31,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return true;
             }
 
-            if (!_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
+            if (!_entMan.TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -39,7 +41,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 combatModeComponent.IsInCombatMode = true;
             }
 
-            if (_owner.TryGetComponent(out UnarmedCombatComponent? unarmedCombatComponent))
+            if (_entMan.TryGetComponent(_owner, out MeleeWeaponComponent? unarmedCombatComponent))
             {
                 _unarmedCombat = unarmedCombatComponent;
             }
@@ -56,7 +58,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             if (!base.Shutdown(outcome))
                 return false;
 
-            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
+            if (_entMan.TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
@@ -66,6 +68,13 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
         public override Outcome Execute(float frameTime)
         {
+            if (_unarmedCombat == null ||
+                !_entMan.GetComponent<TransformComponent>(_target).Coordinates.TryDistance(_entMan, _entMan.GetComponent<TransformComponent>(_owner).Coordinates, out var distance) || distance >
+                _unarmedCombat.Range)
+            {
+                return Outcome.Failed;
+            }
+
             if (_burstTime <= _elapsedTime)
             {
                 return Outcome.Success;
@@ -76,14 +85,8 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Failed;
             }
 
-            if ((_target.Transform.Coordinates.Position - _owner.Transform.Coordinates.Position).Length >
-                _unarmedCombat.Range)
-            {
-                return Outcome.Failed;
-            }
-
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, _target.Transform.Coordinates, _target.Uid);
+            interactionSystem.AiUseInteraction(_owner, _entMan.GetComponent<TransformComponent>(_target).Coordinates, _target);
             _elapsedTime += frameTime;
             return Outcome.Continuing;
         }

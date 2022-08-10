@@ -1,47 +1,50 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
+using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    class TileWallsCommand : IConsoleCommand
+    sealed class TileWallsCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "tilewalls";
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
+        public const string TilePrototypeID = "Plating";
+        public const string WallTag = "Wall";
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            GridId gridId;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            EntityUid? gridId;
 
             switch (args.Length)
             {
                 case 0:
-                    if (player?.AttachedEntity == null)
+                    if (player?.AttachedEntity is not {Valid: true} playerEntity)
                     {
                         shell.WriteLine("Only a player can run this command.");
                         return;
                     }
 
-                    gridId = player.AttachedEntity.Transform.GridID;
+                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                     break;
                 case 1:
-                    if (!int.TryParse(args[0], out var id))
+                    if (!EntityUid.TryParse(args[0], out var id))
                     {
-                        shell.WriteLine($"{args[0]} is not a valid integer.");
+                        shell.WriteLine($"{args[0]} is not a valid entity.");
                         return;
                     }
 
-                    gridId = new GridId(id);
+                    gridId = id;
                     break;
                 default:
                     shell.WriteLine(Help);
@@ -55,55 +58,45 @@ namespace Content.Server.Construction.Commands
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
+            if (!entityManager.EntityExists(grid.GridEntityId))
             {
                 shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
             }
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var underplating = tileDefinitionManager["underplating"];
-            var underplatingTile = new Robust.Shared.Map.Tile(underplating.TileId);
+            var tagSystem = EntitySystem.Get<TagSystem>();
+            var underplating = tileDefinitionManager[TilePrototypeID];
+            var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
-            foreach (var childUid in gridEntity.Transform.ChildEntityUids)
+            foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
             {
-                if (!entityManager.TryGetEntity(childUid, out var childEntity))
+                if (!entityManager.EntityExists(child))
                 {
                     continue;
                 }
 
-                var prototype = childEntity.Prototype;
-                while (true)
-                {
-                    if (prototype?.Parent == null)
-                    {
-                        break;
-                    }
-
-                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parent);
-                }
-
-                if (prototype?.ID != "base_wall")
+                if (!tagSystem.HasTag(child, WallTag))
                 {
                     continue;
                 }
 
-                if (!childEntity.Transform.Anchored)
+                var childTransform = entityManager.GetComponent<TransformComponent>(child);
+
+                if (!childTransform.Anchored)
                 {
                     continue;
                 }
 
-                var tile = grid.GetTileRef(childEntity.Transform.Coordinates);
+                var tile = grid.GetTileRef(childTransform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
-                if (tileDef.Name == "underplating")
+                if (tileDef.ID == TilePrototypeID)
                 {
                     continue;
                 }
 
-                grid.SetTile(childEntity.Transform.Coordinates, underplatingTile);
+                grid.SetTile(childTransform.Coordinates, underplatingTile);
                 changed++;
             }
 

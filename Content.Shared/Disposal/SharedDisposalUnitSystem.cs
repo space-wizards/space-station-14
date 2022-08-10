@@ -1,12 +1,10 @@
-﻿using System;
-using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
+using Content.Shared.DragDrop;
 using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
@@ -26,15 +24,16 @@ namespace Content.Shared.Disposal
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(HandlePreventCollide);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDragDropOnEvent>(OnCanDragDropOn);
         }
 
-        private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
+        private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
         {
-            var otherBody = args.BodyB.OwnerUid;
+            var otherBody = args.BodyB.Owner;
 
             // Items dropped shouldn't collide but items thrown should
-            if (EntityManager.HasComponent<SharedItemComponent>(otherBody) &&
+            if (EntityManager.HasComponent<ItemComponent>(otherBody) &&
                 !EntityManager.HasComponent<ThrownItemComponent>(otherBody))
             {
                 args.Cancel();
@@ -47,35 +46,37 @@ namespace Content.Shared.Disposal
             }
         }
 
-        public virtual bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
+        private void OnCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, CanDragDropOnEvent args)
         {
-            if (!component.Owner.Transform.Anchored)
+            if (args.Handled) return;
+
+            args.CanDrop = CanInsert(component, args.Dragged);
+            args.Handled = true;
+        }
+
+        public virtual bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
+        {
+            if (!EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
                 return false;
 
             // TODO: Probably just need a disposable tag.
-            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
-                !entity.HasComponent<SharedBodyComponent>())
+            if (!EntityManager.TryGetComponent(entity, out ItemComponent? storable) &&
+                !EntityManager.HasComponent<SharedBodyComponent>(entity))
             {
                 return false;
             }
 
 
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+            if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(entity.TryGetComponent(out MobStateComponent? damageState) && damageState.IsDead()))
+                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
                 {
                     return false;
                 }
             }
 
             return true;
-        }
-
-        public bool CanInsert(SharedDisposalUnitComponent component, EntityUid entityId)
-        {
-            var entity = EntityManager.GetEntity(entityId);
-            return CanInsert(component, entity);
         }
     }
 }

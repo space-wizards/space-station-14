@@ -6,7 +6,7 @@ namespace Content.Client.MedicalScanner
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent
+    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
     {
         public override bool DragDropOn(DragDropEvent eventArgs)
         {

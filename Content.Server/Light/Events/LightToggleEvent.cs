@@ -1,8 +1,6 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.Light.Events
 {
-    public class LightToggleEvent : EntityEventArgs
+    public sealed class LightToggleEvent : EntityEventArgs
     {
         public bool IsOn;
 

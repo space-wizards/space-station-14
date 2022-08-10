@@ -1,7 +1,7 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -14,33 +14,31 @@ namespace Content.Server.Database
 {
     public sealed class SqliteServerDbContext : ServerDbContext
     {
-        public DbSet<SqliteServerBan> Ban { get; set; } = default!;
-        public DbSet<SqliteServerUnban> Unban { get; set; } = default!;
-        public DbSet<SqliteConnectionLog> ConnectionLog { get; set; } = default!;
-
-        public SqliteServerDbContext()
+        public SqliteServerDbContext(DbContextOptions<SqliteServerDbContext> options) : base(options)
         {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            if (!InitializedWithOptions)
-                options.UseSqlite("dummy connection string");
-
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
 
             options.ConfigureWarnings(x =>
             {
                 x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
+#if DEBUG
+                // for tests
+                x.Ignore(CoreEventId.SensitiveDataLoggingEnabledWarning);
+#endif
             });
+
+#if DEBUG
+            options.EnableSensitiveDataLogging();
+#endif
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Player>()
-                .HasIndex(p => p.LastSeenUserName);
 
             var ipConverter = new ValueConverter<IPAddress, string>(
                 v => v.ToString(),
@@ -56,22 +54,37 @@ namespace Content.Server.Database
             );
 
             modelBuilder
-                .Entity<SqliteServerBan>()
+                .Entity<ServerBan>()
                 .Property(e => e.Address)
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);
 
-            var jsonConverter = new ValueConverter<JsonDocument, string>(
+            modelBuilder
+                .Entity<ServerRoleBan>()
+                .Property(e => e.Address)
+                .HasColumnType("TEXT")
+                .HasConversion(ipMaskConverter);
+
+            var jsonStringConverter = new ValueConverter<JsonDocument, string>(
                 v => JsonDocumentToString(v),
                 v => StringToJsonDocument(v));
 
+            var jsonByteArrayConverter = new ValueConverter<JsonDocument?, byte[]>(
+                v => JsonDocumentToByteArray(v),
+                v => ByteArrayToJsonDocument(v));
+
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Json)
-                .HasConversion(jsonConverter);
+                .HasConversion(jsonStringConverter);
+
+            modelBuilder.Entity<Profile>()
+                .Property(log => log.Markings)
+                .HasConversion(jsonByteArrayConverter);
         }
 
-        public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
+        public override int CountAdminLogs()
         {
+            return AdminLog.Count();
         }
 
         private static string InetToString(IPAddress address, int mask) {
@@ -108,46 +121,26 @@ namespace Content.Server.Database
         {
             return JsonDocument.Parse(str);
         }
-    }
 
-    [Table("ban")]
-    public class SqliteServerBan
-    {
-        public int Id { get; set; }
+        private static byte[] JsonDocumentToByteArray(JsonDocument? document)
+        {
+            if (document == null)
+            {
+                return Array.Empty<byte>();
+            }
 
-        public Guid? UserId { get; set; }
-        public (IPAddress address, int mask)? Address { get; set; }
-        public byte[]? HWId { get; set; }
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
 
-        public DateTime BanTime { get; set; }
-        public DateTime? ExpirationTime { get; set; }
-        public string Reason { get; set; } = null!;
-        public Guid? BanningAdmin { get; set; }
+            document.WriteTo(writer);
+            writer.Flush();
 
-        public SqliteServerUnban? Unban { get; set; }
-    }
+            return stream.ToArray();
+        }
 
-    [Table("unban")]
-    public class SqliteServerUnban
-    {
-        [Column("unban_id")] public int Id { get; set; }
-
-        public int BanId { get; set; }
-        public SqliteServerBan Ban { get; set; } = null!;
-
-        public Guid? UnbanningAdmin { get; set; }
-        public DateTime UnbanTime { get; set; }
-    }
-
-    [Table("connection_log")]
-    public class SqliteConnectionLog
-    {
-        public int Id { get; set; }
-
-        public Guid UserId { get; set; }
-        public string UserName { get; set; } = null!;
-        public DateTime Time { get; set; }
-        public string Address { get; set; } = null!;
-        public byte[]? HWId { get; set; }
+        private static JsonDocument ByteArrayToJsonDocument(byte[] str)
+        {
+            return JsonDocument.Parse(str);
+        }
     }
 }

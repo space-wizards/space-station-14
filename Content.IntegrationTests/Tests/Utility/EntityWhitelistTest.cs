@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
     [TestOf(typeof(EntityWhitelist))]
-    public class EntityWhitelistTest : ContentIntegrationTest
+    public sealed class EntityWhitelistTest
     {
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";
@@ -60,29 +60,27 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            var serverOptions = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
-            var server = StartServer(serverOptions);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
-            await server.WaitIdleAsync();
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var mapCoordinates = testMap.MapCoords;
+
+            var sEntities = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
             {
-                var mapId = GetMainMapId(mapManager);
-                var mapCoordinates = new MapCoordinates(0, 0, mapId);
+                var validComponent = sEntities.SpawnEntity("ValidComponentDummy", mapCoordinates);
+                var validTag = sEntities.SpawnEntity("ValidTagDummy", mapCoordinates);
 
-                var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates).Uid;
-                var validTag = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates).Uid;
-
-                var invalidComponent = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates).Uid;
-                var invalidTag = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates).Uid;
+                var invalidComponent = sEntities.SpawnEntity("InvalidComponentDummy", mapCoordinates);
+                var invalidTag = sEntities.SpawnEntity("InvalidTagDummy", mapCoordinates);
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
                 {
-                    Components = new[] {$"{ValidComponent}"},
-                    Tags = new[] {"ValidTag"}
+                    Components = new[] { $"{ValidComponent}"},
+                    Tags = new() {"ValidTag"}
                 };
                 whitelistInst.UpdateRegistrations();
                 Assert.That(whitelistInst, Is.Not.Null);
@@ -97,8 +95,8 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
 
                 // Test from serialized
-                var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
-                var whitelistSer = dummy.GetComponent<ItemSlotsComponent>().Slots.Values.First().Whitelist;
+                var dummy = sEntities.SpawnEntity("WhitelistDummy", mapCoordinates);
+                var whitelistSer = sEntities.GetComponent<ItemSlotsComponent>(dummy).Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
                 Assert.That(whitelistSer.Components, Is.Not.Null);
@@ -110,6 +108,7 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
                 Assert.That(whitelistSer.IsValid(invalidTag), Is.False);
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

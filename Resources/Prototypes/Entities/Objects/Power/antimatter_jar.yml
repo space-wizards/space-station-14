@@ -10,4 +10,5 @@
   - type: Sprite
     sprite: Objects/Power/AME/ame_jar.rsi
     state: jar
+    netsync: false
   - type: AMEFuelContainer

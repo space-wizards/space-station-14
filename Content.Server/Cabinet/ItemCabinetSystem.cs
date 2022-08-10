@@ -5,14 +5,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Cabinet
 {
-    public class ItemCabinetSystem : EntitySystem
+    public sealed class ItemCabinetSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
@@ -25,7 +22,7 @@ namespace Content.Server.Cabinet
             SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnComponentStartup);
 
             SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
-            SubscribeLocalEvent<ItemCabinetComponent, GetActivationVerbsEvent>(AddToggleOpenVerb);
+            SubscribeLocalEvent<ItemCabinetComponent, GetVerbsEvent<ActivationVerb>>(AddToggleOpenVerb);
 
             SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
@@ -43,7 +40,7 @@ namespace Content.Server.Cabinet
         private void OnComponentStartup(EntityUid uid, ItemCabinetComponent cabinet, ComponentStartup args)
         {
             UpdateAppearance(uid, cabinet);
-            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot.ID, !cabinet.Opened);
+            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
         }
 
         private void UpdateAppearance(EntityUid uid,
@@ -59,17 +56,19 @@ namespace Content.Server.Cabinet
 
         private void OnContainerModified(EntityUid uid, ItemCabinetComponent cabinet, ContainerModifiedMessage args)
         {
+            if (!cabinet.Initialized) return;
+
             if (args.Container.ID == cabinet.CabinetSlot.ID)
                 UpdateAppearance(uid, cabinet);
         }
 
-        private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent cabinet, GetActivationVerbsEvent args)
+        private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent cabinet, GetVerbsEvent<ActivationVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
 
             // Toggle open verb
-            Verb toggleVerb = new();
+            ActivationVerb toggleVerb = new();
             toggleVerb.Act = () => ToggleItemCabinet(uid, cabinet);
             if (cabinet.Opened)
             {
@@ -102,8 +101,8 @@ namespace Content.Server.Cabinet
                 return;
 
             cabinet.Opened = !cabinet.Opened;
-            SoundSystem.Play(Filter.Pvs(uid), cabinet.DoorSound.GetSound(), uid, AudioHelpers.WithVariation(0.15f));
-            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot.ID, !cabinet.Opened);
+            SoundSystem.Play(cabinet.DoorSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.15f));
+            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
 
             UpdateAppearance(uid, cabinet);
         }

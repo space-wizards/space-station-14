@@ -1,30 +1,9 @@
-﻿using Content.Shared.Climbing;
-using Content.Shared.DragDrop;
-using Content.Shared.Interaction.Helpers;
-using Robust.Shared.GameObjects;
+using Content.Client.Movement.Systems;
+using Content.Shared.Climbing;
 
-namespace Content.Client.Movement.Components
-{
-    [RegisterComponent]
-    [ComponentReference(typeof(IClimbable))]
-    public class ClimbableComponent : SharedClimbableComponent
-    {
-        public override bool CanDragDropOn(DragDropEvent eventArgs)
-        {
-            if (!base.CanDragDropOn(eventArgs))
-                return false;
+namespace Content.Client.Movement.Components;
 
-            var user = eventArgs.User;
-            var target = eventArgs.Target;
-            var dragged = eventArgs.Dragged;
-            bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
-
-            return user.InRangeUnobstructed(target, Range, predicate: Ignored) && user.InRangeUnobstructed(dragged, Range, predicate: Ignored);
-        }
-
-        public override bool DragDropOn(DragDropEvent eventArgs)
-        {
-            return false;
-        }
-    }
-}
+[RegisterComponent]
+[Access(typeof(ClimbSystem))]
+[ComponentReference(typeof(SharedClimbableComponent))]
+public sealed class ClimbableComponent : SharedClimbableComponent { }

@@ -1,0 +1,4 @@
+- type: advertisementsPack
+  id: LawDrobeAds
+  advertisements:
+    - advertisement-lawdrobe-1

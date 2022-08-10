@@ -1,7 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Events
 {
@@ -9,7 +6,7 @@ namespace Content.Shared.Tabletop.Events
     /// An event sent by the server to the client to tell the client to open a tabletop game window.
     /// </summary>
     [Serializable, NetSerializable]
-    public class TabletopPlayEvent : EntityEventArgs
+    public sealed class TabletopPlayEvent : EntityEventArgs
     {
         public EntityUid TableUid;
         public EntityUid CameraUid;

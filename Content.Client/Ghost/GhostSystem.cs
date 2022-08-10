@@ -1,17 +1,16 @@
-﻿using Content.Client.Ghost.UI;
+using Content.Client.Ghost.UI;
 using Content.Client.HUD;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Ghost
 {
     [UsedImplicitly]
-    public class GhostSystem : SharedGhostSystem
+    public sealed class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
@@ -36,7 +35,7 @@ namespace Content.Client.Ghost
 
                 foreach (var ghost in EntityManager.GetAllComponents(typeof(GhostComponent), true))
                 {
-                    if (ghost.Owner.TryGetComponent(out SpriteComponent? sprite))
+                    if (EntityManager.TryGetComponent(ghost.Owner, out SpriteComponent? sprite))
                     {
                         sprite.Visible = value;
                     }
@@ -60,7 +59,7 @@ namespace Content.Client.Ghost
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
         {
-            if (component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 sprite.Visible = GhostVisibility;
             }
@@ -104,7 +103,7 @@ namespace Content.Client.Ghost
             var entity = _playerManager.LocalPlayer?.ControlledEntity;
 
             if (entity == null ||
-                !entity.TryGetComponent(out GhostComponent? ghost))
+                !EntityManager.TryGetComponent(entity.Value, out GhostComponent? ghost))
             {
                 return;
             }

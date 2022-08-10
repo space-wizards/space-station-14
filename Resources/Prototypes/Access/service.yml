@@ -1,0 +1,39 @@
+- type: accessLevel
+  id: Bar
+  name: id-card-access-level-bar
+
+- type: accessLevel
+  id: Kitchen
+  name: id-card-access-level-kitchen
+
+- type: accessLevel
+  id: Hydroponics
+  name: id-card-access-level-hydroponics
+
+- type: accessLevel
+  id: Service
+  name: id-card-access-level-service
+
+- type: accessLevel
+  id: Janitor
+  name: id-card-access-level-janitor
+
+- type: accessLevel
+  id: Theatre
+  name: id-card-access-level-theatre
+
+- type: accessLevel
+  id: Chapel
+  name: id-card-access-level-chapel
+
+- type: accessGroup
+  id: Service
+  tags:
+  - HeadOfPersonnel
+  - Bar
+  - Kitchen
+  - Hydroponics
+  - Service
+  - Janitor
+  - Theatre
+  - Chapel

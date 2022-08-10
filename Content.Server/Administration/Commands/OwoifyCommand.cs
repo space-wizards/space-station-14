@@ -1,15 +1,12 @@
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Random;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public class OwoifyCommand : IConsoleCommand
+public sealed class OwoifyCommand : IConsoleCommand
 {
     public string Command => "owoify";
 

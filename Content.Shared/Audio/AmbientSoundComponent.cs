@@ -1,10 +1,6 @@
-using System;
-using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Audio
 {
@@ -12,13 +8,11 @@ namespace Content.Shared.Audio
     [NetworkedComponent]
     public sealed class AmbientSoundComponent : Component
     {
-        public override string Name => "AmbientSound";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
-        [DataField("sound")]
+        [DataField("sound", required: true), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier Sound = default!;
 
         /// <summary>

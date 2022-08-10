@@ -1,9 +1,10 @@
 ﻿- type: reagent
   id: Toxin
-  name: toxin
-  desc: A Toxic chemical.
+  name: reagent-name-toxin
+  group: Toxins
+  desc: reagent-desc-toxin
   color: "#cf3600"
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -18,10 +19,96 @@
             Poison: 2
 
 - type: reagent
+  id: CarpoToxin
+  name: reagent-name-carpotoxin
+  group: Toxins
+  desc: reagent-desc-carpotoxin
+  color: "#e2a38c"
+  physicalDesc: reagent-physical-desc-exotic-smelling
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustHealth
+    amount: -5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+
+- type: reagent
+  id: ChloralHydrate
+  name: reagent-name-chloral-hydrate
+  group: Toxins
+  desc: reagent-desc-chloral-hydrate
+  color: "#000067"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 15
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 20
+        damage:
+          types:
+            Poison: 1.5
+
+- type: reagent
+  id: Mold
+  name: reagent-name-mold
+  group: Toxins
+  desc: reagent-desc-mold
+  color: "#8a9a5b"
+  physicalDesc: reagent-physical-desc-fuzzy
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:ChemCauseRandomDisease
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mold
+          min: 1
+        diseases:
+          - VentCough
+          - SpaceCold
+          - SpaceFlu
+          - BirdFlew
+          - Plague
+          - TongueTwister
+          - MemeticAmirmir
+
+- type: reagent
   id: PolytrinicAcid
-  name: polytrinic acid
-  desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
-  physicalDesc: strong-smelling
+  name: reagent-name-polytrinic-acid
+  group: Toxins
+  desc: reagent-desc-polytrinic-acid
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
@@ -42,9 +129,8 @@
         damage:
           groups:
             Caustic: 0.5
-      - !type:DoAction
+      - !type:Scream
         probability: 0.3
-        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -54,14 +140,16 @@
             Caustic: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
 - type: reagent
   id: FluorosulfuricAcid
-  name: fluorosulfuric acid
-  desc: An extremely corrosive chemical substance.
-  physicalDesc: strong-smelling
+  name: reagent-name-fluorosulfuric-acid
+  group: Toxins
+  desc: reagent-desc-fluorosulfuric-acid
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
@@ -75,9 +163,8 @@
         damage:
           groups:
             Caustic: 0.3
-      - !type:DoAction
+      - !type:Scream
         probability: 0.2
-        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -87,14 +174,16 @@
             Caustic: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
 - type: reagent
   id: SulfuricAcid
-  name: sulfuric acid
-  desc: A highly corrosive, oily, colorless liquid.
-  physicalDesc: oily
+  name: reagent-name-sulfuric-acid
+  group: Toxins
+  desc: reagent-desc-sulfuric-acid
+  physicalDesc: reagent-physical-desc-oily
   color: "#BF8C00"
   boilingPoint: 337.0
   meltingPoint: 10.31
@@ -115,9 +204,8 @@
         damage:
           groups:
             Caustic: 0.1
-      - !type:DoAction
+      - !type:Scream
         probability: 0.1
-        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -127,42 +215,16 @@
             Poison: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
-  # TODO MIRROR acid!
-
-- type: reagent
-  id: Plasma
-  name: plasma
-  desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
-  physicalDesc: gaseous
-  color: "#7e009e"
-  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
-  meltingPoint: -186.4
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 1.5
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 3
-      - !type:AdjustReagent
-        reagent: Inaprovaline
-        amount: -2.0
-  reactiveEffects:
-    Flammable:
-      methods: [ Touch ]
-      effects:
-      - !type:FlammableReaction
 
 - type: reagent
   id: UnstableMutagen
-  name: unstable mutagen
-  desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
-  physicalDesc: glowing
+  name: reagent-name-unstable-mutagen
+  group: Toxins
+  desc: reagent-desc-unstable-mutagen
+  physicalDesc: reagent-physical-desc-glowing
   color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
   meltingPoint: 261.0
@@ -179,9 +241,10 @@
 
 - type: reagent
   id: HeartbreakerToxin
-  name: heartbreaker toxin
-  desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
-  physicalDesc: strong-smelling
+  name: reagent-name-heartbreaker-toxin
+  group: Toxins
+  desc: reagent-desc-heartbreaker-toxin
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#5f959c"
   metabolisms:
     Poison:
@@ -189,16 +252,17 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: 4
+            Asphyxiation: 2
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
 
 - type: reagent
   id: Lexorin
-  name: lexorin
-  desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
-  physicalDesc: pungent
+  name: reagent-name-lexorin
+  group: Toxins
+  desc: reagent-desc-lexorin
+  physicalDesc: reagent-physical-desc-pungent
   color: "#6b0007"
   metabolisms:
     Poison:
@@ -210,9 +274,10 @@
 
 - type: reagent
   id: MindbreakerToxin
-  name: mindbreaker toxin
-  desc: A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
-  physicalDesc: opaque
+  name: reagent-name-mindbreaker-toxin
+  group: Toxins
+  desc: reagent-desc-mindbreaker-toxin
+  physicalDesc: reagent-physical-desc-opaque
   color: "#77b58e"
   plantMetabolism:
   - !type:PlantAdjustToxins
@@ -220,18 +285,11 @@
   # TODO hallucinations
 
 - type: reagent
-  id: Soporific
-  name: soporific (sleep-toxin)
-  desc: A less powerful sedative that takes a while to work, intended to help insomniacs and patients that are too aggressive to be treated normally. Takes roughly 50 seconds to make the patient fall asleep. Is safe in large quantities. Can be counteracted with Anti-Toxin.
-  physicalDesc: acrid
-  color: "#215263"
-  # TODO sleeping
-
-- type: reagent
   id: Histamine
-  name: histamine
-  desc: Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal.
-  physicalDesc: abrasive
+  name: reagent-name-histamine
+  group: Toxins
+  desc: reagent-desc-histamine
+  physicalDesc: reagent-physical-desc-abrasive
   color: "#FA6464"
   metabolisms:
     Poison:
@@ -245,7 +303,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 45
         damage:
           groups:
             Brute: 2
@@ -258,16 +316,18 @@
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 45
         type: Local
+        visualType: Medium
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
 
 - type: reagent
   id: Theobromine
-  name: theobromine
-  desc: Theobromine is a bitter alkaloid of the cacao plant found in chocolate, and some other foods.
-  physicalDesc: grainy
+  name: reagent-name-theobromine
+  group: Toxins
+  desc: reagent-desc-theobromine
+  physicalDesc: reagent-physical-desc-grainy
   color: "#f5f5f5"
   meltingPoint: 351
   boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
@@ -283,3 +343,101 @@
         damage:
           types:
             Poison: 4
+      - !type:ChemVomit
+        probability: 0.04
+        conditions:
+          - !type:ReagentThreshold
+            min: 3
+          - !type:OrganType
+            type: Animal
+
+- type: reagent
+  id: Amatoxin
+  name: reagent-name-amatoxin
+  group: Toxins
+  desc: reagent-desc-amatoxin
+  physicalDesc: reagent-physical-desc-nondescript
+  color: "#D6CE7B"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 6
+
+- type: reagent
+  id: VentCrud
+  name: reagent-name-vent-crud
+  desc: reagent-desc-vent-crud
+  physicalDesc: reagent-physical-desc-sticky
+  color: "#000000"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 2
+        - !type:ChemCauseDisease ##Since this mostly just comes from the event you won't ingest that much
+          causeChance: 0.6
+          disease: VentCough
+
+- type: reagent
+  id: Corpium
+  name: reagent-name-corpium
+  desc: reagent-desc-corpium
+  physicalDesc: reagent-physical-desc-necrotic
+  color: "#7668a1"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Cellular: 1
+        - !type:ChemCauseDisease
+          causeChance: 1
+          disease: ActiveZombieVirus
+
+- type: reagent
+  id: UncookedAnimalProteins
+  name: reagent-name-uncooked-animal-proteins
+  desc: reagent-desc-uncooked-animal-proteins
+  physicalDesc: reagent-physical-desc-clumpy
+  color: "#FFFFE5"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Human
+        damage:
+          types:
+            Poison: 2
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Animal
+        reagent: Protein
+        amount: 0.5
+
+- type: reagent
+  id: Allicin
+  name: reagent-name-allicin
+  desc: reagent-desc-allicin
+  physicalDesc: reagent-physical-desc-pungent
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 6

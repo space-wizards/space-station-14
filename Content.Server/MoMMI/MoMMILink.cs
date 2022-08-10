@@ -1,17 +1,14 @@
-using System;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
-using Newtonsoft.Json;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 
 namespace Content.Server.MoMMI
 {
@@ -26,7 +23,7 @@ namespace Content.Server.MoMMI
 
         void IPostInjectInit.PostInject()
         {
-            _statusHost.AddHandler(_handleChatPost);
+            _statusHost.AddHandler(HandleChatPost);
         }
 
         public async void SendOOCMessage(string sender, string message)
@@ -37,10 +34,10 @@ namespace Content.Server.MoMMI
                 Contents = message
             };
 
-            await _sendMessageInternal("ooc", sentMessage);
+            await SendMessageInternal("ooc", sentMessage);
         }
 
-        private async Task _sendMessageInternal(string type, object messageObject)
+        private async Task SendMessageInternal(string type, object messageObject)
         {
             var url = _configurationManager.GetCVar(CCVars.StatusMoMMIUrl);
             var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
@@ -62,9 +59,7 @@ namespace Content.Server.MoMMI
                 Contents = messageObject
             };
 
-            var jsonMessage = JsonConvert.SerializeObject(sentMessage);
-            var request =
-                await _httpClient.PostAsync(url, new StringContent(jsonMessage, Encoding.UTF8, "application/json"));
+            var request = await _httpClient.PostAsJsonAsync(url, sentMessage);
 
             if (!request.IsSuccessStatusCode)
             {
@@ -72,7 +67,7 @@ namespace Content.Server.MoMMI
             }
         }
 
-        private bool _handleChatPost(IStatusHandlerContext context)
+        private async Task<bool> HandleChatPost(IStatusHandlerContext context)
         {
             if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/ooc")
             {
@@ -83,67 +78,74 @@ namespace Content.Server.MoMMI
 
             if (string.IsNullOrEmpty(password))
             {
-                context.RespondError(HttpStatusCode.Forbidden);
+                await context.RespondErrorAsync(HttpStatusCode.Forbidden);
                 return true;
             }
 
             OOCPostMessage? message = null;
             try
             {
-                message = context.RequestBodyJson<OOCPostMessage>();
+                message = await context.RequestBodyJsonAsync<OOCPostMessage>();
             }
-            catch (JsonSerializationException)
+            catch (JsonException)
             {
                 // message null so enters block down below.
             }
 
             if (message == null)
             {
-                context.RespondError(HttpStatusCode.BadRequest);
+                await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                 return true;
             }
 
             if (message.Password != password)
             {
-                context.RespondError(HttpStatusCode.Forbidden);
+                await context.RespondErrorAsync(HttpStatusCode.Forbidden);
                 return true;
             }
 
-            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Sender, message.Contents));
+            var sender = message.Sender;
+            var contents = message.Contents.ReplaceLineEndings(" ");
 
-            context.Respond("Success", HttpStatusCode.OK);
+            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(sender, contents));
 
+            await context.RespondAsync("Success", HttpStatusCode.OK);
             return true;
         }
 
-        [JsonObject(MemberSerialization.Fields)]
-        private class MoMMIMessageBase
+        private sealed class MoMMIMessageBase
         {
-            [JsonProperty("password")] public string Password = null!;
+            [JsonInclude] [JsonPropertyName("password")]
+            public string Password = null!;
 
-            [JsonProperty("type")] public string Type = null!;
+            [JsonInclude] [JsonPropertyName("type")]
+            public string Type = null!;
 
-            [JsonProperty("contents")] public object Contents = null!;
+            [JsonInclude] [JsonPropertyName("contents")]
+            public object Contents = null!;
         }
 
-        [JsonObject(MemberSerialization.Fields)]
-        private class MoMMIMessageOOC
+        private sealed class MoMMIMessageOOC
         {
-            [JsonProperty("sender")] public string Sender = null!;
+            [JsonInclude] [JsonPropertyName("sender")]
+            public string Sender = null!;
 
-            [JsonProperty("contents")] public string Contents = null!;
+            [JsonInclude] [JsonPropertyName("contents")]
+            public string Contents = null!;
         }
 
-        [JsonObject(MemberSerialization.Fields, ItemRequired = Required.Always)]
-        private class OOCPostMessage
+        private sealed class OOCPostMessage
         {
-            #pragma warning disable CS0649
-            [JsonProperty("password")] public string Password = null!;
+#pragma warning disable CS0649
+            [JsonInclude] [JsonPropertyName("password")]
+            public string Password = null!;
 
-            [JsonProperty("sender")] public string Sender = null!;
+            [JsonInclude] [JsonPropertyName("sender")]
+            public string Sender = null!;
 
-            [JsonProperty("contents")] public string Contents = null!;
-            #pragma warning restore CS0649
+            [JsonInclude] [JsonPropertyName("contents")]
+            public string Contents = null!;
+#pragma warning restore CS0649
         }
     }
 }

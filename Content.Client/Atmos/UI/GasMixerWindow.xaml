@@ -1,15 +1,15 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
             MinSize="200 200" Title="Gas Mixer">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-mixer-ui-mixer-status} "/>
+            <Label Text="{Loc comp-gas-mixer-ui-mixer-status}"/>
             <Control MinSize="5 0" />
             <Button Name="ToggleStatusButton"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-mixer-ui-mixer-output-pressure} "/>
+            <Label Text="{Loc comp-gas-mixer-ui-mixer-output-pressure}"/>
             <Control MinSize="5 0" />
             <LineEdit Name="MixerPressureOutputInput" MinSize="60 0" />
             <Control MinSize="5 0" />
@@ -21,12 +21,12 @@
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Control MinSize="0 5" />
-            <Label Text="{Loc comp-gas-mixer-ui-mixer-node-primary} "/>
+            <Label Text="{Loc comp-gas-mixer-ui-mixer-node-primary}"/>
             <Control MinSize="5 0" />
             <LineEdit Name="MixerNodeOneInput" MinSize="60 0" />
             <Label Text=" %"/>
             <Control MinSize="5 0" />
-            <Label Text="{Loc comp-gas-mixer-ui-mixer-node-side} "/>
+            <Label Text="{Loc comp-gas-mixer-ui-mixer-node-side}"/>
             <Control MinSize="5 0" />
             <LineEdit Name="MixerNodeTwoInput" MinSize="60 0" />
             <Label Text=" %"/>
@@ -35,4 +35,4 @@
             <Button Name="SetMixerPercentageButton" Text="{Loc comp-gas-mixer-ui-mixer-set}" HorizontalAlignment="Right" Disabled="True"/>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

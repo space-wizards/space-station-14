@@ -1,0 +1,11 @@
+- type: entity
+  id: LockerScienceFilled
+  suffix: Filled
+  parent: LockerScientist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingHeadsetScience
+      - id: ClothingMaskSterile
+      - id: ClothingOuterCoatLab

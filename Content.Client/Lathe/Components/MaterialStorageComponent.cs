@@ -7,7 +7,7 @@ namespace Content.Client.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMaterialStorageComponent))]
-    public class MaterialStorageComponent : SharedMaterialStorageComponent
+    public sealed class MaterialStorageComponent : SharedMaterialStorageComponent
     {
         protected override Dictionary<string, int> Storage { get; set; } = new();
 

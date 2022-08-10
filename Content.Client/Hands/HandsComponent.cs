@@ -1,53 +1,23 @@
 using Content.Shared.Hands.Components;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Hands
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandsComponent))]
-    public class HandsComponent : SharedHandsComponent
+    [Access(typeof(HandsSystem))]
+    public sealed class HandsComponent : SharedHandsComponent
     {
+        /// <summary>
+        ///     Whether or not to add in-hand sprites for held items. Some entities (e.g., drones) don't want these.
+        /// </summary>
+        [DataField("showInHands")]
+        public bool ShowInHands = true;
+
         public HandsGui? Gui { get; set; }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            if (curState is not HandsComponentState state)
-                return;
-
-            Hands.Clear();
-
-            foreach (var handState in state.Hands)
-            {
-                var newHand = new Hand(handState.Name, handState.Location);
-                Hands.Add(newHand);
-            }
-
-            ActiveHand = state.ActiveHand;
-
-            HandsModified();
-        }
-
-        public override void HandsModified()
-        {
-            UpdateHandContainers();
-
-            base.HandsModified();
-        }
-
-        public void UpdateHandContainers()
-        {
-            if (!Owner.TryGetComponent<ContainerManagerComponent>(out var containerMan))
-                return;
-
-            foreach (var hand in Hands)
-            {
-                if (hand.Container == null)
-                {
-                    containerMan.TryGetContainer(hand.Name, out var container);
-                    hand.Container = container;
-                }
-            }
-        }
+        /// <summary>
+        ///     Data about the current sprite layers that the hand is contributing to the owner entity. Used for sprite in-hands.
+        /// </summary>
+        public readonly Dictionary<HandLocation, HashSet<string>> RevealedLayers = new();
     }
 }

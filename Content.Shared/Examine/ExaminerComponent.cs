@@ -1,7 +1,3 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Shared.Examine
 {
     /// <summary>
@@ -10,8 +6,6 @@ namespace Content.Shared.Examine
     [RegisterComponent]
     public sealed class ExaminerComponent : Component
     {
-        public override string Name => "Examiner";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("DoRangeCheck")]
         private bool _doRangeCheck = true;

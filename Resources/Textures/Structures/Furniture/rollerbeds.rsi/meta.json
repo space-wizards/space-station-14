@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0, Baystation 12 and AuroraStation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "rollerbed"
+        },
+        {
+            "name": "rollerbed_buckled"
+        },
+        {
+            "name": "rollerbed_folded"
+        },
+        {
+            "name": "cheap_rollerbed"
+        },
+        {
+            "name": "cheap_rollerbed_buckled"
+        },
+        {
+            "name": "cheap_rollerbed_folded"
+        },
+        {
+            "name": "emergency_rollerbed"
+        },
+        {
+            "name": "emergency_rollerbed_buckled"
+        },
+        {
+            "name": "emergency_rollerbed_folded"
+        }
+    ]
+}

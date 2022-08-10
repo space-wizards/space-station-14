@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Database;
+namespace Content.Shared.Database;
 
 // DO NOT CHANGE THE NUMERIC VALUES OF THESE
 public enum LogType
@@ -40,12 +40,13 @@ public enum LogType
     Pickup = 36,
     Drop = 37,
     BulletHit = 38,
-    ForceFeed = 40,
+    ForceFeed = 40, // involuntary
+    Ingestion = 53, // voluntary
     MeleeHit = 41,
     HitScanHit = 42,
     Suicide = 43,
     Explosion = 44,
-    Radiation = 45,
+    Radiation = 45, // Unused
     Barotrauma = 46,
     Flammable = 47,
     Asphyxiation = 48,
@@ -54,4 +55,24 @@ public enum LogType
     Thirst = 51,
     Electrocution = 52,
     CrayonDraw = 39,
+    AtmosPressureChanged = 54,
+    AtmosPowerChanged = 55,
+    AtmosVolumeChanged = 56,
+    AtmosFilterChanged = 57,
+    AtmosRatioChanged = 58,
+    Emitter = 59,
+    GhostRoleTaken = 60,
+    Chat = 61,
+    Action = 62,
+    RCD = 63,
+    Construction = 64,
+    Trigger = 65,
+    Anchor = 66,
+    Unanchor = 67,
+    EmergencyShuttle = 68,
+    // haha so funny
+    Emag = 69,
+    Gib = 70,
+    Identity = 71,
+    CableCut = 72,
 }

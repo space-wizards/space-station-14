@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Suspicion.Roles
 {
@@ -32,7 +30,7 @@ namespace Content.Server.Suspicion.Roles
 
                 var partnerText = Loc.GetString(
                     "suspicion-partners-in-crime",
-                    ("partnerCount", traitors.Count-1),
+                    ("partnersCount", traitors.Count-1),
                     ("partnerNames", allPartners)
                 );
 

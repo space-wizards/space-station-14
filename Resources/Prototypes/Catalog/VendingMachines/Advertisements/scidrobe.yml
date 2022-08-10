@@ -1,0 +1,5 @@
+- type: advertisementsPack
+  id: SciDrobeAds
+  advertisements:
+    - advertisement-scidrobe-1
+    - advertisement-scidrobe-2

@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Sound;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Audio;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Tools.Components
 {
@@ -15,10 +9,10 @@ namespace Content.Server.Tools.Components
     ///     Not to be confused with Multitool (power)
     /// </summary>
     [RegisterComponent]
-    public class MultipleToolComponent : SharedMultipleToolComponent
+    public sealed class MultipleToolComponent : SharedMultipleToolComponent
     {
         [DataDefinition]
-        public class ToolEntry
+        public sealed class ToolEntry
         {
             [DataField("behavior", required:true)]
             public PrototypeFlags<ToolQualityPrototype> Behavior { get; } = new();
@@ -32,7 +26,7 @@ namespace Content.Server.Tools.Components
             [DataField("sprite")]
             public SpriteSpecifier? Sprite { get; } = null;
         }
-        
+
         [DataField("entries", required:true)]
         public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
 

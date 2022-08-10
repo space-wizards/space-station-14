@@ -5,7 +5,7 @@
   components:
   - type: InteractionOutline
   - type: Construction
-    graph: barricade
+    graph: Barricade
     node: barricadewooden
   - type: Sprite
     sprite: Structures/Walls/barricades.rsi
@@ -15,15 +15,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mask:
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Tag
     tags:
-    - ExplosivePassable
     - Wooden
   - type: Damageable
     damageModifierSet: Wood
@@ -44,10 +41,10 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+    damage:
+      types:
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Appearance
-    visuals:
-    - type: FireVisualizer
-      sprite: Effects/fire.rsi
-      normalState: 1
-      Sprite:
-        drawdepth: Effects
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: 1

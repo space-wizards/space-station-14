@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Content.Benchmarks
 {
-    public class StereoToMonoBenchmark
+    public sealed class StereoToMonoBenchmark
     {
         [Params(128, 256, 512)]
         public int N { get; set; }

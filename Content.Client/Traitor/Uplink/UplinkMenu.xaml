@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'uplink-user-interface-title'}"
             MinSize="512 512"
@@ -13,7 +13,7 @@
                                HorizontalExpand="True"
                                HorizontalAlignment="Left" />
                 <Button Name="WithdrawButton"
-                        Text="Withdraw"
+                        Text="{Loc 'uplink-user-interface-withdraw-button'}"
                         HorizontalAlignment="Right"
                         MinWidth="64"/>
             </BoxContainer>
@@ -50,4 +50,4 @@
             </PanelContainer>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

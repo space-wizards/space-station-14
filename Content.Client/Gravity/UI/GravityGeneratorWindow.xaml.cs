@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -14,7 +15,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Gravity.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GravityGeneratorWindow : FancyWindow
+    public sealed partial class GravityGeneratorWindow : FancyWindow
     {
         private readonly ButtonGroup _buttonGroup = new();
 
@@ -33,7 +34,7 @@ namespace Content.Client.Gravity.UI
             OnButton.OnPressed += _ => _owner.SetPowerSwitch(true);
             OffButton.OnPressed += _ => _owner.SetPowerSwitch(false);
 
-            EntityView.Sprite = component.Owner.GetComponent<SpriteComponent>();
+            EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
         }
 
         public void UpdateState(SharedGravityGeneratorComponent.GeneratorState state)

@@ -1,0 +1,4 @@
+- type: advertisementsPack
+  id: ViroDrobeAds
+  advertisements:
+    - advertisement-virodrobe-1

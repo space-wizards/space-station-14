@@ -35,8 +35,9 @@
     state: icon-alt
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
-    HeldPrefix: alt
-    ClothingPrefix: alt
+    equippedPrefix: alt
+  - type: Item
+    heldPrefix: alt
   - type: MeleeWeapon
     damage:
       types:
@@ -53,7 +54,9 @@
     state: icon-super
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
-    ClothingPrefix: super
+    equippedPrefix: super
+  - type: Item
+    heldPrefix: super
   - type: MeleeWeapon
     damage:
       types:
@@ -89,7 +92,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesGlassesSunglasses
   name: sun glasses
-  description: Useful both for security and cargonia
+  description: Useful both for security and cargonia.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
@@ -120,3 +123,7 @@
     sprite: Clothing/Eyes/Glasses/thermal.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/thermal.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95

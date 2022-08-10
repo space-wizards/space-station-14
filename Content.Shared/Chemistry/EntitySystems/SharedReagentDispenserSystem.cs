@@ -1,6 +1,4 @@
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Chemistry.Dispenser;
 
@@ -21,7 +19,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         private void OnComponentInit(EntityUid uid, SharedReagentDispenserComponent component, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, $"{component.Name}-beaker", component.BeakerSlot);
+            _itemSlotsSystem.AddItemSlot(uid, SharedReagentDispenserComponent.BeakerSlotId, component.BeakerSlot);
         }
 
         private void OnComponentRemove(EntityUid uid, SharedReagentDispenserComponent component, ComponentRemove args)

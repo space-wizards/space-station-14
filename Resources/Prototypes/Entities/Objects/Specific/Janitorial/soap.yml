@@ -14,7 +14,9 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
     paralyzeTime: 2
-    intersectPercentage: 0.2
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
+    intersectRatio: 0.2
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -27,13 +29,13 @@
       id: "slips"
       hard: false
       layer:
-      - SmallImpassable
+      - SlipLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
       mass: 5
       mask:
-      - SmallImpassable
+      - ItemMask
 
 - type: entity
   name: soap
@@ -44,7 +46,7 @@
   - type: Sprite
     state: nt
   - type: Item
-    HeldPrefix: nt
+    heldPrefix: nt
 
 - type: entity
   name: soap
@@ -55,7 +57,7 @@
   - type: Sprite
     state: deluxe
   - type: Item
-    HeldPrefix: deluxe
+    heldPrefix: deluxe
 
 - type: entity
   name: soap
@@ -67,8 +69,10 @@
     state: syndie
   - type: Slippery
     paralyzeTime: 5
+    launchForwardsMultiplier: 9.0
+  - type: StepTrigger
   - type: Item
-    HeldPrefix: syndie
+    heldPrefix: syndie
 
 - type: entity
   name: soap
@@ -80,8 +84,9 @@
     state: gibs
   - type: Slippery
     paralyzeTime: 2
+  - type: StepTrigger
   - type: Item
-    HeldPrefix: gibs
+    heldPrefix: gibs
 
 - type: entity
   name: omega soap
@@ -93,5 +98,7 @@
     state: omega
   - type: Slippery
     paralyzeTime: 7
+    launchForwardsMultiplier: 9.0
+  - type: StepTrigger
   - type: Item
-    HeldPrefix: omega
+    heldPrefix: omega

@@ -13,6 +13,7 @@ namespace Content.Client.Items.Components
         /// <returns>
         ///     The control to render as status.
         /// </returns>
+        [Obsolete("Use ItemStatusCollectMessage")]
         public Control MakeControl();
 
         /// <summary>
@@ -26,6 +27,7 @@ namespace Content.Client.Items.Components
         ///     Note that this may be called after a second invocation of <see cref="MakeControl"/> (for example if the user switches the item between two hands).
         /// </para>
         /// </remarks>
+        [Obsolete("Use ItemStatusCollectMessage")]
         public void DestroyControl(Control control)
         {
         }

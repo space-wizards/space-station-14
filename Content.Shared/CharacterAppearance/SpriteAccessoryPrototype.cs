@@ -1,7 +1,5 @@
-﻿using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.CharacterAppearance
@@ -12,7 +10,7 @@ namespace Content.Shared.CharacterAppearance
     [Prototype("spriteAccessory")]
     public sealed class SpriteAccessoryPrototype : IPrototype, ISerializationHooks
     {
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("categories", required: true)]

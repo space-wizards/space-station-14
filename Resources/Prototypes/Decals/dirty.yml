@@ -1,0 +1,52 @@
+﻿# If you spawn any of these, they should probably be made cleanable as well.
+
+- type: decal
+  id: Dirt
+  tags: ["station", "dirty"]
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirt
+
+- type: decal
+  id: DirtLight
+  tags: ["station", "dirty"]
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirtlight
+
+- type: decal
+  id: DirtMedium
+  tags: ["station", "dirty"]
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirtmedium
+
+- type: decal
+  id: DirtHeavy
+  tags: ["station", "dirty"]
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirtheavy
+
+- type: decal
+  id: Damaged
+  tags: ["station", "dirty"]
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: damaged
+
+- type: decal
+  id: Remains
+  tags: ["station", "dirty"]
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: remains
+
+- type: decal
+  id: Rust
+  tags: ["station", "dirty"]
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: rust
+
+

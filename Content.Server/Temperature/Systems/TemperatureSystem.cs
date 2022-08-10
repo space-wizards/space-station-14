@@ -2,25 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Temperature.Systems
 {
-    public class TemperatureSystem : EntitySystem
+    public sealed class TemperatureSystem : EntitySystem
     {
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
         /// <summary>
         ///     All the components that will have their damage updated at the end of the tick.
@@ -31,13 +32,13 @@ namespace Content.Server.Temperature.Systems
 
         public float UpdateInterval = 1.0f;
 
-        private float _accumulatedFrametime = 0.0f;
+        private float _accumulatedFrametime;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
-            SubscribeLocalEvent<ServerAlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+            SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
             SubscribeLocalEvent<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
         }
 
@@ -56,10 +57,12 @@ namespace Content.Server.Temperature.Systems
 
             foreach (var comp in ShouldUpdateDamage)
             {
-                if (comp.Deleted || comp.Paused)
+                MetaDataComponent? metaData = null;
+
+                if (Deleted(comp.Owner, metaData) || Paused(comp.Owner, metaData))
                     continue;
 
-                ChangeDamage(comp.OwnerUid, comp);
+                ChangeDamage(comp.Owner, comp);
             }
 
             ShouldUpdateDamage.Clear();
@@ -72,7 +75,7 @@ namespace Content.Server.Temperature.Systems
                 float lastTemp = temperature.CurrentTemperature;
                 float delta = temperature.CurrentTemperature - temp;
                 temperature.CurrentTemperature = temp;
-                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta));
+                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
             }
         }
 
@@ -91,55 +94,62 @@ namespace Content.Server.Temperature.Systems
                 temperature.CurrentTemperature += heatAmount / temperature.HeatCapacity;
                 float delta = temperature.CurrentTemperature - lastTemp;
 
-                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta));
+                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
             }
         }
 
         private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature, ref AtmosExposedUpdateEvent args)
         {
+            var transform = args.Transform;
+
+            if (transform.MapUid == null)
+                return;
+
+            var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+
             var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
-            var tileHeatCapacity = _atmosphereSystem.GetTileHeatCapacity(args.Coordinates);
+            var tileHeatCapacity = _atmosphereSystem.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
             var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
             ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature );
         }
 
-        private void ServerAlert(EntityUid uid, ServerAlertsComponent status, OnTemperatureChangeEvent args)
+        private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
         {
             switch (args.CurrentTemperature)
             {
                 // Cold strong.
                 case <= 260:
-                    status.ShowAlert(AlertType.Cold, 3);
+                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 3);
                     break;
 
                 // Cold mild.
                 case <= 280 and > 260:
-                    status.ShowAlert(AlertType.Cold, 2);
+                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 2);
                     break;
 
                 // Cold weak.
                 case <= 292 and > 280:
-                    status.ShowAlert(AlertType.Cold, 1);
+                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 1);
                     break;
 
                 // Safe.
                 case <= 327 and > 292:
-                    status.ClearAlertCategory(AlertCategory.Temperature);
+                    _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
                     break;
 
                 // Heat weak.
                 case <= 335 and > 327:
-                    status.ShowAlert(AlertType.Hot, 1);
+                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 1);
                     break;
 
                 // Heat mild.
                 case <= 360 and > 335:
-                    status.ShowAlert(AlertType.Hot, 2);
+                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 2);
                     break;
 
                 // Heat strong.
                 case > 360:
-                    status.ShowAlert(AlertType.Hot, 3);
+                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 3);
                     break;
             }
         }
@@ -151,7 +161,7 @@ namespace Content.Server.Temperature.Systems
 
         private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
         {
-            if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
+            if (!EntityManager.HasComponent<DamageableComponent>(uid))
                 return;
 
             // See this link for where the scaling func comes from:
@@ -166,30 +176,30 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking high temperature damage");
+                    _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking high temperature damage");
                     temperature.TakingDamage = true;
                 }
 
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.HeatDamageThreshold);
                 var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
-                _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage);
+                _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage, interruptsDoAfters: false);
             }
             else if (temperature.CurrentTemperature <= temperature.ColdDamageThreshold)
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking low temperature damage");
+                    _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking low temperature damage");
                     temperature.TakingDamage = true;
                 }
 
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.ColdDamageThreshold);
                 var tempDamage =
                     Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / temperature.ColdDamageThreshold));
-                _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
+                _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage, interruptsDoAfters: false);
             }
             else if (temperature.TakingDamage)
             {
-                _logSystem.Add(LogType.Temperature, $"{temperature.Owner} stopped taking temperature damage");
+                _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} stopped taking temperature damage");
                 temperature.TakingDamage = false;
             }
         }
@@ -200,7 +210,7 @@ namespace Content.Server.Temperature.Systems
         }
     }
 
-    public class OnTemperatureChangeEvent : EntityEventArgs
+    public sealed class OnTemperatureChangeEvent : EntityEventArgs
     {
         public float CurrentTemperature { get; }
         public float LastTemperature { get; }
@@ -214,8 +224,10 @@ namespace Content.Server.Temperature.Systems
         }
     }
 
-    public class ModifyChangedTemperatureEvent : EntityEventArgs
+    public sealed class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+
         public float TemperatureDelta;
 
         public ModifyChangedTemperatureEvent(float temperature)

@@ -1,20 +1,9 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.Radiation;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 
 namespace Content.Shared.Damage
 {
@@ -27,11 +16,9 @@ namespace Content.Shared.Damage
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
-    [Friend(typeof(DamageableSystem))]
-    public class DamageableComponent : Component, IRadiationAct, IExAct
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)]
+    public sealed class DamageableComponent : Component
     {
-        public override string Name => "Damageable";
-
         /// <summary>
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
         ///     If null, all damage types will be supported.
@@ -47,7 +34,6 @@ namespace Content.Shared.Damage
         ///     Though DamageModifierSets can be deserialized directly, we only want to use the prototype version here
         ///     to reduce duplication.
         /// </remarks>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("damageModifierSet", customTypeSerializer: typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
         public string? DamageModifierSetId;
 
@@ -58,7 +44,6 @@ namespace Content.Shared.Damage
         ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
         /// </remarks>
         [DataField("damage")]
-        [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = new();
 
         /// <summary>
@@ -73,63 +58,15 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     The sum of all damages in the DamageableComponent.
         /// </summary>
-        [ViewVariables] public FixedPoint2 TotalDamage;
-
-        // Really these shouldn't be here. OnExplosion() and RadiationAct() should be handled elsewhere.
         [ViewVariables]
+        public FixedPoint2 TotalDamage;
+
         [DataField("radiationDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
         public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
-        [ViewVariables]
-        [DataField("explosionDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> ExplosionDamageTypeIDs = new() { "Piercing", "Heat" };
-
-        // TODO RADIATION Remove this.
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
-        {
-            var damageValue = FixedPoint2.New(MathF.Max((frameTime * radiation.RadsPerSecond), 1));
-
-            // Radiation should really just be a damage group instead of a list of types.
-            DamageSpecifier damage = new();
-            foreach (var typeID in RadiationDamageTypeIDs)
-            {
-                damage.DamageDict.Add(typeID, damageValue);
-            }
-
-            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
-
-            // should logging be disabled during rad storms? a lot of entities are going to be damaged.
-            if (actual != null && !actual.Empty)
-                EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Radiation, $"{Owner} took {actual.Total} radiation damage");
-        }
-
-        // TODO EXPLOSION Remove this.
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            var damageValue = eventArgs.Severity switch
-            {
-                ExplosionSeverity.Light => FixedPoint2.New(20),
-                ExplosionSeverity.Heavy => FixedPoint2.New(60),
-                ExplosionSeverity.Destruction => FixedPoint2.New(250),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            // Explosion should really just be a damage group instead of a list of types.
-            DamageSpecifier damage = new();
-            foreach (var typeID in ExplosionDamageTypeIDs)
-            {
-                damage.DamageDict.Add(typeID, damageValue);
-            }
-
-            var actual = EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
-
-            // will logging handle nukes?
-            if (actual != null && !actual.Empty)
-                EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Explosion, $"{Owner} took {actual.Total} explosion damage");
-        }
     }
 
     [Serializable, NetSerializable]
-    public class DamageableComponentState : ComponentState
+    public sealed class DamageableComponentState : ComponentState
     {
         public readonly Dictionary<string, FixedPoint2> DamageDict;
         public readonly string? ModifierSetId;

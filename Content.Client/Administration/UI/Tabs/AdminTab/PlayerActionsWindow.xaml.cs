@@ -12,7 +12,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    public partial class PlayerActionsWindow : SS14Window
+    public sealed partial class PlayerActionsWindow : DefaultWindow
     {
         private PlayerInfo? _selectedPlayer;
 

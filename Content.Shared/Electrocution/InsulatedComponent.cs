@@ -1,18 +1,12 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Electrocution
 {
-    [Friend(typeof(SharedElectrocutionSystem))]
+    [Access(typeof(SharedElectrocutionSystem))]
     [RegisterComponent, NetworkedComponent]
-    public class InsulatedComponent : Component
+    public sealed class InsulatedComponent : Component
     {
-        public override string Name => "Insulated";
-
         /// <summary>
         ///     Siemens coefficient. Zero means completely insulated.
         /// </summary>
@@ -23,7 +17,7 @@ namespace Content.Shared.Electrocution
     // Technically, people could cheat and figure out which budget insulated gloves are gud and which ones are bad.
     // We might want to rethink this a little bit.
     [NetSerializable, Serializable]
-    public class InsulatedComponentState : ComponentState
+    public sealed class InsulatedComponentState : ComponentState
     {
         public float SiemensCoefficient { get; private set; }
 

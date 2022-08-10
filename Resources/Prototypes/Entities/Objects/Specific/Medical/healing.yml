@@ -1,32 +1,45 @@
 - type: entity
+  parent: BaseItem
+  id: BaseHealingItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+  - type: Item
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
+
+- type: entity
   name: ointment
   description: Used to treat those nasty burns.
-  parent: BaseItem
+  parent: BaseHealingItem
   id: Ointment
   components:
   - type: Tag
     tags:
     - Ointment
   - type: Sprite
-    sprite: Objects/Specific/Medical/medical.rsi
     state: ointment
   - type: Item
-    sprite: Objects/Specific/Medical/medical.rsi
-    HeldPrefix: ointment
+    heldPrefix: ointment
   - type: Healing
     damageContainer: Biological
     damage:
       groups:
-        Burn: -10 # 5 for each type in the group
+        Burn: -15 # 5 for each type in the group
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
   - type: Stack
     stackType: Ointment
-    max: 5
-    count: 5
+    max: 10
+    count: 10
 
 - type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
-  parent: Ointment
+  parent: BaseHealingItem
   id: Brutepack
   components:
   - type: Tag
@@ -39,13 +52,20 @@
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
+    bloodlossModifier: -3 # a little bit of bloodloss healing.
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Brutepack
+    max: 10
+    count: 10
 
 - type: entity
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
-  parent: Ointment
+  parent: BaseHealingItem
   id: Gauze
   components:
   - type: Tag
@@ -53,11 +73,228 @@
     - Gauze
   - type: Sprite
     state: gauze
+  - type: Construction
+    graph: Gauze
+    node: gauze
   - type: Healing
     damageContainer: Biological
     damage:
       types:
-        Slash: -5
-        Piercing: -5
+        Slash: -2.5
+        Piercing: -2.5
+    bloodlossModifier: -10
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Gauze
+    max: 10
+    count: 10
+
+- type: entity
+  id: Gauze1
+  parent: Gauze
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  name: aloe cream
+  description: A topical cream for burns.
+  parent: Ointment ##Yes it's a direct reskin
+  id: AloeCream
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Hydroponics/aloe.rsi
+    state: cream
+  - type: Stack
+    stackType: AloeCream
+    max: 10
+    count: 10
+
+# Pills
+- type: entity
+  name: dexalin pill
+  parent: Pill
+  id: PillDexalin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Dexalin
+          Quantity: 15
+
+- type: entity
+  name: dylovene pill
+  parent: Pill
+  id: PillDylovene
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Dylovene
+          Quantity: 15
+
+- type: entity
+  name: hyronalin pill
+  parent: Pill
+  id: PillHyronalin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Hyronalin
+          Quantity: 15
+
+- type: entity
+  name: iron pill
+  parent: Pill
+  id: PillIron
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Iron
+          Quantity: 15
+
+- type: entity
+  name: kelotane pill
+  parent: Pill
+  id: PillKelotane
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Kelotane
+          Quantity: 15
+
+- type: entity
+  name: space drugs
+  parent: Pill
+  id: PillSpaceDrugs
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 15
+
+- type: entity
+  name: tricordrazine pill
+  parent: Pill
+  id: PillTricordrazine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Tricordrazine
+          Quantity: 15
+
+- type: entity
+  name: romerol pill
+  parent: Pill
+  id: PillRomerol
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Romerol
+          Quantity: 10
+
+# Syringes
+- type: entity
+  name: ephedrine syringe
+  parent: Syringe
+  id: SyringeEphedrine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 15
+
+- type: entity
+  name: inaprovaline syringe
+  parent: Syringe
+  id: SyringeInaprovaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Inaprovaline
+          Quantity: 15
+
+- type: entity
+  name: tranexamic acid syringe
+  parent: Syringe
+  id: SyringeTranexamicAcid
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: TranexamicAcid
+          Quantity: 15
+
+- type: entity
+  name: spaceacillin syringe
+  parent: Syringe
+  id: SyringeSpaceacillin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Spaceacillin
+          Quantity: 15
+
+- type: entity
+  name: ipecac syringe
+  parent: Syringe
+  id: SyringeIpecac
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ipecac
+          Quantity: 15
+
+#this is where all the syringes are so i didn't know where to put it
+- type: entity
+  name: corpium syringe
+  parent: Syringe
+  id: SyringeCorpium
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Corpium
+          Quantity: 10

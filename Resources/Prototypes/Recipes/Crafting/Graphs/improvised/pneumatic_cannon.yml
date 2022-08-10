@@ -1,0 +1,24 @@
+- type: constructionGraph
+  id: PneumaticCannon
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cannon
+      steps:
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: pipe
+      - tag: Handcuffs
+        icon:
+          sprite: Objects/Misc/cablecuffs.rsi
+          state: cuff
+          color: red
+        name: cuffs
+      - material: Steel
+        amount: 6
+        doAfter: 10
+  - node: cannon
+    entity: WeaponImprovisedPneumaticCannon

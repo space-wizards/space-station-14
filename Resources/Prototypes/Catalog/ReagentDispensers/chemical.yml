@@ -7,23 +7,25 @@
   - Copper
   - Ethanol
   - Fluorine
-  - Glucose
+  - Sugar
   - Hydrogen
   - Iodine
   - Iron
   - Lithium
   - Mercury
   - Nitrogen
-  - Nutriment
   - Oxygen
   - Phosphorus
   - Potassium
   - Radium
   - Silicon
   - Sodium
-  - Sugar
   - Sulfur
-  - SulfuricAcid
-  - Uranium
-  - Water
 
+- type: reagentDispenserInventory
+  id: ChemDispenserEmaggedInventory
+  inventory: ##Feel free to change this to something more interesting when more chems are added
+  - Napalm
+  - Toxin
+  - Epinephrine
+  - Ultravasculine

@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -21,7 +17,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         INodeGroup MakeNodeGroup(NodeGroupID id);
     }
 
-    public class NodeGroupFactory : INodeGroupFactory
+    public sealed class NodeGroupFactory : INodeGroupFactory
     {
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
@@ -55,7 +51,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         }
     }
 
-    public enum NodeGroupID
+    public enum NodeGroupID : byte
     {
         Default,
         HVPower,

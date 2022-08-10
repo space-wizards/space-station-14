@@ -1,8 +1,7 @@
 using Content.Server.Access.Components;
-using Content.Shared.Access;
+using Content.Shared.Access.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Access.Systems
 {

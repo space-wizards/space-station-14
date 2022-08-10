@@ -14,7 +14,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Atmos.UI
 {
-    public class GasAnalyzerWindow : BaseWindow
+    public sealed class GasAnalyzerWindow : BaseWindow
     {
         public GasAnalyzerBoundUserInterface Owner { get; }
 
@@ -108,7 +108,7 @@ namespace Content.Client.Atmos.UI
                     },
                     (CloseButton = new TextureButton
                     {
-                        StyleClasses = {SS14Window.StyleClassWindowCloseButton},
+                        StyleClasses = {DefaultWindow.StyleClassWindowCloseButton},
                         VerticalAlignment = VAlignment.Center
                     })
                 }
@@ -145,7 +145,7 @@ namespace Content.Client.Atmos.UI
                 PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#525252ff") }
             });
             CloseButton.OnPressed += _ => Close();
-            SetSize = (300, 200);
+            SetSize = (300, 420);
         }
 
 

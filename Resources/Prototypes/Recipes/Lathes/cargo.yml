@@ -1,10 +1,10 @@
 ﻿- type: latheRecipe
-  id: ConveyorAssembly
+  id: ConveyorBeltAssembly
   icon:
     sprite: Structures/conveyor.rsi
     state: conveyor_loose
   result: ConveyorBeltAssembly
-  completetime: 1000
+  completetime: 4
   materials:
-    Steel: 1000
-    Glass: 50
+    Steel: 500
+    Plastic: 50

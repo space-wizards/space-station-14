@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.AI.Components;
-using Robust.Shared.GameObjects;
+using Content.Server.AI.EntitySystems;
+using Content.Shared.Access.Systems;
 using Robust.Shared.Physics;
 
 namespace Content.Server.AI.Pathfinding.Accessible
@@ -25,17 +23,18 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static ReachableArgs GetArgs(IEntity entity)
+        public static ReachableArgs GetArgs(EntityUid entity)
         {
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (entMan.TryGetComponent(entity, out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            var access = accessSystem.FindAccessTags(entity.Uid);
-            var visionRadius = entity.GetComponent<AiControllerComponent>().VisionRadius;
+            var access = accessSystem.FindAccessTags(entity);
+            var visionRadius = entMan.GetComponent<NPCComponent>(entity).VisionRadius;
 
             return new ReachableArgs(visionRadius, access, collisionMask);
         }

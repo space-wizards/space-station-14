@@ -10,14 +10,13 @@
   components:
   - type: Damageable
     damageContainer: Biological
-  - type: BiologicalSurgeryData
 
 # For primates mainly
 - type: entity
   id: HandsAnimal
   name: "animal hands"
   parent: PartAnimal
-  abstract: true
+  noSpawn: true
   components:
   - type: BodyPart
     partType: Hand
@@ -29,7 +28,7 @@
   id: LegsAnimal
   name: "animal legs"
   parent: PartAnimal
-  abstract: true
+  noSpawn: true
   components:
   - type: BodyPart
     partType: Leg
@@ -40,7 +39,7 @@
   id: FeetAnimal
   name: "animal feet"
   parent: PartAnimal
-  abstract: true
+  noSpawn: true
   components:
   - type: BodyPart
     partType: Foot
@@ -51,7 +50,7 @@
   id: TorsoAnimal
   name: "animal torso"
   parent: PartAnimal
-  abstract: true
+  noSpawn: true
   components:
   - type: BodyPart
     partType: Torso
@@ -72,23 +71,34 @@
   abstract: true
   components:
   - type: Mechanism
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
   id: OrganAnimalLungs
   parent: BaseAnimalOrgan
   name: lungs
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
     compatibility: Biological
   - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
 
 - type: entity
   id: OrganAnimalStomach
   parent: BaseAnimalOrgan
   name: stomach
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
@@ -98,11 +108,10 @@
       stomach:
         maxVol: 100
   - type: Stomach
-    maxVolume: 100
-    digestionDelay: 20
+    maxVolume: 10
   - type: Metabolizer
     maxReagents: 3
-    metabolizerTypes: [Human, Animal]
+    metabolizerTypes: [Animal]
     groups:
     - id: Food
     - id: Drink
@@ -111,14 +120,14 @@
   id: OrganAnimalLiver
   parent: BaseAnimalOrgan
   name: liver
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
     compatibility: Biological
   - type: Metabolizer
     maxReagents: 1
-    metabolizerTypes: [Human, Animal]
+    metabolizerTypes: [Animal]
     groups:
     - id: Alcohol
       rateModifier: 0.1
@@ -127,14 +136,14 @@
   id: OrganAnimalHeart
   parent: BaseAnimalOrgan
   name: heart
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
     compatibility: Biological
   - type: Metabolizer
     maxReagents: 2
-    metabolizerTypes: [Human, Animal]
+    metabolizerTypes: [Animal]
     groups:
     - id: Medicine
     - id: Poison
@@ -144,12 +153,12 @@
   id: OrganAnimalKidneys
   parent: BaseAnimalOrgan
   name: kidneys
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
     compatibility: Biological
   - type: Metabolizer
     maxReagents: 5
-    metabolizerTypes: [Human, Animal]
+    metabolizerTypes: [Animal]
     removeEmpty: true

@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -31,42 +30,14 @@ namespace Content.IntegrationTests.Tests.Networking
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
     [TestFixture]
-    public class SimplePredictReconcileTest : ContentIntegrationTest
+    public sealed class SimplePredictReconcileTest
     {
         [Test]
         public async Task Test()
         {
-            // Initialize client & server with text component and system registered.
-            // They can't be registered/detected automatically.
-            var (client, server) = await StartConnectedServerDummyTickerClientPair(
-                new ClientContentIntegrationOption
-                {
-                    // This test is designed around specific timing values and when I wrote it interpolation was off.
-                    // As such, I would have to update half this test to make sure it works with interpolation.
-                    // I'm kinda lazy.
-                    CVarOverrides =
-                    {
-                        {CVars.NetInterp.Name, "false"},
-                        {CVars.NetPVS.Name, "false"}
-                    },
-                    ContentBeforeIoC = () =>
-                    {
-                        IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
-                    }
-                },
-                new ServerContentIntegrationOption
-                {
-                    CVarOverrides =
-                    {
-                        {CVars.NetPVS.Name, "false"}
-                    },
-                    ContentBeforeIoC = () =>
-                    {
-                        IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
-                    }
-                });
+            await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, DisableInterpolate = true, DummyTicker = true});
+            var server = pairTracker.Pair.Server;
+            var client = pairTracker.Pair.Client;
 
             // Pull in all dependencies we need.
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
@@ -77,7 +48,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var cGameTiming = client.ResolveDependency<IGameTiming>();
             var cGameStateManager = client.ResolveDependency<IClientGameStateManager>();
 
-            IEntity serverEnt = default!;
+            EntityUid serverEnt = default;
             PredictionTestComponent serverComponent = default!;
             PredictionTestComponent clientComponent = default!;
 
@@ -86,20 +57,20 @@ namespace Content.IntegrationTests.Tests.Networking
             var clientSystem = client.ResolveDependency<IEntitySystemManager>()
                 .GetEntitySystem<PredictionTestEntitySystem>();
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
                 serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
-                serverComponent = serverEnt.AddComponent<PredictionTestComponent>();
+                serverComponent = IoCManager.Resolve<IEntityManager>().AddComponent<PredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.
                 player.JoinGame();
             });
 
             // Run some ticks so that
-            await RunTicksSync(client, server, 3);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 3);
 
             // Due to technical things with the game state processor it has an extra state in the buffer here.
             // This burns through it real quick, but I'm not sure it should be there?
@@ -112,8 +83,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await client.WaitPost(() =>
             {
-                clientComponent = cEntityManager.GetEntity(serverEnt.Uid)
-                    .GetComponent<PredictionTestComponent>();
+                clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(serverEnt);
             });
 
             Assert.That(clientComponent.Foo, Is.False);
@@ -137,7 +107,7 @@ namespace Content.IntegrationTests.Tests.Networking
             {
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, true));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, true));
 
                     Assert.That(clientComponent.Foo, Is.True);
                 });
@@ -209,7 +179,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send event to server to change flag again, this time to disable it..
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, false));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, false));
 
                     Assert.That(clientComponent.Foo, Is.False);
                 });
@@ -280,7 +250,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send first event to disable the flag (reminder: it never got accepted by the server).
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, false));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, false));
 
                     Assert.That(clientComponent.Foo, Is.False);
                 });
@@ -308,7 +278,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send another event, to re-enable it.
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, true));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, true));
 
                     Assert.That(clientComponent.Foo, Is.True);
                 });
@@ -389,13 +359,12 @@ namespace Content.IntegrationTests.Tests.Networking
                     Assert.That(clientComponent.Foo, Is.True);
                 }
             }
+            await pairTracker.CleanReturnAsync();
         }
 
         [NetworkedComponent()]
-        private sealed class PredictionTestComponent : Component
+        public sealed class PredictionTestComponent : Component
         {
-            public override string Name => "PredictionTest";
-
             private bool _foo;
 
             public bool Foo
@@ -436,7 +405,7 @@ namespace Content.IntegrationTests.Tests.Networking
         }
 
         [Reflect(false)]
-        private sealed class PredictionTestEntitySystem : EntitySystem
+        public sealed class PredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
 
@@ -456,8 +425,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
-                var entity = EntityManager.GetEntity(message.Uid);
-                var component = entity.GetComponent<PredictionTestComponent>();
+                var component = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(message.Uid);
                 var old = component.Foo;
                 if (Allow)
                 {

@@ -1,26 +1,10 @@
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public class GasPassiveGateComponent : Component
+    public sealed class GasPassiveGateComponent : Component
     {
-        public override string Name => "GasPassiveGate";
-
-        [DataField("enabled")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled { get; set; } = true;
-
-        /// <summary>
-        ///     This is the minimum difference needed to overcome the friction in the mechanism.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("frictionDifference")]
-        public float FrictionPressureDifference { get; set; } = 10f;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
         public string InletName { get; set; } = "inlet";
@@ -29,7 +13,8 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         [DataField("outlet")]
         public string OutletName { get; set; } = "outlet";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
+        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("flowRate")]
+        public float FlowRate { get; set; } = 0;
     }
 }

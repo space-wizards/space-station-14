@@ -1,9 +1,0 @@
-- type: entity
-  abstract: true
-  parent: BaseItem
-  id: Clothing
-  components:
-  - type: Sprite
-    netsync: false
-  - type: Clothing
-    size: 5

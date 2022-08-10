@@ -1,20 +1,21 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Administration;
 using Robust.Client.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Managers
 {
-    public class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit
+    public sealed class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit
     {
         [Dependency] private readonly IClientNetManager _netMgr = default!;
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
+        [Dependency] private readonly IResourceManager _res = default!;
 
         private AdminData? _adminData;
         private readonly HashSet<string> _availableCommands = new();
+
+        private readonly AdminCommandPermissions _localCommandPermissions = new();
 
         public event Action? AdminStatusUpdated;
 
@@ -30,12 +31,22 @@ namespace Content.Client.Administration.Managers
 
         public bool CanCommand(string cmdName)
         {
+            if (_adminData != null && _adminData.HasFlag(AdminFlags.Host))
+            {
+                // Host can execute all commands when connected.
+                // Kind of a shortcut to avoid pains during development.
+                return true;
+            }
+
+            if (_localCommandPermissions.CanCommand(cmdName, _adminData))
+                return true;
+
             return _availableCommands.Contains(cmdName);
         }
 
         public bool CanViewVar()
         {
-            return _adminData?.CanViewVar() ?? false;
+            return CanCommand("vv");
         }
 
         public bool CanAdminPlace()
@@ -56,11 +67,26 @@ namespace Content.Client.Administration.Managers
         public void Initialize()
         {
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(UpdateMessageRx);
+
+            // Load flags for engine commands, since those don't have the attributes.
+            if (_res.TryContentFileRead(new ResourcePath("/clientCommandPerms.yml"), out var efs))
+            {
+                _localCommandPermissions.LoadPermissionsFromStream(efs);
+            }
         }
 
         private void UpdateMessageRx(MsgUpdateAdminStatus message)
         {
             _availableCommands.Clear();
+            var host = IoCManager.Resolve<IClientConsoleHost>();
+
+            // Anything marked as Any we'll just add even if the server doesn't know about it.
+            foreach (var (command, instance) in host.RegisteredCommands)
+            {
+                if (Attribute.GetCustomAttribute(instance.GetType(), typeof(AnyCommandAttribute)) == null) continue;
+                _availableCommands.Add(command);
+            }
+
             _availableCommands.UnionWith(message.AvailableCommands);
             Logger.DebugS("admin", $"Have {message.AvailableCommands.Length} commands available");
 

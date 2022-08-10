@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.AI
@@ -11,7 +7,7 @@ namespace Content.Shared.AI
     {
         #region Mob Debug
         [Serializable, NetSerializable]
-        public class UtilityAiDebugMessage : EntityEventArgs
+        public sealed class UtilityAiDebugMessage : EntityEventArgs
         {
             public EntityUid EntityUid { get; }
             public double PlanningTime { get; }
@@ -39,10 +35,10 @@ namespace Content.Shared.AI
         /// Client asks the server for the pathfinding graph details
         /// </summary>
         [Serializable, NetSerializable]
-        public class RequestPathfindingGraphMessage : EntityEventArgs {}
+        public sealed class RequestPathfindingGraphMessage : EntityEventArgs {}
 
         [Serializable, NetSerializable]
-        public class PathfindingGraphMessage : EntityEventArgs
+        public sealed class PathfindingGraphMessage : EntityEventArgs
         {
             public Dictionary<int, List<Vector2>> Graph { get; }
 
@@ -52,7 +48,7 @@ namespace Content.Shared.AI
             }
         }
 
-        public class AStarRouteDebug
+        public sealed class AStarRouteDebug
         {
             public EntityUid EntityUid { get; }
             public Queue<TileRef> Route { get; }
@@ -75,7 +71,7 @@ namespace Content.Shared.AI
             }
         }
 
-        public class JpsRouteDebug
+        public sealed class JpsRouteDebug
         {
             public EntityUid EntityUid { get; }
             public Queue<TileRef> Route { get; }
@@ -96,7 +92,7 @@ namespace Content.Shared.AI
         }
 
         [Serializable, NetSerializable]
-        public class AStarRouteMessage : EntityEventArgs
+        public sealed class AStarRouteMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly IEnumerable<Vector2> Route;
@@ -120,7 +116,7 @@ namespace Content.Shared.AI
         }
 
         [Serializable, NetSerializable]
-        public class JpsRouteMessage : EntityEventArgs
+        public sealed class JpsRouteMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly IEnumerable<Vector2> Route;
@@ -144,10 +140,10 @@ namespace Content.Shared.AI
         [Serializable, NetSerializable]
         public sealed class ReachableChunkRegionsDebugMessage : EntityEventArgs
         {
-            public GridId GridId { get; }
+            public EntityUid GridId { get; }
             public Dictionary<int, Dictionary<int, List<Vector2>>> Regions { get; }
 
-            public ReachableChunkRegionsDebugMessage(GridId gridId, Dictionary<int, Dictionary<int, List<Vector2>>> regions)
+            public ReachableChunkRegionsDebugMessage(EntityUid gridId, Dictionary<int, Dictionary<int, List<Vector2>>> regions)
             {
                 GridId = gridId;
                 Regions = regions;
@@ -157,11 +153,11 @@ namespace Content.Shared.AI
         [Serializable, NetSerializable]
         public sealed class ReachableCacheDebugMessage : EntityEventArgs
         {
-            public GridId GridId { get; }
+            public EntityUid GridId { get; }
             public Dictionary<int, List<Vector2>> Regions { get; }
             public bool Cached { get; }
 
-            public ReachableCacheDebugMessage(GridId gridId, Dictionary<int, List<Vector2>> regions, bool cached)
+            public ReachableCacheDebugMessage(EntityUid gridId, Dictionary<int, List<Vector2>> regions, bool cached)
             {
                 GridId = gridId;
                 Regions = regions;

@@ -1,5 +1,5 @@
-<SS14Window
-    SetSize="300 300"
+<DefaultWindow
+    SetSize="300 400"
     Margin="4 0"
     xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical">
@@ -7,10 +7,23 @@
             <Label Text ="{Loc 'admin-solutions-window-solution-label'}" Margin="0 0 10 0"/>
             <OptionButton Name="SolutionOption" HorizontalExpand="True"/>
         </BoxContainer>
-        <Label Name="TotalLabel" HorizontalExpand="True"  Margin="0 4"/>
+
+        <!-- The total volume / capacity of the solution -->
+        <BoxContainer Name="VolumeBox" Orientation="Vertical" HorizontalExpand="True" Margin="0 4"/>
+
+        <!-- The temperature / heat capacity / thermal energy of the solution -->
+        <Collapsible Orientation="Vertical">
+            <CollapsibleHeading Name="ThermalHeading" Title="{Loc 'admin-solutions-window-thermals'}" />
+            <CollapsibleBody>
+                <BoxContainer Name="ThermalBox" Orientation="Vertical" HorizontalExpand="True" Margin="0 4"/>
+            </CollapsibleBody>
+        </Collapsible>
+
+        <!-- The reagents in the solution -->
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="0 4">
             <BoxContainer Name="ReagentList" Orientation="Vertical"/>
         </ScrollContainer>
+        
         <Button Name="AddButton" Text="{Loc 'admin-solutions-window-add-new-button'}" HorizontalExpand="True"  Margin="0 4"/>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

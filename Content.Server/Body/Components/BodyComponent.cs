@@ -1,24 +1,19 @@
-using Content.Server.Ghost;
 using Content.Shared.Audio;
-using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
-    [ComponentReference(typeof(IGhostOnMove))]
-    public class BodyComponent : SharedBodyComponent, IGhostOnMove
+    public sealed class BodyComponent : SharedBodyComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private Container _partContainer = default!;
 
         [DataField("gibSound")] private SoundSpecifier _gibSound = new SoundCollectionSpecifier("gib");
@@ -57,9 +52,9 @@ namespace Content.Server.Body.Components
                 {
                     // Using MapPosition instead of Coordinates here prevents
                     // a crash within the character preview menu in the lobby
-                    var entity = Owner.EntityManager.SpawnEntity(preset.PartIDs[slot.Id], Owner.Transform.MapPosition);
+                    var entity = _entMan.SpawnEntity(preset.PartIDs[slot.Id], _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
 
-                    if (!entity.TryGetComponent(out SharedBodyPartComponent? part))
+                    if (!_entMan.TryGetComponent(entity, out SharedBodyPartComponent? part))
                     {
                         Logger.Error($"Entity {slot.Id} does not have a {nameof(SharedBodyPartComponent)} component.");
                         continue;
@@ -83,26 +78,63 @@ namespace Content.Server.Body.Components
             }
         }
 
-        public override void Gib(bool gibParts = false)
+        public override HashSet<EntityUid> Gib(bool gibParts = false)
         {
-            base.Gib(gibParts);
+            var gibs = base.Gib(gibParts);
 
-            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
+            var xform = _entMan.GetComponent<TransformComponent>(Owner);
+            var coordinates = xform.Coordinates;
 
-            if (Owner.TryGetComponent(out ContainerManagerComponent? container))
+            // These have already been forcefully removed from containers so run it here.
+            foreach (var part in gibs)
+            {
+                _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs), true);
+            }
+
+            SoundSystem.Play(_gibSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), coordinates, AudioHelpers.WithVariation(0.025f));
+
+            if (_entMan.TryGetComponent(Owner, out ContainerManagerComponent? container))
             {
                 foreach (var cont in container.GetAllContainers())
                 {
                     foreach (var ent in cont.ContainedEntities)
                     {
                         cont.ForceRemove(ent);
-                        ent.Transform.Coordinates = Owner.Transform.Coordinates;
+                        _entMan.GetComponent<TransformComponent>(ent).Coordinates = coordinates;
                         ent.RandomOffset(0.25f);
                     }
                 }
             }
 
-            Owner.QueueDelete();
+            _entMan.EventBus.RaiseLocalEvent(Owner, new BeingGibbedEvent(gibs), false);
+            _entMan.QueueDeleteEntity(Owner);
+
+            return gibs;
+        }
+    }
+
+    public sealed class BeingGibbedEvent : EntityEventArgs
+    {
+        public readonly HashSet<EntityUid> GibbedParts;
+
+        public BeingGibbedEvent(HashSet<EntityUid> gibbedParts)
+        {
+            GibbedParts = gibbedParts;
+        }
+    }
+
+    /// <summary>
+    /// An event raised on all the parts of an entity when it's gibbed
+    /// </summary>
+    public sealed class PartGibbedEvent : EntityEventArgs
+    {
+        public EntityUid EntityToGib;
+        public readonly HashSet<EntityUid> GibbedParts;
+
+        public PartGibbedEvent(EntityUid entityToGib, HashSet<EntityUid> gibbedParts)
+        {
+            EntityToGib = entityToGib;
+            GibbedParts = gibbedParts;
         }
     }
 }

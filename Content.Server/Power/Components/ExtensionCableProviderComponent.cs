@@ -1,18 +1,11 @@
-﻿using System.Collections.Generic;
-using Content.Server.Power.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+﻿using Content.Server.Power.EntitySystems;
 
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    [Friend(typeof(ExtensionCableSystem))]
-    public class ExtensionCableProviderComponent : Component
+    [Access(typeof(ExtensionCableSystem))]
+    public sealed class ExtensionCableProviderComponent : Component
     {
-        public override string Name => "ExtensionCableProvider";
-
         /// <summary>
         ///     The max distance this can connect to <see cref="ExtensionCableReceiverComponent"/>s from.
         /// </summary>

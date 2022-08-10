@@ -2,7 +2,9 @@
 
 # Generates build info and injects it into the server zip files.
 
+import codecs
 import hashlib
+import io
 import json
 import os
 import subprocess
@@ -19,10 +21,13 @@ SERVER_FILES = [
 
 VERSION = os.environ['GITHUB_SHA']
 FORK_ID = "wizards"
-BUILD_URL = f"https://central.spacestation14.io/builds/wizards/builds/{VERSION}/{FILE}"
+BUILD_URL = f"https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{FORK_VERSION}}/{FILE}"
+MANIFEST_URL = f"https://cdn.centcomm.spacestation14.com/cdn/version/{{FORK_VERSION}}/manifest"
+MANIFEST_DOWNLOAD_URL = f"https://cdn.centcomm.spacestation14.com/cdn/version/{{FORK_VERSION}}/download"
 
 def main() -> None:
-    manifest = generate_manifest("release")
+    client_file = os.path.join("release", FILE)
+    manifest = generate_build_json(client_file)
 
     for server in SERVER_FILES:
         inject_manifest(os.path.join("release", server), manifest)
@@ -33,23 +38,47 @@ def inject_manifest(zip_path: str, manifest: str) -> None:
         z.writestr("build.json", manifest)
 
 
-def generate_manifest(dir: str) -> str:
+def generate_build_json(file: str) -> str:
     # Env variables set by Jenkins.
 
-    hash = sha256_file(os.path.join(dir, FILE))
+    hash = sha256_file(file)
     engine_version = get_engine_version()
+    manifest_hash = generate_manifest_hash(file)
 
     return json.dumps({
         "download": BUILD_URL,
         "hash": hash,
         "version": VERSION,
         "fork_id": FORK_ID,
-        "engine_version": engine_version
+        "engine_version": engine_version,
+        "manifest_url": MANIFEST_URL,
+        "manifest_download_url": MANIFEST_DOWNLOAD_URL,
+        "manifest_hash": manifest_hash
     })
 
+def generate_manifest_hash(file: str) -> str:
+    zip = ZipFile(file)
+    infos = zip.infolist()
+    infos.sort(key=lambda i: i.filename)
+
+    bytesIO = io.BytesIO()
+    writer = codecs.getwriter("UTF-8")(bytesIO)
+    writer.write("Robust Content Manifest 1\n")
+
+    for info in infos:
+        if info.filename[-1] == "/":
+            continue
+
+        bytes = zip.read(info)
+        hash = hashlib.blake2b(bytes, digest_size=32).hexdigest().upper()
+        writer.write(f"{hash} {info.filename}\n")
+
+    manifestHash = hashlib.blake2b(bytesIO.getbuffer(), digest_size=32)
+
+    return manifestHash.hexdigest().upper()
 
 def get_engine_version() -> str:
-    proc = subprocess.run(["git", "describe", "--exact-match", "--tags", "--abbrev=0"], stdout=subprocess.PIPE, cwd="RobustToolbox", check=True, encoding="UTF-8")
+    proc = subprocess.run(["git", "describe","--tags", "--abbrev=0"], stdout=subprocess.PIPE, cwd="RobustToolbox", check=True, encoding="UTF-8")
     tag = proc.stdout.strip()
     assert tag.startswith("v")
     return tag[1:] # Cut off v prefix.
@@ -62,7 +91,6 @@ def sha256_file(path: str) -> str:
             h.update(b)
 
         return h.hexdigest()
-
 
 if __name__ == '__main__':
     main()

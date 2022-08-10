@@ -1,0 +1,909 @@
+- type: decal
+  id: 0
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 0
+
+- type: decal
+  id: 1
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 1
+
+- type: decal
+  id: 2
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 2
+
+- type: decal
+  id: 3
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 3
+
+- type: decal
+  id: 4
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 4
+
+- type: decal
+  id: 5
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 5
+
+- type: decal
+  id: 6
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 6
+
+- type: decal
+  id: 7
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 7
+
+- type: decal
+  id: 8
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 8
+
+- type: decal
+  id: 9
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: 9
+
+- type: decal
+  id: Blasto
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Blasto
+
+- type: decal
+  id: Clandestine
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Clandestine
+
+- type: decal
+  id: Cyber
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Cyber
+
+- type: decal
+  id: Diablo
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Diablo
+
+- type: decal
+  id: Donk
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Donk
+
+- type: decal
+  id: Gene
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Gene
+
+- type: decal
+  id: Gib
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Gib
+
+- type: decal
+  id: Max
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Max
+
+- type: decal
+  id: Newton
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Newton
+
+- type: decal
+  id: North
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: North
+
+- type: decal
+  id: Omni
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Omni
+
+- type: decal
+  id: Osiron
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Osiron
+
+- type: decal
+  id: Prima
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Prima
+
+- type: decal
+  id: Psyke
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Psyke
+
+- type: decal
+  id: Sirius
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Sirius
+
+- type: decal
+  id: Tunnel
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Tunnel
+
+- type: decal
+  id: Waffle
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: Waffle
+
+- type: decal
+  id: a
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: a
+
+- type: decal
+  id: ampersand
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: ampersand
+
+- type: decal
+  id: amyjon
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: amyjon
+
+- type: decal
+  id: arrow
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: arrow
+
+- type: decal
+  id: b
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: b
+
+- type: decal
+  id: beepsky
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: beepsky
+
+- type: decal
+  id: biohazard
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: biohazard
+
+- type: decal
+  id: blueprint
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: blueprint
+
+- type: decal
+  id: body
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: body
+
+- type: decal
+  id: bottle
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: bottle
+
+- type: decal
+  id: brush
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: brush
+
+- type: decal
+  id: c
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: c
+
+- type: decal
+  id: carp
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: carp
+
+- type: decal
+  id: cat
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: cat
+
+- type: decal
+  id: chevron
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: chevron
+
+- type: decal
+  id: clawprint
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: clawprint
+
+- type: decal
+  id: clown
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: clown
+
+- type: decal
+  id: comma
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: comma
+
+- type: decal
+  id: corgi
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: corgi
+
+- type: decal
+  id: credit
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: credit
+
+- type: decal
+  id: cyka
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: cyka
+
+- type: decal
+  id: d
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: d
+
+- type: decal
+  id: danger
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: danger
+
+- type: decal
+  id: disk
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: disk
+
+- type: decal
+  id: dot
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: dot
+
+- type: decal
+  id: dwarf
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: dwarf
+
+- type: decal
+  id: e
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: e
+
+- type: decal
+  id: electricdanger
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: electricdanger
+
+- type: decal
+  id: end
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: end
+
+- type: decal
+  id: engie
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: engie
+
+- type: decal
+  id: equals
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: equals
+
+- type: decal
+  id: evac
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: evac
+
+- type: decal
+  id: exclamationmark
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: exclamationmark
+
+- type: decal
+  id: f
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: f
+
+- type: decal
+  id: face
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: face
+
+- type: decal
+  id: fireaxe
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: fireaxe
+
+- type: decal
+  id: firedanger
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: firedanger
+
+- type: decal
+  id: food
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: food
+
+- type: decal
+  id: footprint
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: footprint
+
+- type: decal
+  id: g
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: g
+
+- type: decal
+  id: ghost
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: ghost
+
+- type: decal
+  id: guy
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: guy
+
+- type: decal
+  id: h
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: h
+
+- type: decal
+  id: heart
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: heart
+
+- type: decal
+  id: i
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: i
+
+- type: decal
+  id: j
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: j
+
+- type: decal
+  id: k
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: k
+
+- type: decal
+  id: l
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: l
+
+- type: decal
+  id: largebrush
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: largebrush
+
+- type: decal
+  id: like
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: like
+
+- type: decal
+  id: line
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: line
+
+- type: decal
+  id: m
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: m
+
+- type: decal
+  id: matt
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: matt
+
+- type: decal
+  id: med
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: med
+
+- type: decal
+  id: minus
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: minus
+
+- type: decal
+  id: n
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: n
+
+- type: decal
+  id: nay
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: nay
+
+- type: decal
+  id: o
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: o
+
+- type: decal
+  id: p
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: p
+
+- type: decal
+  id: pawprint
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: pawprint
+
+- type: decal
+  id: peace
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: peace
+
+- type: decal
+  id: percent
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: percent
+
+- type: decal
+  id: plus
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: plus
+
+- type: decal
+  id: pound
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: pound
+
+- type: decal
+  id: prolizard
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: prolizard
+
+- type: decal
+  id: q
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: q
+
+- type: decal
+  id: questionmark
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: questionmark
+
+- type: decal
+  id: r
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: r
+
+- type: decal
+  id: radiation
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: radiation
+
+- type: decal
+  id: revolution
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: revolution
+
+- type: decal
+  id: rune1
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: rune1
+
+- type: decal
+  id: rune2
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: rune2
+
+- type: decal
+  id: rune3
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: rune3
+
+- type: decal
+  id: rune4
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: rune4
+
+- type: decal
+  id: rune5
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: rune5
+
+- type: decal
+  id: rune6
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: rune6
+
+- type: decal
+  id: s
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: s
+
+- type: decal
+  id: safe
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: safe
+
+- type: decal
+  id: scroll
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: scroll
+
+- type: decal
+  id: shop
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: shop
+
+- type: decal
+  id: shortline
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: shortline
+
+- type: decal
+  id: shotgun
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: shotgun
+
+- type: decal
+  id: skull
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: skull
+
+- type: decal
+  id: slash
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: slash
+
+- type: decal
+  id: smallbrush
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: smallbrush
+
+- type: decal
+  id: snake
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: snake
+
+- type: decal
+  id: space
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: space
+
+- type: decal
+  id: splatter
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: splatter
+
+- type: decal
+  id: star
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: star
+
+- type: decal
+  id: stickman
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: stickman
+
+- type: decal
+  id: t
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: t
+
+- type: decal
+  id: taser
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: taser
+
+- type: decal
+  id: thinline
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: thinline
+
+- type: decal
+  id: toilet
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: toilet
+
+- type: decal
+  id: toolbox
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: toolbox
+
+- type: decal
+  id: trade
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: trade
+
+- type: decal
+  id: u
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: u
+
+- type: decal
+  id: uboa
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: uboa
+
+- type: decal
+  id: v
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: v
+
+- type: decal
+  id: w
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: w
+
+- type: decal
+  id: x
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: x
+
+- type: decal
+  id: y
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: y
+
+- type: decal
+  id: z
+  tags: ["crayon"]
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: z

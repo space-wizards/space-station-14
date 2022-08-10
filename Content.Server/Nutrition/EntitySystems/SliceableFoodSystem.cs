@@ -1,24 +1,23 @@
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    internal class SliceableFoodSystem : EntitySystem
+    internal sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -34,7 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled)
                 return;
 
-            if (TrySliceFood(uid, args.UserUid, args.UsedUid, component))
+            if (TrySliceFood(uid, args.User, args.Used, component))
                 args.Handled = true;
         }
 
@@ -57,7 +56,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            var sliceUid = EntityManager.SpawnEntity(component.Slice, transform.Coordinates).Uid;
+            var sliceUid = EntityManager.SpawnEntity(component.Slice, transform.Coordinates);
 
             var lostSolution = _solutionContainerSystem.SplitSolution(uid, solution,
                 solution.CurrentVolume / FixedPoint2.New(component.Count));
@@ -67,14 +66,14 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (EntityManager.TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                if (ContainerHelpers.IsInContainer(component.Owner))
+                if (_containerSystem.IsEntityInContainer(component.Owner))
                 {
-                    handsComponent.PutInHandOrDrop(EntityManager.GetComponent<ItemComponent>(sliceUid));
+                    _handsSystem.PickupOrDrop(user, sliceUid, handsComp: handsComponent);
                 }
             }
 
-            SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound(), transform.Coordinates,
-                AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
+                transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             component.Count--;
             // If someone makes food proto with 1 slice...
@@ -86,7 +85,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // Split last slice
             if (component.Count == 1) {
-                var lastSlice = EntityManager.SpawnEntity(component.Slice, transform.Coordinates).Uid;
+                var lastSlice = EntityManager.SpawnEntity(component.Slice, transform.Coordinates);
 
                 // Fill last slice with the rest of the solution
                 FillSlice(lastSlice, solution);

@@ -1,12 +1,10 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+﻿using Robust.Shared.Map;
 
 namespace Content.Shared.Construction.Conditions
 {
     public interface IConstructionCondition
     {
         ConstructionGuideEntry? GenerateGuideEntry();
-        bool Condition(IEntity user, EntityCoordinates location, Direction direction);
+        bool Condition(EntityUid user, EntityCoordinates location, Direction direction);
     }
 }

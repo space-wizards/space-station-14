@@ -1,6 +1,5 @@
 using Content.Server.Hands.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Inventory
 {
@@ -8,18 +7,13 @@ namespace Content.Server.AI.WorldState.States.Inventory
     /// AKA what's in active hand
     /// </summary>
     [UsedImplicitly]
-    public sealed class EquippedEntityState : StateData<IEntity>
+    public sealed class EquippedEntityState : StateData<EntityUid?>
     {
         public override string Name => "EquippedEntity";
 
-        public override IEntity? GetValue()
+        public override EntityUid? GetValue()
         {
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
-            {
-                return null;
-            }
-
-            return handsComponent.GetActiveHand?.Owner;
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(Owner)?.ActiveHandEntity;
         }
     }
 }

@@ -1,33 +1,16 @@
-using System.Collections.Generic;
-using Content.Server.Hands.Components;
+using System.Linq;
+using Content.Shared.Hands.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Hands
 {
     [UsedImplicitly]
-    public class HandItemsState : StateData<List<IEntity>>
+    public sealed class HandItemsState : StateData<List<EntityUid>>
     {
         public override string Name => "HandItems";
-        public override List<IEntity> GetValue()
+        public override List<EntityUid> GetValue()
         {
-            var result = new List<IEntity>();
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
-            {
-                return result;
-            }
-
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                var item = handsComponent.GetItem(hand);
-
-                if (item != null)
-                {
-                    result.Add(item.Owner);
-                }
-            }
-
-            return result;
+            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedHandsSystem>().EnumerateHeld(Owner).ToList();
         }
     }
 }

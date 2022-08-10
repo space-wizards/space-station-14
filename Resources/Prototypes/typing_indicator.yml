@@ -1,0 +1,19 @@
+﻿- type: typingIndicator
+  id: default
+  typingState: default0
+
+- type: typingIndicator
+  id: robot
+  typingState: robot0
+
+- type: typingIndicator
+  id: alien
+  typingState: alien0
+
+- type: typingIndicator
+  id: guardian
+  typingState: guardian0
+
+- type: typingIndicator
+  id: holo
+  typingState: holo0

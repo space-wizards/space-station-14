@@ -245,6 +245,18 @@
     Grog: 2
 
 - type: reaction
+  id: IceCream
+  reactants:
+    Cream:
+      amount: 1
+    Ice:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    IceCream: 3
+
+- type: reaction
   id: IcedCoffee
   reactants:
     Coffee:
@@ -303,16 +315,6 @@
       amount: 2
   products:
     IrishCream: 3
-
-- type: reaction
-  id: LeanShine
-  reactants:
-    Lean:
-      amount: 1
-    Moonshine:
-      amount: 1
-  products:
-    LeanShine: 2
 
 - type: reaction
   id: Lemonade
@@ -411,14 +413,14 @@
     Moonshine: 3
 
 - type: reaction
-  id: NukaCola
+  id: NuclearCola
   reactants:
     Cola:
       amount: 5
     Uranium:
       amount: 1
   products:
-    NukaCola: 5
+    NuclearCola: 5
 
 - type: reaction
   id: Patron
@@ -439,6 +441,16 @@
       amount: 1
   products:
     Rewriter: 2
+
+- type: reaction
+  id: RootBeerFloat
+  reactants:
+    RootBeer:
+      amount: 2
+    IceCream:
+      amount: 1
+  products:
+    RootBeerFloat: 3
 
 - type: reaction
   id: ScrewdriverCocktail
@@ -529,3 +541,24 @@
       amount: 1
   products:
     WhiteRussian: 3
+
+- type: reaction
+  id: HotRamen
+  minTemp: 323.15
+  reactants:
+    DryRamen:
+      amount: 3
+    Water:
+      amount: 1
+  products:
+    HotRamen: 3
+
+- type: reaction
+  id: Pilk
+  reactants:
+    Cola:
+      amount: 1
+    Milk:
+      amount: 1
+  products:
+    Pilk: 2

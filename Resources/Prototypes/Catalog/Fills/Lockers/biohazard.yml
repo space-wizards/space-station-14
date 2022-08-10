@@ -6,9 +6,7 @@
    - type: StorageFill
      contents:
        - id: ClothingOuterBioGeneral
-         prob: 1
        - id: ClothingHeadHatHoodBioGeneral
-         prob: 1
 
  - type: entity
    id: ClosetL3VirologyFilled
@@ -18,9 +16,7 @@
    - type: StorageFill
      contents:
        - id: ClothingOuterBioVirology
-         prob: 1
        - id: ClothingHeadHatHoodBioVirology
-         prob: 1
 
  - type: entity
    id: ClosetL3SecurityFilled
@@ -30,9 +26,7 @@
    - type: StorageFill
      contents:
        - id: ClothingOuterBioSecurity
-         prob: 1
        - id: ClothingHeadHatHoodBioSecurity
-         prob: 1
 
  - type: entity
    id: ClosetL3JanitorFilled
@@ -42,9 +36,7 @@
    - type: StorageFill
      contents:
        - id: ClothingOuterBioJanitor
-         prob: 1
        - id: ClothingHeadHatHoodBioJanitor
-         prob: 1
 
  - type: entity
    id: ClosetL3ScienceFilled
@@ -54,6 +46,4 @@
    - type: StorageFill
      contents:
        - id: ClothingOuterBioScientist
-         prob: 1
        - id: ClothingHeadHatHoodBioScientist
-         prob: 1

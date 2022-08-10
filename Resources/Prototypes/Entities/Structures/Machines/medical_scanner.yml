@@ -5,9 +5,11 @@
   description: A bulky medical scanner.
   components:
   - type: MedicalScanner
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceList
   - type: Sprite
     netsync: false
-    noRot: true
     sprite: Structures/Machines/scanner.rsi
     layers:
     - state: open
@@ -20,15 +22,14 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
+        bounds: "-0.25,-0.5,0.25,0.5"
       mass: 25
-      layer:
-      - SmallImpassable
-      - Opaque
       mask:
-      - MobMask
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -49,7 +50,6 @@
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer
-  - type: UserInterface
-    interfaces:
-    - key: enum.MedicalScannerUiKey.Key
-      type: MedicalScannerBoundUserInterface
+  - type: Climbable
+  - type: ApcPowerReceiver
+    powerLoad: 200 #Receives most of its power from the console

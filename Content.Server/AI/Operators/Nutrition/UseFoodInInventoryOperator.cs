@@ -1,20 +1,17 @@
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Random;
 
 namespace Content.Server.AI.Operators.Nutrition
 {
-    public class UseFoodInInventoryOperator : AiOperator
+    public sealed class UseFoodInInventoryOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
         private float _interactionCooldown;
 
-        public UseFoodInInventoryOperator(IEntity owner, IEntity target)
+        public UseFoodInInventoryOperator(EntityUid owner, EntityUid target)
         {
             _owner = owner;
             _target = target;
@@ -28,43 +25,32 @@ namespace Content.Server.AI.Operators.Nutrition
                 return Outcome.Continuing;
             }
 
+            var entities = IoCManager.Resolve<IEntityManager>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var handsSys = sysMan.GetEntitySystem<SharedHandsSystem>();
+
             // TODO: Also have this check storage a la backpack etc.
-            if (_target.Deleted ||
-                !_owner.TryGetComponent(out HandsComponent? handsComponent) ||
-                !_target.TryGetComponent(out ItemComponent? itemComponent))
+            if (entities.Deleted(_target) ||
+                !entities.TryGetComponent(_owner, out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }
 
-            FoodComponent? foodComponent = null;
-
-            foreach (var slot in handsComponent.ActivePriorityEnumerable())
-            {
-                if (handsComponent.GetItem(slot) != itemComponent) continue;
-                handsComponent.ActiveHand = slot;
-                if (!_target.TryGetComponent(out foodComponent))
-                {
-                    return Outcome.Failed;
-                }
-
-                // This should also implicitly open it.
-                handsComponent.ActivateItem();
-                _interactionCooldown = IoCManager.Resolve<IRobustRandom>().NextFloat() + 0.5f;
-            }
-
-            if (foodComponent == null)
-            {
+            if (!handsSys.TrySelect<FoodComponent>(_owner, out var foodComponent, handsComponent))
                 return Outcome.Failed;
-            }
 
-            if (_target.Deleted ||
+            if (!handsSys.TryUseItemInHand(_owner, false, handsComponent))
+                return Outcome.Failed;
+
+            if ((!entities.EntityExists(_target) ? EntityLifeStage.Deleted : entities.GetComponent<MetaDataComponent>(_target).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 foodComponent.UsesRemaining == 0 ||
-                _owner.TryGetComponent(out HungerComponent? hungerComponent) &&
+                entities.TryGetComponent(_owner, out HungerComponent? hungerComponent) &&
                 hungerComponent.CurrentHunger >= hungerComponent.HungerThresholds[HungerThreshold.Okay])
             {
                 return Outcome.Success;
             }
 
+            /// do afters for food might mess this up?
             return Outcome.Continuing;
         }
     }

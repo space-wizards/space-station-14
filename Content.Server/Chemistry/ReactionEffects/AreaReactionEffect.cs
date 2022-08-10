@@ -1,23 +1,14 @@
-﻿using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -46,13 +37,6 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// Used to calculate dilution. Increasing this makes the reagents more diluted.
         /// </summary>
         [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1f;
-
-        /// <summary>
-        /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
-        /// _reagentDilutionStart to zero. When the range is zero the reagents volume gets multiplied by this.
-        /// </summary>
-        [DataField("reagentMaxConcentrationFactor")]
-        private float _reagentMaxConcentrationFactor = 2;
 
         /// <summary>
         /// How many seconds will the effect stay, counting after fully spreading.
@@ -122,16 +106,16 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (areaEffectComponent == null)
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                ent.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ent);
                 return;
             }
 
             areaEffectComponent.TryAddSolution(splitSolution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
-            SoundSystem.Play(Filter.Pvs(args.SolutionEntity), _sound.GetSound(), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
-        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity);
+        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);
     }
 }

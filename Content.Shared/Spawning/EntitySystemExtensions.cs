@@ -1,16 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Spawning
 {
     public static class EntitySystemExtensions
     {
-        public static IEntity? SpawnIfUnobstructed(
+        public static EntityUid? SpawnIfUnobstructed(
             this IEntityManager entityManager,
             string? prototypeName,
             EntityCoordinates coordinates,
@@ -24,7 +20,7 @@ namespace Content.Shared.Spawning
             return entityManager.SpawnIfUnobstructed(prototypeName, mapCoordinates, collisionLayer, box, physicsManager);
         }
 
-        public static IEntity? SpawnIfUnobstructed(
+        public static EntityUid? SpawnIfUnobstructed(
             this IEntityManager entityManager,
             string? prototypeName,
             MapCoordinates coordinates,
@@ -59,7 +55,7 @@ namespace Content.Shared.Spawning
             string? prototypeName,
             EntityCoordinates coordinates,
             CollisionGroup collisionLayer,
-            [NotNullWhen(true)] out IEntity? entity,
+            [NotNullWhen(true)] out EntityUid? entity,
             Box2? box = null,
             SharedPhysicsSystem? physicsManager = null)
         {
@@ -73,7 +69,7 @@ namespace Content.Shared.Spawning
             string? prototypeName,
             MapCoordinates coordinates,
             CollisionGroup collisionLayer,
-            [NotNullWhen(true)] out IEntity? entity,
+            [NotNullWhen(true)] out EntityUid? entity,
             in Box2? box = null,
             SharedPhysicsSystem? physicsManager = null)
         {

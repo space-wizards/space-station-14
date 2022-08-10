@@ -1,14 +1,12 @@
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class RemoveEntityStorageCommand : IConsoleCommand
+    public sealed class RemoveEntityStorageCommand : IConsoleCommand
     {
         public string Command => "rmstorage";
         public string Description => "Removes a given entity from it's containing storage, if any.";
@@ -30,13 +28,14 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
+            if (!entityManager.EntitySysManager.TryGetEntitySystem<EntityStorageSystem>(out var entstorage)) return;
             if (!entityManager.TryGetComponent<TransformComponent>(entityUid, out var transform)) return;
 
             var parent = transform.ParentUid;
 
             if (entityManager.TryGetComponent<EntityStorageComponent>(parent, out var storage))
             {
-                storage.Remove(entityManager.GetEntity(entityUid));
+                entstorage.Remove(entityUid, storage.Owner, storage);
             }
             else
             {

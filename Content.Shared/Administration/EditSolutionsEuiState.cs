@@ -1,14 +1,11 @@
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
-using System;
-using Robust.Shared.GameObjects;
-using System.Collections.Generic;
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
-    public class EditSolutionsEuiState : EuiStateBase
+    public sealed class EditSolutionsEuiState : EuiStateBase
     {
         public readonly EntityUid Target;
         public readonly Dictionary<string, Solution>? Solutions;

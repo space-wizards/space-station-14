@@ -1,12 +1,30 @@
-using System;
-using Robust.Client.Graphics;
+using System.Threading.Tasks;
+using Robust.Shared.Maths;
 
-namespace Content.Client.Parallax.Managers
+namespace Content.Client.Parallax.Managers;
+
+public interface IParallaxManager
 {
-    public interface IParallaxManager
-    {
-        event Action<Texture>? OnTextureLoaded;
-        Texture? ParallaxTexture { get; }
-        void LoadParallax();
-    }
+    /// <summary>
+    /// All WorldHomePosition values are offset by this.
+    /// </summary>
+    Vector2 ParallaxAnchor { get; set; }
+
+    bool IsLoaded(string name);
+
+    /// <summary>
+    /// The layers of the selected parallax.
+    /// </summary>
+    ParallaxLayerPrepared[] GetParallaxLayers(string name);
+
+    /// <summary>
+    /// Loads in the default parallax to use.
+    /// Do not call until prototype manager is available.
+    /// </summary>
+    void LoadDefaultParallax();
+
+    Task LoadParallaxByName(string name);
+
+    void UnloadParallax(string name);
 }
+

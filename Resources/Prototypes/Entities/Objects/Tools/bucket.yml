@@ -10,17 +10,21 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/bucket.rsi
-    state: icon
-  - type: Clothing
+    layers:
+    - state: icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: Item
     size: 100
+  - type: Clothing
     sprite: Objects/Tools/bucket.rsi
-    Slots:
-    - Helmet
-  - type: Bucket
+    slots:
+    - HEAD
   - type: SolutionContainerManager
     solutions:
       bucket:
-        maxVol: 500
+        maxVol: 250
   - type: SolutionTransfer
     transferAmount: 50
     maxTransferAmount: 100
@@ -30,16 +34,6 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 5
-      mask:
-      - Impassable
   - type: Spillable
     solution: bucket
   - type: DrawableSolution
@@ -47,4 +41,10 @@
   - type: RefillableSolution
     solution: bucket
   - type: DrainableSolution
+    solution: bucket
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+  - type: ExaminableSolution
     solution: bucket

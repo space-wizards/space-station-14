@@ -1,12 +1,10 @@
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
-    public class RaiseEvent : IGraphAction
+    public sealed class RaiseEvent : IGraphAction
     {
         [DataField("event", required:true)]
         public EntityEventArgs? Event { get; } = null;

@@ -1,0 +1,38 @@
+- type: entity
+  name: Secway Spawner
+  id: SpawnVehicleSecway
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Objects/Vehicles/secway.rsi/keys.png
+  - type: ConditionalSpawner
+    prototypes:
+      - VehicleSecway
+
+- type: entity
+  name: Janicart Spawner
+  id: SpawnVehiclePussywagon
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Objects/Vehicles/pussywagon.rsi/keys.png
+  - type: ConditionalSpawner
+    prototypes:
+      - VehiclePussyWagon
+
+- type: entity
+  name: ATV Spawner
+  id: SpawnVehicleATV
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Objects/Vehicles/atv.rsi/keys.png
+  - type: ConditionalSpawner
+    prototypes:
+      - VehicleATV

@@ -1,6 +1,6 @@
 - type: entity
-  abstract: true
-  id: BaseApc
+  noSpawn: true
+  id: BaseAPC
   name: APC
   description: A control terminal for the area's electrical systems.
   placement:
@@ -8,11 +8,12 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -15
+    volume: -9
     range: 2
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
+    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
@@ -21,13 +22,6 @@
   - type: AccessReader
     access: [["Engineering"]]
   - type: InteractionOutline
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.3,0.25"
-        layer: [ Passable ]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -39,8 +33,8 @@
     visuals:
     - type: ApcVisualizer
   - type: Battery
-    maxCharge: 10000
-    startingCharge: 10000
+    maxCharge: 50000
+    startingCharge: 0
   - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
@@ -62,11 +56,76 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    singleUser: true
+    key: enum.ApcUiKey.Key
   - type: Construction
-    graph: apc
+    graph: APC
     node: apc
   - type: PowerNetworkBattery
     maxSupply: 10000
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
+  - type: WallMount
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StationInfiniteBatteryTarget
+
+# APCs in use
+- type: entity
+  parent: BaseAPC
+  id: APCBasic
+  suffix: Basic, 50kW
+  components:
+  - type: Battery
+    maxCharge: 50000
+    startingCharge: 50000
+
+- type: entity
+  parent: BaseAPC
+  id: APCHighCapacity
+  suffix: High Capacity, 100kW
+  components:
+  - type: Battery
+    maxCharge: 100000
+    startingCharge: 100000
+
+- type: entity
+  parent: BaseAPC
+  id: APCSuperCapacity
+  suffix: Super Capacity, 150kW
+  components:
+  - type: Battery
+    maxCharge: 150000
+    startingCharge: 150000
+
+- type: entity
+  parent: BaseAPC
+  id: APCHyperCapacity
+  suffix: Hyper Capacity, 200kW
+  components:
+  - type: Battery
+    maxCharge: 200000
+    startingCharge: 200000

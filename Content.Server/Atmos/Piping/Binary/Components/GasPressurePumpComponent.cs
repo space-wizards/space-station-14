@@ -1,16 +1,12 @@
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public class GasPressurePumpComponent : Component
+    public sealed class GasPressurePumpComponent : Component
     {
-        public override string Name => "GasPressurePump";
-
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -22,6 +18,14 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("targetPressure")]
         public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
+
+        /// <summary>
+        ///     Max pressure of the target gas (NOT relative to source).
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("maxTargetPressure")]
+        public float MaxTargetPressure = Atmospherics.MaxOutputPressure;
     }
 }

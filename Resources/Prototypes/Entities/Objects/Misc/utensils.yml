@@ -7,6 +7,11 @@
     sprite: Objects/Misc/utensils.rsi
   - type: Item
     sprite: Objects/Misc/utensils.rsi
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   parent: UtensilBase
@@ -17,6 +22,7 @@
   - type: Tag
     tags:
     - Hoe
+    - Metal
   - type: Sprite
     state: fork
   - type: Utensil
@@ -32,11 +38,12 @@
   - type: Sprite
     state: plastic_fork
   - type: Item
-    color: white
   - type: Utensil
     types:
     - Fork
     breakChance: 0.20
+  - type: Tag
+    tags: [ Plastic ]
 
 - type: entity
   parent: UtensilBase
@@ -44,10 +51,13 @@
   name: spoon
   description: There is no spoon.
   components:
+  - type: Tag
+    tags:
+    - Metal
   - type: Sprite
     state: spoon
   - type: Item
-    HeldPrefix: spoon
+    heldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
@@ -58,11 +68,13 @@
   name: plastic spoon
   description: There is no spoon.
   components:
+  - type: Tag
+    tags:
+    - Plastic
   - type: Sprite
     state: plastic_spoon
   - type: Item
-    color: white
-    HeldPrefix: spoon
+    heldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
@@ -74,10 +86,12 @@
   name: plastic knife
   description: That's not a knife. This is a knife.
   components:
+  - type: Tag
+    tags:
+    - Plastic
   - type: Sprite
     state: plastic_knife
   - type: Item
-    color: white
   - type: Utensil
     types:
     - Knife

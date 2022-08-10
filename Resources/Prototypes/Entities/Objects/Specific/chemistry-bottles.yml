@@ -8,6 +8,9 @@
   - type: Tag
     tags:
     - Bottle
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
@@ -37,6 +40,8 @@
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
+  - type: TrashOnEmpty
+    solution: drink
 
 - type: entity
   name: bottle
@@ -51,10 +56,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-1-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-1-
 
 - type: entity
   name: bottle
@@ -69,10 +73,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-2-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-2-
 
 - type: entity
   name: bottle
@@ -87,10 +90,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-3-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-3-
 
 - type: entity
   name: bottle
@@ -105,10 +107,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-4-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-4-
 
 - type: entity
   id: EpinephrineChemistryBottle
@@ -123,3 +124,56 @@
         - ReagentId: Epinephrine
           Quantity: 30
 
+- type: entity
+  id: RobustHarvestChemistryBottle
+  name: robust harvest bottle
+  description: This will increase the potency of your plants.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RobustHarvest
+          Quantity: 30
+
+- type: entity
+  id: NocturineChemistryBottle
+  name: nocturine bottle
+  description: This will make someone fall down almost immediately. Hard to overdose on.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 30
+
+- type: entity
+  id: EphedrineChemistryBottle
+  name: ephedrine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 30
+
+- type: entity
+  id: OmnizineChemistryBottle
+  name: omnizine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 30

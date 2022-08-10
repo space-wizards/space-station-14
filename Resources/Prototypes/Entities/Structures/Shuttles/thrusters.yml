@@ -1,13 +1,11 @@
 - type: entity
   id: BaseThruster
   parent: BaseStructureDynamic
-  name: thruster
-  description: It goes nyooooooom.
   abstract: true
   components:
     - type: AmbientSound
       range: 4
-      volume: -5
+      volume: -4
       sound:
         path: /Audio/Effects/shuttle_thruster.ogg
     - type: Transform
@@ -16,8 +14,8 @@
       rotateWhileAnchored: true
     - type: Thruster
       damage:
-        groups:
-          Burn: 40
+        types:
+          Heat: 40
     - type: InteractionOutline
     - type: Sprite
       netsync: false
@@ -44,9 +42,31 @@
 - type: entity
   id: Thruster
   parent: BaseThruster
-  name: thruster
-  description: It goes nyooooooom.
   components:
+  - type: Thruster
+  - type: Sprite
+    sprite: Structures/Shuttles/thruster.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      offset: 0, 1
+
+- type: entity
+  id: DebugThruster
+  parent: BaseThruster
+  suffix: DEBUG
+  components:
+  - type: Thruster
+    requireSpace: false
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -63,12 +83,11 @@
 - type: entity
   id: Gyroscope
   parent: BaseThruster
-  name: Gyroscope
-  description: Increases the shuttle's potential angular rotation.
   components:
   - type: Thruster
     thrusterType: Angular
-    impulse: 2
+    requireSpace: false
+    thrust: 5000
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
@@ -83,3 +102,34 @@
     - state: thrust_burn_unshaded
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
+  - type: PointLight
+    radius: 1.3
+    energy: 0.8
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    offset: "0, 0.1" # shine from the top, not bottom of the computer
+    color: "#4246b3"
+
+- type: entity
+  id: DebugGyroscope
+  parent: Gyroscope
+  suffix: DEBUG
+  components:
+    - type: Thruster
+      requireSpace: false
+    - type: ApcPowerReceiver
+      needsPower: false
+      powerLoad: 0
+    - type: Sprite
+      sprite: Structures/Shuttles/thruster.rsi
+      layers:
+        - state: base
+          map: ["enum.ThrusterVisualLayers.Base"]
+        - state: thrust
+          map: ["enum.ThrusterVisualLayers.ThrustOn"]
+          shader: unshaded
+        - state: thrust_burn_unshaded
+          map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+          shader: unshaded
+          offset: 0, 1

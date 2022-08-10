@@ -1,26 +1,15 @@
-using System.Collections.Generic;
-using Content.Server.Items;
-using Content.Server.MachineLinking.Components;
-using Content.Server.Power.Components;
+using Content.Server.Physics.Controllers;
 using Content.Shared.Conveyor;
 using Content.Shared.MachineLinking;
-using Robust.Server.GameObjects;
-using Robust.Shared.Analyzers;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Conveyor
 {
     [RegisterComponent]
-    [Friend(typeof(ConveyorSystem))]
-    public class ConveyorComponent : Component
+    [Access(typeof(ConveyorController))]
+    public sealed class ConveyorComponent : Component
     {
-        public override string Name => "Conveyor";
-
         /// <summary>
         ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>
@@ -40,5 +29,17 @@ namespace Content.Server.Conveyor
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public ConveyorState State;
+
+        [DataField("forwardPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string ForwardPort = "Forward";
+
+        [DataField("reversePort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        public string ReversePort = "Reverse";
+
+        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        public string OffPort = "Off";
+
+        [ViewVariables]
+        public readonly HashSet<EntityUid> Intersecting = new();
     }
 }

@@ -5,8 +5,8 @@
   description: A torch fashioned from some wood.
   components:
     - type: ExpendableLight
-      spentName: burnt torch
-      spentDesc: It looks like this torch has burnt out. What a bummer.
+      spentName: expendable-light-burnt-torch-name
+      spentDesc: expendable-light-burnt-torch-desc
       glowDuration: 100
       fadeOutDuration: 4
       iconStateSpent: torch_spent
@@ -29,9 +29,9 @@
       state: icon
     - type: Item
       sprite: Objects/Misc/torch.rsi
-      HeldPrefix: unlit
+      heldPrefix: unlit
     - type: Construction
-      graph: lightTorch
+      graph: LightTorch
       node: torch
     - type: Appearance
       visuals:
@@ -41,6 +41,7 @@
       color: "#E25822"
       radius: 1.0
       energy: 5.0
+      netsync: false
     - type: LightBehaviour
       behaviours:
         - !type:RandomizeBehaviour # immediately make it bright and flickery

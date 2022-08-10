@@ -20,23 +20,16 @@
          "directions":4
       },
       {
-         "name":"pipeFourway",
+         "name": "pipeFourway",
+         "directions":4
       },
       {
          "name":"pipeStraight",
          "directions":4
       },
       {
-         "name":"pipeConnectorSouth",
-      },
-      {
-         "name":"pipeConnectorNorth",
-      },
-      {
-         "name":"pipeConnectorEast",
-      },
-      {
-         "name":"pipeConnectorWest",
+         "name":"pipeConnector",
+         "directions":4
       }
    ]
 }

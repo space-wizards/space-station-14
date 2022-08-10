@@ -1,4 +1,19 @@
-<customControls:SS14Window xmlns:customControls="https://spacestation14.io"
-    Title="Port Selector" MinSize="200 200">
-    <customControls:ItemList Name="ButtonContainer" VerticalExpand="True" HorizontalExpand="True" SelectMode="Button"/>
-</customControls:SS14Window>
+<DefaultWindow xmlns="https://spacestation14.io" Title="{Loc signal-port-selector-menu-title}" MinSize="400 200">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.3">
+                <RichTextLabel Name="HeaderLeft"/>
+                <BoxContainer Name="ButtonContainerLeft" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
+            </BoxContainer>
+            <BoxContainer Name="ContainerMiddle" Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.2"/>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.3">
+                <RichTextLabel Name="HeaderRight"/>
+                <BoxContainer Name="ButtonContainerRight" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Button Name="ButtonClear" Text="{Loc signal-port-selector-menu-clear}"/>
+            <Button Name="ButtonLinkDefault" Text="{Loc signal-port-selector-menu-link-defaults}"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

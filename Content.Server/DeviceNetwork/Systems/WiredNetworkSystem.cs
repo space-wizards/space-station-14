@@ -1,15 +1,10 @@
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Power.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
-    public class WiredNetworkSystem : EntitySystem
+    public sealed class WiredNetworkSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -22,10 +17,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            IEntity sender = EntityManager.GetEntity(args.Sender);
-            IEntity receiver = EntityManager.GetEntity(uid);
-
-            if (receiver.Transform.GridID != sender.Transform.GridID)
+            if (EntityManager.GetComponent<TransformComponent>(uid).GridUid != args.SenderTransform.GridUid)
             {
                 args.Cancel();
             }

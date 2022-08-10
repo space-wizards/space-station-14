@@ -1,16 +1,15 @@
 using System;
- using Content.Client.Administration;
-using Robust.Client.Console;
-using Robust.Client.GameObjects;
+using Content.Client.Administration;
+using Content.Client.Administration.Systems;
+using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Network;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Client.Commands
 {
-    public class OpenAHelpCommand : IConsoleCommand
+    [AnyCommand]
+    public sealed class OpenAHelpCommand : IConsoleCommand
     {
         public string Command => "openahelp";
         public string Description => $"Opens AHelp channel for a given NetUserID, or your personal channel if none given.";
@@ -25,18 +24,17 @@ namespace Content.Client.Commands
             }
             if (args.Length == 0)
             {
-                EntitySystem.Get<BwoinkSystem>().EnsureWindowForLocalPlayer();
+                EntitySystem.Get<BwoinkSystem>().Open();
             }
             else
             {
                 if (Guid.TryParse(args[0], out var guid))
                 {
-                    EntitySystem.Get<BwoinkSystem>().EnsureWindow(new NetUserId(guid));
+                    EntitySystem.Get<BwoinkSystem>().Open(new NetUserId(guid));
                 }
                 else
                 {
                     shell.WriteLine("Bad GUID!");
-                    return;
                 }
             }
         }

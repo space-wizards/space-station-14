@@ -1,0 +1,224 @@
+# Leader
+- type: job
+  id: ERTLeader
+  name: job-name-ertleader
+  playTimeTracker: JobERTLeader
+  setPreference: false
+  startingGear: ERTLeaderGearEVA
+  icon: "Nanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: ERTLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTLeaderFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerclothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityWebbing
+    pocket1: Flare
+    pocket2:
+
+- type: startingGear
+  id: ERTLeaderGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTLeaderFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTLeader
+    suitStorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityFilled
+    pocket1: Flare
+    pocket2:
+
+# Engineer
+- type: job
+  id: ERTEngineer
+  name: job-name-ertengineer
+  playTimeTracker: JobERTEngineer
+  setPreference: false
+  startingGear: ERTEngineerGearEVA
+  icon: "Nanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: ERTEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTEngineerFilled
+    shoes: ClothingShoesBootsWork
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesColorYellow
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1: Flare
+    pocket2:
+
+- type: startingGear
+  id: ERTEngineerGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTEngineerFilled
+    shoes: ClothingShoesBootsMagAdv
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesColorYellow
+    outerClothing: ClothingOuterHardsuitERTEngineer
+    suitStorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1: Flare
+
+# Security
+- type: job
+  id: ERTSecurity
+  name: job-name-ertsecurity
+  playTimeTracker: JobERTSecurity
+  setPreference: false
+  startingGear: ERTEngineerGearEVA
+  icon: "Nanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: ERTSecurityGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTSecurityFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityWebbing
+    pocket1: Flare
+    pocket2:
+
+- type: startingGear
+  id: ERTSecurityGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTSecurityFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    suitStorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityWebbing
+    pocket1: Flare
+
+# Medical
+- type: job
+  id: ERTMedical
+  name: job-name-ertmedic
+  playTimeTracker: JobERTMedical
+  setPreference: false
+  startingGear: ERTMedicalGearEVA
+  icon: "Nanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: ERTMedicalGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTMedicalFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltMedicalFilled
+    pocket1: HandheldHealthAnalyzer
+    pocket2: Flare
+
+- type: startingGear
+  id: ERTMedicalGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTMedicalFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTMedical
+    suitStorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltMedicalFilled
+    pocket1: HandheldHealthAnalyzer
+    pocket2: Flare
+
+# Janitor
+- type: job
+  id: ERTJanitor
+  name: job-name-ertjanitor
+  playTimeTracker: JobERTJanitor
+  setPreference: false
+  startingGear: ERTJanitorGearEVA
+  icon: "Nanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: ERTJanitorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTJanitorFilled
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHelmetHelmet
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltJanitorFilled
+    pocket1: Flare
+    pocket2:
+
+- type: startingGear
+  id: ERTJanitorGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTJanitorFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskBreath
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTJanitor
+    suitStorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltJanitorFilled
+    pocket1: Flare

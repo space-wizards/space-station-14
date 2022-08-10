@@ -1,18 +1,15 @@
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.BarSign
 {
     [Prototype("barSign")]
-    public class BarSignPrototype : IPrototype
+    public sealed class BarSignPrototype : IPrototype
     {
         private string _description = string.Empty;
         private string _name = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
 

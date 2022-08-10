@@ -12,13 +12,13 @@ namespace Content.IntegrationTests.Tests.AI
 {
     [TestFixture]
     [TestOf(typeof(BehaviorSetPrototype))]
-    public class BehaviorSetsTest : ContentIntegrationTest
+    public sealed class BehaviorSetsTest
     {
         [Test]
         public async Task TestBehaviorSets()
         {
-            var server = StartServer();
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
             var reflectionManager = server.ResolveDependency<IReflectionManager>();
@@ -48,7 +48,7 @@ namespace Content.IntegrationTests.Tests.AI
             {
                 foreach (var entity in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!entity.TryGetComponent<UtilityAi>("UtilityAI", out var npcNode)) continue;
+                    if (!entity.TryGetComponent<UtilityNPCComponent>("UtilityAI", out var npcNode)) continue;
 
                     foreach (var entry in npcNode.BehaviorSets)
                     {
@@ -56,6 +56,7 @@ namespace Content.IntegrationTests.Tests.AI
                     }
                 }
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

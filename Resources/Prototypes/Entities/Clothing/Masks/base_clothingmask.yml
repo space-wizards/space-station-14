@@ -1,0 +1,22 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingMaskBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    slots: [mask]
+
+- type: entity
+  abstract: true
+  parent: ClothingMaskBase
+  id: ClothingMaskPullableBase
+  components:
+  - type: Mask
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Clothing/Mask/gas.rsi/icon.png
+      iconOn: Interface/Inventory/blocked.png
+      event: !type:ToggleMaskEvent

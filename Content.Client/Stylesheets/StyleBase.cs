@@ -164,7 +164,7 @@ namespace Content.Client.Stylesheets
 
                 // Window close button base texture.
                 new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
+                    new SelectorElement(typeof(TextureButton), new[] {DefaultWindow.StyleClassWindowCloseButton}, null,
                         null),
                     new[]
                     {
@@ -173,7 +173,7 @@ namespace Content.Client.Stylesheets
                     }),
                 // Window close button hover.
                 new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
+                    new SelectorElement(typeof(TextureButton), new[] {DefaultWindow.StyleClassWindowCloseButton}, null,
                         new[] {TextureButton.StylePseudoClassHover}),
                     new[]
                     {
@@ -181,7 +181,7 @@ namespace Content.Client.Stylesheets
                     }),
                 // Window close button pressed.
                 new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
+                    new SelectorElement(typeof(TextureButton), new[] {DefaultWindow.StyleClassWindowCloseButton}, null,
                         new[] {TextureButton.StylePseudoClassPressed}),
                     new[]
                     {

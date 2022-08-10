@@ -1,0 +1,93 @@
+- type: entity
+  id: CrateSalvageEquipment
+  name: "salvage equipment crate"
+  description: For the daring.
+  suffix: Filled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSalvage
+      - id: ClothingMaskBreath
+      - id: OxygenTankFilled
+      - id: FireExtinguisher
+      - id: ClothingShoesBootsMag
+      - id: Pickaxe
+      - id: Welder
+      - id: Wrench
+      - id: Screwdriver
+      - id: Crowbar
+      - id: Wirecutter
+      - id: ClothingBeltUtility
+      - id: OreBag
+
+- type: entity
+  id: CrateSalvageAssortedGoodies
+  suffix: Filled, Salvage Random
+  noSpawn: true # You should use SalvageMaterialCrateSpawner instead
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+        # Normal (10%)
+      - id: ToolboxEmergencyFilled
+        prob: 0.1
+      - id: ClothingMaskBreath
+        prob: 0.1
+      - id: OxygenTankFilled
+        prob: 0.1
+      - id: SheetPlasma
+        prob: 0.1
+      - id: WelderIndustrialAdvanced
+        prob: 0.1
+      - id: ResearchDisk
+        prob: 0.1
+        #  - Service
+      - id: CrayonBox
+        prob: 0.1
+        #  - Medical
+      - id: MedkitFilled
+        prob: 0.1
+      - id: BoxSyringe
+        prob: 0.1
+      - id: BoxBeaker
+        prob: 0.1
+        #  - Scaf
+      - id: ClothingHeadHelmetScaf
+        prob: 0.1
+      - id: ClothingOuterArmorScaf
+        prob: 0.1
+        #  - Heh
+      - id: SalvageHumanCorpse
+        prob: 0.1
+      - id: LidSalami
+        prob: 0.1
+        # Interesting (1%)
+        #  - Ammo
+      - id: MagazineBoxMagnum
+        prob: 0.01
+      - id: ResearchDisk5000
+        prob: 0.01
+        # Just no (0.1%)
+        #  - Working guns
+      - id: WeaponRevolverDeckard
+        prob: 0.001
+      - id: WeaponRevolverInspector
+        prob: 0.001
+      - id: ClothingShoesBootsMagBlinding
+        prob: 0.001
+        #  - Skub
+      - id: Skub
+        prob: 0.001
+      - id: ResearchDisk10000
+        prob: 0.001
+      - id: ClothingHeadHatCatEars
+        prob: 0.01
+        # TRAITOR EQUIPMENT (0.01%)
+      - id: Telecrystal10
+        prob: 0.0001
+      - id: WeaponRevolverPython
+        prob: 0.0001
+      - id: WeaponRevolverMateba
+        prob: 0.0001
+

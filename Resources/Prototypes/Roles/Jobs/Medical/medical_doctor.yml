@@ -1,25 +1,30 @@
 - type: job
   id: MedicalDoctor
-  name: "medical doctor"
+  name: job-name-doctor
+  playTimeTracker: JobMedicalDoctor
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 1800
   startingGear: DoctorGear
-  departments:
-  - Medical
   icon: "MedicalDoctor"
-  supervisors: "the chief medical officer"
+  supervisors: job-supervisors-cmo
   access:
   - Medical
   - Maintenance
+  extendedAccess:
+  - Chemistry
 
 - type: startingGear
   id: DoctorGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitMedicalDoctor
-    backpack: ClothingBackpackMedicalFilled
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorWhite
-    outerclothing: ClothingOuterCoatLab
-    idcard: MedicalPDA
+    outerClothing: ClothingOuterCoatLab
+    id: MedicalPDA
     ears: ClothingHeadsetMedical
-    belt: ClothingBeltMedical
+    belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtMedicalDoctor
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

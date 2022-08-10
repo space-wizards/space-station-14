@@ -6,7 +6,7 @@ namespace Content.Client.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
-    public class BodyComponent : SharedBodyComponent, IDraggable
+    public sealed class BodyComponent : SharedBodyComponent, IDraggable
     {
         bool IDraggable.CanStartDrag(StartDragDropEvent args)
         {

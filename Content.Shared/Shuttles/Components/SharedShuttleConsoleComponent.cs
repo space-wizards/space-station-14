@@ -1,14 +1,20 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.Components
 {
     /// <summary>
     /// Interact with to start piloting a shuttle.
     /// </summary>
-    [NetworkedComponent()]
+    [NetworkedComponent]
     public abstract class SharedShuttleConsoleComponent : Component
     {
-        public override string Name => "ShuttleConsole";
+
+    }
+
+    [Serializable, NetSerializable]
+    public enum ShuttleConsoleUiKey : byte
+    {
+        Key,
     }
 }

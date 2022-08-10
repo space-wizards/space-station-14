@@ -1,49 +1,11 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Body.Components;
-using Content.Shared.Damage;
 using Content.Shared.DragDrop;
-using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner
 {
     public abstract class SharedMedicalScannerComponent : Component, IDragDropOn
     {
-        public override string Name => "MedicalScanner";
-
-        [Serializable, NetSerializable]
-        public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
-        {
-            public readonly EntityUid? Entity;
-            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup;
-            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerType;
-            public readonly bool IsScanned;
-
-            public MedicalScannerBoundUserInterfaceState(
-                EntityUid? entity,
-                DamageableComponent? damageable,
-                bool isScanned)
-            {
-                Entity = entity;
-                DamagePerGroup = damageable?.DamagePerGroup ?? new();
-                DamagePerType = damageable?.Damage?.DamageDict ?? new();
-                IsScanned = isScanned;
-            }
-
-            public bool HasDamage()
-            {
-                return DamagePerType.Count > 0;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public enum MedicalScannerUiKey
-        {
-            Key
-        }
-
         [Serializable, NetSerializable]
         public enum MedicalScannerVisuals
         {
@@ -61,26 +23,9 @@ namespace Content.Shared.MedicalScanner
             Yellow,
         }
 
-        [Serializable, NetSerializable]
-        public enum UiButton
+        public bool CanInsert(EntityUid entity)
         {
-            ScanDNA,
-        }
-
-        [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
-        {
-            public readonly UiButton Button;
-
-            public UiButtonPressedMessage(UiButton button)
-            {
-                Button = button;
-            }
-        }
-
-        public bool CanInsert(IEntity entity)
-        {
-            return entity.HasComponent<SharedBodyComponent>();
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
         }
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)

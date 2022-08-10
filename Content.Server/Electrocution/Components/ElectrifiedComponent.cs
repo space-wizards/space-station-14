@@ -1,5 +1,4 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Electrocution
 {
@@ -7,10 +6,8 @@ namespace Content.Server.Electrocution
     ///     Component for things that shock users on touch.
     /// </summary>
     [RegisterComponent]
-    public class ElectrifiedComponent : Component
+    public sealed class ElectrifiedComponent : Component
     {
-        public override string Name => "Electrified";
-
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
@@ -26,8 +23,14 @@ namespace Content.Server.Electrocution
         [DataField("onHandInteract")]
         public bool OnHandInteract { get; set; } = true;
 
+        [DataField("onInteractUsing")]
+        public bool OnInteractUsing { get; set; } = true;
+
         [DataField("requirePower")]
         public bool RequirePower { get; } = true;
+
+        [DataField("usesApcPower")]
+        public bool UsesApcPower { get; } = false;
 
         [DataField("highVoltageNode")]
         public string? HighVoltageNode { get; }
@@ -57,9 +60,18 @@ namespace Content.Server.Electrocution
         ///     Shock time, in seconds.
         /// </summary>
         [DataField("shockTime")]
-        public float ShockTime { get; } = 30f;
+        public float ShockTime { get; } = 8f;
 
         [DataField("siemensCoefficient")]
         public float SiemensCoefficient { get; } = 1f;
+
+        [DataField("shockNoises")]
+        public SoundSpecifier ShockNoises { get; } = new SoundCollectionSpecifier("sparks");
+
+        [DataField("playSoundOnShock")]
+        public bool PlaySoundOnShock { get; } = true;
+
+        [DataField("shockVolume")]
+        public float ShockVolume { get; } = 20;
     }
 }

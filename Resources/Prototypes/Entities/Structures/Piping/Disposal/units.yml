@@ -24,17 +24,20 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.4,0.25,0.4"
+        bounds: "-0.25,-0.4,0.25,0.4"
       mass: 30
       mask:
-      - Impassable
+      - MachineMask
       layer:
-      - Opaque
-      - SmallImpassable
-      - VaultImpassable
-      - MobImpassable
+      - MachineLayer
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -74,7 +77,7 @@
   name: disposal unit
   components:
   - type: Construction
-    graph: disposalMachine
+    graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
     flushTime: 2

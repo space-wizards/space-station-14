@@ -1,19 +1,15 @@
-using System.Collections.Generic;
 using Content.Client.Strip;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
-    public class StrippableBoundUserInterface : BoundUserInterface
+    public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
-        public Dictionary<Slots, string>? Inventory { get; private set; }
+        public Dictionary<(string ID, string Name), string>? Inventory { get; private set; }
         public Dictionary<string, string>? Hands { get; private set; }
         public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
 
@@ -28,10 +24,11 @@ namespace Content.Client.Inventory
         {
             base.Open();
 
-            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title",("ownerName", Owner.Owner.Name))}");
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, entMan)))}");
 
             _strippingMenu.OnClose += Close;
-            _strippingMenu.OpenCentered();
+            _strippingMenu.OpenCenteredLeft();
             UpdateMenu();
         }
 
@@ -54,9 +51,9 @@ namespace Content.Client.Inventory
             {
                 foreach (var (slot, name) in Inventory)
                 {
-                    _strippingMenu.AddButton(SlotNames[slot], name, (ev) =>
+                    _strippingMenu.AddButton(slot.Name, name, (ev) =>
                     {
-                        SendMessage(new StrippingInventoryButtonPressed(slot));
+                        SendMessage(new StrippingInventoryButtonPressed(slot.ID));
                     });
                 }
             }

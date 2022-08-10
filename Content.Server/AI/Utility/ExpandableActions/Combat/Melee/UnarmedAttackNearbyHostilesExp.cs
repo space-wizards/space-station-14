@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.AI.Components;
+﻿using Content.Server.AI.Components;
 using Content.Server.AI.EntitySystems;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Combat.Melee;
@@ -8,8 +6,6 @@ using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
 {
@@ -31,7 +27,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!owner.TryGetComponent(out AiControllerComponent? controller))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out NPCComponent? controller))
             {
                 throw new InvalidOperationException();
             }

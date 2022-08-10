@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class ShowMechanismsCommand : IConsoleCommand
+    public sealed class ShowMechanismsCommand : IConsoleCommand
     {
         public const string CommandName = "showmechanisms";
 
@@ -19,11 +19,11 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanisms = entityManager.EntityQuery<SharedMechanismComponent>(true);
+            var mechanisms = entityManager.EntityQuery<MechanismComponent>(true);
 
             foreach (var mechanism in mechanisms)
             {
-                if (mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
+                if (entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
                 {
                     sprite.ContainerOccluded = false;
                 }

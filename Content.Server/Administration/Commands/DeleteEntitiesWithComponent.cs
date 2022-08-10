@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.VarEdit)]
-    class DeleteEntitiesWithComponent : IConsoleCommand
+    sealed class DeleteEntitiesWithComponent : IConsoleCommand
     {
         public string Command => "deleteewc";
 
@@ -37,12 +32,12 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
             var entitiesWithComponents = components.Select(c => entityManager.GetAllComponents(c).Select(x => x.Owner));
-            var entitiesWithAllComponents = entitiesWithComponents.Skip(1).Aggregate(new HashSet<IEntity>(entitiesWithComponents.First()), (h, e) => { h.IntersectWith(e); return h; });
+            var entitiesWithAllComponents = entitiesWithComponents.Skip(1).Aggregate(new HashSet<EntityUid>(entitiesWithComponents.First()), (h, e) => { h.IntersectWith(e); return h; });
 
             var count = 0;
             foreach (var entity in entitiesWithAllComponents)
             {
-                entity.Delete();
+                entityManager.DeleteEntity(entity);
                 count += 1;
             }
 

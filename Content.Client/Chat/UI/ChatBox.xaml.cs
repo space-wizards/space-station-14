@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Alerts.UI;
 using Content.Client.Chat.Managers;
+using Content.Client.Chat.TypingIndicator;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Chat;
@@ -22,6 +23,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Chat.UI
 {
     [GenerateTypedNameReferences]
+    [Virtual]
     public partial class ChatBox : Control
     {
         [Dependency] protected readonly IChatManager ChatMgr = default!;
@@ -30,6 +32,7 @@ namespace Content.Client.Chat.UI
         private static readonly ChatChannel[] ChannelFilterOrder =
         {
             ChatChannel.Local,
+            ChatChannel.Whisper,
             ChatChannel.Emotes,
             ChatChannel.Radio,
             ChatChannel.OOC,
@@ -42,8 +45,10 @@ namespace Content.Client.Chat.UI
         private static readonly ChatSelectChannel[] ChannelSelectorOrder =
         {
             ChatSelectChannel.Local,
+            ChatSelectChannel.Whisper,
             ChatSelectChannel.Emotes,
             ChatSelectChannel.Radio,
+            ChatSelectChannel.LOOC,
             ChatSelectChannel.OOC,
             ChatSelectChannel.Dead,
             ChatSelectChannel.Admin
@@ -58,10 +63,12 @@ namespace Content.Client.Chat.UI
         public const char AliasEmotes = '@';
         public const char AliasAdmin = ']';
         public const char AliasRadio = ';';
+        public const char AliasWhisper = ',';
 
         private static readonly Dictionary<char, ChatSelectChannel> PrefixToChannel = new()
         {
             {AliasLocal, ChatSelectChannel.Local},
+            {AliasWhisper, ChatSelectChannel.Whisper},
             {AliasConsole, ChatSelectChannel.Console},
             {AliasOOC, ChatSelectChannel.OOC},
             {AliasEmotes, ChatSelectChannel.Emotes},
@@ -395,19 +402,19 @@ namespace Content.Client.Chat.UI
 
         private void WriteChatMessage(StoredChatMessage message)
         {
-            Logger.DebugS("chat", $"{message.Channel}: {message.Message}");
+            var messageText = FormattedMessage.EscapeText(message.Message);
+            if (!string.IsNullOrEmpty(message.MessageWrap))
+            {
+                messageText = string.Format(message.MessageWrap, messageText);
+            }
+
+            Logger.DebugS("chat", $"{message.Channel}: {messageText}");
 
             if (IsFilteredOut(message.Channel))
                 return;
 
             // TODO: Can make this "smarter" later by only setting it false when the message has been scrolled to
             message.Read = true;
-
-            var messageText = FormattedMessage.EscapeText(message.Message);
-            if (!string.IsNullOrEmpty(message.MessageWrap))
-            {
-                messageText = string.Format(message.MessageWrap, messageText);
-            }
 
             var color = message.MessageColorOverride != Color.Transparent
                 ? message.MessageColorOverride
@@ -469,6 +476,9 @@ namespace Content.Client.Chat.UI
         {
             // Update channel select button to correct channel if we have a prefix.
             UpdateChannelSelectButton();
+
+            // Warn typing indicator about change
+            EntitySystem.Get<TypingIndicatorSystem>().ClientChangedChatText();
         }
 
         private static ChatSelectChannel GetChannelFromPrefix(char prefix)
@@ -491,6 +501,7 @@ namespace Content.Client.Chat.UI
             return channel switch
             {
                 ChatSelectChannel.Radio => Color.LimeGreen,
+                ChatSelectChannel.LOOC => Color.MediumTurquoise,
                 ChatSelectChannel.OOC => Color.LightSkyBlue,
                 ChatSelectChannel.Dead => Color.MediumPurple,
                 ChatSelectChannel.Admin => Color.Red,
@@ -511,6 +522,9 @@ namespace Content.Client.Chat.UI
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
+            // Warn typing indicator about entered text
+            EntitySystem.Get<TypingIndicatorSystem>().ClientSubmittedChatText();
+
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
                 var (prefixChannel, text) = SplitInputContents();

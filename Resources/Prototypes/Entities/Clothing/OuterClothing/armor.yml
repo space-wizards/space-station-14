@@ -16,7 +16,7 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Heat: 0.4 # this technically means it protects against fires pretty well?
+        Heat: 0.4 # this technically means it protects against fires pretty well? -heat is just for lasers and stuff, not atmos temperature
 
 - type: entity
   parent: ClothingOuterBase
@@ -37,10 +37,10 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorCult
   name: acolyte armor
-  description: An evil-looking cult armor, made of bones.
+  description: An evil-looking piece of cult armor, made of bones.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
@@ -55,7 +55,7 @@
         Heat: 0.5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorHeavy
   name: heavy armor suit
   description: A heavily armored suit that protects against excessive damage.
@@ -98,7 +98,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusblue
-  name: magus blue
+  name: blue magus armor
   description: An blue armored suit that provides good protection.
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusred
-  name: magus red
+  name: red magus armor
   description: A red armored suit that provides good protection.
   components:
   - type: Sprite
@@ -118,7 +118,7 @@
     sprite: Clothing/OuterClothing/Armor/magusred.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorRiot
   name: riot suit
   description: An armored vest with heavy padding to protect against melee attacks, perfect for fighting delinquents around the station.
@@ -127,9 +127,18 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/riot.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.9
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorScaf
   name: scaf suit
   description: A green and brown tactical suit for combat situations.
@@ -138,3 +147,56 @@
     sprite: Clothing/OuterClothing/Armor/scaf.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/scaf.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.4
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorCaptainCarapace
+  name: "captain's carapace"
+  description: "An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest."
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+    
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorChangeling
+  name: chitinous armor
+  description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.9
+        Radiation: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.65 
+  - type: ExplosionResistance
+    damageCoefficient: 0.5

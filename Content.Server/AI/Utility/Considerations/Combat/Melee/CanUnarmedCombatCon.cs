@@ -8,7 +8,9 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
     {
         protected override float GetScore(Blackboard context)
         {
-            return context.GetState<SelfState>().GetValue()?.HasComponent<UnarmedCombatComponent>() ?? false ? 1.0f : 0.0f;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entity = context.GetState<SelfState>().GetValue();
+            return entityManager.HasComponent<MeleeWeaponComponent>(entity) ? 1.0f : 0.0f;
         }
     }
 }

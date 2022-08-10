@@ -1,11 +1,6 @@
-﻿using System;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
 {
@@ -19,7 +14,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     ///     Can be used for things like adding accents or something. I don't know. Go wild.
     /// </remarks>
     [UsedImplicitly]
-    public class GenericStatusEffect : ReagentEffect
+    public sealed class GenericStatusEffect : ReagentEffect
     {
         [DataField("key", required: true)]
         public string Key = default!;
@@ -29,6 +24,12 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
 
         [DataField("time")]
         public float Time = 2.0f;
+
+        /// <remarks>
+        ///     true - refresh status effect time,  false - accumulate status effect time
+        /// </remarks>
+        [DataField("refresh")]
+        public bool Refresh = true;
 
         /// <summary>
         ///     Should this effect add the status effect, remove time from it, or set its cooldown?
@@ -41,7 +42,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
             var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
             if (Type == StatusEffectMetabolismType.Add && Component != String.Empty)
             {
-                statusSys.TryAddStatusEffect(args.SolutionEntity, Key, TimeSpan.FromSeconds(Time), Component);
+                statusSys.TryAddStatusEffect(args.SolutionEntity, Key, TimeSpan.FromSeconds(Time), Refresh, Component);
             }
             else if (Type == StatusEffectMetabolismType.Remove)
             {

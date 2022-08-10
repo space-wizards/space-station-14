@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Mind.Components;
-using Content.Server.Stack;
+using System.Linq;
 using Content.Shared.Stacks;
 using Content.Shared.Traitor.Uplink;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Traitor.Uplink.Account
@@ -14,7 +9,7 @@ namespace Content.Server.Traitor.Uplink.Account
     /// <summary>
     ///     Manage all registred uplink accounts and their balance
     /// </summary>
-    public class UplinkAccountsSystem : EntitySystem
+    public sealed class UplinkAccountsSystem : EntitySystem
     {
         public const string TelecrystalProtoId = "Telecrystal";
 
@@ -30,6 +25,8 @@ namespace Content.Server.Traitor.Uplink.Account
             return _accounts.Add(acc);
         }
 
+        public bool HasAccount(EntityUid holder) =>
+            _accounts.Any(acct => acct.AccountHolder == holder);
 
         /// <summary>
         /// Add TC to uplinks account balance
@@ -71,24 +68,18 @@ namespace Content.Server.Traitor.Uplink.Account
 
         }
 
-        public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out IEntity? purchasedItem)
+        public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid? purchasedItem)
         {
             purchasedItem = null;
 
             if (!_listingSystem.TryGetListing(itemId, out var listing))
-            {
                 return false;
-            }
 
             if (acc.Balance < listing.Price)
-            {
                 return false;
-            }
 
             if (!RemoveFromBalance(acc, listing.Price))
-            {
                 return false;
-            }
 
             purchasedItem = EntityManager.SpawnEntity(listing.ItemId, spawnCoords);
             return true;
@@ -107,7 +98,7 @@ namespace Content.Server.Traitor.Uplink.Account
 
             // create a stack of TCs near player
             var stackEntity = EntityManager.SpawnEntity(TelecrystalProtoId, spawnCoords);
-            stackUid = stackEntity.Uid;
+            stackUid = stackEntity;
 
             // set right amount in stack
             _stackSystem.SetCount(stackUid.Value, actTC);

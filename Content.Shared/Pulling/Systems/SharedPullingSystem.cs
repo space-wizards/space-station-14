@@ -1,24 +1,17 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
-using Content.Shared.Rotatable;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using Robust.Shared.IoC;
-using Content.Shared.Verbs;
-using Robust.Shared.Localization;
 
 namespace Content.Shared.Pulling
 {
@@ -26,30 +19,16 @@ namespace Content.Shared.Pulling
     public abstract partial class SharedPullingSystem : EntitySystem
     {
         [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
-        private readonly Dictionary<IEntity, IEntity> _pullers =
+        private readonly Dictionary<EntityUid, EntityUid> _pullers =
             new();
 
         private readonly HashSet<SharedPullableComponent> _moving = new();
         private readonly HashSet<SharedPullableComponent> _stoppedMoving = new();
-
-        /// <summary>
-        ///     If distance between puller and pulled entity lower that this threshold,
-        ///     pulled entity will not change its rotation.
-        ///     Helps with small distance jittering
-        /// </summary>
-        private const float ThresholdRotDistance = 1;
-
-        /// <summary>
-        ///     If difference between puller and pulled angle  lower that this threshold,
-        ///     pulled entity will not change its rotation.
-        ///     Helps with diagonal movement jittering
-        ///     As of further adjustments, should divide cleanly into 90 degrees
-        /// </summary>
-        private const float ThresholdRotAngle = 22.5f;
 
         public IReadOnlySet<SharedPullableComponent> Moving => _moving;
 
@@ -57,25 +36,49 @@ namespace Content.Shared.Pulling
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
-            SubscribeLocalEvent<MoveEvent>(PullerMoved);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerInsert);
+            SubscribeLocalEvent<SharedPullableComponent, JointRemovedEvent>(OnJointRemoved);
 
             SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
             SubscribeLocalEvent<SharedPullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
 
-            SubscribeLocalEvent<SharedPullableComponent, GetOtherVerbsEvent>(AddPullVerbs);
+            SubscribeLocalEvent<SharedPullableComponent, GetVerbsEvent<Verb>>(AddPullVerbs);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Register<SharedPullingSystem>();
         }
 
-        private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetOtherVerbsEvent args)
+        private void OnJointRemoved(EntityUid uid, SharedPullableComponent component, JointRemovedEvent args)
         {
-            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            if (component.Puller != args.OtherBody.Owner)
+                return;
+
+            // Do we have some other join with our Puller?
+            // or alternatively:
+            // TODO track the relevant joint.
+
+            if (TryComp(uid, out JointComponent? joints))
+            {
+                foreach (var jt in joints.GetJoints.Values)
+                {
+                    if (jt.BodyAUid == component.Puller || jt.BodyBUid == component.Puller)
+                        return;
+                }
+            }
+
+            // No more joints with puller -> force stop pull.
+            _pullSm.ForceDisconnectPullable(component);
+        }
+
+        private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetVerbsEvent<Verb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             // Are they trying to pull themselves up by their bootstraps?
@@ -100,22 +103,20 @@ namespace Content.Shared.Pulling
         }
 
         // Raise a "you are being pulled" alert if the pulled entity has alerts.
-        private static void PullableHandlePullStarted(EntityUid uid, SharedPullableComponent component, PullStartedMessage args)
+        private void PullableHandlePullStarted(EntityUid uid, SharedPullableComponent component, PullStartedMessage args)
         {
-            if (args.Pulled.OwnerUid != uid)
+            if (args.Pulled.Owner != uid)
                 return;
 
-            if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
-                alerts.ShowAlert(AlertType.Pulled);
+            _alertsSystem.ShowAlert(component.Owner, AlertType.Pulled);
         }
 
-        private static void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
+        private  void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
         {
-            if (args.Pulled.OwnerUid != uid)
+            if (args.Pulled.Owner != uid)
                 return;
 
-            if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
-                alerts.ClearAlert(AlertType.Pulled);
+            _alertsSystem.ClearAlert(component.Owner, AlertType.Pulled);
         }
 
         public override void Update(float frameTime)
@@ -153,46 +154,19 @@ namespace Content.Shared.Pulling
             _stoppedMoving.Add(component);
         }
 
-        private void PullerMoved(ref MoveEvent ev)
-        {
-            var puller = ev.Sender;
-
-            if (!TryGetPulled(ev.Sender, out var pulled))
-            {
-                return;
-            }
-
-            // The pulled object may have already been deleted.
-            // TODO: Work out why. Monkey + meat spike is a good test for this,
-            //  assuming you're still pulling the monkey when it gets gibbed.
-            if (pulled.Deleted)
-            {
-                return;
-            }
-
-            if (!pulled.TryGetComponent(out IPhysBody? physics))
-            {
-                return;
-            }
-
-            UpdatePulledRotation(puller, pulled);
-
-            physics.WakeBody();
-        }
-
         // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
         private void HandleContainerInsert(EntInsertedIntoContainerMessage message)
         {
-            if (message.Entity.TryGetComponent(out SharedPullableComponent? pullable))
+            if (EntityManager.TryGetComponent(message.Entity, out SharedPullableComponent? pullable))
             {
                 TryStopPull(pullable);
             }
 
-            if (message.Entity.TryGetComponent(out SharedPullerComponent? puller))
+            if (EntityManager.TryGetComponent(message.Entity, out SharedPullerComponent? puller))
             {
                 if (puller.Pulling == null) return;
 
-                if (!puller.Pulling.TryGetComponent(out SharedPullableComponent? pulling))
+                if (!EntityManager.TryGetComponent(puller.Pulling.Value, out SharedPullableComponent? pulling))
                 {
                     return;
                 }
@@ -203,81 +177,52 @@ namespace Content.Shared.Pulling
 
         private bool HandleMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var player = session?.AttachedEntity;
-
-            if (player == null)
-            {
+            if (session?.AttachedEntity is not { } player ||
+                !player.IsValid())
                 return false;
-            }
 
             if (!TryGetPulled(player, out var pulled))
             {
                 return false;
             }
 
-            if (!pulled.TryGetComponent(out SharedPullableComponent? pullable))
+            if (!EntityManager.TryGetComponent(pulled.Value, out SharedPullableComponent? pullable))
             {
                 return false;
             }
+
+            if (_containerSystem.IsEntityInContainer(player) ||
+                player.IsWeightless(entityManager: EntityManager))
+                return false;
 
             TryMoveTo(pullable, coords);
 
             return false;
         }
 
-        private void SetPuller(IEntity puller, IEntity pulled)
+        private void SetPuller(EntityUid puller, EntityUid pulled)
         {
             _pullers[puller] = pulled;
         }
 
-        private bool RemovePuller(IEntity puller)
+        private bool RemovePuller(EntityUid puller)
         {
             return _pullers.Remove(puller);
         }
 
-        public IEntity? GetPulled(IEntity by)
+        public EntityUid GetPulled(EntityUid by)
         {
             return _pullers.GetValueOrDefault(by);
         }
 
-        public bool TryGetPulled(IEntity by, [NotNullWhen(true)] out IEntity? pulled)
+        public bool TryGetPulled(EntityUid by, [NotNullWhen(true)] out EntityUid? pulled)
         {
             return (pulled = GetPulled(by)) != null;
         }
 
-        public bool IsPulling(IEntity puller)
+        public bool IsPulling(EntityUid puller)
         {
             return _pullers.ContainsKey(puller);
-        }
-
-        private void UpdatePulledRotation(IEntity puller, IEntity pulled)
-        {
-            // TODO: update once ComponentReference works with directed event bus.
-            if (!pulled.TryGetComponent(out RotatableComponent? rotatable))
-                return;
-
-            if (!rotatable.RotateWhilePulling)
-                return;
-
-            var dir = puller.Transform.WorldPosition - pulled.Transform.WorldPosition;
-            if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
-            {
-                var oldAngle = pulled.Transform.WorldRotation;
-                var newAngle = Angle.FromWorldVec(dir);
-
-                var diff = newAngle - oldAngle;
-                if (Math.Abs(diff.Degrees) > (ThresholdRotAngle / 2f))
-                {
-                    // Ok, so this bit is difficult because ideally it would look like it's snapping to sane angles.
-                    // Otherwise PIANO DOOR STUCK! happens.
-                    // But it also needs to work with station rotation / align to the local parent.
-                    // So...
-                    var baseRotation = pulled.Transform.Parent?.WorldRotation ?? 0f;
-                    var localRotation = newAngle - baseRotation;
-                    var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
-                    pulled.Transform.LocalRotation = localRotationSnapped;
-                }
-            }
         }
     }
 }

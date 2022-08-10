@@ -1,12 +1,7 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
@@ -16,7 +11,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class MachineFrameComplete : IGraphCondition
+    public sealed class MachineFrameComplete : IGraphCondition
     {
         [DataField("guideIconBoard")]
         public SpriteSpecifier? GuideIconBoard { get; }
@@ -30,14 +25,14 @@ namespace Content.Server.Construction.Conditions
             if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
                 return false;
 
-            return machineFrame.IsComplete;
+            return EntitySystem.Get<MachineFrameSystem>().IsComplete(machineFrame);
         }
 
         public bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MachineFrameComponent?>(entity, out var machineFrame))
                 return false;
 
             if (!machineFrame.HasBoard)
@@ -46,7 +41,7 @@ namespace Content.Server.Construction.Conditions
                 return true;
             }
 
-            if (machineFrame.IsComplete) return false;
+            if (EntitySystem.Get<MachineFrameSystem>().IsComplete(machineFrame)) return false;
 
             args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-requirement-label") + "\n");
             foreach (var (part, required) in machineFrame.Requirements)

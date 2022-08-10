@@ -1,23 +1,21 @@
-using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Coordinates.Helpers
 {
     public static class SnapgridHelper
     {
-        public static void SnapToGrid(this IEntity entity, IEntityManager? entityManager = null, IMapManager? mapManager = null)
+        public static void SnapToGrid(this EntityUid entity, IEntityManager? entMan = null, IMapManager? mapManager = null)
         {
-            entity.Transform.Coordinates = entity.Transform.Coordinates.SnapToGrid(entityManager, mapManager);
+            IoCManager.Resolve(ref entMan, ref mapManager);
+            var transform = entMan.GetComponent<TransformComponent>(entity);
+            transform.Coordinates = transform.Coordinates.SnapToGrid(entMan, mapManager);
         }
 
-        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IEntityManager? entityManager = null, IMapManager? mapManager = null)
+        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IEntityManager? entMan = null, IMapManager? mapManager = null)
         {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-            mapManager ??= IoCManager.Resolve<IMapManager>();
+            IoCManager.Resolve(ref entMan, ref mapManager);
 
-            var gridId = coordinates.GetGridId(entityManager);
+            var gridId = coordinates.GetGridId(entMan);
 
             var tileSize = 1f;
 

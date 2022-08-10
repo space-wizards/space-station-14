@@ -1,0 +1,25 @@
+#
+# Base component for consumable food
+#
+- type: entity
+  parent: BaseItem
+  id: FoodBase
+  abstract: true
+  components:
+  - type: Food
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: Sprite
+    netsync: false
+
+# This base type is used to cover all of the "obvious" things that should be doable to open-package food.
+# Practically this means injection.
+# But it might in future also mean drawing with a syringe, so this is a base prototype just in case.
+
+- type: entity
+  parent: FoodBase
+  id: FoodInjectableBase
+  abstract: true
+  components:
+  - type: InjectableSolution
+    solution: food

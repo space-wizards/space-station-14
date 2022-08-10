@@ -1,7 +1,6 @@
 - type: entity
   id: CrateFunPlushie
-  name: plushie crate
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -19,14 +18,18 @@
         amount: 1
       - id: PlushieLizard
         amount: 1
+      - id: PlushieSpaceLizard
+        amount: 1
       - id: PlushieVox
+        amount: 1
+      - id: PlushieRouny
+        amount: 1
+      - id: PlushieRatvar
         amount: 1
 
 - type: entity
   id: CrateFunInstruments
-  name: big band instrument collection
-  description: Get your sad station movin' and groovin' with this fine collection! Contains thirteen different instruments.
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -58,9 +61,25 @@
         amount: 1
 
 - type: entity
+  id: CrateFunBrass
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: TrumpetInstrument
+        amount: 3
+      - id: TromboneInstrument
+        amount: 3
+      - id: FrenchHornInstrument
+        amount: 2
+      - id: EuphoniumInstrument
+        amount: 1
+      - id: TubaInstrument
+        amount: 1
+
+- type: entity
   id: CrateFunArtSupplies
-  name: art supplies
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -68,3 +87,42 @@
         amount: 1
       - id: CrayonWhite
         amount: 1
+
+- type: entity
+  id: CrateFunBoardGames
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ChessBoard
+        amount: 1
+      - id: BackgammonBoard
+        amount: 1
+      - id: ParchisBoard
+        amount: 1
+      - id: CheckerBoard
+        amount: 1
+      - id: d6Dice
+        amount: 4
+
+- type: entity
+  id: CrateFunATV
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: VehicleATV
+      amount: 1
+    - id: VehicleKeyATV
+      amount: 1
+
+- type: entity
+  id: CrateFunSyndicateSegway
+  parent: CrateLivestock
+  components:
+    - type: StorageFill
+      contents:
+        - id: VehicleSyndicateSegway
+          amount: 1
+        - id: VehicleKeySyndicateSegway
+          amount: 1

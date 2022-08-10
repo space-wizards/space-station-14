@@ -18,12 +18,6 @@
   components: *oxyTankFill
 
 - type: entity
-  id: RedOxygenTankFilled
-  parent: RedOxygenTank
-  suffix: Filled
-  components: *oxyTankFill
-
-- type: entity
   id: EmergencyOxygenTankFilled
   parent: EmergencyOxygenTank
   suffix: Filled
@@ -75,6 +69,43 @@
           - 4.75217098 # oxygen
           - 17.8772147 # nitrogen
         temperature: 293.15
+
+- type: entity
+  id: NitrogenTankFilled
+  parent: NitrogenTank
+  suffix: Filled
+  name: nitrogen tank
+  components:
+    - type: GasTank
+      outputPressure: 101.325
+      air:
+        volume: 70
+        moles:
+          - 0 # oxygen
+          - 22.6293856 # nitrogen
+        temperature: 293.15
+
+- type: entity
+  id: NitrousOxideTankFilled
+  parent: NitrousOxideTank
+  suffix: Filled
+  name: nitrous oxide tank
+  components:
+    - type: GasTank
+      outputPressure: 101.325
+      air:
+        volume: 70
+        moles:
+          - 20.5 # oxygen
+          - 0 # Nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 # Water vapor
+          - 0 # Miasma
+          - 2 # N2O
+        temperature: 293.15
+
 
 - type: entity
   id: PlasmaTankFilled

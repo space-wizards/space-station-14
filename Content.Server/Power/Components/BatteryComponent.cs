@@ -1,18 +1,13 @@
-using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Power.Components
 {
     /// <summary>
     ///     Battery node on the pow3r network. Needs other components to connect to actual networks.
     /// </summary>
     [RegisterComponent]
+    [Virtual]
     public class BatteryComponent : Component
     {
-        public override string Name => "Battery";
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
@@ -39,7 +34,7 @@ namespace Content.Server.Power.Components
         /// </summary>
         public virtual bool TryUseCharge(float chargeToUse)
         {
-            if (chargeToUse >= CurrentCharge)
+            if (chargeToUse > CurrentCharge)
             {
                 return false;
             }
@@ -71,7 +66,10 @@ namespace Content.Server.Power.Components
             }
         }
 
-        protected virtual void OnChargeChanged() { }
+        protected virtual void OnChargeChanged()
+        {
+            _entMan.EventBus.RaiseLocalEvent(Owner, new ChargeChangedEvent(), false);
+        }
 
         private void SetMaxCharge(float newMax)
         {
@@ -86,4 +84,6 @@ namespace Content.Server.Power.Components
             OnChargeChanged();
         }
     }
+
+    public struct ChargeChangedEvent {}
 }

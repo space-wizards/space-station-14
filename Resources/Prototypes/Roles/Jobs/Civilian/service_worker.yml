@@ -1,0 +1,25 @@
+﻿- type: job
+  id: ServiceWorker
+  name: job-name-serviceworker
+  playTimeTracker: JobServiceWorker
+  startingGear: ServiceWorkerGear
+  icon: "ServiceWorker"
+  supervisors: job-supervisors-service
+  canBeAntag: false
+  access:
+  - Service
+  - Maintenance
+  - Bar
+  - Kitchen
+
+- type: startingGear
+  id: ServiceWorkerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlack
+    id: ServiceWorkerPDA
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtBartender
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

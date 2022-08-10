@@ -1,5 +1,6 @@
 ﻿- type: reagent
   id: BaseDrink
+  group: Drinks
   abstract: true
   metabolisms:
     Drink:
@@ -37,12 +38,16 @@
 
 - type: reagent
   id: BaseAlcohol
+  group: Drinks
   abstract: true
   metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

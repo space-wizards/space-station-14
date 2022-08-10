@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Crayon;
+using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -7,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Crayon.UI
 {
-    public class CrayonBoundUserInterface : BoundUserInterface
+    public sealed class CrayonBoundUserInterface : BoundUserInterface
     {
         public CrayonBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -22,9 +23,8 @@ namespace Content.Client.Crayon.UI
 
             _menu.OnClose += Close;
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var crayonDecals = prototypeManager.EnumeratePrototypes<CrayonDecalPrototype>().FirstOrDefault();
-            if (crayonDecals != null)
-                _menu.Populate(crayonDecals);
+            var crayonDecals = prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("crayon"));
+            _menu.Populate(crayonDecals);
             _menu.OpenCentered();
         }
 
@@ -40,6 +40,11 @@ namespace Content.Client.Crayon.UI
             SendMessage(new CrayonSelectMessage(state));
         }
 
+        public void SelectColor(Color color)
+        {
+            SendMessage(new CrayonColorMessage(color));
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -47,6 +52,7 @@ namespace Content.Client.Crayon.UI
             if (disposing)
             {
                 _menu?.Close();
+                _menu = null;
             }
         }
     }

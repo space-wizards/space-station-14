@@ -1,0 +1,194 @@
+# TODO probably needs a base grenade
+
+- type: entity
+  name: explosive grenade
+  description: Grenade that creates a small but devastating explosion.
+  parent: BaseItem
+  id: ExGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Item
+    size: 5
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: OnUseTimerTrigger
+    delay: 3.5
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+
+- type: entity
+  name: flashbang
+  description: Eeeeeeeeeeeeeeeeeeeeee
+  parent: BaseItem
+  id: GrenadeFlashBang
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Item
+    size: 5
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: OnUseTimerTrigger
+    delay: 3.5
+  - type: FlashOnTrigger
+    range: 7
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: DeleteOnTrigger
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound:
+        path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: Syndicate minibomb
+  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
+  parent: BaseItem
+  id: SyndieMiniBomb
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 10
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 200
+    intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
+    maxIntensity: 60
+  - type: ExplodeOnTrigger
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound:
+        path: /Audio/Effects/minibombcountdown.ogg
+
+- type: entity
+  name: the nuclear option
+  description: Please don't throw it, think of the children.
+  parent: BaseItem
+  id: NuclearGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/nukenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 20000 # ~15 tile radius.
+    intensitySlope: 5
+    maxIntensity: 50
+  - type: ExplodeOnTrigger
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound:
+        path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: modular grenade
+  description: A grenade casing. Requires a trigger and a payload.
+  parent: BaseItem
+  id: ModularGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/modular.rsi
+    state: empty
+  - type: Item
+    size: 8
+  - type: PayloadCase
+  - type: Construction
+    graph: ModularGrenadeGraph
+    node: emptyCase
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: GenericEnumVisualizer
+      key: enum.Trigger.TriggerVisuals.VisualState
+      states:
+        enum.Trigger.TriggerVisualState.Primed: primed
+        enum.Trigger.TriggerVisualState.Unprimed: complete

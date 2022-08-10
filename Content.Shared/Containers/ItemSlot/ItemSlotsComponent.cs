@@ -1,15 +1,10 @@
-using Content.Shared.Sound;
 using Content.Shared.Whitelist;
-using Robust.Shared.Analyzers;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -18,11 +13,10 @@ namespace Content.Shared.Containers.ItemSlots
     ///     insert/eject interactions.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlotsComponent : Component
+    [Access(typeof(ItemSlotsSystem))]
+    [NetworkedComponent]
+    public sealed class ItemSlotsComponent : Component
     {
-        public override string Name => "ItemSlots";
-
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
         ///     cref="ItemSlotsSystem"/>.
@@ -49,16 +43,11 @@ namespace Content.Shared.Containers.ItemSlots
     [Serializable, NetSerializable]
     public sealed class ItemSlotsComponentState : ComponentState
     {
-        public readonly Dictionary<string, bool> SlotLocked;
+        public readonly Dictionary<string, ItemSlot> Slots;
 
         public ItemSlotsComponentState(Dictionary<string, ItemSlot> slots)
         {
-            SlotLocked = new(slots.Count);
-
-            foreach (var (key, slot) in slots)
-            {
-                SlotLocked[key] = slot.Locked;
-            }
+            Slots = slots;
         }
     }
 
@@ -67,19 +56,33 @@ namespace Content.Shared.Containers.ItemSlots
     ///     insert/eject sounds.
     /// </summary>
     [DataDefinition]
-    [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlot
+    [Access(typeof(ItemSlotsSystem))]
+    [Serializable, NetSerializable]
+    public sealed class ItemSlot
     {
+        public ItemSlot() { }
+
+        public ItemSlot(ItemSlot other)
+        {
+            CopyFrom(other);
+        }
+
+
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
 
         [DataField("insertSound")]
-        public SoundSpecifier? InsertSound;
-        // maybe default to /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg ??
+        public SoundSpecifier InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
         [DataField("ejectSound")]
-        public SoundSpecifier? EjectSound;
-        // maybe default to /Audio/Machines/id_swipe.ogg?
+        public SoundSpecifier EjectSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
+
+        /// <summary>
+        ///     Options used for playing the insert/eject sounds.
+        /// </summary>
+        [DataField("soundOptions")]
+        [Obsolete("Use the sound specifer parameters instead")]
+        public AudioParams SoundOptions = AudioParams.Default;
 
         /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
@@ -88,10 +91,21 @@ namespace Content.Shared.Containers.ItemSlots
         ///     This will be passed through Loc.GetString. If the name is an empty string, then verbs will use the name
         ///     of the currently held or currently inserted entity instead.
         /// </remarks>
-        [DataField("name")]
+        [DataField("name", readOnly: true)]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string Name = string.Empty;
 
-        [DataField("startingItem", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        /// <summary>
+        ///     The entity prototype that is spawned into this slot on map init.
+        /// </summary>
+        /// <remarks>
+        ///     Marked as readOnly because some components (e.g. PowerCellSlot) set the starting item based on some
+        ///     property of that component (e.g., cell slot size category), and this can lead to unnecessary changes
+        ///     when mapping.
+        /// </remarks>
+        [DataField("startingItem", readOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [NonSerialized]
         public string? StartingItem;
 
         /// <summary>
@@ -106,6 +120,13 @@ namespace Content.Shared.Containers.ItemSlots
         public bool Locked = false;
 
         /// <summary>
+        ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.
+        ///     It doesn't block other insertion methods, like verbs.
+        /// </summary>
+        [DataField("insertOnInteract")]
+        public bool InsertOnInteract = true;
+
+        /// <summary>
         ///     Whether the item slots system will attempt to eject this item to the user's hands when interacted with.
         /// </summary>
         /// <remarks>
@@ -117,21 +138,33 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnInteract = false;
 
         /// <summary>
-        ///     Override the insert verb text. Defaults to [insert category] -> [item-name]. If not null, the verb will
-        ///     not be given a category.
+        ///     If true, and if this slot is attached to an item, then it will attempt to eject slot when to the slot is
+        ///     used in the user's hands.
+        /// </summary>
+        /// <remarks>
+        ///     Desirable for things like ranged weapons ('Z' to eject), but not desirable for others (e.g., PDA uses
+        ///     'Z' to open UI). Unlike <see cref="EjectOnInteract"/>, this will not make any changes to the context
+        ///     menu, nor will it disable alt-click interactions.
+        /// </remarks>
+        [DataField("ejectOnUse")]
+        public bool EjectOnUse = false;
+
+        /// <summary>
+        ///     Override the insert verb text. Defaults to using the slot's name (if specified) or the name of the
+        ///     targeted item. If specified, the verb will not be added to the default insert verb category.
         /// </summary>
         [DataField("insertVerbText")]
         public string? InsertVerbText;
 
         /// <summary>
-        ///     Override the insert verb text. Defaults to [eject category] -> [item-name]. If not null, the verb will
-        ///     not be given a category.
+        ///     Override the eject verb text. Defaults to using the slot's name (if specified) or the name of the
+        ///     targeted item. If specified, the verb will not be added to the default eject verb category
         /// </summary>
         [DataField("ejectVerbText")]
         public string? EjectVerbText;
 
-        [ViewVariables]
-        public ContainerSlot ContainerSlot = default!;
+        [ViewVariables, NonSerialized]
+        public ContainerSlot? ContainerSlot = default!;
 
         /// <summary>
         ///     If this slot belongs to some de-constructible component, should the item inside the slot be ejected upon
@@ -141,6 +174,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     The actual deconstruction logic is handled by the server-side EmptyOnMachineDeconstructSystem.
         /// </remarks>
         [DataField("ejectOnDeconstruct")]
+        [NonSerialized]
         public bool EjectOnDeconstruct = true;
 
         /// <summary>
@@ -148,6 +182,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     ejected when it is broken or destroyed?
         /// </summary>
         [DataField("ejectOnBreak")]
+        [NonSerialized]
         public bool EjectOnBreak = false;
 
         /// <summary>
@@ -167,13 +202,43 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("swap")]
         public bool Swap = true;
 
-        public string ID => ContainerSlot.ID;
+        public string? ID => ContainerSlot?.ID;
 
         // Convenience properties
-        public bool HasItem => ContainerSlot.ContainedEntity != null;
-        public IEntity? Item => ContainerSlot.ContainedEntity;
+        public bool HasItem => ContainerSlot?.ContainedEntity != null;
+        public EntityUid? Item => ContainerSlot?.ContainedEntity;
 
-        // and to make it easier for  whenever IEntity is removed
-        public EntityUid? ItemUid => ContainerSlot.ContainedEntity?.Uid;
+        /// <summary>
+        ///     Priority for use with the eject & insert verbs for this slot.
+        /// </summary>
+        [DataField("priority")]
+        public int Priority = 0;
+
+        /// <summary>
+        ///     If false, errors when adding an item slot with a duplicate key are suppressed. Local==true implies that
+        ///     the slot was added via client component state handling.
+        /// </summary>
+        [NonSerialized]
+        public bool Local = true;
+
+        public void CopyFrom(ItemSlot other)
+        {
+            // These fields are mutable reference types. But they generally don't get modified, so this should be fine.
+            Whitelist = other.Whitelist;
+            InsertSound = other.InsertSound;
+            EjectSound = other.EjectSound;
+
+            SoundOptions = other.SoundOptions;
+            Name = other.Name;
+            Locked = other.Locked;
+            InsertOnInteract = other.InsertOnInteract;
+            EjectOnInteract = other.EjectOnInteract;
+            EjectOnUse = other.EjectOnUse;
+            InsertVerbText = other.InsertVerbText;
+            EjectVerbText = other.EjectVerbText;
+            WhitelistFailPopup = other.WhitelistFailPopup;
+            Swap = other.Swap;
+            Priority = other.Priority;
+        }
     }
 }

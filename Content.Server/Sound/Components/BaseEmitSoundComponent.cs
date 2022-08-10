@@ -1,7 +1,4 @@
-using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Sound.Components
 {
@@ -11,12 +8,10 @@ namespace Content.Server.Sound.Components
     /// </summary>
     public abstract class BaseEmitSoundComponent : Component
     {
+        public static readonly AudioParams DefaultParams = AudioParams.Default.WithVolume(-2f);
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound", required: true)]
         public SoundSpecifier Sound { get; set; } = default!;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("variation")]
-        public float PitchVariation { get; set; } = 0.0f;
     }
 }

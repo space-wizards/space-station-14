@@ -16,7 +16,7 @@ namespace Content.Client.Atmos.UI
     /// Client-side UI used to control a gas volume pump.
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class GasVolumePumpWindow : SS14Window
+    public sealed partial class GasVolumePumpWindow : DefaultWindow
     {
         public bool PumpStatus = true;
 

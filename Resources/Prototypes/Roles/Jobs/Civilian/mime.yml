@@ -1,20 +1,23 @@
 - type: job
   id: Mime
-  name: "mime"
+  name: job-name-mime
+  playTimeTracker: JobMime
   startingGear: MimeGear
-  departments:
-  - Civilian
   icon: "Mime"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Theatre
   - Maintenance
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: MimePowers
 
 - type: startingGear
   id: MimeGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitMime
-    backpack: ClothingBackpackMimeFilled
+    jumpsuit: ClothingUniformJumpsuitMime
+    back: ClothingBackpackMimeFilled
     head: ClothingHeadHatBeret
     belt: ClothingBeltSuspenders
     gloves: ClothingHandsGlovesLatex
@@ -22,7 +25,7 @@
     pocket1: CrayonMime
     pocket2: Paper
     mask: ClothingMaskMime
-    idcard: MimePDA
+    id: MimePDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtMime
   satchel: ClothingBackpackSatchelFilled

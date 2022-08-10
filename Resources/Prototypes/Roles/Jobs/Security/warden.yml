@@ -1,27 +1,33 @@
 - type: job
   id: Warden
-  name: "warden"
+  name: job-name-warden
+  playTimeTracker: JobWarden
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 10800
   startingGear: WardenGear
-  departments:
-  - Security
   icon: "Warden"
-  supervisors: "the head of security"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
   access:
   - Security
- # - Brig
+  - Armory
   - Maintenance
   - Service
+  - Brig
+  - External
 
 - type: startingGear
   id: WardenGear
   equipment:
     head: ClothingHeadHatWarden
-    innerclothing: ClothingUniformJumpsuitWarden
-    backpack: ClothingBackpackSecurityFilled
+    jumpsuit: ClothingUniformJumpsuitWarden
+    back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesSecurity
-    outerclothing: ClothingOuterCoatWarden
-    idcard: WardenPDA
+    outerClothing: ClothingOuterCoatWarden
+    id: WardenPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
   innerclothingskirt: ClothingUniformJumpskirtWarden

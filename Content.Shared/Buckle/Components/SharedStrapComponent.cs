@@ -1,7 +1,5 @@
-using System;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction.Helpers;
-using Robust.Shared.GameObjects;
+using Content.Shared.Interaction;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -28,14 +26,46 @@ namespace Content.Shared.Buckle.Components
     [NetworkedComponent()]
     public abstract class SharedStrapComponent : Component, IDragDropOn
     {
-        public sealed override string Name => "Strap";
+        /// <summary>
+        /// The change in position to the strapped mob
+        /// </summary>
+        [DataField("position")]
+        public StrapPosition Position { get; set; } = StrapPosition.None;
+
+
+        /// <summary>
+        /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
+        /// </summary>
+        public readonly HashSet<EntityUid> BuckledEntities = new();
+
+        /// <summary>
+        /// The distance above which a buckled entity will be automatically unbuckled.
+        /// Don't change it unless you really have to
+        /// </summary>
+        [DataField("maxBuckleDistance", required: false)]
+        public float MaxBuckleDistance = 0.1f;
+
+        /// <summary>
+        /// Gets and clamps the buckle offset to MaxBuckleDistance
+        /// </summary>
+        public Vector2 BuckleOffset => Vector2.Clamp(
+            BuckleOffsetUnclamped,
+            Vector2.One * -MaxBuckleDistance,
+            Vector2.One * MaxBuckleDistance);
+
+        /// <summary>
+        /// The buckled entity will be offset by this amount from the center of the strap object.
+        /// If this offset it too big, it will be clamped to <see cref="MaxBuckleDistance"/>
+        /// </summary>
+        [DataField("buckleOffset", required: false)]
+        public Vector2 BuckleOffsetUnclamped = Vector2.Zero;
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            if (!eventArgs.Dragged.TryGetComponent(out SharedBuckleComponent? buckleComponent)) return false;
-            bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedBuckleComponent? buckleComponent)) return false;
+            bool Ignored(EntityUid entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
 
-            return eventArgs.Target.InRangeUnobstructed(eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
+            return EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.Target, eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);
@@ -44,80 +74,29 @@ namespace Content.Shared.Buckle.Components
     [Serializable, NetSerializable]
     public sealed class StrapComponentState : ComponentState
     {
-        public StrapComponentState(StrapPosition position)
-        {
-            Position = position;
-        }
-
         /// <summary>
         /// The change in position that this strap makes to the strapped mob
         /// </summary>
-        public StrapPosition Position { get; }
-    }
+        public StrapPosition Position;
 
-    [Serializable, NetSerializable]
-    public enum StrapVisuals
-    {
-        RotationAngle
-    }
+        public float MaxBuckleDistance;
+        public Vector2 BuckleOffsetClamped;
+        public HashSet<EntityUid> BuckledEntities;
 
-    [Serializable, NetSerializable]
-#pragma warning disable 618
-    public abstract class StrapChangeMessage : ComponentMessage
-#pragma warning restore 618
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="StrapChangeMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        /// <param name="buckled">True if the entity was buckled, false otherwise</param>
-        protected StrapChangeMessage(IEntity entity, IEntity strap, bool buckled)
+        public StrapComponentState(StrapPosition position, Vector2 offset, HashSet<EntityUid> buckled, float maxBuckleDistance)
         {
-            Entity = entity;
-            Strap = strap;
-            Buckled = buckled;
-        }
-
-        /// <summary>
-        ///     The entity that had its buckling status changed
-        /// </summary>
-        public IEntity Entity { get; }
-
-        /// <summary>
-        ///     The strap that the entity was buckled to or unbuckled from
-        /// </summary>
-        public IEntity Strap { get; }
-
-        /// <summary>
-        ///     True if the entity was buckled, false otherwise.
-        /// </summary>
-        public bool Buckled { get; }
-    }
-
-    [Serializable, NetSerializable]
-    public class StrapMessage : StrapChangeMessage
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="StrapMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public StrapMessage(IEntity entity, IEntity strap) : base(entity, strap, true)
-        {
+            Position = position;
+            BuckleOffsetClamped = offset;
+            BuckledEntities = buckled;
+            MaxBuckleDistance = maxBuckleDistance;
         }
     }
 
     [Serializable, NetSerializable]
-    public class UnStrapMessage : StrapChangeMessage
+    public enum StrapVisuals : byte
     {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="UnStrapMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public UnStrapMessage(IEntity entity, IEntity strap) : base(entity, strap, false)
-        {
-        }
+        RotationAngle,
+        BuckledState,
+        State
     }
 }

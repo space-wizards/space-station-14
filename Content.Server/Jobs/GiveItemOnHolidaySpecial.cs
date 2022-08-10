@@ -1,20 +1,15 @@
-using Content.Server.Hands.Components;
 using Content.Server.Holiday;
-using Content.Server.Holiday.Interfaces;
-using Content.Server.Items;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Jobs
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class GiveItemOnHolidaySpecial : JobSpecial
+    public sealed class GiveItemOnHolidaySpecial : JobSpecial
     {
         [DataField("holiday", customTypeSerializer:typeof(PrototypeIdSerializer<HolidayPrototype>))]
         public string Holiday { get; } = string.Empty;
@@ -22,20 +17,21 @@ namespace Content.Server.Jobs
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Prototype { get; } = string.Empty;
 
-        public override void AfterEquip(IEntity mob)
+        public override void AfterEquip(EntityUid mob)
         {
             if (string.IsNullOrEmpty(Holiday) || string.IsNullOrEmpty(Prototype))
                 return;
 
-            if (!EntitySystem.Get<HolidaySystem>().IsCurrentlyHoliday(Holiday))
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+
+            if (!sysMan.GetEntitySystem<HolidaySystem>().IsCurrentlyHoliday(Holiday))
                 return;
 
-            var entity = mob.EntityManager.SpawnEntity(Prototype, mob.Transform.Coordinates);
+            var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entity.TryGetComponent(out ItemComponent? item) || !mob.TryGetComponent(out HandsComponent? hands))
-                return;
+            var entity = entMan.SpawnEntity(Prototype, entMan.GetComponent<TransformComponent>(mob).Coordinates);
 
-            hands.PutInHand(item, false);
+            sysMan.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(mob, entity);
         }
     }
 }

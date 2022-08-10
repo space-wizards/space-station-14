@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.Suspicion
 {
-    class SuspicionRoleSystem : EntitySystem
+    sealed class SuspicionRoleSystem : EntitySystem
     {
         public override void Initialize()
         {

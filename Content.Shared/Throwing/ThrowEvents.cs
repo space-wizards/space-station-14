@@ -1,8 +1,3 @@
-using System;
-using JetBrains.Annotations;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-
 namespace Content.Shared.Throwing
 {
     /// <summary>
@@ -13,19 +8,19 @@ namespace Content.Shared.Throwing
         /// <summary>
         ///     The entity that threw <see cref="Thrown"/>.
         /// </summary>
-        public IEntity? User { get; }
+        public EntityUid? User { get; }
 
         /// <summary>
         ///     The entity thrown by <see cref="User"/> that hit <see cref="Target"/>
         /// </summary>
-        public IEntity Thrown { get; }
+        public EntityUid Thrown { get; }
 
         /// <summary>
         ///     The entity hit with <see cref="Thrown"/> by <see cref="User"/>
         /// </summary>
-        public IEntity Target { get; }
+        public EntityUid Target { get; }
 
-        public ThrowEvent(IEntity? user, IEntity thrown, IEntity target)
+        public ThrowEvent(EntityUid? user, EntityUid thrown, EntityUid target)
         {
             User = user;
             Thrown = thrown;
@@ -36,9 +31,9 @@ namespace Content.Shared.Throwing
     /// <summary>
     ///     Raised directed on the target entity being hit by the thrown entity.
     /// </summary>
-    public class ThrowHitByEvent : ThrowEvent
+    public sealed class ThrowHitByEvent : ThrowEvent
     {
-        public ThrowHitByEvent(IEntity? user, IEntity thrown, IEntity target) : base(user, thrown, target)
+        public ThrowHitByEvent(EntityUid? user, EntityUid thrown, EntityUid target) : base(user, thrown, target)
         {
         }
     }
@@ -46,9 +41,9 @@ namespace Content.Shared.Throwing
     /// <summary>
     ///     Raised directed on the thrown entity that hits another.
     /// </summary>
-    public class ThrowDoHitEvent : ThrowEvent
+    public sealed class ThrowDoHitEvent : ThrowEvent
     {
-        public ThrowDoHitEvent(IEntity? user, IEntity thrown, IEntity target) : base(user, thrown, target)
+        public ThrowDoHitEvent(EntityUid? user, EntityUid thrown, EntityUid target) : base(user, thrown, target)
         {
         }
     }

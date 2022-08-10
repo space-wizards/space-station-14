@@ -1,9 +1,0 @@
-- type: entity
-  abstract: true
-  parent: Clothing
-  id: ClothingMaskBase
-  components:
-  - type: Sprite
-    state: icon
-  - type: Clothing
-    Slots: [mask]

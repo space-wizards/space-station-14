@@ -5,13 +5,12 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class RemoveHandCommand : IConsoleCommand
+    sealed class RemoveHandCommand : IConsoleCommand
     {
         public string Command => "removehand";
         public string Description => "Removes a hand from your entity.";
@@ -32,7 +31,7 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out SharedBodyComponent? body))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(player.AttachedEntity, out SharedBodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";

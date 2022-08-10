@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Tests.Shared.Alert
 {
     [TestFixture, TestOf(typeof(AlertOrderPrototype))]
-    public class AlertOrderPrototypeTests : ContentUnitTest
+    public sealed class AlertOrderPrototypeTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alertOrder
@@ -25,50 +25,45 @@ namespace Content.Tests.Shared.Alert
     - category: Temperature
 
 - type: alert
-  name: AlertLowPressure
+  id: LowPressure
+  icons: []
   category: Pressure
-  alertType: LowPressure
 
 - type: alert
-  name: AlertOverfed
-  category: Hunger
-  alertType: Overfed
-
-- type: alert
-  name: AlertHighPressure
+  id: HighPressure
+  icons: []
   category: Pressure
-  alertType: HighPressure
 
 - type: alert
-  name: AlertPeckish
+  id: Peckish
+  icons: []
   category: Hunger
-  alertType: Peckish
 
 - type: alert
-  name: AlertStun
-  alertType: Stun
+  id: Stun
+  icons: []
 
 - type: alert
-  name: AlertHandcuffed
-  alertType: Handcuffed
+  id: Handcuffed
+  icons: []
 
 - type: alert
-  name: AlertHot
+  id: Hot
+  icons: []
   category: Temperature
-  alertType: Hot
 
 - type: alert
-  name: AlertCold
+  id: Cold
+  icons: []
   category: Temperature
-  alertType: Cold
 
 - type: alert
-  name: AlertWeightless
-  alertType: Weightless
+  id: Weightless
+  icons: []
 
 - type: alert
-  name: AlertPilotingShuttle
-  alertType: PilotingShuttle
+  id: PilotingShuttle
+  icons: []
 ";
 
         [Test]
@@ -78,7 +73,7 @@ namespace Content.Tests.Shared.Alert
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
-            prototypeManager.Resync();
+            prototypeManager.ResolveResults();
 
             var alertOrder = prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
 
@@ -89,7 +84,6 @@ namespace Content.Tests.Shared.Alert
             expectedOrder.Add(AlertType.Handcuffed);
             expectedOrder.Add(AlertType.HighPressure);
             // stuff with only category + same category ordered by enum value
-            expectedOrder.Add(AlertType.Overfed);
             expectedOrder.Add(AlertType.Peckish);
             expectedOrder.Add(AlertType.Hot);
             expectedOrder.Add(AlertType.Stun);

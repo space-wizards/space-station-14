@@ -1,14 +1,11 @@
-﻿using System;
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    class StartRoundCommand : IConsoleCommand
+    sealed class StartRoundCommand : IConsoleCommand
     {
         public string Command => "startround";
         public string Description => "Ends PreRoundLobby state and starts the round.";

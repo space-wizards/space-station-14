@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
@@ -6,21 +5,16 @@ using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tools
 {
-    public partial class ToolSystem
+    public sealed partial class ToolSystem
     {
         private void InitializeMultipleTools()
         {
             SubscribeLocalEvent<MultipleToolComponent, ComponentStartup>(OnMultipleToolStartup);
-            SubscribeLocalEvent<MultipleToolComponent, UseInHandEvent>(OnMultipleToolUsedInHand);
             SubscribeLocalEvent<MultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);
             SubscribeLocalEvent<MultipleToolComponent, ComponentGetState>(OnMultipleToolGetState);
         }
@@ -30,14 +24,6 @@ namespace Content.Server.Tools
             // Only set the multiple tool if we have a tool component.
             if(EntityManager.TryGetComponent(uid, out ToolComponent? tool))
                 SetMultipleTool(uid, multiple, tool);
-        }
-
-        private void OnMultipleToolUsedInHand(EntityUid uid, MultipleToolComponent multiple, UseInHandEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            args.Handled = CycleMultipleTool(uid, multiple);
         }
 
         private void OnMultipleToolActivated(EntityUid uid, MultipleToolComponent multiple, ActivateInWorldEvent args)
@@ -67,7 +53,7 @@ namespace Content.Server.Tools
             var current = multiple.Entries[multiple.CurrentEntry];
 
             if(current.ChangeSound is {} changeSound)
-                SoundSystem.Play(Filter.Pvs(uid), changeSound.GetSound(), uid);
+                SoundSystem.Play(changeSound.GetSound(), Filter.Pvs(uid), uid);
 
             return true;
         }
@@ -78,7 +64,7 @@ namespace Content.Server.Tools
                 return;
 
             // Sprite is optional.
-            Resolve(uid, ref sprite);
+            Resolve(uid, ref sprite, false);
 
             if (multiple.Entries.Length == 0)
             {

@@ -1,11 +1,10 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
-    public class TotalDamage : ReagentEffectCondition
+    public sealed class TotalDamage : ReagentEffectCondition
     {
         [DataField("max")]
         public FixedPoint2 Max = FixedPoint2.MaxValue;
@@ -15,7 +14,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         public override bool Condition(ReagentEffectArgs args)
         {
-            if (args.EntityManager.TryGetComponent(args.SolutionEntity, out DamageableComponent damage))
+            if (args.EntityManager.TryGetComponent(args.SolutionEntity, out DamageableComponent? damage))
             {
                 var total = damage.TotalDamage;
                 if (total > Min && total < Max)

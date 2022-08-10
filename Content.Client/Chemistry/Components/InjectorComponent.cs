@@ -17,7 +17,7 @@ namespace Content.Client.Chemistry.Components
     /// Client behavior for injectors & syringes. Used for item status on injectors
     /// </summary>
     [RegisterComponent]
-    public class InjectorComponent : SharedInjectorComponent, IItemStatus
+    public sealed class InjectorComponent : SharedInjectorComponent, IItemStatus
     {
         [ViewVariables] private FixedPoint2 CurrentVolume { get; set; }
         [ViewVariables] private FixedPoint2 TotalVolume { get; set; }
@@ -56,7 +56,7 @@ namespace Content.Client.Chemistry.Components
                 _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
                 AddChild(_label);
 
-                parent._uiUpdateNeeded = true;
+                Update();
             }
 
             protected override void FrameUpdate(FrameEventArgs args)
@@ -66,7 +66,11 @@ namespace Content.Client.Chemistry.Components
                 {
                     return;
                 }
+                Update();
+            }
 
+            public void Update()
+            {
                 _parent._uiUpdateNeeded = false;
 
                 //Update current volume and injector state

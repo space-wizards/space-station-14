@@ -2,24 +2,17 @@ using Content.Server.CharacterAppearance.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.CharacterAppearance.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class MagicMirrorComponent : SharedMagicMirrorComponent, IActivate
+    public sealed class MagicMirrorComponent : SharedMagicMirrorComponent
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly SpriteAccessoryManager _spriteAccessoryManager = default!;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MagicMirrorUiKey.Key);
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(MagicMirrorUiKey.Key);
 
         protected override void Initialize()
         {
@@ -43,12 +36,12 @@ namespace Content.Server.CharacterAppearance.Components
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Session.AttachedEntity == null)
+            if (obj.Session.AttachedEntity is not {Valid: true} player)
             {
                 return;
             }
 
-            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent? looks))
+            if (!_entities.TryGetComponent(player, out HumanoidAppearanceComponent? looks))
             {
                 return;
             }
@@ -91,38 +84,7 @@ namespace Content.Server.CharacterAppearance.Components
                     break;
             }
 
-            EntitySystem.Get<HumanoidAppearanceSystem>().ForceAppearanceUpdate(obj.Session.AttachedEntity.Uid);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent? looks))
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("magic-mirror-component-activate-user-has-no-hair"));
-                return;
-            }
-
-            UserInterface?.Toggle(actor.PlayerSession);
-
-            var appearance = looks.Appearance;
-
-            var msg = new MagicMirrorInitialDataMessage(
-                appearance.HairColor,
-                appearance.FacialHairColor,
-                appearance.HairStyleId,
-                appearance.FacialHairStyleId,
-                appearance.EyeColor,
-                looks.CategoriesHair,
-                looks.CategoriesFacialHair,
-                looks.CanColorHair,
-                looks.CanColorFacialHair);
-
-            UserInterface?.SendMessage(msg, actor.PlayerSession);
+            EntitySystem.Get<HumanoidAppearanceSystem>().ForceAppearanceUpdate(player);
         }
     }
 }

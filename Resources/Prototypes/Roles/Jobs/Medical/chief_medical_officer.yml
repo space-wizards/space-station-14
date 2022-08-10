@@ -2,32 +2,35 @@
 
 - type: job
   id: ChiefMedicalOfficer
-  name: "chief medical officer"
-  head: true
+  name: job-name-cmo
+  playTimeTracker: JobChiefMedicalOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 18000
+  weight: 10
   startingGear: CMOGear
-  departments:
-  - Command
-  - Medical
   icon: "ChiefMedicalOfficer"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Medical
   - Command
   - Maintenance
   - Chemistry
+  - ChiefMedicalOfficer
 
 - type: startingGear
   id: CMOGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitCMO
-    backpack: ClothingBackpackMedicalFilled
+    jumpsuit: ClothingUniformJumpsuitCMO
+    back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorBrown
-    outerclothing: ClothingOuterCoatLabCmo
-    idcard: CMOPDA
+    outerClothing: ClothingOuterCoatLabCmo
+    id: CMOPDA
     ears: ClothingHeadsetAltMedical
-    belt: ClothingBeltMedical
+    belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtCMO
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

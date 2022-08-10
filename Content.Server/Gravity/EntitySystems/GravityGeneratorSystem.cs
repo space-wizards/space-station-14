@@ -1,13 +1,9 @@
-﻿using System;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Gravity.EntitySystems
 {
@@ -24,9 +20,26 @@ namespace Content.Server.Gravity.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentInit>(OnComponentInitialized);
+            SubscribeLocalEvent<GravityGeneratorComponent, ComponentShutdown>(OnComponentShutdown);
+            SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged); // Or just anchor changed?
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
+        }
+
+        private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)
+        {
+            // TODO consider stations with more than one generator.
+            if (component.GravityActive && TryComp(args.OldParent, out GravityComponent? gravity))
+                _gravitySystem.DisableGravity(gravity);
+
+            UpdateGravityActive(component, false);
+        }
+
+        private void OnComponentShutdown(EntityUid uid, GravityGeneratorComponent component, ComponentShutdown args)
+        {
+            component.GravityActive = false;
+            UpdateGravityActive(component, true);
         }
 
         public override void Update(float frameTime)
@@ -126,7 +139,7 @@ namespace Content.Server.Gravity.EntitySystems
             ApcPowerReceiverComponent powerReceiver,
             float chargeRate)
         {
-            if (!_uiSystem.IsUiOpen(component.Owner.Uid, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key))
+            if (!_uiSystem.IsUiOpen(component.Owner, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key))
                 return;
 
             var chargeTarget = chargeRate < 0 ? 0 : 1;
@@ -162,7 +175,7 @@ namespace Content.Server.Gravity.EntitySystems
             );
 
             _uiSystem.TrySetUiState(
-                component.Owner.Uid,
+                component.Owner,
                 SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key,
                 state);
 
@@ -184,12 +197,11 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void UpdateGravityActive(GravityGeneratorComponent grav, bool shake)
         {
-            var gridId = grav.Owner.Transform.GridID;
-            if (gridId == GridId.Invalid)
+            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridUid;
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
                 return;
 
-            var grid = _mapManager.GetGrid(gridId);
-            var gravity = EntityManager.GetComponent<GravityComponent>(grid.GridEntityId);
+            var gravity = EntityManager.GetComponent<GravityComponent>(gridId.Value);
 
             if (grav.GravityActive)
                 _gravitySystem.EnableGravity(gravity);
@@ -197,12 +209,12 @@ namespace Content.Server.Gravity.EntitySystems
                 _gravitySystem.DisableGravity(gravity);
 
             if (shake)
-                _gravityShakeSystem.ShakeGrid(gridId, gravity);
+                _gravityShakeSystem.ShakeGrid(gridId.Value, gravity);
         }
 
         private void OnInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             ApcPowerReceiverComponent? powerReceiver = default!;
@@ -219,7 +231,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void UpdateState(GravityGeneratorComponent grav, ApcPowerReceiverComponent powerReceiver)
         {
-            var uid = grav.Owner.Uid;
+            var uid = grav.Owner;
             var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
             appearance?.SetData(GravityGeneratorVisuals.Charge, grav.Charge);
 
@@ -249,28 +261,28 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void MakeBroken(GravityGeneratorComponent component, AppearanceComponent? appearance)
         {
-            _ambientSoundSystem.SetAmbience(component.Owner.Uid, false);
+            _ambientSoundSystem.SetAmbience(component.Owner, false);
 
             appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.Broken);
         }
 
         private void MakeUnpowered(GravityGeneratorComponent component, AppearanceComponent? appearance)
         {
-            _ambientSoundSystem.SetAmbience(component.Owner.Uid, false);
+            _ambientSoundSystem.SetAmbience(component.Owner, false);
 
             appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.Unpowered);
         }
 
         private void MakeOff(GravityGeneratorComponent component, AppearanceComponent? appearance)
         {
-            _ambientSoundSystem.SetAmbience(component.Owner.Uid, false);
+            _ambientSoundSystem.SetAmbience(component.Owner, false);
 
             appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.Off);
         }
 
         private void MakeOn(GravityGeneratorComponent component, AppearanceComponent? appearance)
         {
-            _ambientSoundSystem.SetAmbience(component.Owner.Uid, true);
+            _ambientSoundSystem.SetAmbience(component.Owner, true);
 
             appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.On);
         }

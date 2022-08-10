@@ -1,7 +1,4 @@
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Access
 {
@@ -9,10 +6,10 @@ namespace Content.Shared.Access
     ///     Defines a single access level that can be stored on ID cards and checked for.
     /// </summary>
     [Prototype("accessLevel")]
-    public class AccessLevelPrototype : IPrototype
+    public sealed class AccessLevelPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>
@@ -21,7 +18,7 @@ namespace Content.Shared.Access
         [DataField("name")]
         public string Name
         {
-            get => _name ?? ID;
+            get => (_name is not null) ? _name : ID;
             private set => _name = Loc.GetString(value);
         }
 

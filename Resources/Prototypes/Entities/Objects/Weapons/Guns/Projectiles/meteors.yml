@@ -1,7 +1,7 @@
 - type: entity
   id: MeteorLarge
   name: meteor
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     noRot: false
@@ -14,28 +14,28 @@
   - type: ExplodeOnTrigger
   - type: DeleteOnTrigger
   - type: TriggerOnCollide
+    fixtureID: projectile
   - type: Projectile
     damage: {}
     deleteOnCollide: false
   - type: Explosive
-    devastationRange: 3
-    heavyImpactRange: 5
-    lightImpactRange: 7
-    flashRange: 10
+    explosionType: Default
+    totalIntensity: 600.0
+    intensitySlope: 30
+    maxIntensity: 45
   - type: Physics
     bodyType: Dynamic
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
-          radius: 0.5
+        radius: 0.8
       mass: 200
       hard: true
+      id: projectile
       # Didn't use MapGrid for now as the bounds are stuffed.
       layer:
-        - Impassable
-        - SmallImpassable
-        - VaultImpassable
+      - LargeMobLayer
       mask:
-        - Impassable
+      - Impassable
+      - BulletImpassable

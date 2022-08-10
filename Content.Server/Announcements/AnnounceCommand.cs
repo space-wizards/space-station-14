@@ -1,22 +1,20 @@
-using System;
 using Content.Server.Administration;
-using Content.Server.Chat.Managers;
+using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Audio;
 
 namespace Content.Server.Announcements
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class AnnounceCommand : IConsoleCommand
+    public sealed class AnnounceCommand : IConsoleCommand
     {
         public string Command => "announce";
         public string Description => "Send an in-game announcement.";
-        public string Help => $"{Command} <sender> <message> or {Command} <message> to send announcement as centcomm.";
+        public string Help => $"{Command} <sender> <message> or {Command} <message> to send announcement as CentCom.";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var chat = IoCManager.Resolve<IChatManager>();
+            var chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
 
             if (args.Length == 0)
             {
@@ -26,12 +24,12 @@ namespace Content.Server.Announcements
 
             if (args.Length == 1)
             {
-                chat.DispatchStationAnnouncement(args[0]);
+                chat.DispatchGlobalAnnouncement(args[0], colorOverride: Color.Gold);
             }
             else
             {
                 var message = string.Join(' ', new ArraySegment<string>(args, 1, args.Length-1));
-                chat.DispatchStationAnnouncement(message, args[0]);
+                chat.DispatchGlobalAnnouncement(message, args[0], colorOverride: Color.Gold);
             }
             shell.WriteLine("Sent!");
         }

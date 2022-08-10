@@ -1,31 +1,17 @@
-using System;
-using System.Collections.Generic;
-using Content.Server.Administration.Logs;
-using Content.Server.Alert;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Damage;
-using Content.Shared.Database;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedHungerComponent))]
     public sealed class HungerComponent : SharedHungerComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        private float _accumulatedFrameTime;
 
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
@@ -73,14 +59,10 @@ namespace Content.Server.Nutrition.Components
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {
-            { HungerThreshold.Overfed, AlertType.Overfed },
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
+            { HungerThreshold.Dead, AlertType.Starving },
         };
-
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
 
         public void HungerThresholdEffect(bool force = false)
         {
@@ -88,21 +70,19 @@ namespace Content.Server.Nutrition.Components
             {
                 // Revert slow speed if required
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
-                    Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent))
+                    _entMan.TryGetComponent(Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
-                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent);
-
                 if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
-                    alertsComponent?.ShowAlert(alertId);
+                    EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, alertId);
                 }
                 else
                 {
-                    alertsComponent?.ClearAlertCategory(AlertCategory.Hunger);
+                    EntitySystem.Get<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Hunger);
                 }
 
                 switch (_currentHungerThreshold)
@@ -126,7 +106,7 @@ namespace Content.Server.Nutrition.Components
                     case HungerThreshold.Starving:
                         // TODO: If something else bumps this could cause mega-speed.
                         // If some form of speed update system if multiple things are touching it use that.
-                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                         _lastHungerThreshold = _currentHungerThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
                         return;
@@ -183,21 +163,6 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
-            // --> Current Hunger is below dead threshold
-
-            if (!Owner.TryGetComponent(out MobStateComponent? mobState))
-                return;
-
-            if (!mobState.IsDead())
-            {
-                // --> But they are not dead yet.
-                _accumulatedFrameTime += frametime;
-                if (_accumulatedFrameTime >= 1)
-                {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * (int) _accumulatedFrameTime, true);
-                    _accumulatedFrameTime -= (int) _accumulatedFrameTime;
-                }
-            }
         }
 
         private void UpdateCurrentThreshold()
@@ -206,11 +171,6 @@ namespace Content.Server.Nutrition.Components
             // _trySound(calculatedThreshold);
             if (calculatedHungerThreshold != _currentHungerThreshold)
             {
-                if (_currentHungerThreshold == HungerThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{Owner} has stopped starving");
-                else if (calculatedHungerThreshold == HungerThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{Owner} has started starving");
-
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();
                 Dirty();

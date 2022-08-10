@@ -1,11 +1,12 @@
 ﻿using Content.Client.Eui;
 using Content.Shared.Cloning;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
 
 namespace Content.Client.Cloning.UI
 {
     [UsedImplicitly]
-    public class AcceptCloningEui : BaseEui
+    public sealed class AcceptCloningEui : BaseEui
     {
         private readonly AcceptCloningWindow _window;
 
@@ -28,6 +29,7 @@ namespace Content.Client.Cloning.UI
 
         public override void Opened()
         {
+            IoCManager.Resolve<IClyde>().RequestWindowAttention();
             _window.OpenCentered();
         }
 

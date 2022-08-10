@@ -1,0 +1,14 @@
+- type: vendingMachineInventory
+  id: CargoDrobeInventory
+  name: CargoDrobe
+  spriteName: cargodrobe
+  startingInventory:
+    AppraisalTool: 3
+    ClothingUniformJumpsuitCargo: 3
+    ClothingUniformJumpskirtCargo: 3
+    ClothingShoesColorBlack: 3
+    ClothingHandsGlovesFingerless: 3
+    ClothingHeadHatCargosoft: 3
+    ClothingHeadsetCargo: 3
+    ClothingOuterWinterCargo: 2
+    ClothingOuterWinterMiner: 2

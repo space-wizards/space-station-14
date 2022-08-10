@@ -9,12 +9,24 @@
     tags:
     - Write
     - Crayon
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key
       type: CrayonBoundUserInterface
   - type: Crayon
     capacity: 5
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: MindbreakerToxin
+          Quantity: 2
 
 - type: entity
   parent: Crayon
@@ -27,7 +39,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: white
+    heldPrefix: white
   - type: Crayon
     color: white
     capacity: 5
@@ -36,6 +48,8 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -48,7 +62,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: mime
+    heldPrefix: mime
   - type: Crayon
     color: white
     capacity: 5
@@ -57,6 +71,31 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonRainbow
+  name: rainbow crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: rainbow
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: rainbow
+  - type: Crayon
+    color: Red
+    selectableColor: true
+    capacity: 30
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -69,7 +108,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: black
+    heldPrefix: black
   - type: Crayon
     color: black
     capacity: 5
@@ -78,6 +117,8 @@
     - Write
     - Crayon
     - CrayonBlack
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -90,7 +131,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: red
+    heldPrefix: red
   - type: Crayon
     color: red
     capacity: 5
@@ -99,6 +140,8 @@
     - Write
     - Crayon
     - CrayonRed
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -111,7 +154,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: orange
+    heldPrefix: orange
   - type: Crayon
     color: orange
     capacity: 5
@@ -120,6 +163,8 @@
     - Write
     - Crayon
     - CrayonOrange
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -132,7 +177,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: yellow
+    heldPrefix: yellow
   - type: Crayon
     color: yellow
     capacity: 5
@@ -141,6 +186,8 @@
     - Write
     - Crayon
     - CrayonYellow
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -153,7 +200,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: green
+    heldPrefix: green
   - type: Crayon
     color: green
     capacity: 5
@@ -162,6 +209,8 @@
     - Write
     - Crayon
     - CrayonGreen
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -174,7 +223,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: Crayon
     color: lightblue
     capacity: 5
@@ -183,6 +232,8 @@
     - Write
     - Crayon
     - CrayonBlue
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -195,7 +246,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: purple
+    heldPrefix: purple
   - type: Crayon
     color: purple
     capacity: 5
@@ -204,9 +255,11 @@
     - Write
     - Crayon
     - CrayonPurple
+    - Recyclable
+    - Trash
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: CrayonBox
   name: crayon box
   description: "It's a box of crayons."
@@ -219,8 +272,8 @@
     capacity: 7
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: 9999
-    HeldPrefix: box
+    size: 7
+    heldPrefix: box
   - type: StorageFill
     contents:
     - id: CrayonRed
@@ -260,7 +313,4 @@
         whitelist:
           tags:
           - CrayonYellow
-
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer

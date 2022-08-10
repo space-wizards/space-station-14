@@ -4,6 +4,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Administration.UI.CustomControls
 {
+    [Virtual]
     public class CommandButton : Button
     {
         public string? Command { get; set; }

@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.Pinpointer
 {
@@ -44,7 +41,7 @@ namespace Content.Shared.Pinpointer
                 return;
 
             pinpointer.DistanceToTarget = distance;
-            pinpointer.Dirty();
+            Dirty(pinpointer);
         }
 
         /// <summary>
@@ -59,7 +56,7 @@ namespace Content.Shared.Pinpointer
                 return;
 
             pinpointer.DirectionToTarget = directionToTarget;
-            pinpointer.Dirty();
+            Dirty(pinpointer);
         }
 
         /// <summary>
@@ -79,7 +76,7 @@ namespace Content.Shared.Pinpointer
                 ActivePinpointers.Remove(uid);
 
             pinpointer.IsActive = isActive;
-            pinpointer.Dirty();
+            Dirty(pinpointer);
         }
 
 

@@ -19,6 +19,7 @@
     sprite: Clothing/Neck/Misc/stethoscope.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/stethoscope.rsi
+  - type: Stethoscope
 
 - type: entity
   parent: ClothingNeckBase
@@ -30,3 +31,14 @@
     sprite: Clothing/Neck/Misc/bling.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/bling.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckLawyerbadge
+  name: lawyer badge
+  description: A badge to show that the owner is a 'legitimate' lawyer who passed the NT bar exam required to practice law.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/lawyerbadge.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/lawyerbadge.rsi

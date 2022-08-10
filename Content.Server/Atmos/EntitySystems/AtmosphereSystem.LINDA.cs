@@ -3,7 +3,7 @@ using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         private void ProcessCell(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int fireCount)
         {
@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     shouldShareAir = true;
-                } else if (tile.Air!.Compare(enemyTile.Air!) != GasMixture.GasCompareResult.NoExchange)
+                } else if (CompareExchange(tile.Air, enemyTile.Air) != GasCompareResult.NoExchange)
                 {
                     if (!enemyTile.Excited)
                     {
@@ -78,17 +78,18 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (shouldShareAir)
                 {
-                    var difference = Share(tile.Air!, enemyTile.Air!, adjacentTileLength);
+                    var difference = Share(tile, enemyTile, adjacentTileLength);
 
-                    if (SpaceWind)
+                    // Monstermos already handles this, so let's not handle it ourselves.
+                    if (!MonstermosEqualization)
                     {
-                        if (difference > 0)
+                        if (difference >= 0)
                         {
-                            ConsiderPressureDifference(gridAtmosphere, tile, enemyTile, difference);
+                            ConsiderPressureDifference(gridAtmosphere, tile, direction, difference);
                         }
                         else
                         {
-                            ConsiderPressureDifference(gridAtmosphere, enemyTile, tile, -difference);
+                            ConsiderPressureDifference(gridAtmosphere, enemyTile, direction.GetOpposite(), -difference);
                         }
                     }
 
@@ -113,9 +114,17 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void Archive(TileAtmosphere tile, int fireCount)
         {
-            tile.Air?.Archive();
+            if (tile.Air != null)
+            {
+                tile.Air.Moles.AsSpan().CopyTo(tile.MolesArchived.AsSpan());
+                tile.TemperatureArchived = tile.Air.Temperature;
+            }
+            else
+            {
+                tile.TemperatureArchived = tile.Temperature;
+            }
+
             tile.ArchivedCycle = fireCount;
-            tile.TemperatureArchived = tile.Temperature;
         }
 
         private void LastShareCheck(TileAtmosphere tile)
@@ -123,7 +132,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Air == null || tile.ExcitedGroup == null)
                 return;
 
-            switch (tile.Air.LastShare)
+            switch (tile.LastShare)
             {
                 case > Atmospherics.MinimumAirToSuspend:
                     ExcitedGroupResetCooldowns(tile.ExcitedGroup);
@@ -132,6 +141,194 @@ namespace Content.Server.Atmos.EntitySystems
                     tile.ExcitedGroup.DismantleCooldown = 0;
                     break;
             }
+        }
+
+        /// <summary>
+        ///     Makes a tile become active and start processing. Does NOT check if the tile belongs to the grid atmos.
+        /// </summary>
+        /// <param name="gridAtmosphere">Grid Atmosphere where to get the tile.</param>
+        /// <param name="tile">Tile Atmosphere to be activated.</param>
+        private void AddActiveTile(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
+        {
+            if (tile.Air == null)
+                return;
+
+            tile.Excited = true;
+            gridAtmosphere.ActiveTiles.Add(tile);
+        }
+
+        /// <summary>
+        ///     Makes a tile become inactive and stop processing.
+        /// </summary>
+        /// <param name="gridAtmosphere">Grid Atmosphere where to get the tile.</param>
+        /// <param name="tile">Tile Atmosphere to be deactivated.</param>
+        /// <param name="disposeExcitedGroup">Whether to dispose of the tile's <see cref="ExcitedGroup"/></param>
+        private void RemoveActiveTile(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, bool disposeExcitedGroup = true)
+        {
+            tile.Excited = false;
+            gridAtmosphere.ActiveTiles.Remove(tile);
+
+            if (tile.ExcitedGroup == null)
+                return;
+
+            if (disposeExcitedGroup)
+                ExcitedGroupDispose(gridAtmosphere, tile.ExcitedGroup);
+            else
+                ExcitedGroupRemoveTile(tile.ExcitedGroup, tile);
+        }
+
+        /// <summary>
+        ///     Calculates the heat capacity for a gas mixture, using the archived values.
+        /// </summary>
+        public float GetHeatCapacityArchived(TileAtmosphere tile)
+        {
+            if (tile.Air == null)
+                return tile.HeatCapacity;
+
+            // Moles archived is not null if air is not null.
+            return GetHeatCapacityCalculation(tile.MolesArchived!, tile.Space);
+        }
+
+        /// <summary>
+        ///     Shares gas between two tiles. Part of LINDA.
+        /// </summary>
+        public float Share(TileAtmosphere tileReceiver, TileAtmosphere tileSharer, int atmosAdjacentTurfs)
+        {
+            if (tileReceiver.Air is not {} receiver || tileSharer.Air is not {} sharer)
+                return 0f;
+
+            var temperatureDelta = tileReceiver.TemperatureArchived - tileSharer.TemperatureArchived;
+            var absTemperatureDelta = Math.Abs(temperatureDelta);
+            var oldHeatCapacity = 0f;
+            var oldSharerHeatCapacity = 0f;
+
+            if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
+            {
+                oldHeatCapacity = GetHeatCapacity(receiver);
+                oldSharerHeatCapacity = GetHeatCapacity(sharer);
+            }
+
+            var heatCapacityToSharer = 0f;
+            var heatCapacitySharerToThis = 0f;
+            var movedMoles = 0f;
+            var absMovedMoles = 0f;
+
+            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                var thisValue = receiver.Moles[i];
+                var sharerValue = sharer.Moles[i];
+                var delta = (thisValue - sharerValue) / (atmosAdjacentTurfs + 1);
+                if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
+                if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
+                {
+                    var gasHeatCapacity = delta * GasSpecificHeats[i];
+                    if (delta > 0)
+                    {
+                        heatCapacityToSharer += gasHeatCapacity;
+                    }
+                    else
+                    {
+                        heatCapacitySharerToThis -= gasHeatCapacity;
+                    }
+                }
+
+                if (!receiver.Immutable) receiver.Moles[i] -= delta;
+                if (!sharer.Immutable) sharer.Moles[i] += delta;
+                movedMoles += delta;
+                absMovedMoles += MathF.Abs(delta);
+            }
+
+            tileReceiver.LastShare = absMovedMoles;
+
+            if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
+            {
+                var newHeatCapacity = oldHeatCapacity + heatCapacitySharerToThis - heatCapacityToSharer;
+                var newSharerHeatCapacity = oldSharerHeatCapacity + heatCapacityToSharer - heatCapacitySharerToThis;
+
+                // Transfer of thermal energy (via changed heat capacity) between self and sharer.
+                if (!receiver.Immutable && newHeatCapacity > Atmospherics.MinimumHeatCapacity)
+                {
+                    receiver.Temperature = ((oldHeatCapacity * receiver.Temperature) - (heatCapacityToSharer * tileReceiver.TemperatureArchived) + (heatCapacitySharerToThis * tileSharer.TemperatureArchived)) / newHeatCapacity;
+                }
+
+                if (!sharer.Immutable && newSharerHeatCapacity > Atmospherics.MinimumHeatCapacity)
+                {
+                    sharer.Temperature = ((oldSharerHeatCapacity * sharer.Temperature) - (heatCapacitySharerToThis * tileSharer.TemperatureArchived) + (heatCapacityToSharer * tileReceiver.TemperatureArchived)) / newSharerHeatCapacity;
+                }
+
+                // Thermal energy of the system (self and sharer) is unchanged.
+
+                if (MathF.Abs(oldSharerHeatCapacity) > Atmospherics.MinimumHeatCapacity)
+                {
+                    if (MathF.Abs(newSharerHeatCapacity / oldSharerHeatCapacity - 1) < 0.1)
+                    {
+                        TemperatureShare(tileReceiver, tileSharer, Atmospherics.OpenHeatTransferCoefficient);
+                    }
+                }
+            }
+
+            if (!(temperatureDelta > Atmospherics.MinimumTemperatureToMove) &&
+                !(MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove)) return 0f;
+            var moles = receiver.TotalMoles;
+            var theirMoles = sharer.TotalMoles;
+
+            return (tileReceiver.TemperatureArchived * (moles + movedMoles)) - (tileSharer.TemperatureArchived * (theirMoles - movedMoles)) * Atmospherics.R / receiver.Volume;
+        }
+
+        /// <summary>
+        ///     Shares temperature between two mixtures, taking a conduction coefficient into account.
+        /// </summary>
+        public float TemperatureShare(TileAtmosphere tileReceiver, TileAtmosphere tileSharer, float conductionCoefficient)
+        {
+            if (tileReceiver.Air is not { } receiver || tileSharer.Air is not { } sharer)
+                return 0f;
+
+            var temperatureDelta = tileReceiver.TemperatureArchived - tileSharer.TemperatureArchived;
+            if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
+            {
+                var heatCapacity = GetHeatCapacityArchived(tileReceiver);
+                var sharerHeatCapacity = GetHeatCapacityArchived(tileSharer);
+
+                if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
+                {
+                    var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
+
+                    if (!receiver.Immutable)
+                        receiver.Temperature = MathF.Abs(MathF.Max(receiver.Temperature - heat / heatCapacity, Atmospherics.TCMB));
+
+                    if (!sharer.Immutable)
+                        sharer.Temperature = MathF.Abs(MathF.Max(sharer.Temperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
+                }
+            }
+
+            return sharer.Temperature;
+        }
+
+        /// <summary>
+        ///     Shares temperature between a gas mixture and an abstract sharer, taking a conduction coefficient into account.
+        /// </summary>
+        public float TemperatureShare(TileAtmosphere tileReceiver, float conductionCoefficient, float sharerTemperature, float sharerHeatCapacity)
+        {
+            if (tileReceiver.Air is not {} receiver)
+                return 0;
+
+            var temperatureDelta = tileReceiver.TemperatureArchived - sharerTemperature;
+            if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
+            {
+                var heatCapacity = GetHeatCapacityArchived(tileReceiver);
+
+                if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
+                {
+                    var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
+
+                    if (!receiver.Immutable)
+                        receiver.Temperature = MathF.Abs(MathF.Max(receiver.Temperature - heat / heatCapacity, Atmospherics.TCMB));
+
+                    sharerTemperature = MathF.Abs(MathF.Max(sharerTemperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
+                }
+            }
+
+            return sharerTemperature;
         }
     }
 }

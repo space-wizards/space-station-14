@@ -2,7 +2,6 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
 {
@@ -12,8 +11,8 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || target.Deleted || !target.TryGetComponent<FoodComponent>(out var foodComp) ||
-                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target.Uid, foodComp.SolutionName, out var food))
+            if (target == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent<FoodComponent?>(target.Value, out var foodComp)
+                               || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target.Value, foodComp.SolutionName, out var food))
             {
                 return 0.0f;
             }

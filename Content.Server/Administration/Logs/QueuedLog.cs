@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using Content.Server.Database;
-using JetBrains.Annotations;
+﻿using Content.Server.Database;
 
 namespace Content.Server.Administration.Logs;
 
 public readonly struct QueuedLog
 {
-    public QueuedLog(AdminLog log, List<(int id, string? name)> entities)
+    public QueuedLog(AdminLog log, Dictionary<int, string?> entities)
     {
         Log = log;
         Entities = entities;
@@ -14,9 +12,9 @@ public readonly struct QueuedLog
 
     public AdminLog Log { get; }
 
-    public List<(int id, string? name)> Entities { get; }
+    public Dictionary<int, string?> Entities { get; }
 
-    public void Deconstruct(out AdminLog log, out List<(int id, string? name)> entities)
+    public void Deconstruct(out AdminLog log, out Dictionary<int, string?> entities)
     {
         log = Log;
         entities = Entities;

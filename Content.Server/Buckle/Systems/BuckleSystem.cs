@@ -1,13 +1,14 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
+using Content.Server.Storage.Components;
 using Content.Shared.Buckle;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Buckle.Systems
 {
@@ -21,30 +22,32 @@ namespace Content.Server.Buckle.Systems
             UpdatesAfter.Add(typeof(InteractionSystem));
             UpdatesAfter.Add(typeof(InputSystem));
 
-            SubscribeLocalEvent<BuckleComponent, MoveEvent>(MoveEvent);
-
-            SubscribeLocalEvent<StrapComponent, RotateEvent>(RotateEvent);
-
-            SubscribeLocalEvent<BuckleComponent, EntInsertedIntoContainerMessage>(ContainerModifiedBuckle);
+            SubscribeLocalEvent<StrapComponent, ComponentGetState>(OnStrapGetState);
             SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(ContainerModifiedStrap);
-
-            SubscribeLocalEvent<BuckleComponent, EntRemovedFromContainerMessage>(ContainerModifiedBuckle);
             SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(ContainerModifiedStrap);
 
+            SubscribeLocalEvent<BuckleComponent, MoveEvent>(MoveEvent);
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
-
-            SubscribeLocalEvent<BuckleComponent, GetInteractionVerbsEvent>(AddUnbuckleVerb);
+            SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
+            SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         }
 
-        private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetInteractionVerbsEvent args)
+        private void OnStrapGetState(EntityUid uid, StrapComponent component, ref ComponentGetState args)
+        {
+            args.State = new StrapComponentState(component.Position, component.BuckleOffset, component.BuckledEntities, component.MaxBuckleDistance);
+        }
+
+        private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !component.Buckled)
                 return;
-            
-            Verb verb = new();
-            verb.Act = () => component.TryUnbuckle(args.User);
-            verb.Text = Loc.GetString("verb-categories-unbuckle");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";
+
+            InteractionVerb verb = new()
+            {
+                Act = () => component.TryUnbuckle(args.User),
+                Text = Loc.GetString("verb-categories-unbuckle"),
+                IconTexture = "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png"
+            };
 
             if (args.Target == args.User && args.Using == null)
             {
@@ -61,14 +64,6 @@ namespace Content.Server.Buckle.Systems
             args.Handled = component.TryUnbuckle(args.User);
         }
 
-        public override void Update(float frameTime)
-        {
-            foreach (var (buckle, physics) in EntityManager.EntityQuery<BuckleComponent, PhysicsComponent>())
-            {
-                buckle.Update(physics);
-            }
-        }
-
         private void MoveEvent(EntityUid uid, BuckleComponent buckle, ref MoveEvent ev)
         {
             var strap = buckle.BuckledTo;
@@ -78,9 +73,9 @@ namespace Content.Server.Buckle.Systems
                 return;
             }
 
-            var strapPosition = strap.Owner.Transform.Coordinates.Offset(buckle.BuckleOffset);
+            var strapPosition = EntityManager.GetComponent<TransformComponent>(strap.Owner).Coordinates.Offset(buckle.BuckleOffset);
 
-            if (ev.NewPosition.InRange(EntityManager, strapPosition, 0.2f))
+            if (ev.NewPosition.InRange(EntityManager, strapPosition, strap.MaxBuckleDistance))
             {
                 return;
             }
@@ -88,30 +83,11 @@ namespace Content.Server.Buckle.Systems
             buckle.TryUnbuckle(buckle.Owner, true);
         }
 
-        private void RotateEvent(EntityUid uid, StrapComponent strap, ref RotateEvent ev)
-        {
-            // On rotation of a strap, reattach all buckled entities.
-            // This fixes buckle offsets and draw depths.
-            foreach (var buckledEntity in strap.BuckledEntities)
-            {
-                if (!buckledEntity.TryGetComponent(out BuckleComponent? buckled))
-                {
-                    continue;
-                }
-                buckled.ReAttach(strap);
-                buckled.Dirty();
-            }
-        }
-
-        private void ContainerModifiedBuckle(EntityUid uid, BuckleComponent buckle, ContainerModifiedMessage message)
-        {
-            ContainerModifiedReAttach(buckle, buckle.BuckledTo);
-        }
         private void ContainerModifiedStrap(EntityUid uid, StrapComponent strap, ContainerModifiedMessage message)
         {
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                if (!buckledEntity.TryGetComponent(out BuckleComponent? buckled))
+                if (!EntityManager.TryGetComponent(buckledEntity, out BuckleComponent? buckled))
                 {
                     continue;
                 }
@@ -140,6 +116,12 @@ namespace Content.Server.Buckle.Systems
             {
                 buckle.ReAttach(strap);
             }
+        }
+
+        public void OnEntityStorageInsertAttempt(EntityUid uid, BuckleComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        {
+            if (comp.Buckled)
+                args.Cancel();
         }
     }
 }

@@ -58,13 +58,17 @@
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 100
+  - type: Tag
+    tags:
+      - Spray
+      - DroneUsable #They don't have any other chem stuff on their whitelist so they can't refill it
 
 # Vapor
 
 - type: entity
   id: Vapor
   name: "vapor"
-  abstract: true
+  noSpawn: true
   components:
   - type: SolutionContainerManager
     solutions:
@@ -88,10 +92,8 @@
         bounds: "-0.25,-0.25,0.25,0.25"
       hard: false
       mask:
+      - FullTileMask
       - Opaque
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
   - type: Appearance
     visuals:
     - type: VaporVisualizer

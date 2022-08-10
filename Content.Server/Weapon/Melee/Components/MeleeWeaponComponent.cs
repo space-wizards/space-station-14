@@ -1,20 +1,19 @@
-using System;
 using Content.Shared.Damage;
-using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Weapon.Melee.Components
 {
     [RegisterComponent]
-    public class MeleeWeaponComponent : Component
+    public sealed class MeleeWeaponComponent : Component
     {
-        public override string Name => "MeleeWeapon";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
-        public SoundSpecifier HitSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/genhit1.ogg");
+        public SoundSpecifier? HitSound;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("noDamageSound")]
+        public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]
@@ -34,7 +33,7 @@ namespace Content.Server.Weapon.Melee.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("arc")]
-        public string Arc { get; set; } = "default";
+        public string? Arc { get; set; } = "default";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("arcwidth")]
@@ -54,5 +53,9 @@ namespace Content.Server.Weapon.Melee.Components
         [DataField("damage", required:true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
+
+        [DataField("bluntStaminaDamageFactor")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
     }
 }

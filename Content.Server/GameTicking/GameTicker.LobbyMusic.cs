@@ -1,11 +1,10 @@
-using Content.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         private const string LobbyMusicCollection = "LobbyMusic";
 

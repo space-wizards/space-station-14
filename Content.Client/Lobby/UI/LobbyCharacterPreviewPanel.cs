@@ -2,10 +2,13 @@ using System.Linq;
 using Content.Client.HUD.UI;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
+using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,25 +18,26 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
 {
-    public class LobbyCharacterPreviewPanel : Control
+    public sealed class LobbyCharacterPreviewPanel : Control
     {
-        private readonly IClientPreferencesManager _preferencesManager;
-        private IEntity _previewDummy;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+
+        private EntityUid? _previewDummy;
         private readonly Label _summaryLabel;
         private readonly BoxContainer _loaded;
+        private readonly BoxContainer _viewBox;
         private readonly Label _unloaded;
 
-        public LobbyCharacterPreviewPanel(IEntityManager entityManager,
-            IClientPreferencesManager preferencesManager)
+        public LobbyCharacterPreviewPanel()
         {
-            _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
-
+            IoCManager.InjectDependencies(this);
             var header = new NanoHeading
             {
                 Text = Loc.GetString("lobby-character-preview-panel-header")
@@ -47,40 +51,29 @@ namespace Content.Client.Lobby.UI
 
             _summaryLabel = new Label();
 
-            var viewSouth = MakeSpriteView(_previewDummy, Direction.South);
-            var viewNorth = MakeSpriteView(_previewDummy, Direction.North);
-            var viewWest = MakeSpriteView(_previewDummy, Direction.West);
-            var viewEast = MakeSpriteView(_previewDummy, Direction.East);
-
             var vBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical
             };
-
-            vBox.AddChild(header);
-
-            _unloaded = new Label {Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label")};
+            _unloaded = new Label { Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label") };
 
             _loaded = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
                 Visible = false
             };
-
-            _loaded.AddChild(CharacterSetupButton);
-            _loaded.AddChild(_summaryLabel);
-
-            var hBox = new BoxContainer
+            _viewBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal
             };
-            hBox.AddChild(viewSouth);
-            hBox.AddChild(viewNorth);
-            hBox.AddChild(viewWest);
-            hBox.AddChild(viewEast);
+            var _vSpacer = new VSpacer();
 
-            _loaded.AddChild(hBox);
+            _loaded.AddChild(_summaryLabel);
+            _loaded.AddChild(_viewBox);
+            _loaded.AddChild(_vSpacer);
+            _loaded.AddChild(CharacterSetupButton);
 
+            vBox.AddChild(header);
             vBox.AddChild(_loaded);
             vBox.AddChild(_unloaded);
             AddChild(vBox);
@@ -98,15 +91,15 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            _previewDummy.Delete();
-            _previewDummy = null!;
+            if (_previewDummy != null) _entityManager.DeleteEntity(_previewDummy.Value);
+            _previewDummy = default;
         }
 
-        private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
+        private SpriteView MakeSpriteView(EntityUid entity, Direction direction)
         {
             return new()
             {
-                Sprite = entity.GetComponent<ISpriteComponent>(),
+                Sprite = _entityManager.GetComponent<ISpriteComponent>(entity),
                 OverrideDirection = direction,
                 Scale = (2, 2)
             };
@@ -129,38 +122,50 @@ namespace Content.Client.Lobby.UI
                 }
                 else
                 {
+                    _previewDummy = _entityManager.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(selectedCharacter.Species).DollPrototype, MapCoordinates.Nullspace);
+                    var viewSouth = MakeSpriteView(_previewDummy.Value, Direction.South);
+                    var viewNorth = MakeSpriteView(_previewDummy.Value, Direction.North);
+                    var viewWest = MakeSpriteView(_previewDummy.Value, Direction.West);
+                    var viewEast = MakeSpriteView(_previewDummy.Value, Direction.East);
+                    _viewBox.DisposeAllChildren();
+                    _viewBox.AddChild(viewSouth);
+                    _viewBox.AddChild(viewNorth);
+                    _viewBox.AddChild(viewWest);
+                    _viewBox.AddChild(viewEast);
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, selectedCharacter);
-                    GiveDummyJobClothes(_previewDummy, selectedCharacter);
+                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Value, selectedCharacter);
+                    GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
                 }
             }
         }
 
-        public static void GiveDummyJobClothes(IEntity dummy, HumanoidCharacterProfile profile)
+        public static void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
-            var inventory = dummy.GetComponent<ClientInventoryComponent>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var invSystem = EntitySystem.Get<ClientInventorySystem>();
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
+            // ReSharper disable once ConstantNullCoalescingCondition
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
 
-            inventory.ClearAllSlotVisuals();
-
-            if (job.StartingGear != null)
+            if (job.StartingGear != null && invSystem.TryGetSlots(dummy, out var slots))
             {
-                var entityMan = IoCManager.Resolve<IEntityManager>();
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
-                foreach (var slot in AllSlots)
+                foreach (var slot in slots)
                 {
-                    var itemType = gear.GetGear(slot, profile);
+                    var itemType = gear.GetGear(slot.Name, profile);
+                    if (invSystem.TryUnequip(dummy, slot.Name, out var unequippedItem, true, true))
+                    {
+                        entMan.DeleteEntity(unequippedItem.Value);
+                    }
+
                     if (itemType != string.Empty)
                     {
-                        var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                        inventory.SetSlotVisuals(slot, item);
-                        item.Delete();
+                        var item = entMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                        invSystem.TryEquip(dummy, item, slot.Name, true, true);
                     }
                 }
             }

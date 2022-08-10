@@ -1,5 +1,3 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Labels
@@ -24,7 +22,7 @@ namespace Content.Shared.Labels
     /// Represents a <see cref="HandLabelerComponent"/> state that can be sent to the client
     /// </summary>
     [Serializable, NetSerializable]
-    public class HandLabelerBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class HandLabelerBoundUserInterfaceState : BoundUserInterfaceState
     {
         public string CurrentLabel { get; }
 
@@ -35,7 +33,7 @@ namespace Content.Shared.Labels
     }
 
     [Serializable, NetSerializable]
-    public class HandLabelerLabelChangedMessage : BoundUserInterfaceMessage
+    public sealed class HandLabelerLabelChangedMessage : BoundUserInterfaceMessage
     {
         public string Label { get; }
 

@@ -4,6 +4,8 @@
   description: A deployable barrier. Swipe your ID card to lock/unlock it.
   parent: BaseStructure
   components:
+  - type: Transform
+    noRot: true
   - type: Sprite
     sprite: Objects/Specific/Security/barrier.rsi
     netsync: false
@@ -14,15 +16,12 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-          radius: 0.45
-      layer:
-      - Opaque
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      mask:
-      - Impassable
+        radius: 0.45
       mass: 150
+      mask:
+      - MachineMask
+      layer:
+      - WallLayer
   - type: AccessReader
     access: [["Security"]]
   - type: Lock

@@ -4,7 +4,6 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.Considerations.Containers
 {
@@ -16,15 +15,16 @@ namespace Content.Server.AI.Utility.Considerations.Containers
     {
         protected override float GetScore(Blackboard context)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var target = context.GetState<TargetEntityState>().GetValue();
-            if (target == null)
+            if (!entMan.EntityExists(target))
             {
                 return 0.0f;
             }
 
-            if (target.TryGetContainer(out var container))
+            if (target!.Value.TryGetContainer(out var container))
             {
-                if (container.Owner.TryGetComponent(out EntityStorageComponent? storageComponent))
+                if (entMan.TryGetComponent(container.Owner, out EntityStorageComponent? storageComponent))
                 {
                     if (storageComponent.IsWeldedShut && !storageComponent.Open)
                     {
@@ -41,12 +41,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
 
             var owner = context.GetState<SelfState>().GetValue();
 
-            if (owner == null)
-            {
-                return 0;
-            }
-
-            return EntitySystem.Get<AiReachableSystem>().CanAccess(owner, target, SharedInteractionSystem.InteractionRange) ? 1.0f : 0.0f;
+            return EntitySystem.Get<AiReachableSystem>().CanAccess(owner, target.Value, SharedInteractionSystem.InteractionRange) ? 1.0f : 0.0f;
         }
     }
 }

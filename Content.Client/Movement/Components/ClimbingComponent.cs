@@ -1,23 +1,9 @@
-﻿using Content.Shared.Climbing;
-using Robust.Shared.GameObjects;
+﻿using Content.Client.Movement.Systems;
+using Content.Shared.Climbing;
 
-namespace Content.Client.Movement.Components
-{
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedClimbingComponent))]
-    public class ClimbingComponent : SharedClimbingComponent
-    {
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
+namespace Content.Client.Movement.Components;
 
-            if (curState is not ClimbModeComponentState climbModeState)
-            {
-                return;
-            }
-
-            IsClimbing = climbModeState.Climbing;
-            OwnerIsTransitioning = climbModeState.IsTransitioning;
-        }
-    }
-}
+[RegisterComponent]
+[Access(typeof(ClimbSystem))]
+[ComponentReference(typeof(SharedClimbingComponent))]
+public sealed class ClimbingComponent : SharedClimbingComponent { }

@@ -6,44 +6,60 @@ using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Traitor.Uplink.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddUplinkCommand : IConsoleCommand
+    public sealed class AddUplinkCommand : IConsoleCommand
     {
         public string Command => "adduplink";
 
-        public string Description => "Creates uplink on selected item and link it to users account";
+        public string Description => Loc.GetString("add-uplink-command-description");
 
-        public string Help => "Usage: adduplink <username> <item-id>";
+        public string Help => Loc.GetString("add-uplink-command-help");
+
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            return args.Length switch
+            {
+                1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("add-uplink-command-completion-1")),
+                2 => CompletionResult.FromHint(Loc.GetString("add-uplink-command-completion-2")),
+                _ => CompletionResult.Empty
+            };
+        }
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length < 1)
+            if (args.Length > 2)
             {
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
-            // Get player entity
-            if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(args[0], out var session))
+            IPlayerSession? session;
+            if (args.Length > 0)
             {
-                shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
+                // Get player entity
+                if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(args[0], out session))
+                {
+                    shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
+                    return;
+                }
+            }
+            else
+            {
+                session = (IPlayerSession?) shell.Player;
+            }
+
+            if (session?.AttachedEntity is not { } user)
+            {
+                shell.WriteLine(Loc.GetString("add-uplink-command-error-1"));
                 return;
             }
-            if (session.AttachedEntity == null)
-            {
-                shell.WriteLine(Loc.GetString("Selected player doesn't controll any entity"));
-                return;
-            }
-            var user = session.AttachedEntity;
 
             // Get target item
-            IEntity? uplinkEntity = null;
+            EntityUid? uplinkEntity = null;
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (args.Length >= 2)
             {
@@ -60,7 +76,7 @@ namespace Content.Server.Traitor.Uplink.Commands
                     return;
                 }
 
-                uplinkEntity = entityManager.GetEntity(eUid);
+                uplinkEntity = eUid;
             }
 
             // Get TC count
@@ -68,15 +84,15 @@ namespace Content.Server.Traitor.Uplink.Commands
             var tcCount = configManager.GetCVar(CCVars.TraitorStartingBalance);
 
             // Get account
-            var uplinkAccount = new UplinkAccount(tcCount, user.Uid);
+            var uplinkAccount = new UplinkAccount(tcCount, user);
             var accounts = entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
             accounts.AddNewAccount(uplinkAccount);
 
             // Finally add uplink
             if (!entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .AddUplink(user, uplinkAccount!, uplinkEntity))
+                .AddUplink(user, uplinkAccount, uplinkEntity))
             {
-                shell.WriteLine(Loc.GetString("Failed to add uplink to the player"));
+                shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
                 return;
             }
         }

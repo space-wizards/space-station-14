@@ -1,13 +1,8 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.AME.Components
 {
     [RegisterComponent]
-    public class AMEFuelContainerComponent : Component
+    public sealed class AMEFuelContainerComponent : Component
     {
-        public override string Name => "AMEFuelContainer";
-
         private int _fuelAmount;
         private int _maxFuelAmount;
 

@@ -1,15 +1,13 @@
-using Robust.Shared.GameObjects;
+using Content.Shared.Roles;
 using Robust.Shared.Serialization;
-using System;
 
 namespace Content.Shared.Traitor.Uplink
 {
     [Serializable, NetSerializable]
-    public class UplinkAccountData
+    public sealed class UplinkAccountData
     {
         public EntityUid? DataAccountHolder;
         public int DataBalance;
-
         public UplinkAccountData(EntityUid? dataAccountHolder, int dataBalance)
         {
             DataAccountHolder = dataAccountHolder;

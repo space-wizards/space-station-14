@@ -44,6 +44,9 @@
       "name": "clown"
     },
     {
+      "name": "corgi"
+    },
+    {
       "name": "crab"
     },
     {
@@ -151,6 +154,9 @@
       "name": "sausage"
     },
     {
+      "name": "slime"
+    },
+    {
       "name": "spider"
     },
     {
@@ -164,6 +170,12 @@
     },
     {
       "name": "xeno"
+    },
+	{
+      "name": "dragon"
+    },
+	{
+      "name": "dragon_veins"
     }
   ]
 }

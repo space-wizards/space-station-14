@@ -1,4 +1,3 @@
-﻿using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -7,10 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -96,20 +92,18 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private AtmosDebugOverlayData ConvertTileToData(TileAtmosphere? tile)
+        private AtmosDebugOverlayData ConvertTileToData(TileAtmosphere? tile, bool mapIsSpace)
         {
-            var gases = new float[Atmospherics.TotalNumberOfGases];
+            var gases = new float[Atmospherics.AdjustedNumberOfGases];
+
             if (tile?.Air == null)
             {
-                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid, false, tile?.BlockedAirflow ?? AtmosDirection.Invalid);
+                return new AtmosDebugOverlayData(Atmospherics.TCMB, gases, AtmosDirection.Invalid, tile?.LastPressureDirection ?? AtmosDirection.Invalid, 0, tile?.BlockedAirflow ?? AtmosDirection.Invalid, tile?.Space ?? mapIsSpace);
             }
             else
             {
-                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-                {
-                    gases[i] = tile.Air.GetMoles(i);
-                }
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.ExcitedGroup != null, tile.BlockedAirflow);
+                NumericsHelpers.Add(gases, tile.Air.Moles);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.LastPressureDirection, tile.ExcitedGroup?.GetHashCode() ?? 0, tile.BlockedAirflow, tile.Space);
             }
         }
 
@@ -131,20 +125,28 @@ namespace Content.Server.Atmos.EntitySystems
             // Afterwards we reset all the chunk data for the next time we tick.
             foreach (var session in _playerObservers)
             {
-                if (session.AttachedEntity == null) continue;
+                if (session.AttachedEntity is not {Valid: true} entity)
+                    continue;
 
-                var entity = session.AttachedEntity;
+                var transform = EntityManager.GetComponent<TransformComponent>(entity);
+                var mapUid = transform.MapUid;
 
-                var worldBounds = Box2.CenteredAround(entity.Transform.WorldPosition,
+                var mapIsSpace = _atmosphereSystem.IsTileSpace(null, mapUid, Vector2i.Zero);
+
+                var worldBounds = Box2.CenteredAround(transform.WorldPosition,
                     new Vector2(LocalViewRange, LocalViewRange));
 
-                foreach (var grid in _mapManager.FindGridsIntersecting(entity.Transform.MapID, worldBounds))
+                foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
                 {
-                    if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
+                    var uid = grid.GridEntityId;
 
-                    if (!gridEnt.TryGetComponent<GridAtmosphereComponent>(out var gam)) continue;
+                    if (!Exists(uid))
+                        continue;
 
-                    var entityTile = grid.GetTileRef(entity.Transform.Coordinates).GridIndices;
+                    if (!TryComp(uid, out GridAtmosphereComponent? gridAtmos))
+                        continue;
+
+                    var entityTile = grid.GetTileRef(transform.Coordinates).GridIndices;
                     var baseTile = new Vector2i(entityTile.X - (LocalViewRange / 2), entityTile.Y - (LocalViewRange / 2));
                     var debugOverlayContent = new AtmosDebugOverlayData[LocalViewRange * LocalViewRange];
 
@@ -153,12 +155,12 @@ namespace Content.Server.Atmos.EntitySystems
                     {
                         for (var x = 0; x < LocalViewRange; x++)
                         {
-                            var Vector2i = new Vector2i(baseTile.X + x, baseTile.Y + y);
-                            debugOverlayContent[index++] = ConvertTileToData(_atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, gam, Vector2i));
+                            var vector = new Vector2i(baseTile.X + x, baseTile.Y + y);
+                            debugOverlayContent[index++] = ConvertTileToData(gridAtmos.Tiles.TryGetValue(vector, out var tile) ? tile : null, mapIsSpace);
                         }
                     }
 
-                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(grid.Index, baseTile, debugOverlayContent), session.ConnectedClient);
+                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(grid.GridEntityId, baseTile, debugOverlayContent), session.ConnectedClient);
                 }
             }
         }

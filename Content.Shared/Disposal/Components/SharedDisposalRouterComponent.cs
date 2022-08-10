@@ -1,18 +1,14 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Robust.Shared.GameObjects;
+﻿using System.Text.RegularExpressions;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components
 {
-    public class SharedDisposalRouterComponent : Component
+    public sealed class SharedDisposalRouterComponent : Component
     {
-        public override string Name => "DisposalRouter";
-
         public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]
-        public class DisposalRouterUserInterfaceState : BoundUserInterfaceState
+        public sealed class DisposalRouterUserInterfaceState : BoundUserInterfaceState
         {
             public readonly string Tags;
 
@@ -23,7 +19,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public class UiActionMessage : BoundUserInterfaceMessage
+        public sealed class UiActionMessage : BoundUserInterfaceMessage
         {
             public readonly UiAction Action;
             public readonly string Tags = "";

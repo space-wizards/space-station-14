@@ -1,17 +1,15 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MobState
 {
     [Serializable, NetSerializable]
-    public enum DamageStateVisuals
+    public enum DamageStateVisuals : byte
     {
         State
     }
 
     /// <summary>
-    ///     Defines what state an <see cref="IEntity"/> is in.
+    ///     Defines what state an <see cref="Robust.Shared.GameObjects.EntityUid"/> is in.
     ///
     ///     Ordered from most alive to least alive.
     ///     To enumerate them in this way see

@@ -1,11 +1,8 @@
-using System;
 using Content.Server.Power.Components;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
 using Content.Shared.SMES;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Power.SMES
@@ -16,11 +13,10 @@ namespace Content.Server.Power.SMES
     ///     Code interfacing with the powernet is handled in <see cref="BatteryStorageComponent"/> and <see cref="BatteryDischargerComponent"/>.
     /// </summary>
     [RegisterComponent]
-    public class SmesComponent : Component
+    public sealed class SmesComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        public override string Name => "Smes";
 
         private int _lastChargeLevel;
 
@@ -47,7 +43,7 @@ namespace Content.Server.Power.SMES
                 _lastChargeLevel = newLevel;
                 _lastChargeLevelChange = _gameTiming.CurTime;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(SmesVisuals.LastChargeLevel, newLevel);
                 }
@@ -59,7 +55,7 @@ namespace Content.Server.Power.SMES
                 _lastChargeState = newChargeState;
                 _lastChargeStateChange = _gameTiming.CurTime;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(SmesVisuals.LastChargeState, newChargeState);
                 }
@@ -68,7 +64,7 @@ namespace Content.Server.Power.SMES
 
         private int GetNewChargeLevel()
         {
-            if (!Owner.TryGetComponent(out BatteryComponent? battery))
+            if (!_entMan.TryGetComponent(Owner, out BatteryComponent? battery))
             {
                 return 0;
             }
@@ -78,7 +74,7 @@ namespace Content.Server.Power.SMES
 
         private ChargeState GetNewChargeState()
         {
-            var battery = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var battery = _entMan.GetComponent<PowerNetworkBatteryComponent>(Owner);
             return (battery.CurrentSupply - battery.CurrentReceiving) switch
             {
                 > 0 => ChargeState.Discharging,

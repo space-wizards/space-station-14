@@ -4,27 +4,27 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class DummyIconTest : ContentIntegrationTest
+    public sealed class DummyIconTest
     {
         [Test]
         public async Task Test()
         {
-            var (client, _) = await StartConnectedServerClientPair(new ClientContentIntegrationOption(){ Pool = false }, new ServerContentIntegrationOption() { Pool = false });
-
-            var prototypeManager = client.ResolveDependency<IPrototypeManager>();
-            var resourceCache = client.ResolveDependency<IResourceCache>();
+            await using var pairTracker = await PoolManager.GetServerClient();
+            var client = pairTracker.Pair.Client;
 
             await client.WaitAssertion(() =>
             {
+                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                var resourceCache = IoCManager.Resolve<IResourceCache>();
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
+                    if (proto.NoSpawn || proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
 
                     Assert.DoesNotThrow(() =>
                     {
@@ -33,6 +33,7 @@ namespace Content.IntegrationTests.Tests
                         proto.ID);
                 }
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

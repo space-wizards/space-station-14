@@ -1,8 +1,9 @@
 ﻿- type: reagent
   id: Carpetium
-  name: carpetium
-  desc: A mystical chemical, usually outsourced from the Clown Planet, that covers everything it touches in carpet.
-  physicalDesc: fibrous
+  name: reagent-name-carpetium
+  group: Special
+  desc: reagent-desc-carpetium
+  physicalDesc: reagent-physical-desc-fibrous
   color: "#800000"
   tileReactions:
   - !type:CreateEntityTileReaction
@@ -16,19 +17,28 @@
         type: Local
         messages: [ "carpetium-effect-blood-fibrous", "carpetium-effect-jumpsuit-insides" ]
         probability: 0.1
+      # Hail the madman logic, if it has CARP, means it helps against CARPs
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarpoToxin
+          min: 1
+        reagent: CarpoToxin
+        amount: -3
 
 - type: reagent
   id: Fiber
-  name: fiber
-  desc: A raw material, usually extracted from wool or other fabric products.
-  physicalDesc: fibrous
+  name: reagent-name-fiber
+  desc: reagent-desc-fiber
+  physicalDesc: reagent-physical-desc-fibrous
   color: "#808080"
 
 - type: reagent
   id: BuzzochloricBees
-  name: Buzzochloric Bees
-  desc: "Liquid bees. Oh god it's LIQUID BEES NO-"
-  physicalDesc: buzzy
+  name: reagent-name-buzzochloric-bees
+  group: Toxins
+  desc: reagent-desc-buzzochloric-bees
+  physicalDesc: reagent-physical-desc-buzzy
   color: "#FFD35D"
   tileReactions:
   - !type:CreateEntityTileReaction
@@ -45,6 +55,7 @@
       effects:
       - !type:PopupMessage
         type: Local
+        visualType: MediumCaution
         messages:
         - "buzzochloricbees-effect-oh-god-bees"
         - "buzzochloricbees-effect-its-the-bees"
@@ -61,6 +72,7 @@
           tag: Bee
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages:
           - "buzzochloricbees-effect-histamine-bee-allergy"
           - "buzzochloricbees-effect-histamine-swells"
@@ -77,6 +89,7 @@
           tag: Bee
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages:
           - "buzzochloricbees-effect-licoxide-electrifying"
           - "buzzochloricbees-effect-licoxide-shocked-by-bee-facts"
@@ -115,23 +128,24 @@
 
 - type: reagent
   id: GroundBee
-  name: Ground Bee
-  desc: Bee grounds. Gross.
-  physicalDesc: bee guts
+  name: reagent-name-ground-bee
+  desc: reagent-desc-ground-bee
+  physicalDesc: reagent-physical-desc-bee-guts
   color: "#86530E"
 
 - type: reagent
   id: Saxoite
-  name: Saxoite
-  desc: Smells like jazz.
-  physicalDesc: ground brass
+  name: reagent-name-saxoite
+  desc: reagent-desc-saxoite
+  physicalDesc: reagent-physical-desc-ground-brass
   color: "#B8A603"
 
 - type: reagent
   id: Licoxide
-  name: Licoxide
-  desc: It looks... electrifying.
-  physicalDesc: electric
+  name: reagent-name-licoxide
+  group: Toxins
+  desc: reagent-desc-licoxide
+  physicalDesc: reagent-physical-desc-electric
   color: "#FDD023"
   metabolisms:
     Poison:

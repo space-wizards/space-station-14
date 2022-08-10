@@ -6,7 +6,7 @@ namespace Content.Tests.Shared.Administration
 {
     [TestFixture]
     [Parallelizable(ParallelScope.All)]
-    public class AdminFlagsExtTest
+    public sealed class AdminFlagsExtTest
     {
         [Test]
         [TestCase("ADMIN", AdminFlags.Admin)]

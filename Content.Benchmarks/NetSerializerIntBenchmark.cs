@@ -6,7 +6,7 @@ using BenchmarkDotNet.Attributes;
 namespace Content.Benchmarks
 {
     [SimpleJob]
-    public class NetSerializerIntBenchmark
+    public sealed class NetSerializerIntBenchmark
     {
         private MemoryStream _writeStream;
         private MemoryStream _readStream;

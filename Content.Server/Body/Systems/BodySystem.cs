@@ -1,14 +1,11 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
+using Content.Server.Kitchen.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.MobState.Components;
-using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Movement.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
@@ -21,10 +18,12 @@ namespace Content.Server.Body.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+            SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
         }
 
-        private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
+        private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
         {
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
                 mobState.IsDead() &&
@@ -40,29 +39,54 @@ namespace Content.Server.Body.Systems
             }
         }
 
+        private void OnApplyMetabolicMultiplier(EntityUid uid, BodyComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            foreach (var (part, _) in component.Parts)
+            foreach (var mechanism in part.Mechanisms)
+            {
+                RaiseLocalEvent(mechanism.Owner, args, false);
+            }
+        }
+
+        private void OnBeingMicrowaved(EntityUid uid, BodyComponent component, BeingMicrowavedEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            // Don't microwave animals, kids
+            Transform(uid).AttachToGridOrMap();
+            component.Gib();
+
+            args.Handled = true;
+        }
+
         /// <summary>
-        ///     Returns a list of ValueTuples of <see cref="T"/> and SharedMechanismComponent on each mechanism
+        ///     Returns a list of ValueTuples of <see cref="T"/> and MechanismComponent on each mechanism
         ///     in the given body.
         /// </summary>
         /// <param name="uid">The entity to check for the component on.</param>
         /// <param name="body">The body to check for mechanisms on.</param>
         /// <typeparam name="T">The component to check for.</typeparam>
-        public IEnumerable<(T Comp, SharedMechanismComponent Mech)> GetComponentsOnMechanisms<T>(EntityUid uid,
+        public List<(T Comp, MechanismComponent Mech)> GetComponentsOnMechanisms<T>(EntityUid uid,
             SharedBodyComponent? body=null) where T : Component
         {
             if (!Resolve(uid, ref body))
-                yield break;
+                return new();
 
+            var query = EntityManager.GetEntityQuery<T>();
+            var list = new List<(T Comp, MechanismComponent Mech)>(3);
             foreach (var (part, _) in body.Parts)
             foreach (var mechanism in part.Mechanisms)
             {
-                if (EntityManager.TryGetComponent<T>(mechanism.OwnerUid, out var comp))
-                    yield return (comp, mechanism);
+                if (query.TryGetComponent(mechanism.Owner, out var comp))
+                    list.Add((comp, mechanism));
             }
+
+            return list;
         }
 
         /// <summary>
-        ///     Tries to get a list of ValueTuples of <see cref="T"/> and SharedMechanismComponent on each mechanism
+        ///     Tries to get a list of ValueTuples of <see cref="T"/> and MechanismComponent on each mechanism
         ///     in the given body.
         /// </summary>
         /// <param name="uid">The entity to check for the component on.</param>
@@ -71,7 +95,7 @@ namespace Content.Server.Body.Systems
         /// <typeparam name="T">The component to check for.</typeparam>
         /// <returns>Whether any were found.</returns>
         public bool TryGetComponentsOnMechanisms<T>(EntityUid uid,
-            [NotNullWhen(true)] out IEnumerable<(T Comp, SharedMechanismComponent Mech)>? comps,
+            [NotNullWhen(true)] out List<(T Comp, MechanismComponent Mech)>? comps,
             SharedBodyComponent? body=null) where T: Component
         {
             if (!Resolve(uid, ref body))
@@ -80,9 +104,9 @@ namespace Content.Server.Body.Systems
                 return false;
             }
 
-            comps = GetComponentsOnMechanisms<T>(uid, body).ToArray();
+            comps = GetComponentsOnMechanisms<T>(uid, body);
 
-            if (!comps.Any())
+            if (comps.Count == 0)
             {
                 comps = null;
                 return false;

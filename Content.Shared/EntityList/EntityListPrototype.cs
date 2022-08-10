@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using Robust.Shared.IoC;
+﻿using System.Collections.Immutable;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.EntityList
 {
     [Prototype("entityList")]
-    public class EntityListPrototype : IPrototype
+    public sealed class EntityListPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

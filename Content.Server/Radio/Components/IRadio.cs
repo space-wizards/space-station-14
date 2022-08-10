@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.GameObjects;
+using Content.Shared.Radio;
 
 namespace Content.Server.Radio.Components
 {
-    public interface IRadio
+    public interface IRadio : IComponent
     {
-        IReadOnlyList<int> Channels { get; }
+        void Receive(string message, RadioChannelPrototype channel, EntityUid speaker);
 
-        void Receive(string message, int channel, IEntity speaker);
-
-        void Broadcast(string message, IEntity speaker);
+        void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel);
     }
 }

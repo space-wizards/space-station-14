@@ -14,17 +14,18 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+        bounds: "-0.45,-0.45,0.45,0.45"
       mass: 100
       mask:
-      - MobImpassable
+      - FullTileMask
       layer:
-      - MobImpassable
-      - VaultImpassable
+      - HumanoidBlockLayer
   - type: Anchorable
+    delay: 2
   - type: Pullable
   - type: Transform
     anchored: true
+    noRot: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -37,7 +38,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: airlock
+    graph: Airlock
     node: assembly
   placement:
     mode: SnapgridCenter

@@ -1,0 +1,155 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingHeadBase
+  components:
+  - type: Clothing
+    slots:
+    - HEAD
+  - type: Sprite
+    state: icon
+  - type: Tag
+    tags:
+      - DroneUsable
+
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: HatBase
+  components:
+  - type: Clothing
+    slots:
+    - HEAD
+  - type: Sprite
+    state: icon
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
+  id: ClothingHeadLightBase
+  name: base helmet with light
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+      map: [ "light" ]
+  - type: Clothing
+    heldPrefix: off
+  - type: ToggleableLightVisuals
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 6
+    energy: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: Appearance
+    visuals:
+    - type: FlashLightVisualizer
+  - type: HandheldLight
+    addPrefix: true
+  - type: Battery
+    maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
+  id: ClothingHeadEVAHelmetBase
+  name: base space helmet
+  components:
+  - type: Item
+    size: 10
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
+  - type: IdentityBlocker
+
+- type: entity
+  abstract: true
+  # No parent since we aren't actually an item.
+  id: ClothingHeadHardsuitBase
+  name: base hardsuit helmet
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: icon # default state used by most inheritors
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Clothing
+    #Apparently the hardsuit helmet equip sound is from a walking mech?
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
+    quickEquip: false
+    slots: [ HEAD ]
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.90
+        Radiation: 0.25
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
+  - type: IdentityBlocker
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHardsuitWithLightBase
+  name: base hardsuit helmet with light
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+      map: [ "light" ]
+  - type: Clothing
+    equippedPrefix: off
+  - type: ToggleableLightVisuals
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 6
+    energy: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: Appearance
+    visuals:
+    - type: FlashLightVisualizer
+  - type: HandheldLight
+    addPrefix: true
+  - type: Battery
+    maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.

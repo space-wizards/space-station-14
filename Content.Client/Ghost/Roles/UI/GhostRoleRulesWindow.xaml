@@ -1,8 +1,8 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'ghost-roles-window-title'}">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True">
-        <RichTextLabel Name="Title" VerticalExpand="True"/>
+        <RichTextLabel Name="TopBanner" VerticalExpand="True"/>
         <Button Name="RequestButton"
                 Text="{Loc 'ghost-roles-window-request-role-button'}"
                 Disabled="True"
@@ -10,4 +10,4 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

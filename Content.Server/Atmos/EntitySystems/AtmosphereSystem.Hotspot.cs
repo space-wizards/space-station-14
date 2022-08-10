@@ -1,14 +1,23 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Audio;
+using Robust.Shared.Audio;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly GridTileLookupSystem _gridtileLookupSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
+        private const int HotspotSoundCooldownCycles = 200;
+
+        private int _hotspotSoundCooldown = 0;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string? HotspotSound { get; private set; } = "/Audio/Effects/fire.ogg";
 
         private void ProcessHotspot(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
         {
@@ -68,6 +77,19 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (tile.Hotspot.Temperature > tile.MaxFireTemperatureSustained)
                 tile.MaxFireTemperatureSustained = tile.Hotspot.Temperature;
+
+            if (_hotspotSoundCooldown++ == 0 && !string.IsNullOrEmpty(HotspotSound))
+            {
+                var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
+                // A few details on the audio parameters for fire.
+                // The greater the fire state, the lesser the pitch variation.
+                // The greater the fire state, the greater the volume.
+                SoundSystem.Play(HotspotSound, Filter.Pvs(coordinates),
+                    coordinates, AudioHelpers.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
+            }
+
+            if (_hotspotSoundCooldown > HotspotSoundCooldownCycles)
+                _hotspotSoundCooldown = 0;
 
             // TODO ATMOS Maybe destroy location here?
         }
@@ -141,9 +163,9 @@ namespace Content.Server.Atmos.EntitySystems
 
             var fireEvent = new TileFireEvent(tile.Hotspot.Temperature, tile.Hotspot.Volume);
 
-            foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
+            foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                RaiseLocalEvent(entity.Uid, fireEvent, false);
+                RaiseLocalEvent(entity, ref fireEvent, false);
             }
         }
     }

@@ -1,20 +1,19 @@
 using Content.Server.AI.Components;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.WorldState;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility
 {
     public static class UtilityAiHelpers
     {
-        public static Blackboard? GetBlackboard(IEntity entity)
+        public static Blackboard? GetBlackboard(EntityUid entity)
         {
-            if (!entity.TryGetComponent(out AiControllerComponent? aiControllerComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out NPCComponent? aiControllerComponent))
             {
                 return null;
             }
 
-            if (aiControllerComponent is UtilityAi utilityAi)
+            if (aiControllerComponent is UtilityNPCComponent utilityAi)
             {
                 return utilityAi.Blackboard;
             }

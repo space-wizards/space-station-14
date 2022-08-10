@@ -1,16 +1,16 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
             MinSize="200 120" Title="Volume Pump">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-pump-ui-pump-status} "/>
+            <Label Text="{Loc comp-gas-pump-ui-pump-status}"/>
             <Control MinSize="5 0" />
             <Button Name="ToggleStatusButton"/>
         </BoxContainer>
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-pump-ui-pump-transfer-rate} "/>
+            <Label Text="{Loc comp-gas-pump-ui-pump-transfer-rate}"/>
             <Control MinSize="5 0" />
             <LineEdit Name="PumpTransferRateInput" MinSize="60 0" />
             <Control MinSize="5 0" />
@@ -20,4 +20,4 @@
             <Button Name="SetTransferRateButton" Text="{Loc comp-gas-pump-ui-pump-set-rate}" HorizontalAlignment="Right" Disabled="True"/>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

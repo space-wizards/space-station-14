@@ -1,18 +1,14 @@
 using Content.Shared.Chemistry.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using static Content.Shared.Chemistry.Components.MovespeedModifierMetabolismComponent;
 
 namespace Content.Shared.Chemistry
 {
     // TODO CONVERT THIS TO A STATUS EFFECT!!!!!!!!!!!!!!!!!!!!!!!!
-    public class MetabolismMovespeedModifierSystem : EntitySystem
+    public sealed class MetabolismMovespeedModifierSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movespeed = default!;
@@ -22,6 +18,8 @@ namespace Content.Shared.Chemistry
         public override void Initialize()
         {
             base.Initialize();
+
+            UpdatesOutsidePrediction = true;
 
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentHandleState>(OnMovespeedHandleState);
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentStartup>(AddComponent);
@@ -75,9 +73,9 @@ namespace Content.Shared.Chemistry
                 if (component.ModifierTimer > currentTime) continue;
 
                 _components.RemoveAt(i);
-                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.OwnerUid);
+                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.Owner);
 
-                _movespeed.RefreshMovementSpeedModifiers(component.OwnerUid);
+                _movespeed.RefreshMovementSpeedModifiers(component.Owner);
             }
         }
     }

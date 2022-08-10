@@ -3,7 +3,7 @@ using YamlDotNet.Core.Events;
 
 namespace Content.Tools
 {
-    public class TypeTagPreserver : IEmitter
+    public sealed class TypeTagPreserver : IEmitter
     {
         public TypeTagPreserver(IEmitter emitter)
         {

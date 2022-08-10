@@ -1,7 +1,6 @@
 using Content.Client.Storage;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Interactable
 {
@@ -9,17 +8,18 @@ namespace Content.Client.Interactable
     {
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
-            if (!EntityManager.TryGetEntity(target, out var entity))
+            if (!EntityManager.EntityExists(target))
                 return false;
 
-            if (!entity.TryGetContainer(out var container))
+            if (!target.TryGetContainer(out var container))
                 return false;
 
-            if (!EntityManager.TryGetComponent(container.Owner.Uid, out ClientStorageComponent storage))
+            if (!TryComp(container.Owner, out ClientStorageComponent? storage))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return storage.UIOpen;
+            // Need to return if UI is open or not
+            return true;
         }
     }
 }

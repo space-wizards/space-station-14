@@ -4,7 +4,7 @@
     sprite: Objects/Specific/Chemistry/beaker.rsi
     state: beaker
   result: Beaker
-  completetime: 500
+  completetime: 2
   materials:
     Glass: 100
 
@@ -14,7 +14,7 @@
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
     state: beakerlarge
   result: LargeBeaker
-  completetime: 500
+  completetime: 2
   materials:
     Glass: 200
 
@@ -24,9 +24,10 @@
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     state: beakernoreact
   result: CryostasisBeaker
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 250
+    Plastic: 50
 
 - type: latheRecipe
   id: Dropper
@@ -34,7 +35,7 @@
     sprite: Objects/Specific/Chemistry/dropper.rsi
     state: dropper
   result: Dropper
-  completetime: 500
+  completetime: 2
   materials:
     Glass: 200
     Plastic: 100
@@ -45,6 +46,15 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: syringe_base0
   result: Syringe
-  completetime: 500
+  completetime: 2
   materials:
-    Glass: 200
+    Plastic: 100
+    Steel: 25
+
+- type: latheRecipe
+  id: PillCanister
+  icon: Objects/Specific/Chemistry/pills_canister.rsi/pill_canister.png
+  result: PillCanister
+  completetime: 2
+  materials:
+    Plastic: 100

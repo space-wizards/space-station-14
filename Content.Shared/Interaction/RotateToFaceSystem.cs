@@ -1,26 +1,8 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Rotatable;
-using Content.Shared.Inventory;
-using Content.Shared.Physics;
-using Content.Shared.Popups;
-using Content.Shared.Throwing;
-using Content.Shared.Timing;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Content.Shared.MobState.Components;
 
 namespace Content.Shared.Interaction
 {
@@ -31,28 +13,28 @@ namespace Content.Shared.Interaction
     /// Doesn't really fit with SharedInteractionSystem so it's not there.
     /// </summary>
     [UsedImplicitly]
-    public class RotateToFaceSystem : EntitySystem
+    public sealed class RotateToFaceSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        public bool TryFaceCoordinates(IEntity user, Vector2 coordinates)
+        public bool TryFaceCoordinates(EntityUid user, Vector2 coordinates)
         {
-            var diff = coordinates - user.Transform.MapPosition.Position;
+            var diff = coordinates - EntityManager.GetComponent<TransformComponent>(user).MapPosition.Position;
             if (diff.LengthSquared <= 0.01f)
                 return true;
             var diffAngle = Angle.FromWorldVec(diff);
             return TryFaceAngle(user, diffAngle);
         }
 
-        public bool TryFaceAngle(IEntity user, Angle diffAngle)
+        public bool TryFaceAngle(EntityUid user, Angle diffAngle)
         {
-            if (_actionBlockerSystem.CanChangeDirection(user.Uid))
+            if (_actionBlockerSystem.CanChangeDirection(user) && TryComp(user, out MobStateComponent? mob) && !mob.IsIncapacitated())
             {
-                user.Transform.WorldRotation = diffAngle;
+                EntityManager.GetComponent<TransformComponent>(user).WorldRotation = diffAngle;
                 return true;
             }
             else
             {
-                if (user.TryGetComponent(out SharedBuckleComponent? buckle) && buckle.Buckled)
+                if (EntityManager.TryGetComponent(user, out SharedBuckleComponent? buckle) && buckle.Buckled)
                 {
                     var suid = buckle.LastEntityBuckledTo;
                     if (suid != null)
@@ -64,7 +46,7 @@ namespace Content.Shared.Interaction
                             // (Since the user being buckled to it holds it down with their weight.)
                             // This is logically equivalent to RotateWhileAnchored.
                             // Barstools and office chairs have independent wheels, while regular chairs don't.
-                            rotatable.Owner.Transform.WorldRotation = diffAngle;
+                            EntityManager.GetComponent<TransformComponent>(rotatable.Owner).WorldRotation = diffAngle;
                             return true;
                         }
                     }

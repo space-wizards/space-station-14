@@ -1,7 +1,10 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Doors;
+using Content.Server.Doors.Systems;
+using Content.Shared.Doors.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Doors.Components
@@ -11,12 +14,9 @@ namespace Content.Server.Doors.Components
     /// and not being openable on open-hand click.
     /// </summary>
     [RegisterComponent]
-    public class FirelockComponent : Component
+    public sealed class FirelockComponent : Component
     {
-        public override string Name => "Firelock";
-
-        [ComponentDependency]
-        public readonly ServerDoorComponent? DoorComponent = null;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
@@ -27,10 +27,15 @@ namespace Content.Server.Doors.Components
 
         public bool EmergencyPressureStop()
         {
-            if (DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Open && DoorComponent.CanCloseGeneric())
+            var doorSys = EntitySystem.Get<DoorSystem>();
+            if (_entMan.TryGetComponent<DoorComponent>(Owner, out var door) &&
+                door.State == DoorState.Open &&
+                doorSys.CanClose(Owner, door))
             {
-                DoorComponent.Close();
-                if (Owner.TryGetComponent(out AirtightComponent? airtight))
+                doorSys.StartClosing(Owner, door);
+
+                // Door system also sets airtight, but only after a delay. We want it to be immediate.
+                if (_entMan.TryGetComponent(Owner, out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
                 }
@@ -41,12 +46,20 @@ namespace Content.Server.Doors.Components
 
         public bool IsHoldingPressure(float threshold = 20)
         {
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var transform = _entMan.GetComponent<TransformComponent>(Owner);
+
+            if (transform.GridUid is not {} gridUid)
+                return false;
+
+            var atmosphereSystem = _entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            var transformSystem = _entMan.EntitySysManager.GetEntitySystem<TransformSystem>();
+
+            var position = transformSystem.GetGridOrMapTilePosition(Owner, transform);
 
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(gridUid, position))
             {
                 var moles = adjacent.TotalMoles;
                 if (moles < minMoles)
@@ -60,20 +73,25 @@ namespace Content.Server.Doors.Components
 
         public bool IsHoldingFire()
         {
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = _entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            var transformSystem = _entMan.EntitySysManager.GetEntitySystem<TransformSystem>();
 
-            if (!atmosphereSystem.TryGetGridAndTile(Owner.Transform.Coordinates, out var tuple))
+            var transform = _entMan.GetComponent<TransformComponent>(Owner);
+            var position = transformSystem.GetGridOrMapTilePosition(Owner, transform);
+
+            // No grid, no fun.
+            if (transform.GridUid is not {} gridUid)
                 return false;
 
-            if (atmosphereSystem.GetTileMixture(tuple.Value.Grid, tuple.Value.Tile) == null)
+            if (atmosphereSystem.GetTileMixture(gridUid, null, position) == null)
                 return false;
 
-            if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, tuple.Value.Tile))
+            if (atmosphereSystem.IsHotspotActive(gridUid, position))
                 return true;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(gridUid, position))
             {
-                if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, adjacent))
+                if (atmosphereSystem.IsHotspotActive(gridUid, adjacent))
                     return true;
             }
 

@@ -1,0 +1,21 @@
+- type: accessLevel
+  id: Command
+  name: id-card-access-level-command
+
+- type: accessLevel
+  id: Captain
+  name: id-card-access-level-captain
+
+- type: accessLevel
+  id: HeadOfPersonnel
+  name: id-card-access-level-head-of-personnel
+
+- type: accessGroup
+  id: Command
+  tags:
+  - Command
+  - Captain
+  - HeadOfPersonnel
+
+- type: accessLevel
+  id: EmergencyShuttleRepealAll

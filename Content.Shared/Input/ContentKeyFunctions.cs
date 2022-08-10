@@ -5,15 +5,15 @@ namespace Content.Shared.Input
     [KeyFunctions]
     public static class ContentKeyFunctions
     {
-        public static readonly BoundKeyFunction WideAttack = "WideAttack";
-        public static readonly BoundKeyFunction ActivateItemInHand = "ActivateItemInHand";
-        public static readonly BoundKeyFunction AltActivateItemInHand = "AltActivateItemInHand";
+        public static readonly BoundKeyFunction UseItemInHand = "ActivateItemInHand";
+        public static readonly BoundKeyFunction AltUseItemInHand = "AltActivateItemInHand";
         public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld";
         public static readonly BoundKeyFunction AltActivateItemInWorld = "AltActivateItemInWorld";
         public static readonly BoundKeyFunction Drop = "Drop";
         public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
         public static readonly BoundKeyFunction FocusChat = "FocusChatInputWindow";
         public static readonly BoundKeyFunction FocusLocalChat = "FocusLocalChatWindow";
+        public static readonly BoundKeyFunction FocusWhisperChat = "FocusWhisperChatWindow";
         public static readonly BoundKeyFunction FocusRadio = "FocusRadioWindow";
         public static readonly BoundKeyFunction FocusOOC = "FocusOOCWindow";
         public static readonly BoundKeyFunction FocusAdminChat = "FocusAdminChatWindow";
@@ -37,6 +37,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenEntitySpawnWindow = "OpenEntitySpawnWindow";
         public static readonly BoundKeyFunction OpenSandboxWindow = "OpenSandboxWindow";
         public static readonly BoundKeyFunction OpenTileSpawnWindow = "OpenTileSpawnWindow";
+        public static readonly BoundKeyFunction OpenDecalSpawnWindow = "OpenDecalSpawnWindow";
         public static readonly BoundKeyFunction OpenAdminMenu = "OpenAdminMenu";
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
@@ -49,6 +50,13 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Arcade2 = "Arcade2";
         public static readonly BoundKeyFunction Arcade3 = "Arcade3";
         public static readonly BoundKeyFunction OpenActionsMenu = "OpenAbilitiesMenu";
+        public static readonly BoundKeyFunction ShuttleStrafeLeft = "ShuttleStrafeLeft";
+        public static readonly BoundKeyFunction ShuttleStrafeUp = "ShuttleStrafeUp";
+        public static readonly BoundKeyFunction ShuttleStrafeRight = "ShuttleStrafeRight";
+        public static readonly BoundKeyFunction ShuttleStrafeDown = "ShuttleStrafeDown";
+        public static readonly BoundKeyFunction ShuttleRotateLeft = "ShuttleRotateLeft";
+        public static readonly BoundKeyFunction ShuttleRotateRight = "ShuttleRotateRight";
+        public static readonly BoundKeyFunction ShuttleBrake = "ShuttleBrake";
         public static readonly BoundKeyFunction Hotbar0 = "Hotbar0";
         public static readonly BoundKeyFunction Hotbar1 = "Hotbar1";
         public static readonly BoundKeyFunction Hotbar2 = "Hotbar2";
@@ -78,5 +86,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Vote7 = "Vote7";
         public static readonly BoundKeyFunction Vote8 = "Vote8";
         public static readonly BoundKeyFunction Vote9 = "Vote9";
+        public static readonly BoundKeyFunction EditorCopyObject = "EditorCopyObject";
     }
 }

@@ -1,13 +1,19 @@
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Interaction.Components;
 using Content.Server.Sound.Components;
 using Content.Server.Throwing;
-using Content.Shared.Audio;
+using Content.Server.UserInterface;
+using Content.Server.Popups;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
+using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Sound
 {
@@ -15,9 +21,36 @@ namespace Content.Server.Sound
     /// Will play a sound on various events if the affected entity has a component derived from BaseEmitSoundComponent
     /// </summary>
     [UsedImplicitly]
-    public class EmitSoundSystem : EntitySystem
+    public sealed class EmitSoundSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+
         /// <inheritdoc />
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var soundSpammer in EntityQuery<SpamEmitSoundComponent>())
+            {
+                soundSpammer.Accumulator += frameTime;
+                if (soundSpammer.Accumulator < soundSpammer.RollInterval)
+                {
+                    continue;
+                }
+                soundSpammer.Accumulator -= soundSpammer.RollInterval;
+
+                if (_random.Prob(soundSpammer.PlayChance))
+                {
+                    if (soundSpammer.PopUp != null)
+                        _popupSystem.PopupEntity(Loc.GetString(soundSpammer.PopUp), soundSpammer.Owner, Filter.Pvs(soundSpammer.Owner));
+                    TryEmitSound(soundSpammer);
+                }
+            }
+        }
         public override void Initialize()
         {
             base.Initialize();
@@ -25,16 +58,37 @@ namespace Content.Server.Sound
             SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>(HandleEmitSoundOnUseInHand);
             SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>(HandleEmitSoundOnThrown);
             SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
+            SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
+            SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
+            SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(HandleEmitSoundOnPickup);
+            SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(HandleEmitSoundOnDrop);
+        }
+
+        private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
+        {
+            TryEmitSound(component);
+            args.Handled = true;
         }
 
         private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
         {
+            if (!TryComp<TransformComponent>(eUI, out var xform) ||
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
+
+            var tile = grid.GetTileRef(xform.Coordinates);
+
+            if (tile.IsSpace(_tileDefMan)) return;
+
             TryEmitSound(component);
         }
 
-        private void HandleEmitSoundOnUseInHand(EntityUid eUI, BaseEmitSoundComponent component, UseInHandEvent arg)
+        private void HandleEmitSoundOnUseInHand(EntityUid eUI, EmitSoundOnUseComponent component, UseInHandEvent arg)
         {
+            // Intentionally not checking whether the interaction has already been handled.
             TryEmitSound(component);
+
+            if (component.Handle)
+                arg.Handled = true;
         }
 
         private void HandleEmitSoundOnThrown(EntityUid eUI, BaseEmitSoundComponent component, ThrownEvent arg)
@@ -42,14 +96,33 @@ namespace Content.Server.Sound
             TryEmitSound(component);
         }
 
-        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, BaseEmitSoundComponent component, ActivateInWorldEvent arg)
+        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, EmitSoundOnActivateComponent component, ActivateInWorldEvent arg)
+        {
+            // Intentionally not checking whether the interaction has already been handled.
+            TryEmitSound(component);
+
+            if (component.Handle)
+                arg.Handled = true;
+        }
+
+        private void HandleEmitSoundOnUIOpen(EntityUid eUI, BaseEmitSoundComponent component, AfterActivatableUIOpenEvent arg)
         {
             TryEmitSound(component);
         }
 
-        private static void TryEmitSound(BaseEmitSoundComponent component)
+        private void HandleEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, GotEquippedHandEvent args)
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+            TryEmitSound(component);
+        }
+
+        private void HandleEmitSoundOnDrop(EntityUid uid, EmitSoundOnDropComponent component, DroppedEvent args)
+        {
+            TryEmitSound(component);
+        }
+
+        private void TryEmitSound(BaseEmitSoundComponent component)
+        {
+            _audioSystem.PlayPvs(component.Sound, component.Owner, component.Sound.Params.AddVolume(-2f));
         }
     }
 }

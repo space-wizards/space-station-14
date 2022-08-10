@@ -3,6 +3,7 @@ using Content.Client.HUD;
 using Content.Shared.Suspicion;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -11,12 +12,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Suspicion
 {
     [RegisterComponent]
-    public class SuspicionRoleComponent : SharedSuspicionRoleComponent
+    public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private SuspicionGui? _gui;
         private string? _role;
@@ -72,7 +72,7 @@ namespace Content.Client.Suspicion
             }
 
             _overlayActive = true;
-            var overlay = new TraitorOverlay(Owner.EntityManager, _resourceCache, _eyeManager);
+            var overlay = new TraitorOverlay(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IPlayerManager>(), _resourceCache);
             _overlayManager.AddOverlay(overlay);
         }
 

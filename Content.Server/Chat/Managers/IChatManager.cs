@@ -1,5 +1,7 @@
+using Content.Shared.Chat;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chat.Managers
 {
@@ -10,31 +12,24 @@ namespace Content.Server.Chat.Managers
         /// <summary>
         ///     Dispatch a server announcement to every connected player.
         /// </summary>
-        void DispatchServerAnnouncement(string message);
-
-        /// <summary>
-        ///     Station announcement to every player
-        /// </summary>
         /// <param name="message"></param>
-        /// <param name="sender"></param>
-        /// <param name="playDefaultSound">If the default 'PA' sound should be played.</param>
-        void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true);
+        /// <param name="colorOverride">Override the color of the message being sent.</param>
+        void DispatchServerAnnouncement(string message, Color? colorOverride = null);
 
         void DispatchServerMessage(IPlayerSession player, string message);
 
-        /// <param name="hideChat">If true, message will not be logged to chat boxes but will still produce a speech bubble.</param>
-        void EntitySay(IEntity source, string message, bool hideChat=false);
-        void EntityMe(IEntity source, string action);
-
-        void SendOOC(IPlayerSession player, string message);
-        void SendAdminChat(IPlayerSession player, string message);
-        void SendDeadChat(IPlayerSession player, string message);
-        void SendAdminDeadChat(IPlayerSession player, string message);
+        void TrySendOOCMessage(IPlayerSession player, string message, OOCChatType type);
 
         void SendHookOOC(string sender, string message);
-
-        delegate string TransformChat(EntityUid speaker, string message);
-        void RegisterChatTransform(TransformChat handler);
         void SendAdminAnnouncement(string message);
+
+        void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,
+            INetChannel client, Color? colorOverride = null);
+        void ChatMessageToMany(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,
+            List<INetChannel> clients, Color? colorOverride = null);
+        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, Color? colorOverride);
+        void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null);
+
+        bool MessageCharacterLimit(IPlayerSession player, string message);
     }
 }

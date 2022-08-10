@@ -1,24 +1,17 @@
 - type: reagent
-  id: Alkycosine
-  name: alkycosine
-  desc: Lessens the damage to neurological tissue. More effective at treating brain damage than alkysine and also a fairly effective painkiller as well. Caution is needed in its creation to avoid mixing bleach and the chlorine needed to make alkysine.
-  physicalDesc: strong-smelling
-  color: "#9e232b"
-  # TODO brain damage
-
-- type: reagent
-  id: Alkysine
-  name: alkysine
-  desc: Lessens the damage to neurological tissue, effective even after catastrophic injury. Used for treating brain damage and also a fairly effective painkiller.
-  physicalDesc: oily
-  color: "#ff8c00"
-  # TODO brain damage
+  id: Cryptobiolin
+  name: reagent-name-cryptobiolin
+  group: Medicine
+  desc: reagent-desc-cryptobiolin
+  physicalDesc: reagent-physical-desc-fizzy
+  color: "#081a80"
 
 - type: reagent
   id: Dylovene
-  name: dylovene
-  desc: A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
-  physicalDesc: translucent
+  name: reagent-name-dylovene
+  group: Medicine
+  desc: reagent-desc-dylovene
+  physicalDesc: reagent-physical-desc-translucent
   color: "#3a1d8a"
   metabolisms:
     Medicine:
@@ -36,9 +29,10 @@
 
 - type: reagent
   id: Diphenhydramine
-  name: diphenhydramine
-  desc: Rapidly purges the body of histamine and reduces jitteriness.
-  physicalDesc: chalky
+  name: reagent-name-diphenhydramine
+  group: Medicine
+  desc: reagent-desc-diphenhydramine
+  physicalDesc: reagent-physical-desc-chalky
   color: "#64ffe6"
   metabolisms:
     Medicine:
@@ -48,14 +42,30 @@
         amount: -3.0
       - !type:GenericStatusEffect
         key: Jitter
-        time: 1.0
+        time: 3.0
+        type: Remove
+
+- type: reagent
+  id: Ethylredoxrazine
+  name: reagent-name-ethylredoxrazine
+  group: Medicine
+  desc: reagent-desc-ethylredoxrazine
+  physicalDesc: reagent-physical-desc-opaque
+  color: "#2d5708"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Drunk
+        time: 2.0
         type: Remove
 
 - type: reagent
   id: Arithrazine
-  name: arithrazine
-  desc: A slightly unstable medication used for the most extreme any serious case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
-  physicalDesc: cloudy
+  name: reagent-name-arithrazine
+  group: Medicine
+  desc: reagent-desc-arithrazine
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#bd5902"
   metabolisms:
     Medicine:
@@ -69,9 +79,10 @@
 
 - type: reagent
   id: Bicaridine
-  name: bicaridine
-  desc: An analgesic which is highly effective at treating brute damage. It is useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
-  physicalDesc: opaque
+  name: reagent-name-bicaridine
+  group: Medicine
+  desc: reagent-desc-bicaridine
+  physicalDesc: reagent-physical-desc-opaque
   color: "#ffaa00"
   metabolisms:
     Medicine:
@@ -80,12 +91,28 @@
         damage:
           groups:
             Brute: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+            Poison: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+    Alcohol:
+      effects:
+      - !type:Drunk
 
 - type: reagent
   id: Cryoxadone
-  name: cryoxadone
-  desc: Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.
-  physicalDesc: fizzy
+  name: reagent-name-cryoxadone
+  group: Medicine
+  desc: reagent-desc-cryoxadone
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#0091ff"
   plantMetabolism:
     - !type:PlantAdjustToxins
@@ -110,31 +137,25 @@
 
 - type: reagent
   id: Clonexadone
-  name: clonexadone
+  name: reagent-name-clonexadone
+  group: Medicine
   parent: Cryoxadone
-  desc: Heals standard damage in the same as Cryoxadone, with the same temperature requirement. Significantly more effective than the former at treating cellular damage, although both can be used simultaneously. Best used in cryo cells.
-  physicalDesc: bubbly
+  desc: reagent-desc-clonexadone
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#0666ff"
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: -5
     - !type:PlantAdjustHealth
       amount: 5
-
-- type: reagent
-  id: Citalopram
-  name: citalopram
-  desc: Prevents hallucination slightly.
-  physicalDesc: cloudy
-  color: "#21693c"
-  # Why do so many chems 'reduce hallucination slightly' and why did we add so fucking many
-  # without even implementing hallucination?
+    - !type:PlantClonexadone {}
 
 - type: reagent
   id: Dermaline
-  name: dermaline
-  desc: An advanced chemical that is more effective at treating burn damage than Kelotane.
-  physicalDesc: translucent
+  name: reagent-name-dermaline
+  group: Medicine
+  desc: reagent-desc-dermaline
+  physicalDesc: reagent-physical-desc-translucent
   color: "#215263"
   metabolisms:
     Medicine:
@@ -143,12 +164,26 @@
         damage:
           groups:
             Burn: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+        groups:
+            Brute: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
 
 - type: reagent
   id: Dexalin
-  name: dexalin
-  desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful (Results in 1 unit instead of 2).
-  physicalDesc: opaque
+  name: reagent-name-dexalin
+  group: Medicine
+  desc: reagent-desc-dexalin
+  physicalDesc: reagent-physical-desc-opaque
   color: "#0041a8"
   metabolisms:
     Medicine:
@@ -157,12 +192,14 @@
         damage:
           types:
             Asphyxiation: -1
+            Bloodloss: -0.5
 
 - type: reagent
   id: DexalinPlus
-  name: dexalin plus
-  desc: Used in treatment of extreme cases of oxygen deprivation. Even a single unit immediately counters all oxygen loss, which is hugely useful in many circumstances. Any dose beyond this will continue to counter oxygen loss until it is metabolized, essentially removing the need to breathe.
-  physicalDesc: cloudy
+  name: reagent-name-dexalin-plus
+  group: Medicine
+  desc: reagent-desc-dexalin-plus
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#4da0bd"
   metabolisms:
     Medicine:
@@ -170,22 +207,23 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: -3
-
-- type: reagent
-  id: Ethylredoxrazine
-  name: ethylredoxrazine
-  desc: Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
-  physicalDesc: opaque
-  color: "#2d5708"
-  # TODO: GenericStatusEffect remove drunkenness
+            Asphyxiation: -3.5
+            Bloodloss: -3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Lexorin
+          min: 1
+        reagent: Lexorin
+        amount: -3
 
 # this ones a doozy
 - type: reagent
   id: Epinephrine
-  name: epinephrine
-  desc: Effective at bringing people back from a critical state. Reduces some stun times. Easy to overdose on.
-  physicalDesc: odorless
+  name: reagent-name-epinephrine
+  group: Medicine
+  desc: reagent-desc-epinephrine
+  physicalDesc: reagent-physical-desc-odorless
   color: "#d2fffa"
   metabolisms:
     Medicine:
@@ -233,25 +271,19 @@
         amount: 4
       - !type:GenericStatusEffect
         key: Stun
-        time: 0.25
+        time: 0.75
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 0.25
+        time: 0.75
         type: Remove
 
 - type: reagent
-  id: Hyperzine
-  name: hyperzine
-  desc: A highly effective, long lasting muscle stimulant. It allows greater freedom of movement in bulky clothing although it has the side effect of causing some twitching. Dangerous in higher doses.
-  physicalDesc: translucent
-  color: "#17bd61"
-
-- type: reagent
   id: Hyronalin
-  name: hyronalin
-  desc: A weak treatment for radiation damage. Considered to be useful mainly for genetic modification, where it reduces radiation levels, and thus the chance of genetic mutations. Largely outclassed by Arithrazine.
-  physicalDesc: cloudy
+  name: reagent-name-hyronalin
+  group: Medicine
+  desc: reagent-desc-hyronalin
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#4cb580"
   metabolisms:
     Medicine:
@@ -260,28 +292,39 @@
         damage:
           types:
             Radiation: -1
+      - !type:ChemVomit
+        probability: 0.02
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+           Heat: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
 
 - type: reagent
-  id: Imidazoline
-  name: imidazoline
-  desc: Effective in treating eye trauma. It heals damage caused by physical or chemical trauma, though it is ineffective in treating genetic defects in the eyes.
-  physicalDesc: pungent
-  color: "#f7ef00"
-  # TODO eye damage
-
-- type: reagent
-  id: Inacusiate
-  name: inacusiate
-  desc: You only need 1u for Inacusiate to be effective. Cures deafness instantly. Useful after an explosion.
-  physicalDesc: pungent
-  color: "#c4c04b"
-  # TODO ear damage
+  id: Ipecac
+  name: reagent-name-ipecac
+  group: Medicine
+  desc: reagent-desc-ipecac
+  physicalDesc: reagent-physical-desc-inky
+  color: "#422912"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ChemVomit
+        probability: 0.3
 
 - type: reagent
   id: Inaprovaline
-  name: inaprovaline
-  desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding (internal or external) by half while in the body. Acts as a decent painkiller.
-  physicalDesc: opaque
+  name: reagent-name-inaprovaline
+  group: Medicine
+  desc: reagent-desc-inaprovaline
+  physicalDesc: reagent-physical-desc-opaque
   color: "#731024"
   metabolisms:
     Medicine:
@@ -294,12 +337,15 @@
         damage:
           types:
             Asphyxiation: -5
+      - !type:ModifyBleedAmount
+        amount: -0.25
 
 - type: reagent
   id: Kelotane
-  name: kelotane
-  desc: Treats burn damage and prevents infection.
-  physicalDesc: strong-smelling
+  name: reagent-name-kelotane
+  group: Medicine
+  desc: reagent-desc-kelotane
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#bf3d19"
   metabolisms:
     Medicine:
@@ -311,47 +357,77 @@
 
 - type: reagent
   id: Leporazine
-  name: leporazine
-  desc: This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
-  physicalDesc: pungent
+  name: reagent-name-leporazine
+  group: Medicine
+  desc: reagent-desc-leporazine
+  physicalDesc: reagent-physical-desc-pungent
   color: "#ff7db5"
   metabolisms:
     Medicine:
       effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: -4
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
           max: 293.15
-        amount: 1000 # thermal energy, not temperature!
+        amount: 100000 # thermal energy, not temperature!
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
           min: 293.15
-        amount: -1000
+        amount: -10000
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
 
 - type: reagent
-  id: Methylin
-  name: methylin
-  desc: An intelligence enhancer, also used in the treatment of attention deficit hyperactivity disorder. Also known as Ritalin. Allows monkeys (not diona nymphs) to understand human speech and improves their dexterity as long as they have some in their system. Causes toxin and brain damage in higher doses.
-  physicalDesc: acrid
-  color: "#a700c4"
-
-- type: reagent
-  id: Oxycodone
-  name: oxycodone
-  desc: A very effective painkiller, about 250% as strong as Tramadol.
-  physicalDesc: acrid
-  color: "#c4a300"
+  id: Barozine
+  name: reagent-name-barozine
+  group: Medicine
+  desc: reagent-desc-barozine
+  physicalDesc: reagent-physical-desc-viscous
+  color: "#ff867d"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.3
+        damage:
+          types:
+            Heat: 0.5
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 30
+        damage:
+          types:
+            Poison: 3
+      - !type:GenericStatusEffect
+        key: PressureImmunity
+        component: PressureImmunity
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:Scream
+        probability: 0.2
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
+        probability: 0.1
 
 - type: reagent
   id: Phalanximine
-  name: phalanximine
-  desc: Used in the treatment of cancer, is as effective as Anti-Toxin. Causes moderate radiation and hair loss.
-  physicalDesc: acrid
+  name: reagent-name-phalanximine
+  group: Medicine
+  desc: reagent-desc-phalanximine
+  physicalDesc: reagent-physical-desc-acrid
   color: "#c8ff75"
   metabolisms:
     Medicine:
@@ -359,37 +435,94 @@
       - !type:HealthChange
         damage:
           types:
-            # close enough to what it says
-            Poison: -1
+            Cellular: -1
             Radiation: 1
+      - !type:ChemVomit
+        probability: 0.05
 
 - type: reagent
-  id: Paroxetine
-  name: paroxetine
-  desc: Prevents hallucination, but has a 10% chance of causing intense hallucinations.
-  physicalDesc: acrid
-  color: "#fffbad"
-  # TODO: Hallucinations.
+  id: Romerol
+  name: reagent-name-romerol
+  group: Medicine
+  desc: reagent-desc-romerol
+  physicalDesc: reagent-physical-desc-acrid
+  color: "#7e916e"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
 
 - type: reagent
-  id: Ryetalyn
-  name: ryetalyn
-  desc: You only need 1u for Ryetalin to work. Deactivates genetic defects and powers, restoring a patient to an ideal state. May be useful if genetics is unable to function properly. Deactivated effects return if the patient's genes are modified again.
-  physicalDesc: cloudy
-  color: "#532fd4"
+  id: PulpedBananaPeel
+  name: reagent-name-pulped-banana-peel
+  group: Medicine
+  desc: reagent-desc-pulped-banana-peel
+  physicalDesc: reagent-physical-desc-pulpy
+  color: "#FFE774"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBleedAmount
+        amount: -0.5
+
+- type: reagent
+  id: Siderlac
+  name: reagent-name-siderlac
+  group: Medicine
+  desc: reagent-desc-siderlac
+  physicalDesc: reagent-physical-desc-milky
+  color: "#f4dab8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: -5
 
 - type: reagent
   id: Spaceacillin
-  name: spaceacillin
-  desc: A theta-lactam antibiotic. A common and very useful medicine, effective against many diseases likely to be encountered in space. Slows progression of diseases.
-  physicalDesc: opaque
+  name: reagent-name-spaceacillin
+  group: Medicine
+  desc: reagent-desc-spaceacillin
+  physicalDesc: reagent-physical-desc-opaque
   color: "#9942f5"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:ChemCureDisease
+
+- type: reagent
+  id: Stellibinin
+  name: reagent-name-stellibinin
+  group: Medicine
+  desc: reagent-desc-stellibinin
+  physicalDesc: reagent-physical-desc-starry
+  color: "#2b2f77"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -4
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Amatoxin
+          min: 1
+        reagent: Amatoxin
+        amount: -3
 
 - type: reagent
   id: Synaptizine
-  name: synaptizine
-  desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. One unit is enough to treat hallucinations; two units is deadly.
-  physicalDesc: pungent
+  name: reagent-name-synaptizine
+  group: Medicine
+  desc: reagent-desc-synaptizine
+  physicalDesc: reagent-physical-desc-pungent
   color: "#d49a2f"
   metabolisms:
     Poison:
@@ -400,58 +533,62 @@
             Poison: 3
       - !type:GenericStatusEffect
         key: Stun
-        time: 1.0
+        time: 3.0
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 1.0
+        time: 3.0
         type: Remove
 
 - type: reagent
-  id: Tramadol
-  name: tramadol
-  desc: A simple, yet effective painkiller. Very effective for patients in shock.
-  physicalDesc: strong-smelling
-  color: "#2f6ed4"
+  id: TranexamicAcid
+  name: reagent-name-tranexamic-acid
+  group: Medicine
+  desc: reagent-desc-tranexamic-acid
+  physicalDesc: reagent-physical-desc-viscous
+  color: "#ba7d7d"
+  metabolisms:
+    Medicine:
+      effects:
+      # Medium-large quantities can hurt you instead,
+      # but still technically stop your bleeding.
+      - !type:ModifyBleedAmount
+        amount: -1.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        damage:
+          types:
+            Bloodloss: 3
 
 - type: reagent
   id: Tricordrazine
-  name: tricordrazine
-  desc: A wide-spectrum stimulant, originally derived from Cordrazine. Is capable of healing all four main damage types simultaneously, however it only heals at half the rate of conventional healing chemicals. Because of its low potency, it's best used as a supplement to other medicines.
-  physicalDesc: opaque
+  name: reagent-name-tricordrazine
+  group: Medicine
+  desc: reagent-desc-tricordrazine
+  physicalDesc: reagent-physical-desc-opaque
   color: "#00e5ff"
   metabolisms:
     Medicine:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
         damage:
           groups:
             Burn: -1
-            Toxin: -1
-            Airloss: -1
             Brute: -1
-
-- type: reagent
-  id: ChloralHydrate
-  name: chloral hydrate
-  desc: A powerful sedative which causes death in doses upwards of 16.2 units. Sends the patient to sleep almost instantly.
-  physicalDesc: acrid
-  color: "#18c9b1"
-  # TODO: sleeping and unconsciousness
-
-- type: reagent
-  id: Cryptobiolin
-  name: cryptobiolin
-  desc: Causes confusion and dizziness. This is essential to make Spaceacillin.
-  physicalDesc: fizzy
-  color: "#081a80"
-  # TODO confusion/dizzyness
+          types:
+            Poison: -0.5 ##Should be about what it was when it healed the toxin group
 
 - type: reagent
   id: Lipozine
-  name: lipozine
-  desc: Causes weight loss upon consumption.
-  physicalDesc: oily
+  name: reagent-name-lipozine
+  group: Medicine
+  desc: reagent-desc-lipozine
+  physicalDesc: reagent-physical-desc-oily
   color: "#2690b5"
   metabolisms:
     Medicine:
@@ -460,18 +597,13 @@
       - !type:SatiateHunger
         factor: -1
 
-- type: reagent
-  id: Sterilizine
-  name: sterilizine
-  desc: Helps the patient when used during surgery, may also decontaminate objects and surfaces that bear pathogens. Is currently useless due to infections not being a thing.
-  physicalDesc: strong-smelling
-  color: "#7cad37"
-
+  # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
-  name: Omnizine
-  desc: A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that it's origins remain a mystery because knowing the secrets of its production would render most commercial pharmaceuticals obsolete.
-  physicalDesc: soothing
+  name: reagent-name-omnizine
+  group: Medicine
+  desc: reagent-desc-omnizine
+  physicalDesc: reagent-physical-desc-soothing
   color: "#fcf7f9"
   metabolisms:
     Medicine:
@@ -483,3 +615,46 @@
             Toxin: -2
             Airloss: -2
             Brute: -2
+
+- type: reagent
+  id: Ultravasculine
+  name: reagent-name-ultravasculine
+  group: Medicine
+  desc: reagent-desc-ultravasculine
+  physicalDesc: reagent-physical-desc-thick-and-grainy
+  color: "#520e30"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 0
+          max: 30
+        damage:
+          groups:
+            Toxin: -3
+            Brute: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          groups:
+            Toxin: -1
+            Brute: 3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Histamine
+          min: 1
+        reagent: Histamine
+        amount: -1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Histamine
+          min: 1
+        reagent: Ultravasculine
+        amount: 0.5
+

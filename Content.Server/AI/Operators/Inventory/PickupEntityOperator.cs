@@ -1,20 +1,17 @@
-using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Items;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
-    public class PickupEntityOperator : AiOperator
+    public sealed class PickupEntityOperator : AiOperator
     {
         // Input variables
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
 
-        public PickupEntityOperator(IEntity owner, IEntity target)
+        public PickupEntityOperator(EntityUid owner, EntityUid target)
         {
             _owner = owner;
             _target = target;
@@ -22,41 +19,23 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (_target.Deleted ||
-                !_target.HasComponent<ItemComponent>() ||
-                _target.IsInContainer() ||
-                !_owner.InRangeUnobstructed(_target, popup: true))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var interactionSystem = sysMan.GetEntitySystem<InteractionSystem>();
+            var handsSys = sysMan.GetEntitySystem<SharedHandsSystem>();
+
+            if (entMan.Deleted(_target)
+                || !entMan.HasComponent<ItemComponent>(_target)
+                || _target.IsInContainer()
+                || !interactionSystem.InRangeUnobstructed(_owner, _target, popup: true))
             {
                 return Outcome.Failed;
             }
 
-            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
-            {
+            // select empty hand
+            if (!handsSys.TrySelectEmptyHand(_owner))
                 return Outcome.Failed;
-            }
 
-            var emptyHands = false;
-
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                if (handsComponent.GetItem(hand) == null)
-                {
-                    if (handsComponent.ActiveHand != hand)
-                    {
-                        handsComponent.ActiveHand = hand;
-                    }
-
-                    emptyHands = true;
-                    break;
-                }
-            }
-
-            if (!emptyHands)
-            {
-                return Outcome.Failed;
-            }
-
-            var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
             interactionSystem.InteractHand(_owner, _target);
             return Outcome.Success;
         }

@@ -18,7 +18,7 @@
 - type: entity
   id: ParchisBoardTabletop
   name: parchís
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/parchis_tabletop.rsi
@@ -26,49 +26,3 @@
     noRot: false
     drawdepth: FloorTiles
 
-# Parchís pieces
-- type: entity
-  id: BaseParchisPiece
-  parent: BaseItem
-  abstract: true
-  components:
-  - type: TabletopDraggable
-  - type: Sprite
-    netsync: false
-    noRot: true
-    sprite: Objects/Fun/Tabletop/parchis_pieces.rsi
-  - type: Appearance
-    visuals:
-      - type: TabletopItemVisualizer
-
-- type: entity
-  id: RedParchisPiece
-  name: red piece
-  parent: BaseParchisPiece
-  components:
-  - type: Sprite
-    state: red
-
-- type: entity
-  id: GreenParchisPiece
-  name: green piece
-  parent: BaseParchisPiece
-  components:
-  - type: Sprite
-    state: green
-
-- type: entity
-  id: YellowParchisPiece
-  name: yellow piece
-  parent: BaseParchisPiece
-  components:
-  - type: Sprite
-    state: yellow
-
-- type: entity
-  id: BlueParchisPiece
-  name: blue piece
-  parent: BaseParchisPiece
-  components:
-  - type: Sprite
-    state: blue

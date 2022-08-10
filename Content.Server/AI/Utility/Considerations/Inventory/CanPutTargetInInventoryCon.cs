@@ -2,11 +2,11 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Hands;
 using Content.Server.AI.WorldState.States.Inventory;
-using Content.Server.Items;
+using Content.Shared.Item;
 
 namespace Content.Server.AI.Utility.Considerations.Inventory
 {
-    public class CanPutTargetInInventoryCon : Consideration
+    public sealed class CanPutTargetInInventoryCon : Consideration
     {
         protected override float GetScore(Blackboard context)
         {
@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility.Considerations.Inventory
             // If not then check if we have a free hand
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !target.HasComponent<ItemComponent>())
+            if (target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(target))
             {
                 return 0.0f;
             }

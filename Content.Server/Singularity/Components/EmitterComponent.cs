@@ -1,25 +1,11 @@
-using System;
 using System.Threading;
-using Content.Server.Access.Components;
-using Content.Server.Power.Components;
-using Content.Shared.Sound;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
+using Robust.Shared.Audio;
 
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class EmitterComponent : Component
+    public sealed class EmitterComponent : Component
     {
-        [ComponentDependency] public readonly AppearanceComponent? Appearance = default;
-        [ComponentDependency] public readonly AccessReader? AccessReader = default;
-        [ComponentDependency] public readonly PowerConsumerComponent? PowerConsumer = default;
-
-        public override string Name => "Emitter";
-
         public CancellationTokenSource? TimerCancel;
 
         // whether the power switch is in "on"
@@ -30,7 +16,7 @@ namespace Content.Server.Singularity.Components
         // For the "emitter fired" sound
         public const float Variation = 0.25f;
         public const float Volume = 0.5f;
-        public const float Distance = 3f;
+        public const float Distance = 6f;
 
         [ViewVariables] public int FireShotCounter;
 

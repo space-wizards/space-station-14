@@ -1,6 +1,7 @@
 using Content.Shared.Shuttles.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Shuttles
 {
@@ -10,7 +11,8 @@ namespace Content.Client.Shuttles
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? spriteComponent)) return;
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? spriteComponent)) return;
 
             component.TryGetData(ThrusterVisualState.State, out bool state);
 

@@ -1,10 +1,9 @@
 - type: tile
+  id: Space
   name: space
-  display_name: Space
-  texture: ""
   friction: 0
-  is_subfloor: true
-  is_space: true
+  isSubfloor: true
+  isSpace: true
   sturdy: false
   thermalConductivity: 0.4
   heatCapacity: 700000

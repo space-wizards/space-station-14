@@ -4,24 +4,70 @@
   id: hydroponicsTray
   description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
-  - type: Physics
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.1"
       mass: 25
       hard: true
       mask:
-      - Impassable
+      - MachineMask
   - type: Anchorable
   - type: Pullable
   - type: Sprite
-    sprite: Structures/Hydroponics/containers.rsi
-    state: hydrotray3
+    layers:
+      - sprite: Structures/Hydroponics/containers.rsi
+        state: hydrotray3
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lowhealth3
+        map: [ "health_alert" ]
+        visible: false
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lowwater3
+        map: [ "water_alert" ]
+        visible: false
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lownutri3
+        map: [ "nutri_alert" ]
+        visible: false
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: alert3
+        map: [ "undefined_alert" ]
+        visible: false
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: harvest3
+        map: [ "harvest_alert" ]
+        visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PlantHolderVisuals.HealthLight:
+        health_alert:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PlantHolderVisuals.WaterLight:
+        water_alert:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PlantHolderVisuals.NutritionLight:
+        nutri_alert:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PlantHolderVisuals.AlertLight:
+        undefined_alert:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PlantHolderVisuals.HarvestLight:
+        harvest_alert:
+          True: { visible: true }
+          False: { visible: false }
   - type: PlantHolder
     drawWarnings: true
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -39,4 +85,8 @@
   - type: Wires
     BoardName: "HydroponicsTray"
     LayoutId: HydroponicsTray
-
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/flowing_water_open.ogg

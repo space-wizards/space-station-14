@@ -1,30 +1,63 @@
 - type: entity
   name: Civilian
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobCivilian
   description: A miserable pile of secrets.
   components:
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Clothing
     - Hunger
     - Thirst
     - Idle
-    startingGear: AssistantGear
+  - type: Loadout
+    prototype: PassengerGear
   - type: AiFactionTag
     factions:
     - NanoTrasen
 
 - type: entity
   name: Spirate
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobSpirate
   description: Yarr!
   components:
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Clothing
     - Hunger
     - Thirst
     - Idle
     - Spirate
+
+- type: entity
+  parent: MobHuman
+  id: MobCBURNUnit
+  name: CBURN Agent
+  description: A miserable pile of secrets
+  components:
+  - type: RandomHumanoidAppearance
+  - type: Loadout
+    prototype: CBURNGear
+  - type: GhostTakeoverAvailable
+    makeSentient: false
+    name: CBURN Agent
+    description: A highly trained CentCom agent, capable of dealing with various threats.
+
+- type: entity
+  parent: BaseMobHuman
+  suffix: Dead
+  save: true
+  id: SalvageHumanCorpse
+  name: unidentified human
+  description: We barely knew ye.
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 200
+

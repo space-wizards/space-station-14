@@ -1,26 +1,29 @@
 - type: reagent
   id: Aluminium # We use real words here.
-  name: aluminium
-  desc: A silver, soft, non-magnetic, and ductile metal.
-  physicalDesc: metallic
+  name: reagent-name-aluminium # -we use real words here.
+  group: Elements
+  desc: reagent-desc-aluminium # -we use real words here.
+  physicalDesc: reagent-physical-desc-metallic
   color: "#848789"
   boilingPoint: 2327.0
   meltingPoint: 660.0
 
 - type: reagent
   id: Carbon
-  name: carbon
-  desc: A black, crystalline solid.
-  physicalDesc: crystalline
+  name: reagent-name-carbon
+  group: Elements
+  desc: reagent-desc-carbon
+  physicalDesc: reagent-physical-desc-crystalline
   color: "#22282b"
   boilingPoint: 4200.0
   meltingPoint: 3550.0
 
 - type: reagent
   id: Chlorine
-  name: chlorine
-  desc: A yellow-green gas which is toxic to humans.
-  physicalDesc: gaseous
+  name: reagent-name-chlorine
+  group: Elements
+  desc: reagent-desc-chlorine
+  physicalDesc: reagent-physical-desc-gaseous
   color: "#a2ff00"
   meltingPoint: -101.5
   boilingPoint: -34.04
@@ -36,18 +39,20 @@
 
 - type: reagent
   id: Copper
-  name: copper
-  desc: A soft, malleable, and ductile metal with very high thermal and electrical conductivity.
-  physicalDesc: metallic
+  name: reagent-name-copper
+  group: Elements
+  desc: reagent-desc-copper
+  physicalDesc: reagent-physical-desc-metallic
   color: "#b05b3c"
   boilingPoint: 2595.0
   meltingPoint: 1083.0
 
 - type: reagent
   id: Fluorine
-  name: fluorine
-  desc: A highly toxic pale yellow gas. Extremely reactive.
-  physicalDesc: gaseous
+  name: reagent-name-fluorine
+  group: Elements
+  desc: reagent-desc-fluorine
+  physicalDesc: reagent-physical-desc-gaseous
   color: "#808080"
   boilingPoint: -188.11
   meltingPoint: -219.67
@@ -63,45 +68,55 @@
 
 - type: reagent
   id: Gold
-  name: gold
-  desc: Gold is a dense, soft, shiny metal and the most malleable and ductile metal known.
-  physicalDesc: metallic
+  name: reagent-name-gold
+  group: Elements
+  desc: reagent-desc-gold
+  physicalDesc: reagent-physical-desc-metallic
   color: "#F7C430"
   boilingPoint: 2700.0
   meltingPoint: 1064.76
 
 - type: reagent
   id: Hydrogen
-  name: hydrogen
-  desc: A light, flammable gas.
-  physicalDesc: gaseous
+  name: reagent-name-hydrogen
+  group: Elements
+  desc: reagent-desc-hydrogen
+  physicalDesc: reagent-physical-desc-gaseous
   color: "#808080"
   boilingPoint: -253.0
   meltingPoint: -259.2
 
 - type: reagent
   id: Iodine
-  name: iodine
-  desc: Commonly added to table salt as a nutrient. On its own it tastes far less pleasing.
-  physicalDesc: Dark Brown
+  name: reagent-name-iodine
+  group: Elements
+  desc: reagent-desc-iodine
+  physicalDesc: reagent-physical-desc-dark-brown
   color: "#BC8A00"
   boilingPoint: 184.3
   meltingPoint: 113.7
 
 - type: reagent
   id: Iron
-  name: iron
-  desc: A silvery-grey metal which forms iron oxides (rust) with contact with air. Commonly alloyed with other elements to create alloys such as steel.
-  physicalDesc: metallic
+  name: reagent-name-iron
+  group: Elements
+  desc: reagent-desc-iron
+  physicalDesc: reagent-physical-desc-metallic
   color: "#434b4d"
   boilingPoint: 2862.0
   meltingPoint: 1538.0
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBloodLevel
+        amount: 2
 
 - type: reagent
   id: Lithium
-  name: lithium
-  desc: A soft, silvery-white alkali metal. It is highly reactive, and ignites if it makes contact with water.
-  physicalDesc: shiny
+  name: reagent-name-lithium
+  group: Elements
+  desc: reagent-desc-lithium
+  physicalDesc: reagent-physical-desc-shiny
   color: "#c6c8cc"
   meltingPoint: 180.5
   boilingPoint: 1330.0
@@ -109,14 +124,15 @@
 
 - type: reagent
   id: Mercury
-  name: mercury
-  desc: A silver metal which is liquid at room temperature. It is highly toxic to humans.
-  physicalDesc: shiny
+  name: reagent-name-mercury
+  group: Elements
+  desc: reagent-desc-mercury
+  physicalDesc: reagent-physical-desc-shiny
   color: "#929296"
   meltingPoint: -38.83
   boilingPoint: 356.73
   metabolisms:
-    Medicine:
+    Poison:
       effects:
       - !type:HealthChange
         damage:
@@ -124,37 +140,21 @@
             Poison: 2
 
 - type: reagent
-  id: Nitrogen
-  name: nitrogen
-  desc: A colorless, odorless unreactive gas. Highly stable.
-  physicalDesc: gaseous
-  color: "#808080"
-  boilingPoint: -195.8
-  meltingPoint: -210.0
-
-- type: reagent
-  id: Oxygen
-  name: oxygen
-  desc: An oxidizing, colorless gas.
-  physicalDesc: gaseous
-  color: "#808080"
-  boilingPoint: -183.0
-  meltingPoint: -218.4
-
-- type: reagent
   id: Potassium
-  name: potassium
-  desc: A soft, shiny grey metal. Even more reactive than lithium.
-  physicalDesc: shiny
+  name: reagent-name-potassium
+  group: Elements
+  desc: reagent-desc-potassium
+  physicalDesc: reagent-physical-desc-shiny
   color: "#c6c8cc"
   meltingPoint: 65.5
   boilingPoint: 759.0
 
 - type: reagent
   id: Phosphorus
-  name: phosphorus
-  desc: A reactive metal used in pyrotechnics and weapons.
-  physicalDesc: powdery
+  name: reagent-name-phosphorus
+  group: Elements
+  desc: reagent-desc-phosphorus
+  physicalDesc: reagent-physical-desc-powdery
   color: "#ede4e4"
   meltingPoint: 44.2
   boilingPoint: 280.5
@@ -168,55 +168,61 @@
 
 - type: reagent
   id: Radium
-  name: radium
+  name: reagent-name-radium
+  group: Elements
   parent: Uranium
-  desc: A radioactive metal, silvery-white in its pure form. It glows due to its radioactivity and is highly toxic.
-  physicalDesc: glowing
+  desc: reagent-desc-radium
+  physicalDesc: reagent-physical-desc-glowing
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
 
 - type: reagent
   id: Silicon
-  name: silicon
-  desc: A hard and brittle crystalline solid with a blue-grey color.
-  physicalDesc: crystalline
+  name: reagent-name-silicon
+  group: Elements
+  desc: reagent-desc-silicon
+  physicalDesc: reagent-physical-desc-crystalline
   color: "#364266"
   boilingPoint: 3265.0
   meltingPoint: 1414.0
 
 - type: reagent
   id: Silver
-  name: silver
-  desc: A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal.
-  physicalDesc: reasonably metallic
+  name: reagent-name-silver
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
   color: "#d0d0d0"
   boilingPoint: 2212.0
   meltingPoint: 960.5
 
 - type: reagent
   id: Sulfur
-  name: sulfur
-  desc: A yellow, crystalline solid.
-  physicalDesc: powdery
+  name: reagent-name-sulfur
+  group: Elements
+  desc: reagent-desc-sulfur
+  physicalDesc: reagent-physical-desc-powdery
   color: "#fff385"
   boilingPoint: 445.0
   meltingPoint: 120.0
 
 - type: reagent
   id: Sodium
-  name: sodium
-  desc: A silvery-white alkali metal. Highly reactive in its pure form. #thanks visne <3
-  physicalDesc: metallic
+  name: reagent-name-sodium
+  group: Elements
+  desc: reagent-desc-sodium
+  physicalDesc: reagent-physical-desc-metallic
   color: "#c6c8cc"
   meltingPoint: 97.8
   boilingPoint: 883.0
 
 - type: reagent
   id: Uranium
-  name: uranium
-  desc: A grey metallic chemical element in the actinide series, weakly radioactive.
-  physicalDesc: metallic
+  name: reagent-name-uranium
+  group: Elements
+  desc: reagent-desc-uranium
+  physicalDesc: reagent-physical-desc-metallic
   color: "#8fa191"
   meltingPoint: 1133.0
   boilingPoint: 4131.0
@@ -231,7 +237,7 @@
     prob: 0.2
     amount: 0.1
   metabolisms:
-    Medicine:
+    Poison:
       effects:
       - !type:HealthChange
         damage:

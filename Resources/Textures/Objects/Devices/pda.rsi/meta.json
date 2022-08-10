@@ -21,12 +21,6 @@
       "name": "light_overlay"
     },
     {
-      "name": "pai_off_overlay"
-    },
-    {
-      "name": "pai_overlay"
-    },
-    {
       "name": "pda"
     },
     {
@@ -34,6 +28,9 @@
     },
     {
       "name": "pda-bartender"
+    },
+    {
+      "name": "pda-boxer"
     },
     {
       "name": "pda-captain"
@@ -147,6 +144,24 @@
     },
     {
       "name": "pda-warden"
+    },
+    {
+      "name": "pda-musician"
+    },
+    {
+      "name": "pda-reporter"
+    },
+    {
+      "name": "pda-interncadet"
+    },
+    {
+      "name": "pda-internmed"
+    },
+    {
+      "name": "pda-internservice"
+    },
+    {
+      "name": "pda-interntech"
     }
   ]
 }

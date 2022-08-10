@@ -1,17 +1,11 @@
-using System.Collections.Generic;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public class AddToSolutionReaction : ReagentEffect
+    public sealed class AddToSolutionReaction : ReagentEffect
     {
         [DataField("solution")]
         private string _solution = "reagents";

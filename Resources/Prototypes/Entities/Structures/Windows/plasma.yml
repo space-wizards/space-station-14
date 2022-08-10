@@ -10,7 +10,7 @@
     sprite: Structures/Windows/plasma_window.rsi
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Glass
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
@@ -30,7 +30,7 @@
   - type: IconSmooth
     base: pwindow
   - type: Construction
-    graph: window
+    graph: Window
     node: plasmaWindow
   - type: Appearance
     visuals:
@@ -40,6 +40,8 @@
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 20.5
 
 - type: entity
   id: PlasmaWindowDirectional
@@ -53,14 +55,13 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: plasmaWindowDirectional
   - type: Destructible
     thresholds:
@@ -78,3 +79,5 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 20.5

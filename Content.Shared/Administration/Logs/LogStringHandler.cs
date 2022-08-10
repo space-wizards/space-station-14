@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace Content.Shared.Administration.Logs;
 
@@ -40,7 +38,21 @@ public ref struct LogStringHandler
             format = argument[0] == '@' ? argument[1..] : argument;
         }
 
-        Values.Add(format, value);
+        if (Values.TryAdd(format, value) ||
+            Values[format] == (object?) value)
+        {
+            return;
+        }
+
+        var originalFormat = format;
+        var i = 2;
+        format = $"{originalFormat}_{i}";
+
+        while (!Values.TryAdd(format, value))
+        {
+            format = $"{originalFormat}_{i}";
+            i++;
+        }
     }
 
     public void AppendLiteral(string value)

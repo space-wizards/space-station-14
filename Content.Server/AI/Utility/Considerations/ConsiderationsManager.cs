@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 
 namespace Content.Server.AI.Utility.Considerations
 {
-    public class ConsiderationsManager
+    public sealed class ConsiderationsManager
     {
         private readonly Dictionary<Type, Consideration> _considerations = new();
 

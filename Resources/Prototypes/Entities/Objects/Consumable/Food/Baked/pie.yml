@@ -13,10 +13,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 24
-        reagents:
+        maxVol: 20
+        reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 11
+        - ReagentId: Vitamin
+          Quanity: 5
   - type: SliceableFood
     count: 4
   - type: Tag
@@ -40,7 +42,9 @@
         maxVol: 6
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 1.2
+        - ReagentId: Vitamin
+          Quantity: 1
   - type: Tag
     tags:
     - NoSpinOnThrow
@@ -259,10 +263,21 @@
     layers:
     - state: plate
     - state: amanita
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 17
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Amatoxin
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like pie, mushrooms.
 
 - type: entity
-  name: amanita pie
+  name: plump pie
   parent: FoodPieBase
   id: FoodPiePlump
   description: I bet you love stuff made out of plump helmets!

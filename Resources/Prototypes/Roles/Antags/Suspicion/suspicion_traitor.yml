@@ -1,6 +1,6 @@
 - type: antag
   id: SuspicionTraitor
-  name: "traitor"
+  name: "Suspect"
   antagonist: true
   setPreference: true
   objective: "Kill the innocents."

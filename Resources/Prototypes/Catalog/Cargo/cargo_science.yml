@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: ArtifactContainer
+  icon:
+    sprite: Structures/Storage/Crates/artifact.rsi
+    state: artifact_container_icon
+  product: CrateArtifactContainer
+  cost: 2000
+  category: Science
+  group: market

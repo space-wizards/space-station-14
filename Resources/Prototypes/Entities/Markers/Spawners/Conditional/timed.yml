@@ -24,13 +24,38 @@
   components:
     - type: Sprite
       layers:
-        - state: blue
-        - texture: Mobs/Aliens/Xenos/xeno.rsi/crit.png
-        - state: ai
+      - state: blue
+      - texture: Mobs/Aliens/Xenos/burrower.rsi/crit.png
+      - state: ai
     - type: TimedSpawner
       prototypes:
-        - MobXeno
+      - MobXeno
       chance: 0.85
       intervalSeconds: 30
       minimumEntitiesSpawned: 2
       maximumEntitiesSpawned: 4
+
+- type: entity
+  name: Mouse Timed Spawner
+  id: MouseTimedSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - texture: Mobs/Animals/mouse.rsi/icon-2.png
+        - state: timed
+    - type: TimedSpawner
+      prototypes:
+        - MobMouse
+        - MobMouse1
+        - MobMouse2
+      # round ~90m
+      # one spawner should only spawn ~5 mice for sanity reasons
+      # therefore 18m
+      # use 50% chance for randomness and balance with halved interval
+      chance: 0.5
+      intervalSeconds: 540
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
+

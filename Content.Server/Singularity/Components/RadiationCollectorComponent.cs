@@ -1,83 +1,37 @@
-using System;
-using Content.Server.Power.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
-using Content.Shared.Radiation;
-using Content.Shared.Singularity.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
+using Content.Server.Singularity.EntitySystems;
 
 namespace Content.Server.Singularity.Components
 {
+    /// <summary>
+    ///     Generates electricity from radiation.
+    /// </summary>
     [RegisterComponent]
-    public class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct
+    [Access(typeof(RadiationCollectorSystem))]
+    public sealed class RadiationCollectorComponent : Component
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        public override string Name => "RadiationCollector";
-        private bool _enabled;
-        private TimeSpan _coolDownEnd;
-
+        /// <summary>
+        ///     How much joules will collector generate for each rad.
+        /// </summary>
+        [DataField("chargeModifier")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Collecting {
-            get => _enabled;
-            set
-            {
-                if (_enabled == value) return;
-                _enabled = value;
-                SetAppearance(_enabled ? RadiationCollectorVisualState.Activating : RadiationCollectorVisualState.Deactivating);
-            }
-        }
+        public float ChargeModifier = 30000f;
 
-        [ComponentDependency] private readonly BatteryComponent? _batteryComponent = default!;
+        /// <summary>
+        ///     Cooldown time between users interaction.
+        /// </summary>
+        [DataField("cooldown")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan Cooldown = TimeSpan.FromSeconds(0.81f);
 
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var curTime = _gameTiming.CurTime;
+        /// <summary>
+        ///     Was machine activated by user?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool Enabled;
 
-            if(curTime < _coolDownEnd)
-                return true;
-
-            if (!_enabled)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-on"));
-                Collecting = true;
-            }
-            else
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-off"));
-                Collecting = false;
-            }
-
-            _coolDownEnd = curTime + TimeSpan.FromSeconds(0.81f);
-
-            return true;
-        }
-
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
-        {
-            if (!_enabled) return;
-
-            // No idea if this is even vaguely accurate to the previous logic.
-            // The maths is copied from that logic even though it works differently.
-            // But the previous logic would also make the radiation collectors never ever stop providing energy.
-            // And since frameTime was used there, I'm assuming that this is what the intent was.
-            // This still won't stop things being potentially hilarously unbalanced though.
-            if (_batteryComponent != null)
-            {
-                _batteryComponent!.CurrentCharge += frameTime * radiation.RadsPerSecond * 3000f;
-            }
-        }
-
-        protected void SetAppearance(RadiationCollectorVisualState state)
-        {
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
-            {
-                appearance.SetData(RadiationCollectorVisuals.VisualState, state);
-            }
-        }
+        /// <summary>
+        ///     Timestamp when machine can be deactivated again.
+        /// </summary>
+        public TimeSpan CoolDownEnd;
     }
 }

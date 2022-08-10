@@ -1,13 +1,9 @@
 using Content.Shared.Kudzu;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Random;
 
 namespace Content.Server.Kudzu;
 
-public class GrowingKudzuSystem : EntitySystem
+public sealed class GrowingKudzuSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -44,10 +40,10 @@ public class GrowingKudzuSystem : EntitySystem
             kudzu.GrowthLevel += 1;
 
             if (kudzu.GrowthLevel == 3 &&
-                EntityManager.TryGetComponent<SpreaderComponent>(kudzu.OwnerUid, out var spreader))
+                EntityManager.TryGetComponent<SpreaderComponent>((kudzu).Owner, out var spreader))
             {
                 // why cache when you can simply cease to be? Also saves a bit of memory/time.
-                EntityManager.RemoveComponent<GrowingKudzuComponent>(kudzu.OwnerUid);
+                EntityManager.RemoveComponent<GrowingKudzuComponent>((kudzu).Owner);
             }
 
             appearance.SetData(KudzuVisuals.GrowthLevel, kudzu.GrowthLevel);

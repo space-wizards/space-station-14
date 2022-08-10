@@ -1,11 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Tag;
-using Content.Shared.Wires;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+﻿using Content.Shared.Tag;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Whitelist
 {
@@ -24,31 +19,36 @@ namespace Content.Shared.Whitelist
     ///     - AsteroidRock
     /// </code>
     [DataDefinition]
-    public class EntityWhitelist : ISerializationHooks
+    [Serializable, NetSerializable]
+    public sealed class EntityWhitelist
     {
         /// <summary>
         ///     Component names that are allowed in the whitelist.
         /// </summary>
         [DataField("components")] public string[]? Components = null;
 
-        private List<IComponentRegistration>? _registrations = null;
+        [NonSerialized]
+        private List<ComponentRegistration>? _registrations = null;
 
         /// <summary>
         ///     Tags that are allowed in the whitelist.
         /// </summary>
-        [DataField("tags")] public string[]? Tags = null;
+        [DataField("tags", customTypeSerializer:typeof(PrototypeIdListSerializer<TagPrototype>))]
+        public List<string>? Tags = null;
 
-        void ISerializationHooks.AfterDeserialization()
-        {
-            UpdateRegistrations();
-        }
+        /// <summary>
+        ///     If false, an entity only requires one of these components or tags to pass the whitelist. If true, an
+        ///     entity requires to have ALL of these components and tags to pass.
+        /// </summary>
+        [DataField("requireAll")]
+        public bool RequireAll = false;
 
         public void UpdateRegistrations()
         {
             if (Components == null) return;
 
             var compfact = IoCManager.Resolve<IComponentFactory>();
-            _registrations = new List<IComponentRegistration>();
+            _registrations = new List<ComponentRegistration>();
             foreach (var name in Components)
             {
                 var availability = compfact.GetComponentAvailability(name);
@@ -69,22 +69,30 @@ namespace Content.Shared.Whitelist
         /// </summary>
         public bool IsValid(EntityUid uid, IEntityManager? entityManager = null)
         {
+            if (Components != null && _registrations == null)
+                UpdateRegistrations();
+
             entityManager ??= IoCManager.Resolve<IEntityManager>();
-
-            if (Tags != null && entityManager.TryGetComponent(uid, out TagComponent? tags))
-            {
-                if (tags.HasAnyTag(Tags))
-                        return true;
-            }
-
             if (_registrations != null)
             {
                 foreach (var reg in _registrations)
                 {
                     if (entityManager.HasComponent(uid, reg.Type))
-                        return true;
+                    {
+                        if (!RequireAll)
+                            return true;
+                    }
+                    else if (RequireAll)
+                        return false;
                 }
             }
+
+            if (Tags != null && entityManager.TryGetComponent(uid, out TagComponent? tags))
+            {
+                var tagSystem = EntitySystem.Get<TagSystem>();
+                return RequireAll ? tagSystem.HasAllTags(tags, Tags) : tagSystem.HasAnyTag(tags, Tags);
+            }
+
             return false;
         }
     }

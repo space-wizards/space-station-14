@@ -1,6 +1,5 @@
 ## Entity
 
-plant-holder-component-empty-seed-packet-message = The packet seems to be empty. You throw it away.
 plant-holder-component-plant-success-message = You plant the {$seedName} {$seedNoun}.
 plant-holder-component-already-seeded-message = The {$name} already has seeds in it!
 plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
@@ -23,9 +22,9 @@ plant-holder-component-something-already-growing-message = [color=green]{$seedNa
 plant-holder-component-something-already-growing-low-health-message = The plant looks [color=red]{$healthState}[/color].
 plant-holder-component-plant-old-adjective = old and wilting
 plant-holder-component-plant-unhealthy-adjective = unhealthy
-plant-holder-component-dead-plant-matter-message = It is full of [color=red]dead plant matter[/color].
-plant-holder-component-weed-high-level-message = It is filled with [color=green]weeds[/color]!
-plant-holder-component-pest-high-level-message = It is filled with [color=gray]tiny worms[/color]!
+plant-holder-component-dead-plant-matter-message = It's full of [color=red]dead plant matter[/color].
+plant-holder-component-weed-high-level-message = It's filled with [color=green]weeds[/color]!
+plant-holder-component-pest-high-level-message = It's filled with [color=gray]tiny worms[/color]!
 plant-holder-component-water-level-message = Water:     [color=cyan]{$waterLevel}[/color].
 plant-holder-component-nutrient-level-message = Nutrient: [color=orange]{$nutritionLevel}[/color].
 plant-holder-component-toxins-high-warning = The [color=red]toxicity level alert[/color] is flashing red.

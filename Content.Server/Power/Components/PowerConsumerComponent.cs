@@ -1,8 +1,5 @@
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {
@@ -10,10 +7,8 @@ namespace Content.Server.Power.Components
     ///     Draws power directly from an MV or HV wire it is on top of.
     /// </summary>
     [RegisterComponent]
-    public class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
+    public sealed class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
     {
-        public override string Name => "PowerConsumer";
-
         /// <summary>
         ///     How much power this needs to be fully powered.
         /// </summary>

@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.AI.EntitySystems
@@ -54,12 +49,12 @@ namespace Content.Server.AI.EntitySystems
 
         public Faction GetHostileFactions(Faction faction) => _hostileFactions.TryGetValue(faction, out var hostiles) ? hostiles : Faction.None;
 
-        public Faction GetFactions(IEntity entity) =>
-            entity.TryGetComponent(out AiFactionTagComponent? factionTags)
+        public Faction GetFactions(EntityUid entity) =>
+            EntityManager.TryGetComponent(entity, out AiFactionTagComponent? factionTags)
             ? factionTags.Factions
             : Faction.None;
 
-        public IEnumerable<IEntity> GetNearbyHostiles(IEntity entity, float range)
+        public IEnumerable<EntityUid> GetNearbyHostiles(EntityUid entity, float range)
         {
             var ourFaction = GetFactions(entity);
             var hostile = GetHostileFactions(ourFaction);
@@ -72,9 +67,9 @@ namespace Content.Server.AI.EntitySystems
             {
                 if ((component.Factions & hostile) == 0)
                     continue;
-                if (component.Owner.Transform.MapID != entity.Transform.MapID)
+                if (EntityManager.GetComponent<TransformComponent>(component.Owner).MapID != EntityManager.GetComponent<TransformComponent>(entity).MapID)
                     continue;
-                if (!component.Owner.Transform.MapPosition.InRange(entity.Transform.MapPosition, range))
+                if (!EntityManager.GetComponent<TransformComponent>(component.Owner).MapPosition.InRange(EntityManager.GetComponent<TransformComponent>(entity).MapPosition, range))
                     continue;
 
                 yield return component.Owner;

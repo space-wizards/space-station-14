@@ -1,13 +1,9 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Arcade
 {
     public abstract class SharedSpaceVillainArcadeComponent : Component
     {
-        public override string Name => "SpaceVillainArcade";
-
         [Serializable, NetSerializable]
         public enum Indicators
         {
@@ -48,7 +44,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public class SpaceVillainArcadePlayerActionMessage : BoundUserInterfaceMessage
+        public sealed class SpaceVillainArcadePlayerActionMessage : BoundUserInterfaceMessage
         {
             public readonly PlayerAction PlayerAction;
             public SpaceVillainArcadePlayerActionMessage(PlayerAction playerAction)
@@ -58,7 +54,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public class SpaceVillainArcadeMetaDataUpdateMessage : SpaceVillainArcadeDataUpdateMessage
+        public sealed class SpaceVillainArcadeMetaDataUpdateMessage : SpaceVillainArcadeDataUpdateMessage
         {
             public readonly string GameTitle;
             public readonly string EnemyName;
@@ -71,7 +67,7 @@ namespace Content.Shared.Arcade
             }
         }
 
-        [Serializable, NetSerializable]
+        [Serializable, NetSerializable, Virtual]
         public class SpaceVillainArcadeDataUpdateMessage : BoundUserInterfaceMessage
         {
             public readonly int PlayerHP;

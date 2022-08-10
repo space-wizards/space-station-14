@@ -1,19 +1,18 @@
-using System;
 using System.Threading;
+using Content.Server.Administration.Logs;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Projectiles;
 using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Audio;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -23,9 +22,10 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Singularity.EntitySystems
 {
     [UsedImplicitly]
-    public class EmitterSystem : EntitySystem
+    public sealed class EmitterSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -44,7 +44,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            if (component.Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
+            if (EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!component.IsOn)
                 {
@@ -56,6 +56,10 @@ namespace Content.Server.Singularity.EntitySystems
                     SwitchOff(component);
                     component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)));
                 }
+
+                _adminLogger.Add(LogType.Emitter,
+                    component.IsOn ? LogImpact.Medium : LogImpact.High,
+                    $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter}");
             }
             else
             {
@@ -86,7 +90,7 @@ namespace Content.Server.Singularity.EntitySystems
         public void SwitchOff(EmitterComponent component)
         {
             component.IsOn = false;
-            if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = 0;
+            if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer)) powerConsumer.DrawRate = 0;
             PowerOff(component);
             UpdateAppearance(component);
         }
@@ -94,7 +98,7 @@ namespace Content.Server.Singularity.EntitySystems
         public void SwitchOn(EmitterComponent component)
         {
             component.IsOn = true;
-            if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = component.PowerUseActive;
+            if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer)) powerConsumer.DrawRate = component.PowerUseActive;
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
             UpdateAppearance(component);
@@ -141,7 +145,9 @@ namespace Content.Server.Singularity.EntitySystems
             // and thus not firing
             DebugTools.Assert(component.IsPowered);
             DebugTools.Assert(component.IsOn);
-            DebugTools.Assert(component.PowerConsumer != null && (component.PowerConsumer.DrawRate <= component.PowerConsumer.ReceivedPower));
+            DebugTools.Assert(TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer) &&
+                              (powerConsumer.DrawRate <= powerConsumer.ReceivedPower ||
+                               MathHelper.CloseTo(powerConsumer.DrawRate, powerConsumer.ReceivedPower, 0.0001f)));
 
             Fire(component);
 
@@ -166,9 +172,9 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void Fire(EmitterComponent component)
         {
-            var projectile = component.Owner.EntityManager.SpawnEntity(component.BoltType, component.Owner.Transform.Coordinates);
+            var projectile = EntityManager.SpawnEntity(component.BoltType, EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates);
 
-            if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
+            if (!EntityManager.TryGetComponent<PhysicsComponent?>(projectile, out var physicsComponent))
             {
                 Logger.Error("Emitter tried firing a bolt, but it was spawned without a PhysicsComponent");
                 return;
@@ -176,28 +182,28 @@ namespace Content.Server.Singularity.EntitySystems
 
             physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
+            if (!EntityManager.TryGetComponent<ProjectileComponent?>(projectile, out var projectileComponent))
             {
                 Logger.Error("Emitter tried firing a bolt, but it was spawned without a ProjectileComponent");
                 return;
             }
 
-            projectileComponent.IgnoreEntity(component.Owner);
+            Get<ProjectileSystem>().SetShooter(projectileComponent, component.Owner);
 
             physicsComponent
-                .LinearVelocity = component.Owner.Transform.WorldRotation.ToWorldVec() * 20f;
-            projectile.Transform.WorldRotation = component.Owner.Transform.WorldRotation;
+                .LinearVelocity = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * 20f;
+            EntityManager.GetComponent<TransformComponent>(projectile).WorldRotation = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation;
 
             // TODO: Move to projectile's code.
-            Timer.Spawn(3000, () => projectile.Delete());
+            Timer.Spawn(3000, () => EntityManager.DeleteEntity(projectile));
 
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
-                AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
+            SoundSystem.Play(component.FireSound.GetSound(), Filter.Pvs(component.Owner),
+                component.Owner, AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
         }
 
         private void UpdateAppearance(EmitterComponent component)
         {
-            if (component.Appearance == null)
+            if (!TryComp<AppearanceComponent>(component.Owner, out var appearanceComponent))
             {
                 return;
             }
@@ -216,7 +222,7 @@ namespace Content.Server.Singularity.EntitySystems
                 state = EmitterVisualState.Off;
             }
 
-            component.Appearance.SetData(EmitterVisuals.VisualState, state);
+            appearanceComponent.SetData(EmitterVisuals.VisualState, state);
         }
     }
 }

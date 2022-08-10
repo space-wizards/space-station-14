@@ -2,15 +2,11 @@ using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Tabletop
 {
-    public partial class TabletopSystem
+    public sealed partial class TabletopSystem
     {
         /// <summary>
         ///     Ensures that a <see cref="TabletopSession"/> exists on a <see cref="TabletopGameComponent"/>.
@@ -18,7 +14,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         /// <param name="tabletop">The tabletop game in question.</param>
         /// <returns>The session for the given tabletop game.</returns>
-        private TabletopSession EnsureSession(TabletopGameComponent tabletop)
+        public TabletopSession EnsureSession(TabletopGameComponent tabletop)
         {
             // We already have a session, return it
             // TODO: if tables are connected, treat them as a single entity. This can be done by sharing the session.
@@ -72,7 +68,7 @@ namespace Content.Server.Tabletop
         /// <param name="uid">The UID of the tabletop game entity.</param>
         public void OpenSessionFor(IPlayerSession player, EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {} attachedEntity)
+            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {Valid: true} attachedEntity)
                 return;
 
             // Make sure we have a session, and add the player to it if not added already.
@@ -81,7 +77,7 @@ namespace Content.Server.Tabletop
             if (session.Players.ContainsKey(player))
                 return;
 
-            if(attachedEntity.TryGetComponent<TabletopGamerComponent>(out var gamer))
+            if(EntityManager.TryGetComponent<TabletopGamerComponent?>(attachedEntity, out var gamer))
                 CloseSessionFor(player, gamer.Tabletop, false);
 
             // Set the entity as an absolute GAMER.
@@ -110,13 +106,13 @@ namespace Content.Server.Tabletop
             if (!session.Players.TryGetValue(player, out var data))
                 return;
 
-            if(removeGamerComponent && player.AttachedEntity is {} attachedEntity && attachedEntity.TryGetComponent(out TabletopGamerComponent? gamer))
+            if(removeGamerComponent && player.AttachedEntity is {} attachedEntity && EntityManager.TryGetComponent(attachedEntity, out TabletopGamerComponent? gamer))
             {
                 // We invalidate this to prevent an infinite feedback from removing the component.
                 gamer.Tabletop = EntityUid.Invalid;
 
                 // You stop being a gamer.......
-                attachedEntity.RemoveComponent<TabletopGamerComponent>();
+                EntityManager.RemoveComponent<TabletopGamerComponent>(attachedEntity);
             }
 
             session.Players.Remove(player);
@@ -148,9 +144,9 @@ namespace Content.Server.Tabletop
             eyeComponent.Zoom = tabletop.CameraZoom;
 
             // Add the user to the view subscribers. If there is no player session, just skip this step
-            _viewSubscriberSystem.AddViewSubscriber(camera.Uid, player);
+            _viewSubscriberSystem.AddViewSubscriber(camera, player);
 
-            return camera.Uid;
+            return camera;
         }
     }
 }

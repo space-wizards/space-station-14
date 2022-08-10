@@ -3,14 +3,12 @@ using Content.Shared.Administration;
 using Content.Shared.EntityList;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityList
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public class SpawnEntityListCommand : IConsoleCommand
+    public sealed class SpawnEntityListCommand : IConsoleCommand
     {
         public string Command => "spawnentitylist";
         public string Description => "Spawns a list of entities around you";
@@ -30,7 +28,7 @@ namespace Content.Server.EntityList
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            if (player.AttachedEntity is not {} attached)
             {
                 shell.WriteError("You must have an entity to run this command.");
                 return;
@@ -49,7 +47,7 @@ namespace Content.Server.EntityList
 
             foreach (var entity in prototype.Entities(prototypeManager))
             {
-                entityManager.SpawnEntity(entity.ID, player.AttachedEntity.Transform.Coordinates);
+                entityManager.SpawnEntity(entity.ID, entityManager.GetComponent<TransformComponent>(attached).Coordinates);
                 i++;
             }
 

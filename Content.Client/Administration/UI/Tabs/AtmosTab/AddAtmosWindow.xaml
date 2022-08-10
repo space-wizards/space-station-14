@@ -1,4 +1,4 @@
-﻿<SS14Window
+﻿<DefaultWindow
     xmlns="https://spacestation14.io" Title="{Loc Add Atmos}">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
@@ -8,4 +8,4 @@
         </BoxContainer>
         <Button Name="SubmitButton" Text="{Loc Add Atmos}" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

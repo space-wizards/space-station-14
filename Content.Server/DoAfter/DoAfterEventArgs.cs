@@ -1,10 +1,5 @@
-﻿using System;
-using System.Threading;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
-
-// ReSharper disable UnassignedReadonlyField
+﻿using System.Threading;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.DoAfter
 {
@@ -24,6 +19,11 @@ namespace Content.Server.DoAfter
         ///     Applicable target (if relevant)
         /// </summary>
         public EntityUid? Target { get; }
+
+        /// <summary>
+        ///     Entity used by the User on the Target.
+        /// </summary>
+        public EntityUid? Used { get; set; }
 
         /// <summary>
         ///     Manually cancel the do_after so it no longer runs
@@ -53,7 +53,17 @@ namespace Content.Server.DoAfter
         public float MovementThreshold { get; set; }
 
         public bool BreakOnDamage { get; set; }
+
+        /// <summary>
+        ///     Threshold for user damage
+        /// </summary>
+        public FixedPoint2 DamageThreshold { get; set; }
         public bool BreakOnStun { get; set; }
+
+        /// <summary>
+        ///     Threshold for distance user from the used OR target entities.
+        /// </summary>
+        public float? DistanceThreshold { get; set; }
 
         /// <summary>
         ///     Requires a function call once at the end (like InRangeUnobstructed).
@@ -99,24 +109,19 @@ namespace Content.Server.DoAfter
         public object? BroadcastFinishedEvent { get; set; }
 
         public DoAfterEventArgs(
-            IEntity user,
-            float delay,
-            CancellationToken cancelToken = default,
-            IEntity? target = null) : this(user.Uid, delay, cancelToken, target?.Uid ?? null)
-        {
-        }
-
-        public DoAfterEventArgs(
             EntityUid user,
             float delay,
             CancellationToken cancelToken = default,
-            EntityUid? target = null)
+            EntityUid? target = null,
+            EntityUid? used = null)
         {
             User = user;
             Delay = delay;
             CancelToken = cancelToken;
             Target = target;
+            Used = used;
             MovementThreshold = 0.1f;
+            DamageThreshold = 1.0;
 
             if (Target == null)
             {

@@ -2,85 +2,30 @@
   abstract: true
   parent: BaseItem
   id: IngotBase
-  description: A heavy metal ingot stamped with the Nanotransen logo.
+  description: A heavy metal ingot stamped with the Nanotrasen logo.
   components:
   - type: Sprite
     netsync: false
     sprite: Objects/Materials/ingots.rsi
   - type: Item
     sprite: Objects/Materials/ingots.rsi
+  - type: StaticPrice
+    price: 0
   - type: ItemStatus
   - type: Tag
     tags:
     - Ingot
-
-- type: entity
-  parent: IngotBase
-  id: IngotAdamantine
-  name: adamantine bar
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Adamantine
-  - type: Stack
-    stackType: Adamantine
-  - type: Sprite
-    state: adamantine_3
-  - type: Item
-    HeldPrefix: adamantine
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - adamantine
-      - adamantine_2
-      - adamantine_3
-
-- type: entity
-  parent: IngotAdamantine
-  id: IngotAdamantine1
-  name: adamantine bar
-  suffix: Single
-  components:
-  - type: Sprite
-    state: adamantine
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: IngotBase
-  id: IngotCopper
-  name: copper bar
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Copper
-  - type: Stack
-    stackType: Copper
-  - type: Sprite
-    state: copper_3
-  - type: Item
-    HeldPrefix: copper
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - copper
-      - copper_2
-      - copper_3
-
-- type: entity
-  parent: IngotCopper
-  id: IngotCopper1
-  name: copper bar
-  suffix: Single
-  components:
-  - type: Sprite
-    state: copper
-  - type: Stack
-    count: 1
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: IngotBase
@@ -90,13 +35,13 @@
   components:
   - type: Material
     materials:
-    - Gold
+      Gold: 100
   - type: Stack
     stackType: Gold
   - type: Sprite
     state: gold_3
   - type: Item
-    HeldPrefix: gold
+    heldPrefix: gold
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -118,87 +63,19 @@
 
 - type: entity
   parent: IngotBase
-  id: IngotHydrogen
-  name: hydrogen bar
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Hydrogen
-  - type: Stack
-    stackType: Hydrogen
-  - type: Sprite
-    state: hydrogen_3
-  - type: Item
-    HeldPrefix: hydrogen
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - hydrogen
-      - hydrogen_2
-      - hydrogen_3
-
-- type: entity
-  parent: IngotHydrogen
-  id: IngotHydrogen1
-  name: hydrogen bar
-  suffix: Single
-  components:
-  - type: Sprite
-    state: hydrogen
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: IngotBase
-  id: IngotIron
-  name: iron bar
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Iron
-  - type: Stack
-    stackType: Iron
-  - type: Sprite
-    state: iron_3
-  - type: Item
-    HeldPrefix: iron
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - iron
-      - iron_2
-      - iron_3
-
-- type: entity
-  parent: IngotIron
-  id: IngotIron1
-  name: iron bar
-  suffix: Single
-  components:
-  - type: Sprite
-    state: iron
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: IngotBase
   id: IngotSilver
   name: silver bar
   suffix: Full
   components:
   - type: Material
     materials:
-    - Silver
+      Silver: 100
   - type: Stack
     stackType: Silver
   - type: Sprite
     state: silver_3
   - type: Item
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: Appearance
     visuals:
     - type: StackVisualizer

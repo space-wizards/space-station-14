@@ -23,7 +23,12 @@
         maxVol: 6
         reagents:
         - ReagentId: Egg
-          Quantity: 5
+          Quantity: 6
+  - type: SolutionSpiker
+    sourceSolution: food
+    ignoreEmpty: true
+    popup: spike-solution-egg
+  - type: DeleteOnTrigger
   - type: DamageOnLand
     damage:
       types:
@@ -108,6 +113,9 @@
   - type: Tag
     tags:
     - Egg
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
 
 # Egg
 
@@ -118,8 +126,13 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
-    state: icon
-  - type: RandomSpriteState
-    spriteStates:
-      - icon
-      - white
+    layers:
+      - state: icon
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+    netsync: false
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          icon: ""
+      - enum.DamageStateVisualLayers.Base:
+          white: ""

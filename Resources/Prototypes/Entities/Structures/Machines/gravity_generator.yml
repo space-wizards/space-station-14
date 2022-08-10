@@ -7,6 +7,7 @@
     mode: AlignTileAny
   components:
   - type: AmbientSound
+    volume: -6
     range: 7
     sound:
       path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
@@ -30,15 +31,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-1.5,-1.5,1.5,1.5"
+        bounds: "-1.5,-1.5,1.5,1.5"
       mass: 500
       mask:
-      - Impassable
+      - LargeMobMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - WallLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
@@ -51,8 +49,8 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: GravityGenerator
-    idlePower: 15
-    activePower: 500
+    idlePower: 50
+    activePower: 2500
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
   - type: UserInterface
@@ -72,3 +70,37 @@
     # Gravity generator is a large machine, not casting shadows is fine within the radius set above.
     castShadows: false
     color: "#a8ffd9"
+
+- type: entity
+  id: GravityGeneratorMini
+  parent: GravityGenerator
+  name: mini gravity generator
+  description: It's what keeps you to the floor, now in fun size.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/gravity_generator_mini.rsi
+    layers:
+      - state: on
+        map: ["enum.GravityGeneratorVisualLayers.Base"]
+      - sprite: Structures/Machines/gravity_generator_core.rsi
+        state: activated
+        shader: unshaded
+        map: ["enum.GravityGeneratorVisualLayers.Core"]
+        scale: "0.4,0.4"
+        offset: "0,0.2"
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 500
+      mask:
+      - LargeMobMask
+      layer:
+      - WallLayer
+  - type: GravityGenerator
+    idlePower: 15
+    activePower: 500
+    lightRadiusMin: 0.75
+    lightRadiusMax: 2.5

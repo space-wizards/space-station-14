@@ -1,8 +1,5 @@
-using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics.Joints;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Shuttles.Components
 {
@@ -10,12 +7,28 @@ namespace Content.Server.Shuttles.Components
     public sealed class DockingComponent : SharedDockingComponent
     {
         [ViewVariables]
-        public DockingComponent? DockedWith;
+        [DataField("dockedWith")]
+        public EntityUid? DockedWith;
 
         [ViewVariables]
         public Joint? DockJoint;
 
+        [ViewVariables, DataField("dockJointId")]
+        public string? DockJointId;
+
         [ViewVariables]
         public override bool Docked => DockedWith != null;
+
+        /// <summary>
+        /// Color that gets shown on the radar screen.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("radarColor")]
+        public Color RadarColor = Color.DarkViolet;
+
+        /// <summary>
+        /// Color that gets shown on the radar screen when the dock is highlighted.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("highlightedRadarColor")]
+        public Color HighlightedRadarColor = Color.Magenta;
     }
 }

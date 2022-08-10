@@ -1,5 +1,4 @@
 using Content.Server.Explosion.EntitySystems;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Explosion.Components
 {
@@ -7,8 +6,7 @@ namespace Content.Server.Explosion.Components
     /// Will delete the attached entity upon a <see cref="TriggerEvent"/>.
     /// </summary>
     [RegisterComponent]
-    public class DeleteOnTriggerComponent : Component
+    public sealed class DeleteOnTriggerComponent : Component
     {
-        public override string Name => "DeleteOnTrigger";
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Nutrition.Components;
 using JetBrains.Annotations;
@@ -12,7 +11,7 @@ namespace Content.Server.AI.WorldState.States.Nutrition
 
         public override bool GetValue()
         {
-            if (!Owner.TryGetComponent(out HungerComponent? hungerComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HungerComponent? hungerComponent))
             {
                 return false;
             }

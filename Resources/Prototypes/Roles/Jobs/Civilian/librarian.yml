@@ -1,0 +1,22 @@
+- type: job
+  id: Librarian
+  name: job-name-librarian
+  playTimeTracker: JobLibrarian
+  startingGear: LibrarianGear
+  icon: "Librarian"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Maintenance
+
+- type: startingGear
+  id: LibrarianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLibrarian
+    back: ClothingBackpackBriefcaseFilled
+    shoes: ClothingShoesColorBlack
+    id: LibrarianPDA
+    ears: ClothingHeadsetService
+    pocket1: d10Dice
+  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
+

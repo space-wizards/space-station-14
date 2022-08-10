@@ -1,0 +1,9 @@
+- type: entity
+  parent: BaseItem
+  id: BrbSign
+  name: brb sign
+  description: Lets others know you are away.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/brbsign.rsi
+    state: icon

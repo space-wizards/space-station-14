@@ -1,7 +1,7 @@
 - type: construction
   name: torch
   id: LightTorch
-  graph: lightTorch
+  graph: LightTorch
   startNode: start
   targetNode: torch
   category: Tools

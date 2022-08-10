@@ -1,18 +1,13 @@
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Wieldable.Components
 {
     /// <summary>
     ///     Used for objects that can be wielded in two or more hands,
     /// </summary>
-    [RegisterComponent, Friend(typeof(WieldableSystem))]
-    public class WieldableComponent : Component
+    [RegisterComponent, Access(typeof(WieldableSystem))]
+    public sealed class WieldableComponent : Component
     {
-        public override string Name => "Wieldable";
-
         [DataField("wieldSound")]
         public SoundSpecifier? WieldSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 

@@ -2,18 +2,20 @@ using Content.Shared.Light;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
-    public class LightBulbVisualizer : AppearanceVisualizer
+    public sealed class LightBulbVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent<SpriteComponent>(out var sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
             // update sprite state

@@ -1,38 +1,57 @@
 ﻿using System.Linq;
 using Content.Client.Eui;
-using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using static Content.Shared.Administration.AdminLogsEuiMsg;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 
 namespace Content.Client.Administration.UI.Logs;
 
 [UsedImplicitly]
-public class AdminLogsEui : BaseEui
+public sealed class AdminLogsEui : BaseEui
 {
+    [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
     public AdminLogsEui()
     {
-        Window = new AdminLogsWindow();
-        Window.OnClose += () => SendMessage(new Close());
-        Window.LogSearch.OnTextEntered += _ => RequestLogs();
-        Window.RefreshButton.OnPressed += _ => RequestLogs();
-        Window.NextButton.OnPressed += _ => NextLogs();
+        LogsWindow = new AdminLogsWindow();
+        LogsControl = LogsWindow.Logs;
+
+        LogsControl.LogSearch.OnTextEntered += _ => RequestLogs();
+        LogsControl.RefreshButton.OnPressed += _ => RequestLogs();
+        LogsControl.NextButton.OnPressed += _ => NextLogs();
+        LogsControl.PopOutButton.OnPressed += _ => PopOut();
     }
 
-    private AdminLogsWindow Window { get; }
+    private WindowRoot? Root { get; set; }
+
+    private IClydeWindow? ClydeWindow { get; set; }
+
+    private AdminLogsWindow? LogsWindow { get; set; }
+
+    private AdminLogsControl LogsControl { get; }
 
     private bool FirstState { get; set; } = true;
+
+    private void OnRequestClosed(WindowRequestClosedEventArgs args)
+    {
+        SendMessage(new Close());
+    }
 
     private void RequestLogs()
     {
         var request = new LogsRequest(
-            Window.SelectedRoundId,
-            Window.SelectedTypes.ToList(),
+            LogsControl.SelectedRoundId,
+            LogsControl.Search,
+            LogsControl.SelectedTypes.ToHashSet(),
             null,
             null,
             null,
-            Window.SelectedPlayers.ToArray(),
+            LogsControl.SelectedPlayers.ToArray(),
             null,
             null,
             DateOrder.Descending);
@@ -46,42 +65,58 @@ public class AdminLogsEui : BaseEui
         SendMessage(request);
     }
 
-    private bool TrySetFirstState(AdminLogsEuiState state)
+    private void PopOut()
     {
-        if (!FirstState)
+        if (LogsWindow == null)
         {
-            return false;
+            return;
         }
 
-        FirstState = false;
-        Window.SetCurrentRound(state.RoundId);
-        Window.SetRoundSpinBox(state.RoundId);
-        return true;
-    }
+        LogsControl.Orphan();
+        LogsWindow.Dispose();
+        LogsWindow = null;
 
-    public override void Opened()
-    {
-        Window.OpenCentered();
+        var monitor = _clyde.EnumerateMonitors().First();
+
+        ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
+        {
+            Maximized = false,
+            Title = "Admin Logs",
+            Monitor = monitor,
+            Width = 1000,
+            Height = 400
+        });
+
+        ClydeWindow.RequestClosed += OnRequestClosed;
+        ClydeWindow.DisposeOnClose = true;
+
+        Root = _uiManager.CreateWindowRoot(ClydeWindow);
+        Root.AddChild(LogsControl);
+
+        LogsControl.PopOutButton.Disabled = true;
+        LogsControl.PopOutButton.Visible = false;
     }
 
     public override void HandleState(EuiStateBase state)
     {
         var s = (AdminLogsEuiState) state;
 
-        var first = TrySetFirstState(s);
-
         if (s.IsLoading)
         {
             return;
         }
 
-        Window.SetCurrentRound(s.RoundId);
-        Window.SetPlayers(s.Players);
+        LogsControl.SetCurrentRound(s.RoundId);
+        LogsControl.SetPlayers(s.Players);
 
-        if (first)
+        if (!FirstState)
         {
-            RequestLogs();
+            return;
         }
+
+        FirstState = false;
+        LogsControl.SetRoundSpinBox(s.RoundId);
+        RequestLogs();
     }
 
     public override void HandleMessage(EuiMessageBase msg)
@@ -90,20 +125,40 @@ public class AdminLogsEui : BaseEui
 
         switch (msg)
         {
-            case NewLogs {Replace: true} newLogs:
-                Window.SetLogs(newLogs.Logs);
-                break;
-            case NewLogs {Replace: false} newLogs:
-                Window.AddLogs(newLogs.Logs);
+            case NewLogs newLogs:
+                if (newLogs.Replace)
+                {
+                    LogsControl.SetLogs(newLogs.Logs);
+                }
+                else
+                {
+                    LogsControl.AddLogs(newLogs.Logs);
+                }
+
+                LogsControl.NextButton.Disabled = !newLogs.HasNext;
                 break;
         }
+    }
+
+    public override void Opened()
+    {
+        base.Opened();
+
+        LogsWindow?.OpenCentered();
     }
 
     public override void Closed()
     {
         base.Closed();
 
-        Window.Close();
-        Window.Dispose();
+        if (ClydeWindow != null)
+        {
+            ClydeWindow.RequestClosed -= OnRequestClosed;
+        }
+
+        LogsControl.Dispose();
+        LogsWindow?.Dispose();
+        Root?.Dispose();
+        ClydeWindow?.Dispose();
     }
 }

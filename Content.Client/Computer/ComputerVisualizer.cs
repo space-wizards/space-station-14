@@ -2,6 +2,7 @@ using Content.Shared.Computer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Computer
@@ -19,11 +20,12 @@ namespace Content.Client.Computer
         private string BodyBrokenState = "broken";
         private string ScreenBroken = "computer_broken";
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent>(entity, out var sprite)) return;
+
             sprite.LayerSetState(Layers.Screen, ScreenState);
 
             if (!string.IsNullOrEmpty(KeyboardState))
@@ -37,7 +39,7 @@ namespace Content.Client.Computer
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent>(component.Owner, out var sprite)) return;
 
             if (!component.TryGetData(ComputerVisuals.Powered, out bool powered))
             {

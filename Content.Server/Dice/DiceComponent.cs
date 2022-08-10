@@ -1,16 +1,10 @@
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Dice
 {
-    [RegisterComponent, Friend(typeof(DiceSystem))]
-    public class DiceComponent : Component
+    [RegisterComponent, Access(typeof(DiceSystem))]
+    public sealed class DiceComponent : Component
     {
-        public override string Name => "Dice";
-
         [ViewVariables]
         [DataField("sound")]
         public SoundSpecifier Sound { get; } = new SoundCollectionSpecifier("Dice");

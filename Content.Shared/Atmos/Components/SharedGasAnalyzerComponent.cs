@@ -1,16 +1,11 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Components
 {
     [NetworkedComponent()]
-    public class SharedGasAnalyzerComponent : Component
+    public abstract class SharedGasAnalyzerComponent : Component
     {
-        public override string Name => "GasAnalyzer";
-
         [Serializable, NetSerializable]
         public enum GasAnalyzerUiKey
         {
@@ -18,7 +13,7 @@ namespace Content.Shared.Atmos.Components
         }
 
         [Serializable, NetSerializable]
-        public class GasAnalyzerBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class GasAnalyzerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public float Pressure;
             public float Temperature;
@@ -59,7 +54,7 @@ namespace Content.Shared.Atmos.Components
         }
 
         [Serializable, NetSerializable]
-        public class GasAnalyzerRefreshMessage : BoundUserInterfaceMessage
+        public sealed class GasAnalyzerRefreshMessage : BoundUserInterfaceMessage
         {
             public GasAnalyzerRefreshMessage() {}
         }
@@ -73,7 +68,7 @@ namespace Content.Shared.Atmos.Components
         }
 
         [Serializable, NetSerializable]
-        public class GasAnalyzerComponentState : ComponentState
+        public sealed class GasAnalyzerComponentState : ComponentState
         {
             public GasAnalyzerDanger Danger;
 

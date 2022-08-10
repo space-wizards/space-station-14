@@ -1,4 +1,4 @@
-﻿<SS14Window
+﻿<DefaultWindow
     xmlns="https://spacestation14.io" Title="{Loc Set Temperature}">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
@@ -23,4 +23,4 @@
         </BoxContainer>
         <Button Name="SubmitButton" Text="{Loc Set Temperature}" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

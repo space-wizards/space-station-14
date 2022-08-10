@@ -1,24 +1,18 @@
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Analyzers;
+using System.Threading;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
-    [Friend(typeof(DrinkSystem))]
-    public class DrinkComponent : Component
+    [Access(typeof(DrinkSystem))]
+    public sealed class DrinkComponent : Component
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = DefaultSolutionName;
         public const string DefaultSolutionName = "drink";
-
-        public override string Name => "Drink";
 
         [ViewVariables]
         [DataField("useSound")]
@@ -44,14 +38,21 @@ namespace Content.Server.Nutrition.Components
         public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
 
         /// <summary>
+        /// How long it takes to drink this yourself.
+        /// </summary>
+        [DataField("delay")]
+        public float Delay = 1;
+
+        /// <summary>
         ///     This is how many seconds it takes to force feed someone this drink.
         /// </summary>
         [DataField("forceFeedDelay")]
         public float ForceFeedDelay = 3;
 
         /// <summary>
-        ///     If true, this drink has some DoAfter active (someone is being force fed).
+        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
+        ///     currently "in use".
         /// </summary>
-        public bool InUse = false;
+        public CancellationTokenSource? CancelToken;
     }
 }

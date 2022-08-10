@@ -1,32 +1,53 @@
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
-using Content.Shared.Whitelist;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Utility;
+using Content.Server.Shuttles.Events;
 
 namespace Content.Server.Pinpointer
 {
     public sealed class ServerPinpointerSystem : SharedPinpointerSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PinpointerComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<HyperspaceJumpCompletedEvent>(OnLocateTarget);
         }
 
-        private void OnUseInHand(EntityUid uid, PinpointerComponent component, UseInHandEvent args)
+        private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
         {
             TogglePinpointer(uid, component);
+            LocateTarget(uid, component);
+        }
 
-            // try to find target from whitelist
-            if (component.IsActive && component.Whitelist != null)
+        private void OnLocateTarget(HyperspaceJumpCompletedEvent ev)
+        {
+            // This feels kind of expensive, but it only happens once per hyperspace jump
+            foreach (var uid in ActivePinpointers)
             {
-                var target = FindTargetFromWhitelist(uid, component.Whitelist);
+                if (TryComp<PinpointerComponent>(uid, out var component))
+                {
+                    LocateTarget(uid, component);
+                }
+            }
+        }
+
+        private void LocateTarget(EntityUid uid, PinpointerComponent component)
+        {
+            // try to find target from whitelist
+            if (component.IsActive && component.Component != null)
+            {
+                if (!EntityManager.ComponentFactory.TryGetRegistration(component.Component, out var reg))
+                {
+                    Logger.Error($"Unable to find component registration for {component.Component} for pinpointer!");
+                    DebugTools.Assert(false);
+                    return;
+                }
+
+                var target = FindTargetFromComponent(uid, reg.Type);
                 SetTarget(uid, target, component);
             }
         }
@@ -47,24 +68,28 @@ namespace Content.Server.Pinpointer
         ///     Try to find the closest entity from whitelist on a current map
         ///     Will return null if can't find anything
         /// </summary>
-        private EntityUid? FindTargetFromWhitelist(EntityUid uid, EntityWhitelist whitelist,
-            TransformComponent? transform = null)
+        private EntityUid? FindTargetFromComponent(EntityUid uid, Type whitelist, TransformComponent? transform = null)
         {
-            if (!Resolve(uid, ref transform))
+            var xformQuery = GetEntityQuery<TransformComponent>();
+
+            if (transform == null)
+                xformQuery.TryGetComponent(uid, out transform);
+
+            if (transform == null)
                 return null;
 
-            var mapId = transform.MapID;
-            var ents = _entityLookup.GetEntitiesInMap(mapId);
-
             // sort all entities in distance increasing order
+            var mapId = transform.MapID;
             var l = new SortedList<float, EntityUid>();
-            foreach (var e in ents)
+            var worldPos = _transform.GetWorldPosition(transform, xformQuery);
+
+            foreach (var comp in EntityManager.GetAllComponents(whitelist))
             {
-                if (whitelist.IsValid(e.Uid))
-                {
-                    var dist = (e.Transform.WorldPosition - transform.WorldPosition).LengthSquared;
-                    l.TryAdd(dist, e.Uid);
-                }
+                if (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                    compXform.MapID != mapId) continue;
+
+                var dist = (_transform.GetWorldPosition(compXform, xformQuery) - worldPos).LengthSquared;
+                l.TryAdd(dist, comp.Owner);
             }
 
             // return uid with a smallest distacne
@@ -124,10 +149,12 @@ namespace Content.Server.Pinpointer
         /// <returns>Null if failed to caluclate distance between two entities</returns>
         private Vector2? CalculateDirection(EntityUid pinUid, EntityUid trgUid)
         {
+            var xformQuery = GetEntityQuery<TransformComponent>();
+
             // check if entities have transform component
-            if (!EntityManager.TryGetComponent(pinUid, out TransformComponent? pin))
+            if (!xformQuery.TryGetComponent(pinUid, out var pin))
                 return null;
-            if (!EntityManager.TryGetComponent(trgUid, out TransformComponent? trg))
+            if (!xformQuery.TryGetComponent(trgUid, out var trg))
                 return null;
 
             // check if they are on same map
@@ -135,7 +162,7 @@ namespace Content.Server.Pinpointer
                 return null;
 
             // get world direction vector
-            var dir = (trg.WorldPosition - pin.WorldPosition);
+            var dir = (_transform.GetWorldPosition(trg, xformQuery) - _transform.GetWorldPosition(pin, xformQuery));
             return dir;
         }
 

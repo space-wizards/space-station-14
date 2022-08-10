@@ -1,20 +1,17 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Gravity
 {
     [NetworkedComponent()]
+    [Virtual]
     public class SharedGravityGeneratorComponent : Component
     {
-        public override string Name => "GravityGenerator";
-
         /// <summary>
         ///     Sent to the server to set whether the generator should be on or off
         /// </summary>
         [Serializable, NetSerializable]
-        public class SwitchGeneratorMessage : BoundUserInterfaceMessage
+        public sealed class SwitchGeneratorMessage : BoundUserInterfaceMessage
         {
             public bool On;
 
@@ -25,7 +22,7 @@ namespace Content.Shared.Gravity
         }
 
         [Serializable, NetSerializable]
-        public class GeneratorState : BoundUserInterfaceState
+        public sealed class GeneratorState : BoundUserInterfaceState
         {
             public bool On;
             // 0 -> 255

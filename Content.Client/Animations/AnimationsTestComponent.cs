@@ -3,6 +3,7 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Animations
@@ -10,13 +11,11 @@ namespace Content.Client.Animations
     [RegisterComponent]
     public sealed class AnimationsTestComponent : Component
     {
-        public override string Name => "AnimationsTest";
-
         protected override void Initialize()
         {
             base.Initialize();
 
-            var animations = Owner.GetComponent<AnimationPlayerComponent>();
+            var animations = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(Owner);
             animations.Play(new Animation
             {
                 Length = TimeSpan.FromSeconds(20),

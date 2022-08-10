@@ -6,14 +6,14 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Kitchen.EntitySystems
 {
-    public class MicrowaveSystem : EntitySystem
+    public sealed class MicrowaveSystem : EntitySystem
     {
         public void StartSoundLoop(MicrowaveComponent microwave)
         {
             StopSoundLoop(microwave);
 
-            microwave.PlayingStream = SoundSystem.Play(Filter.Local(), microwave.LoopingSound.GetSound(), microwave.Owner,
-                AudioParams.Default.WithMaxDistance(5).WithLoop(true));
+            microwave.PlayingStream = SoundSystem.Play(microwave.LoopingSound.GetSound(), Filter.Local(),
+                microwave.Owner, AudioParams.Default.WithMaxDistance(5).WithLoop(true));
         }
 
         public void StopSoundLoop(MicrowaveComponent microwave)

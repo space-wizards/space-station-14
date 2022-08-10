@@ -9,16 +9,17 @@ namespace Content.Client.Computer
     /// ComputerBoundUserInterface shunts all sorts of responsibilities that are in the BoundUserInterface for architectural reasons into the Window.
     /// NOTE: Despite the name, ComputerBoundUserInterface does not and will not care about things like power.
     /// </summary>
-    public class ComputerBoundUserInterface<W, S> : ComputerBoundUserInterfaceBase where W : BaseWindow, IComputerWindow<S>, new() where S : BoundUserInterfaceState
+    [Virtual]
+    public class ComputerBoundUserInterface<TWindow, TState> : ComputerBoundUserInterfaceBase where TWindow : BaseWindow, IComputerWindow<TState>, new() where TState : BoundUserInterfaceState
     {
         [Dependency] private readonly IDynamicTypeFactory _dynamicTypeFactory = default!;
-        private W? _window;
+        private TWindow? _window;
 
         protected override void Open()
         {
             base.Open();
 
-            _window = (W) _dynamicTypeFactory.CreateInstance(typeof(W));
+            _window = (TWindow) _dynamicTypeFactory.CreateInstance(typeof(TWindow));
             _window.SetupComputerWindow(this);
             _window.OnClose += Close;
             _window.OpenCentered();
@@ -36,7 +37,7 @@ namespace Content.Client.Computer
                 return;
             }
 
-            _window.UpdateState((S) state);
+            _window.UpdateState((TState) state);
         }
 
         protected override void Dispose(bool disposing)
@@ -54,6 +55,7 @@ namespace Content.Client.Computer
     /// This class is to avoid a lot of <> being written when we just want to refer to SendMessage.
     /// We could instead qualify a lot of generics even further, but that is a waste of time.
     /// </summary>
+    [Virtual]
     public class ComputerBoundUserInterfaceBase : BoundUserInterface
     {
         public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
@@ -64,10 +66,10 @@ namespace Content.Client.Computer
         }
     }
 
-    public interface IComputerWindow<S>
+    public interface IComputerWindow<TState>
     {
         void SetupComputerWindow(ComputerBoundUserInterfaceBase cb) {}
-        void UpdateState(S state) {}
+        void UpdateState(TState state) {}
     }
 }
 

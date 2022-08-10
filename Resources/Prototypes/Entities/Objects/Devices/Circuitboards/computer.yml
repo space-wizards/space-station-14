@@ -1,52 +1,144 @@
-﻿# TODO: Add descriptions (10)
-
 - type: entity
   parent: BaseItem
   id: BaseComputerCircuitboard
-  name: circuit board
+  name: computer board
   abstract: true
   components:
     - type: ComputerBoard
     - type: Sprite
       sprite: Objects/Misc/module.rsi
-      state: id_mod
+      state: cpuboard
+    - type: Tag
+      tags:
+        - DroneUsable
+    - type: StaticPrice
+      price: 75
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: AlertsComputerCircuitboard
+  name: alerts computer board
+  description: A computer printed circuit board for an alerts computer
+  components:
+    - type: ComputerBoard
+      prototype: ComputerAlert
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: PowerComputerCircuitboard
+  name: power monitoring computer board
+  description: A computer printed circuit board for a power monitoring computer
+  components:
+    - type: ComputerBoard
+      prototype: ComputerPowerMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: MedicalRecordsComputerCircuitboard
+  name: medical records computer board
+  description: A computer printed circuit board for a medical records computer
+  components:
+    - type: ComputerBoard
+      prototype: ComputerMedicalRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CriminalRecordsComputerCircuitboard
+  name: criminal records computer board
+  description: A computer printed circuit board for a criminal records computer
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCriminalRecords
 
 - type: entity
   parent: BaseComputerCircuitboard
   id: SupplyComputerCircuitboard
-  name: supply board
+  name: supply ordering computer board
+  description: A computer printed circuit board for a supply ordering console
   components:
     - type: ComputerBoard
-      prototype: ComputerSupplyOrdering
+      prototype: ComputerCargoOrders
+    - type: StaticPrice
+      price: 750
 
 - type: entity
   parent: BaseComputerCircuitboard
   id: SupplyRequestComputerCircuitboard
-  name: supply request board
+  name: supply request computer board
+  description: A computer printed circuit board for a supply request console
   components:
     - type: ComputerBoard
-      prototype: ComputerSupplyRequest
+      prototype: ComputerCargoOrders
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SurveillanceCameraMonitorCircuitboard
+  name: surveillance camera monitor board
+  description: A computer printed circuit board for a surveillance camera monitor
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSurveillanceCameraMonitor
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SurveillanceWirelessCameraMonitorCircuitboard
+  name: surveillance wireless camera monitor board
+  description: A computer printed circuit board for a surveillance wireless camera monitor
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSurveillanceWirelessCameraMonitor
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerTelevisionCircuitboard
+  name: television board
+  description: A computer printed circuit board for a television
+  components:
+    - type: ComputerBoard
+      prototype: ComputerTelevision
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: PowerMonitoringComputerCircuitboard
+  name: power monitoring computer board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerPowerMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard
   id: ResearchComputerCircuitboard
   name: R&D computer board
+  description: A computer printed circuit board for a R&D console
   components:
     - type: ComputerBoard
       prototype: ComputerResearchAndDevelopment
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: CrewMonitoringComputerCircuitboard
+  name: crew monitoring computer board
+  description: A computer printed circuit board for a crew monitoring console
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCrewMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: IDComputerCircuitboard
-  name: ID card terminal board
+  name: ID card computer board
+  description: A computer printed circuit board for an ID card console
   components:
     - type: ComputerBoard
       prototype: ComputerId
+    - type: StaticPrice
+      price: 750
 
 - type: entity
   parent: BaseComputerCircuitboard
   id: BodyScannerComputerCircuitboard
   name: body scanner computer board
+  description: A computer printed circuit board for a body scanner console
   components:
     - type: ComputerBoard
       prototype: computerBodyScanner
@@ -55,14 +147,33 @@
   parent: BaseComputerCircuitboard
   id: CommsComputerCircuitboard
   name: communications computer board
+  description: A computer printed circuit board for a communications console
   components:
     - type: ComputerBoard
       prototype: ComputerComms
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: SyndicateCommsComputerCircuitboard
+  name: syndicate communications computer board
+  description: A computer printed circuit board for a syndicate communications console
+  components:
+    - type: ComputerBoard
+      prototype: SyndicateComputerComms
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: RadarConsoleCircuitboard
+  name: radar console computer board
+  components:
+  - type: ComputerBoard
+    prototype: ComputerRadar
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: SolarControlComputerCircuitboard
   name: solar control computer board
+  description: A computer printed circuit board for a solar control console
   components:
     - type: ComputerBoard
       prototype: ComputerSolarControl
@@ -71,6 +182,7 @@
   parent: BaseComputerCircuitboard
   id: SpaceVillainArcadeComputerCircuitboard
   name: space villain arcade board
+  description: A computer printed circuit board for a space villain arcade cabinet
   components:
     - type: ComputerBoard
       prototype: SpaceVillainArcade
@@ -79,6 +191,7 @@
   parent: BaseComputerCircuitboard
   id: BlockGameArcadeComputerCircuitboard
   name: block game arcade board
+  description: A computer printed circuit board for a block game arcade cabinet
   components:
     - type: ComputerBoard
       prototype: BlockGameArcade
@@ -86,8 +199,35 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ParticleAcceleratorComputerCircuitboard
-  name: PA control box
-  suffix: Circuit Board
+  name: PA control box computer board
+  description: A computer printed circuit board for a particle accelerator control box
   components:
     - type: ComputerBoard
       prototype: ParticleAcceleratorControlBoxUnfinished
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ShuttleConsoleCircuitboard
+  name: shuttle console board
+  description: A computer printed circuit board for a shuttle console
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttle
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SyndicateShuttleConsoleCircuitboard
+  name: syndicate shuttle console board
+  description: A computer printed circuit board for a syndicate shuttle console
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleSyndie
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CloningConsoleComputerCircuitboard
+  name: cloning console computer board
+  description: A computer printed circuit board for a cloning console
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCloningConsole

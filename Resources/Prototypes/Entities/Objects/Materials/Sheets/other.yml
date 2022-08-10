@@ -13,6 +13,17 @@
   - type: Tag
     tags:
     - Sheet
+    - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: SheetOtherBase
@@ -25,7 +36,7 @@
   - type: Sprite
     state: paper_3
   - type: Item
-    HeldPrefix: paper
+    heldPrefix: paper
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -47,44 +58,19 @@
 
 - type: entity
   parent: SheetOtherBase
-  id: SheetPhoron
-  name: phoron
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Phoron
-  - type: Stack
-    stackType: Phoron
-  - type: Sprite
-    state: phoron
-  - type: Item
-    HeldPrefix: phoron
-
-- type: entity
-  parent: SheetPhoron
-  id: SheetPhoron1
-  name: phoron
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: SheetOtherBase
   id: SheetPlasma
   name: plasma
   suffix: Full
   components:
   - type: Material
     materials:
-    - Plasma
+      Plasma: 500
   - type: Stack
     stackType: Plasma
   - type: Sprite
     state: plasma_3
   - type: Item
-    HeldPrefix: plasma
+    heldPrefix: plasma
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -121,15 +107,20 @@
   name: plastic
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - Plastic
+    - Sheet
+    - DroneUsable
   - type: Material
     materials:
-    - Plastic
+      Plastic: 100
   - type: Stack
     stackType: Plastic
   - type: Sprite
     state: plastic_3
   - type: Item
-    HeldPrefix: plastic
+    heldPrefix: plastic
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -155,12 +146,23 @@
   name: uranium
   suffix: Full
   components:
+  - type: Material
+    materials:
+      Uranium: 100
   - type: Stack
     stackType: Uranium
   - type: Sprite
     state: uranium
   - type: Item
-    HeldPrefix: uranium
+    heldPrefix: uranium
+  - type: Extractable
+    grindableSolutionName: uranium
+  - type: SolutionContainerManager
+    solutions:
+      uranium:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 10
 
 - type: entity
   parent: SheetUranium

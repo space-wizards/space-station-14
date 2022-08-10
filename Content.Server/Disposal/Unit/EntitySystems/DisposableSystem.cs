@@ -1,16 +1,11 @@
 using System.Linq;
-﻿using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Unit.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
@@ -21,6 +16,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public void ExitDisposals(EntityUid uid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null)
         {
@@ -36,37 +32,37 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // Check for a disposal unit to throw them into and then eject them from it.
             // *This ejection also makes the target not collide with the unit.*
             // *This is on purpose.*
-            var grid = _mapManager.GetGrid(holderTransform.GridID);
-            var gridTileContents = grid.GetLocal(holderTransform.Coordinates);
+
             DisposalUnitComponent? duc = null;
-            foreach (var contentUid in gridTileContents)
+            if (_mapManager.TryGetGrid(holderTransform.GridUid, out var grid))
             {
-                if (EntityManager.TryGetComponent(contentUid, out duc))
-                    break;
+                foreach (var contentUid in grid.GetLocal(holderTransform.Coordinates))
+                {
+                    if (EntityManager.TryGetComponent(contentUid, out duc))
+                        break;
+                }
             }
 
             foreach (var entity in holder.Container.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out IPhysBody? physics))
+                RemComp<BeingDisposedComponent>(entity);
+
+                if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
                 }
 
-                holder.Container.ForceRemove(entity);
+                var meta = MetaData(entity);
+                holder.Container.ForceRemove(entity, EntityManager, meta);
 
-                if (entity.Transform.Parent == holderTransform)
-                {
-                    if (duc != null)
-                    {
-                        // Insert into disposal unit
-                        entity.Transform.Coordinates = new EntityCoordinates(duc.OwnerUid, Vector2.Zero);
-                        duc.Container.Insert(entity);
-                    }
-                    else
-                    {
-                        entity.Transform.AttachParentToContainerOrGrid();
-                    }
-                }
+                var xform = Transform(entity);
+                if (xform.ParentUid != uid)
+                    continue;
+
+                if (duc != null)
+                    duc.Container.Insert(entity, EntityManager, xform, meta: meta);
+                else
+                    xform.AttachParentToContainerOrGrid(EntityManager);
             }
 
             if (duc != null)
@@ -74,11 +70,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 _disposalUnitSystem.TryEjectContents(duc);
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-
-            if (atmosphereSystem.GetTileMixture(holderTransform.Coordinates, true) is {} environment)
+            if (_atmosphereSystem.GetContainingMixture(uid, false, true) is {} environment)
             {
-                atmosphereSystem.Merge(environment, holder.Air);
+                _atmosphereSystem.Merge(environment, holder.Air);
                 holder.Air.Clear();
             }
 
@@ -99,6 +93,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;
+            }
+
+            foreach (var ent in holder.Container.ContainedEntities)
+            {
+                var comp = EnsureComp<BeingDisposedComponent>(ent);
+                comp.Holder = holder.Owner;
             }
 
             // Insert into next tube
@@ -154,18 +154,18 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 var currentTube = holder.CurrentTube;
                 if (currentTube == null || currentTube.Deleted)
                 {
-                    ExitDisposals(holder.OwnerUid);
+                    ExitDisposals((holder).Owner);
                     break;
                 }
 
                 if (holder.TimeLeft > 0)
                 {
                     var progress = 1 - holder.TimeLeft / holder.StartingTime;
-                    var origin = currentTube.Owner.Transform.Coordinates;
+                    var origin = EntityManager.GetComponent<TransformComponent>(currentTube.Owner).Coordinates;
                     var destination = holder.CurrentDirection.ToVec();
                     var newPosition = destination * progress;
 
-                    holder.Owner.Transform.Coordinates = origin.Offset(newPosition);
+                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition);
 
                     continue;
                 }
@@ -175,15 +175,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 currentTube.Contents.ForceRemove(holder.Owner);
 
                 // Find next tube
-                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube.OwnerUid, holder.CurrentDirection);
+                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube.Owner, holder.CurrentDirection);
                 if (nextTube == null || nextTube.Deleted)
                 {
-                    ExitDisposals(holder.OwnerUid);
+                    ExitDisposals((holder).Owner);
                     break;
                 }
 
                 // Perform remainder of entry process
-                if (!EnterTube(holder.OwnerUid, nextTube.OwnerUid, holder, null, nextTube, null))
+                if (!EnterTube((holder).Owner, nextTube.Owner, holder, null, nextTube, null))
                 {
                     break;
                 }

@@ -1,0 +1,4 @@
+- type: advertisementsPack
+  id: AtmosDrobeAds
+  advertisements:
+    - advertisement-atmosdrobe-1

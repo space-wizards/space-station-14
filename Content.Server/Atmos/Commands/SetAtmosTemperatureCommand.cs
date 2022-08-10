@@ -1,16 +1,14 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class SetAtmosTemperatureCommand : IConsoleCommand
+    public sealed class SetAtmosTemperatureCommand : IConsoleCommand
     {
         public string Command => "setatmostemp";
         public string Description => "Sets a grid's temperature (in kelvin).";
@@ -19,10 +17,8 @@ namespace Content.Server.Atmos.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 2) return;
-            if(!int.TryParse(args[0], out var id)
+            if(!EntityUid.TryParse(args[0], out var gridId)
                || !float.TryParse(args[1], out var temperature)) return;
-
-            var gridId = new GridId(id);
 
             var mapMan = IoCManager.Resolve<IMapManager>();
 
@@ -41,7 +37,7 @@ namespace Content.Server.Atmos.Commands
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             var tiles = 0;
-            foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
+            foreach (var tile in atmosphereSystem.GetAllMixtures(gridComp.GridEntityId, true))
             {
                 tiles++;
                 tile.Temperature = temperature;

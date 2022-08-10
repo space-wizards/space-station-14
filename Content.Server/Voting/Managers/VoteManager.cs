@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -15,8 +13,6 @@ using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -35,7 +31,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IAdminManager _adminMgr = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IAfkManager _afkManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
 
         private int _nextVoteId = 1;
@@ -228,7 +224,7 @@ namespace Content.Server.Voting.Managers
 
         private void SendSingleUpdate(VoteReg v, IPlayerSession player)
         {
-            var msg = _netManager.CreateNetMessage<MsgVoteData>();
+            var msg = new MsgVoteData();
 
             msg.VoteId = v.Id;
             msg.VoteActive = !v.Finished;
@@ -271,7 +267,7 @@ namespace Content.Server.Voting.Managers
 
         private void SendUpdateCanCallVote(IPlayerSession player)
         {
-            var msg = _netManager.CreateNetMessage<MsgVoteCanCall>();
+            var msg = new MsgVoteCanCall();
             msg.CanCall = CanCallVote(player, null, out var isAdmin, out var timeSpan);
             msg.WhenCanCallVote = timeSpan;
 
@@ -324,6 +320,10 @@ namespace Content.Server.Voting.Managers
             // Standard vote on timeout, no calling.
             // Ghosts I understand you're dead but stop spamming the restart vote bloody hell.
             if (voteType != null && _standardVoteTimeout.TryGetValue(voteType.Value, out timeSpan))
+                return false;
+
+            // No, seriously, stop spamming the restart vote!
+            if (voteType == StandardVoteType.Restart && _cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
                 return false;
 
             return !_voteTimeout.TryGetValue(initiator.UserId, out timeSpan);

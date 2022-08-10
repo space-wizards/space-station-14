@@ -1,18 +1,11 @@
-using System;
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Friend(typeof(UtensilSystem))]
-    public class UtensilComponent : Component
+    [RegisterComponent, Access(typeof(UtensilSystem))]
+    public sealed class UtensilComponent : Component
     {
-        public override string Name => "Utensil";
-
         [DataField("types")]
         private UtensilType _types = UtensilType.None;
 

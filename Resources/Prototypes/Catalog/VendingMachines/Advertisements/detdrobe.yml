@@ -1,0 +1,4 @@
+- type: advertisementsPack
+  id: DetDrobeAds
+  advertisements:
+    - advertisement-detdrobe-1

@@ -19,7 +19,7 @@
           baseState: unlit
     - type: ParticleAcceleratorFuelChamber
     - type: Construction
-      graph: particleAcceleratorFuelChamber
+      graph: ParticleAcceleratorFuelChamber
       node: completed
 
 # Unfinished
@@ -37,6 +37,6 @@
       sprite: Structures/Power/Generation/PA/fuel_chamber.rsi
       state: chamber
     - type: Construction
-      graph: particleAcceleratorFuelChamber
+      graph: ParticleAcceleratorFuelChamber
       node: start
       defaultTarget: completed

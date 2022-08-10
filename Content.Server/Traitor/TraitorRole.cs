@@ -1,18 +1,22 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Roles;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+using Content.Shared.Roles;
 
 namespace Content.Server.Traitor
 {
-    public class TraitorRole : Role
+    public sealed class TraitorRole : Role
     {
-        public TraitorRole(Mind.Mind mind) : base(mind)
+        public AntagPrototype Prototype { get; }
+
+        public TraitorRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
         {
+            Prototype = antagPrototype;
+            Name = antagPrototype.Name;
+            Antagonist = antagPrototype.Antagonist;
         }
 
-        public override string Name => Loc.GetString("traitor-role-name");
-        public override bool Antagonist => true;
+        public override string Name { get; }
+        public override bool Antagonist { get; }
 
         public void GreetTraitor(string[] codewords)
         {

@@ -1,6 +1,6 @@
 - type: entity
   id: CigarCase
-  parent: BaseItem
+  parent: BaseStorageItem
   name: cigar case
   description: A case for holding your cigars when you are not smoking them.
   components:

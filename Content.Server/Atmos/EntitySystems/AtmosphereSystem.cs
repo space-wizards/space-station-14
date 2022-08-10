@@ -1,88 +1,90 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Body.Systems;
 using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 
-namespace Content.Server.Atmos.EntitySystems
+namespace Content.Server.Atmos.EntitySystems;
+
+/// <summary>
+///     This is our SSAir equivalent, if you need to interact with or query atmos in any way, go through this.
+/// </summary>
+[UsedImplicitly]
+public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
-    /// <summary>
-    ///     This is our SSAir equivalent, if you need to interact with or query atmos in any way, go through this.
-    /// </summary>
-    [UsedImplicitly]
-    public partial class AtmosphereSystem : SharedAtmosphereSystem
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly InternalsSystem _internals = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
+
+
+    private const float ExposedUpdateDelay = 1f;
+    private float _exposedTimer = 0f;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        base.Initialize();
 
-        private const float ExposedUpdateDelay = 1f;
-        private float _exposedTimer = 0f;
+        UpdatesAfter.Add(typeof(NodeGroupSystem));
 
-        public override void Initialize()
+        InitializeBreathTool();
+        InitializeGases();
+        InitializeCommands();
+        InitializeCVars();
+        InitializeGridAtmosphere();
+        InitializeMap();
+
+
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        ShutdownCommands();
+    }
+
+    private void OnTileChanged(TileChangedEvent ev)
+    {
+        InvalidateTile(ev.NewTile.GridUid, ev.NewTile.GridIndices);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        UpdateProcessing(frameTime);
+        UpdateHighPressure(frameTime);
+
+        _exposedTimer += frameTime;
+
+        if (_exposedTimer < ExposedUpdateDelay)
+            return;
+
+        foreach (var (exposed, transform) in EntityManager.EntityQuery<AtmosExposedComponent, TransformComponent>())
         {
-            base.Initialize();
+            var air = GetContainingMixture(exposed.Owner, transform:transform);
 
-            UpdatesAfter.Add(typeof(NodeGroupSystem));
+            if (air == null)
+                continue;
 
-            InitializeGases();
-            InitializeCVars();
-            InitializeGrid();
-
-            #region Events
-
-            // Map events.
-            _mapManager.TileChanged += OnTileChanged;
-
-            #endregion
+            var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, air, transform);
+            RaiseLocalEvent(exposed.Owner, ref updateEvent);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            _mapManager.TileChanged -= OnTileChanged;
-        }
-
-        private void OnTileChanged(object? sender, TileChangedEventArgs eventArgs)
-        {
-            // When a tile changes, we want to update it only if it's gone from
-            // space -> not space or vice versa. So if the old tile is the
-            // same as the new tile in terms of space-ness, ignore the change
-
-            if (eventArgs.NewTile.IsSpace() == eventArgs.OldTile.IsSpace())
-            {
-                return;
-            }
-
-            InvalidateTile(eventArgs.NewTile.GridIndex, eventArgs.NewTile.GridIndices);
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            UpdateProcessing(frameTime);
-
-            _exposedTimer += frameTime;
-
-            if (_exposedTimer >= ExposedUpdateDelay)
-            {
-                foreach (var exposed in EntityManager.EntityQuery<AtmosExposedComponent>())
-                {
-                    var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);
-                    if (tile == null) continue;
-                    var updateEvent = new AtmosExposedUpdateEvent(exposed.Owner.Transform.Coordinates, tile);
-                    RaiseLocalEvent(exposed.Owner.Uid, ref updateEvent);
-                }
-
-                _exposedTimer -= ExposedUpdateDelay;
-            }
-        }
+        _exposedTimer -= ExposedUpdateDelay;
     }
 }

@@ -1,17 +1,13 @@
-﻿using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class VisualizerDataInt : IGraphAction, ISerializationHooks
+    public sealed class VisualizerDataInt : IGraphAction, ISerializationHooks
     {
         [DataField("key")] public string Key { get; private set; } = string.Empty;
         [DataField("data")] public int Data { get; private set; } = 0;
@@ -25,10 +21,6 @@ namespace Content.Server.Construction.Completions
                 if(IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(Key, out var @enum))
                 {
                     appearance.SetData(@enum, Data);
-                }
-                else
-                {
-                    appearance.SetData(Key, Data);
                 }
             }
         }

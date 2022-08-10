@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer.NodeGroups
 {
@@ -23,22 +16,28 @@ namespace Content.Server.NodeContainer.NodeGroups
     }
 
     [NodeGroup(NodeGroupID.Pipe)]
-    public class PipeNet : BaseNodeGroup, IPipeNet
+    public sealed class PipeNet : BaseNodeGroup, IPipeNet
     {
         [ViewVariables] public GasMixture Air { get; set; } = new() {Temperature = Atmospherics.T20C};
 
-        [ViewVariables] private readonly List<PipeNode> _pipes = new();
-
         [ViewVariables] private AtmosphereSystem? _atmosphereSystem;
 
-        public GridId Grid => GridId;
+        public EntityUid? Grid { get; private set; }
 
-        public override void Initialize(Node sourceNode)
+        public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
-            base.Initialize(sourceNode);
+            base.Initialize(sourceNode, entMan);
 
-            _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            _atmosphereSystem.AddPipeNet(this);
+            Grid = entMan.GetComponent<TransformComponent>(sourceNode.Owner).GridUid;
+
+            if (Grid == null)
+            {
+                // This is probably due to a cannister or something like that being spawned in space.
+                return;
+            }
+
+            _atmosphereSystem = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            _atmosphereSystem.AddPipeNet(Grid.Value, this);
         }
 
         public void Update()
@@ -53,8 +52,6 @@ namespace Content.Server.NodeContainer.NodeGroups
             foreach (var node in groupNodes)
             {
                 var pipeNode = (PipeNode) node;
-                _pipes.Add(pipeNode);
-                pipeNode.JoinPipeNet(this);
                 Air.Volume += pipeNode.Volume;
             }
         }
@@ -63,38 +60,42 @@ namespace Content.Server.NodeContainer.NodeGroups
         {
             base.RemoveNode(node);
 
-            var pipeNode = (PipeNode) node;
-            Air.Volume -= pipeNode.Volume;
-            // TODO: Bad O(n^2)
-            _pipes.Remove(pipeNode);
+            // if the node is simply being removed into a separate group, we do nothing, as gas redistribution will be
+            // handled by AfterRemake(). But if it is being deleted, we actually want to remove the gas stored in this node.
+            if (!node.Deleting || node is not PipeNode pipe)
+                return;
+
+            Air.Multiply(1f - pipe.Volume / Air.Volume);
+            Air.Volume -= pipe.Volume;
         }
 
         public override void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups)
         {
             RemoveFromGridAtmos();
 
-            var buffer = new GasMixture(Air.Volume) {Temperature = Air.Temperature};
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-
+            var newAir = new List<GasMixture>(newGroups.Count());
             foreach (var newGroup in newGroups)
             {
-                if (newGroup.Key is not IPipeNet newPipeNet)
-                    continue;
-
-                var newAir = newPipeNet.Air;
-                var newVolume = newGroup.Cast<PipeNode>().Sum(n => n.Volume);
-
-                buffer.Clear();
-                atmosphereSystem.Merge(buffer, Air);
-                buffer.Multiply(MathF.Min(newVolume / Air.Volume, 1f));
-                atmosphereSystem.Merge(newAir, buffer);
+                if (newGroup.Key is IPipeNet newPipeNet)
+                    newAir.Add(newPipeNet.Air);
             }
+
+            _atmosphereSystem?.DivideInto(Air, newAir);
         }
 
         private void RemoveFromGridAtmos()
         {
-            DebugTools.AssertNotNull(_atmosphereSystem);
-            _atmosphereSystem?.RemovePipeNet(this);
+            if (Grid == null)
+                return;
+
+            _atmosphereSystem?.RemovePipeNet(Grid.Value, this);
+        }
+
+        public override string GetDebugData()
+        {
+            return @$"Pressure: { Air.Pressure:G3}
+Temperature: {Air.Temperature:G3}
+Volume: {Air.Volume:G3}";
         }
     }
 }

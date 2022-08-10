@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/commit/a39e3f3f1f351e3be5ae955c4de3a2e8889e191b",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "holstered"
+    },
+    {
+      "name": "notholstered"
+    },
+    {
+      "name": "base",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "icon"
+    }
+  ]
+}

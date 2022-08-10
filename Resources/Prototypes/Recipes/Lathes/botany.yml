@@ -4,29 +4,29 @@
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
   result: HydroponicsToolMiniHoe
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Plastic: 100
 
 - type: latheRecipe
-  id: Scythe
+  id: HydroponicsToolScythe
   icon:
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
   result: HydroponicsToolScythe
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 300
     Plastic: 200
 
 - type: latheRecipe
-  id: Hatchet
+  id: HydroponicsToolHatchet
   icon:
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
   result: HydroponicsToolHatchet
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Plastic: 100
@@ -37,7 +37,7 @@
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon
   result: HydroponicsToolSpade
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Plastic: 100

@@ -6,13 +6,10 @@
   - type: StorageFill
     contents:
       - id: ClothingNeckCloakQm
-        prob: 1
       - id: ClothingHeadsetCargo
-        prob: 1
       - id: PlushieLizard
         prob: 0.1
       - id: ClothingHandsGlovesColorBrown
-        prob: 1
       - id: ClothingOuterSuitFire
         prob: 0.5
       - id: ClothingShoesColorBrown
@@ -20,11 +17,11 @@
       - id: ClothingHeadHatCargosoft
         prob: 0.8
       - id: SupplyRequestComputerCircuitboard
-        prob: 1
       - id: SupplyComputerCircuitboard
-        prob: 1
       - id: CigPackGreen
         prob: 0.50
+      - id: DoorRemoteCargo
+      - id: RubberStampQm
 
 - type: entity
   id: LockerCaptainFilled
@@ -33,34 +30,33 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterArmorCaptainCarapace
       - id: NukeDisk
-        prob: 1
       - id: PinpointerNuclear
-        prob: 1
       - id: CaptainIDCard
-        prob: 1
       - id: ClothingHeadHatCaptain
-        prob: 1
       - id: ClothingNeckCloakCap
-        prob: 1
       - id: ClothingHandsGlovesCaptain
-        prob: 1
       - id: ClothingOuterHardsuitCap
-        prob: 1
-      - id: TaserGun
-        prob: 1
-      - id: ClothingShoesColorBlack
-        prob: 0.7
-      - id: ClothingHeadHelmetHardsuitCap
-        prob: 1
+      - id: ClothingMaskGasCaptain
+      - id: WeaponDisabler
       - id: CommsComputerCircuitboard
-        prob: 1
       - id: ClothingHeadsetAltCommand
-        prob: 1
+      - id: SpaceCash1000
       - id: PlushieNuke
         prob: 0.1
       - id: CigarGoldCase
         prob: 0.25
+      - id: ClothingBeltSheathFilled
+      - id: DoorRemoteCommand
+      - id: ClothingNeckCloakCapFormal
+      - id: ClothingUniformJumpsuitCapFormal
+      - id: ClothingUniformJumpskirtCapFormalDress
+      - id: ClothingNeckBronzeheart
+      - id: ClothingNeckGoldmedal
+      - id: RubberStampCaptain
+      - id: WeaponAntiqueLaser
+      - id: JetpackCaptainFilled
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -70,19 +66,14 @@
   - type: StorageFill
     contents:
       - id: ClothingNeckCloakHop
-        prob: 1
       - id: ClothingHeadHatHopcap
-        prob: 1
       - id: HoPIDCard
         prob: 0.9
       - id: ClothingHeadsetCommand
-        prob: 1
       - id: BoxPDA
-        prob: 1
+      - id: BoxID
       - id: IDComputerCircuitboard
-        prob: 1
-      - id: TaserGun
-        prob: 1
+      - id: WeaponDisabler
       - id: ClothingShoesColorBlack
         prob: 0.7
       - id: PlushieLizard
@@ -90,6 +81,9 @@
       - id: CigarGoldCase
         prob: 0.10
         # Fuck the HoP they don't deserve fucking cigars.
+      - id: DoorRemoteService
+      - id: ClothingNeckGoldmedal
+      - id: RubberStampHop
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -98,18 +92,21 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitEngineeringWhite
       - id: ClothingOuterHardsuitEngineeringWhite
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
+      - id: NitrogenTankFilled
       - id: ClothingNeckCloakCe
       - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHeadHatBeretEngineering
-      - id: ClothingShoesBootsMag
+      - id: ClothingShoesBootsMagAdv
       - id: ClothingHandsGlovesColorYellow
       - id: CigarCase
         prob: 0.15
+      - id: DoorRemoteEngineering
+      - id: RubberStampCE
+      - id: JetpackVoidFilled
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -119,25 +116,22 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-        prob: 1
-      - id: ClothingHandsGlovesLatex
-        prob: 1
+      - id: ClothingHandsGlovesNitrile
       #- name: ClothingEyesHudMedical #Removed until working properly
-      #  prob: 1
       - id: ClothingHeadsetAltMedical
-        prob: 1
       - id: ClothingCloakCmo
-        prob: 1
       - id: ClothingBackpackDuffelSurgeryFilled
-        prob: 1
       - id: ClothingOuterCoatLabCmo
-        prob: 1
       - id: ClothingMaskSterile
-        prob: 1
-      - id: ClothingHeadHelmetHardsuitMedical
-        prob: 1
       - id: ClothingOuterHardsuitMedical
-        prob: 1
+      - id: DiagnoserMachineCircuitboard
+      - id: VaccinatorMachineCircuitboard
+        prob: 0.25
+      - id: Hypospray
+      - id: HandheldCrewMonitor
+      - id: DoorRemoteMedical
+      - id: RubberStampCMO
+      - id: MedicalTechFabCircuitboard
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -147,19 +141,15 @@
   - type: StorageFill
     contents:
       - id: ResearchComputerCircuitboard
-        prob: 1
       - id: ProtolatheMachineCircuitboard
-        prob: 1
+      - id: CircuitImprinterMachineCircuitboard
       - id: ClothingNeckCloakRd
-        prob: 1
       - id: ClothingHeadsetMedicalScience
-        prob: 1
-      - id: ClothingHeadHelmetHardsuitRd
-        prob: 1
       - id: ClothingOuterHardsuitRd
-        prob: 1
       - id: PlushieSlime
         prob: 0.1
+      - id: DoorRemoteResearch
+      - id: RubberStampRd
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -168,20 +158,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: TaserGun
-        prob: 1
+      - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
-        prob: 1
       - id: ClothingHeadHatHoshat
-        prob: 1
       - id: ClothingNeckCloakHos
-        prob: 1
       - id: ClothingOuterCoatHoSTrench
-        prob: 1
       - id: ClothingUniformJumpskirtHoSAlt
-        prob: 1
       - id: ClothingUniformJumpsuitHoSAlt
-        prob: 1
       - id: ClothingUniformJumpsuitHoSBlue
         prob: 0.5
       - id: ClothingUniformJumpsuitHoSGrey
@@ -190,21 +173,21 @@
         prob: 0.1
       - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
-      - id: ClothingHeadHelmetHardsuitSecurityRed
-        prob: 1
       - id: ClothingOuterHardsuitSecurityRed
-        prob: 1
+      - id: ClothingMaskGasSecurity
       - id: ClothingShoeSlippersDuck
         prob: 0.2
       - id: DrinkVacuumFlask
         prob: 0.8
       - id: ClothingBeltSecurityFilled
-        prob: 1
       - id: ClothingHeadsetAltSecurity
-        prob: 1
       - id: ClothingEyesGlassesSecurity
-        prob: 1
       - id: ClothingShoesBootsJack
-        prob: 1
       - id: CigarGoldCase
         prob: 0.50
+      - id: DoorRemoteSecurity
+      - id: ClothingUniformJumpskirtHosFormal
+      - id: ClothingUniformJumpsuitHosFormal
+      - id: RubberStampHos
+      - id: SecurityTechFabCircuitboard
+      - id: JetpackSecurityFilled

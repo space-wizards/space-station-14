@@ -1,8 +1,7 @@
 - type: entity
-  name: beaker
   parent: BaseItem
-  description: Used to contain a moderate amount of chemicals and solutions.
-  id: Beaker
+  id: BaseBeaker
+  abstract: true
   components:
   - type: Tag
     tags:
@@ -39,15 +38,12 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
-  - type: Spillable
-    solution: beaker
   - type: Drink
     isOpen: true
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: beaker
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -60,7 +56,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
+        solution: beaker
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -83,11 +80,22 @@
         Blunt: 5
 
 - type: entity
+  name: beaker
+  parent: BaseBeaker
+  description: Used to contain a moderate amount of chemicals and solutions.
+  id: Beaker
+  components:
+  - type: Spillable
+    solution: beaker
+
+- type: entity
   name: large beaker
-  parent: Beaker
+  parent: BaseBeaker
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
   components:
+  - type: Spillable
+    solution: beaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
     layers:
@@ -102,14 +110,13 @@
       beaker:
         maxVol: 100
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: beakerlarge
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beakerlarge
 
 - type: entity
   name: cryostasis beaker
-  parent: Beaker
+  parent: BaseBeaker
   description: Used to contain chemicals or solutions without reactions.
   id: CryostasisBeaker
   components:
@@ -120,15 +127,34 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 40
         canReact: false
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpillBehavior
+        solution: beaker
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - GlassBeaker
+    - Cryobeaker
 
 - type: entity
   name: bluespace beaker
-  parent: Beaker
+  parent: BaseBeaker
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:
+  - type: Spillable
+    solution: beaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
@@ -176,10 +202,9 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 1
-      fillBaseName: dropper
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: dropper
 
 - type: entity
   name: syringe
@@ -198,7 +223,7 @@
         map: ["enum.SolutionContainerLayers.Base"]
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    HeldPrefix: 0
+    heldPrefix: 0
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -207,24 +232,17 @@
     injectOnly: false
   - type: Spillable
     solution: injector
+  - type: TrashOnEmpty
+    solution: injector
   - type: Appearance
-    visuals:
-      # this visualizer used for reagent inside
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 4
-      fillBaseName: syringe
-      # this one for syrigine itself (plunger)
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 4
-      fillBaseName: syringe_base
-      emptySpriteName: syringe_base0
-      layer: Base
-      changeColor: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: syringe
 
 - type: entity
   name: pill
   parent: BaseItem
-  id: pill
+  id: Pill
   description: It's not a suppository.
   components:
   - type: Sprite
@@ -245,11 +263,16 @@
     solutions:
       food:
         maxVol: 50
+  - type: SolutionSpiker
+    sourceSolution: food
+  - type: DeleteOnTrigger
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: pill canister
   id: PillCanister
-  parent: BaseItem
+  parent: BaseStorageItem
   description: Holds up to 12 pills.
   components:
   - type: Sprite
@@ -257,6 +280,9 @@
     state: pill_canister
   - type: Item
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
+  - type: Tag
+    tags:
+      - PillCanister
   - type: Storage
     capacity: 12
     quickInsert: true

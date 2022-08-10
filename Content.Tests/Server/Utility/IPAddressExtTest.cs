@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace Content.Tests.Server.Utility
 {
-    public class IPAddressExtTest
+    public sealed class IPAddressExtTest
     {
         [Test]
         [TestCase("192.168.5.85/24", "192.168.5.1")]

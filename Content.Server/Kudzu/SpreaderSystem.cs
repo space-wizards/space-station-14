@@ -1,19 +1,14 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.Kudzu;
 
 // Future work includes making the growths per interval thing not global, but instead per "group"
-public class SpreaderSystem : EntitySystem
+public sealed class SpreaderSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -30,7 +25,12 @@ public class SpreaderSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SpreaderComponent, ComponentAdd>(SpreaderAddHandler);
-        SubscribeLocalEvent<AirtightChanged>(e => UpdateNearbySpreaders(e.Airtight.OwnerUid, e.Airtight));
+        SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
+    }
+
+    private void OnAirtightChanged(AirtightChanged e)
+    {
+        UpdateNearbySpreaders((e.Airtight).Owner, e.Airtight);
     }
 
     private void SpreaderAddHandler(EntityUid uid, SpreaderComponent component, ComponentAdd args)
@@ -44,7 +44,7 @@ public class SpreaderSystem : EntitySystem
         if (!EntityManager.TryGetComponent<TransformComponent>(blocker, out var transform))
             return; // how did we get here?
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
+        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return;
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
@@ -89,7 +89,7 @@ public class SpreaderSystem : EntitySystem
 
         if (spreader.Enabled == false) return false;
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return false;
+        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return false;
 
         var didGrow = false;
 
@@ -97,7 +97,7 @@ public class SpreaderSystem : EntitySystem
         {
             var direction = (DirectionFlag) (1 << i);
             var coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
-            if (grid.GetTileRef(coords).Tile.IsEmpty || _robustRandom.Prob(spreader.Chance)) continue;
+            if (grid.GetTileRef(coords).Tile.IsEmpty || _robustRandom.Prob(1 - spreader.Chance)) continue;
             var ents = grid.GetLocal(coords);
 
             if (ents.Any(x => IsTileBlockedFrom(x, direction))) continue;

@@ -30,7 +30,10 @@
     compatibility: Biological
   - type: Input
     context: "ghost"
-  - type: DummyInputMover
+  - type: InputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
   - type: GhostOnMove
   - type: Brain
 
@@ -100,6 +103,14 @@
     size: 1
     compatibility: Biological
   - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
 
 - type: entity
   id: OrganHumanHeart
@@ -139,8 +150,6 @@
       stomach:
         maxVol: 250
   - type: Stomach
-    maxVolume: 250
-    digestionDelay: 20
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this
   # to intestines instead.
@@ -174,7 +183,7 @@
   id: OrganHumanKidneys
   parent: BaseHumanOrgan
   name: kidneys
-  description: "Filters toxins out of a bloodstream."
+  description: "Filters toxins from the bloodstream."
   components:
   - type: Sprite
     layers:

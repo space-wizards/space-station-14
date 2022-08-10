@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at 606005645d3a14c4439e5ce14785650121b22678",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "dirt"
+    },
+    {
+      "name": "dirtlight",
+    },
+    {
+      "name": "dirtmedium",
+    },
+    {
+      "name": "dirtheavy",
+    },
+    {
+      "name": "damaged",
+    },
+    {
+      "name": "remains"
+    },
+    {
+      "name": "rust"
+    }
+  ]
+}

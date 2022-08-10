@@ -1,13 +1,7 @@
-using System;
 using Content.Shared.Radiation;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation
@@ -16,11 +10,11 @@ namespace Content.Server.Radiation
     [ComponentReference(typeof(SharedRadiationPulseComponent))]
     public sealed class RadiationPulseComponent : SharedRadiationPulseComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private float _duration;
-        private float _radsPerSecond = 8f;
         private float _range = 5f;
         private TimeSpan _startTime;
         private TimeSpan _endTime;
@@ -47,17 +41,6 @@ namespace Content.Server.Radiation
 
         [DataField("maxPulseLifespan")]
         public float MaxPulseLifespan { get; set; } = 2.5f;
-
-        [DataField("dps")]
-        public override float RadsPerSecond
-        {
-            get => _radsPerSecond;
-            set
-            {
-                _radsPerSecond = value;
-                Dirty();
-            }
-        }
 
         [DataField("sound")] public SoundSpecifier Sound { get; set; } = new SoundCollectionSpecifier("RadiationPulse");
 
@@ -96,23 +79,23 @@ namespace Content.Server.Radiation
                 _endTime = currentTime + TimeSpan.FromSeconds(_duration);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), Sound.GetSound(), Owner);
+            SoundSystem.Play(Sound.GetSound(), Filter.Pvs(Owner), Owner);
 
             Dirty();
         }
 
         public override ComponentState GetComponentState()
         {
-            return new RadiationPulseState(_radsPerSecond, _range, Draw, Decay, _startTime, _endTime);
+            return new RadiationPulseState(_range, Draw, Decay, _startTime, _endTime);
         }
 
         public void Update(float frameTime)
         {
-            if (!Decay || Owner.Deleted)
+            if (!Decay || _entMan.Deleted(Owner))
                 return;
 
             if (_duration <= 0f)
-                Owner.QueueDelete();
+                _entMan.QueueDeleteEntity(Owner);
 
             _duration -= frameTime;
         }

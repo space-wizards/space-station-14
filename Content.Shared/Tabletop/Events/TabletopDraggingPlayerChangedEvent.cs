@@ -1,6 +1,3 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Events
@@ -10,22 +7,19 @@ namespace Content.Shared.Tabletop.Events
     /// trying to move a single item at the same time.
     /// </summary>
     [Serializable, NetSerializable]
-    public class TabletopDraggingPlayerChangedEvent : EntityEventArgs
+    public sealed class TabletopDraggingPlayerChangedEvent : EntityEventArgs
     {
         /// <summary>
         /// The UID of the entity being dragged.
         /// </summary>
         public EntityUid DraggedEntityUid;
 
-        /// <summary>
-        /// The NetUserID of the player that is now dragging the item.
-        /// </summary>
-        public NetUserId? DraggingPlayer;
+        public bool IsDragging;
 
-        public TabletopDraggingPlayerChangedEvent(EntityUid draggedEntityUid, NetUserId? draggingPlayer)
+        public TabletopDraggingPlayerChangedEvent(EntityUid draggedEntityUid, bool isDragging)
         {
             DraggedEntityUid = draggedEntityUid;
-            DraggingPlayer = draggingPlayer;
+            IsDragging = isDragging;
         }
     }
 }

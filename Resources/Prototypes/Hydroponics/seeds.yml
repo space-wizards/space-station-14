@@ -1,7 +1,6 @@
 ﻿- type: seed
   id: wheat
   name: wheat
-  seedName: wheat
   displayName: wheat stalks
   plantRsi: Objects/Specific/Hydroponics/wheat.rsi
   productPrototypes:
@@ -26,7 +25,6 @@
 - type: seed
   id: oat
   name: oat
-  seedName: oat
   displayName: oat stalks
   plantRsi: Objects/Specific/Hydroponics/oat.rsi
   productPrototypes:
@@ -51,7 +49,6 @@
 - type: seed
   id: banana
   name: banana
-  seedName: banana
   displayName: banana plant
   plantRsi: Objects/Specific/Hydroponics/banana.rsi
   productPrototypes:
@@ -65,15 +62,18 @@
   waterConsumption: 6
   idealHeat: 298
   chemicals:
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
     Nutriment:
       Min: 1
-      Max: 20
-      PotencyDivisor: 20
+      Max: 2
+      PotencyDivisor: 50
 
 - type: seed
   id: carrots
   name: carrot
-  seedName: carrot
   displayName: carrots
   plantRsi: Objects/Specific/Hydroponics/carrot.rsi
   productPrototypes:
@@ -88,13 +88,16 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 20
+      Max: 5
       PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: lemon
   name: lemon
-  seedName: lemon
   displayName: lemon trees
   plantRsi: Objects/Specific/Hydroponics/lemon.rsi
   productPrototypes:
@@ -109,13 +112,16 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 20
+      Max: 5
       PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: pineapple
   name: pineapple
-  seedName: pineapple
   displayName: pineapple plant
   plantRsi: Objects/Specific/Hydroponics/pineapple.rsi
   productPrototypes:
@@ -127,16 +133,24 @@
   yield: 4
   potency: 10
   idealLight: 8
+  growthStages: 3
   chemicals:
     Nutriment:
       Min: 1
       Max: 20
       PotencyDivisor: 20
+    Water:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Vitamin:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
 
 - type: seed
   id: potato
   name: potato
-  seedName: potato
   displayName: potatoes
   plantRsi: Objects/Specific/Hydroponics/potato.rsi
   productPrototypes:
@@ -153,11 +167,14 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: sugarcane
   name: sugarcane
-  seedName: sugarcane
   displayName: sugarcanes
   plantRsi: Objects/Specific/Hydroponics/sugarcane.rsi
   productPrototypes:
@@ -178,8 +195,7 @@
 
 - type: seed
   id: towercap
-  name: towercap
-  seedName: tower cap
+  name: tower cap
   displayName: tower caps
   plantRsi: Objects/Specific/Hydroponics/towercap.rsi
   productPrototypes:
@@ -198,7 +214,6 @@
 - type: seed
   id: tomato
   name: tomato
-  seedName: tomato
   displayName: tomato plant
   plantRsi: Objects/Specific/Hydroponics/tomato.rsi
   productPrototypes:
@@ -220,11 +235,14 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: eggplant
   name: eggplant
-  seedName: eggplant
   displayName: eggplants
   plantRsi: Objects/Specific/Hydroponics/eggplant.rsi
   productPrototypes:
@@ -242,11 +260,14 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: apple
   name: apple
-  seedName: apple
   displayName: apple tree
   plantRsi: Objects/Specific/Hydroponics/apple.rsi
   productPrototypes:
@@ -263,11 +284,14 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: corn
   name: corn
-  seedName: corn
   displayName: ears of corn
   plantRsi: Objects/Specific/Hydroponics/corn.rsi
   productPrototypes:
@@ -286,11 +310,14 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: onion
   name: onion
-  seedName: onion
   displayName: onions
   plantRsi: Objects/Specific/Hydroponics/onion.rsi
   productPrototypes:
@@ -309,11 +336,18 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Allicin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: onionred
   name: red onion
-  seedName: red onion
   displayName: red onions
   plantRsi: Objects/Specific/Hydroponics/onion_red.rsi
   productPrototypes:
@@ -332,12 +366,19 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Allicin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: chanterelle
   name: chanterelle
-  seedName: chanterelle
-  seedNoun: spores
+  noun: spores
   displayName: chanterelle mushrooms
   plantRsi: Objects/Specific/Hydroponics/chanterelle.rsi
   productPrototypes:
@@ -359,8 +400,7 @@
 
 - type: seed
   id: eggy
-  name: eggy
-  seedName: egg-plant
+  name: egg-plant
   displayName: egg-plants
   plantRsi: Objects/Specific/Hydroponics/eggy.rsi
   productPrototypes:
@@ -374,7 +414,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    Nutriment:
+    Egg:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -382,7 +422,6 @@
 - type: seed
   id: cannabis
   name: cannabis
-  seedName: cannabis
   displayName: cannabis
   plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
   productPrototypes:
@@ -405,7 +444,6 @@
 - type: seed
   id: tobacco
   name: tobacco
-  seedName: tobacco
   displayName: tobacco plant
   plantRsi: Objects/Specific/Hydroponics/tobacco.rsi
   productPrototypes:
@@ -424,3 +462,230 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: nettle
+  name: nettle
+  displayName: nettles
+  plantRsi: Objects/Specific/Hydroponics/nettle.rsi
+  productPrototypes:
+    - Nettle
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 20
+  growthStages: 5
+  idealLight: 8
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    Histamine:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+
+- type: seed
+  id: chili
+  name: chili
+  displayName: chilis
+  plantRsi: Objects/Specific/Hydroponics/chili.rsi
+  productPrototypes:
+    - FoodChili
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    CapsaicinOil:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Nutriment:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: poppy
+  name: poppy
+  displayName: poppies
+  plantRsi: Objects/Specific/Hydroponics/poppy.rsi
+  productPrototypes:
+    - FoodPoppy
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+      Potencydivisor: 50
+    Bicaridine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: aloe
+  name: aloe
+  displayName: aloe
+  plantRsi: Objects/Specific/Hydroponics/aloe.rsi
+  productPrototypes:
+    - FoodAloe
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 5
+  waterConsumption: 6
+  chemicals:
+    Aloe:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Dermaline:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: lingzhi
+  name: lingzhi
+  displayName: lingzhi
+  plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
+  productPrototypes:
+    - FoodLingzhi
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    Ultravasculine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+    Epinephrine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+
+- type: seed
+  id: ambrosiaVulgaris
+  name: ambrosia vulgaris
+  displayName: ambrosia vulgaris
+  plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+  productPrototypes:
+    - FoodAmbrosiaVulgaris
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 6
+  waterConsumption: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 10
+    Bicaridine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Kelotane:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Desoxyephedrine: #Needs a small touch of spice, replace this with something better when we have more fun drugs
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+    Vitamin:
+      Min: 1
+      Max: 2
+      Potencydivisor: 50
+
+- type: seed
+  id: galaxythistle
+  name: galaxythistle
+  displayName: galaxythistle
+  plantRsi: Objects/Specific/Hydroponics/galaxythistle.rsi
+  productPrototypes:
+    - FoodGalaxythistle
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    Stellibinin:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+
+- type: seed
+  id: flyAmanita
+  name: fly amanita
+  displayName: fly amanita
+  plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
+  productPrototypes:
+    - FoodFlyAmanita
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 2
+  waterConsumption: 6
+  chemicals:
+    Amatoxin:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+    Nutriment: ## yumby :)
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: gatfruit
+  name: gatfruit
+  displayName: gatfruit tree
+  plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
+  productPrototypes:
+    - FoodGatfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20

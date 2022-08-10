@@ -1,17 +1,11 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Server.Chemistry.Components.SolutionManager
+﻿namespace Content.Server.Chemistry.Components.SolutionManager
 {
     /// <summary>
     ///     Denotes the solution that can removed  be with syringes.
     /// </summary>
     [RegisterComponent]
-    public class DrawableSolutionComponent : Component
+    public sealed class DrawableSolutionComponent : Component
     {
-        public override string Name => "DrawableSolution";
-
         /// <summary>
         /// Solution name that can be removed with syringes.
         /// </summary>

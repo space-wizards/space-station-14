@@ -1,6 +1,4 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Tag
 {
@@ -10,10 +8,10 @@ namespace Content.Shared.Tag
     ///     gets saved in TagComponent.
     /// </summary>
     [Prototype("Tag")]
-    public class TagPrototype : IPrototype
+    public sealed class TagPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Destructible;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Reflection;
 
 namespace Content.IntegrationTests.Tests.Destructible
 {
@@ -9,7 +10,8 @@ namespace Content.IntegrationTests.Tests.Destructible
     ///     This is just a system for testing destructible thresholds. Whenever any threshold is reached, this will add that
     ///     threshold to a list for checking during testing.
     /// </summary>
-    public class TestDestructibleListenerSystem : EntitySystem
+    [Reflect(false)]
+    public sealed class TestDestructibleListenerSystem : EntitySystem
     {
         public readonly List<DamageThresholdReached> ThresholdsReached = new();
 

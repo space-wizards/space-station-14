@@ -7,16 +7,18 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 9999
-    QuickEquip: false
-    Slots:
+  - type: Clothing
+    quickEquip: false
+    slots:
     - back
-    sprite: Clothing/Back/Backpacks/backpack.rsi
   - type: Storage
     capacity: 100
-    storageSoundCollection:
-      collection: storageRustle
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
 
 - type: entity
   parent: ClothingBackpack
@@ -26,8 +28,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/clown.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Backpacks/clown.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: BikeHorn
 
 - type: entity
   parent: ClothingBackpack
@@ -36,8 +39,6 @@
   description: It's a very robust backpack.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/security.rsi
-  - type: Clothing
     sprite: Clothing/Back/Backpacks/security.rsi
 
 - type: entity
@@ -48,8 +49,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/engineering.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Backpacks/engineering.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -58,8 +57,6 @@
   description: It's a backpack especially designed for use in a sterile environment.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/medical.rsi
-  - type: Clothing
     sprite: Clothing/Back/Backpacks/medical.rsi
 
 - type: entity
@@ -70,8 +67,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/captain.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Backpacks/captain.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -80,8 +75,6 @@
   description: A silent backpack made for those silent workers. Silence Co.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/mime.rsi
-  - type: Clothing
     sprite: Clothing/Back/Backpacks/mime.rsi
 
 - type: entity
@@ -92,8 +85,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/chemistry.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Backpacks/chemistry.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -102,8 +93,6 @@
   description: It's a backpack made of all-natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/botany.rsi
-  - type: Clothing
     sprite: Clothing/Back/Backpacks/botany.rsi
 
 - type: entity
@@ -114,9 +103,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/science.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Backpacks/science.rsi
-    
+
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackVirology
@@ -125,9 +112,65 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/virology.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Backpacks/virology.rsi
 
+#ERT
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackERTLeader
+  name: ERT commander backpack
+  description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertleader.rsi
+  - type: Storage
+    capacity: 200
+
+- type: entity
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackERTSecurity
+  name: ERT security backpack
+  description: A spacious backpack with lots of pockets, worn by Security Officers of an Emergency Response Team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertsec.rsi
+
+- type: entity
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackERTMedical
+  name: ERT medical backpack
+  description: A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertmed.rsi
+
+- type: entity
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackERTEngineer
+  name: ERT engineer backpack
+  description: A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/erteng.rsi
+
+- type: entity
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackERTJanitor
+  name: ERT janitor backpack
+  description: A spacious backpack with lots of pockets, worn by Janitors of an Emergency Response Team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertjanitor.rsi
+
+- type: entity
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackERTClown
+  name: ERT clown backpack
+  description: A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertclown.rsi
+
+#Special
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackHolding
@@ -142,6 +185,6 @@
     - state: holding-unlit
       shader: unshaded
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/holding.rsi
+    equippedPrefix: holding
   - type: Storage
     capacity: 10000

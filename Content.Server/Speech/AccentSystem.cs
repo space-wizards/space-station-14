@@ -1,33 +1,28 @@
 using System.Text.RegularExpressions;
-using Content.Server.Chat.Managers;
-using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 
 namespace Content.Server.Speech
 {
-    public class AccentSystem : EntitySystem
+    public sealed class AccentSystem : EntitySystem
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
-
         public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?])", RegexOptions.Compiled);
 
         public override void Initialize()
         {
-            _chatManager.RegisterChatTransform(AccentHandler);
+            SubscribeLocalEvent<TransformSpeechEvent>(AccentHandler);
         }
 
-        public string AccentHandler(EntityUid playerUid, string message)
+        private void AccentHandler(TransformSpeechEvent args)
         {
-            var accentEvent = new AccentGetEvent(playerUid, message);
+            var accentEvent = new AccentGetEvent(args.Sender, args.Message);
 
-            RaiseLocalEvent(playerUid, accentEvent);
-
-            return accentEvent.Message;
+            RaiseLocalEvent(args.Sender, accentEvent, true);
+            args.Message = accentEvent.Message;
         }
     }
 
-    public class AccentGetEvent : EntityEventArgs
+    public sealed class AccentGetEvent : EntityEventArgs
     {
         /// <summary>
         ///     The entity to apply the accent to.

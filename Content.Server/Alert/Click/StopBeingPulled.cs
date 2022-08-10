@@ -3,8 +3,6 @@ using Content.Shared.Alert;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Alert.Click
 {
@@ -13,14 +11,14 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class StopBeingPulled : IAlertClick
+    public sealed class StopBeingPulled : IAlertClick
     {
-        public void AlertClicked(ClickAlertEventArgs args)
+        public void AlertClicked(EntityUid player)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Player.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(player, null))
                 return;
 
-            if (args.Player.TryGetComponent<SharedPullableComponent>(out var playerPullable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(player, out var playerPullable))
             {
                 EntitySystem.Get<SharedPullingSystem>().TryStopPull(playerPullable);
             }

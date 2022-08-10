@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States
 {
@@ -7,7 +6,7 @@ namespace Content.Server.AI.WorldState.States
     /// Could be target item to equip, target to attack, etc.
     /// </summary>
     [UsedImplicitly]
-    public sealed class TargetEntityState : PlanningStateData<IEntity>
+    public sealed class TargetEntityState : PlanningStateData<EntityUid?>
     {
         public override string Name => "TargetEntity";
 

@@ -1,11 +1,6 @@
-using System;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.ReagentEffects
@@ -14,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Default metabolism for stimulants and tranqs. Attempts to find a MovementSpeedModifier on the target,
     /// adding one if not there and to change the movespeed
     /// </summary>
-    public class MovespeedModifier : ReagentEffect
+    public sealed class MovespeedModifier : ReagentEffect
     {
         /// <summary>
         /// How much the entities' walk speed is multiplied by.

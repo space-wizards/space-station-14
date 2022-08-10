@@ -1,14 +1,21 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.Sound.Components
 {
     /// <summary>
     /// Simple sound emitter that emits sound on ActivateInWorld
     /// </summary>
     [RegisterComponent]
-    public class EmitSoundOnActivateComponent : BaseEmitSoundComponent
+    public sealed class EmitSoundOnActivateComponent : BaseEmitSoundComponent
     {
-        /// <inheritdoc />
-        public override string Name => "EmitSoundOnActivate";
+        /// <summary>
+        ///     Whether or not to mark an interaction as handled after playing the sound. Useful if this component is
+        ///     used to play sound for some other component with activation functionality.
+        /// </summary>
+        /// <remarks>
+        ///     If false, you should be confident that the interaction will also be handled by some other system, as
+        ///     otherwise this might enable sound spamming, as use-delays are only initiated if the interaction was
+        ///     handled.
+        /// </remarks>
+        [DataField("handle")]
+        public bool Handle = true;
     }
 }

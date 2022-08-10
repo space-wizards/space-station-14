@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Access.Components;
 using Content.Server.Doors.Components;
-using Robust.Shared.GameObjects;
+using Content.Shared.Access.Components;
+using Content.Shared.Doors.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Pathfinding
 {
-    public class PathfindingNode
+    public sealed class PathfindingNode
     {
         public PathfindingChunk ParentChunk => _parentChunk;
         private readonly PathfindingChunk _parentChunk;
@@ -22,34 +19,23 @@ namespace Content.Server.AI.Pathfinding
         /// Whenever there's a change in the collision layers we update the mask as the graph has more reads than writes
         /// </summary>
         public int BlockedCollisionMask { get; private set; }
-        private readonly Dictionary<IEntity, int> _blockedCollidables = new(0);
+        private readonly Dictionary<EntityUid, int> _blockedCollidables = new(0);
 
-        public IReadOnlyDictionary<IEntity, int> PhysicsLayers => _physicsLayers;
-        private readonly Dictionary<IEntity, int> _physicsLayers = new(0);
+        public IReadOnlyDictionary<EntityUid, int> PhysicsLayers => _physicsLayers;
+        private readonly Dictionary<EntityUid, int> _physicsLayers = new(0);
 
         /// <summary>
         /// The entities on this tile that require access to traverse
         /// </summary>
         /// We don't store the ICollection, at least for now, as we'd need to replicate the access code here
-        public IReadOnlyCollection<AccessReader> AccessReaders => _accessReaders.Values;
-        private readonly Dictionary<IEntity, AccessReader> _accessReaders = new(0);
+        public IReadOnlyCollection<AccessReaderComponent> AccessReaders => _accessReaders.Values;
+        private readonly Dictionary<EntityUid, AccessReaderComponent> _accessReaders = new(0);
 
         public PathfindingNode(PathfindingChunk parent, TileRef tileRef)
         {
             _parentChunk = parent;
             TileRef = tileRef;
             GenerateMask();
-        }
-
-        public static bool IsRelevant(IEntity entity, IPhysBody physicsComponent)
-        {
-            if (entity.Transform.GridID == GridId.Invalid ||
-                (PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) == 0)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         /// <summary>
@@ -96,7 +82,7 @@ namespace Content.Server.AI.Pathfinding
             }
         }
 
-        public PathfindingNode? GetNeighbor(Direction direction)
+        public PathfindingNode? GetNeighbor(Direction direction, IEntityManager? entManager = null)
         {
             var chunkXOffset = TileRef.X - ParentChunk.Indices.X;
             var chunkYOffset = TileRef.Y - ParentChunk.Indices.Y;
@@ -257,18 +243,19 @@ namespace Content.Server.AI.Pathfinding
         /// <param name="entity"></param>
         /// TODO: These 2 methods currently don't account for a bunch of changes (e.g. airlock unpowered, wrenching, etc.)
         /// TODO: Could probably optimise this slightly more.
-        public void AddEntity(IEntity entity, IPhysBody physicsComponent)
+        public void AddEntity(EntityUid entity, IPhysBody physicsComponent, IEntityManager? entMan = null)
         {
+            IoCManager.Resolve(ref entMan);
             // If we're a door
-            if (entity.HasComponent<AirlockComponent>() || entity.HasComponent<ServerDoorComponent>())
+            if (entMan.HasComponent<AirlockComponent>(entity) || entMan.HasComponent<DoorComponent>(entity))
             {
                 // If we need access to traverse this then add to readers, otherwise no point adding it (except for maybe tile costs in future)
                 // TODO: Check for powered I think (also need an event for when it's depowered
                 // AccessReader calls this whenever opening / closing but it can seem to get called multiple times
                 // Which may or may not be intended?
-                if (entity.TryGetComponent(out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
+                if (entMan.TryGetComponent(entity, out AccessReaderComponent? accessReader) && !_accessReaders.ContainsKey(entity))
                 {
-                    _accessReaders.Add(entity, accessReader);
+                    _accessReaders.TryAdd(entity, accessReader);
                     ParentChunk.Dirty();
                 }
                 return;
@@ -276,13 +263,14 @@ namespace Content.Server.AI.Pathfinding
 
             DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) != 0);
 
-            if (physicsComponent.BodyType != BodyType.Static)
+            if (physicsComponent.BodyType != BodyType.Static ||
+                !physicsComponent.Hard)
             {
-                _physicsLayers.Add(entity, physicsComponent.CollisionLayer);
+                _physicsLayers.TryAdd(entity, physicsComponent.CollisionLayer);
             }
             else
             {
-                _blockedCollidables.Add(entity, physicsComponent.CollisionLayer);
+                _blockedCollidables.TryAdd(entity, physicsComponent.CollisionLayer);
                 GenerateMask();
                 ParentChunk.Dirty();
             }
@@ -293,23 +281,24 @@ namespace Content.Server.AI.Pathfinding
         /// Will check each category and remove it from the applicable one
         /// </summary>
         /// <param name="entity"></param>
-        public void RemoveEntity(IEntity entity)
+        public void RemoveEntity(EntityUid entity)
         {
             // There's no guarantee that the entity isn't deleted
             // 90% of updates are probably entities moving around
             // Entity can't be under multiple categories so just checking each once is fine.
-            if (_physicsLayers.ContainsKey(entity))
+            if (_physicsLayers.Remove(entity))
             {
-                _physicsLayers.Remove(entity);
+                return;
             }
-            else if (_accessReaders.ContainsKey(entity))
+
+            if (_accessReaders.Remove(entity))
             {
-                _accessReaders.Remove(entity);
                 ParentChunk.Dirty();
+                return;
             }
-            else if (_blockedCollidables.ContainsKey(entity))
+
+            if (_blockedCollidables.Remove(entity))
             {
-                _blockedCollidables.Remove(entity);
                 GenerateMask();
                 ParentChunk.Dirty();
             }

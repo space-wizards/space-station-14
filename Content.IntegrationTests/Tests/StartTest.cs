@@ -5,48 +5,32 @@ using Robust.Shared.Exceptions;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class StartTest : ContentIntegrationTest
+    public sealed class StartTest
     {
         /// <summary>
-        ///     Test that the server starts.
-        /// </summary>
-        [Test]
-        public async Task TestServerStart()
-        {
-            var server = StartServer(new ServerContentIntegrationOption
-            {
-                Pool = false
-            });
-            server.RunTicks(5);
-            await server.WaitIdleAsync();
-            Assert.That(server.IsAlive);
-            var runtimeLog = server.ResolveDependency<IRuntimeLog>();
-            Assert.That(runtimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged.");
-            server.Stop();
-            await server.WaitIdleAsync();
-            Assert.That(!server.IsAlive);
-        }
-
-        /// <summary>
-        ///     Test that the client starts.
+        ///     Test that the server, and client start, and stop.
         /// </summary>
         [Test]
         public async Task TestClientStart()
         {
-            var client = StartClient(new ClientContentIntegrationOption
-            {
-                Pool = false
-            });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{Disconnected = true});
+            var client = pairTracker.Pair.Client;
+            Assert.That(client.IsAlive);
+            await client.WaitRunTicks(5);
+            Assert.That(client.IsAlive);
+            var cRuntimeLog = client.ResolveDependency<IRuntimeLog>();
+            Assert.That(cRuntimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged on client.");
             await client.WaitIdleAsync();
             Assert.That(client.IsAlive);
-            client.RunTicks(5);
-            await client.WaitIdleAsync();
-            Assert.That(client.IsAlive);
-            var runtimeLog = client.ResolveDependency<IRuntimeLog>();
-            Assert.That(runtimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged.");
-            client.Stop();
-            await client.WaitIdleAsync();
-            Assert.That(!client.IsAlive);
+
+            var server = pairTracker.Pair.Server;
+            Assert.That(server.IsAlive);
+            var sRuntimeLog = server.ResolveDependency<IRuntimeLog>();
+            Assert.That(sRuntimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged on server.");
+            await server.WaitIdleAsync();
+            Assert.That(server.IsAlive);
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

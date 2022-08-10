@@ -1,29 +1,36 @@
-using System;
-using Content.Server.Doors.Components;
+using System.Linq;
+using Content.Server.Administration.Logs;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
-using Content.Shared.Audio;
-using Content.Shared.Doors;
+using Content.Server.Sticky.Events;
+using Content.Shared.Actions;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
+using Content.Shared.Trigger;
+using Content.Shared.Database;
+using Content.Shared.Explosion;
+using Content.Shared.Interaction;
+using Content.Shared.Payload.Components;
+using Content.Shared.StepTrigger.Systems;
+using Robust.Server.Containers;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Explosion.EntitySystems
 {
     /// <summary>
     /// Raised whenever something is Triggered on the entity.
     /// </summary>
-    public class TriggerEvent : HandledEntityEventArgs
+    public sealed class TriggerEvent : HandledEntityEventArgs
     {
-        public IEntity Triggered { get; }
-        public IEntity? User { get; }
+        public EntityUid Triggered { get; }
+        public EntityUid? User { get; }
 
-        public TriggerEvent(IEntity triggered, IEntity? user = null)
+        public TriggerEvent(EntityUid triggered, EntityUid? user = null)
         {
             Triggered = triggered;
             User = user;
@@ -31,110 +38,169 @@ namespace Content.Server.Explosion.EntitySystems
     }
 
     [UsedImplicitly]
-    public sealed class TriggerSystem : EntitySystem
+    public sealed partial class TriggerSystem : EntitySystem
     {
         [Dependency] private readonly ExplosionSystem _explosions = default!;
+        [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
+        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
+
+            InitializeProximity();
+            InitializeOnUse();
+            InitializeSignal();
+            InitializeTimedCollide();
+
+            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
+            SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
-            SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
-            SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
         }
 
-        #region Explosions
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
-
-            Explode(uid, explosiveComponent);
+            _explosions.TriggerExplosive(uid, user: args.User);
+            args.Handled = true;
         }
-
-        // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
-        public void Explode(EntityUid uid, ExplosiveComponent component)
-        {
-            if (component.Exploding)
-            {
-                return;
-            }
-
-            component.Exploding = true;
-            _explosions.SpawnExplosion(uid, component.DevastationRange, component.HeavyImpactRange, component.LightImpactRange, component.FlashRange);
-            EntityManager.QueueDeleteEntity(uid);
-        }
-        #endregion
 
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
-            if (component.Flashed) return;
-
             // TODO Make flash durations sane ffs.
-            _flashSystem.FlashArea(uid, args.User?.Uid, component.Range, component.Duration * 1000f);
-            component.Flashed = true;
+            _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
+            args.Handled = true;
         }
         #endregion
-
-        private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
-        {
-            if (component.Sound == null) return;
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), AudioHelpers.WithVariation(0.01f));
-        }
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
             EntityManager.QueueDeleteEntity(uid);
+            args.Handled = true;
         }
 
-        private void HandleDoorTrigger(EntityUid uid, ToggleDoorOnTriggerComponent component, TriggerEvent args)
+        private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
         {
-            if (EntityManager.TryGetComponent<ServerDoorComponent>(uid, out var door))
-            {
-                switch (door.State)
-                {
-                    case SharedDoorComponent.DoorState.Open:
-                        door.Close();
-                        break;
-                    case SharedDoorComponent.DoorState.Closed:
-                        door.Open();
-                        break;
-                    case SharedDoorComponent.DoorState.Closing:
-                    case SharedDoorComponent.DoorState.Opening:
-                        break;
-                }
-            }
+			if(args.OurFixture.ID == component.FixtureID)
+				Trigger(component.Owner);
         }
 
-        private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
+        private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
         {
-            Trigger(component.Owner);
+            Trigger(component.Owner, args.User);
+            args.Handled = true;
         }
 
-        public void Trigger(IEntity trigger, IEntity? user = null)
+        private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
+        {
+            Trigger(uid, args.Tripper);
+        }
+
+        public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
-            EntityManager.EventBus.RaiseLocalEvent(trigger.Uid, triggerEvent);
+            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent, true);
+            return triggerEvent.Handled;
         }
 
-        public void HandleTimerTrigger(TimeSpan delay, IEntity triggered, IEntity? user = null)
+        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound, AudioParams beepParams)
         {
-            if (delay.TotalSeconds <= 0)
+            if (delay <= 0)
             {
-                Trigger(triggered, user);
+                RemComp<ActiveTimerTriggerComponent>(uid);
+                Trigger(uid, user);
                 return;
             }
 
-            Timer.Spawn(delay, () =>
+            if (HasComp<ActiveTimerTriggerComponent>(uid))
+                return;
+
+            if (user != null)
             {
-                if (triggered.Deleted) return;
-                Trigger(triggered, user);
-            });
+                // Check if entity is bomb/mod. grenade/etc
+                if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
+                    TryComp(container.ContainedEntities.First(), out ChemicalPayloadComponent? chemicalPayloadComponent))
+                {
+                    // If a beaker is missing, the entity won't explode, so no reason to log it
+                    if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||
+                        !TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
+                        return;
+
+                    _adminLogger.Add(LogType.Trigger,
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.Trigger,
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
+                }
+
+            }
+            else
+            {
+                _adminLogger.Add(LogType.Trigger,
+                    $"{delay} second timer trigger started on entity {ToPrettyString(uid):timer}");
+            }
+
+            var active = AddComp<ActiveTimerTriggerComponent>(uid);
+            active.TimeRemaining = delay;
+            active.User = user;
+            active.BeepParams = beepParams;
+            active.BeepSound = beepSound;
+            active.BeepInterval = beepInterval;
+            active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
+
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            UpdateProximity(frameTime);
+            UpdateTimer(frameTime);
+            UpdateTimedCollide(frameTime);
+        }
+
+        private void UpdateTimer(float frameTime)
+        {
+            HashSet<EntityUid> toRemove = new();
+            foreach (var timer in EntityQuery<ActiveTimerTriggerComponent>())
+            {
+                timer.TimeRemaining -= frameTime;
+                timer.TimeUntilBeep -= frameTime;
+
+                if (timer.TimeRemaining <= 0)
+                {
+                    Trigger(timer.Owner, timer.User);
+                    toRemove.Add(timer.Owner);
+                    continue;
+                }
+
+                if (timer.BeepSound == null || timer.TimeUntilBeep > 0)
+                    continue;
+
+                timer.TimeUntilBeep += timer.BeepInterval;
+                var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
+                SoundSystem.Play(timer.BeepSound.GetSound(), filter, timer.Owner, timer.BeepParams);
+            }
+
+            foreach (var uid in toRemove)
+            {
+                RemComp<ActiveTimerTriggerComponent>(uid);
+
+                // In case this is a re-usable grenade, un-prime it.
+                if (TryComp<AppearanceComponent>(uid, out var appearance))
+                    appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Unprimed);
+            }
         }
     }
 }

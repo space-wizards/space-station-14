@@ -1,18 +1,11 @@
-using System;
 using Content.Server.Advertisements;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Advertise
 {
-    [RegisterComponent, Friend(typeof(AdvertiseSystem))]
-    public class AdvertiseComponent : Component
+    [RegisterComponent, Access(typeof(AdvertiseSystem))]
+    public sealed class AdvertiseComponent : Component
     {
-        public override string Name => "Advertise";
-
         /// <summary>
         ///     Minimum time in seconds to wait before saying a new ad, in seconds. Has to be larger than or equal to 1.
         /// </summary>

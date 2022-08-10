@@ -1,0 +1,123 @@
+#Entities found at entities/objects/specific/medical
+- type: entity
+  id: MedkitFilled
+  suffix: Filled
+  parent: Medkit
+  components:
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+        amount: 1
+      - id: Brutepack
+        amount: 2
+      - id: Gauze
+        amount: 1
+      - id: Ointment
+        amount: 2
+      # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
+
+- type: entity
+  id: MedkitBurnFilled
+  suffix: Filled
+  parent: MedkitBurn
+  components:
+  - type: StorageFill
+    contents:
+      - id: Ointment
+        amount: 2
+      - id: PillKelotane
+        amount: 3
+      - id: SyringeInaprovaline
+        amount: 1
+
+- type: entity
+  id: MedkitBruteFilled
+  suffix: Filled
+  parent: MedkitBrute
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 2 # TO DO: Advanced brute pack
+      - id: PillIron
+        amount: 2
+      - id: Gauze
+        amount: 2
+
+- type: entity
+  id: MedkitToxinFilled
+  suffix: Filled
+  parent: MedkitToxin
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyringeSpaceacillin
+        amount: 1
+      - id: SyringeIpecac
+        amount: 1
+      - id: PillDylovene
+        amount: 3
+
+- type: entity
+  id: MedkitOxygenFilled
+  suffix: Filled
+  parent: MedkitO2
+  components:
+  - type: StorageFill
+    contents:
+      - id: EmergencyMedipen
+        amount: 1
+      - id: PillDexalin
+        amount: 3
+      - id: SyringeInaprovaline
+        amount: 1
+
+- type: entity
+  id: MedkitRadiationFilled
+  suffix: Filled
+  parent: MedkitRadiation
+  components:
+  - type: StorageFill
+    contents:
+      - id: Ointment
+        amount: 2
+      - id: PillHyronalin
+        amount: 3
+      - id: EmergencyMedipen
+        amount: 1
+
+- type: entity
+  id: MedkitAdvancedFilled
+  suffix: Filled
+  parent: MedkitAdvanced
+  components:
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+        amount: 1
+      - id: Brutepack
+        amount: 3 # TO DO: Advanced fills
+      - id: SyringeTranexamicAcid
+        amount: 1
+      - id: PillTricordrazine
+        amount: 1
+      - id: AntiPoisonMedipen
+        amount: 1
+
+- type: entity
+  id: MedkitCombatFilled
+  suffix: Filled
+  parent: MedkitCombat
+  components:
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+        amount: 1
+      - id: SyringeEphedrine
+        amount: 1 # TO DO: More combat meds
+      - id: SyringeTranexamicAcid
+        amount: 1
+      - id: PillTricordrazine
+        amount: 1
+      - id: AntiPoisonMedipen
+        amount: 1

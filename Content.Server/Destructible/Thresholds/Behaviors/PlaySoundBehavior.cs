@@ -1,16 +1,12 @@
-using System;
 using Content.Shared.Audio;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]
-    public class PlaySoundBehavior : IThresholdBehavior
+    public sealed class PlaySoundBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Sound played upon destruction.
@@ -20,7 +16,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
             var pos = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
-            SoundSystem.Play(Filter.Pvs(pos), Sound.GetSound(), pos, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Sound.GetSound(), Filter.Pvs(pos), pos, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

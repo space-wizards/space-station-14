@@ -1,0 +1,18 @@
+- name: Articles
+  href: articles/
+  
+# Client 
+- name: Content.Client 
+  href: api/Content.Client/
+
+# Server
+- name: Content.Server
+  href: api/Content.Server/
+
+# Shared 
+- name: Content.Shared
+  href: api/Content.Shared/
+  
+# Unit testing
+- name: Content.Tests
+  href: api/Content.Tests/

@@ -1,17 +1,15 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Fluids.Components;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class WaterVaporReaction : IGasReactionEffect
+    public sealed class WaterVaporReaction : IGasReactionEffect
     {
         [DataField("reagent")] public string? Reagent { get; } = null;
 
@@ -36,7 +34,8 @@ namespace Content.Server.Atmos.Reactions
             mixture.AdjustMoles(GasId, -MolesPerUnit);
 
             var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
-            tileRef.SpillAt(new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), PuddlePrototype, sound: false);
+            EntitySystem.Get<SpillableSystem>()
+                .SpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), PuddlePrototype, sound: false);
 
             return ReactionResult.Reacting;
         }

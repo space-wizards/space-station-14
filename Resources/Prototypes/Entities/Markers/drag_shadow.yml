@@ -1,7 +1,7 @@
 - type: entity
   name: drag shadow
   id: dragshadow
-  abstract: true
+  noSpawn: true
   components:
   - type: Tag
     tags:

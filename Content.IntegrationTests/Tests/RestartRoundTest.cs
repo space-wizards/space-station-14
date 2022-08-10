@@ -7,19 +7,21 @@ using Robust.Shared.IoC;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class RestartRoundTest : ContentIntegrationTest
+    public sealed class RestartRoundTest
     {
         [Test]
         public async Task Test()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            await using var pairTracker = await PoolManager.GetServerClient();
+            var server = pairTracker.Pair.Server;
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().RestartRound();
             });
 
-            await RunTicksSync(client, server, 10);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pairTracker.CleanReturnAsync();
         }
     }
 }
