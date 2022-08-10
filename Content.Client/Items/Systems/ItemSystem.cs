@@ -98,19 +98,5 @@ public sealed class ItemSystem : SharedItemSystem
         result = new() { layer };
         return true;
     }
-
-    /// <summary>
-    ///     Copy in-hand and clothing visuals from another item.
-    /// </summary>
-    public void CopyVisuals(EntityUid uid, ItemComponent otherItem, ItemComponent? item = null)
-    {
-        if (!Resolve(uid, ref item))
-            return;
-
-        item.RsiPath = otherItem.RsiPath;
-        item.InhandVisuals = otherItem.InhandVisuals;
-
-        VisualsChanged(uid);
-    }
     #endregion
 }
