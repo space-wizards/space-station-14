@@ -102,18 +102,7 @@ namespace Content.Shared.Eye.Blinding
                 blindable.Sources--;
             }
 
-            if (blindable.Sources > 0)
-            {
-                // used for examining here...
-                var blurry = EnsureComp<BlurryVisionComponent>(uid);
-                blurry.Magnitude = 1;
-                blurry.Dirty();
-            } else
-            {
-                if (blindable.EyeDamage == 0)
-                    RemComp<BlurryVisionComponent>(uid);
-                blindable.Sources = 0;
-            }
+            blindable.Sources = Math.Max(blindable.Sources, 0);
         }
 
         public void AdjustEyeDamage(EntityUid uid, bool add, BlindableComponent? blindable = null)
