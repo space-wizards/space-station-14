@@ -41,6 +41,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
     netsync: false
     state: unlit-icon
+    color: '#804A40FF'
   - type: Tag
     tags:
       - Cigarette
