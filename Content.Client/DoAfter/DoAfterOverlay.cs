@@ -1,6 +1,9 @@
 using Content.Client.Resources;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -9,6 +12,7 @@ namespace Content.Client.DoAfter;
 
 public sealed class DoAfterOverlay : Overlay
 {
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     private readonly SharedTransformSystem _transform;
@@ -32,15 +36,10 @@ public sealed class DoAfterOverlay : Overlay
     {
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-        // TODO: This doesn't work well with packetloss.
-        // Ideally we'd receive it from the server with its start time and duration
-        // then we'd work out the diff between current time and start time, then we'd accumulate it
-        // every first-time-predicted, then for the in between frames just render at the progress of the tick
-        var currentTime = _timing.CurTime;
+        var spriteQuery = _entManager.GetEntityQuery<SpriteComponent>();
 
-        // TODO: Get UI scale
-        var scale = Vector2.One * 1f;
-        var scaleMatrix = Matrix3.CreateScale(scale);
+        var scale = _configManager.GetCVar(CVars.DisplayUIScale);
+        var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
         handle.UseShader(_shader);
 
@@ -63,42 +62,50 @@ public sealed class DoAfterOverlay : Overlay
 
             foreach (var (_, doAfter) in comp.DoAfters)
             {
-                var ratio = (currentTime - doAfter.StartTime).TotalSeconds;
-
-                // Just in case it doesn't get cleaned up by the system for whatever reason.
-                if (ratio > doAfter.Delay + DoAfterSystem.ExcessTime)
-                    continue;
-
+                var elapsed = doAfter.Accumulator;
                 var displayRatio = MathF.Min(1.0f,
-                    (float) ratio / doAfter.Delay);
+                    elapsed / doAfter.Delay);
 
                 Matrix3.Multiply(scaleMatrix, worldMatrix, out var scaledWorld);
                 Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);
 
                 handle.SetTransform(matty);
-                var offset = _barTexture.Height / scale.Y * index;
+                var offset = _barTexture.Height / scale * index;
+
+                float yOffset;
+                if (spriteQuery.TryGetComponent(comp.Owner, out var sprite))
+                {
+                    yOffset = sprite.Bounds.Height / 2f + 0.05f;
+                }
+                else
+                {
+                    yOffset = 0.5f;
+                }
+
                 var position = new Vector2(-_barTexture.Width / 2f / EyeManager.PixelsPerMeter,
-                    0.5f / scale.Y + offset / EyeManager.PixelsPerMeter * scale.Y);
+                    yOffset / scale + offset / EyeManager.PixelsPerMeter * scale);
 
                 // Draw the underlying bar texture
                 handle.DrawTexture(_barTexture, position);
 
                 // Draw the bar itself
-                var cancelled = false;
+                var cancelled = doAfter.Cancelled;
                 Color color;
+                const float flashTime = 0.125f;
 
-                // TODO: Do cancellations
                 if (cancelled)
                 {
-                    color = Color.White;
+                    var flash = Math.Floor(doAfter.CancelledAccumulator / flashTime) % 2 == 0;
+                    color = new Color(1f, 0f, 0f, flash ? 1f : 0f);
                 }
                 else
                 {
                     color = GetProgressColor(displayRatio);
                 }
 
-                var startX = 2f;
-                var endX = 22f;
+                // Hardcoded width of the progress bar because it doesn't match the texture.
+                const float startX = 2f;
+                const float endX = 22f;
 
                 var xProgress = (endX - startX) * displayRatio + startX;
 

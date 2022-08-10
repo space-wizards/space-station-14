@@ -7,6 +7,6 @@ namespace Content.Client.DoAfter
     {
         public readonly Dictionary<byte, ClientDoAfter> DoAfters = new();
 
-        public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters = new();
+        public readonly Dictionary<byte, ClientDoAfter> CancelledDoAfters = new();
     }
 }
