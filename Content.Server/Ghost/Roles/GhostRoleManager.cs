@@ -280,14 +280,19 @@ public sealed class GhostRoleManager
         if (entry.Owner != session)
             return;
 
+        InternalDeleteGhostRoleGroup(entry, deleteEntities);
+    }
+
+    private void InternalDeleteGhostRoleGroup(RoleGroupEntry entry, bool deleteEntities)
+    {
         // Clear active group roles.
         foreach (var (k, v) in _roleGroupActiveGroups)
         {
-            if (v == identifier)
+            if (v == entry.Identifier)
                 _roleGroupActiveGroups.Remove(k);
         }
 
-        _roleGroupEntries.Remove(identifier);
+        _roleGroupEntries.Remove(entry.Identifier);
         SendGhostRoleGroupChangedEvent(wasDeleted: true);
 
         if (!deleteEntities)
@@ -348,24 +353,19 @@ public sealed class GhostRoleManager
         return true;
     }
 
-    public void DetachFromGhostRoleGroup(uint identifier, EntityUid uid)
-    {
-        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
-            return;
-
-        var removed = entry.Entities.Remove(uid);
-        if(removed)
-            SendGhostRoleGroupChangedEvent();
-    }
-
-    public bool RemoveEntityFromGhostRoleGroup(uint identifier, EntityUid uid)
+    public bool DetachFromGhostRoleGroup(uint identifier, EntityUid uid)
     {
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
             return false;
 
         var removed = entry.Entities.Remove(uid);
-        if(removed)
-            SendGhostRoleGroupChangedEvent();
+        if (!removed)
+            return removed;
+
+        SendGhostRoleGroupChangedEvent();
+
+        if(entry.Entities.Count == 0 && entry.Status != GhostRoleGroupStatus.Editing)
+            InternalDeleteGhostRoleGroup(entry, false);
 
         return removed;
     }

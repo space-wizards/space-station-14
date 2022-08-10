@@ -50,7 +50,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, GhostRoleGroupComponent component, MindAddedMessage args)
     {
-        _ghostRoleManager.RemoveEntityFromGhostRoleGroup(component.Identifier, uid);
+        _ghostRoleManager.DetachFromGhostRoleGroup(component.Identifier, uid);
     }
 
     private void Reset(RoundRestartCleanupEvent ev)
