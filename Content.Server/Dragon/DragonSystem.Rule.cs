@@ -56,11 +56,11 @@ public sealed partial class DragonSystem
 
             if (TryComp<ActorComponent>(dragon.Owner, out var actor))
             {
-                args.AddLine(Loc.GetString("dragon-round-end-dragon-player", ("name", dragon.Owner), ("rifts", met), ("player", actor.PlayerSession)));
+                args.AddLine(Loc.GetString("dragon-round-end-dragon-player", ("name", dragon.Owner), ("count", met), ("player", actor.PlayerSession)));
             }
             else
             {
-                args.AddLine(Loc.GetString("dragon-round-end-dragon", ("name", dragon.Owner), ("rifts", met)));
+                args.AddLine(Loc.GetString("dragon-round-end-dragon", ("name", dragon.Owner), ("count", met)));
             }
         }
     }

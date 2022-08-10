@@ -1,25 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'Adds Magic! Learn spells with spellbooks. Spells including: Blink -
-      a teleport spell. Knock - a spell that unlocks and opens doors. Force Wall -
-      a spell that creates a force field in front of you. Runes - magic drawings on
-      the ground. And a Summon Magi-Carp spell!', type: Add}
-  - {message: Adds a way to prevent a specified entity from colliding with another.,
-    type: Add}
-  id: 1622
-  time: '2022-05-29T06:29:10.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: New NanoTrasen alert levels - Gamma & Epsilon, type: Add}
-  id: 1623
-  time: '2022-05-29T08:35:08.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: 'Waystation has been faithfully ported to SS14, and will succeed Packed
-      Station''s role as a low to midpop map.', type: Add}
-  id: 1624
-  time: '2022-05-29T16:18:16.0000000+00:00'
 - author: youarereadingthis
   changes:
   - {message: Examine text for anchors., type: Add}
@@ -2946,3 +2925,20 @@ Entries:
   - {message: Holofan projectors can now be printed in protolathes., type: Add}
   id: 2121
   time: '2022-08-08T08:57:39.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added bare footstep sounds for different surfaces, type: Add}
+  id: 2122
+  time: '2022-08-08T09:03:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed broken names in traitor steal conditions., type: Fix}
+  id: 2123
+  time: '2022-08-09T00:32:17.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has finally bought a license for SpaceDB, and is sharing
+      it with its stations for crew record management. We only have the one license.
+      Don''t tell them what we''re doing.', type: Add}
+  id: 2124
+  time: '2022-08-09T05:10:01.0000000+00:00'
