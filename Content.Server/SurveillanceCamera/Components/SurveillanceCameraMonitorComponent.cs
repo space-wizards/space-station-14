@@ -41,4 +41,10 @@ public sealed class SurveillanceCameraMonitorComponent : Component
     [ViewVariables]
     // The subnets known by this camera monitor.
     public Dictionary<string, string> KnownSubnets { get; } = new();
+
+    // mostly copied from Speech
+    [ViewVariables] public bool SpeechEnabled = false;
+    [ViewVariables] public float SpeechSoundCooldown = 0.5f;
+
+    public TimeSpan LastSoundPlayed = TimeSpan.Zero;
 }

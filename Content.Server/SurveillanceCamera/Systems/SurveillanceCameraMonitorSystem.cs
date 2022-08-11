@@ -6,9 +6,12 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.Wires;
 using Content.Shared.Interaction;
+using Content.Shared.Speech;
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -18,6 +21,9 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -219,7 +225,26 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnSpeechSent(EntityUid uid, SurveillanceCameraMonitorComponent component,
         SurveillanceCameraSpeechSendEvent args)
     {
-        _chatSystem.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false);
+        var time = _gameTiming.CurTime;
+        var cd = TimeSpan.FromSeconds(component.SpeechSoundCooldown);
+
+        // this part's mostly copied from speech
+        if (time - component.LastSoundPlayed < cd
+            && TryComp<SharedSpeechComponent>(args.Speaker, out var speech)
+            && speech.SpeechSounds != null
+            && _prototypeManager.TryIndex(speech.SpeechSounds, out SpeechSoundsPrototype? speechProto))
+        {
+            var sound = args.OriginalMessage[^1] switch
+            {
+                '?' => speechProto.AskSound,
+                '!' => speechProto.ExclaimSound,
+                _ => speechProto.SaySound
+            };
+
+            _audioSystem.PlayPvs(sound, uid);
+        }
+
+        _chatSystem.TrySendInGameICMessage(uid, args.WrappedMessage, InGameICChatType.Speak, false);
     }
     #endregion
 

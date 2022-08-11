@@ -25,8 +25,8 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
             return;
         }
 
-        message = Loc.GetString("surveillance-camera-microphone-message", ("speaker", speaker), ("message", message));
-        var ev = new SurveillanceCameraSpeechSendEvent(message);
+        var wrapped = Loc.GetString("surveillance-camera-microphone-message", ("speaker", speaker), ("message", message));
+        var ev = new SurveillanceCameraSpeechSendEvent(speaker, message, wrapped);
 
         foreach (var monitor in camera.ActiveMonitors)
         {
@@ -37,11 +37,15 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
 
 public sealed class SurveillanceCameraSpeechSendEvent : EntityEventArgs
 {
-    public string Message { get; }
+    public EntityUid Speaker { get; }
+    public string OriginalMessage { get; }
+    public string WrappedMessage { get; }
 
-    public SurveillanceCameraSpeechSendEvent(string message)
+    public SurveillanceCameraSpeechSendEvent(EntityUid speaker, string originalMessage, string wrappedMessage)
     {
-        Message = message;
+        Speaker = speaker;
+        OriginalMessage = originalMessage;
+        WrappedMessage = wrappedMessage;
     }
 }
 
