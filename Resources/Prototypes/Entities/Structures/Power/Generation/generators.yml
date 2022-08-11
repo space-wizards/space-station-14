@@ -185,6 +185,15 @@
   id: GeneratorUranium
   suffix: Uranium, 15kW
   components:
+  - type: Generator
+    optimalBurnRate: 0.00208333333
+    fuelMaterial: Uranium
+  - type: ActivatableUI
+    key: enum.GeneratorComponentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneratorComponentUiKey.Key
+        type: GeneratorBoundUserInterface
   - type: PowerSupplier
     supplyRate: 60000
   - type: Sprite
