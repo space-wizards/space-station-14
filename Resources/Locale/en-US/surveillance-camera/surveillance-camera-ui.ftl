@@ -10,3 +10,5 @@ surveillance-camera-monitor-ui-no-subnets = No Subnets
 
 surveillance-camera-setup = Setup
 surveillance-camera-setup-ui-set = Set
+
+surveillance-camera-microphone-message = {$speaker} says, {$message}
