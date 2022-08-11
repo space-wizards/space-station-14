@@ -11,6 +11,7 @@ using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.SurveillanceCamera;
@@ -24,6 +25,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -241,8 +243,13 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                 _ => speechProto.SaySound
             };
 
-            _audioSystem.PlayPvs(sound, uid);
+            var scale = (float) _random.NextGaussian(1, speechProto.Variation);
+            var param = speech.AudioParams.WithPitchScale(scale);
+            _audioSystem.PlayPvs(sound, uid, param);
+
+            component.LastSoundPlayed = time;
         }
+
 
         _chatSystem.TrySendInGameICMessage(uid, args.WrappedMessage, InGameICChatType.Speak, false);
     }
