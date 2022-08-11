@@ -21,17 +21,6 @@ public abstract class SharedTurretConsoleSystem : EntitySystem
         SubscribeLocalEvent<GunnerComponent, ComponentShutdown>(HandleGunnerShutdown);
     }
 
-    [Serializable, NetSerializable]
-    protected sealed class GunnerComponentState : ComponentState
-    {
-        public EntityUid? Console { get; }
-
-        public GunnerComponentState(EntityUid? uid)
-        {
-            Console = uid;
-        }
-    }
-
     protected virtual void HandleGunnerShutdown(EntityUid uid, GunnerComponent component, ComponentShutdown args)
     {
         _actionBlockerSystem.UpdateCanMove(uid);
@@ -51,5 +40,15 @@ public abstract class SharedTurretConsoleSystem : EntitySystem
             return;
 
         args.Cancel();
+    }
+
+    [Serializable, NetSerializable]
+    protected sealed class GunnerComponentState : ComponentState
+    {
+        public EntityUid? Console { get; }
+        public GunnerComponentState(EntityUid? uid)
+        {
+            Console = uid;
+        }
     }
 }

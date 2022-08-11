@@ -2,31 +2,57 @@ using Content.Client.ShipGuns.Components;
 using Content.Shared.Input;
 using Content.Shared.ShipGuns.Components;
 using Content.Shared.ShipGuns.Systems;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Client.ShipGuns.Systems;
 
 /// <inheritdoc/>
 public sealed class TurretConsoleSystem : SharedTurretConsoleSystem
 {
-    [Dependency] private readonly IInputManager _input = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<GunnerComponent, ComponentHandleState>(OnHandleState);
-        var turretContext = _input.Contexts.New("turret", "common");
+        var turretContext = _inputManager.Contexts.New("turret", "common");
         turretContext.AddFunction(ContentKeyFunctions.TurretSafety);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var cursorPosition = EntityCoordinates.FromMap(_mapManager, _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition));
+
+        if (_playerManager.LocalPlayer!.ControlledEntity == null)
+            return;
+
+        var character = _playerManager.LocalPlayer!.ControlledEntity.Value;
+        if (!EntityManager.TryGetComponent<GunnerComponent>(character, out var component))
+            return;
+
+        var args = new GimbalGunSystem.GunnerCursorPositionEvent()
+        {
+            Coordinates = cursorPosition,
+        };
+
+        EntityManager.RaisePredictiveEvent(args);
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
-        _input.Contexts.Remove("turret");
+        _inputManager.Contexts.Remove("turret");
     }
 
     protected override void HandleGunnerShutdown(EntityUid uid, GunnerComponent component, ComponentShutdown args)
@@ -35,7 +61,7 @@ public sealed class TurretConsoleSystem : SharedTurretConsoleSystem
         if (_playerManager.LocalPlayer?.ControlledEntity != uid)
             return;
 
-        _input.Contexts.SetActiveContext("human");
+        _inputManager.Contexts.SetActiveContext("human");
     }
 
     private void OnHandleState(EntityUid uid, GunnerComponent component, ref ComponentHandleState args)
@@ -47,7 +73,7 @@ public sealed class TurretConsoleSystem : SharedTurretConsoleSystem
         if (!console.IsValid())
         {
             component.Console = null;
-            _input.Contexts.SetActiveContext("human");
+            _inputManager.Contexts.SetActiveContext("human");
             return;
         }
 
@@ -59,6 +85,6 @@ public sealed class TurretConsoleSystem : SharedTurretConsoleSystem
 
         component.Console = turretConsoleComponent;
         _actionBlockerSystem.UpdateCanMove(uid);
-        _input.Contexts.SetActiveContext("turret");
+        _inputManager.Contexts.SetActiveContext("turret");
     }
 }
