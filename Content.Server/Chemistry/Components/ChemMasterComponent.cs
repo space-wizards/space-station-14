@@ -85,7 +85,24 @@ namespace Content.Server.Chemistry.Components
             switch (msg.Action)
             {
                 case UiAction.ChemButton:
-                    TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
+                    if (!_bufferModeTransfer)
+                    {
+                        if (msg.IsBuffer)
+                        {
+                            DiscardReagent(msg.Id, msg.Amount, BufferSolution);
+                        }
+                        else if (BeakerSlot.HasItem &&
+                                BeakerSlot.Item is {Valid: true} beaker &&
+                                _entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) &&
+                                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
+                        {
+                            DiscardReagent(msg.Id, msg.Amount, beakerSolution);
+                        }
+                    }
+                    else
+                    {
+                        TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
+                    }
                     break;
                 case UiAction.Transfer:
                     _bufferModeTransfer = true;
@@ -182,23 +199,11 @@ namespace Content.Server.Chemistry.Components
 
         private void TransferReagent(string id, FixedPoint2 amount, bool isBuffer)
         {
-            if (!_bufferModeTransfer && isBuffer)
-            {
-                DiscardReagent(id, amount, BufferSolution);
-                return;
-            }
-
             if (!BeakerSlot.HasItem ||
                 BeakerSlot.Item is not {Valid: true} beaker ||
                 !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
                 return;
-
-            if (!_bufferModeTransfer)
-            {
-                DiscardReagent(id, amount, beakerSolution);
-                return;
-            }
 
             if (isBuffer)
             {
