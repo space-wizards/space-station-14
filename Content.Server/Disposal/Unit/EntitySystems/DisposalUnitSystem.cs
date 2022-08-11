@@ -10,6 +10,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Server.Carrying;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
@@ -21,7 +22,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -476,6 +476,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId.Value, Filter.Entities(userId.Value), PopupType.SmallCaution);
                 return false;
             }
+
+            // holy shit I hate disposals I tried basically every other way of doing this
+            if (HasComp<CarryingComponent>(toInsertId))
+                return false;
 
             if (!CanInsert(unit, toInsertId))
                 return false;
