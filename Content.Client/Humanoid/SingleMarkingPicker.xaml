@@ -1,14 +1,16 @@
 <BoxContainer xmlns="https://spacestation14.io">
     <!-- "Slot" selection -->
-    <BoxContainer>
+    <BoxContainer Name="SlotSelectorContainer">
         <OptionButton Name="SlotSelector" />
         <Button Name="AddButton" />
         <Button Name="RemoveButton" />
     </BoxContainer>
-    <!-- Color sliders -->
-    <ColorSelectorSliders Name="ColorSelector" />
     <!-- Item list -->
     <ScrollContainer>
         <ItemList Name="MarkingList" />
+    </ScrollContainer>
+    <!-- Color sliders -->
+    <ScrollContainer>
+        <BoxContainer Name="ColorSelectorContainer" />
     </ScrollContainer>
 </BoxContainer>
