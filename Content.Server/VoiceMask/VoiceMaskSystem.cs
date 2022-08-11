@@ -1,11 +1,12 @@
+using Content.Server.Access.Systems;
 using Content.Server.Chat.Systems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server.VoiceMask;
 
 public sealed partial class VoiceMaskSystem : EntitySystem
 {
+    [Dependency] private readonly IdCardSystem _idCard = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnSpeakerNameTransform);
@@ -17,7 +18,9 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (component.Enabled)
         {
-            args.Name = Identity.Name(uid, EntityManager);
+            args.Name = _idCard.TryGetIdCard(uid, out var card) && !string.IsNullOrEmpty(card.FullName)
+                ? card.FullName
+                : Loc.GetString("voice-mask-unknown");
         }
     }
 }

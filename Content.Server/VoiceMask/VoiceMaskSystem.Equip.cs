@@ -1,4 +1,5 @@
 using Content.Shared.Inventory.Events;
+using Content.Shared.Speech;
 
 namespace Content.Server.VoiceMask;
 

@@ -225,8 +225,8 @@
   category: Utility
   itemId: ClothingMaskGasVoiceMasker
   listingName: Voice Mask
-  description: A gas mask that morphs your voice to the name of the person on your ID card - or the most generic voice you can think of that's close to your own.
-  price: 5
+  description: A gas mask that morphs your voice to the name of the person on your ID card - or the most generic voice you can think of.
+  price: 2
 
 # Bundles
 
