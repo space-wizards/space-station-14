@@ -104,10 +104,11 @@ namespace Content.Server.NPC.Systems
     public enum Faction
     {
         None = 0,
-        NanoTrasen = 1 << 0,
-        SimpleHostile = 1 << 1,
-        SimpleNeutral = 1 << 2,
-        Syndicate = 1 << 3,
-        Xeno = 1 << 4,
+        Dragon = 1 << 0,
+        NanoTrasen = 1 << 1,
+        SimpleHostile = 1 << 2,
+        SimpleNeutral = 1 << 3,
+        Syndicate = 1 << 4,
+        Xeno = 1 << 5,
     }
 }
