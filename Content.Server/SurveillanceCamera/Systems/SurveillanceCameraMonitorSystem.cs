@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Chat.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
@@ -16,6 +17,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly SurveillanceCameraSystem _surveillanceCameras = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
 
     public override void Initialize()
     {
@@ -30,6 +32,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshCamerasMessage>(OnRefreshCamerasMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraSpeechSendEvent>(OnSpeechSent);
     }
 
     private const float _maxHeartbeatTime = 300f;
@@ -211,6 +214,12 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
 
         RemoveViewer(uid, args.Session.AttachedEntity.Value, component);
+    }
+
+    private void OnSpeechSent(EntityUid uid, SurveillanceCameraMonitorComponent component,
+        SurveillanceCameraSpeechSendEvent args)
+    {
+        _chatSystem.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false);
     }
     #endregion
 
