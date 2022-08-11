@@ -56,6 +56,8 @@ public sealed class DeadMansSwitchSystem : EntitySystem
 
         _signalSystem.InvokePort(uid, component.Port);
         component.Armed = false;
+        if(EntityManager.TryGetComponent<DeadMansSwitchHolderComponent>(args.User, out var holderComp))
+            holderComp.Switches.Remove(component);
         _popupSystem.PopupEntity(Loc.GetString("dead-mans-switch-let-go"), args.User, Filter.Entities(args.User));
         args.Handled = true;
     }
