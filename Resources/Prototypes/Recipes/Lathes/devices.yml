@@ -55,3 +55,15 @@
     Steel: 100
     Plastic: 200
     Glass: 100
+
+- type: latheRecipe
+  id: DeadMansSwitch
+  icon:
+    sprite: Objects/Devices/signaller.rsi
+    state: signaller
+  result: DeadMansSwitch
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 200
+    Glass: 100
