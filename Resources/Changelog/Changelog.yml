@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Added an audio setting to disable playing admin music, type: Add}
-  id: 1632
-  time: '2022-06-02T13:41:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: SMGs have had their maximum spread angle increased (i.e. accuracy reduced).,
@@ -2935,3 +2930,8 @@ Entries:
   - {message: A console to toggle IFF (radar labels) has been added., type: Add}
   id: 2131
   time: '2022-08-11T16:58:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Disarming no longer deselects after a usage., type: Remove}
+  id: 2132
+  time: '2022-08-11T20:08:23.0000000+00:00'
