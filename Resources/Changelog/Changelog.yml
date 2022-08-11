@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: SMGs have had their maximum spread angle increased (i.e. accuracy reduced).,
-    type: Tweak}
-  id: 1633
-  time: '2022-06-02T19:46:46.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Post Lights are now slightly smaller and sit further up in a tile.,
@@ -2935,3 +2929,9 @@ Entries:
   - {message: Disarming no longer deselects after a usage., type: Remove}
   id: 2132
   time: '2022-08-11T20:08:23.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Add pneumatic valves, which control gas flow based on control pressure.',
+    type: Add}
+  id: 2133
+  time: '2022-08-11T21:19:32.0000000+00:00'
