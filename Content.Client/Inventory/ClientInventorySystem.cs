@@ -265,7 +265,7 @@ namespace Content.Client.Inventory
             public bool ShowInWindow => SlotDef.ShowInWindow;
             public string SlotGroup => SlotDef.SlotGroup;
             public string SlotDisplayName => SlotDef.DisplayName;
-            public string TextureName => "slots/"+SlotDef.TextureName;
+            public string TextureName => "Slots/"+SlotDef.TextureName;
             public SlotData(SlotDefinition slotDef,ContainerSlot? container = null, bool highlighted = false, bool blocked = false)
             {
                 SlotDef = slotDef;

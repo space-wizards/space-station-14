@@ -16,9 +16,9 @@ public sealed class HandButton : SlotControl
     {
         ButtonTexturePath = handLoc switch
         {
-            HandLocation.Left => "slots/hand_l",
-            HandLocation.Middle => "slots/hand_m",
-            HandLocation.Right => "slots/hand_r",
+            HandLocation.Left => "Slots/hand_l",
+            HandLocation.Middle => "Slots/hand_m",
+            HandLocation.Right => "Slots/hand_r",
             _ => ButtonTexturePath
         };
     }
