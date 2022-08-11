@@ -4,24 +4,14 @@ namespace Content.Server.SurveillanceCamera;
 
 public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
 {
-    public override void Initialize()
+    public void RelayEntityMessage(EntityUid source, EntityUid speaker, string message, SurveillanceCameraComponent? camera = null)
     {
-
-    }
-
-    private void OnEntitySpeak()
-    {
-        // check if the speaking entity has an offending component,
-        // and if it does, disregard
-    }
-
-    private void RelayEntityMessage(EntityUid source, EntityUid speaker, string message, SurveillanceCameraComponent? camera)
-    {
-        if (!Resolve(speaker, ref camera))
+        if (!Resolve(source, ref camera))
         {
             return;
         }
 
+        message = Loc.GetString("surveillance-camera-microphone-message", ("speaker", speaker), ("message", message));
         var ev = new SurveillanceCameraSpeechSendEvent(message);
 
         foreach (var monitor in camera.ActiveMonitors)
