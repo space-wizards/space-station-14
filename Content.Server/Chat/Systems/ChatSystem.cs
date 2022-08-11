@@ -395,8 +395,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         var sessions = new List<ICommonSession>();
         var listenerList = new List<EntityUid>();
 
-
-
         ListenerEntityDistanceToList(source, listenerList);
         ClientDistanceToList(source, VoiceRange, sessions);
         _chatManager.ChatMessageToMany(channel, message, messageWrap, source, hideChat, sessions.Select(s => s.ConnectedClient).ToList());
@@ -404,7 +402,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         foreach (var listenerEntity in listenerList.ToArray())
         {
             RaiseLocalEvent(listenerEntity, new ChatMessageHeardNearbyEvent(channel, message, messageWrap, source, hideChat));
-
         }
 
     }
