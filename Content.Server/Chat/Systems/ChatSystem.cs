@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,6 +14,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.MobState;
+using Content.Server.TapeRecorder;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -391,8 +393,20 @@ public sealed partial class ChatSystem : SharedChatSystem
     private void SendInVoiceRange(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat)
     {
         var sessions = new List<ICommonSession>();
+        var listenerList = new List<EntityUid>();
+
+
+
+        ListenerEntityDistanceToList(source, listenerList);
         ClientDistanceToList(source, VoiceRange, sessions);
         _chatManager.ChatMessageToMany(channel, message, messageWrap, source, hideChat, sessions.Select(s => s.ConnectedClient).ToList());
+
+        foreach (var listenerEntity in listenerList.ToArray())
+        {
+            RaiseLocalEvent(listenerEntity, new ChatMessageHeardNearbyEvent(channel, message, messageWrap, source, hideChat));
+
+        }
+
     }
 
     /// <summary>
@@ -488,6 +502,25 @@ public sealed partial class ChatSystem : SharedChatSystem
                 continue;
 
             playerSessions.Add(player);
+        }
+    }
+
+    private void ListenerEntityDistanceToList(EntityUid source, List<EntityUid> listenerList)
+    {
+        var listenerComponents = EntityQuery<ChatListenerComponent>().ToList();
+        var xforms = GetEntityQuery<TransformComponent>();
+        var transformSource = xforms.GetComponent(source);
+        var sourceMapId = transformSource.MapID;
+        var sourceCoords = transformSource.Coordinates;
+
+        foreach (var chatlisteners in listenerComponents.ToArray())
+        {
+            var transformEntity = xforms.GetComponent(chatlisteners.Owner);
+
+            if (transformEntity.MapID != sourceMapId || !sourceCoords.InRange(EntityManager, transformEntity.Coordinates, chatlisteners.HearingRange))
+                continue;
+
+            listenerList.Add(chatlisteners.Owner);
         }
     }
 

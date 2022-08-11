@@ -1,0 +1,14 @@
+- type: entity
+  name: tape recorder
+  parent: BaseItem
+  description: A handy handheld radio.
+  id: TapeRecorder
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/tape_recorder.rsi
+      state: taperecorder_idle
+    - type: Item
+      sprite: Objects/Devices/tape_recorder.rsi
+      heldPrefix: taperecorder_idle
+    - type: TapeRecorder
+    - type: ChatListener
