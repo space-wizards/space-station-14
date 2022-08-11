@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Added the handheld health analyzer to the regular, advanced and combat
-      first aid kits.', type: Add}
-  id: 1627
-  time: '2022-06-01T03:17:38.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed an issue where mouse ghosts would be tethered to who ate them,
@@ -2942,3 +2936,9 @@ Entries:
   - {message: IFF labels on the shuttle console now look fancier., type: Tweak}
   id: 2126
   time: '2022-08-10T17:48:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchorable now checks if the tile has something that can collide first
+      before allowing anchoring., type: Tweak}
+  id: 2127
+  time: '2022-08-11T02:11:30.0000000+00:00'
