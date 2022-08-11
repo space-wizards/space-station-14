@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed an issue where mouse ghosts would be tethered to who ate them,
-    type: Fix}
-  id: 1628
-  time: '2022-06-01T07:39:50.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Added modular landmines, which can be constructed using a payload and
@@ -2942,3 +2936,8 @@ Entries:
       before allowing anchoring., type: Tweak}
   id: 2127
   time: '2022-08-11T02:11:30.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: You can get more hints about how long something has been rotten., type: Tweak}
+  id: 2128
+  time: '2022-08-11T02:43:19.0000000+00:00'
