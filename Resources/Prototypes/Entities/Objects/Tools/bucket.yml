@@ -10,7 +10,11 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/bucket.rsi
-    state: icon
+    layers:
+    - state: icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
   - type: Item
     size: 100
   - type: Clothing
@@ -37,4 +41,10 @@
   - type: RefillableSolution
     solution: bucket
   - type: DrainableSolution
+    solution: bucket
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+  - type: ExaminableSolution
     solution: bucket

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+using Content.Shared.Buckle.Components;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,7 +21,7 @@ namespace Content.Client.Visualizer
 
             if (!entManager.TryGetComponent(appearance.Owner, out SpriteComponent? sprite)) return;
 
-            if (appearance.TryGetData("StrapState", out bool strapped) && strapped)
+            if (appearance.TryGetData(StrapVisuals.State, out bool strapped) && strapped)
             {
                 sprite.LayerSetState(0, $"{_key}_buckled");
             }

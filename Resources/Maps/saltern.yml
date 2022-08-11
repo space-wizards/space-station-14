@@ -4,7 +4,7 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
+  0: Space
   1: FloorArcadeBlue
   2: FloorArcadeBlue2
   3: FloorArcadeRed
@@ -26,42 +26,42 @@ tilemap:
   19: FloorShuttlePurple
   20: FloorShuttleRed
   21: FloorShuttleWhite
-  22: floor_asteroid_coarse_sand0
-  23: floor_asteroid_coarse_sand1
-  24: floor_asteroid_coarse_sand2
-  25: floor_asteroid_coarse_sand_dug
-  26: floor_asteroid_sand
-  27: floor_asteroid_tile
-  28: floor_bar
-  29: floor_blue
-  30: floor_blue_circuit
-  31: floor_clown
-  32: floor_dark
-  33: floor_elevator_shaft
-  34: floor_freezer
-  35: floor_glass
-  36: floor_gold
-  37: floor_grass
-  38: floor_green_circuit
-  39: floor_hydro
-  40: floor_kitchen
-  41: floor_laundry
-  42: floor_lino
-  43: floor_mime
-  44: floor_mono
-  45: floor_reinforced
-  46: floor_rglass
-  47: floor_rock_vault
-  48: floor_showroom
-  49: floor_silver
-  50: floor_snow
-  51: floor_steel
-  52: floor_steel_dirty
-  53: floor_techmaint
-  54: floor_white
-  55: floor_wood
-  56: lattice
-  57: plating
+  22: FloorAsteroidCoarseSand0
+  23: FloorAsteroidCoarseSand1
+  24: FloorAsteroidCoarseSand2
+  25: FloorAsteroidCoarseSandDug
+  26: FloorAsteroidSand
+  27: FloorAsteroidTile
+  28: FloorBar
+  29: FloorBlue
+  30: FloorBlueCircuit
+  31: FloorClown
+  32: FloorDark
+  33: FloorElevatorShaft
+  34: FloorFreezer
+  35: FloorGlass
+  36: FloorGold
+  37: FloorGrass
+  38: FloorGreenCircuit
+  39: FloorHydro
+  40: FloorKitchen
+  41: FloorLaundry
+  42: FloorLino
+  43: FloorMime
+  44: FloorMono
+  45: FloorReinforced
+  46: FloorRGlass
+  47: FloorRockVault
+  48: FloorShowroom
+  49: FloorSilver
+  50: FloorSnow
+  51: FloorSteel
+  52: FloorSteelDirty
+  53: FloorTechMaint
+  54: FloorWhite
+  55: FloorWood
+  56: Lattice
+  57: Plating
 grids:
 - settings:
     chunksize: 16
@@ -41718,22 +41718,6 @@ entities:
   - pos: 14.5,-27.5
     parent: 852
     type: Transform
-- uid: 4334
-  type: Emitter
-  components:
-  - pos: 71.5,9.5
-    parent: 852
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4335
   type: CableMV
   components:
@@ -41799,24 +41783,6 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 63.5,2.5
-    parent: 852
-    type: Transform
-- uid: 4345
-  type: RadiationCollector
-  components:
-  - pos: 78.5,3.5
-    parent: 852
-    type: Transform
-- uid: 4346
-  type: RadiationCollector
-  components:
-  - pos: 78.5,5.5
-    parent: 852
-    type: Transform
-- uid: 4347
-  type: RadiationCollector
-  components:
-  - pos: 74.5,9.5
     parent: 852
     type: Transform
 - uid: 4348
@@ -41897,22 +41863,6 @@ entities:
   - pos: 77.5,9.5
     parent: 852
     type: Transform
-- uid: 4361
-  type: Emitter
-  components:
-  - pos: 75.5,9.5
-    parent: 852
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4362
   type: CableMV
   components:
@@ -41960,23 +41910,6 @@ entities:
   - pos: 78.5,9.5
     parent: 852
     type: Transform
-- uid: 4368
-  type: Emitter
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 78.5,2.5
-    parent: 852
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4369
   type: CableMV
   components:
@@ -42386,23 +42319,6 @@ entities:
   - pos: 80.5,-6.5
     parent: 852
     type: Transform
-- uid: 4433
-  type: Emitter
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 64.5,2.5
-    parent: 852
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4434
   type: Grille
   components:
@@ -43245,18 +43161,6 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4549
-  type: RadiationCollector
-  components:
-  - pos: 68.5,9.5
-    parent: 852
-    type: Transform
-- uid: 4550
-  type: RadiationCollector
-  components:
-  - pos: 69.5,9.5
-    parent: 852
-    type: Transform
 - uid: 4551
   type: Grille
   components:
@@ -43273,29 +43177,6 @@ entities:
   type: CableMV
   components:
   - pos: 78.5,-4.5
-    parent: 852
-    type: Transform
-- uid: 4554
-  type: Emitter
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 67.5,-4.5
-    parent: 852
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 4555
-  type: RadiationCollector
-  components:
-  - pos: 70.5,9.5
     parent: 852
     type: Transform
 - uid: 4556
@@ -43315,18 +43196,6 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4557
-  type: RadiationCollector
-  components:
-  - pos: 72.5,9.5
-    parent: 852
-    type: Transform
-- uid: 4558
-  type: RadiationCollector
-  components:
-  - pos: 73.5,9.5
-    parent: 852
-    type: Transform
 - uid: 4559
   type: ContainmentFieldGenerator
   components:
@@ -43407,46 +43276,6 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 56.5,2.5
-    parent: 852
-    type: Transform
-- uid: 4572
-  type: RadiationCollector
-  components:
-  - pos: 74.5,-4.5
-    parent: 852
-    type: Transform
-- uid: 4573
-  type: RadiationCollector
-  components:
-  - pos: 72.5,-4.5
-    parent: 852
-    type: Transform
-- uid: 4574
-  type: RadiationCollector
-  components:
-  - pos: 69.5,-4.5
-    parent: 852
-    type: Transform
-- uid: 4575
-  type: Emitter
-  components:
-  - pos: 67.5,9.5
-    parent: 852
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 4576
-  type: ContainmentFieldGenerator
-  components:
-  - pos: 67.5,2.5
     parent: 852
     type: Transform
 - uid: 4577
@@ -45870,12 +45699,6 @@ entities:
   - containers:
       ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 4910
-  type: RadiationCollector
-  components:
-  - pos: 78.5,4.5
-    parent: 852
-    type: Transform
 - uid: 4911
   type: CableMV
   components:
@@ -57150,12 +56973,6 @@ entities:
   - pos: 56.5,2.5
     parent: 852
     type: Transform
-- uid: 6298
-  type: ContainmentFieldGenerator
-  components:
-  - pos: 71.5,-1.5
-    parent: 852
-    type: Transform
 - uid: 6299
   type: ContainmentFieldGenerator
   components:
@@ -57181,12 +56998,6 @@ entities:
   - pos: 44.5,1.5
     parent: 852
     type: Transform
-- uid: 6303
-  type: RadiationCollector
-  components:
-  - pos: 73.5,-4.5
-    parent: 852
-    type: Transform
 - uid: 6304
   type: CableHV
   components:
@@ -57197,24 +57008,6 @@ entities:
   type: CableHV
   components:
   - pos: 47.5,1.5
-    parent: 852
-    type: Transform
-- uid: 6306
-  type: ContainmentFieldGenerator
-  components:
-  - pos: 71.5,6.5
-    parent: 852
-    type: Transform
-- uid: 6307
-  type: RadiationCollector
-  components:
-  - pos: 68.5,-4.5
-    parent: 852
-    type: Transform
-- uid: 6308
-  type: RadiationCollector
-  components:
-  - pos: 70.5,-4.5
     parent: 852
     type: Transform
 - uid: 6309
@@ -57255,29 +57048,6 @@ entities:
   - pos: 50.5,1.5
     parent: 852
     type: Transform
-- uid: 6315
-  type: ContainmentFieldGenerator
-  components:
-  - pos: 75.5,2.5
-    parent: 852
-    type: Transform
-- uid: 6316
-  type: Emitter
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 75.5,-4.5
-    parent: 852
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6317
   type: CableMV
   components:
@@ -57308,35 +57078,6 @@ entities:
   - pos: 75.5,6.5
     parent: 852
     type: Transform
-- uid: 6322
-  type: RadiationCollector
-  components:
-  - pos: 78.5,0.5
-    parent: 852
-    type: Transform
-- uid: 6323
-  type: RadiationCollector
-  components:
-  - pos: 78.5,1.5
-    parent: 852
-    type: Transform
-- uid: 6324
-  type: Emitter
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 71.5,-4.5
-    parent: 852
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6325
   type: CableMV
   components:
@@ -63169,12 +62910,6 @@ entities:
   type: CableHV
   components:
   - pos: 43.5,6.5
-    parent: 852
-    type: Transform
-- uid: 7175
-  type: RadiationCollector
-  components:
-  - pos: 78.5,-0.5
     parent: 852
     type: Transform
 - uid: 7176
@@ -74147,7 +73882,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 8740
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: -32.388412,-27.529545
     parent: 852

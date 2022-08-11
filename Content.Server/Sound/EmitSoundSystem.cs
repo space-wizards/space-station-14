@@ -4,8 +4,10 @@ using Content.Server.Sound.Components;
 using Content.Server.Throwing;
 using Content.Server.UserInterface;
 using Content.Server.Popups;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
@@ -58,6 +60,8 @@ namespace Content.Server.Sound
             SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
             SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
             SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
+            SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(HandleEmitSoundOnPickup);
+            SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(HandleEmitSoundOnDrop);
         }
 
         private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
@@ -102,6 +106,16 @@ namespace Content.Server.Sound
         }
 
         private void HandleEmitSoundOnUIOpen(EntityUid eUI, BaseEmitSoundComponent component, AfterActivatableUIOpenEvent arg)
+        {
+            TryEmitSound(component);
+        }
+
+        private void HandleEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, GotEquippedHandEvent args)
+        {
+            TryEmitSound(component);
+        }
+
+        private void HandleEmitSoundOnDrop(EntityUid uid, EmitSoundOnDropComponent component, DroppedEvent args)
         {
             TryEmitSound(component);
         }

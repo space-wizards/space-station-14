@@ -1,10 +1,9 @@
 - type: job
   id: Boxer
   name: "boxer"
+  playTimeTracker: JobBoxer
   startingGear: BoxerGear
   setPreference: false
-  departments:
-  - Civilian
   icon: "Boxer"
   supervisors: "the head of personnel"
   access:

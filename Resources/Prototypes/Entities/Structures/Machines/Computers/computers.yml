@@ -185,6 +185,27 @@
 
 - type: entity
   parent: BaseComputer
+  id: ComputerStationRecords
+  name: station records computer
+  description: This can be used to check station records.
+  components:
+    - type: GeneralStationRecordConsole
+    - type: UserInterface
+      interfaces:
+        - key: enum.GeneralStationRecordConsoleKey.Key
+          type: GeneralStationRecordConsoleBoundUserInterface
+    - type: ActivatableUI
+      key: enum.GeneralStationRecordConsoleKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#1f8c28"
+    - type: Computer
+      board: CriminalRecordsComputerCircuitboard
+
+- type: entity
+  parent: BaseComputer
   id: ComputerCrewMonitoring
   name: crew monitoring console
   description: Used to monitor active health sensors built into most of the crew's uniforms.
@@ -282,6 +303,7 @@
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
       type: IdCardConsoleBoundUserInterface
+  - type: CrewManifestViewer
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
@@ -509,8 +531,6 @@
       screen: dna
   - type: ApcPowerReceiver
     powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
-  - type: ExtensionCableProvider #See above
-    transferRange: 4
   - type: Computer
     board: CloningConsoleComputerCircuitboard
   - type: PointLight

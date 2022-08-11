@@ -36,6 +36,11 @@ namespace Content.Server.NPC.Systems
         public override void Initialize()
         {
             base.Initialize();
+            // Makes physics etc debugging easier.
+#if DEBUG
+            _configurationManager.OverrideDefault(CCVars.NPCEnabled, false);
+#endif
+
             _sawmill = Logger.GetSawmill("npc");
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, ComponentInit>(OnNPCInit);

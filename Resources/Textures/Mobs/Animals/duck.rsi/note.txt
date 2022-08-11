@@ -1,1 +1,0 @@
-Eventually we'll have some kind of unifying "RandomSpriteStateComponent" but til now i'm just leaving these here in protest.

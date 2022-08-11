@@ -200,7 +200,8 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
-            if (grid.GridEntityId == ourGridId) continue;
+            if (grid.GridEntityId == ourGridId)
+                continue;
 
             var gridBody = bodyQuery.GetComponent(grid.GridEntityId);
             if (gridBody.Mass < 10f)
@@ -222,6 +223,7 @@ public sealed class RadarControl : Control
 
             if (ShowIFF)
             {
+                var gridBounds = grid.LocalAABB;
                 Label label;
 
                 if (!_iffControls.TryGetValue(grid.GridEntityId, out var control))
@@ -232,34 +234,32 @@ public sealed class RadarControl : Control
                         FontColorOverride = Color.Aquamarine,
                     };
 
-                    control = new PanelContainer()
-                    {
-                        HorizontalAlignment = HAlignment.Center,
-                        VerticalAlignment = VAlignment.Center,
-                        Children =
-                        {
-                            label
-                        },
-                        StyleClasses  = { StyleNano.StyleClassBorderedWindowPanel },
-                    };
-
-                    _iffControls[grid.GridEntityId] = control;
-                    AddChild(control);
+                    _iffControls[grid.GridEntityId] = label;
+                    AddChild(label);
+                }
+                else
+                {
+                    label = (Label) control;
                 }
 
                 var gridCentre = matty.Transform(gridBody.LocalCenter);
                 gridCentre.Y = -gridCentre.Y;
                 var distance = gridCentre.Length;
 
-                if (gridCentre.Length > RadarRange)
-                {
-                    gridCentre = gridCentre.Normalized * RadarRange;
-                }
+                // y-offset the control to always render below the grid (vertically)
+                var yOffset = Math.Max(gridBounds.Height, gridBounds.Width) * MinimapScale / 1.8f / UIScale;
 
-                control.Visible = true;
-                label = (Label) control.GetChild(0);
+                // The actual position in the UI. We offset the matrix position to render it off by half its width
+                // plus by the offset.
+                var uiPosition = ScalePosition(gridCentre) / UIScale - new Vector2(label.Width / 2f, -yOffset);
+
+                // Look this is uggo so feel free to cleanup. We just need to clamp the UI position to within the viewport.
+                uiPosition = new Vector2(Math.Clamp(uiPosition.X, 0f, Width - label.Width),
+                    Math.Clamp(uiPosition.Y, 10f, Height - label.Height));
+
+                label.Visible = true;
                 label.Text = Loc.GetString("shuttle-console-iff-label", ("name", name), ("distance", $"{distance:0.0}"));
-                LayoutContainer.SetPosition(control, ScalePosition(gridCentre) / UIScale);
+                LayoutContainer.SetPosition(label, uiPosition);
             }
             else
             {
