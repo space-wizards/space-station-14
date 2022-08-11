@@ -1,7 +1,7 @@
 namespace Content.Server.Carrying
 {
     /// <summary>
-    /// Used so we can sub to events like VirtualItemDeleted
+    /// Stores the carrier of an entity being carried.
     /// </summary>
     [RegisterComponent]
     public sealed class BeingCarriedComponent : Component

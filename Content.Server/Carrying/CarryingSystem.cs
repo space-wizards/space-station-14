@@ -21,7 +21,6 @@ using Content.Shared.Standing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Throwing;
 using Content.Shared.Physics.Pull;
-using Content.Shared.Interaction;
 using Robust.Shared.Player;
 
 namespace Content.Server.Carrying
@@ -90,6 +89,9 @@ namespace Content.Server.Carrying
             args.Verbs.Add(verb);
         }
 
+        /// <summary>
+        /// Since the carried entity is stored as 2 virtual items, when deleted we want to drop them.
+        /// </summary>
         private void OnVirtualItemDeleted(EntityUid uid, CarryingComponent component, VirtualItemDeletedEvent args)
         {
             if (!HasComp<CarriableComponent>(args.BlockingEntity))
@@ -98,6 +100,10 @@ namespace Content.Server.Carrying
             DropCarried(uid, args.BlockingEntity);
         }
 
+        /// <summary>
+        /// Basically using virtual item passthrough to throw the carried person. A new age!
+        /// Maybe other things besides throwing should use virt items like this...
+        /// </summary>
         private void OnThrow(EntityUid uid, CarryingComponent component, BeforeThrowEvent args)
         {
             if (!TryComp<HandVirtualItemComponent>(args.ItemUid, out var virtItem) || !HasComp<CarriableComponent>(virtItem.BlockingEntity))
@@ -111,6 +117,9 @@ namespace Content.Server.Carrying
             _vocalSystem.TryScream(args.ItemUid);
         }
 
+        /// <summary>
+        /// Only let the person being carried interact with their carrier and things on their person.
+        /// </summary>
         private void OnInteractionAttempt(EntityUid uid, BeingCarriedComponent component, InteractionAttemptEvent args)
         {
             if (args.Target == null)
@@ -122,6 +131,9 @@ namespace Content.Server.Carrying
                 args.Cancel();
         }
 
+        /// <summary>
+        /// Try to escape via the escape inventory system.
+        /// </summary>
         private void OnMoveInput(EntityUid uid, BeingCarriedComponent component, ref MoveInputEvent args)
         {
             if (!TryComp<CanEscapeInventoryComponent>(uid, out var escape) || escape.CancelToken != null)
