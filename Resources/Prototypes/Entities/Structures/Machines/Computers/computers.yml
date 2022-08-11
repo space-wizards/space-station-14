@@ -118,6 +118,36 @@
 
 - type: entity
   parent: BaseComputer
+  id: ComputerIFF
+  name: IFF computer
+  description: Allows you to control the IFF characteristics of this vessel.
+  components:
+    - type: IFFConsole
+    - type: Sprite
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body" ]
+          state: computer
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          sprite: Structures/Shuttles/iff.rsi
+          state: helm
+          shader: unshaded
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          screen: helm
+    - type: ActivatableUI
+      key: enum.IFFConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.IFFConsoleUiKey.Key
+          type: IFFConsoleBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
   id: ComputerPowerMonitoring
   name: power monitoring computer
   description: It monitors power levels across the station.

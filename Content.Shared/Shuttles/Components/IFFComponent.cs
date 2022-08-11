@@ -9,6 +9,9 @@ namespace Content.Shared.Shuttles.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedShuttleSystem))]
 public sealed class IFFComponent : Component
 {
+    /// <summary>
+    /// Default color to use for IFF if no component is found.
+    /// </summary>
     public static readonly Color IFFColor = Color.Aquamarine;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("flags")]

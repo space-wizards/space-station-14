@@ -7,14 +7,23 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem
 {
+    /*
+     * Handles the label visibility on radar controls. This can be hiding the label or applying other effects.
+     */
+
     private void InitializeIFF()
     {
         SubscribeLocalEvent<IFFComponent, ComponentGetState>(OnIFFGetState);
         SubscribeLocalEvent<IFFComponent, ComponentHandleState>(OnIFFHandleState);
     }
 
+    protected virtual void UpdateIFFInterfaces(EntityUid gridUid, IFFComponent component) {}
+
+    /// <summary>
+    /// Sets the color for this grid to appear as on radar.
+    /// </summary>
     [PublicAPI]
-    public void SetColor(EntityUid gridUid, Color color, IFFComponent? component = null)
+    public void SetIFFColor(EntityUid gridUid, Color color, IFFComponent? component = null)
     {
         component ??= EnsureComp<IFFComponent>(gridUid);
 
@@ -23,10 +32,11 @@ public abstract partial class SharedShuttleSystem
 
         component.Color = color;
         Dirty(component);
+        UpdateIFFInterfaces(gridUid, component);
     }
 
     [PublicAPI]
-    public void AddFlag(EntityUid gridUid, IFFFlags flags, IFFComponent? component = null)
+    public void AddIFFFlag(EntityUid gridUid, IFFFlags flags, IFFComponent? component = null)
     {
         component ??= EnsureComp<IFFComponent>(gridUid);
 
@@ -35,12 +45,13 @@ public abstract partial class SharedShuttleSystem
 
         component.Flags |= flags;
         Dirty(component);
+        UpdateIFFInterfaces(gridUid, component);
     }
 
     [PublicAPI]
-    public void RemoveFlag(EntityUid gridUid, IFFFlags flags, IFFComponent? component = null)
+    public void RemoveIFFFlag(EntityUid gridUid, IFFFlags flags, IFFComponent? component = null)
     {
-        if (!TryComp(gridUid, out component))
+        if (!Resolve(gridUid, ref component, false))
             return;
 
         if ((component.Flags & flags) == 0x0)
@@ -48,6 +59,7 @@ public abstract partial class SharedShuttleSystem
 
         component.Flags &= ~flags;
         Dirty(component);
+        UpdateIFFInterfaces(gridUid, component);
     }
 
     private void OnIFFHandleState(EntityUid uid, IFFComponent component, ref ComponentHandleState args)
