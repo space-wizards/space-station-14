@@ -1,0 +1,29 @@
+﻿- type: entity
+  id: AutomatedDistressSystem
+  parent: BaseMachinePowered
+  name: Automated Distress System
+  description: A relatively un-compact device designed to hail when something happens to your crew.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/server.rsi
+      state: server
+    - type: ApcPowerReceiver
+      powerLoad: 200
+      priority: Low
+    - type: ExtensionCableReceiver
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 2
