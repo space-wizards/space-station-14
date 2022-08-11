@@ -2,7 +2,6 @@
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Tag;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -14,6 +13,10 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
 
+    // Updates chameleon visuals and meta information.
+    // This function is called on a server after user selected new outfit.
+    // And after that on a client after state was updated.
+    // This 100% makes sure that server and client have exactly same data.
     protected virtual void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.SelectedId) ||
