@@ -10,6 +10,11 @@ namespace Content.Shared.Shuttles.Components;
 public sealed class IFFComponent : Component
 {
     /// <summary>
+    /// Should we show IFF by default?
+    /// </summary>
+    public const bool ShowIFFDefault = true;
+
+    /// <summary>
     /// Default color to use for IFF if no component is found.
     /// </summary>
     public static readonly Color IFFColor = Color.Aquamarine;

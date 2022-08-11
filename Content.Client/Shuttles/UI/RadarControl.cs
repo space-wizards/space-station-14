@@ -225,8 +225,8 @@ public sealed class RadarControl : Control
             var color = iff?.Color ?? IFFComponent.IFFColor;
 
             if (ShowIFF &&
-                (iff == null ||
-                (iff.Flags & IFFFlags.HideLabel) == 0x0))
+                (iff == null && IFFComponent.ShowIFFDefault ||
+                 (iff.Flags & IFFFlags.HideLabel) == 0x0))
             {
                 var gridBounds = grid.LocalAABB;
                 Label label;
