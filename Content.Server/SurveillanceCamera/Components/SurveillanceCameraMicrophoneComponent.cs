@@ -35,7 +35,8 @@ public sealed class SurveillanceCameraMicrophoneComponent : Component, IListen
     public int ListenRange { get; } = 10;
     public bool CanListen(string message, EntityUid source, RadioChannelPrototype? channelPrototype)
     {
-        return _microphoneSystem?.CanListen(Owner, speaker, this);
+        return _microphoneSystem != null
+            && _microphoneSystem.CanListen(Owner, source, this);
     }
 
     public void Listen(string message, EntityUid speaker, RadioChannelPrototype? channel)
