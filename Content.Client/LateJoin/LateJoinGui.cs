@@ -3,6 +3,7 @@ using Content.Client.CrewManifest;
 using Content.Client.Eui;
 using Content.Client.GameTicking.Managers;
 using Content.Client.HUD.UI;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
@@ -70,6 +71,7 @@ namespace Content.Client.LateJoin
             _jobCategories.Clear();
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
+            var tracker = IoCManager.Resolve<PlayTimeTrackingManager>();
 
             if (!gameTicker.DisallowedLateJoin && gameTicker.StationNames.Count == 0)
                 Logger.Warning("No stations exist, nothing to display in late-join GUI");
@@ -223,12 +225,8 @@ namespace Content.Client.LateJoin
                             Stretch = TextureRect.StretchMode.KeepCentered
                         };
 
-                        if (prototype.Icon != null)
-                        {
-                            var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), prototype.Icon);
-                            icon.Texture = specifier.Frame0();
-                        }
-
+                        var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), prototype.Icon);
+                        icon.Texture = specifier.Frame0();
                         jobSelector.AddChild(icon);
 
                         var jobLabel = new Label
@@ -247,9 +245,16 @@ namespace Content.Client.LateJoin
                             SelectedId?.Invoke((id, jobButton.JobId));
                         };
 
-                        if (value == 0)
+                        string? reason = null;
+
+                        if (value == 0 || !tracker.IsAllowed(prototype, out reason))
                         {
                             jobButton.Disabled = true;
+
+                            if (!string.IsNullOrEmpty(reason))
+                            {
+                                jobButton.ToolTip = reason;
+                            }
                         }
 
                         _jobButtons[id][prototype.ID] = jobButton;
