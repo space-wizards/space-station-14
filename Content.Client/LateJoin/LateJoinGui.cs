@@ -3,7 +3,7 @@ using Content.Client.CrewManifest;
 using Content.Client.Eui;
 using Content.Client.GameTicking.Managers;
 using Content.Client.HUD.UI;
-using Content.Client.UserInterface;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
@@ -19,7 +19,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
 {
-    public sealed class LateJoinGui : FancyWindow
+    public sealed class LateJoinGui : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
@@ -32,8 +32,6 @@ namespace Content.Client.LateJoin
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
-        private readonly Button _purchaseShip = new() {Text = "Purchase a new vessel", HorizontalAlignment = HAlignment.Center, HorizontalExpand = false};
-        private readonly NewVesselGui _vesselPurchaseUi = new();
 
         public LateJoinGui()
         {
@@ -50,7 +48,7 @@ namespace Content.Client.LateJoin
                 Margin = new Thickness(0),
             };
 
-            ContentsContainer.AddChild(_base);
+            Contents.AddChild(_base);
 
             RebuildUI();
 
@@ -62,35 +60,22 @@ namespace Content.Client.LateJoin
                 Close();
             };
 
-            _purchaseShip.OnPressed += _ =>
-            {
-                _vesselPurchaseUi.OpenCenteredLeft();
-            };
-
             gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
-        }
-
-        public override void Close()
-        {
-            _vesselPurchaseUi.Close();
-            base.Close();
         }
 
         private void RebuildUI()
         {
             _base.RemoveAllChildren();
-            _base.AddChild(_purchaseShip);
-
             _jobLists.Clear();
             _jobButtons.Clear();
             _jobCategories.Clear();
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
+            var tracker = IoCManager.Resolve<PlayTimeTrackingManager>();
 
             if (!gameTicker.DisallowedLateJoin && gameTicker.StationNames.Count == 0)
                 Logger.Warning("No stations exist, nothing to display in late-join GUI");
 
-            _purchaseShip.Disabled = !gameTicker.PurchaseAvailable;
             foreach (var (id, name) in gameTicker.StationNames)
             {
                 var jobList = new BoxContainer
@@ -240,12 +225,8 @@ namespace Content.Client.LateJoin
                             Stretch = TextureRect.StretchMode.KeepCentered
                         };
 
-                        if (prototype.Icon != null)
-                        {
-                            var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), prototype.Icon);
-                            icon.Texture = specifier.Frame0();
-                        }
-
+                        var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), prototype.Icon);
+                        icon.Texture = specifier.Frame0();
                         jobSelector.AddChild(icon);
 
                         var jobLabel = new Label
@@ -264,9 +245,16 @@ namespace Content.Client.LateJoin
                             SelectedId?.Invoke((id, jobButton.JobId));
                         };
 
-                        if (value == 0)
+                        string? reason = null;
+
+                        if (value == 0 || !tracker.IsAllowed(prototype, out reason))
                         {
                             jobButton.Disabled = true;
+
+                            if (!string.IsNullOrEmpty(reason))
+                            {
+                                jobButton.ToolTip = reason;
+                            }
                         }
 
                         _jobButtons[id][prototype.ID] = jobButton;

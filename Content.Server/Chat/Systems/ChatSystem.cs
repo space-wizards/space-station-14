@@ -266,6 +266,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
+        _listener.PingListeners(source, message, null);
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev);
