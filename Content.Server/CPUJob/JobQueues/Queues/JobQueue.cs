@@ -7,10 +7,7 @@ namespace Content.Server.CPUJob.JobQueues.Queues
     {
         private readonly IStopwatch _stopwatch;
 
-        public JobQueue(double maxTime = 0.002) : this(new Stopwatch())
-        {
-            MaxTime = maxTime;
-        }
+        public JobQueue() : this(new Stopwatch()) {}
 
         public JobQueue(IStopwatch stopwatch)
         {
@@ -20,7 +17,7 @@ namespace Content.Server.CPUJob.JobQueues.Queues
         /// <summary>
         /// How long the job's allowed to run for before suspending
         /// </summary>
-        public virtual double MaxTime { get; }
+        public virtual double MaxTime { get; } = 0.002;
 
         private readonly Queue<IJob> _pendingQueue = new();
         private readonly List<IJob> _waitingJobs = new();
