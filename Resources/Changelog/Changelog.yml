@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Post Lights are now slightly smaller and sit further up in a tile.,
-    type: Tweak}
-  id: 1634
-  time: '2022-06-02T20:12:23.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Nukes will now explode in 120 seconds instead of 180., type: Tweak}
@@ -2935,3 +2929,9 @@ Entries:
     type: Add}
   id: 2133
   time: '2022-08-11T21:19:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The popup for not being able to wield an item is now grammatically correct.,
+    type: Fix}
+  id: 2134
+  time: '2022-08-11T22:53:36.0000000+00:00'
