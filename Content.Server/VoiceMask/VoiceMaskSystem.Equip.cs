@@ -7,7 +7,8 @@ public sealed partial class VoiceMaskSystem
 {
     private void OnEquip(EntityUid uid, VoiceMaskerComponent component, GotEquippedEvent args)
     {
-        EnsureComp<VoiceMaskComponent>(args.Equipee);
+        var comp = EnsureComp<VoiceMaskComponent>(args.Equipee);
+        comp.VoiceName = component.LastSetName;
     }
 
     private void OnUnequip(EntityUid uid, VoiceMaskerComponent compnent, GotUnequippedEvent args)
