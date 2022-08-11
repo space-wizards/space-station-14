@@ -430,8 +430,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         if (monitor.ActiveCamera != null)
         {
-            EntityUid? monitorUid = monitor.Viewers.Count == 0 ? uid : null;
-            _surveillanceCameras.RemoveActiveViewer(monitor.ActiveCamera.Value, player, monitorUid);
+            _surveillanceCameras.RemoveActiveViewer(monitor.ActiveCamera.Value, player);
         }
     }
 
