@@ -250,3 +250,6 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: Construction
+      graph: GasTrinary
+      node: pneumaticvalve
