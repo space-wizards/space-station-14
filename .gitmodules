@@ -6,3 +6,4 @@
     path = Secrets
     url = https://github.com/moonheart08/outer-rim-14-secrets-pub.git
     branch = master
+    update = none
