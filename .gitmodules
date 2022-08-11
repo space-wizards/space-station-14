@@ -4,6 +4,6 @@
 	branch = master
 [submodule "Secrets"]
     path = Secrets
-    url = https://github.com/moonheart08/outer-rim-14-secrets-pub.git
+    url = git@github.com:moonheart08/outer-rim-14-secrets.git
     branch = master
     update = none
