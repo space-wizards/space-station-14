@@ -21,6 +21,7 @@ using Content.Shared.Standing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Throwing;
 using Content.Shared.Physics.Pull;
+using Content.Shared.Interaction;
 using Robust.Shared.Player;
 
 namespace Content.Server.Carrying
@@ -46,6 +47,7 @@ namespace Content.Server.Carrying
             SubscribeLocalEvent<CarriableComponent, GetVerbsEvent<AlternativeVerb>>(AddCarryVerb);
             SubscribeLocalEvent<CarryingComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<CarryingComponent, BeforeThrowEvent>(OnThrow);
+            SubscribeLocalEvent<BeingCarriedComponent, InteractionAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<BeingCarriedComponent, MoveInputEvent>(OnMoveInput);
             SubscribeLocalEvent<BeingCarriedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<BeingCarriedComponent, StandAttemptEvent>(OnStandAttempt);
@@ -107,6 +109,17 @@ namespace Content.Server.Carrying
             args.ThrowStrength = 5f * multiplier;
 
             _vocalSystem.TryScream(args.ItemUid);
+        }
+
+        private void OnInteractionAttempt(EntityUid uid, BeingCarriedComponent component, InteractionAttemptEvent args)
+        {
+            if (args.Target == null)
+                return;
+
+            var targetParent = Transform(args.Target.Value).ParentUid;
+
+            if (args.Target.Value != component.Carrier && targetParent != component.Carrier && targetParent != uid)
+                args.Cancel();
         }
 
         private void OnMoveInput(EntityUid uid, BeingCarriedComponent component, ref MoveInputEvent args)
@@ -225,20 +238,12 @@ namespace Content.Server.Carrying
 
         private void ApplyCarrySlowdown(EntityUid carrier, EntityUid carried)
         {
-            if (!TryComp<PhysicsComponent>(carrier, out var carrierPhysics))
-                return;
-            if (!TryComp<PhysicsComponent>(carried, out var carriedPhysics))
-                return;
+            var massRatio = _contests.MassContest(carrier, carried);
 
-            var carrierMass = carrierPhysics.FixturesMass;
-            var carriedMass = carriedPhysics.FixturesMass;
+            if (massRatio == 0)
+                massRatio = 1;
 
-            if (carrierMass == 0f)
-                carrierMass = 70f;
-            if (carriedMass == 0f)
-                carriedMass = 70f;
-
-            var massRatioSq = Math.Pow((carriedMass / carrierMass), 2);
+            var massRatioSq = Math.Pow(massRatio, 2);
             var modifier = (1 - (massRatioSq * 0.15));
             var slowdownComp = EnsureComp<CarryingSlowdownComponent>(carrier);
             _slowdown.SetModifier(carrier, (float) modifier, (float) modifier, slowdownComp);
