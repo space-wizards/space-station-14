@@ -12,6 +12,7 @@ namespace Content.Server.VendingMachines
     {
         public bool Ejecting;
         public bool Denying;
+        public bool DispenseOnHitCoolingDown;
 
         public string? NextItemToEject;
 
@@ -40,6 +41,15 @@ namespace Content.Server.VendingMachines
         public float? DispenseOnHitThreshold;
 
         /// <summary>
+        ///     Amount of time in seconds that need to pass before damage can cause a vending machine to eject again.
+        ///     This value is separate to <see cref="SharedVendingMachineComponent.EjectDelay"/> because that value might be
+        ///     0 for a vending machine for legitimate reasons (no desired delay/no eject animation)
+        ///     and can be circumvented with forced ejections.
+        /// </summary>
+        [DataField("dispenseOnHitCooldown")]
+        public float? DispenseOnHitCooldown = 1.0f;
+
+        /// <summary>
         ///     Sound that plays when ejecting an item
         /// </summary>
         [DataField("soundVend")]
@@ -65,5 +75,6 @@ namespace Content.Server.VendingMachines
 
         public float EjectAccumulator = 0f;
         public float DenyAccumulator = 0f;
+        public float DispenseOnHitAccumulator = 0f;
     }
 }

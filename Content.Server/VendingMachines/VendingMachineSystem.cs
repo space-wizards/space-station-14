@@ -108,11 +108,15 @@ namespace Content.Server.VendingMachines
         
         private void OnDamage(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
         {
-            if (component.DispenseOnHitChance == null || args.DamageDelta == null)
+            if (component.DispenseOnHitCoolingDown || component.DispenseOnHitChance == null || args.DamageDelta == null)
                 return;
 
             if (args.DamageDelta.Total >= component.DispenseOnHitThreshold && _random.Prob(component.DispenseOnHitChance.Value))
-                EjectRandom(uid, throwItem: true, forceEject:true, component);
+            {
+                if (component.DispenseOnHitCooldown > 0f)
+                    component.DispenseOnHitCoolingDown = true;
+                EjectRandom(uid, throwItem: true, forceEject: true, component);
+            }
         }
 
         private void OnSelfDispense(EntityUid uid, VendingMachineComponent component, VendingMachineSelfDispenseEvent args)
@@ -362,6 +366,16 @@ namespace Content.Server.VendingMachines
                         comp.Denying = false;
 
                         DenyItem(comp);
+                    }
+                }
+
+                if (comp.DispenseOnHitCoolingDown)
+                {
+                    comp.DispenseOnHitAccumulator += frameTime;
+                    if (comp.DispenseOnHitAccumulator >= comp.DispenseOnHitCooldown)
+                    {
+                        comp.DispenseOnHitAccumulator = 0f;
+                        comp.DispenseOnHitCoolingDown = false;
                     }
                 }
             }
