@@ -9,7 +9,7 @@ namespace Content.Server.Ghost.Roles.UI
     {
         public override GhostRolesEuiState GetNewState()
         {
-            var manager = IoCManager.Resolve<GhostRoleManager>();
+            var manager = EntitySystem.Get<GhostRoleLotterySystem>();
             var adminManager = IoCManager.Resolve<IAdminManager>();
 
             return new GhostRolesEuiState(
@@ -27,22 +27,22 @@ namespace Content.Server.Ghost.Roles.UI
             switch (msg)
             {
                 case GhostRoleTakeoverRequestMessage req:
-                    IoCManager.Resolve<GhostRoleManager>().TakeoverImmediate(Player, req.Identifier);
-                    break;
-                case GhostRoleLotteryRequestMessage req:
-                    IoCManager.Resolve<GhostRoleManager>().AddGhostRoleLotteryRequest(Player, req.Identifier);
-                    break;
-                case GhostRoleCancelLotteryRequestMessage req:
-                    IoCManager.Resolve<GhostRoleManager>().RemoveGhostRoleLotteryRequest(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleSystem>().RequestTakeover(Player, req.Identifier);
                     break;
                 case GhostRoleFollowRequestMessage req:
                     EntitySystem.Get<GhostRoleSystem>().Follow(Player, req.Identifier);
                     break;
+                case GhostRoleLotteryRequestMessage req:
+                    EntitySystem.Get<GhostRoleLotterySystem>().GhostRoleAddPlayerLotteryRequest(Player, req.Identifier);
+                    break;
+                case GhostRoleCancelLotteryRequestMessage req:
+                    EntitySystem.Get<GhostRoleLotterySystem>().GhostRoleRemovePlayerLotteryRequest(Player, req.Identifier);
+                    break;
                 case GhostRoleGroupLotteryRequestMessage req:
-                    IoCManager.Resolve<GhostRoleManager>().AddRoleGroupLotteryRequest(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleLotterySystem>().GhostRoleGroupAddPlayerLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleGroupCancelLotteryMessage req:
-                    IoCManager.Resolve<GhostRoleManager>().RemoveRoleGroupLotteryRequest(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleLotterySystem>().GhostRoleGroupRemovePlayerLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleWindowCloseMessage _:
                     Closed();
@@ -54,7 +54,7 @@ namespace Content.Server.Ghost.Roles.UI
         {
             base.Closed();
 
-            EntitySystem.Get<GhostRoleSystem>().CloseEui(Player);
+            EntitySystem.Get<GhostRoleLotterySystem>().CloseEui(Player);
         }
     }
 }

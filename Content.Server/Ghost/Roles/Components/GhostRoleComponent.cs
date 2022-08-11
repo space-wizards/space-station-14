@@ -4,7 +4,7 @@ using Robust.Server.Player;
 
 namespace Content.Server.Ghost.Roles.Components
 {
-    [Access(typeof(GhostRoleSystem), typeof(GhostRoleManager))]
+    [Access(typeof(GhostRoleSystem))]
     public abstract class GhostRoleComponent : Component
     {
         [DataField("name")] public string _roleName = "Unknown";
@@ -38,7 +38,7 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleName = value;
-                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+                EntitySystem.Get<GhostRoleLotterySystem>().UpdateAllEui();
             }
         }
 
@@ -50,7 +50,7 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleDescription = value;
-                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+                EntitySystem.Get<GhostRoleLotterySystem>().UpdateAllEui();
             }
         }
 
@@ -62,7 +62,7 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleRules = value;
-                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+                EntitySystem.Get<GhostRoleLotterySystem>().UpdateAllEui();
             }
         }
 
@@ -74,7 +74,7 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleUseLottery = value;
-                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+                EntitySystem.Get<GhostRoleLotterySystem>().UpdateAllEui();
             }
         }
 

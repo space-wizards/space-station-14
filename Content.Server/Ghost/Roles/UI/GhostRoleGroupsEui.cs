@@ -7,7 +7,7 @@ public sealed class GhostRoleGroupsEui : BaseEui
 {
     public override AdminGhostRolesEuiState GetNewState()
     {
-        var manager = IoCManager.Resolve<GhostRoleManager>();
+        var manager = EntitySystem.Get<GhostRoleGroupSystem>();
 
         return new AdminGhostRolesEuiState(manager.GetAdminGhostRoleGroupInfo(Player));
     }
