@@ -8,9 +8,7 @@
             <Label Text="{Loc 'cargo-console-order-menu-description-label'}" />
             <RichTextLabel Name="Description"
                         Access="Public"
-                        VerticalExpand="True"
-                        HorizontalExpand="True"
-                        MaxSize="350 350"/>
+                        SetWidth="350"/>
             <Label Text="{Loc 'cargo-console-order-menu-cost-label'}" />
             <Label Name="PointCost"
                       Access="Public" />

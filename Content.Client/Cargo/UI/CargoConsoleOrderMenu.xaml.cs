@@ -18,12 +18,5 @@ namespace Content.Client.Cargo.UI
             Amount.SetButtons(new List<int> { -3, -2, -1 }, new List<int> { 1, 2, 3 });
             Amount.IsValid = n => n > 0;
         }
-
-//             MinSize = SetSize = (350, 47);
-//         public float GetRequiredHeight()
-//         {
-//             this.Measure((5000, 5000));
-//             return this.DesiredSize.Y;
-//         }
     }
 }

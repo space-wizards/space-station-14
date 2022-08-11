@@ -82,7 +82,7 @@ namespace Content.Client.Cargo.BUI
                 _orderMenu.Requester.Text = orderRequester;
                 _orderMenu.Reason.Text = "";
                 _orderMenu.Amount.Value = 1;
-//                 _orderMenu.SetHeight = _orderMenu.GetRequiredHeight() + _orderMenu.MinHeight;
+
                 _orderMenu.OpenCentered();
             };
             _menu.OnOrderApproved += ApproveOrder;
