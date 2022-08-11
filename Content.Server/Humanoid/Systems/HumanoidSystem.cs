@@ -95,6 +95,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         Synchronize(uid);
     }
 
+    // this was done enough times that it only made sense to do it here
+
     public void CloneAppearance(EntityUid source, EntityUid target, HumanoidComponent? sourceHumanoid = null,
         HumanoidComponent? targetHumanoid = null)
     {
