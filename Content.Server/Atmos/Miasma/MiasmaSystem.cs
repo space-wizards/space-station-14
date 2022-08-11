@@ -191,12 +191,14 @@ namespace Content.Server.Atmos.Miasma
             if (!component.Rotting)
                 return;
 
-            if (component.DeathAccumulator < 2 * component.RotAfter.TotalSeconds)
-                args.PushMarkup(Loc.GetString("miasma-rotting"));
-            else if (component.DeathAccumulator < 3 * component.RotAfter.TotalSeconds)
-                args.PushMarkup(Loc.GetString("miasma-bloated"));
-            else
-                args.PushMarkup(Loc.GetString("miasma-extremely-bloated"));
+            	if (!component.Rotting)
+                    return;
+                var stage = component.DeathAccumulator / component.RotAfter.TotalSeconds;
+                var description = stage switch {
+                    >= 3 => "miasma-extremely-bloated",
+                    >= 2 => "miasma-bloated",
+                       _ => "miasma-rotting"};
+                args.PushMarkup(Loc.GetString(description));
         }
 
         /// Containers
