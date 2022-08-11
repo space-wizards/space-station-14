@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix infinite gunshot sounds from spent cartridges., type: Fix}
-  - {message: Fix cap cartridge visualizer., type: Fix}
-  - {message: Fix empty gunshot sounds (no more wehnigun log spam)., type: Fix}
-  id: 1631
-  time: '2022-06-02T09:13:13.0000000+00:00'
 - author: ike709
   changes:
   - {message: Added an audio setting to disable playing admin music, type: Add}
@@ -2937,3 +2930,8 @@ Entries:
       went. Enjoy your usage of handheld radio technology, today!', type: Tweak}
   id: 2130
   time: '2022-08-11T09:25:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: A console to toggle IFF (radar labels) has been added., type: Add}
+  id: 2131
+  time: '2022-08-11T16:58:44.0000000+00:00'
