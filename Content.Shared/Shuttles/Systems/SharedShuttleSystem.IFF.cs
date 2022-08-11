@@ -25,7 +25,8 @@ public abstract partial class SharedShuttleSystem
 
     public void RemoveFlag(EntityUid gridUid, IFFFlags flags, IFFComponent? component = null)
     {
-        component ??= EnsureComp<IFFComponent>(gridUid);
+        if (!TryComp(gridUid, out component))
+            return;
 
         if ((component.Flags & flags) == 0x0)
             return;
