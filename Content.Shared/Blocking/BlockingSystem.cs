@@ -1,8 +1,10 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Maps;
@@ -40,8 +42,30 @@ public sealed class BlockingSystem : EntitySystem
 
         SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<BlockingComponent, ToggleActionEvent>(OnToggleAction);
+        SubscribeLocalEvent<BlockingComponent, DestructionEventArgs>(OnBreak);
 
         SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
+    }
+
+    private void OnBreak(EntityUid uid, BlockingComponent component, DestructionEventArgs args)
+    {
+        if (_containerSystem.IsEntityInContainer(uid))
+        {
+            if (component.User == null)
+                return;
+
+            if (!EntityManager.TryGetComponent(component.User, out SharedHandsComponent? hands))
+                return;
+
+            foreach(var hand in hands.Hands)
+            {
+                if (hand.Value.HeldEntity == uid)
+                {
+                    _handsSystem.TryDrop((EntityUid) component.User, hand.Value, null, true, true, hands);
+                    return;
+                }
+            }
+        }
     }
 
     private void OnEquip(EntityUid uid, BlockingComponent component, GotEquippedHandEvent args)

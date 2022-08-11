@@ -54,27 +54,10 @@ public sealed class BlockingUserSystem : EntitySystem
 
     private void OnDamageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)
     {
-        //TODO: Have a way to tell where the damage is coming from. Is it coming from another player? That way we can tell if it makes sense that the damage could be blocked.
-        if (component.BlockingItem != null && args.DamageIncreased && IsDamageValid(args))
+        if (component.BlockingItem != null && args.DamageIncreased)
         {
             RaiseLocalEvent(component.BlockingItem.Value, args);
         }
-    }
-
-    /// <summary>
-    /// This method ensures that the damage being done to the sheild is in fact valid for damaging the sheild. E.G: Sheild should take damage to asphyxiation, radiation, etc., just stuff that makes sense to be able to be blocked.
-    /// </summary>
-    /// <param name="args"></param>
-    /// <returns>Bool: True when valid damage type, false when not valid damage or the damageDelta is null.</returns>
-    private bool IsDamageValid(DamageChangedEvent args)
-    {
-        if (args.DamageDelta == null)
-        {
-            return false;
-        }
-
-        return !(args.DamageDelta.DamageDict.ContainsKey("Asphyxiation") || args.DamageDelta.DamageDict.ContainsKey("Bloodloss") || args.DamageDelta.DamageDict.ContainsKey("Cellular")
-            || args.DamageDelta.DamageDict.ContainsKey("Poison") || args.DamageDelta.DamageDict.ContainsKey("Radiation"));
     }
 
     private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
