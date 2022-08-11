@@ -7,7 +7,6 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.NPC
 {
-#if DEBUG
     public sealed class ClientAiDebugSystem : EntitySystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -195,5 +194,4 @@ namespace Content.Client.NPC
         Paths = 1 << 1,
         Thonk = 1 << 2,
     }
-#endif
 }

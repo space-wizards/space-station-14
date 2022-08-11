@@ -9,7 +9,6 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.NPC
 {
-#if DEBUG
     public sealed class ClientPathfindingDebugSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -516,5 +515,4 @@ namespace Content.Client.NPC
         CachedRegions = 1 << 3,
         Regions = 1 << 4,
     }
-#endif
 }
