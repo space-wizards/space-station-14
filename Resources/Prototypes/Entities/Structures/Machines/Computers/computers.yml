@@ -675,6 +675,7 @@
       range: 200
     - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
+      speechEnabled: true
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
     - type: ActivatableUIRequiresPower
