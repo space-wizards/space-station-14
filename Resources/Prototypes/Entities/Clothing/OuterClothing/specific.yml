@@ -10,12 +10,12 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/OuterClothing/Vests/vest.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/OuterClothing/Vests/vest.rsi
     - type: ChameleonClothing
       slot: [outerClothing]
       default: ClothingOuterVest
-    - type: Appearance
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

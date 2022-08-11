@@ -1,21 +1,21 @@
 ﻿- type: entity
-  parent: ClothingHeadset
-  id: ClothingHeadsetChameleon # should have service radio chanel
-  name: service headset
-  description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
+  parent: ClothingHeadsetGrey
+  id: ClothingHeadsetChameleon
+  name: passenger headset
+  description: An updated, modular intercom that fits over the head. Takes encryption keys.
   suffix: Chameleon
   components:
     - type: Tag
       tags:
         - IgnoreChameleon
     - type: Sprite
-      sprite: Clothing/Ears/Headsets/service.rsi
+      sprite: Clothing/Ears/Headsets/base.rsi
+      netsync: false
     - type: Clothing
-      sprite: Clothing/Ears/Headsets/service.rsi
+      sprite: Clothing/Ears/Headsets/base.rsi
     - type: ChameleonClothing
       slot: [ears]
-      default: ClothingHeadsetService
-    - type: Appearance
+      default: ClothingHeadsetGrey
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

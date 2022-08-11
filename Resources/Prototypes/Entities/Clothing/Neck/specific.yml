@@ -10,12 +10,12 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Neck/Scarfs/red.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Neck/Scarfs/red.rsi
     - type: ChameleonClothing
       slot: [neck]
       default: ClothingNeckScarfStripedRed
-    - type: Appearance
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

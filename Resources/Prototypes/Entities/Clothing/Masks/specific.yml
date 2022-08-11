@@ -10,12 +10,12 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Mask/gas.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Mask/gas.rsi
     - type: ChameleonClothing
       slot: [mask]
       default: ClothingMaskGas
-    - type: Appearance
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

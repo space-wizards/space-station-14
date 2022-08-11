@@ -112,12 +112,12 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Shoes/Color/black.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Shoes/Color/black.rsi
     - type: ChameleonClothing
       slot: [FEET]
       default: ClothingShoesColorBlack
-    - type: Appearance
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

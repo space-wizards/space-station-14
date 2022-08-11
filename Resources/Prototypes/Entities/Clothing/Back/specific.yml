@@ -10,12 +10,12 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Back/Backpacks/backpack.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Back/Backpacks/backpack.rsi
     - type: ChameleonClothing
       slot: [back]
       default: ClothingBackpack
-    - type: Appearance
     - type: UserInterface
       interfaces:
         - key: enum.StorageUiKey.Key

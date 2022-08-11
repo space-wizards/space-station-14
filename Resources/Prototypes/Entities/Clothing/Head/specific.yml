@@ -10,12 +10,12 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Head/Hats/beret.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Head/Hats/beret.rsi
     - type: ChameleonClothing
       slot: [HEAD]
       default: ClothingHeadHatBeret
-    - type: Appearance
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

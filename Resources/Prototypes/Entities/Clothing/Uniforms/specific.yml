@@ -10,6 +10,7 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
     - type: SuitSensor
@@ -18,7 +19,6 @@
     - type: ChameleonClothing
       slot: [innerclothing]
       default: ClothingUniformJumpsuitColorBlack
-    - type: Appearance
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

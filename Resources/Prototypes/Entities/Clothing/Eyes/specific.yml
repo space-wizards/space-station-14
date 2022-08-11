@@ -10,12 +10,12 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
     - type: ChameleonClothing
       slot: [eyes]
       default: ClothingEyesGlassesSunglasses
-    - type: Appearance
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

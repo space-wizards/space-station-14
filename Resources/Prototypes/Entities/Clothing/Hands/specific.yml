@@ -10,12 +10,15 @@
         - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Hands/Gloves/Color/black.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Hands/Gloves/Color/black.rsi
     - type: ChameleonClothing
       slot: [gloves]
       default: ClothingHandsGlovesColorBlack
-    - type: Appearance
+    - type: Fiber
+      fiberMaterial: fibers-chameleon
+    - type: FingerprintMask
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key
