@@ -9,11 +9,12 @@ namespace Content.Server.MachineLinking.Components;
 [RegisterComponent]
 public sealed class DeadMansSwitchComponent : Component
 {
+    [ViewVariables(VVAccess.ReadWrite)]
     public bool Armed;
 
     /// <summary>
     ///     The port that gets signaled when the switch fires.
     /// </summary>
     [DataField("port", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
-    public string Port = "Activated";
+    public string Port = "Pressed";
 }
