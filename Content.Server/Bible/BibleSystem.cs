@@ -81,7 +81,7 @@ namespace Content.Server.Bible
                 }
                 summonableComp.AlreadySummoned = false;
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner,
-                    Filter.Pvs(summonableComp.Owner), PopupType.Medium);
+                    Filter.Entities(summonableComp.Owner), PopupType.Medium);
                 SoundSystem.Play("/Audio/Effects/radpulse9.ogg", Filter.Pvs(summonableComp.Owner), summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
@@ -229,7 +229,7 @@ namespace Content.Server.Bible
             // If this is going to use a ghost role mob spawner, attach it to the bible.
             if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
-                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, Filter.Pvs(user), PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, Filter.Entities(user), PopupType.Medium);
                 Transform(familiar).AttachParent(component.Owner);
             }
             component.AlreadySummoned = true;
