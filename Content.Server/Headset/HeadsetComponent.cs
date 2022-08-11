@@ -45,9 +45,9 @@ namespace Content.Server.Headset
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        public bool CanListen(string message, EntityUid source, RadioChannelPrototype prototype)
+        public bool CanListen(string message, EntityUid source, RadioChannelPrototype? prototype)
         {
-            return Channels.Contains(prototype.ID) && RadioRequested;
+            return prototype != null && Channels.Contains(prototype.ID) && RadioRequested;
         }
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
@@ -73,8 +73,13 @@ namespace Content.Server.Headset
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 
-        public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
+        public void Listen(string message, EntityUid speaker, RadioChannelPrototype? channel)
         {
+            if (channel == null)
+            {
+                return;
+            }
+
             Broadcast(message, speaker, channel);
         }
 
