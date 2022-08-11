@@ -1,11 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Added 6 new floor tiles ported from Goon! Look out for clown carpet,
-      boxing ring, gym mat, office carpet, metal diamond and alternate blue arcade.',
-    type: Add}
-  id: 1630
-  time: '2022-06-02T02:10:59.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix infinite gunshot sounds from spent cartridges., type: Fix}
@@ -2938,3 +2931,9 @@ Entries:
   - {message: Ore Processor deconstruction now works properly., type: Fix}
   id: 2129
   time: '2022-08-11T04:24:04.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Nanotrasen has found where all the microphones for handheld radios
+      went. Enjoy your usage of handheld radio technology, today!', type: Tweak}
+  id: 2130
+  time: '2022-08-11T09:25:29.0000000+00:00'
