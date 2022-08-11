@@ -1,6 +1,6 @@
 late-join-gui-title = Позднее присоединение
-late-join-gui-jobs-amount-in-department-tooltip = Должности в { $departmentName }
-late-join-gui-department-jobs-label = Должности: { $departmentName }
+late-join-gui-jobs-amount-in-department-tooltip = { $departmentName }
+late-join-gui-department-jobs-label = { $departmentName }
 late-join-gui-job-slot-capped =
     { $jobName } ({ $amount } { $amount ->
         [zero] не доступна
