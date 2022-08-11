@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Added modular landmines, which can be constructed using a payload and
-      are triggered by stepping on them.', type: Add}
-  - {message: Mines and grenades will now be triggered if an explosion damages them.,
-    type: Tweak}
-  id: 1629
-  time: '2022-06-01T08:39:06.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Added 6 new floor tiles ported from Goon! Look out for clown carpet,
@@ -2941,3 +2933,8 @@ Entries:
   - {message: You can get more hints about how long something has been rotten., type: Tweak}
   id: 2128
   time: '2022-08-11T02:43:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Ore Processor deconstruction now works properly., type: Fix}
+  id: 2129
+  time: '2022-08-11T04:24:04.0000000+00:00'
