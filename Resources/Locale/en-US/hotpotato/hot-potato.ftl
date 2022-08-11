@@ -11,3 +11,7 @@ hot-potato-drop-fail = { THE($item) } refuses to detach from your hand!
 hot-potato-activate-user = You squeeze { THE($item) }, activating its countdown and attachment mechanism!
 
 hot-potato-activate = {CAPITALIZE(THE($user))} squeezes { THE($item) }, which promptly starts to flash red-hot colors!
+
+hot-potato-dud = { THE($item) } drops to the ground!
+
+hot-potato-dud = { THE($item) } drops to the ground! Looks like it was really a {$newitem}

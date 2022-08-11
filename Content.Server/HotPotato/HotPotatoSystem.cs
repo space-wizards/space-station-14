@@ -1,15 +1,11 @@
 using Content.Server.AI.Components;
 using Content.Server.Body.Components;
-using Content.Server.Explosion.Components;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Components;
-using Content.Server.Popups;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
@@ -27,6 +23,7 @@ public sealed class HotPotatoSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -35,6 +32,21 @@ public sealed class HotPotatoSystem : EntitySystem
         SubscribeLocalEvent<HotPotatoComponent, AfterInteractEvent>(OnInteractUsing);
         SubscribeLocalEvent<HotPotatoComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<HotPotatoComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
+        SubscribeLocalEvent<HotPotatoComponent, TriggerEvent>(OnTrigger);
+    }
+
+    private void OnTrigger(EntityUid uid, HotPotatoComponent component, TriggerEvent args)
+    {
+        if (component.IsDud)
+        {
+            RemComp<UnremoveableComponent>(component.Owner);
+            var newItem = Spawn(component.TurnInto, Transform((component.Owner)).MapPosition);
+
+            _audioSystem.PlayPvs(component.DudSound, newItem);
+            _popupSystem.PopupEntity(Loc.GetString("hot-potato-dud", ("item", component.Owner), ("newitem", newItem)), newItem, Filter.Pvs(newItem), PopupType.Medium);
+
+            QueueDel(component.Owner);
+        }
     }
 
     private void OnRemoveAttempt(EntityUid uid, HotPotatoComponent component, ContainerGettingRemovedAttemptEvent args)
