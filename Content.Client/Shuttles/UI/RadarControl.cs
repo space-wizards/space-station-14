@@ -211,6 +211,15 @@ public sealed class RadarControl : Control
                 continue;
             }
 
+            _entManager.TryGetComponent<IFFComponent>(grid.GridEntityId, out var iff);
+
+            // Hide it entirely.
+            if (iff != null &&
+                (iff.Flags & IFFFlags.Hide) != 0x0)
+            {
+                continue;
+            }
+
             shown.Add(grid.GridEntityId);
             var name = metaQuery.GetComponent(grid.GridEntityId).EntityName;
 
@@ -221,7 +230,6 @@ public sealed class RadarControl : Control
             var gridFixtures = fixturesQuery.GetComponent(grid.GridEntityId);
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
-            _entManager.TryGetComponent<IFFComponent>(grid.GridEntityId, out var iff);
             var color = iff?.Color ?? IFFComponent.IFFColor;
 
             if (ShowIFF &&

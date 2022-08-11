@@ -39,5 +39,11 @@ public enum IFFFlags : byte
     /// </summary>
     HideLabel,
 
+    /// <summary>
+    /// Should the grid hide entirely (AKA full stealth).
+    /// Will also hide the label if that is not set.
+    /// </summary>
+    Hide,
+
     // TODO: Need one that hides its outline, just replace it with a bunch of triangles or lines or something.
 }

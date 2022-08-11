@@ -22,6 +22,7 @@ public sealed class IFFConsoleBoundUserInterface : BoundUserInterface
         _window = new IFFConsoleWindow();
         _window.OnClose += Close;
         _window.ShowIFF += SendIFFMessage;
+        _window.ShowVessel += SendVesselMessage;
         _window.OpenCenteredLeft();
     }
 
@@ -37,15 +38,18 @@ public sealed class IFFConsoleBoundUserInterface : BoundUserInterface
 
     private void SendIFFMessage(bool obj)
     {
-        switch (obj)
+        SendMessage(new IFFShowIFFMessage()
         {
-            case true:
-                SendMessage(new IFFShowIFFMessage());
-                break;
-            case false:
-                SendMessage(new IFFHideIFFMessage());
-                break;
-        }
+            Show = obj,
+        });
+    }
+
+    private void SendVesselMessage(bool obj)
+    {
+        SendMessage(new IFFShowVesselMessage()
+        {
+            Show = obj,
+        });
     }
 
     protected override void Dispose(bool disposing)

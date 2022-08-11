@@ -11,23 +11,43 @@ public sealed partial class ShuttleSystem
     {
         SubscribeLocalEvent<IFFConsoleComponent, AnchorStateChangedEvent>(OnIFFConsoleAnchor);
         SubscribeLocalEvent<IFFConsoleComponent, IFFShowIFFMessage>(OnIFFShow);
-        SubscribeLocalEvent<IFFConsoleComponent, IFFHideIFFMessage>(OnIFFHide);
+        SubscribeLocalEvent<IFFConsoleComponent, IFFShowVesselMessage>(OnIFFShowVessel);
     }
 
     private void OnIFFShow(EntityUid uid, IFFConsoleComponent component, IFFShowIFFMessage args)
     {
-        if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null)
+        if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null ||
+            (component.AllowedFlags & IFFFlags.HideLabel) == 0x0)
+        {
             return;
+        }
 
-        RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+        if (!args.Show)
+        {
+            AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+        }
+        else
+        {
+            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+        }
     }
 
-    private void OnIFFHide(EntityUid uid, IFFConsoleComponent component, IFFHideIFFMessage args)
+    private void OnIFFShowVessel(EntityUid uid, IFFConsoleComponent component, IFFShowVesselMessage args)
     {
-        if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null)
+        if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null ||
+            (component.AllowedFlags & IFFFlags.Hide) == 0x0)
+        {
             return;
+        }
 
-        AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+        if (!args.Show)
+        {
+            AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
+        }
+        else
+        {
+            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
+        }
     }
 
     private void OnIFFConsoleAnchor(EntityUid uid, IFFConsoleComponent component, ref AnchorStateChangedEvent args)
