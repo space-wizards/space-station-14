@@ -10,6 +10,7 @@ namespace Content.Server.SurveillanceCamera;
 ///     environment. All surveillance camera monitors have speakers for this.
 /// </summary>
 [RegisterComponent]
+[ComponentReference(typeof(IListen))]
 public sealed class SurveillanceCameraMicrophoneComponent : Component, IListen
 {
     public bool Enabled { get; set; } = true;

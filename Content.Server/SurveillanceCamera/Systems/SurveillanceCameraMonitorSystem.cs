@@ -227,6 +227,11 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnSpeechSent(EntityUid uid, SurveillanceCameraMonitorComponent component,
         SurveillanceCameraSpeechSendEvent args)
     {
+        if (!component.SpeechEnabled)
+        {
+            return;
+        }
+
         var time = _gameTiming.CurTime;
         var cd = TimeSpan.FromSeconds(component.SpeechSoundCooldown);
 
@@ -242,6 +247,20 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                 '!' => speechProto.ExclaimSound,
                 _ => speechProto.SaySound
             };
+
+            var uppercase = 0;
+            for (var i = 0; i < args.OriginalMessage.Length; i++)
+            {
+                if (char.IsUpper(args.OriginalMessage[i]))
+                {
+                    uppercase++;
+                }
+            }
+
+            if (uppercase > args.OriginalMessage.Length / 2)
+            {
+                sound = speechProto.ExclaimSound;
+            }
 
             var scale = (float) _random.NextGaussian(1, speechProto.Variation);
             var param = speech.AudioParams.WithPitchScale(scale);
