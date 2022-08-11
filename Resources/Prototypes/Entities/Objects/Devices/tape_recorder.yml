@@ -12,3 +12,5 @@
       heldPrefix: taperecorder_idle
     - type: TapeRecorder
     - type: ChatListener
+    - type: Speech
+    - type: ItemCooldown

@@ -396,6 +396,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         var listenerList = new List<EntityUid>();
 
         ListenerEntityDistanceToList(source, listenerList);
+
         ClientDistanceToList(source, VoiceRange, sessions);
         _chatManager.ChatMessageToMany(channel, message, messageWrap, source, hideChat, sessions.Select(s => s.ConnectedClient).ToList());
 
@@ -514,6 +515,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             var transformEntity = xforms.GetComponent(chatlisteners.Owner);
 
+            if (source == chatlisteners.Owner || HasComp<ChatListenerComponent>(source))
+                continue;
             if (transformEntity.MapID != sourceMapId || !sourceCoords.InRange(EntityManager, transformEntity.Coordinates, chatlisteners.HearingRange))
                 continue;
 
