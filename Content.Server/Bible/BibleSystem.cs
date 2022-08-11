@@ -82,7 +82,7 @@ namespace Content.Server.Bible
                 summonableComp.AlreadySummoned = false;
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner,
                     Filter.Entities(summonableComp.Owner), PopupType.Medium);
-                SoundSystem.Play("/Audio/Effects/radpulse9.ogg", Filter.Pvs(summonableComp.Owner), summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
+                SoundSystem.Play("/Audio/Effects/radpulse9.ogg", Filter.Entities(summonableComp.Owner), summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
                 _remQueue.Enqueue(respawning.Owner);
