@@ -2,6 +2,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -22,6 +23,7 @@ namespace Content.Server.TapeRecorder
             base.Initialize();
             SubscribeLocalEvent<TapeRecorderComponent, ChatMessageHeardNearbyEvent>(OnChatMessageHeard);
             SubscribeLocalEvent<TapeRecorderComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<TapeRecorderComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         }
 
         public override void Update(float frameTime)
@@ -36,21 +38,35 @@ namespace Content.Server.TapeRecorder
                 tape.AccumulatedTime += frameTime;
                 if (tape.Playing)
                 {
-                    for (int i = 0; i < tape.MessageTimeStamps.Count; i++)
+                    if (tape.TimeStamp > tape.MessageTimeStamps[tape.PlaybackCurrentMessage])
                     {
-                        if (tape.TimeStamp > tape.MessageTimeStamps[i] && tape.PlaybackCurrentMessage == i)
-                        {
-                            _chat.TrySendInGameICMessage(tape.Owner, tape.MessageList[i], InGameICChatType.Speak, false);
-                            tape.PlaybackCurrentMessage++;
-                        }
-
-                        if (tape.PlaybackCurrentMessage == tape.MessageList.Count)
-                            StopPlaying(tape);
+                        _chat.TrySendInGameICMessage(tape.Owner, tape.MessageList[tape.PlaybackCurrentMessage], InGameICChatType.Speak, false);
+                        tape.PlaybackCurrentMessage++;
                     }
+
+                    if (tape.PlaybackCurrentMessage == tape.MessageList.Count)
+                        StopPlaying(tape);
+
                     tape.TimeStamp = tape.AccumulatedTime - tape.TapeStartTime;
                 }
             }
         }
+
+        private void OnGetAltVerbs(EntityUid uid, TapeRecorderComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            args.Verbs.Add(new AlternativeVerb()
+            {
+                Category = RecorderModes,
+                Text = "Play",
+                Priority = 5,
+
+                Act = () =>
+                {
+                    _popupSystem.PopupEntity("pee", args.User, Filter.Entities(args.User));
+                },
+            });
+        }
+
 
         public void StartRecording(TapeRecorderComponent component)
         {
@@ -118,5 +134,7 @@ namespace Content.Server.TapeRecorder
                 //_chat.TrySendInGameICMessage(component.Owner, (component.AccumulatedTime - component.RecordingStartTime).ToString(), InGameICChatType.Speak, args.HideChat);
             }
         }
+
+        public static VerbCategory RecorderModes = new("Tape Recorder Modes", "/Textures/Interface/VerbIcons/clock.svg.192dpi.png");
     }
 }
