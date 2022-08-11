@@ -1,13 +1,16 @@
 using Content.Server.Chat.Systems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory.Events;
 
 namespace Content.Server.VoiceMask;
 
-public sealed class VoiceMaskSystem : EntitySystem
+public sealed partial class VoiceMaskSystem : EntitySystem
 {
     public override void Initialize()
     {
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnSpeakerNameTransform);
+        SubscribeLocalEvent<VoiceMaskerComponent, GotEquippedEvent>(OnEquip);
+        SubscribeLocalEvent<VoiceMaskerComponent, GotUnequippedEvent>(OnUnequip);
     }
 
     private void OnSpeakerNameTransform(EntityUid uid, VoiceMaskComponent component, TransformSpeakerNameEvent args)
