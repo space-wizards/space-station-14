@@ -1,9 +1,23 @@
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 
 namespace Content.Server.SurveillanceCamera;
 
 public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
 {
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+
+    public bool CanListen(EntityUid source, EntityUid speaker, SurveillanceCameraMicrophoneComponent? microphone = null)
+    {
+        if (!Resolve(source, ref microphone))
+        {
+            return false;
+        }
+
+        return microphone.Enabled
+               && !microphone.BlacklistedComponents.IsValid(speaker)
+               && _interactionSystem.InRangeUnobstructed(source, speaker, range: microphone.ListenRange);
+    }
     public void RelayEntityMessage(EntityUid source, EntityUid speaker, string message, SurveillanceCameraComponent? camera = null)
     {
         if (!Resolve(source, ref camera))

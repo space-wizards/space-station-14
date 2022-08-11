@@ -23,16 +23,23 @@ public sealed class SurveillanceCameraMicrophoneComponent : Component, IListen
     public EntityWhitelist BlacklistedComponents { get; } = new();
 
     // TODO: Once IListen is removed, **REMOVE THIS**
-    public int ListenRange { get; }
+
+    private SurveillanceCameraMicrophoneSystem? _microphoneSystem;
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        _microphoneSystem = EntitySystem.Get<SurveillanceCameraMicrophoneSystem>();
+    }
+
+    public int ListenRange { get; } = 10;
     public bool CanListen(string message, EntityUid source, RadioChannelPrototype? channelPrototype)
     {
-        return Enabled
-               && !BlacklistedComponents.IsValid(source)
-               && EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
+        return _microphoneSystem?.CanListen(Owner, speaker, this);
     }
 
     public void Listen(string message, EntityUid speaker, RadioChannelPrototype? channel)
     {
-        EntitySystem.Get<SurveillanceCameraMicrophoneSystem>().RelayEntityMessage(Owner, speaker, message);
+        _microphoneSystem?.RelayEntityMessage(Owner, speaker, message);
     }
 }
