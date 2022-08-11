@@ -8,6 +8,7 @@
   components:
   - type: Hunger
   - type: Thirst
+  - type: Carriable
 
 - type: entity
   name: Urist McHands

@@ -1,14 +1,15 @@
 using Content.Server.DoAfter;
 using Content.Server.Contests;
-using Robust.Shared.Containers;
 using Content.Server.Popups;
-using Robust.Shared.Player;
+using Content.Server.Carrying;
 using Content.Shared.Storage;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Events;
 using Content.Shared.Interaction.Events;
+using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Resist;
 
@@ -20,6 +21,7 @@ public sealed class EscapeInventorySystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly ContestsSystem _contests = default!;
+    [Dependency] private readonly CarryingSystem _carryingSystem = default!;
 
     /// <summary>
     /// You can't escape the hands of an entity this many times more massive than you.
@@ -74,7 +76,7 @@ public sealed class EscapeInventorySystem : EntitySystem
             args.Cancel();
     }
 
-    private void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component, float multiplier = 1f)
+    public void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component, float multiplier = 1f)
     {
         component.CancelToken = new();
         var doAfterEventArgs = new DoAfterEventArgs(user, component.BaseResistTime * multiplier, component.CancelToken.Token, container)
@@ -95,6 +97,12 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnEscapeComplete(EntityUid uid, CanEscapeInventoryComponent component, EscapeDoAfterComplete ev)
     {
+        if (TryComp<BeingCarriedComponent>(uid, out var carried))
+        {
+            _carryingSystem.DropCarried(carried.Carrier, uid);
+            return;
+        }
+
         //Drops the mob on the tile below the container
         Transform(uid).AttachParentToContainerOrGrid(EntityManager);
         component.CancelToken = null;
