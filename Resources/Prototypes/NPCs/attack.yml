@@ -48,5 +48,4 @@
     removeKeyOnFinish: false
     targetKey: CombatTargetCoordinates
     pathfindKey: CombatTargetPathfind
-    # TODO: Need to pass this in
     rangeKey: MeleeRange
