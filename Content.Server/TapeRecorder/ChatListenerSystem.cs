@@ -5,14 +5,8 @@ using Robust.Shared.Player;
 
 namespace Content.Server.TapeRecorder
 {
-    /// <summary>
-    /// This handles...
-    /// </summary>
     public sealed class ChatListenerSystem : EntitySystem
     {
-        [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        /// <inheritdoc/>
         public override void Initialize()
         {
             base.Initialize();

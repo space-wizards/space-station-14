@@ -1,7 +1,7 @@
 - type: entity
   name: tape recorder
   parent: BaseItem
-  description: A handy handheld radio.
+  description: A device that can record to cassette tapes, and play them.
   id: TapeRecorder
   components:
     - type: Sprite
@@ -14,3 +14,12 @@
     - type: ChatListener
     - type: Speech
     - type: ItemCooldown
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.TapeRecorderVisuals.Status
+          states:
+            enum.TapeRecorderState.Play: taperecorder_playing
+            enum.TapeRecorderState.Record: taperecorder_recording
+            enum.TapeRecorderState.Rewind: taperecorder_recording
+            enum.TapeRecorderState.Idle: taperecorder_idle
