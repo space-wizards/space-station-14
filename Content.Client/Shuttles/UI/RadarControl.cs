@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Shuttles.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -221,7 +222,9 @@ public sealed class RadarControl : Control
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
 
-            if (ShowIFF)
+            if (ShowIFF &&
+                (!_entManager.TryGetComponent<IFFComponent>(grid.GridEntityId, out var iff) ||
+                (iff.Flags & IFFFlags.HideLabel) == 0x0))
             {
                 var gridBounds = grid.LocalAABB;
                 Label label;
