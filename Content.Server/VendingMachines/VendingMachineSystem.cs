@@ -111,7 +111,8 @@ namespace Content.Server.VendingMachines
             if (component.DispenseOnHitCoolingDown || component.DispenseOnHitChance == null || args.DamageDelta == null)
                 return;
 
-            if (args.DamageDelta.Total >= component.DispenseOnHitThreshold && _random.Prob(component.DispenseOnHitChance.Value))
+            if (args.DamageIncreased && args.DamageDelta.Total >= component.DispenseOnHitThreshold &&
+                _random.Prob(component.DispenseOnHitChance.Value))
             {
                 if (component.DispenseOnHitCooldown > 0f)
                     component.DispenseOnHitCoolingDown = true;
