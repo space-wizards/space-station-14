@@ -674,6 +674,7 @@
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceNetworkRequiresPower
+    - type: Speech
     - type: SurveillanceCameraMonitor
       speechEnabled: true
     - type: ActivatableUI
