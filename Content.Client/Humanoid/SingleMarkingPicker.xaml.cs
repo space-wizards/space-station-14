@@ -177,11 +177,13 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     {
         // if the total amount of points available is one,
         // we don't really need to have visible slots, right?
+        /* yes we do
         if (_totalPoints == 1)
         {
             SlotSelectorContainer.Visible = false;
             return;
         }
+        */
 
         SlotSelectorContainer.Visible = true;
         SlotSelector.Clear();
@@ -195,5 +197,8 @@ public sealed partial class SingleMarkingPicker : BoxContainer
                 SlotSelector.SelectId(i);
             }
         }
+
+        AddButton.Disabled = _pointsUsed == _totalPoints;
+        RemoveButton.Disabled = _pointsUsed == 0;
     }
 }
