@@ -9,7 +9,6 @@
       state: produce
     - type: Item
       sprite: Objects/Specific/Hydroponics/potato.rsi
-      state: produce
       size: 10
     - type: OnUseTimerTrigger
       delay: 15
@@ -60,7 +59,6 @@
       state: produce
     - type: Item
       sprite: Objects/Specific/Hydroponics/potato.rsi
-      state: produce
       size: 10
     - type: OnUseTimerTrigger
       delay: 15
