@@ -1,0 +1,13 @@
+sound_items_taperecorder_tape_flip.ogg is licensed under CC0. Taken from https://freesound.org/people/kyles/sounds/450525/
+
+sound_items_taperecorder_taperecorder_close.ogg is licensed under CC BY 3.0. Taken from https://freesound.org/people/Bertrof/sounds/351567/
+
+sound_items_taperecorder_taperecorder_hiss_mid.ogg is licensed under CC0. Taken from https://freesound.org/people/ovejota/sounds/541643/
+
+sound_items_taperecorder_taperecorder_hiss_start.ogg is licensed under CC0. Taken from https://freesound.org/people/ovejota/sounds/541643/
+
+sound_items_taperecorder_taperecorder_play.ogg is licensed under CC0. Taken from https://freesound.org/people/kyles/sounds/450525/
+
+sound_items_taperecorder_taperecorder_print.ogg is licensed under CC BY-NC 3.0. Taken from https://freesound.org/people/andrewweathers/sounds/25421/
+
+sound_items_taperecorder_taperecorder_stop.ogg is licensed under CC0. Taken from https://freesound.org/people/Pogotron/sounds/61075/
