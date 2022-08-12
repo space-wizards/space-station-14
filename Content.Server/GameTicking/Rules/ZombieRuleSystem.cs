@@ -13,7 +13,6 @@ using Content.Server.Traitor;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
-using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;

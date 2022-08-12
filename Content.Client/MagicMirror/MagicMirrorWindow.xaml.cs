@@ -38,7 +38,7 @@ public sealed partial class MagicMirrorWindow : DefaultWindow
 
     public void UpdateState(MagicMirrorUiState state)
     {
-        HairPicker.UpdateData(state.Hair, state.Species, state.HairSlot, state.HairSlotsLeft, state.HairSlotTotal);
-        FacialHairPicker.UpdateData(state.FacialHair, state.Species, state.FacialHairSlot, state.FacialHairSlotsLeft, state.FacialHairSlotTotal);
+        HairPicker.UpdateData(state.Hair, state.Species, state.HairSlot, state.HairSlotsUsed, state.HairSlotTotal);
+        FacialHairPicker.UpdateData(state.FacialHair, state.Species, state.FacialHairSlot, state.FacialHairSlotsUsed, state.FacialHairSlotTotal);
     }
 }

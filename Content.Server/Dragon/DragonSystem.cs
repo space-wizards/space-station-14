@@ -2,7 +2,6 @@ using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;

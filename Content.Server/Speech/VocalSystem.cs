@@ -3,8 +3,6 @@ using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.CharacterAppearance;
-using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
