@@ -17,7 +17,7 @@ public sealed class GasPowerProviderComponent : Component
     public GasMixture Buffer { get; } = new(100.0f);
 
     [DataField("plasmaMolesConsumedSec")]
-    public float PlasmaMolesConsumedSec = 1.55975875833f / 2;
+    public float PlasmaMolesConsumedSec = 1.55975875833f / 4;
     [DataField("pressureConsumedSec")]
     public float PressureConsumedSec = 0.25f;
     [ViewVariables]
