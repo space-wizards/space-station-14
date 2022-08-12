@@ -23,6 +23,7 @@ public sealed class LightningSystem : SharedLightningSystem
         base.Initialize();
 
         SubscribeLocalEvent<LightningComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<LightningComponent, ComponentShutdown>(OnShutdown);
     }
 
     public override void Update(float frameTime)
@@ -30,11 +31,19 @@ public sealed class LightningSystem : SharedLightningSystem
         base.Update(frameTime);
     }
 
+    private void OnShutdown(EntityUid uid, LightningComponent component, ComponentShutdown args)
+    {
+        //throw new NotImplementedException();
+    }
+
     private void OnCollide(EntityUid uid, LightningComponent component, StartCollideEvent args)
     {
         if (component.MaxArc > 0 && component.Counter < component.MaxArc)
         {
-            Arc(component, component.Owner, args.OtherFixture.Body.Owner);
+            if (!TryComp<BeamComponent>(uid, out var lightningBeam) || lightningBeam.VirtualBeamController == null)
+                return;
+
+            Arc(component, args.OtherFixture.Body.Owner, lightningBeam.VirtualBeamController.Value);
 
             //When the lightning is made with TryCreateBeam, spawns random sprites for each beam to make it look nicer.
             var spriteStateNumber = _random.Next(1, 12);
@@ -43,34 +52,40 @@ public sealed class LightningSystem : SharedLightningSystem
             component.ArcTargets.Add(args.OtherFixture.Body.Owner);
             component.ArcTargets.Add(component.ArcTarget);
 
-            _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase", spriteState);
+            _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase", spriteState, controller: lightningBeam.VirtualBeamController.Value);
         }
     }
 
-    public void Arc(LightningComponent component, EntityUid user, EntityUid target)
+    public void Arc(LightningComponent component, EntityUid target, EntityUid contollerEntity)
     {
+        if (!TryComp<BeamComponent>(contollerEntity, out var controller))
+            return;
+
         var targetXForm = Transform(target);
         var directions = Enum.GetValues<Direction>().Length;
 
         var lightningQuery = GetEntityQuery<LightningComponent>();
         var beamQuery = GetEntityQuery<BeamComponent>();
-        var machineQuery = GetEntityQuery<MachineComponent>();
 
         for (int i = 0; i < directions; i++)
         {
-            var direction = (Direction)i;
+            var direction = (Direction) i;
             var dirRad = direction.ToAngle() + targetXForm.GetWorldPositionRotation().WorldRotation;
-            var ray = new CollisionRay(targetXForm.GetWorldPositionRotation().WorldPosition, dirRad.ToVec(), component.CollisionMask);
-            var rayCastResults = _physics.IntersectRay(targetXForm.MapID, ray, component.MaxLength, target, false).ToList();
+            var ray = new CollisionRay(targetXForm.GetWorldPositionRotation().WorldPosition, dirRad.ToVec(),
+                component.CollisionMask);
+            var rayCastResults = _physics.IntersectRay(targetXForm.MapID, ray, component.MaxLength, target, false)
+                .ToList();
 
             RayCastResults? closestResult = null;
 
             foreach (var result in rayCastResults)
             {
-                if (lightningQuery.HasComponent(result.HitEntity) || beamQuery.HasComponent(result.HitEntity) || component.ArcTargets.Contains(result.HitEntity))
+                if (lightningQuery.HasComponent(result.HitEntity) || beamQuery.HasComponent(result.HitEntity) ||
+                    component.ArcTargets.Contains(result.HitEntity) || controller.HitTargets.Contains(result.HitEntity))
                 {
                     continue;
                 }
+
                 closestResult = result;
             }
 

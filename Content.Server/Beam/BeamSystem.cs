@@ -1,4 +1,5 @@
-﻿using Content.Shared.Beam;
+﻿using Content.Server.Beam.Components;
+using Content.Shared.Beam;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -23,24 +24,26 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="prototype">The prototype used to make the beam</param>
     /// <param name="userAngle">Angle of the user firing the beam</param>
     /// <param name="calculatedDistance">The calculated distance from the user to the target.</param>
-    /// <param name="beamOffset">The offset of the beam from the user.</param>
-    /// <param name="offsetCorrection">Calculated offset correction so the <see cref="EdgeShape"/> can be properly dynamically created</param>
+    /// <param name="beamStartPos">Where the beam will spawn in</param>
+    /// <param name="distanceCorrection">Calculated correction so the <see cref="EdgeShape"/> can be properly dynamically created</param>
+    /// <param name="controller"></param>
     /// <param name="bodyState">Optional sprite state for the <see cref="prototype"/> if it needs a dynamic one</param>
     /// <param name="shader">Optional shader for the <see cref="prototype"/> and <see cref="bodyState"/> if it needs something other than default</param>
-    private void CreateBeam(
-        string prototype,
+    private void CreateBeam(string prototype,
         Angle userAngle,
         Vector2 calculatedDistance,
-        EntityCoordinates beamOffset,
-        Vector2 offsetCorrection,
+        EntityCoordinates beamStartPos,
+        Vector2 distanceCorrection,
+        EntityUid? controller,
         string? bodyState = null,
         string shader = "unshaded")
     {
-        var offset = beamOffset;
+        var offset = beamStartPos;
         var ent = Spawn(prototype, offset);
-        var shape = new EdgeShape(offsetCorrection, new Vector2(0,0));
-        var distanceLength = offsetCorrection.Length;
-        if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics))
+        var shape = new EdgeShape(distanceCorrection, new Vector2(0,0));
+        var distanceLength = distanceCorrection.Length;
+
+        if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) && TryComp<BeamComponent>(ent, out var beam))
         {
             sprites.Rotation = userAngle;
             if (bodyState != null)
@@ -58,6 +61,15 @@ public sealed class BeamSystem : SharedBeamSystem
             };
 
             _fixture.TryCreateFixture(physics, fixture);
+
+            if (controller != null)
+                beam.VirtualBeamController = controller;
+
+            else
+            {
+                var controllerEnt = Spawn("VirtualBeamEntityController", offset);
+                beam.VirtualBeamController = controllerEnt;
+            }
 
             Dirty(ent);
 
@@ -92,22 +104,32 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="bodyPrototype">The prototype spawned when this beam is created</param>
     /// <param name="bodyState">Optional sprite state for the <see cref="bodyPrototype"/> if a default one is not given</param>
     /// <param name="shader">Optional shader for the <see cref="bodyPrototype"/> if a default one is not given</param>
-    public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype, string? bodyState = null, string shader = "unshaded")
+    /// <param name="controller"></param>
+    public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype, string? bodyState = null,
+        string shader = "unshaded", EntityUid? controller = null)
     {
         var userXForm = Transform(user);
         var targetXForm = Transform(target);
 
+        //The distance between the target and the user.
         var calculatedDistance = targetXForm.LocalPosition - userXForm.LocalPosition;
         var userAngle = calculatedDistance.ToWorldAngle();
 
-        var offset = userXForm.Coordinates.Offset(calculatedDistance.Normalized);
+        //
+        var beamStartPos = userXForm.Coordinates.Offset(calculatedDistance.Normalized);
 
         //Don't divide by zero
         if (calculatedDistance.Length == 0)
             return;
 
-        var offsetCorrection = (calculatedDistance / calculatedDistance.Length) * (calculatedDistance.Length - 1);
+        if (controller != null && TryComp<BeamComponent>(controller, out var controllerBeamComp))
+        {
+            controllerBeamComp.HitTargets.Add(user);
+            controllerBeamComp.HitTargets.Add(target);
+        }
 
-        CreateBeam(bodyPrototype, userAngle, calculatedDistance, offset, offsetCorrection, bodyState, shader);
+        var distanceCorrection = calculatedDistance - calculatedDistance.Normalized;
+
+        CreateBeam(bodyPrototype, userAngle, calculatedDistance, beamStartPos, distanceCorrection, controller, bodyState, shader);
     }
 }
