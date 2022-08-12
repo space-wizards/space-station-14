@@ -123,6 +123,7 @@ entities:
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
+    enabled: True
     type: Gravity
   - chunkCollection:
       0,-1:
@@ -411,7 +412,7 @@ entities:
       1,-9: 0
       1,-8: 0
       1,-7: 3
-      1,-6: 4
+      1,-6: 3
       1,-5: 4
       1,-4: 0
       1,-3: 0
@@ -1493,13 +1494,14 @@ entities:
     parent: 5
     type: Transform
 - uid: 130
-  type: GasValve
+  type: GasPressurePump
   components:
   - pos: 2.5,-12.5
     parent: 5
     type: Transform
-  - open: False
-    type: GasValve
+  - targetPressure: 20
+    enabled: False
+    type: GasPressurePump
 - uid: 131
   type: GasPipeStraight
   components:
@@ -1727,13 +1729,11 @@ entities:
     parent: 5
     type: Transform
 - uid: 165
-  type: GasValve
+  type: GasPipeStraight
   components:
-  - pos: 2.5,1.5
+  - pos: 2.5,2.5
     parent: 5
     type: Transform
-  - open: False
-    type: GasValve
 - uid: 166
   type: GasPipeTJunction
   components:
@@ -2822,6 +2822,8 @@ entities:
   - pos: -4.5280375,-12.439297
     parent: 5
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 322
   type: SheetUranium1
   components:
@@ -2843,7 +2845,7 @@ entities:
     parent: 5
     type: Transform
 - uid: 325
-  type: AtmosFixPlasmaMarker
+  type: AtmosFixBlockerMarker
   components:
   - pos: 1.5,-5.5
     parent: 5
@@ -5178,12 +5180,16 @@ entities:
 
       DO NOT LEAVE THEM ON WHEN NOT MOVING, THEY LEAK!
     type: Paper
+  - canCollide: False
+    type: Physics
 - uid: 608
   type: Pen
   components:
   - pos: -12.909789,-7.3446293
     parent: 5
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 609
   type: LockerAtmosphericsFilled
   components:
@@ -5271,4 +5277,80 @@ entities:
   - pos: -4.5,1.5
     parent: 5
     type: Transform
+- uid: 622
+  type: GravityGeneratorMini
+  components:
+  - pos: -1.5,1.5
+    parent: 5
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - powerLoad: 500
+    type: ApcPowerReceiver
+  - radius: 2.5
+    type: PointLight
+- uid: 623
+  type: CableMV
+  components:
+  - pos: -9.5,-11.5
+    parent: 5
+    type: Transform
+- uid: 624
+  type: GasPressurePump
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,1.5
+    parent: 5
+    type: Transform
+  - targetPressure: 20
+    enabled: False
+    type: GasPressurePump
+- uid: 625
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    rot: 3.141592653589793 rad
+    pos: 8.5,-11.5
+    parent: 5
+    type: Transform
+- uid: 626
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    rot: 3.141592653589793 rad
+    pos: 8.5,-10.5
+    parent: 5
+    type: Transform
+- uid: 627
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    rot: 3.141592653589793 rad
+    pos: 8.5,-9.5
+    parent: 5
+    type: Transform
+- uid: 628
+  type: SheetPlastic
+  components:
+  - pos: -3.716732,-12.448862
+    parent: 5
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 629
+  type: SheetSteel
+  components:
+  - pos: -3.310482,-12.511362
+    parent: 5
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 630
+  type: SheetSteel
+  components:
+  - pos: -2.904232,-12.495737
+    parent: 5
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
