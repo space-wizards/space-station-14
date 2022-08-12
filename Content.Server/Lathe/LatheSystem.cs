@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Server.Power.Components;
 using Robust.Server.Player;
 
 namespace Content.Server.Lathe
@@ -36,6 +37,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
+            SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
@@ -162,13 +164,26 @@ namespace Content.Server.Lathe
             // We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
+            EntityManager.QueueDeleteEntity(args.Used);
+
             EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = lathe.InsertionTime;
+
+            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
+                ("item", args.Used)), uid, Filter.Entities(args.User));
 
             if (matProto != null)
             {
                 UpdateInsertingAppearance(uid, true, matProto.Color);
             }
             UpdateInsertingAppearance(uid, true);
+        }
+
+
+        private void OnPowerChanged(EntityUid uid, LatheComponent component, PowerChangedEvent args)
+        {
+            //if the power state changes, try to produce.
+            //aka, if you went from unpowered --> powered, resume lathe queue.
+            TryStartProducing(uid, component: component);
         }
 
         /// <summary>

@@ -496,7 +496,7 @@
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
-      board: AutolatheMachineCircuitboard
+      board: OreProcessorMachineCircuitboard
     - type: LatheDatabase
       static: true
       recipes:
