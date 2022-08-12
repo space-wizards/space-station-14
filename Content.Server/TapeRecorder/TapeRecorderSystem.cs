@@ -1,6 +1,8 @@
+using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Chat;
+using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -27,6 +29,7 @@ namespace Content.Server.TapeRecorder
             SubscribeLocalEvent<TapeRecorderComponent, ChatMessageHeardNearbyEvent>(OnChatMessageHeard);
             SubscribeLocalEvent<TapeRecorderComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<TapeRecorderComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+            SubscribeLocalEvent<TapeRecorderComponent, ExaminedEvent>(OnExamined);
         }
 
         public override void Update(float frameTime)
@@ -54,7 +57,21 @@ namespace Content.Server.TapeRecorder
                         tape.PlaybackCurrentMessage++;
                     }
 
-                    tape.TimeStamp = tape.AccumulatedTime - tape.TapeStartTime;
+                    tape.TimeStamp += frameTime;
+                }
+
+                if (tape.Enabled && tape.CurrentMode == TapeRecorderState.Rewind)
+                {
+                    tape.TimeStamp -= frameTime;
+
+                    if (tape.TimeStamp <= 0)
+                    {
+                        tape.TimeStamp = 0;
+                        tape.PlaybackCurrentMessage = 0;
+                        StopTape(tape);
+                        return;
+                    }
+
                 }
 
             }
@@ -69,23 +86,31 @@ namespace Content.Server.TapeRecorder
 
         public void StartPlaying(TapeRecorderComponent component)
         {
-            component.TimeStamp = 0;
-            component.PlaybackCurrentMessage = 0;
-            component.TapeStartTime = component.AccumulatedTime;
+            int test = 0;
+
+            for (int i = 0; i < component.RecordedMessages.Count; i++)
+            {
+                if (component.RecordedMessages[i].MessageTimeStamp < component.TimeStamp)
+                    test = i + 1;
+            } //finding out which message we're on
+
+            _popupSystem.PopupEntity(test.ToString(), component.Owner, Filter.Pvs(component.Owner));
+
+            //component.TimeStamp = 0;
+            component.PlaybackCurrentMessage = test;
+            //component.TapeStartTime = component.AccumulatedTime;
             _popupSystem.PopupEntity("The tape recorder starts playback", component.Owner, Filter.Pvs(component.Owner));
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
 
         public void StopTape(TapeRecorderComponent component)
         {
-            if (component.Enabled)
-            {
-                _audioSystem.PlayPvs(component.StopSound, component.Owner);
-                _popupSystem.PopupEntity("The tape recorder has stopped!", component.Owner,
-                    Filter.Pvs(component.Owner));
-                component.Enabled = false;
-                UpdateAppearance(component);
-            }
+            if (!component.Enabled)
+                return;
+
+            _audioSystem.PlayPvs(component.StopSound, component.Owner);
+            component.Enabled = false;
+            UpdateAppearance(component);
         }
 
         private void UpdateAppearance(TapeRecorderComponent component)
@@ -150,6 +175,14 @@ namespace Content.Server.TapeRecorder
                 //_chat.TrySendInGameICMessage(component.Owner, (component.AccumulatedTime - component.RecordingStartTime).ToString(), InGameICChatType.Speak, args.HideChat);
             }
 
+        }
+
+        private void OnExamined(EntityUid uid, TapeRecorderComponent component, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange)
+                return;
+
+            args.PushMarkup(TimeSpan.FromSeconds(component.TimeStamp).ToString("mm\\:ss") + " / " + (TimeSpan.FromSeconds(component.TapeMaxTime)));
         }
 
         private void OnGetAltVerbs(EntityUid uid, TapeRecorderComponent component, GetVerbsEvent<AlternativeVerb> args)
