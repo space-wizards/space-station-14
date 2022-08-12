@@ -4,7 +4,7 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
+  0: Space
   1: FloorArcadeBlue
   2: FloorArcadeRed
   3: FloorAsteroidIronsand1
