@@ -1,5 +1,7 @@
 ### Locale for wielding items; i.e. two-handing them
 
+wieldable-verb-text-wield = Wield
+wieldable-verb-text-unwield = Unwield
 wieldable-component-successful-wield = Вы берёте { $item } в две руки.
 wieldable-component-failed-wield = Вы берёте { $item } в одну руку.
 wieldable-component-no-hands = Вам не хватает рук!

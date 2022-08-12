@@ -1,6 +1,9 @@
+ent-BaseBarSign = bar sign
+    .desc = { ent-BaseStructure.desc }
+    .suffix = { "" }
 ent-BarSign = bar sign
     .suffix = Random
-    .desc = { ent-BaseStructure.desc }
+    .desc = { ent-BaseBarSign.desc }
 ent-LargeBarSign = large bar sign
     .desc = { "" }
     .suffix = { "" }
