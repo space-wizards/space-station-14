@@ -26,7 +26,7 @@ public sealed class NPCBlackboard
     /// <summary>
     /// The specific blackboard for this NPC.
     /// </summary>
-    private Dictionary<string, object> _blackboard = new();
+    private readonly Dictionary<string, object> _blackboard = new();
 
     /// <summary>
     /// Should we allow setting values on the blackboard. This is true when we are planning.
@@ -168,6 +168,9 @@ public sealed class NPCBlackboard
         DebugTools.Assert(!_blackboard.ContainsKey(key) || _blackboard[key] is T);
         return _blackboard.Remove(key);
     }
+
+    // I Ummd and Ahhd about using strings vs enums and decided on tags because
+    // if a fork wants to do their own thing they don't need to touch the enum.
 
     /*
     * Constants to make development easier
