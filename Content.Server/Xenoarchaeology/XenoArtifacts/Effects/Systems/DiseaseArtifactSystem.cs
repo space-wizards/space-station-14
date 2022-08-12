@@ -24,9 +24,12 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         [ViewVariables(VVAccess.ReadWrite)]
         public readonly IReadOnlyList<string> ArtifactDiseases = new[]
         {
-            "VanAusdallsRobovirus",
             "MemeticAmirmir",
+            "SpaceCold",
+            "SpaceFlu",
+            "BirdFlew",
             "TongueTwister",
+            "ORDisease1",
             "AMIV"
         };
 

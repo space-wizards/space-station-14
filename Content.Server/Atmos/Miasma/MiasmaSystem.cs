@@ -38,13 +38,9 @@ namespace Content.Server.Atmos.Miasma
         public readonly IReadOnlyList<string> MiasmaDiseasePool = new[]
         {
             "VentCough",
-            "AMIV",
             "SpaceCold",
             "SpaceFlu",
             "BirdFlew",
-            "VanAusdallsRobovirus",
-            "BleedersBite",
-            "Plague",
             "TongueTwister",
             "MemeticAmirmir"
         };
