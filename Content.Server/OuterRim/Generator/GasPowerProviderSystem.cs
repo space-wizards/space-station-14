@@ -51,7 +51,6 @@ public sealed class GasPowerProviderSystem : EntitySystem
             if (pipe.Air.Moles[(int) Gas.Plasma] > component.PlasmaMolesConsumedSec * timeDelta)
             {
                 pipe.Air.AdjustMoles(Gas.Plasma, -component.PlasmaMolesConsumedSec * timeDelta);
-                Logger.Debug($"{-component.PlasmaMolesConsumedSec * timeDelta}");
                 SetPowered(uid, component, true);
             }
             else
