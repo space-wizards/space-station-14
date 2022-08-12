@@ -45,16 +45,16 @@ namespace Content.Server.TapeRecorder
                 if (tape.Enabled && tape.CurrentMode == TapeRecorderState.Play)
                 {
 
-                    if (tape.PlaybackCurrentMessage >= tape.RecordedMessages.Count)
+                    if (tape.CurrentMessageIndex >= tape.RecordedMessages.Count)
                     {
                         StopTape(tape);
                         return;
                     }
 
-                    if (tape.TimeStamp > tape.RecordedMessages[tape.PlaybackCurrentMessage].MessageTimeStamp)
+                    if (tape.TimeStamp > tape.RecordedMessages[tape.CurrentMessageIndex].MessageTimeStamp)
                     {
-                        _chat.TrySendInGameICMessage(tape.Owner, tape.RecordedMessages[tape.PlaybackCurrentMessage].Message, InGameICChatType.Speak, false);
-                        tape.PlaybackCurrentMessage++;
+                        _chat.TrySendInGameICMessage(tape.Owner, tape.RecordedMessages[tape.CurrentMessageIndex].Message, InGameICChatType.Speak, false);
+                        tape.CurrentMessageIndex++;
                     }
 
                     tape.TimeStamp += frameTime;
@@ -62,12 +62,12 @@ namespace Content.Server.TapeRecorder
 
                 if (tape.Enabled && tape.CurrentMode == TapeRecorderState.Rewind)
                 {
-                    tape.TimeStamp -= frameTime;
+                    tape.TimeStamp -= frameTime * 3;
 
                     if (tape.TimeStamp <= 0)
                     {
                         tape.TimeStamp = 0;
-                        tape.PlaybackCurrentMessage = 0;
+                        tape.CurrentMessageIndex = 0;
                         StopTape(tape);
                         return;
                     }
@@ -80,37 +80,54 @@ namespace Content.Server.TapeRecorder
         public void StartRecording(TapeRecorderComponent component)
         {
             component.RecordingStartTime = component.AccumulatedTime - component.TimeStamp;
+            component.RecordingStartTimestamp = component.TimeStamp;
+
             _popupSystem.PopupEntity("The tape recorder starts recording", component.Owner, Filter.Pvs(component.Owner));
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
 
         public void StartPlaying(TapeRecorderComponent component)
         {
-            int test = 0;
-
-            for (int i = 0; i < component.RecordedMessages.Count; i++)
-            {
-                if (component.RecordedMessages[i].MessageTimeStamp < component.TimeStamp)
-                    test = i + 1;
-            } //finding out which message we're on
-
-            _popupSystem.PopupEntity(test.ToString(), component.Owner, Filter.Pvs(component.Owner));
-
-            //component.TimeStamp = 0;
-            component.PlaybackCurrentMessage = test;
-            //component.TapeStartTime = component.AccumulatedTime;
+            //component.CurrentMessageIndex = GetTapeIndex(component);
+            component.CurrentMessageIndex = GetTapeIndex(component);
             _popupSystem.PopupEntity("The tape recorder starts playback", component.Owner, Filter.Pvs(component.Owner));
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
 
+        public int GetTapeIndex(TapeRecorderComponent component) // returns the index of the message we are on, based on where the tape is
+        {
+            if (component.RecordedMessages.Count == 0)
+                return 0;
+
+            //Find the index with the closest timestamp to component.TimeStamp
+            var closest = component.RecordedMessages.Select((x, i) => new { Index = i, TimeStamp = x.MessageTimeStamp }).OrderBy(x => Math.Abs(x.TimeStamp - component.TimeStamp)).First();
+            return closest.Index;
+        }
+
         public void StopTape(TapeRecorderComponent component)
         {
+            if (component.CurrentMode == TapeRecorderState.Record && component.Enabled)
+            {
+                component.TimeStamp = (component.AccumulatedTime - component.RecordingStartTime);
+
+                //Clear the recorded messages between the start and end of our recording buffer
+                component.RecordedMessages.RemoveAll(x => x.MessageTimeStamp > component.RecordingStartTimestamp && x.MessageTimeStamp < component.TimeStamp);
+                component.RecordedMessages.AddRange(component.RecordedMessageBuffer);
+
+                //Clear the buffer
+                component.RecordedMessageBuffer.Clear();
+
+                //sort the list by timestamp
+                component.RecordedMessages.Sort((x, y) => x.MessageTimeStamp.CompareTo(y.MessageTimeStamp));
+            }
+
             if (!component.Enabled)
                 return;
 
             _audioSystem.PlayPvs(component.StopSound, component.Owner);
             component.Enabled = false;
             UpdateAppearance(component);
+
         }
 
         private void UpdateAppearance(TapeRecorderComponent component)
@@ -155,6 +172,7 @@ namespace Content.Server.TapeRecorder
                     StartRecording(component);
                     break;
                 case TapeRecorderState.Rewind:
+                    _audioSystem.PlayPvs(component.StartSound, component.Owner);
                     break;
                 case TapeRecorderState.Idle:
                     break;
@@ -169,12 +187,11 @@ namespace Content.Server.TapeRecorder
 
             component.TimeStamp = (component.AccumulatedTime - component.RecordingStartTime);
 
+            //Record messages to recordedmessagesbuffer
             if (component.CurrentMode == TapeRecorderState.Record && component.Enabled)
             {
-                component.RecordedMessages.Add((component.TimeStamp, TimeSpan.FromSeconds(component.TimeStamp).ToString("mm\\:ss") + " : " + Name(args.Source) + ": " + args.Message));
-                //_chat.TrySendInGameICMessage(component.Owner, (component.AccumulatedTime - component.RecordingStartTime).ToString(), InGameICChatType.Speak, args.HideChat);
+                component.RecordedMessageBuffer.Add((component.TimeStamp, TimeSpan.FromSeconds(component.TimeStamp).ToString("mm\\:ss") + " : " + Name(args.Source) + ": " + args.Message));
             }
-
         }
 
         private void OnExamined(EntityUid uid, TapeRecorderComponent component, ExaminedEvent args)
@@ -182,9 +199,11 @@ namespace Content.Server.TapeRecorder
             if (!args.IsInDetailsRange)
                 return;
 
-            args.PushMarkup(TimeSpan.FromSeconds(component.TimeStamp).ToString("mm\\:ss") + " / " + (TimeSpan.FromSeconds(component.TapeMaxTime)));
+            args.PushMarkup(TimeSpan.FromSeconds(component.TimeStamp).ToString("mm\\:ss") + " / " + (TimeSpan.FromSeconds(component.TapeMaxTime) + " on message " + component.CurrentMessageIndex));
         }
 
+
+        //the verb sewer
         private void OnGetAltVerbs(EntityUid uid, TapeRecorderComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
 

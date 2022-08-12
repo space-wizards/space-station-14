@@ -19,9 +19,18 @@ namespace Content.Server.TapeRecorder
         //A list of the timestamps for each recorded message
         public List<float> MessageTimeStamps = new();
         */
-
+        [ViewVariables(VVAccess.ReadOnly)]
         public List<(float MessageTimeStamp, string Message)> RecordedMessages = new ();
 
+        [ViewVariables(VVAccess.ReadOnly)]
+        public List<(float MessageTimeStamp, string Message)> RecordedMessageBuffer = new ();
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public List<int> overlappingMessages = new();
+
+
+        //During playback, the message we are currently on
+        public int CurrentMessageIndex = 0;
 
         public bool Recording = false;
         public bool Playing = false;
@@ -32,12 +41,14 @@ namespace Content.Server.TapeRecorder
 
 
         //Our current position in the "tape"
+        [ViewVariables(VVAccess.ReadOnly)]
         public float TimeStamp;
 
-        //During playback, the message we are currently on
-        public int PlaybackCurrentMessage;
-
+        [ViewVariables(VVAccess.ReadOnly)]
         public float RecordingStartTime;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float RecordingStartTimestamp;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("tapeMaxTime")]
