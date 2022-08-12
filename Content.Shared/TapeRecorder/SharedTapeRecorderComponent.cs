@@ -13,7 +13,8 @@ namespace Content.Shared.TapeRecorder
         Play,
         Record,
         Rewind,
-        Idle
+        Idle,
+        Empty
     }
 
 }

@@ -10,23 +10,13 @@ namespace Content.Server.TapeRecorder
     public class TapeRecorderComponent : Component
     {
 
+        public CassetteTapeComponent? InsertedTape = null;
+
         //Starts in record mode since it'll probably be an empty tape
         public TapeRecorderState CurrentMode { get; set; } = TapeRecorderState.Record;
 
         public bool Enabled = false;
 
-        /// <summary>
-        /// A list of all recorded messages with timestamps
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public List<(float MessageTimeStamp, string Message)> RecordedMessages = new ();
-
-        /// <summary>
-        ///Our current position in the "tape"
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float TimeStamp;
-        
         /// <summary>
         ///AccumulatedTime recording was started on
         /// </summary>
@@ -36,13 +26,6 @@ namespace Content.Server.TapeRecorder
         ///The timestamp of the tape that we started recording on
         /// </summary>
         public float RecordingStartTimestamp;
-
-        /// <summary>
-        /// The maximum length of the tape
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("tapeMaxTime")]
-        public float TapeMaxTime = 20f;
 
         /// <summary>
         /// Sound that plays when the tape recorder stops doing something

@@ -1,7 +1,7 @@
 - type: entity
   name: tape recorder
   parent: BaseItem
-  description: A device that can record to cassette tapes, and play them.
+  description: Anything said into this device can and will be used against you in a court of space law.
   id: TapeRecorder
   components:
     - type: Sprite
@@ -14,6 +14,14 @@
     - type: ChatListener
     - type: Speech
     - type: ItemCooldown
+    - type: ItemSlots
+      slots:
+        cassette_tape:
+          priority: 4
+          whitelist:
+            name: Cassette
+            tags:
+              - CassetteTape
     - type: Appearance
       visuals:
         - type: GenericEnumVisualizer
@@ -23,3 +31,22 @@
             enum.TapeRecorderState.Record: taperecorder_recording
             enum.TapeRecorderState.Rewind: taperecorder_recording
             enum.TapeRecorderState.Idle: taperecorder_idle
+            enum.TapeRecorderState.Empty: taperecorder_empty
+
+- type: entity
+  name: cassette tape
+  parent: BaseItem
+  description: A magnetic tape that can hold up to three minutes of content on either side.
+  id: CassetteTApe
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      state: tape_blue
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_blue
+    - type: CassetteTape
+      tapeMaxTime: 180
+    - type: Tag
+      tags:
+        - CassetteTape
