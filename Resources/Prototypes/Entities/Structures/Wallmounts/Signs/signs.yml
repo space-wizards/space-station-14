@@ -44,6 +44,15 @@
   components:
   - type: Sprite
     state: direction_chapel
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalChemistry
+  name: chapel sign
+  description: A direction sign, pointing out which way the chemistry lab is.
+  components:
+  - type: Sprite
+    state: direction_chemistry    
     
 - type: entity
   parent: BaseSign
@@ -92,12 +101,30 @@
 
 - type: entity
   parent: BaseSign
+  id: SignDirectionalFood
+  name: food sign
+  description: A direction sign, pointing out which way the kitchen is.
+  components:
+  - type: Sprite
+    state: direction_food
+
+- type: entity
+  parent: BaseSign
   id: SignDirectionalGravity
   name: gravity sign
   description: A direction sign, pointing out which way the gravity generator is.
   components:
   - type: Sprite
     state: direction_gravity    
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalHop
+  name: hop sign
+  description: A direction sign, pointing out which way Head of Personnel's office is.
+  components:
+  - type: Sprite
+    state: direction_hop
 
 - type: entity
   parent: BaseSign
@@ -126,6 +153,24 @@
   - type: Sprite
     state: direction_janitor
     
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalLibrary
+  name: janitor sign
+  description: A direction sign, pointing out which way the library is.
+  components:
+  - type: Sprite
+    state: direction_library
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalJanitor
+  name: janitor sign
+  description: A direction sign, pointing out which way the janitor's closet is.
+  components:
+  - type: Sprite
+    state: direction_janitor
+
 - type: entity
   parent: BaseSign
   id: SignDirectionalLibrary

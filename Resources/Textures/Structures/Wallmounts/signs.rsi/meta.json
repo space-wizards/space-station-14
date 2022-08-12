@@ -362,6 +362,24 @@
             ]
         },
         {
+            "name": "direction_chemistry",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "direction_eng",
             "directions": 4,
             "delays": [
