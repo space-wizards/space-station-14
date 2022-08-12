@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Tag
 {
     [RegisterComponent, Access(typeof(TagSystem))]
-    public sealed class TagComponent : Component, ISerializationHooks
+    public sealed class TagComponent : Component
     {
         [ViewVariables]
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]

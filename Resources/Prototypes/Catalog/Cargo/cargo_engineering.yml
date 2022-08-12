@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "LV cables crate"
   id: EngineeringCableLv
-  description: "3 coils of LV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coillv-30
@@ -11,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: "MV cables crate"
   id: EngineeringCableMv
-  description: "3 coils of MV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coilmv-30
@@ -23,9 +19,7 @@
   group: market
 
 - type: cargoProduct
-  name: "HV cables crate"
   id: EngineeringCableHv
-  description: "3 coils of HV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coilhv-30
@@ -35,9 +29,7 @@
   group: market
 
 - type: cargoProduct
-  name: "bulk cables crate"
   id: EngineeringCableBulk
-  description: "2 coils each for every cable type."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coilall-30
@@ -47,9 +39,7 @@
   group: market
 
 - type: cargoProduct
-  name: "electrical supplies crate"
   id: EngineeringElectricalSupplies
-  description: "N.T. is not responsible for any workplace infighting relating to the insulated gloves included within these crates."
   icon:
     sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
     state: icon

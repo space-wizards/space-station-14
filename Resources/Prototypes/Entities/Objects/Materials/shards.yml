@@ -5,13 +5,19 @@
   description: It's a shard of some unknown material.
   components:
   - type: Sprite
-    sprite: Objects/Materials/Shards/shard.rsi
-    state: shard1
-  - type: RandomSpriteState
-    spriteStates:
-    - shard1
-    - shard2
-    - shard3
+    layers:
+      - sprite: Objects/Materials/Shards/shard.rsi
+        state: shard1
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+    netsync: false
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          shard1: ""
+      - enum.DamageStateVisualLayers.Base:
+          shard2: ""
+      - enum.DamageStateVisualLayers.Base:
+          shard3: ""
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:

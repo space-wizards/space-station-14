@@ -4,7 +4,7 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
+  0: Space
   1: FloorArcadeBlue
   2: FloorArcadeBlue2
   3: FloorArcadeRed
@@ -26,42 +26,42 @@ tilemap:
   19: FloorShuttlePurple
   20: FloorShuttleRed
   21: FloorShuttleWhite
-  22: floor_asteroid_coarse_sand0
-  23: floor_asteroid_coarse_sand1
-  24: floor_asteroid_coarse_sand2
-  25: floor_asteroid_coarse_sand_dug
-  26: floor_asteroid_sand
-  27: floor_asteroid_tile
-  28: floor_bar
-  29: floor_blue
-  30: floor_blue_circuit
-  31: floor_clown
-  32: floor_dark
-  33: floor_elevator_shaft
-  34: floor_freezer
-  35: floor_glass
-  36: floor_gold
-  37: floor_grass
-  38: floor_green_circuit
-  39: floor_hydro
-  40: floor_kitchen
-  41: floor_laundry
-  42: floor_lino
-  43: floor_mime
-  44: floor_mono
-  45: floor_reinforced
-  46: floor_rglass
-  47: floor_rock_vault
-  48: floor_showroom
-  49: floor_silver
-  50: floor_snow
-  51: floor_steel
-  52: floor_steel_dirty
-  53: floor_techmaint
-  54: floor_white
-  55: floor_wood
-  56: lattice
-  57: plating
+  22: FloorAsteroidCoarseSand0
+  23: FloorAsteroidCoarseSand1
+  24: FloorAsteroidCoarseSand2
+  25: FloorAsteroidCoarseSandDug
+  26: FloorAsteroidSand
+  27: FloorAsteroidTile
+  28: FloorBar
+  29: FloorBlue
+  30: FloorBlueCircuit
+  31: FloorClown
+  32: FloorDark
+  33: FloorElevatorShaft
+  34: FloorFreezer
+  35: FloorGlass
+  36: FloorGold
+  37: FloorGrass
+  38: FloorGreenCircuit
+  39: FloorHydro
+  40: FloorKitchen
+  41: FloorLaundry
+  42: FloorLino
+  43: FloorMime
+  44: FloorMono
+  45: FloorReinforced
+  46: FloorRGlass
+  47: FloorRockVault
+  48: FloorShowroom
+  49: FloorSilver
+  50: FloorSnow
+  51: FloorSteel
+  52: FloorSteelDirty
+  53: FloorTechMaint
+  54: FloorWhite
+  55: FloorWood
+  56: Lattice
+  57: Plating
 grids:
 - settings:
     chunksize: 16
@@ -15793,7 +15793,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 610
-  type: RedOxygenTankFilled
+  type: OxygenTankFilled
   components:
   - pos: 23.524204,-7.450146
     parent: 2
