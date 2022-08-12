@@ -1753,6 +1753,15 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 185
+  type: Wrench
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.48340595,2.328014
+    parent: 6
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 186
   type: ResearchComputerCircuitboard
   components:
   - rot: 3.141592653589793 rad
@@ -1761,7 +1770,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 186
+- uid: 187
   type: SheetUranium1
   components:
   - pos: -0.21971905,11.543614
@@ -1769,7 +1778,7 @@ entities:
     type: Transform
   - count: 10
     type: Stack
-- uid: 187
+- uid: 188
   type: CircuitImprinterMachineCircuitboard
   components:
   - rot: 3.141592653589793 rad
