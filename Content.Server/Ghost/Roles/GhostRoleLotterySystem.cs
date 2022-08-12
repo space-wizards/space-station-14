@@ -4,6 +4,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -20,7 +21,6 @@ using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -30,23 +30,28 @@ internal sealed class PlayerLotteryData
     public readonly HashSet<uint> GhostRoleGroups = new();
 }
 
+internal record GhostRoleLotteryRecord
+{
+    public HashSet<GhostRoleComponent> ForTake = new();
+    public HashSet<GhostRoleComponent> ForLottery = new();
+}
+
 [UsedImplicitly]
 public sealed class GhostRoleLotterySystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
-    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
 
     private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
     private readonly Dictionary<IPlayerSession, PlayerLotteryData> _playerLotteryData = new ();
 
     private readonly List<GhostRoleComponent> _ghostRoleComponentQueuedLotteries = new();
-    private readonly Dictionary<string, List<GhostRoleComponent>> _ghostRoleComponentLotteries = new();
+    private readonly Dictionary<string, GhostRoleLotteryRecord> _ghostRoleComponentLotteries = new();
+    private readonly List<uint> _roleGroupQueuedLotteries = new();
     private readonly HashSet<uint> _roleGroupLotteries = new();
 
     private bool _needsUpdateGhostRoles = true;
@@ -55,7 +60,8 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     public TimeSpan LotteryStartTime { get; private set; } = TimeSpan.Zero;
     public TimeSpan LotteryExpiresTime { get; private set; } = TimeSpan.Zero;
 
-    public int AvailableRolesCount => 0;
+    public int AvailableRolesCount { get; private set; } = 0;
+
     public string[] AvailableRoles => new string[] { };
 
 
@@ -85,7 +91,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     public void OpenEui(IPlayerSession session)
     {
         if (session.AttachedEntity is not {Valid: true} attached ||
-            _entityManager.HasComponent<GhostComponent>(attached))
+            !_entityManager.HasComponent<GhostComponent>(attached))
             return;
 
         if(_openUis.ContainsKey(session))
@@ -150,29 +156,15 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         _needsUpdateGhostRoleCount = true;
     }
 
-    public GhostRoleInfo[] GetGhostRolesInfo(IPlayerSession player)
+    public string[] GetPlayerRequestedGhostRoles(IPlayerSession player)
     {
-        var ghostRoleInfo = new List<GhostRoleInfo>(_ghostRoleComponentLotteries.Count);
+        var requested = new List<string>();
+        if (!_playerLotteryData.TryGetValue(player, out var data))
+            return requested.ToArray();
 
-        foreach (var (identifier, components) in _ghostRoleComponentLotteries)
-        {
-            if(components.Count == 0)
-                continue;
+        requested.AddRange(data.GhostRoles);
 
-            var infoOrNull = _ghostRoleSystem.GetGhostRolesInfoOrNull(identifier);
-            if (infoOrNull is not { } info)
-                continue;
-
-            info.IsRequested = true;
-            ghostRoleInfo.Add(info);
-        }
-
-        return ghostRoleInfo.ToArray();
-    }
-
-    public GhostRoleGroupInfo[] GetGhostRoleGroupsInfo(IPlayerSession player)
-    {
-        throw new NotImplementedException();
+        return requested.ToArray();
     }
 
     private void PlayerStatusChanged(object? _, SessionStatusEventArgs args)
@@ -234,14 +226,11 @@ public sealed class GhostRoleLotterySystem : EntitySystem
 
     public void GhostRoleQueueComponent(GhostRoleComponent component)
     {
-        if (!component.RoleUseLottery)
-            return;
-
         if (_ghostRoleComponentQueuedLotteries.Contains(component))
             return;
 
         if (_ghostRoleComponentLotteries.TryGetValue(component.RoleName, out var components) &&
-            components.Contains(component))
+            (components.ForTake.Contains(component) || components.ForLottery.Contains(component)))
         {
             return;
         }
@@ -255,7 +244,12 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         if (!_ghostRoleComponentLotteries.TryGetValue(component.RoleName, out var components))
             return;
 
-        components.Remove(component);
+        // TODO: Move components between these two if `RoleUseLottery` is modified.
+        components.ForLottery.Remove(component);
+        components.ForTake.Remove(component);
+
+        _needsUpdateGhostRoles = true;
+        _needsUpdateGhostRoleCount = true;
     }
 
     public void GhostRoleGroupAddPlayerLotteryRequest(IPlayerSession player, uint identifier)
@@ -296,25 +290,45 @@ public sealed class GhostRoleLotterySystem : EntitySystem
             return;
         }
 
+        _needsUpdateGhostRoles = true;
+        _needsUpdateGhostRoleCount = true;
+
         var successfulPlayers = new HashSet<IPlayerSession>();
         ProcessRoleGroupLottery(successfulPlayers);
         ProcessGhostRoleLottery(successfulPlayers);
 
-        var added = false;
+        var anyAdded = false;
 
         foreach (var component in _ghostRoleComponentQueuedLotteries)
         {
             if (!_ghostRoleComponentLotteries.TryGetValue(component.RoleName, out var components))
-                _ghostRoleComponentLotteries[component.RoleName] = components = new List<GhostRoleComponent>();
+                _ghostRoleComponentLotteries[component.RoleName] = components = new GhostRoleLotteryRecord();
 
-            if(components.Contains(component))
-                continue;
+            var added = component.RoleUseLottery
+                ? components.ForLottery.Add(component)
+                : components.ForTake.Add(component);
 
-            components.Add(component);
-            added = true;
+            if(added)
+                component.Queued = false;
+
+            anyAdded |= added;
         }
 
-        if (added)
+        foreach (var group in _roleGroupQueuedLotteries)
+        {
+            var added = _roleGroupLotteries.Add(group);
+
+            anyAdded |= added;
+        }
+
+        _roleGroupQueuedLotteries.Clear();
+        _ghostRoleComponentQueuedLotteries.Clear();
+
+        var ev = new GhostRoleCountRequestedEvent();
+        RaiseLocalEvent(ev);
+        AvailableRolesCount = ev.Count;
+
+        if (anyAdded)
             UpdateAllEui();
 
         var elapseTime = TimeSpan.FromSeconds(_cfgManager.GetCVar<float>(CCVars.GhostRoleLotteryTime));
@@ -327,6 +341,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     private void ProcessGhostRoleLottery(ISet<IPlayerSession> successfulPlayers)
     {
         var sessions = new List<IPlayerSession>(_playerLotteryData.Count);
+        var clearRoles = new HashSet<string>();
 
         foreach (var (ghostRoleIdentifier, components) in _ghostRoleComponentLotteries)
         {
@@ -339,20 +354,20 @@ public sealed class GhostRoleLotterySystem : EntitySystem
 
 
             var playerCount = sessions.Count;
-            var lotteryCount = _ghostRoleSystem.RequestCountForRole(ghostRoleIdentifier);
+            var componentCount = components.ForLottery.Count;
 
             if (playerCount == 0)
                 continue;
 
             var sessionIdx = 0;
-            var lotteryIdx = 0;
+            var compIdx = 0;
 
             _random.Shuffle(sessions);
-            // entry.Requests.Clear();
 
-            while (sessionIdx < playerCount && lotteryIdx < lotteryCount)
+            while (sessionIdx < playerCount && compIdx < componentCount)
             {
                 var session = sessions[sessionIdx];
+                var component = components.ForLottery.First();
 
                 if (session.Status != SessionStatus.InGame || successfulPlayers.Contains(session))
                 {
@@ -360,21 +375,36 @@ public sealed class GhostRoleLotterySystem : EntitySystem
                     continue;
                 }
 
-                if (!_ghostRoleSystem.RequestTakeover(session, ghostRoleIdentifier))
+                var takeoverEvent = new GhostRoleRequestTakeoverEvent(session, component);
+                RaiseLocalEvent(component.Owner, takeoverEvent);
+                if (!takeoverEvent.Result)
                 {
-                    sessionIdx++;
+                    compIdx++;
+                    components.ForLottery.Remove(component);
                     continue;
                 }
 
-                lotteryIdx++;
+                if (takeoverEvent.GhostRoleTaken)
+                {
+                    components.ForLottery.Remove(component);
+                    compIdx++;
+                }
+
+
                 sessionIdx++;
 
                 successfulPlayers.Add(session);
                 ClearPlayerLotteryRequests(session);
                 CloseEui(session);
-
-                _ghostRoleSystem.OnPlayerTakeoverComplete(session, ghostRoleIdentifier);
             }
+
+            if (components.ForLottery.Count == 0)
+                clearRoles.Add(ghostRoleIdentifier);
+        }
+
+        foreach (var (_, data) in _playerLotteryData)
+        {
+            data.GhostRoles.ExceptWith(clearRoles);
         }
     }
 

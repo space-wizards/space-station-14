@@ -10,11 +10,14 @@ namespace Content.Server.Ghost.Roles.UI
         public override GhostRolesEuiState GetNewState()
         {
             var manager = EntitySystem.Get<GhostRoleLotterySystem>();
+            var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
+            var ghostRoleGroupSystem = EntitySystem.Get<GhostRoleGroupSystem>();
             var adminManager = IoCManager.Resolve<IAdminManager>();
 
             return new GhostRolesEuiState(
-                manager.GetGhostRoleGroupsInfo(Player),
-                manager.GetGhostRolesInfo(Player),
+                ghostRoleGroupSystem.GetGhostRoleGroupsInfo(),
+                ghostRoleSystem.GetGhostRolesInfo(),
+                manager.GetPlayerRequestedGhostRoles(Player),
                 manager.LotteryStartTime,
                 manager.LotteryExpiresTime,
                 adminManager.IsAdmin(Player));

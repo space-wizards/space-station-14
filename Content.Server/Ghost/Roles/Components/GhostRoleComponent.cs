@@ -91,6 +91,12 @@ namespace Content.Server.Ghost.Roles.Components
         [DataField("reregister")]
         public bool ReregisterOnGhost { get; set; } = true;
 
+        /// <summary>
+        /// If the ghost role currently in the queue for the lottery.
+        /// </summary>
+        [Access(typeof(GhostRoleSystem), typeof(GhostRoleLotterySystem))]
+        public bool Queued { get; set; } = false;
+
         public abstract bool Take(IPlayerSession session);
     }
 }

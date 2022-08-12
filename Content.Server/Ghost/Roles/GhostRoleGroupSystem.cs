@@ -86,7 +86,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         }
     }
 
-    public GhostRoleGroupInfo[] GetGhostRoleGroupsInfo(IPlayerSession session)
+    public GhostRoleGroupInfo[] GetGhostRoleGroupsInfo()
     {
         var groups = new List<GhostRoleGroupInfo>(_roleGroupEntries.Count);
         foreach (var (_, group) in _roleGroupEntries)
@@ -102,7 +102,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
                 Name = group.RoleName,
                 Description = group.RoleDescription,
                 Status = group.Status.ToString(),
-                IsRequested = group.Requests.Contains(session),
             });
         }
 
@@ -222,6 +221,9 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
         foreach (var entity in entry.Entities)
         {
+            if (TryComp<MindComponent>(entity, out var mindComp) && mindComp.Mind?.UserId != null)
+                continue; // Don't delete player-controlled entities.
+
             // TODO: Exempt certain entities from this.
             EntityManager.QueueDeleteEntity(entity);
         }
@@ -267,8 +269,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (entry.Entities.Contains(entity))
             return true;
 
-        // if (component != null || EntityManager.TryGetComponent(entity, out component))
-        //     _ghostRoleLotterySystem.RemoveGhostRoleLotteryRequest(session, component);
+        if (component != null || EntityManager.TryGetComponent(entity, out component))
+            _ghostRoleLotterySystem.GhostRoleRemoveComponent(component);
 
         entry.Entities.Add(entity);
         SendGhostRoleGroupChangedEvent();
@@ -308,8 +310,6 @@ internal sealed class RoleGroupEntry
     public GhostRoleGroupStatus Status = GhostRoleGroupStatus.Editing;
 
     public readonly List<EntityUid> Entities = new();
-
-    public readonly HashSet<IPlayerSession> Requests = new();
 }
 
 public struct GhostRoleGroupChangedEventArgs

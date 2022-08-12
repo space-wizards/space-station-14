@@ -118,12 +118,12 @@ namespace Content.Client.Ghost.Roles.UI
 
             foreach (var group in ghostState.GhostRoleGroups)
             {
-                _window.AddGroupEntry(group, ghostState.ShowAdminControls);
+                _window.AddGroupEntry(group, ghostState.ShowAdminControls, ghostState.PlayerRequests.Contains(group.Identifier));
             }
 
             foreach (var role in ghostState.GhostRoles)
             {
-                _window.AddEntry(role);
+                _window.AddEntry(role, ghostState.PlayerRequests.Contains(role.Name));
             }
 
             var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);

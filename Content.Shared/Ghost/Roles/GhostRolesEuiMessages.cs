@@ -10,7 +10,6 @@ namespace Content.Shared.Ghost.Roles
         public string Name { get; set; }
         public string Description { get; set; }
         public string Rules { get; set; }
-        public bool IsRequested { get; set; }
         public int AvailableLotteryRoleCount { get; set; }
         public int AvailableImmediateRoleCount { get; set; }
     }
@@ -23,7 +22,6 @@ namespace Content.Shared.Ghost.Roles
         public string Name { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
-        public bool IsRequested { get; set; }
         public int AvailableCount { get; set; }
     }
 
@@ -32,14 +30,16 @@ namespace Content.Shared.Ghost.Roles
     {
         public GhostRoleGroupInfo[] GhostRoleGroups { get; }
         public GhostRoleInfo[] GhostRoles { get; }
+        public string[] PlayerRequests { get; }
         public TimeSpan LotteryStart { get; }
         public TimeSpan LotteryEnd { get; }
         public bool ShowAdminControls { get; }
 
-        public GhostRolesEuiState(GhostRoleGroupInfo[] ghostRoleGroups, GhostRoleInfo[] ghostRoles, TimeSpan lotteryStart, TimeSpan lotteryEnd, bool showAdminControls)
+        public GhostRolesEuiState(GhostRoleGroupInfo[] ghostRoleGroups, GhostRoleInfo[] ghostRoles, string[] requests, TimeSpan lotteryStart, TimeSpan lotteryEnd, bool showAdminControls)
         {
             GhostRoleGroups = ghostRoleGroups;
             GhostRoles = ghostRoles;
+            PlayerRequests = requests;
             LotteryStart = lotteryStart;
             LotteryEnd = lotteryEnd;
             ShowAdminControls = showAdminControls;

@@ -49,11 +49,11 @@ namespace Content.Client.Ghost.Roles.UI
             EntryContainer.DisposeAllChildren();
         }
 
-        public void AddEntry(GhostRoleInfo role)
+        public void AddEntry(GhostRoleInfo role, bool isRequested)
         {
             NoRolesMessage.Visible = false;
 
-            var entry = new GhostRolesEntry(role);
+            var entry = new GhostRoleEntry(role, isRequested);
             entry.OnRoleTake += OnRoleTake;
             entry.OnRoleSelected += OnRoleRequested;
             entry.OnRoleCancelled += OnRoleCancelled;
@@ -61,11 +61,11 @@ namespace Content.Client.Ghost.Roles.UI
             EntryContainer.AddChild(entry);
         }
 
-        public void AddGroupEntry(GhostRoleGroupInfo group, bool adminControls)
+        public void AddGroupEntry(GhostRoleGroupInfo group, bool adminControls, bool isRequested)
         {
             NoRolesMessage.Visible = false;
 
-            var entry = new GhostRoleGroupEntry(group, adminControls);
+            var entry = new GhostRoleGroupEntry(group, adminControls, isRequested);
             entry.OnGroupSelected +=  OnGroupRequested;
             entry.OnGroupCancelled += OnGroupCancelled;
 

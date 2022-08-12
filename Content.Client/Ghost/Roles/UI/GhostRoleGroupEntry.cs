@@ -5,19 +5,13 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.Ghost.Roles.UI;
 
-[GenerateTypedNameReferences]
-public sealed partial class GhostRoleGroupEntry : BoxContainer
+public sealed partial class GhostRoleGroupEntry : BaseEntry
 {
     public event Action<GhostRoleGroupInfo>? OnGroupSelected;
     public event Action<GhostRoleGroupInfo>? OnGroupCancelled;
 
-    public event Action<GhostRoleGroupInfo>? OnGroupDelete;
-    public event Action<GhostRoleGroupInfo>? OnGroupRelease;
-
-    public GhostRoleGroupEntry(GhostRoleGroupInfo group, bool adminControls)
+    public GhostRoleGroupEntry(GhostRoleGroupInfo group, bool adminControls, bool isRequested)
     {
-        RobustXamlLoader.Load(this);
-
         var total = group.AvailableCount;
         var ready = group.Status == "Released";
 
@@ -26,8 +20,8 @@ public sealed partial class GhostRoleGroupEntry : BoxContainer
 
         RequestButton.Text = "Request";
 
-        RequestButton.Visible = ready && !group.IsRequested;
-        CancelButton.Visible = ready && group.IsRequested;
+        RequestButton.Visible = ready && !isRequested;
+        CancelButton.Visible = ready && isRequested;
 
         RequestButton.OnPressed += _ => OnGroupSelected?.Invoke(group);
         CancelButton.OnPressed += _ => OnGroupCancelled?.Invoke(group);
