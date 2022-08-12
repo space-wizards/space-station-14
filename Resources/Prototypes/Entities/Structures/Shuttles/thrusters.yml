@@ -22,9 +22,6 @@
     - type: Appearance
       visuals:
       - type: ThrusterVisualizer
-    - type: ApcPowerReceiver
-      powerLoad: 1500
-    - type: ExtensionCableReceiver
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -44,6 +41,9 @@
   parent: BaseThruster
   components:
   - type: Thruster
+  - type: ApcPowerReceiver
+    powerLoad: 1500
+  - type: ExtensionCableReceiver
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -57,6 +57,42 @@
       shader: unshaded
       offset: 0, 1
 
+
+- type: entity
+  id: ThrusterGas
+  name: gas thruster
+  description: It runs on magic! Well, that's not quite true, it runs on high temperature gas or just straight plasma depending on your mood.
+  parent: BaseThruster
+  components:
+    - type: Thruster
+    - type: GasPowerProvider
+    - type: PipeColorVisuals
+    - type: AtmosPipeColor
+    - type: AtmosUnsafeUnanchor
+    - type: PipeAppearance
+    - type: AtmosDevice
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+    - type: Sprite
+      sprite: Structures/Shuttles/thruster.rsi
+      layers:
+        - state: pipeHalf
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: base
+          map: ["enum.ThrusterVisualLayers.Base"]
+        - state: thrust
+          map: ["enum.ThrusterVisualLayers.ThrustOn"]
+          shader: unshaded
+        - state: thrust_burn_unshaded
+          map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+          shader: unshaded
+          offset: 0, 1
+
 - type: entity
   id: DebugThruster
   parent: BaseThruster
@@ -67,6 +103,7 @@
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
+  - type: ExtensionCableReceiver
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -84,6 +121,9 @@
   id: Gyroscope
   parent: BaseThruster
   components:
+  - type: ApcPowerReceiver
+    powerLoad: 1500
+  - type: ExtensionCableReceiver
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
@@ -121,6 +161,7 @@
     - type: ApcPowerReceiver
       needsPower: false
       powerLoad: 0
+    - type: ExtensionCableReceiver
     - type: Sprite
       sprite: Structures/Shuttles/thruster.rsi
       layers:
