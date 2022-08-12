@@ -1,78 +1,4 @@
 Entries:
-- author: youarereadingthis
-  changes:
-  - {message: Examine text for anchors., type: Add}
-  id: 1625
-  time: '2022-05-30T08:55:54.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: NanoTrasen has finally installed surveillance camera systems into our
-      stations. Be aware that you are now being watched onboard our fine stations!,
-    type: Add}
-  id: 1626
-  time: '2022-05-31T08:44:57.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added the handheld health analyzer to the regular, advanced and combat
-      first aid kits.', type: Add}
-  id: 1627
-  time: '2022-06-01T03:17:38.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed an issue where mouse ghosts would be tethered to who ate them,
-    type: Fix}
-  id: 1628
-  time: '2022-06-01T07:39:50.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Added modular landmines, which can be constructed using a payload and
-      are triggered by stepping on them.', type: Add}
-  - {message: Mines and grenades will now be triggered if an explosion damages them.,
-    type: Tweak}
-  id: 1629
-  time: '2022-06-01T08:39:06.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added 6 new floor tiles ported from Goon! Look out for clown carpet,
-      boxing ring, gym mat, office carpet, metal diamond and alternate blue arcade.',
-    type: Add}
-  id: 1630
-  time: '2022-06-02T02:10:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix infinite gunshot sounds from spent cartridges., type: Fix}
-  - {message: Fix cap cartridge visualizer., type: Fix}
-  - {message: Fix empty gunshot sounds (no more wehnigun log spam)., type: Fix}
-  id: 1631
-  time: '2022-06-02T09:13:13.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added an audio setting to disable playing admin music, type: Add}
-  id: 1632
-  time: '2022-06-02T13:41:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: SMGs have had their maximum spread angle increased (i.e. accuracy reduced).,
-    type: Tweak}
-  id: 1633
-  time: '2022-06-02T19:46:46.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Post Lights are now slightly smaller and sit further up in a tile.,
-    type: Tweak}
-  id: 1634
-  time: '2022-06-02T20:12:23.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Nukes will now explode in 120 seconds instead of 180., type: Tweak}
-  id: 1635
-  time: '2022-06-02T20:53:32.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Gas miners are now capped at 300 kPa instead of 4500 kPa. Less pressure
-      bombing., type: Tweak}
-  id: 1636
-  time: '2022-06-02T21:35:32.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station now has security cameras. Lots of them., type: Add}
@@ -2942,3 +2868,70 @@ Entries:
       Don''t tell them what we''re doing.', type: Add}
   id: 2124
   time: '2022-08-09T05:10:01.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Escape inventory doafter bars now stop after you are set down., type: Fix}
+  - {message: Escape inventory doafter length when held in a hand is now based on
+      relative mass. Escaping from anything but hands remains the same length., type: Tweak}
+  id: 2125
+  time: '2022-08-10T08:37:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: IFF labels on the shuttle console now look fancier., type: Tweak}
+  id: 2126
+  time: '2022-08-10T17:48:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchorable now checks if the tile has something that can collide first
+      before allowing anchoring., type: Tweak}
+  id: 2127
+  time: '2022-08-11T02:11:30.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: You can get more hints about how long something has been rotten., type: Tweak}
+  id: 2128
+  time: '2022-08-11T02:43:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Ore Processor deconstruction now works properly., type: Fix}
+  id: 2129
+  time: '2022-08-11T04:24:04.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Nanotrasen has found where all the microphones for handheld radios
+      went. Enjoy your usage of handheld radio technology, today!', type: Tweak}
+  id: 2130
+  time: '2022-08-11T09:25:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: A console to toggle IFF (radar labels) has been added., type: Add}
+  id: 2131
+  time: '2022-08-11T16:58:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Disarming no longer deselects after a usage., type: Remove}
+  id: 2132
+  time: '2022-08-11T20:08:23.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Add pneumatic valves, which control gas flow based on control pressure.',
+    type: Add}
+  id: 2133
+  time: '2022-08-11T21:19:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The popup for not being able to wield an item is now grammatically correct.,
+    type: Fix}
+  id: 2134
+  time: '2022-08-11T22:53:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes no longer can become stuck not producing anything with items
+      in the queue., type: Fix}
+  id: 2135
+  time: '2022-08-12T01:33:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio occlusion is working again, type: Fix}
+  id: 2136
+  time: '2022-08-12T02:53:28.0000000+00:00'

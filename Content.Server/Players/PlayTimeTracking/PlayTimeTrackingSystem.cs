@@ -219,6 +219,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
                 jobs.RemoveSwap(i);
                 i--;
+                break;
             }
         }
     }
