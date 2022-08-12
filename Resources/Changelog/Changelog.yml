@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Nukes will now explode in 120 seconds instead of 180., type: Tweak}
-  id: 1635
-  time: '2022-06-02T20:53:32.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Gas miners are now capped at 300 kPa instead of 4500 kPa. Less pressure
@@ -2935,3 +2930,9 @@ Entries:
     type: Fix}
   id: 2134
   time: '2022-08-11T22:53:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes no longer can become stuck not producing anything with items
+      in the queue., type: Fix}
+  id: 2135
+  time: '2022-08-12T01:33:32.0000000+00:00'
