@@ -88,6 +88,15 @@ namespace Content.Server.Atmos.Miasma
                 if (!perishable.Progressing)
                     continue;
 
+                var transform = Transform(perishable.Owner);
+                var indices = _transformSystem.GetGridOrMapTilePosition(perishable.Owner);
+
+                var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
+                if (tileMix is null || tileMix.Pressure <= 10.0f)
+                {
+                    continue;
+                }
+
                 perishable.DeathAccumulator += frameTime;
                 if (perishable.DeathAccumulator < perishable.RotAfter.TotalSeconds)
                     continue;
@@ -115,10 +124,6 @@ namespace Content.Server.Atmos.Miasma
 
                 float molRate = perishable.MolsPerSecondPerUnitMass * _rotUpdateRate;
 
-                var transform = Transform(perishable.Owner);
-                var indices = _transformSystem.GetGridOrMapTilePosition(perishable.Owner);
-
-                var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
                 tileMix?.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
             }
         }
