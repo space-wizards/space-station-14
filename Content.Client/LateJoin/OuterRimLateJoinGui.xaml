@@ -1,6 +1,5 @@
 ﻿<cui:FancyWindow xmlns:cui="clr-namespace:Content.Client.UserInterface"
                  xmlns="https://spacestation14.io"
-                 xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                  xmlns:lateJoin="clr-namespace:Content.Client.LateJoin"
                  xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                  Title="Join Game"
@@ -15,7 +14,7 @@
             <Button Name="CrewManifestButton" Text="Crew Manifest" HorizontalAlignment="Center" Visible="False"/>
         </BoxContainer>
         <!--<cc:VSeparator StyleClasses="LowDivider"/>
-        <BoxContainer Orientation="Vertical" Margin="4 4" HorizontalExpand="True" SizeFlagsStretchRatio="1">
+        <BoxContainer Orientation="Vertical" Margin="4 4" HorizontalExpand="True" SizeFlagsStretchRatio="2">
             <RichTextLabel Name="ShipDescription"/>
         </BoxContainer>-->
     </BoxContainer>

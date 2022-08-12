@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Maps;
 
@@ -34,5 +35,7 @@ public sealed partial class GameMapPrototype : IPrototype
     /// </summary>
     [DataField("votable")]
     public bool Votable { get; } = true;
+
+    [DataField("descriptionPath")] public ResourcePath? DescriptionPath = null;
 
 }

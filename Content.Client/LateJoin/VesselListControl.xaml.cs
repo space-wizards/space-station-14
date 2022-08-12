@@ -55,9 +55,17 @@ public sealed partial class VesselListControl : BoxContainer
 
     private void UpdateUi(IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> obj)
     {
-        VesselItemList.Clear();
+        foreach (var (key, item) in VesselItemList.Select(x => ((EntityUid)x.Metadata!, x)))
+        {
+            if (!_gameTicker.StationNames.ContainsKey(key))
+                VesselItemList.Remove(item);
+        }
+
         foreach (var (key, name) in _gameTicker.StationNames)
         {
+            if (VesselItemList.Any(x => ((EntityUid)x.Metadata!) == key))
+                continue;
+
             var item = new ItemList.Item(VesselItemList)
             {
                 Metadata = key,

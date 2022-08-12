@@ -1,20 +1,26 @@
 ﻿<userInterface:FancyWindow
     xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
-    xmlns:controls="https://spacestation14.io"
+    xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client.HUD.UI"
     xmlns:controls1="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     MinHeight="560"
-    MinWidth="250"
-    Title="Mission Control">
-    <controls:BoxContainer Orientation="Vertical">
-        <controls:Label Text="Available Vessels" Margin="10 3"/>
-        <controls1:HLine Color="{xNamespace:Static style:StyleNano.NanoGold}" Thickness="2" Access="Public"/>
-        <controls:ItemList Name="ShuttleList" HorizontalExpand="True" VerticalExpand="True" Margin="10 3"/>
-
-        <controls:BoxContainer Orientation="Horizontal" Margin="0 3" HorizontalExpand="True" HorizontalAlignment="Center">
-            <controls:Button Name="PurchaseShipButton" Text="Purchase" Disabled="True"/>
-        </controls:BoxContainer>
-    </controls:BoxContainer>
+    MinWidth="500"
+    Title="Purchase">
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical">
+            <Label Text="Available Vessels" Margin="10 3"/>
+            <customControls:HSeparator StyleClasses="LowDivider"/>
+            <ItemList Name="ShuttleList" HorizontalExpand="True" VerticalExpand="True" Margin="3 10"/>
+            <BoxContainer Orientation="Horizontal" Margin="0 3" HorizontalExpand="True" HorizontalAlignment="Center">
+                <Button Name="PurchaseShipButton" Text="Purchase" Disabled="True"/>
+            </BoxContainer>
+        </BoxContainer>
+        <customControls:VSeparator StyleClasses="LowDivider"/>
+        <BoxContainer Orientation="Vertical">
+            <RichTextLabel Name="VesselDescription" Margin="10 10"/>
+        </BoxContainer>
+    </BoxContainer>
 </userInterface:FancyWindow>

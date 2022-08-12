@@ -4,6 +4,7 @@
   mapPath: /Maps/isvbiobubble.yml
   minPlayers: 0
   fallback: true
+  descriptionPath: "/Server Info/ISVBioBubbleInfo.txt"
   stations:
     ISVBioBubble:
       mapNameTemplate: '{0} BioBubble {1}'

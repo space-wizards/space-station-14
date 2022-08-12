@@ -4,6 +4,7 @@
   mapPath: /Maps/isvskipper.yml
   minPlayers: 0
   fallback: true
+  descriptionPath: "/Server Info/ISVSkipperInfo.txt"
   stations:
     IsvSkipper:
       mapNameTemplate: '{0} Skipper {1}'

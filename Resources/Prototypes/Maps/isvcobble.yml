@@ -4,6 +4,7 @@
   mapPath: /Maps/isvcobble.yml
   minPlayers: 0
   fallback: true
+  descriptionPath: "/Server Info/ISVCobbleInfo.txt"
   stations:
     ISVCobble:
       mapNameTemplate: '{0} Cobble {1}'
