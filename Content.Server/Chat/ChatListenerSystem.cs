@@ -1,18 +1,7 @@
-using Content.Server.Chat.Systems;
-using Content.Server.Popups;
 using Content.Shared.Chat;
-using Robust.Shared.Player;
 
-namespace Content.Server.TapeRecorder
+namespace Content.Server.Chat
 {
-    public sealed class ChatListenerSystem : EntitySystem
-    {
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-    }
-
     public sealed class ChatMessageHeardNearbyEvent : EntityEventArgs
     {
         /// <summary>

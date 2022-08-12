@@ -26,13 +26,11 @@ namespace Content.Server.TapeRecorder
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public float TimeStamp;
-
-
+        
         /// <summary>
         ///AccumulatedTime recording was started on
         /// </summary>
         public float RecordingStartTime;
-
 
         /// <summary>
         ///The timestamp of the tape that we started recording on
@@ -44,7 +42,7 @@ namespace Content.Server.TapeRecorder
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("tapeMaxTime")]
-        public float TapeMaxTime;
+        public float TapeMaxTime = 20f;
 
         /// <summary>
         /// Sound that plays when the tape recorder stops doing something

@@ -1,4 +1,4 @@
-namespace Content.Server.TapeRecorder
+namespace Content.Server.Chat.Components
 {
 
     /// <summary>
@@ -12,6 +12,6 @@ namespace Content.Server.TapeRecorder
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hearingRange")]
-        public int HearingRange = 2;
+        public int HearingRange = 3;
     }
 }

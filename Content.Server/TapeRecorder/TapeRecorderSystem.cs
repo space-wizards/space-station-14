@@ -1,11 +1,11 @@
 using System.Linq;
+using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Shared.TapeRecorder;
@@ -41,11 +41,18 @@ namespace Content.Server.TapeRecorder
 
                 tape.AccumulatedTime += frameTime;
 
+
+                if (tape.Enabled && tape.TimeStamp >= tape.TapeMaxTime && tape.CurrentMode != TapeRecorderState.Rewind)
+                {
+                    StopTape(tape);
+                    return; // stops if we are further in the tape than should be possible (unless rewinding)
+                }
+
                 //Handle tape playback
                 if (tape.Enabled && tape.CurrentMode == TapeRecorderState.Play)
                 {
 
-                    if (tape.CurrentMessageIndex >= tape.RecordedMessages.Count)
+                    if (tape.CurrentMessageIndex >= tape.RecordedMessages.Count || tape.TimeStamp >= tape.TapeMaxTime)
                     {
                         StopTape(tape);
                         return;
