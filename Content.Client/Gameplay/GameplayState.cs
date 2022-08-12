@@ -39,19 +39,40 @@ namespace Content.Client.Gameplay
 
         protected override void Startup()
         {
+            // On startup, the linked screen type is automatically loaded.
+            // However, at the moment, we would need to (somehow) send an event
+            // when the chat sidebar is resized in order to get the viewport
+            // (or whatever the parent control for the viewport would be) to
+            // scale down. This is because screens appear to be
             base.Startup();
-            Viewport = new MainViewport
-            {
-                Viewport =
-                {
-                    ViewportSize = ViewportSize
-                }
-            };
-            UserInterfaceManager.StateRoot.AddChild(Viewport);
-            LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
-            Viewport.SetPositionFirst();
+
+            Viewport = UserInterfaceManager.ActiveScreen!.GetWidget<MainViewport>()!;
+
+            // ourple
+
+            // Add the viewport to the root of the current state's primary control.
+            // TODO: This might be legacy code? There's absolutely nothing stopping me
+            // from just dropping MainViewport in the XAML as a UIWidget.
+            // UserInterfaceManager.StateRoot.AddChild(Viewport); nope
+
+            // Set the anchor preset (?) to 'wide'.
+            // TODO: This is where the oldchat stuff needs to start.
+            // Done in the screen.
+            // LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
+
+            // Set the viewport to the first control to be drawn.
+            // TODO: Wrapper control around this?
+            // Done in XAML.
+            // Viewport.SetPositionFirst();
+
+            // Set the eyemanager's viewport to the viewport widget's viewport.
             _eyeManager.MainViewport = Viewport.Viewport;
+
+            // Add the hand-item overlay.
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
+
+            // FPS counter.
+            // yeah this can just stay here, whatever
             _fpsCounter = new FpsCounter(_gameTiming);
             UserInterfaceManager.PopupRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
