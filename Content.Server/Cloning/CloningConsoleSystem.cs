@@ -211,9 +211,10 @@ namespace Content.Server.Cloning.Systems
                 EntityUid? cloneBody = clonePod.BodyContainer.ContainedEntity;
 
                 clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
-                if (cloneBody != null)
+                if (HasComp<ActiveCloningPodComponent>(consoleComponent.CloningPod))
                 {
-                    cloneBodyInfo = Identity.Name(cloneBody.Value, EntityManager);
+                    if (cloneBody != null)
+                        cloneBodyInfo = Identity.Name(cloneBody.Value, EntityManager);
                     clonerStatus = ClonerStatus.ClonerOccupied;
                 }
             }
@@ -233,5 +234,6 @@ namespace Content.Server.Cloning.Systems
                 clonerInRange
                 );
         }
+
     }
 }

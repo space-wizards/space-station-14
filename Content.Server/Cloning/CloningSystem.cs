@@ -147,6 +147,9 @@ namespace Content.Server.Cloning.Systems
             if (!Resolve(uid, ref clonePod) || bodyToClone == null)
                 return false;
 
+            if (HasComp<ActiveCloningPodComponent>(uid))
+                return false;
+
             if (ClonesWaitingForMind.TryGetValue(mind, out var clone))
             {
                 if (EntityManager.EntityExists(clone) &&

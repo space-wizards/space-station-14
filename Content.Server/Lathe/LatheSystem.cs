@@ -156,7 +156,6 @@ namespace Content.Server.Lathe
             _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
                 ("item", args.Used)), uid, Filter.Entities(args.User));
 
-
             // TODO: You can probably split this part off of lathe component too
             if (!TryComp<LatheComponent>(uid, out var lathe))
                 return;
