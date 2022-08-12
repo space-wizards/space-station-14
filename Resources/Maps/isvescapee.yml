@@ -1753,6 +1753,15 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 185
+  type: ResearchComputerCircuitboard
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.62596905,12.640514
+    parent: 6
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 186
   type: SheetUranium1
   components:
   - pos: -0.21971905,11.543614
@@ -1760,4 +1769,13 @@ entities:
     type: Transform
   - count: 10
     type: Stack
+- uid: 187
+  type: CircuitImprinterMachineCircuitboard
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.26659405,12.734264
+    parent: 6
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
