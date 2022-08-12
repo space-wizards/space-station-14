@@ -19,7 +19,6 @@
         cassette_tape:
           priority: 4
           whitelist:
-            name: Cassette
             tags:
               - CassetteTape
     - type: Appearance
