@@ -94,7 +94,7 @@ namespace Content.Server.TapeRecorder
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
 
-        public int GetTapeIndex(TapeRecorderComponent component) // returns the index of the message we are on, based on where the tape is
+        private static int GetTapeIndex(TapeRecorderComponent component) // returns the index of the message we are on, based on where the tape is
         {
             if (component.RecordedMessages.Count == 0)
                 return 0;
@@ -104,22 +104,27 @@ namespace Content.Server.TapeRecorder
             return closest.Index;
         }
 
+        private static void FlushBufferToMemory(TapeRecorderComponent component)
+        {
+
+            component.TimeStamp = (component.AccumulatedTime - component.RecordingStartTime);
+
+            //Clear the recorded messages between the start and end of our recording buffer
+            component.RecordedMessages.RemoveAll(x => x.MessageTimeStamp > component.RecordingStartTimestamp && x.MessageTimeStamp < component.TimeStamp);
+            component.RecordedMessages.AddRange(component.RecordedMessageBuffer);
+
+            //Clear the buffer
+            component.RecordedMessageBuffer.Clear();
+
+            //sort the list by timestamp
+            component.RecordedMessages.Sort((x, y) => x.MessageTimeStamp.CompareTo(y.MessageTimeStamp));
+
+            }
+
         public void StopTape(TapeRecorderComponent component)
         {
             if (component.CurrentMode == TapeRecorderState.Record && component.Enabled)
-            {
-                component.TimeStamp = (component.AccumulatedTime - component.RecordingStartTime);
-
-                //Clear the recorded messages between the start and end of our recording buffer
-                component.RecordedMessages.RemoveAll(x => x.MessageTimeStamp > component.RecordingStartTimestamp && x.MessageTimeStamp < component.TimeStamp);
-                component.RecordedMessages.AddRange(component.RecordedMessageBuffer);
-
-                //Clear the buffer
-                component.RecordedMessageBuffer.Clear();
-
-                //sort the list by timestamp
-                component.RecordedMessages.Sort((x, y) => x.MessageTimeStamp.CompareTo(y.MessageTimeStamp));
-            }
+                FlushBufferToMemory(component);
 
             if (!component.Enabled)
                 return;
@@ -187,7 +192,7 @@ namespace Content.Server.TapeRecorder
 
             component.TimeStamp = (component.AccumulatedTime - component.RecordingStartTime);
 
-            //Record messages to recordedmessagesbuffer
+            //Record messages to the BUFFER (so we can overwrite messages that happened in our timestamp window)
             if (component.CurrentMode == TapeRecorderState.Record && component.Enabled)
             {
                 component.RecordedMessageBuffer.Add((component.TimeStamp, TimeSpan.FromSeconds(component.TimeStamp).ToString("mm\\:ss") + " : " + Name(args.Source) + ": " + args.Message));

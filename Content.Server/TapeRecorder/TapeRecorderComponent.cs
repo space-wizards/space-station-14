@@ -3,7 +3,9 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.TapeRecorder
 {
-
+    /// <summary>
+    /// Component given to tape recorders, will allow you to record to the stored cassette tape.
+    /// </summary>
     [RegisterComponent]
     public class TapeRecorderComponent : Component
     {
@@ -13,54 +15,58 @@ namespace Content.Server.TapeRecorder
 
         public bool Enabled = false;
 
-        /*
-        //A list of all recorded messages
-        public List<string> MessageList = new();
-        //A list of the timestamps for each recorded message
-        public List<float> MessageTimeStamps = new();
-        */
+        /// <summary>
+        /// A list of all recorded messages with timestamps
+        /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public List<(float MessageTimeStamp, string Message)> RecordedMessages = new ();
 
-        [ViewVariables(VVAccess.ReadOnly)]
-        public List<(float MessageTimeStamp, string Message)> RecordedMessageBuffer = new ();
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public List<int> overlappingMessages = new();
-
-
-        //During playback, the message we are currently on
-        public int CurrentMessageIndex = 0;
-
-        public bool Recording = false;
-        public bool Playing = false;
-
-
-        public float AccumulatedTime;
-        public float TapeStartTime;
-
-
-        //Our current position in the "tape"
+        /// <summary>
+        ///Our current position in the "tape"
+        /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public float TimeStamp;
 
-        [ViewVariables(VVAccess.ReadOnly)]
+
+        /// <summary>
+        ///AccumulatedTime recording was started on
+        /// </summary>
         public float RecordingStartTime;
 
-        [ViewVariables(VVAccess.ReadOnly)]
+
+        /// <summary>
+        ///The timestamp of the tape that we started recording on
+        /// </summary>
         public float RecordingStartTimestamp;
 
+        /// <summary>
+        /// The maximum length of the tape
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("tapeMaxTime")]
         public float TapeMaxTime;
 
+        /// <summary>
+        /// Sound that plays when the tape recorder stops doing something
+        /// </summary>
         [DataField("stopSound")]
         public SoundSpecifier StopSound = new SoundPathSpecifier("/Audio/Items/Taperecorder/sound_items_taperecorder_taperecorder_stop.ogg");
 
+        /// <summary>
+        /// Sound that plays when the tape recorder enables
+        /// </summary>
         [DataField("startSound")]
         public SoundSpecifier StartSound = new SoundPathSpecifier("/Audio/Items/Taperecorder/sound_items_taperecorder_taperecorder_play.ogg");
 
 
+        //temporary buffer used while recording messages
+        public List<(float MessageTimeStamp, string Message)> RecordedMessageBuffer = new ();
+
+        //During playback, the message we are currently on
+        public int CurrentMessageIndex = 0;
+
+
+        public float AccumulatedTime;
 
         //stuff for cooldown of using in hand
         public TimeSpan LastUseTime;
