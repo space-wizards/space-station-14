@@ -1,0 +1,17 @@
+﻿- type: gameMap
+  id: ISVConstruct
+  mapName: 'ISV Construct'
+  mapPath: /Maps/isvconstruct.yml
+  minPlayers: 0
+  fallback: true
+  descriptionPath: "/Server Info/ISVConstructInfo.txt"
+  stations:
+    IsvConstruct:
+      mapNameTemplate: '{0} Construct {1}'
+      nameGenerator:
+        !type:IndependentNameGenerator
+        prefixCreator: ''
+      overflowJobs: []
+      availableJobs:
+        SalvageSpecialist: [ 2, 2 ]
+        AtmosphericTechnician: [ 2, 2 ]
