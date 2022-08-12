@@ -39,6 +39,12 @@ namespace Content.Server.TapeRecorder
         [DataField("startSound")]
         public SoundSpecifier StartSound = new SoundPathSpecifier("/Audio/Items/Taperecorder/sound_items_taperecorder_taperecorder_play.ogg");
 
+        /// <summary>
+        ///The speed multiplier for rewinding speed
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("rewindSpeed")]
+        public float RewindSpeed = 5;
 
         //temporary buffer used while recording messages
         public List<(float MessageTimeStamp, string Message)> RecordedMessageBuffer = new ();

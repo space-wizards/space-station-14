@@ -83,10 +83,11 @@ namespace Content.Server.TapeRecorder
                     if (tapeRecorder.CurrentMessageIndex >= tapeRecorder.InsertedTape.RecordedMessages.Count || tapeRecorder.InsertedTape.TimeStamp >= tapeRecorder.InsertedTape.TapeMaxTime)
                     {
                         StopTape(tapeRecorder);
-                        tapeRecorder.CurrentMode = TapeRecorderState.Rewind; // go into record mode once at at recorded data
+                        tapeRecorder.CurrentMode = TapeRecorderState.Rewind; // go into record mode once at end of recorded data
                         return;
                     }
 
+                    //send the current message once our tapes timestamp passes the message timestamp
                     if (tapeRecorder.InsertedTape.TimeStamp > tapeRecorder.InsertedTape.RecordedMessages[tapeRecorder.CurrentMessageIndex].MessageTimeStamp)
                     {
                         _chat.TrySendInGameICMessage(tapeRecorder.Owner, tapeRecorder.InsertedTape.RecordedMessages[tapeRecorder.CurrentMessageIndex].Message, InGameICChatType.Speak, false);
@@ -100,7 +101,7 @@ namespace Content.Server.TapeRecorder
                 if (!tapeRecorder.Enabled || tapeRecorder.CurrentMode != TapeRecorderState.Rewind)
                     continue;
 
-                tapeRecorder.InsertedTape.TimeStamp -= frameTime * 3;
+                tapeRecorder.InsertedTape.TimeStamp -= frameTime * tapeRecorder.RewindSpeed;
 
                 if (tapeRecorder.InsertedTape.TimeStamp <= 0) //stop rewinding when we get to the beginning of the tape
                 {
@@ -133,7 +134,11 @@ namespace Content.Server.TapeRecorder
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
 
-        private static int GetTapeIndex(TapeRecorderComponent component) // returns the index of the message we are on, based on where the tape is
+
+        /// <summary>
+        /// Gets the index in RecordedMessages that corresponds to the tapes current timestamp
+        /// </summary>
+        private static int GetTapeIndex(TapeRecorderComponent component)
         {
             if (component.InsertedTape == null)
                 return 0;
@@ -146,6 +151,9 @@ namespace Content.Server.TapeRecorder
             return closest.Index;
         }
 
+        /// <summary>
+        /// Flushes recorded buffer to tape memory. Overwrites data if the timestamps overlap
+        /// </summary>
         private static void FlushBufferToMemory(TapeRecorderComponent component)
         {
             if (component.InsertedTape == null)
@@ -165,6 +173,9 @@ namespace Content.Server.TapeRecorder
 
             }
 
+        /// <summary>
+        /// Handles Tape Recorder being stopped in any mode
+        /// </summary>
         public void StopTape(TapeRecorderComponent component)
         {
             if (component.CurrentMode == TapeRecorderState.Record && component.Enabled)
@@ -229,6 +240,9 @@ namespace Content.Server.TapeRecorder
             }
         }
 
+        /// <summary>
+        /// Records heard messages to the message buffer
+        /// </summary>
         private void OnChatMessageHeard(EntityUid uid, TapeRecorderComponent component, ChatMessageHeardNearbyEvent args)
         {
             if (component.InsertedTape == null)
