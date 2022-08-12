@@ -5353,4 +5353,20 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 631
+  type: Gyroscope
+  components:
+  - pos: 0.5,3.5
+    parent: 5
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 632
+  type: Gyroscope
+  components:
+  - pos: 0.5,-14.5
+    parent: 5
+    type: Transform
+  - enabled: False
+    type: AmbientSound
 ...

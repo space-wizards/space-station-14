@@ -1710,4 +1710,54 @@ entities:
       - port: Toggle
         uid: 60
     type: SignalTransmitter
+- uid: 182
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -0.5,2.5
+    parent: 6
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 183
+  type: Poweredlight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,8.5
+    parent: 6
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 184
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,11.5
+    parent: 6
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 185
+  type: SheetUranium1
+  components:
+  - pos: -0.21971905,11.543614
+    parent: 6
+    type: Transform
+  - count: 10
+    type: Stack
 ...
