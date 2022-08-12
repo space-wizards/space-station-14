@@ -9,7 +9,7 @@ namespace Content.Shared.ShipGuns.Components;
 public sealed class GunnerComponent : Component
 {
     [ViewVariables]
-    public SharedTurretConsoleComponent? Console { get; set; }
+    public SharedTargetingConsoleComponent? Console { get; set; }
 
     /// <summary>
     /// Where we started using the guns to check if we should break from moving too far.
