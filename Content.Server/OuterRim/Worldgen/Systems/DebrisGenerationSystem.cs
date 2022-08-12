@@ -1,7 +1,8 @@
 using System.Linq;
 using Content.Server.OuterRim.Worldgen.Components;
 using Content.Server.OuterRim.Worldgen.Prototypes;
-using Content.Shared.OuterRim.Worldgen.Components;
+using Content.Server.Shuttles.Systems;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -9,15 +10,19 @@ namespace Content.Server.OuterRim.Worldgen.Systems;
 
 public sealed class DebrisGenerationSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private ITileDefinitionManager _tileDefinition = default!;
-    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinition = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
 
     public EntityUid GenerateDebris(DebrisPrototype proto, MapCoordinates location)
     {
         var (_, gridEnt) = GenerateFloorplan(proto, location);
         var unpop = AddComp<UnpopulatedComponent>(gridEnt);
         unpop.Populator = proto.Populator;
+        EnsureComp<IFFComponent>(gridEnt);
+        _shuttleSystem.SetIFFColor(gridEnt, proto.DebrisRadarColor);
+        _shuttleSystem.AddIFFFlag(gridEnt, IFFFlags.HideLabel);
         return gridEnt;
     }
 
@@ -29,10 +34,6 @@ public sealed class DebrisGenerationSystem : EntitySystem
     {
         var grid = _mapManager.CreateGrid(location.MapId);
         grid.WorldPosition = location.Position;
-
-        var identity = EnsureComp<GridIdentityComponent>(grid.GridEntityId);
-        identity.GridColor = proto.DebrisRadarColor;
-        identity.ShowIff = false;
 
         switch (proto.FloorplanStyle)
         {

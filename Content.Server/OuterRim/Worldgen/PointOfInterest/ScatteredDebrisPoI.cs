@@ -1,6 +1,7 @@
 ﻿using Content.Server.OuterRim.Worldgen.Systems.Overworld;
 using Content.Server.OuterRim.Worldgen.Tools;
-using Content.Shared.OuterRim.Worldgen.Components;
+using Content.Server.Shuttles.Systems;
+using Content.Shared.Shuttles.Components;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -19,6 +20,7 @@ public sealed class ScatteredDebrisPoI : PointOfInterestGenerator
         var mapLoader = IoCManager.Resolve<IMapLoader>();
         var entityManager = IoCManager.Resolve<IEntityManager>();
         var worldChunkSys = entityManager.EntitySysManager.GetEntitySystem<WorldChunkSystem>();
+        var iffSys = entityManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
 
         var density = worldChunkSys.GetChunkDensity(chunk);
         var offs = (int)((WorldChunkSystem.ChunkSize - (density / 2)) / 2);
@@ -34,8 +36,7 @@ public sealed class ScatteredDebrisPoI : PointOfInterestGenerator
                 Offset = center + point,
                 Rotation = random.NextAngle()
             });
-            var comp = entityManager.AddComponent<GridIdentityComponent>(grid!.Value);
-            comp.ShowIff = false;
+            iffSys.AddIFFFlag(grid!.Value, IFFFlags.HideLabel);
         }
 
 
