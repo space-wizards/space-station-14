@@ -5,5 +5,7 @@ namespace Content.Server.Carrying
     /// </summary>
     [RegisterComponent]
     public sealed class CarryingComponent : Component
-    {}
+    {
+        public EntityUid Carried = default!;
+    }
 }

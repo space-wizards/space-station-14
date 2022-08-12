@@ -7,6 +7,8 @@ using Content.Server.Resist;
 using Content.Server.Speech;
 using Content.Server.Popups;
 using Content.Server.Contests;
+using Content.Server.Climbing;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands;
 using Content.Shared.Stunnable;
@@ -46,12 +48,15 @@ namespace Content.Server.Carrying
             SubscribeLocalEvent<CarriableComponent, GetVerbsEvent<AlternativeVerb>>(AddCarryVerb);
             SubscribeLocalEvent<CarryingComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<CarryingComponent, BeforeThrowEvent>(OnThrow);
+            SubscribeLocalEvent<CarryingComponent, EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<BeingCarriedComponent, InteractionAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<BeingCarriedComponent, MoveInputEvent>(OnMoveInput);
             SubscribeLocalEvent<BeingCarriedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<BeingCarriedComponent, StandAttemptEvent>(OnStandAttempt);
             SubscribeLocalEvent<BeingCarriedComponent, GettingInteractedWithAttemptEvent>(OnInteractedWith);
             SubscribeLocalEvent<BeingCarriedComponent, PullAttemptEvent>(OnPullAttempt);
+            SubscribeLocalEvent<BeingCarriedComponent, StartClimbEvent>(OnStartClimb);
+            SubscribeLocalEvent<BeingCarriedComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<CarrySuccessfulEvent>(OnCarrySuccess);
             SubscribeLocalEvent<CarryCancelledEvent>(OnCarryCancelled);
         }
@@ -117,6 +122,14 @@ namespace Content.Server.Carrying
             _vocalSystem.TryScream(args.ItemUid);
         }
 
+        private void OnParentChanged(EntityUid uid, CarryingComponent component, ref EntParentChangedMessage args)
+        {
+            if (Transform(uid).MapID != args.OldMapId)
+                return;
+
+            DropCarried(uid, component.Carried);
+        }
+
         /// <summary>
         /// Only let the person being carried interact with their carrier and things on their person.
         /// </summary>
@@ -164,6 +177,16 @@ namespace Content.Server.Carrying
         private void OnPullAttempt(EntityUid uid, BeingCarriedComponent component, PullAttemptEvent args)
         {
             args.Cancelled = true;
+        }
+
+        private void OnStartClimb(EntityUid uid, BeingCarriedComponent component, StartClimbEvent args)
+        {
+            DropCarried(component.Carrier, uid);
+        }
+
+        private void OnBuckleChange(EntityUid uid, BeingCarriedComponent component, BuckleChangeEvent args)
+        {
+            DropCarried(component.Carrier, uid);
         }
 
         private void OnCarrySuccess(CarrySuccessfulEvent ev)
@@ -224,14 +247,17 @@ namespace Content.Server.Carrying
                 _pullingSystem.TryStopPull(pullable);
 
             Transform(carried).Coordinates = Transform(carrier).Coordinates;
-            Transform(carried).ParentUid = carrier;
+            Transform(carried).AttachParent(Transform(carrier));
             _virtualItemSystem.TrySpawnVirtualItemInHand(carried, carrier);
             _virtualItemSystem.TrySpawnVirtualItemInHand(carried, carrier);
-            EnsureComp<CarryingComponent>(carrier);
+            var carryingComp = EnsureComp<CarryingComponent>(carrier);
             ApplyCarrySlowdown(carrier, carried);
             var carriedComp = EnsureComp<BeingCarriedComponent>(carried);
             EnsureComp<KnockedDownComponent>(carried);
+
+            carryingComp.Carried = carried;
             carriedComp.Carrier = carrier;
+
             _actionBlockerSystem.UpdateCanMove(carried);
         }
 
