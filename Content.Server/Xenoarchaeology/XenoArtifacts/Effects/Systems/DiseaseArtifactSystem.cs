@@ -25,9 +25,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         public readonly IReadOnlyList<string> ArtifactDiseases = new[]
         {
             "VanAusdallsRobovirus",
-            "OwOnavirus",
-            "BleedersBite",
-            "Ultragigacancer",
             "MemeticAmirmir",
             "TongueTwister",
             "AMIV"
