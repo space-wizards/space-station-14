@@ -198,6 +198,7 @@ namespace Content.Server.TapeRecorder
                 _appearanceSystem.SetData(component.Owner, TapeRecorderVisuals.Status, TapeRecorderState.Idle);
                 return;
             }
+
             _appearanceSystem.SetData(component.Owner, TapeRecorderVisuals.Status, component.CurrentMode);
         }
 
@@ -278,6 +279,8 @@ namespace Content.Server.TapeRecorder
         //the verb sewer
         private void OnGetAltVerbs(EntityUid uid, TapeRecorderComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
+            if (component.CurrentMode == TapeRecorderState.Empty)
+                return;
 
             if (component.CurrentMode != TapeRecorderState.Play)
             {

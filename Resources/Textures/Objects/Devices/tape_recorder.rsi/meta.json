@@ -32,6 +32,17 @@
         ]
       ]
     },
+        {
+      "name": "taperecorder_rewinding",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
     {
       "name": "taperecorder_empty"
     }

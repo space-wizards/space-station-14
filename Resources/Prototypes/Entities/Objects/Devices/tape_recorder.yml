@@ -6,10 +6,10 @@
   components:
     - type: Sprite
       sprite: Objects/Devices/tape_recorder.rsi
-      state: taperecorder_idle
+      state: taperecorder_empty
     - type: Item
       sprite: Objects/Devices/tape_recorder.rsi
-      heldPrefix: taperecorder_idle
+      heldPrefix: taperecorder_empty
     - type: TapeRecorder
     - type: ChatListener
     - type: Speech
@@ -28,7 +28,7 @@
           states:
             enum.TapeRecorderState.Play: taperecorder_playing
             enum.TapeRecorderState.Record: taperecorder_recording
-            enum.TapeRecorderState.Rewind: taperecorder_recording
+            enum.TapeRecorderState.Rewind: taperecorder_rewinding
             enum.TapeRecorderState.Idle: taperecorder_idle
             enum.TapeRecorderState.Empty: taperecorder_empty
 

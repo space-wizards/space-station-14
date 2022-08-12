@@ -7,7 +7,7 @@ namespace Content.Server.TapeRecorder
     /// Component given to tape recorders, will allow you to record to the stored cassette tape.
     /// </summary>
     [RegisterComponent]
-    public class TapeRecorderComponent : Component
+    public sealed class TapeRecorderComponent : Component
     {
 
         public CassetteTapeComponent? InsertedTape = null;
