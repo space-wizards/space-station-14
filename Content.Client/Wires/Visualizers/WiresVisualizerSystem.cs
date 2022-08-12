@@ -12,14 +12,16 @@ namespace Content.Client.Wires.Visualizers
             if (args.Sprite == null)
                 return;
 
+            var layer = args.Sprite.LayerMapReserveBlank(WiresVisualLayers.MaintenancePanel);
+
             if (_appearanceSystem.TryGetData(uid, WiresVisuals.MaintenancePanelState, out var panelState, args.Component))
             {
-                args.Sprite.LayerSetVisible(WiresVisualLayers.MaintenancePanel, (bool) panelState);
+                args.Sprite.LayerSetVisible(layer, (bool) panelState);
             }
             else
             {
                 //Mainly for spawn window
-                args.Sprite.LayerSetVisible(WiresVisualLayers.MaintenancePanel, false);
+                args.Sprite.LayerSetVisible(layer, false);
             }
         }
     }
