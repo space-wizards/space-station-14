@@ -75,12 +75,12 @@ public sealed class MagicMirrorSelectSlotMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class MagicMirrorAddSlotMessage : BoundUserInterfaceMessage
 {
-    public MagicMirrorAddSlotMessage(MagicMirrorAddSlotMessage category)
+    public MagicMirrorAddSlotMessage(MagicMirrorCategory category)
     {
         Category = category;
     }
 
-    public MagicMirrorAddSlotMessage Category { get; }
+    public MagicMirrorCategory Category { get; }
 }
 
 [Serializable, NetSerializable]

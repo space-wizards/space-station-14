@@ -1,4 +1,5 @@
 using Content.Shared.MagicMirror;
+using Content.Shared.Markings;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.MagicMirror;
@@ -17,6 +18,43 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
         _window = new();
 
         _window.OpenCentered();
+
+        _window.OnHairSelected += tuple => SelectHair(MagicMirrorCategory.Hair, tuple.id, tuple.slot);
+        _window.OnHairColorChanged += args => ChangeColor(MagicMirrorCategory.Hair, args.marking, args.slot);
+        _window.OnHairSlotAdded += delegate() { AddSlot(MagicMirrorCategory.Hair); };
+        _window.OnHairSlotRemoved += args => RemoveSlot(MagicMirrorCategory.Hair, args);
+        _window.OnHairSlotSelected += args => SelectSlot(MagicMirrorCategory.Hair, args);
+
+        _window.OnFacialHairSelected += tuple => SelectHair(MagicMirrorCategory.FacialHair, tuple.id, tuple.slot);
+        _window.OnFacialHairColorChanged += args => ChangeColor(MagicMirrorCategory.FacialHair, args.marking, args.slot);
+        _window.OnFacialHairSlotAdded += delegate() { AddSlot(MagicMirrorCategory.FacialHair); };
+        _window.OnFacialHairSlotRemoved += args => RemoveSlot(MagicMirrorCategory.FacialHair, args);
+        _window.OnFacialHairSlotSelected += args => SelectSlot(MagicMirrorCategory.FacialHair, args);
+    }
+
+    private void SelectHair(MagicMirrorCategory category, string marking, uint slot)
+    {
+        SendMessage(new MagicMirrorSelectMessage(category, marking, slot));
+    }
+
+    private void ChangeColor(MagicMirrorCategory category, Marking marking, uint slot)
+    {
+        SendMessage(new MagicMirrorChangeColorMessage(category, new(marking.MarkingColors), slot));
+    }
+
+    private void RemoveSlot(MagicMirrorCategory category, uint slot)
+    {
+        SendMessage(new MagicMirrorRemoveSlotMessage(category, slot));
+    }
+
+    private void SelectSlot(MagicMirrorCategory category, uint slot)
+    {
+        SendMessage(new MagicMirrorSelectSlotMessage(category, slot));
+    }
+
+    private void AddSlot(MagicMirrorCategory category)
+    {
+        SendMessage(new MagicMirrorAddSlotMessage(category));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

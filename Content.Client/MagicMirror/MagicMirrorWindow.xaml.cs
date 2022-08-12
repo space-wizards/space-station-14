@@ -9,14 +9,14 @@ namespace Content.Client.MagicMirror;
 public sealed partial class MagicMirrorWindow : DefaultWindow
 {
     // MMMMMMM
-    public Action<(uint, string)>? OnHairSelected;
-    public Action<(uint, Marking)>? OnHairColorChanged;
+    public Action<(uint slot, string id)>? OnHairSelected;
+    public Action<(uint slot, Marking marking)>? OnHairColorChanged;
     public Action<uint>? OnHairSlotRemoved;
     public Action<uint>? OnHairSlotSelected;
     public Action? OnHairSlotAdded;
 
-    public Action<(uint, string)>? OnFacialHairSelected;
-    public Action<(uint, Marking)>? OnFacialHairColorChanged;
+    public Action<(uint slot, string id)>? OnFacialHairSelected;
+    public Action<(uint slot, Marking marking)>? OnFacialHairColorChanged;
     public Action<uint>? OnFacialHairSlotRemoved;
     public Action<uint>? OnFacialHairSlotSelected;
     public Action? OnFacialHairSlotAdded;
