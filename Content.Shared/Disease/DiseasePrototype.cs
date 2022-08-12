@@ -30,8 +30,7 @@ namespace Content.Shared.Disease
         /// <summary>
         /// Controls how often a disease ticks.
         /// </summary>
-        [ViewVariables]
-        public float TickTime = 1f;
+        [ViewVariables, DataField("tickTime")] public float TickTime = 1f;
 
         /// <summary>
         /// Since disease isn't mapped to metabolism or anything,

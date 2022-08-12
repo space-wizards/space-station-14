@@ -1,5 +1,6 @@
 ﻿<fw:FancyWindow xmlns:fw="clr-namespace:Content.Client.UserInterface"
                 xmlns="https://spacestation14.io"
+                xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 MinSize="270 130"
                 SetSize="360 180"
                 Title="Generator">
@@ -17,7 +18,8 @@
                 <Label Name="FuelLeft" Text="0"/>
             </GridContainer>
         </BoxContainer>
-        <PanelContainer Margin="12 0 0 0" StyleClasses="Inset" VerticalAlignment="Center">
+        <cc:VSeparator StyleClasses="LowDivider"/>
+        <PanelContainer Margin="12 0 0 0" StyleClasses="Inset" VerticalAlignment="Center" HorizontalExpand="True">
             <SpriteView Name="EntityView" SetSize="64 64" Scale="2 2" OverrideDirection="South" />
         </PanelContainer>
     </BoxContainer>

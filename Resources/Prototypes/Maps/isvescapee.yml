@@ -1,0 +1,16 @@
+﻿- type: gameMap
+  id: ISVEscapee
+  mapName: 'ISV Escapee'
+  mapPath: /Maps/isvconstruct.yml
+  minPlayers: 0
+  fallback: true
+  descriptionPath: "/Server Info/ISVEscapeeInfo.txt"
+  stations:
+    ISVEscapee:
+      mapNameTemplate: '{0} Escapee {1}'
+      nameGenerator:
+        !type:IndependentNameGenerator
+        prefixCreator: ''
+      overflowJobs: []
+      availableJobs:
+        Passenger: [ 3, 3 ]

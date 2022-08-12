@@ -102,6 +102,7 @@ namespace Content.Server.Ghost
             }
 
             component.TimeOfDeath = _gameTiming.CurTime;
+            Dirty(component);
 
             _actions.AddAction(uid, component.Action, null);
         }
