@@ -1,6 +1,7 @@
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
@@ -39,6 +40,7 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamage);
 
+            SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
             SubscribeLocalEvent<VendingMachineComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
 
@@ -61,6 +63,12 @@ namespace Content.Server.VendingMachines
                 var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.Action));
                 _action.AddAction(uid, action, uid);
             }
+        }
+
+        private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)
+        {
+            if (component.Broken)
+                args.Cancel();
         }
 
         private void OnBoundUIOpened(EntityUid uid, VendingMachineComponent component, BoundUIOpenedEvent args)
@@ -108,7 +116,8 @@ namespace Content.Server.VendingMachines
         
         private void OnDamage(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
         {
-            if (component.DispenseOnHitCoolingDown || component.DispenseOnHitChance == null || args.DamageDelta == null)
+            if (component.Broken || component.DispenseOnHitCoolingDown ||
+                component.DispenseOnHitChance == null || args.DamageDelta == null)
                 return;
 
             if (args.DamageIncreased && args.DamageDelta.Total >= component.DispenseOnHitThreshold &&
