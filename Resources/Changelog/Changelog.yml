@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Gas miners are now capped at 300 kPa instead of 4500 kPa. Less pressure
-      bombing., type: Tweak}
-  id: 1636
-  time: '2022-06-02T21:35:32.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station now has security cameras. Lots of them., type: Add}
@@ -2936,3 +2930,8 @@ Entries:
       in the queue., type: Fix}
   id: 2135
   time: '2022-08-12T01:33:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio occlusion is working again, type: Fix}
+  id: 2136
+  time: '2022-08-12T02:53:28.0000000+00:00'
