@@ -21,9 +21,9 @@ namespace Content.Client.Lathe
             }
 
             if (args.Component.TryGetData(WiresVisuals.MaintenancePanelState, out bool panel)
-                && args.Sprite.LayerMapTryGet(WiresVisualizer.WiresVisualLayers.MaintenancePanel, out _))
+                && args.Sprite.LayerMapTryGet(WiresVisualLayers.MaintenancePanel, out _))
             {
-                args.Sprite.LayerSetVisible(WiresVisualizer.WiresVisualLayers.MaintenancePanel, panel);
+                args.Sprite.LayerSetVisible(WiresVisualLayers.MaintenancePanel, panel);
             }
 
             // Lathe specific stuff

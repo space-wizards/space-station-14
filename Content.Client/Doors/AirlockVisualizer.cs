@@ -85,7 +85,7 @@ namespace Content.Client.Doors
                     {
                         var flickMaintenancePanel = new AnimationTrackSpriteFlick();
                         CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                        flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
+                        flickMaintenancePanel.LayerKey = WiresVisualLayers.MaintenancePanel;
                         flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
                     }
                 }
@@ -109,7 +109,7 @@ namespace Content.Client.Doors
                     {
                         var flickMaintenancePanel = new AnimationTrackSpriteFlick();
                         OpenAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                        flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
+                        flickMaintenancePanel.LayerKey = WiresVisualLayers.MaintenancePanel;
                         flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
                     }
                 }
