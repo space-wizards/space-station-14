@@ -49,8 +49,6 @@ namespace Content.Server.Tiles
             var locationMap = location.ToMap(EntityManager);
             if (locationMap.MapId == MapId.Nullspace)
                 return;
-
-
             _mapManager.TryGetGrid(location.EntityId, out var mapGrid);
 
             foreach (var currentTile in component.OutputTiles)
