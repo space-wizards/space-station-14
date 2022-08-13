@@ -1145,7 +1145,7 @@ namespace Content.Shared.CCVar
         /// The time each ghost role lottery lasts. In seconds.
         /// </summary>
         public static readonly CVarDef<float> GhostRoleLotteryTime =
-            CVarDef.Create("ghost.role_lottery_time", 30f, CVar.SERVERONLY);
+            CVarDef.Create("ghost.role_lottery_time", 10f, CVar.SERVERONLY);
 
         /*
          * PLAYTIME

@@ -7,5 +7,6 @@ namespace Content.Server.Ghost.Roles.Components;
 [Access(typeof(GhostRoleGroupSystem))]
 public sealed class GhostRoleGroupComponent : Component
 {
+    [ViewVariables(VVAccess.ReadOnly)]
     public uint Identifier { get; set; }
 }

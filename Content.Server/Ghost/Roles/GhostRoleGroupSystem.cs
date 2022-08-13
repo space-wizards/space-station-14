@@ -66,7 +66,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, GhostRoleGroupComponent component, MindAddedMessage args)
     {
-        DetachFromGhostRoleGroup(component.Identifier, uid);
+        if(_roleGroupEntries.TryGetValue(component.Identifier, out var entry))
+            RemComp<GhostRoleGroupComponent>(uid); // This will trigger the removal of the entity from the role group.
     }
 
     private void Reset(RoundRestartCleanupEvent ev)
@@ -187,15 +188,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             return;
 
         RemComp<GhostTakeoverAvailableComponent>(uid); // Remove so that GhostRoleSystem doesn't manage it simultaneously.
-        var comp = AddComp<GhostRoleGroupComponent>(uid);
-        comp.Identifier = identifier.Value;
-
         AttachToGhostRoleGroup(args.PlacedBy, identifier.Value, uid, component);
     }
 
     private void OnShutdown(EntityUid uid, GhostRoleGroupComponent role, ComponentShutdown args)
     {
-        DetachFromGhostRoleGroup(role.Identifier, uid);
+        if(_roleGroupEntries.TryGetValue(role.Identifier, out var entry))
+            InternalDetachFromGhostRoleGroup(entry, uid);
     }
 
     /// <summary>
@@ -358,6 +357,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             _ghostRoleLotterySystem.GhostRoleRemoveComponent(component); // If it has ghost role, it may already be part of a lottery. Remove it.
 
         MakeSentientCommand.MakeSentient(entity, EntityManager);
+        var groupComponent = EnsureComp<GhostRoleGroupComponent>(entity);
+        groupComponent.Identifier = identifier;
 
         _roleGroupEntities[entity] = identifier;
         _needsUpdateRoleGroups = true;
@@ -379,6 +380,12 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (entry.Status != GhostRoleGroupStatus.Editing)
             return false;
 
+        RemCompDeferred<GhostRoleGroupComponent>(entity); // Defer so we can remove below and get the result.
+        return InternalDetachFromGhostRoleGroup(entry, entity);
+    }
+
+    private bool InternalDetachFromGhostRoleGroup(RoleGroupEntry entry, EntityUid entity)
+    {
         var removed = _roleGroupEntities.Remove(entity);
         if (!removed)
             return removed;
@@ -388,7 +395,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (entry.Status == GhostRoleGroupStatus.Editing)
             return removed;
 
-        if(_roleGroupEntities.Count(kv => kv.Value == identifier) == 0)
+        if(_roleGroupEntities.Count(kv => kv.Value == entry.Identifier) == 0)
             InternalDeleteGhostRoleGroup(entry, false);
         else
             _ghostRoleLotterySystem.UpdateAllEui();

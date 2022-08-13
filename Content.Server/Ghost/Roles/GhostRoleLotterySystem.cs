@@ -501,7 +501,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
 
              var playerCount = sessions.Count;
              if (playerCount == 0)
-                 return;
+                 continue;
 
              var sessionIdx = 0;
 
