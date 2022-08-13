@@ -117,8 +117,6 @@ namespace Content.Server.TapeRecorder
         private void ChangeMode(TapeRecorderComponent component, TapeRecorderState state)
         {
             component.CurrentMode = state;
-
-
             UpdateAppearance(component);
         }
 
