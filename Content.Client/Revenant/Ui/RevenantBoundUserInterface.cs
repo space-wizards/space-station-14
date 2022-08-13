@@ -1,6 +1,4 @@
-using Content.Client.Traitor.Uplink;
 using Content.Shared.Revenant;
-using Content.Shared.Traitor.Uplink;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
