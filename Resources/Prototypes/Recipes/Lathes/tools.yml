@@ -38,7 +38,6 @@
 
 - type: latheRecipe
   id: CableStack
-  name: LV cable
   icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
   result: CableApcStack1
   completetime: 2
@@ -47,7 +46,6 @@
 
 - type: latheRecipe
   id: CableMVStack
-  name: MV cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
   result: CableMVStack1
   completetime: 2
@@ -56,7 +54,6 @@
 
 - type: latheRecipe
   id: CableHVStack
-  name: HV cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
   result: CableHVStack1
   completetime: 2
@@ -152,3 +149,16 @@
   materials:
     Steel: 300
     Plastic: 100
+
+- type: latheRecipe
+  id: HolofanProjector
+  icon: 
+    sprite: Objects/Devices/Holoprojectors/atmos.rsi
+    state: icon
+  result: HolofanProjector
+  completetime: 8
+  materials: # Inherited materials and time from PowerCellMedium recipe
+    Steel: 600
+    Glass: 350
+    Plastic: 150
+    Gold: 10

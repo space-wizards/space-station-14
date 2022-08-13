@@ -136,6 +136,7 @@ namespace Content.Client.Lobby
             if (gameTicker.IsGameStarted)
             {
                 _lobby.StartTime.Text = string.Empty;
+                _lobby.StationTime.Text = Loc.GetString("lobby-state-player-status-station-time", ("stationTime", _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan).ToString("hh\\:mm")));
                 return;
             }
 
@@ -159,6 +160,7 @@ namespace Content.Client.Lobby
                 }
             }
 
+            _lobby.StationTime.Text =  Loc.GetString("lobby-state-player-status-station-time", ("stationTime", TimeSpan.Zero.ToString("hh\\:mm")));
             _lobby.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 

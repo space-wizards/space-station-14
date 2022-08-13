@@ -45,7 +45,8 @@ namespace Content.Server.Atmos.Miasma
             "VanAusdallsRobovirus",
             "BleedersBite",
             "Plague",
-            "TongueTwister"
+            "TongueTwister",
+            "MemeticAmirmir"
         };
 
         /// <summary>
@@ -99,11 +100,14 @@ namespace Content.Server.Atmos.Miasma
 
                 EnsureComp<FliesComponent>(perishable.Owner);
 
-                DamageSpecifier damage = new();
-                damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
-                damage.DamageDict.Add("Cellular", 0.3); // Cloning rework might use this eventually
+                if (rotting.DealDamage)
+                {
+                    DamageSpecifier damage = new();
+                    damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
+                    damage.DamageDict.Add("Cellular", 0.3); // Cloning rework might use this eventually
 
-                _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true);
+                    _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true);
+                }
 
                 if (!TryComp<PhysicsComponent>(perishable.Owner, out var physics))
                     continue;
@@ -184,8 +188,14 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
         {
-            if (component.Rotting)
-                args.PushMarkup(Loc.GetString("miasma-rotting"));
+            if (!component.Rotting)
+                return;
+            var stage = component.DeathAccumulator / component.RotAfter.TotalSeconds;
+            var description = stage switch {
+                >= 3 => "miasma-extremely-bloated",
+                >= 2 => "miasma-bloated",
+                   _ => "miasma-rotting"};
+            args.PushMarkup(Loc.GetString(description));
         }
 
         /// Containers
@@ -200,7 +210,7 @@ namespace Content.Server.Atmos.Miasma
         }
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
-            if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            if (TryComp<PerishableComponent>(args.Entity, out var perishable) && !Terminating(uid))
             {
                 ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);

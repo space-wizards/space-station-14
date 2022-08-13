@@ -2,11 +2,13 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Database;
 using Content.Shared.PDA;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
@@ -21,6 +23,7 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -73,22 +76,39 @@ namespace Content.Server.Access.Systems
             }
         }
 
-        public bool TryChangeJobTitle(EntityUid uid, string jobTitle, IdCardComponent? id = null)
+        /// <summary>
+        /// Attempts to change the job title of a card.
+        /// Returns true/false.
+        /// </summary>
+        /// <remarks>
+        /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
+        /// </remarks>
+        public bool TryChangeJobTitle(EntityUid uid, string jobTitle, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
                 return false;
 
-            // TODO: Whenever we get admin logging these should be logged
             if (jobTitle.Length > SharedIdCardConsoleComponent.MaxJobTitleLength)
                 jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
 
             id.JobTitle = jobTitle;
             Dirty(id);
             UpdateEntityName(uid, id);
+
+            if (player != null)
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(id.Owner):entity} to {jobTitle} ");
             return true;
         }
 
-        public bool TryChangeFullName(EntityUid uid, string fullName, IdCardComponent? id = null)
+        /// <summary>
+        /// Attempts to change the full name of a card.
+        /// Returns true/false.
+        /// </summary>
+        /// <remarks>
+        /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
+        /// </remarks>
+        public bool TryChangeFullName(EntityUid uid, string fullName, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
                 return false;
@@ -99,6 +119,10 @@ namespace Content.Server.Access.Systems
             id.FullName = fullName;
             Dirty(id);
             UpdateEntityName(uid, id);
+
+            if (player != null)
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(id.Owner):entity} to {fullName} ");
             return true;
         }
 

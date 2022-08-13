@@ -6,7 +6,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
@@ -38,7 +38,7 @@
     thresholds:
       0: Alive
       15: Dead
-  - type: MovementIgnoreGravity
+  - type: MovementAlwaysTouching
   - type: Appearance
   - type: DamageStateVisuals
     states:

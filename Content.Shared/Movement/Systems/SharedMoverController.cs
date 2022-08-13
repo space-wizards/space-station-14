@@ -1,11 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
-using Content.Shared.MobState.Components;
 using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
@@ -17,9 +14,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -38,6 +35,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
         [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -61,6 +59,7 @@ namespace Content.Shared.Movement.Systems
         public override void Initialize()
         {
             base.Initialize();
+            InitializeFootsteps();
             InitializeInput();
             InitializeMob();
             InitializePushing();
@@ -114,7 +113,8 @@ namespace Content.Shared.Movement.Systems
             }
 
             UsedMobMovement[mover.Owner] = true;
-            var weightless = _gravity.IsWeightless(mover.Owner, physicsComponent, xform);
+            // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
+            var weightless = _gravity.IsWeightless(physicsComponent.Owner, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
 
@@ -214,12 +214,16 @@ namespace Content.Shared.Movement.Systems
                     : worldTotal.ToWorldAngle();
                 rotateXform.DeferUpdates = false;
 
-                if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) && TryGetSound(mover, mobMover, xform, out var variation, out var sound))
+                if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) &&
+                    TryGetSound(weightless, mover, mobMover, xform, out var sound))
                 {
                     var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingAddedVolumeMultiplier;
-                    SoundSystem.Play(sound,
-                        GetSoundPlayers(mover.Owner),
-                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume * soundModifier));
+
+                    var audioParams = sound.Params
+                        .WithVolume(FootstepVolume * soundModifier)
+                        .WithVariation(sound.Params.Variation ?? FootstepVariation);
+
+                    _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
                 }
             }
 
@@ -307,24 +311,19 @@ namespace Content.Shared.Movement.Systems
             return false;
         }
 
-        // TODO: Predicted audio moment.
-        protected abstract Filter GetSoundPlayers(EntityUid mover);
-
         protected abstract bool CanSound();
 
-        private bool TryGetSound(InputMoverComponent mover, MobMoverComponent mobMover, TransformComponent xform, out float variation, [NotNullWhen(true)] out string? sound)
+        private bool TryGetSound(bool weightless, InputMoverComponent mover, MobMoverComponent mobMover, TransformComponent xform, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
-            variation = 0f;
 
             if (!CanSound() || !_tags.HasTag(mover.Owner, "FootstepSound")) return false;
 
             var coordinates = xform.Coordinates;
-            var gridId = coordinates.GetGridUid(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
 
             // Handle footsteps.
-            if (_mapManager.GridExists(gridId))
+            if (!weightless)
             {
                 // Can happen when teleporting between grids.
                 if (!coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance) ||
@@ -343,7 +342,6 @@ namespace Content.Shared.Movement.Systems
                 return false;
             }
 
-            DebugTools.Assert(gridId != null);
             mobMover.LastPosition = coordinates;
 
             if (mobMover.StepSoundDistance < distanceNeeded) return false;
@@ -353,19 +351,31 @@ namespace Content.Shared.Movement.Systems
             if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
                 EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
             {
-                sound = modifier.SoundCollection.GetSound();
-                variation = modifier.Variation;
+                sound = modifier.Sound;
                 return true;
             }
 
-            return TryGetFootstepSound(gridId!.Value, coordinates, out variation, out sound);
+            return TryGetFootstepSound(coordinates, shoes != null, out sound);
         }
 
-        private bool TryGetFootstepSound(EntityUid gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
+        private bool TryGetFootstepSound(EntityCoordinates coordinates, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
-            variation = 0f;
             sound = null;
-            var grid = _mapManager.GetGrid(gridId);
+            var gridUid = coordinates.GetGridUid(EntityManager);
+
+            // Fallback to the map
+            if (gridUid == null)
+            {
+                if (TryComp<FootstepModifierComponent>(coordinates.GetMapUid(EntityManager), out var modifier))
+                {
+                    sound = modifier.Sound;
+                    return true;
+                }
+
+                return false;
+            }
+
+            var grid = _mapManager.GetGrid(gridUid.Value);
             var tile = grid.GetTileRef(coordinates);
 
             if (tile.IsSpace(_tileDefinitionManager)) return false;
@@ -376,18 +386,15 @@ namespace Content.Shared.Movement.Systems
             {
                 if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
-                    sound = footstep.SoundCollection.GetSound();
-                    variation = footstep.Variation;
+                    sound = footstep.Sound;
                     return true;
                 }
             }
 
             // Walking on a tile.
             var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            sound = def.FootstepSounds?.GetSound();
-            variation = FootstepVariation;
-
-            return !string.IsNullOrEmpty(sound);
+            sound = haveShoes ? def.FootstepSounds : def.BarestepSounds;
+            return sound != null;
         }
     }
 }

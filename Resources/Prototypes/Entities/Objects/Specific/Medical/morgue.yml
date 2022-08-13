@@ -92,3 +92,6 @@
     netsync: false
     sprite: Objects/Materials/materials.rsi
     state: ash
+  - type: Tag
+    tags:
+    - Trash

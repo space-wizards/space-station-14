@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
+using Content.Server.Contests;
 using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
@@ -28,6 +29,8 @@ namespace Content.Server.CombatMode
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        [Dependency] private readonly ContestsSystem _contests = default!;
 
         public override void Initialize()
         {
@@ -108,33 +111,15 @@ namespace Content.Server.CombatMode
 
         private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
         {
-            float healthMod = 0;
-
             if (HasComp<DisarmProneComponent>(disarmer))
                 return 1.0f;
 
             if (HasComp<DisarmProneComponent>(disarmed))
                 return 0.0f;
 
-            if (TryComp<DamageableComponent>(disarmer, out var disarmerDamage) && TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
-            {
-                // I wanted this to consider their mob state thresholds too but I'm not touching that shitcode after having a go at this.
-                healthMod = (((float) disarmedDamage.TotalDamage - (float) disarmerDamage.TotalDamage) / 200); // Ex. You have 0 damage, they have 90, you get a 45% chance increase
-            }
+            var contestResults = 1 - _contests.OverallStrengthContest(disarmer, disarmed);
 
-            float massMod = 0;
-
-            if (TryComp<PhysicsComponent>(disarmer, out var disarmerPhysics) && TryComp<PhysicsComponent>(disarmed, out var disarmedPhysics))
-            {
-                if (disarmerPhysics.FixturesMass != 0) // yeah this will never happen but let's not kill the server if it does
-                    massMod = (((disarmedPhysics.FixturesMass / disarmerPhysics.FixturesMass - 1 ) / 2)); // Ex, you weigh 120, they weigh 70, you get a 29% bonus
-            }
-
-            float chance = (disarmerComp.BaseDisarmFailChance - healthMod - massMod);
-            if (HasComp<SlowedDownComponent>(disarmer)) // might need to revisit this part after stamina damage, right now this is basically "pre-stun"
-                chance += 0.35f;
-            if (HasComp<SlowedDownComponent>(disarmed))
-                chance -= 0.35f;
+            float chance = (disarmerComp.BaseDisarmFailChance + contestResults);
 
             if (inTargetHand != null && TryComp<DisarmMalusComponent>(inTargetHand, out var malus))
             {

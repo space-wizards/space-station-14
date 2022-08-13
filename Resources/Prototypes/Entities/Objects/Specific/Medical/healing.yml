@@ -7,7 +7,7 @@
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
     sprite: Objects/Specific/Medical/medical.rsi
-    HeldPrefix: ointment
+    heldPrefix: ointment
 
 - type: entity
   name: ointment
@@ -21,12 +21,12 @@
   - type: Sprite
     state: ointment
   - type: Item
-    HeldPrefix: ointment
+    heldPrefix: ointment
   - type: Healing
     damageContainer: Biological
     damage:
       groups:
-        Burn: -10 # 5 for each type in the group
+        Burn: -15 # 5 for each type in the group
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:

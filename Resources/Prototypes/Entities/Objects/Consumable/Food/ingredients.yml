@@ -54,6 +54,8 @@
       path: /Audio/Items/eating_1.ogg
   - type: Spillable
     solution: food
+  - type: TrashOnEmpty
+    solution: food
 
 - type: entity
   parent: ReagentContainerBase

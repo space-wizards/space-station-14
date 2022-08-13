@@ -73,6 +73,9 @@ public sealed partial class ChatSystem
             chan = _prototypeManager.Index<RadioChannelPrototype>("Common");
         }
 
+        // Re-capitalize message since we removed the prefix.
+        message = SanitizeMessageCapital(source, message);
+
         if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
             TryComp(entityUid, out HeadsetComponent? headset))
         {

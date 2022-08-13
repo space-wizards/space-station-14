@@ -3,12 +3,14 @@ using Content.Server.Interaction.Components;
 using Content.Server.Sound.Components;
 using Content.Server.Throwing;
 using Content.Server.UserInterface;
+using Content.Server.Popups;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -22,8 +24,10 @@ namespace Content.Server.Sound
     public sealed class EmitSoundSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         /// <inheritdoc />
 
@@ -41,6 +45,8 @@ namespace Content.Server.Sound
 
                 if (_random.Prob(soundSpammer.PlayChance))
                 {
+                    if (soundSpammer.PopUp != null)
+                        _popupSystem.PopupEntity(Loc.GetString(soundSpammer.PopUp), soundSpammer.Owner, Filter.Pvs(soundSpammer.Owner));
                     TryEmitSound(soundSpammer);
                 }
             }
@@ -54,6 +60,8 @@ namespace Content.Server.Sound
             SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
             SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
             SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
+            SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(HandleEmitSoundOnPickup);
+            SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(HandleEmitSoundOnDrop);
         }
 
         private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
@@ -102,10 +110,19 @@ namespace Content.Server.Sound
             TryEmitSound(component);
         }
 
+        private void HandleEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, GotEquippedHandEvent args)
+        {
+            TryEmitSound(component);
+        }
+
+        private void HandleEmitSoundOnDrop(EntityUid uid, EmitSoundOnDropComponent component, DroppedEvent args)
+        {
+            TryEmitSound(component);
+        }
+
         private void TryEmitSound(BaseEmitSoundComponent component)
         {
-            var audioParams = component.AudioParams.WithPitchScale((float) _random.NextGaussian(1, component.PitchVariation));
-            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, audioParams);
+            _audioSystem.PlayPvs(component.Sound, component.Owner, component.Sound.Params.AddVolume(-2f));
         }
     }
 }

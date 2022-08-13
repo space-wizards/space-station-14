@@ -1,7 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-﻿using System.Collections.Generic;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Client.Graphics;
 
 namespace Content.Client.Parallax.Data

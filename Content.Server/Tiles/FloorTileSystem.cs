@@ -2,7 +2,6 @@ using Content.Server.Stack;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -58,7 +57,7 @@ namespace Content.Server.Tiles
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
                     }
                 }
-                else if (HasBaseTurf(currentTileDefinition, "space"))
+                else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
                 {
                     mapGrid = _mapManager.CreateGrid(locationMap.MapId);
                     mapGrid.WorldPosition = locationMap.Position;

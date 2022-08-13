@@ -43,9 +43,10 @@
   - type: Clothing
     sprite: Clothing/Shoes/Misc/duck-slippers.rsi
   - type: FootstepModifier
-    variation: 0.07
     footstepSoundCollection:
-      collection: footstep_duck
+      collection: FootstepDuck
+      params:
+        variation: 0.07
 
 - type: entity
   parent: ClothingShoesBase

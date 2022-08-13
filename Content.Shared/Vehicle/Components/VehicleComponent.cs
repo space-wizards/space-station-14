@@ -1,5 +1,4 @@
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 
@@ -36,10 +35,7 @@ namespace Content.Shared.Vehicle.Components
         [DataField("hornSound")] public SoundSpecifier? HornSound =
         new SoundPathSpecifier("/Audio/Effects/Vehicle/carhorn.ogg")
         {
-            Params =
-            {
-                Volume = -3f,
-            }
+            Params = AudioParams.Default.WithVolume(-3f)
         };
 
         public IPlayingAudioStream? HonkPlayingStream;

@@ -1,6 +1,5 @@
 - type: entity
   id: CrateNPCBee
-  name: crate of bees
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -11,7 +10,6 @@
 
 - type: entity
   id: CrateNPCButterflies
-  name: crate of butterflies
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -22,7 +20,6 @@
 
 - type: entity
   id: CrateNPCCat
-  name: cat crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -33,7 +30,6 @@
 
 - type: entity
   id: CrateNPCChicken
-  name: chicken crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -44,7 +40,6 @@
 
 - type: entity
   id: CrateNPCDuck
-  name: duck crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -59,7 +54,6 @@
 
 - type: entity
   id: CrateNPCCorgi
-  name: corgi crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -69,7 +63,6 @@
 
 - type: entity
   id: CrateNPCCow
-  name: cow crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -80,7 +73,6 @@
 
 - type: entity
   id: CrateNPCGoat
-  name: goat crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -91,7 +83,6 @@
 
 - type: entity
   id: CrateNPCGoose
-  name: goose crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -102,7 +93,6 @@
 
 - type: entity
   id: CrateNPCGorilla
-  name: gorilla crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -113,7 +103,6 @@
 
 - type: entity
   id: CrateNPCMonkeyCube
-  name: monkey cube crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -123,7 +112,6 @@
 
 - type: entity
   id: CrateNPCMouse
-  name: mice crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -133,7 +121,6 @@
 
 - type: entity
   id: CrateNPCParrot
-  name: parrot crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -144,7 +131,6 @@
 
 - type: entity
   id: CrateNPCPenguin
-  name: penguin crate
   parent: CrateLivestock
   components:
   - type: StorageFill
@@ -155,7 +141,6 @@
 
 - type: entity
   id: CrateNPCSnake
-  name: snake crate
   parent: CrateLivestock
   components:
   - type: StorageFill

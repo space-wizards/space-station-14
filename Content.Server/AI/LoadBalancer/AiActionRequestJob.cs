@@ -35,7 +35,7 @@ namespace Content.Server.AI.LoadBalancer
 
             var entity = _request.Context.GetState<SelfState>().GetValue();
 
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(entity))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<NPCComponent>(entity))
             {
                 return null;
             }
