@@ -36,6 +36,12 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Ringer
+  - type: CartridgeComputer
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
     singleUser: true

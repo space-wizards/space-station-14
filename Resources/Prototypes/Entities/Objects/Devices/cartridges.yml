@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: BaseItem
+  id: TestCartridge
+  name: Test Cartridge
+  description: Funny test entity goes BRRRRR!
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+    netsync: false
+  - type: Icon
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: Cartridge
+    programName: Test Program
+    icon:
+      sprite:  Objects/Devices/cartridge.rsi
+      state: cart-y
+  - type: NotekeeperCartridge
+
+
