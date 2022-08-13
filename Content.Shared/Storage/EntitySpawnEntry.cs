@@ -13,8 +13,8 @@ namespace Content.Shared.Storage;
 public struct EntitySpawnEntry
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("id", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrototypeId = default!;
+    [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? PrototypeId;
 
     /// <summary>
     ///     The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
