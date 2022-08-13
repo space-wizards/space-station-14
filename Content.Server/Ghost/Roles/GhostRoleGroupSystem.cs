@@ -394,9 +394,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Removes the entity from the role group. If the role group becomes empty and isn't
-    ///     being edited, it will be removed. If the entity belongs to a different role group, it
-    ///     will not be removed from that role group.
+    ///     Removes the entity from the role group. If the entity has attached to a different role group, it will remain
+    ///     attached to that role group.
     ///     <para/>
     ///
     ///     This will fail if the role group has been released or is not owned by the session. If you need to
@@ -405,21 +404,28 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <param name="session">The player session requesting the detach.</param>
     /// <param name="identifier">The identifier of the role group.</param>
     /// <param name="entity">The entity being removed.</param>
-    /// <returns>true if the entity was successfully removed; otherwise false</returns>
+    /// <returns>true if the entity was successfully removed or not a part of the role group; otherwise false</returns>
     public bool DetachFromGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity)
     {
-        if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
+        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
+            return true;
+
+        if (_roleGroupEntities.TryGetValue(entity, out var currentIdentifier) && currentIdentifier != identifier)
+            return true; // Entity has already been moved to a different role group.
+
+        if (entry.Status != GhostRoleGroupStatus.Editing || !CanModify(session, entry))
             return false;
 
-        if (entry.Status != GhostRoleGroupStatus.Editing)
-            return false;
-
-        var result = InternalDetachFromGhostRoleGroup(entry, entity);
-
-        RemComp<GhostRoleGroupComponent>(entity);
-        return result;
+        RemComp<GhostRoleGroupComponent>(entity); // Triggers the removal of the entity from the role group.
+        return true;
     }
 
+    /// <summary>
+    ///     Internal entity detachment from role group.
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     private bool InternalDetachFromGhostRoleGroup(RoleGroupEntry entry, EntityUid entity)
     {
         var removed = _roleGroupEntities.Remove(entity);
