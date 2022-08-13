@@ -130,3 +130,22 @@
       sprite: Objects/Devices/cassette_tapes.rsi
       heldPrefix: tape_white
 
+
+- type: entity
+  name: tape recorder kit
+  parent: BoxCardboard
+  id: BoxTapeRecorder
+  description: A kit with colorful cassette tapes and a tape recorder.
+  components:
+    - type: StorageFill
+      contents:
+        - id: BlueCassetteTape
+          amount: 1
+        - id: RedCassetteTape
+          amount: 1
+        - id: PurpleCassetteTape
+          amount: 1
+        - id: WhiteCassetteTape
+          amount: 1
+        - id: TapeRecorder
+          amount: 1

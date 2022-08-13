@@ -23,6 +23,7 @@
         - Skub
         - ClothingHeadHatCatEars
         - DrinkMugDog
+        - BoxTapeRecorder
       rareChance: 0.01
       prototypes:
         - Lighter
