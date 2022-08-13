@@ -2,8 +2,11 @@ using Content.Server.Stack;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -15,6 +18,8 @@ namespace Content.Server.Tiles
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly PhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -35,10 +40,18 @@ namespace Content.Server.Tiles
 
             // this looks a bit sussy but it might be because it needs to be able to place off of grids and expand them
             var location = args.ClickLocation.AlignWithClosestGridTile();
+            foreach (var ent in location.GetEntitiesInTile())
+            {
+                // check that we the tile we're trying to access isn't blocked by a wall or something
+                if (TryComp<PhysicsComponent>(ent, out var phys) && phys.Hard && (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                    return;
+            }
             var locationMap = location.ToMap(EntityManager);
             if (locationMap.MapId == MapId.Nullspace)
                 return;
-            _mapManager.TryGetGrid(location.GetGridId(EntityManager), out var mapGrid);
+
+
+            _mapManager.TryGetGrid(location.EntityId, out var mapGrid);
 
             foreach (var currentTile in component.OutputTiles)
             {
@@ -82,7 +95,7 @@ namespace Content.Server.Tiles
         {
             var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
-            SoundSystem.Play(placeSound.GetSound(), Filter.Pvs(location), location, AudioHelpers.WithVariation(0.125f, _random));
+            _audio.Play(placeSound, Filter.Pvs(location), location, AudioHelpers.WithVariation(0.125f, _random));
         }
     }
 }
