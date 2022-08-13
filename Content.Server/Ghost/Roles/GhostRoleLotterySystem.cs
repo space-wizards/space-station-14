@@ -36,6 +36,12 @@ internal record GhostRoleLotteryRecord
     public HashSet<GhostRoleComponent> ForLottery = new();
 }
 
+public sealed class RequestAvailableLotteryItemsMessage
+{
+    public readonly List<GhostRoleComponent> GhostRoles = new();
+    public readonly List<uint> GhostRoleGroups = new();
+}
+
 [UsedImplicitly]
 public sealed class GhostRoleLotterySystem : EntitySystem
 {
@@ -49,9 +55,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
     private readonly Dictionary<IPlayerSession, PlayerLotteryData> _playerLotteryData = new ();
 
-    private readonly List<GhostRoleComponent> _ghostRoleComponentQueuedLotteries = new();
     private readonly Dictionary<string, GhostRoleLotteryRecord> _ghostRoleComponentLotteries = new();
-    private readonly List<uint> _roleGroupQueuedLotteries = new();
     private readonly HashSet<uint> _roleGroupLotteries = new();
 
     private bool _needsUpdateGhostRoles = true;
@@ -77,6 +81,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+
 
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
@@ -150,12 +155,6 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         }
     }
 
-    public void ForceUIRefresh()
-    {
-        _needsUpdateGhostRoles = true;
-        _needsUpdateGhostRoleCount = true;
-    }
-
     public string[] GetPlayerRequestedGhostRoles(IPlayerSession player)
     {
         var requested = new List<string>();
@@ -163,6 +162,17 @@ public sealed class GhostRoleLotterySystem : EntitySystem
             return requested.ToArray();
 
         requested.AddRange(data.GhostRoles);
+
+        return requested.ToArray();
+    }
+
+    public uint[] GetPlayerRequestedRoleGroups(IPlayerSession player)
+    {
+        var requested = new List<uint>();
+        if (!_playerLotteryData.TryGetValue(player, out var data))
+            return requested.ToArray();
+
+        requested.AddRange(data.GhostRoleGroups);
 
         return requested.ToArray();
     }
@@ -224,23 +234,8 @@ public sealed class GhostRoleLotterySystem : EntitySystem
             UpdatePlayerEui(player);
     }
 
-    public void GhostRoleQueueComponent(GhostRoleComponent component)
-    {
-        if (_ghostRoleComponentQueuedLotteries.Contains(component))
-            return;
-
-        if (_ghostRoleComponentLotteries.TryGetValue(component.RoleName, out var components) &&
-            (components.ForTake.Contains(component) || components.ForLottery.Contains(component)))
-        {
-            return;
-        }
-
-        _ghostRoleComponentQueuedLotteries.Add(component);
-    }
-
     public void GhostRoleRemoveComponent(GhostRoleComponent component)
     {
-        _ghostRoleComponentQueuedLotteries.Remove(component);
         if (!_ghostRoleComponentLotteries.TryGetValue(component.RoleName, out var components))
             return;
 
@@ -299,7 +294,10 @@ public sealed class GhostRoleLotterySystem : EntitySystem
 
         var anyAdded = false;
 
-        foreach (var component in _ghostRoleComponentQueuedLotteries)
+        var lotteryEvent = new RequestAvailableLotteryItemsMessage();
+        RaiseLocalEvent(lotteryEvent);
+
+        foreach (var component in lotteryEvent.GhostRoles)
         {
             if (!_ghostRoleComponentLotteries.TryGetValue(component.RoleName, out var components))
                 _ghostRoleComponentLotteries[component.RoleName] = components = new GhostRoleLotteryRecord();
@@ -308,23 +306,16 @@ public sealed class GhostRoleLotterySystem : EntitySystem
                 ? components.ForLottery.Add(component)
                 : components.ForTake.Add(component);
 
-            if(added)
-                component.Queued = false;
-
             anyAdded |= added;
         }
 
-        foreach (var group in _roleGroupQueuedLotteries)
+        foreach (var group in lotteryEvent.GhostRoleGroups)
         {
             var added = _roleGroupLotteries.Add(group);
-
             anyAdded |= added;
         }
 
-        _roleGroupQueuedLotteries.Clear();
-        _ghostRoleComponentQueuedLotteries.Clear();
-
-        var ev = new GhostRoleCountRequestedEvent();
+        var ev = new GhostRoleCountRequestedMessage();
         RaiseLocalEvent(ev);
         AvailableRolesCount = ev.Count;
 
@@ -352,7 +343,6 @@ public sealed class GhostRoleLotterySystem : EntitySystem
                     sessions.Add(playerSession);
             }
 
-
             var playerCount = sessions.Count;
             var componentCount = components.ForLottery.Count;
 
@@ -375,7 +365,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
                     continue;
                 }
 
-                var takeoverEvent = new GhostRoleRequestTakeoverEvent(session, component);
+                var takeoverEvent = new GhostRoleRequestTakeoverMessage(session, component);
                 RaiseLocalEvent(component.Owner, takeoverEvent);
                 if (!takeoverEvent.Result)
                 {
@@ -410,76 +400,57 @@ public sealed class GhostRoleLotterySystem : EntitySystem
 
     private void ProcessRoleGroupLottery(ISet<IPlayerSession> successfulPlayers)
     {
-        // foreach (var (_, entry) in _roleGroupEntries)
-        // {
-        //     var playerCount = entry.Requests.Count;
-        //     var lotteryCount = entry.Entities.Count;
-        //
-        //     if (playerCount == 0)
-        //         return;
-        //
-        //     if (lotteryCount == 0)
-        //     {
-        //         entry.Requests.Clear();
-        //         return;
-        //     }
-        //
-        //     var sessionIdx = 0;
-        //     var lotteryIdx = 0;
-        //
-        //     var lottery = entry.Entities.ShallowClone();
-        //     entry.Entities.Clear();
-        //
-        //     var shuffledRequests = entry.Requests.ToList();
-        //     _random.Shuffle(shuffledRequests);
-        //     entry.Requests.Clear();
-        //
-        //     while (sessionIdx < playerCount && lotteryIdx < lotteryCount)
-        //     {
-        //         var session = shuffledRequests[sessionIdx];
-        //         var entityUid = lottery[lotteryIdx];
-        //
-        //         if (session.Status != SessionStatus.InGame || successfulPlayers.Contains(session))
-        //         {
-        //             sessionIdx++;
-        //             continue;
-        //         }
-        //
-        //         var contentData = session.ContentData();
-        //
-        //         DebugTools.AssertNotNull(contentData);
-        //
-        //         var newMind = new Mind.Mind(session.UserId)
-        //         {
-        //             CharacterName = _entityManager.GetComponent<MetaDataComponent>(entityUid).EntityName
-        //         };
-        //         newMind.AddRole(new GhostRoleMarkerRole(newMind, entry.RoleName));
-        //
-        //         newMind.ChangeOwningPlayer(session.UserId);
-        //         newMind.TransferTo(entityUid);
-        //
-        //         sessionIdx++;
-        //         lotteryIdx++;
-        //
-        //         successfulPlayers.Add(session);
-        //         SendPlayerTakeoverCompleteEvent(session, entry.RoleName, entityUid);
-        //     }
-        //
-        //     if (lotteryIdx == lotteryCount)
-        //     {
-        //         // Role Group is fully used.
-        //         _roleGroupEntries.Remove(entry.Identifier);
-        //     }
-        //
-        //     // Re-add remaining entities.
-        //     while (lotteryIdx < lotteryCount)
-        //     {
-        //         var entityUid = lottery[lotteryIdx];
-        //         entry.Entities.Add(entityUid);
-        //
-        //         lotteryIdx++;
-        //     }
-        //}
+        var sessions = new List<IPlayerSession>(_playerLotteryData.Count);
+        var clearRoleGroups = new HashSet<uint>();
+
+         foreach (var roleGroupIdentifier in _roleGroupLotteries)
+         {
+             foreach (var (session, data) in _playerLotteryData)
+             {
+                 if (data.GhostRoleGroups.Contains(roleGroupIdentifier))
+                     sessions.Add(session);
+             }
+
+             var playerCount = sessions.Count;
+             if (playerCount == 0)
+                 return;
+
+             var sessionIdx = 0;
+
+             _random.Shuffle(sessions);
+
+             while (sessionIdx < playerCount)
+             {
+                 var session = sessions[sessionIdx];
+                 if (session.Status != SessionStatus.InGame || successfulPlayers.Contains(session))
+                 {
+                     sessionIdx++;
+                     continue;
+                 }
+
+                 var ev = new GhostRoleGroupRequestTakeoverMessage(session, roleGroupIdentifier);
+                 RaiseLocalEvent(ev);
+
+                 if(!ev.Result)
+                     continue;
+
+                 sessionIdx++;
+                 successfulPlayers.Add(session);
+                 ClearPlayerLotteryRequests(session);
+                 CloseEui(session);
+
+                 if (ev.RoleGroupTaken)
+                 {
+                     clearRoleGroups.Add(roleGroupIdentifier);
+                 }
+             }
+
+             _roleGroupLotteries.ExceptWith(clearRoleGroups);
+             foreach (var (_, data) in _playerLotteryData)
+             {
+                 data.GhostRoleGroups.ExceptWith(clearRoleGroups);
+             }
+         }
     }
 }
 

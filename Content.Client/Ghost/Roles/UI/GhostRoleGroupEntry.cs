@@ -10,7 +10,7 @@ public sealed partial class GhostRoleGroupEntry : BaseEntry
     public event Action<GhostRoleGroupInfo>? OnGroupSelected;
     public event Action<GhostRoleGroupInfo>? OnGroupCancelled;
 
-    public GhostRoleGroupEntry(GhostRoleGroupInfo group, bool adminControls, bool isRequested)
+    public GhostRoleGroupEntry(GhostRoleGroupInfo group, bool isRequested)
     {
         var total = group.AvailableCount;
         var ready = group.Status == "Released";
@@ -20,6 +20,8 @@ public sealed partial class GhostRoleGroupEntry : BaseEntry
 
         RequestButton.Text = "Request";
 
+        TakeButton.Visible = false;
+        FollowButton.Visible = false;
         RequestButton.Visible = ready && !isRequested;
         CancelButton.Visible = ready && isRequested;
 

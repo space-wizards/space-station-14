@@ -68,12 +68,12 @@ namespace Content.Client.Ghost.Roles.UI
 
             _window.OnGroupRequested += info =>
             {
-                SendMessage(new GhostRoleGroupLotteryRequestMessage(info.GroupIdentifier));
+                SendMessage(new GhostRoleGroupLotteryRequestMessage(info.Identifier));
             };
 
             _window.OnGroupCancelled += info =>
             {
-                SendMessage(new GhostRoleGroupCancelLotteryMessage(info.GroupIdentifier));
+                SendMessage(new GhostRoleGroupCancelLotteryMessage(info.Identifier));
             };
 
             _window.OnRoleGroupsOpened += OnRoleGroupsOpen;
@@ -118,7 +118,7 @@ namespace Content.Client.Ghost.Roles.UI
 
             foreach (var group in ghostState.GhostRoleGroups)
             {
-                _window.AddGroupEntry(group, ghostState.ShowAdminControls, ghostState.PlayerRequests.Contains(group.Identifier));
+                _window.AddGroupEntry(group, ghostState.PlayerRoleGroupRequests.Contains(group.Identifier));
             }
 
             foreach (var role in ghostState.GhostRoles)

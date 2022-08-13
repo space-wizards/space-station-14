@@ -41,6 +41,8 @@ public sealed class GhostRoleSystem : EntitySystem
 
     private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
+    private readonly HashSet<GhostRoleComponent> _queuedComponents = new();
+
     /// <summary>
     ///     Cache mapping the identifiers back to the components for quick lookup.
     /// </summary>
@@ -60,8 +62,9 @@ public sealed class GhostRoleSystem : EntitySystem
         SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
 
-        SubscribeLocalEvent<GhostRoleComponent, GhostRoleRequestTakeoverEvent>(OnTakeoverRequest);
-        SubscribeLocalEvent<GhostRoleCountRequestedEvent>(OnRequestCount);
+        SubscribeLocalEvent<GhostRoleComponent, GhostRoleRequestTakeoverMessage>(OnTakeoverRequest);
+        SubscribeLocalEvent<RequestAvailableLotteryItemsMessage>(OnLotteryRequest);
+        SubscribeLocalEvent<GhostRoleCountRequestedMessage>(OnRequestCount);
     }
 
     public void Follow(IPlayerSession player, string roleIdentifier)
@@ -125,11 +128,12 @@ public sealed class GhostRoleSystem : EntitySystem
             case DamageState.Alive:
             {
                 if (!component.Taken)
-                    _ghostRoleLotterySystem.GhostRoleQueueComponent(component);
+                    _queuedComponents.Add(component);
                 break;
             }
             case DamageState.Critical:
             case DamageState.Dead:
+                _queuedComponents.Remove(component);
                 _ghostRoleLotterySystem.GhostRoleRemoveComponent(component);
                 break;
         }
@@ -220,6 +224,11 @@ public sealed class GhostRoleSystem : EntitySystem
     private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
     {
         component.Taken = true; // Handle take-overs outside of this system (e.g. Admin take-over).
+        _queuedComponents.Remove(component);
+        if (_ghostRoleData.TryGetValue(component.RoleName, out var data))
+            data.Components.Remove(component);
+
+
         _ghostRoleLotterySystem.GhostRoleRemoveComponent(component);
     }
 
@@ -230,7 +239,7 @@ public sealed class GhostRoleSystem : EntitySystem
             return;
 
         component.Taken = false;
-        _ghostRoleLotterySystem.GhostRoleQueueComponent(component);
+        _queuedComponents.Add(component);
     }
 
     private void OnInit(EntityUid uid, GhostRoleComponent component, ComponentInit args)
@@ -259,20 +268,19 @@ public sealed class GhostRoleSystem : EntitySystem
         component.Identifier = data.RoleIdentifier;
         component.Queued = true;
 
-        data.Components.Add(component);
-
-        _ghostRoleLotterySystem.GhostRoleQueueComponent(component);
+        _queuedComponents.Add(component);
     }
 
     private void OnShutdown(EntityUid uid, GhostRoleComponent component, ComponentShutdown args)
     {
+        _queuedComponents.Remove(component);
         _ghostRoleLotterySystem.GhostRoleRemoveComponent(component);
 
         if (_ghostRoleData.TryGetValue(component.RoleName, out var data))
             data.Components.Remove(component);
     }
 
-    private void OnTakeoverRequest(EntityUid uid, GhostRoleComponent component, GhostRoleRequestTakeoverEvent ev)
+    private void OnTakeoverRequest(EntityUid uid, GhostRoleComponent component, GhostRoleRequestTakeoverMessage ev)
     {
         ev.Result = RequestTakeover(ev.Player, ev.GhostRole);
         if (!ev.Result)
@@ -282,7 +290,21 @@ public sealed class GhostRoleSystem : EntitySystem
         OnPlayerTakeoverComplete(ev.Player, ev.GhostRole.RoleName);
     }
 
-    private void OnRequestCount(GhostRoleCountRequestedEvent ev)
+    private void OnLotteryRequest(RequestAvailableLotteryItemsMessage ev)
+    {
+        foreach (var comp in _queuedComponents)
+        {
+            comp.Queued = false;
+            ev.GhostRoles.Add(comp);
+
+            if (_ghostRoleData.TryGetValue(comp.RoleName, out var data))
+                data.Components.Add(comp);
+        }
+
+        _queuedComponents.Clear();
+    }
+
+    private void OnRequestCount(GhostRoleCountRequestedMessage ev)
     {
         foreach (var (_, data) in _ghostRoleData)
         {
@@ -306,29 +328,12 @@ public sealed class GhostRoleSystem : EntitySystem
 
         _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {data.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
     }
-
-    public int RequestCountForRole(string ghostRoleIdentifier)
-    {
-        if (!_ghostRoleData.TryGetValue(ghostRoleIdentifier, out var data))
-            return 0;
-
-        var count = 0;
-        foreach (var c in data.Components)
-        {
-            if (c is GhostRoleMobSpawnerComponent spawnerComponent)
-                count += spawnerComponent.AvailableTakeovers;
-            else
-                count++;
-        }
-
-        return count;
-    }
 }
 
 /// <summary>
 ///     Raise this event to request a takeover on a ghost role entity.
 /// </summary>
-public sealed class GhostRoleRequestTakeoverEvent : EntityEventArgs
+public sealed class GhostRoleRequestTakeoverMessage : EntityEventArgs
 {
     /// <summary>
     ///     Player to takeover the entity.
@@ -354,7 +359,7 @@ public sealed class GhostRoleRequestTakeoverEvent : EntityEventArgs
     /// </summary>
     public bool GhostRoleTaken { get; set; }
 
-    public GhostRoleRequestTakeoverEvent(IPlayerSession player, GhostRoleComponent ghostRole)
+    public GhostRoleRequestTakeoverMessage(IPlayerSession player, GhostRoleComponent ghostRole)
     {
         Player = player;
         GhostRole = ghostRole;

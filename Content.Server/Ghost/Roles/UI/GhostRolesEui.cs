@@ -18,6 +18,7 @@ namespace Content.Server.Ghost.Roles.UI
                 ghostRoleGroupSystem.GetGhostRoleGroupsInfo(),
                 ghostRoleSystem.GetGhostRolesInfo(),
                 manager.GetPlayerRequestedGhostRoles(Player),
+                manager.GetPlayerRequestedRoleGroups(Player),
                 manager.LotteryStartTime,
                 manager.LotteryExpiresTime,
                 adminManager.IsAdmin(Player));

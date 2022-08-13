@@ -61,11 +61,11 @@ namespace Content.Client.Ghost.Roles.UI
             EntryContainer.AddChild(entry);
         }
 
-        public void AddGroupEntry(GhostRoleGroupInfo group, bool adminControls, bool isRequested)
+        public void AddGroupEntry(GhostRoleGroupInfo group, bool isRequested)
         {
             NoRolesMessage.Visible = false;
 
-            var entry = new GhostRoleGroupEntry(group, adminControls, isRequested);
+            var entry = new GhostRoleGroupEntry(group, isRequested);
             entry.OnGroupSelected +=  OnGroupRequested;
             entry.OnGroupCancelled += OnGroupCancelled;
 
