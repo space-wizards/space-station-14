@@ -54,7 +54,7 @@ namespace Content.Server.TapeRecorder
                 if (tapeRecorder.Enabled && tapeRecorder.InsertedTape.TimeStamp >= tapeRecorder.InsertedTape.TapeMaxTime && tapeRecorder.CurrentMode != TapeRecorderState.Rewind)
                 {
                     StopTape(tapeRecorder);
-                    tapeRecorder.CurrentMode = TapeRecorderState.Rewind; // go into rewind mode once at end of tape
+                    ChangeMode(tapeRecorder, TapeRecorderState.Rewind); // go into rewind mode once at end of tape
                 }
 
                 //Handle tape playback
@@ -64,7 +64,7 @@ namespace Content.Server.TapeRecorder
                     if (tapeRecorder.CurrentMessageIndex >= tapeRecorder.InsertedTape.RecordedMessages.Count || tapeRecorder.InsertedTape.TimeStamp >= tapeRecorder.InsertedTape.TapeMaxTime)
                     {
                         StopTape(tapeRecorder);
-                        tapeRecorder.CurrentMode = TapeRecorderState.Rewind; // go into record mode once we reached the end of recorded data
+                        ChangeMode(tapeRecorder, TapeRecorderState.Rewind); // go into rewind mode once we reached the end of recorded data
                         return;
                     }
 
@@ -89,7 +89,7 @@ namespace Content.Server.TapeRecorder
                     tapeRecorder.InsertedTape.TimeStamp = 0;
                     tapeRecorder.CurrentMessageIndex = 0;
                     StopTape(tapeRecorder);
-                    tapeRecorder.CurrentMode = TapeRecorderState.Play; // go into play mode once finished rewinding
+                    ChangeMode(tapeRecorder, TapeRecorderState.Play); // go into play mode once finished rewinding
                     return;
                 }
 
@@ -105,15 +105,21 @@ namespace Content.Server.TapeRecorder
 
             if (!TryComp<CassetteTapeComponent>(slot.ContainedEntity, out var cassetteTapeComponent))
             {
-                component.CurrentMode = TapeRecorderState.Empty;
                 component.InsertedTape = null;
-                UpdateAppearance(component);
+                ChangeMode(component, TapeRecorderState.Empty);
                 return;
             }
 
-            component.CurrentMode = TapeRecorderState.Idle;
-            UpdateAppearance(component);
+            ChangeMode(component, TapeRecorderState.Idle);
             component.InsertedTape = cassetteTapeComponent;
+        }
+
+        private void ChangeMode(TapeRecorderComponent component, TapeRecorderState state)
+        {
+            component.CurrentMode = state;
+
+
+            UpdateAppearance(component);
         }
 
         public void StartRecording(TapeRecorderComponent component)
@@ -124,17 +130,32 @@ namespace Content.Server.TapeRecorder
             component.RecordingStartTime = component.AccumulatedTime - component.InsertedTape.TimeStamp;
             component.RecordingStartTimestamp = component.InsertedTape.TimeStamp;
 
-            _popupSystem.PopupEntity("The tape recorder starts recording", component.Owner, Filter.Pvs(component.Owner));
+            _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-recording", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
 
         public void StartPlaying(TapeRecorderComponent component)
         {
             component.CurrentMessageIndex = GetTapeIndex(component);
-            _popupSystem.PopupEntity("The tape recorder starts playback", component.Owner, Filter.Pvs(component.Owner));
+            _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-playback", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
 
+        /// <summary>
+        /// Handles Tape Recorder being stopped in any mode
+        /// </summary>
+        public void StopTape(TapeRecorderComponent component)
+        {
+            if (!component.Enabled)
+                return;
+
+            if (component.CurrentMode == TapeRecorderState.Record && component.Enabled)
+                FlushBufferToMemory(component);
+
+            _audioSystem.PlayPvs(component.StopSound, component.Owner);
+            component.Enabled = false;
+            UpdateAppearance(component);
+        }
 
         /// <summary>
         /// Gets the index in RecordedMessages of the message that will come next on the tape
@@ -144,7 +165,6 @@ namespace Content.Server.TapeRecorder
             if (component.InsertedTape == null || component.InsertedTape.RecordedMessages.Count == 0)
                 return 0;
 
-            //find the first index that comes after the current timestamp
             var index = component.InsertedTape.RecordedMessages.FindIndex(x => x.MessageTimeStamp > component.InsertedTape.TimeStamp);
             if (index == -1)
                 return component.InsertedTape.RecordedMessages.Count;
@@ -172,22 +192,6 @@ namespace Content.Server.TapeRecorder
 
             }
 
-        /// <summary>
-        /// Handles Tape Recorder being stopped in any mode
-        /// </summary>
-        public void StopTape(TapeRecorderComponent component)
-        {
-            if (!component.Enabled)
-                return;
-
-            if (component.CurrentMode == TapeRecorderState.Record && component.Enabled)
-                FlushBufferToMemory(component);
-
-            _audioSystem.PlayPvs(component.StopSound, component.Owner);
-            component.Enabled = false;
-            UpdateAppearance(component);
-        }
-
         private void UpdateAppearance(TapeRecorderComponent component)
         {
             if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
@@ -204,7 +208,6 @@ namespace Content.Server.TapeRecorder
 
         private void OnUseInHand(EntityUid uid, TapeRecorderComponent component, UseInHandEvent args)
         {
-
             //Use in hand cooldown
             var currentTime = _gameTiming.CurTime;
             if (currentTime < component.CooldownEnd)
@@ -232,6 +235,7 @@ namespace Content.Server.TapeRecorder
                     StartRecording(component);
                     break;
                 case TapeRecorderState.Rewind:
+                    _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-rewind", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
                     _audioSystem.PlayPvs(component.StartSound, component.Owner);
                     break;
                 case TapeRecorderState.Idle:
@@ -268,13 +272,12 @@ namespace Content.Server.TapeRecorder
 
             if (component.InsertedTape == null)
             {
-                args.PushMarkup("[color=yellow]There is no cassette tape in the tape recorder.");
+                args.PushMarkup(Loc.GetString("tape-recorder-no-cassette", ("item", component.Owner)));
                 return;
             }
 
             args.PushMarkup(TimeSpan.FromSeconds(component.InsertedTape.TimeStamp).ToString("mm\\:ss") + " / " + (TimeSpan.FromSeconds(component.InsertedTape.TapeMaxTime).ToString("mm\\:ss")));
         }
-
 
         //the verb sewer
         private void OnGetAltVerbs(EntityUid uid, TapeRecorderComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -286,15 +289,14 @@ namespace Content.Server.TapeRecorder
             {
                 args.Verbs.Add(new AlternativeVerb()
                 {
-                    Category = RecorderModes,
                     Text = "Play",
-                    Priority = 5,
+                    Priority = 6,
 
                     Act = () =>
                     {
                         StopTape(component);
-                        _popupSystem.PopupEntity("Play mode", component.Owner, Filter.Pvs(component.Owner));
-                        component.CurrentMode = TapeRecorderState.Play;
+                        _popupSystem.PopupEntity(Loc.GetString("tape-recorder-switch-play", ("item", component.Owner)), args.User, Filter.Entities(args.User));
+                        ChangeMode(component, TapeRecorderState.Play);
                     },
                 });
             }
@@ -302,15 +304,14 @@ namespace Content.Server.TapeRecorder
             {
                 args.Verbs.Add(new AlternativeVerb()
                 {
-                    Category = RecorderModes,
                     Text = "Record",
                     Priority = 5,
 
                     Act = () =>
                     {
                         StopTape(component);
-                        _popupSystem.PopupEntity("Record mode", component.Owner, Filter.Pvs(component.Owner));
-                        component.CurrentMode = TapeRecorderState.Record;
+                        _popupSystem.PopupEntity(Loc.GetString("tape-recorder-switch-record", ("item", component.Owner)), args.User, Filter.Entities(args.User));
+                        ChangeMode(component, TapeRecorderState.Record);
                     },
                 });
             }
@@ -318,20 +319,17 @@ namespace Content.Server.TapeRecorder
             {
                 args.Verbs.Add(new AlternativeVerb()
                 {
-                    Category = RecorderModes,
                     Text = "Rewind",
                     Priority = 5,
 
                     Act = () =>
                     {
                         StopTape(component);
-                        _popupSystem.PopupEntity("Rewind mode", component.Owner, Filter.Pvs(component.Owner));
-                        component.CurrentMode = TapeRecorderState.Rewind;
+                        _popupSystem.PopupEntity(Loc.GetString("tape-recorder-switch-rewind", ("item", component.Owner)), args.User, Filter.Entities(args.User));
+                        ChangeMode(component, TapeRecorderState.Rewind);
                     },
                 });
             }
         }
-
-        public static VerbCategory RecorderModes = new("Tape Recorder Modes", "/Textures/Interface/VerbIcons/clock.svg.192dpi.png");
     }
 }
