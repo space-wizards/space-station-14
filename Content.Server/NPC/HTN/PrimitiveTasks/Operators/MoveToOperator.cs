@@ -169,7 +169,7 @@ public sealed class MoveToOperator : HTNOperator
             blackboard.Remove<EntityCoordinates>(TargetKey);
         }
 
-        _entManager.RemoveComponent<NPCSteeringComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        _steering.Unregister(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)

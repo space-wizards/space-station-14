@@ -13,14 +13,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems
 {
-    public sealed class NPCSteeringSystem : EntitySystem
+    public sealed partial class NPCSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.1f;
@@ -30,6 +31,7 @@ namespace Content.Server.NPC.Systems
         public override void Initialize()
         {
             base.Initialize();
+            InitializeAvoidance();
             _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
 
             SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
@@ -268,7 +270,7 @@ namespace Content.Server.NPC.Systems
             }
 
             modifierQuery.TryGetComponent(steering.Owner, out var modifier);
-            var moveSpeed = GetSprintSpeed(modifier);
+            var moveSpeed = GetSprintSpeed(steering.Owner, modifier);
 
             var input = direction.Normalized;
 
@@ -388,14 +390,16 @@ namespace Content.Server.NPC.Systems
             ), steering.PathfindToken.Token);
         }
 
-        private float GetSprintSpeed(MovementSpeedModifierComponent? modifier)
-        {
-            return modifier?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-        }
+        // TODO: Move these to movercontroller
 
-        private float GetWalkSpeed(MovementSpeedModifierComponent? modifier)
+        private float GetSprintSpeed(EntityUid uid, MovementSpeedModifierComponent? modifier = null)
         {
-            return modifier?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            if (!Resolve(uid, ref modifier, false))
+            {
+                return MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            }
+
+            return modifier.CurrentSprintSpeed;
         }
     }
 }

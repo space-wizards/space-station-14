@@ -14,6 +14,12 @@ public sealed class NPCSteeringComponent : Component
     [ViewVariables] public CancellationTokenSource? PathfindToken = null;
 
     /// <summary>
+    /// How many entities we're allowed to consider for collision avoidance.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("avoidanceMax")]
+    public int AvoidanceMax = 5;
+
+    /// <summary>
     /// Current path we're following to our coordinates.
     /// </summary>
     [ViewVariables] public Queue<TileRef> CurrentPath = new();
