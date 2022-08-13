@@ -5,6 +5,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -38,10 +39,14 @@ namespace Content.Server.Tiles
 
             // this looks a bit sussy but it might be because it needs to be able to place off of grids and expand them
             var location = args.ClickLocation.AlignWithClosestGridTile();
+            var physics = GetEntityQuery<PhysicsComponent>();
             foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
             {
                 // check that we the tile we're trying to access isn't blocked by a wall or something
-                if (TryComp<PhysicsComponent>(ent, out var phys) && phys.Hard && (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                if (physics.TryGetComponent(ent, out var phys) &&
+                    phys.BodyType == BodyType.Static &&
+                    phys.Hard &&
+                    (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                     return;
             }
             var locationMap = location.ToMap(EntityManager);
