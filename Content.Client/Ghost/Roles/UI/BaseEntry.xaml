@@ -10,9 +10,9 @@
     <BoxContainer HorizontalAlignment="Left"
                   Orientation="Horizontal"
                   SeparationOverride="5">
-        <Button Name="TakeButton" Text="Take"/>
-        <Button Name="RequestButton" Text="Request"/>
-        <Button Name="CancelButton" Text="Cancel" StyleClasses="Caution"/>
-        <Button Name="FollowButton" Text="Follow"/>
+        <Button Name="TakeButton" Text="{Loc 'ghost-roles-window-take-role-button'}"/>
+        <Button Name="RequestButton" Text="{Loc 'ghost-roles-window-request-role-button'}"/>
+        <Button Name="CancelButton" Text="{Loc 'ghost-roles-window-cancel-role-button'}" StyleClasses="Caution"/>
+        <Button Name="FollowButton" Text="{Loc 'ghost-roles-window-follow-role-button'}"/>
     </BoxContainer>
 </BoxContainer>

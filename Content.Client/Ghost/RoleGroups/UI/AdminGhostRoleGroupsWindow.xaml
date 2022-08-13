@@ -1,9 +1,9 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-               Title="Manage Ghost Role Groups"
+               Title="{Loc 'ghost-role-groups-window-title'}"
                MinSize="432 275">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <Label Name="NoRoleGroupsMessage"
-               Text="No ghost role groups have been created yet."
+               Text="{Loc 'ghost-role-groups-window-no-role-groups-label'}"
                VerticalAlignment="Top"/>
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Name="EntryContainer" VerticalExpand="True">
@@ -11,7 +11,7 @@
             </BoxContainer>
         </ScrollContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="False" VerticalAlignment="Bottom">
-            <Button Name="StartGroupButton" Text="Start Group"></Button>
+            <Button Name="StartGroupButton" Text="{Loc 'ghost-role-groups-window-start-group-button'}"></Button>
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

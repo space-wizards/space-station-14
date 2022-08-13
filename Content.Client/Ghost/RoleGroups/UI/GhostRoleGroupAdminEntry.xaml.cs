@@ -9,6 +9,7 @@ namespace Content.Client.Ghost.RoleGroups.UI;
 public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
 
     public event Action<AdminGhostRoleGroupInfo>? OnGroupActivate;
     public event Action<AdminGhostRoleGroupInfo>? OnGroupRelease;
@@ -24,6 +25,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
 
         Title.Text = group.Name;
         Description.SetMessage(group.Description);
+        DetailsButton.Text = "+ " + _loc.GetString("ghost-role-groups-window-details-button");
 
         foreach (var entity in group.Entities)
         {
@@ -37,7 +39,10 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         }
 
         ActivateButton.Visible = group.Status == GhostRoleGroupStatus.Editing;
-        ActivateButton.Text = group.IsActive ? "Deactivate" : "Activate";
+        ActivateButton.Text = group.IsActive
+            ? _loc.GetString("ghost-role-groups-window-deactivate-button")
+            : _loc.GetString("ghost-role-groups-window-activate-button");
+
         switch (group.IsActive)
         {
             case true:
@@ -51,10 +56,10 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         ReleaseButton.Disabled = group.Status != GhostRoleGroupStatus.Editing;
         ReleaseButton.Text = group.Status switch
         {
-            GhostRoleGroupStatus.Editing => "Release",
-            GhostRoleGroupStatus.Releasing => "Releasing...",
-            GhostRoleGroupStatus.Released => "Released",
-            _ => "Release"
+            GhostRoleGroupStatus.Editing => _loc.GetString("ghost-role-groups-window-release-button"),
+            GhostRoleGroupStatus.Releasing => _loc.GetString("ghost-role-groups-window-releasing-button"),
+            GhostRoleGroupStatus.Released => _loc.GetString("ghost-role-groups-window-released-button"),
+            _ => _loc.GetString("ghost-role-groups-window-release-button")
         };
 
         DeleteButton.Visible = group.Status == GhostRoleGroupStatus.Editing;
@@ -66,7 +71,9 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         {
             _showDetails = !_showDetails;
             EntityDetailsContainer.Visible = _showDetails;
-            DetailsButton.Text = _showDetails ? "- Details" : "+ Details";
+
+            var prefix = _showDetails ? "- " : "+ ";
+            DetailsButton.Text = prefix + _loc.GetString("ghost-role-groups-window-details-button");
         };
     }
 }

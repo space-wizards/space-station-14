@@ -19,7 +19,7 @@
                       Orientation="Horizontal"
                       HorizontalExpand="True"
                       SeparationOverride="5">
-            <Button Name="DetailsButton" Text="+ Details" HorizontalAlignment="Right"/>
+            <Button Name="DetailsButton" Text="{Loc 'ghost-role-groups-window-details-button'}" HorizontalAlignment="Right"/>
         </BoxContainer>
     </BoxContainer>
     <BoxContainer Orientation="Vertical"
@@ -29,7 +29,7 @@
                   Margin="30 8 8 8"
                   Visible="False">
         <PanelContainer StyleClasses="HighDivider"></PanelContainer>
-        <Label Name="NoRoleGroupEntitiesLabel" Text="Place entities via the Entity Spawner"/>
+        <Label Name="NoRoleGroupEntitiesLabel" Text="{Loc 'ghost-role-groups-window-no-entities-in-group-label'}"/>
         <!-- Entity details for the role group added here by code. -->
     </BoxContainer>
 </BoxContainer>

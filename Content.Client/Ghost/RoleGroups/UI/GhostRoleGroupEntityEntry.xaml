@@ -7,6 +7,6 @@
         <Label Name="EntityNameLabel" MaxWidth="200"/>
     </BoxContainer>
     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right" HorizontalExpand="True">
-        <Button Name="GotoButton" Text="Go To" HorizontalAlignment="Right"/>
+        <Button Name="GotoButton" Text="{Loc 'ghost-role-groups-window-entity-goto-button'}" HorizontalAlignment="Right"/>
     </BoxContainer>
 </BoxContainer>

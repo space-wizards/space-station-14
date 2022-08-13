@@ -2,15 +2,15 @@
                Title="Start Role Group">
     <BoxContainer Orientation="Vertical" SeparationOverride="5">
         <BoxContainer Orientation="Horizontal">
-            <Label Name="RoleNameLabel" MinSize="150 0" Text="Role Name" />
+            <Label Name="RoleNameLabel" MinSize="150 0" Text="{Loc 'ghost-role-groups-start-window-role-name-label'}" />
             <LineEdit Name="RoleName" MinSize="300 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Name="RoleDescriptionLabel" MinSize="150 0" Text="Role Description" />
+            <Label Name="RoleDescriptionLabel" MinSize="150 0" Text="{Loc 'ghost-role-groups-start-window-role-description-label'}" />
             <LineEdit Name="RoleDescription" MinSize="300 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Button Name="StartButton" Text="Start" />
+            <Button Name="StartButton" Text="{Loc 'ghost-role-groups-start-window-start-button'}" />
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

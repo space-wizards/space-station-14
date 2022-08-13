@@ -253,19 +253,6 @@ public sealed class GhostRoleSystem : EntitySystem
         if (component.RoleRules == "")
             component.RoleRules = Loc.GetString("ghost-role-component-default-rules");
 
-        if (!_ghostRoleData.TryGetValue(component.RoleName, out var data))
-        {
-            _ghostRoleData[component.RoleName] = data = new GhostRoleData()
-            {
-                RoleIdentifier = _ghostRoleLotterySystem.NextIdentifier,
-                RoleName = component.RoleName,
-                RoleDescription = component.RoleDescription,
-                RoleRules = component.RoleRules,
-                Components = new HashSet<GhostRoleComponent>(),
-            };
-        }
-
-        component.Identifier = data.RoleIdentifier;
         component.Queued = true;
 
         _queuedComponents.Add(component);
@@ -297,8 +284,20 @@ public sealed class GhostRoleSystem : EntitySystem
             comp.Queued = false;
             ev.GhostRoles.Add(comp);
 
-            if (_ghostRoleData.TryGetValue(comp.RoleName, out var data))
-                data.Components.Add(comp);
+            if (!_ghostRoleData.TryGetValue(comp.RoleName, out var data))
+            {
+                _ghostRoleData[comp.RoleName] = data = new GhostRoleData()
+                {
+                    RoleIdentifier = _ghostRoleLotterySystem.NextIdentifier,
+                    RoleName = comp.RoleName,
+                    RoleDescription = comp.RoleDescription,
+                    RoleRules = comp.RoleRules,
+                    Components = new HashSet<GhostRoleComponent>(),
+                };
+            }
+
+            comp.Identifier = data.RoleIdentifier;
+            data.Components.Add(comp);
         }
 
         _queuedComponents.Clear();
