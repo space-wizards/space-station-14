@@ -40,10 +40,14 @@
   components:
     - type: Sprite
       sprite: Objects/Devices/cassette_tapes.rsi
-      state: tape_blue
+      layers:
+      - state: tape_blue
+      - state: tape_ribbonoverlay
+        visible: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi
       heldPrefix: tape_blue
+    - type: Damageable
     - type: CassetteTape
       tapeMaxTime: 180
     - type: Tag

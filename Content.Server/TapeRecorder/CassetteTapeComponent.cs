@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace Content.Server.TapeRecorder
 {
 
@@ -12,6 +14,12 @@ namespace Content.Server.TapeRecorder
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public List<(float MessageTimeStamp, string Message)> RecordedMessages = new ();
+
+        public CancellationTokenSource? CancelToken = null;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("unspooled")]
+        public bool UnSpooled = false;
 
         /// <summary>
         ///Our current position in the "tape"
