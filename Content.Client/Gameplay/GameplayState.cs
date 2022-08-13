@@ -46,7 +46,12 @@ namespace Content.Client.Gameplay
             // scale down. This is because screens appear to be
             base.Startup();
 
-            Viewport = UserInterfaceManager.ActiveScreen!.GetWidget<MainViewport>()!;
+            Viewport = UserInterfaceManager.ActiveScreen!.FindControl<MainViewport>("MainViewport");
+            Viewport.Viewport.ViewportSize = ViewportSize;
+
+            // ?
+            Viewport.Viewport.HorizontalExpand = true;
+            Viewport.Viewport.VerticalExpand = true;
 
             // ourple
 
