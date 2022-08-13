@@ -4,7 +4,7 @@
         <Label Text="{Loc 'ghost-role-groups-delete-window-delete-group-entities-label'}"/>
         <BoxContainer Orientation="Horizontal">
             <Label Name="DeleteEntitiesLabel" Text="{Loc 'ghost-role-groups-delete-window-confirm-delete-group-entities-label'}"/>
-            <CheckBox Name="DeleteEntitiesCheckbox" />
+            <CheckBox Name="DeleteEntitiesCheckbox" Margin="5 0"/>
         </BoxContainer>
         <Button Name="DeleteButton" HorizontalAlignment="Right" StyleClasses="Caution" Text="Delete"></Button>
     </BoxContainer>
