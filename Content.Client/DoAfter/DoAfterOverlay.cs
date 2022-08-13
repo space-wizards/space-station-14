@@ -37,6 +37,7 @@ public sealed class DoAfterOverlay : Overlay
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var spriteQuery = _entManager.GetEntityQuery<SpriteComponent>();
+        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         var scale = _configManager.GetCVar(CVars.DisplayUIScale);
         var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
@@ -44,9 +45,10 @@ public sealed class DoAfterOverlay : Overlay
         handle.UseShader(_shader);
 
         // TODO: Need active DoAfter component (or alternatively just make DoAfter itself active)
-        foreach (var (comp, xform) in _entManager.EntityQuery<DoAfterComponent, TransformComponent>(true))
+        foreach (var comp in _entManager.EntityQuery<DoAfterComponent>(true))
         {
             if (comp.DoAfters.Count == 0 ||
+                !xformQuery.TryGetComponent(comp.Owner, out var xform) ||
                 xform.MapID != args.MapId)
             {
                 continue;
@@ -113,7 +115,7 @@ public sealed class DoAfterOverlay : Overlay
                 const float endX = 22f;
 
                 var xProgress = (endX - startX) * displayRatio + startX;
-                
+
                 var box = new Box2(new Vector2(startX, 3f) / EyeManager.PixelsPerMeter, new Vector2(xProgress, 4f) / EyeManager.PixelsPerMeter);
                 box = box.Translated(position);
                 handle.DrawRect(box, color);
