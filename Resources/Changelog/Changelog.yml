@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Delta Station now has security cameras. Lots of them., type: Add}
-  - {message: Delta Station now has more decals., type: Tweak}
-  id: 1637
-  time: '2022-06-03T05:32:57.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Removed dwarves, due to their lack of content. If someone steps up
@@ -2935,3 +2929,8 @@ Entries:
   - {message: Audio occlusion is working again, type: Fix}
   id: 2136
   time: '2022-08-12T02:53:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed inverted combat mode toggle., type: Fix}
+  id: 2137
+  time: '2022-08-13T00:27:14.0000000+00:00'
