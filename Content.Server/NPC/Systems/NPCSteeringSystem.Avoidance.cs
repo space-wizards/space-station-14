@@ -1,4 +1,5 @@
 using Content.Server.NPC.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
@@ -29,9 +30,30 @@ public sealed partial class NPCSteeringSystem
         SubscribeLocalEvent<NPCAvoidanceComponent, CollisionChangeEvent>(OnAvoidanceCollision);
     }
 
+    private void CollisionAvoidance((NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent)[] npcs)
+    {
+        foreach (var (steering, _, mover, xform) in npcs)
+        {
+            ComputeNeighbors();
+            ComputeVelocity();
+            // TODO: Compute velocity
+        }
+    }
+
+    private void ComputeNeighbors()
+    {
+
+    }
+
+    private void ComputeVelocity()
+    {
+
+    }
+
     private Vector2 GetAvoidanceVector(NPCSteeringComponent component)
     {
-        // TODO: Get relevant VOs in front of us
+        // TODO: Probably need a separate component to store relevant data
+        // That way multiple back-ends can be specified and picked instead.
 
         var vos = new ValueList<VelocityObstacle>();
 
@@ -212,7 +234,7 @@ public sealed partial class NPCSteeringSystem
         AddToLookup(uid, args.NewPosition);
     }
 
-    private void OnAvoidanceCollision(EntityUid uid, NPCAvoidanceComponent component, CollisionChangeEvent args)
+    private void OnAvoidanceCollision(EntityUid uid, NPCAvoidanceComponent component, ref CollisionChangeEvent args)
     {
         component.Enabled = args.CanCollide;
     }

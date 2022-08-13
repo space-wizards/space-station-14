@@ -111,9 +111,18 @@ namespace Content.Server.NPC.Systems
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
 
-            foreach (var (steering, _, mover, xform) in EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>())
+            var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
+                .ToArray();
+
+            // TODO: Do this in parallel. This will require pathfinder refactor to not use jobqueue.
+            foreach (var (steering, _, mover, xform) in npcs)
             {
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, frameTime);
+            }
+
+            if (CollisionAvoidanceEnabled)
+            {
+                CollisionAvoidance(npcs);
             }
         }
 
@@ -206,6 +215,7 @@ namespace Content.Server.NPC.Systems
             {
                 SetDirection(mover, Vector2.Zero);
                 steering.Status = SteeringStatus.NoPath;
+                steering.CurrentTarget = targetCoordinates;
                 return;
             }
 
@@ -229,6 +239,7 @@ namespace Content.Server.NPC.Systems
                     {
                         SetDirection(mover, Vector2.Zero);
                         steering.Status = SteeringStatus.NoPath;
+                        steering.CurrentTarget = targetCoordinates;
                         return;
                     }
 
@@ -240,6 +251,7 @@ namespace Content.Server.NPC.Systems
                     // This probably shouldn't happen as we check above but eh.
                     SetDirection(mover, Vector2.Zero);
                     steering.Status = SteeringStatus.InRange;
+                    steering.CurrentTarget = targetCoordinates;
                     return;
                 }
             }
@@ -282,6 +294,7 @@ namespace Content.Server.NPC.Systems
             {
                 SetDirection(mover, Vector2.Zero);
                 steering.Status = SteeringStatus.NoPath;
+                steering.CurrentTarget = targetCoordinates;
                 return;
             }
 
@@ -300,11 +313,7 @@ namespace Content.Server.NPC.Systems
             }
 
             SetDirection(mover, input);
-
-            // todo: Need a console command to make an NPC steer to a specific spot.
-
-            // TODO: Actual steering behaviours and collision avoidance.
-            // TODO: Need to handle path invalidation if nodes change.
+            steering.CurrentTarget = targetCoordinates;
         }
 
         /// <summary>

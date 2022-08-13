@@ -14,20 +14,19 @@ public sealed class NPCSteeringComponent : Component
     [ViewVariables] public CancellationTokenSource? PathfindToken = null;
 
     /// <summary>
-    /// How many entities we're allowed to consider for collision avoidance.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("avoidanceMax")]
-    public int AvoidanceMax = 5;
-
-    /// <summary>
     /// Current path we're following to our coordinates.
     /// </summary>
     [ViewVariables] public Queue<TileRef> CurrentPath = new();
 
     /// <summary>
-    /// Target that we're trying to move to.
+    /// End target that we're trying to move to.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public EntityCoordinates Coordinates;
+
+    /// <summary>
+    /// Target that we're trying to move to. If we have a path then this will be the first node on the path.
+    /// </summary>
+    [ViewVariables] public EntityCoordinates CurrentTarget;
 
     /// <summary>
     /// How close are we trying to get to the coordinates before being considered in range.
