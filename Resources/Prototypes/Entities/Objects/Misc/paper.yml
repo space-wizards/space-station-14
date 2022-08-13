@@ -164,8 +164,6 @@
           tags:
           - Document
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
   - type: Tag
     tags:
     - Folder

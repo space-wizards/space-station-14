@@ -77,7 +77,7 @@ namespace Content.Client.Info
 
         public static Control MakeRules(IConfigurationManager cfg, IResourceManager res)
         {
-            return MakeSection(Loc.GetString("ui-rules-header"), cfg.GetCVar(CCVars.RulesFile), true, res);
+            return MakeSection(Loc.GetString(cfg.GetCVar(CCVars.RulesHeader)), cfg.GetCVar(CCVars.RulesFile), true, res);
         }
     }
 }

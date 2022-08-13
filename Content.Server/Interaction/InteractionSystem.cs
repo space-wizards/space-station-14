@@ -225,10 +225,7 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
-                        {
-                            _adminLogger.Add(LogType.AttackArmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             return;
-                        }
                     }
                     else
                     {
@@ -236,20 +233,7 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
-                        {
-                            if (target != null)
-                            {
-                                _adminLogger.Add(LogType.AttackArmedClick, LogImpact.Low,
-                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
-                            }
-                            else
-                            {
-                                _adminLogger.Add(LogType.AttackArmedClick, LogImpact.Low,
-                                    $"{ToPrettyString(user):user} attacked with {ToPrettyString(item.Value):used} at {coordinates}");
-                            }
-
                             return;
-                        }
                     }
                 }
                 else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
@@ -279,19 +263,6 @@ namespace Content.Server.Interaction
             {
                 var ev = new ClickAttackEvent(used, user, coordinates, target);
                 RaiseLocalEvent(used, ev, false);
-                if (ev.Handled)
-                {
-                    if (target != null)
-                    {
-                        _adminLogger.Add(LogType.AttackUnarmedClick, LogImpact.Low,
-                            $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} at {coordinates}");
-                    }
-                    else
-                    {
-                        _adminLogger.Add(LogType.AttackUnarmedClick, LogImpact.Low,
-                            $"{ToPrettyString(user):user} attacked at {coordinates}");
-                    }
-                }
             }
         }
     }

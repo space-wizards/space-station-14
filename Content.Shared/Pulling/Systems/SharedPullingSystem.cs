@@ -65,7 +65,7 @@ namespace Content.Shared.Pulling
 
             if (TryComp(uid, out JointComponent? joints))
             {
-                foreach (var jt in joints.GetJoints)
+                foreach (var jt in joints.GetJoints.Values)
                 {
                     if (jt.BodyAUid == component.Puller || jt.BodyBUid == component.Puller)
                         return;

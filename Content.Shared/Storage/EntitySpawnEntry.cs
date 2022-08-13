@@ -78,12 +78,12 @@ public static class EntitySpawnCollection
     /// <param name="entries">The entity spawn entries.</param>
     /// <param name="random">Resolve param.</param>
     /// <returns>A list of entity prototypes that should be spawned.</returns>
-    public static List<string> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
+    public static List<string?> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
         IRobustRandom? random = null)
     {
         IoCManager.Resolve(ref random);
 
-        var spawned = new List<string>();
+        var spawned = new List<string?>();
         var orGroupedSpawns = new Dictionary<string, OrGroup>();
 
         // collect groups together, create singular items that pass probability
