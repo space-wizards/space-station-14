@@ -1,12 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bojevic firerate dropped from 3 to 2, type: Tweak}
-  - {message: Shotgun pellet damage from 13 to 8 (3 shotting players instead of 2
-      shot assuming all pellets hit)., type: Tweak}
-  - {message: Spread changed from 10 degrees to 15., type: Tweak}
-  id: 1639
-  time: '2022-06-03T07:57:39.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Emitters have been removed from cargo ordering. You now have to research
@@ -2932,3 +2924,8 @@ Entries:
   - {message: do_after progress bars now show on cameras., type: Fix}
   id: 2138
   time: '2022-08-13T04:32:23.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Kvass tank from cargo now come unpackaged., type: Tweak}
+  id: 2139
+  time: '2022-08-13T12:06:15.0000000+00:00'
