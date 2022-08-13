@@ -15,3 +15,8 @@ tape-recorder-start-playback = {THE($item)} starts playback
 tape-recorder-start-rewind = {THE($item)} starts rewinding
 
 tape-recorder-stop = {THE($item)} stops
+
+
+cassette-repair-start = You start winding the tape back into {THE($item)}
+
+cassette-repair-finish = You manage to wind the tape back into {THE($item)}

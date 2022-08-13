@@ -36,20 +36,97 @@
   name: cassette tape
   parent: BaseItem
   description: A magnetic tape that can hold up to three minutes of content on either side.
-  id: CassetteTApe
+  id: BaseCassetteTape
+  abstract: true
   components:
     - type: Sprite
       sprite: Objects/Devices/cassette_tapes.rsi
       layers:
-      - state: tape_blue
+      - state: tape_greyscale
       - state: tape_ribbonoverlay
         visible: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi
-      heldPrefix: tape_blue
+      heldPrefix: tape_greyscale
     - type: Damageable
     - type: CassetteTape
       tapeMaxTime: 180
     - type: Tag
       tags:
         - CassetteTape
+
+- type: entity
+  name: blue cassette tape
+  parent: BaseCassetteTape
+  id: BlueCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_blue
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_blue
+
+- type: entity
+  name: red cassette tape
+  parent: BaseCassetteTape
+  id: RedCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_red
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_red
+
+- type: entity
+  name: yellow cassette tape
+  parent: BaseCassetteTape
+  id: YellowCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_yellow
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_yellow
+
+- type: entity
+  name: purple cassette tape
+  parent: BaseCassetteTape
+  id: PurpleCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_purple
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_purple
+
+- type: entity
+  name: white cassette tape
+  parent: BaseCassetteTape
+  id: WhiteCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_white
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_white
+

@@ -60,13 +60,13 @@ namespace Content.Server.TapeRecorder
                 TargetCancelledEvent = new SpoolingCancelEvent()
             };
 
-            _popupSystem.PopupEntity("You being to respool the thing", args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("cassette-repair-start", ("item", component.Owner)), args.User, Filter.Entities(args.User));
             _doAfterSystem.DoAfter(doAfterEventArgs);
         }
 
         private void OnSpoolingComplete(EntityUid uid, CassetteTapeComponent component, SpoolingCompleteEvent args)
         {
-            _popupSystem.PopupEntity("you respool the tape!", component.Owner, Filter.Pvs(component.Owner));
+            _popupSystem.PopupEntity(Loc.GetString("cassette-repair-finish", ("item", component.Owner)), args.User, Filter.Entities(args.User));
 
             _tagSystem.AddTag(component.Owner, "CassetteTape");
             if (!TryComp<SpriteComponent>(component.Owner, out var spriteComponent))
