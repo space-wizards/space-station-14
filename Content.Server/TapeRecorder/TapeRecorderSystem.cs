@@ -121,7 +121,7 @@ namespace Content.Server.TapeRecorder
 
         public void StartRecording(TapeRecorderComponent component)
         {
-            if (component.InsertedTape == null)
+            if (component.InsertedTape == null || component.InsertedTape.TimeStamp >= component.InsertedTape.TapeMaxTime)
                 return;
 
             component.RecordingStartTime = component.AccumulatedTime - component.InsertedTape.TimeStamp;
@@ -134,7 +134,20 @@ namespace Content.Server.TapeRecorder
         public void StartPlaying(TapeRecorderComponent component)
         {
             component.CurrentMessageIndex = GetTapeIndex(component);
+
+            if (component.InsertedTape == null || component.CurrentMessageIndex >= component.InsertedTape.RecordedMessages.Count || component.InsertedTape.TimeStamp >= component.InsertedTape.TapeMaxTime)
+                return;
+
             _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-playback", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
+            _audioSystem.PlayPvs(component.StartSound, component.Owner);
+        }
+
+        public void StartRewinding(TapeRecorderComponent component)
+        {
+            if (component.InsertedTape == null || component.InsertedTape.TimeStamp <= 0)
+                return;
+
+            _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-rewind", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
 
@@ -150,6 +163,7 @@ namespace Content.Server.TapeRecorder
                 FlushBufferToMemory(component);
 
             _audioSystem.PlayPvs(component.StopSound, component.Owner);
+            _popupSystem.PopupEntity(Loc.GetString("tape-recorder-stop", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
             component.Enabled = false;
             UpdateAppearance(component);
         }
@@ -232,8 +246,7 @@ namespace Content.Server.TapeRecorder
                     StartRecording(component);
                     break;
                 case TapeRecorderState.Rewind:
-                    _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-rewind", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
-                    _audioSystem.PlayPvs(component.StartSound, component.Owner);
+                    StartRewinding(component);
                     break;
                 case TapeRecorderState.Idle:
                     break;

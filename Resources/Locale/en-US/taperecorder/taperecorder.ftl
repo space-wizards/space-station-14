@@ -8,8 +8,10 @@ tape-recorder-switch-rewind = You switch {THE($item)} to rewind mode
 
 tape-recorder-switch-record = You switch {THE($item)} to record mode
 
-tape-recorder-start-recording = The {THE($item)} starts recording
+tape-recorder-start-recording = {THE($item)} starts recording
 
-tape-recorder-start-playback = The {THE($item)} starts playback
+tape-recorder-start-playback = {THE($item)} starts playback
 
-tape-recorder-start-rewind = The {THE($item)} starts rewinding
+tape-recorder-start-rewind = {THE($item)} starts rewinding
+
+tape-recorder-stop = {THE($item)} stops

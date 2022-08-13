@@ -13,7 +13,7 @@ namespace Content.Server.TapeRecorder
         public CassetteTapeComponent? InsertedTape = null;
 
         //Starts in record mode since it'll probably be an empty tape
-        public TapeRecorderState CurrentMode { get; set; } = TapeRecorderState.Record;
+        public TapeRecorderState CurrentMode { get; set; } = TapeRecorderState.Empty;
 
         public bool Enabled = false;
 
