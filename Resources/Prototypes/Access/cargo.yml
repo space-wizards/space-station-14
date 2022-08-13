@@ -1,14 +1,14 @@
 - type: accessLevel
   id: Quartermaster
-  name: Quartermaster
+  name: id-card-access-level-quartermaster
 
 - type: accessLevel
   id: Cargo
-  name: Cargo
+  name: id-card-access-level-cargo
 
 - type: accessLevel
   id: Salvage
-  name: Salvage
+  name: id-card-access-level-salvage
 
 - type: accessGroup
   id: Cargo

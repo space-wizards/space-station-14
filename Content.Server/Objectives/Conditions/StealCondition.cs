@@ -1,12 +1,14 @@
 using Content.Server.Containers;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
 {
+    // Oh god my eyes
     [UsedImplicitly]
     [DataDefinition]
     public sealed class StealCondition : IObjectiveCondition, ISerializationHooks
@@ -19,7 +21,7 @@ namespace Content.Server.Objectives.Conditions
         /// instead of "steal advanced magboots. Should be a loc string.
         /// </summary>
         [ViewVariables]
-        [DataField("owner", required: true)] private string _owner = string.Empty;
+        [DataField("owner")] private string? _owner = null;
 
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
@@ -36,7 +38,10 @@ namespace Content.Server.Objectives.Conditions
                 ? prototype.Name
                 : "[CANNOT FIND NAME]";
 
-        public string Title => Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(_owner)), ("itemName", Loc.GetString(PrototypeName)));
+        public string Title =>
+            _owner == null
+                ? Loc.GetString("objective-condition-steal-title-no-owner", ("itemName", Loc.GetString(PrototypeName)))
+                : Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(_owner)), ("itemName", Loc.GetString(PrototypeName)));
 
         public string Description => Loc.GetString("objective-condition-steal-description",("itemName", Loc.GetString(PrototypeName)));
 
@@ -46,9 +51,41 @@ namespace Content.Server.Objectives.Conditions
         {
             get
             {
-                if (_mind?.OwnedEntity is not {Valid: true} owned)
-                    return 0f;
-                return owned.ContainsPrototypeRecursive(_prototypeId)? 1f : 0f;
+                var uid = _mind?.OwnedEntity;
+                var entMan = IoCManager.Resolve<IEntityManager>();
+
+                // TODO make this a container system function
+                // or: just iterate through transform children, instead of containers?
+
+                var metaQuery = entMan.GetEntityQuery<MetaDataComponent>();
+                var managerQuery = entMan.GetEntityQuery<ContainerManagerComponent>();
+                var stack = new Stack<ContainerManagerComponent>();
+
+                if (!metaQuery.TryGetComponent(_mind?.OwnedEntity, out var meta))
+                    return 0;
+
+                if (meta.EntityPrototype?.ID == _prototypeId)
+                    return 1;
+
+                if (!managerQuery.TryGetComponent(uid, out var currentManager))
+                    return 0;
+
+                do
+                {
+                    foreach (var container in currentManager.Containers.Values)
+                    {
+                        foreach (var entity in container.ContainedEntities)
+                        {
+                            if (metaQuery.GetComponent(entity).EntityPrototype?.ID == _prototypeId)
+                                return 1;
+                            if (!managerQuery.TryGetComponent(entity, out var containerManager))
+                                continue;
+                            stack.Push(containerManager);
+                        }
+                    }
+                } while (stack.TryPop(out currentManager));
+
+                return 0;
             }
         }
 

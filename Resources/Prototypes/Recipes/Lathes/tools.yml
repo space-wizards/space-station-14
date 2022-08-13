@@ -149,3 +149,16 @@
   materials:
     Steel: 300
     Plastic: 100
+
+- type: latheRecipe
+  id: HolofanProjector
+  icon: 
+    sprite: Objects/Devices/Holoprojectors/atmos.rsi
+    state: icon
+  result: HolofanProjector
+  completetime: 8
+  materials: # Inherited materials and time from PowerCellMedium recipe
+    Steel: 600
+    Glass: 350
+    Plastic: 150
+    Gold: 10

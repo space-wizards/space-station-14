@@ -7,7 +7,7 @@ namespace Content.Server.Kitchen.Components
     [RegisterComponent, Access(typeof(KitchenSpikeSystem))]
     public sealed class KitchenSpikeComponent : SharedKitchenSpikeComponent
     {
-        public List<string>? PrototypesToSpawn;
+        public List<string?>? PrototypesToSpawn;
 
         // TODO: Spiking alive mobs? (Replace with uid) (deal damage to their limbs on spiking, kill on first butcher attempt?)
         public string MeatSource1p = "?";

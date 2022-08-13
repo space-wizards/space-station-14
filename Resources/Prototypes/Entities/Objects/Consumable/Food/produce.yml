@@ -489,6 +489,9 @@
     netsync: false
   - type: Item
     size: 1
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   name: onion
