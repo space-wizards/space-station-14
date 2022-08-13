@@ -19,7 +19,7 @@ namespace Content.Server.TapeRecorder
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("unspooled")]
-        public bool UnSpooled = false;
+        public bool Unspooled = false;
 
         /// <summary>
         ///Our current position in the "tape"

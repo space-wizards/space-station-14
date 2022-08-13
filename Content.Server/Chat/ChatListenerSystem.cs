@@ -2,11 +2,11 @@ using Content.Shared.Chat;
 
 namespace Content.Server.Chat
 {
+    /// <summary>
+    /// Event raised on entitys with the "ChatListener" component when they hear a nearby message
+    /// </summary>
     public sealed class ChatMessageHeardNearbyEvent : EntityEventArgs
     {
-        /// <summary>
-        ///     message
-        /// </summary>
         public ChatChannel Channel;
 
         public string Message;

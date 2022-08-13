@@ -267,7 +267,7 @@ namespace Content.Server.TapeRecorder
             if (component.CurrentMode != TapeRecorderState.Record || !component.Enabled)
                 return;
 
-            if (args.Channel != ChatChannel.Local) //filter out messages that aren't local chat (whispering should be picked up by the recorder, neither should emotes)
+            if (args.Channel != ChatChannel.Local) //filter out messages that aren't local chat (whispering should not be picked up by the recorder, neither should emotes)
                 return;
 
             component.InsertedTape.TimeStamp = (component.AccumulatedTime - component.RecordingStartTime);
