@@ -19,7 +19,7 @@ namespace Content.Server.Tiles
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly PhysicsSystem _physics = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
         public override void Initialize()
         {
@@ -40,7 +40,7 @@ namespace Content.Server.Tiles
 
             // this looks a bit sussy but it might be because it needs to be able to place off of grids and expand them
             var location = args.ClickLocation.AlignWithClosestGridTile();
-            foreach (var ent in location.GetEntitiesInTile())
+            foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
             {
                 // check that we the tile we're trying to access isn't blocked by a wall or something
                 if (TryComp<PhysicsComponent>(ent, out var phys) && phys.Hard && (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
