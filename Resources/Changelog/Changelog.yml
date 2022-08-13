@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that caused gas quantity to not be conserved when anchoring
-      and unanchoring atmos devices., type: Fix}
-  id: 1642
-  time: '2022-06-03T10:09:52.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'APCs, generators and wallmount substations are no longer nuke proof.',
@@ -2928,3 +2922,9 @@ Entries:
   - {message: The Outlaw's Hat now looks nicer., type: Tweak}
   id: 2141
   time: '2022-08-13T13:52:24.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: nukies no longer have the chance to spawn with their suit sensors on,
+    type: Fix}
+  id: 2142
+  time: '2022-08-13T13:57:49.0000000+00:00'
