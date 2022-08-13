@@ -1,12 +1,10 @@
 using System.Linq;
 using Content.Server.Access.Systems;
-using Content.Server.Station.Systems;
-using Content.Server.StationRecords;
+using Content.Server.Administration.Logs;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.StationRecords;
-using Content.Server.Administration.Logs;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
 
@@ -93,25 +91,6 @@ namespace Content.Server.Access.Components
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
                 $"{_entities.ToPrettyString(player):player} has modified {_entities.ToPrettyString(targetIdEntity):entity} with the following accesses: [{string.Join(", ", newAccessList)}]");
 
-            UpdateStationRecord(targetIdEntity, newFullName, newJobTitle);
-        }
-
-        private void UpdateStationRecord(EntityUid idCard, string newFullName, string newJobTitle)
-        {
-            var station = EntitySystem.Get<StationSystem>().GetOwningStation(Owner);
-            var recordSystem = EntitySystem.Get<StationRecordsSystem>();
-            if (station == null
-                || !_entities.TryGetComponent(idCard, out StationRecordKeyStorageComponent? keyStorage)
-                || keyStorage.Key == null
-                || !recordSystem.TryGetRecord(station.Value, keyStorage.Key.Value, out GeneralStationRecord? record))
-            {
-                return;
-            }
-
-            record.Name = newFullName;
-            record.JobTitle = newJobTitle;
-
-            recordSystem.Synchronize(station.Value);
         }
 
         public void UpdateUserInterface()

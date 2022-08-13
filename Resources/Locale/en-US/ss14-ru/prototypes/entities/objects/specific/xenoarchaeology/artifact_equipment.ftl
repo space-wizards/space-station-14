@@ -1,3 +1,3 @@
-ent-CrateArtifactContainer = { ent-BaseStructureDynamic }
-    .desc = { ent-BaseStructureDynamic.desc }
+ent-CrateArtifactContainer = artifact container
+    .desc = Used to safely contain and move artifacts.
     .suffix = { "" }

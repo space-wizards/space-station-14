@@ -68,7 +68,7 @@
       - glass_3
   - type: FloorTile
     outputs:
-    - FloorGlass
+    - floor_glass
   - type: Construction
     graph: Glass
     node: SheetGlass
@@ -109,7 +109,7 @@
       - rglass_3
   - type: FloorTile
     outputs:
-    - FloorRGlass
+    - floor_rglass
   - type: Construction
     graph: Glass
     node: SheetRGlass

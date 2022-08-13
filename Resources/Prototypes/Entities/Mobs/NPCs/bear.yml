@@ -29,7 +29,7 @@
       - MobMask
       layer:
       - MobLayer
-  - type: MovementAlwaysTouching
+  - type: MovementIgnoreGravity
   - type: MobState
     thresholds:
       0: Alive

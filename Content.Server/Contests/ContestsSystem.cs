@@ -23,7 +23,7 @@ namespace Content.Server.Contests
         /// </summary>
         public float MassContest(EntityUid roller, EntityUid target, PhysicsComponent? rollerPhysics = null, PhysicsComponent? targetPhysics = null)
         {
-            if (!Resolve(roller, ref rollerPhysics, false) || !Resolve(target, ref targetPhysics, false))
+            if (!Resolve(roller, ref rollerPhysics) || !Resolve(target, ref targetPhysics))
                 return 1f;
 
             if (rollerPhysics == null || targetPhysics == null)
@@ -43,7 +43,7 @@ namespace Content.Server.Contests
         /// <summary>
         public float DamageContest(EntityUid roller, EntityUid target, DamageableComponent? rollerDamage = null, DamageableComponent? targetDamage = null)
         {
-            if (!Resolve(roller, ref rollerDamage, false) || !Resolve(target, ref targetDamage, false))
+            if (!Resolve(roller, ref rollerDamage) || !Resolve(target, ref targetDamage))
                 return 1f;
 
             if (rollerDamage == null || targetDamage == null)

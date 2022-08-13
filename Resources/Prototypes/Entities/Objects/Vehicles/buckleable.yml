@@ -148,8 +148,10 @@
         whitelist:
           tags:
             - TrashBag
-    sprite: Objects/Vehicles/pussywagon.rsi
   - type: Appearance
+    visuals:
+      - type: MappedItemVisualizer
+        sprite: Objects/Vehicles/pussywagon.rsi
 
 - type: entity
   id: VehiclePussyWagonDestroyed

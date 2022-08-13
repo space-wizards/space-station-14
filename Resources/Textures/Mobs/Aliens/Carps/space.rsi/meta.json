@@ -11,39 +11,13 @@
       "name": "icon"
     },
     {
-      "name": "mouth",
-      "directions": 4,
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
+      "name": "dead"
     },
     {
-      "name": "dead_mouth"
+      "name": "crit"
     },
     {
-      "name": "base_dead"
-    },
-    {
-      "name": "base",
+      "name": "alive",
       "directions": 4,
       "delays": [
         [

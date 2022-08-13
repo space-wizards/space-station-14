@@ -1,52 +1,5 @@
 - type: entity
-  abstract: true
-  parent: BaseStructure
-  id: BaseWall
-  name: basewall
-  description: Keeps the air in and the greytide out.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wall
-  components:
-  - type: RangedDamageSound
-    soundGroups:
-      Brute:
-        collection:
-          MetalBulletImpact
-    soundTypes:
-      Heat:
-        collection:
-          MetalLaserImpact
-  - type: Tag
-    tags:
-    - Wall
-  - type: Sprite
-    netsync: false
-    drawdepth: Walls
-  - type: Icon
-    state: full
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Physics
-    bodyType: Static
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
-  - type: Occluder
-    sizeX: 32
-    sizeY: 32
-  - type: Airtight
-
-- type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallBrick
   name: brick wall
   components:
@@ -76,7 +29,7 @@
     base: brick
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallClock
   name: clock wall
   components:
@@ -106,7 +59,7 @@
     base: clock
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallClown
   name: clown wall
   components:
@@ -137,7 +90,7 @@
 
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallCult
   name: cult wall
   components:
@@ -167,7 +120,7 @@
     base: cult
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallDebug
   name: debug wall
   suffix: DEBUG
@@ -199,7 +152,7 @@
     base: debug
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallDiamond
   name: diamond wall
   components:
@@ -229,7 +182,7 @@
     base: diamond
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallGold
   name: gold wall
   components:
@@ -259,7 +212,7 @@
     base: gold
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallIce
   name: ice wall
   components:
@@ -289,7 +242,7 @@
     base: ice
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallPlasma
   name: plasma wall
   components:
@@ -319,7 +272,7 @@
     base: plasma
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallPlastic
   name: plastic wall
   components:
@@ -349,7 +302,7 @@
     base: plastic
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallReinforced
   name: reinforced wall
   components:
@@ -388,7 +341,7 @@
 
 # Riveting
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallRiveted
   name: riveted wall
   components:
@@ -418,7 +371,7 @@
     base: riveted
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallSandstone
   name: sandstone wall
   components:
@@ -448,7 +401,7 @@
     base: sandstone
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallSilver
   name: silver wall
   components:
@@ -535,7 +488,7 @@
       path: /Audio/Effects/metalbreak.ogg
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallShuttle
   name: shuttle wall
   components:
@@ -565,7 +518,7 @@
     base: state
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallSolid
   name: solid wall
   components:
@@ -608,7 +561,7 @@
     price: 1 # total material cost. If you change the recipe for the wall you should recalculate this.
     
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallSolidRust
   name: solid wall
   suffix: rusted
@@ -647,7 +600,7 @@
     base: solidrust
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallUranium
   name: uranium wall
   components:
@@ -673,7 +626,7 @@
     base: uranium
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallWood
   name: wood wall
   components:
@@ -706,7 +659,7 @@
 # Vault Walls
 
 - type: entity
-  parent: BaseWall
+  parent: WallBase
   id: WallVaultAlien
   name: alien vault wall
   description: A mysterious ornate looking wall. There may be ancient dangers inside.

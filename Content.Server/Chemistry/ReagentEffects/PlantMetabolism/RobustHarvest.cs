@@ -18,14 +18,14 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            if (plantHolderComp.Seed.Potency < 100)
+            if (plantHolderComp.Seed.Potency < 100 && random.Prob(0.1f))
             {
                 plantHolderComp.EnsureUniqueSeed();
-                plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + 3, 100);
+                plantHolderComp.Seed.Potency++;
             }
-            else if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
+
+            if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
             {
-                // Too much of a good thing reduces yield
                 plantHolderComp.EnsureUniqueSeed();
                 plantHolderComp.Seed.Yield--;
             }

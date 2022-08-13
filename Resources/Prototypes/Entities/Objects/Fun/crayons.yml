@@ -313,4 +313,7 @@
         whitelist:
           tags:
           - CrayonYellow
+
   - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer

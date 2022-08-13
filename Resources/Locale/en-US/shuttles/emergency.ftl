@@ -24,7 +24,6 @@ emergency-shuttle-console-auth-revoked = Early launch authorization revoked, {$r
 emergency-shuttle-console-denied = Access denied
 
 # UI
-emergency-shuttle-console-window-title = Emergency Shuttle Console
 emergency-shuttle-ui-engines = ENGINES:
 emergency-shuttle-ui-idle = Idle
 emergency-shuttle-ui-repeal-all = Repeal All

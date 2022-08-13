@@ -8,6 +8,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents
 {
@@ -42,21 +43,16 @@ namespace Content.Server.StationEvents
 
             // Can't just check debug / release for a default given mappers need to use release mode
             // As such we'll always pause it by default.
-            _configurationManager.OnValueChanged(CCVars.EventsEnabled, SetEnabled, true);
+            _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => RuleAdded = value, true);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         }
 
-        public override void Shutdown()
+        public override void Started()
         {
-            base.Shutdown();
-            _configurationManager.UnsubValueChanged(CCVars.EventsEnabled, SetEnabled);
+            if (!_configurationManager.GetCVar(CCVars.EventsEnabled))
+                RuleAdded = false;
         }
-
-        public bool EventsEnabled { get; private set; }
-        private void SetEnabled(bool value) => EventsEnabled = value;
-
-        public override void Started() { }
         public override void Ended() { }
 
         /// <summary>
@@ -90,7 +86,7 @@ namespace Content.Server.StationEvents
         {
             base.Update(frameTime);
 
-            if (!RuleStarted || !EventsEnabled)
+            if (!RuleStarted)
                 return;
 
             if (_timeUntilNextEvent > 0)

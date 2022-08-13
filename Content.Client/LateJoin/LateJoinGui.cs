@@ -1,18 +1,12 @@
 using System.Linq;
-using Content.Client.CrewManifest;
-using Content.Client.Eui;
 using Content.Client.GameTicking.Managers;
 using Content.Client.HUD.UI;
-using Content.Client.Players.PlayTimeTracking;
-using Content.Shared.CCVar;
-using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
-using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -23,7 +17,6 @@ namespace Content.Client.LateJoin
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         public event Action<(EntityUid, string)> SelectedId;
 
@@ -71,7 +64,6 @@ namespace Content.Client.LateJoin
             _jobCategories.Clear();
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
-            var tracker = IoCManager.Resolve<PlayTimeTrackingManager>();
 
             if (!gameTicker.DisallowedLateJoin && gameTicker.StationNames.Count == 0)
                 Logger.Warning("No stations exist, nothing to display in late-join GUI");
@@ -117,21 +109,6 @@ namespace Content.Client.LateJoin
                         }
                     }
                 });
-
-                if (_configManager.GetCVar<bool>(CCVars.CrewManifestWithoutEntity))
-                {
-                    var crewManifestButton = new Button()
-                    {
-                        Text = Loc.GetString("crew-manifest-button-label")
-                    };
-                    crewManifestButton.OnPressed += args =>
-                    {
-                        EntitySystem.Get<CrewManifestSystem>().RequestCrewManifest(id);
-                    };
-
-                    _base.AddChild(crewManifestButton);
-                }
-
                 var jobListScroll = new ScrollContainer()
                 {
                     VerticalExpand = true,
@@ -225,8 +202,12 @@ namespace Content.Client.LateJoin
                             Stretch = TextureRect.StretchMode.KeepCentered
                         };
 
-                        var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), prototype.Icon);
-                        icon.Texture = specifier.Frame0();
+                        if (prototype.Icon != null)
+                        {
+                            var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), prototype.Icon);
+                            icon.Texture = specifier.Frame0();
+                        }
+
                         jobSelector.AddChild(icon);
 
                         var jobLabel = new Label
@@ -245,16 +226,9 @@ namespace Content.Client.LateJoin
                             SelectedId?.Invoke((id, jobButton.JobId));
                         };
 
-                        string? reason = null;
-
-                        if (value == 0 || !tracker.IsAllowed(prototype, out reason))
+                        if (value == 0)
                         {
                             jobButton.Disabled = true;
-
-                            if (!string.IsNullOrEmpty(reason))
-                            {
-                                jobButton.ToolTip = reason;
-                            }
                         }
 
                         _jobButtons[id][prototype.ID] = jobButton;
