@@ -1,5 +1,3 @@
-## ToiletComponent
-
 tape-recorder-no-cassette = [color=yellow]There is no cassette tape in the {THE($item)}.[/color]
 
 tape-recorder-switch-play = You switch {THE($item)} to play mode.
