@@ -118,6 +118,7 @@ namespace Content.Client.DoAfter.UI
             leftOffset + (int) (XPixelDiff * Ratio * UIScale),
             -2);
             handle.DrawRect(box, color);
+            handle.UseShader(null);
         }
     }
 
