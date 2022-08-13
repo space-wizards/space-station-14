@@ -59,6 +59,7 @@ namespace Content.Client.Preferences.UI
         private readonly IClientPreferencesManager _preferencesManager;
         private readonly IEntityManager _entMan;
         private readonly IConfigurationManager _configurationManager;
+        private readonly MarkingManager _markingManager;
 
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
@@ -120,6 +121,7 @@ namespace Content.Client.Preferences.UI
             _entMan = entityManager;
             _preferencesManager = preferencesManager;
             _configurationManager = configurationManager;
+            _markingManager = IoCManager.Resolve<MarkingManager>();
 
             #region Left
 
@@ -675,6 +677,9 @@ namespace Content.Client.Preferences.UI
         {
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
+            var pointsProto = _prototypeManager
+                .Index<SpeciesPrototype>(Profile.Species).MarkingPoints;
+            _markingSet = new(Profile.Appearance.Markings, pointsProto, _markingManager);
 
             NeedsDummyRebuild = true;
             UpdateControls();
@@ -904,15 +909,13 @@ namespace Content.Client.Preferences.UI
             }
 
             _hairPicker.UpdateData(
-                Profile.Appearance.HairColor,
-                Profile.Appearance.HairStyleId,
-                SpriteAccessoryCategories.HumanHair,
-                true);
+                new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }) },
+                Profile.Species,
+                1);
             _facialHairPicker.UpdateData(
-                Profile.Appearance.FacialHairColor,
-                Profile.Appearance.FacialHairStyleId,
-                SpriteAccessoryCategories.HumanFacialHair,
-                true);
+                new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) },
+                Profile.Species,
+                1);
         }
 
         private void UpdateEyePickers()

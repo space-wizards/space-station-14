@@ -15,30 +15,57 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     ///     It will send the 'slot' (marking index)
     ///     and the selected marking's ID.
     /// </summary>
-    public Action<(uint, string)>? OnMarkingSelect;
+    public Action<(int, string)>? OnMarkingSelect;
     /// <summary>
     ///     What happens if a slot is removed.
     ///     This will send the 'slot' (marking index).
     /// </summary>
-    public Action<uint>? OnSlotRemove;
+    public Action<int>? OnSlotRemove;
 
     /// <summary>
     ///     What happens when a slot is added.
     /// </summary>
     public Action? OnSlotAdd;
 
-    public Action<uint>? OnSlotSelected;
-
     /// <summary>
     ///     What happens if a marking's color is changed.
     ///     Sends a 'slot' number, and the marking in question.
     /// </summary>
-    public Action<(uint, Marking)>? OnColorChanged;
+    public Action<(int, Marking)>? OnColorChanged;
 
-    // current selected marking
-    private Marking? _marking;
     // current selected slot
-    private uint _slot;
+    private int _slot = -1;
+    private int Slot
+    {
+        get
+        {
+            if (_markings == null || _markings.Count == 0)
+            {
+                _slot = -1;
+            }
+
+            return _slot;
+        }
+        set
+        {
+            if (_markings == null || _markings.Count == 0)
+            {
+                _slot = -1;
+                return;
+            }
+
+            _slot = value;
+            _ignoreItemSelected = true;
+
+            foreach (var item in MarkingList)
+            {
+                item.Selected = (string) item.Metadata! == _markings[_slot].MarkingId;
+            }
+
+            _ignoreItemSelected = false;
+            PopulateColors();
+        }
+    }
 
     // amount of slots to show
     private uint _pointsUsed;
@@ -58,8 +85,13 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             }
         }
     }
+    private IReadOnlyDictionary<string, MarkingPrototype>? _markingPrototypeCache;
 
     private string? _species;
+    private List<Marking>? _markings;
+
+    private int PointsLeft => _markings != null ? (int) _totalPoints - _markings.Count : 0;
+    private int PointsUsed => _markings != null ? _markings.Count : 0;
 
     public SingleMarkingPicker()
     {
@@ -73,7 +105,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         SlotSelector.OnItemSelected += args =>
         {
-            OnSlotSelected!((uint) args.Button.SelectedId);
+            Slot = args.Button.SelectedId;
         };
 
         RemoveButton.OnPressed += _ =>
@@ -82,13 +114,19 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         };
     }
 
-    public void UpdateData(Marking marking, string species, uint selectedSlot, uint pointsUsed, uint totalPoints)
+    public void UpdateData(List<Marking> markings, string species, uint totalPoints)
     {
+        _markings = markings;
         _species = species;
-        _marking = marking;
-        _slot = selectedSlot;
-        _pointsUsed = pointsUsed;
         _totalPoints = totalPoints;
+
+        _markingPrototypeCache = _markingManager.MarkingsByCategoryAndSpecies(Category, _species);
+
+        Visible = _markingPrototypeCache.Count != 0;
+        if (_markingPrototypeCache.Count == 0)
+        {
+            return;
+        }
 
         PopulateList();
         PopulateColors();
@@ -102,19 +140,20 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             throw new ArgumentException("Tried to populate marking list without a set species!");
         }
 
-        var dict = _markingManager.MarkingsByCategoryAndSpecies(Category, _species);
-
-        if (_marking == null)
+        MarkingSelectorContainer.Visible = _markings != null && _markings.Count != 0;
+        if (_markings == null || _markings.Count == 0)
         {
-            _marking = dict.First().Value.AsMarking();
+            return;
         }
+
+        var dict = _markingManager.MarkingsByCategoryAndSpecies(Category, _species);
 
         foreach (var (id, marking) in dict)
         {
             var item = MarkingList.AddItem(id);
             item.Metadata = marking.ID;
 
-            if (_marking.MarkingId == marking.ID)
+            if (_markings[Slot].MarkingId == id)
             {
                 _ignoreItemSelected = true;
                 item.Selected = true;
@@ -125,30 +164,32 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
     private void PopulateColors()
     {
-        if (_marking == null
-            || !_markingManager.TryGetMarking(_marking, out var proto))
+        if (_markings == null
+            || !_markingManager.TryGetMarking(_markings[Slot], out var proto))
         {
             return;
         }
 
+        var marking = _markings[Slot];
+
         ColorSelectorContainer.DisposeAllChildren();
         ColorSelectorContainer.RemoveAllChildren();
 
-        if (_marking.MarkingColors.Count != proto.Sprites.Count)
+        if (marking.MarkingColors.Count != proto.Sprites.Count)
         {
-            _marking = new Marking(_marking.MarkingId, proto.Sprites.Count);
+            marking = new Marking(marking.MarkingId, proto.Sprites.Count);
         }
 
-        for (var i = 0; i < _marking.MarkingColors.Count; i++)
+        for (var i = 0; i < marking.MarkingColors.Count; i++)
         {
             var selector = new ColorSelectorSliders();
-            selector.Color = _marking.MarkingColors[i];
+            selector.Color = marking.MarkingColors[i];
 
             var colorIndex = i;
             selector.OnColorChanged += color =>
             {
-                _marking.SetColor(colorIndex, color);
-                OnColorChanged!((_slot, _marking));
+                marking.SetColor(colorIndex, color);
+                OnColorChanged!((_slot, marking));
             };
         }
     }
@@ -161,12 +202,10 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         }
 
         var id = (string) MarkingList[args.ItemIndex].Metadata!;
-        if (!_markingManager.Markings.TryGetValue(id, out var proto))
+        if (!_markingManager.Markings.ContainsKey(id))
         {
             throw new ArgumentException("Attempted to select non-existent marking.");
         }
-
-        _marking = proto.AsMarking();
 
         OnMarkingSelect!((_slot, id));
     }
@@ -175,18 +214,13 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
     private void PopulateSlotSelector()
     {
-        // if the total amount of points available is one,
-        // we don't really need to have visible slots, right?
-        /* yes we do
-        if (_totalPoints == 1)
+        SlotSelector.Visible = Slot >= 0;
+        SlotSelector.Clear();
+
+        if (Slot < 0)
         {
-            SlotSelectorContainer.Visible = false;
             return;
         }
-        */
-
-        SlotSelectorContainer.Visible = true;
-        SlotSelector.Clear();
 
         for (var i = 0; i < _pointsUsed; i++)
         {
@@ -198,7 +232,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             }
         }
 
-        AddButton.Disabled = _pointsUsed == _totalPoints;
-        RemoveButton.Disabled = _pointsUsed == 0;
+        AddButton.Disabled = PointsLeft == 0;
+        RemoveButton.Disabled = PointsUsed == 0;
     }
 }

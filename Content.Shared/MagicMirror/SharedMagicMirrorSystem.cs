@@ -19,7 +19,7 @@ public enum MagicMirrorCategory
 [Serializable, NetSerializable]
 public sealed class MagicMirrorSelectMessage : BoundUserInterfaceMessage
 {
-    public MagicMirrorSelectMessage(MagicMirrorCategory category, string marking, uint slot)
+    public MagicMirrorSelectMessage(MagicMirrorCategory category, string marking, int slot)
     {
         Category = category;
         Marking = marking;
@@ -28,13 +28,13 @@ public sealed class MagicMirrorSelectMessage : BoundUserInterfaceMessage
 
     public MagicMirrorCategory Category { get; }
     public string Marking { get; }
-    public uint Slot { get; }
+    public int Slot { get; }
 }
 
 [Serializable, NetSerializable]
 public sealed class MagicMirrorChangeColorMessage : BoundUserInterfaceMessage
 {
-    public MagicMirrorChangeColorMessage(MagicMirrorCategory category, List<Color> colors, uint slot)
+    public MagicMirrorChangeColorMessage(MagicMirrorCategory category, List<Color> colors, int slot)
     {
         Category = category;
         Colors = colors;
@@ -43,33 +43,33 @@ public sealed class MagicMirrorChangeColorMessage : BoundUserInterfaceMessage
 
     public MagicMirrorCategory Category { get; }
     public List<Color> Colors { get; }
-    public uint Slot { get; }
+    public int Slot { get; }
 }
 
 [Serializable, NetSerializable]
 public sealed class MagicMirrorRemoveSlotMessage : BoundUserInterfaceMessage
 {
-    public MagicMirrorRemoveSlotMessage(MagicMirrorCategory category, uint slot)
+    public MagicMirrorRemoveSlotMessage(MagicMirrorCategory category, int slot)
     {
         Category = category;
         Slot = slot;
     }
 
     public MagicMirrorCategory Category { get; }
-    public uint Slot { get; }
+    public int Slot { get; }
 }
 
 [Serializable, NetSerializable]
 public sealed class MagicMirrorSelectSlotMessage : BoundUserInterfaceMessage
 {
-    public MagicMirrorSelectSlotMessage(MagicMirrorCategory category, uint slot)
+    public MagicMirrorSelectSlotMessage(MagicMirrorCategory category, int slot)
     {
         Category = category;
         Slot = slot;
     }
 
     public MagicMirrorCategory Category { get; }
-    public uint Slot { get; }
+    public int Slot { get; }
 }
 
 [Serializable, NetSerializable]
@@ -86,29 +86,21 @@ public sealed class MagicMirrorAddSlotMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class MagicMirrorUiState : BoundUserInterfaceState
 {
-    public MagicMirrorUiState(string species, Marking hair, uint hairSlot, uint hairSlotsUsed, uint hairSlotTotal, Marking facialHair, uint facialHairSlot, uint facialHairSlotsUsed, uint facialHairSlotTotal)
+    public MagicMirrorUiState(string species, List<Marking> hair, uint hairSlotTotal, List<Marking> facialHair, uint facialHairSlotTotal)
     {
         Species = species;
         Hair = hair;
-        HairSlot = hairSlot;
-        HairSlotsUsed = hairSlotsUsed;
         HairSlotTotal = hairSlotTotal;
         FacialHair = facialHair;
-        FacialHairSlot = facialHairSlot;
-        FacialHairSlotsUsed = facialHairSlotsUsed;
         FacialHairSlotTotal = facialHairSlotTotal;
     }
 
     public string Species { get; }
 
-    public Marking Hair { get; }
-    public uint HairSlot { get; }
-    public uint HairSlotsUsed { get; }
+    public List<Marking> Hair { get; }
     public uint HairSlotTotal { get; }
 
-    public Marking FacialHair { get; }
-    public uint FacialHairSlot { get; }
-    public uint FacialHairSlotsUsed { get; }
+    public List<Marking> FacialHair { get; }
     public uint FacialHairSlotTotal { get; }
 
 }

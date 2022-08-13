@@ -9,16 +9,14 @@ namespace Content.Client.MagicMirror;
 public sealed partial class MagicMirrorWindow : DefaultWindow
 {
     // MMMMMMM
-    public Action<(uint slot, string id)>? OnHairSelected;
-    public Action<(uint slot, Marking marking)>? OnHairColorChanged;
-    public Action<uint>? OnHairSlotRemoved;
-    public Action<uint>? OnHairSlotSelected;
+    public Action<(int slot, string id)>? OnHairSelected;
+    public Action<(int slot, Marking marking)>? OnHairColorChanged;
+    public Action<int>? OnHairSlotRemoved;
     public Action? OnHairSlotAdded;
 
-    public Action<(uint slot, string id)>? OnFacialHairSelected;
-    public Action<(uint slot, Marking marking)>? OnFacialHairColorChanged;
-    public Action<uint>? OnFacialHairSlotRemoved;
-    public Action<uint>? OnFacialHairSlotSelected;
+    public Action<(int slot, string id)>? OnFacialHairSelected;
+    public Action<(int slot, Marking marking)>? OnFacialHairColorChanged;
+    public Action<int>? OnFacialHairSlotRemoved;
     public Action? OnFacialHairSlotAdded;
 
     public MagicMirrorWindow()
@@ -26,19 +24,17 @@ public sealed partial class MagicMirrorWindow : DefaultWindow
         HairPicker.OnMarkingSelect += OnHairSelected;
         HairPicker.OnColorChanged += OnHairColorChanged;
         HairPicker.OnSlotRemove += OnHairSlotRemoved;
-        HairPicker.OnSlotSelected += OnHairSlotSelected;
         HairPicker.OnSlotAdd += OnHairSlotAdded;
 
         FacialHairPicker.OnMarkingSelect += OnFacialHairSelected;
         FacialHairPicker.OnColorChanged += OnFacialHairColorChanged;
         FacialHairPicker.OnSlotRemove += OnFacialHairSlotRemoved;
-        FacialHairPicker.OnSlotSelected += OnFacialHairSlotSelected;
         FacialHairPicker.OnSlotAdd += OnFacialHairSlotAdded;
     }
 
     public void UpdateState(MagicMirrorUiState state)
     {
-        HairPicker.UpdateData(state.Hair, state.Species, state.HairSlot, state.HairSlotsUsed, state.HairSlotTotal);
-        FacialHairPicker.UpdateData(state.FacialHair, state.Species, state.FacialHairSlot, state.FacialHairSlotsUsed, state.FacialHairSlotTotal);
+        HairPicker.UpdateData(state.Hair, state.Species, state.HairSlotTotal);
+        FacialHairPicker.UpdateData(state.FacialHair, state.Species, state.FacialHairSlotTotal);
     }
 }
