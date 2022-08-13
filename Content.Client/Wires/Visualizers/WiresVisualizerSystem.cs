@@ -5,8 +5,6 @@ namespace Content.Client.Wires.Visualizers
 {
     public sealed class WiresVisualizerSystem : VisualizerSystem<WiresVisualsComponent>
     {
-        [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-
         protected override void OnAppearanceChange(EntityUid uid, WiresVisualsComponent component, ref AppearanceChangeEvent args)
         {
             if (args.Sprite == null)
@@ -14,9 +12,10 @@ namespace Content.Client.Wires.Visualizers
 
             var layer = args.Sprite.LayerMapReserveBlank(WiresVisualLayers.MaintenancePanel);
 
-            if (_appearanceSystem.TryGetData(uid, WiresVisuals.MaintenancePanelState, out var panelState, args.Component))
+            if(args.AppearanceData.TryGetValue(WiresVisuals.MaintenancePanelState, out var panelStateObject) &&
+                panelStateObject is bool panelState)
             {
-                args.Sprite.LayerSetVisible(layer, (bool) panelState);
+                args.Sprite.LayerSetVisible(layer, panelState);
             }
             else
             {
