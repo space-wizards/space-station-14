@@ -38,7 +38,18 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
             NoRoleGroupEntitiesLabel.Visible = false;
         }
 
-        ActivateButton.Visible = group.Status == GhostRoleGroupStatus.Editing;
+
+        ReleaseButton.Visible = group.CanModify;
+        ReleaseButton.Disabled = group.Status != GhostRoleGroupStatus.Editing;
+        ReleaseButton.Text = group.Status switch
+        {
+            GhostRoleGroupStatus.Editing => _loc.GetString("ghost-role-groups-window-release-button"),
+            GhostRoleGroupStatus.Releasing => _loc.GetString("ghost-role-groups-window-releasing-button"),
+            GhostRoleGroupStatus.Released => _loc.GetString("ghost-role-groups-window-released-button"),
+            _ => _loc.GetString("ghost-role-groups-window-release-button")
+        };
+
+        ActivateButton.Visible = group.CanModify && group.Status == GhostRoleGroupStatus.Editing;
         ActivateButton.Text = group.IsActive
             ? _loc.GetString("ghost-role-groups-window-deactivate-button")
             : _loc.GetString("ghost-role-groups-window-activate-button");
@@ -53,14 +64,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
                 break;
         }
 
-        ReleaseButton.Disabled = group.Status != GhostRoleGroupStatus.Editing;
-        ReleaseButton.Text = group.Status switch
-        {
-            GhostRoleGroupStatus.Editing => _loc.GetString("ghost-role-groups-window-release-button"),
-            GhostRoleGroupStatus.Releasing => _loc.GetString("ghost-role-groups-window-releasing-button"),
-            GhostRoleGroupStatus.Released => _loc.GetString("ghost-role-groups-window-released-button"),
-            _ => _loc.GetString("ghost-role-groups-window-release-button")
-        };
+        DeleteButton.Visible = group.CanModify;
 
         ActivateButton.OnPressed += _ => OnGroupActivate?.Invoke(group);
         ReleaseButton.OnPressed += _ => OnGroupRelease?.Invoke(group);

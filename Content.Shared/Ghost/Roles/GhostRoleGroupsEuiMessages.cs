@@ -11,6 +11,7 @@ public struct AdminGhostRoleGroupInfo
     public string Description { get; set; }
     public GhostRoleGroupStatus Status { get; set; }
     public bool IsActive { get; set; }
+    public bool CanModify { get; set; }
     public EntityUid[] Entities { get; set; }
 }
 

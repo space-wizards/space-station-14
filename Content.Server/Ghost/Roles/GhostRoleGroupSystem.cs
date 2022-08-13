@@ -10,7 +10,6 @@ using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
-using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
 using Robust.Server.Placement;
 using Robust.Server.Player;
@@ -38,7 +37,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <summary>
     ///     Assignment of entities to an individual role group.
     /// </summary>
-    private readonly Dictionary<EntityUid, uint> _roleGroupEntities = new();
+    private readonly Dictionary<EntityUid, uint> _roleGroupEntities = new(); // TODO: We have a component already on entities with this information, should we just use that?
 
     /// <summary>
     ///     Active role groups for each player. Entities placed down that fulfill certain criteria will
@@ -173,6 +172,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
                 Status = entry.Status,
                 Entities = groupEntities,
                 IsActive = _roleGroupActiveGroups.GetValueOrDefault(session) == entry.Identifier,
+                CanModify = CanModify(session, entry)
             };
 
             groups.Add(group);
@@ -237,10 +237,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_adminManager.IsAdmin(session))
             return;
 
-        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
-            return;
-
-        if (entry.Owner != session)
+        if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return;
 
         entry.Status = GhostRoleGroupStatus.Releasing;
@@ -258,10 +255,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_adminManager.IsAdmin(session))
             return;
 
-        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
-            return;
-
-        if (entry.Owner != session)
+        if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return;
 
         InternalDeleteGhostRoleGroup(entry, deleteEntities);
@@ -301,7 +295,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <param name="identifier">The role group to activate/deactivate.</param>
     public void ToggleOrSetActivePlayerRoleGroup(IPlayerSession player, uint identifier)
     {
-        if (!_roleGroupEntries.ContainsKey(identifier))
+        if (!_roleGroupEntries.TryGetValue(identifier, out var nextRoleGroup) || !CanModify(player, nextRoleGroup))
             return;
 
         // Deactivate the current role group first.
@@ -329,6 +323,42 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Get the session's active role group.
+    /// </summary>
+    /// <param name="player">The session to get the active role group for.</param>
+    /// <param name="groupIdentifier">The identifier of the active role group.</param>
+    /// <returns>True if the session has an active role group; Otherwise false.</returns>
+    public bool TryGetActiveRoleGroup(IPlayerSession player, out uint groupIdentifier)
+    {
+        return _roleGroupActiveGroups.TryGetValue(player, out groupIdentifier);
+    }
+
+    /// <summary>
+    ///     Checks if the player can modify the role group.
+    /// </summary>
+    /// <param name="player">The session to check access for.</param>
+    /// <param name="groupIdentifier">The identifier of the role group to check.</param>
+    /// <returns>true if the player can modify the role group; Otherwise false.</returns>
+    public bool CanModify(IPlayerSession player, uint groupIdentifier)
+    {
+        return _roleGroupEntries.TryGetValue(groupIdentifier, out var roleGroupEntry)
+               && CanModify(player, roleGroupEntry);
+    }
+
+    /// <summary>
+    ///     Checks if the player can modify the role group.
+    /// </summary>
+    /// <param name="player">The session to check access for.</param>
+    /// <param name="entry">The role group to check.</param>
+    /// <returns>true if the player can modify the role group; Otherwise false.</returns>
+    private bool CanModify(IPlayerSession player, RoleGroupEntry entry)
+    {
+        return _adminManager.IsAdmin(player) && entry.Owner == player;
+    }
+
+
+
+    /// <summary>
     ///     Adds the entity to the role group. If the entity has a <see cref="GhostRoleComponent"/> then
     ///     it will be removed from the ghost role lottery.
     /// </summary>
@@ -342,10 +372,10 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_adminManager.IsAdmin(session))
             return false;
 
-        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
+        if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return false;
 
-        if (entry.Owner != session || entry.Status != GhostRoleGroupStatus.Editing)
+        if (entry.Status != GhostRoleGroupStatus.Editing)
             return false;
 
         if (_roleGroupEntities.TryGetValue(entity, out var curGroupIdentifier) && curGroupIdentifier == identifier)
@@ -367,21 +397,29 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
     /// <summary>
     ///     Removes the entity from the role group. If the role group becomes empty and isn't
-    ///     being edited, it will be removed.
+    ///     being edited, it will be removed. If the entity belongs to a different role group, it
+    ///     will not be removed from that role group.
+    ///     <para/>
+    ///
+    ///     This will fail if the role group has been released or is not owned by the session. If you need to
+    ///     force removal, remove the <see cref="GhostRoleGroupComponent"/> instead.
     /// </summary>
+    /// <param name="session">The player session requesting the detach.</param>
     /// <param name="identifier">The identifier of the role group.</param>
     /// <param name="entity">The entity being removed.</param>
     /// <returns>true if the entity was successfully removed; otherwise false</returns>
-    public bool DetachFromGhostRoleGroup(uint identifier, EntityUid entity)
+    public bool DetachFromGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity)
     {
-        if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
+        if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return false;
 
         if (entry.Status != GhostRoleGroupStatus.Editing)
             return false;
 
-        RemCompDeferred<GhostRoleGroupComponent>(entity); // Defer so we can remove below and get the result.
-        return InternalDetachFromGhostRoleGroup(entry, entity);
+        var result = InternalDetachFromGhostRoleGroup(entry, entity);
+
+        RemComp<GhostRoleGroupComponent>(entity);
+        return result;
     }
 
     private bool InternalDetachFromGhostRoleGroup(RoleGroupEntry entry, EntityUid entity)
@@ -618,7 +656,7 @@ open";
             return;
         }
 
-        shell.WriteLine(manager.DetachFromGhostRoleGroup(groupIdentifier, entityUid)
+        shell.WriteLine(manager.DetachFromGhostRoleGroup(player, groupIdentifier, entityUid)
             ? "Successfully detached entity from role group."
             : "Failed to detach entity from role group");
     }

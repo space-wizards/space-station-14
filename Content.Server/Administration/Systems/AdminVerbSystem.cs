@@ -7,6 +7,7 @@ using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
@@ -43,6 +44,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+        [Dependency] private readonly GhostRoleGroupSystem _ghostRoleGroupSystem = default!;
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
@@ -296,6 +298,41 @@ namespace Content.Server.Administration.Systems
                 verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target);
                 verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
+            }
+
+            if (_groupController.CanCommand(player, "ghostrolegroups") &&
+                _ghostRoleGroupSystem.TryGetActiveRoleGroup(player, out var activeRoleGroup))
+            {
+                var verb = new Verb()
+                {
+                    Category = VerbCategory.Debug,
+                    Impact = LogImpact.Medium,
+                };
+
+                var roleGroupComponent = EntityManager.GetComponentOrNull<GhostRoleGroupComponent>(args.Target);
+                var canModify = roleGroupComponent != null && _ghostRoleGroupSystem.CanModify(player, roleGroupComponent.Identifier);
+
+                if (roleGroupComponent != null && canModify)
+                {
+                    verb.Text = "Detach from Role Group";
+                    verb.Act = () => _ghostRoleGroupSystem.DetachFromGhostRoleGroup(player, activeRoleGroup, args.Target);
+                    args.Verbs.Add(verb);
+                }
+                else if(roleGroupComponent == null || canModify)
+                {
+                    // It isn't assigned to a role group, or belongs to one we're allowed to modify.
+                    verb.Text = "Attach to Active Role Group";
+                    verb.Act = () => _ghostRoleGroupSystem.AttachToGhostRoleGroup(player, activeRoleGroup, args.Target);
+                    args.Verbs.Add(verb);
+                }
+                else if(!canModify)
+                {
+                    verb.Text = "Belongs to another role group!";
+                    verb.Priority = 10;
+                    verb.Disabled = true;
+                    verb.Message = $"Attached to role group: {roleGroupComponent.Identifier}";
+                    args.Verbs.Add(verb);
+                }
             }
 
             if (_groupController.CanAdminMenu(player) &&
