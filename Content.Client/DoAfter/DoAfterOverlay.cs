@@ -39,7 +39,7 @@ public sealed class DoAfterOverlay : Overlay
         var spriteQuery = _entManager.GetEntityQuery<SpriteComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        var scale = _configManager.GetCVar(CVars.DisplayUIScale);
+        const float scale = 1f;
         var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
         handle.UseShader(_shader);
