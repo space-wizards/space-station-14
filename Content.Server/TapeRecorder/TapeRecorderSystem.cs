@@ -16,7 +16,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.TapeRecorder
 {
     /// <summary>
-    /// This handles...
+    /// System for handling tape recorders
     /// </summary>
     public sealed class TapeRecorderSystem : EntitySystem
     {
@@ -27,7 +27,6 @@ namespace Content.Server.TapeRecorder
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
-        /// <inheritdoc/>
         public override void Initialize()
         {
             base.Initialize();
