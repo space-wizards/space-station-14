@@ -356,8 +356,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         return _adminManager.IsAdmin(player) && entry.Owner == player;
     }
 
-
-
     /// <summary>
     ///     Adds the entity to the role group. If the entity has a <see cref="GhostRoleComponent"/> then
     ///     it will be removed from the ghost role lottery.
@@ -369,18 +367,18 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <returns>true if the entity was successfully added; otherwise false.</returns>
     public bool AttachToGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity, GhostRoleComponent? component = null)
     {
-        if (!_adminManager.IsAdmin(session))
-            return false;
-
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return false;
 
         if (entry.Status != GhostRoleGroupStatus.Editing)
             return false;
 
-        if (_roleGroupEntities.TryGetValue(entity, out var curGroupIdentifier) && curGroupIdentifier == identifier)
+        if (_roleGroupEntities.TryGetValue(entity, out var curGroupIdentifier))
         {
-            return true;
+            if (curGroupIdentifier == identifier)
+                return true; // Already is part of this role group.
+            if (!CanModify(session, curGroupIdentifier))
+                return false; // Can't transfer from a role group we don't have the ability to modify.
         }
 
         if (component != null || EntityManager.TryGetComponent(entity, out component))
