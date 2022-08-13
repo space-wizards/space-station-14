@@ -1,6 +1,5 @@
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.MobState.Components;
 using Content.Shared.MobState;
 using Content.Shared.Damage;
 using Content.Shared.Verbs;
@@ -31,6 +30,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -81,8 +81,9 @@ namespace Content.Server.Bible
                 }
                 summonableComp.AlreadySummoned = false;
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner,
-                    Filter.Entities(summonableComp.Owner), PopupType.Medium);
-                SoundSystem.Play("/Audio/Effects/radpulse9.ogg", Filter.Entities(summonableComp.Owner), summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
+                    Filter.Pvs(summonableComp.Owner), PopupType.Medium);
+                _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/radpulse9.ogg"), summonableComp.Owner,
+                    AudioParams.Default.WithVolume(-4));
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
                 _remQueue.Enqueue(respawning.Owner);
@@ -108,13 +109,13 @@ namespace Content.Server.Bible
 
             component.LastAttackTime = currentTime;
             component.CooldownEnd = component.LastAttackTime + TimeSpan.FromSeconds(component.CooldownTime);
-            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd), false);
+            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd));
 
             if (!HasComp<BibleUserComponent>(args.User))
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, Filter.Entities(args.User));
 
-                SoundSystem.Play(component.SizzleSoundPath.GetSound(), Filter.Pvs(args.User), args.User);
+                _audio.PlayPvs(component.SizzleSoundPath, args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true);
 
                 return;
@@ -131,7 +132,7 @@ namespace Content.Server.Bible
                     var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                     _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User), PopupType.MediumCaution);
 
-                    SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
+                    _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/hit_kick.ogg"), args.Target.Value);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true);
                     return;
                 }
@@ -143,7 +144,7 @@ namespace Content.Server.Bible
             var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
             _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User), PopupType.Large);
 
-            SoundSystem.Play(component.HealSoundPath.GetSound(), Filter.Pvs(args.Target.Value), args.User);
+            _audio.PlayPvs(component.HealSoundPath, args.User);
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);
         }
 
@@ -159,7 +160,8 @@ namespace Content.Server.Bible
             {
                 Act = () =>
                 {
-                    if (!TryComp<TransformComponent>(args.User, out var userXform)) return;
+                    if (!TryComp<TransformComponent>(args.User, out var userXform))
+                        return;
 
                     AttemptSummon(component, args.User, userXform);
                 },
@@ -238,5 +240,7 @@ namespace Content.Server.Bible
     }
 
     public sealed class SummonActionEvent : InstantActionEvent
-    {}
+    {
+
+    }
 }
