@@ -1,3 +1,6 @@
+ent-BaseWall = basewall
+    .desc = Keeps the air in and the greytide out.
+    .suffix = { "" }
 ent-WallBrick = кирпичная стена
     .desc = { ent-WallBase.desc }
     .suffix = { "" }

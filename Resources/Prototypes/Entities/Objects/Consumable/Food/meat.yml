@@ -87,12 +87,14 @@
     tags:
     - Raw
   - type: Sprite
-    netsync: true
+    netsync: false
     state: bacon
-  - type: RandomSpriteState
-    spriteStates:
-    - bacon
-    - bacon2
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          bacon: ""
+      - enum.DamageStateVisualLayers.Base:
+          bacon2: ""
   - type: SolutionContainerManager
     solutions:
       food:
@@ -501,11 +503,13 @@
     layers:
     - state: plate-meat
     - state: bacon-cooked
-  - type: RandomSpriteState
-    spriteLayer: 1
-    spriteStates:
-    - bacon-cooked
-    - bacon2-cooked
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          bacon-cooked: ""
+      - enum.DamageStateVisualLayers.Base:
+          bacon2-cooked: ""
   - type: SolutionContainerManager
     solutions:
       food:
@@ -608,12 +612,16 @@
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
-    netsync: true
-    state: chicken-fried
-  - type: RandomSpriteState
-    spriteStates:
-    - chicken-fried
-    - chicken2-fried
+    netsync: false
+    layers:
+    - state: chicken-fried
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          chicken-fried: ""
+      - enum.DamageStateVisualLayers.Base:
+          chicken2-fried: ""
   - type: SolutionContainerManager
     solutions:
       food:

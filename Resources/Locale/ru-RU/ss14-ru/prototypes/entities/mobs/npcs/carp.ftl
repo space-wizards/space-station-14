@@ -1,3 +1,6 @@
+ent-BaseMobCarp = space carp
+    .desc = It's a space carp.
+    .suffix = { "" }
 ent-MobCarp = космический карп
     .desc = Это космический карп.
     .suffix = { "" }

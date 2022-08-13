@@ -8,10 +8,12 @@ namespace Content.Shared.Weapons.Ranged.Events;
 [Serializable, NetSerializable]
 public sealed class MuzzleFlashEvent : EntityEventArgs
 {
+    public EntityUid Uid;
     public string Prototype;
 
-    public MuzzleFlashEvent(string prototype)
+    public MuzzleFlashEvent(EntityUid uid, string prototype)
     {
+        Uid = uid;
         Prototype = prototype;
     }
 }

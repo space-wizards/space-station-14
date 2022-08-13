@@ -1,6 +1,5 @@
 import typing
 import os
-import lokalise
 from pydash import py_
 from project import Project
 
@@ -11,12 +10,12 @@ class LocalePath:
 
 
 class LokaliseTranslation:
-    def __init__(self, data: lokalise.client.TranslationModel, key_name: typing.AnyStr):
+    def __init__(self, data, key_name: typing.AnyStr):
         self.key_name = key_name,
         self.data = data
 
 class LokaliseKey:
-    def __init__(self, data: lokalise.client.KeyModel):
+    def __init__(self, data):
         self.data = data
         self.key_name = self.data.key_name['web']
         self.key_base_name = self.get_key_base_name(self.key_name)
