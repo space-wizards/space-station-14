@@ -42,4 +42,9 @@
   alert: Muted
 
 - type: statusEffect
+  id: Corporeal
+  alert: Corporeal
+
+- type: statusEffect
   id: ForcedSleep #I.e., they will not wake on damage or similar
+

@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Shuttles.Events;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -307,6 +308,7 @@ public sealed partial class ShuttleSystem
                     comp.State = FTLState.Cooldown;
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(comp.Owner);
+                    RaiseLocalEvent(new HyperspaceJumpCompletedEvent());
                     break;
                 case FTLState.Cooldown:
                     RemComp<FTLComponent>(comp.Owner);

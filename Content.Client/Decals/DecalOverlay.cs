@@ -69,6 +69,8 @@ namespace Content.Client.Decals
                     }
                 }
             }
+
+            handle.SetTransform(Matrix3.Identity);
         }
 
         public SpriteSpecifier GetDecalSprite(string id)
