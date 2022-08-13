@@ -502,6 +502,8 @@ namespace Content.Client.NPC
             {
                 DrawRegions(screenHandle, viewport);
             }
+
+            screenHandle.UseShader(null);
         }
     }
 

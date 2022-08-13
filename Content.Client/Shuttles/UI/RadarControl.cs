@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Shuttles.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -210,6 +211,15 @@ public sealed class RadarControl : Control
                 continue;
             }
 
+            _entManager.TryGetComponent<IFFComponent>(grid.GridEntityId, out var iff);
+
+            // Hide it entirely.
+            if (iff != null &&
+                (iff.Flags & IFFFlags.Hide) != 0x0)
+            {
+                continue;
+            }
+
             shown.Add(grid.GridEntityId);
             var name = metaQuery.GetComponent(grid.GridEntityId).EntityName;
 
@@ -220,8 +230,11 @@ public sealed class RadarControl : Control
             var gridFixtures = fixturesQuery.GetComponent(grid.GridEntityId);
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
+            var color = iff?.Color ?? IFFComponent.IFFColor;
 
-            if (ShowIFF)
+            if (ShowIFF &&
+                (iff == null && IFFComponent.ShowIFFDefault ||
+                 (iff.Flags & IFFFlags.HideLabel) == 0x0))
             {
                 var gridBounds = grid.LocalAABB;
                 Label label;
@@ -231,7 +244,6 @@ public sealed class RadarControl : Control
                     label = new Label()
                     {
                         HorizontalAlignment = HAlignment.Left,
-                        FontColorOverride = Color.Aquamarine,
                     };
 
                     _iffControls[grid.GridEntityId] = label;
@@ -242,6 +254,7 @@ public sealed class RadarControl : Control
                     label = (Label) control;
                 }
 
+                label.FontColorOverride = color;
                 var gridCentre = matty.Transform(gridBody.LocalCenter);
                 gridCentre.Y = -gridCentre.Y;
                 var distance = gridCentre.Length;
@@ -267,7 +280,7 @@ public sealed class RadarControl : Control
             }
 
             // Detailed view
-            DrawGrid(handle, matty, gridFixtures, Color.Aquamarine);
+            DrawGrid(handle, matty, gridFixtures, color);
 
             DrawDocks(handle, grid.GridEntityId, matty);
         }

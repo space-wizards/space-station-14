@@ -1,59 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Added 6 new floor tiles ported from Goon! Look out for clown carpet,
-      boxing ring, gym mat, office carpet, metal diamond and alternate blue arcade.',
-    type: Add}
-  id: 1630
-  time: '2022-06-02T02:10:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix infinite gunshot sounds from spent cartridges., type: Fix}
-  - {message: Fix cap cartridge visualizer., type: Fix}
-  - {message: Fix empty gunshot sounds (no more wehnigun log spam)., type: Fix}
-  id: 1631
-  time: '2022-06-02T09:13:13.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added an audio setting to disable playing admin music, type: Add}
-  id: 1632
-  time: '2022-06-02T13:41:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: SMGs have had their maximum spread angle increased (i.e. accuracy reduced).,
-    type: Tweak}
-  id: 1633
-  time: '2022-06-02T19:46:46.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Post Lights are now slightly smaller and sit further up in a tile.,
-    type: Tweak}
-  id: 1634
-  time: '2022-06-02T20:12:23.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Nukes will now explode in 120 seconds instead of 180., type: Tweak}
-  id: 1635
-  time: '2022-06-02T20:53:32.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Gas miners are now capped at 300 kPa instead of 4500 kPa. Less pressure
-      bombing., type: Tweak}
-  id: 1636
-  time: '2022-06-02T21:35:32.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station now has security cameras. Lots of them., type: Add}
-  - {message: Delta Station now has more decals., type: Tweak}
-  id: 1637
-  time: '2022-06-03T05:32:57.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Removed dwarves, due to their lack of content. If someone steps up
-      in the next few weeks to make them better we''ll see about their reintroduction.',
-    type: Remove}
-  id: 1638
-  time: '2022-06-03T07:31:35.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bojevic firerate dropped from 3 to 2, type: Tweak}
@@ -2938,3 +2883,52 @@ Entries:
   - {message: Ore Processor deconstruction now works properly., type: Fix}
   id: 2129
   time: '2022-08-11T04:24:04.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Nanotrasen has found where all the microphones for handheld radios
+      went. Enjoy your usage of handheld radio technology, today!', type: Tweak}
+  id: 2130
+  time: '2022-08-11T09:25:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: A console to toggle IFF (radar labels) has been added., type: Add}
+  id: 2131
+  time: '2022-08-11T16:58:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Disarming no longer deselects after a usage., type: Remove}
+  id: 2132
+  time: '2022-08-11T20:08:23.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Add pneumatic valves, which control gas flow based on control pressure.',
+    type: Add}
+  id: 2133
+  time: '2022-08-11T21:19:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The popup for not being able to wield an item is now grammatically correct.,
+    type: Fix}
+  id: 2134
+  time: '2022-08-11T22:53:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes no longer can become stuck not producing anything with items
+      in the queue., type: Fix}
+  id: 2135
+  time: '2022-08-12T01:33:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio occlusion is working again, type: Fix}
+  id: 2136
+  time: '2022-08-12T02:53:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed inverted combat mode toggle., type: Fix}
+  id: 2137
+  time: '2022-08-13T00:27:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: do_after progress bars now show on cameras., type: Fix}
+  id: 2138
+  time: '2022-08-13T04:32:23.0000000+00:00'
