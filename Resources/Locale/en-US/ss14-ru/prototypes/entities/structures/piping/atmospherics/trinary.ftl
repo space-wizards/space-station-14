@@ -13,6 +13,3 @@ ent-GasMixer = gas mixer
 ent-GasMixerFlipped = gas mixer
     .suffix = Flipped
     .desc = { ent-GasMixer.desc }
-ent-PressureControlledValve = pneumatic valve
-    .desc = Valve controlled by pressure.
-    .suffix = { "" }

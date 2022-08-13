@@ -1,8 +1,5 @@
-ent-BaseMobCarp = space carp
+ent-MobCarp = space carp
     .desc = It's a space carp.
-    .suffix = { "" }
-ent-MobCarp = { ent-BaseMobCarp }
-    .desc = { ent-BaseMobCarp.desc }
     .suffix = { "" }
 ent-MobCarpMagic = magicarp
     .desc = Looks like some kind of fish. Might be magical.
@@ -15,4 +12,4 @@ ent-MobCarpSalvage = { ent-MobCarp }
     .desc = { ent-MobCarp.desc }
 ent-MobCarpDragon = space carp
     .suffix = DragonBrood
-    .desc = { ent-BaseMobCarp.desc }
+    .desc = { ent-MobCarp.desc }

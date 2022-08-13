@@ -12,7 +12,7 @@ namespace Content.Server.Wieldable.Components
         public SoundSpecifier? WieldSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         [DataField("unwieldSound")]
-        public SoundSpecifier? UnwieldSound;
+        public SoundSpecifier? UnwieldSound = default!;
 
         /// <summary>
         ///     Number of free hands required (excluding the item itself) required
@@ -23,7 +23,6 @@ namespace Content.Server.Wieldable.Components
 
         public bool Wielded = false;
 
-        [DataField("wieldedInhandPrefix")]
         public string WieldedInhandPrefix = "wielded";
 
         public string? OldInhandPrefix = null;

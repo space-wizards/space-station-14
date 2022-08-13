@@ -57,7 +57,7 @@ namespace Content.Server.Tiles
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
                     }
                 }
-                else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
+                else if (HasBaseTurf(currentTileDefinition, "space"))
                 {
                     mapGrid = _mapManager.CreateGrid(locationMap.MapId);
                     mapGrid.WorldPosition = locationMap.Position;

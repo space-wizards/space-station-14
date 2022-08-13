@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Maps;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
@@ -42,15 +41,10 @@ namespace Content.MapRenderer.Painters
 
             grid.GetAllTiles().AsParallel().ForAll(tile =>
             {
-                var sprite = _sTileDefinitionManager[tile.Tile.TypeId].Sprite;
-
-                if (sprite == null)
-                    return;
-
                 var x = (int) (tile.X + xOffset);
                 var y = (int) (tile.Y + yOffset);
-                var path = sprite.ToString();
-                var image = images[path][tile.Tile.Variant];
+                var sprite = _sTileDefinitionManager[tile.Tile.TypeId].SpriteName;
+                var image = images[sprite][tile.Tile.Variant];
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
 
@@ -72,15 +66,15 @@ namespace Content.MapRenderer.Painters
 
             foreach (var definition in tileDefinitionManager)
             {
-                var sprite = definition.Sprite;
+                var sprite = definition.SpriteName;
+                images[sprite] = new List<Image>(definition.Variants);
 
-                if (sprite == null)
+                if (string.IsNullOrEmpty(sprite))
+                {
                     continue;
+                }
 
-                var path = sprite.ToString();
-                images[path] = new List<Image>(definition.Variants);
-
-                using var stream = resourceCache.ContentFileRead(path);
+                using var stream = resourceCache.ContentFileRead($"{TilesPath}{sprite}.png");
                 Image tileSheet = Image.Load<Rgba32>(stream);
 
                 if (tileSheet.Width != tileSize * definition.Variants || tileSheet.Height != tileSize)
@@ -91,7 +85,7 @@ namespace Content.MapRenderer.Painters
                 for (var i = 0; i < definition.Variants; i++)
                 {
                     var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, 0, 32, 32)));
-                    images[path].Add(tileImage);
+                    images[sprite].Add(tileImage);
                 }
             }
 

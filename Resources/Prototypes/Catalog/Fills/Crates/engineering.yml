@@ -1,5 +1,6 @@
 - type: entity
   id: CrateEngineeringGear
+  name: engineering gear crate
   parent: CrateEngineering
   components:
   - type: StorageFill
@@ -19,6 +20,7 @@
 
 - type: entity
   id: CrateEngineeringToolbox
+  name: toolbox crate
   parent: CrateEngineering
   components:
   - type: StorageFill
@@ -30,6 +32,7 @@
 
 #- type: entity
 #  id: CrateEngineeringPowercell
+#  name:  ame crate
 #  parent: CrateElectrical
 #  components:
 #  - type: StorageFill
@@ -39,6 +42,7 @@
 
 - type: entity
   id: CrateEngineeringCableLV
+  name: LV cable crate
   parent: CrateElectrical
   components:
   - type: StorageFill
@@ -48,6 +52,7 @@
 
 - type: entity
   id: CrateEngineeringCableMV
+  name: MV cable crate
   parent: CrateElectrical
   components:
   - type: StorageFill
@@ -57,6 +62,7 @@
 
 - type: entity
   id: CrateEngineeringCableHV
+  name: HV cable crate
   parent: CrateElectrical
   components:
   - type: StorageFill
@@ -66,6 +72,7 @@
 
 - type: entity
   id: CrateEngineeringCableBulk
+  name: bulk cable crate
   parent: CrateElectrical
   components:
   - type: StorageFill
@@ -79,6 +86,7 @@
 
 - type: entity
   id: CrateEngineeringElectricalSupplies
+  name: Electrical Supplies Crate
   parent: CrateElectrical
   components:
   - type: StorageFill

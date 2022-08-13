@@ -1,53 +1,46 @@
-using System.Linq;
-using Content.Shared.Decals;
-using Content.Shared.Sprite;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+using Content.Server.Sprite.Components;
+using Content.Shared.Random.Helpers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Server.Sprite;
 
-public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
+public sealed class RandomSpriteSystem: EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RandomSpriteComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<RandomSpriteComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RandomSpriteColorComponent, ComponentStartup>(OnSpriteColorStartup);
+        SubscribeLocalEvent<RandomSpriteColorComponent, MapInitEvent>(OnSpriteColorMapInit);
+
+        SubscribeLocalEvent<RandomSpriteStateComponent, MapInitEvent>(OnSpriteStateMapInit);
     }
 
-    private void OnMapInit(EntityUid uid, RandomSpriteComponent component, MapInitEvent args)
+    private void OnSpriteColorStartup(EntityUid uid, RandomSpriteColorComponent component, ComponentStartup args)
     {
-        if (component.Selected.Count > 0)
-            return;
-
-        if (component.Available.Count == 0)
-            return;
-
-        var group = _random.Pick(component.Available);
-        component.Selected.EnsureCapacity(group.Count);
-
-        foreach (var layer in group)
-        {
-            Color? color = null;
-
-            if (!string.IsNullOrEmpty(layer.Value.Color))
-                color = _random.Pick(_prototype.Index<ColorPalettePrototype>(layer.Value.Color).Colors.Values);
-
-            component.Selected.Add(layer.Key, (layer.Value.State, color));
-        }
-
-        Dirty(component);
+        UpdateColor(component);
     }
 
-    private void OnGetState(EntityUid uid, RandomSpriteComponent component, ref ComponentGetState args)
+    private void OnSpriteColorMapInit(EntityUid uid, RandomSpriteColorComponent component, MapInitEvent args)
     {
-        args.State = new RandomSpriteColorComponentState()
-        {
-            Selected = component.Selected,
-        };
+        component.SelectedColor = _random.Pick(component.Colors.Keys);
+        UpdateColor(component);
+    }
+
+    private void OnSpriteStateMapInit(EntityUid uid, RandomSpriteStateComponent component, MapInitEvent args)
+    {
+        if (component.SpriteStates == null) return;
+        if (!TryComp<SpriteComponent>(uid, out var spriteComponent)) return;
+        spriteComponent.LayerSetState(component.SpriteLayer, _random.Pick(component.SpriteStates));
+    }
+
+    private void UpdateColor(RandomSpriteColorComponent component)
+    {
+        if (!TryComp<SpriteComponent>(component.Owner, out var spriteComponent) || component.SelectedColor == null) return;
+
+        spriteComponent.LayerSetState(0, component.BaseState);
+        spriteComponent.LayerSetColor(0, component.Colors[component.SelectedColor]);
     }
 }

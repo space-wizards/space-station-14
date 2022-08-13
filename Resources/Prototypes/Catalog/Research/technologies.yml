@@ -4,9 +4,9 @@
 # Base Technology
 
 - type: technology
-  name: technologies-basic-research-technology
+  name: "basic research technology"
   id: BasicResearch
-  description: technologies-basic-research-technology-description
+  description: Nanotrasen basic research technologies.
   icon:
     sprite: Structures/Machines/server.rsi
     state: server-on
@@ -15,9 +15,9 @@
 # Cleaning Technology Tree
 
 - type: technology
-  name: technologies-cleaning-technology
+  name: "cleaning technology"
   id: MopBucket
-  description: technologies-cleaning-technology-description
+  description: Start to a shiny clean station
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: mopbucket
@@ -33,9 +33,9 @@
 # Biological Technology Tree
 
 - type: technology
-  name: technologies-biological-technology
+  name: "biological technology"
   id: BiologicalTechnology
-  description: technologies-biological-technology-description
+  description: Investigations into the natural world.
   icon:
     sprite: Structures/Furniture/potted_plants.rsi
     state: applebush
@@ -53,9 +53,9 @@
     - DiseaseSwab
 
 - type: technology
-  name: technologies-advanced-botany
+  name: "advanced botany"
   id: AdvancedBotany
-  description: technologies-advanced-botany-description
+  description: A better understanding of botany.
   icon:
     sprite: Objects/Specific/Hydroponics/potato.rsi
     state: seed
@@ -68,9 +68,9 @@
     - MicrowaveMachineCircuitboard
 
 - type: technology
-  name: technologies-advanced-surgery
+  name: "advanced surgery"
   id: AdvancedSugery
-  description: technologies-advanced-surgery-description
+  description: Research new surgical procedures.
   icon:
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
@@ -88,9 +88,9 @@
 # Chemistry Technology Tree
 
 - type: technology
-  name: technologies-chemistry-technology
+  name: "chemistry technology"
   id: ChemistryTechnology
-  description: technologies-chemistry-technology-description
+  description: A crash course in chemistry.
   icon:
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
     state: beakerlarge
@@ -109,9 +109,9 @@
     - ChemicalPayload
 
 - type: technology
-  name: technologies-medical-machinery
+  name: "medical machinery"
   id: MedicalMachinery
-  description: technologies-medical-machinery-description
+  description: Machines any self-respecting medbay would need.
   icon:
     sprite: Structures/dispensers.rsi
     state: industrial-working
@@ -129,9 +129,9 @@
     - CloningConsoleComputerCircuitboard
 
 - type: technology
-  name: technologies-advanced-life-support
+  name: "advanced life support systems"
   id: AdvancedLifeSupport
-  description: technologies-advanced-life-support-description
+  description: The cutting edge of life and death.
   icon:
     sprite: Structures/Machines/cloning.rsi
     state: pod_0
@@ -209,9 +209,9 @@
 # Industrial Engineering Technology Tree
 
 - type: technology
-  name: technologies-industrial-engineering
+  name: "industrial engineering"
   id: IndustrialEngineering
-  description: technologies-industrial-engineering-description
+  description: A refresher course on modern engineering technology.
   icon:
     sprite: Structures/Machines/protolathe.rsi
     state: icon
@@ -239,12 +239,11 @@
     - ComputerTelevisionCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
-    - HolofanProjector
 
 - type: technology
-  name: technologies-material-sheet-printing
+  name: material sheet printing
   id: Sheets
-  description: technologies-material-sheet-printing-description
+  description: Print those sheets!
   icon: Objects/Materials/Sheets/researchicon.png
   requiredPoints: 2500
   requiredTechnologies:
@@ -256,9 +255,9 @@
     - SheetGlass1
 
 - type: technology
-  name: technologies-advanced-atmospherics-technology
+  name: advanced atmospherics technology
   id: AdvancedAtmosTechnology
-  description: technologies-advanced-atmospherics-technology-description
+  description: As if it can get more advanced.
   icon:
     sprite: Structures/Piping/Atmospherics/thermomachine.rsi
     state: freezer_off
@@ -272,9 +271,9 @@
 # Avionics Circuitry Technology Tree
 
 - type: technology
-  name: technologies-avionics-systems
+  name: "avionics systems"
   id: AvionicsSystems
-  description: technologies-avionics-systems-description
+  description: The latest in fly-by-LV-wire technology
   icon:
     sprite: Structures/Machines/computers.rsi
     state: avionics-systems
@@ -289,9 +288,9 @@
 # Electromagnetic Theory Technology Tree
 
 - type: technology
-  name: technologies-electromagnetic-theory
+  name: "electromagnetic theory"
   id: ElectromagneticTheory
-  description: technologies-electromagnetic-theory-description
+  description: Try not to fry yourself.
   icon:
     sprite: Structures/Power/apc.rsi
     state: apc0
@@ -320,9 +319,9 @@
     - SignalTrigger
 
 - type: technology
-  name: technologies-compact-power-technology
+  name: "compact power technology"
   id: CompactPowerTechnology
-  description: technologies-compact-power-technology-description
+  description: Power, but smaller.
   icon:
     sprite: Structures/Power/apc.rsi
     state: apc0
@@ -337,9 +336,9 @@
     - GeneratorUraniumMachineCircuitboard
 
 - type: technology
-  name: technologies-applied-musicology
+  name: "applied musicology"
   id: AppliedMusicology
-  description: technologies-applied-musicology-description
+  description: Bringing you the latest in audio-audio technology.
   icon:
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
@@ -351,9 +350,9 @@
     - DawInstrumentMachineCircuitboard
 
 - type: technology
-  name: technologies-basic-powercell-printing
+  name: "basic powercell printing"
   id: PowerCellBasic
-  description: technologies-basic-powercell-printing-description
+  description: Print standard powercells.
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: small
@@ -364,9 +363,9 @@
     - PowerCellSmall
 
 - type: technology
-  name: technologies-advanced-powercell-printing
+  name: "advanced powercell printing"
   id: PowerCellAdvanced
-  description: technologies-advanced-powercell-printing-description
+  description: Print advanced powercells.
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: medium
@@ -377,9 +376,9 @@
     - PowerCellMedium
 
 - type: technology
-  name: technologies-super-powercell-printing
+  name: "super powercell printing"
   id: PowerCellSuper
-  description: technologies-super-powercell-printing-description
+  description: Print super powercells.
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: high
@@ -391,9 +390,9 @@
 # Basic Parts Technology Tree
 
 - type: technology
-  name: technologies-basic-parts-technology
+  name: "basic parts technology"
   id: BasicPartsTechnology
-  description: technologies-basic-parts-technology-description
+  description: They aren't great, but at least they're something.
   icon:
     sprite: Objects/Misc/stock_parts.rsi
     state: micro_mani
@@ -408,9 +407,9 @@
     - ScanningModuleStockPart
 
 - type: technology
-  name: technologies-robotics-technology
+  name: "robotics technology"
   id: RoboticsTechnology
-  description: technologies-robotics-technology-description
+  description: Robot parts.
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot

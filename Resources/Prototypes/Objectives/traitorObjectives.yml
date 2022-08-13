@@ -11,6 +11,7 @@
   conditions:
     - !type:StealCondition
       prototype: CaptainIDCard
+      owner: job-name-captain
 
 - type: objective
   id: KillRandomObjective
@@ -190,3 +191,4 @@
   conditions:
     - !type:StealCondition
       prototype: JetpackCaptainFilled
+      owner: job-name-captain

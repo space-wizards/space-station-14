@@ -1,10 +1,10 @@
 - type: accessLevel
   id: ResearchDirector
-  name: id-card-access-level-research-director
+  name: Research Director
 
 - type: accessLevel
   id: Research
-  name: id-card-access-level-research
+  name: Research
 
 - type: accessGroup
   id: Research

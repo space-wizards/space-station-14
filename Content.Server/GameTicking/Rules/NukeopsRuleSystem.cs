@@ -1,12 +1,15 @@
 using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Nuke;
 using Content.Server.Players;
+using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
@@ -20,8 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using System.Data;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -34,14 +36,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
 
     public override string Prototype => "Nukeops";
-
-    private readonly SoundSpecifier _greetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 
     private const string NukeopsPrototypeId = "Nukeops";
     private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
@@ -292,12 +293,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
-
-        SoundSystem.Play(_greetSound.GetSound(), Filter.Empty().AddWhere(s =>
-        {
-            var mind = ((IPlayerSession) s).Data.ContentData()?.Mind;
-            return mind != null && _aliveNukeops.ContainsKey(mind);
-        }), AudioParams.Default);
     }
 
     //For admins forcing someone to nukeOps.

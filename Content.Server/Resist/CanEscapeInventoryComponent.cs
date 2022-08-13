@@ -6,11 +6,17 @@ namespace Content.Server.Resist;
 public sealed class CanEscapeInventoryComponent : Component
 {
     /// <summary>
-    /// Base doafter length for uncontested breakouts.
+    /// How long it takes to break out of storage. Default at 5 seconds.
     /// </summary>
     [ViewVariables]
-    [DataField("baseResistTime")]
-    public float BaseResistTime = 5f;
+    [DataField("resistTime")]
+    public float ResistTime = 5f;
+
+    /// <summary>
+    /// For quick exit if the player attempts to move while already resisting
+    /// </summary>
+    [ViewVariables]
+    public bool IsResisting = false;
 
     /// <summary>
     /// Cancellation token used to cancel the DoAfter if the mob is removed before it's complete

@@ -1,5 +1,6 @@
 - type: entity
   id: CrateSyndicateSurplusBundle
+  name: syndicate surplus crate
   parent: CrateGenericSteel
   components:
     - type: SurplusBundle
@@ -7,6 +8,7 @@
 
 - type: entity
   id: CrateSyndicateSuperSurplusBundle
+  name: syndicate super surplus crate
   parent: CrateGenericSteel
   components:
     - type: SurplusBundle

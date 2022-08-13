@@ -15,7 +15,6 @@
     heldPrefix: default
   - type: Access
   - type: IdCard
-  - type: StationRecordKeyStorage
   - type: Tag
     tags:
     - DoorBumpOpener
