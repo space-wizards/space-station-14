@@ -544,9 +544,10 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineSeeds
+  id: VendingMachineSeedsUnlocked
   name: MegaSeed Servitor
   description: For when you need seeds fast. Hands down the best seed selection on the station!
+  suffix: Unlocked
   components:
   - type: VendingMachine
     pack: MegaSeedServitorInventory
@@ -569,12 +570,18 @@
       ejectUnshaded: true
       broken: true
     - type: WiresVisualizer
-  - type: AccessReader
-    access: [["Hydroponics"]]
   - type: PointLight
     radius: 1.5
     energy: 1.6
     color: "#326e3f"
+    
+- type: entity
+  parent: VendingMachineSeedsUnlocked
+  id: VendingMachineSeeds
+  suffix: Hyroponics
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
 
 - type: entity
   parent: VendingMachine
