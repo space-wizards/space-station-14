@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Sandbox is now votable again as long as there are less than 5 players
-      in the server., type: Tweak}
-  id: 1641
-  time: '2022-06-03T10:04:53.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that caused gas quantity to not be conserved when anchoring
@@ -2929,3 +2923,8 @@ Entries:
     type: Add}
   id: 2140
   time: '2022-08-13T13:49:41.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: The Outlaw's Hat now looks nicer., type: Tweak}
+  id: 2141
+  time: '2022-08-13T13:52:24.0000000+00:00'
