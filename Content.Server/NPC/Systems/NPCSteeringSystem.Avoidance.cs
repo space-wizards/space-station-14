@@ -1,5 +1,6 @@
 using Content.Server.NPC.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -31,6 +32,12 @@ public sealed partial class NPCSteeringSystem
     private Vector2 GetAvoidanceVector(NPCSteeringComponent component)
     {
         // TODO: Get relevant VOs in front of us
+
+        var vos = new ValueList<VelocityObstacle>();
+
+        // TODO: Check if desired velocity falls inside any VO
+        // if it doesn't then return vector2.zero here
+
         // TODO: Combined VO
 
         return Vector2.Zero;
@@ -75,16 +82,36 @@ public sealed partial class NPCSteeringSystem
     {
         // Essentially we need to get a cone from entity A to entity B
         // The edges of the cone are offset by both their radii
+        // Any velocity vector within this cone will collide and anything outside won't.
 
         // Can just use pythagoras to get the offset
         // TODO: Custom
         var combinedRadii = 0.7f;
-        
 
         var xformA = Transform(uidA);
         var xformB = Transform(uidB);
 
+        // Get B in space of A
+        var bPos = xformB.LocalPosition - xformA.LocalPosition;
 
+        // Tan theta because we know the opposite (radius) and the adjacent (bPos).
+        var opposite = combinedRadii;
+        var adjacent = bPos.Length;
+
+        var angle = new Angle(MathF.Atan(opposite / adjacent));
+
+        // This is the angle we need to rotate bPos by in either direction to get the cone.
+
+        var edge1 = (-angle).RotateVec(bPos).Normalized;
+        var edge2 = angle.RotateVec(bPos).Normalized;
+        var offset = Comp<PhysicsComponent>(uidB).LinearVelocity;
+
+        return new VelocityObstacle()
+        {
+            Edge1 = edge1,
+            Edge2 = edge2,
+            Origin = offset,
+        };
     }
 
     #region Lookup
@@ -192,6 +219,7 @@ public sealed partial class NPCSteeringSystem
 
     #endregion
 
+    // TODO: Make readonly
     private struct VelocityObstacle
     {
         public Vector2 Edge1;
