@@ -216,6 +216,10 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         if (_needsUpdateGhostRoleCount)
         {
             _needsUpdateGhostRoleCount = false;
+            var ev = new GhostRoleCountRequestedEvent();
+            RaiseLocalEvent(ev);
+            AvailableRolesCount = ev.Count;
+
             var response = new GhostUpdateGhostRoleCountEvent(AvailableRolesCount, AvailableRoles);
             foreach (var player in _playerManager.Sessions)
             {
@@ -300,7 +304,6 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         ProcessRoleGroupLottery(successfulPlayers);
         ProcessGhostRoleLottery(successfulPlayers);
 
-        var anyAdded = false;
 
         var lotteryEvent = new RequestAvailableLotteryItemsMessage();
         RaiseLocalEvent(lotteryEvent);
@@ -310,25 +313,16 @@ public sealed class GhostRoleLotterySystem : EntitySystem
             if (!_ghostRoleComponentLotteries.TryGetValue(component.RoleName, out var components))
                 _ghostRoleComponentLotteries[component.RoleName] = components = new GhostRoleLotteryRecord();
 
-            var added = component.RoleUseLottery
-                ? components.ForLottery.Add(component)
-                : components.ForTake.Add(component);
-
-            anyAdded |= added;
+            if(component.RoleUseLottery)
+                components.ForLottery.Add(component);
+            else
+                components.ForTake.Add(component);
         }
 
         foreach (var group in lotteryEvent.GhostRoleGroups)
         {
-            var added = _roleGroupLotteries.Add(group);
-            anyAdded |= added;
+            _roleGroupLotteries.Add(group);
         }
-
-        var ev = new GhostRoleCountRequestedMessage();
-        RaiseLocalEvent(ev);
-        AvailableRolesCount = ev.Count;
-
-        if (anyAdded)
-            UpdateAllEui();
 
         var elapseTime = TimeSpan.FromSeconds(_cfgManager.GetCVar<float>(CCVars.GhostRoleLotteryTime));
 

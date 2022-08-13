@@ -11,8 +11,8 @@
         <BoxContainer HorizontalAlignment="Left"
                       Orientation="Horizontal"
                       SeparationOverride="5">
-            <Button Name="ActivateButton" Text="Activate"/>
             <Button Name="ReleaseButton" Text="Release"/>
+            <Button Name="ActivateButton" Text="Activate"/>
             <Button Name="DeleteButton" Text="Delete" StyleClasses="Caution"/>
         </BoxContainer>
         <BoxContainer HorizontalAlignment="Right"

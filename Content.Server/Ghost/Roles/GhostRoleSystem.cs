@@ -68,7 +68,7 @@ public sealed class GhostRoleSystem : EntitySystem
 
         SubscribeLocalEvent<GhostRoleComponent, GhostRoleRequestTakeoverMessage>(OnTakeoverRequest);
         SubscribeLocalEvent<RequestAvailableLotteryItemsMessage>(OnLotteryRequest);
-        SubscribeLocalEvent<GhostRoleCountRequestedMessage>(OnRequestCount);
+        SubscribeLocalEvent<GhostRoleCountRequestedEvent>(OnRequestCount);
     }
 
     private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
@@ -253,7 +253,7 @@ public sealed class GhostRoleSystem : EntitySystem
         _queuedComponents.Clear();
     }
 
-    private void OnRequestCount(GhostRoleCountRequestedMessage ev)
+    private void OnRequestCount(GhostRoleCountRequestedEvent ev)
     {
         foreach (var (_, data) in _ghostRoleData)
         {

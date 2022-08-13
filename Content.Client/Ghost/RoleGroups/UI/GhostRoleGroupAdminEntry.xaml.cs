@@ -62,8 +62,6 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
             _ => _loc.GetString("ghost-role-groups-window-release-button")
         };
 
-        DeleteButton.Visible = group.Status == GhostRoleGroupStatus.Editing;
-
         ActivateButton.OnPressed += _ => OnGroupActivate?.Invoke(group);
         ReleaseButton.OnPressed += _ => OnGroupRelease?.Invoke(group);
         DeleteButton.OnPressed += _ => OnGroupDelete?.Invoke(group);

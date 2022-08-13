@@ -3,12 +3,14 @@ using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
 using Robust.Server.Placement;
 using Robust.Server.Player;
@@ -54,6 +56,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         SubscribeLocalEvent<GhostRoleGroupComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RequestAvailableLotteryItemsMessage>(OnLotteryRequest);
         SubscribeLocalEvent<GhostRoleGroupRequestTakeoverMessage>(OnTakeoverRequest);
+        SubscribeLocalEvent<GhostRoleCountRequestedEvent>(OnGhostRoleCountRequest);
     }
 
     private void OnMindAdded(EntityUid uid, GhostRoleGroupComponent component, MindAddedMessage args)
@@ -69,6 +72,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         }
 
         _openUis.Clear();
+        _roleGroupActiveGroups.Clear();
+        _roleGroupEntries.Clear();
     }
 
     public void OpenEui(IPlayerSession session)
@@ -175,7 +180,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         Logger.Debug($"Added {ToPrettyString(args.Placed)} to role group.");
         MakeSentientCommand.MakeSentient(uid, EntityManager);
 
-        RemComp<GhostTakeoverAvailableComponent>(uid); // Remove this from ghost role system.
+        RemComp<GhostTakeoverAvailableComponent>(uid); // Remove so that GhostRoleSystem doesn't manage it simultaneously.
         var comp = AddComp<GhostRoleGroupComponent>(uid);
         comp.Identifier = identifier.Value;
 
@@ -268,6 +273,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
         _roleGroupEntries.Remove(entry.Identifier);
         _needsUpdateRoleGroups = true;
+        _ghostRoleLotterySystem.UpdateAllEui();
 
         if (!deleteEntities)
             return;
@@ -293,9 +299,10 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_roleGroupEntries.ContainsKey(identifier))
             return;
 
+        // Deactivate the current role group first.
         if (_roleGroupActiveGroups.Remove(player, out var current) && current == identifier)
         {
-
+            UpdatePlayerEui(player); // Player toggled the current active role group.
             return;
         }
 
@@ -313,7 +320,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_adminManager.IsAdmin(session))
             return null;
 
-        return _roleGroupActiveGroups.GetValueOrDefault(session);
+        return _roleGroupActiveGroups.TryGetValue(session, out var value) ? value : null;
     }
 
     /// <summary>
@@ -365,10 +372,28 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
         _needsUpdateRoleGroups = true;
 
-        if(entry.Entities.Count == 0 && entry.Status != GhostRoleGroupStatus.Editing)
-            InternalDeleteGhostRoleGroup(entry, false);
+        if (entry.Status != GhostRoleGroupStatus.Editing)
+        {
+            if(entry.Entities.Count == 0)
+                InternalDeleteGhostRoleGroup(entry, false);
+            else
+                _ghostRoleLotterySystem.UpdateAllEui();
+        }
+
+
 
         return removed;
+    }
+
+    private void OnGhostRoleCountRequest(GhostRoleCountRequestedEvent ev)
+    {
+        foreach (var (_, group) in _roleGroupEntries)
+        {
+            if (group.Status != GhostRoleGroupStatus.Released)
+                continue;
+
+            ev.Count += group.Entities.Count;
+        }
     }
 
     /// <summary>
