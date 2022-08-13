@@ -3,7 +3,7 @@
             MinSize="375 360">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right" Name="AdminControls" Margin="0 8">
-            <Button Name="OpenGhostRoleGroupsButton" Text="Manage Role Groups" HorizontalAlignment="Right"/>
+            <Button Name="OpenGhostRoleGroupsButton" Text="{Loc 'ghost-roles-window-manage-role-groups-button'}" HorizontalAlignment="Right"/>
         </BoxContainer>
         <Label Name="NoRolesMessage"
                Text="{Loc 'ghost-roles-window-no-roles-available-label'}"

@@ -11,9 +11,9 @@
         <BoxContainer HorizontalAlignment="Left"
                       Orientation="Horizontal"
                       SeparationOverride="5">
-            <Button Name="ReleaseButton" Text="Release"/>
-            <Button Name="ActivateButton" Text="Activate"/>
-            <Button Name="DeleteButton" Text="Delete" StyleClasses="Caution"/>
+            <Button Name="ReleaseButton" Text="{Loc 'ghost-role-groups-window-release-button'}"/>
+            <Button Name="ActivateButton" Text="{Loc 'ghost-role-groups-window-activate-button'}"/>
+            <Button Name="DeleteButton" Text="{Loc 'ghost-role-groups-window-delete-button'}" StyleClasses="Caution"/>
         </BoxContainer>
         <BoxContainer HorizontalAlignment="Right"
                       Orientation="Horizontal"
