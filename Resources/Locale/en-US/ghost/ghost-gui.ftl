@@ -6,6 +6,7 @@ ghost-target-window-title = Ghost Warp
 ghost-target-window-current-button = Warp: {$name}
 
 ghost-roles-window-title = Ghost Roles
+ghost-roles-window-manage-role-groups-button = Manage Role Groups
 ghost-roles-window-take-role-button = Take
 ghost-roles-window-request-role-button = Request
 ghost-roles-window-request-role-button-timer = Request ({$time}s)
@@ -22,6 +23,7 @@ ghost-role-groups-window-entity-goto-button = Go To
 ghost-role-groups-window-details-button = Details
 ghost-role-groups-window-activate-button = Activate
 ghost-role-groups-window-deactivate-button = Deactivate
+ghost-role-groups-window-delete-button = Delete
 ghost-role-groups-window-release-button = Release
 ghost-role-groups-window-releasing-button = Releasing...
 ghost-role-groups-window-released-button = Released

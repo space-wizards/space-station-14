@@ -23,7 +23,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        Title.Text = group.Name;
+        Title.Text = group.Name + $" [{group.GroupIdentifier}]";
         Description.SetMessage(group.Description);
         DetailsButton.Text = "+ " + _loc.GetString("ghost-role-groups-window-details-button");
 

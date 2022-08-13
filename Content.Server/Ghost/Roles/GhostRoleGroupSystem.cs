@@ -36,6 +36,11 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     private readonly Dictionary<uint, RoleGroupEntry> _roleGroupEntries = new();
 
     /// <summary>
+    ///     Assignment of entities to an individual role group.
+    /// </summary>
+    private readonly Dictionary<EntityUid, uint> _roleGroupEntities = new();
+
+    /// <summary>
     ///     Active role groups for each player. Entities placed down that fulfill certain criteria will
     ///     be automatically placed into the active role group.
     /// </summary>
@@ -132,7 +137,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             groups.Add(new GhostRoleGroupInfo()
             {
                 Identifier = group.Identifier,
-                AvailableCount = group.Entities.Count,
+                AvailableCount = _roleGroupEntities.Count(kv => kv.Value == group.Identifier),
                 Name = group.RoleName,
                 Description = group.RoleDescription,
                 Status = group.Status.ToString(),
@@ -155,13 +160,17 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
         foreach (var (_, entry) in _roleGroupEntries)
         {
+            var groupEntities = _roleGroupEntities
+                .Where(x => x.Value == entry.Identifier)
+                .Select(x => x.Key).ToArray();
+
             var group = new AdminGhostRoleGroupInfo()
             {
                 GroupIdentifier = entry.Identifier,
                 Name = entry.RoleName,
                 Description = entry.RoleDescription,
                 Status = entry.Status,
-                Entities = entry.Entities.ToArray(),
+                Entities = groupEntities,
                 IsActive = _roleGroupActiveGroups.GetValueOrDefault(session) == entry.Identifier,
             };
 
@@ -176,9 +185,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         var identifier = GetActiveGhostRoleGroupOrNull(args.PlacedBy);
         if (identifier == null)
             return;
-
-        Logger.Debug($"Added {ToPrettyString(args.Placed)} to role group.");
-        MakeSentientCommand.MakeSentient(uid, EntityManager);
 
         RemComp<GhostTakeoverAvailableComponent>(uid); // Remove so that GhostRoleSystem doesn't manage it simultaneously.
         var comp = AddComp<GhostRoleGroupComponent>(uid);
@@ -278,7 +284,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!deleteEntities)
             return;
 
-        foreach (var entity in entry.Entities)
+        foreach (var (entity, _) in _roleGroupEntities.Where(x => x.Value == entry.Identifier))
         {
             if (TryComp<MindComponent>(entity, out var mindComp) && mindComp.Mind?.UserId != null)
                 continue; // Don't delete player-controlled entities.
@@ -343,13 +349,17 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (entry.Owner != session || entry.Status != GhostRoleGroupStatus.Editing)
             return false;
 
-        if (entry.Entities.Contains(entity))
+        if (_roleGroupEntities.TryGetValue(entity, out var curGroupIdentifier) && curGroupIdentifier == identifier)
+        {
             return true;
+        }
 
         if (component != null || EntityManager.TryGetComponent(entity, out component))
-            _ghostRoleLotterySystem.GhostRoleRemoveComponent(component); // Ghost role might already
+            _ghostRoleLotterySystem.GhostRoleRemoveComponent(component); // If it has ghost role, it may already be part of a lottery. Remove it.
 
-        entry.Entities.Add(entity);
+        MakeSentientCommand.MakeSentient(entity, EntityManager);
+
+        _roleGroupEntities[entity] = identifier;
         _needsUpdateRoleGroups = true;
         return true;
     }
@@ -366,21 +376,22 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
             return false;
 
-        var removed = entry.Entities.Remove(entity);
+        if (entry.Status != GhostRoleGroupStatus.Editing)
+            return false;
+
+        var removed = _roleGroupEntities.Remove(entity);
         if (!removed)
             return removed;
 
         _needsUpdateRoleGroups = true;
 
-        if (entry.Status != GhostRoleGroupStatus.Editing)
-        {
-            if(entry.Entities.Count == 0)
-                InternalDeleteGhostRoleGroup(entry, false);
-            else
-                _ghostRoleLotterySystem.UpdateAllEui();
-        }
+        if (entry.Status == GhostRoleGroupStatus.Editing)
+            return removed;
 
-
+        if(_roleGroupEntities.Count(kv => kv.Value == identifier) == 0)
+            InternalDeleteGhostRoleGroup(entry, false);
+        else
+            _ghostRoleLotterySystem.UpdateAllEui();
 
         return removed;
     }
@@ -392,7 +403,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             if (group.Status != GhostRoleGroupStatus.Released)
                 continue;
 
-            ev.Count += group.Entities.Count;
+            ev.Count += _roleGroupEntities.Count(kv => kv.Value == group.Identifier);
         }
     }
 
@@ -428,13 +439,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_roleGroupEntries.TryGetValue(ev.RoleGroupIdentifier, out var entry))
             return;
 
-        if (entry.Entities.Count == 0)
+        if (!_roleGroupEntities.TryFirstOrNull(kv => kv.Value == ev.RoleGroupIdentifier, out var kv))
         {
-            ev.RoleGroupTaken = true;
+            ev.RoleGroupTaken = true; // Role group is already completely used up.
             return;
         }
 
-        var entityUid = entry.Entities.First();
+        var entityUid = kv.Value.Key;
         var contentData = ev.Player.ContentData();
 
         DebugTools.AssertNotNull(contentData);
@@ -468,8 +479,6 @@ internal sealed class RoleGroupEntry
     public string RoleDescription { get; init; } = default!;
 
     public GhostRoleGroupStatus Status = GhostRoleGroupStatus.Editing;
-
-    public readonly List<EntityUid> Entities = new();
 }
 
 /// <summary>
@@ -515,33 +524,117 @@ public sealed class GhostRoleGroupsCommand : IConsoleCommand
     public string Command => "ghostrolegroups";
     public string Description => "Manage ghost role groups.";
     public string Help => @$"${Command}
-start <name> <description> <rules>
+start <name> <description>
+attach <entity> <groupIdentifier>
+detach <entity> <groupIdentifier>
 delete <deleteEntities> <groupIdentifier>
-release [groupIdentifier]
+release <groupIdentifier>
 open";
 
     private void ExecuteStart(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
     {
-        if (args.Length < 3)
+        if (args.Length != 3)
+        {
+            shell.WriteLine("Wrong number of arguments.");
             return;
-
-        var manager = EntitySystem.Get<GhostRoleGroupSystem>();
+        }
 
         var name = args[1];
         var description = args[2];
 
+        var manager = EntitySystem.Get<GhostRoleGroupSystem>();
         var id = manager.StartGhostRoleGroup(player, name, description);
-        shell.WriteLine($"Role group start: {id}");
+        shell.WriteLine(id != null ? $"Role group started. Id is: {id}" : "Failed to start role group");
+    }
+
+    private void ExecuteAttach(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    {
+        if (args.Length != 3)
+        {
+            shell.WriteLine("Wrong number of arguments.");
+            return;
+        }
+
+        var manager = EntitySystem.Get<GhostRoleGroupSystem>();
+
+        if (!EntityUid.TryParse(args[1], out var entityUid) || !entityUid.Valid)
+        {
+            shell.WriteLine("Invalid argument for <entity>. Expected EntityUid");
+            return;
+        }
+
+        if (!uint.TryParse(args[2], out var groupIdentifier))
+        {
+            shell.WriteLine("Invalid argument for <groupIdentifier>. Expected unsigned integer");
+            return;
+        }
+
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        if (!entityManager.EntityExists(entityUid))
+        {
+            shell.WriteLine("Invalid entity specified!");
+            return;
+        }
+
+
+        shell.WriteLine(manager.AttachToGhostRoleGroup(player, groupIdentifier, entityUid)
+            ? "Successfully attached entity to role group"
+            : "Failed to attach entity to role group.");
+    }
+
+    private void ExecuteDetach(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    {
+        if (args.Length != 3)
+        {
+            shell.WriteLine("Wrong number of arguments.");
+            return;
+        }
+
+        var manager = EntitySystem.Get<GhostRoleGroupSystem>();
+
+        if (!EntityUid.TryParse(args[1], out var entityUid) || !entityUid.Valid)
+        {
+            shell.WriteLine("Invalid argument for <entity>. Expected EntityUid");
+            return;
+        }
+
+        if (!uint.TryParse(args[2], out var groupIdentifier))
+        {
+            shell.WriteLine("Invalid argument for <groupIdentifier>. Expected unsigned integer.");
+            return;
+        }
+
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        if (!entityManager.EntityExists(entityUid))
+        {
+            shell.WriteLine("Invalid entity specified!");
+            return;
+        }
+
+        shell.WriteLine(manager.DetachFromGhostRoleGroup(groupIdentifier, entityUid)
+            ? "Successfully detached entity from role group."
+            : "Failed to detach entity from role group");
     }
 
     private void ExecuteDelete(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
     {
         var manager = EntitySystem.Get<GhostRoleGroupSystem>();
         if (args.Length != 3)
+        {
+            shell.WriteLine("Wrong number of arguments.");
             return;
+        }
 
-        var deleteEntities = bool.Parse(args[1]);
-        var identifier = uint.Parse(args[2]);
+        if (!bool.TryParse(args[1], out var deleteEntities))
+        {
+            shell.WriteLine("Invalid argument for <deleteEntities>. Expected true|false");
+        }
+
+        if (!uint.TryParse(args[2], out var identifier))
+        {
+            shell.WriteLine("Invalid argument for <groupIdentifier>. Expected unsigned integer.");
+            return;
+        }
 
         manager.DeleteGhostRoleGroup(player, identifier, deleteEntities);
     }
@@ -549,26 +642,19 @@ open";
     private void ExecuteRelease(IConsoleShell shell,  IPlayerSession player, string argStr, string[] args)
     {
         var manager = EntitySystem.Get<GhostRoleGroupSystem>();
-
-        switch (args.Length)
+        if (args.Length != 2)
         {
-            case > 2:
-                shell.WriteLine(Help);
-                break;
-            case 2:
-            {
-                var identifier = uint.Parse(args[1]);
-                manager.ReleaseGhostRoleGroup(player, identifier);
-                break;
-            }
-            default:
-            {
-                var identifier = manager.GetActiveGhostRoleGroupOrNull(player);
-                if(identifier != null)
-                    manager.ReleaseGhostRoleGroup(player, identifier.Value);
-                break;
-            }
+            shell.WriteLine("Wrong number of arguments.");
+            return;
         }
+
+        if (!uint.TryParse(args[1], out var identifier))
+        {
+            shell.WriteLine("Invalid argument for <groupIdentifier>. Expected unsigned integer.");
+            return;
+        }
+
+        manager.ReleaseGhostRoleGroup(player, identifier);
     }
 
     private void ExecuteOpen(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
@@ -582,7 +668,11 @@ open";
         if (args.Length != 2)
             return;
 
-        var identifier = uint.Parse(args[1]);
+        if (!uint.TryParse(args[1], out var identifier))
+        {
+            shell.WriteLine("Invalid argument for <groupIdentifier>. Expected unsigned integer.");
+            return;
+        }
 
         manager.ToggleOrSetActivePlayerRoleGroup(player, identifier);
     }
@@ -607,6 +697,12 @@ open";
         {
             case "start":
                 ExecuteStart(shell, player, argStr, args);
+                break;
+            case "attach":
+                ExecuteAttach(shell, player, argStr, args);
+                break;
+            case "detach":
+                ExecuteDetach(shell, player, argStr, args);
                 break;
             case "activate":
                 ExecuteActivate(shell, player, argStr, args);
