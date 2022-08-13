@@ -100,7 +100,6 @@ namespace Content.Server.Flash
                 {
                     sprite.LayerSetState(0, "burnt");
 
-                    EntityManager.EnsureComponent<TagComponent>(comp.Owner);
                     _tagSystem.AddTag(comp.Owner, "Trash");
                     comp.Owner.PopupMessage(user, Loc.GetString("flash-component-becomes-empty"));
                 }

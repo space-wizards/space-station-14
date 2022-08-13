@@ -20,7 +20,6 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
-
         public override void Initialize()
         {
             base.Initialize();
@@ -63,7 +62,6 @@ namespace Content.Server.Light.EntitySystems
                         meta.EntityName = Loc.GetString(component.SpentName);
                         meta.EntityDescription = Loc.GetString(component.SpentDesc);
 
-                        EntityManager.EnsureComponent<TagComponent>(component.Owner);
                         _tagSystem.AddTag(component.Owner, "Trash");
 
                         UpdateSpriteAndSounds(component);
