@@ -1,13 +1,11 @@
 using Content.Shared.VendingMachines;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Client.VendingMachines;
 
 public sealed class VendingMachineSystem : SharedVendingMachineSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
 
     public override void Initialize()
@@ -31,14 +29,13 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         if (args.Sprite == null)
             return;
 
-        var sprite = args.Sprite;
-
-        if (!TryGetData<VendingMachineVisualState>(uid, VendingMachineVisuals.VisualState, out var visualState, args.Component))
+        if (!args.AppearanceData.TryGetValue(VendingMachineVisuals.VisualState, out var visualStateObject) ||
+            visualStateObject is not VendingMachineVisualState visualState)
         {
             visualState = VendingMachineVisualState.Normal;
         }
 
-        UpdateAppearance(uid, visualState, component, sprite);
+        UpdateAppearance(uid, visualState, component, args.Sprite);
     }
 
     private void UpdateAppearance(EntityUid uid, VendingMachineVisualState visualState, VendingMachineComponent component, SpriteComponent sprite)
@@ -131,22 +128,6 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
             return;
 
         sprite.LayerSetVisible(actualLayer, false);
-    }
-
-    private bool TryGetData<T>(EntityUid uid, Enum key, [NotNullWhen(true)] out T? value, AppearanceComponent component)
-    {
-        if (_appearanceSystem.TryGetData(uid, key, out var data, component))
-        {
-            try
-            {
-                value = (T) data;
-                return true;
-            }
-            catch { }
-        }
-
-        value = default!;
-        return false;
     }
 }
 
