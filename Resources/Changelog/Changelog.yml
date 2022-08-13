@@ -1,11 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Removed dwarves, due to their lack of content. If someone steps up
-      in the next few weeks to make them better we''ll see about their reintroduction.',
-    type: Remove}
-  id: 1638
-  time: '2022-06-03T07:31:35.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bojevic firerate dropped from 3 to 2, type: Tweak}
@@ -2934,3 +2927,8 @@ Entries:
   - {message: Fixed inverted combat mode toggle., type: Fix}
   id: 2137
   time: '2022-08-13T00:27:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: do_after progress bars now show on cameras., type: Fix}
+  id: 2138
+  time: '2022-08-13T04:32:23.0000000+00:00'
