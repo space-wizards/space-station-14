@@ -1,11 +1,8 @@
 ﻿using System.Linq;
 using Content.Server.Beam;
 using Content.Server.Beam.Components;
-using Content.Server.Construction.Components;
 using Content.Server.Lightning.Components;
-using Content.Shared.Beam.Components;
 using Content.Shared.Lightning;
-using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;

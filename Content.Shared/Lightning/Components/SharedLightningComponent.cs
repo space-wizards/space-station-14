@@ -1,7 +1,4 @@
 ﻿using Content.Shared.Physics;
-using Robust.Shared.GameStates;
-using Robust.Shared.Map;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lightning.Components;
 public abstract class SharedLightningComponent : Component

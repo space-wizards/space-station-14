@@ -1,7 +1,5 @@
 using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.Beam;
-using Content.Server.Lightning;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
@@ -39,9 +37,6 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
         {
-            if (args.Handled)
-                return;
-
             args.Handled = true;
             if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
             {
