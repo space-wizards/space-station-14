@@ -1,7 +1,6 @@
 - type: storePreset
   id: StorePresetUplink
   storeName: Uplink
-  activateInHand: true
   categories:
   - UplinkWeapons
   - UplinkAmmo

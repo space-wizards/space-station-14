@@ -12,9 +12,7 @@ namespace Content.Shared.Store;
 [DataDefinition]
 public sealed class StorePresetPrototype : IPrototype
 {
-    [ViewVariables]
-    [IdDataField]
-    public string ID { get; } = default!;
+    [ViewVariables] [IdDataField] public string ID { get; } = default!;
 
     /// <summary>
     /// The name displayed at the top of the store window
@@ -31,7 +29,8 @@ public sealed class StorePresetPrototype : IPrototype
     /// <summary>
     /// The inital balance that the store initializes with.
     /// </summary>
-    [DataField("initialBalance", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
+    [DataField("initialBalance",
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
     public Dictionary<string, FixedPoint2>? InitialBalance { get; }
 
     /// <summary>
@@ -39,10 +38,4 @@ public sealed class StorePresetPrototype : IPrototype
     /// </summary>
     [DataField("currencyWhitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<CurrencyPrototype>))]
     public HashSet<string> CurrencyWhitelist { get; } = new();
-
-    /// <summary>
-    /// Whether or not this store can be activated by using it in hand.
-    /// </summary>
-    [DataField("activateInHand")]
-    public bool ActivateInHand { get; } = true;
 }

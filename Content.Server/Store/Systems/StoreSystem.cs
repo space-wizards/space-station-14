@@ -25,7 +25,6 @@ public sealed partial class StoreSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
-        //SubscribeLocalEvent<StoreComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>((_,c,a) => UpdateUserInterface(a.User, c));
 
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
@@ -114,16 +113,6 @@ public sealed partial class StoreSystem : EntitySystem
         return true;
     }
 
-    private void OnActivate(EntityUid uid, StoreComponent component, ActivateInWorldEvent args)
-    {
-        if (args.Handled || !component.ActivateInHand)
-            return;
-
-        args.Handled = true;
-
-        ToggleUi(args.User, component);
-    }
-
     /// <summary>
     /// Initializes a store based on a preset ID
     /// </summary>
@@ -149,7 +138,6 @@ public sealed partial class StoreSystem : EntitySystem
     {
         component.Preset = preset.ID;
         component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
-        component.ActivateInHand = preset.ActivateInHand;
         component.Categories.UnionWith(preset.Categories);
         if (component.Balance == new Dictionary<string, FixedPoint2>() && preset.InitialBalance != null) //if we don't have a value stored, use the preset
             TryAddCurrency(preset.InitialBalance, component);

@@ -48,7 +48,6 @@ namespace Content.Server.Traitor.Uplink
             var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
             _store.InitializeFromPreset(uplinkPresetId, store);
             store.AccountOwner = user;
-            store.ActivateInHand = false;
             store.Balance.Clear();
 
             if (balance != null)
@@ -57,9 +56,6 @@ namespace Content.Server.Traitor.Uplink
                 _store.TryAddCurrency(
                     new Dictionary<string, FixedPoint2>() { { TelecrystalCurrencyPrototype, balance.Value } }, store);
             }
-
-            if (!HasComp<PDAComponent>(uplinkEntity.Value))
-                store.ActivateInHand = true;
 
             // TODO add BUI. Currently can't be done outside of yaml -_-
 
