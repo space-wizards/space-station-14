@@ -1,21 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Added the Syndicate Communication Console., type: Add}
-  - {message: Using communication consoles now requires Command access., type: Tweak}
-  - {message: 'Announcements are now per-station, so nukies will no longer know the
-      state of the station they''re entering.', type: Tweak}
-  - {message: Fix delay between alert status changes scaling with tick rate., type: Fix}
-  id: 1646
-  time: '2022-06-03T11:37:35.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: 'Items can now have prices, and their price can be evaluated with the
-      Appraisal Tool. This is currently only used for privateers.', type: Add}
-  - {message: 'There''s been reports of privateering in your sector, be on the lookout.',
-    type: Add}
-  id: 1647
-  time: '2022-06-03T15:56:11.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Reduced the number of each drink for Robust Softdrink machines from
@@ -2926,3 +2909,15 @@ Entries:
       role., type: Add}
   id: 2145
   time: '2022-08-14T05:17:37.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: Cans and shakers can now be spilled on floor, type: Add}
+  id: 2146
+  time: '2022-08-14T05:19:45.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Fixed cigarette/blunt/joint crafting recipes to consume the correct
+      amount of ingredients, type: Fix}
+  - {message: Made blunts brown instead of white, type: Tweak}
+  id: 2147
+  time: '2022-08-14T05:20:31.0000000+00:00'
