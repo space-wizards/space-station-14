@@ -18,7 +18,6 @@ namespace Content.Client.Kitchen.UI
     public sealed class MicrowaveBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private MicrowaveMenu? _menu;
 

@@ -38,7 +38,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 {
     public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
