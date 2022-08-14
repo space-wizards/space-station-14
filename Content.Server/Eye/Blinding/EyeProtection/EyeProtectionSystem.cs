@@ -40,7 +40,7 @@ namespace Content.Server.Eye.Blinding.EyeProtection
 
             var statusTimeSpan = TimeSpan.FromSeconds(statusTime * (blindable.EyeDamage + 1));
             // Add permanent eye damage if they had zero protection, also scale their temporary blindness by how much they already accumulated.
-            if (_statusEffectsSystem.TryAddStatusEffect(args.User, "TemporaryBlindness", statusTimeSpan, false, "TemporaryBlindness") && blindable.BlindResistance <= 0)
+            if (_statusEffectsSystem.TryAddStatusEffect(args.User, SharedBlindingSystem.BlindingStatusEffect, statusTimeSpan, false, "TemporaryBlindness") && blindable.BlindResistance <= 0)
                 _blindingSystem.AdjustEyeDamage(args.User, true, blindable);
         }
         private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, WelderToggledEvent args)

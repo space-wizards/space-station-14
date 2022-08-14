@@ -9,6 +9,7 @@ namespace Content.Shared.Eye.Blinding
 {
     public sealed class SharedBlindingSystem : EntitySystem
     {
+        public const string BlindingStatusEffect = "TemporaryBlindness";
         public override void Initialize()
         {
             base.Initialize();
