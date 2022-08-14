@@ -125,7 +125,7 @@ namespace Content.Server.NPC.Pathfinding
             return true;
         }
 
-        public static Queue<TileRef> ReconstructPath(Dictionary<PathfindingNode, PathfindingNode> cameFrom, PathfindingNode current)
+        public static List<TileRef> ReconstructPath(Dictionary<PathfindingNode, PathfindingNode> cameFrom, PathfindingNode current)
         {
             var running = new Stack<TileRef>();
             running.Push(current.TileRef);
@@ -137,7 +137,7 @@ namespace Content.Server.NPC.Pathfinding
                 running.Push(current.TileRef);
             }
 
-            var result = new Queue<TileRef>(running);
+            var result = new List<TileRef>(running);
 
             return result;
         }

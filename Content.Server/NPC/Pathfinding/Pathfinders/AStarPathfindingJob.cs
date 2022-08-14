@@ -1,8 +1,10 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.AI;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Pathfinding.Pathfinders
@@ -134,6 +136,9 @@ namespace Content.Server.NPC.Pathfinding.Pathfinders
                 return null;
             }
 
+            var simplifiedRoute = PathfindingSystem.Simplify(route, 0f);
+            var actualRoute = new Queue<TileRef>(simplifiedRoute);
+
 #if DEBUG
             // Need to get data into an easier format to send to the relevant clients
             if (DebugRoute != null && route.Count > 0)
@@ -152,7 +157,7 @@ namespace Content.Server.NPC.Pathfinding.Pathfinders
 
                 var debugRoute = new SharedAiDebug.AStarRouteDebug(
                     _pathfindingArgs.Uid,
-                    route,
+                    actualRoute,
                     debugCameFrom,
                     debugGScores,
                     DebugTime);
@@ -161,7 +166,7 @@ namespace Content.Server.NPC.Pathfinding.Pathfinders
             }
 #endif
 
-            return route;
+            return actualRoute;
         }
     }
 }

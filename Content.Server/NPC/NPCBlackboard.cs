@@ -20,6 +20,7 @@ public sealed class NPCBlackboard
         {MedibotInjectRange, 4f},
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
+        {"MovementRange", 0.5f},
         {"VisionRadius", 7f},
     };
 
