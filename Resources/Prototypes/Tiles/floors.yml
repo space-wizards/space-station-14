@@ -686,7 +686,7 @@
   placementVariants: [0, 1, 2, 3]
   baseTurfs:
   - FloorDirt
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
@@ -702,7 +702,7 @@
   placementVariants: [0, 1, 2, 3]
   baseTurfs:
   - FloorDirt
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
@@ -718,7 +718,7 @@
   placementVariants: [0, 1, 2, 3]
   baseTurfs:
   - Plating
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -733,7 +733,7 @@
   sprite: /Textures/Tiles/Asteroid/asteroid_sand.png
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -763,7 +763,7 @@
   placementVariants: [ 0, 1, 2 ]
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -785,7 +785,7 @@
   sprite: /Textures/Tiles/Asteroid/asteroid_coarse_sand_dug.png
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -799,7 +799,7 @@
   sprite: /Textures/Tiles/ironsand1.png
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -813,7 +813,7 @@
   sprite: /Textures/Tiles/ironsand2.png
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -827,7 +827,7 @@
   sprite: /Textures/Tiles/ironsand3.png
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -841,7 +841,7 @@
   sprite: /Textures/Tiles/ironsand4.png
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -858,7 +858,7 @@
   placementVariants: [0, 1, 2, 3, 4, 5, 6]
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
@@ -874,7 +874,7 @@
   placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
   baseTurfs:
   - Space
-  isSubfloor: false
+  isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
