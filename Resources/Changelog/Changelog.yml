@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Post lights now have interaction outlines., type: Fix}
-  id: 1657
-  time: '2022-06-04T21:50:30.0000000+00:00'
 - author: themias
   changes:
   - {message: Other players can now hear the Musician's PDA music, type: Fix}
@@ -2932,3 +2927,10 @@ Entries:
   - {message: You can no longer place tiles underneath solid structures., type: Fix}
   id: 2156
   time: '2022-08-14T06:00:39.0000000+00:00'
+- author: martin69420
+  changes:
+  - {message: 'yellow, green, and blue boxing gloves now use correct sprites for worn
+      and inhand states', type: Fix}
+  - {message: renamed boxing gloves to red boxing gloves, type: Tweak}
+  id: 2157
+  time: '2022-08-14T06:23:25.0000000+00:00'
