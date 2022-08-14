@@ -48,3 +48,5 @@
 - type: statusEffect
   id: ForcedSleep #I.e., they will not wake on damage or similar
 
+- type: statusEffect
+  id: TemporaryBlindness
