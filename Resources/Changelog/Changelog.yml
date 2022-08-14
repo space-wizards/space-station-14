@@ -1,11 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'The Emergency Response Team have arrived! Look out for ghost roles
-      becoming available when centcom advises they''re coming. (Not currently call-able,
-      ask an admin via communications console to centcom).', type: Add}
-  id: 1645
-  time: '2022-06-03T10:48:29.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Added the Syndicate Communication Console., type: Add}
@@ -2927,3 +2920,9 @@ Entries:
   - {message: Fixed e-dagger flipping back and forth while in right hand, type: Fix}
   id: 2144
   time: '2022-08-14T05:15:54.0000000+00:00'
+- author: Zero_Diamond
+  changes:
+  - {message: Added "musician's tuxedo" and "musician's winter coat" for musician
+      role., type: Add}
+  id: 2145
+  time: '2022-08-14T05:17:37.0000000+00:00'
