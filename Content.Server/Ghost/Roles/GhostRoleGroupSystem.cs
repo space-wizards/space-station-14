@@ -58,7 +58,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         SubscribeLocalEvent<GhostRoleGroupComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RequestAvailableLotteryItemsMessage>(OnLotteryRequest);
         SubscribeLocalEvent<GhostRoleGroupRequestTakeoverMessage>(OnTakeoverRequest);
-        SubscribeLocalEvent<GhostRoleCountRequestedEvent>(OnGhostRoleCountRequest);
     }
 
     private void OnMindAdded(EntityUid uid, GhostRoleGroupComponent component, MindAddedMessage args)
@@ -435,15 +434,22 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         return true;
     }
 
-    private void OnGhostRoleCountRequest(GhostRoleCountRequestedEvent ev)
+    /// <summary>
+    ///     Returns the total number of available roles. Only released role groups contribute to this count.
+    /// </summary>
+    /// <returns></returns>
+    public int GetAvailableCount()
     {
+        var count = 0;
         foreach (var (_, group) in _roleGroupEntries)
         {
             if (group.Status != GhostRoleGroupStatus.Released)
                 continue;
 
-            ev.Count += _lookupComponentsByIdentifier[group.Identifier].Count;
+            count += _lookupComponentsByIdentifier[group.Identifier].Count;
         }
+
+        return count;
     }
 
     /// <summary>

@@ -213,18 +213,21 @@ public sealed class GhostRoleLotterySystem : EntitySystem
             UpdateAllEui();
         }
 
-        if (_needsUpdateGhostRoleCount)
-        {
-            _needsUpdateGhostRoleCount = false;
-            var ev = new GhostRoleCountRequestedEvent();
-            RaiseLocalEvent(ev);
-            AvailableRolesCount = ev.Count;
+        if (!_needsUpdateGhostRoleCount)
+            return;
 
-            var response = new GhostUpdateGhostRoleCountEvent(AvailableRolesCount, AvailableRoles);
-            foreach (var player in _playerManager.Sessions)
-            {
-                RaiseNetworkEvent(response, player.ConnectedClient);
-            }
+        _needsUpdateGhostRoleCount = false;
+        var ghostRoleSystem = Get<GhostRoleSystem>();
+        var ghostRoleGroupSystem = Get<GhostRoleGroupSystem>();
+
+        AvailableRolesCount = 0;
+        AvailableRolesCount += ghostRoleSystem.GetAvailableCount();
+        AvailableRolesCount += ghostRoleGroupSystem.GetAvailableCount();
+
+        var response = new GhostUpdateGhostRoleCountEvent(AvailableRolesCount, AvailableRoles);
+        foreach (var player in _playerManager.Sessions)
+        {
+            RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }
 

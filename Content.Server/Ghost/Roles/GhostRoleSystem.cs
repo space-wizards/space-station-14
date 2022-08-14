@@ -68,7 +68,6 @@ public sealed class GhostRoleSystem : EntitySystem
 
         SubscribeLocalEvent<GhostRoleComponent, GhostRoleRequestTakeoverMessage>(OnTakeoverRequest);
         SubscribeLocalEvent<RequestAvailableLotteryItemsMessage>(OnLotteryRequest);
-        SubscribeLocalEvent<GhostRoleCountRequestedEvent>(OnRequestCount);
     }
 
     private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
@@ -253,23 +252,6 @@ public sealed class GhostRoleSystem : EntitySystem
         _queuedComponents.Clear();
     }
 
-    private void OnRequestCount(GhostRoleCountRequestedEvent ev)
-    {
-        foreach (var (_, data) in _ghostRoleData)
-        {
-            if (data.Components.Count == 0)
-                return;
-
-            foreach (var comp in data.Components)
-            {
-                if (comp is GhostRoleMobSpawnerComponent spawnComp)
-                    ev.Count += spawnComp.AvailableTakeovers;
-                else
-                    ev.Count += 1;
-            }
-        }
-    }
-
     public void OnPlayerTakeoverComplete(IPlayerSession player, string roleIdentifier)
     {
         if (player.AttachedEntity == null || !_ghostRoleData.TryGetValue(roleIdentifier, out var data))
@@ -351,6 +333,33 @@ public sealed class GhostRoleSystem : EntitySystem
         _ghostRoleLotterySystem.GhostRoleRemoveComponent(role);
         OnPlayerTakeoverComplete(player, role.RoleName);
         return true;
+    }
+
+    /// <summary>
+    ///     Returns the total number of available roles. If a ghost role has multiple uses, they will all be counted.
+    /// </summary>
+    public int GetAvailableCount()
+    {
+        var count = 0;
+
+        foreach (var (_, data) in _ghostRoleData)
+        {
+            if (data.Components.Count == 0)
+                continue;
+
+            foreach (var comp in data.Components)
+            {
+                if(comp.Taken)
+                    continue;
+
+                if (comp is GhostRoleMobSpawnerComponent spawnComp)
+                    count += spawnComp.AvailableTakeovers;
+                else
+                    count += 1;
+            }
+        }
+
+        return count;
     }
 }
 
