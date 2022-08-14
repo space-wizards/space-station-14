@@ -36,7 +36,7 @@ namespace Content.Server.TapeRecorder
         /// </summary>
         private void OnInteractUsing(EntityUid uid, CassetteTapeComponent component, InteractUsingEvent args)
         {
-            if (!component.UnSpooled || component.CancelToken != null)
+            if (!component.Unspooled || component.CancelToken != null)
                 return;
             if (!TryComp<ToolComponent>(args.Used, out var toolComponent))
                 return;
@@ -72,7 +72,7 @@ namespace Content.Server.TapeRecorder
             if (!TryComp<SpriteComponent>(component.Owner, out var spriteComponent))
                 return;
             spriteComponent.LayerSetVisible(1, false);
-            component.UnSpooled = false;
+            component.Unspooled = false;
             component.TimeStamp = 0; //may as well rewind it while fixing it
             component.CancelToken = null;
         }
@@ -94,7 +94,7 @@ namespace Content.Server.TapeRecorder
             if (!TryComp<SpriteComponent>(component.Owner, out var spriteComponent))
                 return;
             spriteComponent.LayerSetVisible(1, true);
-            component.UnSpooled = true;
+            component.Unspooled = true;
 
             if (component.RecordedMessages.Count == 0)
                 return;

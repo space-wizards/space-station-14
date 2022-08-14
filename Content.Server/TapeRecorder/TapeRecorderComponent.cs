@@ -23,7 +23,7 @@ namespace Content.Server.TapeRecorder
         public float RecordingStartTime;
 
         /// <summary>
-        ///The timestamp of the tape that we started recording on
+        ///What the timestamp of the tape was when we started recording. Used to find out where we need to overwrite data
         /// </summary>
         public float RecordingStartTimestamp;
 
