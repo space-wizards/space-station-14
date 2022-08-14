@@ -699,6 +699,9 @@
     seedId: poppy
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Flower
 
 - type: entity
   name: lingzhi

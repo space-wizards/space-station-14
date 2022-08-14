@@ -60,3 +60,16 @@
   icon:
     sprite: Clothing/Eyes/Misc/blindfold.rsi
     state: icon
+
+- type: construction
+  name: flower crown
+  id: flowercrown
+  graph: flowercrown
+  startNode: start
+  targetNode: flowercrown
+  category: Misc
+  description: "A coronet of fresh and fragrant flowers."
+  icon:
+    sprite: Clothing/Head/Misc/flower-crown.rsi
+    state: icon
+  objectType: Item
