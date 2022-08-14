@@ -2,6 +2,11 @@
   id: ServiceWorker
   name: job-name-serviceworker
   playTimeTracker: JobServiceWorker
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Service
+      time: 1800
+      inverted: true # stop playing intern if you're good at service!
   startingGear: ServiceWorkerGear
   icon: "ServiceWorker"
   supervisors: job-supervisors-service
