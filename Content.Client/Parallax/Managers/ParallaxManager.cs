@@ -18,10 +18,10 @@ public sealed class ParallaxManager : IParallaxManager
 
     public Vector2 ParallaxAnchor { get; set; }
 
-    private readonly ConcurrentDictionary<string, ParallaxLayerPrepared[]> _parallaxesLQ = new();
-    private readonly ConcurrentDictionary<string, ParallaxLayerPrepared[]> _parallaxesHQ = new();
+    private readonly Dictionary<string, ParallaxLayerPrepared[]> _parallaxesLQ = new();
+    private readonly Dictionary<string, ParallaxLayerPrepared[]> _parallaxesHQ = new();
 
-    private readonly ConcurrentDictionary<string, CancellationTokenSource> _loadingParallaxes = new();
+    private readonly Dictionary<string, CancellationTokenSource> _loadingParallaxes = new();
 
     public bool IsLoaded(string name) => _parallaxesLQ.ContainsKey(name);
 
@@ -45,8 +45,8 @@ public sealed class ParallaxManager : IParallaxManager
         }
 
         if (!_parallaxesLQ.ContainsKey(name)) return;
-        _parallaxesLQ.Remove(name, out _);
-        _parallaxesHQ.Remove(name, out _);
+        _parallaxesLQ.Remove(name);
+        _parallaxesHQ.Remove(name);
     }
 
     public async void LoadDefaultParallax()
