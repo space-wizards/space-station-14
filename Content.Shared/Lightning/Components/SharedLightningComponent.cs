@@ -22,6 +22,13 @@ public abstract class SharedLightningComponent : Component
     public int MaxTotalArcs = 50;
 
     /// <summary>
+    /// The prototype ID used for arcing bolts. Usually will be the same name as the main proto but it could be flexible.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("lightningPrototype")]
+    public string LightningPrototype = "Lightning";
+
+    /// <summary>
     /// The target that the lightning will Arc to.
     /// </summary>
     [ViewVariables]

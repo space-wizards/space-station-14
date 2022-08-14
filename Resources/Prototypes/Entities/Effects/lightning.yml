@@ -1,6 +1,7 @@
 ﻿- type: entity
   name: "Lightning"
   id: LightningBase
+  abstract: true
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
@@ -15,7 +16,6 @@
   - type: Electrified
     requirePower: false
   - type: Lightning
-    canArc: true
   - type: PointLight
     enabled: true
     color: "#4080FF"
@@ -27,3 +27,79 @@
     sound: /Audio/Effects/Lightning/lightningshock.ogg
   - type: TimedDespawn
     lifetime: 3
+
+- type: entity
+  name: "Lightning"
+  id: Lightning
+  parent: LightningBase
+  components:
+    - type: Lightning
+      canArc: true
+
+- type: entity
+  name: "Charged Lightning"
+  id: ChargedLightning
+  parent: LightningBase
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "blue_lightning"
+          shader: unshaded
+    - type: Electrified
+      requirePower: false
+      shockDamage: 40
+    - type: Lightning
+      canArc: true
+      lightningPrototype: ChargedLightning
+
+- type: entity
+  name: "Supercharged Lightning"
+  id: SuperchargedLightning
+  parent: ChargedLightning
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "yellow_lightning"
+          shader: unshaded
+    - type: Electrified
+      requirePower: false
+      shockDamage: 50
+    - type: Lightning
+      canArc: true
+      lightningPrototype: SuperchargedLightning
+    - type: PointLight
+      enabled: true
+      color: "#FFFF00"
+      radius: 3.5
+      softness: 1
+      autoRot: true
+      castShadows: false
+
+- type: entity
+  name: "Hypercharged Lightning"
+  id: HyperchargedLightning
+  parent: ChargedLightning
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "red_lightning"
+          shader: unshaded
+    - type: Electrified
+      requirePower: false
+      shockDamage: 60
+    - type: Lightning
+      canArc: true
+      lightningPrototype: HyperchargedLightning
+    - type: PointLight
+      enabled: true
+      color: "#ff0000"
+      radius: 3.5
+      softness: 1
+      autoRot: true
+      castShadows: false

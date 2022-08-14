@@ -54,14 +54,12 @@ public sealed class LightningSystem : SharedLightningSystem
             {
                 Arc(component, args.OtherFixture.Body.Owner, lightningBeam.VirtualBeamController.Value);
 
-                //When the lightning is made with TryCreateBeam, spawns random sprites for each beam to make it look nicer.
-                var spriteStateNumber = _random.Next(1, 12);
-                var spriteState = ("lightning_" + spriteStateNumber);
+                var spriteState = LightningRandomizer();
 
                 component.ArcTargets.Add(args.OtherFixture.Body.Owner);
                 component.ArcTargets.Add(component.ArcTarget);
 
-                _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase", spriteState, controller: lightningBeam.VirtualBeamController.Value);
+                _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, component.LightningPrototype, spriteState, controller: lightningBeam.VirtualBeamController.Value);
 
                 //Break from this loop so other created bolts can collide and arc
                 break;
@@ -70,12 +68,35 @@ public sealed class LightningSystem : SharedLightningSystem
     }
 
     /// <summary>
+    /// Fires lightning from user to target
+    /// </summary>
+    /// <param name="user">Where the lightning fires from</param>
+    /// <param name="target">Where the lightning fires to</param>
+    /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
+    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning")
+    {
+        var spriteState = LightningRandomizer();
+        _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
+    }
+
+    /// <summary>
+    /// Picks a random sprite state for the lightning.
+    /// </summary>
+    /// <returns>Returns a sprite state of lightning_ + the chosen random number</returns>
+    private string LightningRandomizer()
+    {
+        //When the lightning is made with TryCreateBeam, spawns random sprites for each beam to make it look nicer.
+        var spriteStateNumber = _random.Next(1, 12);
+        return ("lightning_" + spriteStateNumber);
+    }
+
+    /// <summary>
     /// Looks for a target to arc to in all 8 directions, adds the closest to a local dictionary and picks at random
     /// </summary>
     /// <param name="component"></param>
     /// <param name="target"></param>
     /// <param name="controllerEntity"></param>
-    public void Arc(LightningComponent component, EntityUid target, EntityUid controllerEntity)
+    private void Arc(LightningComponent component, EntityUid target, EntityUid controllerEntity)
     {
         if (!TryComp<BeamComponent>(controllerEntity, out var controller))
             return;

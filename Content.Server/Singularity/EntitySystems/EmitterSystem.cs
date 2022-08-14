@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Beam;
+using Content.Server.Lightning;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
@@ -27,7 +28,6 @@ namespace Content.Server.Singularity.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly BeamSystem _beam = default!;
 
         public override void Initialize()
         {
@@ -42,11 +42,6 @@ namespace Content.Server.Singularity.EntitySystems
             if (args.Handled)
                 return;
 
-            _beam.TryCreateBeam(component.Owner, args.User, "LightningBase");
-
-            args.Handled = true;
-
-            /*
             args.Handled = true;
             if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
             {
@@ -75,7 +70,6 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-not-anchored", ("target", component.Owner)));
             }
-            */
         }
 
         private void ReceivedChanged(
