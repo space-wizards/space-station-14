@@ -510,6 +510,8 @@ namespace Content.Client.AI
             {
                 DrawRegions(screenHandle, viewport);
             }
+
+            screenHandle.UseShader(null);
         }
     }
 

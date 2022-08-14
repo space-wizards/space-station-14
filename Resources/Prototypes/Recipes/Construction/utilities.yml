@@ -5,7 +5,7 @@
   graph: SurveillanceCamera
   startNode: start
   targetNode: camera
-  category: Utilities
+  category: construction-category-utilities
   description: "Surveillance camera. It's watching. Soon."
   icon:
     sprite: Structures/Wallmounts/camera.rsi
@@ -19,7 +19,7 @@
   graph: WallmountTelescreen
   startNode: start
   targetNode: Telescreen
-  category: Utilities
+  category: construction-category-utilities
   description: "A surveillance camera monitor for the wall."
   icon:
     sprite: Structures/Machines/computers.rsi
@@ -34,7 +34,7 @@
   graph: APC
   startNode: start
   targetNode: apc
-  category: Utilities
+  category: construction-category-utilities
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:
     sprite: Structures/Power/apc.rsi
@@ -49,7 +49,7 @@
   graph: SolarPanel
   startNode: start
   targetNode: solarpanel
-  category: Utilities
+  category: construction-category-utilities
   description: "Can be turned into a solar panel or solar tracker."
   icon:
     sprite: Structures/Power/Generation/solar_panel.rsi
@@ -66,7 +66,7 @@
   graph: CableTerminal
   startNode: start
   targetNode: cable_terminal
-  category: Utilities
+  category: construction-category-utilities
   description: "Input of devices such as the SMES. The red cables needs to face the device."
   icon:
     sprite: Structures/Power/cable_terminal.rsi
@@ -81,7 +81,7 @@
   graph: WallmountSubstation
   startNode: start
   targetNode: substation
-  category: Utilities
+  category: construction-category-utilities
   description: "A wallmount substation for compact spaces. Make sure to place cable under before building the wall."
   icon:
     sprite: Structures/Power/substation.rsi
@@ -96,7 +96,7 @@
   graph: WallmountGenerator
   startNode: start
   targetNode: generator
-  category: Utilities
+  category: construction-category-utilities
   description: "A wallmount generator for compact spaces. Make sure to place cable under before building the wall."
   icon:
     sprite: Structures/Power/Generation/wallmount_generator.rsi
@@ -111,7 +111,7 @@
   graph: WallmountGenerator
   startNode: start
   targetNode: APU
-  category: Utilities
+  category: construction-category-utilities
   description: "A wallmount APU for compact shuttles. Make sure to place cable under before building the wall."
   icon:
     sprite: Structures/Power/Generation/wallmount_generator.rsi
@@ -127,7 +127,7 @@
   graph: DisposalMachine
   startNode: start
   targetNode: disposal_unit
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -135,12 +135,25 @@
     state: "disposal"
 
 - type: construction
+  name: mailing unit
+  id: MailingUnit
+  graph: DisposalMachine
+  startNode: start
+  targetNode: mailing_unit
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: "mailing"
+
+- type: construction
   name: disposal pipe
   id: DisposalPipe
   graph: DisposalPipe
   startNode: start
   targetNode: pipe
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   icon:
@@ -153,7 +166,7 @@
   graph: DisposalPipe
   startNode: start
   targetNode: tagger
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -166,7 +179,7 @@
   graph: DisposalPipe
   startNode: start
   targetNode: trunk
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -179,7 +192,7 @@
   graph: DisposalPipe
   startNode: start
   targetNode: router
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -192,7 +205,7 @@
   graph: DisposalPipe
   startNode: start
   targetNode: junction
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -205,7 +218,7 @@
   graph: DisposalPipe
   startNode: start
   targetNode: yJunction
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -218,7 +231,7 @@
   graph: DisposalPipe
   startNode: start
   targetNode: bend
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -232,7 +245,7 @@
   graph: AirAlarm
   startNode: start
   targetNode: air_alarm
-  category: Structures
+  category: construction-category-structures
   description: An air alarm. Alarms... air?
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
@@ -250,7 +263,7 @@
   graph: FireAlarm
   startNode: start
   targetNode: fire_alarm
-  category: Structures
+  category: construction-category-structures
   description: A fire alarm. Spicy!
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
@@ -269,7 +282,7 @@
   graph: GasPipe
   startNode: start
   targetNode: half
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -282,7 +295,7 @@
   graph: GasPipe
   startNode: start
   targetNode: straight
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -295,7 +308,7 @@
   graph: GasPipe
   startNode: start
   targetNode: bend
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -308,7 +321,7 @@
   graph: GasPipe
   startNode: start
   targetNode: tjunction
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -321,7 +334,7 @@
   graph: GasPipe
   startNode: start
   targetNode: fourway
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -335,7 +348,7 @@
   graph: GasUnary
   startNode: start
   targetNode: ventpump
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -350,7 +363,7 @@
   graph: GasUnary
   startNode: start
   targetNode: passivevent
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -365,7 +378,7 @@
   graph: GasUnary
   startNode: start
   targetNode: ventscrubber
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -380,7 +393,7 @@
   graph: GasUnary
   startNode: start
   targetNode: outletinjector
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -396,7 +409,7 @@
   graph: GasBinary
   startNode: start
   targetNode: pressurepump
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -411,7 +424,7 @@
   graph: GasBinary
   startNode: start
   targetNode: volumepump
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -426,7 +439,7 @@
   graph: GasBinary
   startNode: start
   targetNode: passivegate
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -441,7 +454,7 @@
   graph: GasBinary
   startNode: start
   targetNode: valve
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -456,7 +469,7 @@
   graph: GasBinary
   startNode: start
   targetNode: port
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -471,7 +484,7 @@
   graph: GasBinary
   startNode: start
   targetNode: dualportventpump
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -487,7 +500,7 @@
   graph: GasTrinary
   startNode: start
   targetNode: filter
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -502,7 +515,7 @@
   graph: GasTrinary
   startNode: start
   targetNode: mixer
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -517,7 +530,7 @@
   graph: GasTrinary
   startNode: start
   targetNode: pneumaticvalve
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:

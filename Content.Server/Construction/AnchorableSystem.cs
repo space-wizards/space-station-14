@@ -246,8 +246,6 @@ namespace Content.Server.Construction
         {
             public EntityUid User;
             public EntityUid Using;
-
-            public readonly TransformComponent Transform = default!;
         }
 
         private sealed class TryUnanchorCompletedEvent : AnchorEvent
