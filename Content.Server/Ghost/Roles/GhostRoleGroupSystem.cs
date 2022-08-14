@@ -35,19 +35,12 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     private readonly Dictionary<uint, RoleGroupEntry> _roleGroupEntries = new();
 
     /// <summary>
-    ///     Assignment of entities to an individual role group.
-    /// </summary>
-    private readonly Dictionary<EntityUid, uint> _roleGroupEntities = new(); // TODO: We have a component already on entities with this information, should we just use that?
-
-    /// <summary>
     ///     Active role groups for each player. Entities placed down that fulfill certain criteria will
     ///     be automatically placed into the active role group.
     /// </summary>
     private readonly Dictionary<IPlayerSession, uint> _roleGroupActiveGroups = new();
 
     private bool _needsUpdateRoleGroups = true;
-
-    private const string GhostRoleGroupPrefix = "GhostRoleGroupPrefix:";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -65,8 +58,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, GhostRoleGroupComponent component, MindAddedMessage args)
     {
-        if(_roleGroupEntries.TryGetValue(component.Identifier, out var entry))
-            RemComp<GhostRoleGroupComponent>(uid); // This will trigger the removal of the entity from the role group.
+        RemComp<GhostRoleGroupComponent>(uid); // This will trigger the removal of the entity from the role group.
     }
 
     private void Reset(RoundRestartCleanupEvent ev)
@@ -94,7 +86,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     public void CloseEui(IPlayerSession session)
     {
         if(_openUis.Remove(session, out var eui))
-            eui?.Close();
+            eui.Close();
     }
 
     private void UpdatePlayerEui(IPlayerSession session)
@@ -105,7 +97,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         ui.StateDirty();
     }
 
-    public void UpdateAllEui()
+    private void UpdateAllEui()
     {
         foreach (var eui in _openUis.Values)
         {
@@ -134,10 +126,11 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             if (group.Status != GhostRoleGroupStatus.Released)
                 continue;
 
+
             groups.Add(new GhostRoleGroupInfo()
             {
                 Identifier = group.Identifier,
-                AvailableCount = _roleGroupEntities.Count(kv => kv.Value == group.Identifier),
+                AvailableCount = EntityQuery<GhostRoleGroupComponent>().Count(c => c.Identifier == group.Identifier),
                 Name = group.RoleName,
                 Description = group.RoleDescription,
                 Status = group.Status.ToString(),
@@ -160,9 +153,9 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
         foreach (var (_, entry) in _roleGroupEntries)
         {
-            var groupEntities = _roleGroupEntities
-                .Where(x => x.Value == entry.Identifier)
-                .Select(x => x.Key).ToArray();
+            var groupEntities = EntityQuery<GhostRoleGroupComponent>()
+                .Where(c => c.Identifier == entry.Identifier)
+                .Select(c => c.Owner).ToArray();
 
             var group = new AdminGhostRoleGroupInfo()
             {
@@ -183,18 +176,27 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
     private void OnEntityPlaced(EntityUid uid, GhostTakeoverAvailableComponent component, EntityPlacedEvent args)
     {
-        var identifier = GetActiveGhostRoleGroupOrNull(args.PlacedBy);
-        if (identifier == null)
+        if (!TryGetActiveRoleGroup(args.PlacedBy, out var identifier))
             return;
 
         RemComp<GhostTakeoverAvailableComponent>(uid); // Remove so that GhostRoleSystem doesn't manage it simultaneously.
-        AttachToGhostRoleGroup(args.PlacedBy, identifier.Value, uid, component);
+        AttachToGhostRoleGroup(args.PlacedBy, identifier, uid, component);
     }
 
     private void OnShutdown(EntityUid uid, GhostRoleGroupComponent role, ComponentShutdown args)
     {
-        if(_roleGroupEntries.TryGetValue(role.Identifier, out var entry))
-            InternalDetachFromGhostRoleGroup(entry, uid);
+        if (!_roleGroupEntries.TryGetValue(role.Identifier, out var entry))
+            return;
+
+        _needsUpdateRoleGroups = true;
+
+        if (entry.Status == GhostRoleGroupStatus.Editing)
+            return;
+
+        if(EntityQuery<GhostRoleGroupComponent>().All(c => c.Identifier != entry.Identifier))
+            InternalDeleteGhostRoleGroup(entry, false);
+        else
+            _ghostRoleLotterySystem.UpdateAllEui();
     }
 
     /// <summary>
@@ -277,13 +279,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!deleteEntities)
             return;
 
-        foreach (var (entity, _) in _roleGroupEntities.Where(x => x.Value == entry.Identifier))
+        foreach (var groupComp in EntityQuery<GhostRoleGroupComponent>().Where(c => c.Identifier == entry.Identifier))
         {
-            if (TryComp<MindComponent>(entity, out var mindComp) && mindComp.Mind?.UserId != null)
+            if (TryComp<MindComponent>(groupComp.Owner, out var mindComp) && mindComp.Mind?.UserId != null)
                 continue; // Don't delete player-controlled entities.
 
             // TODO: Exempt certain entities from this.
-            EntityManager.QueueDeleteEntity(entity);
+            EntityManager.QueueDeleteEntity(groupComp.Owner);
         }
     }
 
@@ -307,19 +309,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
         _roleGroupActiveGroups[player] = identifier;
         UpdatePlayerEui(player);
-    }
-
-    /// <summary>
-    ///     Get the session's active role group.
-    /// </summary>
-    /// <param name="session">The session to get the active role group for.</param>
-    /// <returns>The active role group identifier if it exists and is active for the session. Otherwise null.</returns>
-    public uint? GetActiveGhostRoleGroupOrNull(IPlayerSession session)
-    {
-        if (!_adminManager.IsAdmin(session))
-            return null;
-
-        return _roleGroupActiveGroups.TryGetValue(session, out var value) ? value : null;
     }
 
     /// <summary>
@@ -373,11 +362,11 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (entry.Status != GhostRoleGroupStatus.Editing)
             return false;
 
-        if (_roleGroupEntities.TryGetValue(entity, out var curGroupIdentifier))
+        if (TryComp<GhostRoleGroupComponent>(entity, out var ghostRoleGroupComp))
         {
-            if (curGroupIdentifier == identifier)
+            if (ghostRoleGroupComp.Identifier == identifier)
                 return true; // Already is part of this role group.
-            if (!CanModify(session, curGroupIdentifier))
+            if (!CanModify(session, ghostRoleGroupComp.Identifier))
                 return false; // Can't transfer from a role group we don't have the ability to modify.
         }
 
@@ -388,7 +377,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         var groupComponent = EnsureComp<GhostRoleGroupComponent>(entity);
         groupComponent.Identifier = identifier;
 
-        _roleGroupEntities[entity] = identifier;
         _needsUpdateRoleGroups = true;
         return true;
     }
@@ -410,7 +398,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry))
             return true;
 
-        if (_roleGroupEntities.TryGetValue(entity, out var currentIdentifier) && currentIdentifier != identifier)
+        if (TryComp<GhostRoleGroupComponent>(entity, out var currentGhostRoleGroup) && currentGhostRoleGroup.Identifier != identifier)
             return true; // Entity has already been moved to a different role group.
 
         if (entry.Status != GhostRoleGroupStatus.Editing || !CanModify(session, entry))
@@ -420,39 +408,23 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    ///     Internal entity detachment from role group.
-    /// </summary>
-    /// <param name="entry"></param>
-    /// <param name="entity"></param>
-    /// <returns></returns>
-    private bool InternalDetachFromGhostRoleGroup(RoleGroupEntry entry, EntityUid entity)
-    {
-        var removed = _roleGroupEntities.Remove(entity);
-        if (!removed)
-            return removed;
-
-        _needsUpdateRoleGroups = true;
-
-        if (entry.Status == GhostRoleGroupStatus.Editing)
-            return removed;
-
-        if(_roleGroupEntities.Count(kv => kv.Value == entry.Identifier) == 0)
-            InternalDeleteGhostRoleGroup(entry, false);
-        else
-            _ghostRoleLotterySystem.UpdateAllEui();
-
-        return removed;
-    }
-
     private void OnGhostRoleCountRequest(GhostRoleCountRequestedEvent ev)
     {
+        var counts = new Dictionary<uint, int>();
+        foreach(var comp in EntityQuery<GhostRoleGroupComponent>())
+        {
+            if (counts.TryAdd(comp.Identifier, 1))
+                continue;
+
+            counts[comp.Identifier]++;
+        }
+
         foreach (var (_, group) in _roleGroupEntries)
         {
             if (group.Status != GhostRoleGroupStatus.Released)
                 continue;
 
-            ev.Count += _roleGroupEntities.Count(kv => kv.Value == group.Identifier);
+            ev.Count += counts[group.Identifier];
         }
     }
 
@@ -488,13 +460,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_roleGroupEntries.TryGetValue(ev.RoleGroupIdentifier, out var entry))
             return;
 
-        if (!_roleGroupEntities.TryFirstOrNull(kv => kv.Value == ev.RoleGroupIdentifier, out var kv))
+        if (!EntityQuery<GhostRoleGroupComponent>().TryFirstOrDefault(c => c.Identifier == ev.RoleGroupIdentifier, out var ghostRoleGroupComponent))
         {
             ev.RoleGroupTaken = true; // Role group is already completely used up.
             return;
         }
 
-        var entityUid = kv.Value.Key;
+        var entityUid = ghostRoleGroupComponent.Owner;
         var contentData = ev.Player.ContentData();
 
         DebugTools.AssertNotNull(contentData);
@@ -544,7 +516,7 @@ public sealed class GhostRoleGroupRequestTakeoverMessage : EntityEventArgs
 
     /// <summary>
     ///     Identifier for the role group.
-    ///     Input paramter.
+    ///     Input parameter.
     /// </summary>
     public uint RoleGroupIdentifier { get; }
 
@@ -580,9 +552,9 @@ delete <deleteEntities> <groupIdentifier>
 release <groupIdentifier>
 open";
 
-    private void ExecuteStart(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    private void ExecuteStart(IConsoleShell shell, IPlayerSession player, IReadOnlyList<string> args)
     {
-        if (args.Length != 3)
+        if (args.Count != 3)
         {
             shell.WriteLine("Wrong number of arguments.");
             return;
@@ -596,9 +568,9 @@ open";
         shell.WriteLine(id != null ? $"Role group started. Id is: {id}" : "Failed to start role group");
     }
 
-    private void ExecuteAttach(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    private void ExecuteAttach(IConsoleShell shell, IPlayerSession player, IReadOnlyList<string> args)
     {
-        if (args.Length != 3)
+        if (args.Count != 3)
         {
             shell.WriteLine("Wrong number of arguments.");
             return;
@@ -631,9 +603,9 @@ open";
             : "Failed to attach entity to role group.");
     }
 
-    private void ExecuteDetach(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    private void ExecuteDetach(IConsoleShell shell, IPlayerSession player, IReadOnlyList<string> args)
     {
-        if (args.Length != 3)
+        if (args.Count != 3)
         {
             shell.WriteLine("Wrong number of arguments.");
             return;
@@ -665,10 +637,10 @@ open";
             : "Failed to detach entity from role group");
     }
 
-    private void ExecuteDelete(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    private void ExecuteDelete(IConsoleShell shell, IPlayerSession player, IReadOnlyList<string> args)
     {
         var manager = EntitySystem.Get<GhostRoleGroupSystem>();
-        if (args.Length != 3)
+        if (args.Count != 3)
         {
             shell.WriteLine("Wrong number of arguments.");
             return;
@@ -688,10 +660,10 @@ open";
         manager.DeleteGhostRoleGroup(player, identifier, deleteEntities);
     }
 
-    private void ExecuteRelease(IConsoleShell shell,  IPlayerSession player, string argStr, string[] args)
+    private void ExecuteRelease(IConsoleShell shell,  IPlayerSession player, IReadOnlyList<string> args)
     {
         var manager = EntitySystem.Get<GhostRoleGroupSystem>();
-        if (args.Length != 2)
+        if (args.Count != 2)
         {
             shell.WriteLine("Wrong number of arguments.");
             return;
@@ -706,15 +678,15 @@ open";
         manager.ReleaseGhostRoleGroup(player, identifier);
     }
 
-    private void ExecuteOpen(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    private void ExecuteOpen(IPlayerSession player)
     {
         EntitySystem.Get<GhostRoleGroupSystem>().OpenEui(player);
     }
 
-    private void ExecuteActivate(IConsoleShell shell, IPlayerSession player, string argStr, string[] args)
+    private void ExecuteActivate(IConsoleShell shell, IPlayerSession player, IReadOnlyList<string> args)
     {
         var manager = EntitySystem.Get<GhostRoleGroupSystem>();
-        if (args.Length != 2)
+        if (args.Count != 2)
             return;
 
         if (!uint.TryParse(args[1], out var identifier))
@@ -745,25 +717,25 @@ open";
         switch (args[0])
         {
             case "start":
-                ExecuteStart(shell, player, argStr, args);
+                ExecuteStart(shell, player, args);
                 break;
             case "attach":
-                ExecuteAttach(shell, player, argStr, args);
+                ExecuteAttach(shell, player, args);
                 break;
             case "detach":
-                ExecuteDetach(shell, player, argStr, args);
+                ExecuteDetach(shell, player, args);
                 break;
             case "activate":
-                ExecuteActivate(shell, player, argStr, args);
+                ExecuteActivate(shell, player, args);
                 break;
             case "release":
-                ExecuteRelease(shell, player, argStr, args);
+                ExecuteRelease(shell, player, args);
                 break;
             case "delete":
-                ExecuteDelete(shell, player, argStr, args);
+                ExecuteDelete(shell, player, args);
                 break;
             case "open":
-                ExecuteOpen(shell, player, argStr, args);
+                ExecuteOpen(player);
                 break;
             default:
                 shell.WriteLine($"Usage: {Help}");
