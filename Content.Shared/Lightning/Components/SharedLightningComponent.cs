@@ -7,20 +7,26 @@ namespace Content.Shared.Lightning.Components;
 public abstract class SharedLightningComponent : Component
 {
     /// <summary>
-    /// If this can arc, how many targets should this arc to?
+    /// Can this lightning arc?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxArc")]
-    public int MaxArc = 3;
+    [DataField("canArc")]
+    public bool CanArc;
 
     /// <summary>
-    /// List of targets that this collided with already
+    /// How much should lightning arc in total?
+    /// Controls the amount of bolts that will spawn.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("maxTotalArc")]
+    public int MaxTotalArcs = 50;
+
+    /// <summary>
+    /// The target that the lightning will Arc to.
     /// </summary>
     [ViewVariables]
     [DataField("arcTarget")]
     public EntityUid ArcTarget;
-
-    public int Counter = 0;
 
     /// <summary>
     /// How far should this lightning go?
@@ -29,7 +35,11 @@ public abstract class SharedLightningComponent : Component
     [DataField("maxLength")]
     public float MaxLength = 5f;
 
+    /// <summary>
+    /// List of targets that this collided with already
+    /// </summary>
     [ViewVariables]
+    [DataField("arcTargets")]
     public HashSet<EntityUid> ArcTargets = new();
 
     /// <summary>

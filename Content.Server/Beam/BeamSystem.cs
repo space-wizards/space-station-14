@@ -1,5 +1,7 @@
-﻿using Content.Server.Beam.Components;
+﻿using System.Linq;
+using Content.Server.Beam.Components;
 using Content.Shared.Beam;
+using Content.Shared.Beam.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -16,6 +18,29 @@ public sealed class BeamSystem : SharedBeamSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<BeamComponent, BeamControllerCreatedEvent>(OnControllerCreated);
+        SubscribeLocalEvent<BeamComponent, BeamFiredEvent>(OnBeamFired);
+        SubscribeLocalEvent<BeamComponent, ComponentRemove>(OnRemove);
+    }
+
+    private void OnControllerCreated(EntityUid uid, BeamComponent component, BeamControllerCreatedEvent args)
+    {
+        component.OriginBeam = args.OriginBeam;
+    }
+
+    private void OnBeamFired(EntityUid uid, BeamComponent component, BeamFiredEvent args)
+    {
+        component.CreatedBeams.Add(args.CreatedBeam);
+    }
+
+    private void OnRemove(EntityUid uid, BeamComponent component, ComponentRemove args)
+    {
+        if (component.VirtualBeamController == null)
+            return;
+
+        if (component.CreatedBeams.Count == 0 && component.VirtualBeamController.Value.Valid)
+            QueueDel(component.VirtualBeamController.Value);
     }
 
     /// <summary>
@@ -32,14 +57,14 @@ public sealed class BeamSystem : SharedBeamSystem
     private void CreateBeam(string prototype,
         Angle userAngle,
         Vector2 calculatedDistance,
-        EntityCoordinates beamStartPos,
+        MapCoordinates beamStartPos,
         Vector2 distanceCorrection,
         EntityUid? controller,
         string? bodyState = null,
         string shader = "unshaded")
     {
-        var offset = beamStartPos;
-        var ent = Spawn(prototype, offset);
+        var beamSpawnPos = beamStartPos;
+        var ent = Spawn(prototype, beamSpawnPos);
         var shape = new EdgeShape(distanceCorrection, new Vector2(0,0));
         var distanceLength = distanceCorrection.Length;
 
@@ -67,8 +92,11 @@ public sealed class BeamSystem : SharedBeamSystem
 
             else
             {
-                var controllerEnt = Spawn("VirtualBeamEntityController", offset);
+                var controllerEnt = Spawn("VirtualBeamEntityController", beamSpawnPos);
                 beam.VirtualBeamController = controllerEnt;
+
+                var beamControllerCreatedEvent = new BeamControllerCreatedEvent(ent, controllerEnt);
+                RaiseLocalEvent(controllerEnt, beamControllerCreatedEvent, true);
             }
 
             Dirty(ent);
@@ -76,8 +104,8 @@ public sealed class BeamSystem : SharedBeamSystem
             //TODO: Sometime in the future this needs to be replaced with tiled sprites because lord this is shit.
             for (int i = 0; i < distanceLength-1; i++)
             {
-                offset = offset.Offset(calculatedDistance.Normalized);
-                var newEnt = Spawn(prototype, offset);
+                beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized);
+                var newEnt = Spawn(prototype, beamSpawnPos);
                 if (!TryComp<SpriteComponent>(newEnt, out var newSprites))
                     return;
                 newSprites.Rotation = userAngle;
@@ -91,8 +119,10 @@ public sealed class BeamSystem : SharedBeamSystem
 
                 Dirty(newEnt);
             }
-        }
 
+            var beamFiredEvent = new BeamFiredEvent(ent);
+            RaiseLocalEvent(beam.VirtualBeamController.Value, beamFiredEvent, true);
+        }
     }
 
     /// <summary>
@@ -108,15 +138,18 @@ public sealed class BeamSystem : SharedBeamSystem
     public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype, string? bodyState = null,
         string shader = "unshaded", EntityUid? controller = null)
     {
+        if (!user.IsValid() || !target.IsValid())
+            return;
+
         var userXForm = Transform(user);
         var targetXForm = Transform(target);
 
         //The distance between the target and the user.
-        var calculatedDistance = targetXForm.LocalPosition - userXForm.LocalPosition;
+        var calculatedDistance = targetXForm.WorldPosition - userXForm.WorldPosition;
         var userAngle = calculatedDistance.ToWorldAngle();
 
-        //
-        var beamStartPos = userXForm.Coordinates.Offset(calculatedDistance.Normalized);
+        //Where the start of the beam will spawn
+        var beamStartPos = userXForm.MapPosition.Offset(calculatedDistance.Normalized);
 
         //Don't divide by zero
         if (calculatedDistance.Length == 0)
@@ -131,5 +164,8 @@ public sealed class BeamSystem : SharedBeamSystem
         var distanceCorrection = calculatedDistance - calculatedDistance.Normalized;
 
         CreateBeam(bodyPrototype, userAngle, calculatedDistance, beamStartPos, distanceCorrection, controller, bodyState, shader);
+
+        var ev = new CreateBeamSuccessEvent(user, target);
+        RaiseLocalEvent(user, ev, true);
     }
 }

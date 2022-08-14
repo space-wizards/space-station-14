@@ -4,6 +4,7 @@
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
     layers:
     - state: "lightning_1"
       shader: unshaded
@@ -14,6 +15,7 @@
   - type: Electrified
     requirePower: false
   - type: Lightning
+    canArc: true
   - type: PointLight
     enabled: true
     color: "#4080FF"
@@ -22,5 +24,5 @@
     autoRot: true
     castShadows: false
   - type: Beam
-  #- type: TimedDespawn
-  #  lifetime: 3
+  - type: TimedDespawn
+    lifetime: 3
