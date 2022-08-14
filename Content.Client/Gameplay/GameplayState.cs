@@ -6,6 +6,7 @@ using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
@@ -18,6 +19,7 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         protected override Type? LinkedScreenType => typeof(DefaultGameScreen);
@@ -63,6 +65,7 @@ namespace Content.Client.Gameplay
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
+            _uiManager.ClearWindows();
         }
 
         /// <summary>

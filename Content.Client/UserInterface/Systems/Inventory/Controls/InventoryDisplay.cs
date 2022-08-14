@@ -59,4 +59,10 @@ public sealed class InventoryDisplay : LayoutContainer
             UpdateSizeData(buttonOffset);
         }
     }
+
+    public void ClearButtons()
+    {
+        Children.Clear();
+    }
+
 }

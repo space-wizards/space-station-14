@@ -22,6 +22,13 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     private CharacterWindow? _window;
     private MenuButton CharacterButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().CharacterButton;
 
+
+    public override void Initialize()
+    {
+        _window = UIManager.CreateWindow<CharacterWindow>();
+        _window.SetCentered();
+    }
+
     public void OnStateEntered(GameplayState state)
     {
         CharacterButton.OnPressed += CharacterButtonPressed;
@@ -103,36 +110,20 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         ToggleWindow();
     }
 
-    private void CreateWindow()
-    {
-        _window = UIManager.CreateWindow<CharacterWindow>();
-
-        if (_window == null)
-            return;
-
-        _window.OpenCentered();
-        _characterInfo.RequestCharacterInfo();
-        CharacterButton.Pressed = true;
-    }
-
     private void CloseWindow()
     {
-        if (_window == null)
-            return;
-
-        _window.Dispose();
-        _window = null;
+        _window!.Close();
         CharacterButton.Pressed = false;
     }
 
     private void ToggleWindow()
     {
-        if (_window == null)
+        if (!_window!.IsOpen)
         {
-            CreateWindow();
+            _characterInfo.RequestCharacterInfo();
+            _window.Open();
             return;
         }
-
         CloseWindow();
     }
 }
