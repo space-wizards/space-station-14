@@ -241,19 +241,30 @@
     sprite: Structures/Walls/gold.rsi
   - type: Icon
     sprite: Structures/Walls/gold.rsi
+  - type: Construction
+    graph: Girder
+    node: goldWall
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: gold
@@ -301,19 +312,30 @@
     sprite: Structures/Walls/plasma.rsi
   - type: Icon
     sprite: Structures/Walls/plasma.rsi
+  - type: Construction
+    graph: Girder
+    node: plasmaWall
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: plasma
@@ -331,19 +353,30 @@
     sprite: Structures/Walls/plastic.rsi
   - type: Icon
     sprite: Structures/Walls/plastic.rsi
+  - type: Construction
+    graph: Girder
+    node: plasticWall
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: plastic
@@ -460,19 +493,30 @@
     sprite: Structures/Walls/silver.rsi
   - type: Icon
     sprite: Structures/Walls/silver.rsi
+  - type: Construction
+    graph: Girder
+    node: silverWall
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: silver
@@ -655,19 +699,30 @@
     sprite: Structures/Walls/uranium.rsi
   - type: Icon
     sprite: Structures/Walls/uranium.rsi
+  - type: Construction
+    graph: Girder
+    node: uraniumWall
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: uranium
@@ -677,27 +732,34 @@
   id: WallWood
   name: wood wall
   components:
-  - type: Tag
-    tags:
-      - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/wood.rsi
   - type: Icon
     sprite: Structures/Walls/wood.rsi
+  - type: Construction
+    graph: Girder
+    node: woodWall
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 300 # #excess damage (nuke?). avoid computational cost of spawning entities.
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: wood

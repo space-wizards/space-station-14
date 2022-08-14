@@ -19,7 +19,7 @@ namespace Content.Client.Ghost
         // No good way to get an event into the UI.
         public int AvailableGhostRoleCount { get; private set; } = 0;
 
-        private bool _ghostVisibility;
+        private bool _ghostVisibility = true;
 
         private bool GhostVisibility
         {
@@ -33,12 +33,9 @@ namespace Content.Client.Ghost
 
                 _ghostVisibility = value;
 
-                foreach (var ghost in EntityManager.GetAllComponents(typeof(GhostComponent), true))
+                foreach (var ghost in EntityQuery<GhostComponent, SpriteComponent>(true))
                 {
-                    if (EntityManager.TryGetComponent(ghost.Owner, out SpriteComponent? sprite))
-                    {
-                        sprite.Visible = value;
-                    }
+                    ghost.Item2.Visible = true;
                 }
             }
         }
@@ -69,12 +66,6 @@ namespace Content.Client.Ghost
         {
             component.Gui?.Dispose();
             component.Gui = null;
-
-            // PlayerDetachedMsg might not fire due to deletion order so...
-            if (component.IsAttached)
-            {
-                GhostVisibility = false;
-            }
         }
 
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, PlayerAttachedEvent playerAttachedEvent)
