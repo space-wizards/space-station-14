@@ -32,7 +32,7 @@ public sealed class ParallaxManager : IParallaxManager
             return !_parallaxesLQ.TryGetValue(name, out var lq) ? Array.Empty<ParallaxLayerPrepared>() : lq;
         }
 
-        return !_parallaxesLQ.TryGetValue(name, out var hq) ? Array.Empty<ParallaxLayerPrepared>() : hq;
+        return !_parallaxesHQ.TryGetValue(name, out var hq) ? Array.Empty<ParallaxLayerPrepared>() : hq;
     }
 
     public void UnloadParallax(string name)
@@ -89,8 +89,8 @@ public sealed class ParallaxManager : IParallaxManager
 
             if (token.Token.IsCancellationRequested) return;
 
-            _parallaxesLQ[name] = layers[0];
-            _parallaxesHQ[name] = layers[1];
+            _parallaxesLQ[name] = layers[1];
+            _parallaxesHQ[name] = layers[0];
 
             _sawmill.Info($"Loaded parallax {name}");
 
