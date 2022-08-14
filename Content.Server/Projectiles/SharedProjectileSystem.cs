@@ -39,20 +39,8 @@ namespace Content.Server.Projectiles
             if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
                 return;
 
-            // Relay the projectile to the vehicle owner.
-            // See note in shared about other relays.
             var otherEntity = args.OtherFixture.Body.Owner;
-
-            if (TryComp<VehicleComponent>(otherEntity, out var vehicle) && vehicle.Rider != null)
-                otherEntity = vehicle.Rider.Value;
-
             var direction = args.OurFixture.Body.LinearVelocity.Normalized;
-
-            Collide(component, otherEntity, direction);
-        }
-
-        private void Collide(ProjectileComponent component, EntityUid otherEntity, Vector2 direction)
-        {
             var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances);
             component.DamagedEntity = true;
 
@@ -60,7 +48,7 @@ namespace Content.Server.Projectiles
             {
                 _adminLogger.Add(LogType.BulletHit,
                     HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
-                    $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
+                    $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
             }
 
             _guns.PlayImpactSound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
@@ -73,7 +61,7 @@ namespace Content.Server.Projectiles
 
             if (component.DeleteOnCollide)
             {
-                QueueDel(component.Owner);
+                QueueDel(uid);
 
                 if (component.ImpactEffect != null && TryComp<TransformComponent>(component.Owner, out var xform))
                 {

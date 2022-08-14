@@ -108,27 +108,13 @@ public sealed partial class GunSystem : SharedGunSystem
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
 
-                    Func<EntityUid, bool>? predicate = uid => uid == user;
-                    if (TryComp<RiderComponent>(user, out var rider) && rider.Vehicle != null)
-                    {
-                        var comp = rider;
-                        predicate = uid => uid == user || uid == comp.Vehicle;
-                    }
-
                     var rayCastResults =
-                        Physics.IntersectRayWithPredicate(fromMap.MapId, ray, hitscan.MaxLength, predicate, false).ToList();
+                        Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
 
                     if (rayCastResults.Count >= 1)
                     {
                         var result = rayCastResults[0];
                         var hitEntity = result.HitEntity;
-
-                        // If you need ANYTHING ELSE to do this then for the love of god use the eventbus or I will shank you
-                        if (TryComp<VehicleComponent>(result.HitEntity, out var vehicle) && vehicle.Rider != null)
-                        {
-                            hitEntity = vehicle.Rider.Value;
-                        }
-
                         var distance = result.Distance;
                         FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
 
