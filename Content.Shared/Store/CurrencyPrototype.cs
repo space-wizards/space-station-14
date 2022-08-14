@@ -18,16 +18,22 @@ public sealed class CurrencyPrototype : IPrototype
     public string ID { get; } = default!;
 
     /// <summary>
-    /// The player-facing name of the currency. Supports Loc.
+    /// The Loc string used for displaying the balance of a certain currency at the top of the store ui
     /// </summary>
-    [DataField("name")]
-    public string Name { get; } = string.Empty;
+    [DataField("balanceDisplay")]
+    public string BalanceDisplay { get; } = string.Empty;
+
+    /// <summary>
+    /// The Loc string used for displaying the price of listings in store UI
+    /// </summary>
+    [DataField("priceDisplay")]
+    public string PriceDisplay { get; } = string.Empty;
 
     /// <summary>
     /// The physical entity of the currency
     /// </summary>
     [DataField("entityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? EntityId { get; } = null;
+    public string? EntityId { get; }
 
     /// <summary>
     /// Whether or not this currency can be withdrawn from a shop by a player. Requires a valid entityId.

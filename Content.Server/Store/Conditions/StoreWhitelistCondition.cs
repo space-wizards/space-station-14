@@ -4,9 +4,9 @@ using Content.Shared.Whitelist;
 namespace Content.Server.Store.Conditions;
 
 /// <summary>
-/// Filters out an entry based on the components or tags on an entity.
+/// Filters out an entry based on the components or tags on the store itself.
 /// </summary>
-public sealed class StoreUserWhitelistCondition : ListingCondition
+public sealed class StoreWhitelistCondition : ListingCondition
 {
     /// <summary>
     /// A whitelist of tags or components.
@@ -22,17 +22,20 @@ public sealed class StoreUserWhitelistCondition : ListingCondition
 
     public override bool Condition(ListingConditionArgs args)
     {
+        if (args.StoreEntity == null)
+            return false;
+
         var ent = args.EntityManager;
 
         if (Whitelist != null)
         {
-            if (!Whitelist.IsValid(args.User, ent))
+            if (!Whitelist.IsValid(args.StoreEntity.Value, ent))
                 return false;
         }
 
         if (Blacklist != null)
         {
-            if (Blacklist.IsValid(args.User, ent))
+            if (Blacklist.IsValid(args.StoreEntity.Value, ent))
                 return false;
         }
 

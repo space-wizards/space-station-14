@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Store.Ui;
+namespace Content.Client.Store.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class StoreListingControl : Control

@@ -108,7 +108,7 @@ public sealed partial class StoreSystem : EntitySystem
         //condition checking because why not
         if (listing.Conditions != null)
         {
-            var args = new ListingConditionArgs(msg.Buyer, listing, EntityManager);
+            var args = new ListingConditionArgs(msg.Buyer, component.Owner, listing, EntityManager);
             var conditionsMet = true;
 
             foreach (var condition in listing.Conditions.Where(condition => !condition.Condition(args)))

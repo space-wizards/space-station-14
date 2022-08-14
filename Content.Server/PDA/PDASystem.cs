@@ -110,7 +110,7 @@ namespace Content.Server.PDA
             // players. This should really use a sort of key-code entry system that selects an account which is not directly tied to
             // a player entity.
 
-            if (!HasComp<StoreComponent>(pda.Owner))
+            if (!TryComp<StoreComponent>(pda.Owner, out var storeComponent))
                 return;
 
             var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, hasInstrument);
@@ -120,8 +120,8 @@ namespace Content.Server.PDA
                 if (session.AttachedEntity is not EntityUid { Valid: true } user)
                     continue;
 
-                if (TryComp<MindComponent>(session.AttachedEntity, out var mindcomp) && mindcomp.Mind != null &&
-                    mindcomp.Mind.HasRole<TraitorRole>())
+                if (storeComponent.AccountOwner == user || (TryComp<MindComponent>(session.AttachedEntity, out var mindcomp) && mindcomp.Mind != null &&
+                    mindcomp.Mind.HasRole<TraitorRole>()))
                     ui.SetState(uplinkState, session);
             }
         }
@@ -171,8 +171,12 @@ namespace Content.Server.PDA
 
         private void AfterUIOpen(EntityUid uid, PDAComponent pda, AfterActivatableUIOpenEvent args)
         {
+            //TODO: this is awful
             // A new user opened the UI --> Check if they are a traitor and should get a user specific UI state override.
-            if (!HasComp<StoreComponent>(pda.Owner) ||
+            if (!TryComp<StoreComponent>(pda.Owner, out var storeComp))
+                return;
+
+            if (storeComp.AccountOwner != args.User &&
                 !(TryComp<MindComponent>(args.User, out var mindcomp) && mindcomp.Mind != null && mindcomp.Mind.HasRole<TraitorRole>()))
                 return;
 

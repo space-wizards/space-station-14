@@ -17,7 +17,7 @@ public abstract class ListingCondition
     public abstract bool Condition(ListingConditionArgs args);
 }
 
-/// <param name="User">The person purchasing the listing</param>
-/// <param name="listing">The liting itself</param>
+/// <param name="Buyer">The person purchasing the listing</param>
+/// <param name="Listing">The liting itself</param>
 /// <param name="EntityManager">An entitymanager for sane coding</param>
-public readonly record struct ListingConditionArgs(EntityUid User, ListingData listing, IEntityManager EntityManager);
+public readonly record struct ListingConditionArgs(EntityUid Buyer, EntityUid? StoreEntity, ListingData Listing, IEntityManager EntityManager);

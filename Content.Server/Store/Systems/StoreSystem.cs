@@ -25,7 +25,8 @@ public sealed partial class StoreSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<StoreComponent, ActivateInWorldEvent>(OnActivate);
+        //SubscribeLocalEvent<StoreComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>((_,c,a) => UpdateUserInterface(a.User, c));
 
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
@@ -72,7 +73,7 @@ public sealed partial class StoreSystem : EntitySystem
     public Dictionary<string, FixedPoint2> GetCurrencyValue(CurrencyComponent component)
     {
         TryComp<StackComponent>(component.Owner, out var stack);
-        var amount = stack == null ? 1 : stack.Count;
+        var amount = stack?.Count ?? 1;
 
         return component.Price.ToDictionary(v => v.Key, p => p.Value * amount);
     }
@@ -146,6 +147,7 @@ public sealed partial class StoreSystem : EntitySystem
     /// <param name="component">The store being initialized</param>
     public void InitializeFromPreset(StorePresetPrototype preset, StoreComponent component)
     {
+        component.Preset = preset.ID;
         component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
         component.ActivateInHand = preset.ActivateInHand;
         component.Categories.UnionWith(preset.Categories);

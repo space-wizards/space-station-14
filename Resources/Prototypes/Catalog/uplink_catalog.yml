@@ -106,7 +106,7 @@
   categories:
     - UplinkExplosives
   conditions:
-  - !type:StoreUserWhitelistCondition
+  - !type:BuyerWhitelistCondition
     blacklist:
       components:
       - SurplusBundle
@@ -183,10 +183,10 @@
   categories:
   - UplinkUtility
   conditions:
-  - !type:StoreAntagCondition
-    blacklist: 
-    - Nukeops
-    - NukeopsCommander
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkHolster
@@ -307,11 +307,11 @@
   categories:
   - UplinkBundles
   conditions:
-  - !type:StoreAntagCondition
-    whitelist: 
-    - Nukeops
-    - NukeopsCommander
-  - !type:StoreUserWhitelistCondition
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
     blacklist:
       components:
       - SurplusBundle
@@ -325,11 +325,11 @@
   categories:
   - UplinkBundles
   conditions:
-  - !type:StoreAntagCondition
-    blacklist: 
-    - Nukeops
-    - NukeopsCommander
-  - !type:StoreUserWhitelistCondition
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
     blacklist:
       components:
       - SurplusBundle
@@ -343,11 +343,11 @@
   categories:
   - UplinkBundles
   conditions:
-  - !type:StoreAntagCondition
-    blacklist: 
-    - Nukeops
-    - NukeopsCommander
-  - !type:StoreUserWhitelistCondition
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
     blacklist:
       components:
       - SurplusBundle
@@ -405,7 +405,7 @@
   categories:
   - UplinkJob
   conditions:
-  - !type:StoreJobCondition
+  - !type:BuyerJobCondition
     whitelist:
     - Botanist
 
@@ -418,10 +418,10 @@
   categories:
   - UplinkJob
   conditions:
-  - !type:StoreJobCondition
+  - !type:BuyerJobCondition
     whitelist:
     - Chaplain
-  - !type:StoreUserWhitelistCondition
+  - !type:BuyerWhitelistCondition
     blacklist:
       components:
       - SurplusBundle
@@ -583,7 +583,7 @@
   categories:
   - UplinkMisc
   conditions:
-  - !type:StoreUserWhitelistCondition
+  - !type:BuyerWhitelistCondition
     blacklist:
       components:
       - SurplusBundle

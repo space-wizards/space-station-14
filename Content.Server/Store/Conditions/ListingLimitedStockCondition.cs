@@ -5,7 +5,7 @@ namespace Content.Server.Store.Conditions;
 /// <summary>
 /// Only allows a listing to be purchased a certain amount of times.
 /// </summary>
-public sealed class StoreLimitedStockCondition : ListingCondition
+public sealed class ListingLimitedStockCondition : ListingCondition
 {
     /// <summary>
     /// The amount of times this listing can be purchased.
@@ -15,6 +15,6 @@ public sealed class StoreLimitedStockCondition : ListingCondition
 
     public override bool Condition(ListingConditionArgs args)
     {
-        return args.listing.PurchaseAmount < Stock;
+        return args.Listing.PurchaseAmount < Stock;
     }
 }

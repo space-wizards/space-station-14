@@ -65,6 +65,8 @@
     interfaces:
     - key: enum.StoreUiKey.Key
       type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
   - type: Store
     preset: StorePresetUplink
     balance: 
@@ -80,8 +82,6 @@
     balance:
       Telecrystal: 20
 
-
-#Default Nuclear Operative amount, not considering crew count
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio25TC
@@ -92,15 +92,19 @@
     balance:
       Telecrystal: 25
 
+#this uplink MUST be used for nukeops, as it has the tag for filtering the listing.
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio40TC
-  suffix: 40 TC
+  suffix: 40 TC, NukeOps
   components:
   - type: Store
     preset: StorePresetUplink
     balance:
       Telecrystal: 40
+  - type: Tag
+    tags:
+    - NukeOpsUplink
 
 - type: entity
   parent: BaseUplinkRadio

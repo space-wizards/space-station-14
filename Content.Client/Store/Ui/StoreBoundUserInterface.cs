@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using System.Linq;
 
-namespace Content.Client.Store.Ui;
+namespace Content.Client.Store.UI;
 
 [UsedImplicitly]
 public sealed class StoreBoundUserInterface : BoundUserInterface

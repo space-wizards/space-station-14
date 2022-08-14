@@ -17,7 +17,7 @@ using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Store.Ui;
+namespace Content.Client.Store.UI;
 
 /// <summary>
 ///     Window to select amount TC to withdraw from Uplink account
@@ -57,13 +57,13 @@ public sealed partial class StoreWithdrawWindow : DefaultWindow
         _buttons.Clear();
         foreach (var currency in _validCurrencies)
         {
-            Logger.Debug((currency.Value.Name));
+            Logger.Debug((currency.Value.PriceDisplay));
             var button = new CurrencyWithdrawButton()
             {
                 Id = currency.Value.ID,
                 Amount = currency.Key,
                 MinHeight = 20,
-                Text = Loc.GetString("store-withdraw-button-ui", ("currency",Loc.GetString(currency.Value.Name))),
+                Text = Loc.GetString("store-withdraw-button-ui", ("currency",Loc.GetString(currency.Value.PriceDisplay))),
             };
             button.Disabled = false;
             button.OnPressed += args =>

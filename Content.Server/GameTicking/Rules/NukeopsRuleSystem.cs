@@ -289,7 +289,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             newMind.TransferTo(mob);
             _stationSpawningSystem.EquipStartingGear(mob, gear, null);
-            _uplink.AddUplink(mob, null);
 
             ev.PlayerPool.Remove(session);
             _aliveNukeops.Add(newMind, true);

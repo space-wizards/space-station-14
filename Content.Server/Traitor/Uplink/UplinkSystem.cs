@@ -13,7 +13,7 @@ namespace Content.Server.Traitor.Uplink
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly StoreSystem _store = default!;
 
-        public const string TelecrystalCurrencyPrototype = "TeleCrystal";
+        public const string TelecrystalCurrencyPrototype = "Telecrystal";
 
         /// <summary>
         ///     Gets the amount of TC on an "uplink"
@@ -24,9 +24,7 @@ namespace Content.Server.Traitor.Uplink
         public int GetTCBalance(StoreComponent component)
         {
             FixedPoint2? tcBalance = component.Balance.GetValueOrDefault(TelecrystalCurrencyPrototype);
-            var emo = tcBalance != null ? tcBalance.Value.Int() : 0;
-
-            return emo; //hey ma, that's me!
+            return tcBalance != null ? tcBalance.Value.Int() : 0;
         }
 
         /// <summary>
@@ -50,6 +48,7 @@ namespace Content.Server.Traitor.Uplink
             var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
             _store.InitializeFromPreset(uplinkPresetId, store);
             store.AccountOwner = user;
+            store.ActivateInHand = false;
             store.Balance.Clear();
 
             if (balance != null)

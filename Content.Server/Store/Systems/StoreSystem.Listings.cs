@@ -66,7 +66,7 @@ public sealed partial class StoreSystem : EntitySystem
     /// <returns>The available listings.</returns>
     public IEnumerable<ListingData> GetAvailableListings(EntityUid user, StoreComponent component)
     {
-        return GetAvailableListings(user, component.Listings, component.Categories);
+        return GetAvailableListings(user, component.Listings, component.Categories, component.Owner);
     }
 
     /// <summary>
@@ -75,8 +75,9 @@ public sealed partial class StoreSystem : EntitySystem
     /// <param name="user">The person getting the listings.</param>
     /// <param name="listings">All of the listings that are available. If null, will just get all listings from the prototypes.</param>
     /// <param name="categories">What categories to filter by.</param>
+    /// <param name="storeEntity">The physial entity of the store. Can be null.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingData> GetAvailableListings(EntityUid user, HashSet<ListingData>? listings, HashSet<string> categories)
+    public IEnumerable<ListingData> GetAvailableListings(EntityUid user, HashSet<ListingData>? listings, HashSet<string> categories, EntityUid? storeEntity = null)
     {
         if (listings == null)
             listings = GetAllListings();
@@ -88,7 +89,7 @@ public sealed partial class StoreSystem : EntitySystem
 
             if (listing.Conditions != null)
             {
-                var args = new ListingConditionArgs(user, listing, EntityManager);
+                var args = new ListingConditionArgs(user, storeEntity, listing, EntityManager);
                 var conditionsMet = true;
 
                 foreach (var condition in listing.Conditions)

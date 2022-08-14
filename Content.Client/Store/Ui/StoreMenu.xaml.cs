@@ -11,7 +11,7 @@ using Content.Shared.Actions.ActionTypes;
 using System.Linq;
 using Content.Shared.FixedPoint;
 
-namespace Content.Client.Store.Ui;
+namespace Content.Client.Store.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class StoreMenu : DefaultWindow
@@ -25,7 +25,7 @@ public sealed partial class StoreMenu : DefaultWindow
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
 
-    public EntityUid? CurrentBuyer = null;
+    public EntityUid? CurrentBuyer;
     public Dictionary<string, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
 
@@ -52,7 +52,7 @@ public sealed partial class StoreMenu : DefaultWindow
         var balanceStr = string.Empty;
         foreach (var type in currency)
         {
-            balanceStr += $"{Loc.GetString(type.Value.Name, ("amount", 1))}: {type.Key.Item2}\n";
+            balanceStr += $"{Loc.GetString(type.Value.BalanceDisplay, ("amount", type.Key.Item2))}\n";
         }
 
         BalanceInfo.SetMarkup(balanceStr.TrimEnd());
@@ -158,7 +158,7 @@ public sealed partial class StoreMenu : DefaultWindow
         foreach (var type in listing.Cost)
         {
             var currency = _prototypeManager.Index<CurrencyPrototype>(type.Key);
-            text += $"{type.Value} {Loc.GetString(currency.Name, ("amount", type.Value))}\n";
+            text += $"{Loc.GetString(currency.PriceDisplay, ("amount", type.Value))}\n";
         }
 
         if (listing.Cost.Count < 1)
