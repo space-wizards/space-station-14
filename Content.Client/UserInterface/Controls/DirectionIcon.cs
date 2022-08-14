@@ -66,7 +66,6 @@ public sealed class DirectionIcon : TextureRect
             handle.SetTransform(Matrix3.CreateTransform(GlobalPixelPosition - offset, -_rotation.Value));
         }
 
-        handle.SetTransform(Matrix3.Identity);
         base.Draw(handle);
     }
 }
