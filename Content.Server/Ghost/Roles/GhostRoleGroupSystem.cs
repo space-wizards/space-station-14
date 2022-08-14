@@ -40,6 +40,11 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// </summary>
     private readonly Dictionary<IPlayerSession, uint> _roleGroupActiveGroups = new();
 
+    /// <summary>
+    ///     Cache of <see cref="GhostRoleGroupComponent"/> indexed by the role group identifier.
+    /// </summary>
+    private readonly Dictionary<uint, HashSet<GhostRoleGroupComponent>> _lookupComponentsByIdentifier = new();
+
     private bool _needsUpdateRoleGroups = true;
 
     /// <inheritdoc/>
@@ -185,6 +190,9 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, GhostRoleGroupComponent role, ComponentShutdown args)
     {
+        if (_lookupComponentsByIdentifier.TryGetValue(role.Identifier, out var components))
+            components.Remove(role);
+
         if (!_roleGroupEntries.TryGetValue(role.Identifier, out var entry))
             return;
 
@@ -226,6 +234,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             _roleGroupActiveGroups.Add(session, entry.Identifier);
 
         _needsUpdateRoleGroups = true;
+        _lookupComponentsByIdentifier.Add(identifier, new HashSet<GhostRoleGroupComponent>());
         return identifier;
     }
 
@@ -276,10 +285,12 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         _needsUpdateRoleGroups = true;
         _ghostRoleLotterySystem.UpdateAllEui();
 
-        if (!deleteEntities)
+        _lookupComponentsByIdentifier.Remove(entry.Identifier, out var deleteComponents);
+
+        if (!deleteEntities || deleteComponents == null)
             return;
 
-        foreach (var groupComp in EntityQuery<GhostRoleGroupComponent>().Where(c => c.Identifier == entry.Identifier))
+        foreach (var groupComp in deleteComponents)
         {
             if (TryComp<MindComponent>(groupComp.Owner, out var mindComp) && mindComp.Mind?.UserId != null)
                 continue; // Don't delete player-controlled entities.
@@ -352,9 +363,9 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <param name="session">The session requesting the addition of the entity to the role group.</param>
     /// <param name="identifier">The identifier of the role group.</param>
     /// <param name="entity">The entity being added.</param>
-    /// <param name="component">Ghost role component for bypassing component lookup.</param>
+    /// <param name="ghostRoleComponent">Ghost role component for bypassing component lookup.</param>
     /// <returns>true if the entity was successfully added; otherwise false.</returns>
-    public bool AttachToGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity, GhostRoleComponent? component = null)
+    public bool AttachToGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity, GhostRoleComponent? ghostRoleComponent = null)
     {
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return false;
@@ -362,22 +373,38 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (entry.Status != GhostRoleGroupStatus.Editing)
             return false;
 
+        uint? prevRoleGroupIdentifier = null; // Get the previous role group (if it exists).
         if (TryComp<GhostRoleGroupComponent>(entity, out var ghostRoleGroupComp))
         {
             if (ghostRoleGroupComp.Identifier == identifier)
                 return true; // Already is part of this role group.
+
+            prevRoleGroupIdentifier = ghostRoleGroupComp.Identifier;
             if (!CanModify(session, ghostRoleGroupComp.Identifier))
                 return false; // Can't transfer from a role group we don't have the ability to modify.
         }
 
-        if (component != null || EntityManager.TryGetComponent(entity, out component))
-            _ghostRoleLotterySystem.GhostRoleRemoveComponent(component); // If it has ghost role, it may already be part of a lottery. Remove it.
+        // If it has ghost role, it may already be part of a lottery. Remove it.
+        if (ghostRoleComponent != null || EntityManager.TryGetComponent(entity, out ghostRoleComponent))
+            _ghostRoleLotterySystem.GhostRoleRemoveComponent(ghostRoleComponent);
 
         MakeSentientCommand.MakeSentient(entity, EntityManager);
         var groupComponent = EnsureComp<GhostRoleGroupComponent>(entity);
         groupComponent.Identifier = identifier;
-
         _needsUpdateRoleGroups = true;
+
+        // Remove from previous role group lookup.
+        if (prevRoleGroupIdentifier != null &&
+            _lookupComponentsByIdentifier.TryGetValue(prevRoleGroupIdentifier.Value, out var components))
+        {
+            components.Remove(groupComponent);
+        }
+
+        // Add the component to lookup tables.
+        if(!_lookupComponentsByIdentifier.TryGetValue(groupComponent.Identifier, out components))
+            _lookupComponentsByIdentifier[groupComponent.Identifier] = components = new HashSet<GhostRoleGroupComponent>();
+
+        components.Add(groupComponent);
         return true;
     }
 
@@ -410,21 +437,12 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
     private void OnGhostRoleCountRequest(GhostRoleCountRequestedEvent ev)
     {
-        var counts = new Dictionary<uint, int>();
-        foreach(var comp in EntityQuery<GhostRoleGroupComponent>())
-        {
-            if (counts.TryAdd(comp.Identifier, 1))
-                continue;
-
-            counts[comp.Identifier]++;
-        }
-
         foreach (var (_, group) in _roleGroupEntries)
         {
             if (group.Status != GhostRoleGroupStatus.Released)
                 continue;
 
-            ev.Count += counts[group.Identifier];
+            ev.Count += _lookupComponentsByIdentifier[group.Identifier].Count;
         }
     }
 
@@ -460,12 +478,14 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_roleGroupEntries.TryGetValue(ev.RoleGroupIdentifier, out var entry))
             return;
 
-        if (!EntityQuery<GhostRoleGroupComponent>().TryFirstOrDefault(c => c.Identifier == ev.RoleGroupIdentifier, out var ghostRoleGroupComponent))
+        if (!_lookupComponentsByIdentifier.TryGetValue(ev.RoleGroupIdentifier, out var components)
+            || components.Count == 0)
         {
             ev.RoleGroupTaken = true; // Role group is already completely used up.
             return;
         }
 
+        var ghostRoleGroupComponent = components.First();
         var entityUid = ghostRoleGroupComponent.Owner;
         var contentData = ev.Player.ContentData();
 
