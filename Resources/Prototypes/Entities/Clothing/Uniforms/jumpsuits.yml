@@ -822,3 +822,14 @@
       sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMusician
+  name: musician's tuxedo
+  description: A fancy tuxedo for the musically inclined.  Perfect for any lounge act!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/musician.rsi

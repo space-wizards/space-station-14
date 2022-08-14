@@ -284,3 +284,14 @@
         Slash: 0.8
         Piercing: 0.6 #slightly less bulletproof than wardens normal coat
         Heat: 0.75
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterMusician
+  name: musician's winter coat
+  description: An oversized, plasticine space tuxedo that'll have people asking "do you know me?"
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
