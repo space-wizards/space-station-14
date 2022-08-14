@@ -135,6 +135,19 @@
     state: "disposal"
 
 - type: construction
+  name: mailing unit
+  id: MailingUnit
+  graph: DisposalMachine
+  startNode: start
+  targetNode: mailing_unit
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: "mailing"
+
+- type: construction
   name: disposal pipe
   id: DisposalPipe
   graph: DisposalPipe

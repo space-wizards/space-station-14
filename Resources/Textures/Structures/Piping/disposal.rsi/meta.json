@@ -17,6 +17,15 @@
             ]
         },
         {
+            "name": "conmailing",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "conpipe-c",
             "directions": 4,
             "delays": [
@@ -188,6 +197,15 @@
             ]
         },
         {
+            "name": "mailing",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "disposal-charging",
             "directions": 1,
             "delays": [
@@ -197,7 +215,33 @@
             ]
         },
         {
+            "name": "mailing-charging",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "disposal-flush",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "mailing-flush",
             "directions": 1,
             "delays": [
                 [
@@ -235,6 +279,15 @@
         },
         {
             "name": "dispover-handle",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mailover-handle",
             "directions": 1,
             "delays": [
                 [

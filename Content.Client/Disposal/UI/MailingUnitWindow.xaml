@@ -1,11 +1,22 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
                xmlns:ui="clr-namespace:Content.Client.Disposal.UI"
-               MinSize="300 140"
-            SetSize="300 140"
+               MinSize="300 400"
+            SetSize="300 400"
             Resizable="False">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal"
-                      SeparationOverride="4">
+        <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+            <Label Text="{Loc 'ui-mailing-unit-target-label'}" />
+            <Label Name="Target"
+                   Text="" />
+        </BoxContainer>
+        <ItemList Name="TargetListContainer"
+                  Access="Public"
+                  SelectMode="Single"
+                  VerticalExpand="True"
+                  HorizontalExpand="True"
+                  Margin="0 0 0 16">
+        </ItemList>
+        <BoxContainer Orientation="Horizontal" SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
             <Label Name="UnitState"
                    Text="{Loc 'ui-disposal-unit-label-status'}" />
@@ -26,7 +37,7 @@
         <BoxContainer Orientation="Horizontal">
             <Button Name="Engage"
                     Access="Public"
-                    Text="{Loc 'ui-disposal-unit-button-flush'}"
+                    Text="{Loc 'ui-mailing-unit-button-flush'}"
                     StyleClasses="OpenRight"
                     ToggleMode="True" />
             <Button Name="Eject"

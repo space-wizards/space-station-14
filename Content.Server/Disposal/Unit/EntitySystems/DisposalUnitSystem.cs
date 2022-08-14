@@ -131,7 +131,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             // This is not an interaction, activation, or alternative verb type because unfortunately most users are
             // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
-            if (!args.CanAccess ||
+            if (!component.MobsCanEnter ||
+                !args.CanAccess ||
                 !args.CanInteract ||
                 component.Container.ContainedEntities.Contains(args.User) ||
                 !_actionBlockerSystem.CanMove(args.User))
@@ -423,6 +424,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (oldPressure < 1 && state == SharedDisposalUnitComponent.PressureState.Ready)
             {
                 UpdateVisualState(component);
+                UpdateInterface(component, component.Powered);
 
                 if (component.Engaged)
                 {
@@ -512,6 +514,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
+            //Allows the MailingUnitSystem to add tags or prevent flushing
+            var beforeFlushArgs = new BeforeDisposalFlushEvent();
+            RaiseLocalEvent(component.Owner, beforeFlushArgs, false);
+
+            if (beforeFlushArgs.Cancelled)
+            {
+                Disengage(component);
+                return false;
+            }
+
             var xform = Transform(component.Owner);
             if (!TryComp(xform.GridUid, out IMapGridComponent? grid))
                 return false;
@@ -536,7 +548,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 component.Air = environment.Remove(transferMoles);
             }
 
-            entryComponent.TryInsert(component);
+            entryComponent.TryInsert(component, beforeFlushArgs.Tags);
 
             component.AutomaticEngageToken?.Cancel();
             component.AutomaticEngageToken = null;
@@ -558,6 +570,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var stateString = Loc.GetString($"{component.State}");
             var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName, stateString, EstimatedFullPressure(component), powered, component.Engaged);
             component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.SetState(state);
+
+            var stateUpdatedEvent = new DisposalUnitUIStateUpdatedEvent(state);
+            RaiseLocalEvent(component.Owner, stateUpdatedEvent, false);
         }
 
         private TimeSpan EstimatedFullPressure(DisposalUnitComponent component)
@@ -686,7 +701,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// </summary>
         public void TryQueueEngage(DisposalUnitComponent component)
         {
-            if (component.Deleted || !component.Powered && component.Container.ContainedEntities.Count == 0)
+            if (component.Deleted || !component.AutomaticEngage || !component.Powered && component.Container.ContainedEntities.Count == 0)
             {
                 return;
             }
@@ -712,6 +727,29 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             UpdateVisualState(component);
+        }
+
+        /// <summary>
+        /// Sent before the disposal unit flushes it's contents.
+        /// Allows adding tags for sorting and preventing the disposal unit from flushing.
+        /// </summary>
+        public sealed class BeforeDisposalFlushEvent : CancellableEntityEventArgs
+        {
+            public List<string> Tags = new();
+        }
+
+        /// <summary>
+        /// Sent before the disposal unit flushes it's contents.
+        /// Allows adding tags for sorting and preventing the disposal unit from flushing.
+        /// </summary>
+        public sealed class DisposalUnitUIStateUpdatedEvent : EntityEventArgs
+        {
+            public SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState State;
+
+            public DisposalUnitUIStateUpdatedEvent(SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState state)
+            {
+                State = state;
+            }
         }
     }
 }
