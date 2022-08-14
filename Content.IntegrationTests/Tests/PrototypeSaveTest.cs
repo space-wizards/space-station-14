@@ -32,6 +32,7 @@ public sealed class PrototypeSaveTest
     private readonly HashSet<string> _ignoredPrototypes = new()
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
+        "constructionghost",
 
         // TODO fix more prototypes
         // The rest of these prototypes (probably) shouldn't be getting ignored.
@@ -128,11 +129,8 @@ public sealed class PrototypeSaveTest
         "UniformPrinter",
         "OreProcessor",
         "MedicalScanner",
-        "MobHoloparasiteGuardian",
-        "MobIfritGuardian",
         "KitchenMicrowave",
         "MagazinePistolSubMachineGunTopMounted",
-        "constructionghost",
         "Recycler",
         "EpinephrineChemistryBottle",
         "RobustHarvestChemistryBottle",
