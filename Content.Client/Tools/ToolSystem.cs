@@ -29,7 +29,7 @@ namespace Content.Client.Tools
             base.SetMultipleTool(uid, multiple, tool, playSound, user);
             ((MultipleToolComponent)multiple).UiUpdateNeeded = true;
 
-            // TODO rplace this with appearance + visualizer
+            // TODO replace this with appearance + visualizer
             // in order to convert this to a specifier, the manner in which the sprite is specified in yaml needs to be updated.
 
             if (multiple.Entries.Length > multiple.CurrentEntry && TryComp(uid, out SpriteComponent? sprite))

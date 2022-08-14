@@ -83,7 +83,7 @@ public abstract class SharedToolSystem : EntitySystem
         tool.UseSound = current.Sound;
         tool.Qualities = current.Behavior;
 
-        if (current.ChangeSound != null)
+        if (playSound && current.ChangeSound != null)
             _audioSystem.PlayPredicted(current.ChangeSound, uid, user);
 
         if (_protoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
