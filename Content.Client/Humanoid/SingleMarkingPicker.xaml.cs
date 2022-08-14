@@ -15,7 +15,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     ///     It will send the 'slot' (marking index)
     ///     and the selected marking's ID.
     /// </summary>
-    public Action<(int, string)>? OnMarkingSelect;
+    public Action<(int slot, string id)>? OnMarkingSelect;
     /// <summary>
     ///     What happens if a slot is removed.
     ///     This will send the 'slot' (marking index).
@@ -31,7 +31,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     ///     What happens if a marking's color is changed.
     ///     Sends a 'slot' number, and the marking in question.
     /// </summary>
-    public Action<(int, Marking)>? OnColorChanged;
+    public Action<(int slot, Marking marking)>? OnColorChanged;
 
     // current selected slot
     private int _slot = -1;

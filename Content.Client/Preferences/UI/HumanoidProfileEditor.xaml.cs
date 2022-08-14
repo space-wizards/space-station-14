@@ -240,43 +240,39 @@ namespace Content.Client.Preferences.UI
 
             #region Hair
 
-            _hairPicker.Populate();
-
-            _hairPicker.OnHairStylePicked += newStyle =>
+            _hairPicker.OnMarkingSelect += newStyle =>
             {
                 if (Profile is null)
                     return;
                 Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithHairStyleName(newStyle));
+                    Profile.Appearance.WithHairStyleName(newStyle.id));
                 IsDirty = true;
             };
 
-            _hairPicker.OnHairColorPicked += newColor =>
+            _hairPicker.OnColorChanged += newColor =>
             {
                 if (Profile is null)
                     return;
                 Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithHairColor(newColor));
+                    Profile.Appearance.WithHairColor(newColor.marking.MarkingColors[0]));
                 IsDirty = true;
             };
 
-            _facialHairPicker.Populate();
-
-            _facialHairPicker.OnHairStylePicked += newStyle =>
+            _facialHairPicker.OnMarkingSelect += newStyle =>
             {
                 if (Profile is null)
                     return;
                 Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithFacialHairStyleName(newStyle));
+                    Profile.Appearance.WithFacialHairStyleName(newStyle.id));
                 IsDirty = true;
             };
 
-            _facialHairPicker.OnHairColorPicked += newColor =>
+            _facialHairPicker.OnColorChanged += newColor =>
             {
                 if (Profile is null)
                     return;
                 Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithFacialHairColor(newColor));
+                    Profile.Appearance.WithFacialHairColor(newColor.marking.MarkingColors[0]));
                 IsDirty = true;
             };
 
