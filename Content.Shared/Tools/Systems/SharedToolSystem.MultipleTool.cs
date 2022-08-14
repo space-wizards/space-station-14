@@ -1,9 +1,7 @@
 using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tools;
@@ -11,6 +9,7 @@ namespace Content.Shared.Tools;
 public abstract class SharedToolSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -41,7 +40,7 @@ public abstract class SharedToolSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = CycleMultipleTool(uid, multiple);
+        args.Handled = CycleMultipleTool(uid, multiple, args.User);
     }
 
     private void OnMultipleToolGetState(EntityUid uid, SharedMultipleToolComponent multiple, ref ComponentGetState args)
@@ -49,7 +48,7 @@ public abstract class SharedToolSystem : EntitySystem
         args.State = new MultipleToolComponentState(multiple.CurrentEntry);
     }
 
-    public bool CycleMultipleTool(EntityUid uid, SharedMultipleToolComponent? multiple = null)
+    public bool CycleMultipleTool(EntityUid uid, SharedMultipleToolComponent? multiple = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref multiple))
             return false;
@@ -58,24 +57,25 @@ public abstract class SharedToolSystem : EntitySystem
             return false;
 
         multiple.CurrentEntry = (uint) ((multiple.CurrentEntry + 1) % multiple.Entries.Length);
-        SetMultipleTool(uid, multiple);
-
-        var current = multiple.Entries[multiple.CurrentEntry];
-
-        if(current.ChangeSound is {} changeSound)
-            SoundSystem.Play(changeSound.GetSound(), Filter.Pvs(uid), uid);
+        SetMultipleTool(uid, multiple, playSound: true, user: user);
 
         return true;
     }
 
-    public virtual void SetMultipleTool(EntityUid uid, SharedMultipleToolComponent? multiple = null, ToolComponent? tool = null)
+    public virtual void SetMultipleTool(EntityUid uid,
+        SharedMultipleToolComponent? multiple = null,
+        ToolComponent? tool = null,
+        bool playSound = false,
+        EntityUid? user = null)
     {
         if (!Resolve(uid, ref multiple, ref tool))
             return;
 
+        Dirty(multiple);
+
         if (multiple.Entries.Length <= multiple.CurrentEntry)
         {
-            Loc.GetString("multiple-tool-component-no-behavior");
+            multiple.CurrentQualityName = Loc.GetString("multiple-tool-component-no-behavior");
             return;
         }
 
@@ -83,12 +83,11 @@ public abstract class SharedToolSystem : EntitySystem
         tool.UseSound = current.Sound;
         tool.Qualities = current.Behavior;
 
-        if (_protoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
-        {
-            multiple.CurrentQualityName = Loc.GetString(quality.Name);
-        }
+        if (current.ChangeSound != null)
+            _audioSystem.PlayPredicted(current.ChangeSound, uid, user);
 
-        Dirty(multiple);
+        if (_protoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
+            multiple.CurrentQualityName = Loc.GetString(quality.Name);
     }
 }
 

@@ -17,12 +17,16 @@ namespace Content.Client.Tools
             SubscribeLocalEvent<MultipleToolComponent, ItemStatusCollectMessage>(OnGetStatusMessage);
         }
 
-        public override void SetMultipleTool(EntityUid uid, SharedMultipleToolComponent? multiple = null, ToolComponent? tool = null)
+        public override void SetMultipleTool(EntityUid uid,
+        SharedMultipleToolComponent? multiple = null,
+        ToolComponent? tool = null,
+        bool playSound = false,
+        EntityUid? user = null)
         {
             if (!Resolve(uid, ref multiple))
                 return;
 
-            base.SetMultipleTool(uid, multiple);
+            base.SetMultipleTool(uid, multiple, tool, playSound, user);
             ((MultipleToolComponent)multiple).UiUpdateNeeded = true;
 
             // TODO rplace this with appearance + visualizer
