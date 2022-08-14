@@ -17,4 +17,4 @@ ent-CrateFunATV = ATV crate
     .desc = An Absolutely Taxable Vehicle to help cargo with hauling.
 
 ent-CrateFunSyndicateSegway = Syndicate segway crate
-    .desc = An All-Tile Vehicle to help security run after clowns
+    .desc = A crate containing a two-wheeler that will help you escape from the security officers. Or not.
