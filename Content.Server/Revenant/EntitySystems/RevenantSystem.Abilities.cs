@@ -43,6 +43,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         SubscribeLocalEvent<RevenantComponent, InteractNoHandEvent>(OnInteract);
         SubscribeLocalEvent<RevenantComponent, SoulSearchDoAfterComplete>(OnSoulSearchComplete);
+        SubscribeLocalEvent<RevenantComponent, SoulSearchDoAfterCancelled>(OnSoulSearchCancelled);
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterComplete>(OnHarvestComplete);
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterCancelled>(OnHarvestCancelled);
 
@@ -84,6 +85,9 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant)
     {
+        if (revenant.SoulSearchCancelToken != null)
+            return;
+
         _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, Filter.Entities(uid), PopupType.Medium);
         revenant.SoulSearchCancelToken = new();
         var searchDoAfter = new DoAfterEventArgs(uid, revenant.SoulSearchDuration, revenant.SoulSearchCancelToken.Token, target)
@@ -91,6 +95,7 @@ public sealed partial class RevenantSystem : EntitySystem
             BreakOnUserMove = true,
             DistanceThreshold = 2,
             UserFinishedEvent = new SoulSearchDoAfterComplete(target),
+            UserCancelledEvent = new SoulSearchDoAfterCancelled(),
         };
         _doAfter.DoAfter(searchDoAfter);
     }
@@ -99,6 +104,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (!TryComp<EssenceComponent>(args.Target, out var essence))
             return;
+        component.SoulSearchCancelToken = null;
         essence.SearchComplete = true;
 
         string message;
@@ -117,8 +123,16 @@ public sealed partial class RevenantSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString(message, ("target", args.Target)), args.Target, Filter.Entities(uid), PopupType.Medium);
     }
 
+    private void OnSoulSearchCancelled(EntityUid uid, RevenantComponent component, SoulSearchDoAfterCancelled args)
+    {
+        component.SoulSearchCancelToken = null;
+    }
+
     private void BeginHarvestDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant, EssenceComponent essence)
     {
+        if (revenant.HarvestCancelToken != null)
+            return;
+
         if (essence.Harvested)
         {
             _popup.PopupEntity(Loc.GetString("revenant-soul-harvested"), target, Filter.Entities(uid), PopupType.SmallCaution);
@@ -152,6 +166,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnHarvestComplete(EntityUid uid, RevenantComponent component, HarvestDoAfterComplete args)
     {
+        component.HarvestCancelToken = null;
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
 
         if (!TryComp<EssenceComponent>(args.Target, out var essence))
@@ -184,6 +199,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnHarvestCancelled(EntityUid uid, RevenantComponent component, HarvestDoAfterCancelled args)
     {
+        component.HarvestCancelToken = null;
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
     }
 
