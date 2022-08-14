@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using Content.Server.Beam.Components;
+using Content.Server.Construction.Completions;
 using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -14,14 +16,21 @@ namespace Content.Server.Beam;
 public sealed class BeamSystem : SharedBeamSystem
 {
     [Dependency] private readonly FixtureSystem _fixture = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<BeamComponent, CreateBeamSuccessEvent>(OnBeamCreationSuccess);
         SubscribeLocalEvent<BeamComponent, BeamControllerCreatedEvent>(OnControllerCreated);
         SubscribeLocalEvent<BeamComponent, BeamFiredEvent>(OnBeamFired);
         SubscribeLocalEvent<BeamComponent, ComponentRemove>(OnRemove);
+    }
+
+    private void OnBeamCreationSuccess(EntityUid uid, BeamComponent component, CreateBeamSuccessEvent args)
+    {
+        component.BeamShooter = args.User;
     }
 
     private void OnControllerCreated(EntityUid uid, BeamComponent component, BeamControllerCreatedEvent args)
@@ -94,6 +103,9 @@ public sealed class BeamSystem : SharedBeamSystem
             {
                 var controllerEnt = Spawn("VirtualBeamEntityController", beamSpawnPos);
                 beam.VirtualBeamController = controllerEnt;
+
+                if (beam.Sound != null)
+                    _audio.PlayPvs(beam.Sound, beam.Owner);
 
                 var beamControllerCreatedEvent = new BeamControllerCreatedEvent(ent, controllerEnt);
                 RaiseLocalEvent(controllerEnt, beamControllerCreatedEvent, true);

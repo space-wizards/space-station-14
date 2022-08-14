@@ -63,13 +63,18 @@ public sealed class LightningSystem : SharedLightningSystem
 
                 _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, "LightningBase", spriteState, controller: lightningBeam.VirtualBeamController.Value);
 
-                //Break from this loop to give other lightning a chance to spawn
-                if (1 < beamController.CreatedBeams.Count)
-                    break;
+                //Break from this loop so other created bolts can collide and arc
+                break;
             }
         }
     }
 
+    /// <summary>
+    /// Looks for a target to arc to in all 8 directions, adds the closest to a local dictionary and picks at random
+    /// </summary>
+    /// <param name="component"></param>
+    /// <param name="target"></param>
+    /// <param name="controllerEntity"></param>
     public void Arc(LightningComponent component, EntityUid target, EntityUid controllerEntity)
     {
         if (!TryComp<BeamComponent>(controllerEntity, out var controller))
@@ -95,8 +100,11 @@ public sealed class LightningSystem : SharedLightningSystem
 
             foreach (var result in rayCastResults)
             {
-                if (lightningQuery.HasComponent(result.HitEntity) || beamQuery.HasComponent(result.HitEntity) ||
-                    component.ArcTargets.Contains(result.HitEntity) || controller.HitTargets.Contains(result.HitEntity))
+                if (lightningQuery.HasComponent(result.HitEntity)
+                    || beamQuery.HasComponent(result.HitEntity)
+                    || component.ArcTargets.Contains(result.HitEntity)
+                    || controller.HitTargets.Contains(result.HitEntity)
+                    || controller.BeamShooter == result.HitEntity)
                 {
                     continue;
                 }

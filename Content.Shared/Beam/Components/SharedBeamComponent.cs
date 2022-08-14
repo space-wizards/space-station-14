@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Map;
+﻿using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Beam.Components;
@@ -28,11 +29,22 @@ public abstract class SharedBeamComponent : Component
     public EntityUid OriginBeam;
 
     /// <summary>
+    /// The entity that fired the beam originally
+    /// </summary>
+    [ViewVariables]
+    [DataField("beamShooter")]
+    public EntityUid BeamShooter;
+
+    /// <summary>
     /// A unique list of created beams that the controller keeps track of.
     /// </summary>
     [ViewVariables]
     [DataField("createdBeams")]
     public HashSet<EntityUid> CreatedBeams = new();
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("sound")]
+    public SoundSpecifier? Sound;
 }
 
 /// <summary>
