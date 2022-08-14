@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added boxes of nitrile gloves., type: Add}
-  - {message: Fixed name of sterile mask and latex glove boxes., type: Tweak}
-  id: 1653
-  time: '2022-06-04T05:05:18.0000000+00:00'
 - author: UKNOWH
   changes:
   - {message: Added makeshift laser gun!, type: Add}
@@ -2922,3 +2916,10 @@ Entries:
   - {message: You can now stop C-4 from automatically activating when planted., type: Tweak}
   id: 2152
   time: '2022-08-14T05:48:03.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: The mailing unit. A pneumatic mail delivery system!, type: Add}
+  - {message: Mailing unit electronics. Unlocked by the industrial engineering research.,
+    type: Add}
+  id: 2153
+  time: '2022-08-14T05:57:25.0000000+00:00'
