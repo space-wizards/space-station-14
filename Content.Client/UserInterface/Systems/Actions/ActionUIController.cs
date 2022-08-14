@@ -26,7 +26,7 @@ using static Robust.Client.UserInterface.Controls.TextureRect;
 
 namespace Content.Client.UserInterface.Systems.Actions;
 
-public sealed class ActionUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<ActionsSystem>
+public sealed class ActionUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,IOnSystemChanged<ActionsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -71,10 +71,10 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
     {
         ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
         ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-
+        ActionButton.OnPressed += ActionButtonPressed;
         _dragShadow.Orphan();
         UIManager.PopupRoot.AddChild(_dragShadow);
-        ActionButton.OnPressed += ActionButtonPressed;
+        CreateWindow();
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenActionsMenu,
@@ -164,26 +164,14 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
     private void CreateWindow()
     {
         _window = UIManager.CreateWindow<ActionsWindow>();
-
-        if (_window == null)
-            return;
-
+        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
         _window.OnClose += OnWindowClosed;
+        _window.OnOpen += OnWindowOpen;
         _window.ClearButton.OnPressed += OnClearPressed;
         _window.SearchBar.OnTextChanged += OnSearchChanged;
         _window.FilterButton.OnItemSelected += OnFilterSelected;
-
-        _window.OpenCentered();
-
         UpdateFilterLabel();
         SearchAndDisplay();
-
-        ActionButton.Pressed = true;
-    }
-
-    private void CloseWindow()
-    {
-        _window?.Close();
     }
 
     private void ToggleWindow()
@@ -194,7 +182,13 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
             return;
         }
 
-        CloseWindow();
+        if (_window.IsOpen)
+        {
+            _window.Close();
+            return;
+        }
+        _window.Open();
+
     }
 
     private void UpdateFilterLabel()
@@ -333,9 +327,13 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         _menuDragHelper.EndDrag();
     }
 
+    private void OnWindowOpen()
+    {
+        ActionButton.Pressed = true;
+    }
+
     private void OnWindowClosed()
     {
-        _window = null;
         ActionButton.Pressed = false;
     }
 
@@ -571,5 +569,10 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         {
             Array.Fill(_data, null);
         }
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        CommandBinds.Unregister<ActionUIController>();
     }
 }

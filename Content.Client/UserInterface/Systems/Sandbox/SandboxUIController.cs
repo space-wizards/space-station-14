@@ -13,6 +13,7 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controllers.Implementations;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -21,7 +22,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Sandbox;
 
 // TODO hud refactor should part of this be in engine?
-public sealed class SandboxUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<SandboxSystem>
+public sealed class SandboxUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,IOnSystemChanged<SandboxSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
@@ -46,7 +47,7 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
     {
         SandboxButton.OnPressed += SandboxButtonPressed;
         _admin.AdminStatusUpdated += CheckStatus;
-
+        CreateWindow();
         _input.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
             InputCmdHandler.FromDelegate(_ => EntitySpawningController.ToggleWindow()));
         _input.SetInputCommand(ContentKeyFunctions.OpenSandboxWindow,
@@ -78,18 +79,10 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
         ToggleWindow();
     }
 
-    private void OpenWindow()
+    private void CreateWindow()
     {
-        if (_window != null)
-        {
-            if (!_window.IsOpen)
-                _window.Open();
-
-            return;
-        }
-
-        _window = new SandboxWindow();
-
+        _window = UIManager.CreateWindow<SandboxWindow>();
+        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.Center);
         _window.ToggleLightButton.Pressed = !_light.Enabled;
         _window.ToggleFovButton.Pressed = !_eye.CurrentEye.DrawFov;
         _window.ToggleShadowsButton.Pressed = !_light.DrawShadows;
@@ -114,7 +107,16 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
         _window.ShowBbButton.OnPressed += OnShowBbClicked;
         _window.MachineLinkingButton.OnPressed += OnMachineLinkingClicked;
 
-        _window.OpenCentered();
+    }
+
+
+    private void OpenWindow()
+    {
+        if (_window == null)
+        {
+           CreateWindow();
+        }
+        _window!.Open();
         SandboxButton.Pressed = true;
     }
 
@@ -145,7 +147,6 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
 
     private void WindowOnClose()
     {
-        _window = null;
         SandboxButton.Pressed = false;
     }
 
@@ -231,5 +232,10 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
             OpenWindow();
         else
             CloseWindow();
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        CommandBinds.Unregister<SandboxUIController>();
     }
 }

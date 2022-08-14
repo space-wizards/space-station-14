@@ -10,7 +10,7 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Client.UserInterface.Systems.Info;
 
-public sealed class InfoUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<BwoinkSystem>
+public sealed class InfoUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<BwoinkSystem>
 {
     private RulesAndInfoWindow? _window;
     private MenuButton InfoButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InfoButton;
@@ -44,7 +44,12 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenInfo,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .Register<CharacterUIController>();
+            .Register<InfoUIController>();
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        CommandBinds.Unregister<InfoUIController>();
     }
 
     private void InfoButtonPressed(BaseButton.ButtonEventArgs args)
@@ -55,21 +60,11 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
     private void CreateWindow()
     {
         _window = UIManager.CreateWindow<RulesAndInfoWindow>();
-
-        if (_window == null)
-            return;
-
-        _window.OpenCentered();
-        InfoButton.Pressed = true;
+        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
     }
-
     private void CloseWindow()
     {
-        if (_window == null)
-            return;
-
-        _window.Dispose();
-        _window = null;
+        _window?.Close();
         InfoButton.Pressed = false;
     }
 
@@ -78,10 +73,15 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
         if (_window == null)
         {
             CreateWindow();
-            return;
         }
 
-        CloseWindow();
+        if (_window!.IsOpen)
+        {
+            CloseWindow();
+            return;
+        }
+        _window.Open();
+        InfoButton.Pressed = true;
     }
 
     public void SetInfoRed(bool value)

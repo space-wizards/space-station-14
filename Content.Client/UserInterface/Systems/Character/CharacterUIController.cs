@@ -15,7 +15,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Character;
 
-public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
+public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
@@ -26,17 +26,21 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     public override void Initialize()
     {
         _window = UIManager.CreateWindow<CharacterWindow>();
-        _window.SetCentered();
+        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
     }
 
     public void OnStateEntered(GameplayState state)
     {
         CharacterButton.OnPressed += CharacterButtonPressed;
-
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
-                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .Register<CharacterUIController>();
+                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+             .Register<CharacterUIController>();
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        CommandBinds.Unregister<CharacterUIController>();
     }
 
     public void OnSystemLoaded(CharacterInfoSystem system)

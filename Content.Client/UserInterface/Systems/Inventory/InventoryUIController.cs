@@ -7,6 +7,7 @@ using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using static Content.Client.Inventory.ClientInventorySystem;
@@ -14,7 +15,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Inventory;
 
-public sealed class InventoryUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<ClientInventorySystem>
+public sealed class InventoryUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,IOnSystemChanged<ClientInventorySystem>
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     private ClientInventoryComponent? _playerInventory;
@@ -26,7 +27,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     public override void Initialize()
     {
         _inventoryWindow = UIManager.CreateWindow<InventoryWindow>();
-        _inventoryWindow.SetCentered();
+        LayoutContainer.SetAnchorPreset(_inventoryWindow,LayoutContainer.LayoutPreset.Center);
         _inventoryWindow!.OnClose += OnInventoryClosed;
     }
 
@@ -38,6 +39,11 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             .Register<ClientInventorySystem>();
 
         UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InventoryButton.OnPressed += InventoryButtonPressed;
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        CommandBinds.Unregister<InventoryUIController>();
     }
 
     private void InventoryButtonPressed(ButtonEventArgs args)
@@ -72,12 +78,17 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         InventoryButton.Pressed = true;
     }
 
+    public void CloseWindow()
+    {
+        _inventoryWindow!.Close();
+    }
+
     public void ToggleInventoryMenu()
     {
         UpdateInventoryWindow(_playerInventory);
         if (_inventoryWindow!.IsOpen)
         {
-            _inventoryWindow.Close();
+            CloseWindow();
             return;
         }
         _inventoryWindow.Open();

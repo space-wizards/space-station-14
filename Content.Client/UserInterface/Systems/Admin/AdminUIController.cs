@@ -9,6 +9,7 @@ using Robust.Client.Console;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
@@ -16,7 +17,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Admin;
 
-public sealed class AdminUIController : UIController, IOnStateEntered<GameplayState>
+public sealed class AdminUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
@@ -34,13 +35,19 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
     {
         // Reset the AdminMenu Window on disconnect
         _net.Disconnect += (_, _) => ResetWindow();
-
+        if (_window == null) //create the window if it is null
+            CreateWindow();
         _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
             InputCmdHandler.FromDelegate(_ => Toggle()));
 
         _admin.AdminStatusUpdated += AdminStatusUpdated;
         AdminButton.OnPressed += AdminButtonPressed;
         AdminStatusUpdated();
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        CommandBinds.Unregister<AdminUIController>();
     }
 
     private void AdminStatusUpdated()
@@ -55,21 +62,12 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
 
     private void Open()
     {
-        if (_window == null)
-        {
-            _window = new AdminMenuWindow();
-            _window.OnClose += Close;
-        }
-
-        _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
-        _window.OpenCentered();
+        _window!.Open();
         AdminButton.Pressed = true;
     }
 
     private void Close()
     {
-        if (_window != null)
-            _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
         _window?.Close();
         AdminButton.Pressed = false;
     }
@@ -102,6 +100,14 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         {
             TryOpen();
         }
+    }
+
+    private void CreateWindow()
+    {
+        _window = UIManager.CreateWindow<AdminMenuWindow>();
+        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.Center);
+        _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
+        _window.OnClose += Close;
     }
 
     public void ResetWindow()
