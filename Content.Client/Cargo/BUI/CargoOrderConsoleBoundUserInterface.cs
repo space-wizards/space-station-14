@@ -71,10 +71,7 @@ namespace Content.Client.Cargo.BUI
                     return;
 
                 if (row.Description.Text != null)
-                {
-                    var Description = new RichTextLabel();
                     _orderMenu.Description.SetMessage(row.Description.Text);
-                };
 
                 _product = row.Product;
                 _orderMenu.ProductName.Text = row.ProductName.Text;
