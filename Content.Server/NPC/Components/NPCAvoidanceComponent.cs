@@ -1,5 +1,3 @@
-using Content.Server.NPC.Systems;
-
 namespace Content.Server.NPC.Components;
 
 /// <summary>
@@ -8,13 +6,6 @@ namespace Content.Server.NPC.Components;
 [RegisterComponent]
 public sealed class NPCAvoidanceComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool EnabledVV
-    {
-        get => Enabled;
-        set => IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NPCSteeringSystem>().SetEnabled(this, value);
-    }
-
-    [DataField("enabled")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
     public bool Enabled = true;
 }
