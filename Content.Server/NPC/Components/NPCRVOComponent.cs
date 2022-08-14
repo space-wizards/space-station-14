@@ -1,3 +1,5 @@
+using Content.Server.NPC.Systems;
+
 namespace Content.Server.NPC.Components;
 
 /// <summary>
@@ -21,4 +23,19 @@ public sealed class NPCRVOComponent : Component
     /// Time horizon to consider for static neighbor collision.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public float ObstacleTimeHorizon = 3f;
+
+    /// <summary>
+    /// Range considered for neighbor agents
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("neighborRange")]
+    public float NeighborRange = 3f;
+
+    [ViewVariables]
+    public readonly HashSet<EntityUid> ObstacleNeighbors = new();
+
+    [ViewVariables]
+    public readonly HashSet<EntityUid> AgentNeighbors = new();
+
+    [ViewVariables]
+    public readonly List<ORCALine> OrcaLines = new();
 }
