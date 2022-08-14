@@ -5,6 +5,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
+using Content.Shared.MobState.EntitySystems;
 using Robust.Server.GameObjects;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -17,6 +18,7 @@ namespace Content.Server.Atmos.Miasma
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
 
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -65,9 +67,9 @@ namespace Content.Server.Atmos.Miasma
         /// </summary>
         private float _poolAccumulator = 0f;
 
-        /// <summmary>
+        /// <summary>
         /// How long without an infection before we pick a new disease.
-        /// </summary>
+        /// </sumary>
         private TimeSpan _poolRepickTime = TimeSpan.FromMinutes(5);
 
         public override void Update(float frameTime)
@@ -163,7 +165,7 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
         {
-            if (args.Component.IsDead())
+            if (_mobState.IsDead(uid))
                 EnsureComp<RottingComponent>(uid);
         }
 
@@ -210,7 +212,9 @@ namespace Content.Server.Atmos.Miasma
         }
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
-            if (TryComp<PerishableComponent>(args.Entity, out var perishable) && !Terminating(uid))
+            // If we get de-parented due to entity shutdown don't add more flies.
+            if (TryComp<PerishableComponent>(args.Entity, out var perishable) &&
+                TryComp<MetaDataComponent>(uid, out var metadata) && metadata.EntityLifeStage < EntityLifeStage.Terminating)
             {
                 ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);
@@ -223,7 +227,6 @@ namespace Content.Server.Atmos.Miasma
         private void OnFliesInit(EntityUid uid, FliesComponent component, ComponentInit args)
         {
             component.VirtFlies = EntityManager.SpawnEntity("AmbientSoundSourceFlies", Transform(uid).Coordinates);
-            Transform(component.VirtFlies).AttachParent(uid);
         }
 
         private void OnFliesShutdown(EntityUid uid, FliesComponent component, ComponentShutdown args)
