@@ -1,20 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: ERT roles no longer show up on the role select screen., type: Fix}
-  id: 1649
-  time: '2022-06-04T00:04:34.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Generator circuit boards and emitters can now be printed with the correct
-      technology unlock., type: Fix}
-  id: 1650
-  time: '2022-06-04T00:04:49.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Inflatables can no longer be placed on walls or doors, type: Fix}
-  id: 1651
-  time: '2022-06-04T02:15:46.0000000+00:00'
 - author: themias
   changes:
   - {message: Ghosting no longer causes dragged corpses to be dropped, type: Fix}
@@ -2921,3 +2905,20 @@ Entries:
   - {message: Vehicle riders are easy to kill again., type: Fix}
   id: 2148
   time: '2022-08-14T05:22:15.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: ChemMasters no longer need a free beaker loaded to discard reagents.,
+    type: Fix}
+  id: 2149
+  time: '2022-08-14T05:37:19.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: "fix spawn point for HoP and Detective on NSS\_Pillar", type: Fix}
+  id: 2150
+  time: '2022-08-14T05:37:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Rat King now can spawn with a multitude of different names. Enjoy!,
+    type: Add}
+  id: 2151
+  time: '2022-08-14T05:38:40.0000000+00:00'
