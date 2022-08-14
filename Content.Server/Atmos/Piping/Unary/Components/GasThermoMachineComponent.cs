@@ -1,5 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.MachineLinking;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
@@ -78,5 +80,14 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("maxTemperatureDelta")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float MaxTemperatureDelta = 300;
+
+        [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OnPort = "On";
+
+        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OffPort = "Off";
+
+        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string TogglePort = "Toggle";
     }
 }

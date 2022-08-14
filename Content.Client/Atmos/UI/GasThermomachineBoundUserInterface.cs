@@ -44,7 +44,7 @@ namespace Content.Client.Atmos.UI
             if (_window is null) return;
 
             _window.SetActive(!_window.Active);
-            SendMessage(new GasThermomachineToggleMessage());
+            SendMessage(new GasThermomachineToggleStatusMessage());
         }
 
         private void OnTemperatureChanged(float value)

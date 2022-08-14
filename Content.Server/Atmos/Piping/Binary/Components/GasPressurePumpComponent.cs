@@ -1,4 +1,6 @@
 using Content.Shared.Atmos;
+using Content.Shared.MachineLinking;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
@@ -27,5 +29,14 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxTargetPressure")]
         public float MaxTargetPressure = Atmospherics.MaxOutputPressure;
+
+        [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OnPort = "On";
+
+        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OffPort = "Off";
+
+        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string TogglePort = "Toggle";
     }
 }

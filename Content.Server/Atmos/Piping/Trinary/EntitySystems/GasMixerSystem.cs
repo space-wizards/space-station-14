@@ -13,6 +13,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
@@ -23,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
 
         public override void Initialize()
         {
@@ -31,6 +34,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasMixerComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceUpdateEvent>(OnMixerUpdated);
             SubscribeLocalEvent<GasMixerComponent, InteractHandEvent>(OnMixerInteractHand);
+            SubscribeLocalEvent<GasMixerComponent, SignalReceivedEvent>(OnSignalReceived);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeNodePercentageMessage>(OnChangeNodePercentageMessage);
@@ -42,6 +46,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnInit(EntityUid uid, GasMixerComponent mixer, ComponentInit args)
         {
             UpdateAppearance(uid, mixer);
+            _signalSystem.EnsureReceiverPorts(uid, mixer.OnPort, mixer.OffPort, mixer.TogglePort);
         }
 
         private void OnMixerUpdated(EntityUid uid, GasMixerComponent mixer, AtmosDeviceUpdateEvent args)
@@ -157,6 +162,17 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
             args.Handled = true;
+        }
+        private void OnSignalReceived(EntityUid uid, GasMixerComponent mixer, SignalReceivedEvent args)
+        {
+            if (args.Port == mixer.OffPort)
+                mixer.Enabled = false;
+            else if (args.Port == mixer.OnPort)
+                mixer.Enabled = true;
+            else if (args.Port == mixer.TogglePort)
+                mixer.Enabled = !mixer.Enabled;
+            DirtyUI(uid, mixer);
+            UpdateAppearance(uid, mixer);
         }
 
         private void DirtyUI(EntityUid uid, GasMixerComponent? mixer)

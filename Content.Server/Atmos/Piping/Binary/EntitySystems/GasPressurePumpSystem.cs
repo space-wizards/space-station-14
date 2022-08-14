@@ -14,6 +14,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -24,6 +26,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
 
         public override void Initialize()
         {
@@ -34,6 +37,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceDisabledEvent>(OnPumpLeaveAtmosphere);
             SubscribeLocalEvent<GasPressurePumpComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<GasPressurePumpComponent, InteractHandEvent>(OnPumpInteractHand);
+            SubscribeLocalEvent<GasPressurePumpComponent, SignalReceivedEvent>(OnSignalReceived);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasPressurePumpComponent, GasPressurePumpChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
             SubscribeLocalEvent<GasPressurePumpComponent, GasPressurePumpToggleStatusMessage>(OnToggleStatusMessage);
@@ -42,6 +46,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnInit(EntityUid uid, GasPressurePumpComponent pump, ComponentInit args)
         {
             UpdateAppearance(uid, pump);
+            _signalSystem.EnsureReceiverPorts(uid, pump.OnPort, pump.OffPort, pump.TogglePort);
         }
 
         private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
@@ -112,6 +117,17 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
 
             args.Handled = true;
+        }
+        private void OnSignalReceived(EntityUid uid, GasPressurePumpComponent pump, SignalReceivedEvent args)
+        {
+            if (args.Port == pump.OffPort)
+                pump.Enabled = false;
+            else if (args.Port == pump.OnPort)
+                pump.Enabled = true;
+            else if (args.Port == pump.TogglePort)
+                pump.Enabled = !pump.Enabled;
+            DirtyUI(uid, pump);
+            UpdateAppearance(uid, pump);
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpToggleStatusMessage args)

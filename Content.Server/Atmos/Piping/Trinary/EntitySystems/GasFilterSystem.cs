@@ -14,6 +14,8 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
+using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
@@ -25,6 +27,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
 
         public override void Initialize()
         {
@@ -34,6 +37,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceUpdateEvent>(OnFilterUpdated);
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceDisabledEvent>(OnFilterLeaveAtmosphere);
             SubscribeLocalEvent<GasFilterComponent, InteractHandEvent>(OnFilterInteractHand);
+            SubscribeLocalEvent<GasFilterComponent, SignalReceivedEvent>(OnSignalReceived);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
@@ -44,6 +48,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
         {
             UpdateAppearance(uid, filter);
+            _signalSystem.EnsureReceiverPorts(uid, filter.OnPort, filter.OffPort, filter.TogglePort);
         }
 
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, AtmosDeviceUpdateEvent args)
@@ -113,6 +118,17 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
             args.Handled = true;
+        }
+        private void OnSignalReceived(EntityUid uid, GasFilterComponent filter, SignalReceivedEvent args)
+        {
+            if (args.Port == filter.OffPort)
+                filter.Enabled = false;
+            else if (args.Port == filter.OnPort)
+                filter.Enabled = true;
+            else if (args.Port == filter.TogglePort)
+                filter.Enabled = !filter.Enabled;
+            DirtyUI(uid, filter);
+            UpdateAppearance(uid, filter);
         }
 
         private void DirtyUI(EntityUid uid, GasFilterComponent? filter)

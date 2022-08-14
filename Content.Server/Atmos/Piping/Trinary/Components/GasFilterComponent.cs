@@ -1,4 +1,6 @@
 using Content.Shared.Atmos;
+using Content.Shared.MachineLinking;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
@@ -31,5 +33,14 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas? FilteredGas { get; set; }
+
+        [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OnPort = "On";
+
+        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OffPort = "Off";
+
+        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string TogglePort = "Toggle";
     }
 }

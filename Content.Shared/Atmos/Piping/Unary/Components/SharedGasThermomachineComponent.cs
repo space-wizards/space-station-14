@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components;
 
@@ -19,7 +19,7 @@ public enum ThermoMachineMode : byte
 
 [Serializable]
 [NetSerializable]
-public sealed class GasThermomachineToggleMessage : BoundUserInterfaceMessage
+public sealed class GasThermomachineToggleStatusMessage : BoundUserInterfaceMessage
 {
 }
 

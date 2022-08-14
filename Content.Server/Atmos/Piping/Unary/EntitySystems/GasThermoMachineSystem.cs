@@ -9,6 +9,8 @@ using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -17,18 +19,24 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<GasThermoMachineComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceDisabledEvent>(OnThermoMachineLeaveAtmosphere);
             SubscribeLocalEvent<GasThermoMachineComponent, RefreshPartsEvent>(OnGasThermoRefreshParts);
-
+            SubscribeLocalEvent<GasThermoMachineComponent, SignalReceivedEvent>(OnSignalReceived);
             // UI events
-            SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineToggleMessage>(OnToggleMessage);
+            SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineToggleStatusMessage>(OnToggleStatusMessage);
             SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineChangeTemperatureMessage>(OnChangeTemperature);
+        }
+        private void OnInit(EntityUid uid, GasThermoMachineComponent component, ComponentInit args)
+        {
+            _signalSystem.EnsureReceiverPorts(uid, component.OnPort, component.OffPort, component.TogglePort);
         }
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
@@ -111,8 +119,18 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             DirtyUI(uid, component);
         }
+        private void OnSignalReceived(EntityUid uid, GasThermoMachineComponent component, SignalReceivedEvent args)
+        {
+            if (args.Port == component.OffPort)
+                component.Enabled = false;
+            else if (args.Port == component.OnPort)
+                component.Enabled = true;
+            else if (args.Port == component.TogglePort)
+                component.Enabled = !component.Enabled;
+            DirtyUI(uid, component);
+        }
 
-        private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent component, GasThermomachineToggleMessage args)
+        private void OnToggleStatusMessage(EntityUid uid, GasThermoMachineComponent component, GasThermomachineToggleStatusMessage args)
         {
             component.Enabled = !component.Enabled;
 

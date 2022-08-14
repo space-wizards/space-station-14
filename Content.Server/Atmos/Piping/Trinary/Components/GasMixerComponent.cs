@@ -1,5 +1,7 @@
 using Content.Server.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.MachineLinking;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
@@ -38,5 +40,14 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inletTwoConcentration")]
         public float InletTwoConcentration = 0.5f;
+
+        [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OnPort = "On";
+
+        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OffPort = "Off";
+
+        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string TogglePort = "Toggle";
     }
 }

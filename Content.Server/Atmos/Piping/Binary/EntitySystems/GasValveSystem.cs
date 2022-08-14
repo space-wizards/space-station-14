@@ -8,6 +8,8 @@ using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -15,14 +17,22 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasValveSystem : EntitySystem
     {
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<GasValveComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasValveComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<GasValveComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<GasValveComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<GasValveComponent, SignalReceivedEvent>(OnSignalReceived);
+        }
+
+        private void OnInit(EntityUid uid, GasValveComponent component, ComponentInit args)
+        {
+            _signalSystem.EnsureReceiverPorts(uid, component.OnPort, component.OffPort, component.TogglePort);
         }
 
         private void OnExamined(EntityUid uid, GasValveComponent valve, ExaminedEvent args)
@@ -46,12 +56,25 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
             Toggle(uid, component);
-            SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioHelpers.WithVariation(0.25f));
+        }
+
+        private void OnSignalReceived(EntityUid uid, GasValveComponent component, SignalReceivedEvent args)
+        {
+            if (args.Port == component.OffPort)
+                Set(uid, component, false);
+            else if (args.Port == component.OnPort)
+                Set(uid, component, true);
+            else if (args.Port == component.TogglePort)
+                Toggle(uid, component);
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)
         {
-            component.Open = value;
+            if (component.Open != value)
+            {
+                SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioHelpers.WithVariation(0.25f));
+                component.Open = value;
+            }
             if (TryComp(uid, out NodeContainerComponent? nodeContainer)
                 && nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet)
                 && nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
