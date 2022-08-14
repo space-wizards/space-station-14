@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Ghosting no longer causes dragged corpses to be dropped, type: Fix}
-  id: 1652
-  time: '2022-06-04T02:59:07.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added boxes of nitrile gloves., type: Add}
@@ -2922,3 +2917,8 @@ Entries:
     type: Add}
   id: 2151
   time: '2022-08-14T05:38:40.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: You can now stop C-4 from automatically activating when planted., type: Tweak}
+  id: 2152
+  time: '2022-08-14T05:48:03.0000000+00:00'
