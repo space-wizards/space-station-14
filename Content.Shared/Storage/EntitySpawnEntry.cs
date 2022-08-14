@@ -14,7 +14,7 @@ public struct EntitySpawnEntry
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? PrototypeId;
+    public string? PrototypeId = null;
 
     /// <summary>
     ///     The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
