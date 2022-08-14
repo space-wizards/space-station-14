@@ -32,7 +32,6 @@ public sealed partial class NPCSteeringSystem
 
             ComputeNeighbors(mover, rvo, body, xform);
             ComputeVelocity(mover, rvo, body, xform);
-            // TODO: Compute velocity
         }
     }
 
