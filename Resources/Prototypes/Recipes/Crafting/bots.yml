@@ -4,7 +4,7 @@
   graph: CleanBot
   startNode: start
   targetNode: bot
-  category: Utilities
+  category: construction-category-utilities
   objectType: Item
   description: This bot wanders around the station, mopping up any puddles it sees.
   icon:
@@ -17,7 +17,7 @@
   graph: HonkBot
   startNode: start
   targetNode: bot
-  category: Utilities
+  category: construction-category-utilities
   objectType: Item
   description: This bot honks and slips people.
   icon:
@@ -30,7 +30,7 @@
   graph: MediBot
   startNode: start
   targetNode: bot
-  category: Utilities
+  category: construction-category-utilities
   objectType: Item
   description: This bot can help supply basic healing.
   icon:

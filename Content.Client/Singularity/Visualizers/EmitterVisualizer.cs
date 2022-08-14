@@ -14,6 +14,7 @@ namespace Content.Client.Singularity.Visualizers
         private const string OverlayBeam = "beam";
         private const string OverlayUnderPowered = "underpowered";
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

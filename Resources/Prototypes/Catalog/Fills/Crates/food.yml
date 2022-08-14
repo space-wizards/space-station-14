@@ -38,12 +38,3 @@
       amount: 3
     - id: KitchenKnife
       amount: 1
-
-- type: entity
-  id: CrateFoodKvassTank
-  parent: CrateGenericSteel
-  components:
-    - type: StorageFill
-      contents:
-        - id: KvassTankFull
-          amount: 1

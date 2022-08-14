@@ -54,3 +54,15 @@
   fireColor: Blue
   texturePath: /Textures/Effects/fire_greyscale.rsi 
   fireStates: 3
+
+- type: explosion
+  id: RevenantElectric
+  damagePerIntensity:
+    types:
+      Shock: 4
+  tileBreakChance: [0]
+  tileBreakIntensity: [0]
+  lightColor: Plum
+  fireColor: Plum
+  texturePath: /Textures/Effects/fire_greyscale.rsi 
+  fireStates: 3
