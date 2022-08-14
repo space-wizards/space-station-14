@@ -23,6 +23,7 @@ namespace Content.Client.Fluids
         // Whether the puddle has a unique sprite we don't want to overwrite
         [DataField("customPuddleSprite")] public bool CustomPuddleSprite;
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -44,6 +45,7 @@ namespace Content.Client.Fluids
             spriteComponent.Rotation = Angle.FromDegrees(_random.Next(0, 359));
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

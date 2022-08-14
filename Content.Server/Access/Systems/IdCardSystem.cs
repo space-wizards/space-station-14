@@ -19,7 +19,6 @@ namespace Content.Server.Access.Systems
 {
     public sealed class IdCardSystem : SharedIdCardSystem
     {
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

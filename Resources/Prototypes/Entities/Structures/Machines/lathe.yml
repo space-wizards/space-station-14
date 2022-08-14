@@ -181,6 +181,7 @@
       - APCElectronics
       - AirAlarmElectronics
       - FireAlarmElectronics
+      - MailingUnitElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -432,7 +433,7 @@
       - ClothingUniformJumpskirtMedicalDoctor
       - ClothingUniformJumpsuitMime
       - ClothingUniformJumpskirtMime
-      - ClothingUniformJumpsuitLawyerPurple
+      - ClothingUniformJumpsuitMusician
       - ClothingUniformJumpsuitParamedic
       - ClothingUniformJumpskirtParamedic
       - ClothingUniformJumpsuitPrisoner
@@ -491,7 +492,7 @@
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
-      board: AutolatheMachineCircuitboard
+      board: OreProcessorMachineCircuitboard
     - type: LatheDatabase
       static: true
       recipes:

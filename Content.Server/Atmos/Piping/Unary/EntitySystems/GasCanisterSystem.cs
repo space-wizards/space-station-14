@@ -24,7 +24,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
