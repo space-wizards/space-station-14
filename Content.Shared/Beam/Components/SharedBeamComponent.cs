@@ -1,7 +1,9 @@
 ﻿using Robust.Shared.Audio;
 
 namespace Content.Shared.Beam.Components;
-
+/// <summary>
+/// Use this as a generic beam. Not for something like a laser gun, more for something continuous like lightning.
+/// </summary>
 public abstract class SharedBeamComponent : Component
 {
     /// <summary>

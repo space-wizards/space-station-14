@@ -1,6 +1,9 @@
 ﻿using Content.Shared.Physics;
 
 namespace Content.Shared.Lightning.Components;
+/// <summary>
+/// Handles how lightning acts and is spawned. Use the ShootLightning method to fire lightning from one user to a target.
+/// </summary>
 public abstract class SharedLightningComponent : Component
 {
     /// <summary>
