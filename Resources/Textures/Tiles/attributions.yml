@@ -10,7 +10,7 @@
   copyright: "vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05, asteroid.png renamed to asteroid_sand.png, asteroidfloor.png renamed to asteroid_tile.png"
   source: "https://github.com/vgstation-coders/vgstation13"
 
-- files: ["bar.png", "blue.png", "blue_circuit.png", "clown.png", "cropped_parallax.png", "glass.png", "eighties.png, "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "kitchen.png", "lattice.png", "laundry.png", "mime.png", "plating.png", "rglass.png", "reinforced.png", "silver.png","steel.png", "steel_dirty.png", "snow.png", "white.png", "wood.png"]
+- files: ["bar.png", "blue.png", "blue_circuit.png", "clown.png", "cropped_parallax.png", "glass.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "kitchen.png", "lattice.png", "laundry.png", "mime.png", "plating.png", "rglass.png", "reinforced.png", "silver.png","steel.png", "steel_dirty.png", "snow.png", "white.png", "wood.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
   source: "https://github.com/tgstation/tgstation/"
