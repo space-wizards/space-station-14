@@ -31,6 +31,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server.Station.Systems;
 
 namespace Content.Server.Entry
 {
@@ -160,6 +161,7 @@ namespace Content.Server.Entry
         protected override void Dispose(bool disposing)
         {
             _playTimeTracking?.Shutdown();
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StationSystem>().OnServerDispose();
         }
     }
 }
