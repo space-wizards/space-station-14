@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Reduced the number of each drink for Robust Softdrink machines from
-      10 to 2., type: Tweak}
-  id: 1648
-  time: '2022-06-03T23:46:51.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: ERT roles no longer show up on the role select screen., type: Fix}
   id: 1649
   time: '2022-06-04T00:04:34.0000000+00:00'
@@ -2921,3 +2915,9 @@ Entries:
   - {message: Made blunts brown instead of white, type: Tweak}
   id: 2147
   time: '2022-08-14T05:20:31.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: Drivebys work again, type: Fix}
+  - {message: Vehicle riders are easy to kill again., type: Fix}
+  id: 2148
+  time: '2022-08-14T05:22:15.0000000+00:00'
