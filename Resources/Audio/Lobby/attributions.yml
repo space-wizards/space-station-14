@@ -10,7 +10,8 @@
 
 - files: ["space_asshole.ogg"]
   license: "Custom"
-  copyright: "Space Asshole by Chris Remo is used with special permission from the author, under the condition that the project remains non-commercial and open source. At the author's request, here is a link to his bandcamp: https://chrisremo.bandcamp.com/"
+  copyright: "Space Asshole by Chris Remo is used with special permission from the author, under the condition that the project remains non-commercial and open source."
+  source: "https://chrisremo.bandcamp.com"
 
 - files: ["absconditus.ogg"]
   license: "CC-BY-NC-SA-3.0"
