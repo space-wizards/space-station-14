@@ -45,7 +45,7 @@ namespace Content.Server.TapeRecorder
 
             component.CancelToken = new CancellationTokenSource();
 
-            var doAfterEventArgs = new DoAfterEventArgs(args.User, component.TapeMaxTime / 25, component.CancelToken.Token, component.Owner)
+            var doAfterEventArgs = new DoAfterEventArgs(args.User, 7, component.CancelToken.Token, component.Owner)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

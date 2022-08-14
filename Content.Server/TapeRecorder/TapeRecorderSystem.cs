@@ -8,7 +8,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Content.Shared.TapeRecorder;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -22,7 +21,6 @@ namespace Content.Server.TapeRecorder
     {
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -50,7 +48,7 @@ namespace Content.Server.TapeRecorder
                     return;
 
                 //stop player if tape is at end
-                if (tapeRecorder.Enabled && tapeRecorder.InsertedTape.TimeStamp >= tapeRecorder.InsertedTape.TapeMaxTime && tapeRecorder.CurrentMode != TapeRecorderState.Rewind)
+                if (tapeRecorder.Enabled && tapeRecorder.InsertedTape.TimeStamp >= tapeRecorder.InsertedTape.TapeMaxTime.TotalSeconds && tapeRecorder.CurrentMode != TapeRecorderState.Rewind)
                 {
                     StopTape(tapeRecorder);
                     ChangeMode(tapeRecorder, TapeRecorderState.Rewind); // go into rewind mode once at end of tape
@@ -60,7 +58,7 @@ namespace Content.Server.TapeRecorder
                 if (tapeRecorder.Enabled && tapeRecorder.CurrentMode == TapeRecorderState.Play)
                 {
 
-                    if (tapeRecorder.CurrentMessageIndex >= tapeRecorder.InsertedTape.RecordedMessages.Count || tapeRecorder.InsertedTape.TimeStamp >= tapeRecorder.InsertedTape.TapeMaxTime)
+                    if (tapeRecorder.CurrentMessageIndex >= tapeRecorder.InsertedTape.RecordedMessages.Count || tapeRecorder.InsertedTape.TimeStamp >= tapeRecorder.InsertedTape.TapeMaxTime.TotalSeconds)
                     {
                         StopTape(tapeRecorder);
                         ChangeMode(tapeRecorder, TapeRecorderState.Rewind); // go into rewind mode once we reached the end of recorded data
@@ -105,6 +103,7 @@ namespace Content.Server.TapeRecorder
             if (!TryComp<CassetteTapeComponent>(slot.ContainedEntity, out var cassetteTapeComponent))
             {
                 component.InsertedTape = null;
+                slot.Remove(component.Owner);
                 ChangeMode(component, TapeRecorderState.Empty);
                 return;
             }
@@ -121,7 +120,7 @@ namespace Content.Server.TapeRecorder
 
         public void StartRecording(TapeRecorderComponent component)
         {
-            if (component.InsertedTape == null || component.InsertedTape.TimeStamp >= component.InsertedTape.TapeMaxTime)
+            if (component.InsertedTape == null || component.InsertedTape.TimeStamp >= component.InsertedTape.TapeMaxTime.TotalSeconds)
                 return;
 
             component.RecordingStartTime = component.AccumulatedTime - component.InsertedTape.TimeStamp;
@@ -135,7 +134,7 @@ namespace Content.Server.TapeRecorder
         {
             component.CurrentMessageIndex = GetTapeIndex(component);
 
-            if (component.InsertedTape == null || component.CurrentMessageIndex >= component.InsertedTape.RecordedMessages.Count || component.InsertedTape.TimeStamp >= component.InsertedTape.TapeMaxTime)
+            if (component.InsertedTape == null || component.CurrentMessageIndex >= component.InsertedTape.RecordedMessages.Count || component.InsertedTape.TimeStamp >= component.InsertedTape.TapeMaxTime.TotalSeconds)
                 return;
 
             _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-playback", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
@@ -219,13 +218,7 @@ namespace Content.Server.TapeRecorder
 
         private void OnUseInHand(EntityUid uid, TapeRecorderComponent component, UseInHandEvent args)
         {
-            //Use in hand cooldown
-            var currentTime = _gameTiming.CurTime;
-            if (currentTime < component.CooldownEnd)
-                return;
-            component.LastUseTime = currentTime;
-            component.CooldownEnd = component.LastUseTime + TimeSpan.FromSeconds(component.CooldownTime);
-
+            args.Handled = true;
 
             if (component.Enabled || component.InsertedTape == null)
             {
@@ -286,7 +279,7 @@ namespace Content.Server.TapeRecorder
                 return;
             }
 
-            args.PushMarkup(TimeSpan.FromSeconds(component.InsertedTape.TimeStamp).ToString("mm\\:ss") + " / " + (TimeSpan.FromSeconds(component.InsertedTape.TapeMaxTime).ToString("mm\\:ss")));
+            args.PushMarkup(TimeSpan.FromSeconds(component.InsertedTape.TimeStamp).ToString("mm\\:ss") + " / " + (TimeSpan.FromSeconds(component.InsertedTape.TapeMaxTime.TotalSeconds).ToString("mm\\:ss")));
         }
 
         //the verb sewer

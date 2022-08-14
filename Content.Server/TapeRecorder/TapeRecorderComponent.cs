@@ -52,13 +52,6 @@ namespace Content.Server.TapeRecorder
         //During playback, the message we are currently on
         public int CurrentMessageIndex = 0;
 
-
         public float AccumulatedTime;
-
-        //stuff for cooldown of using in hand
-        public TimeSpan LastUseTime;
-        public TimeSpan CooldownEnd;
-        [DataField("cooldownTime")]
-        public float CooldownTime { get; } = 1.5f;
     }
 }
