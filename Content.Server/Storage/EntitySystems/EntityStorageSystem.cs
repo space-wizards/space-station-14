@@ -208,9 +208,9 @@ public sealed class EntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool TryOpenStorage(EntityUid user, EntityUid target)
+    public bool TryOpenStorage(EntityUid user, EntityUid target, bool silent = false)
     {
-        if (!CanOpen(user, target))
+        if (!CanOpen(user, target, silent))
             return false;
 
         OpenStorage(target);
@@ -357,12 +357,12 @@ public sealed class EntityStorageSystem : EntitySystem
         }
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var surface))
-            _placeableSurface.SetPlaceable(uid, true, surface);
+            _placeableSurface.SetPlaceable(uid, component.Open, surface);
 
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
             appearance.SetData(StorageVisuals.Open, component.Open);
-            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
+            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Any());
         }
     }
 }

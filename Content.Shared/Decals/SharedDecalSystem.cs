@@ -10,7 +10,6 @@ namespace Content.Shared.Decals
     public abstract class SharedDecalSystem : EntitySystem
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
         protected readonly Dictionary<EntityUid, Dictionary<uint, Vector2i>> ChunkIndex = new();
@@ -20,25 +19,11 @@ namespace Content.Shared.Decals
         public const int ChunkSize = 32;
         public static Vector2i GetChunkIndices(Vector2 coordinates) => new ((int) Math.Floor(coordinates.X / ChunkSize), (int) Math.Floor(coordinates.Y / ChunkSize));
 
-        private float _viewSize;
-
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged, true);
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _configurationManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
-        }
-
-        private void OnPvsRangeChanged(float obj)
-        {
-            _viewSize = obj * 2f;
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)

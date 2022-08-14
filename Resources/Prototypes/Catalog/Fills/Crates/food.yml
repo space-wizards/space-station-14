@@ -1,7 +1,5 @@
 - type: entity
   id: CrateFoodPizza
-  name: emergency pizza delivery
-  description: Help do your part to end station hunger by distributing pizza to underfunded departments!
   parent: CratePlastic
   components:
   - type: StorageFill
@@ -13,8 +11,6 @@
 
 - type: entity
   id: CrateFoodMRE
-  name: MRE crate
-  description: A military style meal fit to feed a whole department.
   parent: CratePlastic
   components:
   - type: StorageFill
@@ -24,8 +20,6 @@
 
 - type: entity
   id: CrateFoodCooking
-  name: kitchen supplies crate
-  description: Extra kitchen supplies, in case the botanists are absent.
   parent: CratePlastic
   components:
   - type: StorageFill
@@ -44,13 +38,3 @@
       amount: 3
     - id: KitchenKnife
       amount: 1
-
-- type: entity
-  id: CrateFoodKvassTank
-  name:  kvass tank crate
-  parent: CrateGenericSteel
-  components:
-    - type: StorageFill
-      contents:
-        - id: KvassTankFull
-          amount: 1

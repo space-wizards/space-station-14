@@ -43,7 +43,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
         {
-            clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
+            clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, "clonepod-bodyContainer");
             _signalSystem.EnsureReceiverPorts(uid, CloningPodComponent.PodPort);
         }
 

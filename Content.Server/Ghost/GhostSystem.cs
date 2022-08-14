@@ -64,10 +64,9 @@ namespace Content.Server.Ghost
             var booCounter = 0;
             foreach (var ent in ents)
             {
-                var ghostBoo = new GhostBooEvent();
-                RaiseLocalEvent(ent, ghostBoo, true);
+                var handled = DoGhostBooEvent(ent);
 
-                if (ghostBoo.Handled)
+                if (handled)
                     booCounter++;
 
                 if (booCounter >= component.BooMaxTargets)
@@ -271,6 +270,14 @@ namespace Content.Server.Ghost
         public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
         {
             args.Cancel();
+        }
+
+        public bool DoGhostBooEvent(EntityUid target)
+        {
+            var ghostBoo = new GhostBooEvent();
+            RaiseLocalEvent(target, ghostBoo, true);
+
+            return ghostBoo.Handled;
         }
     }
 }

@@ -1,32 +1,31 @@
 ﻿- type: tile
-  id: plating
+  id: Plating
   name: plating
-  texture: plating
-  base_turfs:
-  - lattice
-  is_subfloor: true
-  footstep_sounds:
-    collection: footstep_plating
+  sprite: /Textures/Tiles/plating.png
+  baseTurfs:
+  - Lattice
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepPlating
   friction: 0.5
   thermalConductivity: 0.04
   heatCapacity: 10000
 
 - type: tile
-  id: lattice
+  id: Lattice
   name: lattice
-  texture: lattice
-  base_turfs:
-  - space
-  is_subfloor: true
-  footstep_sounds:
-    collection: footstep_plating
+  sprite: /Textures/Tiles/lattice.png
+  baseTurfs:
+  - Space
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepPlating
   friction: 0.5
-  is_space: true
+  isSpace: true
   thermalConductivity: 0.04
   heatCapacity: 10000
 
 # The final step in underplating's deprecation before it gets completely wiped from the codebase.
 - type: tileAlias
-  id: underplating
-  target: plating
-
+  id: UnderPlating
+  target: Plating

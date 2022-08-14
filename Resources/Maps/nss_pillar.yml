@@ -4,7 +4,7 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
+  0: Space
   1: FloorArcadeBlue
   2: FloorArcadeBlue2
   3: FloorArcadeRed
@@ -24,42 +24,42 @@ tilemap:
   17: FloorShuttlePurple
   18: FloorShuttleRed
   19: FloorShuttleWhite
-  20: floor_asteroid_coarse_sand0
-  21: floor_asteroid_coarse_sand1
-  22: floor_asteroid_coarse_sand2
-  23: floor_asteroid_coarse_sand_dug
-  24: floor_asteroid_sand
-  25: floor_asteroid_tile
-  26: floor_bar
-  27: floor_blue
-  28: floor_blue_circuit
-  29: floor_clown
-  30: floor_dark
-  31: floor_elevator_shaft
-  32: floor_freezer
-  33: floor_glass
-  34: floor_gold
-  35: floor_grass
-  36: floor_green_circuit
-  37: floor_hydro
-  38: floor_kitchen
-  39: floor_laundry
-  40: floor_lino
-  41: floor_mime
-  42: floor_mono
-  43: floor_reinforced
-  44: floor_rglass
-  45: floor_rock_vault
-  46: floor_showroom
-  47: floor_silver
-  48: floor_snow
-  49: floor_steel
-  50: floor_steel_dirty
-  51: floor_techmaint
-  52: floor_white
-  53: floor_wood
-  54: lattice
-  55: plating
+  20: FloorAsteroidCoarseSand0
+  21: FloorAsteroidCoarseSand1
+  22: FloorAsteroidCoarseSand2
+  23: FloorAsteroidCoarseSandDug
+  24: FloorAsteroidSand
+  25: FloorAsteroidTile
+  26: FloorBar
+  27: FloorBlue
+  28: FloorBlueCircuit
+  29: FloorClown
+  30: FloorDark
+  31: FloorElevatorShaft
+  32: FloorFreezer
+  33: FloorGlass
+  34: FloorGold
+  35: FloorGrass
+  36: FloorGreenCircuit
+  37: FloorHydro
+  38: FloorKitchen
+  39: FloorLaundry
+  40: FloorLino
+  41: FloorMime
+  42: FloorMono
+  43: FloorReinforced
+  44: FloorRGlass
+  45: FloorRockVault
+  46: FloorShowroom
+  47: FloorSilver
+  48: FloorSnow
+  49: FloorSteel
+  50: FloorSteelDirty
+  51: FloorTechMaint
+  52: FloorWhite
+  53: FloorWood
+  54: Lattice
+  55: Plating
 grids:
 - settings:
     chunksize: 16
@@ -152657,4 +152657,16 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 18097
+  type: SpawnPointHeadOfPersonnel
+  components:
+  - pos: -13.5,-10.5
+    parent: 130
+    type: Transform
+- uid: 18098
+  type: SpawnPointDetective
+  components:
+  - pos: -49.5,5.5
+    parent: 130
+    type: Transform
 ...

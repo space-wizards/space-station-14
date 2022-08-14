@@ -4,7 +4,7 @@
   graph: LightTorch
   startNode: start
   targetNode: torch
-  category: Tools
+  category: construction-category-tools
   description: A torch fashioned from some wood.
   icon: Objects/Misc/torch.rsi/icon.png
   objectType: Item

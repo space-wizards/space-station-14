@@ -14,7 +14,6 @@ namespace Content.Client.Decals
         private readonly SharedTransformSystem _transform;
         private readonly SpriteSystem _sprites;
         private readonly IEntityManager _entManager;
-        private readonly IMapManager _mapManager;
         private readonly IPrototypeManager _prototypeManager;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
@@ -26,14 +25,12 @@ namespace Content.Client.Decals
             SharedTransformSystem transforms,
             SpriteSystem sprites,
             IEntityManager entManager,
-            IMapManager mapManager,
             IPrototypeManager prototypeManager)
         {
             _decals = decals;
             _transform = transforms;
             _sprites = sprites;
             _entManager = entManager;
-            _mapManager = mapManager;
             _prototypeManager = prototypeManager;
         }
 
@@ -47,7 +44,14 @@ namespace Content.Client.Decals
             {
                 if (zIndexDictionary.Count == 0) continue;
 
-                var xform = xformQuery.GetComponent(gridId);
+                if (!xformQuery.TryGetComponent(gridId, out var xform))
+                {
+                    Logger.Error($"Tried to draw decals on a non-existent grid. GridUid: {gridId}");
+                    continue;
+                }
+
+                if (xform.MapID != args.MapId)
+                    continue;
 
                 handle.SetTransform(_transform.GetWorldMatrix(xform, xformQuery));
 
@@ -69,6 +73,8 @@ namespace Content.Client.Decals
                     }
                 }
             }
+
+            handle.SetTransform(Matrix3.Identity);
         }
 
         public SpriteSpecifier GetDecalSprite(string id)

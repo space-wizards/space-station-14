@@ -5,6 +5,8 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
+using Content.Server.Damage.Components;
+using Content.Server.Damage.Systems;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
 using Content.Shared.Audio;
@@ -28,6 +30,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly StaminaSystem _staminaSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -101,6 +104,13 @@ namespace Content.Server.Weapon.Melee
 
                     if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
+                        FixedPoint2 bluntDamage;
+                        // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
+                        if (damageResult.DamageDict.TryGetValue("Blunt", out bluntDamage))
+                        {
+                            _staminaSystem.TakeStaminaDamage(target, (bluntDamage * comp.BluntStaminaDamageFactor).Float());
+                        }
+
                         if (args.Used == args.User)
                             _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
@@ -112,7 +122,9 @@ namespace Content.Server.Weapon.Melee
                     }
                     else
                     {
-                        SoundSystem.Play(comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
                     }
                 }
             }
@@ -208,7 +220,9 @@ namespace Content.Server.Weapon.Melee
                     }
                     else
                     {
-                        SoundSystem.Play(comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
                     }
                 }
                 else

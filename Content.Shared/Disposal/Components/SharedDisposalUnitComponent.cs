@@ -15,6 +15,10 @@ namespace Content.Shared.Disposal.Components
         /// </summary>
         public List<EntityUid> RecentlyEjected = new();
 
+
+        [DataField("mobsCanEnter")]
+        public bool MobsCanEnter = true;
+
         [Serializable, NetSerializable]
         public enum Visuals : byte
         {

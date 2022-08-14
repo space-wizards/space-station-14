@@ -252,6 +252,9 @@
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HidesHair
 
 - type: entity
   parent: ClothingHeadBase
