@@ -92,7 +92,7 @@ namespace Content.IntegrationTests.Tests
 
                 var station = entManager.GetComponent<StationMemberComponent>(targetGrid!.Value).Station;
                 var shuttle = loader.LoadBlueprint(shuttleMap, entManager.GetComponent<StationDataComponent>(station).EmergencyShuttlePath.ToString());
-                Assert.That(shuttleSystem.TryFTLDock(entManager.GetComponent<ShuttleComponent>(shuttle.gridId!.Value), station));
+                Assert.That(shuttleSystem.TryFTLDock(entManager.GetComponent<ShuttleComponent>(shuttle.gridId!.Value), targetGrid.Value));
 
                 mapManager.DeleteMap(mapId);
                 mapManager.DeleteMap(shuttleMap);
