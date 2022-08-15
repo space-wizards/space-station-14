@@ -195,6 +195,11 @@ namespace Content.Client.Damage
             public readonly string? Color;
         }
 
+        /// <summary>
+        ///     Initializes an entity to be managed by this appearance controller.
+        ///     DO NOT assume this is your only entity. Visualizers are shared.
+        /// </summary>
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -492,6 +497,7 @@ namespace Content.Client.Damage
             spriteComponent.LayerSetVisible(newLayer, false);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             var entities = _entityManager;

@@ -85,7 +85,24 @@ namespace Content.Server.Chemistry.Components
             switch (msg.Action)
             {
                 case UiAction.ChemButton:
-                    TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
+                    if (!_bufferModeTransfer)
+                    {
+                        if (msg.IsBuffer)
+                        {
+                            DiscardReagent(msg.Id, msg.Amount, BufferSolution);
+                        }
+                        else if (BeakerSlot.HasItem &&
+                                BeakerSlot.Item is {Valid: true} beaker &&
+                                _entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) &&
+                                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
+                        {
+                            DiscardReagent(msg.Id, msg.Amount, beakerSolution);
+                        }
+                    }
+                    else
+                    {
+                        TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
+                    }
                     break;
                 case UiAction.Transfer:
                     _bufferModeTransfer = true;
@@ -159,12 +176,31 @@ namespace Content.Server.Chemistry.Components
             UserInterface?.SetState(state);
         }
 
+        private void DiscardReagent(string id, FixedPoint2 amount, Solution solution)
+        {
+            foreach (var reagent in solution.Contents)
+            {
+                if (reagent.ReagentId == id)
+                {
+                    FixedPoint2 actualAmount;
+                    if (amount == FixedPoint2.New(-1)) //amount is FixedPoint2.New(-1) when the client sends a message requesting to remove all solution from the container
+                    {
+                        actualAmount = reagent.Quantity;
+                    }
+                    else
+                    {
+                        actualAmount = FixedPoint2.Min(reagent.Quantity, amount);
+                    }
+                    solution.RemoveReagent(id, actualAmount);
+                    return;
+                }
+            }
+        }
+
         private void TransferReagent(string id, FixedPoint2 amount, bool isBuffer)
         {
-            if (!BeakerSlot.HasItem && _bufferModeTransfer)
-                return;
-
-            if (BeakerSlot.Item is not {Valid: true} beaker ||
+            if (!BeakerSlot.HasItem ||
+                BeakerSlot.Item is not {Valid: true} beaker ||
                 !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
                 return;
@@ -189,13 +225,8 @@ namespace Content.Server.Chemistry.Components
 
 
                         BufferSolution.RemoveReagent(id, actualAmount);
-                        if (_bufferModeTransfer)
-                        {
-                            EntitySystem.Get<SolutionContainerSystem>()
-                                .TryAddReagent(beaker, beakerSolution, id, actualAmount, out var _);
-                            // beakerSolution.Solution.AddReagent(id, actualAmount);
-                        }
-
+                        EntitySystem.Get<SolutionContainerSystem>()
+                            .TryAddReagent(beaker, beakerSolution, id, actualAmount, out var _);
                         break;
                     }
                 }

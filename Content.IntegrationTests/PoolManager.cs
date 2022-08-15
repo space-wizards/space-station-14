@@ -57,6 +57,7 @@ public static class PoolManager
         (CCVars.VelocityConstraintMinimumThreads.Name, "1", true),
         (CCVars.VelocityConstraintsPerThread.Name, "999", true),
         (CCVars.ThreadParallelCount.Name, "1", true),
+        (CCVars.GameRoleTimers.Name, "false", false),
     };
 
     private static int PairId = 0;
