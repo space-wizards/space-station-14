@@ -121,21 +121,12 @@
 
 
 - type: entity
-  name: kahlua bottle
+  name: coffee liqueur bottle #kahlua
   parent: DrinkBottleBaseEmpty
-  id: DrinkBottleKahlua
+  id: DrinkBottleCoffeeLiqueur
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/kahluabottle_empty.rsi
-
-
-- type: entity
-  name: nt cahors bottle
-  parent: DrinkBottleBaseEmpty
-  id: DrinkBottleNTCahors
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/ntcahors_empty.rsi
 
 
 - type: entity

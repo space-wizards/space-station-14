@@ -10,7 +10,7 @@
     DrinkAbsintheBottleFull: 2
     DrinkAleBottleFull: 5
     DrinkBeer: 5 # Needs to be renamed DrinkBeerBottleFull
-    DrinkBlueCuracaoBottleFull: 2
+    DrinkCuracaoBottleFull: 2
     DrinkCognacBottleFull: 4
     DrinkColaBottleFull: 4
     DrinkCreamCarton: 5
@@ -20,7 +20,7 @@
     DrinkJuiceLimeCarton: 3
     DrinkJuiceOrangeCarton: 3
     DrinkJuiceTomatoCarton: 3
-    DrinkKahluaBottleFull: 3
+    DrinkCoffeeLiqueurBottleFull: 3
     DrinkMelonLiquorBottleFull: 3
     DrinkPatronBottleFull: 2
     DrinkRumBottleFull: 4

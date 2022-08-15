@@ -28,6 +28,9 @@ reagent-desc-root-beer = A very sweet, carbonated drink reminiscent of sarsparil
 reagent-name-root-beer-float = root beer float
 reagent-desc-root-beer-float = Root beer, but now with ice cream on top. It truly is the magnum opus of Canadian summertime drinks.
 
+reagent-name-shamblers-juice = ~Shake me up some of that Shambler's Juice!~
+reagent-desc-shamblers-juice = A carbonated metallic soda.
+
 reagent-name-space-mountain-wind = Space Mountain Wind
 reagent-desc-space-mountain-wind = Blows right through you like a space wind.
 

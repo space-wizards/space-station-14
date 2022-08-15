@@ -380,7 +380,7 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBlueCuracaoGlass
-  name: blue curacao
+  name: curacao
   description: Exotically blue, fruity drink, distilled from oranges.
   components:
   - type: Drink
@@ -389,7 +389,7 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: BlueCuracao
+        - ReagentId: Curacao
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/curacaoglass.rsi
@@ -555,23 +555,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkDeadRumGlass
-  name: deadrum glass
-  description: Popular with the sailors. Not very popular with everyone else.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: DeadRum
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/rumglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkDemonsBlood
   name: demons blood
   description: Just looking at this thing makes the hair at the back of your neck stand up.
@@ -700,7 +683,7 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: GargleBlaster
+        - ReagentId: PanGalacticGargleBlaster
           Quantity: 50
   - type: Drink
   - type: Sprite
@@ -1024,8 +1007,8 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkKahluaGlass
-  name: kahlua glass
+  id: DrinkCoffeeLiqueurGlass #kahlua
+  name: coffee liqueur glass
   description: DAMN, THIS THING LOOKS ROBUST
   components:
   - type: SolutionContainerManager
@@ -1033,7 +1016,7 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: Kahlua
+        - ReagentId: CoffeeLiqueur
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluaglass.rsi
@@ -1301,23 +1284,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/nothing.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkNTCahors
-  name: neotheology cahors whine
-  description: It looks like wine, but more dark.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: NTCahors
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ntcahors.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1877,23 +1843,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkVodkaMartiniGlass
-  name: vodka martini glass
-  description: A bastardisation of the classic martini. Still great.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: VodkaMartini
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/martiniglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

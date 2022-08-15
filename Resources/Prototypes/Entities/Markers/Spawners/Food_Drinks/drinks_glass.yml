@@ -9,7 +9,7 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Consumable/Drinks/beerglass.rsi/icon.png 
+      - texture: Objects/Consumable/Drinks/beerglass.rsi/icon.png
   - type: RandomSpawner
   #small item
     prototypes:
@@ -26,7 +26,7 @@
       - DrinkBerryJuice
       - DrinkBilkGlass
       - DrinkBlackRussianGlass
-      - DrinkBlueCuracaoGlass
+      - DrinkCuracaoGlass
       - DrinkBloodyMaryGlass
       - DrinkBooger
       - DrinkBraveBullGlass
@@ -35,7 +35,6 @@
       - DrinkCafeLatte
       - DrinkCognacGlass
       - DrinkCubaLibreGlass
-      - DrinkDeadRumGlass
       - DrinkDevilsKiss
       - DrinkDriestMartiniGlass
       - DrinkDrGibbGlass
@@ -66,7 +65,6 @@
       - DrinkMeadGlass
       - DrinkMilkshake
       - DrinkMojito
-      - DrinkNTCahors
       - DrinkPatronGlass
       - DrinkRedMeadGlass
       - DrinkRewriter
@@ -82,7 +80,6 @@
       - DrinkTequilaSunriseGlass
       - DrinkThreeMileIslandGlass
       - DrinkToxinsSpecialGlass
-      - DrinkVodkaMartiniGlass
       - DrinkVodkaTonicGlass
       - DrinkWatermelonJuice
       - DrinkWhiskeyColaGlass

@@ -187,7 +187,7 @@
     FourteenLoko: 3
 
 - type: reaction
-  id: GargleBlaster
+  id: PanGalacticGargleBlaster
   reactants:
     Cognac:
       amount: 1
@@ -200,7 +200,7 @@
     Whiskey:
       amount: 1
   products:
-    GargleBlaster: 5
+    PanGalacticGargleBlaster: 5
 
 - type: reaction
   id: GinFizz
@@ -511,16 +511,6 @@
       amount: 1
   products:
     ThreeMileIsland: 10
-
-- type: reaction
-  id: VodkaMartini
-  reactants:
-    Vermouth:
-      amount: 1
-    Vodka:
-      amount: 2
-  products:
-    VodkaMartini: 3
 
 - type: reaction
   id: WhiskeyCola

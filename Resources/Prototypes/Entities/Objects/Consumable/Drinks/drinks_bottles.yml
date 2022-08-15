@@ -65,7 +65,7 @@
     solutions:
       drink:
         reagents:
-        - ReagentId: BlueCuracao
+        - ReagentId: Curacao
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-blue.rsi
@@ -165,8 +165,8 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkKahluaBottleFull
-  name: kahlua bottle
+  id: DrinkCoffeeLiqueurBottleFull #kahlua
+  name: sussy wussy's coffee liqueur bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
   components:
   - type: SolutionContainerManager

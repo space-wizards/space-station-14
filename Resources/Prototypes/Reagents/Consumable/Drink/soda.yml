@@ -83,6 +83,14 @@
   spritePath: rootbeerfloatglass.rsi
 
 - type: reagent
+  id: ShamblersJuice
+  name: reagent-name-shamblers-juice
+  parent: BaseSoda
+  desc: reagent-desc-shamblers-juice
+  physicalDesc: reagent-physical-desc-fizzy
+  color: "#f00060"
+
+- type: reagent
   id: SpaceMountainWind
   name: reagent-name-space-mountain-wind
   parent: BaseSoda

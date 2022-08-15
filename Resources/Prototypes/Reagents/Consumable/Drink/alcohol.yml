@@ -2736,3 +2736,20 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.4875
+
+- type: reagent
+  id: ScrewdriverCocktail
+  name: reagent-name-screwdriver-cocktail
+  parent: BaseAlcohol
+  desc: reagent-desc-screwdriver-cocktail
+  physicalDesc: reagent-physical-desc-strong-smelling
+  color: "#A68310"
+  spritePath: screwdriverglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15

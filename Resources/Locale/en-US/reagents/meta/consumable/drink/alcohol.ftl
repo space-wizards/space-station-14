@@ -475,3 +475,6 @@ reagent-desc-tich-toch = A mix of Tiltällen, Töchtaüse Syrup, and vodka. It's
 
 reagent-name-helianthus = Helianthus
 reagent-desc-helianthus = A dark yet radiant mixture of absinthe and hallucinogens. The choice of all true artists.
+
+reagent-name-screwdriver-cocktail = Screwdriver
+reagent-desc-screwdriver-cocktail = Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.

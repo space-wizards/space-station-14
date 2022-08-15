@@ -14,7 +14,7 @@
   #small item
     prototypes:
       - DrinkAbsintheBottleFull
-      - DrinkBlueCuracaoBottleFull
+      - DrinkCuracaoBottleFull
       - DrinkCognacBottleFull
       - DrinkGrenadineBottleFull
       - DrinkGinBottleFull
