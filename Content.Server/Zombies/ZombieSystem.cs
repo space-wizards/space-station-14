@@ -20,7 +20,6 @@ namespace Content.Server.Zombies
 {
     public sealed class ZombieSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damage = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;

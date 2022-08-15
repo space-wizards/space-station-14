@@ -4,7 +4,7 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
+  0: Space
   1: FloorArcadeBlue
   2: FloorArcadeBlue2
   3: FloorArcadeRed
@@ -24,42 +24,42 @@ tilemap:
   17: FloorShuttlePurple
   18: FloorShuttleRed
   19: FloorShuttleWhite
-  20: floor_asteroid_coarse_sand0
-  21: floor_asteroid_coarse_sand1
-  22: floor_asteroid_coarse_sand2
-  23: floor_asteroid_coarse_sand_dug
-  24: floor_asteroid_sand
-  25: floor_asteroid_tile
-  26: floor_bar
-  27: floor_blue
-  28: floor_blue_circuit
-  29: floor_clown
-  30: floor_dark
-  31: floor_elevator_shaft
-  32: floor_freezer
-  33: floor_glass
-  34: floor_gold
-  35: floor_grass
-  36: floor_green_circuit
-  37: floor_hydro
-  38: floor_kitchen
-  39: floor_laundry
-  40: floor_lino
-  41: floor_mime
-  42: floor_mono
-  43: floor_reinforced
-  44: floor_rglass
-  45: floor_rock_vault
-  46: floor_showroom
-  47: floor_silver
-  48: floor_snow
-  49: floor_steel
-  50: floor_steel_dirty
-  51: floor_techmaint
-  52: floor_white
-  53: floor_wood
-  54: lattice
-  55: plating
+  20: FloorAsteroidCoarseSand0
+  21: FloorAsteroidCoarseSand1
+  22: FloorAsteroidCoarseSand2
+  23: FloorAsteroidCoarseSandDug
+  24: FloorAsteroidSand
+  25: FloorAsteroidTile
+  26: FloorBar
+  27: FloorBlue
+  28: FloorBlueCircuit
+  29: FloorClown
+  30: FloorDark
+  31: FloorElevatorShaft
+  32: FloorFreezer
+  33: FloorGlass
+  34: FloorGold
+  35: FloorGrass
+  36: FloorGreenCircuit
+  37: FloorHydro
+  38: FloorKitchen
+  39: FloorLaundry
+  40: FloorLino
+  41: FloorMime
+  42: FloorMono
+  43: FloorReinforced
+  44: FloorRGlass
+  45: FloorRockVault
+  46: FloorShowroom
+  47: FloorSilver
+  48: FloorSnow
+  49: FloorSteel
+  50: FloorSteelDirty
+  51: FloorTechMaint
+  52: FloorWhite
+  53: FloorWood
+  54: Lattice
+  55: Plating
 grids:
 - settings:
     chunksize: 16
@@ -363,61 +363,61 @@ entities:
     parent: 104
     type: Transform
 - uid: 38
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 12.5,-4.5
     parent: 104
     type: Transform
 - uid: 39
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 12.5,-3.5
     parent: 104
     type: Transform
 - uid: 40
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 9.5,-5.5
     parent: 104
     type: Transform
 - uid: 41
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 10.5,-5.5
     parent: 104
     type: Transform
 - uid: 42
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 11.5,-5.5
     parent: 104
     type: Transform
 - uid: 43
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 12.5,-5.5
     parent: 104
     type: Transform
 - uid: 44
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 12.5,-5.5
     parent: 104
     type: Transform
 - uid: 45
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-5.5
     parent: 104
     type: Transform
 - uid: 46
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 20.5,-2.5
     parent: 104
     type: Transform
 - uid: 47
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 22.5,-2.5
     parent: 104
@@ -435,14 +435,14 @@ entities:
     parent: 104
     type: Transform
 - uid: 50
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 17.5,-12.5
     parent: 104
     type: Transform
 - uid: 51
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 19.5,-12.5
@@ -455,13 +455,13 @@ entities:
     parent: 104
     type: Transform
 - uid: 53
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 17.5,-2.5
     parent: 104
     type: Transform
 - uid: 54
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 18.5,-2.5
     parent: 104
@@ -479,7 +479,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 57
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 13.5,-5.5
     parent: 104
@@ -492,37 +492,37 @@ entities:
     parent: 104
     type: Transform
 - uid: 59
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-5.5
     parent: 104
     type: Transform
 - uid: 60
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-4.5
     parent: 104
     type: Transform
 - uid: 61
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-3.5
     parent: 104
     type: Transform
 - uid: 62
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 12.5,-9.5
     parent: 104
     type: Transform
 - uid: 63
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 11.5,-9.5
     parent: 104
     type: Transform
 - uid: 64
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 10.5,-9.5
     parent: 104
@@ -534,43 +534,43 @@ entities:
     parent: 104
     type: Transform
 - uid: 66
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-1.5
     parent: 104
     type: Transform
 - uid: 67
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-2.5
     parent: 104
     type: Transform
 - uid: 68
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 9.5,-2.5
     parent: 104
     type: Transform
 - uid: 69
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 11.5,-2.5
     parent: 104
     type: Transform
 - uid: 70
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 14.5,1.5
     parent: 104
     type: Transform
 - uid: 71
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 13.5,1.5
     parent: 104
     type: Transform
 - uid: 72
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 12.5,1.5
     parent: 104
@@ -582,43 +582,43 @@ entities:
     parent: 104
     type: Transform
 - uid: 74
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 10.5,1.5
     parent: 104
     type: Transform
 - uid: 75
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 9.5,1.5
     parent: 104
     type: Transform
 - uid: 76
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,0.5
     parent: 104
     type: Transform
 - uid: 77
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,1.5
     parent: 104
     type: Transform
 - uid: 78
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 7.5,1.5
     parent: 104
     type: Transform
 - uid: 79
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-11.5
     parent: 104
     type: Transform
 - uid: 80
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-9.5
     parent: 104
@@ -635,85 +635,85 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 82
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 1.5,-9.5
     parent: 104
     type: Transform
 - uid: 83
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 0.5,-9.5
     parent: 104
     type: Transform
 - uid: 84
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -0.5,-9.5
     parent: 104
     type: Transform
 - uid: 85
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -0.5,-8.5
     parent: 104
     type: Transform
 - uid: 86
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 2.5,-9.5
     parent: 104
     type: Transform
 - uid: 87
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 3.5,-9.5
     parent: 104
     type: Transform
 - uid: 88
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 4.5,-9.5
     parent: 104
     type: Transform
 - uid: 89
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 5.5,-9.5
     parent: 104
     type: Transform
 - uid: 90
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,-8.5
     parent: 104
     type: Transform
 - uid: 91
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,-7.5
     parent: 104
     type: Transform
 - uid: 92
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,-6.5
     parent: 104
     type: Transform
 - uid: 93
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,-5.5
     parent: 104
     type: Transform
 - uid: 94
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,-1.5
     parent: 104
     type: Transform
 - uid: 95
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,-0.5
     parent: 104
@@ -730,19 +730,19 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 97
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 6.5,1.5
     parent: 104
     type: Transform
 - uid: 98
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 5.5,1.5
     parent: 104
     type: Transform
 - uid: 99
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 4.5,1.5
     parent: 104
@@ -754,19 +754,19 @@ entities:
     parent: 104
     type: Transform
 - uid: 101
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -0.5,0.5
     parent: 104
     type: Transform
 - uid: 102
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -0.5,1.5
     parent: 104
     type: Transform
 - uid: 103
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 2.5,1.5
     parent: 104
@@ -5733,13 +5733,13 @@ entities:
       - 0
     type: GridAtmosphere
 - uid: 105
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,0.5
     parent: 104
     type: Transform
 - uid: 106
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 14.5,0.5
     parent: 104
@@ -5773,7 +5773,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 110
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 12.5,-2.5
     parent: 104
@@ -5795,19 +5795,19 @@ entities:
     parent: 104
     type: Transform
 - uid: 113
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-10.5
     parent: 104
     type: Transform
 - uid: 114
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-1.5
     parent: 104
     type: Transform
 - uid: 115
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 0.5,1.5
     parent: 104
@@ -5833,7 +5833,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 119
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 24.5,-2.5
     parent: 104
@@ -5845,7 +5845,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 121
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 18.5,-12.5
@@ -5858,37 +5858,37 @@ entities:
     parent: 104
     type: Transform
 - uid: 123
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 21.5,-2.5
     parent: 104
     type: Transform
 - uid: 124
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 19.5,-2.5
     parent: 104
     type: Transform
 - uid: 125
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-3.5
     parent: 104
     type: Transform
 - uid: 126
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-4.5
     parent: 104
     type: Transform
 - uid: 127
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 11.5,-6.5
     parent: 104
     type: Transform
 - uid: 128
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 11.5,-8.5
     parent: 104
@@ -5912,7 +5912,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 132
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 23.5,-2.5
     parent: 104
@@ -5947,13 +5947,13 @@ entities:
     parent: 104
     type: Transform
 - uid: 137
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-12.5
     parent: 104
     type: Transform
 - uid: 138
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,-4.5
     parent: 104
@@ -6175,7 +6175,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 168
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 14.5,-9.5
     parent: 104
@@ -6193,7 +6193,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 171
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 13.5,-9.5
     parent: 104
@@ -6211,25 +6211,25 @@ entities:
     parent: 104
     type: Transform
 - uid: 174
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 15.5,-9.5
     parent: 104
     type: Transform
 - uid: 175
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-9.5
     parent: 104
     type: Transform
 - uid: 176
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 15.5,-5.5
     parent: 104
     type: Transform
 - uid: 177
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-13.5
     parent: 104
@@ -6241,67 +6241,67 @@ entities:
     parent: 104
     type: Transform
 - uid: 179
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-14.5
     parent: 104
     type: Transform
 - uid: 180
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-15.5
     parent: 104
     type: Transform
 - uid: 181
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 9.5,-15.5
     parent: 104
     type: Transform
 - uid: 182
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 10.5,-15.5
     parent: 104
     type: Transform
 - uid: 183
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 11.5,-15.5
     parent: 104
     type: Transform
 - uid: 184
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 12.5,-15.5
     parent: 104
     type: Transform
 - uid: 185
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 13.5,-15.5
     parent: 104
     type: Transform
 - uid: 186
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 14.5,-15.5
     parent: 104
     type: Transform
 - uid: 187
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 15.5,-15.5
     parent: 104
     type: Transform
 - uid: 188
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-15.5
     parent: 104
     type: Transform
 - uid: 189
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-14.5
     parent: 104
@@ -6313,19 +6313,19 @@ entities:
     parent: 104
     type: Transform
 - uid: 191
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-12.5
     parent: 104
     type: Transform
 - uid: 192
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-11.5
     parent: 104
     type: Transform
 - uid: 193
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-10.5
     parent: 104
@@ -6361,7 +6361,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 199
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 1.5,-17.5
@@ -6484,7 +6484,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 215
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-0.5
     parent: 104
@@ -6753,20 +6753,20 @@ entities:
     parent: 104
     type: Transform
 - uid: 252
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-13.5
     parent: 104
     type: Transform
 - uid: 253
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -2.5,-17.5
     parent: 104
     type: Transform
 - uid: 254
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-14.5
@@ -6984,7 +6984,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 288
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 14.5,-0.5
     parent: 104
@@ -6998,7 +6998,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 290
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 15.5,-0.5
     parent: 104
@@ -7050,25 +7050,25 @@ entities:
     parent: 104
     type: Transform
 - uid: 298
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 13.5,-2.5
     parent: 104
     type: Transform
 - uid: 299
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 14.5,-2.5
     parent: 104
     type: Transform
 - uid: 300
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 15.5,-2.5
     parent: 104
     type: Transform
 - uid: 301
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-2.5
     parent: 104
@@ -7118,49 +7118,49 @@ entities:
     parent: 104
     type: Transform
 - uid: 309
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-11.5
     parent: 104
     type: Transform
 - uid: 310
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-12.5
     parent: 104
     type: Transform
 - uid: 311
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 24.5,-12.5
     parent: 104
     type: Transform
 - uid: 312
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 21.5,-12.5
     parent: 104
     type: Transform
 - uid: 313
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 23.5,-12.5
     parent: 104
     type: Transform
 - uid: 314
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 22.5,-12.5
     parent: 104
     type: Transform
 - uid: 315
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 20.5,-12.5
@@ -7323,63 +7323,63 @@ entities:
     parent: 104
     type: Transform
 - uid: 339
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-10.5
     parent: 104
     type: Transform
 - uid: 340
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-9.5
     parent: 104
     type: Transform
 - uid: 341
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-8.5
     parent: 104
     type: Transform
 - uid: 342
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-7.5
     parent: 104
     type: Transform
 - uid: 343
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-6.5
     parent: 104
     type: Transform
 - uid: 344
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-5.5
     parent: 104
     type: Transform
 - uid: 345
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-4.5
     parent: 104
     type: Transform
 - uid: 346
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-3.5
     parent: 104
     type: Transform
 - uid: 347
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-2.5
@@ -7585,21 +7585,21 @@ entities:
     parent: 104
     type: Transform
 - uid: 378
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-12.5
     parent: 104
     type: Transform
 - uid: 379
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-12.5
     parent: 104
     type: Transform
 - uid: 380
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,-11.5
@@ -7832,7 +7832,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 414
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-15.5
@@ -7857,7 +7857,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 418
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: -1.5707963267948966 rad
     pos: -12.5,8.5
@@ -7894,7 +7894,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 424
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -10.5,8.5
     parent: 104
@@ -7912,7 +7912,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 427
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -1.5,-9.5
     parent: 104
@@ -8048,7 +8048,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 441
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -2.5,-1.5
     parent: 104
@@ -8060,7 +8060,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 443
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -3.5,-1.5
     parent: 104
@@ -8078,19 +8078,19 @@ entities:
     parent: 104
     type: Transform
 - uid: 446
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -5.5,-0.5
     parent: 104
     type: Transform
 - uid: 447
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -3.5,-4.5
     parent: 104
     type: Transform
 - uid: 448
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -2.5,-4.5
     parent: 104
@@ -8162,25 +8162,25 @@ entities:
     parent: 104
     type: Transform
 - uid: 460
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -5.5,-4.5
     parent: 104
     type: Transform
 - uid: 461
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -5.5,0.5
     parent: 104
     type: Transform
 - uid: 462
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -5.5,-5.5
     parent: 104
     type: Transform
 - uid: 463
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -4.5,-1.5
     parent: 104
@@ -8234,7 +8234,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 472
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -4.5,-4.5
     parent: 104
@@ -8246,7 +8246,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 474
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -5.5,-1.5
     parent: 104
@@ -8294,7 +8294,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 482
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -9.5,8.5
     parent: 104
@@ -8318,7 +8318,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 486
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -16.5,8.5
     parent: 104
@@ -9071,7 +9071,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 611
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -5.5,-6.5
     parent: 104
@@ -9085,7 +9085,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 613
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -13.5,19.5
     parent: 104
@@ -9155,7 +9155,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 623
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -17.5,19.5
     parent: 104
@@ -9323,7 +9323,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 651
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -17.5,23.5
     parent: 104
@@ -9443,7 +9443,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 671
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -12.5,24.5
     parent: 104
@@ -9467,7 +9467,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 675
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: -1.5707963267948966 rad
     pos: -12.5,9.5
@@ -9516,7 +9516,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 683
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -15.5,10.5
     parent: 104
@@ -9588,7 +9588,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 695
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -11.5,10.5
     parent: 104
@@ -9608,7 +9608,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 698
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -14.5,10.5
     parent: 104
@@ -9680,7 +9680,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 710
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -13.5,10.5
     parent: 104
@@ -9800,19 +9800,19 @@ entities:
     parent: 104
     type: Transform
 - uid: 730
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -12.5,10.5
     parent: 104
     type: Transform
 - uid: 731
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -12.5,22.5
     parent: 104
     type: Transform
 - uid: 732
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -15.5,19.5
     parent: 104
@@ -9854,7 +9854,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 739
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -17.5,21.5
     parent: 104
@@ -9878,13 +9878,13 @@ entities:
     parent: 104
     type: Transform
 - uid: 743
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -16.5,9.5
     parent: 104
     type: Transform
 - uid: 744
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -16.5,7.5
     parent: 104
@@ -10031,7 +10031,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 767
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -16.5,10.5
     parent: 104
@@ -10070,7 +10070,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 773
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-11.5
@@ -11932,13 +11932,13 @@ entities:
     parent: 104
     type: Transform
 - uid: 1025
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 3.5,-18.5
     parent: 104
     type: Transform
 - uid: 1026
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 4.5,-18.5
     parent: 104
@@ -12453,7 +12453,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1111
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-17.5
@@ -12503,7 +12503,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1118
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-17.5
@@ -12534,7 +12534,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1123
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: 1.5,-11.5
@@ -12555,7 +12555,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1126
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -17.5,22.5
     parent: 104
@@ -12572,7 +12572,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1128
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: -1.5707963267948966 rad
     pos: -11.5,8.5
@@ -12591,7 +12591,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1131
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-16.5
     parent: 104
@@ -12623,25 +12623,25 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1136
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -11.5,5.5
     parent: 104
     type: Transform
 - uid: 1137
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -15.5,7.5
     parent: 104
     type: Transform
 - uid: 1138
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -15.5,6.5
     parent: 104
     type: Transform
 - uid: 1139
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -15.5,5.5
     parent: 104
@@ -12697,7 +12697,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1147
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -11.5,7.5
     parent: 104
@@ -12909,7 +12909,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1181
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 2.5,-16.5
     parent: 104
@@ -12933,7 +12933,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1184
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-11.5
@@ -12953,26 +12953,26 @@ entities:
     parent: 104
     type: Transform
 - uid: 1187
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-17.5
     parent: 104
     type: Transform
 - uid: 1188
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 2.5,-18.5
     parent: 104
     type: Transform
 - uid: 1189
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-16.5
     parent: 104
     type: Transform
 - uid: 1190
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-11.5
@@ -13009,14 +13009,14 @@ entities:
     parent: 104
     type: Transform
 - uid: 1196
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,-17.5
     parent: 104
     type: Transform
 - uid: 1197
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 7.5,-18.5
     parent: 104
@@ -13028,7 +13028,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1199
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 5.5,-18.5
     parent: 104
@@ -13040,7 +13040,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1201
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 6.5,-18.5
     parent: 104
@@ -13066,19 +13066,19 @@ entities:
     parent: 104
     type: Transform
 - uid: 1205
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 2.5,-17.5
     parent: 104
     type: Transform
 - uid: 1206
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 8.5,-18.5
     parent: 104
     type: Transform
 - uid: 1207
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -17.5,24.5
     parent: 104
@@ -13091,49 +13091,49 @@ entities:
     parent: 104
     type: Transform
 - uid: 1209
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -17.5,20.5
     parent: 104
     type: Transform
 - uid: 1210
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -14.5,19.5
     parent: 104
     type: Transform
 - uid: 1211
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -12.5,23.5
     parent: 104
     type: Transform
 - uid: 1212
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -16.5,19.5
     parent: 104
     type: Transform
 - uid: 1213
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -12.5,19.5
     parent: 104
     type: Transform
 - uid: 1214
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -16.5,24.5
     parent: 104
     type: Transform
 - uid: 1215
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -12.5,20.5
     parent: 104
     type: Transform
 - uid: 1216
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -15.5,24.5
     parent: 104
@@ -13145,19 +13145,19 @@ entities:
     parent: 104
     type: Transform
 - uid: 1218
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -14.5,24.5
     parent: 104
     type: Transform
 - uid: 1219
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -12.5,21.5
     parent: 104
     type: Transform
 - uid: 1220
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: -13.5,24.5
     parent: 104
@@ -13286,7 +13286,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 1241
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 6.5,-9.5
     parent: 104
@@ -13624,7 +13624,7 @@ entities:
   - index: 7
     type: Map
   - footstepSoundCollection: !type:SoundCollectionSpecifier
-      collection: footstep_snow
+      collection: FootstepSnow
     type: FootstepModifier
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
@@ -14080,13 +14080,13 @@ entities:
     parent: 104
     type: Transform
 - uid: 1381
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 16.5,-16.5
     parent: 104
     type: Transform
 - uid: 1382
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 17.5,-16.5
     parent: 104
@@ -14122,55 +14122,55 @@ entities:
     parent: 104
     type: Transform
 - uid: 1403
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 19.5,-16.5
     parent: 104
     type: Transform
 - uid: 1404
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 20.5,-16.5
     parent: 104
     type: Transform
 - uid: 1405
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 25.5,-16.5
     parent: 104
     type: Transform
 - uid: 1406
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 25.5,-15.5
     parent: 104
     type: Transform
 - uid: 1407
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 25.5,-14.5
     parent: 104
     type: Transform
 - uid: 1408
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 25.5,-13.5
     parent: 104
     type: Transform
 - uid: 1409
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 25.5,-17.5
     parent: 104
     type: Transform
 - uid: 1410
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 23.5,-17.5
     parent: 104
     type: Transform
 - uid: 1411
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 20.5,-17.5
     parent: 104
@@ -14230,25 +14230,25 @@ entities:
     parent: 104
     type: Transform
 - uid: 1420
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 18.5,-16.5
     parent: 104
     type: Transform
 - uid: 1421
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 21.5,-17.5
     parent: 104
     type: Transform
 - uid: 1422
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 22.5,-17.5
     parent: 104
     type: Transform
 - uid: 1423
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 24.5,-17.5
     parent: 104
@@ -17030,19 +17030,19 @@ entities:
     parent: 104
     type: Transform
 - uid: 2017
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 2.5,-10.5
     parent: 104
     type: Transform
 - uid: 2018
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 2.5,-11.5
     parent: 104
     type: Transform
 - uid: 2019
-  type: WallRiveted
+  type: WallPlastitanium
   components:
   - pos: 2.5,-12.5
     parent: 104

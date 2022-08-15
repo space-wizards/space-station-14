@@ -29,6 +29,8 @@
     sprayVelocity: 2
     spraySound:
       path: /Audio/Effects/spray2.ogg
+  - type: TrashOnEmpty
+    solution: spray
 
 - type: entity
   name: spray bottle

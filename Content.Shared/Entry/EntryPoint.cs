@@ -56,14 +56,14 @@ namespace Content.Shared.Entry
         private void _initTileDefinitions()
         {
             // Register space first because I'm a hard coding hack.
-            var spaceDef = _prototypeManager.Index<ContentTileDefinition>("space");
+            var spaceDef = _prototypeManager.Index<ContentTileDefinition>(ContentTileDefinition.SpaceID);
 
             _tileDefinitionManager.Register(spaceDef);
 
             var prototypeList = new List<ContentTileDefinition>();
             foreach (var tileDef in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
             {
-                if (tileDef.ID == "space")
+                if (tileDef.ID == ContentTileDefinition.SpaceID)
                 {
                     continue;
                 }
