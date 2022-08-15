@@ -326,3 +326,31 @@
   physicalDesc: reagent-physical-desc-bubbly
   color: "#381600"
   spritePath: kvass.rsi
+
+  - type: reagent
+  id: DoctorsDelight
+  name: reagent-name-doctors-delight
+  parent: BaseDrink
+  desc: reagent-desc-doctors-delight
+  physicalDesc: reagent-physical-desc-strong-smelling
+  color: "#FF8CFF"
+  spritePath: doctorsdelightglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:SatiateHunger
+        factor: -2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -1
+            Brute: -1
+            Airloss: -1
+            Toxin: -1
