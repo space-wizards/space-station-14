@@ -75,6 +75,14 @@ public sealed class StationSystem : EntitySystem
         _player.PlayerStatusChanged -= OnPlayerStatusChanged;
     }
 
+    /// <summary>
+    ///     Called when the server shuts down or restarts to avoid uneccesarily logging mid-round station deletion errors.
+    /// </summary>
+    public void OnServerDispose()
+    {
+        _stations.Clear();
+    }
+
     private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
         if (e.NewStatus == SessionStatus.Connected)
@@ -97,7 +105,8 @@ public sealed class StationSystem : EntitySystem
         if (_stations.Contains(uid) && // Was not deleted via DeleteStation()
             _gameTicker.RunLevel == GameRunLevel.InRound) // And not due to a round restart
         {
-            throw new InvalidOperationException($"Station entity {ToPrettyString(uid)} is getting deleted mid-round.");
+            // printing a stack trace, rather than throwing an exception so that entity deletion continues as normal.
+            Logger.Error($"Station entity {ToPrettyString(uid)} is getting deleted mid-round. Trace: {Environment.StackTrace}");
         }
 
         _stations.Remove(uid);

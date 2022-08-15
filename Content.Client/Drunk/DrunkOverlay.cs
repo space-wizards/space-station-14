@@ -67,6 +67,7 @@ public sealed class DrunkOverlay : Overlay
         _drunkShader.SetParameter("boozePower", _visualScale);
         handle.UseShader(_drunkShader);
         handle.DrawRect(args.WorldBounds, Color.White);
+        handle.UseShader(null);
     }
 
     /// <summary>

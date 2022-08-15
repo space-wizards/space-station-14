@@ -49,6 +49,21 @@ conversion_modes = {
             [ 46, 46, 46, 46], # 7 : Full
         ]
     ),
+    # TG
+    "tg_shuttle": ConversionMode(
+        7, 9,
+        [
+            # BR, TL, TR, BL
+            [  0,  0,  0,  0],
+            [ 16, 16,  3,  3],
+            [  0,  0,  0,  0],
+            [ 16, 16,  3,  3],
+            [  3,  3, 16, 16],
+            [ 19, 19, 19, 19],
+            [  3,  3, 16, 16],
+            [ 54, 54, 54, 54],
+        ]
+    ),
     # Citadel Station
     "citadel": ConversionMode(
         7, 3,

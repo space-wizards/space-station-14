@@ -25,7 +25,6 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
-        [Dependency] private readonly ActionsSystem _actionSystem = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?

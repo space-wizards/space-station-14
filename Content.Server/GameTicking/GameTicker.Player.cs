@@ -86,7 +86,7 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Disconnected:
                 {
-                    if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
+                    _playerGameStatuses.Remove(session.UserId);
 
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
 
@@ -121,18 +121,17 @@ namespace Content.Server.GameTicking
         {
             _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
 
-            if (_playersInLobby.ContainsKey(session))
-                _playersInLobby.Remove(session);
+            if (!_playerGameStatuses.ContainsKey(session.UserId))
+                _playerGameStatuses.Remove(session.UserId);
 
-            _playersInGame.Add(session.UserId);
+            _playerGameStatuses[session.UserId] = PlayerGameStatus.JoinedGame;
 
             RaiseNetworkEvent(new TickerJoinGameEvent(), session.ConnectedClient);
         }
 
         private void PlayerJoinLobby(IPlayerSession session)
         {
-            _playersInLobby[session] = LobbyPlayerStatus.NotReady;
-            _playersInGame.Remove(session.UserId);
+            _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
 
             var client = session.ConnectedClient;
             RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);
