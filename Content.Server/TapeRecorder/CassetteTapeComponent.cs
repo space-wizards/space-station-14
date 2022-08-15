@@ -32,6 +32,6 @@ namespace Content.Server.TapeRecorder
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("tapeMaxTime")]
-        public float TapeMaxTime = 20f;
+        public TimeSpan TapeMaxTime = TimeSpan.FromSeconds(120);
     }
 }
