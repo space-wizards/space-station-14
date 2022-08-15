@@ -57,6 +57,7 @@ public static class PoolManager
         (CCVars.VelocityConstraintMinimumThreads.Name, "1", true),
         (CCVars.VelocityConstraintsPerThread.Name, "999", true),
         (CCVars.ThreadParallelCount.Name, "1", true),
+        (CCVars.GameRoleTimers.Name, "false", false),
     };
 
     private static int PairId = 0;
@@ -436,7 +437,7 @@ public static class PoolManager
             mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
             mapData.GridCoords = new EntityCoordinates(mapData.MapGrid.GridEntityId, 0, 0);
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var plating = tileDefinitionManager["plating"];
+            var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);
             mapData.MapGrid.SetTile(mapData.GridCoords, platingTile);
             mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);

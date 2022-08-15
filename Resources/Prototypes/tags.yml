@@ -196,6 +196,9 @@
   id: Flashlight
 
 - type: Tag
+  id: Flower
+
+- type: Tag
   id: Folder
 
 - type: Tag
@@ -302,6 +305,9 @@
 - type: Tag
   id: Matchstick
 
+- type: Tag
+  id: MailingUnitElectronics
+  
 - type: Tag
   id: Medkit
 

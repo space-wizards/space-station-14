@@ -134,6 +134,7 @@ namespace Content.Client.Doors
             }
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             if (!_entMan.HasComponent<AnimationPlayerComponent>(entity))
@@ -142,6 +143,7 @@ namespace Content.Client.Doors
             }
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             // only start playing animations once.
