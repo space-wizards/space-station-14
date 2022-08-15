@@ -18,7 +18,7 @@ public sealed class StartEndGameRulesTest
     [Test]
     public async Task Test()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings(){Dirty = true});
         var server = pairTracker.Pair.Server;
 
         await server.WaitAssertion(() =>
