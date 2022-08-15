@@ -126111,16 +126111,6 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 14003
-  type: DrinkMelonLiquorBottleFull
-  components:
-  - pos: -77.23585,27.535078
-    parent: 100
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 14004
   type: OrganHumanEyes
   components:
