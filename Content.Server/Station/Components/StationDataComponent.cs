@@ -36,5 +36,5 @@ public sealed class StationDataComponent : Component
     /// Emergency shuttle map path for this station.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), Access(typeof(ShuttleSystem), Friend = AccessPermissions.ReadExecute)]
-    public ResourcePath EmergencyShuttlePath = new("/Maps/Shuttles/emergency_shuttle.yml");
+    public ResourcePath EmergencyShuttlePath = new("/Maps/Shuttles/boxstation_shuttle.yml");
 }
