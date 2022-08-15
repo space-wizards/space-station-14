@@ -1,7 +1,5 @@
-namespace Content.Server.Radiation.Components;
-
 /// <summary>
-///     Irradiate all 
+///     Irradiate all
 /// </summary>
 [RegisterComponent]
 public sealed class RadiationSourceComponent : Component
