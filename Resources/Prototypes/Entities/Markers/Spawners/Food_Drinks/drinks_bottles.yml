@@ -13,14 +13,12 @@
   - type: RandomSpawner
   #small item
     prototypes:
-      - DrinkAbsintheBottleFull
       - DrinkCuracaoBottleFull
       - DrinkCognacBottleFull
       - DrinkGrenadineBottleFull
       - DrinkGinBottleFull
       - DrinkGoldschlagerBottleFull
-      - DrinkKahluaBottleFull
-      - DrinkMelonLiquorBottleFull
+      - DrinkCoffeeLiqueurBottleFull
       - DrinkPatronBottleFull
       - DrinkRumBottleFull
       - DrinkTequilaBottleFull
@@ -34,5 +32,5 @@
     offset: 0.0
     #rare
     rarePrototypes:
-      - DrinkPoisonWinebottleFull
+      - DrinkAbsintheBottleFull
     rareChance: 0.01

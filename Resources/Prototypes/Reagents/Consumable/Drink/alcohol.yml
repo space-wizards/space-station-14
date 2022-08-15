@@ -1071,23 +1071,6 @@
         amount: 0.2275
 
 - type: reagent
-  id: Sbitten
-  name: reagent-name-sbitten
-  parent: BaseAlcohol
-  desc: reagent-desc-sbitten
-  physicalDesc: reagent-physical-desc-strong-smelling
-  color: "#d8d5ae"
-  spritePath: glass_sbitten.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.455
-
-- type: reagent
   id: RedMead
   name: reagent-name-red-mead
   parent: BaseAlcohol

@@ -1355,23 +1355,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkPoisonWineGlass
-  name: poison wine glass
-  description: A black ichor with an oily purple sheer on top. Are you sure you should drink this?
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: PoisonWine
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/pwineglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkRedMeadGlass
   name: red mead glass
   description: A true Viking's beverage, though its color is strange.
@@ -1507,40 +1490,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkSuiDreamGlass
-  name: sui dream glass
-  description: A froofy, fruity, and sweet mixed drink. Understanding the name only brings shame.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: SuiDream
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/sdreamglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkEmeraldGlass
-  name: melon liquor
-  description: A relatively sweet and fruity 46 proof liquor.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: MelonLiquor
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/emeraldglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

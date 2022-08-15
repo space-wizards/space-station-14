@@ -180,21 +180,6 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkMelonLiquorBottleFull
-  name: emeraldine melon liquor
-  description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: MelonLiquor
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/alco-green.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
   id: DrinkPatronBottleFull
   name: wrapp artiste patron bottle
   description: Silver laced tequilla, served in space night clubs across the galaxy.
@@ -207,21 +192,6 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkPoisonWinebottleFull
-  name: warlock's velvet bottle
-  description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: PoisonWine
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/pwinebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
