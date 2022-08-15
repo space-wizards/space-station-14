@@ -1,5 +1,4 @@
-﻿using Content.Server.Radiation.Components;
-using Content.Shared.Radiation.Events;
+﻿using Content.Shared.Radiation.Events;
 using Robust.Shared.Map;
 
 namespace Content.Server.Radiation.Systems;
