@@ -104,7 +104,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     Act = () => TryEjectContents(component),
                     Category = VerbCategory.Eject,
-                    Text = Loc.GetString("disposal-eject-verb-contents")
+                    Text = Loc.GetString("disposal-eject-verb-get-data-text")
                 };
                 args.Verbs.Add(ejectVerb);
             }
