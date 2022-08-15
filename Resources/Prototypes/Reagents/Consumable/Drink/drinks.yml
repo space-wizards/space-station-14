@@ -354,3 +354,11 @@
             Brute: -1
             Airloss: -1
             Toxin: -1
+
+- type: reagent
+  id: Menthol
+  name: reagent-name-menthol
+  parent: BaseDrink
+  desc: reagent-desc-menthol
+  physicalDesc: reagent-physical-desc-strong-smelling
+  color: "#80AF9C"

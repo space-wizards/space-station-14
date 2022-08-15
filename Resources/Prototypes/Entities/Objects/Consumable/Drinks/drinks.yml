@@ -379,7 +379,7 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkBlueCuracaoGlass
+  id: DrinkCuracaoGlass
   name: curacao
   description: Exotically blue, fruity drink, distilled from oranges.
   components:
@@ -1456,23 +1456,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkSbitenGlass
-  name: sbiten glass
-  description: A spicy mix of Vodka and Spice. Very hot.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Sbiten
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/sbitenglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

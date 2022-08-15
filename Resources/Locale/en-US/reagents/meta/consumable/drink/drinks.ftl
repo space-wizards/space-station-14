@@ -75,3 +75,6 @@ reagent-desc-pilk = A sickening mixture of milk and cola.
 
 reagent-name-kvass = kvass
 reagent-desc-kvass = A cool refreshing drink with a taste of socialism.
+
+reagent-name-menthol = menthol
+reagent-desc-menthol = Alleviates coughing symptoms one might have.

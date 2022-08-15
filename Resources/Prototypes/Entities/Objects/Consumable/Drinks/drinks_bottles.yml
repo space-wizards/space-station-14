@@ -57,7 +57,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkBlueCuracaoBottleFull
+  id: DrinkCuracaoBottleFull
   name: Miss Blue Curacao
   description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
   components:
