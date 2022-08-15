@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPCs steering around puddles, type: Fix}
-  id: 1660
-  time: '2022-06-05T09:42:03.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Added a mapping/editor keybinding that starts placing the same type
@@ -2934,3 +2929,8 @@ Entries:
   - {message: Fix crew monitor not displaying directional arrows, type: Fix}
   id: 2159
   time: '2022-08-15T04:14:01.0000000+00:00'
+- author: SirDragooon
+  changes:
+  - {message: The ChemMaster4000 pill limit is increased to 25, type: Tweak}
+  id: 2160
+  time: '2022-08-15T04:57:31.0000000+00:00'
