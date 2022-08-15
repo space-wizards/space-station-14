@@ -327,7 +327,7 @@
   color: "#381600"
   spritePath: kvass.rsi
 
-  - type: reagent
+- type: reagent
   id: DoctorsDelight
   name: reagent-name-doctors-delight
   parent: BaseDrink
