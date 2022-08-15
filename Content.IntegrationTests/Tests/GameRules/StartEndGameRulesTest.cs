@@ -5,7 +5,6 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.GameRules;
@@ -23,6 +22,7 @@ public sealed class StartEndGameRulesTest
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
         {
             NoClient = true,
+            Dirty = true,
         });
         var server = pairTracker.Pair.Server;
         await server.WaitIdleAsync();
