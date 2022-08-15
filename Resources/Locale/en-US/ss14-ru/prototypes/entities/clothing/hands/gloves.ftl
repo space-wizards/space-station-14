@@ -1,4 +1,4 @@
-ent-ClothingHandsGlovesBoxingRed = boxing gloves
+ent-ClothingHandsGlovesBoxingRed = red boxing gloves
     .desc = Red gloves for competitive boxing.
     .suffix = { "" }
 ent-ClothingHandsGlovesBoxingBlue = blue boxing gloves
@@ -42,4 +42,4 @@ ent-ClothingHandsGlovesFingerless = fingerless gloves
     .suffix = { "" }
 ent-ThievingGloves = black gloves
     .desc = Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
-    .suffix = { "" }
+    .suffix = Thieving

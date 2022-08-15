@@ -7,6 +7,3 @@ ent-CrateFoodMRE = { ent-CratePlastic }
 ent-CrateFoodCooking = { ent-CratePlastic }
     .desc = { ent-CratePlastic.desc }
     .suffix = { "" }
-ent-CrateFoodKvassTank = { ent-CrateGenericSteel }
-    .desc = { ent-CrateGenericSteel.desc }
-    .suffix = { "" }

@@ -217,3 +217,6 @@ ent-ClothingUniformJumpsuitMonasticRobeDark = тёмная монашеская 
 ent-ClothingUniformJumpsuitMonasticRobeLight = светлая монашеская ряса
     .desc = Это светлая ряса, которую часто носят религиозные люди.
     .suffix = { "" }
+ent-ClothingUniformJumpsuitMusician = musician's tuxedo
+    .desc = A fancy tuxedo for the musically inclined.  Perfect for any lounge act!
+    .suffix = { "" }

@@ -79,3 +79,6 @@ ent-ClothingOuterWinterViro = virology winter coat
 ent-ClothingOuterWinterWarden = warden's armored winter coat
     .desc = A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
     .suffix = { "" }
+ent-ClothingOuterWinterMusician = musician's winter coat
+    .desc = An oversized, plasticine space tuxedo that'll have people asking "do you know me?"
+    .suffix = { "" }
