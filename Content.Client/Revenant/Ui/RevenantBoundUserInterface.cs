@@ -11,7 +11,7 @@ public sealed class RevenantBoundUserInterface : BoundUserInterface
 {
     private RevenantMenu? _menu;
 
-    public RevenantBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public RevenantBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
 
     }
