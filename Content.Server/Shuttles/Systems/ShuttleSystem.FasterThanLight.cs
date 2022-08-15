@@ -14,6 +14,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -410,6 +411,23 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool TryFTLDock(ShuttleComponent component, EntityUid targetUid)
     {
+        if (TryComp<StationDataComponent>(targetUid, out var stationData))
+        {
+            var largestBox = 0f;
+
+            foreach (var grid in stationData.Grids)
+            {
+                var gridGrid = Comp<IMapGridComponent>(grid).Grid;
+                var area = gridGrid.LocalAABB.Width * gridGrid.LocalAABB.Height;
+
+                if (area > largestBox)
+                {
+                    largestBox = area;
+                    targetUid = grid;
+                }
+            }
+        }
+
         if (!TryComp<TransformComponent>(component.Owner, out var xform) ||
             !TryComp<TransformComponent>(targetUid, out var targetXform) ||
             targetXform.MapUid == null ||

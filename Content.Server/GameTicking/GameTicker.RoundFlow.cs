@@ -112,7 +112,7 @@ namespace Content.Server.GameTicking
         /// <param name="loadOptions">Map loading options, includes offset.</param>
         /// <param name="stationName">Name to assign to the loaded station.</param>
         /// <returns>All loaded entities and grids.</returns>
-        public (IReadOnlyList<EntityUid>, IReadOnlyList<EntityUid>) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
+        public (IReadOnlyList<EntityUid> Entities, IReadOnlyList<EntityUid> Grids) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
         {
             var loadOpts = loadOptions ?? new MapLoadOptions();
 
