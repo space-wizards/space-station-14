@@ -26,43 +26,9 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
             SubscribeLocalEvent<DisposalTubeComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<DisposalTubeComponent, BreakageEventArgs>(OnBreak);
-            SubscribeLocalEvent<DisposalTaggerComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
-            SubscribeLocalEvent<DisposalRouterComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
             SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
             SubscribeLocalEvent<DisposalTaggerComponent, ActivatableUIOpenAttemptEvent>(OnOpenTaggerUIAttempt);
 
-        }
-
-        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetVerbsEvent<InteractionVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-                return;
-            var player = actor.PlayerSession;
-
-            InteractionVerb verb = new();
-            verb.Text = Loc.GetString("configure-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            verb.Act = () => component.OpenUserInterface(actor);
-            args.Verbs.Add(verb);
-        }
-
-        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetVerbsEvent<InteractionVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-                return;
-            var player = actor.PlayerSession;
-
-            InteractionVerb verb = new();
-            verb.Text = Loc.GetString("configure-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            verb.Act = () => component.OpenUserInterface(actor);
-            args.Verbs.Add(verb);
         }
 
         private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, ref ContainerRelayMovementEntityEvent args)

@@ -5,7 +5,7 @@
   license: "CC-BY-SA-3.0"
   copyright: "CEV-Eris commit 28e589f0ff72a009adf17db767e90be39054f0f2"
   source: "https://github.com/discordia-space/CEV-Eris/"
-- files: [ "asteroid_sand.png", "asteroid_tile.png", "dark.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "hydro.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
+- files: [ "asteroid_sand.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
   license: "CC-BY-SA-3.0"
   copyright: "vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05, asteroid.png renamed to asteroid_sand.png, asteroidfloor.png renamed to asteroid_tile.png"
   source: "https://github.com/vgstation-coders/vgstation13"
@@ -15,7 +15,7 @@
   copyright: "TauCetiStation commit 4cd533cf0a4243050364023af9a4fcaca209dce7"
   source: "https://github.com/TauCetiStation/TauCetiClassic/"
 
-- files: ["cropped_parallax.png"]
+- files: ["blue.png", "blue_circuit.png", "cropped_parallax.png", "glass.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "rglass.png", "silver.png", "snow.png", "wood.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
   source: "https://github.com/tgstation/tgstation/"
@@ -49,3 +49,4 @@
   license: "CC-BY-SA-3.0"
   copyright: "Fortuna commit 2a9408a47e2f83d945335e4feeeeafb552173e6f, grasslight and dirt by Peptide based on grassdark.png and dirt."
   source: "https://github.com/FortunaSS13/Fortuna"
+

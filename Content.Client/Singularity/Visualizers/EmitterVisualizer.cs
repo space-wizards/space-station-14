@@ -16,6 +16,7 @@ namespace Content.Client.Singularity.Visualizers
         private const string OverlayLocked = "lock";
         private const string OverlayUnlocked = "unlock";
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

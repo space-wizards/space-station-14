@@ -46,7 +46,6 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
@@ -230,7 +229,14 @@ namespace Content.Shared.Interaction
 
             // Does the user have hands?
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
+            {
+                if (target != null)
+                {
+                    var ev = new InteractNoHandEvent(user, target.Value);
+                    RaiseLocalEvent(user, ev, true);
+                }
                 return;
+            }
 
             var inRangeUnobstructed = target == null
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
@@ -600,7 +606,7 @@ namespace Content.Shared.Interaction
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public async void InteractUsing(
+        public void InteractUsing(
             EntityUid user,
             EntityUid used,
             EntityUid target,
@@ -629,7 +635,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Used when clicking on an entity resulted in no other interaction. Used for low-priority interactions.
         /// </summary>
-        public async void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
+        public void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
             if (target is {Valid: false})
                 target = null;

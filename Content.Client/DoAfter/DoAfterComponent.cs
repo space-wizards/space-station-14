@@ -1,4 +1,3 @@
-using Content.Client.DoAfter.UI;
 using Content.Shared.DoAfter;
 
 namespace Content.Client.DoAfter
@@ -8,8 +7,6 @@ namespace Content.Client.DoAfter
     {
         public readonly Dictionary<byte, ClientDoAfter> DoAfters = new();
 
-        public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters = new();
-
-        public DoAfterGui? Gui { get; set; }
+        public readonly Dictionary<byte, ClientDoAfter> CancelledDoAfters = new();
     }
 }

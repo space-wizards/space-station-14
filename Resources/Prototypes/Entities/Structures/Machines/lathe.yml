@@ -181,6 +181,7 @@
       - APCElectronics
       - AirAlarmElectronics
       - FireAlarmElectronics
+      - MailingUnitElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -432,7 +433,7 @@
       - ClothingUniformJumpskirtMedicalDoctor
       - ClothingUniformJumpsuitMime
       - ClothingUniformJumpskirtMime
-      - ClothingUniformJumpsuitLawyerPurple
+      - ClothingUniformJumpsuitMusician
       - ClothingUniformJumpsuitParamedic
       - ClothingUniformJumpskirtParamedic
       - ClothingUniformJumpsuitPrisoner
