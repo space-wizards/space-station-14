@@ -12,6 +12,7 @@
       heldPrefix: taperecorder_empty
     - type: TapeRecorder
     - type: ChatListener
+      hearingRange: 4
     - type: Speech
     - type: ItemCooldown
     - type: UseDelay

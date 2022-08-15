@@ -38,9 +38,7 @@ namespace Content.Server.TapeRecorder
         {
             if (!component.Unspooled || component.CancelToken != null)
                 return;
-            if (!TryComp<ToolComponent>(args.Used, out var toolComponent))
-                return;
-            if (!toolComponent.Qualities.Contains("Screwing"))
+            if (!_tagSystem.HasAnyTag(args.Used, "Screwdriver", "Write"))
                 return;
 
             component.CancelToken = new CancellationTokenSource();
