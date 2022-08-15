@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -6,19 +7,11 @@ namespace Content.Shared.Radiation
     [NetworkedComponent()]
     public abstract class SharedRadiationPulseComponent : Component
     {
-        [DataField("radsPerSecond")]
-        public float RadsPerSecond { get; set; } = 1;
+        [DataField("draw")]
+        public bool Draw = true;
 
-        /// <summary>
-        /// Radius of the pulse from its position
-        /// </summary>
-        public virtual float Range { get; set; }
-
-        public virtual bool Decay { get; set; }
-        public virtual bool Draw { get; set; }
-
-        public virtual TimeSpan StartTime { get; }
-        public virtual TimeSpan EndTime { get; }
+        [DataField("sound")]
+        public SoundSpecifier Sound = new SoundCollectionSpecifier("RadiationPulse");
     }
 
     /// <summary>
