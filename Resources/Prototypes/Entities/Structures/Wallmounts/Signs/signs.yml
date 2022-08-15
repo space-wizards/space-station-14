@@ -895,7 +895,6 @@
   parent: BaseSign
   id: SignZomlab
   name: zombie lab sign
-  description: "A sign indicating the zombie lab."
   components:
   - type: Sprite
     state: zomlab
