@@ -11,8 +11,8 @@ reagent-desc-malt-liquor = An alcoholic beverage brewed since ancient times on O
 reagent-name-green-beer = Green Beer
 reagent-desc-green-beer = An alcoholic beverage brewed since ancient times on Old Earth. This variety is dyed a festive green.
 
-reagent-name-kahlua = Kahlua
-reagent-desc-kahlua = A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
+reagent-name-coffee-liqueur = Coffee Liqueur
+reagent-desc-coffee-liqueur = A tasty coffee-flavoured liqueur.
 
 reagent-name-whiskey = Whiskey
 reagent-desc-whiskey = A superb and well-aged single-malt whiskey. Damn.

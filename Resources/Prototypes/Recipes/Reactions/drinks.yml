@@ -27,7 +27,7 @@
       amount: 1
     IrishCarBomb:
       amount: 1
-    Kahlua:
+    CoffeeLiqueur:
       amount: 1
   products:
     B52: 3
@@ -69,7 +69,7 @@
 - type: reaction
   id: BlackRussian
   reactants:
-    Kahlua:
+    CoffeeLiqueur:
       amount: 1
     Vodka:
       amount: 2
@@ -105,7 +105,7 @@
 - type: reaction
   id: BraveBull
   reactants:
-    Kahlua:
+    CoffeeLiqueur:
       amount: 1
     Tequila:
       amount: 2
