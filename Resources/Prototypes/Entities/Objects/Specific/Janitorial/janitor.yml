@@ -207,10 +207,8 @@
           whitelist:
             tags:
               - WetFloorSign
+      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: Appearance
-      visuals:
-        - type: MappedItemVisualizer
-          sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: SolutionContainerVisuals
       maxFillLevels: 3
       fillBaseName: cart_water-

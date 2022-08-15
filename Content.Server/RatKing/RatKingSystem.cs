@@ -15,8 +15,6 @@ namespace Content.Server.RatKing
     {
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ActionsSystem _action = default!;
-        [Dependency] private readonly DiseaseSystem _disease = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly TransformSystem _xform = default!;
 
