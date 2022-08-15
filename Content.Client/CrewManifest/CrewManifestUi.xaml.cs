@@ -24,8 +24,6 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
     private readonly CrewManifestSystem _crewManifestSystem;
 
-    private EntityUid? _station;
-
     public CrewManifestUi()
     {
         RobustXamlLoader.Load(this);

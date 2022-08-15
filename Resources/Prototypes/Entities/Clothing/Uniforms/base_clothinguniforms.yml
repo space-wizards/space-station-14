@@ -1,7 +1,34 @@
 - type: entity
   abstract: true
   parent: Clothing
-  id: ClothingWithSuitSensor
+  id: UnsensoredClothingUniformBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    slots: [innerclothing]
+    equipSound:
+      path: /Audio/Items/jumpsuit_equip.ogg
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 3
+
+- type: entity
+  abstract: true
+  parent: UnsensoredClothingUniformBase
+  id: UnsensoredClothingUniformSkirtBase
+  components:
+  - type: Clothing
+    slots: [innerclothing]
+    femaleMask: UniformTop
+
+
+- type: entity
+  abstract: true
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformBase
   components:
   - type: SuitSensor
   - type: DeviceNetwork
@@ -12,35 +39,9 @@
 
 - type: entity
   abstract: true
-  parent: ClothingWithSuitSensor
-  id: ClothingUniformBase
-  components:
-  - type: Sprite
-    state: icon
-  - type: Clothing
-    slots: [innerclothing]
-    equipSound:
-      path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: MaterialCloth1
-      amount: 3
-
-- type: entity
-  abstract: true
-  parent: ClothingWithSuitSensor
+  parent: ClothingUniformBase
   id: ClothingUniformSkirtBase
   components:
-  - type: Sprite
-    state: icon
   - type: Clothing
     slots: [innerclothing]
     femaleMask: UniformTop
-    equipSound:
-      path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: MaterialCloth1
-      amount: 3

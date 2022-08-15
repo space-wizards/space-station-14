@@ -11,6 +11,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignDirectionalBar
+  name: bar sign
+  description: A direction sign, pointing out which way the bar is.
+  components:
+  - type: Sprite
+    state: direction_bar
+
+- type: entity
+  parent: BaseSign
   id: SignDirectionalBridge
   name: bridge sign
   description: A direction sign, pointing out which way the Bridge is.
@@ -35,6 +44,15 @@
   components:
   - type: Sprite
     state: direction_chapel
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalChemistry
+  name: chemistry sign
+  description: A direction sign, pointing out which way the chemistry lab is.
+  components:
+  - type: Sprite
+    state: direction_chemistry    
     
 - type: entity
   parent: BaseSign
@@ -70,7 +88,16 @@
   description: A direction sign, pointing out which way evac is.
   components:
   - type: Sprite
-    state: direction_evac
+    state: direction_evac    
+    
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalFood
+  name: food sign
+  description: A direction sign, pointing out which way the kitchen is.
+  components:
+  - type: Sprite
+    state: direction_food
 
 - type: entity
   parent: BaseSign
@@ -79,7 +106,16 @@
   description: A direction sign, pointing out which way the gravity generator is.
   components:
   - type: Sprite
-    state: direction_gravity
+    state: direction_gravity    
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalHop
+  name: hop sign
+  description: A direction sign, pointing out which way Head of Personnel's office is.
+  components:
+  - type: Sprite
+    state: direction_hop
 
 - type: entity
   parent: BaseSign
@@ -89,6 +125,24 @@
   components:
   - type: Sprite
     state: direction_hydro
+    
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalJanitor
+  name: janitor sign
+  description: A direction sign, pointing out which way the janitor's closet is.
+  components:
+  - type: Sprite
+    state: direction_janitor
+    
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalLibrary
+  name: library sign
+  description: A direction sign, pointing out which way the library is.
+  components:
+  - type: Sprite
+    state: direction_library
 
 - type: entity
   parent: BaseSign
@@ -107,7 +161,6 @@
   components:
   - type: Sprite
     state: direction_salvage
-
 
 - type: entity
   parent: BaseSign
