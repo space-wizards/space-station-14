@@ -56,6 +56,76 @@
               amount: 2
               doAfter: 1
 
+        - to: woodWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 2
+
+        - to: uraniumWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Uranium
+              amount: 2
+            - tool: Welding
+              doAfter: 10
+
+        - to: silverWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Silver
+              amount: 2
+            - tool: Welding
+              doAfter: 20
+
+        - to: plasticWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plastic
+              amount: 2
+              doAfter: 2
+
+        - to: plasmaWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plasma
+              amount: 2
+            - tool: Welding
+              doAfter: 20
+
+        - to: goldWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Gold
+              amount: 2
+            - tool: Welding
+              doAfter: 20
+
     - node: wall
       entity: WallSolid
       edges:
@@ -66,6 +136,86 @@
               amount: 2
           steps:
             - tool: Welding
+              doAfter: 10
+
+    - node: woodWall
+      entity: WallWood
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 10
+
+    - node: uraniumWall
+      entity: WallUranium
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUranium1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 10
+
+    - node: silverWall
+      entity: WallSilver
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: IngotSilver1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 20
+            - tool: Prying
+              doAfter: 10
+
+    - node: plasticWall
+      entity: WallPlastic
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 10
+
+    - node: plasmaWall
+      entity: WallPlasma
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasma1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 20
+            - tool: Prying
+              doAfter: 10
+
+    - node: goldWall
+      entity: WallGold
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: IngotGold1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 20
+            - tool: Prying
               doAfter: 10
 
     - node: reinforcedGirder

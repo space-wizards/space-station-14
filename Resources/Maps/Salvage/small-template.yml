@@ -4,38 +4,38 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
-  1: floor_asteroid_coarse_sand0
-  2: floor_asteroid_coarse_sand1
-  3: floor_asteroid_coarse_sand2
-  4: floor_asteroid_coarse_sand_dug
-  5: floor_asteroid_sand
-  6: floor_asteroid_tile
-  7: floor_blue
-  8: floor_blue_circuit
-  9: floor_dark
-  10: floor_elevator_shaft
-  11: floor_freezer
-  12: floor_glass
-  13: floor_gold
-  14: floor_green_circuit
-  15: floor_hydro
-  16: floor_lino
-  17: floor_mono
-  18: floor_reinforced
-  19: floor_rglass
-  20: floor_rock_vault
-  21: floor_showroom
-  22: floor_silver
-  23: floor_snow
-  24: floor_steel
-  25: floor_steel_dirty
-  26: floor_techmaint
-  27: floor_white
-  28: floor_wood
-  29: lattice
-  30: plating
-  31: plating
+  0: Space
+  1: FloorAsteroidCoarseSand0
+  2: FloorAsteroidCoarseSand1
+  3: FloorAsteroidCoarseSand2
+  4: FloorAsteroidCoarseSandDug
+  5: FloorAsteroidSand
+  6: FloorAsteroidTile
+  7: FloorBlue
+  8: FloorBlueCircuit
+  9: FloorDark
+  10: FloorElevatorShaft
+  11: FloorFreezer
+  12: FloorGlass
+  13: FloorGold
+  14: FloorGreenCircuit
+  15: FloorHydro
+  16: FloorLino
+  17: FloorMono
+  18: FloorReinforced
+  19: FloorRGlass
+  20: FloorRockVault
+  21: FloorShowroom
+  22: FloorSilver
+  23: FloorSnow
+  24: FloorSteel
+  25: FloorSteelDirty
+  26: FloorTechMaint
+  27: FloorWhite
+  28: FloorWood
+  29: Lattice
+  30: Plating
+  31: Plating
 grids:
 - settings:
     chunksize: 16

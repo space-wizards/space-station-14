@@ -1,9 +1,8 @@
 - type: job
   id: Lawyer
   name: job-name-lawyer
+  playTimeTracker: JobLawyer
   startingGear: LawyerGear
-  departments:
-  - Civilian
   icon: "Lawyer"
   supervisors: job-supervisors-hop
   access:

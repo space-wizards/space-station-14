@@ -7,6 +7,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -23,6 +24,7 @@ public sealed partial class StationJobsSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -39,7 +41,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (_availableJobsDirty)
         {
             _cachedAvailableJobs = GenerateJobsAvailableEvent();
-            RaiseNetworkEvent(_cachedAvailableJobs, Filter.Empty().AddPlayers(_gameTicker.PlayersInLobby.Keys));
+            RaiseNetworkEvent(_cachedAvailableJobs, Filter.Empty().AddPlayers(_playerManager.ServerSessions));
             _availableJobsDirty = false;
         }
     }

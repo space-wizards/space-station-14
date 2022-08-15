@@ -5,6 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Maps
 {
@@ -12,6 +13,8 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
+        public const string SpaceID = "Space";
+
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
         public string[]? Parents { get; private set; }
 
@@ -19,23 +22,29 @@ namespace Content.Shared.Maps
         [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
-        public string Path => "/Textures/Tiles/";
-
         [IdDataFieldAttribute] public string ID { get; } = string.Empty;
 
         public ushort TileId { get; private set; }
 
         [DataField("name")] public string Name { get; } = string.Empty;
 
-        [DataField("texture")] public string SpriteName { get; } = string.Empty;
+        [DataField("sprite")] public ResourcePath? Sprite { get; }
 
-        [DataField("is_subfloor")] public bool IsSubFloor { get; private set; }
+        [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
-        [DataField("base_turfs")] public List<string> BaseTurfs { get; } = new();
+        [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();
 
-        [DataField("can_crowbar")] public bool CanCrowbar { get; private set; }
+        [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
 
-        [DataField("footstep_sounds")] public SoundSpecifier? FootstepSounds { get; }
+        /// <summary>
+        /// These play when the mob has shoes on.
+        /// </summary>
+        [DataField("footstepSounds")] public SoundSpecifier? FootstepSounds { get; }
+
+        /// <summary>
+        /// These play when the mob has no shoes on.
+        /// </summary>
+        [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; } = new SoundCollectionSpecifier("BarestepHard");
 
         [DataField("friction")] public float Friction { get; set; }
 
@@ -51,10 +60,10 @@ namespace Content.Shared.Maps
         // Heat capacity is opt-in, not opt-out.
         [DataField("heatCapacity")] public float HeatCapacity = Atmospherics.MinimumHeatCapacity;
 
-        [DataField("item_drop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("itemDrop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
 
-        [DataField("is_space")] public bool IsSpace { get; private set; }
+        [DataField("isSpace")] public bool IsSpace { get; private set; }
         [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
 
         public void AssignTileId(ushort id)

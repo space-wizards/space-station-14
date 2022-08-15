@@ -1,77 +1,95 @@
 - type: entity
   name: space carp
-  id: MobCarp
+  id: BaseMobCarp
   parent: SimpleSpaceMobBase
   description: It's a space carp.
+  abstract: true
   components:
-  - type: InputMover
-  - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
-    factions:
-    - SimpleHostile
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: alive
-      sprite: Mobs/Aliens/Carps/space.rsi
-  - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.40
-      mass: 40
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: MobState
-    thresholds:
-      0: Alive
-      50: Critical
-      100: Dead
-  - type: MovementIgnoreGravity
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: alive
-      Critical:
-        Base: crit
-      Dead:
-        Base: dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatFish
-      amount: 2
-  - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: bite
-    hitSound:
-      path: /Audio/Effects/bite.ogg
-    damage:
-      types:
-        Piercing: 5
-        Slash: 10
-  - type: ReplacementAccent
-    accent: genericAggressive
-  - type: TypingIndicator
-    proto: alien
-  - type: NoSlip
-  - type: Tag
-    tags:
-    - Carp
+    - type: InputMover
+    - type: MobMover
+    - type: UtilityNPC
+      behaviorSets:
+        - Idle
+        - UnarmedAttackHostiles
+    - type: AiFactionTag
+      factions:
+        - SimpleHostile
+    - type: Sprite
+      drawdepth: Mobs
+      netsync: false
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: base
+          sprite: Mobs/Aliens/Carps/space.rsi
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: mouth
+          sprite: Mobs/Aliens/Carps/space.rsi
+          shader: unshaded
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            base: Rainbow
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            mouth: ""
+    - type: CombatMode
+      disarmAction:
+        enabled: false
+        autoPopulate: false
+        name: action-name-disarm
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          mass: 40
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: MobState
+      thresholds:
+        0: Alive
+        50: Critical
+        100: Dead
+    - type: MovementAlwaysTouching
+    - type: Appearance
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: base
+          BaseUnshaded: mouth
+        Dead:
+          Base: base_dead
+          BaseUnshaded: dead_mouth
+    - type: Butcherable
+      spawned:
+        - id: FoodMeatFish
+          amount: 2
+    - type: MeleeWeapon
+      range: 1.5
+      arcwidth: 0
+      arc: bite
+      hitSound:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Piercing: 5
+          Slash: 10
+    - type: TypingIndicator
+      proto: alien
+    - type: NoSlip
+    - type: Tag
+      tags:
+        - Carp
+        - DoorBumpOpener
+
+- type: entity
+  parent: BaseMobCarp
+  id: MobCarp
+  components:
+    - type: ReplacementAccent
+      accent: genericAggressive
 
 - type: entity
   name: magicarp
@@ -79,14 +97,14 @@
   id: MobCarpMagic
   description: Looks like some kind of fish. Might be magical.
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: alive
-      sprite: Mobs/Aliens/Carps/magic.rsi
-  - type: TypingIndicator
-    proto: guardian
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: base
+          sprite: Mobs/Aliens/Carps/magic.rsi
+    - type: TypingIndicator
+      proto: guardian
 
 - type: entity
   name: holocarp
@@ -94,46 +112,45 @@
   id: MobCarpHolo
   description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: alive
-      sprite: Mobs/Aliens/Carps/holo.rsi
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.40
-      mass: 5
-      mask:
-      - MobMask
-      layer:
-      - Opaque
-  - type: TypingIndicator
-    proto: robot
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: base
+          sprite: Mobs/Aliens/Carps/holo.rsi
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          mass: 5
+          mask:
+            - MobMask
+          layer:
+            - Opaque
+    - type: TypingIndicator
+      proto: robot
 
 - type: entity
   id: MobCarpSalvage
   parent: MobCarp
   suffix: "Salvage Ruleset"
   components:
-  - type: GhostTakeoverAvailable
-    prob: 0.33
-    name: space carp on salvage wreck
-    description: |
-      Defend the loot inside the salvage wreck!
-  - type: SalvageMobRestrictions
+    - type: GhostTakeoverAvailable
+      prob: 0.33
+      name: space carp on salvage wreck
+      description: |
+        Defend the loot inside the salvage wreck!
+    - type: SalvageMobRestrictions
 
 - type: entity
   name: space carp
   id: MobCarpDragon
   suffix: DragonBrood
-  parent: MobCarp
+  parent: BaseMobCarp
   components:
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: Sentient Carp
-    description: Help the dragon flood the station with carps!
-
+    - type: GhostTakeoverAvailable
+      makeSentient: true
+      name: Sentient Carp
+      description: Help the dragon flood the station with carps!

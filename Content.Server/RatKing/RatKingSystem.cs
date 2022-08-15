@@ -6,17 +6,20 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
+using Content.Shared.Dataset;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.RatKing
 {
     public sealed class RatKingSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ActionsSystem _action = default!;
-        [Dependency] private readonly DiseaseSystem _disease = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly TransformSystem _xform = default!;
 
@@ -34,6 +37,11 @@ namespace Content.Server.RatKing
         {
             _action.AddAction(uid, component.ActionRaiseArmy, null);
             _action.AddAction(uid, component.ActionDomain, null);
+
+            var kingdom = _proto.Index<DatasetPrototype>(component.KingdomNameDataset);
+            var title = _proto.Index<DatasetPrototype>(component.TitleNameDataset);
+
+            MetaData(uid).EntityName = $"{_random.Pick(kingdom.Values)} {_random.Pick(title.Values)}";
         }
 
         /// <summary>

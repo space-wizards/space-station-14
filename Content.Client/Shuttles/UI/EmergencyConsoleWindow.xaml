@@ -1,6 +1,6 @@
 <userInterface:FancyWindow xmlns="https://spacestation14.io"
                            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
-                           Title="Emergency Shuttle Console"
+                           Title="{Loc 'emergency-shuttle-console-window-title'}"
                            MinSize="400 400">
 <BoxContainer Orientation="Vertical"
               Margin="5">

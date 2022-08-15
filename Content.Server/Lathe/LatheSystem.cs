@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Server.Power.Components;
 using Robust.Server.Player;
 
 namespace Content.Server.Lathe
@@ -27,7 +28,7 @@ namespace Content.Server.Lathe
         [Dependency] private readonly SharedAudioSystem _audioSys = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly ResearchSystem _researchSys = default!;
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -36,6 +37,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
+            SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
@@ -156,7 +158,7 @@ namespace Content.Server.Lathe
             EntityManager.QueueDeleteEntity(args.Used);
 
             EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = component.InsertionTime;
-            
+
             _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
                 ("item", args.Used)), uid, Filter.Entities(args.User));
 
@@ -165,6 +167,14 @@ namespace Content.Server.Lathe
                 UpdateInsertingAppearance(uid, true, matProto.Color);
             }
             UpdateInsertingAppearance(uid, true);
+        }
+
+
+        private void OnPowerChanged(EntityUid uid, LatheComponent component, PowerChangedEvent args)
+        {
+            //if the power state changes, try to produce.
+            //aka, if you went from unpowered --> powered, resume lathe queue.
+            TryStartProducing(uid, component: component);
         }
 
         /// <summary>
@@ -187,12 +197,16 @@ namespace Content.Server.Lathe
                 component.Queue.RemoveAt(0);
                 return TryStartProducing(uid, prodComp, component);
             }
-                
+
             if (!component.CanProduce(recipe) || !TryComp(uid, out MaterialStorageComponent? storage))
+            {
+                component.Queue.RemoveAt(0);
                 return false;
+            }
 
             prodComp ??= EnsureComp<LatheProducingComponent>(uid);
 
+            // Do nothing if the lathe is already producing something.
             if (prodComp.Recipe != null)
                 return false;
 
@@ -203,6 +217,7 @@ namespace Content.Server.Lathe
             foreach (var (material, amount) in recipe.RequiredMaterials)
             {
                 // This should always return true, otherwise CanProduce fucked up.
+                // TODO just remove materials when first queuing, to avoid queuing more items than can actually be produced.
                 storage.RemoveMaterial(material, amount);
             }
 
@@ -278,6 +293,7 @@ namespace Content.Server.Lathe
             {
                 for (var i = 0; i < args.Quantity; i++)
                 {
+                    // TODO check required materials exist and make materials unavailable.
                     component.Queue.Add(recipe.ID);
                 }
 

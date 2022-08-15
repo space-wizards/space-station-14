@@ -13,8 +13,10 @@
     - Wirecutter
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
+    netsync: false
     layers:
-    - state: cutters-map
+    - state: cutters
+      map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: cutters-cutty-thingy
   - type: ItemCooldown
   - type: MeleeWeapon
@@ -26,16 +28,10 @@
       - Cutting
     useSound:
       path: /Audio/Items/wirecutter.ogg
-  - type: RandomSpriteColor
-    state: cutters
-    colors:
-      blue: "#1861d5"
-      red: "#951710"
-      pink: "#d5188d"
-      brown: "#a05212"
-      green: "#0e7f1b"
-      cyan: "#18a2d5"
-      yellow: "#d58c18"
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          cutters: Rainbow
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
 
@@ -53,8 +49,10 @@
     - Screwdriver
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
+    netsync: false
     layers:
-      - state: screwdriver-map
+      - state: screwdriver
+        map: [ "enum.DamageStateVisualLayers.Base" ]
       - state: screwdriver-screwybits
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
@@ -68,16 +66,10 @@
       - Screwing
     useSound:
       collection: Screwdriver
-  - type: RandomSpriteColor
-    state: screwdriver
-    colors:
-      blue: "#1861d5"
-      red: "#ff0000"
-      pink: "#d5188d"
-      brown: "#a05212"
-      green: "#0e7f1b"
-      cyan: "#18a2d5"
-      yellow: "#ffa500"
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          screwdriver: Rainbow
 
 - type: entity
   name: wrench

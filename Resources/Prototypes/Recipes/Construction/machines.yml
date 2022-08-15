@@ -4,7 +4,7 @@
   graph: Computer
   startNode: start
   targetNode: computer
-  category: Machines
+  category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -17,7 +17,7 @@
   graph: Machine
   startNode: start
   targetNode: machine
-  category: Machines
+  category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -31,7 +31,7 @@
   graph: LeverGraph
   startNode: start
   targetNode: LeverNode
-  category: Machines
+  category: construction-category-machines
   description: A lever to control machines. It has 3 modes.
   objectType: Structure
   canBuildInImpassable: false
@@ -47,7 +47,7 @@
   graph: LightSwitchGraph
   startNode: start
   targetNode: LightSwitchNode
-  category: Machines
+  category: construction-category-machines
   description: A switch for toggling lights that are connected to the same apc.
   icon:
     sprite: Structures/Wallmounts/switch.rsi
@@ -58,14 +58,14 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
-    
+
 - type: construction
   name: signal switch
   id: SignalSwitchRecipe
   graph: SignalSwitchGraph
   startNode: start
   targetNode: SignalSwitchNode
-  category: Machines
+  category: construction-category-machines
   description: It's a switch for toggling power to things.
   icon:
     sprite: Structures/Wallmounts/switch.rsi
@@ -76,14 +76,14 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
-    
+
 - type: construction
   name: signal button
   id: SignalButtonRecipe
   graph: SignalButtonGraph
   startNode: start
   targetNode: SignalButtonNode
-  category: Machines
+  category: construction-category-machines
   description: It's a button for activating something.
   icon:
     sprite: Structures/Wallmounts/switch.rsi

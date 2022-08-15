@@ -34,6 +34,8 @@
     - type: DrinkCanVisualizer
       stateClosed: icon
       stateOpen: icon_open
+  - type: Spillable
+    solution: drink
   - type: ItemCooldown
   - type: Recyclable
   - type: SpaceGarbage

@@ -181,6 +181,7 @@
       - APCElectronics
       - AirAlarmElectronics
       - FireAlarmElectronics
+      - MailingUnitElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -199,6 +200,7 @@
       - ProximitySensor
       - LeftArmBorg
       - RightArmBorg
+      - HolofanProjector
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -320,6 +322,7 @@
       - ShellShotgun
       - ShellShotgunBeanbag
       - ShellShotgunFlare
+      - ShellTranquilizer
       - CartridgeLightRifle
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
@@ -364,7 +367,6 @@
       - ClothingMaskSterile
       - DiseaseSwab
       - HandheldCrewMonitor
-      - ShellTranquilizer
       - Scalpel
       - Retractor
       - Cautery
@@ -431,7 +433,7 @@
       - ClothingUniformJumpskirtMedicalDoctor
       - ClothingUniformJumpsuitMime
       - ClothingUniformJumpskirtMime
-      - ClothingUniformJumpsuitLawyerPurple
+      - ClothingUniformJumpsuitMusician
       - ClothingUniformJumpsuitParamedic
       - ClothingUniformJumpskirtParamedic
       - ClothingUniformJumpsuitPrisoner
@@ -490,7 +492,7 @@
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
-      board: AutolatheMachineCircuitboard
+      board: OreProcessorMachineCircuitboard
     - type: LatheDatabase
       static: true
       recipes:
