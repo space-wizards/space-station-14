@@ -57,10 +57,6 @@
     - nodevis
     - nodevisfilter
 
-- Flags: FUN
-  Commands:
-    - tethergun
-
 - Flags: ADMIN
   Commands:
     - togglehealthoverlay
