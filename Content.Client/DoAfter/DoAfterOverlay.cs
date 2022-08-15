@@ -2,34 +2,28 @@ using Content.Client.Resources;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.DoAfter;
 
 public sealed class DoAfterOverlay : Overlay
 {
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    private readonly IEntityManager _entManager;
     private readonly SharedTransformSystem _transform;
 
-    private Texture _barTexture;
-    private ShaderInstance _shader;
+    private readonly Texture _barTexture;
+    private readonly ShaderInstance _shader;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    public DoAfterOverlay()
+    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IResourceCache cache)
     {
-        IoCManager.InjectDependencies(this);
+        _entManager = entManager;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
-        _barTexture = IoCManager.Resolve<IResourceCache>()
-            .GetTexture("/Textures/Interface/Misc/progress_bar.rsi/icon.png");
+        _barTexture = cache.GetTexture("/Textures/Interface/Misc/progress_bar.rsi/icon.png");
 
-        _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
+        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -39,7 +33,8 @@ public sealed class DoAfterOverlay : Overlay
         var spriteQuery = _entManager.GetEntityQuery<SpriteComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        var scale = _configManager.GetCVar(CVars.DisplayUIScale);
+        // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
+        const float scale = 1f;
         var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
         handle.UseShader(_shader);

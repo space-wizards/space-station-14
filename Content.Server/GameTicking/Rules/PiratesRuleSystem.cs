@@ -32,7 +32,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
     [ViewVariables]

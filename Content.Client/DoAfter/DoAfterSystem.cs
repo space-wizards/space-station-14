@@ -1,11 +1,10 @@
 using Content.Shared.DoAfter;
-using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Collections;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
-using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -32,7 +31,11 @@ namespace Content.Client.DoAfter
             UpdatesOutsidePrediction = true;
             SubscribeNetworkEvent<CancelledDoAfterMessage>(OnCancelledDoAfter);
             SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
-            IoCManager.Resolve<IOverlayManager>().AddOverlay(new DoAfterOverlay());
+            IoCManager.Resolve<IOverlayManager>().AddOverlay(
+                new DoAfterOverlay(
+                    EntityManager,
+                    IoCManager.Resolve<IPrototypeManager>(),
+                    IoCManager.Resolve<IResourceCache>()));
         }
 
         public override void Shutdown()
@@ -83,7 +86,8 @@ namespace Content.Client.DoAfter
 
         private void OnCancelledDoAfter(CancelledDoAfterMessage ev)
         {
-            if (!TryComp<DoAfterComponent>(ev.Uid, out var doAfter)) return;
+            if (!TryComp<DoAfterComponent>(ev.Uid, out var doAfter))
+                return;
 
             Cancel(doAfter, ev.ID);
         }
@@ -91,7 +95,6 @@ namespace Content.Client.DoAfter
         /// <summary>
         ///     Remove a DoAfter without showing a cancellation graphic.
         /// </summary>
-        /// <param name="clientDoAfter"></param>
         public void Remove(DoAfterComponent component, ClientDoAfter clientDoAfter)
         {
             component.DoAfters.Remove(clientDoAfter.ID);
