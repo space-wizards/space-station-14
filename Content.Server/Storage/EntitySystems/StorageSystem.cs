@@ -656,7 +656,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 foreach (var bui in ui.Interfaces.Values)
                 {
-                    _uiSystem.TryClose(uid, bui.UiKey, session, ui);
+                    _uiSystem.TryClose(entity, bui.UiKey, session, ui);
                 }
             }
         }
