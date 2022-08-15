@@ -245,7 +245,6 @@
     state: direction_wash
 
 # Regular Signs
-# Descriptions intentionally left empty.
 
 - type: entity
   parent: BaseSign
@@ -895,6 +894,7 @@
   parent: BaseSign
   id: SignZomlab
   name: zombie lab sign
+  description: "A sign indicating the zombie lab."
   components:
   - type: Sprite
     state: zomlab
@@ -930,7 +930,7 @@
   parent: BaseSign
   id: SignBlankMed
   name: blank sign
-  Description: A blank sign.
+  description: A blank sign.
   components:
   - type: Sprite
     state: medium_blank
@@ -939,7 +939,7 @@
   parent: BaseSign
   id: SignMagneticsMed
   name: magnetics sign
-  Description: A sign indicating the use of magnets.
+  description: A sign indicating the use of magnets.
   components:
   - type: Sprite
     state: medium_magnetics
@@ -948,7 +948,7 @@
   parent: BaseSign
   id: SignDangerMed
   name: danger sign
-  Description: A sign indicating danger.
+  description: A sign indicating danger.
   components:
   - type: Sprite
     state: medium_danger
@@ -957,7 +957,7 @@
   parent: BaseSign
   id: ExplosivesSignMed
   name: explosives sign
-  Description: A sign indicating explosive materials.
+  description: A sign indicating explosive materials.
   components:
   - type: Sprite
     state: medium_explosives
@@ -966,7 +966,7 @@
   parent: BaseSign
   id: SignCryogenicsMed
   name: cryogenics sign
-  Description: A sign indicating cryogenic materials.
+  description: A sign indicating cryogenic materials.
   components:
   - type: Sprite
     state: medium_cryogenics
@@ -975,7 +975,7 @@
   parent: BaseSign
   id: SignElectricalMed
   name: electrical sign
-  Description: A sign indicating electricity.
+  description: A sign indicating electricity.
   components:
   - type: Sprite
     state: medium_electrical
@@ -984,7 +984,7 @@
   parent: BaseSign
   id: SignBiohazardMed
   name: biohazard sign
-  Description: A sign indicating a biohazard.
+  description: A sign indicating a biohazard.
   components:
   - type: Sprite
     state: medium_biohazard
@@ -993,7 +993,7 @@
   parent: BaseSign
   id: SignRadiationMed
   name: radiation sign
-  Description: A sign indicating radiation.
+  description: A sign indicating radiation.
   components:
   - type: Sprite
     state: medium_radiation
@@ -1002,7 +1002,7 @@
   parent: BaseSign
   id: SignFlammableMed
   name: flammable sign #when flammable component is done, this sign needs it
-  Description: A sign indicating flammable materials.
+  description: A sign indicating flammable materials.
   components:
   - type: Sprite
     state: medium_flammable
@@ -1011,7 +1011,7 @@
   parent: BaseSign
   id: SignLaserMed
   name: laser sign
-  Description: A sign indicating a laser hazard.
+  description: A sign indicating a laser hazard.
   components:
   - type: Sprite
     state: medium_laser
@@ -1020,7 +1020,7 @@
   parent: BaseSign
   id: SignSecureMed
   name: secure sign
-  Description: A sign indicating that the area ahead is a secure area.
+  description: A sign indicating that the area ahead is a secure area.
   components:
   - type: Sprite
     state: medium_secure
