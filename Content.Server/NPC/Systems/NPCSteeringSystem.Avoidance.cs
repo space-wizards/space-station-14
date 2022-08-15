@@ -1,5 +1,7 @@
 using Content.Server.NPC.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.Physics;
 
 namespace Content.Server.NPC.Systems;
@@ -9,20 +11,33 @@ public sealed partial class NPCSteeringSystem
     // Derived from RVO2 library which uses ORCA (optimal reciprocal collision avoidance).
     // Could also potentially use something force based or RVO or detour crowd.
 
-    public bool CollisionAvoidanceEnabled { get; set; }= true;
+    public bool CollisionAvoidanceEnabled { get; set; } = true;
 
     private const float Radius = 0.35f;
     private const float RVO_EPSILON = 0.00001f;
 
     private void InitializeAvoidance()
     {
+        var configManager = IoCManager.Resolve<IConfigurationManager>();
+        configManager.OnValueChanged(CCVars.NPCCollisionAvoidance, SetCollisionAvoidance);
+    }
 
+    private void ShutdownAvoidance()
+    {
+        var configManager = IoCManager.Resolve<IConfigurationManager>();
+        configManager.UnsubValueChanged(CCVars.NPCCollisionAvoidance, SetCollisionAvoidance);
+    }
+
+    private void SetCollisionAvoidance(bool obj)
+    {
+        CollisionAvoidanceEnabled = obj;
     }
 
     private void CollisionAvoidance((NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent)[] npcs)
     {
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
         var rvoQuery = GetEntityQuery<NPCRVOComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var (steering, _, mover, xform) in npcs)
         {
@@ -30,12 +45,12 @@ public sealed partial class NPCSteeringSystem
                 !bodyQuery.TryGetComponent(steering.Owner, out var body))
                 continue;
 
-            ComputeNeighbors(mover, rvo, body, xform);
+            ComputeNeighbors(mover, rvo, body, xform, xformQuery);
             ComputeVelocity(mover, rvo, body, xform);
         }
     }
 
-    private void ComputeNeighbors(InputMoverComponent mover, NPCRVOComponent rvo, PhysicsComponent body, TransformComponent xform)
+    private void ComputeNeighbors(InputMoverComponent mover, NPCRVOComponent rvo, PhysicsComponent body, TransformComponent xform, EntityQuery<TransformComponent> xformQuery)
     {
         // Obstacles
         var obstacleRange = rvo.ObstacleTimeHorizon * GetSprintSpeed(mover.Owner) + Radius;
@@ -47,7 +62,7 @@ public sealed partial class NPCSteeringSystem
         {
             if (other.BodyType != BodyType.Static ||
                 other.Owner == mover.Owner ||
-                Transform(other.Owner).ParentUid != xform.ParentUid)
+                xformQuery.GetComponent(other.Owner).ParentUid != xform.ParentUid)
                 continue;
 
             rvo.ObstacleNeighbors.Add(other.Owner);
@@ -63,7 +78,7 @@ public sealed partial class NPCSteeringSystem
             {
                 if (other.BodyType == BodyType.Static ||
                     other.Owner == mover.Owner ||
-                    Transform(other.Owner).ParentUid != xform.ParentUid)
+                    xformQuery.GetComponent(other.Owner).ParentUid != xform.ParentUid)
                     continue;
 
                 rvo.AgentNeighbors.Add(other.Owner);

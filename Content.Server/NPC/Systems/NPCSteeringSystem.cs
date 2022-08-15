@@ -20,10 +20,8 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.1f;
@@ -60,6 +58,7 @@ namespace Content.Server.NPC.Systems
         public override void Shutdown()
         {
             base.Shutdown();
+            ShutdownAvoidance();
             _configManager.UnsubValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
         }
 
