@@ -1,4 +1,5 @@
 whitelist-not-whitelisted = Вас нет в вайтлисте.
+whitelist-not-whitelisted-rp = You are not whitelisted. To become whitelisted, visit our Discord (which can be found at https://spacestation14.io) and check the #rp-whitelist channel.
 command-whitelistadd-description = Добавить игрока с указанным юзернеймом в вайтлист.
 command-whitelistadd-help = whitelistadd <username>
 command-whitelistremove-description = Удалить игрока с указанным юзернеймом из вайтлиста.

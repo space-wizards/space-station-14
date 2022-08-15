@@ -37,6 +37,8 @@ emergency-shuttle-console-auth-revoked =
     }.
 emergency-shuttle-console-denied = Доступ запрещён
 # UI
+emergency-shuttle-console-window-title = Emergency Shuttle Console
+# UI
 emergency-shuttle-ui-engines = ДВИГАТЕЛИ:
 emergency-shuttle-ui-idle = Простой
 emergency-shuttle-ui-repeal-all = Повторить всё
