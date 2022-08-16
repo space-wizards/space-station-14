@@ -43,10 +43,10 @@ namespace Content.Server.Weapon.Melee.EnergySword
             Color.MediumOrchid
         };
 
-        [DataField("litDamageBonus", required: true)]
+        [DataField("litDamageBonus")]
         public DamageSpecifier LitDamageBonus = default!;
 
-        [DataField("litDisarmMalus", required: true)]
+        [DataField("litDisarmMalus")]
         public float litDisarmMalus = 0.6f;
     }
 }
