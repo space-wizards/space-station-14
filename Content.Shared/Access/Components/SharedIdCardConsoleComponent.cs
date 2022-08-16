@@ -26,12 +26,14 @@ namespace Content.Shared.Access.Components
             public readonly string FullName;
             public readonly string JobTitle;
             public readonly List<string> AccessList;
+            public readonly string JobPrototype;
 
-            public WriteToTargetIdMessage(string fullName, string jobTitle, List<string> accessList)
+            public WriteToTargetIdMessage(string fullName, string jobTitle, List<string> accessList, string jobPrototype)
             {
                 FullName = fullName;
                 JobTitle = jobTitle;
                 AccessList = accessList;
+                JobPrototype = jobPrototype;
             }
         }
 

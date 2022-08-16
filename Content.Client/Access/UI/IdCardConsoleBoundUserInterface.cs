@@ -70,7 +70,8 @@ namespace Content.Client.Access.UI
             SendMessage(new WriteToTargetIdMessage(
                 newFullName,
                 newJobTitle,
-                newAccessList));
+                newAccessList,
+                newJobPrototype));
         }
     }
 }
