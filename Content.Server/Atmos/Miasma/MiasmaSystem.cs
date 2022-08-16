@@ -208,6 +208,7 @@ namespace Content.Server.Atmos.Miasma
                 ToggleDecomposition(args.Entity, false, perishable);
             }
         }
+
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable) && !Terminating(uid))
@@ -216,7 +217,6 @@ namespace Content.Server.Atmos.Miasma
                 ToggleDecomposition(args.Entity, true, perishable);
             }
         }
-
 
         /// Fly stuff
 
@@ -235,7 +235,7 @@ namespace Content.Server.Atmos.Miasma
 
         public void ToggleDecomposition(EntityUid uid, bool decompose, PerishableComponent? perishable = null)
         {
-            if (!Resolve(uid, ref perishable))
+            if (Terminating(uid) || !Resolve(uid, ref perishable))
                 return;
 
             if (decompose == perishable.Progressing) // Saved a few cycles
