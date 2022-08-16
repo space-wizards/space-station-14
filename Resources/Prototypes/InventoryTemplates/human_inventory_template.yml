@@ -40,14 +40,6 @@
       uiContainer: Top
       uiWindowPos: 0,2
       displayName: Jumpsuit
-    - name: id
-      slotTexture: id
-      slotFlags: IDCARD
-      stripTime: 5
-      uiContainer: BottomRight
-      uiWindowPos: 2,1
-      dependsOn: jumpsuit
-      displayName: ID
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
@@ -66,6 +58,14 @@
       dependsOn: jumpsuit
       displayName: Pocket 2
       stripHidden: true
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      stripTime: 5
+      uiContainer: BottomRight
+      uiWindowPos: 2,1
+      dependsOn: jumpsuit
+      displayName: ID
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
