@@ -5,8 +5,6 @@ using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Content.Shared.Tools.Components;
-using Content.Shared.Weapons.Melee;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -52,7 +50,6 @@ namespace Content.Server.TapeRecorder
                 NeedHand = true,
                 TargetFinishedEvent = new SpoolingCompleteEvent
                 {
-                    Component = component,
                     User = args.User,
                 },
                 TargetCancelledEvent = new SpoolingCancelEvent()
@@ -122,7 +119,6 @@ namespace Content.Server.TapeRecorder
         private sealed class SpoolingCompleteEvent : EntityEventArgs
         {
             public EntityUid User;
-            public CassetteTapeComponent Component = default!;
         }
         private sealed class SpoolingCancelEvent : EntityEventArgs
         {

@@ -393,12 +393,11 @@ public sealed partial class ChatSystem : SharedChatSystem
     private void SendInVoiceRange(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat)
     {
         var sessions = new List<ICommonSession>();
-        var listenerList = new List<EntityUid>();
 
         ClientDistanceToList(source, VoiceRange, sessions);
         _chatManager.ChatMessageToMany(channel, message, messageWrap, source, hideChat, sessions.Select(s => s.ConnectedClient).ToList());
 
-        foreach (var listenerEntity in ListenerEntityDistanceToList(source, listenerList))
+        foreach (var listenerEntity in ListenerEntityDistanceToList(source))
         {
             RaiseLocalEvent(listenerEntity, new ChatMessageHeardNearbyEvent(channel, message, messageWrap, source, hideChat));
         }
@@ -501,19 +500,17 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
-    private IEnumerable<EntityUid> ListenerEntityDistanceToList(EntityUid source, List<EntityUid> listenerList)
+    private IEnumerable<EntityUid> ListenerEntityDistanceToList(EntityUid source)
     {
-        var entityQuery = EntityQuery<TransformComponent, ChatListenerComponent>();
+        if (HasComp<ChatListenerComponent>(source))
+            yield break;
 
         var transformSource = Transform(source);
-
         var sourceMapId = transformSource.MapID;
         var sourceCoords = transformSource.Coordinates;
 
-        foreach (var (transformComponent, chatListeners) in entityQuery)
+        foreach (var (transformComponent, chatListeners) in EntityQuery<TransformComponent, ChatListenerComponent>())
         {
-            if (HasComp<ChatListenerComponent>(source))
-                continue;
             if (source == chatListeners.Owner)
                 continue;
             if (transformComponent.MapID != sourceMapId || !sourceCoords.InRange(EntityManager, transformComponent.Coordinates, chatListeners.HearingRange))

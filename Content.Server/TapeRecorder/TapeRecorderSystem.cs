@@ -7,8 +7,8 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Content.Shared.TapeRecorder;
+using Robust.Shared.Player;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
