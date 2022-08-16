@@ -136,3 +136,6 @@ ent-SingularityToy = игрушечная сингулярность
 ent-PonderingOrb = шар размышлений
     .desc = Это тяжело, мужик... Очень тяжело.
     .suffix = { "" }
+ent-ToySword = toy sword
+    .desc = New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
+    .suffix = { "" }
