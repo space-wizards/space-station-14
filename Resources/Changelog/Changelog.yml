@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Stethoscopes have been ported over from Nyanotrasen. Wear one on your
-      neck and right click on someone else to listen to their chest., type: Add}
-  id: 1664
-  time: '2022-06-06T01:37:29.0000000+00:00'
 - author: youarereadingthis
   changes:
   - {message: Removed the shuttle powering crate from the cargo ordering console.,
@@ -2934,3 +2928,8 @@ Entries:
       things that can go wrong in the lab - including explosions., type: Tweak}
   id: 2163
   time: '2022-08-16T11:16:18.0000000+00:00'
+- author: martin69420
+  changes:
+  - {message: Fixed missing death sprite for holocarp and magicarp, type: Fix}
+  id: 2164
+  time: '2022-08-16T13:41:26.0000000+00:00'
