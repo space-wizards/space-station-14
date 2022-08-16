@@ -14,8 +14,6 @@ namespace Content.Server.Abilities.Boxer
 {
     public sealed class BoxingSystem : EntitySystem
     {
-        [Dependency] private readonly StunSystem _stunSystem = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()

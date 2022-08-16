@@ -119,7 +119,6 @@ namespace Content.Client.Traitor.Uplink
             if (texture == null)
                 texture = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
 
-
             var newListing = new UplinkListingControl(listingName, listingDesc, listingPrice, canBuy, texture);
             newListing.UplinkItemBuyButton.OnButtonDown += args
                 => OnListingButtonPressed?.Invoke(args, listing);

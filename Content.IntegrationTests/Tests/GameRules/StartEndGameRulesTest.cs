@@ -1,32 +1,38 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
-/// <summary>
-///     Tests that all game rules can be added/started/ended at the same time without exceptions.
-/// </summary>
+
 [TestFixture]
 public sealed class StartEndGameRulesTest
 {
+    /// <summary>
+    ///     Tests that all game rules can be added/started/ended at the same time without exceptions.
+    /// </summary>
     [Test]
-    public async Task Test()
+    public async Task TestAllConcurrent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
+        {
+            NoClient = true,
+            Dirty = true,
+        });
         var server = pairTracker.Pair.Server;
+        await server.WaitIdleAsync();
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
+        var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
 
         await server.WaitAssertion(() =>
         {
-            var gameTicker = EntitySystem.Get<GameTicker>();
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
-            var rules = protoMan.EnumeratePrototypes<GameRulePrototype>().ToArray();
+            var rules = protoMan.EnumeratePrototypes<GameRulePrototype>().ToList();
+            rules.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
 
             // Start all rules
             foreach (var rule in rules)
@@ -34,7 +40,7 @@ public sealed class StartEndGameRulesTest
                 gameTicker.StartGameRule(rule);
             }
 
-            Assert.That(gameTicker.AddedGameRules.Count == rules.Length);
+            Assert.That(gameTicker.AddedGameRules, Has.Count.EqualTo(rules.Count));
         });
 
         // Wait three ticks for any random update loops that might happen
@@ -42,8 +48,6 @@ public sealed class StartEndGameRulesTest
 
         await server.WaitAssertion(() =>
         {
-            var gameTicker = EntitySystem.Get<GameTicker>();
-
             // End all rules
             gameTicker.ClearGameRules();
             Assert.That(!gameTicker.AddedGameRules.Any());

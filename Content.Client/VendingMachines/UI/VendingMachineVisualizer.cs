@@ -120,6 +120,7 @@ namespace Content.Client.VendingMachines.UI
             flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(key, 0f));
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -137,6 +138,7 @@ namespace Content.Client.VendingMachines.UI
             spriteComponent.LayerSetVisible(VendingMachineVisualLayers.Unlit, true);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

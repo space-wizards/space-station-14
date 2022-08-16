@@ -20,7 +20,7 @@
   components:
   - type: BallisticAmmoProvider
     capacity: 40
-    proto: BulletDonkSoft
+    proto: BulletFoam
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foambox

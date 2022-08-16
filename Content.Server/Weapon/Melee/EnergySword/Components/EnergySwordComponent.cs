@@ -12,6 +12,9 @@ namespace Content.Server.Weapon.Melee.EnergySword
 
         public bool Activated = false;
 
+        [DataField("isSharp")]
+        public bool IsSharp = true;
+
         /// <summary>
         ///     RGB cycle rate for hacked e-swords.
         /// </summary>
@@ -40,10 +43,10 @@ namespace Content.Server.Weapon.Melee.EnergySword
             Color.MediumOrchid
         };
 
-        [DataField("litDamageBonus", required: true)]
-        public DamageSpecifier LitDamageBonus = default!;
+        [DataField("litDamageBonus")]
+        public DamageSpecifier LitDamageBonus = new();
 
-        [DataField("litDisarmMalus", required: true)]
+        [DataField("litDisarmMalus")]
         public float litDisarmMalus = 0.6f;
     }
 }

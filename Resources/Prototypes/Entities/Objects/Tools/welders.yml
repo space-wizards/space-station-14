@@ -50,6 +50,7 @@
     radius: 1.5
     color: orange
   - type: Appearance
+  - type: RequiresEyeProtection
 
 - type: entity
   name: industrial welding tool

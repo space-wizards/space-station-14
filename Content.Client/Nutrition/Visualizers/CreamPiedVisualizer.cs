@@ -13,6 +13,7 @@ namespace Content.Client.Nutrition.Visualizers
         [DataField("state")]
         private string? _state;
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -24,6 +25,7 @@ namespace Content.Client.Nutrition.Visualizers
             sprite.LayerSetVisible(CreamPiedVisualLayers.Pie, false);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
