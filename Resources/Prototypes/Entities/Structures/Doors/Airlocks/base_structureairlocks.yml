@@ -62,7 +62,7 @@
     visuals:
     - type: AirlockVisualizer
       openUnlitVisible: true
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
   - type: ExtensionCableReceiver

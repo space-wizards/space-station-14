@@ -323,24 +323,6 @@
     maxIntensity: 10
 
 - type: entity
-  id: BulletFoam
-  name: foam dart
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    layers:
-      - state: foamdart
-  - type: Projectile
-    deleteOnCollide: true
-    damage:
-      types:
-        Blunt: 2
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/snap.ogg
-
-- type: entity
   id: BulletCap
   name: cap bullet
   parent: BaseBullet

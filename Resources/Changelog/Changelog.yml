@@ -1,28 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Added a mapping/editor keybinding that starts placing the same type
-      of entity or tile that the mouse is currently hovering over. Defaults to `P`,
-    type: Add}
-  id: 1661
-  time: '2022-06-05T22:58:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Anchoring now shows popups, type: Add}
-  id: 1662
-  time: '2022-06-05T23:04:40.0000000+00:00'
-- author: WilliamECrew
-  changes:
-  - {message: 'When dumping contents out of a bag, items will now be spread out randomly
-      instead of all being dumped into the same exact spot.', type: Tweak}
-  id: 1663
-  time: '2022-06-06T00:34:44.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Stethoscopes have been ported over from Nyanotrasen. Wear one on your
-      neck and right click on someone else to listen to their chest., type: Add}
-  id: 1664
-  time: '2022-06-06T01:37:29.0000000+00:00'
 - author: youarereadingthis
   changes:
   - {message: Removed the shuttle powering crate from the cargo ordering console.,
@@ -2934,3 +2910,26 @@ Entries:
   - {message: The ChemMaster4000 pill limit is increased to 25, type: Tweak}
   id: 2160
   time: '2022-08-15T04:57:31.0000000+00:00'
+- author: tomasalves8
+  changes:
+  - {message: Removed the ability to point while asleep, type: Fix}
+  id: 2161
+  time: '2022-08-16T04:22:17.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: "FunTime Arcade Solutions\u2122 has outfitted NanoTrasen stations with\
+      \ a new supply of arcade toys! Come spend your free time at the arcade machines\
+      \ for exciting, fun objects!", type: Add}
+  id: 2162
+  time: '2022-08-16T09:57:40.0000000+00:00'
+- author: Hoid
+  changes:
+  - {message: Experimental Research Hardsuit now protects more effectively against
+      things that can go wrong in the lab - including explosions., type: Tweak}
+  id: 2163
+  time: '2022-08-16T11:16:18.0000000+00:00'
+- author: martin69420
+  changes:
+  - {message: Fixed missing death sprite for holocarp and magicarp, type: Fix}
+  id: 2164
+  time: '2022-08-16T13:41:26.0000000+00:00'

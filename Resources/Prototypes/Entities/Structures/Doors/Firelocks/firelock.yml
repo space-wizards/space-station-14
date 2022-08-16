@@ -70,7 +70,7 @@
       visuals:
         - type: AirlockVisualizer
           simpleVisuals: true
-        - type: WiresVisualizer
+    - type: WiresVisuals
     - type: Wires
       BoardName: "Firelock Control"
       LayoutId: Firelock
