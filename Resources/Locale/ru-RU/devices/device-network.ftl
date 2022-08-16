@@ -2,7 +2,7 @@
 device-frequency-prototype-name-atmos = Атмосферные приборы
 device-frequency-prototype-name-suit-sensors = Сенсоры костюмов
 device-frequency-prototype-name-lights = Умное освещение
-device-frequency-prototype-name-mailing-units = Mailing Units
+device-frequency-prototype-name-mailing-units = Почтовый блок
 # prefixes for randomly generated device addresses
 device-address-prefix-vent = Вент-
 device-address-prefix-scrubber = Скр-

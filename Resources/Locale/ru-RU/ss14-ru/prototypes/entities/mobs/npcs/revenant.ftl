@@ -1,6 +1,6 @@
-ent-MobRevenant = revenant
-    .desc = A spooky ghostie.
+ent-MobRevenant = ревенант
+    .desc = Страшное привидение.
     .suffix = { "" }
-ent-RevenantEctoplasm = ectoplasm
-    .desc = A weird bit of goo. You probably shouldn't leave it lying around like this.
+ent-RevenantEctoplasm = эктоплазма
+    .desc = Странный комок слизи. Вероятно, вам не следует оставлять его здесь лежать.
     .suffix = { "" }
