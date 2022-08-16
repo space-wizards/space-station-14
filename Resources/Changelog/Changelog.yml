@@ -1,11 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Added a mapping/editor keybinding that starts placing the same type
-      of entity or tile that the mouse is currently hovering over. Defaults to `P`,
-    type: Add}
-  id: 1661
-  time: '2022-06-05T22:58:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Anchoring now shows popups, type: Add}
@@ -2934,3 +2927,8 @@ Entries:
   - {message: The ChemMaster4000 pill limit is increased to 25, type: Tweak}
   id: 2160
   time: '2022-08-15T04:57:31.0000000+00:00'
+- author: tomasalves8
+  changes:
+  - {message: Removed the ability to point while asleep, type: Fix}
+  id: 2161
+  time: '2022-08-16T04:22:17.0000000+00:00'
