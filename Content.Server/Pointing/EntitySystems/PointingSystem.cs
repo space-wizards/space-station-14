@@ -3,6 +3,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
 using Content.Server.Visible;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
@@ -108,6 +109,11 @@ namespace Content.Server.Pointing.EntitySystems
             // Checking mob state directly instead of some action blocker, as many action blockers are blocked for
             // ghosts and there is no obvious choice for pointing.
             if (TryComp(player, out MobStateComponent? mob) && mob.IsIncapacitated())
+            {
+                return false;
+            }
+
+            if (HasComp<SleepingComponent>(player))
             {
                 return false;
             }

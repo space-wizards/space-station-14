@@ -94,8 +94,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
 
 - type: entity
   parent: VendingMachine
@@ -124,8 +123,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Bar"]]
 
@@ -153,8 +151,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1
     energy: 1.3
@@ -191,8 +188,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
 
 - type: entity
   parent: VendingMachine
@@ -223,8 +219,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.8
     energy: 1.6
@@ -264,8 +259,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.3
@@ -301,8 +295,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -333,8 +326,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Service"]]
   - type: PointLight
@@ -366,8 +358,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -400,8 +391,7 @@
     - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -431,8 +421,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Engineering"]]
   - type: PointLight
@@ -467,8 +456,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
   - type: PointLight
@@ -502,8 +490,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Hydroponics"]]
   - type: PointLight
@@ -537,8 +524,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Security"]]
   - type: PointLight
@@ -573,13 +559,12 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
     color: "#326e3f"
-    
+
 - type: entity
   parent: VendingMachineSeedsUnlocked
   id: VendingMachineSeeds
@@ -619,8 +604,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -655,8 +639,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -691,8 +674,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -729,8 +711,7 @@
       map: ["enum.VendingMachineVisualLayers.Screen"]
       shader: unshaded
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -766,8 +747,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -796,8 +776,7 @@
     - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
 
@@ -825,8 +804,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -861,8 +839,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -895,8 +872,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -925,8 +901,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -961,8 +936,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -994,8 +968,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Hydroponics"]]
 
@@ -1023,8 +996,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Brig"]]
 
@@ -1052,8 +1024,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Security"]]
 
@@ -1081,8 +1052,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Bar"]]
 
@@ -1110,8 +1080,7 @@
   - type: AccessReader
     access: [["Chapel"]]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -1141,8 +1110,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Cargo"]]
 
@@ -1170,8 +1138,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
 
@@ -1199,8 +1166,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Chemistry"]]
 
@@ -1228,8 +1194,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -1257,8 +1222,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -1286,8 +1250,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Kitchen"]]
 
@@ -1315,8 +1278,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Security"]]
 
@@ -1344,8 +1306,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Janitor"]]
 
@@ -1373,8 +1334,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Research"]]
 
@@ -1402,8 +1362,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Research"]]
 
@@ -1431,8 +1390,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
 
@@ -1460,8 +1418,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
 
