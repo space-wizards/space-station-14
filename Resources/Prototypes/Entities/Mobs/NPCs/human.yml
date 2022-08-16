@@ -18,8 +18,13 @@
   id: MobSpirate
   description: Yarr!
   components:
+  - type: AiFactionTag
+    factions:
+      - Syndicate
   - type: InputMover
   - type: MobMover
+  - type: HTN
+    rootTask: RangedCombatCompound
 
 - type: entity
   parent: MobHuman

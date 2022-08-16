@@ -179,7 +179,13 @@ public abstract partial class SharedGunSystem : EntitySystem
         Dirty(gun);
     }
 
-    private void AttemptShoot(EntityUid user, GunComponent gun)
+    public void AttemptShoot(EntityUid user, GunComponent gun, EntityCoordinates toCoordinates)
+    {
+        gun.ShootCoordinates = toCoordinates;
+        AttemptShoot(user, gun);
+    }
+
+    public void AttemptShoot(EntityUid user, GunComponent gun)
     {
         if (gun.FireRate <= 0f) return;
 

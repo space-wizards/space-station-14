@@ -1,3 +1,48 @@
+# -- Ranged --
+- type: htnCompound
+  id: RangedCombatCompound
+  desc: Tries to shoot a target at range.
+  branches:
+    # Unarmed combat
+    - tasks:
+        - id: PickMeleeTargetPrimitive
+        - id: RangedAttackTargetCompound
+
+- type: htnCompound
+  id: RangedAttackTargetCompound
+  desc: Tries to ranged attack our target.
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
+  branches:
+    # Keep hitting them if they're in LOS
+    - tasks:
+        - id: RangedAttackTargetPrimitive
+
+    # Move to range and hit them
+    - tasks:
+        - id: MoveToCombatTargetPrimitive
+        - id: RangedAttackTargetPrimitive
+
+
+- type: htnPrimitive
+  id: RangedAttackTargetPrimitive
+  desc: Attacks the specified target if they're in LOS.
+  operator: !type:RangedOperator
+    targetKey: CombatTarget
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
+    - !type:TargetInRangePrecondition
+      targetKey: CombatTarget
+      # TODO: Non-scuffed
+      rangeKey: RangedRange
+    - !type:TargetInLOSPrecondition
+      targetKey: CombatTarget
+      rangeKey: RangedRange
+
+
+# -- Melee --
 - type: htnCompound
   id: MeleeCombatCompound
   desc: Selects a target in melee and tries to attack it.

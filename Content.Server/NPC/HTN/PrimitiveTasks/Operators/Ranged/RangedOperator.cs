@@ -1,15 +1,11 @@
 using System.Threading.Tasks;
-using Content.Server.MobState;
 using Content.Server.NPC.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Melee;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
 
-/// <summary>
-/// Attacks the specified key in melee combat.
-/// </summary>
-public sealed class MeleeOperator : HTNOperator
+public sealed class RangedOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
@@ -30,7 +26,7 @@ public sealed class MeleeOperator : HTNOperator
     public override void Startup(NPCBlackboard blackboard)
     {
         base.Startup(blackboard);
-        var melee = _entManager.EnsureComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        var melee = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
         melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 
@@ -55,18 +51,17 @@ public sealed class MeleeOperator : HTNOperator
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
         base.Shutdown(blackboard, status);
-        _entManager.RemoveComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        _entManager.RemoveComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
         blackboard.Remove<EntityUid>(TargetKey);
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         base.Update(blackboard, frameTime);
-        // TODO:
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var status = HTNOperatorStatus.Continuing;
 
-        if (_entManager.TryGetComponent<NPCMeleeCombatComponent>(owner, out var combat))
+        if (_entManager.TryGetComponent<NPCRangedCombatComponent>(owner, out var combat))
         {
             // Success
             if (_entManager.TryGetComponent<MobStateComponent>(combat.Target, out var mobState) &&
@@ -98,7 +93,7 @@ public sealed class MeleeOperator : HTNOperator
 
         if (status != HTNOperatorStatus.Continuing)
         {
-            _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
+            _entManager.RemoveComponent<NPCRangedCombatComponent>(owner);
         }
 
         return status;

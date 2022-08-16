@@ -21,6 +21,7 @@ public sealed class NPCBlackboard
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
         {"MovementRange", 0.5f},
+        {"RangedRange", 7f},
         {"VisionRadius", 7f},
     };
 
