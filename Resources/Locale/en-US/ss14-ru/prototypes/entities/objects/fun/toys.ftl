@@ -136,3 +136,6 @@ ent-SingularityToy = singuloth-brand toy
 ent-PonderingOrb = pondering orb
     .desc = Ponderous, man... Really ponderous.
     .suffix = { "" }
+ent-ToySword = toy sword
+    .desc = New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
+    .suffix = { "" }
