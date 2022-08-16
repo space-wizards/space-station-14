@@ -84,10 +84,10 @@ namespace Content.Server.Chat.Managers
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchServerMessage(IPlayerSession player, string message)
+        public void DispatchServerMessage(IPlayerSession player, string message, Color? colorOverride = null)
         {
             var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            ChatMessageToOne(ChatChannel.Server, message, messageWrap, default, false, player.ConnectedClient);
+            ChatMessageToOne(ChatChannel.Server, message, messageWrap, default, false, player.ConnectedClient, colorOverride);
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
         }
