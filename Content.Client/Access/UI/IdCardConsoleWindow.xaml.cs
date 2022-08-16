@@ -103,6 +103,7 @@ namespace Content.Client.Access.UI
             }
 
             JobTitleLineEdit.Text = Loc.GetString(job.Name);
+            args.Button.SelectId(args.Id);
 
             ClearAllAccess();
 
