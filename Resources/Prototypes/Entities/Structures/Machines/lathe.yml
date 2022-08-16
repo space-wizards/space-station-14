@@ -21,6 +21,7 @@
   - type: LatheVisuals
     idleState: icon
     runningState: building
+  - type: WiresVisuals
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -107,6 +108,7 @@
   - type: LatheVisuals
     idleState: icon
     runningState: building
+  - type: WiresVisuals
   - type: Physics
     bodyType: Static
   - type: Fixtures
