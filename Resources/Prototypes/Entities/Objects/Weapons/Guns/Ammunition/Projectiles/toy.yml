@@ -7,7 +7,7 @@
   - type: Tag
     tags:
       - Cartridge
-      - CartridgeRocket
+      - CartridgeDart
   - type: Projectile
     damage:
       types:
@@ -23,7 +23,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletFoam
-    deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     layers:
