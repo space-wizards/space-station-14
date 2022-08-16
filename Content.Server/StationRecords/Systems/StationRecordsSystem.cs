@@ -216,12 +216,10 @@ public sealed class StationRecordsSystem : EntitySystem
             return;
         }
 
-        foreach (var key in records.Records.GetRecentlyAccessed())
+        foreach (var key in records.Records.GetRecentlyAccessedAndClear())
         {
             RaiseLocalEvent(new RecordModifiedEvent(key));
         }
-
-        records.Records.ClearRecentlyAccessed();
     }
 }
 

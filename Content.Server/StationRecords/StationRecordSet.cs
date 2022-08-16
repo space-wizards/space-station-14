@@ -118,20 +118,14 @@ public sealed class StationRecordSet
     }
 
     /// <summary>
-    ///     Get the recently accessed keys from this record set.
+    ///     Get the recently accessed keys from this record set. Will clear all recently accessed keys afterwards.
     /// </summary>
     /// <returns>All recently accessed keys from this record set.</returns>
-    public IEnumerable<StationRecordKey> GetRecentlyAccessed()
+    public IEnumerable<StationRecordKey> GetRecentlyAccessedAndClear()
     {
-        return _recentlyAccessed;
-    }
-
-    /// <summary>
-    ///     Clears the recently accessed keys from the set.
-    /// </summary>
-    public void ClearRecentlyAccessed()
-    {
+        var set = new HashSet<StationRecordKey>(_recentlyAccessed);
         _recentlyAccessed.Clear();
+        return set;
     }
 
     /// <summary>
