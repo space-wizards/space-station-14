@@ -182,8 +182,8 @@ namespace Content.Server.Access.Components
                     targetIdComponent.FullName,
                     targetIdComponent.JobTitle,
                     targetAccessComponent.Tags.ToArray(),
-                    name,
                     jobProto,
+                    name,
                     _entities.GetComponent<MetaDataComponent>(targetIdEntity).EntityName);
             }
             UserInterface?.SetState(newState);
