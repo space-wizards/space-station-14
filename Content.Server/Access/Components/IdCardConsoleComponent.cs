@@ -21,12 +21,18 @@ namespace Content.Server.Access.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
 
+        private StationRecordsSystem? _recordSystem;
+        private StationSystem? _stationSystem;
+
         protected override void Initialize()
         {
             base.Initialize();
 
             Owner.EnsureComponentWarn<AccessReaderComponent>();
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
+
+            _stationSystem = EntitySystem.Get<StationSystem>();
+            _recordSystem = EntitySystem.Get<StationRecordsSystem>();
 
             if (UserInterface != null)
             {
@@ -98,12 +104,12 @@ namespace Content.Server.Access.Components
 
         private void UpdateStationRecord(EntityUid idCard, string newFullName, string newJobTitle)
         {
-            var station = EntitySystem.Get<StationSystem>().GetOwningStation(Owner);
-            var recordSystem = EntitySystem.Get<StationRecordsSystem>();
+            var station = _stationSystem?.GetOwningStation(Owner);
             if (station == null
+                || _recordSystem == null
                 || !_entities.TryGetComponent(idCard, out StationRecordKeyStorageComponent? keyStorage)
                 || keyStorage.Key == null
-                || !recordSystem.TryGetRecord(station.Value, keyStorage.Key.Value, out GeneralStationRecord? record))
+                || !_recordSystem.TryGetRecord(station.Value, keyStorage.Key.Value, out GeneralStationRecord? record))
             {
                 return;
             }
@@ -111,7 +117,7 @@ namespace Content.Server.Access.Components
             record.Name = newFullName;
             record.JobTitle = newJobTitle;
 
-            recordSystem.Synchronize(station.Value);
+            _recordSystem.Synchronize(station.Value);
         }
 
         public void UpdateUserInterface()
@@ -137,6 +143,7 @@ namespace Content.Server.Access.Components
                     null,
                     null,
                     privilegedIdName,
+                    string.Empty,
                     string.Empty);
             }
             else
@@ -146,6 +153,19 @@ namespace Content.Server.Access.Components
                 var name = string.Empty;
                 if (PrivilegedIdSlot.Item is {Valid: true} item)
                     name = _entities.GetComponent<MetaDataComponent>(item).EntityName;
+
+                var station = _stationSystem?.GetOwningStation(Owner);
+                var jobProto = string.Empty;
+                if (_recordSystem != null
+                    && station != null
+                    && _entities.TryGetComponent(targetIdEntity, out StationRecordKeyStorageComponent? keyStorage)
+                    && keyStorage.Key != null
+                    && _recordSystem.TryGetRecord(station.Value, keyStorage.Key.Value,
+                        out GeneralStationRecord? record))
+                {
+                    jobProto = record.JobPrototype;
+                }
+
                 newState = new IdCardConsoleBoundUserInterfaceState(
                     PrivilegedIdSlot.HasItem,
                     PrivilegedIdIsAuthorized(),
@@ -154,6 +174,7 @@ namespace Content.Server.Access.Components
                     targetIdComponent.JobTitle,
                     targetAccessComponent.Tags.ToArray(),
                     name,
+                    jobProto,
                     _entities.GetComponent<MetaDataComponent>(targetIdEntity).EntityName);
             }
             UserInterface?.SetState(newState);
