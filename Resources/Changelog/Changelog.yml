@@ -1,10 +1,4 @@
 Entries:
-- author: WilliamECrew
-  changes:
-  - {message: 'When dumping contents out of a bag, items will now be spread out randomly
-      instead of all being dumped into the same exact spot.', type: Tweak}
-  id: 1663
-  time: '2022-06-06T00:34:44.0000000+00:00'
 - author: Rane
   changes:
   - {message: Stethoscopes have been ported over from Nyanotrasen. Wear one on your
@@ -2934,3 +2928,9 @@ Entries:
       \ for exciting, fun objects!", type: Add}
   id: 2162
   time: '2022-08-16T09:57:40.0000000+00:00'
+- author: Hoid
+  changes:
+  - {message: Experimental Research Hardsuit now protects more effectively against
+      things that can go wrong in the lab - including explosions., type: Tweak}
+  id: 2163
+  time: '2022-08-16T11:16:18.0000000+00:00'
