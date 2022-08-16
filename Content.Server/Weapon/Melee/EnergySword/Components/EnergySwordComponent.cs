@@ -44,7 +44,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
         };
 
         [DataField("litDamageBonus")]
-        public DamageSpecifier LitDamageBonus = default!;
+        public DamageSpecifier LitDamageBonus = new();
 
         [DataField("litDisarmMalus")]
         public float litDisarmMalus = 0.6f;
