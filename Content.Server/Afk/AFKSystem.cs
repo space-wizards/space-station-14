@@ -1,10 +1,12 @@
 using System.Linq;
 using Content.Server.Afk.Events;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.Afk;
@@ -18,22 +20,29 @@ public sealed class AFKSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
 
     private float _checkDelay;
+    private float _kickDelay;
     private float _accumulator;
 
-    private readonly HashSet<IPlayerSession> _afkPlayers = new();
+    private readonly Dictionary<IPlayerSession, long> _afkPlayers = new();
 
     public override void Initialize()
     {
         base.Initialize();
         _playerManager.PlayerStatusChanged += OnPlayerChange;
         _configManager.OnValueChanged(CCVars.AfkTime, SetAfkDelay, true);
+        _configManager.OnValueChanged(CCVars.AfkKickTime, SetAfkKickDelay, true);
     }
 
     private void SetAfkDelay(float obj)
     {
         _checkDelay = obj;
+    }
+    private void SetAfkKickDelay(int obj)
+    {
+        _kickDelay = obj;
     }
 
     private void OnPlayerChange(object? sender, SessionStatusEventArgs e)
@@ -77,16 +86,30 @@ public sealed class AFKSystem : EntitySystem
         {
             var pSession = (IPlayerSession) session;
             var isAfk = _afkManager.IsAfk(pSession);
-
-            if (isAfk && _afkPlayers.Add(pSession))
+            if (isAfk)
             {
-                var ev = new AFKEvent(pSession);
-                RaiseLocalEvent(ref ev);
-                continue;
+                var curTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+                if (!_afkPlayers.ContainsKey(pSession))
+                {
+                    _afkPlayers.Add(pSession, curTime);
+                    var ev = new AFKEvent(pSession);
+                    RaiseLocalEvent(ref ev);
+                    continue;
+                }
+                var timeElapsed = curTime - _afkPlayers[pSession];
+                if (timeElapsed > _kickDelay*60)
+                {
+                    var network = IoCManager.Resolve<IServerNetManager>();
+                    network.DisconnectChannel(pSession.ConnectedClient, Loc.GetString("afk-system-kick-reason"));
+                }
+                else if(timeElapsed > (_kickDelay-1)*60)
+                {
+                    _chatManager.DispatchServerMessage(pSession, Loc.GetString("afk-system-kick-warning"), Color.Red);
+                }
             }
-
-            if (!isAfk && _afkPlayers.Remove(pSession))
+            else if (_afkPlayers.ContainsKey(pSession))
             {
+                _afkPlayers.Remove(pSession);
                 var ev = new UnAFKEvent(pSession);
                 RaiseLocalEvent(ref ev);
                 continue;
