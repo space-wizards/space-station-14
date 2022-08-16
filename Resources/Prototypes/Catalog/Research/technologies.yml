@@ -239,6 +239,7 @@
     - ComputerTelevisionCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
+    - MailingUnitElectronics
     - HolofanProjector
 
 - type: technology

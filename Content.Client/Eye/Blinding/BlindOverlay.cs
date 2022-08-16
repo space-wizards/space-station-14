@@ -70,11 +70,11 @@ namespace Content.Client.Eye.Blinding
 
             var worldHandle = args.WorldHandle;
             var viewport = args.WorldBounds;
-            worldHandle.SetTransform(Matrix3.Identity);
             worldHandle.UseShader(_greyscaleShader);
             worldHandle.DrawRect(viewport, Color.White);
             worldHandle.UseShader(_circleMaskShader);
             worldHandle.DrawRect(viewport, Color.White);
+            worldHandle.UseShader(null);
         }
     }
 }

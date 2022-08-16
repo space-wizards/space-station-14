@@ -53,7 +53,7 @@
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
   userPopup: action-popup-combat
-  popupToggleSuffix: -disabling
+  popupToggleSuffix: -enabled
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
