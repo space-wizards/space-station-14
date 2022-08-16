@@ -10,6 +10,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -26,6 +27,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {
@@ -76,7 +78,7 @@ namespace Content.Server.Flash
                 Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
-        
+
         private void OnFlashUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)
         {
             if (args.Handled || !UseFlash(comp, args.User))
@@ -97,6 +99,8 @@ namespace Content.Server.Flash
                 if (--comp.Uses == 0)
                 {
                     sprite.LayerSetState(0, "burnt");
+
+                    _tagSystem.AddTag(comp.Owner, "Trash");
                     comp.Owner.PopupMessage(user, Loc.GetString("flash-component-becomes-empty"));
                 }
                 else if (!comp.Flashing)

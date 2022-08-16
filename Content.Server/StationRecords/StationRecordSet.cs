@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.StationRecords;
 
 namespace Content.Server.StationRecords;
@@ -118,14 +119,20 @@ public sealed class StationRecordSet
     }
 
     /// <summary>
-    ///     Get the recently accessed keys from this record set. Will clear all recently accessed keys afterwards.
+    ///     Get the recently accessed keys from this record set.
     /// </summary>
     /// <returns>All recently accessed keys from this record set.</returns>
-    public IEnumerable<StationRecordKey> GetRecentlyAccessedAndClear()
+    public IEnumerable<StationRecordKey> GetRecentlyAccessed()
     {
-        var set = new HashSet<StationRecordKey>(_recentlyAccessed);
+        return _recentlyAccessed.ToArray();
+    }
+
+    /// <summary>
+    ///     Clears the recently accessed keys from the set.
+    /// </summary>
+    public void ClearRecentlyAccessed()
+    {
         _recentlyAccessed.Clear();
-        return set;
     }
 
     /// <summary>

@@ -401,11 +401,11 @@
     Cloth: 300
 
 - type: latheRecipe
-  id: ClothingUniformJumpsuitLawyerPurple ##Musician
+  id: ClothingUniformJumpsuitMusician
   icon:
-    sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
     state: icon
-  result: ClothingUniformJumpsuitLawyerPurple
+  result: ClothingUniformJumpsuitMusician
   completetime: 4
   materials:
     Cloth: 300
