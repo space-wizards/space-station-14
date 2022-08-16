@@ -160,8 +160,7 @@
     - state: daw-panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: Construction
     graph: Machine
     node: machine

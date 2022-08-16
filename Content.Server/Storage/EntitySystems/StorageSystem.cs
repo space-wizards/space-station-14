@@ -349,6 +349,12 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Session.AttachedEntity is not EntityUid player)
                 return;
 
+            if (!Exists(args.InteractedItemUID))
+            {
+                Logger.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
+                return;
+            }
+
             if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID))
                 return;
 

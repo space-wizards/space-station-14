@@ -80,6 +80,7 @@
       - PressureImmunity
       - Muted
       - ForcedSleep
+      - TemporaryBlindness
   - type: DiseaseCarrier
   - type: Blindable
   # Other

@@ -151,15 +151,17 @@ public abstract partial class SharedGunSystem
             {
                 entity = component.Entities[^1];
 
+                args.Ammo.Add(EnsureComp<AmmoComponent>(entity));
+
                 // Leave the entity as is if it doesn't auto cycle
                 // TODO: Suss this out with NewAmmoComponent as I don't think it gets removed from container properly
-                if (HasComp<CartridgeAmmoComponent>(entity) && component.AutoCycle)
+                if (!component.AutoCycle)
                 {
-                    component.Entities.RemoveAt(component.Entities.Count - 1);
-                    component.Container.Remove(entity);
+                    return;
                 }
 
-                args.Ammo.Add(EnsureComp<AmmoComponent>(entity));
+                component.Entities.RemoveAt(component.Entities.Count - 1);
+                component.Container.Remove(entity);
             }
             else if (component.UnspawnedCount > 0)
             {

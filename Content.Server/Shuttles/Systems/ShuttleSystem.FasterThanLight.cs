@@ -454,7 +454,6 @@ public sealed partial class ShuttleSystem
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
-        Box2? aabb = null;
 
         // Spawn nearby.
         // We essentially expand the Box2 of the target area until nothing else is added then we know it's valid.

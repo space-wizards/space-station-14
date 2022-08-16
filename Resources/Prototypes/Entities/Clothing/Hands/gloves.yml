@@ -1,13 +1,13 @@
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesBoxingRed
-  name: boxing gloves
+  name: red boxing gloves
   description: Red gloves for competitive boxing.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/boxing.rsi
+    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/boxing.rsi
+    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
   - type: BoxingGloves
   - type: StaminaDamageOnHit
     damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
@@ -30,11 +30,10 @@
   description: Blue gloves for competitive boxing.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/boxing.rsi
-    state: icon-blue
+    sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/boxing.rsi
-    heldPrefix: blue
+    sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-blue
@@ -47,11 +46,10 @@
   description: Green gloves for competitive boxing.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/boxing.rsi
-    state: icon-green
+    sprite: Clothing/Hands/Gloves/Boxing/boxinggreen.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/boxing.rsi
-    heldPrefix: green
+    sprite: Clothing/Hands/Gloves/Boxing/boxinggreen.rsi
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-green
@@ -64,11 +62,10 @@
   description: Yellow gloves for competitive boxing.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/boxing.rsi
-    state: icon-yellow
+    sprite: Clothing/Hands/Gloves/Boxing/boxingyellow.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/boxing.rsi
-    heldPrefix: yellow
+    sprite: Clothing/Hands/Gloves/Boxing/boxingyellow.rsi
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-yellow
@@ -240,6 +237,7 @@
 - type: entity
   parent: ClothingHandsBase
   id: ThievingGloves
+  suffix: Thieving
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
   description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
   components:

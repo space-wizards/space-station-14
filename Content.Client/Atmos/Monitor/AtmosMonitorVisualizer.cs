@@ -26,6 +26,7 @@ namespace Content.Client.Atmos.Monitor
         [DataField("setOnDepowered")]
         private readonly Dictionary<string, string>? _setOnDepowered;
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -33,6 +34,7 @@ namespace Content.Client.Atmos.Monitor
             IoCManager.InjectDependencies(this);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             if (!_entityManager.TryGetComponent<SpriteComponent>(component.Owner, out var sprite))
