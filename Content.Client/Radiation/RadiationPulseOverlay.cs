@@ -19,8 +19,6 @@ namespace Content.Client.Radiation
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         public override bool RequestScreenTexture => true;
 
-        private TimeSpan _lastTick = default;
-
         private readonly ShaderInstance _baseShader;
         private readonly Dictionary<EntityUid, (ShaderInstance shd, RadiationShaderInstance instance)> _pulses = new();
 
@@ -53,8 +51,9 @@ namespace Content.Client.Radiation
                 shd?.SetParameter("renderScale", viewport.RenderScale);
                 shd?.SetParameter("positionInput", tempCoords);
                 shd?.SetParameter("range", instance.Range);
-                var life = (_lastTick - instance.Start) / instance.Duration;
-                shd?.SetParameter("life", (float) life.TotalSeconds);
+                var life = (_gameTiming.RealTime - instance.Start).TotalSeconds / instance.Duration;
+                shd?.SetParameter("life", (float) life);
+                Logger.Debug(life.ToString());
 
                 // There's probably a very good reason not to do this.
                 // Oh well!
@@ -75,8 +74,6 @@ namespace Content.Client.Radiation
                 _pulses.Clear();
                 return;
             }
-
-            _lastTick = _gameTiming.CurTime;
 
             var currentEyeLoc = currentEye.Position;
 

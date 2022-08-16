@@ -16,7 +16,7 @@ public sealed class RadiationPulseSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, RadiationPulseComponent component, ComponentStartup args)
     {
-        component.StartTime = _timing.CurTime;
+        component.StartTime = _timing.RealTime;
 
         // try to get despawn time or keep default duration time
         if (TryComp<TimedDespawnComponent>(uid, out var despawn))
