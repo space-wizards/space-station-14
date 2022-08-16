@@ -250,6 +250,7 @@
   parent: BaseSign
   id: SignAi
   name: ai sign
+  description: A sign, indicating an AI is present.
   components:
   - type: Sprite
     state: ai
@@ -339,7 +340,7 @@
   parent: BaseSign
   id: SignCanisters
   name: canisters sign
-  description: A sign indicating canisters.
+  description: A sign warning the viewer about pressurised canisters.
   components:
   - type: Sprite
     state: canisters
@@ -357,7 +358,7 @@
   parent: BaseSign
   id: SignCargoDock
   name: cargo dock sign
-  description: A sign indicating the cargo dock.
+  description: A sign indicating a cargo dock.
   components:
   - type: Sprite
     state: cargo_dock
@@ -429,6 +430,7 @@
   parent: BaseSign
   id: SignDoors
   name: doors sign
+  description: A sign indicating doors.
   components:
   - type: Sprite
     state: doors
@@ -473,7 +475,7 @@
   parent: BaseSign
   id: SignEVA
   name: EVA sign
-  description: A sign indicating an EVA area.
+  description: A sign indicating an EVA area. EVA equipment may be required beyond this point.
   components:
   - type: Sprite
     state: eva
@@ -491,7 +493,7 @@
   parent: BaseSign
   id: SignExamroom
   name: examination room sign
-  description: A sign indicating an examination room.
+  description: A sign indicating a medical examination room.
   components:
   - type: Sprite
     state: examroom
@@ -518,7 +520,7 @@
   parent: BaseSign
   id: SignHead
   name: head sign
-  description: A sign indicating the captain's quarters.
+  description: A sign with a hat on it.
   components:
   - type: Sprite
     state: commander
@@ -527,7 +529,7 @@
   parent: BaseSign
   id: SignHydro1
   name: hydro sign
-  description: A sign indicating the hydroponics area.
+  description: A sign indicating a hydroponics area.
   components:
   - type: Sprite
     state: hydro1
@@ -536,7 +538,7 @@
   parent: BaseSign
   id: SignHydro2
   name: hydro sign
-  description: A sign indicating the hydroponics area.
+  description: A sign indicating a hydroponics area.
   components:
   - type: Sprite
     state: hydro2
@@ -545,7 +547,7 @@
   parent: BaseSign
   id: SignHydro3
   name: hydro sign
-  description: A sign indicating the hydroponics area.
+  description: A sign indicating a hydroponics area.
   components:
   - type: Sprite
     state: hydro3
@@ -608,6 +610,7 @@
   parent: BaseSign
   id: SignNosmoking
   name: nosmoking sign
+  description: A sign indicating that smoking is not allowed in the vicinity.
   components:
   - type: Sprite
     state: nosmoking
@@ -670,6 +673,7 @@
   parent: BaseSign
   id: SignShield
   name: shield sign
+  description: A sign with a shield.
   components:
   - type: Sprite
     state: shield
@@ -687,7 +691,7 @@
   parent: BaseSign
   id: SignSpace
   name: space sign
-  description: A sign indicating space.
+  description: A sign warning that the area ahead is nothing but cold, empty space.
   components:
   - type: Sprite
     state: space
@@ -714,7 +718,7 @@
   parent: BaseSign
   id: SignToxins
   name: toxins sign
-  description: A sign indicating a toxic hazard.
+  description: A sign indicating the toxin lab.
   components:
   - type: Sprite
     state: toxins
@@ -723,7 +727,7 @@
   parent: BaseSign
   id: SignToxins2
   name: toxins sign
-  description: A sign indicating a toxic hazard.
+  description: A sign indicating the toxin lab.
   components:
   - type: Sprite
     state: toxins2
@@ -750,7 +754,7 @@
   parent: BaseSign
   id: SignCryogenics
   name: cryogenics warning sign
-  description: A sign indicating a cryogenic materials hazard.
+  description: A sign indicating a cryogenic materials hazard. Bring a jacket!
   components:
   - type: Sprite
     state: cryogenics
@@ -759,7 +763,7 @@
   parent: BaseSign
   id: SignDanger
   name: danger warning sign
-  description: A sign indicating danger.
+  description: A sign warning against some danger.
   components:
   - type: Sprite
     state: danger
@@ -885,7 +889,7 @@
   parent: BaseSign
   id: SignXenolab
   name: xenolab sign
-  description: A sign indicating the xenolab.
+  description: A sign indicating the xenobiology lab.
   components:
   - type: Sprite
     state: xenolab
@@ -894,7 +898,7 @@
   parent: BaseSign
   id: SignZomlab
   name: zombie lab sign
-  description: "A sign indicating the zombie lab."
+  description: A sign indicating the zombie lab.
   components:
   - type: Sprite
     state: zomlab
@@ -948,7 +952,7 @@
   parent: BaseSign
   id: SignDangerMed
   name: danger sign
-  description: A sign indicating danger.
+  description: A sign warning against some form of danger.
   components:
   - type: Sprite
     state: medium_danger
@@ -975,7 +979,7 @@
   parent: BaseSign
   id: SignElectricalMed
   name: electrical sign
-  description: A sign indicating electricity.
+  description: A sign indicating an electrical hazard.
   components:
   - type: Sprite
     state: medium_electrical
@@ -993,7 +997,7 @@
   parent: BaseSign
   id: SignRadiationMed
   name: radiation sign
-  description: A sign indicating radiation.
+  description: A sign warning against ionizing radiation.
   components:
   - type: Sprite
     state: medium_radiation

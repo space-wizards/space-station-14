@@ -72,7 +72,6 @@
   parent: GasFilter
   id: GasFilterFlipped
   name: gas filter
-  description: Very useful for filtering gases.
   suffix: Flipped
   placement:
     mode: SnapgridCenter
@@ -161,7 +160,6 @@
   parent: GasMixer
   id: GasMixerFlipped
   name: gas mixer
-  description: Very useful for mixing gases.
   suffix: Flipped
   placement:
     mode: SnapgridCenter

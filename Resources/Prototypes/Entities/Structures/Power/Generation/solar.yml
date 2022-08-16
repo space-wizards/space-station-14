@@ -43,7 +43,7 @@
   id: SolarPanel
   parent: SolarPanelBasePhysSprite
   name: solar panel
-  description: "A solar panel that generates power."
+  description: A solar panel that generates power.
   components:
   - type: PowerSupplier
     supplyRampTolerance: 500

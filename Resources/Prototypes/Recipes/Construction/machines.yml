@@ -5,7 +5,7 @@
   startNode: start
   targetNode: computer
   category: construction-category-machines
-  description: A computer with a built-in screen.
+  description: A frame used to construct anything with a computer circuitboard.
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:

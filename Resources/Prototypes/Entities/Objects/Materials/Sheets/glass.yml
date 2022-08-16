@@ -119,7 +119,6 @@
   parent: SheetRGlass
   id: SheetRGlass1
   name: reinforced glass
-  description: A reinforced sheet of glass.
   suffix: Single
   components:
   - type: Sprite
@@ -159,7 +158,6 @@
   parent: SheetPGlass
   id: SheetPGlass1
   name: plasma glass
-  description: A sheet of translucent plasma.
   suffix: Single
   components:
   - type: Sprite
@@ -199,7 +197,6 @@
   parent: SheetRPGlass
   id: SheetRPGlass1
   name: reinforced plasma glass
-  description: A reinforced sheet of translucent plasma.
   suffix: Single
   components:
   - type: Sprite
