@@ -1,3 +1,3 @@
-ent-CarpRift = carp rift
-    .desc = A rift akin to the ones space carp use to travel long distances.
+ent-CarpRift = карповый разлом
+    .desc = Разлом, подобный тем, которые космические карпы используют для перемещения на большие расстояния.
     .suffix = { "" }

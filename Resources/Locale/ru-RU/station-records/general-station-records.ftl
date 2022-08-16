@@ -1,8 +1,8 @@
-general-station-record-console-window-title = Station Records Computer
-general-station-record-console-select-record-info = Select a record on the left.
-general-station-record-console-empty-state = No records found!
-general-station-record-console-no-record-found = No record was found for the selected person.
-general-station-record-console-record-age = Age: { $age }
-general-station-record-console-record-title = Job: { $job }
-general-station-record-console-record-species = Species: { $species }
-general-station-record-console-record-gender = Gender: { $gender }
+general-station-record-console-window-title = Компьютер станционного учёта
+general-station-record-console-select-record-info = Выберите запись слева.
+general-station-record-console-empty-state = Записей не найдено!
+general-station-record-console-no-record-found = Для выбранного сотрудника не найдено ни одной записи.
+general-station-record-console-record-age = Возраст: { $age }
+general-station-record-console-record-title = Должность: { $job }
+general-station-record-console-record-species = Раса: { $species }
+general-station-record-console-record-gender = Гендер: { $gender }

@@ -1,4 +1,4 @@
-ent-CrateSyndicateSurplusBundle = Syndicate surplus crate
-    .desc = Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
-ent-CrateSyndicateSuperSurplusBundle = Syndicate super surplus crate.
-    .desc = Contains 125 telecrystals worth of completely random Syndicate items.
+ent-CrateSyndicateSurplusBundle = ящик припасов синдиката
+    .desc = Содержит случайное снаряжение Синдиката, общей стоимостью в 50 телекристаллов. Оно может быть как бесполезным хламом, так и реально крутым.
+ent-CrateSyndicateSuperSurplusBundle = ящик суперприпасов синдиката
+    .desc = Содержит случайное снаряжение Синдиката, общей стоимостью в 125 телекристаллов.

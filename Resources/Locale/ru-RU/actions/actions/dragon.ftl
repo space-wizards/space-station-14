@@ -7,16 +7,26 @@ action-description-devour = Попытаться разрушить констр
 action-name-carp-summon = Призвать карпа
 action-description-carp-summon = Призовите карпа, чтобы он помог вам захватить станцию!
 # Rifts
-carp-rift-warning = A rift is causing an unnaturally large energy flux at { $location }. Stop it at all costs!
-carp-rift-duplicate = Cannot have 2 charging rifts at the same time!
-carp-rift-examine = It is [color=yellow]{ $percentage }%[/color] charged!
-carp-rift-max = You have reached your maximum amount of rifts
-carp-rift-anchor = Rifts require a stable surface to spawn.
-carp-rift-proximity = Too close to a nearby rift! Need to be at least { $proximity }m away.
-carp-rift-space-proximity = Too close to space! Need to be at least { $proximity }m away.
-carp-rift-weakened = You are unable to summon more rifts in your weakened state.
-carp-rift-destroyed = A rift has been destroyed! You are now weakened temporarily.
+carp-rift-warning = Разлом в { $location } порождает неестественно большой поток энергии. Остановите это любой ценой!
+carp-rift-duplicate = Невозможно иметь 2 заряжающихся разлома одновременно!
+carp-rift-examine = Он заряжен на [color=yellow]{ $percentage }%[/color]!
+carp-rift-max = Вы достигли максимального количества разломов
+carp-rift-anchor = Для появления разлома требуется стабильная поверхность.
+carp-rift-proximity = Слишком близко к соседнему разлому! Необходимо находиться на расстоянии не менее { $proximity } метров.
+carp-rift-space-proximity = Слишком близко к космосу! Необходимо находиться на расстоянии не менее { $proximity } метров.
+carp-rift-weakened = В своём ослабленном состоянии вы не можете призвать больше разломов.
+carp-rift-destroyed = Разлом был уничтожен! Теперь вы временно ослаблены.
 # Round end
-dragon-round-end-summary = The dragons were:
-dragon-round-end-dragon = { $name } with { $count } rifts
-dragon-round-end-dragon-player = { $name } ({ $player }) with { $count } rifts
+dragon-round-end-summary = Драконами были:
+dragon-round-end-dragon =
+    { $name } с { $count } { $count ->
+        [one] разломом
+        [few] разломами
+       *[other] разломами
+    }
+dragon-round-end-dragon-player =
+    { $name } ({ $player }) с { $count } { $count ->
+        [one] разломом
+        [few] разломами
+       *[other] разломами
+    }
