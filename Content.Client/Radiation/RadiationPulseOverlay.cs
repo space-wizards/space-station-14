@@ -53,7 +53,6 @@ namespace Content.Client.Radiation
                 shd?.SetParameter("range", instance.Range);
                 var life = (_gameTiming.RealTime - instance.Start).TotalSeconds / instance.Duration;
                 shd?.SetParameter("life", (float) life);
-                Logger.Debug(life.ToString());
 
                 // There's probably a very good reason not to do this.
                 // Oh well!
