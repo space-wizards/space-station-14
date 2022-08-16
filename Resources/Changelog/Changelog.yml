@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Anchoring now shows popups, type: Add}
-  id: 1662
-  time: '2022-06-05T23:04:40.0000000+00:00'
 - author: WilliamECrew
   changes:
   - {message: 'When dumping contents out of a bag, items will now be spread out randomly
@@ -2932,3 +2927,10 @@ Entries:
   - {message: Removed the ability to point while asleep, type: Fix}
   id: 2161
   time: '2022-08-16T04:22:17.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: "FunTime Arcade Solutions\u2122 has outfitted NanoTrasen stations with\
+      \ a new supply of arcade toys! Come spend your free time at the arcade machines\
+      \ for exciting, fun objects!", type: Add}
+  id: 2162
+  time: '2022-08-16T09:57:40.0000000+00:00'
