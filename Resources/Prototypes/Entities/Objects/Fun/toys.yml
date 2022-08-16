@@ -650,12 +650,43 @@
     heldPrefix: orb
 
 - type: entity
-  parent: EnergySword
   id: ToySword
   name: toy sword
   description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
   components:
     - type: EnergySword
+      isSharp: false
       colorOptions:
-        - Blue
-    - type: MeleeWeapon
+        - DodgerBlue
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/e_sword.rsi
+      layers:
+        - state: e_sword
+        - state: e_sword_blade
+          color: "#FFFFFF"
+          visible: false
+          shader: unshaded
+          map: [ "blade" ]
+    - type: Item
+      size: 5
+      sprite: Objects/Weapons/Melee/e_sword.rsi
+    - type: UseDelay
+      delay: 1.0
+    - type: PointLight
+      netsync: false
+      enabled: false
+      radius: 2
+      energy: 2
+      color: white
+    - type: Appearance
+    - type: ToggleableLightVisuals
+      spriteLayer: blade
+      inhandVisuals:
+        left:
+          - state: inhand-left-blade
+            shader: unshaded
+        right:
+          - state: inhand-right-blade
+            shader: unshaded
+    - type: DisarmMalus
+      malus: 0

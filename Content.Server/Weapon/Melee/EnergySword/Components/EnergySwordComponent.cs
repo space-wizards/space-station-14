@@ -12,6 +12,9 @@ namespace Content.Server.Weapon.Melee.EnergySword
 
         public bool Activated = false;
 
+        [DataField("isSharp")]
+        public bool IsSharp = true;
+
         /// <summary>
         ///     RGB cycle rate for hacked e-swords.
         /// </summary>
