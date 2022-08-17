@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Storage.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Client.GameObjects;
@@ -30,6 +31,7 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
             if (component.SpriteLayers.Count == 0)
             {
                 InitLayers(component, spriteComponent, args.Component);
+                return;
             }
 
             EnableLayers(component, spriteComponent, args.Component);
@@ -41,13 +43,14 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
         if (!appearance.TryGetData<ShowLayerData>(StorageMapVisuals.InitLayers, out var wrapper))
             return;
 
+        TryComp<StorageFillComponent>(component.Owner, out var storageFill);
         component.SpriteLayers.AddRange(wrapper.QueuedEntities);
 
         foreach (var sprite in component.SpriteLayers)
         {
             spriteComponent.LayerMapReserveBlank(sprite);
             spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(component.RSIPath!, sprite));
-            spriteComponent.LayerSetVisible(sprite, false);
+            spriteComponent.LayerSetVisible(sprite, storageFill != null);
         }
     }
 

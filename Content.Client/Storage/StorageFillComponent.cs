@@ -1,9 +1,7 @@
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.Storage.Components;
 
-namespace Content.Server.Storage.Components
+namespace Content.Client.Storage.Components
 {
     [RegisterComponent]
-    [Access(typeof(StorageSystem))]
     public sealed class StorageFillComponent : SharedStorageFillComponent {};
 }
