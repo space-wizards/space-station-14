@@ -122,8 +122,6 @@ public sealed class DamageVisualsComponent : Component
     [DataField("damageOverlay")]
     public readonly DamageVisualizerSprite? DamageOverlay;
 
-
-
     public List<Enum> TargetLayerMapKeys = new();
     public bool Disabled = false;
     public bool Valid = true;

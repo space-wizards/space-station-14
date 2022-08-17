@@ -41,6 +41,7 @@
   - type: Construction
     graph: Window
     node: reinforcedPlasmaWindow
+  - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
     damageDivisor: 36

@@ -38,6 +38,7 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     base: swindow
+  - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
     damageDivisor: 36

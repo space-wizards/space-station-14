@@ -77,6 +77,7 @@
   - type: Construction
     graph: Window
     node: window
+  - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
     damageDivisor: 2
