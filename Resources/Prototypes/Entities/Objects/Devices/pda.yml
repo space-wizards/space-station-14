@@ -17,6 +17,11 @@
     state: pda
   - type: Item
     size: 10
+  - type: ContainerContainer
+    containers:
+      PDA-id: !type:ContainerSlot {}
+      PDA-pen: !type:ContainerSlot {}
+  - type: ItemSlots
   - type: Clothing
     quickEquip: false
     slots:
@@ -43,8 +48,8 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
-    - key: enum.UplinkUiKey.Key
-      type: UplinkBoundUserInterface
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
     - key: enum.RingerUiKey.Key
       type: RingerBoundUserInterface
     - key: enum.InstrumentUiKey.Key
@@ -65,6 +70,8 @@
       whitelist:
         components:
         - IdCard
+  - type: CrewManifestViewer
+    unsecure: true
   - type: Tag
     tags:
     - DoorBumpOpener

@@ -188,8 +188,14 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
         {
-            if (component.Rotting)
-                args.PushMarkup(Loc.GetString("miasma-rotting"));
+            if (!component.Rotting)
+                return;
+            var stage = component.DeathAccumulator / component.RotAfter.TotalSeconds;
+            var description = stage switch {
+                >= 3 => "miasma-extremely-bloated",
+                >= 2 => "miasma-bloated",
+                   _ => "miasma-rotting"};
+            args.PushMarkup(Loc.GetString(description));
         }
 
         /// Containers
@@ -202,15 +208,15 @@ namespace Content.Server.Atmos.Miasma
                 ToggleDecomposition(args.Entity, false, perishable);
             }
         }
+
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
-            if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            if (TryComp<PerishableComponent>(args.Entity, out var perishable) && !Terminating(uid))
             {
                 ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);
             }
         }
-
 
         /// Fly stuff
 
@@ -229,7 +235,7 @@ namespace Content.Server.Atmos.Miasma
 
         public void ToggleDecomposition(EntityUid uid, bool decompose, PerishableComponent? perishable = null)
         {
-            if (!Resolve(uid, ref perishable))
+            if (Terminating(uid) || !Resolve(uid, ref perishable))
                 return;
 
             if (decompose == perishable.Progressing) // Saved a few cycles

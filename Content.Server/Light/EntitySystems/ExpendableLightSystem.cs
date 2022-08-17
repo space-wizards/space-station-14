@@ -4,6 +4,7 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light.Component;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -17,6 +18,7 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {
@@ -57,8 +59,10 @@ namespace Content.Server.Light.EntitySystems
                     case ExpendableLightState.Fading:
                         component.CurrentState = ExpendableLightState.Dead;
                         var meta = MetaData(component.Owner);
-                        meta.EntityName = component.SpentName;
-                        meta.EntityDescription = component.SpentDesc;
+                        meta.EntityName = Loc.GetString(component.SpentName);
+                        meta.EntityDescription = Loc.GetString(component.SpentDesc);
+
+                        _tagSystem.AddTag(component.Owner, "Trash");
 
                         UpdateSpriteAndSounds(component);
                         UpdateVisualizer(component);

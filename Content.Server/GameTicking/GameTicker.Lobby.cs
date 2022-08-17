@@ -9,9 +9,7 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         [ViewVariables]
-        private readonly Dictionary<IPlayerSession, LobbyPlayerStatus> _playersInLobby = new();
-
-        [ViewVariables] private readonly HashSet<NetUserId> _playersInGame = new();
+        private readonly Dictionary<NetUserId, PlayerGameStatus> _playerGameStatuses = new();
 
         [ViewVariables]
         private TimeSpan _roundStartTime;
@@ -25,12 +23,14 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
 
-        public IReadOnlyDictionary<IPlayerSession, LobbyPlayerStatus> PlayersInLobby => _playersInLobby;
-        public IReadOnlySet<NetUserId> PlayersInGame => _playersInGame;
+        /// <summary>
+        /// The game status of a players user Id. May contain disconnected players
+        /// </summary>
+        public IReadOnlyDictionary<NetUserId, PlayerGameStatus> PlayerGameStatuses => _playerGameStatuses;
 
         public void UpdateInfoText()
         {
-            RaiseNetworkEvent(GetInfoMsg(), Filter.Empty().AddPlayers(_playersInLobby.Keys));
+            RaiseNetworkEvent(GetInfoMsg(), Filter.Empty().AddPlayers(_playerManager.NetworkedSessions));
         }
 
         private string GetInfoText()
@@ -48,31 +48,31 @@ namespace Content.Server.GameTicking
             return Loc.GetString("game-ticker-get-info-text",("roundId", RoundId), ("playerCount", playerCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
         }
 
-        private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)
+        private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, PlayerGameStatus gameStatus)
         {
-            return new (new Dictionary<NetUserId, LobbyPlayerStatus> { { player.UserId, status } });
+            return new (new Dictionary<NetUserId, PlayerGameStatus> { { player.UserId, gameStatus } });
         }
 
         private TickerLobbyReadyEvent GetPlayerStatus()
         {
-            var players = new Dictionary<NetUserId, LobbyPlayerStatus>();
-            foreach (var player in _playersInLobby.Keys)
+            var players = new Dictionary<NetUserId, PlayerGameStatus>();
+            foreach (var player in _playerGameStatuses.Keys)
             {
-                _playersInLobby.TryGetValue(player, out var status);
-                players.Add(player.UserId, status);
+                _playerGameStatuses.TryGetValue(player, out var status);
+                players.Add(player, status);
             }
             return new TickerLobbyReadyEvent(players);
         }
 
         private TickerLobbyStatusEvent GetStatusMsg(IPlayerSession session)
         {
-            _playersInLobby.TryGetValue(session, out var status);
-            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground,status == LobbyPlayerStatus.Ready, _roundStartTime, _roundStartTimeSpan, Paused);
+            _playerGameStatuses.TryGetValue(session.UserId, out var status);
+            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground,status == PlayerGameStatus.ReadyToPlay, _roundStartTime, _roundStartTimeSpan, Paused);
         }
 
         private void SendStatusToAll()
         {
-            foreach (var player in _playersInLobby.Keys)
+            foreach (var player in _playerManager.ServerSessions)
             {
                 RaiseNetworkEvent(GetStatusMsg(player), player.ConnectedClient);
             }
@@ -121,17 +121,29 @@ namespace Content.Server.GameTicking
             return Paused;
         }
 
+        public void ToggleReadyAll(bool ready)
+        {
+            var status = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
+            foreach (var playerUserId in _playerGameStatuses.Keys)
+            {
+                _playerGameStatuses[playerUserId] = status;
+                if (!_playerManager.TryGetSessionById(playerUserId, out var playerSession))
+                    continue;
+                RaiseNetworkEvent(GetStatusMsg(playerSession), playerSession.ConnectedClient);
+                RaiseNetworkEvent(GetStatusSingle(playerSession, status));
+            }
+        }
+
         public void ToggleReady(IPlayerSession player, bool ready)
         {
-            if (!_playersInLobby.ContainsKey(player)) return;
-
-            if (!_prefsManager.HavePreferencesLoaded(player))
-            {
+            if (!_playerGameStatuses.ContainsKey(player.UserId))
                 return;
-            }
 
-            var status = ready ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
-            _playersInLobby[player] = ready ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
+            if (!_userDb.IsLoadComplete(player))
+                return;
+
+            var status = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
+            _playerGameStatuses[player.UserId] = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
             RaiseNetworkEvent(GetStatusMsg(player), player.ConnectedClient);
             RaiseNetworkEvent(GetStatusSingle(player, status));
         }

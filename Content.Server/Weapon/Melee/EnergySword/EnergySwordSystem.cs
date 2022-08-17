@@ -80,7 +80,8 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
                 weaponComp.HitSound = comp.OnHitOff;
 
-            RemComp<SharpComponent>(comp.Owner);
+            if (comp.IsSharp)
+                RemComp<SharpComponent>(comp.Owner);
 
             SoundSystem.Play(comp.DeActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
@@ -97,7 +98,8 @@ namespace Content.Server.Weapon.Melee.EnergySword
                 _item.SetSize(comp.Owner, 9999, item);
             }
 
-            EnsureComp<SharpComponent>(comp.Owner);
+            if (comp.IsSharp)
+                EnsureComp<SharpComponent>(comp.Owner);
 
             if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
                 weaponComp.HitSound = comp.OnHitOn;

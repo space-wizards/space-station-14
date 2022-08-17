@@ -228,7 +228,7 @@
       food:
         maxVol: 9
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: JuiceCarrot
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
@@ -489,6 +489,9 @@
     netsync: false
   - type: Item
     size: 1
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   name: onion
@@ -504,6 +507,8 @@
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Allicin
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
@@ -527,6 +532,8 @@
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Allicin
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
@@ -595,6 +602,17 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: red onion slice
@@ -604,6 +622,17 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: chili
@@ -670,6 +699,9 @@
     seedId: poppy
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Flower
 
 - type: entity
   name: lingzhi

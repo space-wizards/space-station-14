@@ -6,6 +6,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
@@ -18,6 +19,7 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -264,9 +266,14 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
+        _listener.PingListeners(source, message, null);
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev);
+
+        // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
+        if (!TryComp(source, out ActorComponent? mind))
+            return;
 
         if (originalMessage == message)
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {originalMessage}.");
@@ -362,18 +369,18 @@ public sealed partial class ChatSystem : SharedChatSystem
             messageWrap = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                 ("userName", player.ConnectedClient.UserName));
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
         }
         else
         {
             messageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                 ("playerName", (playerName)));
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
 
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, messageWrap, source, hideChat, clients.ToList());
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
+
     }
     #endregion
 
@@ -436,7 +443,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return newMessage;
     }
 
-    private string TransformSpeech(EntityUid sender, string message)
+    public string TransformSpeech(EntityUid sender, string message)
     {
         var ev = new TransformSpeechEvent(sender, message);
         RaiseLocalEvent(ev);
@@ -455,6 +462,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private string SanitizeMessageCapital(EntityUid source, string message)
     {
+        if (string.IsNullOrEmpty(message))
+            return message;
         // Capitalize first letter
         message = message[0].ToString().ToUpper() + message.Remove(0, 1);
         return message;

@@ -45,19 +45,19 @@ binds:
   key: W
 - function: ShuttleStrafeLeft
   type: State
-  key: Q
+  key: A
 - function: ShuttleStrafeRight
   type: State
-  key: E
+  key: D
 - function: ShuttleStrafeDown
   type: State
   key: S
 - function: ShuttleRotateLeft
   type: State
-  key: A
+  key: Q
 - function: ShuttleRotateRight
   type: State
-  key: D
+  key: E
 - function: ShuttleBrake
   type: State
   key: Space

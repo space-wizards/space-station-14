@@ -48,3 +48,6 @@ reagent-desc-corpium = A Syndicate cocktail, carefully harvested from various so
 
 reagent-name-uncooked-animal-proteins = uncooked animal proteins
 reagent-desc-uncooked-animal-proteins = This is very risky for the stomachs of softer lifeforms to digest.
+
+reagent-name-allicin = allicin
+reagent-desc-allicin = An organosulfur compound found in alliums like garlic, onions, and related plants.

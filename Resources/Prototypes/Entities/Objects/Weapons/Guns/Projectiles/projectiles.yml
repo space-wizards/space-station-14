@@ -37,14 +37,24 @@
     angularDamping: 0
   - type: Fixtures
     fixtures:
-    - shape:
+    - id: projectile
+      shape:
         !type:PhysShapeAabb
         bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
-      id: projectile
       mask:
       - Impassable
       - BulletImpassable
+    - &flybyfixture
+      id: fly-by
+      shape: !type:PhysShapeCircle
+        radius: 1.5
+      layer:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      hard: False
   - type: Projectile
     impactEffect: BulletImpactEffect
     damage:
@@ -76,6 +86,7 @@
       mask:
       - Impassable
       - BulletImpassable
+    - *flybyfixture
 
 - type: entity
   id: BaseBulletHighVelocity
@@ -142,6 +153,7 @@
       mask:
       - Impassable
       - BulletImpassable
+    - *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 30
@@ -178,7 +190,9 @@
       mask:
       - Impassable
       - Opaque
+    - *flybyfixture
   - type: Projectile
+#   soundHit:  Waiting on serv3
     damage:
       types:
         Heat: 14
@@ -321,24 +335,6 @@
     totalIntensity: 175 # about a ~6 tile radius
     intensitySlope: 1
     maxIntensity: 10
-
-- type: entity
-  id: BulletFoam
-  name: foam dart
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    layers:
-      - state: foamdart
-  - type: Projectile
-    deleteOnCollide: true
-    damage:
-      types:
-        Blunt: 2
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/snap.ogg
 
 - type: entity
   id: BulletCap

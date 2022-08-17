@@ -68,18 +68,19 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
         public override Outcome Execute(float frameTime)
         {
+            if (_unarmedCombat == null ||
+                !_entMan.GetComponent<TransformComponent>(_target).Coordinates.TryDistance(_entMan, _entMan.GetComponent<TransformComponent>(_owner).Coordinates, out var distance) || distance >
+                _unarmedCombat.Range)
+            {
+                return Outcome.Failed;
+            }
+
             if (_burstTime <= _elapsedTime)
             {
                 return Outcome.Success;
             }
 
             if (_unarmedCombat?.Deleted ?? true)
-            {
-                return Outcome.Failed;
-            }
-
-            if ((_entMan.GetComponent<TransformComponent>(_target).Coordinates.Position - _entMan.GetComponent<TransformComponent>(_owner).Coordinates.Position).Length >
-                _unarmedCombat.Range)
             {
                 return Outcome.Failed;
             }

@@ -1,10 +1,13 @@
 - type: job
   id: SalvageSpecialist
   name: job-name-salvagespec
+  playTimeTracker: JobSalvageSpecialist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 3600
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
-  departments:
-  - Cargo
   supervisors: job-supervisors-hop-qm
   access:
   - Cargo

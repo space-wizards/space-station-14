@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "emergency pizza crate"
   id: FoodPizza
-  description: Help do your part to end station hunger by distributing pizza to underfunded departments!
   icon:
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: margherita
@@ -11,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: "MRE crate"
   id: FoodMRE
-  description: A military style meal fit to feed a whole department.
   icon:
     sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
@@ -23,9 +19,7 @@
   group: market
 
 - type: cargoProduct
-  name: "kitchen supplies crate"
   id: FoodCook
-  description: Extra kitchen supplies, in case the botanists are absent.
   icon:
     sprite: Objects/Consumable/Food/ingredients.rsi
     state: flour-big
@@ -35,13 +29,11 @@
   group: market
 
 - type: cargoProduct
-  name: kvass tank crate
   id: FoodCrateKvassTank
-  description: A tank with refreshing kvass, which helps so much in the heat.
   icon:
     sprite: Structures/Storage/kvass.rsi
     state: kvass
-  product: CrateFoodKvassTank
+  product: KvassTankFull
   cost: 2000
   category: Food
   group: market

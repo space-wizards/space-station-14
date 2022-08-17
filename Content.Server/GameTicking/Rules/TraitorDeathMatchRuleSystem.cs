@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -6,19 +6,18 @@ using Content.Server.Hands.Components;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
+using Content.Server.Store.Components;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
-using Content.Server.Traitor.Uplink.Account;
-using Content.Server.Traitor.Uplink.Components;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
-using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -39,6 +38,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     public override string Prototype => "TraitorDeathMatch";
 
@@ -48,7 +48,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private bool _safeToEndRound = false;
 
-    private readonly Dictionary<UplinkAccount, string> _allOriginalNames = new();
+    private readonly Dictionary<EntityUid, string> _allOriginalNames = new();
 
     private const string TraitorPrototypeID = "Traitor";
 
@@ -108,15 +108,10 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
             newTmp = Spawn(BackpackPrototypeName, ownedCoords);
             _inventory.TryEquip(owned, newTmp, "back", true);
 
-            // Like normal traitors, they need access to a traitor account.
-            var uplinkAccount = new UplinkAccount(startingBalance, owned);
-            var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-            accounts.AddNewAccount(uplinkAccount);
+            if (!_uplink.AddUplink(owned, startingBalance))
+                return;
 
-            EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .AddUplink(owned, uplinkAccount, newPDA);
-
-            _allOriginalNames[uplinkAccount] = Name(owned);
+            _allOriginalNames[owned] = Name(owned);
 
             // The PDA needs to be marked with the correct owner.
             var pda = Comp<PDAComponent>(newPDA);
@@ -186,14 +181,17 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
         var lines = new List<string>();
         lines.Add(Loc.GetString("traitor-death-match-end-round-description-first-line"));
-        foreach (var uplink in EntityManager.EntityQuery<UplinkComponent>(true))
+
+        foreach (var uplink in EntityManager.EntityQuery<StoreComponent>(true))
         {
-            var uplinkAcc = uplink.UplinkAccount;
-            if (uplinkAcc != null && _allOriginalNames.ContainsKey(uplinkAcc))
+            var owner = uplink.AccountOwner;
+            if (owner != null && _allOriginalNames.ContainsKey(owner.Value))
             {
+                var tcbalance = _uplink.GetTCBalance(uplink);
+
                 lines.Add(Loc.GetString("traitor-death-match-end-round-description-entry",
-                    ("originalName", _allOriginalNames[uplinkAcc]),
-                    ("tcBalance", uplinkAcc.Balance)));
+                    ("originalName", _allOriginalNames[owner.Value]),
+                    ("tcBalance", tcbalance)));
             }
         }
 

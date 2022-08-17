@@ -38,7 +38,7 @@
       mask:
       - MobMask
       layer:
-      - MobLayer
+      - TableLayer
   - type: VehicleVisuals
   - type: Appearance
   - type: Repairable
@@ -148,10 +148,8 @@
         whitelist:
           tags:
             - TrashBag
+    sprite: Objects/Vehicles/pussywagon.rsi
   - type: Appearance
-    visuals:
-      - type: MappedItemVisualizer
-        sprite: Objects/Vehicles/pussywagon.rsi
 
 - type: entity
   id: VehiclePussyWagonDestroyed

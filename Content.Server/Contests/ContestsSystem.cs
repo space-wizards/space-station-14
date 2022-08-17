@@ -23,7 +23,7 @@ namespace Content.Server.Contests
         /// </summary>
         public float MassContest(EntityUid roller, EntityUid target, PhysicsComponent? rollerPhysics = null, PhysicsComponent? targetPhysics = null)
         {
-            if (!Resolve(roller, ref rollerPhysics) || !Resolve(target, ref targetPhysics))
+            if (!Resolve(roller, ref rollerPhysics, false) || !Resolve(target, ref targetPhysics, false))
                 return 1f;
 
             if (rollerPhysics == null || targetPhysics == null)
@@ -43,7 +43,7 @@ namespace Content.Server.Contests
         /// <summary>
         public float DamageContest(EntityUid roller, EntityUid target, DamageableComponent? rollerDamage = null, DamageableComponent? targetDamage = null)
         {
-            if (!Resolve(roller, ref rollerDamage) || !Resolve(target, ref targetDamage))
+            if (!Resolve(roller, ref rollerDamage, false) || !Resolve(target, ref targetDamage, false))
                 return 1f;
 
             if (rollerDamage == null || targetDamage == null)
@@ -75,10 +75,7 @@ namespace Content.Server.Contests
         /// <summary>
         public float StaminaContest(EntityUid roller, EntityUid target, StaminaComponent? rollerStamina = null, StaminaComponent? targetStamina = null)
         {
-            if (!Resolve(roller, ref rollerStamina) || !Resolve(target, ref targetStamina))
-                return 1f;
-
-            if (rollerStamina == null || targetStamina == null)
+            if (!Resolve(roller, ref rollerStamina, false) || !Resolve(target, ref targetStamina, false))
                 return 1f;
 
             var rollerDamageScore= rollerStamina.StaminaDamage / rollerStamina.CritThreshold;

@@ -51,15 +51,6 @@ public sealed class RenameCommand : IConsoleCommand
         {
             // Mind
             mind.Mind.CharacterName = name;
-
-            // Cloner entries
-            if (entSysMan.TryGetEntitySystem<CloningSystem>(out var cloningSystem)
-                && cloningSystem.MindToId.TryGetValue(mind.Mind, out var cloningId)
-                && cloningSystem.IdToDNA.ContainsKey(cloningId))
-            {
-                cloningSystem.IdToDNA[cloningId] =
-                    new ClonerDNAEntry(mind.Mind, cloningSystem.IdToDNA[cloningId].Profile.WithName(name));
-            }
         }
 
         // Id Cards
@@ -71,7 +62,7 @@ public sealed class RenameCommand : IConsoleCommand
             {
                 foreach (var idCardComponent in entMan.EntityQuery<IdCardComponent>())
                 {
-                    if (idCardComponent.OriginalOwnerName != oldName)
+                    if (idCardComponent.OriginalEntityName != oldName)
                         continue;
                     idCardSystem.TryChangeFullName(idCardComponent.Owner, name, idCardComponent);
                 }

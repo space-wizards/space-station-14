@@ -1,5 +1,6 @@
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
+using Content.Server.Station.Components;
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
@@ -18,7 +19,6 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly PVSOverrideSystem _pvs = default!;
-        [Dependency] private readonly ContainmentFieldGeneratorSystem _fieldGeneratorSystem = default!;
         /// <summary>
         /// How much energy the singulo gains from destroying a tile.
         /// </summary>
@@ -130,9 +130,10 @@ namespace Content.Server.Singularity.EntitySystems
             return entity != component.Owner &&
                    !EntityManager.HasComponent<IMapGridComponent>(entity) &&
                    !EntityManager.HasComponent<GhostComponent>(entity) &&
+                   !EntityManager.HasComponent<StationDataComponent>(entity) && // these SHOULD be in null-space... but just in case. Also, maybe someone moves a singularity there..
                    (component.Level > 4 ||
                    !EntityManager.HasComponent<ContainmentFieldComponent>(entity) &&
-                   !(EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent>(entity, out var containFieldGen) && _fieldGeneratorSystem.CanRepel(component, containFieldGen)));
+                   !(EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent>(entity, out var fieldGen) && fieldGen.IsConnected));
         }
 
         private void HandleDestroy(ServerSingularityComponent component, EntityUid entity)

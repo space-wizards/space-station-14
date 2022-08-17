@@ -148,6 +148,7 @@
       amount: -5
     - !type:PlantAdjustHealth
       amount: 5
+    - !type:PlantClonexadone {}
 
 - type: reagent
   id: Dermaline
@@ -657,3 +658,14 @@
         reagent: Ultravasculine
         amount: 0.5
 
+- type: reagent
+  id: Oculine
+  name: reagent-name-oculine
+  desc: reagent-desc-oculine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-translucent
+  color: "#404040"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ChemHealEyeDamage

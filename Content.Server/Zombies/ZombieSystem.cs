@@ -8,8 +8,11 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
 using Content.Shared.Inventory;
+using Content.Shared.MobState;
 using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
+using Content.Server.Speech;
+using Content.Server.Chat.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 
@@ -17,11 +20,12 @@ namespace Content.Server.Zombies
 {
     public sealed class ZombieSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damage = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
+        [Dependency] private readonly VocalSystem _vocal = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -30,7 +34,23 @@ namespace Content.Server.Zombies
             base.Initialize();
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
+            SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
             SubscribeLocalEvent<ZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
+        }
+
+        private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
+        {
+            if (args.CurrentMobState == DamageState.Alive)
+                EnsureComp<ActiveZombieComponent>(uid);
+            else
+                RemComp<ActiveZombieComponent>(uid);
+        }
+
+        private void OnDamage(EntityUid uid, ActiveZombieComponent component, DamageChangedEvent args)
+        {
+            if (args.DamageIncreased)
+                DoGroan(uid, component);
         }
 
         private void OnRefreshSpeed(EntityUid uid, ZombieComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -96,18 +116,52 @@ namespace Content.Server.Zombies
                 if (HasComp<ZombieComponent>(entity))
                     args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
 
-                if ((mobState.IsDead() || mobState.IsCritical())
+                if ((mobState.CurrentState == DamageState.Dead || mobState.CurrentState == DamageState.Critical)
                     && !HasComp<ZombieComponent>(entity))
                 {
                     _zombify.ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
                 }
-                else if (mobState.IsAlive()) //heals when zombies bite live entities
+                else if (mobState.CurrentState == DamageState.Alive) //heals when zombies bite live entities
                 {
                     var healingSolution = new Solution();
                     healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
                     _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
+            }
+        }
+
+        public void DoGroan(EntityUid uid, ActiveZombieComponent component)
+        {
+            if (component.LastDamageGroanCooldown > 0)
+                return;
+
+            if (_robustRandom.Prob(0.5f)) //this message is never seen by players so it just says this for admins
+                _chat.TrySendInGameICMessage(uid, "[automated zombie groan]", InGameICChatType.Speak, false);
+            else
+                _vocal.TryScream(uid);
+
+            component.LastDamageGroanCooldown = component.GroanCooldown;
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var zombiecomp in EntityQuery<ActiveZombieComponent>())
+            {
+                zombiecomp.Accumulator += frameTime;
+                zombiecomp.LastDamageGroanCooldown -= frameTime;
+
+                if (zombiecomp.Accumulator < zombiecomp.RandomGroanAttempt)
+                    continue;
+                zombiecomp.Accumulator -= zombiecomp.RandomGroanAttempt;
+
+                if (!_robustRandom.Prob(zombiecomp.GroanChance))
+                    continue;
+
+                //either do a random accent line or scream
+                DoGroan(zombiecomp.Owner, zombiecomp);
             }
         }
     }

@@ -4,7 +4,7 @@
   graph: Girder
   startNode: start
   targetNode: girder
-  category: Structures
+  category: construction-category-structures
   description: A large structural assembly made out of metal.
   icon:
     sprite: /Textures/Structures/Walls/solid.rsi
@@ -22,7 +22,7 @@
   graph: Girder
   startNode: start
   targetNode: wall
-  category: Structures
+  category: construction-category-structures
   description: Keeps the air in and the greytide out.
   icon:
     sprite: Structures/Walls/solid.rsi
@@ -40,11 +40,119 @@
   graph: Girder
   startNode: start
   targetNode: reinforcedWall
-  category: Structures
+  category: construction-category-structures
   description: Keeps the air in and the greytide out.
   icon:
     sprite: Structures/Walls/solid.rsi
     state: rgeneric
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+# here
+- type: construction
+  name: wood wall
+  id: WoodWall
+  graph: Girder
+  startNode: start
+  targetNode: woodWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/wood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: uranium wall
+  id: UraniumWall
+  graph: Girder
+  startNode: start
+  targetNode: uraniumWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/uranium.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: silver wall
+  id: SilverWall
+  graph: Girder
+  startNode: start
+  targetNode: silverWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/silver.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plastic wall
+  id: PlasticWall
+  graph: Girder
+  startNode: start
+  targetNode: plasticWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/plastic.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plasma wall
+  id: PlasmaWall
+  graph: Girder
+  startNode: start
+  targetNode: plasmaWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/plasma.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: gold wall
+  id: GoldWall
+  graph: Girder
+  startNode: start
+  targetNode: goldWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/gold.rsi
+    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -58,7 +166,7 @@
   graph: Grille
   startNode: start
   targetNode: grille
-  category: Structures
+  category: construction-category-structures
   description: A flimsy framework of iron rods.
   conditions:
     - !type:TileNotBlocked
@@ -75,7 +183,7 @@
   graph: Window
   startNode: start
   targetNode: window
-  category: Structures
+  category: construction-category-structures
   description: Clear.
   canBuildInImpassable: true
   conditions:
@@ -94,7 +202,7 @@
   graph: Window
   startNode: start
   targetNode: reinforcedWindow
-  category: Structures
+  category: construction-category-structures
   description: Clear but tough.
   canBuildInImpassable: true
   conditions:
@@ -113,7 +221,7 @@
   graph: Window
   startNode: start
   targetNode: tintedWindow
-  category: Structures
+  category: construction-category-structures
   description: Not clear but tough.
   canBuildInImpassable: true
   conditions:
@@ -132,7 +240,7 @@
   graph: Window
   startNode: start
   targetNode: plasmaWindow
-  category: Structures
+  category: construction-category-structures
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
   conditions:
@@ -151,7 +259,7 @@
   graph: Window
   startNode: start
   targetNode: reinforcedPlasmaWindow
-  category: Structures
+  category: construction-category-structures
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
@@ -170,7 +278,7 @@
   graph: WindowDirectional
   startNode: start
   targetNode: windowDirectional
-  category: Structures
+  category: construction-category-structures
   description: Clear.
   canBuildInImpassable: true
   conditions:
@@ -188,7 +296,7 @@
   graph: WindowDirectional
   startNode: start
   targetNode: windowReinforcedDirectional
-  category: Structures
+  category: construction-category-structures
   description: Clear but tough.
   canBuildInImpassable: true
   conditions:
@@ -206,7 +314,7 @@
   graph: WindowDirectional
   startNode: start
   targetNode: plasmaWindowDirectional
-  category: Structures
+  category: construction-category-structures
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
   conditions:
@@ -224,7 +332,7 @@
   graph: WindowDirectional
   startNode: start
   targetNode: plasmaReinforcedWindowDirectional
-  category: Structures
+  category: construction-category-structures
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
@@ -242,7 +350,7 @@
   graph: Firelock
   startNode: start
   targetNode: Firelock
-  category: Structures
+  category: construction-category-structures
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
     sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
@@ -259,7 +367,7 @@
   graph: Shutters
   startNode: start
   targetNode: Shutters
-  category: Structures
+  category: construction-category-structures
   description: This is a shutter - connect it to a button to open and close it.
   icon:
     sprite: Structures/Doors/Shutters/shutters.rsi
@@ -275,15 +383,15 @@
   graph: Catwalk
   startNode: start
   targetNode: Catwalk
-  category: Structures
+  category: construction-category-structures
   description: Just like a lattice. Except it looks better.
   conditions:
     - !type:TileNotBlocked
     - !type:TileType
       targets:
-        - lattice
-        - plating
-        - underplating
+        - Lattice
+        - Plating
+        - UnderPlating
   icon:
     sprite: Structures/catwalk.rsi
     state: catwalk_preview
@@ -297,7 +405,7 @@
   graph: Barricade
   startNode: start
   targetNode: barricadewooden
-  category: Structures
+  category: construction-category-structures
   description: An improvised barricade made out of wooden planks.
   icon:
     sprite: Structures/Walls/barricades.rsi
@@ -314,7 +422,7 @@
   graph: Railing
   startNode: start
   targetNode: railing
-  category: Structures
+  category: construction-category-structures
   description: Basic railing meant to protect idiots like you from falling.
   icon:
     sprite: Structures/Walls/railing.rsi
@@ -331,7 +439,7 @@
   graph: Railing
   startNode: start
   targetNode: railingCorner
-  category: Structures
+  category: construction-category-structures
   description: Basic railing meant to protect idiots like you from falling.
   icon:
     sprite: Structures/Walls/railing.rsi
@@ -348,7 +456,7 @@
   graph: Railing
   startNode: start
   targetNode: railingCornerSmall
-  category: Structures
+  category: construction-category-structures
   description: Basic railing meant to protect idiots like you from falling.
   icon:
     sprite: Structures/Walls/railing.rsi
@@ -365,7 +473,7 @@
   graph: Airlock
   startNode: start
   targetNode: airlock
-  category: Structures
+  category: construction-category-structures
   description: It opens, it closes, and maybe crushes you.
   icon:
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
@@ -382,7 +490,7 @@
   graph: Windoor
   startNode: start
   targetNode: windoor
-  category: Structures
+  category: construction-category-structures
   description: It opens, it closes, and you can see through it!
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
@@ -399,7 +507,7 @@
   graph: Windoor
   startNode: start
   targetNode: windoorSecure
-  category: Structures
+  category: construction-category-structures
   description: It opens, it closes, and you can see through it! This one looks tough.
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
@@ -418,7 +526,7 @@
   graph: LightFixture
   startNode: start
   targetNode: tubeLight
-  category: Structures
+  category: construction-category-structures
   description: A wall light fixture. Use light tubes.
   icon:
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
@@ -438,7 +546,7 @@
   graph: LightFixture
   startNode: start
   targetNode: bulbLight
-  category: Structures
+  category: construction-category-structures
   description: A wall light fixture. Use light bulbs.
   icon:
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
@@ -457,7 +565,7 @@
   graph: LightFixture
   startNode: start
   targetNode: groundLight
-  category: Structures
+  category: construction-category-structures
   description: A ground light fixture. Use light bulbs.
   icon:
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -476,7 +584,7 @@
   graph: ConveyorGraph
   startNode: start
   targetNode: entity
-  category: Structures
+  category: construction-category-structures
   description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -493,7 +601,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: metalDoor
-  category: Structures
+  category: construction-category-structures
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -510,7 +618,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: woodDoor
-  category: Structures
+  category: construction-category-structures
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -527,7 +635,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: plasmaDoor
-  category: Structures
+  category: construction-category-structures
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -544,7 +652,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: goldDoor
-  category: Structures
+  category: construction-category-structures
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -561,7 +669,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: silverDoor
-  category: Structures
+  category: construction-category-structures
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -578,7 +686,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: paperDoor
-  category: Structures
+  category: construction-category-structures
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -593,7 +701,7 @@
   graph: PlasticFlapsGraph
   startNode: start
   targetNode: plasticFlaps
-  category: Structures
+  category: construction-category-structures
   placementMode: SnapgridCenter
   description: A plastic flap to let items through and keep people out.
   objectType: Structure
