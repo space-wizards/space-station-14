@@ -541,7 +541,7 @@ namespace Content.Server.Storage.EntitySystems
 
             if (playSound && storageComp.StorageInsertSound is not null)
             {
-                _audio.Play(storageComp.StorageInsertSound, Filter.Pvs(uid, entityManager: EntityManager), uid);
+                _audio.PlayPvs(storageComp.StorageInsertSound, uid);
             }
 
             RecalculateStorageUsed(storageComp);
