@@ -426,15 +426,18 @@
       components:
       - SurplusBundle
 
-- type: uplinkListing
+- type: listing
   id: uplinkMimeBook
-  category: Job
-  itemId: MimeSpellbook
   description: The classical two part series on how to further hone your mime skills.
-  price: 20
-  surplus: false
-  jobWhitelist:
-  - Mime
+  productEntity: MimeSpellbook
+  cost:
+    Telecrystal: 20
+  categories:
+    - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Mime
 
 
 # Armor
