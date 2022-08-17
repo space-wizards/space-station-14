@@ -428,7 +428,7 @@
 
 - type: listing
   id: uplinkHotPotato
-  description: An exploding hot potato.
+  description: An exploding game of hot potato.
   productEntity: HotPotato
   cost:
     Telecrystal: 7
