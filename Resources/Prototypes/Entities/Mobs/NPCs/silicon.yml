@@ -89,6 +89,9 @@
     context: "human"
   - type: InputMover
   - type: MobMover
+  - type: Body
+    template: DroneTemplate
+    preset: DronePreset
 
 - type: entity
   parent: MobSiliconBase
