@@ -78,10 +78,14 @@
       interfaces:
         - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
+    - type: Physics
+      canCollide: false
     - type: Airtight
       fixVacuum: true
+      airBlocked: false
       noAirWhenFullyAirBlocked: true
     - type: Occluder
+      enabled: false
     - type: Construction
       graph: Firelock
       node: Firelock
@@ -119,6 +123,7 @@
       sprite: Structures/Doors/edge_door_hazard.rsi
     - type: Airtight
       fixVacuum: true
+      airBlocked: false
       noAirWhenFullyAirBlocked: false
       airBlockedDirection:
         - South
@@ -136,3 +141,5 @@
       enabled: false
     - type: Door
       occludes: false
+    - type: Physics
+      canCollide: false

@@ -16,6 +16,7 @@ public abstract partial class SharedGunSystem
     protected virtual void InitializeBallistic()
     {
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentInit>(OnBallisticInit);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, MapInitEvent>(OnBallisticMapInit);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, TakeAmmoEvent>(OnBallisticTakeAmmo);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, GetAmmoCountEvent>(OnBallisticAmmoCount);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentGetState>(OnBallisticGetState);
@@ -122,15 +123,16 @@ public abstract partial class SharedGunSystem
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
     {
         component.Container = Containers.EnsureContainer<Container>(uid, "ballistic-ammo");
-        component.UnspawnedCount = component.Capacity;
+    }
 
+    private void OnBallisticMapInit(EntityUid uid, BallisticAmmoProviderComponent component, MapInitEvent args)
+    {
+        // TODO this should be part of the prototype, not set on map init.
+        // Alternatively, just track spawned count, instead of unspawned count.
         if (component.FillProto != null)
         {
-            component.UnspawnedCount -= Math.Min(component.UnspawnedCount, component.Container.ContainedEntities.Count);
-        }
-        else
-        {
-            component.UnspawnedCount = 0;
+            component.UnspawnedCount = Math.Max(0, component.Capacity - component.Container.ContainedEntities.Count);
+            Dirty(component);
         }
     }
 
