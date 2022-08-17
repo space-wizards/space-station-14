@@ -8,6 +8,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Afk;
 
@@ -21,12 +22,14 @@ public sealed class AFKSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IServerNetManager _netManager = default!;
 
     private float _checkDelay;
     private float _kickDelay;
     private float _accumulator;
 
-    private readonly Dictionary<IPlayerSession, long> _afkPlayers = new();
+    private readonly Dictionary<IPlayerSession, double> _afkPlayers = new();
 
     public override void Initialize()
     {
@@ -40,7 +43,7 @@ public sealed class AFKSystem : EntitySystem
     {
         _checkDelay = obj;
     }
-    private void SetAfkKickDelay(int obj)
+    private void SetAfkKickDelay(float obj)
     {
         _kickDelay = obj;
     }
@@ -88,7 +91,7 @@ public sealed class AFKSystem : EntitySystem
             var isAfk = _afkManager.IsAfk(pSession);
             if (isAfk)
             {
-                var curTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+                var curTime = _gameTiming.CurTime.TotalSeconds;
                 if (!_afkPlayers.ContainsKey(pSession))
                 {
                     _afkPlayers.Add(pSession, curTime);
@@ -97,12 +100,11 @@ public sealed class AFKSystem : EntitySystem
                     continue;
                 }
                 var timeElapsed = curTime - _afkPlayers[pSession];
-                if (timeElapsed > _kickDelay*60)
+                if (timeElapsed > _kickDelay)
                 {
-                    var network = IoCManager.Resolve<IServerNetManager>();
-                    network.DisconnectChannel(pSession.ConnectedClient, Loc.GetString("afk-system-kick-reason"));
+                    _netManager.DisconnectChannel(pSession.ConnectedClient, Loc.GetString("afk-system-kick-reason"));
                 }
-                else if(timeElapsed > (_kickDelay-1)*60)
+                else if(timeElapsed >= _kickDelay-1)
                 {
                     _chatManager.DispatchServerMessage(pSession, Loc.GetString("afk-system-kick-warning"), Color.Red);
                 }
