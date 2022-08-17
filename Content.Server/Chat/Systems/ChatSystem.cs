@@ -462,6 +462,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private string SanitizeMessageCapital(EntityUid source, string message)
     {
+        if (string.IsNullOrEmpty(message))
+            return message;
         // Capitalize first letter
         message = message[0].ToString().ToUpper() + message.Remove(0, 1);
         return message;

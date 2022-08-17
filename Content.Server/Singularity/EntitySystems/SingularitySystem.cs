@@ -133,7 +133,7 @@ namespace Content.Server.Singularity.EntitySystems
                    !EntityManager.HasComponent<StationDataComponent>(entity) && // these SHOULD be in null-space... but just in case. Also, maybe someone moves a singularity there..
                    (component.Level > 4 ||
                    !EntityManager.HasComponent<ContainmentFieldComponent>(entity) &&
-                   !EntityManager.HasComponent<ContainmentFieldGeneratorComponent>(entity));
+                   !(EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent>(entity, out var fieldGen) && fieldGen.IsConnected));
         }
 
         private void HandleDestroy(ServerSingularityComponent component, EntityUid entity)

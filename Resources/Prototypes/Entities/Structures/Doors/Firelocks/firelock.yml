@@ -77,7 +77,7 @@
         - type: AirlockVisualizer
           animationTime: 0.6
           emergencyAccessLayer: false
-        - type: WiresVisualizer
+    - type: WiresVisuals
     - type: Wires
       BoardName: "Firelock Control"
       LayoutId: Firelock

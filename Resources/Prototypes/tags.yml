@@ -37,6 +37,9 @@
   id: Bottle
 
 - type: Tag
+  id: BulletFoam
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
@@ -307,7 +310,7 @@
 
 - type: Tag
   id: MailingUnitElectronics
-  
+
 - type: Tag
   id: Medkit
 
