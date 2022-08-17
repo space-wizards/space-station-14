@@ -1,0 +1,35 @@
+- type: entity
+  id: WallLockerBooze
+  parent: WallLockerBase
+  name: booze wall storage
+  description: This is where the bartender keeps the booze.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cabinet
+      state_open: cabinet_open
+      state_closed: cabinet_door
+
+  - type: AccessReader
+    access: [["Bar"]]
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Effects/woodenclosetclose.ogg
+    openSound:
+      path: /Audio/Effects/woodenclosetopen.ogg
+
+# Cargo
+- type: entity
+  id: WallLockerQuarterMaster
+  parent: WallLockerBase
+  name: quartermaster's wall locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: qm
+      state_open: qm_open
+      state_closed: qm_door
+  - type: AccessReader
+    access: [["Quartermaster"]]
