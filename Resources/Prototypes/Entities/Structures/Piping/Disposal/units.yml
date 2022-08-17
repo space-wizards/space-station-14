@@ -72,8 +72,7 @@
       type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
-      disposal-unit: !type:Container
-        ents: []
+      DisposalUnit: !type:Container
 
 - type: entity
   id: DisposalUnit

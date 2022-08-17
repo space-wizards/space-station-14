@@ -1,7 +1,8 @@
 using System.Linq;
-using Content.Server.Storage.Components;
+using Content.Server.Store.Systems;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.PDA;
+using Content.Shared.Store;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -12,23 +13,25 @@ public sealed class SurplusBundleSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
 
-    private UplinkStoreListingPrototype[] _uplinks = default!;
+    private ListingData[] _listings = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SurplusBundleComponent, MapInitEvent>(OnMapInit);
 
-        InitList();
+        SubscribeLocalEvent<SurplusBundleComponent, ComponentInit>(OnInit);
     }
 
-    private void InitList()
+    private void OnInit(EntityUid uid, SurplusBundleComponent component, ComponentInit args)
     {
-        // sort data in price descending order
-        _uplinks = _prototypeManager.EnumeratePrototypes<UplinkStoreListingPrototype>()
-            .Where(item => item.CanSurplus).ToArray();
-        Array.Sort(_uplinks, (a, b) => b.Price - a.Price);
+        var storePreset = _prototypeManager.Index<StorePresetPrototype>(component.StorePreset);
+
+        _listings = _store.GetAvailableListings(uid, null, storePreset.Categories).ToArray();
+
+        Array.Sort(_listings, (a, b) => (int) (b.Cost.Values.Sum() - a.Cost.Values.Sum())); //this might get weird with multicurrency but don't think about it
     }
 
     private void OnMapInit(EntityUid uid, SurplusBundleComponent component, MapInitEvent args)
@@ -46,19 +49,19 @@ public sealed class SurplusBundleSystem : EntitySystem
         var content = GetRandomContent(component.TotalPrice);
         foreach (var item in content)
         {
-            var ent = EntityManager.SpawnEntity(item.ItemId, cords);
+            var ent = EntityManager.SpawnEntity(item.ProductEntity, cords);
             _entityStorage.Insert(ent, component.Owner);
         }
     }
 
     // wow, is this leetcode reference?
-    private List<UplinkStoreListingPrototype> GetRandomContent(int targetCost)
+    private List<ListingData> GetRandomContent(FixedPoint2 targetCost)
     {
-        var ret = new List<UplinkStoreListingPrototype>();
-        if (_uplinks.Length == 0)
+        var ret = new List<ListingData>();
+        if (_listings.Length == 0)
             return ret;
 
-        var totalCost = 0;
+        var totalCost = FixedPoint2.Zero;
         var index = 0;
         while (totalCost < targetCost)
         {
@@ -66,10 +69,10 @@ public sealed class SurplusBundleSystem : EntitySystem
             // Find new item with the lowest acceptable price
             // All expansive items will be before index, all acceptable after
             var remainingBudget = targetCost - totalCost;
-            while (_uplinks[index].Price > remainingBudget)
+            while (_listings[index].Cost.Values.Sum() > remainingBudget)
             {
                 index++;
-                if (index >= _uplinks.Length)
+                if (index >= _listings.Length)
                 {
                     // Looks like no cheap items left
                     // It shouldn't be case for ss14 content
@@ -79,10 +82,10 @@ public sealed class SurplusBundleSystem : EntitySystem
             }
 
             // Select random listing and add into crate
-            var randomIndex = _random.Next(index, _uplinks.Length);
-            var randomItem = _uplinks[randomIndex];
+            var randomIndex = _random.Next(index, _listings.Length);
+            var randomItem = _listings[randomIndex];
             ret.Add(randomItem);
-            totalCost += randomItem.Price;
+            totalCost += randomItem.Cost.Values.Sum();
         }
 
         return ret;
