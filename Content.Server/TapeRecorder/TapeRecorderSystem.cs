@@ -39,7 +39,7 @@ namespace Content.Server.TapeRecorder
         {
             base.Update(frameTime);
 
-            foreach (var (tapeRecorder, activeTapeRecorder) in EntityManager.EntityQuery<TapeRecorderComponent, ActiveTapeRecorderComponent>())
+            foreach (var tapeRecorder in EntityManager.EntityQuery<TapeRecorderComponent>())
             {
                 tapeRecorder.AccumulatedTime += frameTime;
 
@@ -122,7 +122,6 @@ namespace Content.Server.TapeRecorder
             if (component.InsertedTape == null || component.InsertedTape.TimeStamp >= component.InsertedTape.TapeMaxTime.TotalSeconds)
                 return;
 
-            AddComp<ActiveTapeRecorderComponent>(component.Owner);
             component.RecordingStartTime = component.AccumulatedTime - component.InsertedTape.TimeStamp;
             component.RecordingStartTimestamp = component.InsertedTape.TimeStamp;
 
@@ -140,7 +139,6 @@ namespace Content.Server.TapeRecorder
                 return;
             }
 
-            AddComp<ActiveTapeRecorderComponent>(component.Owner);
             _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-playback", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
         }
@@ -149,7 +147,6 @@ namespace Content.Server.TapeRecorder
         {
             if (component.InsertedTape == null || component.InsertedTape.TimeStamp <= 0)
                 return;
-            AddComp<ActiveTapeRecorderComponent>(component.Owner);
 
             _popupSystem.PopupEntity(Loc.GetString("tape-recorder-start-rewind", ("item", component.Owner)), component.Owner, Filter.Pvs(component.Owner));
             _audioSystem.PlayPvs(component.StartSound, component.Owner);
@@ -162,7 +159,6 @@ namespace Content.Server.TapeRecorder
         {
             if (!component.Enabled)
                 return;
-            RemComp<ActiveTapeRecorderComponent>(component.Owner);
 
             if (component.CurrentMode == TapeRecorderState.Record && component.Enabled)
                 FlushBufferToMemory(component);
