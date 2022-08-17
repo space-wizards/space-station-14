@@ -12,7 +12,7 @@ namespace Content.Server.Disposal.Tube.Components
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
-        public const string ContainerId = "disposal-tube";
+        public virtual string ContainerId => "DisposalTube";
 
         [Dependency] private readonly IEntityManager _entMan = default!;
 
