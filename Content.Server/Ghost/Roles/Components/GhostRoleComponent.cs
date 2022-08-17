@@ -1,6 +1,7 @@
 ﻿using Content.Server.Mind.Commands;
 using Content.Server.PAI;
 using Robust.Server.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -13,7 +14,7 @@ namespace Content.Server.Ghost.Roles.Components
 
         [DataField("rules")] private string _roleRules = "";
 
-        [DataField("useLottery")] private bool _roleUseLottery = true;
+        [DataField("lotteryEnabled")] private bool _roleLotteryEnabled;
 
         /// <summary>
         /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
@@ -37,8 +38,10 @@ namespace Content.Server.Ghost.Roles.Components
             get => Loc.GetString(_roleName);
             set
             {
+                var oldRoleName = _roleName;
                 _roleName = value;
-                EntitySystem.Get<GhostRoleLotterySystem>().UpdateAllEui();
+
+                EntitySystem.Get<GhostRoleSystem>().OnGhostRoleUpdate(this, oldRoleName);
             }
         }
 
@@ -50,7 +53,7 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleDescription = value;
-                EntitySystem.Get<GhostRoleLotterySystem>().UpdateAllEui();
+                EntitySystem.Get<GhostRoleSystem>().OnGhostRoleUpdate(this, _roleName);
             }
         }
 
@@ -62,27 +65,48 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleRules = value;
-                EntitySystem.Get<GhostRoleLotterySystem>().UpdateAllEui();
+                EntitySystem.Get<GhostRoleSystem>().OnGhostRoleUpdate(this, _roleName);
             }
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
         [Access(typeof(GhostRoleSystem), typeof(PAISystem), Other = AccessPermissions.Read)] // FIXME Friends
-        public bool RoleUseLottery
+        public bool RoleLotteryEnabled
         {
-            get => _roleUseLottery;
+            get => _roleLotteryEnabled;
             set
             {
-                _roleUseLottery = value;
-                EntitySystem.Get<GhostRoleLotterySystem>().UpdateAllEui();
+                _roleLotteryEnabled = value;
+                EntitySystem.Get<GhostRoleSystem>().OnGhostRoleUpdate(this, _roleName);
             }
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Taken { get; set; }
 
-        [ViewVariables]
-        public uint Identifier { get; set; }
+        /// <summary>
+        /// If the ghost role currently in the queue for the lottery.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool PendingLottery { get; set; }
+
+        /// <summary>
+        /// If the ghost role is disabled because
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool Damaged { get; set; }
+
+        /// <summary>
+        /// If the ghost role is disabled due to being taken by a <see cref="GhostRoleGroupComponent"/>
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool GhostRoleGroupTaken { get; set; }
+
+        /// <summary>
+        /// If the ghost role is available to be taken.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool Available => !(Taken || PendingLottery || Damaged || GhostRoleGroupTaken);
 
         /// <summary>
         /// Reregisters the ghost role when the current player ghosts.
@@ -90,11 +114,6 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reregister")]
         public bool ReregisterOnGhost { get; set; } = true;
-
-        /// <summary>
-        /// If the ghost role currently in the queue for the lottery.
-        /// </summary>
-        public bool Queued { get; set; } = false;
 
         public abstract bool Take(IPlayerSession session);
     }

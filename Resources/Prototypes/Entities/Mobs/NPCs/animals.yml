@@ -743,7 +743,6 @@
     makeSentient: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
-    useLottery: false
   - type: Speech
     speechSounds: Squeak
   - type: Sprite

@@ -123,10 +123,10 @@ namespace Content.Client.Ghost.Roles.UI
 
             foreach (var role in ghostState.GhostRoles)
             {
-                _window.AddEntry(role, ghostState.PlayerRequests.Contains(role.Name));
+                _window.AddEntry(role, ghostState.PlayerGhostRoleRequests.Contains(role.Identifier));
             }
 
-            var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);
+            var closeRulesWindow = ghostState.GhostRoles.All(role => role.Name != _windowRulesId);
             if (closeRulesWindow)
             {
                 _windowRules?.Close();

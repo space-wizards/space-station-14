@@ -11,6 +11,7 @@ using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.MobState;
 using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -40,11 +41,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// </summary>
     private readonly Dictionary<IPlayerSession, uint> _roleGroupActiveGroups = new();
 
-    /// <summary>
-    ///     Cache of <see cref="GhostRoleGroupComponent"/> indexed by the role group identifier.
-    /// </summary>
-    private readonly Dictionary<uint, HashSet<GhostRoleGroupComponent>> _lookupComponentsByIdentifier = new();
-
     private bool _needsUpdateRoleGroups = true;
 
     /// <inheritdoc/>
@@ -53,11 +49,25 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-        SubscribeLocalEvent<GhostTakeoverAvailableComponent, EntityPlacedEvent>(OnEntityPlaced);
+        SubscribeLocalEvent<GhostRoleComponent, EntityPlacedEvent>(OnEntityPlaced);
         SubscribeLocalEvent<GhostRoleGroupComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<GhostRoleGroupComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<GhostRoleGroupComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<RequestAvailableLotteryItemsMessage>(OnLotteryRequest);
-        SubscribeLocalEvent<GhostRoleGroupRequestTakeoverMessage>(OnTakeoverRequest);
+    }
+
+    private void OnMobStateChanged(EntityUid uid, GhostRoleGroupComponent component, MobStateChangedEvent args)
+    {
+        switch (args.CurrentMobState)
+        {
+            case DamageState.Critical:
+            case DamageState.Dead:
+                RemComp<GhostRoleGroupComponent>(uid);
+                break;
+            case DamageState.Invalid:
+            case DamageState.Alive:
+            default:
+                break;
+        }
     }
 
     private void OnMindAdded(EntityUid uid, GhostRoleGroupComponent component, MindAddedMessage args)
@@ -155,19 +165,25 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_adminManager.IsAdmin(session))
             return groups.ToArray();
 
+        // Collect the components by group.
+        var groupEntities = new Dictionary<uint, ICollection<EntityUid>>(_roleGroupEntries.Count);
+        foreach (var comp in EntityQuery<GhostRoleGroupComponent>())
+        {
+            if (!groupEntities.TryGetValue(comp.Identifier, out var entities))
+                groupEntities[comp.Identifier] = entities = new List<EntityUid>();
+
+            entities.Add(comp.Owner);
+        }
+
         foreach (var (_, entry) in _roleGroupEntries)
         {
-            var groupEntities = EntityQuery<GhostRoleGroupComponent>()
-                .Where(c => c.Identifier == entry.Identifier)
-                .Select(c => c.Owner).ToArray();
-
             var group = new AdminGhostRoleGroupInfo()
             {
                 GroupIdentifier = entry.Identifier,
                 Name = entry.RoleName,
                 Description = entry.RoleDescription,
                 Status = entry.Status,
-                Entities = groupEntities,
+                Entities = groupEntities.GetValueOrDefault(entry.Identifier)?.ToArray() ?? new EntityUid[] {},
                 IsActive = _roleGroupActiveGroups.GetValueOrDefault(session) == entry.Identifier,
                 CanModify = CanModify(session, entry)
             };
@@ -178,29 +194,30 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         return groups.ToArray();
     }
 
-    private void OnEntityPlaced(EntityUid uid, GhostTakeoverAvailableComponent component, EntityPlacedEvent args)
+    private void OnEntityPlaced(EntityUid uid, GhostRoleComponent component, EntityPlacedEvent args)
     {
         if (!TryGetActiveRoleGroup(args.PlacedBy, out var identifier))
             return;
 
-        RemComp<GhostTakeoverAvailableComponent>(uid); // Remove so that GhostRoleSystem doesn't manage it simultaneously.
         AttachToGhostRoleGroup(args.PlacedBy, identifier, uid, component);
     }
 
     private void OnShutdown(EntityUid uid, GhostRoleGroupComponent role, ComponentShutdown args)
     {
-        if (_lookupComponentsByIdentifier.TryGetValue(role.Identifier, out var components))
-            components.Remove(role);
-
         if (!_roleGroupEntries.TryGetValue(role.Identifier, out var entry))
-            return;
+            return; // Role group doesn't exist.
+
+        var deleteRoleGroup = !EntityQuery<GhostRoleGroupComponent>()
+            .Any(comp => comp.Identifier == role.Identifier && comp != role);
+
+        RaiseLocalEvent(uid, new GhostRoleGroupEntityDetachedEvent(uid, role.Identifier));
 
         _needsUpdateRoleGroups = true;
 
         if (entry.Status == GhostRoleGroupStatus.Editing)
             return;
 
-        if(EntityQuery<GhostRoleGroupComponent>().All(c => c.Identifier != entry.Identifier))
+        if(deleteRoleGroup)
             InternalDeleteGhostRoleGroup(entry, false);
         else
             _ghostRoleLotterySystem.UpdateAllEui();
@@ -233,7 +250,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             _roleGroupActiveGroups.Add(session, entry.Identifier);
 
         _needsUpdateRoleGroups = true;
-        _lookupComponentsByIdentifier.Add(identifier, new HashSet<GhostRoleGroupComponent>());
         return identifier;
     }
 
@@ -284,12 +300,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         _needsUpdateRoleGroups = true;
         _ghostRoleLotterySystem.UpdateAllEui();
 
-        _lookupComponentsByIdentifier.Remove(entry.Identifier, out var deleteComponents);
-
-        if (!deleteEntities || deleteComponents == null)
+        if (!deleteEntities)
             return;
 
-        foreach (var groupComp in deleteComponents)
+        var toDelete = EntityQuery<GhostRoleGroupComponent>()
+            .Where(comp => comp.Identifier == entry.Identifier);
+
+        foreach (var groupComp in toDelete)
         {
             if (TryComp<MindComponent>(groupComp.Owner, out var mindComp) && mindComp.Mind?.UserId != null)
                 continue; // Don't delete player-controlled entities.
@@ -372,38 +389,21 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (entry.Status != GhostRoleGroupStatus.Editing)
             return false;
 
-        uint? prevRoleGroupIdentifier = null; // Get the previous role group (if it exists).
         if (TryComp<GhostRoleGroupComponent>(entity, out var ghostRoleGroupComp))
         {
             if (ghostRoleGroupComp.Identifier == identifier)
                 return true; // Already is part of this role group.
 
-            prevRoleGroupIdentifier = ghostRoleGroupComp.Identifier;
             if (!CanModify(session, ghostRoleGroupComp.Identifier))
                 return false; // Can't transfer from a role group we don't have the ability to modify.
         }
 
-        // If it has ghost role, it may already be part of a lottery. Remove it.
-        if (ghostRoleComponent != null || EntityManager.TryGetComponent(entity, out ghostRoleComponent))
-            _ghostRoleLotterySystem.GhostRoleRemoveComponent(ghostRoleComponent);
-
         MakeSentientCommand.MakeSentient(entity, EntityManager);
-        var groupComponent = EnsureComp<GhostRoleGroupComponent>(entity);
+        var groupComponent = ghostRoleGroupComp ?? AddComp<GhostRoleGroupComponent>(entity);
         groupComponent.Identifier = identifier;
         _needsUpdateRoleGroups = true;
 
-        // Remove from previous role group lookup.
-        if (prevRoleGroupIdentifier != null &&
-            _lookupComponentsByIdentifier.TryGetValue(prevRoleGroupIdentifier.Value, out var components))
-        {
-            components.Remove(groupComponent);
-        }
-
-        // Add the component to lookup tables.
-        if(!_lookupComponentsByIdentifier.TryGetValue(groupComponent.Identifier, out components))
-            _lookupComponentsByIdentifier[groupComponent.Identifier] = components = new HashSet<GhostRoleGroupComponent>();
-
-        components.Add(groupComponent);
+        RaiseLocalEvent(entity, new GhostRoleGroupEntityAttachedEvent(entity, identifier));
         return true;
     }
 
@@ -441,33 +441,65 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     public int GetAvailableCount()
     {
         var count = 0;
-        foreach (var (_, group) in _roleGroupEntries)
+        foreach (var comp in EntityQuery<GhostRoleGroupComponent>())
         {
-            if (group.Status != GhostRoleGroupStatus.Released)
+            if (!_roleGroupEntries.TryGetValue(comp.Identifier, out var roleGroup)
+                || roleGroup.Status != GhostRoleGroupStatus.Released)
+            {
                 continue;
+            }
 
-            count += _lookupComponentsByIdentifier[group.Identifier].Count;
+            if (TryComp<GhostRoleMobSpawnerComponent>(comp.Owner, out var spawner))
+                count += spawner.AvailableTakeovers;
+            else
+                count += 1;
         }
 
         return count;
     }
 
-    /// <summary>
-    ///     Event handler to supply <see cref="GhostRoleLotterySystem"/> with new lottery items. Any Releasing
-    ///     role groups are put into the Released state and entered into the lottery.
-    /// </summary>
-    /// <param name="ev">Event to be supplied with new lottery items.</param>
-    private void OnLotteryRequest(RequestAvailableLotteryItemsMessage ev)
+    public void OnLotteryResults(uint roleGroupIdentifier, IReadOnlyList<IPlayerSession> sessions,
+        out List<IPlayerSession> successTakeovers, out bool roleGroupTaken)
+    {
+        successTakeovers = new List<IPlayerSession>();
+        roleGroupTaken = true;
+
+        if (!_roleGroupEntries.TryGetValue(roleGroupIdentifier, out var roleGroupEntry))
+            return;
+
+        var sessionIdx = 0;
+        var sessionCount = sessions.Count;
+
+        var ghostRoleSystem = Get<GhostRoleSystem>();
+        var ghostRoleQuery = EntityManager.GetEntityQuery<GhostRoleComponent>();
+
+        foreach (var component in EntityQuery<GhostRoleGroupComponent>())
+        {
+            if (sessionIdx >= sessionCount)
+                break; // All sessions have been used.
+
+            if (component.Identifier != roleGroupIdentifier)
+                continue;
+
+            var session = sessions[sessionIdx];
+            ghostRoleQuery.TryGetComponent(component.Owner, out var ghostRoleComp);
+            if (!PerformTakeover(session, component, roleGroupEntry, ghostRoleComp, ghostRoleSystem))
+                continue;
+
+            sessionIdx++;
+        }
+    }
+
+    public void OnNextLotteryStarting()
     {
         var updated = false;
 
-        foreach (var (identifier, group) in _roleGroupEntries)
+        foreach (var (_, group) in _roleGroupEntries)
         {
             if (group.Status != GhostRoleGroupStatus.Releasing)
                 continue;
 
             group.Status = GhostRoleGroupStatus.Released;
-            ev.GhostRoleGroups.Add(identifier);
             updated = true;
         }
 
@@ -475,38 +507,47 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             UpdateAllEui();
     }
 
-    /// <summary>
-    ///     Event handler to perform the take-over of the role group entity.
-    /// </summary>
-    /// <param name="ev"></param>
-    private void OnTakeoverRequest(GhostRoleGroupRequestTakeoverMessage ev)
-    {
-        if (!_roleGroupEntries.TryGetValue(ev.RoleGroupIdentifier, out var entry))
-            return;
 
-        if (!_lookupComponentsByIdentifier.TryGetValue(ev.RoleGroupIdentifier, out var components)
-            || components.Count == 0)
+    public HashSet<uint> GetAllAvailableLotteryItems()
+    {
+        var lotteryItems = new HashSet<uint>();
+        foreach (var (_, data) in _roleGroupEntries)
         {
-            ev.RoleGroupTaken = true; // Role group is already completely used up.
-            return;
+            if(data.Status != GhostRoleGroupStatus.Released)
+                continue;
+
+            lotteryItems.Add(data.Identifier);
         }
 
-        var ghostRoleGroupComponent = components.First();
-        var entityUid = ghostRoleGroupComponent.Owner;
-        var contentData = ev.Player.ContentData();
+        return lotteryItems;
+    }
+
+    /// <summary>
+    /// Has a player take control of a entity belonging to a ghost role group. If the entity is also a ghost role, this
+    /// request is redirected to <see cref="GhostRoleSystem"/>. Otherwise the entity will be taken over.
+    /// </summary>
+    private bool PerformTakeover(IPlayerSession session, GhostRoleGroupComponent comp, RoleGroupEntry entry, GhostRoleComponent? ghostRoleComp, GhostRoleSystem? ghostRoleSystem = null)
+    {
+        if (ghostRoleComp != null)
+        {
+            ghostRoleSystem ??= Get<GhostRoleSystem>();
+            return ghostRoleSystem.PerformTakeover(session, ghostRoleComp);
+        }
+
+        var entityUid = comp.Owner;
+        var contentData = session.ContentData();
 
         DebugTools.AssertNotNull(contentData);
 
-        var newMind = new Mind.Mind(ev.Player.UserId)
+        var newMind = new Mind.Mind(session.UserId)
         {
             CharacterName = EntityManager.GetComponent<MetaDataComponent>(entityUid).EntityName
         };
         newMind.AddRole(new GhostRoleMarkerRole(newMind, entry.RoleName));
 
-        newMind.ChangeOwningPlayer(ev.Player.UserId);
+        newMind.ChangeOwningPlayer(session.UserId);
         newMind.TransferTo(entityUid);
-
-        ev.Result = true;
+        return true;
     }
 }
 
@@ -526,43 +567,6 @@ internal sealed class RoleGroupEntry
     public string RoleDescription { get; init; } = default!;
 
     public GhostRoleGroupStatus Status = GhostRoleGroupStatus.Editing;
-}
-
-/// <summary>
-///     Raised when a system needs a role group to perform a take over on one of it's owned entities.
-///     TODO: Method events bad. ES methods good.
-/// </summary>
-public sealed class GhostRoleGroupRequestTakeoverMessage : EntityEventArgs
-{
-    /// <summary>
-    ///     Player to takeover the entity.
-    ///     Input parameter.
-    /// </summary>
-    public IPlayerSession Player { get; }
-
-    /// <summary>
-    ///     Identifier for the role group.
-    ///     Input parameter.
-    /// </summary>
-    public uint RoleGroupIdentifier { get; }
-
-    /// <summary>
-    ///     If the player successfully took over the entity.
-    ///     Output parameter.
-    /// </summary>
-    public bool Result { get; set; }
-
-    /// <summary>
-    ///     If the role group was consumed when being taken over.
-    ///     Output parameter.
-    /// </summary>
-    public bool RoleGroupTaken { get; set; }
-
-    public GhostRoleGroupRequestTakeoverMessage(IPlayerSession player, uint identifier)
-    {
-        Player = player;
-        RoleGroupIdentifier = identifier;
-    }
 }
 
 [AdminCommand(AdminFlags.Spawn)]

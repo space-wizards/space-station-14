@@ -29,17 +29,17 @@ namespace Content.Shared.Ghost.Roles
     {
         public GhostRoleGroupInfo[] GhostRoleGroups { get; }
         public GhostRoleInfo[] GhostRoles { get; }
-        public string[] PlayerRequests { get; }
+        public string[] PlayerGhostRoleRequests { get; }
         public uint [] PlayerRoleGroupRequests { get; }
         public TimeSpan LotteryStart { get; }
         public TimeSpan LotteryEnd { get; }
         public bool ShowAdminControls { get; }
 
-        public GhostRolesEuiState(GhostRoleGroupInfo[] ghostRoleGroups, GhostRoleInfo[] ghostRoles, string[] requests, uint[] groupRequests, TimeSpan lotteryStart, TimeSpan lotteryEnd, bool showAdminControls)
+        public GhostRolesEuiState(GhostRoleGroupInfo[] ghostRoleGroups, GhostRoleInfo[] ghostRoles, string[] roleRequests, uint[] groupRequests, TimeSpan lotteryStart, TimeSpan lotteryEnd, bool showAdminControls)
         {
             GhostRoleGroups = ghostRoleGroups;
             GhostRoles = ghostRoles;
-            PlayerRequests = requests;
+            PlayerGhostRoleRequests = roleRequests;
             PlayerRoleGroupRequests = groupRequests;
             LotteryStart = lotteryStart;
             LotteryEnd = lotteryEnd;
