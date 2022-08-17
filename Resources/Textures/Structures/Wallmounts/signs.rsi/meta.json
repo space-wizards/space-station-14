@@ -1204,6 +1204,30 @@
             ]
         },
         {
+            "name": "goldenplaque",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "kiddieplaque",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "security",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "atmominsky",
             "delays": [
                 [
