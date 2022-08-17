@@ -9,3 +9,6 @@ store-currency-price-display-debugdollar = {$amount ->
 
 store-currency-balance-display-telecrystal = TC: {$amount}
 store-currency-price-display-telecrystal = {$amount} TC
+
+store-currency-balance-display-stolen-essence = Stolen Essence: {$amount}
+store-currency-price-display-stolen-essence = {$amount} Stolen Essence

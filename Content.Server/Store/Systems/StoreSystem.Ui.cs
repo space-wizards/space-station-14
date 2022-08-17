@@ -69,6 +69,7 @@ public sealed partial class StoreSystem : EntitySystem
         //if we haven't opened it before, initialize the shit
         if (!component.Opened)
         {
+            RefreshAllListings(component);
             InitializeFromPreset(component.Preset, component);
             component.Opened = true;
         }

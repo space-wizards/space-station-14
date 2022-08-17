@@ -16,6 +16,8 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
 using Content.Server.Polymorph.Systems;
+using Content.Server.Store.Components;
+using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Player;
 using Content.Shared.Movement.Systems;
@@ -42,6 +44,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
 
     public override void Initialize()
     {
@@ -49,13 +52,13 @@ public sealed partial class RevenantSystem : EntitySystem
 
         SubscribeLocalEvent<RevenantComponent, ComponentStartup>(OnStartup);
 
+        SubscribeLocalEvent<RevenantComponent, RevenantShopActionEvent>(OnShop);
         SubscribeLocalEvent<RevenantComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
 
         InitializeAbilities();
-        InitializeShop();
     }
 
     private void OnStartup(EntityUid uid, RevenantComponent component, ComponentStartup args)
@@ -71,10 +74,6 @@ public sealed partial class RevenantSystem : EntitySystem
         //ghost vision
         if (TryComp(component.Owner, out EyeComponent? eye))
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
-
-        //get all the abilities
-        foreach (var listing in _proto.EnumeratePrototypes<RevenantStoreListingPrototype>())
-            component.Listings.Add(listing, true);
 
         var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
         _action.AddAction(uid, shopaction, null);
@@ -112,9 +111,9 @@ public sealed partial class RevenantSystem : EntitySystem
         ChangeEssenceAmount(uid, essenceDamage, component);
     }
 
-    public bool ChangeEssenceAmount(EntityUid uid, FixedPoint2 amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false)
+    public bool ChangeEssenceAmount(EntityUid uid, FixedPoint2 amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false, StoreComponent? store = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, ref store))
             return false;
 
         if (!allowDeath && component.Essence + amount <= 0)
@@ -133,7 +132,7 @@ public sealed partial class RevenantSystem : EntitySystem
             _polymorphable.PolymorphEntity(uid, "Ectoplasm");
         }
 
-        UpdateUserInterface(component);
+        _store.UpdateUserInterface(uid, store);
         return true;
     }
 
@@ -161,6 +160,13 @@ public sealed partial class RevenantSystem : EntitySystem
         _stun.TryStun(uid, TimeSpan.FromSeconds(debuffs.X), false);
 
         return true;
+    }
+
+    private void OnShop(EntityUid uid, RevenantComponent component, RevenantShopActionEvent args)
+    {
+        if (!TryComp<StoreComponent>(uid, out var store))
+            return;
+        _store.ToggleUi(uid, store);
     }
 
     public override void Update(float frameTime)
