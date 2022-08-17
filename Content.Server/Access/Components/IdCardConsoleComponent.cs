@@ -34,8 +34,8 @@ namespace Content.Server.Access.Components
             Owner.EnsureComponentWarn<AccessReaderComponent>();
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
 
-            _stationSystem = EntitySystem.Get<StationSystem>();
-            _recordSystem = EntitySystem.Get<StationRecordsSystem>();
+            _stationSystem = _entities.EntitySysManager.GetEntitySystem<StationSystem>();
+            _recordSystem = _entities.EntitySysManager.GetEntitySystem<StationRecordsSystem>();
 
             if (UserInterface != null)
             {
@@ -71,7 +71,7 @@ namespace Content.Server.Access.Components
             }
 
             var privilegedIdEntity = PrivilegedIdSlot.Item;
-            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+            var accessSystem = _entities.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
             return privilegedIdEntity != null && accessSystem.IsAllowed(privilegedIdEntity.Value, reader);
         }
 
@@ -84,7 +84,7 @@ namespace Content.Server.Access.Components
             if (TargetIdSlot.Item is not {Valid: true} targetIdEntity || !PrivilegedIdIsAuthorized())
                 return;
 
-            var cardSystem = EntitySystem.Get<IdCardSystem>();
+            var cardSystem = _entities.EntitySysManager.GetEntitySystem<IdCardSystem>();
             cardSystem.TryChangeFullName(targetIdEntity, newFullName, player: player);
             cardSystem.TryChangeJobTitle(targetIdEntity, newJobTitle, player: player);
 
@@ -94,7 +94,7 @@ namespace Content.Server.Access.Components
                 return;
             }
 
-            var accessSystem = EntitySystem.Get<AccessSystem>();
+            var accessSystem = _entities.EntitySysManager.GetEntitySystem<AccessSystem>();
             accessSystem.TrySetTags(targetIdEntity, newAccessList);
 
             /*TODO: ECS IdCardConsoleComponent and then log on card ejection, together with the save.
