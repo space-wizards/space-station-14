@@ -82,7 +82,7 @@
   startNode: start
   targetNode: substation
   category: construction-category-utilities
-  description: "A wallmount substation for compact spaces. Make sure to place cable under before building the wall."
+  description: "A wallmount substation for compact spaces. Make sure to place cable underneath before building the wall."
   icon:
     sprite: Structures/Power/substation.rsi
     state: substation_wall
@@ -97,7 +97,7 @@
   startNode: start
   targetNode: generator
   category: construction-category-utilities
-  description: "A wallmount generator for compact spaces. Make sure to place cable under before building the wall."
+  description: "A wallmount generator for compact spaces. Make sure to place cable underneath before building the wall."
   icon:
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     state: panel
@@ -112,7 +112,7 @@
   startNode: start
   targetNode: APU
   category: construction-category-utilities
-  description: "A wallmount APU for compact shuttles. Make sure to place cable under before building the wall."
+  description: "A wallmount APU for compact shuttles. Make sure to place cable underneath before building the wall."
   icon:
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     state: panel
@@ -123,6 +123,7 @@
 # DISPOSALS
 - type: construction
   name: disposal unit
+  description: A pneumatic waste disposal unit.
   id: DisposalUnit
   graph: DisposalMachine
   startNode: start
@@ -136,6 +137,7 @@
 
 - type: construction
   name: mailing unit
+  description: A pneumatic mail delivery unit.
   id: MailingUnit
   graph: DisposalMachine
   startNode: start
@@ -150,6 +152,7 @@
 - type: construction
   name: disposal pipe
   id: DisposalPipe
+  description: A huge pipe segment used for constructing disposal systems.
   graph: DisposalPipe
   startNode: start
   targetNode: pipe
@@ -162,6 +165,7 @@
 
 - type: construction
   name: disposal tagger
+  description: A pipe that tags entities for routing.
   id: DisposalTagger
   graph: DisposalPipe
   startNode: start
@@ -175,6 +179,7 @@
 
 - type: construction
   name: disposal trunk
+  description: A pipe trunk used as an entry point for disposal systems.
   id: DisposalTrunk
   graph: DisposalPipe
   startNode: start
@@ -188,6 +193,7 @@
 
 - type: construction
   name: disposal router
+  description: A three-way router. Entities with matching tags get routed to the side.
   id: DisposalRouter
   graph: DisposalPipe
   startNode: start
@@ -201,6 +207,7 @@
 
 - type: construction
   name: disposal junction
+  description: A three-way junction. The arrow indicates where items exit.
   id: DisposalJunction
   graph: DisposalPipe
   startNode: start
@@ -214,6 +221,7 @@
 
 - type: construction
   name: disposal Y junction
+  description: A three-way junction with another exit point.
   id: DisposalYJunction
   graph: DisposalPipe
   startNode: start
@@ -227,6 +235,7 @@
 
 - type: construction
   name: disposal bend
+  description: A tube bent at a 90 degree angle.
   id: DisposalBend
   graph: DisposalPipe
   startNode: start
@@ -279,6 +288,7 @@
 - type: construction
   name: gas pipe half
   id: GasPipeHalf
+  description: Half of a gas pipe. No skateboards.
   graph: GasPipe
   startNode: start
   targetNode: half
@@ -292,6 +302,7 @@
 - type: construction
   name: gas pipe straight
   id: GasPipeStraight
+  description: A straight pipe segment.
   graph: GasPipe
   startNode: start
   targetNode: straight
@@ -305,6 +316,7 @@
 - type: construction
   name: gas pipe bend
   id: GasPipeBend
+  description: A pipe segment bent at a 90 degree angle.
   graph: GasPipe
   startNode: start
   targetNode: bend
@@ -318,6 +330,7 @@
 - type: construction
   name: gas pipe T junction
   id: GasPipeTJunction
+  description: A pipe segment with a T junction.
   graph: GasPipe
   startNode: start
   targetNode: tjunction
@@ -331,6 +344,7 @@
 - type: construction
   name: gas pipe fourway
   id: GasPipeFourway
+  description: A pipe segment with a fourway junction.
   graph: GasPipe
   startNode: start
   targetNode: fourway
@@ -344,6 +358,7 @@
 # ATMOS UNARY
 - type: construction
   name: air vent
+  description: Pumps gas into the room.
   id: GasVentPump
   graph: GasUnary
   startNode: start
@@ -359,6 +374,7 @@
 
 - type: construction
   name: passive vent
+  description: Unpowered vent that equalises gases on both sides.
   id: GasPassiveVent
   graph: GasUnary
   startNode: start
@@ -374,6 +390,7 @@
 
 - type: construction
   name: air scrubber
+  description: Sucks gas into connected pipes.
   id: GasVentScrubber
   graph: GasUnary
   startNode: start
@@ -389,6 +406,7 @@
 
 - type: construction
   name: air injector
+  description: Injects air into the atmosphere.
   id: GasOutletInjector
   graph: GasUnary
   startNode: start
@@ -406,6 +424,7 @@
 - type: construction
   name: gas pump
   id: GasPressurePump
+  description: A pump that moves gas by pressure.
   graph: GasBinary
   startNode: start
   targetNode: pressurepump
@@ -420,6 +439,7 @@
 
 - type: construction
   name: volumetric gas pump
+  description: A pump that moves gas by volume.
   id: GasVolumePump
   graph: GasBinary
   startNode: start
@@ -436,6 +456,7 @@
 - type: construction
   id: GasPassiveGate
   name: passive gate
+  description: A one-way air valve that does not require power.
   graph: GasBinary
   startNode: start
   targetNode: passivegate
@@ -451,6 +472,7 @@
 - type: construction
   id: GasValve
   name: manual valve
+  description: A pipe with a valve that can be used to disable the flow of gas through it.
   graph: GasBinary
   startNode: start
   targetNode: valve
@@ -466,6 +488,7 @@
 - type: construction
   id: GasPort
   name: connector port
+  description: For connecting portable devices related to atmospherics control.
   graph: GasBinary
   startNode: start
   targetNode: port
@@ -481,6 +504,7 @@
 - type: construction
   id: GasDualPortVentPump
   name: dual-port air vent
+  description: Has a valve and a pump attached to it. There are two ports, one is an input for releasing air, the other is an output when siphoning.
   graph: GasBinary
   startNode: start
   targetNode: dualportventpump
@@ -497,6 +521,7 @@
 - type: construction
   id: GasFilter
   name: gas filter
+  description: Very useful for filtering gases.
   graph: GasTrinary
   startNode: start
   targetNode: filter
@@ -512,6 +537,7 @@
 - type: construction
   id: GasMixer
   name: gas mixer
+  description: Very useful for mixing gases.
   graph: GasTrinary
   startNode: start
   targetNode: mixer
@@ -527,6 +553,7 @@
 - type: construction
   id: PressureControlledValve
   name: pneumatic valve
+  description: Valve controlled by pressure.
   graph: GasTrinary
   startNode: start
   targetNode: pneumaticvalve

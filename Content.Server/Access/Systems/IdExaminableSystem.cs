@@ -1,4 +1,4 @@
-﻿using Content.Server.Access.Components;
+using Content.Server.Access.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -66,7 +66,7 @@ public sealed class IdExaminableSystem : EntitySystem
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
-                ("originalOwnerName", id.OriginalOwnerName),
+                ("originalOwnerName", id.OriginalEntityName),
                 ("jobSuffix", jobSuffix))
             : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                 ("fullName", id.FullName),

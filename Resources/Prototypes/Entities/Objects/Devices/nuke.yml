@@ -48,6 +48,10 @@
   - type: StaticPrice
     price: 50000 # YOU STOLE A NUCLEAR FISSION EXPLOSIVE?!
   - type: CargoSellBlacklist
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      Nuke: !type:ContainerSlot
 
 - type: entity
   parent: NuclearBomb
