@@ -184,22 +184,19 @@ public sealed class HTNSystem : EntitySystem
 
     private void Update(HTNComponent component, float frameTime)
     {
-        // Get a new plan
-        if (component.Plan == null)
-        {
-            RequestPlan(component);
-            return;
-        }
+        // If we're not planning then countdown to next one.
+        if (component.PlanningJob == null)
+            component.PlanAccumulator -= frameTime;
 
         // We'll still try re-planning occasionally even when we're updating in case new data comes in.
         if (component.PlanAccumulator <= 0f)
         {
             RequestPlan(component);
         }
-        else
-        {
-            component.PlanAccumulator -= frameTime;
-        }
+
+        // Getting a new plan so do nothing.
+        if (component.Plan == null)
+            return;
 
         // Run the existing plan still
         var status = HTNOperatorStatus.Finished;

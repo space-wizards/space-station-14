@@ -1,0 +1,25 @@
+- type: entity
+  id: WeaponTurretSyndicate
+  parent: BaseStructure
+  desc: A ballistic machine gun auto-turret.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/turrets.rsi
+    layers:
+      - state: syndie_lethal
+  - type: CombatMode
+  - type: Gun
+    fireRate: 5
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+  # TODO: Infinite ammo provider?
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifle
+    capacity: 1000
+  - type: HTN
+    rootTask: RangedCombatCompound
+  - type: AiFactionTag
+    factions:
+      - Syndicate
