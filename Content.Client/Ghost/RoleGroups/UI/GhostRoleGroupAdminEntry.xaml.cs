@@ -18,7 +18,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
 
     private bool _showDetails;
 
-    public GhostRoleGroupAdminEntry(AdminGhostRoleGroupInfo group)
+    public GhostRoleGroupAdminEntry(AdminGhostRoleGroupInfo group, IReadOnlyDictionary<EntityUid, string> entityNames)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -30,7 +30,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         foreach (var entity in group.Entities)
         {
             // TODO: Entity might not exist client-side yet :(
-            var name = _entityManager.ToPrettyString(entity).Name ?? "Unknown";
+            var name = entityNames.GetValueOrDefault(entity) ?? "Unknown";
             var entry = new GhostRoleGroupEntityEntry(name, entity);
 
             entry.OnEntityGoto += _ => OnEntityGoto?.Invoke(entity);

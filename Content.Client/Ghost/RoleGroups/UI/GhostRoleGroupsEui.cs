@@ -134,7 +134,7 @@ public sealed class GhostRoleGroupsEui : BaseEui
         _window.ClearEntries();
         foreach (var group in groupState.AdminGhostRoleGroups)
         {
-            _window.AddEntry(group);
+            _window.AddEntry(group, groupState.EntityNames);
         }
     }
 

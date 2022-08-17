@@ -26,11 +26,11 @@ public sealed partial class AdminGhostRoleGroupsWindow : DefaultWindow
         EntryContainer.Children.Clear();
     }
 
-    public void AddEntry(AdminGhostRoleGroupInfo group)
+    public void AddEntry(AdminGhostRoleGroupInfo group, IReadOnlyDictionary<EntityUid, string> entityNames)
     {
         NoRoleGroupsMessage.Visible = false;
 
-        var entry = new GhostRoleGroupAdminEntry(group);
+        var entry = new GhostRoleGroupAdminEntry(group, entityNames);
 
         entry.OnGroupActivate += OnGroupActivate;
         entry.OnGroupRelease += OnGroupRelease;
