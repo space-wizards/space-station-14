@@ -51,7 +51,7 @@
 - type: entity
   parent: BaseMobHuman
   suffix: Dead
-  save: true
+  save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse
   name: unidentified human
   description: We barely knew ye.

@@ -49,6 +49,11 @@
         node: broken
   - type: Rotatable
   - type: Pullable
+  - type: CollideOnAnchor
+  - type: ContainerContainer
+    containers:
+      disposal-tube: !type:Container
+        ents: []
 
 - type: entity
   id: DisposalHolder
