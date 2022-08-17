@@ -116,25 +116,12 @@
   id: ProjectileFingerGun
   name: mime bullet
   description: Insert raunchy finger bang joke here.
+  parent: BaseBullet
   components:
     - type: FlyBySound
     - type: Sprite
       netsync: false
       noRot: false
-    - type: Physics
-      bodyType: Dynamic
-      linearDamping: 0
-      angularDamping: 0
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.1,-0.1,0.1,0.1"
-          hard: false
-          id: projectile
-          mask:
-            - Impassable
-            - BulletImpassable
     - type: Projectile
       impactEffect: BulletImpactEffect
       damage:
