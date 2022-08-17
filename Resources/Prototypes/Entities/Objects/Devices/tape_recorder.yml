@@ -24,6 +24,9 @@
           whitelist:
             tags:
               - CassetteTape
+    - type: ContainerContainer
+      containers:
+        cassette_tape: !type:ContainerSlot
     - type: Appearance
       visuals:
         - type: GenericEnumVisualizer
