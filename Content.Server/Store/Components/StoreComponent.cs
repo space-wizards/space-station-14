@@ -59,6 +59,11 @@ public sealed class StoreComponent : Component
     [ViewVariables]
     public HashSet<ListingData> LastAvailableListings = new();
 
+    /// <summary>
+    /// checks whether or not the store has been opened yet.
+    /// </summary>
+    public bool Opened = false;
+
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.

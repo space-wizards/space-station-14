@@ -35,8 +35,6 @@ public sealed partial class StoreSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, StoreComponent component, ComponentStartup args)
     {
-        RefreshAllListings(component);
-        InitializeFromPreset(component.Preset, component);
         RaiseLocalEvent(uid, new StoreAddedEvent(), true);
     }
 
@@ -52,6 +50,12 @@ public sealed partial class StoreSystem : EntitySystem
 
         if (args.Target == null || !TryComp<StoreComponent>(args.Target, out var store))
             return;
+
+        //if you somehow are inserting cash before the store initializes.
+        if (!store.Opened)
+        {
+            InitializeFromPreset(store.Preset, store);
+        }
 
         args.Handled = TryAddCurrency(GetCurrencyValue(component), store);
 
@@ -136,6 +140,7 @@ public sealed partial class StoreSystem : EntitySystem
     /// <param name="component">The store being initialized</param>
     public void InitializeFromPreset(StorePresetPrototype preset, StoreComponent component)
     {
+        RefreshAllListings(component);
         component.Preset = preset.ID;
         component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
         component.Categories.UnionWith(preset.Categories);

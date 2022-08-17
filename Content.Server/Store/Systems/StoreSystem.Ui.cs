@@ -66,6 +66,13 @@ public sealed partial class StoreSystem : EntitySystem
             }
         }
 
+        //if we haven't opened it before, initialize the shit
+        if (!component.Opened)
+        {
+            InitializeFromPreset(component.Preset, component);
+            component.Opened = true;
+        }
+
         //this is the person who will be passed into logic for all listing filtering.
         var buyer = user;
         if (buyer != null) //if we have no "buyer" for this update, then don't update the listings
