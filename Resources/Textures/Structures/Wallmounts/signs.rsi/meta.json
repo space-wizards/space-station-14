@@ -1228,6 +1228,46 @@
             ]
         },
         {
+            "name": "nanotrasen_sign1",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "nanotrasen_sign2",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "nanotrasen_sign3",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "nanotrasen_sign4",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "nanotrasen_sign5",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "atmominsky",
             "delays": [
                 [
