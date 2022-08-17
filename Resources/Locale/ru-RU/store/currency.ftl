@@ -1,10 +1,11 @@
-store-currency-inserted = { CAPITALIZE(THE($used)) } is inserted into the { THE($target) }.
-store-currency-free = Free
-store-currency-balance-display-debugdollar = Debug Dollar: { $amount }
+store-currency-inserted = { CAPITALIZE($used) } внесены в { $target }.
+store-currency-free = Бесплатно
+store-currency-balance-display-debugdollar = Дебаг доллары: { $amount }
 store-currency-price-display-debugdollar =
     { $amount ->
-        [one] { $amount } Debug Dollar
-       *[other] { $amount } Debug Dollars
+        [one] { $amount } Дебаг доллар
+        [few] { $amount } Дебаг доллара
+       *[other] { $amount } Дебаг долларов
     }
-store-currency-balance-display-telecrystal = TC: { $amount }
-store-currency-price-display-telecrystal = { $amount } TC
+store-currency-balance-display-telecrystal = ТК: { $amount }
+store-currency-price-display-telecrystal = { $amount } ТК
