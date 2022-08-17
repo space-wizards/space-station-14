@@ -250,6 +250,8 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: Lock
+      locked: true
 
 - type: entity
   parent: GasCanister
@@ -432,8 +434,6 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-    - type: Lock
-      locked: true
 
 - type: entity
   parent: GasCanister
