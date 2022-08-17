@@ -4,7 +4,7 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
+  0: Space
   1: FloorArcadeBlue
   2: FloorArcadeBlue2
   3: FloorArcadeRed
@@ -29,40 +29,40 @@ tilemap:
   22: FloorShuttlePurple
   23: FloorShuttleRed
   24: FloorShuttleWhite
-  25: floor_asteroid_coarse_sand0
-  26: floor_asteroid_coarse_sand_dug
-  27: floor_asteroid_sand
-  28: floor_asteroid_tile
-  29: floor_bar
-  30: floor_blue
-  31: floor_blue_circuit
-  32: floor_clown
-  33: floor_dark
-  34: floor_elevator_shaft
-  35: floor_freezer
-  36: floor_glass
-  37: floor_gold
-  38: floor_grass
-  39: floor_green_circuit
-  40: floor_hydro
-  41: floor_kitchen
-  42: floor_laundry
-  43: floor_lino
-  44: floor_mime
-  45: floor_mono
-  46: floor_reinforced
-  47: floor_rglass
-  48: floor_rock_vault
-  49: floor_showroom
-  50: floor_silver
-  51: floor_snow
-  52: floor_steel
-  53: floor_steel_dirty
-  54: floor_techmaint
-  55: floor_white
-  56: floor_wood
-  57: lattice
-  58: plating
+  25: FloorAsteroidCoarseSand0
+  26: FloorAsteroidCoarseSandDug
+  27: FloorAsteroidSand
+  28: FloorAsteroidTile
+  29: FloorBar
+  30: FloorBlue
+  31: FloorBlueCircuit
+  32: FloorClown
+  33: FloorDark
+  34: FloorElevatorShaft
+  35: FloorFreezer
+  36: FloorGlass
+  37: FloorGold
+  38: FloorGrass
+  39: FloorGreenCircuit
+  40: FloorHydro
+  41: FloorKitchen
+  42: FloorLaundry
+  43: FloorLino
+  44: FloorMime
+  45: FloorMono
+  46: FloorReinforced
+  47: FloorRGlass
+  48: FloorRockVault
+  49: FloorShowroom
+  50: FloorSilver
+  51: FloorSnow
+  52: FloorSteel
+  53: FloorSteelDirty
+  54: FloorTechMaint
+  55: FloorWhite
+  56: FloorWood
+  57: Lattice
+  58: Plating
 grids:
 - settings:
     chunksize: 16

@@ -228,7 +228,7 @@
       food:
         maxVol: 9
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: JuiceCarrot
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
@@ -699,6 +699,9 @@
     seedId: poppy
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Flower
 
 - type: entity
   name: lingzhi

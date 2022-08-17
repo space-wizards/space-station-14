@@ -68,7 +68,7 @@
       - glass_3
   - type: FloorTile
     outputs:
-    - floor_glass
+    - FloorGlass
   - type: Construction
     graph: Glass
     node: SheetGlass
@@ -89,6 +89,7 @@
   parent: SheetGlassBase
   id: SheetRGlass
   name: reinforced glass
+  description: A reinforced sheet of glass.
   suffix: Full
   components:
   - type: Material
@@ -109,7 +110,7 @@
       - rglass_3
   - type: FloorTile
     outputs:
-    - floor_rglass
+    - FloorRGlass
   - type: Construction
     graph: Glass
     node: SheetRGlass
@@ -130,6 +131,7 @@
   parent: SheetGlassBase
   id: SheetPGlass
   name: plasma glass
+  description: A sheet of translucent plasma.
   suffix: Full
   components:
   - type: Material
@@ -168,6 +170,7 @@
   parent: SheetGlassBase
   id: SheetRPGlass
   name: reinforced plasma glass
+  description: A reinforced sheet of translucent plasma.
   suffix: Full
   components:
   - type: Material

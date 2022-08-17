@@ -266,6 +266,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
+        _listener.PingListeners(source, message, null);
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev);
@@ -461,6 +462,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private string SanitizeMessageCapital(EntityUid source, string message)
     {
+        if (string.IsNullOrEmpty(message))
+            return message;
         // Capitalize first letter
         message = message[0].ToString().ToUpper() + message.Remove(0, 1);
         return message;

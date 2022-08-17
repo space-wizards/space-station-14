@@ -13,6 +13,7 @@ namespace Content.Client.Rotation
     [UsedImplicitly]
     public sealed class RotationVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

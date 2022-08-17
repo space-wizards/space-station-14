@@ -324,6 +324,20 @@
     Ultravasculine: 2
 
 - type: reaction
+  id: Oculine
+  reactants:
+    TableSalt:
+      amount: 1
+    Blood:
+      amount: 1
+    Carbon:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Oculine: 4
+
+- type: reaction
   id: Siderlac
   reactants:
     Aloe:

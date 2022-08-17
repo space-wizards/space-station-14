@@ -24,8 +24,6 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
     private readonly CrewManifestSystem _crewManifestSystem;
 
-    private EntityUid? _station;
-
     public CrewManifestUi()
     {
         RobustXamlLoader.Load(this);
@@ -133,11 +131,11 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
             foreach (var entry in entries)
             {
-                var name = new Label()
+                var name = new RichTextLabel()
                 {
                     HorizontalExpand = true,
-                    Text = entry.Name
                 };
+                name.SetMessage(entry.Name);
 
                 var titleContainer = new BoxContainer()
                 {
@@ -145,10 +143,8 @@ public sealed partial class CrewManifestUi : DefaultWindow
                     HorizontalExpand = true
                 };
 
-                var title = new Label()
-                {
-                    Text = Loc.GetString(entry.JobTitle)
-                };
+                var title = new RichTextLabel();
+                title.SetMessage(Loc.GetString(entry.JobTitle));
 
 
                 if (rsi != null)

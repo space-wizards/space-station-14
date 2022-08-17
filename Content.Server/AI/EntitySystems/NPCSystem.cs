@@ -40,6 +40,7 @@ namespace Content.Server.AI.EntitySystems
 #endif
 
             _sawmill = Logger.GetSawmill("npc");
+            _sawmill.Level = LogLevel.Info;
             InitializeUtility();
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, ComponentInit>(OnNPCInit);
