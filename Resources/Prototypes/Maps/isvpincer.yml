@@ -1,0 +1,17 @@
+﻿- type: gameMap
+  id: ISVPincer
+  mapName: 'ISV Pincer'
+  mapPath: /Maps/isvpincer.yml
+  minPlayers: 0
+  fallback: true
+  descriptionPath: "/Server Info/ISVPincerInfo.txt"
+  stations:
+    IsvPincer:
+      mapNameTemplate: '{0} Pincer {1}'
+      nameGenerator:
+        !type:IndependentNameGenerator
+        prefixCreator: ''
+      overflowJobs: []
+      availableJobs:
+        SalvageSpecialist: [ 2, 2 ]
+        Scientist: [ 3, 3 ]
