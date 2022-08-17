@@ -3,7 +3,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.Store.UI;
+namespace Content.Client.Store.Ui;
 
 [GenerateTypedNameReferences]
 public sealed partial class StoreListingControl : Control

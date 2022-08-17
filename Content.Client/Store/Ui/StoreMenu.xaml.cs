@@ -11,7 +11,7 @@ using Content.Shared.Actions.ActionTypes;
 using System.Linq;
 using Content.Shared.FixedPoint;
 
-namespace Content.Client.Store.UI;
+namespace Content.Client.Store.Ui;
 
 [GenerateTypedNameReferences]
 public sealed partial class StoreMenu : DefaultWindow

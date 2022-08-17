@@ -17,7 +17,7 @@ using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Store.UI;
+namespace Content.Client.Store.Ui;
 
 /// <summary>
 ///     Window to select amount TC to withdraw from Uplink account
