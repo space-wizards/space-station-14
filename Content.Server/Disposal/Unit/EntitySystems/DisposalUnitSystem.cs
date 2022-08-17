@@ -46,6 +46,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly DumpableSystem _dumpableSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
@@ -293,7 +294,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void HandleDisposalInit(EntityUid uid, DisposalUnitComponent component, ComponentInit args)
         {
-            component.Container = component.Owner.EnsureContainer<Container>(component.Name);
+            component.Container = _containerSystem.EnsureContainer<Container>(uid, SharedDisposalUnitComponent.ContainerId);
 
             UpdateInterface(component, component.Powered);
 

@@ -14,8 +14,9 @@ ent-GasOutletInjector = air injector
     .desc = Has a valve and pump attached to it.
     .suffix = { "" }
 ent-BaseGasThermoMachine = thermomachine
-    .desc = { ent-BaseMachinePowered.desc }
-    .suffix = { "" }
+
+  .desc = { ent-['BaseMachinePowered', 'ConstructibleMachine'].desc }
+  .suffix = { "" }
 ent-GasThermoMachineFreezer = freezer
     .desc = Cools gas in connected pipes.
     .suffix = { "" }

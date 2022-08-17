@@ -11,6 +11,8 @@ namespace Content.Shared.Body.Components
     [NetworkedComponent()]
     public abstract class SharedBodyPartComponent : Component
     {
+        public const string ContainerId = "bodypart";
+
         [Dependency] private readonly IEntityManager _entMan = default!;
         private SharedBodyComponent? _body;
 
