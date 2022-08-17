@@ -2,8 +2,6 @@ using Robust.Client.GameObjects;
 using Content.Shared.Lathe;
 using Content.Shared.Power;
 using Content.Client.Power;
-using Content.Client.Wires.Visualizers;
-using Content.Shared.Wires;
 
 namespace Content.Client.Lathe
 {
@@ -18,12 +16,6 @@ namespace Content.Client.Lathe
                 args.Sprite.LayerMapTryGet(PowerDeviceVisualLayers.Powered, out _))
             {
                 args.Sprite.LayerSetVisible(PowerDeviceVisualLayers.Powered, powered);
-            }
-
-            if (args.Component.TryGetData(WiresVisuals.MaintenancePanelState, out bool panel)
-                && args.Sprite.LayerMapTryGet(WiresVisualizer.WiresVisualLayers.MaintenancePanel, out _))
-            {
-                args.Sprite.LayerSetVisible(WiresVisualizer.WiresVisualLayers.MaintenancePanel, panel);
             }
 
             // Lathe specific stuff

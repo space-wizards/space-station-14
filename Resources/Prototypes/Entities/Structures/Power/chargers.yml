@@ -38,6 +38,10 @@
         - MachineMask
       layer:
         - HighImpassable
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      charger-slot: !type:ContainerSlot
 
 - type: entity
   name: recharger

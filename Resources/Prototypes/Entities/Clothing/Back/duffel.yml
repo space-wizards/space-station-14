@@ -15,6 +15,10 @@
     - back
   - type: Storage
     capacity: 120
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9

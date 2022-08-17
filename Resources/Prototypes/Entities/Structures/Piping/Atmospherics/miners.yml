@@ -9,6 +9,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
+    - type: Fixtures
     - type: Transform
       anchored: true
     - type: Damageable

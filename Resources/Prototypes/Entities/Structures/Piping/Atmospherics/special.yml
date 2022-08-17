@@ -19,3 +19,4 @@
           bounds: "-0.5,-0.5,0.5,0.5"
   - type: Airtight
     noAirWhenFullyAirBlocked: false
+  - type: Clickable

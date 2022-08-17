@@ -56,7 +56,7 @@
         Danger: alarm1
       setOnDepowered:
         airAlarmBase: alarmp
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
