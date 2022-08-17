@@ -1094,3 +1094,30 @@
   components:
   - type: Sprite
     state: something-old2
+
+- type: entity
+  parent: BaseSign
+  id: SignSecurity
+  name: security sign
+  description: A sign depicting the security insignia.
+  components:
+  - type: Sprite
+    state: security
+
+- type: entity
+  parent: BaseSign
+  id: SignPlaque
+  name: Golden Plaque
+  description: A prestigious golden plaque.
+  components:
+  - type: Sprite
+    state: goldenplaque
+
+- type: entity
+  parent: BaseSign
+  id: SignKiddiePlaque
+  name: Kiddie Plaque
+  description: A modest plaque.
+  components:
+  - type: Sprite
+    state: kiddieplaque
