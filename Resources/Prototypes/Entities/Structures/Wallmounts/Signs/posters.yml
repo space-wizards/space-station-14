@@ -953,3 +953,21 @@
   components:
   - type: Sprite
     state: waystationmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapMetaLeft
+  name: "Meta Station Map"
+  description: "A map of Meta Station. This looks really old."
+  components:
+  - type: Sprite
+    state: metamapleft
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapMetaRight
+  name: "Meta Station Map"
+  description: "A map of Meta Station. This looks really old."
+  components:
+  - type: Sprite
+    state: metamapright
