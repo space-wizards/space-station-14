@@ -52,4 +52,3 @@
     containers:
       storagebase: !type:Container
         ents: []
-  canBuildInImpassable: true
