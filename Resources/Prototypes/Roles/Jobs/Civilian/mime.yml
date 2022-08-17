@@ -12,6 +12,7 @@
   - !type:AddComponentSpecial
     components:
     - type: MimePowers
+    - type: RenameOnSpawn
 
 - type: startingGear
   id: MimeGear

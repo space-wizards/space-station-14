@@ -22,7 +22,7 @@ namespace Content.Server.CharacterInfo
         [Dependency] private readonly PDASystem _pdaSystem = default!;
         [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
-        /// <inheritdoc/>
+
         public override void Initialize()
         {
             base.Initialize();
