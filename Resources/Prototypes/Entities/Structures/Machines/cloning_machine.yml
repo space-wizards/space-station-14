@@ -28,6 +28,11 @@
   - type: Construction
     graph: Machine
     node: machine
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      clonepod-bodyContainer: !type:Container
   - type: EmptyOnMachineDeconstruct
     containers:
       - clonepod-bodyContainer
