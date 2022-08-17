@@ -48,8 +48,8 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
-    - key: enum.UplinkUiKey.Key
-      type: UplinkBoundUserInterface
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
     - key: enum.RingerUiKey.Key
       type: RingerBoundUserInterface
     - key: enum.InstrumentUiKey.Key
