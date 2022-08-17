@@ -5,15 +5,22 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.NPC.Systems;
 
-public sealed class NPCRangedCombatSystem : EntitySystem
+public sealed partial class NPCCombatSystem
 {
     [Dependency] private readonly GunSystem _gun = default!;
     [Dependency] private readonly RotateToFaceSystem _face = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    public override void Update(float frameTime)
+    // TODO: Don't predict for hitscan
+    private const float ShootSpeed = 20f;
+
+    private void InitializeRanged()
     {
-        base.Update(frameTime);
+
+    }
+
+    private void UpdateRanged(float frameTime)
+    {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var combatQuery = GetEntityQuery<SharedCombatModeComponent>();
 
@@ -49,6 +56,16 @@ public sealed class NPCRangedCombatSystem : EntitySystem
             // TODO: Cycling
             // Max rotation speed
             _face.TryFaceCoordinates(comp.Owner, _transform.GetWorldPosition(targetXform, xformQuery));
+
+            // TODO: Need CanShoot or something for firerate
+            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
+            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+
+            var distance = (targetPos - worldPos).Length;
+            // TODO:
+            var mapVelocity = Comp<PhysicsComponent>(comp.Target).LinearVelocity;
+
+            var targetSpot = targetPos + mapVelocity * distance / ShootSpeed;
 
             _gun.AttemptShoot(comp.Owner, gun, targetXform.Coordinates);
         }

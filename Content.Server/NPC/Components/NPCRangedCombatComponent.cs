@@ -14,4 +14,9 @@ public sealed class NPCRangedCombatComponent : Component
 
     [ViewVariables]
     public CombatStatus Status = CombatStatus.TargetNormal;
+
+    /// <summary>
+    /// In radians. If null it will instantly turn.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)] public float? RotationSpeed;
 }

@@ -1,24 +1,15 @@
 using Content.Server.CombatMode;
-using Content.Server.Interaction;
 using Content.Server.NPC.Components;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
-using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
 
-/// <summary>
-/// Handles melee combat for NPCs.
-/// </summary>
-public sealed class NPCMeleeCombatSystem : EntitySystem
+public sealed partial class NPCCombatSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
-
-    public override void Initialize()
+    private void InitializeMelee()
     {
-        base.Initialize();
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentStartup>(OnMeleeStartup);
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentShutdown>(OnMeleeShutdown);
     }
@@ -42,9 +33,8 @@ public sealed class NPCMeleeCombatSystem : EntitySystem
         component.Weapon = uid;
     }
 
-    public override void Update(float frameTime)
+    private void UpdateMelee(float frameTime)
     {
-        base.Update(frameTime);
         var combatQuery = GetEntityQuery<CombatModeComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
 
