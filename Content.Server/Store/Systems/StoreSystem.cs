@@ -55,6 +55,7 @@ public sealed partial class StoreSystem : EntitySystem
         if (!store.Opened)
         {
             InitializeFromPreset(store.Preset, store);
+            store.Opened = true;
         }
 
         args.Handled = TryAddCurrency(GetCurrencyValue(component), store);
