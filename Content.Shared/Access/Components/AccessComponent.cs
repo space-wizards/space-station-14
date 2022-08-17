@@ -14,7 +14,10 @@ namespace Content.Shared.Access.Components
         [Access(typeof(AccessSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public HashSet<string> Tags = new();
 
-        [DataField("groups", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
-        public HashSet<string> Groups = new();
+        /// <summary>
+        ///     Access Groups. These are added to the tags during map init. After map init this will have no effect.
+        /// </summary>
+        [DataField("groups", readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
+        public readonly HashSet<string> Groups = new();
     }
 }

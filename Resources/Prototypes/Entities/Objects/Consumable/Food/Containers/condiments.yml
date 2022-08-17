@@ -11,6 +11,7 @@
   components:
   - type: Drink
     solution: food
+    refillable: false
     openSounds:
       collection: packetOpenSounds
   - type: DrawableSolution
@@ -19,7 +20,9 @@
     solution: food
   - type: DrainableSolution
     solution: food
-    # Note NOT refillable
+    # Note NOT refillable. 
+    # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
+    # Well its fixed now, but I want to share my pain.
   - type: SolutionContainerManager
     solutions:
       food:
@@ -331,6 +334,10 @@
     solution: food
     openSounds:
       collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -478,6 +485,10 @@
     solution: food
     openSounds:
       collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
