@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Added mute toxin., type: Add}
-  - {message: Silencer now mutes you., type: Add}
-  id: 1666
-  time: '2022-06-06T08:35:25.0000000+00:00'
 - author: Veritius
   changes:
   - {message: You can now opt in to being a nukie., type: Fix}
@@ -2933,3 +2927,8 @@ Entries:
   - {message: Fixed typos on a few descriptions., type: Tweak}
   id: 2165
   time: '2022-08-17T00:56:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed guns spawning w/o ammo., type: Fix}
+  id: 2166
+  time: '2022-08-17T03:44:43.0000000+00:00'
