@@ -4,3 +4,6 @@ ent-BaseMachine = { ent-BaseStructure }
 ent-BaseMachinePowered = { ent-BaseMachine }
     .desc = { ent-BaseMachine.desc }
     .suffix = { "" }
+ent-ConstructibleMachine = { "" }
+    .desc = { "" }
+    .suffix = { "" }
