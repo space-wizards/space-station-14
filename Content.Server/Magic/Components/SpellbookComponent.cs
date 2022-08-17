@@ -35,14 +35,14 @@ public sealed class SpellbookComponent : Component
     /// <summary>
     /// If set to true then you don't have to keep the book after learning it
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isPersistent")]
     public bool Persistent = false;
 
     /// <summary>
     /// If set to true the book will crumble after a single use
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("singleUse")]
     public bool SingleUse = false;
 
