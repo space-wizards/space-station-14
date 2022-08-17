@@ -61,7 +61,7 @@ public sealed partial class StoreSystem : EntitySystem
             ui = component.Owner.GetUIOrNull(StoreUiKey.Key);
             if (ui == null)
             {
-                Logger.Error("No Ui key.");
+                Logger.Info("No Ui key.");
                 return;
             }
         }
