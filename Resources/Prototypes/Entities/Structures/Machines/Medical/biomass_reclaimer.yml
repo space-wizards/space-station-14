@@ -1,6 +1,6 @@
 - type: entity
   id: BiomassReclaimer
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: biomass reclaimer
   description: Reclaims biomass from corpses. Gruesome.
   placement:
@@ -21,7 +21,3 @@
       path: /Audio/Ambience/Objects/reclaimer_ambience.ogg
   - type: Machine
     board: BiomassReclaimerMachineCircuitboard
-  - type: ContainerContainer
-    containers:
-      machine_board: !type:Container
-      machine_parts: !type:Container
