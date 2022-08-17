@@ -84,7 +84,7 @@
   id: DisposalPipe
   parent: DisposalPipeBase
   name: disposal pipe segment
-  description: A huge pipe segment used for constructing disposal systems
+  description: A huge pipe segment used for constructing disposal systems.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -107,7 +107,7 @@
   id: DisposalTagger
   parent: DisposalPipeBase
   name: disposal pipe tagger
-  description: A pipe that tags entities for routing
+  description: A pipe that tags entities for routing.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -136,7 +136,7 @@
   id: DisposalTrunk
   parent: DisposalPipeBase
   name: disposal trunk
-  description: A pipe trunk used as an entry point for disposal systems
+  description: A pipe trunk used as an entry point for disposal systems.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -166,7 +166,7 @@
   id: DisposalRouter
   parent: DisposalPipeBase
   name: disposal router
-  description: A three-way router. Entities with matching tags get routed to the side
+  description: A three-way router. Entities with matching tags get routed to the side.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -206,6 +206,7 @@
 
 - type: entity
   id: DisposalRouterFlipped
+  description: A three-way router. Entities with matching tags get routed to the side.
   parent: DisposalRouter
   suffix: flipped
   components:
@@ -240,7 +241,7 @@
   id: DisposalJunction
   parent: DisposalPipeBase
   name: disposal junction
-  description: A three-way junction. The arrow indicates where items exit
+  description: A three-way junction. The arrow indicates where items exit.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -275,6 +276,7 @@
 
 - type: entity
   id: DisposalJunctionFlipped
+  description: A three-way junction. The arrow indicates where items exit.
   parent: DisposalJunction
   suffix: flipped
   components:
