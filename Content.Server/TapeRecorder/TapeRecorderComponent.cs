@@ -50,6 +50,7 @@ namespace Content.Server.TapeRecorder
         public List<(float MessageTimeStamp, string Message)> RecordedMessageBuffer = new ();
 
         //During playback, the message we are currently on
+        [ViewVariables(VVAccess.ReadOnly)]
         public int CurrentMessageIndex = 0;
 
         public float AccumulatedTime;
