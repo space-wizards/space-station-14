@@ -2,7 +2,7 @@
 - type: entity
   abstract: true
   id: BaseSubstation
-  parent: BaseMachine
+  parent: [ BaseMachine, ConstructibleMachine ]
   name: substation
   description: Reduces the voltage of electricity put into it.
   placement:
@@ -43,9 +43,6 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:
@@ -73,10 +70,6 @@
     LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
-  - type: ContainerContainer
-    containers:
-      machine_parts: !type:Container
-      machine_board: !type:Container
   - type: StationInfiniteBatteryTarget
 
 # Compact Wall Substation Base

@@ -8,6 +8,15 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: MailingUnitElectronics
+  icon: Objects/Misc/module.rsi/net_wired.png
+  result: MailingUnitElectronics
+  completetime: 4
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: DoorElectronics
   icon: Objects/Misc/module.rsi/door_electronics.png
   result: DoorElectronics

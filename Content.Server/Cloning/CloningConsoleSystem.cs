@@ -24,7 +24,6 @@ namespace Content.Server.Cloning.Systems
     {
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;

@@ -95,6 +95,9 @@ public sealed class SpillableSystem : EntitySystem
     {
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution)) return;
 
+        if (TryComp<DrinkComponent>(uid, out var drink) && (!drink.Opened))
+            return;
+
         if (args.User != null)
         {
             _adminLogger.Add(LogType.Landed,

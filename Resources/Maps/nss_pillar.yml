@@ -152657,4 +152657,16 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 18097
+  type: SpawnPointHeadOfPersonnel
+  components:
+  - pos: -13.5,-10.5
+    parent: 130
+    type: Transform
+- uid: 18098
+  type: SpawnPointDetective
+  components:
+  - pos: -49.5,5.5
+    parent: 130
+    type: Transform
 ...

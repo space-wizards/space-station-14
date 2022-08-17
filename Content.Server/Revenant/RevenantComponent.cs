@@ -207,6 +207,8 @@ public sealed class SoulSearchDoAfterComplete : EntityEventArgs
     }
 }
 
+public sealed class SoulSearchDoAfterCancelled : EntityEventArgs { }
+
 public sealed class HarvestDoAfterComplete : EntityEventArgs
 {
     public readonly EntityUid Target;

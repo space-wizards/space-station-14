@@ -61,7 +61,7 @@
   - type: Appearance
     visuals:
     - type: AirlockVisualizer
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
   - type: ExtensionCableReceiver

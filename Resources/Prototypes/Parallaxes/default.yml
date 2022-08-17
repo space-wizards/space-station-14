@@ -29,9 +29,9 @@
   layersLQ:
     - texture:
         !type:GeneratedParallaxTextureSource
-       id: ""
-       configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-       slowness: 0.875
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+        slowness: 0.875
   layersLQUseHQ: false
 
 # Because hyperspace and the menu need their own.
@@ -42,7 +42,7 @@
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/layer1.png"
       slowness: 0.5
-      scale: "1, 1"
+      scale: "3, 3"
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars"
@@ -66,8 +66,8 @@
   layersLQ:
     - texture:
         !type:GeneratedParallaxTextureSource
-       id: ""
-       configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-       slowness: 0.5
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+        slowness: 0.5
   layersLQUseHQ: false
 

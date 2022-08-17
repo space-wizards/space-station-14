@@ -16,6 +16,7 @@ namespace Content.Client.Nutrition.Visualizers
         [DataField("stateOpen")]
         private string? _stateOpen;
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

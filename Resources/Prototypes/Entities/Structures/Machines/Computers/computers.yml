@@ -382,6 +382,12 @@
   - type: Tag
     tags:
     - EmagImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      IdCardConsole-privilegedId: !type:ContainerSlot
+      IdCardConsole-targetId: !type:ContainerSlot
 
 - type: entity
   parent: BaseComputer
