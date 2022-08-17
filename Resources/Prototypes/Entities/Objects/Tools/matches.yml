@@ -62,6 +62,7 @@
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
+    size: 10
   - type: StorageFill
     contents:
       - id: Matchstick
