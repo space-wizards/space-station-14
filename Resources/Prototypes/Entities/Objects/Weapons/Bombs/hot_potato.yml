@@ -18,8 +18,6 @@
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: HotPotato
       isDud: true
-    - type: TriggerOnSignal
-    - type: SignalReceiver
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
