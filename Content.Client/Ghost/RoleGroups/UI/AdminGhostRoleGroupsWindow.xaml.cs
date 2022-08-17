@@ -14,6 +14,8 @@ public sealed partial class AdminGhostRoleGroupsWindow : DefaultWindow
     public event Action<EntityUid>? OnEntityGoto;
     public event Action? OnGroupStart;
 
+    private readonly HashSet<uint> _ghostRoleGroupOpenedDetails = new();
+
     public AdminGhostRoleGroupsWindow()
     {
         RobustXamlLoader.Load(this);
@@ -36,7 +38,19 @@ public sealed partial class AdminGhostRoleGroupsWindow : DefaultWindow
         entry.OnGroupRelease += OnGroupRelease;
         entry.OnGroupDelete += OnGroupDelete;
         entry.OnEntityGoto += OnEntityGoto;
+        entry.OnGroupShowDetails += roleGroup =>
+        {
+            if (!_ghostRoleGroupOpenedDetails.Remove(group.GroupIdentifier))
+            {
+                entry.ShowDetails(true);
+                _ghostRoleGroupOpenedDetails.Add(group.GroupIdentifier);
+                return;
+            }
 
+            entry.ShowDetails(false);
+        };
+
+        entry.ShowDetails(_ghostRoleGroupOpenedDetails.Contains(group.GroupIdentifier));
         EntryContainer.AddChild(entry);
     }
 }

@@ -14,9 +14,9 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
     public event Action<AdminGhostRoleGroupInfo>? OnGroupActivate;
     public event Action<AdminGhostRoleGroupInfo>? OnGroupRelease;
     public event Action<AdminGhostRoleGroupInfo>? OnGroupDelete;
-    public event Action<EntityUid>? OnEntityGoto;
 
-    private bool _showDetails;
+    public event Action<AdminGhostRoleGroupInfo>? OnGroupShowDetails;
+    public event Action<EntityUid>? OnEntityGoto;
 
     public GhostRoleGroupAdminEntry(AdminGhostRoleGroupInfo group, IReadOnlyDictionary<EntityUid, string> entityNames)
     {
@@ -29,7 +29,6 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
 
         foreach (var entity in group.Entities)
         {
-            // TODO: Entity might not exist client-side yet :(
             var name = entityNames.GetValueOrDefault(entity) ?? "Unknown";
             var entry = new GhostRoleGroupEntityEntry(name, entity);
 
@@ -69,13 +68,14 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         ActivateButton.OnPressed += _ => OnGroupActivate?.Invoke(group);
         ReleaseButton.OnPressed += _ => OnGroupRelease?.Invoke(group);
         DeleteButton.OnPressed += _ => OnGroupDelete?.Invoke(group);
-        DetailsButton.OnPressed += _ =>
-        {
-            _showDetails = !_showDetails;
-            EntityDetailsContainer.Visible = _showDetails;
+        DetailsButton.OnPressed += _ =>  OnGroupShowDetails?.Invoke(group);
+    }
 
-            var prefix = _showDetails ? "- " : "+ ";
-            DetailsButton.Text = prefix + _loc.GetString("ghost-role-groups-window-details-button");
-        };
+    public void ShowDetails(bool show)
+    {
+        EntityDetailsContainer.Visible = show;
+
+        var prefix = show ? "- " : "+ ";
+        DetailsButton.Text = prefix + _loc.GetString("ghost-role-groups-window-details-button");
     }
 }
