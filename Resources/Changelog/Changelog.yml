@@ -1,10 +1,4 @@
 Entries:
-- author: youarereadingthis
-  changes:
-  - {message: Removed the shuttle powering crate from the cargo ordering console.,
-    type: Remove}
-  id: 1665
-  time: '2022-06-06T08:34:07.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added mute toxin., type: Add}
@@ -2933,3 +2927,9 @@ Entries:
   - {message: Fixed missing death sprite for holocarp and magicarp, type: Fix}
   id: 2164
   time: '2022-08-16T13:41:26.0000000+00:00'
+- author: martin69420
+  changes:
+  - {message: 'Added descriptions to many entities, including most signs.', type: Add}
+  - {message: Fixed typos on a few descriptions., type: Tweak}
+  id: 2165
+  time: '2022-08-17T00:56:54.0000000+00:00'
