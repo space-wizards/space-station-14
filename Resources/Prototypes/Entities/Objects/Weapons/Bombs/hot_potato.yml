@@ -1,54 +1,5 @@
 - type: entity
   name: hot potato
-  description: A label on the side of this potato reads "Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures."
-  parent: BaseItem
-  id: HotPotato
-  components:
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/potato.rsi
-      state: produce
-    - type: Item
-      sprite: Objects/Specific/Hydroponics/potato.rsi
-      size: 10
-    - type: OnUseTimerTrigger
-      delay: 15
-      delayOptions: [15, 30, 60]
-      initialBeepDelay: 0
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
-    - type: HotPotato
-    - type: TriggerOnSignal
-    - type: SignalReceiver
-    - type: Explosive
-      explosionType: DemolitionCharge
-      totalIntensity: 25
-      intensitySlope: 4
-      maxIntensity: 13
-      canCreateVacuum: false
-    - type: ExplodeOnTrigger
-    - type: Damageable
-      damageContainer: Inorganic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 50
-          behaviors:
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
-            - !type:ExplodeBehavior
-    - type: StickyVisualizer
-    - type: Appearance
-      visuals:
-        - type: GenericEnumVisualizer
-          key: enum.Trigger.TriggerVisuals.VisualState
-          states:
-            enum.Trigger.TriggerVisualState.Primed: primed
-            enum.Trigger.TriggerVisualState.Unprimed: produce
-    - type: ItemCooldown
-
-
-- type: entity
-  name: hot potato
   suffix: fake
   description: A label on the side of this potato reads "Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures."
   parent: BaseItem
@@ -89,3 +40,20 @@
             enum.Trigger.TriggerVisualState.Primed: primed
             enum.Trigger.TriggerVisualState.Unprimed: produce
     - type: ItemCooldown
+
+- type: entity
+  description: A label on the side of this potato reads "Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures."
+  parent: FakeHotPotato
+  id: HotPotato
+  name: hot potato
+  suffix: real
+  components:
+    - type: Explosive
+      explosionType: DemolitionCharge
+      totalIntensity: 25
+      intensitySlope: 4
+      maxIntensity: 13
+      canCreateVacuum: false
+    - type: ExplodeOnTrigger
+    - type: HotPotato
+      isDud: false

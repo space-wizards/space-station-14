@@ -426,6 +426,21 @@
       components:
       - SurplusBundle
 
+- type: listing
+  id: uplinkHotPotato
+  description: An exploding hot potato.
+  productEntity: HotPotato
+  cost:
+    Telecrystal: 7
+  categories:
+    - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Botanist
+        - Clown
+        - Mime
+
 # Armor
 
 # Should be cameleon shoes, change when implemented.
