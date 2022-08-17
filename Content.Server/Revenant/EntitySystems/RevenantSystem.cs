@@ -111,9 +111,9 @@ public sealed partial class RevenantSystem : EntitySystem
         ChangeEssenceAmount(uid, essenceDamage, component);
     }
 
-    public bool ChangeEssenceAmount(EntityUid uid, FixedPoint2 amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false, StoreComponent? store = null)
+    public bool ChangeEssenceAmount(EntityUid uid, FixedPoint2 amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false)
     {
-        if (!Resolve(uid, ref component, ref store))
+        if (!Resolve(uid, ref component))
             return false;
 
         if (!allowDeath && component.Essence + amount <= 0)
@@ -132,7 +132,8 @@ public sealed partial class RevenantSystem : EntitySystem
             _polymorphable.PolymorphEntity(uid, "Ectoplasm");
         }
 
-        _store.UpdateUserInterface(uid, store);
+        if (TryComp<StoreComponent>(uid, out var store))
+            _store.UpdateUserInterface(uid, store);
         return true;
     }
 
