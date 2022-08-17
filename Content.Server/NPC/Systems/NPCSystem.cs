@@ -42,6 +42,7 @@ namespace Content.Server.NPC.Systems
 #endif
 
             _sawmill = Logger.GetSawmill("npc");
+            _sawmill.Level = LogLevel.Info;
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, ComponentInit>(OnNPCInit);
             SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);

@@ -50,7 +50,7 @@ public sealed class EntityStorageSystem : EntitySystem
         component.Contents.OccludesLight = component.OccludesLight;
 
         if (TryComp<ConstructionComponent>(uid, out var construction))
-            _construction.AddContainer(uid, nameof(EntityStorageComponent), construction);
+            _construction.AddContainer(uid, ContainerName, construction);
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var placeable))
             _placeableSurface.SetPlaceable(uid, component.Open, placeable);

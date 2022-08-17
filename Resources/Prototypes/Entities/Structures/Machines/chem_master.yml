@@ -1,6 +1,6 @@
 - type: entity
   id: chem_master
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: ChemMaster 4000
   description: An industrial grade chemical manipulator with pill and bottle production included.
   placement:
@@ -60,7 +60,12 @@
   - type: Machine
     board: ChemMasterMachineCircuitboard
   - type: MaterialStorage
-  - type: Construction
-    graph: Machine
-    node: machine
-
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      ChemMaster-beaker: !type:ContainerSlot
+  - type: ItemSlots
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}
