@@ -21,5 +21,5 @@ public sealed class FlyBySoundComponent : Component
         Params = AudioParams.Default,
     };
 
-    [ViewVariables, DataField("range")] public float Range = 1f;
+    [ViewVariables, DataField("range")] public float Range = 1.5f;
 }
