@@ -49,7 +49,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         };
 
         ReleaseButton.Visible = group.CanModify;
-        ReleaseButton.Disabled = group.Status != GhostRoleGroupStatus.Editing;
+        ReleaseButton.Disabled = group.Status != GhostRoleGroupStatus.Editing || group.Entities.Length == 0;
         ReleaseButton.Text = group.Status switch
         {
             GhostRoleGroupStatus.Editing => _loc.GetString("ghost-role-groups-window-release-button"),

@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -66,6 +65,12 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     /// </summary>
     private readonly HashSet<uint> _roleGroupLotteries = new();
 
+    /// <summary>
+    /// List of unique available roles. Used by the UI so it can highlight the ghost roles button
+    /// when a brand-new role is added.
+    /// </summary>
+    private readonly HashSet<string> _availableRoles = new();
+
     private bool _needsUpdateGhostRoles = true;
     private bool _needsUpdateGhostRoleCount = true;
 
@@ -84,13 +89,6 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     /// items (see <see cref="GhostRoleMobSpawnerComponent"/>) can be worth multiple spawns.
     /// </summary>
     public int AvailableRolesCount { get; private set; }
-
-    /// <summary>
-    /// List of unique available roles. Used by the UI so it can highlight the ghost roles button
-    /// when a brand-new role is added.
-    /// TODO: Reimplement or rework this.
-    /// </summary>
-    public string[] AvailableRoles => new string[] { };
 
 
     private uint _nextIdentifier = 1;
@@ -137,7 +135,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         if (args.NewStatus != SessionStatus.InGame)
             return;
 
-        var response = new GhostUpdateGhostRoleCountEvent(AvailableRolesCount, AvailableRoles);
+        var response = new GhostUpdateGhostRoleCountEvent(AvailableRolesCount, _availableRoles.ToArray());
         RaiseNetworkEvent(response, args.Session.ConnectedClient);
     }
 
@@ -204,7 +202,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         AvailableRolesCount += ghostRoleSystem.GetAvailableCount();
         AvailableRolesCount += ghostRoleGroupSystem.GetAvailableCount();
 
-        var response = new GhostUpdateGhostRoleCountEvent(AvailableRolesCount, AvailableRoles);
+        var response = new GhostUpdateGhostRoleCountEvent(AvailableRolesCount, _availableRoles.ToArray());
         foreach (var player in _playerManager.Sessions)
         {
             RaiseNetworkEvent(response, player.ConnectedClient);
@@ -298,8 +296,15 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         ghostRoleSystem.OnNextLotteryStarting();
         ghostRoleGroupSystem.OnNextLotteryStarting();
 
-        var ghostRoleComponents = ghostRoleSystem.GetAllAvailableLotteryItems();
+        var ghostRoles = ghostRoleSystem.GetAllAvailableLotteryItems();
         var ghostRoleGroups = ghostRoleGroupSystem.GetAllAvailableLotteryItems();
+
+        _availableRoles.Clear();
+        _availableRoles.UnionWith(ghostRoles);
+        foreach (var roleGroupIdentifier in ghostRoleGroups)
+        {
+            _availableRoles.Add($"GhostRoleGroup:{roleGroupIdentifier}");
+        }
 
         // Update ghost role group lotteries.
         var removedRoleGroups = _roleGroupLotteries.Where(rg => !ghostRoleGroups.Contains(rg)).ToArray();
@@ -307,9 +312,9 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         _roleGroupLotteries.UnionWith(ghostRoleGroups);
 
         // Update ghost role lotteries.
-        var removedRoles = _ghostRoleComponentLotteries.Where(r => !ghostRoleComponents.Contains(r)).ToArray();
+        var removedRoles = _ghostRoleComponentLotteries.Where(r => !ghostRoles.Contains(r)).ToArray();
         _ghostRoleComponentLotteries.Clear();
-        _ghostRoleComponentLotteries.UnionWith(ghostRoleComponents);
+        _ghostRoleComponentLotteries.UnionWith(ghostRoles);
 
         foreach (var (_, data) in _playerLotteryData)
         {

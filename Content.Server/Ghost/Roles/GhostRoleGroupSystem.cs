@@ -36,8 +36,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     private readonly Dictionary<uint, RoleGroupEntry> _roleGroupEntries = new();
 
     /// <summary>
-    ///     Active role groups for each player. Entities placed down that fulfill certain criteria will
-    ///     be automatically placed into the active role group.
+    /// Active role groups for each player. Entities placed down that fulfill certain criteria will
+    /// be automatically placed into the active role group.
     /// </summary>
     private readonly Dictionary<IPlayerSession, uint> _roleGroupActiveGroups = new();
 
@@ -200,13 +200,15 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!TryGetActiveRoleGroup(args.PlacedBy, out var identifier))
             return;
 
-        AttachToGhostRoleGroup(args.PlacedBy, identifier, uid, component);
+        AttachToGhostRoleGroup(args.PlacedBy, identifier, uid);
     }
 
     private void OnShutdown(EntityUid uid, GhostRoleGroupComponent role, ComponentShutdown args)
     {
         if (!_roleGroupEntries.TryGetValue(role.Identifier, out var entry))
             return; // Role group doesn't exist.
+
+        entry.ComponentLookup.Remove(role);
 
         var deleteRoleGroup = !EntityQuery<GhostRoleGroupComponent>()
             .Any(comp => comp.Identifier == role.Identifier && comp != role);
@@ -262,6 +264,9 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return;
 
+        if (entry.ComponentLookup.Count == 0)
+            return; // Don't allow empty role groups to be released.
+
         entry.Status = GhostRoleGroupStatus.Releasing;
         _needsUpdateRoleGroups = true;
     }
@@ -296,15 +301,12 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if (!deleteEntities)
             return;
 
-        var toDelete = EntityQuery<GhostRoleGroupComponent>()
-            .Where(comp => comp.Identifier == entry.Identifier);
-
-        foreach (var groupComp in toDelete)
+        // Delete entities attached to the role group.
+        foreach (var groupComp in entry.ComponentLookup)
         {
             if (TryComp<MindComponent>(groupComp.Owner, out var mindComp) && mindComp.Mind?.UserId != null)
                 continue; // Don't delete player-controlled entities.
 
-            // TODO: Exempt certain entities from this.
             EntityManager.QueueDeleteEntity(groupComp.Owner);
         }
     }
@@ -372,14 +374,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <param name="session">The session requesting the addition of the entity to the role group.</param>
     /// <param name="identifier">The identifier of the role group.</param>
     /// <param name="entity">The entity being added.</param>
-    /// <param name="ghostRoleComponent">Ghost role component for bypassing component lookup.</param>
     /// <returns>true if the entity was successfully added; otherwise false.</returns>
-    public bool AttachToGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity, GhostRoleComponent? ghostRoleComponent = null)
+    public bool AttachToGhostRoleGroup(IPlayerSession session, uint identifier, EntityUid entity)
     {
-        if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
+        if (!_roleGroupEntries.TryGetValue(identifier, out var nextRoleGroup) || !CanModify(session, nextRoleGroup))
             return false;
 
-        if (entry.Status != GhostRoleGroupStatus.Editing)
+        if (nextRoleGroup.Status != GhostRoleGroupStatus.Editing)
             return false;
 
         if (TryComp<GhostRoleGroupComponent>(entity, out var ghostRoleGroupComp))
@@ -389,12 +390,18 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
             if (!CanModify(session, ghostRoleGroupComp.Identifier))
                 return false; // Can't transfer from a role group we don't have the ability to modify.
+
+            // Remove from the previous role group lookup.
+            _roleGroupEntries.GetValueOrDefault(ghostRoleGroupComp.Identifier)
+                ?.ComponentLookup.Remove(ghostRoleGroupComp);
         }
 
         MakeSentientCommand.MakeSentient(entity, EntityManager);
-        var groupComponent = ghostRoleGroupComp ?? AddComp<GhostRoleGroupComponent>(entity);
-        groupComponent.Identifier = identifier;
+        ghostRoleGroupComp ??= AddComp<GhostRoleGroupComponent>(entity);
+        ghostRoleGroupComp.Identifier = identifier;
         _needsUpdateRoleGroups = true;
+
+        nextRoleGroup.ComponentLookup.Add(ghostRoleGroupComp);
 
         RaiseLocalEvent(entity, new GhostRoleGroupEntityAttachedEvent(entity, identifier));
         return true;
@@ -472,13 +479,10 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         var ghostRoleSystem = Get<GhostRoleSystem>();
         var ghostRoleQuery = EntityManager.GetEntityQuery<GhostRoleComponent>();
 
-        foreach (var component in EntityQuery<GhostRoleGroupComponent>())
+        foreach (var component in roleGroupEntry.ComponentLookup)
         {
             if (sessionIdx >= sessionCount)
                 break; // All sessions have been used.
-
-            if (component.Identifier != roleGroupIdentifier)
-                continue;
 
             var session = sessions[sessionIdx];
             ghostRoleQuery.TryGetComponent(component.Owner, out var ghostRoleComp);
@@ -517,6 +521,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <returns></returns>
     public HashSet<uint> GetAllAvailableLotteryItems()
     {
+        OnNextLotteryStarting();
+
         var lotteryItems = new HashSet<uint>();
         foreach (var (_, data) in _roleGroupEntries)
         {
@@ -574,6 +580,11 @@ internal sealed class RoleGroupEntry
     public string RoleDescription { get; init; } = default!;
 
     public GhostRoleGroupStatus Status = GhostRoleGroupStatus.Editing;
+
+    /// <summary>
+    /// <see cref="GhostRoleGroupComponent"/>'s that are attached to this role group.
+    /// </summary>
+    public readonly HashSet<GhostRoleGroupComponent> ComponentLookup = new ();
 }
 
 [AdminCommand(AdminFlags.Spawn)]
