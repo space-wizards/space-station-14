@@ -9,7 +9,6 @@ namespace Content.Server.NPC.Systems;
 public sealed partial class NPCCombatSystem
 {
     [Dependency] private readonly GunSystem _gun = default!;
-    [Dependency] private readonly RotateToFaceSystem _face = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     // TODO: Don't predict for hitscan
@@ -54,26 +53,58 @@ public sealed partial class NPCCombatSystem
                 continue;
             }
 
+            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
+            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+
+            // We'll work out the projected spot of the target and shoot there instead of where they are.
+            var distance = (targetPos - worldPos).Length;
+            var mapVelocity = targetBody.LinearVelocity;
+
+            var targetSpot = targetPos + mapVelocity * distance / ShootSpeed;
+
+            // If we have a max rotation speed then do that.
+            var goalRotation = (targetSpot - worldPos).ToWorldAngle();
+            var rotationSpeed = comp.RotationSpeed;
+
+            // We'll rotate even if we can't shoot, looks better.
+            if (rotationSpeed != null)
+            {
+                var rotationDiff = Angle.ShortestDistance(worldRot, goalRotation).Theta;
+                var maxRotate = rotationSpeed.Value.Theta * frameTime;
+
+                if (Math.Abs(rotationDiff) > maxRotate)
+                {
+                    var goalTheta = worldRot + Math.Sign(rotationDiff) * maxRotate;
+                    _transform.SetWorldRotation(xform, goalTheta);
+                    rotationDiff = (goalRotation - goalTheta);
+
+                    if (Math.Abs(rotationDiff) > comp.AccuracyThreshold)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    _transform.SetWorldRotation(xform, goalRotation);
+                }
+            }
+            else
+            {
+                _transform.SetWorldRotation(xform, goalRotation);
+            }
+
             // TODO: LOS
             // TODO: Ammo checks
             // TODO: Burst fire
             // TODO: Cycling
             // Max rotation speed
-            _face.TryFaceCoordinates(comp.Owner, _transform.GetWorldPosition(targetXform, xformQuery), xform);
+
+            // TODO: Check if we can face
 
             if (!_gun.CanShoot(gun))
                 continue;
 
             // TODO: Need CanShoot or something for firerate
-
-            // We'll work out the projected spot of the target and shoot there instead of where they are.
-            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
-            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
-
-            var distance = (targetPos - worldPos).Length;
-            var mapVelocity = targetBody.LinearVelocity;
-
-            var targetSpot = targetPos + mapVelocity * distance / ShootSpeed;
             EntityCoordinates targetCordinates;
 
             if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var mapGrid))

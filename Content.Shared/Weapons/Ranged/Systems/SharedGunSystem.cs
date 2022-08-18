@@ -186,13 +186,17 @@ public abstract partial class SharedGunSystem : EntitySystem
         Dirty(gun);
     }
 
+    /// <summary>
+    /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
+    /// </summary>
     public void AttemptShoot(EntityUid user, GunComponent gun, EntityCoordinates toCoordinates)
     {
         gun.ShootCoordinates = toCoordinates;
         AttemptShoot(user, gun);
+        gun.ShotCounter = 0;
     }
 
-    public void AttemptShoot(EntityUid user, GunComponent gun)
+    private void AttemptShoot(EntityUid user, GunComponent gun)
     {
         if (gun.FireRate <= 0f) return;
 

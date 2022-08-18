@@ -16,7 +16,13 @@ public sealed class NPCRangedCombatComponent : Component
     public CombatStatus Status = CombatStatus.TargetNormal;
 
     /// <summary>
-    /// In radians. If null it will instantly turn.
+    /// If null it will instantly turn.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public float? RotationSpeed;
+    [ViewVariables(VVAccess.ReadWrite)] public Angle? RotationSpeed = Angle.FromDegrees(180);
+
+    /// <summary>
+    /// Maximum distance, between our rotation and the target's, to consider shooting it.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Angle AccuracyThreshold = Angle.FromDegrees(30);
 }
