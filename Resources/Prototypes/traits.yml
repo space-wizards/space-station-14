@@ -1,3 +1,5 @@
 - type: trait
   id: SmokerTrait
   name: Smoker
+  components:
+  - type: SmokerTrait

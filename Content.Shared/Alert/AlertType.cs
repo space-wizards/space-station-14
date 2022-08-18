@@ -37,12 +37,13 @@ namespace Content.Shared.Alert
         VowBroken,
         Essence,
         Corporeal,
+        LightNicotineCraving,
+        IntenseNicotineCraving,
         Debug1,
         Debug2,
         Debug3,
         Debug4,
         Debug5,
-        Debug6
+        Debug6,
     }
-
 }

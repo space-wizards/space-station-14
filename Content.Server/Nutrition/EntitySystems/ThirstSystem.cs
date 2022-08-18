@@ -1,12 +1,8 @@
 using Content.Server.Nutrition.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Alert;
-using Content.Server.Administration.Logs;
-using Content.Shared.Database;
-using Content.Shared.Damage;
 using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -17,7 +13,6 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-        [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
         private ISawmill _sawmill = default!;
         private float _accumulatedFrameTime;
@@ -43,9 +38,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
-            if (_jetpack.IsUserFlying(component.Owner))
-                return;
-
             var mod = component.CurrentThirstThreshold <= ThirstThreshold.Parched ? 0.75f : 1.0f;
             args.ModifySpeed(mod, mod);
         }

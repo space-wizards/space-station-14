@@ -19,6 +19,7 @@
     - category: Temperature
     - category: Hunger
     - category: Thirst
+    - category: NicotineCraving
     - alertType: Magboots
 
 - type: alert
@@ -245,6 +246,20 @@
   icons: [ /Textures/Interface/Alerts/Thirst/Parched.png ]
   name: "[color=red]Parched[/color]"
   description: You're severely thirsty. The thirst makes moving around a chore.
+
+- type: alert
+  id: LightNicotineCraving
+  category: NicotineCraving
+  icons: [ /Textures/Interface/Alerts/Smoker/LightCraving.png ]
+  name: "[color=yellow]Craving Nicotine[/color]"
+  description: You could really use a smoke right now.
+
+- type: alert
+  id: IntenseNicotineCraving
+  category: NicotineCraving
+  icons: [ /Textures/Interface/Alerts/Smoker/IntenseCraving.png ]
+  name: "[color=red]Intense Nicotine Craving[/color]"
+  description: Does anyone have a light?? You feel sluggish.
 
 - type: alert
   id: Muted

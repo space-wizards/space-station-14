@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using static Robust.Shared.Prototypes.EntityPrototype; // don't worry about it
 
 namespace Content.Shared.Traits
 {
@@ -17,5 +18,11 @@ namespace Content.Shared.Traits
         /// </summary>
         [DataField("name")]
         public string Name { get; } = string.Empty;
+
+        /// <summary>
+        ///     The components that get added to the player, when they pick this trait.
+        /// </summary>
+        [DataField("components")]
+        public ComponentRegistry Components { get; } = default!;
     }
 }
