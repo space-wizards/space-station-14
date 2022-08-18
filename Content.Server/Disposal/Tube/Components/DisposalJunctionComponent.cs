@@ -34,14 +34,12 @@ namespace Content.Server.Disposal.Tube.Components
             var next = _entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetDir();
             var directions = ConnectableDirections().Skip(1).ToArray();
 
-            var previous = holder.PreviousDirectionFrom;
-
-            if (previous == next && directions.Contains(previous.GetOpposite()))
-                return previous.GetOpposite();
-
-            if (previous == Direction.Invalid || previous == next)
+            if (holder.PreviousDirectionFrom == Direction.Invalid ||
+                holder.PreviousDirectionFrom == next)
+            {
                 return _random.Pick(directions);
-
+            }
+            
             return next;
         }
     }
