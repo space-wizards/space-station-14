@@ -1,4 +1,5 @@
 using Content.Server.Interaction;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
@@ -9,6 +10,7 @@ namespace Content.Server.NPC.Systems;
 public sealed partial class NPCCombatSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
 
     public override void Initialize()

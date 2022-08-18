@@ -152,6 +152,14 @@ public abstract partial class SharedGunSystem : EntitySystem
         component.AvailableModes = state.AvailableSelectiveFire;
     }
 
+    public bool CanShoot(GunComponent component)
+    {
+        if (component.NextFire > Timing.CurTime)
+            return false;
+
+        return true;
+    }
+
     public GunComponent? GetGun(EntityUid entity)
     {
         if (!_combatMode.IsInCombatMode(entity))
