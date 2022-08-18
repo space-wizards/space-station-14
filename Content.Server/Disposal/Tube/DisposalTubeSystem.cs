@@ -1,7 +1,9 @@
+using System.Text;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Disposal.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
@@ -60,9 +62,11 @@ namespace Content.Server.Disposal.Tube
             {
                 args.Cancel();
             }
+
+            UpdateRouterUserInterface(router);
         }
 
-        private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent router, ActivatableUIOpenAttemptEvent args)
+        private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent tagger, ActivatableUIOpenAttemptEvent args)
         {
             if (!TryComp<HandsComponent>(args.User, out var hands))
             {
@@ -75,8 +79,34 @@ namespace Content.Server.Disposal.Tube
             {
                 args.Cancel();
             }
+
+            tagger.UserInterface?.SetState(new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(tagger.Tag));
         }
 
+        /// <summary>
+        /// Gets component data to be used to update the user interface client-side.
+        /// </summary>
+        /// <returns>Returns a <see cref="SharedDisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
+        private void UpdateRouterUserInterface(DisposalRouterComponent router)
+        {
+            if (router.Tags.Count <= 0)
+            {
+                router.UserInterface?.SetState(new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(""));
+                return;
+            }
+
+            var taglist = new StringBuilder();
+
+            foreach (var tag in router.Tags)
+            {
+                taglist.Append(tag);
+                taglist.Append(", ");
+            }
+
+            taglist.Remove(taglist.Length - 2, 2);
+
+            router.UserInterface?.SetState(new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(taglist.ToString()));
+        }
 
         private static void BodyTypeChanged(
             EntityUid uid,
