@@ -46,15 +46,6 @@ namespace Content.Server.Atmos.Monitor.Components
         [DataField("monitorFire")]
         public bool MonitorFire = false;
 
-        [DataField("displayMaxAlarmInNet")]
-        public bool DisplayMaxAlarmInNet = false;
-
-        [DataField("alarmSound")]
-        public SoundSpecifier AlarmSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
-
-        [DataField("alarmVolume")]
-        public float AlarmVolume { get; set; } = -10;
-
         // really messy but this is parsed at runtime after
         // prototypes are initialized, there's no
         // way without implementing a new

@@ -4,12 +4,14 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {
     public sealed class AtmosAlarmableSystem : EntitySystem
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly AudioSystem _audioSystem = default!;
         public override void Initialize()
         {
             SubscribeLocalEvent<AtmosAlarmableComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
@@ -37,8 +39,17 @@ namespace Content.Server.Atmos.Monitor.Systems
                     component.LastAlarmState = state;
                     component.HighestNetworkState = netMax;
                     UpdateAppearance(uid, netMax);
+                    PlayAlertSound(uid, netMax, component);
                     RaiseLocalEvent(component.Owner, new AtmosMonitorAlarmEvent(state, netMax), true);
                 }
+            }
+        }
+
+        private void PlayAlertSound(EntityUid uid, AtmosMonitorAlarmType alarm, AtmosAlarmableComponent alarmable)
+        {
+            if (alarm == AtmosMonitorAlarmType.Danger)
+            {
+                _audioSystem.PlayPvs(alarmable.AlarmSound, uid, AudioParams.Default.WithVolume(alarmable.AlarmVolume));
             }
         }
 

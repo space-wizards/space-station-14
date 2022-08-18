@@ -44,6 +44,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// </summary>
         public const string AtmosMonitorAlarmResetAllCmd = "atmos_monitor_alarm_reset_all";
 
+        public const string AtmosMonitorSetThresholdData = "atmos_monitor_set_threshold";
+
         // Packet data
         /// <summary>
         ///     Data response that contains the threshold types in an atmos monitor alarm.
@@ -59,6 +61,13 @@ namespace Content.Server.Atmos.Monitor.Systems
         ///     Data response that contains the maximum alarm in an atmos alarm network.
         /// </summary>
         public const string AtmosMonitorAlarmNetMax = "atmos_monitor_alarm_net_max";
+
+        /// <summary>
+        ///     Data response that contains the last state recorded by this air monitor.
+        /// </summary>
+        public const string AtmosMonitorAtmosData = "atmos_monitor_atmos_data";
+
+        public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
 
         public override void Initialize()
         {
@@ -189,16 +198,42 @@ namespace Content.Server.Atmos.Monitor.Systems
                         component.NetworkAlarmStates.Clear();
                     }
                     break;
+                case AirAlarmSystem.AirAlarmSyncCmd:
+                    var payload = new NetworkPayload();
+                    payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
+                    if (component.TileGas != null)
+                    {
+                        var gases = new Dictionary<Gas, float>();
+                        foreach (var gas in Enum.GetValues<Gas>())
+                        {
+                            gases.Add(gas, component.TileGas.GetMoles(gas));
+                        }
+
+                        payload.Add(AtmosMonitorAtmosData, new AtmosSensorData(
+                            component.TileGas.Pressure,
+                            component.TileGas.Temperature,
+                            component.TileGas.TotalMoles,
+                            component.HighestAlarmInNetwork,
+                            gases,
+                            false,
+                            component.PressureThreshold ?? new(),
+                            component.TemperatureThreshold ?? new(),
+                            component.GasThresholds ?? new()
+                        ));
+                    }
+
+                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload);
+                    break;
             }
 
+            /*
             if (component.DisplayMaxAlarmInNet)
             {
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
                     appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, component.HighestAlarmInNetwork);
 
-                if (component.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, component);
             }
-
+            */
         }
 
         private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, PowerChangedEvent args)
@@ -344,19 +379,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             BroadcastAlertPacket(monitor, alarms);
 
-            if (state == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, monitor);
-
             if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent? alarmable)
                 && !alarmable.IgnoreAlarms)
                 RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork), true);
             // TODO: Central system that grabs *all* alarms from wired network
-        }
-
-        private void PlayAlertSound(EntityUid uid, AtmosMonitorComponent? monitor = null)
-        {
-            if (!Resolve(uid, ref monitor)) return;
-
-            SoundSystem.Play(monitor.AlarmSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(monitor.AlarmVolume));
         }
 
         /// <summary>

@@ -516,7 +516,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         public void ForceCloseAllInterfaces(EntityUid uid)
         {
             _uiSystem.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
-            RemoveActiveInterface(uid);
         }
 
         public void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, AtmosDeviceUpdateEvent args)

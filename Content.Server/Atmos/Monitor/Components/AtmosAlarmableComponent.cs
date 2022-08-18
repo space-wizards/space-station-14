@@ -1,4 +1,5 @@
 using Content.Shared.Atmos.Monitor;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Atmos.Monitor.Components
 {
@@ -29,6 +30,12 @@ namespace Content.Server.Atmos.Monitor.Components
         [ViewVariables] public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
         [ViewVariables] public AtmosMonitorAlarmType HighestNetworkState = AtmosMonitorAlarmType.Normal;
         [ViewVariables] public bool IgnoreAlarms { get; set; } = false;
+
+        [DataField("alarmSound")]
+        public SoundSpecifier AlarmSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
+
+        [DataField("alarmVolume")]
+        public float AlarmVolume { get; set; } = -10;
 
         /// <summary>
         ///     List of prototypes that this alarmable can be
