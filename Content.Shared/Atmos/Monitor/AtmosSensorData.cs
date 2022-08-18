@@ -1,7 +1,9 @@
 using Content.Shared.Atmos.Monitor.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
 
+[Serializable, NetSerializable]
 public sealed class AtmosSensorData : IAtmosDeviceData
 {
     public AtmosSensorData(float pressure, float temperature, float totalMoles, AtmosMonitorAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
