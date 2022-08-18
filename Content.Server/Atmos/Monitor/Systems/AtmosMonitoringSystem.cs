@@ -231,7 +231,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                             gases.Add(gas, component.TileGas.GetMoles(gas));
                         }
 
-                        payload.Add(AtmosMonitorAtmosData, new AtmosSensorData(
+                        payload.Add(AirAlarmSystem.AirAlarmSyncData, new AtmosSensorData(
                             component.TileGas.Pressure,
                             component.TileGas.Temperature,
                             component.TileGas.TotalMoles,
