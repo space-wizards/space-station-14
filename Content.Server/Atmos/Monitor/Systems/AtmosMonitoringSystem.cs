@@ -111,8 +111,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public override void Update(float frameTime)
         {
+            /* NOPE
             foreach (var uid in _checkPos)
                 OpenAirOrReposition(uid);
+                */
         }
 
         private void OpenAirOrReposition(EntityUid uid, AtmosMonitorComponent? component = null, AppearanceComponent? appearance = null)

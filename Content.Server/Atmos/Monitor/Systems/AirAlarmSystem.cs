@@ -379,6 +379,50 @@ namespace Content.Server.Atmos.Monitor.Systems
             SetData(uid, address, devData);
         }
 
+        private void OnAtmosAlarm(EntityUid uid, AirAlarmComponent component, NetworkPayload args)
+        {
+            if (component.ActivePlayers.Count != 0)
+            {
+                SyncAllDevices(uid);
+                SendAirData(uid);
+            }
+
+            string addr = string.Empty;
+            if (TryComp(uid, out DeviceNetworkComponent? netConn))
+            {
+                addr = netConn.Address;
+            }
+
+            if (!args.TryGetValue(AtmosMonitorSystem.AtmosMonitorAlarmNetMax, out AtmosMonitorAlarmType? highestNetworkType))
+            {
+                return;
+            }
+
+            // set this air alarm's visuals to match the highest network alarm
+            if (TryComp(uid, out AppearanceComponent? appearanceComponent))
+            {
+                appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, highestNetworkType);
+            }
+
+            if (highestNetworkType == AtmosMonitorAlarmType.Danger)
+            {
+                SetMode(uid, addr, AirAlarmMode.None, true);
+                // set mode to off to mimic the vents/scrubbers being turned off
+                // update UI
+                //
+                // no, the mode isn't processed here - it's literally just
+                // set to what mimics 'off'
+            }
+            else if (highestNetworkType == AtmosMonitorAlarmType.Normal)
+            {
+                // if the mode is still set to off, set it to filtering instead
+                // alternatively, set it to the last saved mode
+                //
+                // no, this still doesn't execute the mode
+                SetMode(uid, addr, AirAlarmMode.Filtering, true);
+            }
+        }
+
         private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, DeviceNetworkPacketEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
@@ -388,8 +432,8 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 case AirAlarmSyncData:
                     if (!args.Data.TryGetValue(AirAlarmSyncData, out IAtmosDeviceData? data)
-                        || data == null
-                        || !controller.CanSync) break;
+                        || !controller.CanSync)
+                        break;
 
                     // Save into component.
                     // Sync data to interface.
@@ -402,7 +446,8 @@ namespace Content.Server.Atmos.Monitor.Systems
 
                     return;
                 case AirAlarmSetDataStatus:
-                    if (!args.Data.TryGetValue(AirAlarmSetDataStatus, out bool dataStatus)) break;
+                    if (!args.Data.TryGetValue(AirAlarmSetDataStatus, out bool dataStatus))
+                        break;
 
                     // Sync data to interface.
                     // This should say if the result
