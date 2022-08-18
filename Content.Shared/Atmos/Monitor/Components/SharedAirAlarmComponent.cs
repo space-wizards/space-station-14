@@ -55,11 +55,34 @@ namespace Content.Shared.Atmos.Monitor.Components
         public bool IgnoreAlarms { get; set; }
     }
 
-    // would be nice to include the entire state here
-    // but it's already handled by messages
     [Serializable, NetSerializable]
     public sealed class AirAlarmUIState : BoundUserInterfaceState
-    {}
+    {
+        public AirAlarmUIState(Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosMonitorAlarmType alarmType)
+        {
+            DeviceData = deviceData;
+            Mode = mode;
+            Tab = tab;
+            AlarmType = alarmType;
+        }
+
+        /// <summary>
+        ///     Every single device data that can be seen from this
+        ///     air alarm. This includes vents, scrubbers, and sensors.
+        ///     The device data you get, however, depends on the current
+        ///     selected tab.
+        /// </summary>
+        public Dictionary<string, IAtmosDeviceData> DeviceData { get; }
+        public AirAlarmMode Mode { get; }
+        public AirAlarmTab Tab { get; }
+        public AtmosMonitorAlarmType AlarmType { get; }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class AirAlarmTabSetMessage : BoundUserInterfaceMessage
+    {
+        public AirAlarmTab Tab { get; }
+    }
 
     [Serializable, NetSerializable]
     public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
@@ -126,5 +149,11 @@ namespace Content.Shared.Atmos.Monitor.Components
         }
     }
 
-
+    public enum AirAlarmTab
+    {
+        Vent,
+        Scrubber,
+        Sensors,
+        Settings
+    }
 }

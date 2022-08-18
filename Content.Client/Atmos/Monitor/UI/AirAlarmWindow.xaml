@@ -40,9 +40,10 @@
             <ScrollContainer VerticalExpand="True">
                 <BoxContainer Name="CScrubberContainer" Orientation="Vertical"/>
             </ScrollContainer>
-            <!-- Alarm thresholds -->
+            <!-- Sensors -->
             <ScrollContainer VerticalExpand="True">
-                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <BoxContainer Name="CSensorContainer" Orientation="Vertical"/>
+                <!-- <BoxContainer Orientation="Vertical" VerticalExpand="True">
                     <BoxContainer Name="CPressureThreshold" Orientation="Vertical" Margin="2 0 2 0" />
                     <BoxContainer Name="CTemperatureThreshold" Orientation="Vertical" Margin="2 0 2 0" />
                     <Collapsible Orientation="Vertical">
@@ -51,7 +52,7 @@
                             <BoxContainer Name="CGasThresholdContainer" Orientation="Vertical" Margin="2 0 2 0" />
                         </CollapsibleBody>
                     </Collapsible>
-                </BoxContainer>
+                </BoxContainer> -->
             </ScrollContainer>
         </TabContainer>
 

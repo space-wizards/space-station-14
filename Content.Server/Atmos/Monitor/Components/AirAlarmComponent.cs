@@ -1,4 +1,6 @@
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Robust.Shared.Network;
 
 namespace Content.Server.Atmos.Monitor.Components
@@ -11,7 +13,12 @@ namespace Content.Server.Atmos.Monitor.Components
         // Remember to null this afterwards.
         [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }
 
+        [ViewVariables] public AirAlarmTab CurrentTab { get; set; }
+
         public Dictionary<string, IAtmosDeviceData> DeviceData = new();
+        public Dictionary<string, GasVentPumpData> VentData = new();
+        public Dictionary<string, GasVentScrubberData> ScrubberData = new();
+        public Dictionary<string, AtmosSensorData> SensorData = new();
 
         public HashSet<NetUserId> ActivePlayers = new();
 

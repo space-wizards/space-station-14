@@ -12,6 +12,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -125,6 +126,24 @@ namespace Content.Server.Atmos.Monitor.Systems
         }
 
         /// <summary>
+        ///     Synchronize all sensors on an air alarm, but only if its current tab is set to Sensors.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="monitor"></param>
+        private void SyncAllSensors(EntityUid uid, AirAlarmComponent? monitor = null)
+        {
+            if (!Resolve(uid, ref monitor) || monitor.CurrentTab != AirAlarmTab.Sensors)
+            {
+                return;
+            }
+
+            foreach (var addr in monitor.SensorData.Keys)
+            {
+                SyncDevice(uid, addr);
+            }
+        }
+
+        /// <summary>
         ///     Sync this air alarm's mode with the rest of the network.
         /// </summary>
         /// <param name="mode">The mode to sync with the rest of the network.</param>
@@ -168,7 +187,9 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 ForceCloseAllInterfaces(uid);
                 component.CurrentModeUpdater = null;
-                component.DeviceData.Clear();
+                component.ScrubberData.Clear();
+                component.SensorData.Clear();
+                component.VentData.Clear();
             }
             else
             {
@@ -208,18 +229,18 @@ namespace Content.Server.Atmos.Monitor.Systems
             _uiSystem.GetUiOrNull(component.Owner, SharedAirAlarmInterfaceKey.Key)?.Open(actor.PlayerSession);
             component.ActivePlayers.Add(actor.PlayerSession.UserId);
             AddActiveInterface(uid);
-            SendAddress(uid);
-            SendAlarmMode(uid);
-            SendThresholds(uid);
             SyncAllDevices(uid);
-            SendAirData(uid);
+            UpdateUI(uid, component);
         }
 
         private void OnResyncAll(EntityUid uid, AirAlarmComponent component, AirAlarmResyncAllDevicesMessage args)
         {
             if (AccessCheck(uid, args.Session.AttachedEntity, component))
             {
-                component.DeviceData.Clear();
+                component.VentData.Clear();
+                component.ScrubberData.Clear();
+                component.SensorData.Clear();
+
                 SyncAllDevices(uid);
             }
         }
@@ -231,7 +252,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (AccessCheck(uid, args.Session.AttachedEntity, component))
                 SetMode(uid, addr, args.Mode, true, false);
             else
-                SendAlarmMode(uid);
+                UpdateUI(uid, component);
         }
 
         private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args)
@@ -239,7 +260,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (AccessCheck(uid, args.Session.AttachedEntity, component))
                 SetThreshold(uid, args.Threshold, args.Type, args.Gas);
             else
-                SendThresholds(uid);
+                UpdateUI(uid, component);
         }
 
         private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
@@ -247,7 +268,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (AccessCheck(uid, args.Session.AttachedEntity, component))
                 SetDeviceData(uid, args.Address, args.Data);
             else
-                SyncDevice(uid, args.Address);
+                UpdateUI(uid, component);
         }
 
         private bool AccessCheck(EntityUid uid, EntityUid? user, AirAlarmComponent? component = null)
@@ -272,7 +293,6 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (component.ActivePlayers.Count != 0)
             {
                 SyncAllDevices(uid);
-                SendAirData(uid);
             }
 
             string addr = string.Empty;
@@ -296,6 +316,8 @@ namespace Content.Server.Atmos.Monitor.Systems
                 // no, this still doesn't execute the mode
                 SetMode(uid, addr, AirAlarmMode.Filtering, true);
             }
+
+            UpdateUI(uid, component);
         }
 
         #endregion
@@ -355,10 +377,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                      && controller.CurrentModeUpdater.NetOwner != origin)
                 controller.CurrentModeUpdater = null;
 
-            // controller.SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
-            // TODO: Use BUI states instead...
-            _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(mode));
-
+            UpdateUI(uid, controller);
 
             // setting sync deals with the issue of air alarms
             // in the same network needing to have the same mode
@@ -384,7 +403,6 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (component.ActivePlayers.Count != 0)
             {
                 SyncAllDevices(uid);
-                SendAirData(uid);
             }
 
             string addr = string.Empty;
@@ -396,12 +414,6 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!args.TryGetValue(AtmosMonitorSystem.AtmosMonitorAlarmNetMax, out AtmosMonitorAlarmType? highestNetworkType))
             {
                 return;
-            }
-
-            // set this air alarm's visuals to match the highest network alarm
-            if (TryComp(uid, out AppearanceComponent? appearanceComponent))
-            {
-                appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, highestNetworkType);
             }
 
             if (highestNetworkType == AtmosMonitorAlarmType.Danger)
@@ -421,6 +433,8 @@ namespace Content.Server.Atmos.Monitor.Systems
                 // no, this still doesn't execute the mode
                 SetMode(uid, addr, AirAlarmMode.Filtering, true);
             }
+
+            UpdateUI(uid, component);
         }
 
         private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, DeviceNetworkPacketEvent args)
@@ -439,10 +453,23 @@ namespace Content.Server.Atmos.Monitor.Systems
                     // Sync data to interface.
                     // _airAlarmDataSystem.UpdateDeviceData(uid, args.SenderAddress, data);
                     //
-                    _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
-                    // if (HasComp<WiresComponent>(uid)) controller.UpdateWires();
-                    if (!controller.DeviceData.TryAdd(args.SenderAddress, data))
-                        controller.DeviceData[args.SenderAddress] = data;
+                    switch (data)
+                    {
+                        case GasVentPumpData ventData:
+                            if (!controller.VentData.TryAdd(args.SenderAddress, ventData))
+                                controller.VentData[args.SenderAddress] = ventData;
+                            break;
+                        case GasVentScrubberData scrubberData:
+                            if (!controller.ScrubberData.TryAdd(args.SenderAddress, scrubberData))
+                                controller.ScrubberData[args.SenderAddress] = scrubberData;
+                            break;
+                        case AtmosSensorData sensorData:
+                            if (!controller.SensorData.TryAdd(args.SenderAddress, sensorData))
+                                controller.SensorData[args.SenderAddress] = sensorData;
+                            break;
+                    }
+
+                    UpdateUI(uid, controller);
 
                     return;
                 case AirAlarmSetDataStatus:
@@ -486,90 +513,59 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <summary>
         ///     Force closes all interfaces currently open related to this air alarm.
         /// </summary>
-        public void ForceCloseAllInterfaces(EntityUid uid) =>
+        public void ForceCloseAllInterfaces(EntityUid uid)
+        {
             _uiSystem.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
-
-        private void SendAddress(EntityUid uid, DeviceNetworkComponent? netConn = null)
-        {
-            if (!Resolve(uid, ref netConn)) return;
-
-            // TODO: Use BUI states instead...
-            _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmSetAddressMessage(netConn.Address));
-        }
-
-        /// <summary>
-        ///     Update an interface's air data. This is all the 'hot' data
-        ///     that an air alarm contains server-side. Updated with a whopping 8
-        ///     delay automatically once a UI is in the loop.
-        /// </summary>
-        public void SendAirData(EntityUid uid, AirAlarmComponent? alarm = null, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null)
-        {
-            if (!Resolve(uid, ref alarm, ref monitor, ref power)) return;
-
-            if (!power.Powered) return;
-
-
-            if (monitor.TileGas != null)
-            {
-                var gases = new Dictionary<Gas, float>();
-
-                foreach (var gas in Enum.GetValues<Gas>())
-                    gases.Add(gas, monitor.TileGas.GetMoles(gas));
-
-                var airData = new AirAlarmAirData(monitor.TileGas.Pressure, monitor.TileGas.Temperature, monitor.TileGas.TotalMoles, monitor.LastAlarmState, gases);
-
-                // TODO: Use BUI states instead...
-                _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAirDataMessage(airData));
-            }
-        }
-
-        /// <summary>
-        ///     Send an air alarm mode to any open interface related to an air alarm.
-        /// </summary>
-        public void SendAlarmMode(EntityUid uid, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null, AirAlarmComponent? controller = null)
-        {
-            if (!Resolve(uid, ref monitor, ref power, ref controller)
-                || !power.Powered) return;
-
-            // TODO: Use BUI states instead...
-            _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(controller.CurrentMode));
-        }
-
-        /// <summary>
-        ///     Send all thresholds to any open interface related to a given air alarm.
-        /// </summary>
-        public void SendThresholds(EntityUid uid, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null, AirAlarmComponent? controller = null)
-        {
-            if (!Resolve(uid, ref monitor, ref power, ref controller)
-                || !power.Powered) return;
-
-            if (monitor.PressureThreshold == null
-                && monitor.TemperatureThreshold == null
-                && monitor.GasThresholds == null)
-                return;
-
-            // TODO: Use BUI states instead...
-            if (monitor.PressureThreshold != null)
-            {
-                _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Pressure, monitor.PressureThreshold));
-            }
-
-            if (monitor.TemperatureThreshold != null)
-            {
-                _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Temperature, monitor.TemperatureThreshold));
-            }
-
-            if (monitor.GasThresholds != null)
-            {
-                foreach (var (gas, threshold) in monitor.GasThresholds)
-                    _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Gas, threshold, gas));
-            }
+            RemoveActiveInterface(uid);
         }
 
         public void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, AtmosDeviceUpdateEvent args)
         {
             if (alarm.CurrentModeUpdater != null)
                 alarm.CurrentModeUpdater.Update(uid);
+        }
+
+        public void UpdateUI(EntityUid uid, AirAlarmComponent? alarm = null, AtmosAlarmableComponent? alarmable = null)
+        {
+            if (!Resolve(uid, ref alarm, ref alarmable))
+            {
+                return;
+            }
+
+            var dataToSend = new Dictionary<string, IAtmosDeviceData>();
+
+            if (alarm.CurrentTab != AirAlarmTab.Settings)
+            {
+                switch (alarm.CurrentTab)
+                {
+                    case AirAlarmTab.Vent:
+                        foreach (var (addr, data) in alarm.VentData)
+                        {
+                            dataToSend.Add(addr, data);
+                        }
+
+                        break;
+                    case AirAlarmTab.Scrubber:
+                        foreach (var (addr, data) in alarm.ScrubberData)
+                        {
+                            dataToSend.Add(addr, data);
+                        }
+
+                        break;
+                    case AirAlarmTab.Sensors:
+                        foreach (var (addr, data) in alarm.SensorData)
+                        {
+                            dataToSend.Add(addr, data);
+                        }
+
+                        break;
+                }
+            }
+
+            _uiSystem.TrySetUiState(
+                uid,
+                SharedAirAlarmInterfaceKey.Key,
+                new AirAlarmUIState(dataToSend, alarm.CurrentMode, alarm.CurrentTab, alarmable.HighestNetworkState));
         }
 
         private const float _delay = 8f;
@@ -583,9 +579,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 _timer = 0f;
                 foreach (var uid in _activeUserInterfaces)
                 {
-                    // TODO: Awful idea, use BUI states instead...
-                    SendAirData(uid);
-                    _uiSystem.TrySetUiState(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUIState());
+                    SyncAllSensors(uid);
                 }
             }
         }
