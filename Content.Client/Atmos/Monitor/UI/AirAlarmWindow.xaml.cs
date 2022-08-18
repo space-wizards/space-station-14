@@ -19,7 +19,7 @@ namespace Content.Client.Atmos.Monitor.UI
     public sealed partial class AirAlarmWindow : DefaultWindow
     {
         public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
-        public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
+        public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
         public event Action<AirAlarmMode>? AirAlarmModeChanged;
         public event Action<string>? ResyncDeviceRequested;
         public event Action? ResyncAllRequested;
@@ -34,9 +34,6 @@ namespace Content.Client.Atmos.Monitor.UI
         private BoxContainer _gasReadout => CGasContainer;
         private BoxContainer _ventDevices => CVentContainer;
         private BoxContainer _scrubberDevices => CScrubberContainer;
-        private BoxContainer _pressureThreshold => CPressureThreshold;
-        private BoxContainer _temperatureThreshold => CTemperatureThreshold;
-        private BoxContainer _gasThreshold => CGasThresholdContainer;
 
         private Dictionary<string, PumpControl> _pumps = new();
         private Dictionary<string, ScrubberControl> _scrubbers = new();
@@ -85,11 +82,24 @@ namespace Content.Client.Atmos.Monitor.UI
             };
         }
 
+        public void UpdateState(AirAlarmUIState state)
+        {
+            _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.PressureAverage:0.##}")));
+            _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
+            _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state", ("state", $"{state.AlarmType}")));
+            UpdateModeSelector(state.Mode);
+            foreach (var (addr, dev) in state.DeviceData)
+            {
+                UpdateDeviceData(addr, dev);
+            }
+        }
+
         public void SetAddress(string address)
         {
             _address.Text = address;
         }
 
+        /*
         public void UpdateGasData(ref AirAlarmAirData state)
         {
             _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.Pressure:0.##}")));
@@ -100,6 +110,7 @@ namespace Content.Client.Atmos.Monitor.UI
                 foreach (var (gas, amount) in state.Gases)
                     _gasLabels[gas].Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"), ("amount", $"{amount:0.####}"), ("percentage", $"{(amount / state.TotalMoles):0.##}"));
         }
+        */
 
         public void UpdateModeSelector(AirAlarmMode mode)
         {
@@ -143,6 +154,7 @@ namespace Content.Client.Atmos.Monitor.UI
             _deviceTotal.Text = $"{_pumps.Count + _scrubbers.Count}";
         }
 
+        /*
         public void UpdateThreshold(ref AirAlarmUpdateAlarmThresholdMessage message)
         {
             switch (message.Type)
@@ -188,5 +200,6 @@ namespace Content.Client.Atmos.Monitor.UI
                     break;
             }
         }
+        */
     }
 }

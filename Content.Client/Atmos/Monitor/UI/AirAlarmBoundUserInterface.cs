@@ -47,34 +47,21 @@ namespace Content.Client.Atmos.Monitor.UI
             SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
         }
 
-        private void OnThresholdChanged(AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
+        private void OnThresholdChanged(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
         {
-            SendMessage(new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
+            SendMessage(new AirAlarmUpdateAlarmThresholdMessage(address, type, threshold, gas));
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        protected override void UpdateState(BoundUserInterfaceState state)
         {
-            if (_window == null)
-                return;
+            base.UpdateState(state);
 
-            switch (message)
+            if (state is not AirAlarmUIState cast || _window == null)
             {
-                case AirAlarmSetAddressMessage addrMsg:
-                    _window.SetAddress(addrMsg.Address);
-                    break;
-                case AirAlarmUpdateDeviceDataMessage deviceMsg:
-                    _window.UpdateDeviceData(deviceMsg.Address, deviceMsg.Data);
-                    break;
-                case AirAlarmUpdateAlarmModeMessage alarmMsg:
-                    _window.UpdateModeSelector(alarmMsg.Mode);
-                    break;
-                case AirAlarmUpdateAlarmThresholdMessage thresholdMsg:
-                    _window.UpdateThreshold(ref thresholdMsg);
-                    break;
-                case AirAlarmUpdateAirDataMessage airDataMsg:
-                    _window.UpdateGasData(ref airDataMsg.AirData);
-                    break;
+                return;
             }
+
+            _window.UpdateState(cast);
         }
 
         protected override void Dispose(bool disposing)

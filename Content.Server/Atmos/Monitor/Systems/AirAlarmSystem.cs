@@ -524,8 +524,8 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
-            var pressure = CalculatePressureAverage(uid, alarm);
-            var temperature = CalculateTemperatureAverage(uid, alarm);
+            var pressure = CalculatePressureAverage(alarm);
+            var temperature = CalculateTemperatureAverage(alarm);
             var dataToSend = new Dictionary<string, IAtmosDeviceData>();
 
             if (alarm.CurrentTab != AirAlarmTab.Settings)
