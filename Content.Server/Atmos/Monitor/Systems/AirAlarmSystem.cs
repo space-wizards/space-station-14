@@ -509,12 +509,16 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private float CalculatePressureAverage(AirAlarmComponent alarm)
         {
-            return alarm.SensorData.Values.Select(v => v.Pressure).Average();
+            return alarm.SensorData.Count != 0
+                ? alarm.SensorData.Values.Select(v => v.Pressure).Average()
+                : 0f;
         }
 
         private float CalculateTemperatureAverage(AirAlarmComponent alarm)
         {
-            return alarm.SensorData.Values.Select(v => v.Temperature).Average();
+            return alarm.SensorData.Count != 0
+                ? alarm.SensorData.Values.Select(v => v.Temperature).Average()
+                : 0f;
         }
 
         public void UpdateUI(EntityUid uid, AirAlarmComponent? alarm = null, AtmosAlarmableComponent? alarmable = null)
