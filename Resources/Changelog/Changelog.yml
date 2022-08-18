@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Counters and tables now take more damage to destroy., type: Tweak}
-  id: 1670
-  time: '2022-06-08T08:47:30.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed an issue where Omnitools and Jaws of Life sometimes don't pry
@@ -2936,3 +2931,8 @@ Entries:
   - {message: Nettle soup recipe works now, type: Tweak}
   id: 2169
   time: '2022-08-18T02:30:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tweaks to bullet flyby sounds to be less grating., type: Tweak}
+  id: 2170
+  time: '2022-08-18T02:32:39.0000000+00:00'
