@@ -27,27 +27,6 @@ namespace Content.Shared.Atmos.Monitor.Components
         DeviceSync
     }
 
-    [Serializable, NetSerializable]
-    public readonly struct AirAlarmAirData
-    {
-        public readonly float? Pressure { get; }
-        public readonly float? Temperature { get; }
-        public readonly float? TotalMoles { get; }
-        public readonly AtmosMonitorAlarmType AlarmState { get; }
-
-        private readonly Dictionary<Gas, float>? _gases;
-        public readonly IReadOnlyDictionary<Gas, float>? Gases { get => _gases; }
-
-        public AirAlarmAirData(float? pressure, float? temperature, float? moles, AtmosMonitorAlarmType state, Dictionary<Gas, float>? gases)
-        {
-            Pressure = pressure;
-            Temperature = temperature;
-            TotalMoles = moles;
-            AlarmState = state;
-            _gases = gases;
-        }
-    }
-
     public interface IAtmosDeviceData
     {
         public bool Enabled { get; set; }
@@ -58,14 +37,18 @@ namespace Content.Shared.Atmos.Monitor.Components
     [Serializable, NetSerializable]
     public sealed class AirAlarmUIState : BoundUserInterfaceState
     {
-        public AirAlarmUIState(Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosMonitorAlarmType alarmType)
+        public AirAlarmUIState(float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosMonitorAlarmType alarmType)
         {
+            PressureAverage = pressureAverage;
+            TemperatureAverage = temperatureAverage;
             DeviceData = deviceData;
             Mode = mode;
             Tab = tab;
             AlarmType = alarmType;
         }
 
+        public float PressureAverage { get; }
+        public float TemperatureAverage { get; }
         /// <summary>
         ///     Every single device data that can be seen from this
         ///     air alarm. This includes vents, scrubbers, and sensors.
@@ -81,34 +64,17 @@ namespace Content.Shared.Atmos.Monitor.Components
     [Serializable, NetSerializable]
     public sealed class AirAlarmTabSetMessage : BoundUserInterfaceMessage
     {
+        public AirAlarmTabSetMessage(AirAlarmTab tab)
+        {
+            Tab = tab;
+        }
+
         public AirAlarmTab Tab { get; }
     }
 
     [Serializable, NetSerializable]
     public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
     {}
-
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmSetAddressMessage : BoundUserInterfaceMessage
-    {
-        public string Address { get; }
-
-        public AirAlarmSetAddressMessage(string address)
-        {
-            Address = address;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmUpdateAirDataMessage : BoundUserInterfaceMessage
-    {
-        public AirAlarmAirData AirData;
-
-        public AirAlarmUpdateAirDataMessage(AirAlarmAirData airData)
-        {
-            AirData = airData;
-        }
-    }
 
     [Serializable, NetSerializable]
     public sealed class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
@@ -137,12 +103,14 @@ namespace Content.Shared.Atmos.Monitor.Components
     [Serializable, NetSerializable]
     public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
     {
+        public string Address { get; }
         public AtmosAlarmThreshold Threshold { get; }
         public AtmosMonitorThresholdType Type { get; }
         public Gas? Gas { get; }
 
-        public AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
+        public AirAlarmUpdateAlarmThresholdMessage(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
         {
+            Address = address;
             Threshold = threshold;
             Type = type;
             Gas = gas;

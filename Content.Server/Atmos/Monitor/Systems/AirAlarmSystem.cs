@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
@@ -158,6 +159,26 @@ namespace Content.Server.Atmos.Monitor.Systems
             _deviceNet.QueuePacket(uid, address, payload);
         }
 
+        private void SetThreshold(EntityUid uid, string address, AtmosMonitorThresholdType type,
+            AtmosAlarmThreshold threshold, Gas? gas = null)
+        {
+            var payload = new NetworkPayload
+            {
+                [DeviceNetworkConstants.Command] = AtmosMonitorSystem.AtmosMonitorSetThresholdCmd,
+                [AtmosMonitorSystem.AtmosMonitorThresholdDataType] = type,
+                [AtmosMonitorSystem.AtmosMonitorThresholdData] = threshold,
+            };
+
+            if (gas != null)
+            {
+                payload.Add(AtmosMonitorSystem.AtmosMonitorThresholdGasType, gas);
+            }
+
+            _deviceNet.QueuePacket(uid, address, payload);
+
+            SyncDevice(uid, address);
+        }
+
         /// <summary>
         ///     Sync this air alarm's mode with the rest of the network.
         /// </summary>
@@ -273,7 +294,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args)
         {
             if (AccessCheck(uid, args.Session.AttachedEntity, component))
-                SetThreshold(uid, args.Threshold, args.Type, args.Gas);
+                SetThreshold(uid, args.Address, args.Type, args.Threshold, args.Gas);
             else
                 UpdateUI(uid, component);
         }
@@ -340,20 +361,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         #region Air Alarm Settings
 
         /// <summary>
-        ///     Set a threshold on an air alarm.
-        /// </summary>
-        /// <param name="threshold">New threshold data.</param>
-        public void SetThreshold(EntityUid uid, AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null, AirAlarmComponent? controller = null)
-        {
-            if (!Resolve(uid, ref controller)) return;
-
-            _atmosMonitorSystem.SetThreshold(uid, type, threshold, gas);
-
-            // TODO: Use BUI states instead...
-            _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
-        }
-
-        /// <summary>
         ///     Set an air alarm's mode.
         /// </summary>
         /// <param name="origin">The origin address of this mode set. Used for network sync.</param>
@@ -411,45 +418,6 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             devData.Dirty = true;
             SetData(uid, address, devData);
-        }
-
-        private void OnAtmosAlarm(EntityUid uid, AirAlarmComponent component, NetworkPayload args)
-        {
-            if (component.ActivePlayers.Count != 0)
-            {
-                SyncAllDevices(uid);
-            }
-
-            string addr = string.Empty;
-            if (TryComp(uid, out DeviceNetworkComponent? netConn))
-            {
-                addr = netConn.Address;
-            }
-
-            if (!args.TryGetValue(AtmosMonitorSystem.AtmosMonitorAlarmNetMax, out AtmosMonitorAlarmType? highestNetworkType))
-            {
-                return;
-            }
-
-            if (highestNetworkType == AtmosMonitorAlarmType.Danger)
-            {
-                SetMode(uid, addr, AirAlarmMode.None, true);
-                // set mode to off to mimic the vents/scrubbers being turned off
-                // update UI
-                //
-                // no, the mode isn't processed here - it's literally just
-                // set to what mimics 'off'
-            }
-            else if (highestNetworkType == AtmosMonitorAlarmType.Normal)
-            {
-                // if the mode is still set to off, set it to filtering instead
-                // alternatively, set it to the last saved mode
-                //
-                // no, this still doesn't execute the mode
-                SetMode(uid, addr, AirAlarmMode.Filtering, true);
-            }
-
-            UpdateUI(uid, component);
         }
 
         private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, DeviceNetworkPacketEvent args)
@@ -539,6 +507,16 @@ namespace Content.Server.Atmos.Monitor.Systems
                 alarm.CurrentModeUpdater.Update(uid);
         }
 
+        private float CalculatePressureAverage(AirAlarmComponent alarm)
+        {
+            return alarm.SensorData.Values.Select(v => v.Pressure).Average();
+        }
+
+        private float CalculateTemperatureAverage(AirAlarmComponent alarm)
+        {
+            return alarm.SensorData.Values.Select(v => v.Temperature).Average();
+        }
+
         public void UpdateUI(EntityUid uid, AirAlarmComponent? alarm = null, AtmosAlarmableComponent? alarmable = null)
         {
             if (!Resolve(uid, ref alarm, ref alarmable))
@@ -546,6 +524,8 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
+            var pressure = CalculatePressureAverage(uid, alarm);
+            var temperature = CalculateTemperatureAverage(uid, alarm);
             var dataToSend = new Dictionary<string, IAtmosDeviceData>();
 
             if (alarm.CurrentTab != AirAlarmTab.Settings)
@@ -579,7 +559,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             _uiSystem.TrySetUiState(
                 uid,
                 SharedAirAlarmInterfaceKey.Key,
-                new AirAlarmUIState(dataToSend, alarm.CurrentMode, alarm.CurrentTab, alarmable.HighestNetworkState));
+                new AirAlarmUIState(pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, alarmable.HighestNetworkState));
         }
 
         private const float _delay = 8f;
