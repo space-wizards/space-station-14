@@ -30,6 +30,7 @@ namespace Content.Client.Atmos.Monitor.UI
             _window.AtmosAlarmThresholdChanged += OnThresholdChanged;
             _window.AirAlarmModeChanged += OnAirAlarmModeChanged;
             _window.ResyncAllRequested += ResyncAllDevices;
+            _window.AirAlarmTabChange += OnTabChanged;
         }
 
         private void ResyncAllDevices()
@@ -50,6 +51,11 @@ namespace Content.Client.Atmos.Monitor.UI
         private void OnThresholdChanged(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
         {
             SendMessage(new AirAlarmUpdateAlarmThresholdMessage(address, type, threshold, gas));
+        }
+
+        private void OnTabChanged(AirAlarmTab tab)
+        {
+            SendMessage(new AirAlarmTabSetMessage(tab));
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

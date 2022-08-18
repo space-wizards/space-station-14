@@ -212,9 +212,16 @@ namespace Content.Server.Atmos.Monitor.Systems
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
+            SubscribeLocalEvent<AirAlarmComponent, AirAlarmTabSetMessage>(OnTabChange);
             SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
             SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
+        }
+
+        private void OnTabChange(EntityUid uid, AirAlarmComponent component, AirAlarmTabSetMessage msg)
+        {
+            component.CurrentTab = msg.Tab;
+            UpdateUI(uid, component);
         }
 
         private void OnPowerChanged(EntityUid uid, AirAlarmComponent component, PowerChangedEvent args)

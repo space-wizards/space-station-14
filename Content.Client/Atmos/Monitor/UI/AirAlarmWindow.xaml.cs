@@ -32,7 +32,6 @@ namespace Content.Client.Atmos.Monitor.UI
         private RichTextLabel _alarmState => CStatusLabel;
 
         private TabContainer _tabContainer => CTabContainer;
-        private BoxContainer _gasReadout => CGasContainer;
         private BoxContainer _ventDevices => CVentContainer;
         private BoxContainer _scrubberDevices => CScrubberContainer;
 
@@ -61,12 +60,14 @@ namespace Content.Client.Atmos.Monitor.UI
                 AirAlarmModeChanged!.Invoke((AirAlarmMode) args.Id);
             };
 
+            /*
             foreach (var gas in Enum.GetValues<Gas>())
             {
                 var gasLabel = new Label();
                 _gasReadout.AddChild(gasLabel);
                 _gasLabels.Add(gas, gasLabel);
             }
+            */
 
             _tabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-vents"));
             _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
