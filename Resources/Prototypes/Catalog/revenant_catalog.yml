@@ -1,7 +1,7 @@
 - type: listing
   id: RevenantDefile
   name: Defile
-  description: Costs 30 Essence per use. Defiles the surrounding area, ripping up floors, damaging windows, opening containers, and throwing items. Using it leaves you vulnerable to attacks for a short period of time.
+  description: Defiles the surrounding area, ripping up floors, damaging windows, opening containers, and throwing items. Using it leaves you vulnerable to attacks for a short period of time.
   productAction: RevenantDefile
   cost: 
     StolenEssence: 10
@@ -14,7 +14,7 @@
 - type: listing
   id: RevenantOverloadLights
   name: Overload Lights
-  description: Costs 40 Essence per use. Overloads all nearby lights, causing the bulbs to shatter and sending out damaging sparks. Using it leaves you vulnerable to attacks for a long period of time.
+  description: Overloads all nearby lights, causing the bulbs to shatter and sending out damaging sparks. Using it leaves you vulnerable to attacks for a long period of time.
   productAction: RevenantOverloadLights
   cost: 
     StolenEssence: 25
@@ -27,7 +27,7 @@
 - type: listing
   id: RevenantBlight
   name: Blight
-  description: Costs 50 Essence per use. Infects all nearby organisms with an infectious disease that causes poison and tiredness. Using it leaves you vulnerable to attacks for a medium period of time.
+  description: Infects all nearby organisms with an infectious disease that causes toxic buildup and tiredness. Using it leaves you vulnerable to attacks for a medium period of time.
   productAction: RevenantBlight
   cost: 
     StolenEssence: 75
@@ -40,7 +40,7 @@
 - type: listing
   id: RevenantMalfunction
   name: Malfunction
-  description: Costs 60 Essence per use. Makes most nearby electronics stop working properly. Using it leaves you vulnerable to attacks for a long period of time.
+  description: Makes nearby electronics stop working properly. Using it leaves you vulnerable to attacks for a long period of time.
   productAction: RevenantMalfunction
   cost: 
     StolenEssence: 125
