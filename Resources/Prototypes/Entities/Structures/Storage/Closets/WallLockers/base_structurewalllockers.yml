@@ -1,10 +1,10 @@
 - type: entity
   id: WallLockerBase
-  parent: BaseStructureDynamic
   placement:
     mode: SnapgridCenter
   abstract: true
   components:
+  - type: Clickable
   - type: Transform
     noRot: true
   - type: InteractionOutline
@@ -14,12 +14,11 @@
   - type: Lock
   - type: Weldable
   - type: Sprite
+    drawdepth: WallMountedItems
     netsync: false
-    sprite: Structures/Storage/closet.rsi
+    sprite: Structures/Storage/wall_locker.rsi
     layers:
-    - state: generic
-    - state: generic_door
-      map: ["enum.StorageVisualLayers.Door"]
+    - state: door
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
