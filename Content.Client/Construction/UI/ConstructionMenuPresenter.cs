@@ -195,7 +195,7 @@ namespace Content.Client.Construction.UI
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
-                var category = Loc.GetString(prototype.Category);
+                var category = prototype.Category;
 
                 if (!string.IsNullOrEmpty(category))
                     uniqueCategories.Add(category);
