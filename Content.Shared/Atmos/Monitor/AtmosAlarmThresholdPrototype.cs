@@ -52,6 +52,15 @@ namespace Content.Shared.Atmos.Monitor
             get => CalculateWarningBound(AtmosMonitorThresholdBound.Lower);
         }
 
+        public AtmosAlarmThreshold(AtmosAlarmThreshold other)
+        {
+            Ignore = other.Ignore;
+            UpperBound = other.UpperBound;
+            LowerBound = other.LowerBound;
+            UpperWarningPercentage = other.UpperWarningPercentage;
+            LowerWarningPercentage = other.LowerWarningPercentage;
+        }
+
         void ISerializationHooks.AfterDeserialization()
         {
             if (UpperBound <= LowerBound)

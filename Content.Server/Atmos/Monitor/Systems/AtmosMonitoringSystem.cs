@@ -75,17 +75,17 @@ namespace Content.Server.Atmos.Monitor.Systems
         private void OnAtmosMonitorInit(EntityUid uid, AtmosMonitorComponent component, ComponentInit args)
         {
             if (component.TemperatureThresholdId != null)
-                component.TemperatureThreshold = _prototypeManager.Index<AtmosAlarmThreshold>(component.TemperatureThresholdId);
+                component.TemperatureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.TemperatureThresholdId));
 
             if (component.PressureThresholdId != null)
-                component.PressureThreshold = _prototypeManager.Index<AtmosAlarmThreshold>(component.PressureThresholdId);
+                component.PressureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.PressureThresholdId));
 
             if (component.GasThresholdIds != null)
             {
                 component.GasThresholds = new();
                 foreach (var (gas, id) in component.GasThresholdIds)
                     if (_prototypeManager.TryIndex<AtmosAlarmThreshold>(id, out var gasThreshold))
-                        component.GasThresholds.Add(gas, gasThreshold);
+                        component.GasThresholds.Add(gas, new(gasThreshold));
             }
         }
 
