@@ -1,0 +1,12 @@
+- type: currency
+  id: Telecrystal
+  balanceDisplay: store-currency-balance-display-telecrystal
+  priceDisplay: store-currency-price-display-telecrystal
+  entityId: Telecrystal1
+  canWithdraw: true
+
+#debug
+- type: currency
+  id: DebugDollar
+  balanceDisplay: store-currency-balance-display-debugdollar
+  priceDisplay: store-currency-price-display-debugdollar
