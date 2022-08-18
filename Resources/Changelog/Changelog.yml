@@ -1,9 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: The Syndicate have gotten more creative with their names., type: Tweak}
-  id: 1668
-  time: '2022-06-07T03:41:22.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixed shutter construction not working properly when using a wrench
@@ -2936,3 +2931,9 @@ Entries:
   - {message: Empty Uplink categories no longer show up in the menu., type: Tweak}
   id: 2167
   time: '2022-08-17T04:34:25.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: 'Uniform printer can now print musician, clown, and mime winter coats',
+    type: Tweak}
+  id: 2168
+  time: '2022-08-18T02:22:30.0000000+00:00'
