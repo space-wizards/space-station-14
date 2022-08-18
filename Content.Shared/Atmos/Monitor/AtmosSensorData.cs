@@ -4,14 +4,13 @@ namespace Content.Shared.Atmos.Monitor;
 
 public sealed class AtmosSensorData : IAtmosDeviceData
 {
-    public AtmosSensorData(float pressure, float temperature, float totalMoles, AtmosMonitorAlarmType alarmState, Dictionary<Gas, float> gases, bool onFire, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
+    public AtmosSensorData(float pressure, float temperature, float totalMoles, AtmosMonitorAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
     {
         Pressure = pressure;
         Temperature = temperature;
         TotalMoles = totalMoles;
         AlarmState = alarmState;
         Gases = gases;
-        OnFire = onFire;
         PressureThreshold = pressureThreshold;
         TemperatureThreshold = temperatureThreshold;
         GasThresholds = gasThresholds;
@@ -43,10 +42,6 @@ public sealed class AtmosSensorData : IAtmosDeviceData
     ///     Current number of gases on this sensor.
     /// </summary>
     public Dictionary<Gas, float> Gases { get; }
-    /// <summary>
-    ///     If this sensor is currently detecting a fire.
-    /// </summary>
-    public bool OnFire { get; }
 
     public AtmosAlarmThreshold PressureThreshold { get; }
     public AtmosAlarmThreshold TemperatureThreshold { get; }

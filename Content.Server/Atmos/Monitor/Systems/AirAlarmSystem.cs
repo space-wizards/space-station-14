@@ -144,6 +144,21 @@ namespace Content.Server.Atmos.Monitor.Systems
         }
 
         /// <summary>
+        ///     Reset a single sensor's state.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="address"></param>
+        private void ResetSensor(EntityUid uid, string address)
+        {
+            var payload = new NetworkPayload
+            {
+                [DeviceNetworkConstants.Command] = AtmosMonitorSystem.AtmosMonitorAlarmResetCmd,
+            };
+
+            _deviceNet.QueuePacket(uid, address, payload);
+        }
+
+        /// <summary>
         ///     Sync this air alarm's mode with the rest of the network.
         /// </summary>
         /// <param name="mode">The mode to sync with the rest of the network.</param>

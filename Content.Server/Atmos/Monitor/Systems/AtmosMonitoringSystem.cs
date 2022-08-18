@@ -40,11 +40,16 @@ namespace Content.Server.Atmos.Monitor.Systems
         public const string AtmosMonitorAlarmSyncCmd = "atmos_monitor_alarm_sync";
 
         /// <summary>
+        ///     Command to reset a single alarm.
+        /// </summary>
+        public const string AtmosMonitorAlarmResetCmd = "atmos_monitor_alarm_reset";
+
+        /// <summary>
         ///     Command to reset all alarms on a network.
         /// </summary>
         public const string AtmosMonitorAlarmResetAllCmd = "atmos_monitor_alarm_reset_all";
 
-        public const string AtmosMonitorSetThresholdData = "atmos_monitor_set_threshold";
+        public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
 
         // Packet data
         /// <summary>
@@ -68,6 +73,10 @@ namespace Content.Server.Atmos.Monitor.Systems
         public const string AtmosMonitorAtmosData = "atmos_monitor_atmos_data";
 
         public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
+
+        public const string AtmosMonitorThresholdDataType = "atmos_monitor_threshold_type";
+
+        public const string AtmosMonitorThresholdGasType = "atmos_monitor_threshold_gas";
 
         public override void Initialize()
         {
@@ -190,6 +199,10 @@ namespace Content.Server.Atmos.Monitor.Systems
                         && !component.NetworkAlarmStates.TryAdd(args.SenderAddress, state))
                         component.NetworkAlarmStates[args.SenderAddress] = state;
                     break;
+                case AtmosMonitorAlarmResetCmd:
+                    Reset(uid);
+                    // Don't clear alarm states here.
+                    break;
                 case AtmosMonitorAlarmResetAllCmd:
                     if (args.Data.TryGetValue(AtmosMonitorAlarmSrc, out string? resetSrc)
                         && alarmable.AlarmedByPrototypes.Contains(resetSrc))
@@ -197,6 +210,15 @@ namespace Content.Server.Atmos.Monitor.Systems
                         component.LastAlarmState = AtmosMonitorAlarmType.Normal;
                         component.NetworkAlarmStates.Clear();
                     }
+                    break;
+                case AtmosMonitorSetThresholdCmd:
+                    if (args.Data.TryGetValue(AtmosMonitorThresholdData, out AtmosAlarmThreshold? thresholdData)
+                        && args.Data.TryGetValue(AtmosMonitorThresholdDataType, out AtmosMonitorThresholdType? thresholdType))
+                    {
+                        args.Data.TryGetValue(AtmosMonitorThresholdGasType, out Gas? gas);
+                        SetThreshold(uid, thresholdType.Value, thresholdData, gas);
+                    }
+
                     break;
                 case AirAlarmSystem.AirAlarmSyncCmd:
                     var payload = new NetworkPayload();
@@ -213,9 +235,8 @@ namespace Content.Server.Atmos.Monitor.Systems
                             component.TileGas.Pressure,
                             component.TileGas.Temperature,
                             component.TileGas.TotalMoles,
-                            component.HighestAlarmInNetwork,
+                            component.LastAlarmState,
                             gases,
-                            false,
                             component.PressureThreshold ?? new(),
                             component.TemperatureThreshold ?? new(),
                             component.GasThresholds ?? new()
@@ -225,15 +246,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                     _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload);
                     break;
             }
-
-            /*
-            if (component.DisplayMaxAlarmInNet)
-            {
-                if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
-                    appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, component.HighestAlarmInNetwork);
-
-            }
-            */
         }
 
         private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, PowerChangedEvent args)
@@ -262,9 +274,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                     }
                 }
             }
-
-            if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
-                appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, component.LastAlarmState);
         }
 
         private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
