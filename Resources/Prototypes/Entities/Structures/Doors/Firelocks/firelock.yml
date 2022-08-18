@@ -7,7 +7,7 @@
     - type: AtmosAlarmable
       alarmedBy:
       - FireAlarm
-      - AirAlarm
+      - GasVentPump # TODO: No
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork

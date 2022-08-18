@@ -28,10 +28,6 @@
         </BoxContainer>
         <!-- Gas/Device Data -->
         <TabContainer Name="CTabContainer" VerticalExpand="True" Margin="0 0 0 2">
-            <!-- Gas readout -->
-            <ScrollContainer VerticalExpand="True">
-                <BoxContainer Name="CGasContainer" Orientation="Vertical" VerticalExpand="True" Margin="2 2 2 2" />
-            </ScrollContainer>
             <!-- Vent devices -->
             <ScrollContainer VerticalExpand="True">
                 <BoxContainer Name="CVentContainer" Orientation="Vertical"/>

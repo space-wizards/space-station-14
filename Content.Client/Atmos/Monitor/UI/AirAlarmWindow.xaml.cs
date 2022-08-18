@@ -23,6 +23,7 @@ namespace Content.Client.Atmos.Monitor.UI
         public event Action<AirAlarmMode>? AirAlarmModeChanged;
         public event Action<string>? ResyncDeviceRequested;
         public event Action? ResyncAllRequested;
+        public event Action<AirAlarmTab>? AirAlarmTabChange;
 
         private Label _address => CDeviceAddress;
         private Label _deviceTotal => CDeviceTotal;
@@ -67,10 +68,14 @@ namespace Content.Client.Atmos.Monitor.UI
                 _gasLabels.Add(gas, gasLabel);
             }
 
-            _tabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-gas"));
-            _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-vents"));
-            _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
-            _tabContainer.SetTabTitle(3, Loc.GetString("air-alarm-ui-window-tab-thresholds"));
+            _tabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-vents"));
+            _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
+            _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-sensors"));
+
+            _tabContainer.OnTabChanged += idx =>
+            {
+                AirAlarmTabChange!((AirAlarmTab) idx);
+            };
 
             _resyncDevices.OnPressed += _ =>
             {
