@@ -14,7 +14,7 @@ namespace Content.Server.Ghost.Roles.Components
 
         [DataField("rules")] private string _roleRules = "";
 
-        [DataField("lotteryEnabled")] private bool _roleLotteryEnabled;
+        [DataField("lotteryEnabled")] private bool _roleLotteryEnabled = true;
 
         /// <summary>
         /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.

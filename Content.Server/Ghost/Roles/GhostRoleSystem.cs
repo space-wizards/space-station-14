@@ -9,6 +9,7 @@ using Content.Server.Players;
 using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
@@ -47,8 +48,15 @@ public sealed class GhostRoleSystem : EntitySystem
         SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<GhostRoleComponent, GhostRoleGroupEntityAttachedEvent>(OnGhostRoleGroupEntityAttached);
         SubscribeLocalEvent<GhostRoleComponent, GhostRoleGroupEntityDetachedEvent>(OnGhostRoleGroupEntityDetached);
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        _openMakeGhostRoleUis.Clear();
+        _ghostRoleLookup.Clear();
     }
 
     private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
@@ -209,10 +217,10 @@ public sealed class GhostRoleSystem : EntitySystem
     /// <summary>
     ///     Called by <see cref="GhostRoleLotterySystem"/> to have the lottery winners takeover the ghost roles.
     /// </summary>
-    /// <param name="roleIdentifier">The role</param>
-    /// <param name="sessions"></param>
-    /// <param name="successTakeovers"></param>
-    /// <param name="rolesTaken"></param>
+    /// <param name="roleName">The ghost role to process requests for.</param>
+    /// <param name="sessions">The players requesting roles</param>
+    /// <param name="successTakeovers">Players that have successfully taken over a role.</param>
+    /// <param name="rolesTaken">True if all roles are taken; Otherwise false.</param>
     public void OnLotteryResults(string roleName, IReadOnlyList<IPlayerSession> sessions,
         out List<IPlayerSession> successTakeovers, out bool rolesTaken)
     {
@@ -260,9 +268,17 @@ public sealed class GhostRoleSystem : EntitySystem
     {
         var lotteryItems = new HashSet<string>();
 
-        foreach (var (_, components) in _ghostRoleLookup)
+        foreach (var (roleName, components) in _ghostRoleLookup)
         {
+            var lotteryCount = 0;
+            foreach (var comp in components)
+            {
+                if (comp.Available && comp.RoleLotteryEnabled)
+                    lotteryCount++;
+            }
 
+            if (lotteryCount > 0)
+                lotteryItems.Add(roleName);
         }
 
         return lotteryItems;
@@ -402,8 +418,11 @@ public sealed class GhostRoleSystem : EntitySystem
             if (_ghostRoleLookup.TryGetValue(oldRoleName, out var oldRoleNameLookup))
                 oldRoleNameLookup.Remove(component);
 
-            if (_ghostRoleLookup.TryGetValue(component.RoleName, out var newRoleNameLookup))
-                newRoleNameLookup.Add(component);
+            if (!_ghostRoleLookup.TryGetValue(component.RoleName, out var newRoleNameLookup))
+                _ghostRoleLookup[component.RoleName] = newRoleNameLookup = new HashSet<GhostRoleComponent>();
+
+            newRoleNameLookup.Add(component);
+            component.PendingLottery = true; // Renaming a
         }
 
         _ghostRoleLotterySystem.UpdateAllEui();

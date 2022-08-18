@@ -47,22 +47,22 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     [Dependency] private readonly EntityManager _entityManager = default!;
 
     /// <summary>
-    ///     Open EUIs per-player.
+    /// Open EUIs per-player.
     /// </summary>
     private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
 
     /// <summary>
-    ///     Lottery requests per-player.
+    /// Lottery requests per-player.
     /// </summary>
     private readonly Dictionary<IPlayerSession, PlayerLotteryData> _playerLotteryData = new ();
 
     /// <summary>
-    ///     Ghost roles put up for the current lottery.
+    /// Ghost roles put up for the current lottery.
     /// </summary>
     private readonly HashSet<string> _ghostRoleComponentLotteries = new();
 
     /// <summary>
-    ///     Ghost role groups put up for the current lottery.
+    /// Ghost role groups put up for the current lottery.
     /// </summary>
     private readonly HashSet<uint> _roleGroupLotteries = new();
 
@@ -70,32 +70,32 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     private bool _needsUpdateGhostRoleCount = true;
 
     /// <summary>
-    ///     Time the lottery started. Uses synced time.
+    /// Time the lottery started. Uses synced time.
     /// </summary>
     public TimeSpan LotteryStartTime { get; private set; } = TimeSpan.Zero;
 
     /// <summary>
-    ///     Time the lotteries will expire at. Uses synced time.
+    /// Time the lotteries will expire at. Uses synced time.
     /// </summary>
     public TimeSpan LotteryExpiresTime { get; private set; } = TimeSpan.Zero;
 
     /// <summary>
-    ///     Cached available role count, representing the total number of available spawns. Be aware that certain
-    ///     items (see <see cref="GhostRoleMobSpawnerComponent"/>) can be worth multiple spawns.
+    /// Cached available role count, representing the total number of available spawns. Be aware that certain
+    /// items (see <see cref="GhostRoleMobSpawnerComponent"/>) can be worth multiple spawns.
     /// </summary>
     public int AvailableRolesCount { get; private set; }
 
     /// <summary>
-    ///     List of unique available roles. Used by the UI so it can highlight the ghost roles button
-    ///     when a brand-new role is added.
-    ///     TODO: Reimplement or rework this.
+    /// List of unique available roles. Used by the UI so it can highlight the ghost roles button
+    /// when a brand-new role is added.
+    /// TODO: Reimplement or rework this.
     /// </summary>
     public string[] AvailableRoles => new string[] { };
 
 
     private uint _nextIdentifier = 1;
     /// <summary>
-    ///     Identifier used for groups of ghost role components and role groups.
+    /// Identifier used for groups of ghost role components and role groups.
     /// </summary>
     public uint NextIdentifier => unchecked(_nextIdentifier++);
 
@@ -212,7 +212,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Retrieves the ghost roles requested by the player.
+    /// Retrieves the ghost roles requested by the player.
     /// </summary>
     /// <param name="player">The player to retrieve requests for.</param>
     /// <returns>Identifiers of ghost roles requested by the player.</returns>
@@ -228,7 +228,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Retrieves the ghost role groups requested by the player.
+    /// Retrieves the ghost role groups requested by the player.
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
@@ -257,7 +257,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Removes every type of request for a single player.
+    /// Removes every type of request for a single player.
     /// </summary>
     /// <param name="player">The player to clear all requests for.</param>
     public void ClearPlayerLotteryRequests(IPlayerSession player)
@@ -295,7 +295,6 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         var ghostRoleSystem = Get<GhostRoleSystem>();
         var ghostRoleGroupSystem = Get<GhostRoleGroupSystem>();
 
-        // TODO: OnNextLotteryStartingEvent?
         ghostRoleSystem.OnNextLotteryStarting();
         ghostRoleGroupSystem.OnNextLotteryStarting();
 
@@ -323,7 +322,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
 
     #region Ghost Role
     /// <summary>
-    ///     Adds the player request for a lottery-enabled ghost role.
+    /// Adds the player request for a lottery-enabled ghost role.
     /// </summary>
     /// <param name="player">The player to add the lottery request for.</param>
     /// <param name="identifier">Identifier of the group of ghost roles.</param>
@@ -339,7 +338,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Removes the player request for a lottery-enabled ghost role.
+    /// Removes the player request for a lottery-enabled ghost role.
     /// </summary>
     /// <param name="player">The player to remove the lottery request for.</param>
     /// <param name="identifier">Identifier of the group of ghost roles.</param>
@@ -353,7 +352,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Run's the lottery for all lottery-able ghost roles.
+    /// Run's the lottery for all lottery enabled ghost roles.
     /// </summary>
     /// <param name="successfulPlayers">Player's that have already been given a ghost role. These should be skipped.</param>
     private void ProcessGhostRoleLottery(ISet<IPlayerSession> successfulPlayers)
@@ -397,7 +396,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
 
     #region Ghost Role Group
     /// <summary>
-    ///     Adds the player request for a ghost role group.
+    /// Adds the player request for a ghost role group.
     /// </summary>
     /// <param name="player">The player to add the request for.</param>
     /// <param name="identifier">The identifier of the role group.</param>
@@ -411,7 +410,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Removes the player request for a ghost role group.
+    /// Removes the player request for a ghost role group.
     /// </summary>
     /// <param name="player">The player to remove the request for.</param>
     /// <param name="identifier">The identifier of the role group.</param>
@@ -425,7 +424,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Run's the lottery for all released ghost role groups.
+    /// Run's the lottery for all released ghost role groups.
     /// </summary>
     /// <param name="successfulPlayers">Player that have already been given a role, these should be skipped.</param>
     private void ProcessRoleGroupLottery(ISet<IPlayerSession> successfulPlayers)

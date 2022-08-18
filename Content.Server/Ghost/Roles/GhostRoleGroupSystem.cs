@@ -129,7 +129,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Retrieves the ghost role group data used for ghost roles UI.
+    /// Retrieves the ghost role group data used for ghost roles UI.
     /// </summary>
     /// <returns></returns>
     public GhostRoleGroupInfo[] GetGhostRoleGroupsInfo()
@@ -155,7 +155,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Retrieves the ghost role group data used for the role group management UI.
+    /// Retrieves the ghost role group data used for the role group management UI.
     /// </summary>
     /// <param name="session"></param>
     /// <returns></returns>
@@ -233,9 +233,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <returns></returns>
     public uint? StartGhostRoleGroup(IPlayerSession session, string name, string description)
     {
-        if (!_adminManager.IsAdmin(session))
-            return null;
-
         var identifier = _ghostRoleLotterySystem.NextIdentifier;
         var entry = new RoleGroupEntry()
         {
@@ -254,15 +251,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Places the role group into a Releasing state.
+    /// Places the role group into a Releasing state. The role group will be fully released once <see cref="GhostRoleLotterySystem"/>
+    /// starts the next lottery cycle.
     /// </summary>
     /// <param name="session">The session requesting the release.</param>
     /// <param name="identifier">The role group to release.</param>
     public void ReleaseGhostRoleGroup(IPlayerSession session, uint identifier)
     {
-        if (!_adminManager.IsAdmin(session))
-            return;
-
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return;
 
@@ -271,16 +266,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Deletes the role group, either dissociating the entities or deleting them based on <paramref name="deleteEntities"/>
+    /// Deletes the role group, either dissociating the entities or deleting them based on <paramref name="deleteEntities"/>
     /// </summary>
     /// <param name="session">The session requesting the deletion.</param>
     /// <param name="identifier">The role group to delete.</param>
     /// <param name="deleteEntities">If entities belonging to the role group should be deleted.</param>
     public void DeleteGhostRoleGroup(IPlayerSession session, uint identifier, bool deleteEntities)
     {
-        if (!_adminManager.IsAdmin(session))
-            return;
-
         if (!_roleGroupEntries.TryGetValue(identifier, out var entry) || !CanModify(session, entry))
             return;
 
@@ -317,8 +309,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Set the players active role group. If the role group is already active, it is
-    ///     deactivated instead.
+    /// Set the players active role group. If the role group is already active, it is
+    /// deactivated instead.
     /// </summary>
     /// <param name="player">The session to activate the role group for.</param>
     /// <param name="identifier">The role group to activate/deactivate.</param>
@@ -339,7 +331,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Get the session's active role group.
+    /// Get the session's active role group.
     /// </summary>
     /// <param name="player">The session to get the active role group for.</param>
     /// <param name="groupIdentifier">The identifier of the active role group.</param>
@@ -350,7 +342,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Checks if the player can modify the role group.
+    /// Checks if the player can modify the role group.
     /// </summary>
     /// <param name="player">The session to check access for.</param>
     /// <param name="groupIdentifier">The identifier of the role group to check.</param>
@@ -362,7 +354,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Checks if the player can modify the role group.
+    /// Checks if the player can modify the role group.
     /// </summary>
     /// <param name="player">The session to check access for.</param>
     /// <param name="entry">The role group to check.</param>
@@ -373,8 +365,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Adds the entity to the role group. If the entity has a <see cref="GhostRoleComponent"/> then
-    ///     it will be removed from the ghost role lottery.
+    /// Adds the entity to the role group. If the entity has a <see cref="GhostRoleComponent"/> then
+    /// it will be removed from the ghost role lottery.
     /// </summary>
     /// <param name="session">The session requesting the addition of the entity to the role group.</param>
     /// <param name="identifier">The identifier of the role group.</param>
@@ -408,12 +400,12 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Removes the entity from the role group. If the entity has attached to a different role group, it will remain
-    ///     attached to that role group.
-    ///     <para/>
+    /// Removes the entity from the role group. If the entity has attached to a different role group, it will remain
+    /// attached to that role group.
+    /// <para/>
     ///
-    ///     This will fail if the role group has been released or is not owned by the session. If you need to
-    ///     force removal, remove the <see cref="GhostRoleGroupComponent"/> instead.
+    /// This will fail if the role group has been released or is not owned by the session. If you need to
+    /// force removal, remove the <see cref="GhostRoleGroupComponent"/> instead.
     /// </summary>
     /// <param name="session">The player session requesting the detach.</param>
     /// <param name="identifier">The identifier of the role group.</param>
@@ -435,9 +427,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Returns the total number of available roles. Only released role groups contribute to this count.
+    /// Returns the total number of available roles. Only released role groups contribute to this count.
     /// </summary>
-    /// <returns></returns>
     public int GetAvailableCount()
     {
         var count = 0;
@@ -458,6 +449,13 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         return count;
     }
 
+    /// <summary>
+    /// Processes the lottery results for a single role group.
+    /// </summary>
+    /// <param name="roleGroupIdentifier">Identifier of the role group.</param>
+    /// <param name="sessions">Sessions that have requested the role.</param>
+    /// <param name="successTakeovers">Player's that have successfully received a role.</param>
+    /// <param name="roleGroupTaken">True with there are no entities remaining; Otherwise false.</param>
     public void OnLotteryResults(uint roleGroupIdentifier, IReadOnlyList<IPlayerSession> sessions,
         out List<IPlayerSession> successTakeovers, out bool roleGroupTaken)
     {
@@ -490,6 +488,10 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Takes releasing role groups and puts them into the released state, allowing players
+    /// to request takeovers.
+    /// </summary>
     public void OnNextLotteryStarting()
     {
         var updated = false;
@@ -508,6 +510,10 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
 
+    /// <summary>
+    /// Returns the role groups that are available for player requests.
+    /// </summary>
+    /// <returns></returns>
     public HashSet<uint> GetAllAvailableLotteryItems()
     {
         var lotteryItems = new HashSet<uint>();
