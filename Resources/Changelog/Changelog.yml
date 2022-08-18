@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed shutter construction not working properly when using a wrench
-      on it., type: Fix}
-  id: 1669
-  time: '2022-06-08T07:50:23.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Counters and tables now take more damage to destroy., type: Tweak}
@@ -2937,3 +2931,8 @@ Entries:
     type: Tweak}
   id: 2168
   time: '2022-08-18T02:22:30.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Nettle soup recipe works now, type: Tweak}
+  id: 2169
+  time: '2022-08-18T02:30:30.0000000+00:00'
