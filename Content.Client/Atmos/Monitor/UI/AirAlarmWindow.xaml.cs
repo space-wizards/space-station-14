@@ -98,6 +98,8 @@ namespace Content.Client.Atmos.Monitor.UI
             {
                 UpdateDeviceData(addr, dev);
             }
+
+            _tabContainer.CurrentTab = (int) state.Tab;
         }
 
         public void SetAddress(string address)
