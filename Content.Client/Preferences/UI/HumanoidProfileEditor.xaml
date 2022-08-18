@@ -139,6 +139,12 @@
                         <BoxContainer Name="CAntagList" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer>
+                <BoxContainer Orientation="Vertical">
+                    <!-- Traits -->
+                    <ScrollContainer VerticalExpand="True">
+                        <BoxContainer Name="CTraitsList" Orientation="Vertical" />
+                    </ScrollContainer>
+                </BoxContainer>
                 <BoxContainer Name="CMarkingsTab" Orientation="Vertical">
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">

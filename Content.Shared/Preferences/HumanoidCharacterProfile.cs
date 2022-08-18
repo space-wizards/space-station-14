@@ -6,6 +6,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Species;
+using Content.Shared.Traits;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -28,6 +29,7 @@ namespace Content.Shared.Preferences
 
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
+        private readonly List<string> _traitPreferences;
 
         private HumanoidCharacterProfile(
             string name,
@@ -41,7 +43,8 @@ namespace Content.Shared.Preferences
             BackpackPreference backpack,
             Dictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
-            List<string> antagPreferences)
+            List<string> antagPreferences,
+            List<string> traitPreferences)
         {
             Name = name;
             FlavorText = flavortext;
@@ -55,21 +58,23 @@ namespace Content.Shared.Preferences
             _jobPriorities = jobPriorities;
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
+            _traitPreferences = traitPreferences;
         }
 
         /// <summary>Copy constructor but with overridable references (to prevent useless copies)</summary>
         private HumanoidCharacterProfile(
             HumanoidCharacterProfile other,
             Dictionary<string, JobPriority> jobPriorities,
-            List<string> antagPreferences)
+            List<string> antagPreferences,
+            List<string> traitPreferences)
             : this(other.Name, other.FlavorText, other.Species, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
-                jobPriorities, other.PreferenceUnavailable, antagPreferences)
+                jobPriorities, other.PreferenceUnavailable, antagPreferences, traitPreferences)
         {
         }
 
         /// <summary>Copy constructor</summary>
         private HumanoidCharacterProfile(HumanoidCharacterProfile other)
-            : this(other, new Dictionary<string, JobPriority>(other.JobPriorities), new List<string>(other.AntagPreferences))
+            : this(other, new Dictionary<string, JobPriority>(other.JobPriorities), new List<string>(other.AntagPreferences), new List<string>(other.TraitPreferences))
         {
         }
 
@@ -85,9 +90,10 @@ namespace Content.Shared.Preferences
             BackpackPreference backpack,
             IReadOnlyDictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
-            IReadOnlyList<string> antagPreferences)
+            IReadOnlyList<string> antagPreferences,
+            IReadOnlyList<string> traitPreferences)
             : this(name, flavortext, species, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
-                preferenceUnavailable, new List<string>(antagPreferences))
+                preferenceUnavailable, new List<string>(antagPreferences), new List<string>(traitPreferences))
         {
         }
 
@@ -108,6 +114,7 @@ namespace Content.Shared.Preferences
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.SpawnAsOverflow,
+                new List<string>(),
                 new List<string>());
         }
 
@@ -127,8 +134,8 @@ namespace Content.Shared.Preferences
             return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
-                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
-                }, PreferenceUnavailableMode.StayInLobby, new List<string>());
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High},
+                }, PreferenceUnavailableMode.StayInLobby, new List<string>(), new List<string>());
         }
 
         public string Name { get; private set; }
@@ -143,6 +150,7 @@ namespace Content.Shared.Preferences
         public BackpackPreference Backpack { get; private set; }
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
         public IReadOnlyList<string> AntagPreferences => _antagPreferences;
+        public IReadOnlyList<string> TraitPreferences => _traitPreferences;
         public PreferenceUnavailableMode PreferenceUnavailable { get; private set; }
 
         public HumanoidCharacterProfile WithName(string name)
@@ -191,7 +199,7 @@ namespace Content.Shared.Preferences
         }
         public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<string, JobPriority>> jobPriorities)
         {
-            return new(this, new Dictionary<string, JobPriority>(jobPriorities), _antagPreferences);
+            return new(this, new Dictionary<string, JobPriority>(jobPriorities), _antagPreferences, _traitPreferences);
         }
 
         public HumanoidCharacterProfile WithJobPriority(string jobId, JobPriority priority)
@@ -205,7 +213,7 @@ namespace Content.Shared.Preferences
             {
                 dictionary[jobId] = priority;
             }
-            return new(this, dictionary, _antagPreferences);
+            return new(this, dictionary, _antagPreferences, _traitPreferences);
         }
 
         public HumanoidCharacterProfile WithPreferenceUnavailable(PreferenceUnavailableMode mode)
@@ -215,7 +223,7 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile WithAntagPreferences(IEnumerable<string> antagPreferences)
         {
-            return new(this, _jobPriorities, new List<string>(antagPreferences));
+            return new(this, _jobPriorities, new List<string>(antagPreferences), _traitPreferences);
         }
 
         public HumanoidCharacterProfile WithAntagPreference(string antagId, bool pref)
@@ -235,7 +243,29 @@ namespace Content.Shared.Preferences
                     list.Remove(antagId);
                 }
             }
-            return new(this, _jobPriorities, list);
+            return new(this, _jobPriorities, list, _traitPreferences);
+        }
+
+        public HumanoidCharacterProfile WithTraitPreference(string traitId, bool pref)
+        {
+            var list = new List<string>(_traitPreferences);
+
+            // TODO: Maybe just refactor this to HashSet? Same with _antagPreferences
+            if(pref)
+            {
+                if(!list.Contains(traitId))
+                {
+                    list.Add(traitId);
+                }
+            }
+            else
+            {
+                if(list.Contains(traitId))
+                {
+                    list.Remove(traitId);
+                }
+            }
+            return new(this, _jobPriorities, _antagPreferences, list);
         }
 
         public string Summary =>
@@ -258,6 +288,7 @@ namespace Content.Shared.Preferences
             if (Backpack != other.Backpack) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
+            if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -357,6 +388,10 @@ namespace Content.Shared.Preferences
                 .Where(prototypeManager.HasIndex<AntagPrototype>)
                 .ToList();
 
+            var traits = TraitPreferences
+                         .Where(prototypeManager.HasIndex<TraitPrototype>)
+                         .ToList();
+
             Name = name;
             FlavorText = flavortext;
             Age = age;
@@ -377,6 +412,9 @@ namespace Content.Shared.Preferences
 
             _antagPreferences.Clear();
             _antagPreferences.AddRange(antags);
+
+            _traitPreferences.Clear();
+            _traitPreferences.AddRange(traits);
         }
 
         public override bool Equals(object? obj)
@@ -399,7 +437,8 @@ namespace Content.Shared.Preferences
                 ),
                 PreferenceUnavailable,
                 _jobPriorities,
-                _antagPreferences
+                _antagPreferences,
+                _traitPreferences
             );
         }
     }
