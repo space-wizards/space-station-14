@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed an issue where Omnitools and Jaws of Life sometimes don't pry
-      floor tiles, type: Fix}
-  id: 1671
-  time: '2022-06-08T09:25:48.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Matches can once again be lit using match boxes., type: Fix}
@@ -2936,3 +2930,8 @@ Entries:
   - {message: Tweaks to bullet flyby sounds to be less grating., type: Tweak}
   id: 2170
   time: '2022-08-18T02:32:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Roundstart bag filling sounds should no longer play., type: Fix}
+  id: 2171
+  time: '2022-08-18T02:34:52.0000000+00:00'
