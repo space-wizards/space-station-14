@@ -3,6 +3,7 @@ using Content.Server.MachineLinking.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MobState;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 
@@ -58,7 +59,7 @@ public sealed class DeadMansSwitchSystem : EntitySystem
         component.Armed = false;
         if(EntityManager.TryGetComponent<DeadMansSwitchHolderComponent>(args.User, out var holderComp))
             holderComp.Switches.Remove(component);
-        _popupSystem.PopupEntity(Loc.GetString("dead-mans-switch-let-go"), args.User, Filter.Entities(args.User));
+        _popupSystem.PopupEntity(Loc.GetString("dead-mans-switch-let-go"), args.User, Filter.Entities(args.User), PopupType.MediumCaution);
         args.Handled = true;
     }
 
@@ -74,7 +75,8 @@ public sealed class DeadMansSwitchSystem : EntitySystem
         else
         {
             _signalSystem.InvokePort(uid, component.Port);
-            _popupSystem.PopupEntity(Loc.GetString("dead-mans-switch-let-go"), args.User, Filter.Entities(args.User));
+            component.Armed = false;
+            _popupSystem.PopupEntity(Loc.GetString("dead-mans-switch-let-go"), args.User, Filter.Entities(args.User), PopupType.MediumCaution);
         }
     }
 
