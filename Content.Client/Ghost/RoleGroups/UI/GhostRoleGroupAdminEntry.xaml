@@ -2,8 +2,15 @@
               Orientation="Vertical"
               HorizontalExpand="True"
               Margin="0 0 8 8">
-    <Label Name="Title"
-           StyleClasses="LabelKeyText"/>
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Name="Title" StyleClasses="LabelKeyText"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Name="Owner" StyleClasses="LabelKeyText"/>
+        </BoxContainer>
+    </BoxContainer>
+
     <PanelContainer StyleClasses="HighDivider"></PanelContainer>
     <RichTextLabel Name="Description"
                    Margin="0 4"/>
@@ -11,6 +18,7 @@
         <BoxContainer HorizontalAlignment="Left"
                       Orientation="Horizontal"
                       SeparationOverride="5">
+            <Label Name="StateTextLabel"/>
             <Button Name="ReleaseButton" Text="{Loc 'ghost-role-groups-window-release-button'}"/>
             <Button Name="ActivateButton" Text="{Loc 'ghost-role-groups-window-activate-button'}"/>
             <Button Name="DeleteButton" Text="{Loc 'ghost-role-groups-window-delete-button'}" StyleClasses="Caution"/>

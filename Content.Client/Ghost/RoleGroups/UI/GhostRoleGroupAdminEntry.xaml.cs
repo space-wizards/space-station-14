@@ -23,7 +23,8 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        Title.Text = group.Name + $" [{group.GroupIdentifier}]";
+        Title.Text = $"[{group.GroupIdentifier}] - {group.Name}";
+        Owner.Text = "Owned By: " + group.OwnerName;
         Description.SetMessage(group.Description);
         DetailsButton.Text = "+ " + _loc.GetString("ghost-role-groups-window-details-button");
 
@@ -38,6 +39,15 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         }
 
 
+        StateTextLabel.Visible = !group.CanModify;
+        StateTextLabel.Text = group.Status switch
+        {
+            GhostRoleGroupStatus.Editing => _loc.GetString("ghost-role-groups-window-state-text-label-editing"),
+            GhostRoleGroupStatus.Releasing => _loc.GetString("ghost-role-groups-window-state-text-label-releasing"),
+            GhostRoleGroupStatus.Released => _loc.GetString("ghost-role-groups-window-state-text-label-released"),
+            _ => "Unknown"
+        };
+
         ReleaseButton.Visible = group.CanModify;
         ReleaseButton.Disabled = group.Status != GhostRoleGroupStatus.Editing;
         ReleaseButton.Text = group.Status switch
@@ -45,7 +55,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
             GhostRoleGroupStatus.Editing => _loc.GetString("ghost-role-groups-window-release-button"),
             GhostRoleGroupStatus.Releasing => _loc.GetString("ghost-role-groups-window-releasing-button"),
             GhostRoleGroupStatus.Released => _loc.GetString("ghost-role-groups-window-released-button"),
-            _ => _loc.GetString("ghost-role-groups-window-release-button")
+            _ => "Unknown"
         };
 
         ActivateButton.Visible = group.CanModify && group.Status == GhostRoleGroupStatus.Editing;

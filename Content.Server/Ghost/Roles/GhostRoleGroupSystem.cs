@@ -181,6 +181,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
             {
                 GroupIdentifier = entry.Identifier,
                 Name = entry.RoleName,
+                OwnerName = entry.Owner.Name,
                 Description = entry.RoleDescription,
                 Status = entry.Status,
                 Entities = groupEntities.GetValueOrDefault(entry.Identifier)?.ToArray() ?? new EntityUid[] {},
