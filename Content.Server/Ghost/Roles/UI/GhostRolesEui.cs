@@ -9,14 +9,13 @@ namespace Content.Server.Ghost.Roles.UI
     {
         public override GhostRolesEuiState GetNewState()
         {
-            var manager = EntitySystem.Get<GhostRoleLotterySystem>();
-            var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
+            var manager = EntitySystem.Get<GhostRoleSelectionSystem>();
             var ghostRoleGroupSystem = EntitySystem.Get<GhostRoleGroupSystem>();
             var adminManager = IoCManager.Resolve<IAdminManager>();
 
             return new GhostRolesEuiState(
                 ghostRoleGroupSystem.GetGhostRoleGroupsInfo(),
-                ghostRoleSystem.GetGhostRolesInfo(),
+                manager.GetGhostRolesInfo(),
                 manager.GetPlayerRequestedGhostRoles(Player),
                 manager.GetPlayerRequestedRoleGroups(Player),
                 manager.LotteryStartTime,
@@ -37,16 +36,16 @@ namespace Content.Server.Ghost.Roles.UI
                     EntitySystem.Get<GhostRoleSystem>().Follow(Player, req.Identifier);
                     break;
                 case GhostRoleLotteryRequestMessage req:
-                    EntitySystem.Get<GhostRoleLotterySystem>().GhostRoleAddPlayerLotteryRequest(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleSelectionSystem>().GhostRoleAddPlayerLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleCancelLotteryRequestMessage req:
-                    EntitySystem.Get<GhostRoleLotterySystem>().GhostRoleRemovePlayerLotteryRequest(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleSelectionSystem>().GhostRoleRemovePlayerLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleGroupLotteryRequestMessage req:
-                    EntitySystem.Get<GhostRoleLotterySystem>().GhostRoleGroupAddPlayerLotteryRequest(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleSelectionSystem>().GhostRoleGroupAddPlayerLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleGroupCancelLotteryMessage req:
-                    EntitySystem.Get<GhostRoleLotterySystem>().GhostRoleGroupRemovePlayerLotteryRequest(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleSelectionSystem>().GhostRoleGroupRemovePlayerLotteryRequest(Player, req.Identifier);
                     break;
                 case GhostRoleWindowCloseMessage _:
                     Closed();
@@ -58,7 +57,7 @@ namespace Content.Server.Ghost.Roles.UI
         {
             base.Closed();
 
-            EntitySystem.Get<GhostRoleLotterySystem>().CloseEui(Player);
+            EntitySystem.Get<GhostRoleSelectionSystem>().CloseEui(Player);
         }
     }
 }

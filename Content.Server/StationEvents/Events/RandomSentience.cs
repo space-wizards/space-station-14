@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Station.Systems;
@@ -11,6 +12,8 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class RandomSentience : StationEventSystem
 {
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+
     public override string Prototype => "RandomSentience";
 
     public override void Started()
@@ -32,8 +35,11 @@ public sealed class RandomSentience : StationEventSystem
             MakeSentientCommand.MakeSentient(target.Owner, EntityManager);
             EntityManager.RemoveComponent<SentienceTargetComponent>(target.Owner);
             var comp = EntityManager.AddComponent<GhostTakeoverAvailableComponent>(target.Owner);
-            comp.RoleName = EntityManager.GetComponent<MetaDataComponent>(target.Owner).EntityName;
-            comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
+            _ghostRoleSystem.SetGhostRoleDetails(
+                comp,
+                roleName: EntityManager.GetComponent<MetaDataComponent>(target.Owner).EntityName,
+                roleDescription: Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName))
+            );
             groups.Add(target.FlavorKind);
         }
 

@@ -25,13 +25,13 @@ namespace Content.Server.Ghost.Roles;
 public sealed class GhostRoleGroupSystem : EntitySystem
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
-    [Dependency] private readonly GhostRoleLotterySystem _ghostRoleLotterySystem = default!;
+    [Dependency] private readonly GhostRoleSelectionSystem _ghostRoleSelectionSystem = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
 
     private readonly Dictionary<IPlayerSession, GhostRoleGroupsEui> _openUis = new();
 
     /// <summary>
-    ///     Data for role group entries, indexed by the identifier acquired from <see cref="GhostRoleLotterySystem"/>
+    ///     Data for role group entries, indexed by the identifier acquired from <see cref="GhostRoleSelectionSystem"/>
     /// </summary>
     private readonly Dictionary<uint, RoleGroupEntry> _roleGroupEntries = new();
 
@@ -205,15 +205,14 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, GhostRoleGroupComponent role, ComponentShutdown args)
     {
+        // Raise before the check, this refers to a non-existing role group.
+        RaiseLocalEvent(uid, new GhostRoleGroupEntityDetachedEvent(uid, role.Identifier));
+
         if (!_roleGroupEntries.TryGetValue(role.Identifier, out var entry))
             return; // Role group doesn't exist.
 
         entry.ComponentLookup.Remove(role);
-
-        var deleteRoleGroup = !EntityQuery<GhostRoleGroupComponent>()
-            .Any(comp => comp.Identifier == role.Identifier && comp != role);
-
-        RaiseLocalEvent(uid, new GhostRoleGroupEntityDetachedEvent(uid, role.Identifier));
+        var deleteRoleGroup = entry.ComponentLookup.Count == 0;
 
         _needsUpdateRoleGroups = true;
 
@@ -223,7 +222,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         if(deleteRoleGroup)
             InternalDeleteGhostRoleGroup(entry, false);
         else
-            _ghostRoleLotterySystem.UpdateAllEui();
+            _ghostRoleSelectionSystem.UpdateAllEui();
     }
 
     /// <summary>
@@ -236,7 +235,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     /// <returns></returns>
     public uint? StartGhostRoleGroup(IPlayerSession session, string name, string description)
     {
-        var identifier = _ghostRoleLotterySystem.NextIdentifier;
+        var identifier = _ghostRoleSelectionSystem.NextIdentifier;
         var entry = new RoleGroupEntry()
         {
             Owner = session,
@@ -254,7 +253,7 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    /// Places the role group into a Releasing state. The role group will be fully released once <see cref="GhostRoleLotterySystem"/>
+    /// Places the role group into a Releasing state. The role group will be fully released once <see cref="GhostRoleSelectionSystem"/>
     /// starts the next lottery cycle.
     /// </summary>
     /// <param name="session">The session requesting the release.</param>
@@ -294,21 +293,24 @@ public sealed class GhostRoleGroupSystem : EntitySystem
                 _roleGroupActiveGroups.Remove(k);
         }
 
-        _roleGroupEntries.Remove(entry.Identifier);
-        _needsUpdateRoleGroups = true;
-        _ghostRoleLotterySystem.UpdateAllEui();
-
-        if (!deleteEntities)
-            return;
-
         // Delete entities attached to the role group.
         foreach (var groupComp in entry.ComponentLookup)
         {
+            if (!deleteEntities)
+            {
+                RemComp<GhostRoleGroupComponent>(groupComp.Owner); // Triggers the removal of the entity from the role group.
+                continue;
+            }
+
             if (TryComp<MindComponent>(groupComp.Owner, out var mindComp) && mindComp.Mind?.UserId != null)
                 continue; // Don't delete player-controlled entities.
 
             EntityManager.QueueDeleteEntity(groupComp.Owner);
         }
+
+        _roleGroupEntries.Remove(entry.Identifier);
+        _needsUpdateRoleGroups = true;
+        _ghostRoleSelectionSystem.UpdateAllEui();
     }
 
     /// <summary>

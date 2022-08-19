@@ -27,6 +27,7 @@ using Content.Server.Traitor;
 using Content.Shared.Zombies;
 using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
+using Content.Server.Ghost.Roles;
 using Content.Server.IdentityManagement;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
@@ -51,6 +52,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
 
         public override void Initialize()
         {
@@ -185,9 +187,12 @@ namespace Content.Server.Zombies
             {
                 //yet more hardcoding. Visit zombie.ftl for more information.
                 EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(target, out var ghostcomp);
-                ghostcomp.RoleName = Loc.GetString("zombie-generic");
-                ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
-                ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
+                _ghostRoleSystem.SetGhostRoleDetails(
+                    ghostcomp,
+                    roleName: Loc.GetString("zombie-generic"),
+                    roleDescription: Loc.GetString("zombie-role-desc"),
+                    roleRules: Loc.GetString("zombie-role-rules")
+                );
             }
 
             //Goes through every hand, drops the items in it, then removes the hand

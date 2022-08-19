@@ -8,105 +8,86 @@ namespace Content.Server.Ghost.Roles.Components
     [Access(typeof(GhostRoleSystem))]
     public abstract class GhostRoleComponent : Component
     {
-        [DataField("name")] private string _roleName = "Unknown";
+        // ReSharper disable InconsistentNaming -
+        [DataField("name"), Access(typeof(GhostRoleSystem), Other = AccessPermissions.None)]
+        public string _InternalRoleName = "Unknown";
 
-        [DataField("description")] private string _roleDescription = "Unknown";
+        [DataField("description"), Access(typeof(GhostRoleSystem), Other = AccessPermissions.None)]
+        public string _InternalRoleDescription = "Unknown";
 
-        [DataField("rules")] private string _roleRules = "";
+        [DataField("rules"), Access(typeof(GhostRoleSystem), Other = AccessPermissions.None)]
+        public string _InternalRoleRules = "";
 
-        [DataField("lotteryEnabled")] private bool _roleLotteryEnabled = true;
+        [DataField("lotteryEnabled"), Access(typeof(GhostRoleSystem), Other = AccessPermissions.None)]
+        public bool _InternalRoleLotteryEnabled = true;
+        // ReSharper restore InconsistentNaming
 
         /// <summary>
         /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
+        [DataField("makeSentient"), ViewVariables(VVAccess.ReadWrite)]
         protected bool MakeSentient = true;
 
         /// <summary>
         ///     The probability that this ghost role will be available after init.
         ///     Used mostly for takeover roles that want some probability of being takeover, but not 100%.
         /// </summary>
-        [DataField("prob")]
-        public float Probability = 1f;
+        [DataField("prob")] public float Probability = 1f;
 
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleName
         {
-            get => Loc.GetString(_roleName);
-            set
-            {
-                var oldRoleName = _roleName;
-                _roleName = value;
-
-                EntitySystem.Get<GhostRoleSystem>().OnGhostRoleUpdate(this, oldRoleName);
-            }
+            get => Loc.GetString(_InternalRoleName);
+            set => EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(this, roleName: value);
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [Access(typeof(GhostRoleSystem))]
         public string RoleDescription
         {
-            get => Loc.GetString(_roleDescription);
-            set
-            {
-                _roleDescription = value;
-                EntitySystem.Get<GhostRoleSystem>().OnGhostRoleUpdate(this, _roleName);
-            }
+            get => Loc.GetString(_InternalRoleDescription);
+            set => EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(this, roleDescription: value);
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [ViewVariables(VVAccess.ReadWrite), Access(typeof(GhostRoleSystem))]
         public string RoleRules
         {
-            get => _roleRules;
-            set
-            {
-                _roleRules = value;
-                EntitySystem.Get<GhostRoleSystem>().OnGhostRoleUpdate(this, _roleName);
-            }
+            get => _InternalRoleRules;
+            set => EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(this, roleRules: value);
         }
 
-        [ViewVariables(VVAccess.ReadOnly)]
-        [Access(typeof(GhostRoleSystem), typeof(PAISystem), Other = AccessPermissions.Read)] // FIXME Friends
+        [ViewVariables(VVAccess.ReadWrite), Access(typeof(GhostRoleSystem))]
         public bool RoleLotteryEnabled
         {
-            get => _roleLotteryEnabled;
-            set
-            {
-                _roleLotteryEnabled = value;
-                EntitySystem.Get<GhostRoleSystem>().OnGhostRoleUpdate(this, _roleName);
-            }
+            get => _InternalRoleLotteryEnabled;
+            set => EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(this, roleLotteryEnabled: value);
         }
 
-        [ViewVariables(VVAccess.ReadOnly)]
+        /// <summary>
+        /// If the ghost role has been taken by a player.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly), Access(typeof(GhostRoleSystem))]
         public bool Taken { get; set; }
 
         /// <summary>
-        /// If the ghost role currently in the queue for the lottery.
+        /// If the ghost role is disabled because the entity is in critical or dead.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public bool PendingLottery { get; set; }
-
-        /// <summary>
-        /// If the ghost role is disabled because
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), Access(typeof(GhostRoleSystem))]
         public bool Damaged { get; set; }
 
         /// <summary>
-        /// If the ghost role is disabled due to being taken by a <see cref="GhostRoleGroupComponent"/>
+        /// If the ghost role is disabled due to being reserved by a <see cref="GhostRoleGroupComponent"/>
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public bool GhostRoleGroupTaken { get; set; }
+        [ViewVariables(VVAccess.ReadOnly), Access(typeof(GhostRoleSystem))]
+        public bool RoleGroupReserved { get; set; }
 
         /// <summary>
         /// If the ghost role is available to be taken.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public bool Available => !(Taken || PendingLottery || Damaged || GhostRoleGroupTaken);
+        [ViewVariables(VVAccess.ReadOnly), Access(typeof(GhostRoleSystem))]
+        public bool Available => !(Taken || Damaged || RoleGroupReserved || Deleted);
 
         /// <summary>
         /// Reregisters the ghost role when the current player ghosts.

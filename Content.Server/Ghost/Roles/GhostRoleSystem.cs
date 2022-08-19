@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
@@ -26,7 +27,7 @@ public sealed class GhostRoleSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly FollowerSystem _followerSystem = default!;
-    [Dependency] private readonly GhostRoleLotterySystem _ghostRoleLotterySystem = default!;
+    [Dependency] private readonly GhostRoleSelectionSystem _ghostRoleSelectionSystem = default!;
 
     private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
@@ -61,6 +62,8 @@ public sealed class GhostRoleSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
     {
+        var prevAvailable = component.Available;
+
         switch (args.CurrentMobState)
         {
             case DamageState.Alive:
@@ -71,12 +74,14 @@ public sealed class GhostRoleSystem : EntitySystem
             case DamageState.Critical:
             case DamageState.Dead:
                 component.Damaged = true;
-                _ghostRoleLotterySystem.UpdateAllEui();
                 break;
             case DamageState.Invalid:
             default:
                 break;
         }
+
+        if(prevAvailable != component.Available)
+            RaiseLocalEvent(uid, new GhostRoleAvailabilityChangedEvent(component.Owner, component, component.Available), true);
     }
 
     public void OpenMakeGhostRoleEui(IPlayerSession session, EntityUid uid)
@@ -98,46 +103,6 @@ public sealed class GhostRoleSystem : EntitySystem
         {
             eui.Close();
         }
-    }
-
-    public GhostRoleInfo[] GetGhostRolesInfo()
-    {
-        var ghostRoleInfo = new List<GhostRoleInfo>(_ghostRoleLookup.Count);
-        var countData = new Dictionary<string, (int Lottery, int Takeover)>(_ghostRoleLookup.Count);
-
-        foreach (var (roleName, components) in _ghostRoleLookup)
-        {
-
-            var (lotteryCount, takeoverCount) = (0, 0);
-            foreach (var comp in components)
-            {
-                if (!comp.Available)
-                    continue;
-
-                if (comp.RoleLotteryEnabled)
-                    lotteryCount++;
-                else
-                    takeoverCount++;
-            }
-
-            if(lotteryCount == 0 && takeoverCount == 0)
-                continue;
-
-            var firstComp = components.First();
-            var role = new GhostRoleInfo()
-            {
-                Identifier = roleName,
-                Name = roleName,
-                Description = firstComp.RoleDescription,
-                Rules = firstComp.RoleRules,
-                AvailableLotteryRoleCount = lotteryCount,
-                AvailableImmediateRoleCount = takeoverCount,
-            };
-
-            ghostRoleInfo.Add(role);
-        }
-
-        return ghostRoleInfo.ToArray();
     }
 
     public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob,
@@ -162,8 +127,11 @@ public sealed class GhostRoleSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
     {
+        var prevAvailable = component.Available;
         component.Taken = true; // Handle take-overs outside of this system (e.g. Admin take-over).
-        _ghostRoleLotterySystem.UpdateAllEui();
+
+        if(prevAvailable == component.Available)
+            RaiseLocalEvent(uid, new GhostRoleAvailabilityChangedEvent(uid, component, component.Available), true);
     }
 
     private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
@@ -189,99 +157,45 @@ public sealed class GhostRoleSystem : EntitySystem
 
         components.Add(component);
 
-        if (component.RoleRules == "")
-            component.RoleRules = Loc.GetString("ghost-role-component-default-rules");
-
-        component.PendingLottery = true;
+        if (component._InternalRoleRules == "")
+            component._InternalRoleRules = Loc.GetString("ghost-role-component-default-rules");
     }
 
     private void OnShutdown(EntityUid uid, GhostRoleComponent component, ComponentShutdown args)
     {
         _ghostRoleLookup.GetValueOrDefault(component.RoleName)?.Remove(component);
-        _ghostRoleLotterySystem.UpdateAllEui();
+
+        if(!(component.Taken || component.Damaged || component.RoleGroupReserved))
+            RaiseLocalEvent(uid, new GhostRoleAvailabilityChangedEvent(uid, component, false), true);
     }
 
     private void OnGhostRoleGroupEntityAttached(EntityUid uid, GhostRoleComponent component, GhostRoleGroupEntityAttachedEvent args)
     {
+        var prevAvailable = component.Available;
+
         // Taken by a ghost role group. Mark as unavailable.
-        component.GhostRoleGroupTaken = true;
-        _ghostRoleLotterySystem.UpdateAllEui();
+        component.RoleGroupReserved = true;
+
+        if(component.Available != prevAvailable)
+            RaiseLocalEvent(uid, new GhostRoleAvailabilityChangedEvent(uid, component, component.Available), true);
     }
 
     private void OnGhostRoleGroupEntityDetached(EntityUid uid, GhostRoleComponent component, GhostRoleGroupEntityDetachedEvent args)
     {
-        component.GhostRoleGroupTaken = false;
-        _ghostRoleLotterySystem.UpdateAllEui();
+        var prevAvailable = component.Available;
+        component.RoleGroupReserved = false;
+
+        if(component.Available != prevAvailable)
+            RaiseLocalEvent(uid, new GhostRoleAvailabilityChangedEvent(uid, component, component.Available), true);
     }
 
     /// <summary>
-    ///     Called by <see cref="GhostRoleLotterySystem"/> to have the lottery winners takeover the ghost roles.
+    /// Retrieves ghost roles that are able to be taken over.
     /// </summary>
-    /// <param name="roleName">The ghost role to process requests for.</param>
-    /// <param name="sessions">The players requesting roles</param>
-    /// <param name="successTakeovers">Players that have successfully taken over a role.</param>
-    /// <param name="rolesTaken">True if all roles are taken; Otherwise false.</param>
-    public void OnLotteryResults(string roleName, IReadOnlyList<IPlayerSession> sessions,
-        out List<IPlayerSession> successTakeovers, out bool rolesTaken)
+    public IEnumerable<GhostRoleComponent> GetAvailableGhostRoles()
     {
-        successTakeovers = new List<IPlayerSession>();
-        rolesTaken = true;
-
-        var sessionIdx = 0;
-        var sessionCount = sessions.Count;
-
-        if (!_ghostRoleLookup.TryGetValue(roleName, out var components))
-            return;
-
-        foreach(var component in components)
-        {
-            if(!component.Available)
-                continue;
-
-            if (sessionIdx >= sessionCount)
-                break; // All sessions have been used.
-
-            if (!component.RoleLotteryEnabled)
-                continue;
-
-            var session = sessions[sessionIdx];
-            if (!PerformTakeover(session, component))
-                continue;
-
-            OnPlayerTakeoverComplete(session, component);
-            sessionIdx++;
-        }
-    }
-
-    public void OnNextLotteryStarting()
-    {
-        foreach (var component in EntityQuery<GhostRoleComponent>())
-        {
-            if(component.Damaged || component.Taken || component.GhostRoleGroupTaken)
-                continue;
-
-            component.PendingLottery = false;
-        }
-    }
-
-    public HashSet<string> GetAllAvailableLotteryItems()
-    {
-        var lotteryItems = new HashSet<string>();
-
-        foreach (var (roleName, components) in _ghostRoleLookup)
-        {
-            var lotteryCount = 0;
-            foreach (var comp in components)
-            {
-                if (comp.Available && comp.RoleLotteryEnabled)
-                    lotteryCount++;
-            }
-
-            if (lotteryCount > 0)
-                lotteryItems.Add(roleName);
-        }
-
-        return lotteryItems;
+        return EntityQuery<GhostRoleComponent>()
+            .Where(comp => comp.Available);
     }
 
     public void OnPlayerTakeoverComplete(IPlayerSession player, GhostRoleComponent comp)
@@ -381,11 +295,16 @@ public sealed class GhostRoleSystem : EntitySystem
     /// <returns></returns>
     public bool PerformTakeover(IPlayerSession player, GhostRoleComponent role)
     {
+        var prevAvailable = role.Available; // This might be a role group takeover, etc.
+
         if (!role.Take(player))
             return false; // Currently only fails if the role is already taken.
 
-        _ghostRoleLotterySystem.ClearPlayerLotteryRequests(player);
-        _ghostRoleLotterySystem.UpdateAllEui();
+        _ghostRoleSelectionSystem.ClearPlayerLotteryRequests(player);
+
+        if(role.Taken && prevAvailable != role.Available)
+            RaiseLocalEvent(role.Owner, new GhostRoleAvailabilityChangedEvent(role.Owner, role, role.Available), true);
+
         OnPlayerTakeoverComplete(player, role);
         return true;
     }
@@ -411,21 +330,66 @@ public sealed class GhostRoleSystem : EntitySystem
         return count;
     }
 
-    public void OnGhostRoleUpdate(GhostRoleComponent component, string oldRoleName)
+    public void SetGhostRoleDetails(GhostRoleComponent component, string? roleName = null, string? roleDescription = null, string? roleRules = null, bool? roleLotteryEnabled = null)
     {
-        if (oldRoleName != component.RoleName)
-        {
-            if (_ghostRoleLookup.TryGetValue(oldRoleName, out var oldRoleNameLookup))
-                oldRoleNameLookup.Remove(component);
+        var modified = false;
+        string? prevRoleName = null;
+        string? prevRoleDescription = null;
+        string? prevRoleRules = null;
+        bool? prevRoleLotteryEnabled = null;
 
-            if (!_ghostRoleLookup.TryGetValue(component.RoleName, out var newRoleNameLookup))
-                _ghostRoleLookup[component.RoleName] = newRoleNameLookup = new HashSet<GhostRoleComponent>();
+
+        if (roleName != null && roleName != component.RoleName)
+        {
+            prevRoleName = component._InternalRoleName;
+            _ghostRoleLookup.GetValueOrDefault(prevRoleName)?.Remove(component);
+
+            component._InternalRoleName = roleName;
+            if (!_ghostRoleLookup.TryGetValue(roleName, out var newRoleNameLookup))
+                _ghostRoleLookup[roleName] = newRoleNameLookup = new HashSet<GhostRoleComponent>();
 
             newRoleNameLookup.Add(component);
-            component.PendingLottery = true; // Renaming a
+            modified = true;
         }
 
-        _ghostRoleLotterySystem.UpdateAllEui();
+        if (roleDescription != null && roleDescription != component.RoleDescription)
+        {
+            prevRoleDescription = component.RoleDescription;
+            component._InternalRoleDescription = roleDescription;
+            modified = true;
+        }
+
+        if (roleRules != null && roleRules != component.RoleRules)
+        {
+            prevRoleRules = component.RoleRules;
+            component._InternalRoleRules = roleRules;
+            modified = true;
+        }
+
+        if (roleLotteryEnabled != null && roleLotteryEnabled != component.RoleLotteryEnabled)
+        {
+            prevRoleLotteryEnabled = component.RoleLotteryEnabled;
+            component._InternalRoleLotteryEnabled = roleLotteryEnabled.Value;
+            modified = true;
+        }
+
+        if (!modified || !component.Initialized)
+            return;
+
+        RaiseLocalEvent( component.Owner, new GhostRoleModifiedEvent(component)
+        {
+            PreviousRoleName = prevRoleName,
+            PreviousRoleDescription = prevRoleDescription,
+            PreviousRoleRule = prevRoleRules,
+            PreviousRoleLotteryEnabled = prevRoleLotteryEnabled,
+        });
+    }
+
+    public IReadOnlySet<GhostRoleComponent> GetGhostRolesByRoleName(string roleName)
+    {
+        return _ghostRoleLookup.TryGetValue(roleName, out var roles)
+            ? roles
+            : ImmutableHashSet<GhostRoleComponent>.Empty;
     }
 }
 

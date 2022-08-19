@@ -2,11 +2,13 @@ using System.Linq;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
+using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -27,16 +29,25 @@ internal sealed class PlayerLotteryData
     public readonly HashSet<uint> GhostRoleGroups = new();
 }
 
+internal record struct GhostRoleData
+{
+    public readonly string RoleName { get; init; }
+    public readonly string RoleDescription { get; init; }
+    public readonly string RoleRules { get; init; }
+    public readonly HashSet<GhostRoleComponent> Components { get; init; }
+}
+
 /// <summary>
-///     Handles the logic for the ghost roles EUI and manages lotteries for <see cref="GhostRoleSystem"/> and
-///     <see cref="GhostRoleGroupSystem"/>.
-///     <para/>
+/// Handles the logic for the ghost roles EUI and manages lotteries for <see cref="GhostRoleSystem"/> and
+/// <see cref="GhostRoleGroupSystem"/>.
+/// <para/>
 ///
-///     Lotteries share a single expiration timer, and will all be run simultaneously. New lotteries are added
-///     after the current lottery expires.
+/// Lotteries share a single expiration timer, and will all be run simultaneously. The available ghost roles
+/// and ghost role groups are snapshot at the beginning of each lottery period. Removals are reflected immediately
+/// but additions will be part of the next lottery snapshot.
 /// </summary>
 [UsedImplicitly]
-public sealed class GhostRoleLotterySystem : EntitySystem
+public sealed class GhostRoleSelectionSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -58,7 +69,7 @@ public sealed class GhostRoleLotterySystem : EntitySystem
     /// <summary>
     /// Ghost roles put up for the current lottery.
     /// </summary>
-    private readonly HashSet<string> _ghostRoleComponentLotteries = new();
+    private readonly Dictionary<string, GhostRoleData> _ghostRoleComponentLotteries = new();
 
     /// <summary>
     /// Ghost role groups put up for the current lottery.
@@ -104,7 +115,38 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
 
+        SubscribeLocalEvent<GhostRoleModifiedEvent>(OnGhostRoleModified);
+        SubscribeLocalEvent<GhostRoleAvailabilityChangedEvent>(OnGhostRoleAvailabilityChanged);
+
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
+    }
+
+    private void OnGhostRoleAvailabilityChanged(GhostRoleAvailabilityChangedEvent ev)
+    {
+        if (ev.Available)
+            return; // Available ghost role components will be part of the next lottery snapshot.
+
+        // Ghost role became unavailable. Remove if it's currently in a lottery.
+        var removed = false;
+        if (_ghostRoleComponentLotteries.TryGetValue(ev.GhostRole.RoleName, out var data))
+            removed = data.Components.Remove(ev.GhostRole);
+
+        _needsUpdateGhostRoles |= removed;
+        _needsUpdateGhostRoleCount |= removed;
+    }
+
+    private void OnGhostRoleModified(GhostRoleModifiedEvent ev)
+    {
+        var removed = false;
+
+        if (ev.PreviousRoleName != null && _ghostRoleComponentLotteries.TryGetValue(ev.PreviousRoleName, out var data))
+            removed |= data.Components.Remove(ev.GhostRole); // Ghost role got renamed. Remove it from the current lottery.
+
+        if (ev.PreviousRoleLotteryEnabled != null && _ghostRoleComponentLotteries.TryGetValue(ev.GhostRole.RoleName, out data))
+            removed |= data.Components.Remove(ev.GhostRole);
+
+        _needsUpdateGhostRoles |= removed;
+        _needsUpdateGhostRoleCount |= removed;
     }
 
     public override void Shutdown()
@@ -293,33 +335,28 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         var ghostRoleSystem = Get<GhostRoleSystem>();
         var ghostRoleGroupSystem = Get<GhostRoleGroupSystem>();
 
-        ghostRoleSystem.OnNextLotteryStarting();
         ghostRoleGroupSystem.OnNextLotteryStarting();
 
-        var ghostRoles = ghostRoleSystem.GetAllAvailableLotteryItems();
-        var ghostRoleGroups = ghostRoleGroupSystem.GetAllAvailableLotteryItems();
+        BuildNewGhostRoleLottery(ghostRoleSystem.GetAvailableGhostRoles());
 
-        _availableRoles.Clear();
-        _availableRoles.UnionWith(ghostRoles);
-        foreach (var roleGroupIdentifier in ghostRoleGroups)
-        {
-            _availableRoles.Add($"GhostRoleGroup:{roleGroupIdentifier}");
-        }
+        var ghostRoleGroups = ghostRoleGroupSystem.GetAllAvailableLotteryItems();
 
         // Update ghost role group lotteries.
         var removedRoleGroups = _roleGroupLotteries.Where(rg => !ghostRoleGroups.Contains(rg)).ToArray();
         _roleGroupLotteries.Clear();
         _roleGroupLotteries.UnionWith(ghostRoleGroups);
 
-        // Update ghost role lotteries.
-        var removedRoles = _ghostRoleComponentLotteries.Where(r => !ghostRoles.Contains(r)).ToArray();
-        _ghostRoleComponentLotteries.Clear();
-        _ghostRoleComponentLotteries.UnionWith(ghostRoles);
-
         foreach (var (_, data) in _playerLotteryData)
         {
-            data.GhostRoles.ExceptWith(removedRoles);
             data.GhostRoleGroups.ExceptWith(removedRoleGroups);
+        }
+
+        // Update all available ghost roles.
+        _availableRoles.Clear();
+        _availableRoles.UnionWith(_ghostRoleComponentLotteries.Keys);
+        foreach (var roleGroupIdentifier in ghostRoleGroups)
+        {
+            _availableRoles.Add($"GhostRoleGroup:{roleGroupIdentifier}");
         }
 
         UpdateUi();
@@ -356,6 +393,32 @@ public sealed class GhostRoleLotterySystem : EntitySystem
             UpdatePlayerEui(player);
     }
 
+    private void BuildNewGhostRoleLottery(IEnumerable<GhostRoleComponent> components)
+    {
+        _ghostRoleComponentLotteries.Clear();
+        foreach (var comp in components)
+        {
+            if (!_ghostRoleComponentLotteries.TryGetValue(comp.RoleName, out var data))
+            {
+                _ghostRoleComponentLotteries[comp.RoleName] = data = new GhostRoleData()
+                {
+                    RoleName = comp.RoleName,
+                    RoleDescription = comp.RoleDescription,
+                    RoleRules = comp.RoleRules,
+                    Components = new HashSet<GhostRoleComponent>()
+                };
+            }
+
+            data.Components.Add(comp);
+        }
+
+        // Clear player requests that no longer exist.
+        foreach (var (_, lotteryRequests) in _playerLotteryData)
+        {
+            lotteryRequests.GhostRoles.IntersectWith(_ghostRoleComponentLotteries.Keys);
+        }
+    }
+
     /// <summary>
     /// Run's the lottery for all lottery enabled ghost roles.
     /// </summary>
@@ -366,12 +429,12 @@ public sealed class GhostRoleLotterySystem : EntitySystem
         var sessions = new List<IPlayerSession>(_playerLotteryData.Count);
         var clearRoles = new HashSet<string>();
 
-        foreach (var ghostRoleIdentifier in _ghostRoleComponentLotteries)
+        foreach (var (ghostRoleIdentifier, data) in _ghostRoleComponentLotteries)
         {
             sessions.Clear();
-            foreach (var (playerSession, data) in _playerLotteryData)
+            foreach (var (playerSession, lotteryData) in _playerLotteryData)
             {
-                if(data.GhostRoles.Contains(ghostRoleIdentifier))
+                if(lotteryData.GhostRoles.Contains(ghostRoleIdentifier))
                     sessions.Add(playerSession);
             }
 
@@ -379,23 +442,87 @@ public sealed class GhostRoleLotterySystem : EntitySystem
                 continue;
 
             _random.Shuffle(sessions);
-            ghostRoleSystem.OnLotteryResults(ghostRoleIdentifier, sessions, out var newSuccessfulSessions, out var rolesTaken);
 
-            foreach (var takenPlayer in newSuccessfulSessions)
+            var roleComponents = ghostRoleSystem.GetGhostRolesByRoleName(ghostRoleIdentifier);
+
+            var sessionCount = sessions.Count;
+            var sessionIdx = 0;
+            var componentIdx = 0;
+
+            foreach(var component in roleComponents)
             {
-                successfulPlayers.Add(takenPlayer);
-                ClearPlayerLotteryRequests(takenPlayer);
-                CloseEui(takenPlayer);
+                if (!component.Available || !component.RoleLotteryEnabled)
+                {
+                    componentIdx++;
+                    continue;
+                }
+
+
+                if (sessionIdx >= sessionCount)
+                    break; // All sessions have been used.
+
+                var session = sessions[sessionIdx];
+                if (!ghostRoleSystem.PerformTakeover(session, component))
+                {
+                    componentIdx++;
+                    continue;
+                }
+
+                if (component.Taken)
+                    componentIdx++;
+
+                sessionIdx++;
+                successfulPlayers.Add(session);
+                ClearPlayerLotteryRequests(session);
+                CloseEui(session);
             }
 
-            if(rolesTaken)
-                clearRoles.Add(ghostRoleIdentifier);
+            if(componentIdx >= roleComponents.Count)
+                clearRoles.Add(ghostRoleIdentifier); // All available components got used.
         }
 
         foreach (var (_, data) in _playerLotteryData)
         {
             data.GhostRoles.ExceptWith(clearRoles);
         }
+    }
+
+    public GhostRoleInfo[] GetGhostRolesInfo()
+    {
+        var ghostRoleSystem = Get<GhostRoleSystem>();
+        var ghostRoleInfo = new List<GhostRoleInfo>(_ghostRoleComponentLotteries.Count);
+
+        foreach (var (roleName, data) in _ghostRoleComponentLotteries)
+        {
+            var (lotteryCount, takeoverCount) = (0, 0);
+            foreach (var comp in data.Components)
+            {
+                if (!comp.Available)
+                    continue;
+
+                if (comp.RoleLotteryEnabled)
+                    lotteryCount++;
+                else
+                    takeoverCount++;
+            }
+
+            if(lotteryCount == 0 && takeoverCount == 0)
+                continue;
+
+            var role = new GhostRoleInfo()
+            {
+                Identifier = roleName,
+                Name = roleName,
+                Description = data.RoleDescription,
+                Rules = data.RoleRules,
+                AvailableLotteryRoleCount = lotteryCount,
+                AvailableImmediateRoleCount = takeoverCount,
+            };
+
+            ghostRoleInfo.Add(role);
+        }
+
+        return ghostRoleInfo.ToArray();
     }
     #endregion
 
@@ -481,7 +608,7 @@ public sealed class GhostRoles : IConsoleCommand
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if(shell.Player is IPlayerSession playerSession)
-            EntitySystem.Get<GhostRoleLotterySystem>().OpenEui(playerSession);
+            EntitySystem.Get<GhostRoleSelectionSystem>().OpenEui(playerSession);
         else
             shell.WriteLine("You can only open the ghost roles UI on a client.");
     }
