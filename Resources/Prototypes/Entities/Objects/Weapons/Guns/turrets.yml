@@ -12,6 +12,12 @@
       - state: syndie_lethal
   - type: Clickable
   - type: InteractionOutline
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Effects/double_beep.wav
   - type: CombatMode
   - type: Gun
     fireRate: 6
