@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Client.Storage.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Client.GameObjects;

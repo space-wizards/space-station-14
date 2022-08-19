@@ -1,4 +1,5 @@
 using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.Storage;
 
 namespace Content.Server.Storage.EntitySystems;

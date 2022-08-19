@@ -1,8 +1,8 @@
 #nullable enable
 using System.Threading.Tasks;
+using Content.Shared.Storage.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Item;
-using Content.Shared.Storage;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
 
