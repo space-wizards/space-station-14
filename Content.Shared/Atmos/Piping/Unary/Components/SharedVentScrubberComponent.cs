@@ -30,7 +30,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public static GasVentScrubberData FilterModePreset = new GasVentScrubberData
         {
             Enabled = true,
-            FilterGases = GasVentScrubberData.DefaultFilterGases,
+            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             WideNet = false
@@ -40,7 +40,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         {
             Enabled = false,
             Dirty = true,
-            FilterGases = GasVentScrubberData.DefaultFilterGases,
+            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             WideNet = false
@@ -50,7 +50,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         {
             Enabled = true,
             Dirty = true,
-            FilterGases = GasVentScrubberData.DefaultFilterGases,
+            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
             VolumeRate = 200f,
             WideNet = false
@@ -61,7 +61,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Enabled = true,
             IgnoreAlarms = true,
             Dirty = true,
-            FilterGases = GasVentScrubberData.DefaultFilterGases,
+            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
             VolumeRate = 200f,
             WideNet = false
