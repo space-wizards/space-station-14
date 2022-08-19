@@ -31,10 +31,17 @@ public sealed class AddWhitelistCommand : IConsoleCommand
             var guid = data.UserId;
             var isWhitelisted = await db.GetWhitelistStatusAsync(guid);
             if (isWhitelisted)
+            {
+                shell.WriteLine(Loc.GetString("command-whitelistadd-existing", ("username", data.Username)));
                 return;
+            }
 
             await db.AddToWhitelistAsync(guid);
+            shell.WriteLine(Loc.GetString("command-whitelistadd-added", ("username", data.Username)));
+            return;
         }
+
+        shell.WriteError(Loc.GetString("command-whitelistadd-not-found", ("username", args[0])));
     }
 }
 
@@ -60,10 +67,17 @@ public sealed class RemoveWhitelistCommand : IConsoleCommand
             var guid = data.UserId;
             var isWhitelisted = await db.GetWhitelistStatusAsync(guid);
             if (!isWhitelisted)
+            {
+                shell.WriteLine(Loc.GetString("command-whitelistremove-existing", ("username", data.Username)));
                 return;
+            }
 
             await db.RemoveFromWhitelistAsync(guid);
+            shell.WriteLine(Loc.GetString("command-whitelistremove-removed", ("username", data.Username)));
+            return;
         }
+
+        shell.WriteError(Loc.GetString("command-whitelistremove-not-found", ("username", args[0])));
     }
 }
 
