@@ -8,11 +8,13 @@ namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
-    [Dependency] private readonly GunSystem _gun = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-
     // TODO: Don't predict for hitscan
     private const float ShootSpeed = 20f;
+
+    /// <summary>
+    /// Cooldown on raycasting to check LOS.
+    /// </summary>
+    private const float UnoccludedCooldown = 0.2f;
 
     private void InitializeRanged()
     {
@@ -31,12 +33,14 @@ public sealed partial class NPCCombatSystem
                 !bodyQuery.TryGetComponent(comp.Target, out var targetBody))
             {
                 comp.Status = CombatStatus.TargetUnreachable;
+                comp.ShootAccumulator = 0f;
                 continue;
             }
 
             if (targetXform.MapID != xform.MapID)
             {
                 comp.Status = CombatStatus.TargetUnreachable;
+                comp.ShootAccumulator = 0f;
                 continue;
             }
 
@@ -50,16 +54,44 @@ public sealed partial class NPCCombatSystem
             if (gun == null)
             {
                 comp.Status = CombatStatus.NoWeapon;
+                comp.ShootAccumulator = 0f;
                 continue;
             }
+
+            comp.LOSAccumulator += frameTime;
 
             var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
             var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
 
             // We'll work out the projected spot of the target and shoot there instead of where they are.
             var distance = (targetPos - worldPos).Length;
-            var mapVelocity = targetBody.LinearVelocity;
+            var oldInLos = comp.TargetInLOS;
 
+            if (comp.LOSAccumulator > UnoccludedCooldown)
+            {
+                comp.LOSAccumulator -= UnoccludedCooldown;
+                comp.TargetInLOS = _interaction.InRangeUnobstructed(comp.Owner, comp.Target, distance);
+            }
+
+            if (!comp.TargetInLOS)
+            {
+                comp.ShootAccumulator = 0f;
+                continue;
+            }
+
+            if (!oldInLos && comp.SoundTargetInLOS != null)
+            {
+                _audio.PlayPvs(comp.SoundTargetInLOS, comp.Owner);
+            }
+
+            comp.ShootAccumulator += frameTime;
+
+            if (comp.ShootAccumulator < comp.ShootDelay)
+            {
+                continue;
+            }
+
+            var mapVelocity = targetBody.LinearVelocity;
             var targetSpot = targetPos + mapVelocity * distance / ShootSpeed;
 
             // If we have a max rotation speed then do that.

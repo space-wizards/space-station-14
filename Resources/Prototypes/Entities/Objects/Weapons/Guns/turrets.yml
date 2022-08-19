@@ -14,6 +14,7 @@
     selectedMode: FullAuto
     availableModes:
       - FullAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
   # TODO: Power ammo provider?
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
