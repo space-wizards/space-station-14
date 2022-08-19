@@ -7803,6 +7803,30 @@ entities:
           color: '#FFFFFFFF'
           id: Remains
           coordinates: -11,-56
+        2268:
+          color: '#79150096'
+          id: QuarterTileOverlayGreyscale270
+          coordinates: -4,-60
+        2269:
+          color: '#79150096'
+          id: QuarterTileOverlayGreyscale270
+          coordinates: -3,-60
+        2270:
+          color: '#79150096'
+          id: QuarterTileOverlayGreyscale270
+          coordinates: -2,-60
+        2272:
+          color: '#D4D4D496'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: -4,-60
+        2273:
+          color: '#D4D4D496'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: -3,-60
+        2274:
+          color: '#D4D4D496'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: -2,-60
       -2,-2:
         1464:
           color: '#52B4E996'
@@ -24111,7 +24135,7 @@ entities:
       -29,-67: 0
       -29,-66: 0
       -29,-65: 0
-      -28,-75: 8
+      -28,-75: 12
       -28,-74: 0
       -28,-73: 0
       -28,-72: 0
@@ -24122,7 +24146,7 @@ entities:
       -28,-67: 0
       -28,-66: 0
       -28,-65: 0
-      -27,-75: 12
+      -27,-75: 13
       -27,-74: 0
       -27,-73: 0
       -27,-72: 0
@@ -25692,40 +25716,40 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 189.4199
-      moles:
-      - 14.030434
-      - 52.78116
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 168.67245
-      moles:
-      - 12.4714365
-      - 46.91636
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
       temperature: 189.4181
       moles:
       - 14.030298
       - 52.780647
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 168.67155
+      moles:
+      - 12.471369
+      - 46.916103
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 189.4179
+      moles:
+      - 14.030282
+      - 52.780586
       - 0
       - 0
       - 0
@@ -25752,10 +25776,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 189.41992
+      temperature: 189.41812
       moles:
-      - 14.030434
-      - 52.78116
+      - 14.030298
+      - 52.780647
       - 0
       - 0
       - 0
@@ -25767,10 +25791,25 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 189.41812
+      temperature: 168.67157
       moles:
-      - 14.030298
-      - 52.780647
+      - 12.471369
+      - 46.9161
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 189.4179
+      moles:
+      - 14.030281
+      - 52.780586
       - 0
       - 0
       - 0
@@ -32888,7 +32927,7 @@ entities:
     type: Transform
 - uid: 951
   components:
-  - index: 4
+  - index: 5
     type: Map
 - uid: 952
   type: CableApcExtension
@@ -183659,9 +183698,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 22823
-  type: RandomPosterAny
+  type: PosterMapMetaRight
   components:
-  - pos: -60.5,-19.5
+  - pos: 1.9809327,12.5
     parent: 0
     type: Transform
 - uid: 22824
@@ -193628,4 +193667,95 @@ entities:
       - port: Toggle
         uid: 24302
     type: SignalTransmitter
+- uid: 24305
+  type: WallmountTelescreen
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 9.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 24306
+  type: PosterMapMetaRight
+  components:
+  - pos: -44.987633,4.5
+    parent: 0
+    type: Transform
+- uid: 24307
+  type: PosterMapMetaRight
+  components:
+  - pos: -57.98687,9.5
+    parent: 0
+    type: Transform
+- uid: 24308
+  type: PosterMapMetaRight
+  components:
+  - pos: -45.986656,-5.5
+    parent: 0
+    type: Transform
+- uid: 24309
+  type: SignKiddiePlaque
+  components:
+  - pos: -32.46485,-14.5
+    parent: 0
+    type: Transform
+- uid: 24310
+  type: PosterMapMetaRight
+  components:
+  - pos: 25.999088,6.5
+    parent: 0
+    type: Transform
+- uid: 24311
+  type: PosterMapMetaRight
+  components:
+  - pos: -6.5203104,-59.5
+    parent: 0
+    type: Transform
+- uid: 24312
+  type: PosterMapMetaRight
+  components:
+  - pos: -60.998116,-19.5
+    parent: 0
+    type: Transform
+- uid: 24313
+  type: PosterMapMetaRight
+  components:
+  - pos: 8.5,-17.5
+    parent: 0
+    type: Transform
+- uid: 24314
+  type: SignKiddiePlaque
+  components:
+  - pos: 3.5,-13.5
+    parent: 0
+    type: Transform
+- uid: 24315
+  type: SignKiddiePlaque
+  components:
+  - pos: -8.5,-16.5
+    parent: 0
+    type: Transform
+- uid: 24316
+  type: SignKiddiePlaque
+  components:
+  - pos: -10.5,20.5
+    parent: 0
+    type: Transform
+- uid: 24317
+  type: SignSecurity
+  components:
+  - pos: -4.5,22.5
+    parent: 0
+    type: Transform
+- uid: 24318
+  type: SignSecurity
+  components:
+  - pos: -0.5,22.5
+    parent: 0
+    type: Transform
+- uid: 24319
+  type: PosterMapMetaRight
+  components:
+  - pos: 17.97155,20.5
+    parent: 0
+    type: Transform
 ...
