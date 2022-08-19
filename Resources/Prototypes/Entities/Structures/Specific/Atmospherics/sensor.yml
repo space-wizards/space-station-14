@@ -1,0 +1,37 @@
+- type: entity
+  id: AirSensor
+  name: air sensor
+  description: Air sensor. It senses air.
+  components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-sensor
+      sendBroadcastAttemptEvent: true
+    - type: DeviceList
+    - type: WiredNetworkConnection
+    - type: AtmosDevice
+    - type: AtmosMonitor
+      temperatureThreshold: stationTemperature
+      pressureThreshold: stationPressure
+      gasThresholds:
+        Oxygen: stationOxygen
+        Nitrogen: ignore
+        CarbonDioxide: stationCO2
+        Plasma: danger # everything below is usually bad
+        Tritium: danger
+        WaterVapor: danger
+        Miasma: danger
+        NitrousOxide: danger
+        Frezon: danger
+    - type: AccessReader
+      access: [ [ "Atmospherics" ] ]
+    - type: Sprite
+      netsync: false
+      drawdepth: FloorObjects
+      sprite: Structures/Specific/Atmospherics/sensor.rsi
+      layers:
+        - state: gsensor1

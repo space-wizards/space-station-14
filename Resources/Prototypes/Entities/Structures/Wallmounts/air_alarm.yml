@@ -17,7 +17,7 @@
   - type: WiredNetworkConnection
   - type: DeviceList
   - type: AtmosAlarmable
-    alarmedBy: ["GasVentPump"]
+    alarmedBy: ["AirSensor"]
   - type: AtmosDevice
   - type: AirAlarm
   - type: Clickable
