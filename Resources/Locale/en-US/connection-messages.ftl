@@ -3,7 +3,7 @@ whitelist-not-whitelisted-rp = You are not whitelisted. To become whitelisted, v
 
 command-whitelistadd-description = Adds the player with the given username to the server whitelist.
 command-whitelistadd-help = whitelistadd <username>
-command-whitelistadd-existing = {$username} already on the whitelist
+command-whitelistadd-existing = {$username} is already on the whitelist!
 command-whitelistadd-added = {$username} added to the whitelist
 command-whitelistadd-not-found = Unable to find '{$username}'
 
