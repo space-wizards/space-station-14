@@ -514,14 +514,14 @@ namespace Content.Server.Atmos.Monitor.Systems
                 alarm.CurrentModeUpdater.Update(uid);
         }
 
-        private float CalculatePressureAverage(AirAlarmComponent alarm)
+        public float CalculatePressureAverage(AirAlarmComponent alarm)
         {
             return alarm.SensorData.Count != 0
                 ? alarm.SensorData.Values.Select(v => v.Pressure).Average()
                 : 0f;
         }
 
-        private float CalculateTemperatureAverage(AirAlarmComponent alarm)
+        public float CalculateTemperatureAverage(AirAlarmComponent alarm)
         {
             return alarm.SensorData.Count != 0
                 ? alarm.SensorData.Values.Select(v => v.Temperature).Average()

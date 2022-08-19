@@ -55,6 +55,17 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             VolumeRate = 200f,
             WideNet = false
         };
+
+        public static GasVentScrubberData ReplaceModePreset = new GasVentScrubberData
+        {
+            Enabled = true,
+            IgnoreAlarms = true,
+            Dirty = true,
+            FilterGases = GasVentScrubberData.DefaultFilterGases,
+            PumpDirection = ScrubberPumpDirection.Siphoning,
+            VolumeRate = 200f,
+            WideNet = false
+        };
     }
 
     [Serializable, NetSerializable]

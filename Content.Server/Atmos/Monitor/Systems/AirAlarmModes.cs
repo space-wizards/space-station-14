@@ -98,7 +98,13 @@ namespace Content.Server.Atmos.Monitor
             if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
-            foreach (var (addr, device) in alarm.DeviceData)
+            foreach (var (addr, device) in alarm.VentData)
+            {
+                device.Enabled = false;
+                AirAlarmSystem.SetData(uid, addr, device);
+            }
+
+            foreach (var (addr, device) in alarm.ScrubberData)
             {
                 device.Enabled = false;
                 AirAlarmSystem.SetData(uid, addr, device);
@@ -113,17 +119,14 @@ namespace Content.Server.Atmos.Monitor
             if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
-            foreach (var (addr, device) in alarm.DeviceData)
+            foreach (var (addr, device) in alarm.VentData)
             {
-                switch (device)
-                {
-                    case GasVentPumpData pumpData:
-                        AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FilterModePreset);
-                        break;
-                    case GasVentScrubberData scrubberData:
-                        AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.FilterModePreset);
-                        break;
-                }
+                AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FilterModePreset);
+            }
+
+            foreach (var (addr, device) in alarm.ScrubberData)
+            {
+                AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.FilterModePreset);
             }
         }
     }
@@ -135,17 +138,14 @@ namespace Content.Server.Atmos.Monitor
             if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
-            foreach (var (addr, device) in alarm.DeviceData)
+            foreach (var (addr, device) in alarm.VentData)
             {
-                switch (device)
-                {
-                    case GasVentPumpData pumpData:
-                        AirAlarmSystem.SetData(uid, addr, GasVentPumpData.PanicModePreset);
-                        break;
-                    case GasVentScrubberData scrubberData:
-                        AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.PanicModePreset);
-                        break;
-                }
+                AirAlarmSystem.SetData(uid, addr, GasVentPumpData.PanicModePreset);
+            }
+
+            foreach (var (addr, device) in alarm.ScrubberData)
+            {
+                AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.PanicModePreset);
             }
         }
     }
@@ -157,81 +157,58 @@ namespace Content.Server.Atmos.Monitor
             if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
-            foreach (var (addr, device) in alarm.DeviceData)
+            foreach (var (addr, device) in alarm.VentData)
             {
-                switch (device)
-                {
-                    case GasVentPumpData pumpData:
-                        AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FillModePreset);
-                        break;
-                    case GasVentScrubberData scrubberData:
-                        AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.FillModePreset);
-                        break;
-                }
+                AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FillModePreset);
+            }
+
+            foreach (var (addr, device) in alarm.ScrubberData)
+            {
+                AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.FillModePreset);
             }
         }
     }
 
     public sealed class AirAlarmReplaceMode : AirAlarmModeExecutor, IAirAlarmModeUpdate
     {
-        private Dictionary<string, IAtmosDeviceData> _devices = new();
+        private AirAlarmComponent? _alarm;
         private float _lastPressure = Atmospherics.OneAtmosphere;
-        private AtmosMonitorComponent? _monitor;
-        private AtmosAlarmableComponent? _alarmable;
 
         public string NetOwner { get; set; } = string.Empty;
 
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm)
-                || !EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
-                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable))
+            if (!EntityManager.TryGetComponent(uid, out _alarm))
                 return;
 
-            _devices = alarm.DeviceData;
-            _monitor = monitor;
-            _alarmable = alarmable;
-            _alarmable.IgnoreAlarms = true;
             SetSiphon(uid);
         }
 
         public void Update(EntityUid uid)
         {
-            if (_monitor == null
-                || _alarmable == null
-                || _monitor.TileGas == null)
+            if (_alarm == null)
                 return;
 
             // just a little pointer
-            var mixture = _monitor.TileGas;
 
-            _lastPressure = mixture.Pressure;
+            _lastPressure = AirAlarmSystem.CalculatePressureAverage(_alarm);
             if (_lastPressure <= 0.2f) // anything below and it might get stuck
             {
-                _alarmable.IgnoreAlarms = false;
                 AirAlarmSystem.SetMode(uid, NetOwner!, AirAlarmMode.Filtering, false, false);
             }
         }
 
         private void SetSiphon(EntityUid uid)
         {
-            foreach (var (addr, device) in _devices)
+            foreach (var (addr, device) in _alarm!.VentData)
             {
-                switch (device)
-                {
-                    case GasVentPumpData pumpData:
-                        pumpData = GasVentPumpData.PanicModePreset;
-                        pumpData.IgnoreAlarms = true;
-                        AirAlarmSystem.SetData(uid, addr, pumpData);
-                        break;
-                    case GasVentScrubberData scrubberData:
-                        scrubberData = GasVentScrubberData.PanicModePreset;
-                        scrubberData.IgnoreAlarms = true;
-                        AirAlarmSystem.SetData(uid, addr, scrubberData);
-                        break;
-                }
+                AirAlarmSystem.SetData(uid, addr, GasVentPumpData.ReplaceModePreset);
+            }
+
+            foreach (var (addr, device) in _alarm!.ScrubberData)
+            {
+                AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.ReplaceModePreset);
             }
         }
-
     }
 }
