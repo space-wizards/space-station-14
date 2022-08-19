@@ -154,19 +154,18 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     public GunComponent? GetGun(EntityUid entity)
     {
-        if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) ||
-            hands.ActiveHandEntity is not { } held)
-        {
-            return null;
-        }
-
-        if (!EntityManager.TryGetComponent(held, out GunComponent? gun))
-            return null;
-
         if (!_combatMode.IsInCombatMode(entity))
             return null;
 
-        return gun;
+        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+            hands.ActiveHandEntity is { } held &&
+            TryComp(held, out GunComponent? gun))
+        {
+            return gun;
+        }
+
+        // Last resort is check if the entity itself is a gun.
+        return !TryComp(entity, out gun) ? null : gun;
     }
 
     private void StopShooting(GunComponent gun)
@@ -349,7 +348,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(sprite);
+        var ev = new MuzzleFlashEvent(gun, sprite);
 
         CreateEffect(gun, ev, user);
     }

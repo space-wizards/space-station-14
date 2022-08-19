@@ -13,6 +13,7 @@ namespace Content.Client.Kitchen.Visualizers
     [UsedImplicitly]
     public sealed class MicrowaveVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

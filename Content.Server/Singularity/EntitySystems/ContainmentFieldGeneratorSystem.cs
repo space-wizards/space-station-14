@@ -41,7 +41,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         foreach (var generator in EntityQuery<ContainmentFieldGeneratorComponent>())
         {
             if (generator.PowerBuffer <= 0) //don't drain power if there's no power, or if it's somehow less than 0.
-                return;
+                continue;
 
             generator.Accumulator += frameTime;
 

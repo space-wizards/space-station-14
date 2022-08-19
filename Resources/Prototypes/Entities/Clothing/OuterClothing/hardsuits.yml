@@ -32,8 +32,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitCap
-  name: captain's armor
-  description: A suit of protective formal armor made for the station's captain.
+  name: captain's armored spacesuit
+  description: A formal armored spacesuit, made for the station's captain.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
@@ -83,7 +83,7 @@
         Heat: 0.2
         Radiation: 0.2
   - type: ExplosionResistance
-    damageCoefficient: 0.7
+    damageCoefficient: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
 
@@ -139,7 +139,7 @@
         Slash: 0.85
         Piercing: 0.8
         Heat: 0.4
-        Radiation: 0.25
+        Radiation: 0.0
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: ToggleableClothing
@@ -237,21 +237,21 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.05
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 5500
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.6
-        Slash: 0.75
+        Slash: 0.8
         Piercing: 0.95
-        Heat: 0.65
-        Radiation: 0.25
+        Heat: 0.3
+        Radiation: 0.1
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: ExplosionResistance
-    damageCoefficient: 0.3
+    damageCoefficient: 0.1
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
@@ -345,7 +345,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndie
   name: blood red hardsuit
-  description: A dual-mode advanced hardsuit designed for work in special operations.
+  description: A heavily armored and agile advanced hardsuit designed for work in special operations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi

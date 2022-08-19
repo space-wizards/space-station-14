@@ -101,7 +101,7 @@
         denyAnimationTime: 0.4
         animatedPanel: false
         openUnlitVisible: true
-      - type: WiresVisualizer
+  - type: WiresVisuals
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false

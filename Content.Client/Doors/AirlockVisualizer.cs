@@ -85,7 +85,7 @@ namespace Content.Client.Doors
                     {
                         var flickMaintenancePanel = new AnimationTrackSpriteFlick();
                         CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                        flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
+                        flickMaintenancePanel.LayerKey = WiresVisualLayers.MaintenancePanel;
                         flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
                     }
                 }
@@ -109,7 +109,7 @@ namespace Content.Client.Doors
                     {
                         var flickMaintenancePanel = new AnimationTrackSpriteFlick();
                         OpenAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                        flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
+                        flickMaintenancePanel.LayerKey = WiresVisualLayers.MaintenancePanel;
                         flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
                     }
                 }
@@ -134,6 +134,7 @@ namespace Content.Client.Doors
             }
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             if (!_entMan.HasComponent<AnimationPlayerComponent>(entity))
@@ -142,6 +143,7 @@ namespace Content.Client.Doors
             }
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             // only start playing animations once.

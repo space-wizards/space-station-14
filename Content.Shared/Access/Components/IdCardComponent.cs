@@ -9,8 +9,8 @@ namespace Content.Shared.Access.Components
     [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem))]
     public sealed class IdCardComponent : Component
     {
-        [DataField("originalOwnerName")]
-        public string OriginalOwnerName = default!;
+        [DataField("originalEntityName")]
+        public string OriginalEntityName = string.Empty;
 
         [DataField("fullName")]
         [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem),

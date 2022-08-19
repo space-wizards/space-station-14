@@ -4,27 +4,27 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
-  7: floor_dark
-  8: floor_elevator_shaft
-  9: floor_freezer
-  10: floor_gold
-  11: floor_green_circuit
-  12: floor_hydro
-  13: floor_lino
-  14: floor_mono
-  15: floor_reinforced
-  16: floor_rock_vault
-  17: floor_showroom
-  18: floor_snow
-  19: floor_steel
-  20: floor_steel_dirty
-  21: floor_techmaint
-  22: floor_white
-  23: floor_wood
-  24: lattice
-  25: plating
-  26: underplating
+  0: Space
+  7: FloorDark
+  8: FloorElevatorShaft
+  9: FloorFreezer
+  10: FloorGold
+  11: FloorGreenCircuit
+  12: FloorHydro
+  13: FloorLino
+  14: FloorMono
+  15: FloorReinforced
+  16: FloorRockVault
+  17: FloorShowroom
+  18: FloorSnow
+  19: FloorSteel
+  20: FloorSteelDirty
+  21: FloorTechMaint
+  22: FloorWhite
+  23: FloorWood
+  24: Lattice
+  25: Plating
+  26: UnderPlating
 grids:
 - settings:
     chunksize: 16

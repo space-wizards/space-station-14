@@ -80,6 +80,7 @@
       - PressureImmunity
       - Muted
       - ForcedSleep
+      - TemporaryBlindness
   - type: DiseaseCarrier
   - type: Blindable
   # Other
@@ -253,27 +254,27 @@
       60: 0.7
       80: 0.5
   - type: HeatResistance
+  - type: DamageVisuals
+    thresholds: [ 20, 40, 100 ]
+    targetLayers:
+      - "enum.HumanoidVisualLayers.Chest"
+      - "enum.HumanoidVisualLayers.Head"
+      - "enum.HumanoidVisualLayers.LArm"
+      - "enum.HumanoidVisualLayers.LLeg"
+      - "enum.HumanoidVisualLayers.RArm"
+      - "enum.HumanoidVisualLayers.RLeg"
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#FF0000"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
     visuals:
       - type: RotationVisualizer
       - type: BuckleVisualizer
       - type: CreamPiedVisualizer
         state: creampie_human
-      - type: DamageVisualizer
-        thresholds: [ 20, 40, 100 ]
-        targetLayers:
-          - "enum.HumanoidVisualLayers.Chest"
-          - "enum.HumanoidVisualLayers.Head"
-          - "enum.HumanoidVisualLayers.LArm"
-          - "enum.HumanoidVisualLayers.LLeg"
-          - "enum.HumanoidVisualLayers.RArm"
-          - "enum.HumanoidVisualLayers.RLeg"
-        damageOverlayGroups:
-          Brute:
-            sprite: Mobs/Effects/brute_damage.rsi
-            color: "#FF0000"
-          Burn:
-            sprite: Mobs/Effects/burn_damage.rsi
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
