@@ -58,15 +58,6 @@ namespace Content.Client.Atmos.Monitor.UI
                 AirAlarmModeChanged!.Invoke((AirAlarmMode) args.Id);
             };
 
-            /*
-            foreach (var gas in Enum.GetValues<Gas>())
-            {
-                var gasLabel = new Label();
-                _gasReadout.AddChild(gasLabel);
-                _gasLabels.Add(gas, gasLabel);
-            }
-            */
-
             _tabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-vents"));
             _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
             _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-sensors"));
@@ -82,12 +73,16 @@ namespace Content.Client.Atmos.Monitor.UI
                 _pumps.Clear();
                 _scrubberDevices.RemoveAllChildren();
                 _scrubbers.Clear();
+                CSensorContainer.RemoveAllChildren();
+                _sensors.Clear();
                 ResyncAllRequested!.Invoke();
             };
         }
 
         public void UpdateState(AirAlarmUIState state)
         {
+            _address.Text = state.Address;
+            _deviceTotal.Text = $"{state.DeviceCount}";
             _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.PressureAverage:0.##}")));
             _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
             _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state", ("state", $"{state.AlarmType}")));
@@ -99,24 +94,6 @@ namespace Content.Client.Atmos.Monitor.UI
 
             _tabContainer.CurrentTab = (int) state.Tab;
         }
-
-        public void SetAddress(string address)
-        {
-            _address.Text = address;
-        }
-
-        /*
-        public void UpdateGasData(ref AirAlarmAirData state)
-        {
-            _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.Pressure:0.##}")));
-            _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.Temperature ?? 0):0.#}"), ("temperature", $"{state.Temperature:0.##}")));
-            _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state", ("state", $"{state.AlarmState}")));
-
-            if (state.Gases != null)
-                foreach (var (gas, amount) in state.Gases)
-                    _gasLabels[gas].Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"), ("amount", $"{amount:0.####}"), ("percentage", $"{(amount / state.TotalMoles):0.##}"));
-        }
-        */
 
         public void UpdateModeSelector(AirAlarmMode mode)
         {
@@ -170,56 +147,6 @@ namespace Content.Client.Atmos.Monitor.UI
 
                     break;
             }
-
-            _deviceTotal.Text = $"{_pumps.Count + _scrubbers.Count}";
         }
-
-        /*
-        public void UpdateThreshold(ref AirAlarmUpdateAlarmThresholdMessage message)
-        {
-            switch (message.Type)
-            {
-                case AtmosMonitorThresholdType.Pressure:
-                    if (_pressureThresholdControl == null)
-                    {
-                        _pressureThresholdControl = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-pressure-title"), message.Threshold, message.Type);
-                        _pressureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                        _pressureThreshold.AddChild(_pressureThresholdControl);
-                    }
-                    else
-                    {
-                        _pressureThresholdControl.UpdateThresholdData(message.Threshold);
-                    }
-
-                    break;
-                case AtmosMonitorThresholdType.Temperature:
-                    if (_temperatureThresholdControl == null)
-                    {
-                        _temperatureThresholdControl = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-temperature-title"), message.Threshold, message.Type);
-                        _temperatureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                        _temperatureThreshold.AddChild(_temperatureThresholdControl);
-                    }
-                    else
-                    {
-                        _temperatureThresholdControl.UpdateThresholdData(message.Threshold);
-                    }
-
-                    break;
-                case AtmosMonitorThresholdType.Gas:
-                    if (_gasThresholdControls.TryGetValue((Gas) message.Gas!, out var control))
-                    {
-                        control.UpdateThresholdData(message.Threshold);
-                        break;
-                    }
-
-                    var gasThreshold = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title", ("gas", $"{(Gas) message.Gas!}")), message.Threshold, AtmosMonitorThresholdType.Gas, (Gas) message.Gas!, 100);
-                    gasThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                    _gasThresholdControls.Add((Gas) message.Gas!, gasThreshold);
-                    _gasThreshold.AddChild(gasThreshold);
-
-                    break;
-            }
-        }
-        */
     }
 }

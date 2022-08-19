@@ -37,8 +37,10 @@ namespace Content.Shared.Atmos.Monitor.Components
     [Serializable, NetSerializable]
     public sealed class AirAlarmUIState : BoundUserInterfaceState
     {
-        public AirAlarmUIState(float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosMonitorAlarmType alarmType)
+        public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosMonitorAlarmType alarmType)
         {
+            Address = address;
+            DeviceCount = deviceCount;
             PressureAverage = pressureAverage;
             TemperatureAverage = temperatureAverage;
             DeviceData = deviceData;
@@ -47,6 +49,8 @@ namespace Content.Shared.Atmos.Monitor.Components
             AlarmType = alarmType;
         }
 
+        public string Address { get; }
+        public int DeviceCount { get; }
         public float PressureAverage { get; }
         public float TemperatureAverage { get; }
         /// <summary>

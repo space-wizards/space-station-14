@@ -133,7 +133,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <param name="monitor"></param>
         private void SyncAllSensors(EntityUid uid, AirAlarmComponent? monitor = null)
         {
-            if (!Resolve(uid, ref monitor) || monitor.CurrentTab != AirAlarmTab.Sensors)
+            if (!Resolve(uid, ref monitor))
             {
                 return;
             }
@@ -528,9 +528,9 @@ namespace Content.Server.Atmos.Monitor.Systems
                 : 0f;
         }
 
-        public void UpdateUI(EntityUid uid, AirAlarmComponent? alarm = null, AtmosAlarmableComponent? alarmable = null)
+        public void UpdateUI(EntityUid uid, AirAlarmComponent? alarm = null, DeviceNetworkComponent? devNet = null, AtmosAlarmableComponent? alarmable = null)
         {
-            if (!Resolve(uid, ref alarm, ref alarmable))
+            if (!Resolve(uid, ref alarm, ref devNet, ref alarmable))
             {
                 return;
             }
@@ -567,10 +567,12 @@ namespace Content.Server.Atmos.Monitor.Systems
                 }
             }
 
+            var deviceCount = alarm.VentData.Count + alarm.ScrubberData.Count + alarm.SensorData.Count;
+
             _uiSystem.TrySetUiState(
                 uid,
                 SharedAirAlarmInterfaceKey.Key,
-                new AirAlarmUIState(pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, alarmable.HighestNetworkState));
+                new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, alarmable.HighestNetworkState));
         }
 
         private const float _delay = 8f;

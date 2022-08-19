@@ -25,7 +25,7 @@ public sealed partial class SensorInfo : BoxContainer
 
         _address = address;
 
-        SensorAddress.Title = address;
+        SensorAddress.Title = $"{address} : {data.AlarmState}";
 
         PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{data.Pressure:0.##}")));
         TemperatureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"), ("temperature", $"{data.Temperature:0.##}")));
