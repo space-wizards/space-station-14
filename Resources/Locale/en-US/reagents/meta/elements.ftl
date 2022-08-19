@@ -50,7 +50,7 @@ reagent-name-sulfur = sulfur
 reagent-desc-sulfur = A yellow, crystalline solid.
 
 reagent-name-sodium = sodium
-reagent-desc-sodium = A silvery-white alkali metal. Highly reactive in its pure form. #thanks visne <3
+reagent-desc-sodium = A silvery-white alkali metal. Highly reactive in its pure form.
 
 reagent-name-uranium = uranium
 reagent-desc-uranium = A grey metallic chemical element in the actinide series, weakly radioactive.

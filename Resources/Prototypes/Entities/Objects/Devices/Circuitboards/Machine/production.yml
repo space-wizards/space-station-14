@@ -35,6 +35,8 @@
   name: security techfab machine board
   description: A machine printed circuit board for a security techfab
   components:
+    - type: Sprite
+      state: security
     - type: MachineBoard
       prototype: SecurityTechFab
       requirements:
@@ -52,6 +54,8 @@
   name: medical techfab machine board
   description: A machine printed circuit board for a medical techfab
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: MedicalTechFab
       requirements:
@@ -68,6 +72,8 @@
   parent: BaseMachineCircuitboard
   name: circuit imprinter machine board
   components:
+  - type: Sprite
+    state: science
   - type: MachineBoard
     prototype: CircuitImprinter
     requirements:
@@ -96,6 +102,8 @@
   parent: BaseMachineCircuitboard
   name: vaccinator machine board
   components:
+  - type: Sprite
+    state: medical
   - type: MachineBoard
     prototype: Vaccinator
     requirements:
@@ -114,6 +122,8 @@
   parent: BaseMachineCircuitboard
   name: diagnoser machine board
   components:
+  - type: Sprite
+    state: medical
   - type: MachineBoard
     prototype: DiseaseDiagnoser
     requirements:
@@ -128,6 +138,8 @@
   name: freezer thermomachine machine board
   description: Looks like you could use a screwdriver to change the board type.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineFreezer
     requirements:
@@ -145,6 +157,8 @@
   name: heater thermomachine machine board
   description: Looks like you could use a screwdriver to change the board type.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineHeater
     requirements:
@@ -162,6 +176,8 @@
   name: portable scrubber machine board
   description: A PCB for a portable scrubber.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: PortableScrubber
     requirements:
@@ -177,6 +193,8 @@
   name: cloning pod machine board
   description: A machine printed circuit board for a cloning pod
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: CloningPod
       requirements:
@@ -192,6 +210,8 @@
   name: medical scanner machine board
   description: A machine printed circuit board for a medical scanner
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: MedicalScanner
       requirements:
@@ -208,6 +228,8 @@
   name: ChemMaster 4000 machine board
   description: A machine printed circuit board for a ChemMaster 4000
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: chem_master
       requirements:
@@ -226,6 +248,8 @@
   name: chem dispenser machine board
   description: A machine printed circuit board for a chem dispenser
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: chem_dispenser
       requirements:
@@ -241,6 +265,8 @@
   name: hydroponics tray machine board
   description: A machine printed circuit board for a hydroponics tray
   components:
+    - type: Sprite
+      state: service
     - type: MachineBoard
       prototype: hydroponicsTray
       # See: https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/modules/hydroponics/hydro_tray.dm#L57
@@ -325,6 +351,8 @@
   parent: BaseMachineCircuitboard
   name: generator (plasma) machine board
   components:
+    - type: Sprite
+      state: engineering
     - type: MachineBoard
       prototype: GeneratorPlasma
       requirements:
@@ -337,6 +365,8 @@
   parent: BaseMachineCircuitboard
   name: generator (uranium) machine board
   components:
+    - type: Sprite
+      state: engineering
     - type: MachineBoard
       prototype: GeneratorUranium
       requirements:
@@ -367,6 +397,8 @@
   parent: BaseMachineCircuitboard
   name: Stasis Bed (Machine Board)
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: StasisBed
       requirements:
@@ -389,6 +421,8 @@
   parent: BaseMachineCircuitboard
   name: ore processor machine board
   components:
+    - type: Sprite
+      state: supply
     - type: MachineBoard
       prototype: OreProcessor
       requirements:
@@ -403,6 +437,8 @@
   parent: BaseMachineCircuitboard
   name: microwave machine board
   components:
+    - type: Sprite
+      state: service
     - type: MachineBoard
       prototype: KitchenMicrowave
       requirements:
@@ -417,6 +453,8 @@
   parent: BaseMachineCircuitboard
   name: emitter machine board
   components:
+    - type: Sprite
+      state: engineering
     - type: MachineBoard
       prototype: Emitter
       requirements:

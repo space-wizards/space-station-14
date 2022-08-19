@@ -10,3 +10,4 @@ welder-component-suicide-lit-message = Ты завариваешь все сво
 welder-component-suicide-unlit-others-message = { $victim } бьет себя незажженной сварочной горелкой!
 welder-component-suicide-unlit-message = Вы ударили себя незажженной сварочной горелкой!
 welder-component-after-interact-refueled-message = Заправлено!
+welder-component-already-full = The welder is already full.

@@ -5,6 +5,12 @@
   entityId: Telecrystal1
   canWithdraw: true
 
+- type: currency
+  id: StolenEssence
+  balanceDisplay: store-currency-balance-display-stolen-essence
+  priceDisplay: store-currency-price-display-stolen-essence
+  canWithdraw: false
+
 #debug
 - type: currency
   id: DebugDollar
