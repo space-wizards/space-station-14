@@ -58,3 +58,8 @@
   name: Pointless
   priority: 9
 
+#revenant
+- type: storeCategory
+  id: RevenantAbilities
+  name: Abilities
+

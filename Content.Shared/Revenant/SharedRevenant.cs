@@ -16,34 +16,3 @@ public enum RevenantVisuals : byte
     Stunned,
     Harvesting,
 }
-
-[NetSerializable, Serializable]
-public enum RevenantUiKey : byte
-{
-    Key
-}
-
-[Serializable, NetSerializable]
-public sealed class RevenantUpdateState : BoundUserInterfaceState
-{
-    public float Essence;
-
-    public readonly List<RevenantStoreListingPrototype> Listings;
-
-    public RevenantUpdateState(float essence, List<RevenantStoreListingPrototype> listings)
-    {
-        Essence = essence;
-        Listings = listings;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class RevenantBuyListingMessage : BoundUserInterfaceMessage
-{
-    public RevenantStoreListingPrototype Listing;
-
-    public RevenantBuyListingMessage (RevenantStoreListingPrototype listing)
-    {
-        Listing = listing;
-    }
-}

@@ -141,7 +141,6 @@ public sealed partial class StoreSystem : EntitySystem
     /// <param name="component">The store being initialized</param>
     public void InitializeFromPreset(StorePresetPrototype preset, StoreComponent component)
     {
-        RefreshAllListings(component);
         component.Preset = preset.ID;
         component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
         component.Categories.UnionWith(preset.Categories);
