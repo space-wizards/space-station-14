@@ -78,8 +78,8 @@ public sealed class SmokerTraitSystem : EntitySystem
 
     private static void OnRefreshMovespeed(EntityUid uid, SmokerTraitComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        var mod = component.CurrentThreshold == CravingThreshold.Intense ? 0.85f : 1.0f;
-        args.ModifySpeed(mod, mod); // Walking speed can just remain the same
+        var mod = component.CurrentThreshold == CravingThreshold.Intense ? 0.9f : 1.0f;
+        args.ModifySpeed(mod, mod);
     }
 
     private void UpdateEffects(SmokerTraitComponent component)
