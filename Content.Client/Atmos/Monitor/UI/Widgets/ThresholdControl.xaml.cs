@@ -8,6 +8,8 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 
+// holy FUCK
+// this technically works because some of this you can *not* do in XAML but holy FUCK
 
 namespace Content.Client.Atmos.Monitor.UI.Widgets
 {

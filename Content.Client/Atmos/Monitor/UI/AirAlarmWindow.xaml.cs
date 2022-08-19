@@ -37,11 +37,9 @@ namespace Content.Client.Atmos.Monitor.UI
 
         private Dictionary<string, PumpControl> _pumps = new();
         private Dictionary<string, ScrubberControl> _scrubbers = new();
+        private Dictionary<string, SensorInfo> _sensors = new();
         private Button _resyncDevices => CResyncButton;
 
-        private ThresholdControl? _pressureThresholdControl;
-        private ThresholdControl? _temperatureThresholdControl;
-        private Dictionary<Gas, ThresholdControl> _gasThresholdControls = new();
 
         private Dictionary<Gas, Label> _gasLabels = new();
 
@@ -154,6 +152,20 @@ namespace Content.Client.Atmos.Monitor.UI
                     else
                     {
                         scrubberControl.ChangeData(scrubber);
+                    }
+
+                    break;
+                case AtmosSensorData sensor:
+                    if (!_sensors.TryGetValue(addr, out var sensorControl))
+                    {
+                        var control = new SensorInfo(sensor, addr);
+                        control.OnThresholdUpdate += AtmosAlarmThresholdChanged;
+                        _sensors.Add(addr, control);
+                        CSensorContainer.AddChild(control);
+                    }
+                    else
+                    {
+                        sensorControl.ChangeData(sensor);
                     }
 
                     break;

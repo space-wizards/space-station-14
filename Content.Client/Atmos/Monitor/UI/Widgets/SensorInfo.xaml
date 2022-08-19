@@ -1,0 +1,21 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:widgets="clr-namespace:Content.Client.Atmos.Monitor.UI.Widgets">
+    <Collapsible Orientation="Vertical">
+        <CollapsibleHeading Name="SensorAddress" />
+        <CollapsibleBody>
+            <RichTextLabel Name="PressureLabel"></RichTextLabel>
+            <RichTextLabel Name="TemperatureLabel"></RichTextLabel>
+            <RichTextLabel Name="TotalMolesLabel" />
+            <RichTextLabel Name="AlarmStateLabel" />
+            <BoxContainer Name="GasContainer" />
+            <Collapsible Orientation="Vertical" Margin="2">
+                <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-thresholds'}" />
+                <CollapsibleBody>
+                    <Control Name="PressureThresholdContainer" />
+                    <Control Name="TemperatureThresholdContainer" />
+                    <BoxContainer Name="GasThresholds" Orientation="Vertical" />
+                </CollapsibleBody>
+            </Collapsible>
+        </CollapsibleBody>
+    </Collapsible>
+</BoxContainer>
