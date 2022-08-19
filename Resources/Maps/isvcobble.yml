@@ -4,65 +4,65 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
+  0: Space
   1: FloorArcadeBlue
   2: FloorArcadeBlue2
   3: FloorArcadeRed
-  4: FloorAsteroidIronsand1
-  5: FloorAsteroidIronsand2
-  6: FloorAsteroidIronsand3
-  7: FloorAsteroidIronsand4
-  8: FloorBoxing
-  9: FloorCarpetClown
-  10: FloorCarpetOffice
-  11: FloorCave
-  12: FloorCaveDrought
-  13: FloorDirt
-  14: FloorEighties
-  15: FloorGrassDark
-  16: FloorGrassJungle
-  17: FloorGrassLight
-  18: FloorGym
-  19: FloorMetalDiamond
-  20: FloorShuttleBlue
-  21: FloorShuttleOrange
-  22: FloorShuttlePurple
-  23: FloorShuttleRed
-  24: FloorShuttleWhite
-  25: floor_asteroid_coarse_sand0
-  26: floor_asteroid_coarse_sand_dug
-  27: floor_asteroid_sand
-  28: floor_asteroid_tile
-  29: floor_bar
-  30: floor_blue
-  31: floor_blue_circuit
-  32: floor_clown
-  33: floor_dark
-  34: floor_elevator_shaft
-  35: floor_freezer
-  36: floor_glass
-  37: floor_gold
-  38: floor_grass
-  39: floor_green_circuit
-  40: floor_hydro
-  41: floor_kitchen
-  42: floor_laundry
-  43: floor_lino
-  44: floor_mime
-  45: floor_mono
-  46: floor_reinforced
-  47: floor_rglass
-  48: floor_rock_vault
-  49: floor_showroom
-  50: floor_silver
-  51: floor_snow
-  52: floor_steel
-  53: floor_steel_dirty
-  54: floor_techmaint
-  55: floor_white
-  56: floor_wood
-  57: lattice
-  58: plating
+  4: FloorAsteroidCoarseSand0
+  5: FloorAsteroidCoarseSandDug
+  6: FloorAsteroidIronsand1
+  7: FloorAsteroidIronsand2
+  8: FloorAsteroidIronsand3
+  9: FloorAsteroidIronsand4
+  10: FloorAsteroidSand
+  11: FloorAsteroidTile
+  12: FloorBar
+  13: FloorBlue
+  14: FloorBlueCircuit
+  15: FloorBoxing
+  16: FloorCarpetClown
+  17: FloorCarpetOffice
+  18: FloorCave
+  19: FloorCaveDrought
+  20: FloorClown
+  21: FloorDark
+  22: FloorDirt
+  23: FloorEighties
+  24: FloorElevatorShaft
+  25: FloorFreezer
+  26: FloorGlass
+  27: FloorGold
+  28: FloorGrass
+  29: FloorGrassDark
+  30: FloorGrassJungle
+  31: FloorGrassLight
+  32: FloorGreenCircuit
+  33: FloorGym
+  34: FloorHydro
+  35: FloorKitchen
+  36: FloorLaundry
+  37: FloorLino
+  38: FloorMetalDiamond
+  39: FloorMime
+  40: FloorMono
+  41: FloorRGlass
+  42: FloorReinforced
+  43: FloorRockVault
+  44: FloorShowroom
+  45: FloorShuttleBlue
+  46: FloorShuttleOrange
+  47: FloorShuttlePurple
+  48: FloorShuttleRed
+  49: FloorShuttleWhite
+  50: FloorSilver
+  51: FloorSnow
+  52: FloorSteel
+  53: FloorSteelDirty
+  54: FloorTechMaint
+  55: FloorWhite
+  56: FloorWood
+  57: Lattice
+  58: Plating
 grids:
 - settings:
     chunksize: 16
@@ -87,7 +87,7 @@ entities:
     type: Transform
 - uid: 2
   components:
-  - index: 4
+  - index: 5
     type: Map
 - uid: 3
   components:
@@ -519,16 +519,12 @@ entities:
   - pos: 4.455214,0.8377582
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 30
   type: CableHVStack
   components:
   - pos: 8.648437,-3.3564167
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 31
   type: WallReinforced
   components:
@@ -570,24 +566,18 @@ entities:
   - pos: 8.570312,-3.2314167
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 37
   type: CableApcStack
   components:
   - pos: 8.492187,-3.1064167
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 38
   type: SheetSteel
   components:
   - pos: 8.492187,-2.7001667
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 39
   type: ShuttleConsoleCircuitboard
   components:
@@ -595,8 +585,6 @@ entities:
     pos: 13.0261135,-0.8966168
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 40
   type: MachineCryopod
   components:
@@ -613,24 +601,18 @@ entities:
     pos: 12.8854885,1.0096332
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 42
   type: CircuitImprinterMachineCircuitboard
   components:
   - pos: 5.236464,1.1502582
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 43
   type: SheetGlass
   components:
   - pos: 8.492187,-2.2782917
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 44
   type: Table
   components:
@@ -657,16 +639,6 @@ entities:
     - Gold
     - Silver
     type: Lathe
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 47
   type: AutolatheMachineCircuitboard
   components:
@@ -674,8 +646,6 @@ entities:
     pos: 4.861464,0.5721332
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 48
   type: Grille
   components:
@@ -748,16 +718,12 @@ entities:
   - pos: 8.522657,-3.0632906
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 58
   type: SheetPlasma
   components:
   - pos: 8.607031,-3.4008436
     parent: 3
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 59
   type: LockerSalvageSpecialistFilled
   components:
@@ -768,6 +734,12 @@ entities:
   type: LockerSalvageSpecialistFilled
   components:
   - pos: 13.5,-2.5
+    parent: 3
+    type: Transform
+- uid: 61
+  type: ThermomachineHeaterMachineCircuitBoard
+  components:
+  - pos: 5.1054688,-2.0717297
     parent: 3
     type: Transform
 - uid: 97
@@ -887,10 +859,6 @@ entities:
     type: Transform
   - supplyRate: 5000
     type: PowerSupplier
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 155
   type: GeneratorPlasma
   components:
@@ -899,10 +867,6 @@ entities:
     type: Transform
   - supplyRate: 5000
     type: PowerSupplier
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 156
   type: CableHV
   components:
@@ -933,10 +897,6 @@ entities:
   - pos: 7.5,-1.5
     parent: 3
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 161
   type: CableHV
   components:

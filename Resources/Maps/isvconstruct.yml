@@ -81,7 +81,7 @@ grids:
 entities:
 - uid: 0
   components:
-  - index: 3
+  - index: 6
     type: Map
 - uid: 1
   type: WallSolid
@@ -123,7 +123,6 @@ entities:
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
-    enabled: True
     type: Gravity
   - chunkCollection:
       0,-1:
@@ -758,10 +757,6 @@ entities:
   - pos: -2.5,1.5
     parent: 5
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 21
   type: CableHV
   components:
@@ -823,10 +818,6 @@ entities:
   - pos: -5.5,1.5
     parent: 5
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 26
   type: AirlockAtmospherics
   components:
@@ -2822,16 +2813,12 @@ entities:
   - pos: -4.5280375,-12.439297
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 322
   type: SheetUranium1
   components:
   - pos: -4.579834,1.5878174
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 323
   type: AtmosFixPlasmaMarker
   components:
@@ -3978,16 +3965,6 @@ entities:
     - Gold
     - Silver
     type: Lathe
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 504
   type: ResearchAndDevelopmentServer
   components:
@@ -4031,10 +4008,6 @@ entities:
     pos: -14.5,-4.5
     parent: 5
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 511
   type: KitchenMicrowave
   components:
@@ -4051,24 +4024,18 @@ entities:
   - pos: -1.7624474,-8.174913
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 513
   type: ProtolatheMachineCircuitboard
   components:
   - pos: -1.5436974,-8.393663
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 514
   type: ResearchComputerCircuitboard
   components:
   - pos: -1.7624474,-8.596788
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 515
   type: CrateFilledSpawner
   components:
@@ -4111,8 +4078,6 @@ entities:
   - pos: -1.345659,-8.214144
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 522
   type: ComputerSurveillanceWirelessCameraMonitor
   components:
@@ -4120,10 +4085,6 @@ entities:
     pos: -14.5,-6.5
     parent: 5
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 523
   type: ComputerShuttle
   components:
@@ -4131,20 +4092,12 @@ entities:
     pos: -14.5,-5.5
     parent: 5
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 524
   type: ComputerPowerMonitoring
   components:
   - pos: -13.5,-3.5
     parent: 5
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 525
   type: CableHV
   components:
@@ -4719,8 +4672,6 @@ entities:
   - pos: 5.5,-8.5
     parent: 5
     type: Transform
-  - fixtures: []
-    type: Fixtures
   - outputs:
       Pressed:
       - port: Toggle
@@ -5180,16 +5131,12 @@ entities:
 
       DO NOT LEAVE THEM ON WHEN NOT MOVING, THEY LEAK!
     type: Paper
-  - canCollide: False
-    type: Physics
 - uid: 608
   type: Pen
   components:
   - pos: -12.909789,-7.3446293
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 609
   type: LockerAtmosphericsFilled
   components:
@@ -5208,8 +5155,6 @@ entities:
   - pos: -3.5556188,1.4989707
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 612
   type: Table
   components:
@@ -5224,9 +5169,8 @@ entities:
     type: Transform
   - containers:
     - EntityStorageComponent
+    - entity_storage
     type: Construction
-  - isPlaceable: False
-    type: PlaceableSurface
 - uid: 614
   type: Carpet
   components:
@@ -5269,8 +5213,6 @@ entities:
   - pos: -4.453272,1.4612353
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 621
   type: Table
   components:
@@ -5335,24 +5277,18 @@ entities:
   - pos: -3.716732,-12.448862
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 629
   type: SheetSteel
   components:
   - pos: -3.310482,-12.511362
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 630
   type: SheetSteel
   components:
   - pos: -2.904232,-12.495737
     parent: 5
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 631
   type: Gyroscope
   components:
@@ -5369,4 +5305,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+- uid: 633
+  type: ThermomachineHeaterMachineCircuitBoard
+  components:
+  - pos: -3.9024878,1.7945018
+    parent: 5
+    type: Transform
 ...

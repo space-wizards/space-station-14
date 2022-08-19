@@ -118,10 +118,6 @@ entities:
   - pos: -13.4955225,8.497876
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
   - tags: []
     type: Tag
 - uid: 5
@@ -130,10 +126,6 @@ entities:
   - pos: -17.5,2.5
     parent: 71
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 6
   type: Grille
   components:
@@ -340,8 +332,6 @@ entities:
   - pos: -6.539706,13.606817
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 40
   type: Grille
   components:
@@ -401,8 +391,6 @@ entities:
     type: Transform
   - state: True
     type: SignalSwitch
-  - fixtures: []
-    type: Fixtures
   - outputs:
       Pressed:
       - port: Toggle
@@ -442,8 +430,6 @@ entities:
   - pos: -6.577731,12.8668785
     parent: 71
     type: Transform
-  - heldPrefix: off
-    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -452,8 +438,6 @@ entities:
       keywords: []
       event: !type:ToggleActionEvent {}
     type: HandheldLight
-  - canCollide: False
-    type: Physics
 - uid: 54
   type: CableMV
   components:
@@ -1370,10 +1354,6 @@ entities:
   - pos: -10.5,15.5
     parent: 71
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 81
   type: WallReinforced
   components:
@@ -1838,10 +1818,6 @@ entities:
   - pos: -2.5,3.5
     parent: 71
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 156
   type: WallSolid
   components:
@@ -1893,10 +1869,6 @@ entities:
   - pos: -17.5,3.5
     parent: 71
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 164
   type: CableMV
   components:
@@ -2147,10 +2119,6 @@ entities:
   - pos: -2.5,2.5
     parent: 71
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 199
   type: WallSolid
   components:
@@ -2221,10 +2189,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 210
-  type: WallReinforced
+  type: ThermomachineHeaterMachineCircuitBoard
   components:
-  - rot: 3.141592653589793 rad
-    pos: -12.5,16.5
+  - pos: -16.184095,11.471628
     parent: 71
     type: Transform
 - uid: 211
@@ -2284,10 +2251,6 @@ entities:
   - pos: -13.5580225,8.513501
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
   - tags: []
     type: Tag
 - uid: 220
@@ -2520,10 +2483,6 @@ entities:
     pos: -16.5,-3.5
     parent: 71
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 255
   type: WallSolid
   components:
@@ -2596,10 +2555,6 @@ entities:
   - pos: -13.6986475,8.466626
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
   - tags: []
     type: Tag
 - uid: 267
@@ -2692,10 +2647,6 @@ entities:
     pos: -8.5,11.5
     parent: 71
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 280
   type: Thruster
   components:
@@ -2758,16 +2709,6 @@ entities:
     - Gold
     - Silver
     type: Lathe
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 287
   type: CableHV
   components:
@@ -3020,8 +2961,6 @@ entities:
   - pos: -16.317772,1.4435401
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 329
   type: CableApcExtension
   components:
@@ -3548,12 +3487,6 @@ entities:
   - pos: -8.5,-1.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 407
   type: CableApcExtension
   components:
@@ -3639,12 +3572,6 @@ entities:
   - pos: -4.5,-0.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 420
   type: AirlockCargoGlass
   components:
@@ -3663,12 +3590,6 @@ entities:
   - pos: -8.5,-0.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 423
   type: TableReinforcedGlass
   components:
@@ -3725,8 +3646,6 @@ entities:
   - pos: -3.5642684,1.5857544
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 429
   type: TableReinforcedGlass
   components:
@@ -3757,12 +3676,6 @@ entities:
   - pos: -9.378793,8.352357
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 434
   type: CableApcExtension
   components:
@@ -3821,32 +3734,24 @@ entities:
   - pos: -16.37475,11.722611
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 443
   type: ProtolatheMachineCircuitboard
   components:
   - pos: -16.354351,13.581133
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 444
   type: Paper
   components:
   - pos: -6.570956,13.559942
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 445
   type: AutolatheMachineCircuitboard
   components:
   - pos: -15.669709,11.351985
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 446
   type: Windoor
   components:
@@ -3867,16 +3772,12 @@ entities:
   - pos: -6.649081,13.481817
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 449
   type: CircuitImprinterMachineCircuitboard
   components:
   - pos: -16.492836,13.732598
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 450
   type: CarpetBlack
   components:
@@ -3895,8 +3796,6 @@ entities:
   - pos: -4.5,15.5
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 453
   type: Poweredlight
   components:
@@ -3953,8 +3852,6 @@ entities:
   - pos: -15.548973,11.75211
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 461
   type: AirlockCommand
   components:
@@ -3968,10 +3865,6 @@ entities:
     pos: -8.5,12.5
     parent: 71
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 463
   type: BlastDoor
   components:
@@ -4023,8 +3916,6 @@ entities:
   - pos: -6.474511,0.5814359
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 469
   type: PosterLegitSafetyInternals
   components:
@@ -4067,30 +3958,18 @@ entities:
   - pos: -15.5,-1.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 475
   type: FirelockGlass
   components:
   - pos: -15.5,-0.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 476
   type: FirelockGlass
   components:
   - pos: -4.5,-1.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 477
   type: Catwalk
   components:
@@ -4103,40 +3982,24 @@ entities:
   - pos: -9.5,2.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 479
   type: FirelockGlass
   components:
   - pos: -10.5,2.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 480
   type: FirelockGlass
   components:
   - pos: -9.5,10.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 481
   type: FirelockGlass
   components:
   - pos: -10.5,10.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 482
   type: CableApcExtension
   components:
@@ -4167,8 +4030,6 @@ entities:
   - pos: -3.5,13.5
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 487
   type: CrateFoodMRE
   components:
@@ -4177,35 +4038,26 @@ entities:
     type: Transform
   - containers:
     - EntityStorageComponent
+    - entity_storage
     type: Construction
-  - isPlaceable: False
-    type: PlaceableSurface
 - uid: 488
   type: CableApcStack10
   components:
   - pos: -16.492836,13.378616
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 489
   type: DrinkMREFlask
   components:
   - pos: -6.449809,8.608776
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 490
   type: FoodTinMRETrash
   components:
   - pos: -6.5968,9.662424
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 491
   type: Chair
   components:
@@ -4310,10 +4162,6 @@ entities:
   - pos: -9.5,15.5
     parent: 71
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 506
   type: ComputerIFF
   components:
@@ -4321,10 +4169,6 @@ entities:
     pos: -11.5,12.5
     parent: 71
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 507
   type: ReinforcedWindow
   components:
@@ -4343,9 +4187,6 @@ entities:
   - pos: -15.5,16.5
     parent: 71
     type: Transform
-  - containers:
-      ItemCabinet: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 510
   type: ComputerAlert
   components:
@@ -4353,10 +4194,6 @@ entities:
     pos: -11.5,11.5
     parent: 71
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 511
   type: Poweredlight
   components:
@@ -4389,9 +4226,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 515
-  type: WallSolid
+  type: ResearchAndDevelopmentServer
   components:
-  - pos: -12.5,16.5
+  - pos: -15.5,15.5
     parent: 71
     type: Transform
 - uid: 516
@@ -4406,12 +4243,6 @@ entities:
   - pos: -11.5,-1.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 518
   type: Fireplace
   components:
@@ -4445,8 +4276,6 @@ entities:
   - pos: -3.5,15.5
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 522
   type: CableApcExtension
   components:
@@ -4471,12 +4300,6 @@ entities:
   - pos: -12.5,17.5
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 526
   type: SignDirectionalDorms
   components:
@@ -4581,20 +4404,12 @@ entities:
     type: Transform
   - solution: beaker
     type: Drink
-  - canCollide: False
-    type: Physics
 - uid: 537
   type: ToolboxMechanical
   components:
   - pos: -6.689785,19.6862
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 538
   type: SignDirectionalSalvage
   components:
@@ -4607,8 +4422,6 @@ entities:
   - pos: -7.511491,19.616915
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 540
   type: PosterContrabandRobustSoftdrinks
   components:
@@ -4621,8 +4434,6 @@ entities:
   - pos: -3.5308616,1.5490623
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 542
   type: Catwalk
   components:
@@ -4660,18 +4471,12 @@ entities:
   - pos: -8.5625,15.625
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 548
   type: Lighter
   components:
   - pos: -10.391603,7.614894
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 549
   type: ComfyChair
   components:
@@ -4709,8 +4514,6 @@ entities:
   - pos: -3.5,14.5
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 555
   type: Catwalk
   components:
@@ -4729,8 +4532,6 @@ entities:
   - pos: -8.671875,13.546875
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 558
   type: Catwalk
   components:
@@ -4743,20 +4544,12 @@ entities:
   - pos: -16.5,15.5
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 560
   type: ToolboxEmergencyFilled
   components:
   - pos: -7.5,18.5
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 561
   type: PosterLegitBuild
   components:
@@ -4845,9 +4638,8 @@ entities:
     type: Transform
   - containers:
     - EntityStorageComponent
+    - entity_storage
     type: Construction
-  - isPlaceable: False
-    type: PlaceableSurface
 - uid: 572
   type: ComfyChair
   components:
@@ -4891,8 +4683,6 @@ entities:
   - pos: -5.5,15.5
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 579
   type: SignRND
   components:
@@ -4952,12 +4742,6 @@ entities:
   - pos: -7.515564,19.005299
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 587
   type: SignMinerDock
   components:
@@ -5057,28 +4841,18 @@ entities:
   - pos: -11.5,-0.5
     parent: 71
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 600
   type: Paper
   components:
   - pos: -8.46875,13.65625
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 601
   type: Paper
   components:
   - pos: -8.484375,13.65625
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 602
   type: AirlockCargo
   components:
@@ -5125,12 +4899,6 @@ entities:
     pos: -8.375,13.65625
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 605
   type: AirlockCargoGlass
   components:
@@ -5149,18 +4917,14 @@ entities:
   - pos: -8.546875,13.6875
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 608
   type: Paper
   components:
   - pos: -8.421875,13.703125
     parent: 71
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 609
   components:
-  - index: 7
+  - index: 3
     type: Map
 ...

@@ -79,7 +79,7 @@ grids:
 entities:
 - uid: 0
   components:
-  - index: 2
+  - index: 4
     type: Map
 - uid: 1
   components:
@@ -496,10 +496,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 293.1156
+      temperature: 293.10187
       moles:
-      - 21.822292
-      - 82.09339
+      - 21.821259
+      - 82.08951
       - 0
       - 0
       - 0
@@ -511,10 +511,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 292.95743
+      temperature: 292.93332
       moles:
-      - 21.810406
-      - 82.048676
+      - 21.808594
+      - 82.04186
       - 0
       - 0
       - 0
@@ -526,10 +526,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 292.33136
+      temperature: 292.2954
       moles:
-      - 21.763363
-      - 81.871704
+      - 21.760662
+      - 81.86154
       - 0
       - 0
       - 0
@@ -541,10 +541,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 185.79225
+      temperature: 185.7034
       moles:
-      - 13.757846
-      - 51.755707
+      - 13.751168
+      - 51.730587
       - 0
       - 0
       - 0
@@ -556,10 +556,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 153.81357
+      temperature: 153.72342
       moles:
-      - 11.354916
-      - 42.71611
+      - 11.348142
+      - 42.690628
       - 0
       - 0
       - 0
@@ -571,10 +571,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 282.2414
+      temperature: 281.88522
       moles:
-      - 21.00519
-      - 79.01953
+      - 20.978426
+      - 78.91884
       - 0
       - 0
       - 0
@@ -586,10 +586,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 280.4536
+      temperature: 279.90958
       moles:
-      - 20.870852
-      - 78.51416
+      - 20.829973
+      - 78.36038
       - 0
       - 0
       - 0
@@ -601,10 +601,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 271.17816
+      temperature: 270.93256
       moles:
-      - 20.17388
-      - 75.89221
+      - 20.155424
+      - 75.822784
       - 0
       - 0
       - 0
@@ -616,10 +616,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 261.6715
+      temperature: 261.3628
       moles:
-      - 19.459536
-      - 73.204926
+      - 19.436337
+      - 73.11765
       - 0
       - 0
       - 0
@@ -631,10 +631,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 289.94833
+      temperature: 289.8925
       moles:
-      - 21.584297
-      - 81.19808
+      - 21.580101
+      - 81.1823
       - 0
       - 0
       - 0
@@ -646,10 +646,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 280.9745
+      temperature: 280.8812
       moles:
-      - 20.909992
-      - 78.6614
+      - 20.902979
+      - 78.635025
       - 0
       - 0
       - 0
@@ -661,10 +661,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 247.64964
+      temperature: 247.33221
       moles:
-      - 18.40591
-      - 69.24129
+      - 18.382057
+      - 69.15155
       - 0
       - 0
       - 0
@@ -676,10 +676,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 201.43713
+      temperature: 201.21342
       moles:
-      - 14.933427
-      - 56.17813
+      - 14.916618
+      - 56.1149
       - 0
       - 0
       - 0
@@ -691,10 +691,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 235.92778
+      temperature: 235.73906
       moles:
-      - 17.52511
-      - 65.927795
+      - 17.51093
+      - 65.87445
       - 0
       - 0
       - 0
@@ -706,10 +706,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 194.79532
+      temperature: 194.69852
       moles:
-      - 14.434351
-      - 54.300655
+      - 14.427076
+      - 54.273293
       - 0
       - 0
       - 0
@@ -721,10 +721,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 109.13131
+      temperature: 109.00658
       moles:
-      - 7.99742
-      - 30.085533
+      - 7.9880466
+      - 30.050272
       - 0
       - 0
       - 0
@@ -736,10 +736,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 133.34027
+      temperature: 133.25572
       moles:
-      - 9.81652
-      - 36.928814
+      - 9.810167
+      - 36.904915
       - 0
       - 0
       - 0
@@ -751,10 +751,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 83.44949
+      temperature: 83.36276
       moles:
-      - 6.067647
-      - 22.82591
+      - 6.0611296
+      - 22.801392
       - 0
       - 0
       - 0
@@ -766,10 +766,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 201.28659
+      temperature: 201.20572
       moles:
-      - 14.922116
-      - 56.135582
+      - 14.9160385
+      - 56.112717
       - 0
       - 0
       - 0
@@ -781,10 +781,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 216.1464
+      temperature: 215.82288
       moles:
-      - 16.038706
-      - 60.336086
+      - 16.014397
+      - 60.244637
       - 0
       - 0
       - 0
@@ -796,10 +796,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 114.043564
+      temperature: 113.7484
       moles:
-      - 8.366533
-      - 31.474102
+      - 8.344355
+      - 31.39067
       - 0
       - 0
       - 0
@@ -811,10 +811,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 255.10657
+      temperature: 254.66467
       moles:
-      - 18.966236
-      - 71.349174
+      - 18.93303
+      - 71.224266
       - 0
       - 0
       - 0
@@ -826,10 +826,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 233.99014
+      temperature: 233.44717
       moles:
-      - 17.37951
-      - 65.380066
+      - 17.338713
+      - 65.22659
       - 0
       - 0
       - 0
@@ -841,10 +841,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 276.23868
+      temperature: 275.75497
       moles:
-      - 20.554134
-      - 77.32271
+      - 20.517788
+      - 77.185974
       - 0
       - 0
       - 0
@@ -856,10 +856,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 272.21964
+      temperature: 271.48856
       moles:
-      - 20.252136
-      - 76.186615
+      - 20.197203
+      - 75.979965
       - 0
       - 0
       - 0
@@ -871,10 +871,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 283.71667
+      temperature: 283.30313
       moles:
-      - 21.116043
-      - 79.436554
+      - 21.084969
+      - 79.31966
       - 0
       - 0
       - 0
@@ -886,10 +886,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 282.57544
+      temperature: 282.0662
       moles:
-      - 21.030289
-      - 79.11395
+      - 20.992025
+      - 78.97
       - 0
       - 0
       - 0
@@ -931,10 +931,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 196.16492
+      temperature: 196.08704
       moles:
-      - 14.537265
-      - 54.687805
+      - 14.531412
+      - 54.66579
       - 0
       - 0
       - 0
@@ -946,10 +946,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 88.92111
+      temperature: 88.65819
       moles:
-      - 6.478792
-      - 24.3726
+      - 6.459036
+      - 24.298279
       - 0
       - 0
       - 0
@@ -961,10 +961,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 195.6597
+      temperature: 195.34818
       moles:
-      - 14.499301
-      - 54.54499
+      - 14.475892
+      - 54.45693
       - 0
       - 0
       - 0
@@ -976,10 +976,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 267.04852
+      temperature: 266.95273
       moles:
-      - 19.863571
-      - 74.72487
+      - 19.856373
+      - 74.697784
       - 0
       - 0
       - 0
@@ -991,10 +991,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 286.16272
+      temperature: 286.13327
       moles:
-      - 21.29984
-      - 80.127975
+      - 21.297628
+      - 80.11965
       - 0
       - 0
       - 0
@@ -1006,10 +1006,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 291.28027
+      temperature: 291.2713
       moles:
-      - 21.684383
-      - 81.574585
+      - 21.683708
+      - 81.572044
       - 0
       - 0
       - 0
@@ -1021,10 +1021,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 292.65186
+      temperature: 292.6492
       moles:
-      - 21.787445
-      - 81.962296
+      - 21.787247
+      - 81.96155
       - 0
       - 0
       - 0
@@ -1036,10 +1036,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 293.02548
+      temperature: 293.0248
       moles:
-      - 21.815521
-      - 82.06792
+      - 21.815472
+      - 82.067726
       - 0
       - 0
       - 0
@@ -1051,10 +1051,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 153.8768
+      temperature: 153.57303
       moles:
-      - 11.359668
-      - 42.73399
+      - 11.336842
+      - 42.64812
       - 0
       - 0
       - 0
@@ -1066,10 +1066,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 229.52103
+      temperature: 229.27927
       moles:
-      - 17.043695
-      - 64.11676
+      - 17.02553
+      - 64.04842
       - 0
       - 0
       - 0
@@ -1081,10 +1081,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 275.04587
+      temperature: 274.89722
       moles:
-      - 20.464506
-      - 76.98553
+      - 20.453335
+      - 76.943504
       - 0
       - 0
       - 0
@@ -1096,10 +1096,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 284.00964
+      temperature: 283.8675
       moles:
-      - 21.138058
-      - 79.51936
+      - 21.127377
+      - 79.47919
       - 0
       - 0
       - 0
@@ -1111,10 +1111,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 274.27283
+      temperature: 274.1068
       moles:
-      - 20.406418
-      - 76.767
+      - 20.393944
+      - 76.72008
       - 0
       - 0
       - 0
@@ -1126,10 +1126,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 152.1266
+      temperature: 151.93686
       moles:
-      - 11.228155
-      - 42.23925
+      - 11.213897
+      - 42.18561
       - 0
       - 0
       - 0
@@ -1141,10 +1141,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 226.25981
+      temperature: 226.05438
       moles:
-      - 16.798641
-      - 63.194893
+      - 16.783207
+      - 63.13683
       - 0
       - 0
       - 0
@@ -1156,10 +1156,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 85.874794
+      temperature: 85.63762
       moles:
-      - 6.2498875
-      - 23.511482
+      - 6.232066
+      - 23.444439
       - 0
       - 0
       - 0
@@ -1171,10 +1171,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 185.4898
+      temperature: 185.02388
       moles:
-      - 13.735119
-      - 51.67021
+      - 13.700109
+      - 51.538506
       - 0
       - 0
       - 0
@@ -1186,10 +1186,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 264.33585
+      temperature: 264.1909
       moles:
-      - 19.659737
-      - 73.95806
+      - 19.648844
+      - 73.91708
       - 0
       - 0
       - 0
@@ -1201,10 +1201,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 285.55362
+      temperature: 285.43964
       moles:
-      - 21.254074
-      - 79.9558
+      - 21.245508
+      - 79.923584
       - 0
       - 0
       - 0
@@ -1216,10 +1216,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 291.21042
+      temperature: 291.12265
       moles:
-      - 21.679134
-      - 81.55484
+      - 21.672539
+      - 81.53004
       - 0
       - 0
       - 0
@@ -1231,10 +1231,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 292.69986
+      temperature: 292.637
       moles:
-      - 21.791054
-      - 81.97587
+      - 21.786327
+      - 81.9581
       - 0
       - 0
       - 0
@@ -1246,10 +1246,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 293.07224
+      temperature: 293.03748
       moles:
-      - 21.819035
-      - 82.08113
+      - 21.816422
+      - 82.071304
       - 0
       - 0
       - 0
@@ -1261,10 +1261,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 163.9945
+      temperature: 163.62509
       moles:
-      - 12.119928
-      - 45.594017
+      - 12.09217
+      - 45.48959
       - 0
       - 0
       - 0
@@ -1276,10 +1276,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 173.45364
+      temperature: 173.16055
       moles:
-      - 12.830704
-      - 48.267887
+      - 12.80868
+      - 48.185036
       - 0
       - 0
       - 0
@@ -1291,10 +1291,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 233.02826
+      temperature: 232.79773
       moles:
-      - 17.307236
-      - 65.10817
+      - 17.289913
+      - 65.04301
       - 0
       - 0
       - 0
@@ -1306,10 +1306,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 171.60693
+      temperature: 171.43732
       moles:
-      - 12.691938
-      - 47.745865
+      - 12.679193
+      - 47.697914
       - 0
       - 0
       - 0
@@ -1321,10 +1321,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 156.98149
+      temperature: 156.871
       moles:
-      - 11.592958
-      - 43.61161
+      - 11.584656
+      - 43.580376
       - 0
       - 0
       - 0
@@ -1336,10 +1336,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 160.10687
+      temperature: 160.02705
       moles:
-      - 11.8278055
-      - 44.49508
+      - 11.821807
+      - 44.472515
       - 0
       - 0
       - 0
@@ -1351,10 +1351,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 187.34341
+      temperature: 187.27672
       moles:
-      - 13.874403
-      - 52.194183
+      - 13.8693905
+      - 52.17533
       - 0
       - 0
       - 0
@@ -1366,10 +1366,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 182.34808
+      temperature: 182.34634
       moles:
-      - 13.499044
-      - 50.78212
+      - 13.498914
+      - 50.781628
       - 0
       - 0
       - 0
@@ -1381,10 +1381,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 182.49934
+      temperature: 182.39539
       moles:
-      - 13.510411
-      - 50.824883
+      - 13.502599
+      - 50.795494
       - 0
       - 0
       - 0
@@ -1396,10 +1396,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 140.3923
+      temperature: 140.38533
       moles:
-      - 10.34642
-      - 38.92225
+      - 10.345896
+      - 38.920277
       - 0
       - 0
       - 0
@@ -1411,10 +1411,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 140.58153
+      temperature: 140.4487
       moles:
-      - 10.360639
-      - 38.97574
+      - 10.350658
+      - 38.938194
       - 0
       - 0
       - 0
@@ -1426,10 +1426,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 83.36263
+      temperature: 83.34322
       moles:
-      - 6.06112
-      - 22.801357
+      - 6.0596614
+      - 22.79587
       - 0
       - 0
       - 0
@@ -1441,10 +1441,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 187.6243
+      temperature: 187.5806
       moles:
-      - 13.895509
-      - 52.273586
+      - 13.892225
+      - 52.26123
       - 0
       - 0
       - 0
@@ -1456,10 +1456,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 187.7974
+      temperature: 187.64276
       moles:
-      - 13.908515
-      - 52.32251
+      - 13.896895
+      - 52.2788
       - 0
       - 0
       - 0
@@ -1471,10 +1471,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 83.54944
+      temperature: 83.41152
       moles:
-      - 6.075156
-      - 22.85416
+      - 6.0647936
+      - 22.815176
       - 0
       - 0
       - 0
@@ -1486,10 +1486,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 80.741554
+      temperature: 80.65978
       moles:
-      - 5.864168
-      - 22.060444
+      - 5.8580236
+      - 22.037327
       - 0
       - 0
       - 0
@@ -1501,10 +1501,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 129.7406
+      temperature: 129.61484
       moles:
-      - 9.546036
-      - 35.911278
+      - 9.536585
+      - 35.875725
       - 0
       - 0
       - 0
@@ -1516,10 +1516,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 142.02316
+      temperature: 141.86783
       moles:
-      - 10.468966
-      - 39.383255
+      - 10.4572935
+      - 39.339344
       - 0
       - 0
       - 0
@@ -1531,10 +1531,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 142.03732
+      temperature: 141.88068
       moles:
-      - 10.470029
-      - 39.387253
+      - 10.45826
+      - 39.34298
       - 0
       - 0
       - 0
@@ -1546,10 +1546,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 129.80132
+      temperature: 129.64958
       moles:
-      - 9.550597
-      - 35.928436
+      - 9.539195
+      - 35.885544
       - 0
       - 0
       - 0
@@ -1561,10 +1561,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 80.85951
+      temperature: 80.71101
       moles:
-      - 5.8730307
-      - 22.093784
+      - 5.861873
+      - 22.05181
       - 0
       - 0
       - 0
@@ -1764,20 +1764,12 @@ entities:
   - pos: -11.5,0.5
     parent: 1
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 29
   type: GeneratorPlasma
   components:
   - pos: -10.5,0.5
     parent: 1
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 30
   type: PlasmaReinforcedWindowDirectional
   components:
@@ -1814,10 +1806,6 @@ entities:
   - pos: -12.5,-0.5
     parent: 1
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 35
   type: CableHV
   components:
@@ -1860,10 +1848,6 @@ entities:
   - pos: -12.5,-1.5
     parent: 1
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 42
   type: WallReinforced
   components:
@@ -2129,24 +2113,12 @@ entities:
   - pos: -1.5,3.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 85
   type: Firelock
   components:
   - pos: 0.5,3.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 86
   type: PlasmaReinforcedWindowDirectional
   components:
@@ -2229,10 +2201,6 @@ entities:
     pos: 4.5,-0.5
     parent: 1
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 98
   type: ComputerCrewMonitoring
   components:
@@ -2240,10 +2208,6 @@ entities:
     pos: 4.5,-1.5
     parent: 1
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 99
   type: ComputerPowerMonitoring
   components:
@@ -2251,20 +2215,12 @@ entities:
     pos: 4.5,0.5
     parent: 1
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 100
   type: ComputerSurveillanceWirelessCameraMonitor
   components:
   - pos: 3.5,1.5
     parent: 1
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 101
   type: ChairWood
   components:
@@ -2372,16 +2328,6 @@ entities:
   - pos: -1.5,-0.5
     parent: 1
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 116
   type: RandomSpawner
   components:
@@ -2414,32 +2360,24 @@ entities:
     type: Transform
   - solution: bucket
     type: Drink
-  - canCollide: False
-    type: Physics
 - uid: 121
   type: HydroponicsToolMiniHoe
   components:
   - pos: 3.2236018,-2.453125
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 122
   type: HydroponicsToolSpade
   components:
   - pos: 3.2548518,-2.484375
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 123
   type: HydroponicsToolHatchet
   components:
   - pos: 3.6142268,-2.34375
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 124
   type: Grille
   components:
@@ -2888,8 +2826,6 @@ entities:
   - pos: -8.714035,1.7457933
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 196
   type: MedicalBed
   components:
@@ -2902,16 +2838,12 @@ entities:
   - pos: -5.5,1.5
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 198
   type: CircuitImprinterMachineCircuitboard
   components:
   - pos: -8.593326,-2.609375
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 199
   type: Table
   components:
@@ -2930,24 +2862,18 @@ entities:
   - pos: -8.551888,-2.2077813
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 202
   type: AutolatheMachineCircuitboard
   components:
   - pos: -8.520638,-2.5202813
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 203
   type: ProtolatheMachineCircuitboard
   components:
   - pos: -8.499576,-2.265625
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 204
   type: GravityGeneratorMini
   components:
@@ -2966,10 +2892,6 @@ entities:
   - pos: 4.5,-4.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalEntry: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 206
   type: LockerBotanistFilled
   components:
@@ -2982,10 +2904,6 @@ entities:
   - pos: -5.5,-2.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 208
   type: Poweredlight
   components:
@@ -3005,8 +2923,6 @@ entities:
   - pos: -8.376535,1.5770168
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 210
   type: Poweredlight
   components:
@@ -3027,16 +2943,6 @@ entities:
   - pos: -7.5,-13.5
     parent: 1
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 212
   type: OreProcessor
   components:
@@ -3051,16 +2957,6 @@ entities:
     - Gold
     - Silver
     type: Lathe
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 213
   type: DisposalTrunk
   components:
@@ -3068,10 +2964,6 @@ entities:
     pos: -5.5,-7.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalEntry: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 214
   type: WallReinforced
   components:
@@ -4027,16 +3919,6 @@ entities:
     - Cloth
     - Durathread
     type: Lathe
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 358
   type: WallSolid
   components:
@@ -4364,10 +4246,6 @@ entities:
   - pos: 4.5,-4.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 411
   type: WardrobeMixedFilled
   components:
@@ -4399,10 +4277,6 @@ entities:
     pos: -5.5,-2.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalEntry: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 416
   type: RandomPosterLegit
   components:
@@ -4483,32 +4357,12 @@ entities:
   - pos: -2.5,-0.5
     parent: 1
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 429
   type: hydroponicsTray
   components:
   - pos: -3.5,-0.5
     parent: 1
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 430
   type: ToySpawner
   components:
@@ -4575,12 +4429,6 @@ entities:
   - pos: 6.5,-2.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4674,12 +4522,6 @@ entities:
   - pos: 7.5,-2.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4695,12 +4537,6 @@ entities:
   - pos: 8.5,-2.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4716,12 +4552,6 @@ entities:
   - pos: 8.5,-3.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4737,12 +4567,6 @@ entities:
   - pos: 9.5,-3.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4758,12 +4582,6 @@ entities:
   - pos: 9.5,-4.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4779,12 +4597,6 @@ entities:
   - pos: 9.5,-5.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4800,12 +4612,6 @@ entities:
   - pos: 9.5,-6.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4821,12 +4627,6 @@ entities:
   - pos: 9.5,-7.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4842,12 +4642,6 @@ entities:
   - pos: 9.5,-8.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4863,12 +4657,6 @@ entities:
   - pos: 8.5,-8.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4884,12 +4672,6 @@ entities:
   - pos: 8.5,-9.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4905,12 +4687,6 @@ entities:
   - pos: 7.5,-9.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4926,12 +4702,6 @@ entities:
   - pos: 6.5,-9.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4947,12 +4717,6 @@ entities:
   - pos: 5.5,-10.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4966,12 +4730,6 @@ entities:
   - pos: 5.5,-11.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -4985,12 +4743,6 @@ entities:
   - pos: 5.5,-12.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5004,12 +4756,6 @@ entities:
   - pos: 5.5,-13.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5023,12 +4769,6 @@ entities:
   - pos: 4.5,-13.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5042,12 +4782,6 @@ entities:
   - pos: 4.5,-14.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5061,12 +4795,6 @@ entities:
   - pos: 3.5,-14.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5080,12 +4808,6 @@ entities:
   - pos: 2.5,-14.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5099,12 +4821,6 @@ entities:
   - pos: 2.5,-15.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5118,12 +4834,6 @@ entities:
   - pos: 1.5,-15.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5137,12 +4847,6 @@ entities:
   - pos: -2.5,-15.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5156,12 +4860,6 @@ entities:
   - pos: -3.5,-15.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5175,12 +4873,6 @@ entities:
   - pos: -3.5,-14.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5194,12 +4886,6 @@ entities:
   - pos: -4.5,-14.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5213,12 +4899,6 @@ entities:
   - pos: 5.5,-1.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5232,12 +4912,6 @@ entities:
   - pos: 5.5,-0.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5251,12 +4925,6 @@ entities:
   - pos: 5.5,0.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5270,29 +4938,12 @@ entities:
   - pos: 5.5,1.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
-  - inputs:
-      Open: []
-      Close: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 484
   type: BlastDoorOpen
   components:
   - pos: 4.5,1.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5306,12 +4957,6 @@ entities:
   - pos: 4.5,2.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5325,12 +4970,6 @@ entities:
   - pos: 3.5,2.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5344,12 +4983,6 @@ entities:
   - pos: 2.5,2.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5363,12 +4996,6 @@ entities:
   - pos: 2.5,3.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5382,12 +5009,6 @@ entities:
   - pos: 1.5,3.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5401,12 +5022,6 @@ entities:
   - pos: -2.5,3.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5420,12 +5035,6 @@ entities:
   - pos: -3.5,3.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5439,12 +5048,6 @@ entities:
   - pos: -3.5,2.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5458,12 +5061,6 @@ entities:
   - pos: -4.5,2.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5479,8 +5076,6 @@ entities:
   - pos: 3,-2.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
   - outputs:
       Pressed:
       - port: Toggle
@@ -5574,12 +5169,6 @@ entities:
   - pos: -0.5,3.5
     parent: 1
     type: Transform
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -5763,8 +5352,6 @@ entities:
   - pos: 2.5,-2.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
   - outputs:
       Pressed:
       - port: Toggle
@@ -5930,8 +5517,6 @@ entities:
   - pos: 7.5,-8.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
   - outputs:
       Pressed:
       - port: Toggle
@@ -6067,53 +5652,30 @@ entities:
     pos: 8.5,-6
     parent: 1
     type: Transform
-  - heldPrefix: off
-    type: Item
-  - canCollide: False
-    type: Physics
 - uid: 559
   type: DrinkLemonadeGlass
   components:
   - pos: 4.648976,-10.465183
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 560
   type: DrinkLemonadeGlass
   components:
   - pos: 4.633351,-11.480808
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 561
   type: FoodBoxPizzaFilled
   components:
   - pos: -5.510355,-4.2520833
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 562
   type: KitchenReagentGrinder
   components:
   - pos: -6.5,-4.5
     parent: 1
     type: Transform
-  - containers:
-      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot {}
-      ReagentGrinder-entityContainerContainer: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 563
   type: CableApcExtension
   components:
@@ -6156,20 +5718,12 @@ entities:
   - pos: -5.5,-7.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 570
   type: DisposalUnit
   components:
   - pos: -5.5,-13.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 571
   type: Table
   components:
@@ -6200,48 +5754,30 @@ entities:
   - pos: -5.6569366,-10.159829
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 576
   type: DrinkGlass
   components:
   - pos: -5.2975616,-10.222329
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 577
   type: DrinkShaker
   components:
   - pos: -5.7038116,-10.675454
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 578
   type: DrinkShaker
   components:
   - pos: -5.2975616,-10.769204
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 579
   type: HandLabeler
   components:
   - pos: -5.5006866,-11.362954
     parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 580
   type: APCHyperCapacity
   components:
@@ -6378,10 +5914,6 @@ entities:
     pos: -5.5,-13.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalEntry: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 601
   type: DisposalJunctionFlipped
   components:
@@ -6389,50 +5921,30 @@ entities:
     pos: -5.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalJunction: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 602
   type: DisposalJunctionFlipped
   components:
   - pos: -0.5,-5.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalJunction: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 603
   type: DisposalJunction
   components:
   - pos: -0.5,-6.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalJunction: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 604
   type: DisposalPipe
   components:
   - pos: -0.5,-4.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 605
   type: DisposalPipe
   components:
   - pos: -0.5,-3.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 606
   type: DisposalPipe
   components:
@@ -6440,10 +5952,6 @@ entities:
     pos: 3.5,-5.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 607
   type: DisposalPipe
   components:
@@ -6451,10 +5959,6 @@ entities:
     pos: 2.5,-5.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 608
   type: DisposalPipe
   components:
@@ -6462,10 +5966,6 @@ entities:
     pos: 1.5,-5.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 609
   type: DisposalPipe
   components:
@@ -6473,10 +5973,6 @@ entities:
     pos: 0.5,-5.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 610
   type: DisposalPipe
   components:
@@ -6484,10 +5980,6 @@ entities:
     pos: -4.5,-6.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 611
   type: DisposalPipe
   components:
@@ -6495,10 +5987,6 @@ entities:
     pos: -3.5,-6.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 612
   type: DisposalPipe
   components:
@@ -6506,10 +5994,6 @@ entities:
     pos: -2.5,-6.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 613
   type: DisposalPipe
   components:
@@ -6517,10 +6001,6 @@ entities:
     pos: -1.5,-6.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 614
   type: DisposalPipe
   components:
@@ -6528,10 +6008,6 @@ entities:
     pos: -0.5,-7.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 615
   type: DisposalPipe
   components:
@@ -6539,10 +6015,6 @@ entities:
     pos: -0.5,-8.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 616
   type: DisposalPipe
   components:
@@ -6550,10 +6022,6 @@ entities:
     pos: -0.5,-9.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 617
   type: DisposalPipe
   components:
@@ -6561,10 +6029,6 @@ entities:
     pos: -0.5,-10.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 618
   type: DisposalPipe
   components:
@@ -6572,10 +6036,6 @@ entities:
     pos: -0.5,-11.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 619
   type: DisposalPipe
   components:
@@ -6583,10 +6043,6 @@ entities:
     pos: -1.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 620
   type: DisposalPipe
   components:
@@ -6594,10 +6050,6 @@ entities:
     pos: -2.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 621
   type: DisposalPipe
   components:
@@ -6605,10 +6057,6 @@ entities:
     pos: -3.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 622
   type: DisposalPipe
   components:
@@ -6616,10 +6064,6 @@ entities:
     pos: -4.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 623
   type: DisposalPipe
   components:
@@ -6627,10 +6071,6 @@ entities:
     pos: -6.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 624
   type: DisposalPipe
   components:
@@ -6638,10 +6078,6 @@ entities:
     pos: -7.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 625
   type: DisposalPipe
   components:
@@ -6649,10 +6085,6 @@ entities:
     pos: -8.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 626
   type: DisposalPipe
   components:
@@ -6660,10 +6092,6 @@ entities:
     pos: -9.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 627
   type: DisposalPipe
   components:
@@ -6671,10 +6099,6 @@ entities:
     pos: -10.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 628
   type: DisposalBend
   components:
@@ -6682,10 +6106,6 @@ entities:
     pos: -0.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 629
   type: DisposalBend
   components:
@@ -6693,20 +6113,12 @@ entities:
     pos: -11.5,-12.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 630
   type: DisposalBend
   components:
   - pos: -11.5,-11.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 631
   type: DisposalPipe
   components:
@@ -6714,10 +6126,6 @@ entities:
     pos: -12.5,-11.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 632
   type: DisposalBend
   components:
@@ -6725,10 +6133,6 @@ entities:
     pos: -5.5,-6.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 633
   type: DisposalBend
   components:
@@ -6736,20 +6140,12 @@ entities:
     pos: 4.5,-5.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 634
   type: DisposalBend
   components:
   - pos: -0.5,-2.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 635
   type: DisposalPipe
   components:
@@ -6757,10 +6153,6 @@ entities:
     pos: -4.5,-2.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 636
   type: DisposalPipe
   components:
@@ -6768,10 +6160,6 @@ entities:
     pos: -3.5,-2.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 637
   type: DisposalPipe
   components:
@@ -6779,10 +6167,6 @@ entities:
     pos: -2.5,-2.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 638
   type: DisposalPipe
   components:
@@ -6790,10 +6174,6 @@ entities:
     pos: -1.5,-2.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 639
   type: BarSign
   components:
@@ -6848,12 +6228,6 @@ entities:
   - pos: 2.5,-6.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 647
   type: Airlock
   components:
@@ -6866,52 +6240,30 @@ entities:
   - pos: 2.5,-5.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 649
   type: FirelockEdge
   components:
   - pos: -1.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 650
   type: FirelockEdge
   components:
   - pos: -0.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 651
   type: FirelockEdge
   components:
   - pos: 0.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 652
   type: FirelockEdge
   components:
   - pos: 1.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 653
   type: FirelockEdge
   components:
@@ -6919,10 +6271,6 @@ entities:
     pos: -1.5,-4.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 654
   type: FirelockEdge
   components:
@@ -6930,10 +6278,6 @@ entities:
     pos: -0.5,-4.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 655
   type: FirelockEdge
   components:
@@ -6941,10 +6285,6 @@ entities:
     pos: 0.5,-4.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 656
   type: FirelockEdge
   components:
@@ -6952,10 +6292,6 @@ entities:
     pos: 1.5,-4.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 657
   type: FirelockEdge
   components:
@@ -6963,10 +6299,6 @@ entities:
     pos: -2.5,-7.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 658
   type: FirelockEdge
   components:
@@ -6974,10 +6306,6 @@ entities:
     pos: -2.5,-6.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 659
   type: FirelockEdge
   components:
@@ -6985,10 +6313,6 @@ entities:
     pos: -2.5,-5.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 660
   type: FirelockEdge
   components:
@@ -6996,10 +6320,6 @@ entities:
     pos: -1.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 661
   type: FirelockEdge
   components:
@@ -7007,10 +6327,6 @@ entities:
     pos: -0.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 662
   type: FirelockEdge
   components:
@@ -7018,10 +6334,6 @@ entities:
     pos: 0.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 663
   type: FirelockEdge
   components:
@@ -7029,50 +6341,30 @@ entities:
     pos: 1.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 664
   type: FirelockEdge
   components:
   - pos: -1.5,-4.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 665
   type: FirelockEdge
   components:
   - pos: -0.5,-4.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 666
   type: FirelockEdge
   components:
   - pos: 0.5,-4.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 667
   type: FirelockEdge
   components:
   - pos: 1.5,-4.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 668
   type: FirelockEdge
   components:
@@ -7080,10 +6372,6 @@ entities:
     pos: -3.5,-13.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 669
   type: FirelockEdge
   components:
@@ -7091,10 +6379,6 @@ entities:
     pos: -3.5,-12.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 670
   type: FirelockEdge
   components:
@@ -7102,10 +6386,6 @@ entities:
     pos: -3.5,-11.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 671
   type: FirelockEdge
   components:
@@ -7113,10 +6393,6 @@ entities:
     pos: -3.5,-10.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 672
   type: FirelockEdge
   components:
@@ -7124,10 +6400,6 @@ entities:
     pos: -3.5,-9.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 673
   type: FirelockEdge
   components:
@@ -7135,10 +6407,6 @@ entities:
     pos: -2.5,-14.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 674
   type: FirelockEdge
   components:
@@ -7146,10 +6414,6 @@ entities:
     pos: -1.5,-14.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 675
   type: FirelockEdge
   components:
@@ -7157,10 +6421,6 @@ entities:
     pos: -0.5,-14.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 676
   type: FirelockEdge
   components:
@@ -7168,10 +6428,6 @@ entities:
     pos: 0.5,-14.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 677
   type: FirelockEdge
   components:
@@ -7179,10 +6435,6 @@ entities:
     pos: 1.5,-14.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 678
   type: FirelockEdge
   components:
@@ -7190,10 +6442,6 @@ entities:
     pos: 2.5,-9.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 679
   type: FirelockEdge
   components:
@@ -7201,10 +6449,6 @@ entities:
     pos: 2.5,-10.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 680
   type: FirelockEdge
   components:
@@ -7212,10 +6456,6 @@ entities:
     pos: 2.5,-11.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 681
   type: FirelockEdge
   components:
@@ -7223,10 +6463,6 @@ entities:
     pos: 2.5,-12.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 682
   type: FirelockEdge
   components:
@@ -7234,60 +6470,36 @@ entities:
     pos: 2.5,-13.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 683
   type: FirelockEdge
   components:
   - pos: -2.5,2.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 684
   type: FirelockEdge
   components:
   - pos: -1.5,2.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 685
   type: FirelockEdge
   components:
   - pos: -0.5,2.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 686
   type: FirelockEdge
   components:
   - pos: 0.5,2.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 687
   type: FirelockEdge
   components:
   - pos: 1.5,2.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 688
   type: FirelockEdge
   components:
@@ -7295,10 +6507,6 @@ entities:
     pos: 2.5,-2.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 689
   type: FirelockEdge
   components:
@@ -7306,10 +6514,6 @@ entities:
     pos: 2.5,-1.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 690
   type: FirelockEdge
   components:
@@ -7317,10 +6521,6 @@ entities:
     pos: 2.5,-0.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 691
   type: FirelockEdge
   components:
@@ -7328,10 +6528,6 @@ entities:
     pos: 2.5,0.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 692
   type: FirelockEdge
   components:
@@ -7339,82 +6535,42 @@ entities:
     pos: 2.5,1.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 693
   type: Firelock
   components:
   - pos: -6.5,-0.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 694
   type: Firelock
   components:
   - pos: -6.5,-12.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 695
   type: Firelock
   components:
   - pos: -9.5,-12.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 696
   type: Firelock
   components:
   - pos: -7.5,-11.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 697
   type: Firelock
   components:
   - pos: -8.5,-7.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 698
   type: Firelock
   components:
   - pos: -4.5,-8.5
     parent: 1
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - enabled: False
-    type: Occluder
-  - canCollide: False
-    type: Physics
 - uid: 699
   type: Table
   components:
@@ -7867,6 +7023,12 @@ entities:
   type: CableTerminal
   components:
   - pos: -12.5,0.5
+    parent: 1
+    type: Transform
+- uid: 764
+  type: ThermomachineHeaterMachineCircuitBoard
+  components:
+  - pos: -2.4967012,-5.4999533
     parent: 1
     type: Transform
 - uid: 765
