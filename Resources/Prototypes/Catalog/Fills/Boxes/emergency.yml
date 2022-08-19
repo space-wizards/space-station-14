@@ -103,6 +103,7 @@
       - state: heart
   - type: Item
     heldPrefix: hug
+    size: 41
   - type: StorageFill
     contents:
       - id: ClothingMaskBreath
@@ -112,8 +113,7 @@
       - id: Flare
       - id: FoodTinMRE
       - id: CrowbarRed
-  - type: Item
-    size: 41
+
 
 - type: entity
   name: extended-capacity survival box
