@@ -509,7 +509,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         var sourceMapId = transformSource.MapID;
         var sourceCoords = transformSource.Coordinates;
 
-        foreach (var (transformComponent, chatListeners) in EntityQuery<TransformComponent, ChatListenerComponent>())
+        foreach (var (chatListeners, transformComponent) in EntityQuery<ChatListenerComponent, TransformComponent>())
         {
             if (source == chatListeners.Owner)
                 continue;

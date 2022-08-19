@@ -12,6 +12,6 @@ namespace Content.Server.Chat.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hearingRange")]
-        public int HearingRange = 3;
+        public int HearingRange = 7;
     }
 }

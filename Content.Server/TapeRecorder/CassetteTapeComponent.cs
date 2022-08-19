@@ -13,7 +13,7 @@ namespace Content.Server.TapeRecorder
         /// A list of all recorded messages with timestamps
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        public List<(float MessageTimeStamp, string Message)> RecordedMessages = new ();
+        public List<(float MessageTimeStamp, string Message)> RecordedMessages = new();
 
         public CancellationTokenSource? CancelToken = null;
 
@@ -22,7 +22,7 @@ namespace Content.Server.TapeRecorder
         public bool Unspooled = false;
 
         /// <summary>
-        ///Our current position in the "tape"
+        /// Our current position in the "tape"
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public float TimeStamp;

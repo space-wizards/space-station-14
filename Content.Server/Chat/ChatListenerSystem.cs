@@ -3,9 +3,10 @@ using Content.Shared.Chat;
 namespace Content.Server.Chat
 {
     /// <summary>
-    /// Event raised on entitys with the "ChatListener" component when they hear a nearby message
+    /// Event raised on entities with the "ChatListener" component when they hear a nearby message
     /// </summary>
-    public sealed class ChatMessageHeardNearbyEvent : EntityEventArgs
+    [ByRefEvent]
+    public struct ChatMessageHeardNearbyEvent
     {
         public ChatChannel Channel;
 
