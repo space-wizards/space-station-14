@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Matches can once again be lit using match boxes., type: Fix}
-  id: 1672
-  time: '2022-06-09T02:39:29.0000000+00:00'
 - author: lapatison
   changes:
   - {message: changed color of opened airlock maint. panel, type: Add}
@@ -2935,3 +2930,9 @@ Entries:
   - {message: Roundstart bag filling sounds should no longer play., type: Fix}
   id: 2171
   time: '2022-08-18T02:34:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Machine boards now have different appearances depending on department.,
+    type: Tweak}
+  id: 2172
+  time: '2022-08-19T00:10:20.0000000+00:00'
