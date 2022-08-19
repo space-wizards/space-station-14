@@ -4,10 +4,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.MachineLinking.Components;
 
 /// <summary>
-/// Invokes its port when dropped or if its user goes crit/dies.
+/// For devices that send a signal when you let go or drop them (dead man's switches)
 /// </summary>
 [RegisterComponent]
-public sealed class DeadMansSwitchComponent : Component
+public sealed class ReleaseSignallerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Armed;

@@ -148,12 +148,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 7
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 2
+        - ReagentId: Potassium
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: Produce
@@ -331,11 +333,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 14
+        maxVol: 18
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Vitamin
+          Quantity: 4
+        # Juicy!
+        - ReagentId: Water
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi

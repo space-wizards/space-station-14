@@ -16,9 +16,9 @@
   parent: BaseItem
   id: DeadMansSwitch
   name: dead man's switch
-  description: A handheld device that activates if you stop gripping it. For the up and coming suicide bomber.
+  description: A handheld device that activates when you stop gripping it. For the up and coming suicide bomber.
   components:
     - type: Sprite
       sprite: Objects/Devices/signaller.rsi
       state: signaller
-    - type: DeadMansSwitch
+    - type: ReleaseSignaller
