@@ -38,3 +38,10 @@
     equippedPrefix: unlit
   - type: Item
     size: 1
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 15

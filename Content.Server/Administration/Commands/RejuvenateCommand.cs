@@ -5,13 +5,12 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
-using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Traits.Smoker;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.Jittering;
-using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.StatusEffect;
 using Robust.Server.Player;
@@ -63,9 +62,14 @@ namespace Content.Server.Administration.Commands
             // TODO holy shit make this an event my man!
             EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target);
 
-            if(entMan.TryGetComponent(target , out ThirstComponent? thirst))
+            if (entMan.TryGetComponent(target, out ThirstComponent? thirst))
             {
                 EntitySystem.Get<ThirstSystem>().ResetThirst(thirst);
+            }
+
+            if (entMan.TryGetComponent(target, out SmokerTraitComponent? smoker))
+            {
+                EntitySystem.Get<SmokerTraitSystem>().ResetCraving(smoker);
             }
 
             if (entMan.TryGetComponent(target, out FlammableComponent? flammable))

@@ -28,8 +28,8 @@
       smokable:
         maxVol: 20
         reagents:
-          - ReagentId: THC
-            Quantity: 10
+        - ReagentId: THC
+          Quantity: 10
 
 - type: entity
   id: Blunt
@@ -61,5 +61,7 @@
       smokable:
         maxVol: 20
         reagents:
-          - ReagentId: THC
-            Quantity: 10
+        - ReagentId: THC
+          Quantity: 10
+        - ReagentId: Nicotine # Blunts are wrapped in a tobacco leaf
+          Quantity: 5

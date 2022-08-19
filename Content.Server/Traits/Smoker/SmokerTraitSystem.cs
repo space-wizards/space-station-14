@@ -1,4 +1,3 @@
-using Content.Server.Body.Components;
 using Content.Shared.Alert;
 using Content.Shared.Movement.Systems;
 
@@ -28,6 +27,48 @@ public sealed class SmokerTraitSystem : EntitySystem
         SubscribeLocalEvent<SmokerTraitComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<SmokerTraitComponent, ComponentStartup>(OnComponentStartup);
     }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        _accumulatedFrameTime += frameTime;
+
+        if (_accumulatedFrameTime > 1)
+        {
+            foreach (var component in EntityManager.EntityQuery<SmokerTraitComponent>())
+            {
+                UpdateCraving(component, 1f);
+            }
+
+            _accumulatedFrameTime -= 1;
+        }
+    }
+
+    /// <summary>
+    ///     Adds craving to the component. Can be negative to remove craving.
+    /// </summary>
+    public void UpdateCraving(SmokerTraitComponent component, float amount)
+    {
+        component.CurrentCraving = Math.Clamp(component.CurrentCraving + amount, 0f, MaxCraving);
+
+        var threshold = GetThreshold(component.CurrentCraving);
+        if (threshold != component.CurrentThreshold)
+        {
+            component.CurrentThreshold = threshold;
+            UpdateEffects(component);
+        }
+    }
+
+    /// <summary>
+    ///     Resets craving to zero.
+    /// </summary>
+    public void ResetCraving(SmokerTraitComponent component)
+    {
+        component.CurrentCraving = 0f;
+        UpdateEffects(component);
+    }
+
     private void OnComponentStartup(EntityUid uid, SmokerTraitComponent component, ComponentStartup args)
     {
         component.CurrentCraving = 0f;
@@ -50,43 +91,6 @@ public sealed class SmokerTraitSystem : EntitySystem
             _alerts.ShowAlert(component.Owner, alertId);
         else
             _alerts.ClearAlertCategory(component.Owner, AlertCategory.NicotineCraving);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        _accumulatedFrameTime += frameTime;
-
-        if (_accumulatedFrameTime > 1)
-        {
-            foreach (var component in EntityManager.EntityQuery<SmokerTraitComponent>())
-            {
-                if (!EntityManager.TryGetComponent<BloodstreamComponent>(component.Owner, out var bloodstream))
-                {
-                    Logger.Debug("Failed to get BloodstreamComponent");
-                }
-                else
-                {
-                    Logger.Debug("--------------------------------------------");
-                    foreach (var reagent in bloodstream.BloodSolution.Contents)
-                    {
-                        Logger.Debug($"{reagent.ReagentId}: {reagent.Quantity}");
-                    }
-                }
-
-                component.CurrentCraving += 1f;
-                component.CurrentCraving = Math.Min(component.CurrentCraving, MaxCraving); // Limit craving
-
-                var threshold = GetThreshold(component.CurrentCraving);
-                if (threshold != component.CurrentThreshold)
-                {
-                    component.CurrentThreshold = threshold;
-                    UpdateEffects(component);
-                }
-            }
-            _accumulatedFrameTime -= 1;
-        }
     }
 
     private static CravingThreshold GetThreshold(float amount)
