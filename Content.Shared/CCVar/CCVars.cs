@@ -186,7 +186,7 @@ namespace Content.Shared.CCVar
         /// If roles should be restricted based on time.
         /// </summary>
         public static readonly CVarDef<bool>
-            GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+            GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
@@ -823,7 +823,7 @@ namespace Content.Shared.CCVar
         ///     The loc string to display as a disconnect reason when someone is not whitelisted.
         /// </summary>
         public static readonly CVarDef<string> WhitelistReason =
-            CVarDef.Create("whitelist.reason", "whitelist-not-whitelisted", CVar.SERVERONLY);
+            CVarDef.Create("whitelist.reason", "whitelist-not-whitelisted-or", CVar.SERVERONLY);
 
         /*
          * VOTE
