@@ -59,7 +59,7 @@ public sealed class ReleaseSignallerSystem : EntitySystem
         component.Armed = false;
         if(EntityManager.TryGetComponent<ReleaseSignallerHolderComponent>(args.User, out var holderComp))
             holderComp.Switches.Remove(component);
-        _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-self", ("device", uid)), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
+        _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-self", ("device", uid)), args.User, Filter.Entities(args.User), PopupType.MediumCaution);
         _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-other", ("device", uid), ("person", args.User)), args.User, Filter.PvsExcept(args.User), PopupType.MediumCaution);
         args.Handled = true;
     }
@@ -77,7 +77,7 @@ public sealed class ReleaseSignallerSystem : EntitySystem
         {
             _signalSystem.InvokePort(uid, component.Port);
             component.Armed = false;
-            _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-self", ("device", uid)), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-self", ("device", uid)), args.User, Filter.Entities(args.User), PopupType.MediumCaution);
             _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-other", ("device", uid), ("person", args.User)), args.User, Filter.PvsExcept(args.User), PopupType.MediumCaution);
         }
     }
