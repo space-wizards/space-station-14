@@ -15,7 +15,9 @@ public sealed class NPCRangedCombatComponent : Component
     public EntityUid Target;
 
     [ViewVariables]
-    public CombatStatus Status = CombatStatus.TargetNormal;
+    public CombatStatus Status = CombatStatus.Normal;
+
+    // Most of the below is to deal with turrets.
 
     /// <summary>
     /// If null it will instantly turn.
@@ -44,7 +46,7 @@ public sealed class NPCRangedCombatComponent : Component
     /// Delay after target is in LOS before we start shooting.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float ShootDelay = 0.1f;
+    public float ShootDelay = 0.2f;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float ShootAccumulator;

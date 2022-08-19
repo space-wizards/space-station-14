@@ -79,19 +79,12 @@ public sealed class MeleeOperator : HTNOperator
             {
                 switch (combat.Status)
                 {
-                    case CombatStatus.TargetNormal:
+                    case CombatStatus.Normal:
                         status = HTNOperatorStatus.Continuing;
                         break;
-                    case CombatStatus.TargetCrit:
-                    case CombatStatus.TargetDead:
-                        status = HTNOperatorStatus.Finished;
-                        break;
-                    case CombatStatus.TargetUnreachable:
-                    case CombatStatus.NoWeapon:
+                    default:
                         status = HTNOperatorStatus.Failed;
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
             }
         }

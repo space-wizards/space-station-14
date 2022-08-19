@@ -52,7 +52,7 @@ public sealed partial class NPCCombatSystem
 
     private void Attack(NPCMeleeCombatComponent component, EntityQuery<TransformComponent> xformQuery)
     {
-        component.Status = CombatStatus.TargetNormal;
+        component.Status = CombatStatus.Normal;
 
         // TODO: Also need to co-ordinate with steering to keep in range.
         // For now I've just moved the utlity version over.
@@ -85,15 +85,5 @@ public sealed partial class NPCCombatSystem
         }
 
         _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, component.Target);
-
-        if (TryComp<MobStateComponent>(component.Target, out var mobState))
-        {
-            component.Status = mobState.CurrentState switch
-            {
-                DamageState.Critical => CombatStatus.TargetCrit,
-                DamageState.Dead => CombatStatus.TargetDead,
-                _ => component.Status
-            };
-        }
     }
 }

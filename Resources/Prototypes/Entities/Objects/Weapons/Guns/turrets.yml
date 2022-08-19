@@ -1,5 +1,7 @@
 - type: entity
   id: WeaponTurretSyndicate
+  name: ballistic turret
+  suffix: Syndicate
   parent: BaseStructure
   desc: A ballistic machine gun auto-turret.
   components:
@@ -8,9 +10,11 @@
     sprite: Objects/Weapons/Guns/turrets.rsi
     layers:
       - state: syndie_lethal
+  - type: Clickable
+  - type: InteractionOutline
   - type: CombatMode
   - type: Gun
-    fireRate: 7
+    fireRate: 6
     selectedMode: FullAuto
     availableModes:
       - FullAuto

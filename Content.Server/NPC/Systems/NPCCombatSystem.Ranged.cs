@@ -1,7 +1,5 @@
 using Content.Server.NPC.Components;
-using Content.Server.Weapon.Ranged.Systems;
 using Content.Shared.CombatMode;
-using Content.Shared.Interaction;
 using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Systems;
@@ -18,7 +16,28 @@ public sealed partial class NPCCombatSystem
 
     private void InitializeRanged()
     {
+        SubscribeLocalEvent<NPCRangedCombatComponent, ComponentStartup>(OnRangedStartup);
+        SubscribeLocalEvent<NPCRangedCombatComponent, ComponentShutdown>(OnRangedShutdown);
+    }
 
+    private void OnRangedStartup(EntityUid uid, NPCRangedCombatComponent component, ComponentStartup args)
+    {
+        if (TryComp<SharedCombatModeComponent>(uid, out var combat))
+        {
+            combat.IsInCombatMode = true;
+        }
+        else
+        {
+            component.Status = CombatStatus.Unspecified;
+        }
+    }
+
+    private void OnRangedShutdown(EntityUid uid, NPCRangedCombatComponent component, ComponentShutdown args)
+    {
+        if (TryComp<SharedCombatModeComponent>(uid, out var combat))
+        {
+            combat.IsInCombatMode = false;
+        }
     }
 
     private void UpdateRanged(float frameTime)
@@ -29,6 +48,9 @@ public sealed partial class NPCCombatSystem
 
         foreach (var (comp, xform) in EntityQuery<NPCRangedCombatComponent, TransformComponent>())
         {
+            if (comp.Status == CombatStatus.Unspecified)
+                continue;
+
             if (!xformQuery.TryGetComponent(comp.Target, out var targetXform) ||
                 !bodyQuery.TryGetComponent(comp.Target, out var targetBody))
             {
@@ -67,6 +89,8 @@ public sealed partial class NPCCombatSystem
             var distance = (targetPos - worldPos).Length;
             var oldInLos = comp.TargetInLOS;
 
+            // TODO: Should be doing these raycasts in parallel
+            // Ideally we'd have 2 steps, 1. to go over the normal details for shooting and then 2. to handle beep / rotate / shoot
             if (comp.LOSAccumulator > UnoccludedCooldown)
             {
                 comp.LOSAccumulator -= UnoccludedCooldown;
@@ -136,7 +160,6 @@ public sealed partial class NPCCombatSystem
             if (!_gun.CanShoot(gun))
                 continue;
 
-            // TODO: Need CanShoot or something for firerate
             EntityCoordinates targetCordinates;
 
             if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var mapGrid))

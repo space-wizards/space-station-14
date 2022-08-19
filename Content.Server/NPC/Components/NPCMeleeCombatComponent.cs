@@ -15,33 +15,28 @@ public sealed class NPCMeleeCombatComponent : Component
     public EntityUid Target;
 
     [ViewVariables]
-    public CombatStatus Status = CombatStatus.TargetNormal;
+    public CombatStatus Status = CombatStatus.Normal;
 }
 
 public enum CombatStatus : byte
 {
+    /// <summary>
+    /// Due to some generic reason we are unable to attack the target.
+    /// </summary>
+    Unspecified,
+
     /// <summary>
     /// Set if we can't reach the target for whatever reason.
     /// </summary>
     TargetUnreachable,
 
     /// <summary>
-    /// Set if the target is valid but still alive.
-    /// </summary>
-    TargetNormal,
-
-    /// <summary>
-    /// Set if the target is crit.
-    /// </summary>
-    TargetCrit,
-
-    /// <summary>
-    /// Set if the target is dead.
-    /// </summary>
-    TargetDead,
-
-    /// <summary>
     /// Set if the weapon we were assigned is no longer valid.
     /// </summary>
     NoWeapon,
+
+    /// <summary>
+    /// No dramas.
+    /// </summary>
+    Normal,
 }
