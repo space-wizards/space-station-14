@@ -294,5 +294,13 @@ namespace Content.Server.Gravity.EntitySystems
         {
             SetSwitchedOn(uid, component, args.On);
         }
+
+        public void DepowerGenerator(EntityUid uid, GravityGeneratorComponent component)
+        {
+            component.Charge = 0;
+            component.SwitchedOn = false;
+            UpdateGravityActive(component, false);
+            UpdateState(component, Comp<ApcPowerReceiverComponent>(uid));
+        }
     }
 }

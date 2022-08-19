@@ -304,6 +304,19 @@ namespace Content.Server.Atmos.EntitySystems
             return sharer.Temperature;
         }
 
+        public void ForceTemperature(TileAtmosphere tileReceiver, float newTemp)
+        {
+            if (tileReceiver.Air is not { } receiver)
+                return;
+
+            if (receiver.Immutable)
+                return;
+
+            receiver.Temperature = newTemp;
+
+            return;
+        }
+
         /// <summary>
         ///     Shares temperature between a gas mixture and an abstract sharer, taking a conduction coefficient into account.
         /// </summary>

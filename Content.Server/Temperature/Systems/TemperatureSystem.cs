@@ -128,12 +128,12 @@ namespace Content.Server.Temperature.Systems
                     break;
 
                 // Cold weak.
-                case <= 292 and > 280:
+                case <= 304.8f and > 280:
                     _alertsSystem.ShowAlert(uid, AlertType.Cold, 1);
                     break;
 
                 // Safe.
-                case <= 327 and > 292:
+                case <= 327 and > 304.8f:
                     _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
                     break;
 

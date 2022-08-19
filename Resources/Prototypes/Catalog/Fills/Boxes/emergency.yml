@@ -12,6 +12,12 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: CrowbarRed
+  - type: Item
+    size: 41
+  - type: Storage
+    capacity: 40
+    size: 10
   - type: Sprite
     layers:
       - state: internals
@@ -31,10 +37,13 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: CrowbarRed
   - type: Sprite
     layers:
       - state: internals
       - state: extendedtank
+  - type: Item
+    size: 41
 
 - type: entity
   name: survival box
@@ -51,10 +60,13 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: CrowbarRed
   - type: Sprite
     layers:
       - state: internals
       - state: emergencytank
+  - type: Item
+    size: 41
 
 - type: entity
   name: survival box
@@ -71,10 +83,13 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: CrowbarRed
   - type: Sprite
     layers:
       - state: internals
       - state: emergencytank
+  - type: Item
+    size: 41
 
 - type: entity
   name: box of hugs
@@ -96,6 +111,9 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: CrowbarRed
+  - type: Item
+    size: 41
 
 - type: entity
   name: extended-capacity survival box
@@ -111,7 +129,10 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: CrowbarRed
   - type: Sprite
     layers:
       - state: internals
       - state: extendedtank
+  - type: Item
+    size: 41
