@@ -1,4 +1,4 @@
-<BoxContainer xmlns="https://spacestation14.io">
+<BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True">
     <Collapsible Orientation="Vertical">
         <CollapsibleHeading Name="SensorAddress" />
         <CollapsibleBody Margin="2">

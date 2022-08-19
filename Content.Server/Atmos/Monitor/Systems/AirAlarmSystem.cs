@@ -344,20 +344,11 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
             {
-                SetMode(uid, addr, AirAlarmMode.None, true);
-                // set mode to off to mimic the vents/scrubbers being turned off
-                // update UI
-                //
-                // no, the mode isn't processed here - it's literally just
-                // set to what mimics 'off'
+                SetMode(uid, addr, AirAlarmMode.None, true, false);
             }
             else if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
             {
-                // if the mode is still set to off, set it to filtering instead
-                // alternatively, set it to the last saved mode
-                //
-                // no, this still doesn't execute the mode
-                SetMode(uid, addr, AirAlarmMode.Filtering, true);
+                SetMode(uid, addr, AirAlarmMode.Filtering, true, false);
             }
 
             UpdateUI(uid, component);
