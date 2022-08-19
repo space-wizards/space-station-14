@@ -9,7 +9,7 @@ command-whitelistadd-not-found = Unable to find '{$username}'
 
 command-whitelistremove-description = Removes the player with the given username from the server whitelist.
 command-whitelistremove-help = whitelistremove <username>
-command-whitelistremove-existing = {$username} not on the whitelist
+command-whitelistremove-existing = {$username} is not on the whitelist!
 command-whitelistremove-removed = {$username} removed from the whitelist
 command-whitelistremove-not-found = Unable to find '{$username}'
 
