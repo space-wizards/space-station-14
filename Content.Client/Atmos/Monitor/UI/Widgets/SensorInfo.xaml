@@ -3,19 +3,23 @@
     <Collapsible Orientation="Vertical">
         <CollapsibleHeading Name="SensorAddress" />
         <CollapsibleBody>
-            <RichTextLabel Name="PressureLabel"></RichTextLabel>
-            <RichTextLabel Name="TemperatureLabel"></RichTextLabel>
-            <RichTextLabel Name="TotalMolesLabel" />
-            <RichTextLabel Name="AlarmStateLabel" />
-            <BoxContainer Name="GasContainer" />
-            <Collapsible Orientation="Vertical" Margin="2">
-                <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-thresholds'}" />
-                <CollapsibleBody>
-                    <Control Name="PressureThresholdContainer" />
-                    <Control Name="TemperatureThresholdContainer" />
-                    <BoxContainer Name="GasThresholds" Orientation="Vertical" />
-                </CollapsibleBody>
-            </Collapsible>
+            <BoxContainer>
+                <RichTextLabel Name="PressureLabel"></RichTextLabel>
+                <RichTextLabel Name="TemperatureLabel"></RichTextLabel>
+                <RichTextLabel Name="TotalMolesLabel" />
+                <RichTextLabel Name="AlarmStateLabel" />
+                <BoxContainer Name="GasContainer" />
+                <Collapsible Orientation="Vertical" Margin="2">
+                    <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-thresholds'}" />
+                    <CollapsibleBody>
+                        <BoxContainer Orientation="Vertical">
+                            <Control Name="PressureThresholdContainer" />
+                            <Control Name="TemperatureThresholdContainer" />
+                            <BoxContainer Name="GasThresholds" Orientation="Vertical" />
+                        </BoxContainer>
+                    </CollapsibleBody>
+                </Collapsible>
+            </BoxContainer>
         </CollapsibleBody>
     </Collapsible>
 </BoxContainer>

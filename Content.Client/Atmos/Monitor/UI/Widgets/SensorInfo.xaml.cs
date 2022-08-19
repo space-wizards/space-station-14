@@ -35,15 +35,16 @@ public sealed partial class SensorInfo : BoxContainer
         {
             var label = new Label();
             label.Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"),
-                ("amount", $"{(amount / data.TotalMoles):0.##}"));
+                ("amount", $"{amount:0.####}"),
+                ("percentage", $"{(amount / data.TotalMoles):0.##}"));
             GasContainer.AddChild(label);
             _gasLabels.Add(gas, label);
         }
 
         _pressureThreshold =
-            new ThresholdControl("Pressure", data.PressureThreshold, AtmosMonitorThresholdType.Pressure);
+            new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-pressure-title"), data.PressureThreshold, AtmosMonitorThresholdType.Pressure);
         PressureThresholdContainer.AddChild(_pressureThreshold);
-        _temperatureThreshold = new ThresholdControl("Temperature", data.TemperatureThreshold,
+        _temperatureThreshold = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-temperature-title"), data.TemperatureThreshold,
             AtmosMonitorThresholdType.Temperature);
         TemperatureThresholdContainer.AddChild(_temperatureThreshold);
 
@@ -59,7 +60,7 @@ public sealed partial class SensorInfo : BoxContainer
 
         foreach (var (gas, threshold) in data.GasThresholds)
         {
-            var gasThresholdControl = new ThresholdControl(gas.ToString(), threshold, AtmosMonitorThresholdType.Gas, gas);
+            var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title", ("gas", $"{gas}")), threshold, AtmosMonitorThresholdType.Gas, gas, 100);
             gasThresholdControl.ThresholdDataChanged += (type, threshold, arg3) =>
             {
                 OnThresholdUpdate!(_address, type, threshold, arg3);
@@ -84,7 +85,8 @@ public sealed partial class SensorInfo : BoxContainer
             }
 
             label.Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"),
-                ("amount", $"{(amount / data.TotalMoles):0.##}"));
+                ("amount", $"{amount:0.####}"),
+                ("percentage", $"{(amount / data.TotalMoles):0.##}"));
         }
 
         _pressureThreshold.UpdateThresholdData(data.PressureThreshold);
