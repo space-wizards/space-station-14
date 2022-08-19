@@ -105,7 +105,7 @@ namespace Content.Client.Audio
             _configManager.UnsubValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
             _configManager.UnsubValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
             _configManager.UnsubValueChanged(CCVars.StationAmbienceEnabled, StationAmbienceCVarChanged);
-            _configManager.OnValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
+            _configManager.UnsubValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
 
             _stateManager.OnStateChanged -= StateManagerOnStateChanged;
 
