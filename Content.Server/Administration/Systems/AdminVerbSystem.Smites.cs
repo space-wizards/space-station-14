@@ -821,7 +821,7 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(args.Target);
-                _movementSpeedModifierSystem?.ChangeBaseSpeed(args.Target, 400, 600, movementSpeed);
+                _movementSpeedModifierSystem?.ChangeBaseSpeed(args.Target, 400, 8000, 40, movementSpeed);
 
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-super-speed-prompt"), args.Target,
                     Filter.Entities(args.Target), PopupType.LargeCaution);
