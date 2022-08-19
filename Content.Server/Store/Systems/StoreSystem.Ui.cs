@@ -60,15 +60,13 @@ public sealed partial class StoreSystem : EntitySystem
         {
             ui = component.Owner.GetUIOrNull(StoreUiKey.Key);
             if (ui == null)
-            {
-                Logger.Error("No Ui key.");
                 return;
-            }
         }
 
         //if we haven't opened it before, initialize the shit
         if (!component.Opened)
         {
+            RefreshAllListings(component);
             InitializeFromPreset(component.Preset, component);
             component.Opened = true;
         }
