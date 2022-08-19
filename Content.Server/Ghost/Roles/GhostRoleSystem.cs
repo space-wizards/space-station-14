@@ -27,7 +27,6 @@ public sealed class GhostRoleSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly FollowerSystem _followerSystem = default!;
-    [Dependency] private readonly GhostRoleSelectionSystem _ghostRoleSelectionSystem = default!;
 
     private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
@@ -299,8 +298,6 @@ public sealed class GhostRoleSystem : EntitySystem
 
         if (!role.Take(player))
             return false; // Currently only fails if the role is already taken.
-
-        _ghostRoleSelectionSystem.ClearPlayerLotteryRequests(player);
 
         if(role.Taken && prevAvailable != role.Available)
             RaiseLocalEvent(role.Owner, new GhostRoleAvailabilityChangedEvent(role.Owner, role, role.Available), true);
