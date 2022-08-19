@@ -259,7 +259,7 @@
   category: NicotineCraving
   icons: [ /Textures/Interface/Alerts/Smoker/IntenseCraving.png ]
   name: "[color=red]Intense Nicotine Craving[/color]"
-  description: Does anyone have a light?? You feel sluggish.
+  description: Does anyone have a light?? You feel sluggish...
 
 - type: alert
   id: Muted
