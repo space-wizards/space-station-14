@@ -11,6 +11,18 @@
     sprite: Structures/Machines/server.rsi
     state: server-on
   requiredPoints: 2500
+  unlockedRecipes:
+    - FlashlightLantern
+    - FireExtinguisher
+    - CableStack
+    - CableMVStack
+    - CableHVStack
+    - LightBulb
+    - LightTube
+    - FirelockElectronics
+    - DoorElectronics
+    - APCElectronics
+
 
 # Cleaning Technology Tree
 
@@ -222,8 +234,6 @@
     - ConveyorBeltAssembly
     - RCD
     - RCDAmmo
-    - FlashlightLantern
-    - FireExtinguisher
     - AutolatheMachineCircuitboard
     - EmitterCircuitboard
     - ProtolatheMachineCircuitboard
@@ -300,19 +310,8 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
-    - CableStack
-    - CableMVStack
-    - CableHVStack
-    - LightBulb
-    - LightTube
-    - FirelockElectronics
-    - DoorElectronics
-    - APCElectronics
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
-    - WallmountSubstationElectronics
-    - WallmountGeneratorElectronics
-    - WallmountGeneratorAPUElectronics
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
@@ -331,9 +330,6 @@
   requiredTechnologies:
     - ElectromagneticTheory
   unlockedRecipes:
-    - WallmountSubstationElectronics
-    - WallmountGeneratorElectronics
-    - WallmountGeneratorAPUElectronics
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
 
