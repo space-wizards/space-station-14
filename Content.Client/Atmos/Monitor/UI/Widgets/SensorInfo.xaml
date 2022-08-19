@@ -15,7 +15,12 @@
                         <RichTextLabel Name="AlarmStateLabel" />
                     </BoxContainer>
                 </BoxContainer>
-                <BoxContainer Name="GasContainer" Orientation="Vertical" Margin="0 0 2 0"/>
+                <Collapsible Margin="0 0 2 0">
+                    <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-gases'}" />
+                    <CollapsibleBody>
+                        <BoxContainer Name="GasContainer" Orientation="Vertical" Margin="2" />
+                    </CollapsibleBody>
+                </Collapsible>
                 <Collapsible Orientation="Vertical" Margin="2">
                     <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-thresholds'}" />
                     <CollapsibleBody>
