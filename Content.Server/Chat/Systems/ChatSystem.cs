@@ -427,8 +427,8 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         var newMessage = message.Trim();
         if (capitalize)
-            newMessage = SanitizeMessageCapital(source, newMessage);
-        newMessage = SanitizeMessagePeriod(source, newMessage);
+            newMessage = SanitizeMessageCapital(newMessage);
+        newMessage = SanitizeMessagePeriod(newMessage);
         newMessage = FormattedMessage.EscapeText(newMessage);
 
         _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
@@ -461,7 +461,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             .Select(p => p.ConnectedClient);
     }
 
-    private string SanitizeMessageCapital(EntityUid source, string message)
+    private string SanitizeMessageCapital(string message)
     {
         if (string.IsNullOrEmpty(message))
             return message;
@@ -470,12 +470,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         return message;
     }
 
-    private string SanitizeMessagePeriod(EntityUid source, string message)
+    private string SanitizeMessagePeriod(string message)
     {
         if (string.IsNullOrEmpty(message))
             return message;
-        // Add period if there isn't one
-        if (message[^1] != '.')
+        // Add period if there isn't any pontuation at the end.
+        if (message[^1] != '.' && message[^1] != '!' && message[^1] != '?')
             message += ".";
         return message;
     }
