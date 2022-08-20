@@ -599,16 +599,6 @@
   - UplinkPointless
 
 - type: listing
-  id: UplinkCatEars
-  name: Cat Ears
-  description: UwU
-  productEntity: ClothingHeadHatCatEars
-  cost:
-    Telecrystal: 21
-  categories:
-  - UplinkPointless
-
-- type: listing
   id: UplinkOutlawHat
   productEntity: ClothingHeadHatOutlawHat
   cost:
