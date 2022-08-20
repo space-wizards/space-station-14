@@ -45,6 +45,7 @@ public static class PoolManager
         (CCVars.GameMapForced.Name, "true", true),
         (CCVars.AdminLogsQueueSendDelay.Name, "0", true),
         (CCVars.NetPVS.Name, "false", true),
+        (CCVars.NetInterp.Name, "false", true),
         (CCVars.NPCMaxUpdates.Name, "999999", true),
         (CCVars.GameMapForced.Name, "true", true),
         (CCVars.SysWinTickPeriod.Name, "0", true),

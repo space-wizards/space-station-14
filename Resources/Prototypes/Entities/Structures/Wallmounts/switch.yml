@@ -130,6 +130,7 @@
     - type: Construction
       graph: LeverGraph
       node: LeverNode
+    - type: Fixtures
     - type: SignalTransmitter
       outputs:
         Left: []

@@ -8,7 +8,7 @@
                 <Label Text="{Loc 'ui-options-net-interp-ratio'}" />
                 <Control MinSize="8 0" />
                 <Slider Name="NetInterpRatioSlider"
-                            ToolTip="{Loc 'ui-options-net-interp-ratio-tooltip'}"
+                            MinValue="0"
                             MaxValue="6"
                             HorizontalExpand="True"
                             MinSize="80 0"
