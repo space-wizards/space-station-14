@@ -39,7 +39,7 @@ namespace Content.Server.Disposal.Tube.Components
             {
                 return _random.Pick(directions);
             }
-
+            
             return next;
         }
     }
