@@ -191,10 +191,13 @@ namespace Content.Server.ParticleAccelerator.Components
 
         protected override void OnRemove()
         {
+            Master = null;
             foreach (var part in AllParts())
             {
                 part.Master = null;
             }
+
+            base.OnRemove();
         }
 
         /*
