@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
@@ -6,7 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.NPC;
 
 [DataDefinition]
-public sealed class NPCBlackboard
+public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 {
     /// <summary>
     /// Global defaults for NPCs
@@ -194,4 +195,14 @@ public sealed class NPCBlackboard
     public const string MovementTarget = "MovementTarget";
     public const string VisionRadius = "VisionRadius";
     public const float MeleeRange = 1f;
+
+    public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+    {
+        return _blackboard.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }

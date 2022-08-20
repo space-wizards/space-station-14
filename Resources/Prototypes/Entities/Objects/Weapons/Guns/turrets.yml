@@ -3,7 +3,7 @@
   name: ballistic turret
   suffix: Syndicate
   parent: BaseStructure
-  desc: A ballistic machine gun auto-turret.
+  description: A ballistic machine gun auto-turret.
   components:
   - type: Sprite
     netsync: false
