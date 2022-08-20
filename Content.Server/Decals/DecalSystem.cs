@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Chunking;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
@@ -17,7 +18,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly ChunkingSystem _chunking = default!;
 
         private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -30,9 +31,6 @@ namespace Content.Server.Decals
         private ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> _chunkViewerPool =
             new DefaultObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>(
                 new DefaultPooledObjectPolicy<Dictionary<EntityUid, HashSet<Vector2i>>>(), 64);
-
-        // Pool if we ever parallelise.
-        private HashSet<EntityUid> _viewers = new(64);
 
         public override void Initialize()
         {
@@ -397,14 +395,16 @@ namespace Content.Server.Decals
         {
             base.Update(frameTime);
 
+            var xformQuery = GetEntityQuery<TransformComponent>();
+
             foreach (var session in Filter.GetAllPlayers(_playerManager))
             {
                 if (session is not IPlayerSession { Status: SessionStatus.InGame } playerSession)
                     continue;
 
-                var chunksInRange = GetChunksForSession(playerSession);
+                var chunksInRange = _chunking.GetChunksForSession(playerSession, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
                 var staleChunks = _chunkViewerPool.Get();
-                var previouslySent = _previousSentChunks[playerSession];
+                var previouslySent = _previousSentChunks.GetOrNew(playerSession);
 
                 // Get any chunks not in range anymore
                 // Then, remove them from previousSentChunks (for stuff like grids out of range)
@@ -522,55 +522,6 @@ namespace Content.Server.Decals
 
             ReturnToPool(updatedChunks);
             ReturnToPool(staleChunks);
-        }
-
-        private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)
-        {
-            var viewers = _viewers;
-            if (session.Status != SessionStatus.InGame || session.AttachedEntity is null)
-                return viewers;
-
-            viewers.Add(session.AttachedEntity.Value);
-
-            foreach (var uid in session.ViewSubscriptions)
-            {
-                viewers.Add(uid);
-            }
-
-            return viewers;
-        }
-
-        private Dictionary<EntityUid, HashSet<Vector2i>> GetChunksForSession(IPlayerSession session)
-        {
-            var viewers = GetSessionViewers(session);
-            var chunks = GetChunksForViewers(viewers);
-            viewers.Clear();
-            return chunks;
-        }
-
-        private Dictionary<EntityUid, HashSet<Vector2i>> GetChunksForViewers(HashSet<EntityUid> viewers)
-        {
-            var chunks = _chunkViewerPool.Get();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-
-            foreach (var viewerUid in viewers)
-            {
-                var (bounds, mapId) = CalcViewBounds(viewerUid, xformQuery.GetComponent(viewerUid));
-
-                foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds))
-                {
-                    if (!chunks.TryGetValue(grid.GridEntityId, out var chunk))
-                        chunks[grid.GridEntityId] = chunk = _chunkIndexPool.Get();
-
-                    var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.GridEntityId, xformQuery).TransformBox(bounds), ChunkSize);
-
-                    while (enumerator.MoveNext(out var indices))
-                    {
-                        chunk.Add(indices.Value);
-                    }
-                }
-            }
-            return chunks;
         }
     }
 }

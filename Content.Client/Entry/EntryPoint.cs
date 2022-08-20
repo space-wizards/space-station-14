@@ -17,6 +17,7 @@ using Content.Client.MainMenu;
 using Content.Client.MobState.Overlays;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation;
 using Content.Client.Sandbox;
@@ -73,7 +74,6 @@ namespace Content.Client.Entry
             // Do not add to these, they are legacy.
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
-            factory.RegisterClass<SharedVendingMachineComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();
@@ -126,6 +126,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<ViewportManager>().Initialize();
             IoCManager.Resolve<GhostKickManager>().Initialize();
             IoCManager.Resolve<ExtendedDisconnectInformationManager>().Initialize();
+            IoCManager.Resolve<PlayTimeTrackingManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
@@ -182,10 +183,10 @@ namespace Content.Client.Entry
             ContentContexts.SetupContexts(inputMan.Contexts);
 
             IoCManager.Resolve<IGameHud>().Initialize();
-            IoCManager.Resolve<IParallaxManager>().LoadParallax(); // Have to do this later because prototypes are needed.
+            IoCManager.Resolve<IParallaxManager>().LoadDefaultParallax(); // Have to do this later because prototypes are needed.
 
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
-            overlayMgr.AddOverlay(new ParallaxOverlay());
+
             overlayMgr.AddOverlay(new SingularityOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());

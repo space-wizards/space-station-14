@@ -19,7 +19,7 @@ namespace Content.Client.Decals
         {
             base.Initialize();
 
-            _overlay = new DecalOverlay(this, _transforms, _sprites, EntityManager, MapManager, PrototypeManager);
+            _overlay = new DecalOverlay(this, _transforms, _sprites, EntityManager, PrototypeManager);
             _overlayManager.AddOverlay(_overlay);
 
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);

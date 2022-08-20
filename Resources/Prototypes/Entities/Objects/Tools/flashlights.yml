@@ -31,6 +31,7 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+  - type: ItemSlots
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false
@@ -63,6 +64,7 @@
       startingItem: PowerCellHigh
   - type: HandheldLight
     addPrefix: false
+  - type: ToggleableLightVisuals
     inhandVisuals:
       left:
       - state: inhand-left-light

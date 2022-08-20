@@ -67,6 +67,11 @@
           False: {visible: false}
   - type: Pullable
   - type: AntiRottingContainer
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
 
 - type: entity
   id: BodyBag_Folded
@@ -92,3 +97,6 @@
     netsync: false
     sprite: Objects/Materials/materials.rsi
     state: ash
+  - type: Tag
+    tags:
+    - Trash

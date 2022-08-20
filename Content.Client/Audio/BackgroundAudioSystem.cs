@@ -1,24 +1,19 @@
-using System.Threading;
 using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
-using Content.Shared;
-using Content.Shared.Audio;
 using Content.Shared.CCVar;
-using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Client;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Audio
@@ -29,7 +24,6 @@ namespace Content.Client.Audio
         [Dependency] private readonly IBaseClient _client = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;

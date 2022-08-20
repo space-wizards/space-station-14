@@ -29,7 +29,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
                     continue;
                 }
 
-                if ((clothingComponent.SlotFlags & slotDef.SlotFlags) != 0)
+                if ((clothingComponent.Slots & slotDef.SlotFlags) != 0)
                 {
                     return 1.0f;
                 }

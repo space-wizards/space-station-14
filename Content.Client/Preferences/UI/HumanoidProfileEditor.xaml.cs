@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.CharacterAppearance;
+using Content.Client.HUD.UI;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
@@ -341,56 +343,65 @@ namespace Content.Client.Preferences.UI
 
             _jobPriorities = new List<JobPrioritySelector>();
             _jobCategories = new Dictionary<string, BoxContainer>();
-            var spriteSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
 
             var firstCategory = true;
+            var playTime = IoCManager.Resolve<PlayTimeTrackingManager>();
 
-            foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.LocalizedName))
+            foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
-                if(!job.SetPreference) { continue; }
+                var departmentName = Loc.GetString($"department-{department.ID}");
 
-                foreach (var department in job.Departments)
+                if (!_jobCategories.TryGetValue(department.ID, out var category))
                 {
-                    if (!_jobCategories.TryGetValue(department, out var category))
+                    category = new BoxContainer
                     {
-                        category = new BoxContainer
-                        {
-                            Orientation = LayoutOrientation.Vertical,
-                            Name = department,
-                            ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
-                                                    ("departmentName", department))
-                        };
+                        Orientation = LayoutOrientation.Vertical,
+                        Name = department.ID,
+                        ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
+                            ("departmentName", departmentName))
+                    };
 
-                            if (firstCategory)
-                            {
-                                firstCategory = false;
-                            }
-                            else
-                            {
-                                category.AddChild(new Control
-                                {
-                                    MinSize = new Vector2(0, 23),
-                                });
-                            }
-
-                        category.AddChild(new PanelContainer
+                    if (firstCategory)
+                    {
+                        firstCategory = false;
+                    }
+                    else
+                    {
+                        category.AddChild(new Control
                         {
-                            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
-                            Children =
-                            {
-                                new Label
-                                {
-                                    Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
-                                                         ("departmentName" ,department))
-                                }
-                            }
+                            MinSize = new Vector2(0, 23),
                         });
-
-                        _jobCategories[department] = category;
-                        _jobList.AddChild(category);
                     }
 
-                    var selector = new JobPrioritySelector(job, spriteSystem);
+                    category.AddChild(new PanelContainer
+                    {
+                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
+                        Children =
+                        {
+                            new Label
+                            {
+                                Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
+                                    ("departmentName", departmentName))
+                            }
+                        }
+                    });
+
+                    _jobCategories[department.ID] = category;
+                    _jobList.AddChild(category);
+                }
+
+                var jobs = department.Roles.Select(o => _prototypeManager.Index<JobPrototype>(o)).Where(o => o.SetPreference).ToList();
+                jobs.Sort((x, y) => -string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCultureIgnoreCase));
+
+                foreach (var job in jobs)
+                {
+                    var selector = new JobPrioritySelector(job);
+
+                    if (!playTime.IsAllowed(job, out var reason))
+                    {
+                        selector.LockRequirements(reason);
+                    }
+
                     category.AddChild(selector);
                     _jobPriorities.Add(selector);
 
@@ -418,6 +429,7 @@ namespace Content.Client.Preferences.UI
                             }
                         }
                     };
+
                 }
             }
 
@@ -992,7 +1004,10 @@ namespace Content.Client.Preferences.UI
 
             public event Action<JobPriority>? PriorityChanged;
 
-            public JobPrioritySelector(JobPrototype job, SpriteSystem sprites)
+            private StripeBack _lockStripe;
+            private Label _requirementsLabel;
+
+            public JobPrioritySelector(JobPrototype job)
             {
                 Job = job;
 
@@ -1021,9 +1036,32 @@ namespace Content.Client.Preferences.UI
                     Stretch = TextureRect.StretchMode.KeepCentered
                 };
 
-                var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
-                    job.Icon);
-                icon.Texture = sprites.Frame0(specifier);
+                if (job.Icon != null)
+                {
+                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
+                        job.Icon);
+                    icon.Texture = specifier.Frame0();
+                }
+
+                _requirementsLabel = new Label()
+                {
+                    Text = Loc.GetString("role-timer-locked"),
+                    Visible = true,
+                    HorizontalAlignment = HAlignment.Center,
+                    StyleClasses = {StyleBase.StyleClassLabelSubText},
+                };
+
+                _lockStripe = new StripeBack()
+                {
+                    Visible = false,
+                    HorizontalExpand = true,
+                    TooltipDelay = 0.2f,
+                    MouseFilter = MouseFilterMode.Stop,
+                    Children =
+                    {
+                        _requirementsLabel
+                    }
+                };
 
                 AddChild(new BoxContainer
                 {
@@ -1032,9 +1070,25 @@ namespace Content.Client.Preferences.UI
                     {
                         icon,
                         new Label {Text = job.LocalizedName, MinSize = (175, 0)},
-                        _optionButton
+                        _optionButton,
+                        _lockStripe,
                     }
                 });
+            }
+
+            public void LockRequirements(string requirements)
+            {
+                _lockStripe.ToolTip = requirements;
+                _lockStripe.Visible = true;
+                _optionButton.Visible = false;
+            }
+
+            // TODO: Subscribe to roletimers event. I am too lazy to do this RN But I doubt most people will notice fn
+            public void UnlockRequirements()
+            {
+                _requirementsLabel.Visible = false;
+                _lockStripe.Visible = false;
+                _optionButton.Visible = true;
             }
         }
 

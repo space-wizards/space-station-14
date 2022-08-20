@@ -32,7 +32,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
     [ViewVariables]
@@ -189,7 +188,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         if (spawns.Count == 0)
         {
             spawns.Add(Transform(_pirateShip).Coordinates);
-            Logger.WarningS("pirates", $"Fell back to default spawn for nukies!");
+            Logger.WarningS("pirates", $"Fell back to default spawn for pirates!");
         }
 
         for (var i = 0; i < ops.Length; i++)
@@ -221,6 +220,14 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             _initialItems.Add(uid);
             return true;
         }); // Include the players in the appraisal.
+    }
+
+    //Forcing one player to be a pirate.
+    public void MakePirate(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("PirateGear"), null);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

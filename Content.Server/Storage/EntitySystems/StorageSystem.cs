@@ -47,6 +47,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -236,13 +237,13 @@ namespace Content.Server.Storage.EntitySystems
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<SharedItemComponent>(eventArgs.Target.Value)))
+            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<ItemComponent>(eventArgs.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
                 foreach (var entity in _entityLookupSystem.GetEntitiesInRange(eventArgs.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
                 {
                     if (entity == eventArgs.User
-                        || !HasComp<SharedItemComponent>(entity)
+                        || !HasComp<ItemComponent>(entity)
                         || !_interactionSystem.InRangeUnobstructed(eventArgs.User, entity))
                         continue;
 
@@ -272,7 +273,7 @@ namespace Content.Server.Storage.EntitySystems
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                     if (_containerSystem.IsEntityInContainer(entity)
                         || entity == eventArgs.User
-                        || !HasComp<SharedItemComponent>(entity))
+                        || !HasComp<ItemComponent>(entity))
                         continue;
 
                     if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(entity, out var transformEnt))
@@ -304,7 +305,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 if (_containerSystem.IsEntityInContainer(target)
                     || target == eventArgs.User
-                    || !HasComp<SharedItemComponent>(target))
+                    || !HasComp<ItemComponent>(target))
                     return;
 
                 if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
@@ -348,6 +349,12 @@ namespace Content.Server.Storage.EntitySystems
             // TODO move this to shared for prediction.
             if (args.Session.AttachedEntity is not EntityUid player)
                 return;
+
+            if (!Exists(args.InteractedItemUID))
+            {
+                Logger.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
+                return;
+            }
 
             if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID))
                 return;
@@ -432,7 +439,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
-            var itemQuery = GetEntityQuery<SharedItemComponent>();
+            var itemQuery = GetEntityQuery<ItemComponent>();
 
             foreach (var entity in storageComp.Storage.ContainedEntities)
             {
@@ -491,7 +498,7 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-            if (TryComp(insertEnt, out SharedItemComponent? itemComp) &&
+            if (TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
                 reason = "comp-storage-insufficient-capacity";
@@ -523,9 +530,8 @@ namespace Content.Server.Storage.EntitySystems
         /// <summary>
         ///     Inserts into the storage container
         /// </summary>
-        /// <param name="entity">The entity to insert</param>
         /// <returns>true if the entity was inserted, false otherwise</returns>
-        public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null)
+        public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null, bool playSound = true)
         {
             if (!Resolve(uid, ref storageComp))
                 return false;
@@ -533,8 +539,10 @@ namespace Content.Server.Storage.EntitySystems
             if (!CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
                 return false;
 
-            if (storageComp.StorageInsertSound is not null)
-                SoundSystem.Play(storageComp.StorageInsertSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, AudioParams.Default);
+            if (playSound && storageComp.StorageInsertSound is not null)
+            {
+                _audio.PlayPvs(storageComp.StorageInsertSound, uid);
+            }
 
             RecalculateStorageUsed(storageComp);
             UpdateStorageUI(uid, storageComp);

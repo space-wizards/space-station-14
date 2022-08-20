@@ -9,6 +9,7 @@ using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Payload.EntitySystems;
@@ -98,8 +99,9 @@ public sealed class PayloadSystem : EntitySystem
 
             component.Owner = uid;
 
-            if (_serializationManager.Copy(data.Component, component, null) is Component copied)
-                EntityManager.AddComponent(uid, copied);
+            var temp = (object) component;
+            _serializationManager.Copy(data.Component, ref temp);
+            EntityManager.AddComponent(uid, (Component)temp!);
 
             trigger.GrantedComponents.Add(registration.Type);
         }

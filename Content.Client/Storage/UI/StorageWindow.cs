@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Content.Client.Items.Components;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Item;
 using Robust.Client.UserInterface;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using static Content.Shared.Storage.SharedStorageComponent;
@@ -132,7 +133,7 @@ namespace Content.Client.Storage.UI
                         new Label
                         {
                             Align = Label.AlignMode.Right,
-                            Text = item?.Size.ToString() ?? Loc.GetString("no-item-size")
+                            Text = item?.Size.ToString() ?? Loc.GetString("comp-storage-no-item-size"),
                         }
                     }
             });

@@ -2,12 +2,14 @@ using Content.Client.Audio;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
 using Content.Client.Viewport;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -19,6 +21,7 @@ namespace Content.Client.GameTicking.Managers
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         [ViewVariables] private bool _initialized;
         private Dictionary<EntityUid, Dictionary<string, uint?>>  _jobsAvailable = new();
@@ -32,8 +35,9 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
+        [ViewVariables] public TimeSpan RoundStartTimeSpan { get; private set; }
         [ViewVariables] public new bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; private set; } = new();
+
         [ViewVariables] public IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> JobsAvailable => _jobsAvailable;
         [ViewVariables] public IReadOnlyDictionary<EntityUid, string> StationNames => _stationNames;
 
@@ -62,7 +66,6 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(RoundRestartCleanup);
 
-            Status = new Dictionary<NetUserId, LobbyPlayerStatus>();
             _initialized = true;
         }
 
@@ -87,13 +90,12 @@ namespace Content.Client.GameTicking.Managers
         private void LobbyStatus(TickerLobbyStatusEvent message)
         {
             StartTime = message.StartTime;
+            RoundStartTimeSpan = message.RoundStartTimeSpan;
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;
             LobbySong = message.LobbySong;
             LobbyBackground = message.LobbyBackground;
             Paused = message.Paused;
-            if (IsGameStarted)
-                Status.Clear();
 
             LobbyStatusUpdated?.Invoke();
         }
@@ -118,11 +120,6 @@ namespace Content.Client.GameTicking.Managers
 
         private void LobbyReady(TickerLobbyReadyEvent message)
         {
-            // Merge the Dictionaries
-            foreach (var p in message.Status)
-            {
-                Status[p.Key] = p.Value;
-            }
             LobbyReadyUpdated?.Invoke();
         }
 
@@ -144,6 +141,12 @@ namespace Content.Client.GameTicking.Managers
         {
             if (string.IsNullOrEmpty(RestartSound))
                 return;
+
+            if (!_configManager.GetCVar(CCVars.RestartSoundsEnabled))
+            {
+                RestartSound = null;
+                return;
+            }
 
             SoundSystem.Play(RestartSound, Filter.Empty());
 

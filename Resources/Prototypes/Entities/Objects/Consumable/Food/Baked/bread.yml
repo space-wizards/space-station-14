@@ -39,10 +39,8 @@
   description: A dark loaf. Resembles pumice.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: alpha
       color: "#281415"
     - state: alpha-filling
@@ -57,10 +55,8 @@
   description: A slice of dark loaf. Resembles pumice.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: alpha-slice
       color: "#281415"
     - state: alpha-slice-filling
@@ -75,10 +71,8 @@
   description: Some plain old earthen bread.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: plain
   - type: SliceableFood
     slice: FoodBreadPlainSlice
@@ -90,10 +84,8 @@
   description: A slice of home.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: plain-slice
 
 - type: entity
@@ -103,10 +95,8 @@
   description: The culinary base of every self-respecting eloquen/tg/entleman.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: meat
   - type: SliceableFood
     slice: FoodBreadMeatSlice
@@ -128,10 +118,8 @@
   description: A slice of delicious meatbread.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: meat-slice
   - type: SolutionContainerManager
     solutions:
@@ -150,10 +138,8 @@
   description: Reassuringly green meatloaf made from xeno meat. Extra heretical.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: xenomeat
   - type: SliceableFood
     slice: FoodBreadMeatXenoSlice
@@ -175,10 +161,8 @@
   description: A slice of delicious meatbread. Extra heretical.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: xenomeat-slice
   - type: SolutionContainerManager
     solutions:
@@ -197,10 +181,8 @@
   description: Reassuringly green meatloaf made from spider meat.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: spidermeat
   - type: SliceableFood
     slice: FoodBreadMeatSpiderSlice
@@ -224,10 +206,8 @@
   description: A slice of meatloaf made from an animal that most likely still wants you dead.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: spidermeat-slice
   - type: SolutionContainerManager
     solutions:
@@ -248,10 +228,8 @@
   description: A heavenly and filling treat.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: banana
   - type: SliceableFood
     slice: FoodBreadBananaSlice
@@ -264,10 +242,8 @@
   description: A slice of delicious banana bread.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: banana-slice
 
 - type: entity
@@ -277,10 +253,8 @@
   description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: tofu
   - type: SliceableFood
     slice: FoodBreadTofuSlice
@@ -302,10 +276,8 @@
   description: A slice of delicious tofu bread.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: tofu-slice
   - type: SolutionContainerManager
     solutions:
@@ -324,10 +296,8 @@
   description: Yum yum yum!
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: creamcheese
   - type: SliceableFood
     slice: FoodBreadCreamcheeseSlice
@@ -349,10 +319,8 @@
   description: A slice of yum!
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: creamcheese-slice
   - type: SolutionContainerManager
     solutions:
@@ -371,10 +339,8 @@
   description: Best eaten in silence.
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: mimana
   - type: SliceableFood
     slice: FoodBreadMimanaSlice
@@ -398,10 +364,8 @@
   description: A slice of silence!
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: mimana-slice
   - type: SolutionContainerManager
     solutions:
@@ -425,7 +389,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate
     - state: moldy-slice
   - type: SolutionContainerManager
     solutions:
@@ -472,7 +435,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate
     - state: garlic-slice
   - type: SolutionContainerManager
     solutions:
@@ -483,6 +445,8 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
+        - ReagentId: Allicin
+          Quantity: 2
 # Tastes like garlic, Italy.
 
 - type: entity

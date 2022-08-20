@@ -22,6 +22,11 @@
   - type: Construction
     graph: SignalSwitchGraph
     node: SignalSwitchNode
+  - type: Fixtures
+  - type: SignalTransmitter
+    outputs:
+      On: []
+      Off: []
 
 - type: entity
   id: SignalButton
@@ -49,6 +54,10 @@
   - type: Construction
     graph: SignalButtonGraph
     node: SignalButtonNode
+  - type: Fixtures
+  - type: SignalTransmitter
+    outputs:
+      Pressed: []
 
 - type: entity
   id: ApcNetSwitch
@@ -79,6 +88,7 @@
     - type: Construction
       graph: LightSwitchGraph
       node: LightSwitchNode
+    - type: Fixtures
 
 - type: entity
   id: TwoWayLever
@@ -92,16 +102,20 @@
     - type: Sprite
       netsync: false
       sprite: Structures/conveyor.rsi
-      state: switch-off
+      layers:
+        - state: switch-off
+          map: ["enabled", "enum.TwoWayLeverState.Middle"]
     - type: TwoWayLever
     - type: UseDelay
       delay: 0.2 # prevent light-toggling auto-clickers.
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: TwoWayLeverVisualizer
-          state_forward: switch-fwd
-          state_off: switch-off
-          state_reversed: switch-rev
+        enum.TwoWayLeverVisuals.State:
+          enabled:
+            Right: { state: switch-fwd }
+            Middle: { state: switch-off }
+            Left: { state: switch-rev }
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -116,3 +130,9 @@
     - type: Construction
       graph: LeverGraph
       node: LeverNode
+    - type: Fixtures
+    - type: SignalTransmitter
+      outputs:
+        Left: []
+        Right: []
+        Middle: []

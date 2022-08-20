@@ -20,7 +20,9 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Dirty = true});
+            //TODO: Run this test in a for loop, and figure out why garbage is ending up in the Entities list on cleanup.
+            //If this gets fixed, see also UninitializedSaveTest.
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Dirty = true, Destructive = true});
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -42,7 +44,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
@@ -100,6 +102,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
+                "StationData", // errors when removed mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
             };
 
@@ -126,7 +129,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
@@ -146,9 +149,10 @@ namespace Content.IntegrationTests.Tests
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {
                         var component = (Component) componentFactory.GetComponent(type);
+                        var name = componentFactory.GetComponentName(type);
 
                         // If this component is ignored
-                        if (skipComponents.Contains(component.Name))
+                        if (skipComponents.Contains(name))
                         {
                             continue;
                         }
@@ -166,13 +170,13 @@ namespace Content.IntegrationTests.Tests
 
                         component.Owner = entity;
 
-                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {name}");
 
                         Assert.DoesNotThrow(() =>
                             {
                                 entityManager.AddComponent(entity, component);
                             }, "Component '{0}' threw an exception.",
-                            component.Name);
+                            name);
 
                         entityManager.DeleteEntity(entity);
                     }
@@ -193,6 +197,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
+                "StationData", // errors when deleted mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
             };
 
@@ -219,7 +224,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
 
                 grid.SetTile(Vector2i.Zero, tile);
@@ -282,15 +287,14 @@ namespace Content.IntegrationTests.Tests
                                 continue;
                             }
 
+                            var name = componentFactory.GetComponentName(component.GetType());
+
                             // If this component is ignored
-                            if (skipComponents.Contains(component.Name))
-                            {
+                            if (skipComponents.Contains(name))
                                 continue;
-                            }
 
                             component.Owner = entity;
-
-                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {name}");
 
                             // Note for the future coder: if an exception occurs where a component reference
                             // was already occupied it might be because some component is ensuring another // initialize.
@@ -300,7 +304,7 @@ namespace Content.IntegrationTests.Tests
                                 {
                                     entityManager.AddComponent(entity, component);
                                 }, "Component '{0}' threw an exception.",
-                                component.Name);
+                                name);
                         }
                         entityManager.DeleteEntity(entity);
                     }

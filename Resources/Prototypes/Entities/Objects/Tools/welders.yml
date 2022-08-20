@@ -20,7 +20,7 @@
   - type: Item
     size: 10
     sprite: Objects/Tools/welder.rsi
-    HeldPrefix: off
+    heldPrefix: off
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -50,6 +50,7 @@
     radius: 1.5
     color: orange
   - type: Appearance
+  - type: RequiresEyeProtection
 
 - type: entity
   name: industrial welding tool
@@ -68,7 +69,7 @@
         - ReagentId: WeldingFuel
           Quantity: 250
         maxVol: 250
-        
+
 - type: entity
   name: advanced industrial welding tool
   parent: WelderIndustrial

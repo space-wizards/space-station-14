@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
@@ -15,6 +14,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using System.Threading;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -195,7 +195,7 @@ public sealed partial class ChemistrySystem
         if (user != target)
         {
             // Create a pop-up for the target
-            var userName = Identity.Name(user, EntityManager);
+            var userName = Identity.Entity(user, EntityManager);
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
                 ("user", userName)), user, Filter.Entities(target));
 
@@ -355,10 +355,10 @@ public sealed partial class ChemistrySystem
             return;
         }
 
-        /// We have some snowflaked behavior for streams.
+        // We have some snowflaked behavior for streams.
         if (stream != null)
         {
-            DrawFromBlood(user, targetEntity, component, solution, stream, (float) realTransferAmount);
+            DrawFromBlood(user, targetEntity, component, solution, stream, realTransferAmount);
             return;
         }
 
@@ -378,10 +378,11 @@ public sealed partial class ChemistrySystem
         AfterDraw(component);
     }
 
-    private void DrawFromBlood(EntityUid user, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, float drawAmount)
+    private void DrawFromBlood(EntityUid user, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, FixedPoint2 transferAmount)
     {
-        float bloodAmount = drawAmount;
-        float chemAmount = 0f;
+        var drawAmount = (float) transferAmount;
+        var bloodAmount = drawAmount;
+        var chemAmount = 0f;
         if (stream.ChemicalSolution.CurrentVolume > 0f) // If they have stuff in their chem stream, we'll draw some of that
         {
             bloodAmount = drawAmount * 0.85f;
@@ -395,7 +396,7 @@ public sealed partial class ChemistrySystem
         _solutions.TryAddSolution(component.Owner, injectorSolution, chemTemp);
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
-                ("amount", drawAmount),
+                ("amount", transferAmount),
                 ("target", Identity.Entity(target, EntityManager))), component.Owner, Filter.Entities(user));
 
         Dirty(component);

@@ -1,7 +1,9 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.Tools;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;
 
@@ -14,6 +16,7 @@ public sealed partial class CableSystem : EntitySystem
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
     public override void Initialize()
     {
@@ -41,6 +44,8 @@ public sealed partial class CableSystem : EntitySystem
     {
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
+
+        _adminLogs.Add(LogType.CableCut, LogImpact.Medium, $"The {ToPrettyString(uid)} at {Transform(uid).Coordinates} was cut by {ToPrettyString(args.User)}.");
 
         Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
         QueueDel(uid);

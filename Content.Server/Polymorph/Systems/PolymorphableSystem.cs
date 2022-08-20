@@ -1,5 +1,4 @@
 using Content.Server.Actions;
-using Content.Server.Body.Components;
 using Content.Server.Buckle.Components;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
@@ -13,11 +12,8 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Polymorph;
 using Robust.Server.Containers;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -89,6 +85,10 @@ namespace Content.Server.Polymorph.Systems
             /// This is the big papa function. This handles the transformation, moving the old entity
             /// logic and conditions specified in the prototype, and everything else that may be needed.
             /// I am clinically insane - emo
+
+            // if it's already morphed, don't allow it again with this condition active.
+            if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(target))
+                return null;
 
             // mostly just for vehicles
             if (TryComp<BuckleComponent>(target, out var buckle))
@@ -184,7 +184,10 @@ namespace Content.Server.Polymorph.Systems
 
             var act = new InstantAction()
             {
-                Event = new PolymorphActionEvent(polyproto),
+                Event = new PolymorphActionEvent()
+                {
+                    Prototype = polyproto,
+                },
                 Name = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
                 Description = Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)),
                 Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity),
@@ -224,11 +227,6 @@ namespace Content.Server.Polymorph.Systems
         /// The polymorph prototype containing all the information about
         /// the specific polymorph.
         /// </summary>
-        public readonly PolymorphPrototype Prototype;
-
-        public PolymorphActionEvent(PolymorphPrototype prototype)
-        {
-            Prototype = prototype;
-        }
+        public PolymorphPrototype Prototype = default!;
     };
 }

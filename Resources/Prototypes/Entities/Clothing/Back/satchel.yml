@@ -7,14 +7,18 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 9999
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - back
-    sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
     capacity: 100
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -28,8 +32,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/engineering.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/engineering.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -38,8 +40,6 @@
   description: A sterile satchel used in medical departments.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/medical.rsi
-  - type: Clothing
     sprite: Clothing/Back/Satchels/medical.rsi
 
 - type: entity
@@ -50,8 +50,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/chemistry.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/chemistry.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -60,8 +58,6 @@
   description: Useful for holding research materials.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/science.rsi
-  - type: Clothing
     sprite: Clothing/Back/Satchels/science.rsi
 
 - type: entity
@@ -72,8 +68,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/security.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/security.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -83,8 +77,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/captain.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/captain.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -93,8 +85,6 @@
   description: A satchel made of all natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/hydroponics.rsi
-  - type: Clothing
     sprite: Clothing/Back/Satchels/hydroponics.rsi
 
 - type: entity
@@ -110,7 +100,5 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/holding.rsi
   - type: Storage
     capacity: 10000

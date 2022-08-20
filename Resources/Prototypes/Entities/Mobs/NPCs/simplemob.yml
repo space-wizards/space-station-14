@@ -14,7 +14,7 @@
       Acidic: [Touch, Ingestion]
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     # - Clothing
     - Idle
@@ -111,6 +111,8 @@
     - SlowedDown
     - Stutter
     - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
   - type: Body
     template: AnimalTemplate
     preset: AnimalPreset
@@ -159,7 +161,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach
@@ -177,6 +179,8 @@
       - SlowedDown
       - Stutter
       - Electrocution
+      - ForcedSleep
+      - TemporaryBlindness
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

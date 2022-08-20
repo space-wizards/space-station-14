@@ -1,15 +1,12 @@
 using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Nuke;
 using Content.Server.Players;
-using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
@@ -22,6 +19,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Server.Traitor;
+using System.Data;
+using Content.Server.Traitor.Uplink;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -34,13 +36,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
 
     public override string Prototype => "Nukeops";
+
+    private readonly SoundSpecifier _greetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 
     private const string NukeopsPrototypeId = "Nukeops";
     private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
@@ -113,7 +117,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
         foreach (var player in everyone)
         {
-            if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
             if (!ev.Profiles.ContainsKey(player.UserId))
             {
                 continue;
@@ -206,6 +209,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             Offset = Vector2.One * 1000f,
         });
 
+        // Naughty, someone saved the shuttle as a map.
+        if (Deleted(outpost))
+        {
+            Logger.ErrorS("nukeops", $"Tried to load nukeops shuttle as a map, aborting.");
+            _mapManager.DeleteMap(mapId);
+            return;
+        }
+
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
@@ -242,20 +253,24 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         for (var i = 0; i < operatives.Count; i++)
         {
             string name;
+            string role;
             StartingGearPrototype gear;
 
             switch (i)
             {
                 case 0:
                     name = $"Commander " + _random.PickAndTake<string>(syndicateNamesElite);
+                    role = NukeopsCommanderPrototypeId;
                     gear = commanderGear;
                     break;
                 case 1:
                     name = $"Agent " + _random.PickAndTake<string>(syndicateNamesNormal);
+                    role = NukeopsPrototypeId;
                     gear = medicGear;
                     break;
                 default:
                     name = $"Operator " + _random.PickAndTake<string>(syndicateNamesNormal);
+                    role = NukeopsPrototypeId;
                     gear = starterGear;
                     break;
             }
@@ -266,6 +281,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 CharacterName = name
             };
             newMind.ChangeOwningPlayer(session.UserId);
+            newMind.AddRole(new TraitorRole(newMind, _prototypeManager.Index<AntagPrototype>(role)));
 
             var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
@@ -279,6 +295,22 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
+
+        SoundSystem.Play(_greetSound.GetSound(), Filter.Empty().AddWhere(s =>
+        {
+            var mind = ((IPlayerSession) s).Data.ContentData()?.Mind;
+            return mind != null && _aliveNukeops.ContainsKey(mind);
+        }), AudioParams.Default);
+    }
+
+    //For admins forcing someone to nukeOps.
+    public void MakeLoneNukie(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(NukeopsPrototypeId)));
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

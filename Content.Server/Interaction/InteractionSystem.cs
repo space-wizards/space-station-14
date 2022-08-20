@@ -1,14 +1,15 @@
 using Content.Server.Administration.Logs;
-using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
+using Content.Server.Weapon.Melee.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
@@ -32,6 +33,8 @@ namespace Content.Server.Interaction
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
+
 
         public override void Initialize()
         {
@@ -222,10 +225,7 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
-                        {
-                            _adminLogger.Add(LogType.AttackArmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             return;
-                        }
                     }
                     else
                     {
@@ -233,23 +233,10 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
-                        {
-                            if (target != null)
-                            {
-                                _adminLogger.Add(LogType.AttackArmedClick, LogImpact.Low,
-                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
-                            }
-                            else
-                            {
-                                _adminLogger.Add(LogType.AttackArmedClick, LogImpact.Low,
-                                    $"{ToPrettyString(user):user} attacked with {ToPrettyString(item.Value):used} at {coordinates}");
-                            }
-
                             return;
-                        }
                     }
                 }
-                else if (!wideAttack && target != null && HasComp<SharedItemComponent>(target.Value))
+                else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, target.Value);
@@ -259,30 +246,23 @@ namespace Content.Server.Interaction
 
             // TODO: Make this saner?
             // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
+
+            var used = user;
+
+            if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) && HasComp<MeleeWeaponComponent>(gloves))
+                used = (EntityUid) gloves;
+
             if (wideAttack)
             {
-                var ev = new WideAttackEvent(user, user, coordinates);
-                RaiseLocalEvent(user, ev, false);
+                var ev = new WideAttackEvent(used, user, coordinates);
+                RaiseLocalEvent(used, ev, false);
                 if (ev.Handled)
                     _adminLogger.Add(LogType.AttackUnarmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
             }
             else
             {
-                var ev = new ClickAttackEvent(user, user, coordinates, target);
-                RaiseLocalEvent(user, ev, false);
-                if (ev.Handled)
-                {
-                    if (target != null)
-                    {
-                        _adminLogger.Add(LogType.AttackUnarmedClick, LogImpact.Low,
-                            $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} at {coordinates}");
-                    }
-                    else
-                    {
-                        _adminLogger.Add(LogType.AttackUnarmedClick, LogImpact.Low,
-                            $"{ToPrettyString(user):user} attacked at {coordinates}");
-                    }
-                }
+                var ev = new ClickAttackEvent(used, user, coordinates, target);
+                RaiseLocalEvent(used, ev, false);
             }
         }
     }

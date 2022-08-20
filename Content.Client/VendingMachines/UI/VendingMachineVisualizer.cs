@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.VendingMachines;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
@@ -117,6 +120,7 @@ namespace Content.Client.VendingMachines.UI
             flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(key, 0f));
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -134,12 +138,24 @@ namespace Content.Client.VendingMachines.UI
             spriteComponent.LayerSetVisible(VendingMachineVisualLayers.Unlit, true);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = entMan.GetComponent<SpriteComponent>(component.Owner);
+
+            // TODO when moving to a system visualizer, re work how this is done
+            // Currently this only gets called during init, so unless it NEEEDS to be configurable, just make this party of the entity prototype.
+            if (component.TryGetData(VendingMachineVisuals.Inventory, out string? invId) &&
+                IoCManager.Resolve<IPrototypeManager>().TryIndex(invId, out VendingMachineInventoryPrototype? prototype) &&
+                IoCManager.Resolve<IResourceCache>().TryGetResource<RSIResource>(
+                    SharedSpriteComponent.TextureRoot / $"Structures/Machines/VendingMachines/{prototype.SpriteName}.rsi", out var res))
+            {
+                sprite.BaseRSI = res.RSI;
+            }
+
             var animPlayer = entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(VendingMachineVisuals.VisualState, out VendingMachineVisualState state))
             {

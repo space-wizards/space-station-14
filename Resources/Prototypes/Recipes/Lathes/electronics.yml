@@ -8,6 +8,15 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: MailingUnitElectronics
+  icon: Objects/Misc/module.rsi/net_wired.png
+  result: MailingUnitElectronics
+  completetime: 4
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: DoorElectronics
   icon: Objects/Misc/module.rsi/door_electronics.png
   result: DoorElectronics
@@ -291,6 +300,15 @@
   id: SolarControlComputerCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: SolarControlComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: CloningConsoleComputerCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CloningConsoleComputerCircuitboard
   completetime: 4
   materials:
      Steel: 100
