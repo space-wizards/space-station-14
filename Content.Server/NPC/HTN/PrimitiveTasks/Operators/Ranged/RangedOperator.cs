@@ -48,9 +48,9 @@ public sealed class RangedOperator : HTNOperator
         var ranged = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
         ranged.Target = blackboard.GetValue<EntityUid>(TargetKey);
 
-        if (blackboard.TryGetValue<Angle>("TurretRotationSpeed", out var rotSpeed))
+        if (blackboard.TryGetValue<double>("TurretRotationSpeed", out var rotSpeed))
         {
-            ranged.RotationSpeed = rotSpeed;
+            ranged.RotationSpeed = Angle.FromDegrees(rotSpeed);
         }
 
         if (blackboard.TryGetValue<SoundSpecifier>("SoundTargetInLOS", out var losSound))

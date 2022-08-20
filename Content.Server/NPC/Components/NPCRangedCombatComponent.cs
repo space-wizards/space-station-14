@@ -8,11 +8,6 @@ namespace Content.Server.NPC.Components;
 [RegisterComponent]
 public sealed class NPCRangedCombatComponent : Component
 {
-    /// <summary>
-    /// Weapon we're using to attack the target.
-    /// </summary>
-    [ViewVariables] public EntityUid Weapon;
-
     [ViewVariables]
     public EntityUid Target;
 

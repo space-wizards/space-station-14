@@ -38,12 +38,14 @@ public sealed class PickRangedTargetOperator : HTNOperator
         var targets = new List<(EntityUid Entity, float Rating)>();
 
         blackboard.TryGetValue<EntityUid>(Key, out var existingTarget);
+        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        var canMove = blackboard.GetValueOrDefault<bool>(NPCBlackboard.CanMove);
 
         // TODO: Need a perception system instead
         foreach (var target in _tags
                      .GetNearbyHostiles(owner, radius))
         {
-            targets.Add((target, GetRating(blackboard, target, existingTarget)));
+            targets.Add((target, GetRating(blackboard, target, existingTarget, canMove, xformQuery)));
         }
 
         targets.Sort((x, y) => x.Rating.CompareTo(y.Rating));
@@ -69,15 +71,18 @@ public sealed class PickRangedTargetOperator : HTNOperator
         return (true, effects);
     }
 
-    private float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget)
+    private float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget, bool canMove, EntityQuery<TransformComponent> xformQuery)
     {
-        var ourCoordinates = blackboard.GetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
-        var targetCoordinates = blackboard.GetValue<EntityCoordinates>(KeyCoordinates);
+        var ourCoordinates = blackboard.GetValueOrDefault<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
+
+        if (!xformQuery.TryGetComponent(uid, out var targetXform))
+            return -1f;
+
+        var targetCoordinates = targetXform.Coordinates;
 
         if (!ourCoordinates.TryDistance(_entManager, targetCoordinates, out var distance))
             return -1f;
 
-        var canMove = blackboard.GetValue<bool>(NPCBlackboard.CanMove);
         var inLOS = _interaction.InRangeUnobstructed(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
             targetCoordinates, distance);
 

@@ -73,7 +73,7 @@ public sealed partial class NPCCombatSystem
 
             var gun = _gun.GetGun(comp.Owner);
 
-            if (gun == null || gun.Owner != comp.Weapon)
+            if (gun == null)
             {
                 comp.Status = CombatStatus.NoWeapon;
                 comp.ShootAccumulator = 0f;

@@ -65,14 +65,14 @@ public sealed class NPCBlackboard
     /// <summary>
     /// Tries to get the blackboard data for a particular key. Returns default if not found
     /// </summary>
-    public T? GetValueOrDefault<T>(string key)
+    public T? GetValueOrDefault<T>(string key, IEntityManager? entManager = null)
     {
         if (_blackboard.TryGetValue(key, out var value))
         {
             return (T) value;
         }
 
-        if (TryGetEntityDefault(key, out value))
+        if (TryGetEntityDefault(key, out value, entManager))
         {
             return (T) value;
         }
@@ -88,7 +88,7 @@ public sealed class NPCBlackboard
     /// <summary>
     /// Tries to get the blackboard data for a particular key.
     /// </summary>
-    public bool TryGetValue<T>(string key, [NotNullWhen(true)] out T? value)
+    public bool TryGetValue<T>(string key, [NotNullWhen(true)] out T? value, IEntityManager? entManager = null)
     {
         if (_blackboard.TryGetValue(key, out var data))
         {
@@ -96,7 +96,7 @@ public sealed class NPCBlackboard
             return true;
         }
 
-        if (TryGetEntityDefault(key, out data))
+        if (TryGetEntityDefault(key, out data, entManager))
         {
             value = (T) data;
             return true;
