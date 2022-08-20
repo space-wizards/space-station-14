@@ -127,8 +127,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
+        bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
 
-        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize);
+        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate);
 
         // Was there an emote in the message? If so, send it.
         if (player != null && emoteStr != message && emoteStr != null)
@@ -423,12 +424,13 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false)
     {
         var newMessage = message.Trim();
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
-        newMessage = SanitizeMessagePeriod(newMessage);
+        if (punctuate)
+            newMessage = SanitizeMessagePeriod(newMessage);
         newMessage = FormattedMessage.EscapeText(newMessage);
 
         _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
