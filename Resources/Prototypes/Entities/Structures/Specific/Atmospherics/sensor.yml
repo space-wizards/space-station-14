@@ -2,7 +2,27 @@
   id: AirSensor
   name: air sensor
   description: Air sensor. It senses air.
+  placement:
+    mode: SnapgridCenter
   components:
+    - type: Item
+      size: 10
+    - type: Transform
+      anchored: true
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Anchorable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+    - type: Physics
+      canCollide: false
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
