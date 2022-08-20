@@ -28,6 +28,8 @@
   name: premium Havanian cigar
   description: A cigar fit for only the best of the best.
   components:
+  - type: Smokable
+    inhaleAmount: 0.075 # It's premium!
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
     netsync: false
