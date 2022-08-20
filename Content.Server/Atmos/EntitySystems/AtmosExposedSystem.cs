@@ -52,7 +52,7 @@ namespace Content.Server.Atmos.EntitySystems
         public AtmosExposedGetAirEvent(EntityUid entity, bool invalidate = false)
         {
             Entity = entity;
-            invalidate = invalidate;
+            Invalidate = invalidate;
         }
     }
 }

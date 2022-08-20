@@ -45,6 +45,7 @@ namespace Content.Client.Cooldown
             _shader.SetParameter("progress", Progress);
             handle.UseShader(_shader);
             handle.DrawRect(PixelSizeBox, color);
+            handle.UseShader(null);
         }
 
         public void FromTime(TimeSpan start, TimeSpan end)

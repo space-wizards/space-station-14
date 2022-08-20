@@ -51,8 +51,8 @@
       - rods_5
   - type: FloorTile
     outputs:
-    - lattice
-    - floor_reinforced
+    - Lattice
+    - FloorReinforced
 
 - type: entity
   parent: PartRodMetal

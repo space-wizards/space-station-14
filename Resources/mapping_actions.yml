@@ -1023,7 +1023,7 @@
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: AlignTileAny
-      tileId: floor_steel
+      tileId: FloorSteel
   assignments:
   - 0: 6
 - action: !type:InstantAction
@@ -1036,14 +1036,14 @@
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: AlignTileAny
-      tileId: plating
+      tileId: Plating
   assignments:
   - 0: 7
   - 1: 8
   - 2: 8
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Tiles/cropped_parallax.png
+    icon: /Textures/Tiles/cropped_parallax.png
     name: space
     keywords: []
     clientExclusive: True

@@ -3,10 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.Painters;
+using Newtonsoft.Json;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Webp;
 
 namespace Content.MapRenderer
 {
@@ -24,82 +27,80 @@ namespace Content.MapRenderer
                 Console.WriteLine("Didn't specify any maps to paint! Provide map names (as map prototype names).");
             }
 
-            // var created = Environment.GetEnvironmentVariable(MapsAddedEnvKey);
-            // var modified = Environment.GetEnvironmentVariable(MapsModifiedEnvKey);
-            //
-            // var yamlStream = new YamlStream();
-            //
-            // if (created != null)
-            // {
-            //     yamlStream.Load(new StringReader(created));
-            // }
-            //
-            // if (modified != null)
-            // {
-            //     yamlStream.Load(new StringReader(modified));
-            // }
-            //
-            // var files = new YamlSequenceNode();
-            //
-            // foreach (var doc in yamlStream.Documents)
-            // {
-            //     var filesModified = (YamlSequenceNode) doc.RootNode;
-            //
-            //     foreach (var node in filesModified)
-            //     {
-            //         files.Add(node);
-            //     }
-            // }
+            if (!CommandLineArguments.TryParse(args, out var arguments))
+                return;
 
-            // var maps = new List<string>();
-
-            // foreach (var node in files)
-            // {
-            //     var fileName = node.AsString();
-            //
-            //     if (!fileName.StartsWith("Resources/Maps/") ||
-            //         !fileName.EndsWith("yml"))
-            //     {
-            //         continue;
-            //     }
-            //
-            //     maps.Add(fileName);
-            // }
-
-            await Run(new List<string>(args));
+            await Run(arguments);
         }
 
-        private static async Task Run(List<string> maps)
+        private static async Task Run(CommandLineArguments arguments)
         {
-            Console.WriteLine($"Creating images for {maps.Count} maps");
+
+            Console.WriteLine($"Creating images for {arguments.Maps.Count} maps");
 
             var mapNames = new List<string>();
-            foreach (var map in maps)
+            foreach (var map in arguments.Maps)
             {
                 Console.WriteLine($"Painting map {map}");
 
-                int i = 0;
-                await foreach (var grid in MapPainter.Paint(map))
+                var mapViewerData = new MapViewerData()
                 {
-                    var directory = DirectoryExtensions.MapImages().FullName;
+                    Id = map,
+                    Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(map)
+                };
+
+                mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax());
+                var directory = Path.Combine(arguments.OutputPath, map);
+                Directory.CreateDirectory(directory);
+
+                int i = 0;
+                await foreach (var renderedGrid in MapPainter.Paint(map))
+                {
+                    var grid = renderedGrid.Image;
                     Directory.CreateDirectory(directory);
 
                     var fileName = Path.GetFileNameWithoutExtension(map);
-                    var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.png";
+                    var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format.ToString()}";
 
                     Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 
-                    await grid.SaveAsPngAsync(savePath);
+                    switch (arguments.Format)
+                    {
+                        case OutputFormat.webp:
+                            var encoder = new WebpEncoder
+                            {
+                                Method = WebpEncodingMethod.BestQuality,
+                                FileFormat = WebpFileFormatType.Lossless,
+                                TransparentColorMode = WebpTransparentColorMode.Preserve
+                            };
+
+                            await grid.SaveAsync(savePath, encoder);
+                            break;
+
+                        default:
+                        case OutputFormat.png:
+                            await grid.SaveAsPngAsync(savePath);
+                            break;
+                    }
+
                     grid.Dispose();
+
+                    mapViewerData.Grids.Add(new GridLayer(renderedGrid,  Path.Combine(map, Path.GetFileName(savePath))));
 
                     mapNames.Add(fileName);
                     i++;
+                }
+
+                if (arguments.ExportViewerJson)
+                {
+                    var json = JsonConvert.SerializeObject(mapViewerData);
+                    await File.WriteAllTextAsync(Path.Combine(arguments.OutputPath, map, "map.json"), json);
                 }
             }
 
             var mapNamesString = $"[{string.Join(',', mapNames.Select(s => $"\"{s}\""))}]";
             Console.WriteLine($@"::set-output name=map_names::{mapNamesString}");
-            Console.WriteLine($"Created {maps.Count} map images.");
+            Console.WriteLine($"Created {arguments.Maps.Count} map images.");
         }
     }
 }

@@ -70,6 +70,9 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      DisposalUnit: !type:Container
 
 - type: entity
   id: DisposalUnit
@@ -85,3 +88,57 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+
+
+- type: entity
+  id: MailingUnit
+  parent: DisposalUnitBase
+  name: mailing unit
+  description: A pneumatic mail delivery unit.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/disposal.rsi
+    layers:
+      - state: conmailing
+        map: [ "enum.DisposalUnitVisualLayers.Base" ]
+      - state: mailover-handle
+        map: [ "enum.DisposalUnitVisualLayers.Handle" ]
+      - state: dispover-ready
+        map: [ "enum.DisposalUnitVisualLayers.Light" ]
+  - type: Construction
+    graph: DisposalMachine
+    node: mailing_unit
+  - type: DisposalUnit
+    flushTime: 2
+    autoEngageEnabled: false
+    mobsCanEnter: false
+  - type: MailingUnit
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: MailingUnit
+    transmitFrequencyId: MailingUnit
+  - type: WiredNetworkConnection
+  - type: Configuration
+    config:
+      tag:
+  - type: Appearance
+    visuals:
+      - type: DisposalUnitVisualizer
+        state_unanchored: conmailing
+        state_anchored: mailing
+        state_charging: mailing-charging
+        overlay_charging: dispover-charge
+        overlay_ready: dispover-ready
+        overlay_full: dispover-full
+        overlay_engaged: mailover-handle
+        state_flush: mailing-flush
+        flush_sound:
+          path: /Audio/Machines/disposalflush.ogg
+        flush_time: 2
+  - type: UserInterface
+    interfaces:
+    - key: enum.MailingUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+    - key: enum.ConfigurationUiKey.Key
+      type: ConfigurationBoundUserInterface

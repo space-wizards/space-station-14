@@ -45,22 +45,22 @@
   description: Used to pilot a shuttle.
   abstract: true
   components:
-  - type: ShuttleConsole
-  - type: ActivatableUI
-    key: enum.ShuttleConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-    - key: enum.ShuttleConsoleUiKey.Key
-      type: ShuttleConsoleBoundUserInterface
-  - type: RadarConsole
-  - type: ExtensionCableReceiver
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#43ccb5"
-  - type: Rotatable
-    rotateWhileAnchored: true
+    - type: ShuttleConsole
+    - type: ActivatableUI
+      key: enum.ShuttleConsoleUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.ShuttleConsoleUiKey.Key
+          type: ShuttleConsoleBoundUserInterface
+    - type: RadarConsole
+    - type: ExtensionCableReceiver
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#43ccb5"
+    - type: Rotatable
+      rotateWhileAnchored: true
 
 - type: entity
   parent: BaseComputerShuttle
@@ -68,13 +68,13 @@
   name: shuttle console
   description: Used to pilot a shuttle.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: generic_key
-      screen: shuttle
-  - type: Computer
-    board: ShuttleConsoleCircuitboard
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: generic_key
+          screen: shuttle
+    - type: Computer
+      board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -82,20 +82,20 @@
   name: syndicate shuttle console
   description: Used to pilot a syndicate shuttle.
   components:
-  - type: Tag
-    tags:
-    - Syndicate
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: syndie_key
-      screen: syndishuttle
-  - type: RadarConsole
-    maxRange: 1536
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#c94242"
+    - type: Tag
+      tags:
+        - Syndicate
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: syndie_key
+          screen: syndishuttle
+    - type: RadarConsole
+      maxRange: 1536
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#c94242"
 
 - type: entity
   parent: BaseComputerShuttle
@@ -103,18 +103,82 @@
   name: cargo shuttle console
   description: Used to pilot the cargo shuttle.
   components:
-  - type: Appearance
-    visuals:
-      - type: ComputerVisualizer
-        key: generic_key
-        screen: shuttle
-  - type: CargoPilotConsole
-  - type: RadarConsole
-    maxRange: 256
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#c94242"
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: generic_key
+          screen: shuttle
+    - type: CargoPilotConsole
+    - type: RadarConsole
+      maxRange: 256
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#c94242"
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerIFF
+  name: IFF computer
+  description: Allows you to control the IFF characteristics of this vessel.
+  components:
+    - type: IFFConsole
+    - type: Sprite
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body" ]
+          state: computer
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          sprite: Structures/Shuttles/iff.rsi
+          state: helm
+          shader: unshaded
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          screen: helm
+    - type: ActivatableUI
+      key: enum.IFFConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.IFFConsoleUiKey.Key
+          type: IFFConsoleBoundUserInterface
+
+- type: entity
+  parent: ComputerIFF
+  id: ComputerIFFSyndicate
+  name: IFF computer
+  suffix: Syndicate
+  description: Allows you to control the IFF and stealth characteristics of this vessel.
+  components:
+    - type: IFFConsole
+      allowedFlags:
+        - Hide
+        - HideLabel
+    - type: Sprite
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body" ]
+          state: computer
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          sprite: Structures/Shuttles/iff.rsi
+          state: helm
+          shader: unshaded
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          screen: helm
+    - type: ActivatableUI
+      key: enum.IFFConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.IFFConsoleUiKey.Key
+          type: IFFConsoleBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -182,6 +246,27 @@
     color: "#1f8c28"
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerStationRecords
+  name: station records computer
+  description: This can be used to check station records.
+  components:
+    - type: GeneralStationRecordConsole
+    - type: UserInterface
+      interfaces:
+        - key: enum.GeneralStationRecordConsoleKey.Key
+          type: GeneralStationRecordConsoleBoundUserInterface
+    - type: ActivatableUI
+      key: enum.GeneralStationRecordConsoleKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#1f8c28"
+    - type: Computer
+      board: CriminalRecordsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -282,6 +367,7 @@
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
       type: IdCardConsoleBoundUserInterface
+  - type: CrewManifestViewer
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
@@ -296,6 +382,12 @@
   - type: Tag
     tags:
     - EmagImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      IdCardConsole-privilegedId: !type:ContainerSlot
+      IdCardConsole-targetId: !type:ContainerSlot
 
 - type: entity
   parent: BaseComputer
