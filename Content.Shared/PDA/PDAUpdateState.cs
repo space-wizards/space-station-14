@@ -1,10 +1,11 @@
+using Content.Shared.CartridgeLoader;
 using Robust.Shared.Serialization;
 
 
 namespace Content.Shared.PDA
 {
     [Serializable, NetSerializable]
-    public sealed class PDAUpdateState : BoundUserInterfaceState
+    public sealed class PDAUpdateState : CartridgeLoaderUiState
     {
         public bool FlashlightEnabled;
         public bool HasPen;

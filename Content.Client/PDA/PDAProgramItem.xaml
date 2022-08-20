@@ -1,0 +1,14 @@
+﻿<pda:PDAProgramItem Orientation="Horizontal" HorizontalExpand="True" MinHeight="60" Margin="8 8 8 8"
+                    xmlns:pda="clr-namespace:Content.Client.PDA"
+                    xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" MinWidth="60">
+        <AnimatedTextureRect HorizontalAlignment="Center" VerticalAlignment="Center" VerticalExpand="True" Name="Icon" Access="Public"/>
+    </BoxContainer>
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+        <Label Name="ProgramName" Access="Public" VerticalExpand="True"/>
+        <BoxContainer HorizontalExpand="True" SetHeight="28">
+            <BoxContainer HorizontalExpand="True"/>
+            <Button Name="InstallButton" Access="Public" Visible="False" SetWidth="90" HorizontalAlignment="Right" VerticalExpand="True"></Button>
+        </BoxContainer>
+    </BoxContainer>
+</pda:PDAProgramItem>

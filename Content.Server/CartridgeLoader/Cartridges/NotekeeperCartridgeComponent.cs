@@ -1,4 +1,4 @@
-﻿namespace Content.Server.CartridgeComputer.Cartridges;
+﻿namespace Content.Server.CartridgeLoader.Cartridges;
 
 [RegisterComponent]
 public sealed class NotekeeperCartridgeComponent : Component

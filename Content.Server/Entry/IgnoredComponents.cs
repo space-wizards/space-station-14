@@ -17,7 +17,7 @@ namespace Content.Server.Entry
             "CharacterInfo",
             "HandheldGPS",
             "CableVisualizer",
-            "CartridgeUiComponent"
+            "CartridgeUi"
         };
     }
 }

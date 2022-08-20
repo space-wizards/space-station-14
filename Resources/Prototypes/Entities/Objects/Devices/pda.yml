@@ -36,12 +36,16 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Ringer
-  - type: CartridgeComputer
+  - type: CartridgeLoader
+    uiKey: enum.PDAUiKey.Key
     cartridgeSlot:
       priority: -1
       name: Cartridge
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
     singleUser: true
@@ -71,6 +75,9 @@
       whitelist:
         components:
         - IdCard
+  - type: ContainerContainer
+    containers:
+      program_container: !type:Container
   - type: CrewManifestViewer
     unsecure: true
   - type: Tag

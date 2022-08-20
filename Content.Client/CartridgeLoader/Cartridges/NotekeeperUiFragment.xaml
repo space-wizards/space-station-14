@@ -1,0 +1,4 @@
+﻿<cartridges:NotekeeperUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                 xmlns="https://spacestation14.io">
+    <Label Text="Test"/>
+</cartridges:NotekeeperUiFragment>

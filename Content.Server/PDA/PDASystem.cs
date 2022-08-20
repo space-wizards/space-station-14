@@ -1,3 +1,4 @@
+using Content.Server.CartridgeLoader;
 using Content.Server.Instruments;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
@@ -25,6 +26,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
 
         public override void Initialize()
         {
@@ -105,7 +107,7 @@ namespace Content.Server.PDA
             var hasInstrument = HasComp<InstrumentComponent>(pda.Owner);
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument);
 
-            ui.SetState(state);
+            _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, state);
 
             // TODO UPLINK RINGTONES/SECRETS This is just a janky placeholder way of hiding uplinks from non syndicate
             // players. This should really use a sort of key-code entry system that selects an account which is not directly tied to
@@ -122,7 +124,7 @@ namespace Content.Server.PDA
                     continue;
 
                 if (_uplinkAccounts.HasAccount(user))
-                    ui.SetState(uplinkState, session);
+                    _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, uplinkState, session);
             }
         }
 
@@ -186,7 +188,7 @@ namespace Content.Server.PDA
 
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner));
 
-            ui.SetState(state, args.Session);
+            _cartridgeLoaderSystem?.UpdateUiState(uid, state, args.Session);
         }
     }
 }

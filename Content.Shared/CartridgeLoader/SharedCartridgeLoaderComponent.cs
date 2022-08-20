@@ -1,10 +1,10 @@
-﻿using System.Collections.Immutable;
-using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Containers.ItemSlots;
 
-namespace Content.Shared.CartridgeComputer;
+namespace Content.Shared.CartridgeLoader;
 
-[Access(typeof(SharedCartridgeComputerSystem))]
-public abstract class SharedCartridgeComputerComponent : Component
+[Virtual]
+[Access(typeof(SharedCartridgeLoaderSystem))]
+public class SharedCartridgeLoaderComponent : Component
 {
     public const string CartridgeSlotId = "Cartridge-Slot";
 
@@ -16,4 +16,7 @@ public abstract class SharedCartridgeComputerComponent : Component
 
     [ViewVariables]
     public readonly List<EntityUid> BackgroundPrograms = new();
+
+    [DataField("installedCartridges")]
+    public List<EntityUid> InstalledPrograms = new();
 }

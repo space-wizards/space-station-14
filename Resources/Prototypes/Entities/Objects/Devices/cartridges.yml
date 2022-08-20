@@ -11,6 +11,8 @@
   - type: Icon
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
+  - type: CartridgeUi
+    ui: !type:NotekeeperUi
   - type: Cartridge
     programName: Test Program
     icon:

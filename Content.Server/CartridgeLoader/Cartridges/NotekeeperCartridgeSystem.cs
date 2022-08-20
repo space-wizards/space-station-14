@@ -1,10 +1,10 @@
-﻿using Content.Shared.CartridgeComputer;
+﻿using Content.Shared.CartridgeLoader;
 
-namespace Content.Server.CartridgeComputer.Cartridges;
+namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed class NotekeeperCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeComputerSystem? _computerSystem = default!;
+    [Dependency] private readonly CartridgeLoaderSystem? _computerSystem = default!;
 
     public override void Initialize()
     {
@@ -20,6 +20,5 @@ public sealed class NotekeeperCartridgeSystem : EntitySystem
 
     private void OnUsed(EntityUid uid, NotekeeperCartridgeComponent component, CartridgeAfterInteractEvent args)
     {
-        var test = 1;
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.CartridgeComputer;
+namespace Content.Shared.CartridgeLoader;
 
 [Serializable, NetSerializable]
-public enum CartridgeComputerVisuals
+public enum CartridgeLoaderVisuals
 {
     CartridgeInserted
 }

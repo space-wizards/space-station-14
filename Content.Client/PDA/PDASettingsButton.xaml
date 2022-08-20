@@ -1,0 +1,11 @@
+﻿<pda:PDASettingsButton xmlns="https://spacestation14.io"
+                       xmlns:pda="clr-namespace:Content.Client.PDA"
+                       HorizontalExpand="True"
+                       MinHeight="48"
+                       Margin="5 4 6 0">
+<PanelContainer Name="Panel"/>
+<BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8 4 0 4">
+    <Label Name="OptionName"/>
+    <Label Name="OptionDescription"/>
+</BoxContainer>
+</pda:PDASettingsButton>

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
-namespace Content.Client.CartridgeComputer;
+namespace Content.Client.CartridgeLoader;
 
 public sealed class CartridgeUISerializer : ITypeSerializer<CartridgeUI, ValueDataNode>
 {

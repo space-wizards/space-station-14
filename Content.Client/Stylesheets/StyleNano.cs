@@ -3,6 +3,7 @@ using Content.Client.Actions.UI;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.HUD.UI;
+using Content.Client.PDA;
 using Content.Client.Resources;
 using Content.Client.Targeting;
 using Content.Client.UserInterface.Controls;
@@ -1405,6 +1406,39 @@ namespace Content.Client.Stylesheets
 
                 Element<Label>().Class("Disabled")
                     .Prop("font-color", DisabledFore),
+
+                //PDA
+                Element<PanelContainer>().Class("PDAContentBackground")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenBoth)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
+
+                Element<PanelContainer>().Class("PDABackground")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenBoth)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#000000")),
+
+                Element<PanelContainer>().Class("PDABackgroundRect")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+
+                Element<PanelContainer>().Class("PDABorderRect")
+                    .Prop(PanelContainer.StylePropertyPanel, AngleBorderRect),
+
+                Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.NormalBgColor))
+                    .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.EnabledFgColor)),
+
+                Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.HoverColor))
+                    .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.EnabledFgColor)),
+
+                Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.PressedColor))
+                    .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.EnabledFgColor)),
+
+                Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.NormalBgColor))
+                    .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.DisabledFgColor)),
+
 
             }).ToList());
         }
