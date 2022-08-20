@@ -23,6 +23,8 @@
             acts: ["Destruction"]
     - type: Physics
       canCollide: false
+    - type: Clickable
+    - type: InteractionOutline
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
@@ -34,6 +36,8 @@
     - type: DeviceList
     - type: WiredNetworkConnection
     - type: AtmosDevice
+    - type: AtmosAlarmable
+      alarmedBy: ["AirSensor"]
     - type: AtmosMonitor
       temperatureThreshold: stationTemperature
       pressureThreshold: stationPressure
