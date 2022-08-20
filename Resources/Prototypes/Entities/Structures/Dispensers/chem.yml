@@ -4,6 +4,8 @@
   parent: ReagentDispenserBase
   description: An industrial grade chemical dispenser with a sizeable chemical supply.
   components:
+  - type: PersistenceControl
+    mode: Delete
   - type: Sprite
     sprite: Structures/dispensers.rsi
     state: industrial-working
