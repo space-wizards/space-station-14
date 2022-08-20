@@ -1,11 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: Added network configuration functionality to multitools, type: Add}
-  - {message: 'Air alarms can be tied to specific vents, scrubbers and firelocks',
-    type: Tweak}
-  id: 1674
-  time: '2022-06-10T01:28:24.0000000+00:00'
 - author: themias
   changes:
   - {message: Captain and HoP PDA pen slots now hold just pens, type: Fix}
@@ -2937,3 +2930,8 @@ Entries:
       disarming., type: Fix}
   id: 2173
   time: '2022-08-20T02:14:55.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Shot glasses can now only hold 10u of liquid., type: Tweak}
+  id: 2174
+  time: '2022-08-20T02:27:48.0000000+00:00'
