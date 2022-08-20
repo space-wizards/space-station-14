@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: changed color of opened airlock maint. panel, type: Add}
-  id: 1673
-  time: '2022-06-09T02:41:29.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: Added network configuration functionality to multitools, type: Add}
@@ -2936,3 +2931,9 @@ Entries:
     type: Tweak}
   id: 2172
   time: '2022-08-19T00:10:20.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: You no longer get better at pushing people over the worse you are at
+      disarming., type: Fix}
+  id: 2173
+  time: '2022-08-20T02:14:55.0000000+00:00'
