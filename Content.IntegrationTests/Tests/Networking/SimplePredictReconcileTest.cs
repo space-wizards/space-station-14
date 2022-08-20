@@ -52,7 +52,8 @@ namespace Content.IntegrationTests.Tests.Networking
             var cGameStateManager = client.ResolveDependency<IClientGameStateManager>();
             var cfg = client.ResolveDependency<IConfigurationManager>();
             var log = cfg.GetCVar(CVars.NetLogging);
-            cfg.SetCVar(CVars.NetLogging, true);
+
+            //cfg.SetCVar(CVars.NetLogging, true);
 
             EntityUid serverEnt = default;
             PredictionTestComponent serverComponent = default!;
