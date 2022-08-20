@@ -18,7 +18,7 @@
     interactSuccessString: petting-success-generic
     interactFailureString: petting-failure-generic
     interactSuccessSound:
-      path: /Audio/Effects/double_beep.wav
+      path: /Audio/Effects/double_beep.ogg
   - type: CombatMode
   - type: Gun
     fireRate: 6
@@ -31,7 +31,12 @@
     proto: CartridgeCaselessRifle
     capacity: 10000
   - type: HTN
-    rootTask: RangedCombatCompound
-  #- type: AiFactionTag
-  #  factions:
-  #    - Syndicate
+    rootTask: TurretCompound
+    blackboard:
+      TurretRotationSpeed: !type:Double
+        180
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        /Audio/Effects/double_beep.ogg
+  - type: AiFactionTag
+    factions:
+      - Syndicate

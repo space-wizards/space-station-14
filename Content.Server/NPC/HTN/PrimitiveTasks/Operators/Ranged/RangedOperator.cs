@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Server.NPC.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
 
@@ -23,13 +24,6 @@ public sealed class RangedOperator : HTNOperator
 
     // Like movement we add a component and pass it off to the dedicated system.
 
-    public override void Startup(NPCBlackboard blackboard)
-    {
-        base.Startup(blackboard);
-        var melee = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
-        melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
-    }
-
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
     {
         // Don't attack if they're already as wounded as we want them.
@@ -46,6 +40,23 @@ public sealed class RangedOperator : HTNOperator
         }
 
         return (true, null);
+    }
+
+    public override void Startup(NPCBlackboard blackboard)
+    {
+        base.Startup(blackboard);
+        var ranged = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        ranged.Target = blackboard.GetValue<EntityUid>(TargetKey);
+
+        if (blackboard.TryGetValue<Angle>("TurretRotationSpeed", out var rotSpeed))
+        {
+            ranged.RotationSpeed = rotSpeed;
+        }
+
+        if (blackboard.TryGetValue<SoundSpecifier>("SoundTargetInLOS", out var losSound))
+        {
+            ranged.SoundTargetInLOS = losSound;
+        }
     }
 
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)

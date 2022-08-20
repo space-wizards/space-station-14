@@ -11,7 +11,7 @@ public sealed partial class NPCSystem
             return;
         }
 
-        var blackboard = component.BlackboardA;
+        var blackboard = component.Blackboard;
         blackboard.SetValue(key, value);
     }
 }

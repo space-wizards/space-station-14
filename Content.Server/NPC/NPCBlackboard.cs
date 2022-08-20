@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Systems;
+using Content.Shared.ActionBlocker;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC;
@@ -142,11 +143,17 @@ public sealed class NPCBlackboard
                     return false;
                 }
 
-                var access = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AccessReaderSystem>();
+                var access = entManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
                 value = access.FindAccessTags(owner);
                 return true;
+            case CanMove:
+                if (!TryGetValue(Owner, out owner))
+                {
+                    return false;
+                }
 
-                break;
+                var blocker = entManager.EntitySysManager.GetEntitySystem<ActionBlockerSystem>();
+                return blocker.CanMove(owner);
             case OwnerCoordinates:
                 if (!TryGetValue(Owner, out owner))
                 {
@@ -179,6 +186,7 @@ public sealed class NPCBlackboard
     */
 
     public const string Access = "Access";
+    public const string CanMove = "CanMove";
     public const string FollowTarget = "FollowTarget";
     public const string MedibotInjectRange = "MedibotInjectRange";
     public const string Owner = "Owner";

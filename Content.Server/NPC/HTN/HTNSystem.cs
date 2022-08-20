@@ -101,7 +101,7 @@ public sealed class HTNSystem : EntitySystem
     private void OnHTNStartup(EntityUid uid, HTNComponent component, ComponentStartup args)
     {
         EnsureComp<ActiveNPCComponent>(uid);
-        component.BlackboardA.SetValue(NPCBlackboard.Owner, uid);
+        component.Blackboard.SetValue(NPCBlackboard.Owner, uid);
     }
 
     private void OnHTNShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
@@ -163,13 +163,13 @@ public sealed class HTNSystem : EntitySystem
 
                 if (comp.Plan == null || newPlanBetter)
                 {
-                    comp.Plan?.CurrentTask.Operator.Shutdown(comp.BlackboardA, HTNOperatorStatus.BetterPlan);
+                    comp.Plan?.CurrentTask.Operator.Shutdown(comp.Blackboard, HTNOperatorStatus.BetterPlan);
                     comp.Plan = comp.PlanningJob.Result;
 
                     // Startup the first task and anything else we need to do.
                     if (comp.Plan != null)
                     {
-                        StartupTask(comp.Plan.Tasks[comp.Plan.Index], comp.BlackboardA, comp.Plan.Effects[comp.Plan.Index]);
+                        StartupTask(comp.Plan.Tasks[comp.Plan.Index], comp.Blackboard, comp.Plan.Effects[comp.Plan.Index]);
                     }
                 }
 
@@ -206,7 +206,7 @@ public sealed class HTNSystem : EntitySystem
         {
             // Run the existing operator
             var currentOperator = component.Plan.CurrentOperator;
-            var blackboard = component.BlackboardA;
+            var blackboard = component.Blackboard;
             status = currentOperator.Update(blackboard, frameTime);
 
             switch (status)
@@ -229,7 +229,7 @@ public sealed class HTNSystem : EntitySystem
                         break;
                     }
 
-                    StartupTask(component.Plan.Tasks[component.Plan.Index], component.BlackboardA, component.Plan.Effects[component.Plan.Index]);
+                    StartupTask(component.Plan.Tasks[component.Plan.Index], component.Blackboard, component.Plan.Effects[component.Plan.Index]);
                     break;
                 default:
                     throw new InvalidOperationException();
@@ -271,7 +271,7 @@ public sealed class HTNSystem : EntitySystem
         var job = new HTNPlanJob(
             0.02,
             _prototypeManager.Index<HTNCompoundTask>(component.RootTask),
-            component.BlackboardA.ShallowClone(), branchTraversal, cancelToken.Token);
+            component.Blackboard.ShallowClone(), branchTraversal, cancelToken.Token);
 
         _planQueue.EnqueueJob(job);
         component.PlanningJob = job;

@@ -1,11 +1,18 @@
 # -- Ranged --
 - type: htnCompound
+  id: TurretCompound
+  desc: Tries to shoot a target in LOS in range.
+  branches:
+    - tasks:
+        - id: PickRangedTargetPrimitive
+        - id: RangedAttackTargetPrimitive
+
+- type: htnCompound
   id: RangedCombatCompound
   desc: Tries to shoot a target at range.
   branches:
-    # Unarmed combat
     - tasks:
-        - id: PickMeleeTargetPrimitive
+        - id: PickRangedTargetPrimitive
         - id: RangedAttackTargetCompound
 
 - type: htnCompound
@@ -24,6 +31,10 @@
         - id: MoveToCombatTargetPrimitive
         - id: RangedAttackTargetPrimitive
 
+
+- type: htnPrimitive
+  id: PickRangedTargetPrimitive
+  operator: !type:PickRangedTargetOperator
 
 - type: htnPrimitive
   id: RangedAttackTargetPrimitive

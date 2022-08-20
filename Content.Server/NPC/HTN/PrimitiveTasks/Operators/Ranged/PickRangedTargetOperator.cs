@@ -1,15 +1,20 @@
 using System.Threading.Tasks;
+using Content.Server.Interaction;
 using Content.Server.NPC.Systems;
 using Robust.Shared.Map;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Melee;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
 
 /// <summary>
-/// Selects a target for melee.
+/// Selects a target for ranged combat.
 /// </summary>
-public sealed class PickMeleeTargetOperator : HTNOperator
+public sealed class PickRangedTargetOperator : HTNOperator
 {
+    // Should probably have an abstract that this and melee inherit from?
+
+    [Dependency] private readonly IEntityManager _entManager = default!;
     private AiFactionTagSystem _tags = default!;
+    private InteractionSystem _interaction = default!;
 
     [ViewVariables, DataField("key")] public string Key = "CombatTarget";
 
@@ -23,6 +28,7 @@ public sealed class PickMeleeTargetOperator : HTNOperator
     {
         base.Initialize(sysManager);
         _tags = sysManager.GetEntitySystem<AiFactionTagSystem>();
+        _interaction = sysManager.GetEntitySystem<InteractionSystem>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
@@ -65,13 +71,30 @@ public sealed class PickMeleeTargetOperator : HTNOperator
 
     private float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget)
     {
-        var rating = 0f;
+        var ourCoordinates = blackboard.GetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
+        var targetCoordinates = blackboard.GetValue<EntityCoordinates>(KeyCoordinates);
+
+        if (!ourCoordinates.TryDistance(_entManager, targetCoordinates, out var distance))
+            return -1f;
+
+        var canMove = blackboard.GetValue<bool>(NPCBlackboard.CanMove);
+        var inLOS = _interaction.InRangeUnobstructed(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
+            targetCoordinates, distance);
+
+        if (!canMove && !inLOS)
+            return -1f;
+
+        var rating = 1f;
+
+        if (inLOS)
+            rating += 2f;
 
         if (existingTarget == uid)
         {
-            rating += 3f;
+            rating += 4f;
         }
 
+        rating += 1f / distance * 4f;
         return rating;
     }
 }

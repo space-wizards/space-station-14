@@ -8,7 +8,9 @@ namespace Content.Server.NPC.Components;
 [RegisterComponent]
 public sealed class NPCRangedCombatComponent : Component
 {
-    // TODO: Have some abstract component they inherit from.
+    /// <summary>
+    /// Weapon we're using to attack the target.
+    /// </summary>
     [ViewVariables] public EntityUid Weapon;
 
     [ViewVariables]
@@ -22,7 +24,7 @@ public sealed class NPCRangedCombatComponent : Component
     /// <summary>
     /// If null it will instantly turn.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public Angle? RotationSpeed = Angle.FromDegrees(180);
+    [ViewVariables(VVAccess.ReadWrite)] public Angle? RotationSpeed;
 
     /// <summary>
     /// Maximum distance, between our rotation and the target's, to consider shooting it.
@@ -55,5 +57,5 @@ public sealed class NPCRangedCombatComponent : Component
     /// Sound to play if the target enters line of sight.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier? SoundTargetInLOS = new SoundPathSpecifier("/Audio/Effects/double_beep.wav");
+    public SoundSpecifier? SoundTargetInLOS;
 }
