@@ -1,0 +1,18 @@
+﻿- type: gameMap
+  id: ISVBoomerang
+  mapName: 'ISV Boomerang'
+  mapPath: /Maps/isvboomerang.yml
+  minPlayers: 0
+  fallback: true
+  descriptionPath: "/Server Info/ISVBoomerangInfo.txt"
+  stations:
+    ISVBoomerang:
+      mapNameTemplate: '{0} Boomerang {1}'
+      nameGenerator:
+        !type:IndependentNameGenerator
+        prefixCreator: ''
+      overflowJobs: []
+      availableJobs:
+        SalvageSpecialist: [ 1, 1 ]
+        Scientist: [ 2, 2 ]
+        MedicalDoctor: [ 1, 1 ]
