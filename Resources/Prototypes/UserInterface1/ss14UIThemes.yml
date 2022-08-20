@@ -1,6 +1,6 @@
 ﻿- type: uiTheme
   id: SS14DefaultTheme
-  path: /textures/interface/Default
+  path: /Textures/Interface/Default/
   colors:
     whiteText: "#FFF5EE"
     slotSelectedGold: "#e6b812"
