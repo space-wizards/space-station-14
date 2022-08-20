@@ -20,6 +20,7 @@
       - id: Wirecutter
       - id: ClothingBeltUtility
       - id: OreBag
+      - id: ClothingHeadHatWelding
 
 - type: entity
   id: CrateSalvageAssortedGoodies
