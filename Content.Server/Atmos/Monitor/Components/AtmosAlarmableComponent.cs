@@ -19,13 +19,19 @@ namespace Content.Server.Atmos.Monitor.Components
 
     /// <summary>
     ///     A component to add to device network devices if you want them to be alarmed
-    ///     by an atmospheric monitor.
+    ///     by an atmospheric alarmer. This will store every single alert received, and
+    ///     calculate the highest alert based on the alerts received. Equally, if you
+    ///     link other alarmables to this, it will store the alerts from them to
+    ///     calculate the highest network alert.
     /// </summary>
     [RegisterComponent]
     public sealed class AtmosAlarmableComponent : Component
     {
         [ViewVariables]
         public List<EntityUid> LinkedMonitors { get; set; } = new();
+
+        [ViewVariables]
+        public Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
 
         [ViewVariables] public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
         [ViewVariables] public AtmosMonitorAlarmType HighestNetworkState = AtmosMonitorAlarmType.Normal;

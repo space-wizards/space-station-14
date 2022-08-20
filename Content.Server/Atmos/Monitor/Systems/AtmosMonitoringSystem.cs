@@ -51,6 +51,8 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
 
+        public const string AtmosMonitorGetDataCmd = "atmos_monitor_get_data";
+
         // Packet data
         /// <summary>
         ///     Data response that contains the threshold types in an atmos monitor alarm.
@@ -82,7 +84,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             SubscribeLocalEvent<AtmosMonitorComponent, ComponentInit>(OnAtmosMonitorInit);
             SubscribeLocalEvent<AtmosMonitorComponent, ComponentStartup>(OnAtmosMonitorStartup);
-            SubscribeLocalEvent<AtmosMonitorComponent, ComponentShutdown>(OnAtmosMonitorShutdown);
             SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
             SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
@@ -115,59 +116,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                 _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
                 return;
             }
-
-            _checkPos.Add(uid);
-        }
-
-        private void OnAtmosMonitorShutdown(EntityUid uid, AtmosMonitorComponent component, ComponentShutdown args)
-        {
-            if (_checkPos.Contains(uid)) _checkPos.Remove(uid);
-        }
-
-        // hackiest shit ever but there's no PostStartup event
-        private HashSet<EntityUid> _checkPos = new();
-
-        public override void Update(float frameTime)
-        {
-            /* NOPE
-            foreach (var uid in _checkPos)
-                OpenAirOrReposition(uid);
-                */
-        }
-
-        private void OpenAirOrReposition(EntityUid uid, AtmosMonitorComponent? component = null, AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref component, ref appearance)) return;
-
-            var transform = Transform(component.Owner);
-
-            if (transform.GridUid == null)
-                return;
-
-            // atmos alarms will first attempt to get the air
-            // directly underneath it - if not, then it will
-            // instead place itself directly in front of the tile
-            // it is facing, and then visually shift itself back
-            // via sprite offsets (SS13 style but fuck it)
-            var coords = transform.Coordinates;
-            var pos = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-
-            if (_atmosphereSystem.IsTileAirBlocked(transform.GridUid.Value, pos))
-            {
-                var rotPos = transform.LocalRotation.RotateVec(new Vector2(0, -1));
-                transform.Anchored = false;
-                coords = coords.Offset(rotPos);
-                transform.Coordinates = coords;
-
-                appearance.SetData(AtmosMonitorVisuals.Offset, - new Vector2i(0, -1));
-
-                transform.Anchored = true;
-            }
-
-            GasMixture? air = _atmosphereSystem.GetContainingMixture(uid, true);
-            component.TileGas = air;
-
-            _checkPos.Remove(uid);
         }
 
         private void BeforePacketRecv(EntityUid uid, AtmosMonitorComponent component, BeforePacketSentEvent args)
@@ -188,8 +136,11 @@ namespace Content.Server.Atmos.Monitor.Systems
             // ignore packets from self, ignore from different frequency
             if (netConn.Address == args.SenderAddress) return;
 
+            var responseKey = string.Empty;
+
             switch (cmd)
             {
+                /*
                 // sync on alarm or explicit sync
                 case AtmosMonitorAlarmCmd:
                 case AtmosMonitorAlarmSyncCmd:
@@ -199,10 +150,12 @@ namespace Content.Server.Atmos.Monitor.Systems
                         && !component.NetworkAlarmStates.TryAdd(args.SenderAddress, state))
                         component.NetworkAlarmStates[args.SenderAddress] = state;
                     break;
+                    */
                 case AtmosMonitorAlarmResetCmd:
                     Reset(uid);
                     // Don't clear alarm states here.
                     break;
+                /*
                 case AtmosMonitorAlarmResetAllCmd:
                     if (args.Data.TryGetValue(AtmosMonitorAlarmSrc, out string? resetSrc)
                         && alarmable.AlarmedByPrototypes.Contains(resetSrc))
@@ -211,6 +164,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                         component.NetworkAlarmStates.Clear();
                     }
                     break;
+                    */
                 case AtmosMonitorSetThresholdCmd:
                     if (args.Data.TryGetValue(AtmosMonitorThresholdData, out AtmosAlarmThreshold? thresholdData)
                         && args.Data.TryGetValue(AtmosMonitorThresholdDataType, out AtmosMonitorThresholdType? thresholdType))
@@ -220,9 +174,9 @@ namespace Content.Server.Atmos.Monitor.Systems
                     }
 
                     break;
-                case AirAlarmSystem.AirAlarmSyncCmd:
+                case AtmosMonitorGetDataCmd:
                     var payload = new NetworkPayload();
-                    payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
+                    payload.Add(DeviceNetworkConstants.Command, AtmosMonitorAtmosData);
                     if (component.TileGas != null)
                     {
                         var gases = new Dictionary<Gas, float>();
@@ -231,7 +185,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                             gases.Add(gas, component.TileGas.GetMoles(gas));
                         }
 
-                        payload.Add(AirAlarmSystem.AirAlarmSyncData, new AtmosSensorData(
+                        payload.Add(AtmosMonitorAtmosData, new AtmosSensorData(
                             component.TileGas.Pressure,
                             component.TileGas.Temperature,
                             component.TileGas.TotalMoles,
@@ -259,10 +213,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                         _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
                         component.TileGas = null;
                     }
-
-                    // clear memory when power cycled
-                    component.LastAlarmState = AtmosMonitorAlarmType.Normal;
-                    component.NetworkAlarmStates.Clear();
                 }
                 else if (args.Powered)
                 {
