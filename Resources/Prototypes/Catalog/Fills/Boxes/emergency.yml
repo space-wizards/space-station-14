@@ -44,6 +44,9 @@
       - state: extendedtank
   - type: Item
     size: 41
+  - type: Storage
+    capacity: 40
+    size: 10
 
 - type: entity
   name: survival box
@@ -67,6 +70,9 @@
       - state: emergencytank
   - type: Item
     size: 41
+  - type: Storage
+    capacity: 40
+    size: 10
 
 - type: entity
   name: survival box
@@ -90,6 +96,9 @@
       - state: emergencytank
   - type: Item
     size: 41
+  - type: Storage
+    capacity: 40
+    size: 10
 
 - type: entity
   name: box of hugs
@@ -113,7 +122,9 @@
       - id: Flare
       - id: FoodTinMRE
       - id: CrowbarRed
-
+  - type: Storage
+    capacity: 40
+    size: 10
 
 - type: entity
   name: extended-capacity survival box
@@ -136,3 +147,6 @@
       - state: extendedtank
   - type: Item
     size: 41
+  - type: Storage
+    capacity: 40
+    size: 10
