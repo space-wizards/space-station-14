@@ -474,7 +474,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         if (string.IsNullOrEmpty(message))
             return message;
-        // Add period if there isn't any pontuation at the end.
+        // Adds a period if the last character is a letter.
         if (char.IsLetter(message[^1]))
             message += ".";
         return message;
