@@ -42,3 +42,8 @@
     drawdepth: SmallObjects
   - type: ApcPowerReceiver
     powerLoad: 300
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot
+      ReagentGrinder-entityContainerContainer: !type:Container

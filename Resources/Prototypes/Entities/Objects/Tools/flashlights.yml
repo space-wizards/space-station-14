@@ -31,6 +31,7 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+  - type: ItemSlots
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false

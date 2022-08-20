@@ -12,9 +12,6 @@
     emagPack: ChemDispenserEmaggedInventory
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:

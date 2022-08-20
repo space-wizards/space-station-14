@@ -47,6 +47,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -529,9 +530,8 @@ namespace Content.Server.Storage.EntitySystems
         /// <summary>
         ///     Inserts into the storage container
         /// </summary>
-        /// <param name="entity">The entity to insert</param>
         /// <returns>true if the entity was inserted, false otherwise</returns>
-        public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null)
+        public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null, bool playSound = true)
         {
             if (!Resolve(uid, ref storageComp))
                 return false;
@@ -539,8 +539,10 @@ namespace Content.Server.Storage.EntitySystems
             if (!CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
                 return false;
 
-            if (storageComp.StorageInsertSound is not null)
-                SoundSystem.Play(storageComp.StorageInsertSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, AudioParams.Default);
+            if (playSound && storageComp.StorageInsertSound is not null)
+            {
+                _audio.PlayPvs(storageComp.StorageInsertSound, uid);
+            }
 
             RecalculateStorageUsed(storageComp);
             UpdateStorageUI(uid, storageComp);

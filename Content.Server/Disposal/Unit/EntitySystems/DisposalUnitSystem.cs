@@ -46,6 +46,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly DumpableSystem _dumpableSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
@@ -104,27 +105,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     Act = () => TryEjectContents(component),
                     Category = VerbCategory.Eject,
-                    Text = Loc.GetString("disposal-eject-verb-contents")
+                    Text = Loc.GetString("disposal-eject-verb-get-data-text")
                 };
                 args.Verbs.Add(ejectVerb);
             }
-
-            // Behavior if using a trash bag & other dumpable containers
-            if (args.Using != null
-                && TryComp<DumpableComponent>(args.Using.Value, out var dumpable)
-                && TryComp<ServerStorageComponent>(args.Using.Value, out var storage)
-                && storage.StoredEntities is { Count: > 0 })
-            {
-                // Verb to dump held container into disposal unit
-                AlternativeVerb dumpVerb = new()
-                {
-                    Act = () => _dumpableSystem.StartDoAfter(args.Using.Value, args.Target, args.User, dumpable, storage),
-                    Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
-                    Priority = 2
-                };
-                args.Verbs.Add(dumpVerb);
-            }
-
         }
 
         private void AddClimbInsideVerb(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<Verb> args)
@@ -310,7 +294,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void HandleDisposalInit(EntityUid uid, DisposalUnitComponent component, ComponentInit args)
         {
-            component.Container = component.Owner.EnsureContainer<Container>(component.Name);
+            component.Container = _containerSystem.EnsureContainer<Container>(uid, SharedDisposalUnitComponent.ContainerId);
 
             UpdateInterface(component, component.Powered);
 
