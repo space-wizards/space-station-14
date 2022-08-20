@@ -181,7 +181,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, DeviceNetworkPacketEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)
-                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable)
                 || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;
 
@@ -202,7 +201,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                     component.FromAirAlarmData(setData);
                     UpdateState(uid, component);
-                    alarmable.IgnoreAlarms = setData.IgnoreAlarms;
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSetDataStatus);
                     payload.Add(AirAlarmSystem.AirAlarmSetDataStatus, true);
 

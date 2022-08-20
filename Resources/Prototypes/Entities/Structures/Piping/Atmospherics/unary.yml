@@ -107,9 +107,6 @@
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
-    - type: AtmosAlarmable
-      alarmedBy:
-      - AirAlarm
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
