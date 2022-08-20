@@ -265,7 +265,5 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: JuiceCarrot
-          Quantity: 1
   - type: Sprite
     state: dink

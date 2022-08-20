@@ -36,8 +36,6 @@
   - type: Clothing
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
 
 - type: entity
   parent: ClothingMaskGas

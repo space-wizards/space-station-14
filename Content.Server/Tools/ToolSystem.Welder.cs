@@ -103,9 +103,6 @@ namespace Content.Server.Tools
 
             welder.Lit = true;
 
-            var ev = new WelderToggledEvent(true);
-            RaiseLocalEvent(welder.Owner, ev, false);
-
             if(item != null)
                 _itemSystem.SetHeldPrefix(uid, "on", item);
 
@@ -141,9 +138,6 @@ namespace Content.Server.Tools
             Resolve(uid, ref item, ref light, ref appearance, false);
 
             welder.Lit = false;
-
-            var ev = new WelderToggledEvent(false);
-            RaiseLocalEvent(welder.Owner, ev, false);
 
             // TODO: Make all this use visualizers.
             if (item != null)
@@ -339,16 +333,6 @@ namespace Content.Server.Tools
             }
 
             _welderTimer -= WelderUpdateTimer;
-        }
-    }
-
-    public sealed class WelderToggledEvent : EntityEventArgs
-    {
-        public bool WelderOn;
-
-        public WelderToggledEvent(bool welderOn)
-        {
-            WelderOn = welderOn;
         }
     }
 }

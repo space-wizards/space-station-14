@@ -31,17 +31,14 @@ namespace Content.Shared.Examine
             public readonly bool CenterAtCursor;
             public readonly bool OpenAtOldTooltip;
 
-            public readonly bool KnowTarget;
-
             public ExamineInfoResponseMessage(EntityUid entityUid, FormattedMessage message, List<Verb>? verbs=null,
-                bool centerAtCursor=true, bool openAtOldTooltip=true, bool knowTarget = true)
+                bool centerAtCursor=true, bool openAtOldTooltip=true)
             {
                 EntityUid = entityUid;
                 Message = message;
                 Verbs = verbs;
                 CenterAtCursor = centerAtCursor;
                 OpenAtOldTooltip = openAtOldTooltip;
-                KnowTarget = knowTarget;
             }
         }
     }

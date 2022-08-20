@@ -228,7 +228,7 @@
       food:
         maxVol: 9
         reagents:
-        - ReagentId: JuiceCarrot
+        - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
