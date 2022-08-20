@@ -154,7 +154,8 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 }
 
                 var blocker = entManager.EntitySysManager.GetEntitySystem<ActionBlockerSystem>();
-                return blocker.CanMove(owner);
+                value = blocker.CanMove(owner);
+                return true;
             case OwnerCoordinates:
                 if (!TryGetValue(Owner, out owner))
                 {

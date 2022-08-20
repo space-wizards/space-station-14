@@ -63,13 +63,22 @@ namespace Content.Server.NPC.Systems
                 yield break;
             }
 
+            // TODO: Yes I know this system is shithouse
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var xform = xformQuery.GetComponent(entity);
+
             foreach (var component in EntityManager.EntityQuery<AiFactionTagComponent>(true))
             {
                 if ((component.Factions & hostile) == 0)
                     continue;
-                if (EntityManager.GetComponent<TransformComponent>(component.Owner).MapID != EntityManager.GetComponent<TransformComponent>(entity).MapID)
+
+                if (!xformQuery.TryGetComponent(component.Owner, out var targetXform))
                     continue;
-                if (!EntityManager.GetComponent<TransformComponent>(component.Owner).MapPosition.InRange(EntityManager.GetComponent<TransformComponent>(entity).MapPosition, range))
+
+                if (targetXform.MapID != xform.MapID)
+                    continue;
+
+                if (!targetXform.Coordinates.InRange(EntityManager, xform.Coordinates, range))
                     continue;
 
                 yield return component.Owner;

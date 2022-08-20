@@ -21,6 +21,11 @@ public sealed class NPCMeleeCombatComponent : Component
 public enum CombatStatus : byte
 {
     /// <summary>
+    /// The target isn't in LOS anymore.
+    /// </summary>
+    NotInSight,
+
+    /// <summary>
     /// Due to some generic reason we are unable to attack the target.
     /// </summary>
     Unspecified,

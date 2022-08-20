@@ -85,6 +85,10 @@ public sealed class RangedOperator : HTNOperator
             {
                 switch (combat.Status)
                 {
+                    case CombatStatus.TargetUnreachable:
+                    case CombatStatus.NotInSight:
+                        status = HTNOperatorStatus.Failed;
+                        break;
                     case CombatStatus.Normal:
                         status = HTNOperatorStatus.Continuing;
                         break;

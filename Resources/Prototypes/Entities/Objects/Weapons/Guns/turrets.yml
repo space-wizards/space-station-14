@@ -8,6 +8,7 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/turrets.rsi
+    drawdepth: WallMountedItems
     layers:
       - state: syndie_lethal
   - type: Clickable

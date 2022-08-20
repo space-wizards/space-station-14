@@ -94,12 +94,13 @@ public sealed partial class NPCCombatSystem
             if (comp.LOSAccumulator > UnoccludedCooldown)
             {
                 comp.LOSAccumulator -= UnoccludedCooldown;
-                comp.TargetInLOS = _interaction.InRangeUnobstructed(comp.Owner, comp.Target, distance);
+                comp.TargetInLOS = _interaction.InRangeUnobstructed(comp.Owner, comp.Target, distance + 0.1f);
             }
 
             if (!comp.TargetInLOS)
             {
                 comp.ShootAccumulator = 0f;
+                comp.Status = CombatStatus.TargetUnreachable;
                 continue;
             }
 
