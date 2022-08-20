@@ -1,21 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: changed color of opened airlock maint. panel, type: Add}
-  id: 1673
-  time: '2022-06-09T02:41:29.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: Added network configuration functionality to multitools, type: Add}
-  - {message: 'Air alarms can be tied to specific vents, scrubbers and firelocks',
-    type: Tweak}
-  id: 1674
-  time: '2022-06-10T01:28:24.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Captain and HoP PDA pen slots now hold just pens, type: Fix}
-  id: 1675
-  time: '2022-06-10T18:53:56.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nukies are fixed again., type: Fix}
@@ -2936,3 +2919,21 @@ Entries:
     type: Tweak}
   id: 2172
   time: '2022-08-19T00:10:20.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: You no longer get better at pushing people over the worse you are at
+      disarming., type: Fix}
+  id: 2173
+  time: '2022-08-20T02:14:55.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Shot glasses can now only hold 10u of liquid., type: Tweak}
+  id: 2174
+  time: '2022-08-20T02:27:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Most circuitry has been resprited., type: Tweak}
+  - {message: Most computers now have department-based sprites for their circuit board.,
+    type: Add}
+  id: 2175
+  time: '2022-08-20T02:50:19.0000000+00:00'
