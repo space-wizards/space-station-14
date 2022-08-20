@@ -254,7 +254,7 @@ namespace Content.Server.TapeRecorder
         /// <summary>
         /// Records heard messages to the message buffer
         /// </summary>
-        private void OnChatMessageHeard(EntityUid uid, TapeRecorderComponent component, ChatMessageHeardNearbyEvent args)
+        private void OnChatMessageHeard(EntityUid uid, TapeRecorderComponent component, ref ChatMessageHeardNearbyEvent args)
         {
             if (component.InsertedTape == null)
                 return;
