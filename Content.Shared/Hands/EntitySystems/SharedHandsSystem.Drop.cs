@@ -63,27 +63,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!CanDropHeld(uid, hand, checkActionBlocker))
             return false;
 
-        var entity = hand.HeldEntity!.Value;
-        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
-
-        var userXform = Transform(uid);
-        var itemXform = Transform(entity);
-        var isInContainer = _containerSystem.IsEntityInContainer(uid);
-
-        if (targetDropLocation == null || isInContainer)
-        {
-            // If user is in a container, drop item into that container. Otherwise, attach to grid or map.\
-            // TODO recursively check upwards for containers
-
-            if (!isInContainer
-                || !_containerSystem.TryGetContainingContainer(userXform.ParentUid, uid, out var container, skipExistCheck: true)
-                || !container.Insert(entity, EntityManager, itemXform))
-                itemXform.AttachToGridOrMap();
-            return true;
-        }
-
-        var target = targetDropLocation.Value.ToMap(EntityManager);
-        itemXform.WorldPosition = GetFinalDropCoordinates(uid, userXform.MapPosition, target);
+        DoDrop(uid, hand, targetDropLocation, doDropInteraction: doDropInteraction, handsComp);
         return true;
     }
 
@@ -104,55 +84,37 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!targetContainer.CanInsert(entity, EntityManager))
             return false;
 
-        DoDrop(uid, hand, false, handsComp);
+        HandlePredropDirtying(uid, hand, entity, handsComp);
         targetContainer.Insert(entity);
         return true;
     }
 
     /// <summary>
-    ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path.
-    /// </summary>
-    private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target)
-    {
-        var dropVector = target.Position - origin.Position;
-        var requestedDropDistance = dropVector.Length;
-
-        if (dropVector.Length > SharedInteractionSystem.InteractionRange)
-        {
-            dropVector = dropVector.Normalized * SharedInteractionSystem.InteractionRange;
-            target = new MapCoordinates(origin.Position + dropVector, target.MapId);
-        }
-
-        var dropLength = _interactionSystem.UnobstructedDistance(origin, target, predicate: e => e == user);
-
-        if (dropLength < requestedDropDistance)
-            return origin.Position + dropVector.Normalized * dropLength;
-        return target.Position;
-    }
-
-    /// <summary>
     ///     Removes the contents of a hand from its container. Assumes that the removal is allowed. In general, you should not be calling this directly.
     /// </summary>
-    public virtual void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? handsComp = null)
+    public virtual void DoDrop(EntityUid uid, Hand hand, EntityCoordinates? targetDropLocation = null, bool doDropInteraction = true, SharedHandsComponent? handsComp = null)
     {
         if (!Resolve(uid, ref handsComp))
             return;
 
-        if (hand.Container?.ContainedEntity == null)
+        if (!hand.HeldEntity.HasValue)
             return;
 
-        var entity = hand.Container.ContainedEntity.Value;
+        var entity = hand.HeldEntity.Value;
+        
+        HandlePredropDirtying(uid, hand, entity, handsComp);
+        _interactionSystem.DoDrop(uid, entity, targetDropLocation, doDropInteraction);
+    }
 
+    private EntityUid? HandlePredropDirtying(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent handsComp)
+    {
         if (!hand.Container!.Remove(entity, EntityManager))
         {
             Logger.Error($"{nameof(SharedHandsComponent)} on {uid} could not remove {entity} from {hand.Container}.");
-            return;
+            return null;
         }
 
         Dirty(handsComp);
-
-        if (doDropInteraction)
-            _interactionSystem.DroppedInteraction(uid, entity);
 
         var gotUnequipped = new GotUnequippedHandEvent(uid, entity, hand);
         RaiseLocalEvent(entity, gotUnequipped, false);
@@ -162,5 +124,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (hand == handsComp.ActiveHand)
             RaiseLocalEvent(entity, new HandDeselectedEvent(uid), false);
+
+        return entity;
     }
 }

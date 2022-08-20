@@ -99,9 +99,9 @@ namespace Content.Client.Hands
         }
         #endregion
 
-        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+        public override void DoDrop(EntityUid uid, Hand hand, EntityCoordinates? targetDropLocation = null, bool doDropInteraction = true, SharedHandsComponent? handsComp = null)
         {
-            base.DoDrop(uid, hand, doDropInteraction, hands);
+            base.DoDrop(uid, hand, targetDropLocation, doDropInteraction, handsComp);
 
             if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
                 sprite.RenderOrder = EntityManager.CurrentTick.Value;

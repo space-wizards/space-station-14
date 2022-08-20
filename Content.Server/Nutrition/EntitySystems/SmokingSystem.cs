@@ -115,19 +115,26 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
 
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
+                smokable.Owner.TryGetContainerMan(out var containerManager);
 
                 if (solution.TotalVolume == FixedPoint2.Zero)
                 {
                     RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent(), true);
+                    if(smokable.State == SmokableState.Burnt &&
+                        containerManager != null &&
+                        _inventorySystem.IsEntityInSlots(containerManager.Owner, smokable.Owner, "mask", "l_hand", "r_hand"))
+                    {
+                        //Drop the thing
+                    }
                 }
 
                 if (inhaledSolution.TotalVolume == FixedPoint2.Zero)
                     continue;
 
-                // This is awful. I hate this so much.
+                // This is still awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
-                if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
-                    !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == smokable.Owner) ||
+                if (containerManager == null ||
+                    !_inventorySystem.IsEntityInSlots(containerManager.Owner, smokable.Owner, "mask") ||
                     !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
                 {
                     continue;

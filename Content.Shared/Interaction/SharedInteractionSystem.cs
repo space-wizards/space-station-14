@@ -837,6 +837,53 @@ namespace Content.Shared.Interaction
 
             return true;
         }
+
+        public virtual void DoDrop(EntityUid uid, EntityUid entity, EntityCoordinates? targetDropLocation = null, bool doDropInteraction = true)
+        {
+            if (doDropInteraction)
+                DroppedInteraction(uid, entity);
+
+            var userXform = Transform(uid);
+            var itemXform = Transform(entity);
+            var isInContainer = ContainerSystem.IsEntityInContainer(uid);
+
+            if (targetDropLocation == null || isInContainer)
+            {
+                // If user is in a container, drop item into that container. Otherwise, attach to grid or map.\
+                // TODO recursively check upwards for containers
+
+                if (!isInContainer
+                    || !ContainerSystem.TryGetContainingContainer(userXform.ParentUid, uid, out var container, skipExistCheck: true)
+                    || !container.Insert(entity, EntityManager, itemXform))
+                    itemXform.AttachToGridOrMap();
+                return;
+            }
+
+            var target = targetDropLocation.Value.ToMap(EntityManager);
+            itemXform.WorldPosition = GetFinalDropCoordinates(uid, userXform.MapPosition, target);
+        }
+
+        /// <summary>
+        ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path.
+        /// </summary>
+        private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target)
+        {
+            var dropVector = target.Position - origin.Position;
+            var requestedDropDistance = dropVector.Length;
+
+            if (dropVector.Length > SharedInteractionSystem.InteractionRange)
+            {
+                dropVector = dropVector.Normalized * SharedInteractionSystem.InteractionRange;
+                target = new MapCoordinates(origin.Position + dropVector, target.MapId);
+            }
+
+            var dropLength = UnobstructedDistance(origin, target, predicate: e => e == user);
+
+            if (dropLength < requestedDropDistance)
+                return origin.Position + dropVector.Normalized * dropLength;
+            return target.Position;
+        }
+
     }
 
     /// <summary>

@@ -474,4 +474,23 @@ public abstract partial class InventorySystem
         entityUid = container.ContainedEntity;
         return entityUid != null;
     }
+
+    public bool IsEntityInSlots(EntityUid ownerUid, EntityUid entityUid, InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null, params string[] slots)
+    {
+        foreach (var slot in slots)
+        {
+            if (TryGetSlotEntity(ownerUid, slot, out var foundEntity, inventoryComponent, containerManagerComponent) &&
+                foundEntity == entityUid)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool IsEntityInSlots(EntityUid ownerUid, EntityUid entityUid, params string[] slots)
+    {
+        return IsEntityInSlots(ownerUid, entityUid, null, null, slots);
+    }
 }
