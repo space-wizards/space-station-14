@@ -233,6 +233,9 @@ namespace Content.Shared.Movement.Systems
                 Accelerate(ref velocity, in worldTotal, accel, frameTime);
 
             PhysicsSystem.SetLinearVelocity(physicsComponent, velocity);
+
+            // Ensures that players do not spiiiiiiin
+            PhysicsSystem.SetAngularVelocity(physicsComponent, 0);
         }
 
         private void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref Vector2 velocity)
