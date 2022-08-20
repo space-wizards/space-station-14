@@ -13,7 +13,7 @@ public sealed partial class GhostRoleGroupEntry : BaseEntry
     public GhostRoleGroupEntry(GhostRoleGroupInfo group, bool isRequested)
     {
         var total = group.AvailableCount;
-        var ready = group.Status == "Released";
+        var ready = group.Status == GhostRoleGroupStatus.Released;
 
         Title.Text = total > 1 ? $"{group.Name} ({total})" : group.Name;
         Description.SetMessage(group.Description);

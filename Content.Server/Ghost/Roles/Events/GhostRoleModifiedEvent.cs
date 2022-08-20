@@ -10,6 +10,7 @@ public sealed class GhostRoleModifiedEvent : EntityEventArgs
 {
     public readonly GhostRoleComponent GhostRole;
 
+    public string? PreviousRoleIdentifier { get; init; }
     public string? PreviousRoleName { get; init; }
     public string? PreviousRoleRule { get; init; }
     public string? PreviousRoleDescription { get; init; }

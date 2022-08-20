@@ -43,7 +43,6 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         StateTextLabel.Text = group.Status switch
         {
             GhostRoleGroupStatus.Editing => _loc.GetString("ghost-role-groups-window-state-text-label-editing"),
-            GhostRoleGroupStatus.Releasing => _loc.GetString("ghost-role-groups-window-state-text-label-releasing"),
             GhostRoleGroupStatus.Released => _loc.GetString("ghost-role-groups-window-state-text-label-released"),
             _ => "Unknown"
         };
@@ -53,7 +52,6 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         ReleaseButton.Text = group.Status switch
         {
             GhostRoleGroupStatus.Editing => _loc.GetString("ghost-role-groups-window-release-button"),
-            GhostRoleGroupStatus.Releasing => _loc.GetString("ghost-role-groups-window-releasing-button"),
             GhostRoleGroupStatus.Released => _loc.GetString("ghost-role-groups-window-released-button"),
             _ => "Unknown"
         };

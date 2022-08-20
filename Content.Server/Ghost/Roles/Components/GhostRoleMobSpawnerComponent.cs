@@ -22,10 +22,9 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("availableTakeovers")]
         private int _availableTakeovers = 1;
 
-        [ViewVariables]
-        private int _currentTakeovers = 0;
+        [ViewVariables] private int _currentTakeovers = 0;
 
-        public int AvailableTakeovers => Math.Max(0,_availableTakeovers - _currentTakeovers);
+        public override int AvailableTakeovers => Math.Max(0,_availableTakeovers - _currentTakeovers);
 
         [CanBeNull]
         [ViewVariables(VVAccess.ReadWrite)]

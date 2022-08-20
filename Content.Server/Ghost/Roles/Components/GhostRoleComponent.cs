@@ -8,7 +8,7 @@ namespace Content.Server.Ghost.Roles.Components
     [Access(typeof(GhostRoleSystem))]
     public abstract class GhostRoleComponent : Component
     {
-        // ReSharper disable InconsistentNaming -
+        // ReSharper disable InconsistentNaming - Internal state for GhostRoleSystem use only.
         [DataField("name"), Access(typeof(GhostRoleSystem), Other = AccessPermissions.None)]
         public string _InternalRoleName = "Unknown";
 
@@ -34,35 +34,36 @@ namespace Content.Server.Ghost.Roles.Components
         /// </summary>
         [DataField("prob")] public float Probability = 1f;
 
-        // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
+        public string RoleIdentifier => _InternalRoleName;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+            // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
+
+        [ViewVariables(VVAccess.ReadWrite), Access(typeof(GhostRoleSystem))]
         public string RoleName
         {
             get => Loc.GetString(_InternalRoleName);
-            set => EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(this, roleName: value);
+            set => EntitySystem.Get<GhostRoleSystem>().SetRoleName(this, value);
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem))]
+        [ViewVariables(VVAccess.ReadWrite), Access(typeof(GhostRoleSystem))]
         public string RoleDescription
         {
             get => Loc.GetString(_InternalRoleDescription);
-            set => EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(this, roleDescription: value);
+            set => EntitySystem.Get<GhostRoleSystem>().SetRoleDescription(this, value);
         }
 
         [ViewVariables(VVAccess.ReadWrite), Access(typeof(GhostRoleSystem))]
         public string RoleRules
         {
             get => _InternalRoleRules;
-            set => EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(this, roleRules: value);
+            set => EntitySystem.Get<GhostRoleSystem>().SetRoleRules(this, value);
         }
 
         [ViewVariables(VVAccess.ReadWrite), Access(typeof(GhostRoleSystem))]
         public bool RoleLotteryEnabled
         {
             get => _InternalRoleLotteryEnabled;
-            set => EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(this, roleLotteryEnabled: value);
+            set => EntitySystem.Get<GhostRoleSystem>().SetRoleLotteryEnabled(this, value);
         }
 
         /// <summary>
@@ -97,5 +98,10 @@ namespace Content.Server.Ghost.Roles.Components
         public bool ReregisterOnGhost { get; set; } = true;
 
         public abstract bool Take(IPlayerSession session);
+
+        /// <summary>
+        /// Returns the number of remaining available takeovers.
+        /// </summary>
+        public abstract int AvailableTakeovers { get; }
     }
 }

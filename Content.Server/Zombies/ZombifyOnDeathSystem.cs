@@ -187,12 +187,9 @@ namespace Content.Server.Zombies
             {
                 //yet more hardcoding. Visit zombie.ftl for more information.
                 EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(target, out var ghostcomp);
-                _ghostRoleSystem.SetGhostRoleDetails(
-                    ghostcomp,
-                    roleName: Loc.GetString("zombie-generic"),
-                    roleDescription: Loc.GetString("zombie-role-desc"),
-                    roleRules: Loc.GetString("zombie-role-rules")
-                );
+                _ghostRoleSystem.SetRoleName(ghostcomp, "zombie-generic");
+                _ghostRoleSystem.SetRoleDescription(ghostcomp, "zombie-role-desc");
+                _ghostRoleSystem.SetRoleRules(ghostcomp, "zombie-role-rules");
             }
 
             //Goes through every hand, drops the items in it, then removes the hand

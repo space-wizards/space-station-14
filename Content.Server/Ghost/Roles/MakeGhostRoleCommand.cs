@@ -52,13 +52,12 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
+            var ghostRoles = EntitySystem.Get<GhostRoleSystem>();
             var newTakeover = entityManager.AddComponent<GhostTakeoverAvailableComponent>(uid);
-            EntitySystem.Get<GhostRoleSystem>().SetGhostRoleDetails(
-                newTakeover,
-                roleName: name,
-                roleDescription: description,
-                roleRules: rules
-            );
+
+            ghostRoles.SetRoleName(newTakeover, name);
+            ghostRoles.SetRoleDescription(newTakeover, description);
+            ghostRoles.SetRoleRules(newTakeover, rules);
 
             shell.WriteLine($"Made entity {metaData.EntityName} a ghost role.");
         }

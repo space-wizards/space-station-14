@@ -10,6 +10,8 @@ namespace Content.Server.Ghost.Roles.Components
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
     public sealed class GhostTakeoverAvailableComponent : GhostRoleComponent
     {
+        public override int AvailableTakeovers => Taken ? 0 : 1;
+
         public override bool Take(IPlayerSession session)
         {
             if (Taken)

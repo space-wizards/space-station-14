@@ -17,7 +17,7 @@ namespace Content.Server.PAI
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
-        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+        [Dependency] private readonly GhostRoleSystem _ghostRoles = default!;
 
         public override void Initialize()
         {
@@ -81,12 +81,9 @@ namespace Content.Server.PAI
             EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
 
             var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
-            _ghostRoleSystem.SetGhostRoleDetails(
-                ghostFinder,
-                roleName: Loc.GetString("pai-system-role-name"),
-                roleDescription: Loc.GetString("pai-system-role-description"),
-                roleLotteryEnabled: false
-            );
+            _ghostRoles.SetRoleName(ghostFinder, "pai-system-role-name");
+            _ghostRoles.SetRoleDescription(ghostFinder,"pai-system-role-description");
+            _ghostRoles.SetRoleLotteryEnabled(ghostFinder, false);
 
             _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, Filter.Entities(args.User));
             UpdatePAIAppearance(uid, PAIStatus.Searching);
