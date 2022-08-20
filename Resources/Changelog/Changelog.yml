@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Captain and HoP PDA pen slots now hold just pens, type: Fix}
-  id: 1675
-  time: '2022-06-10T18:53:56.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nukies are fixed again., type: Fix}
@@ -2935,3 +2930,10 @@ Entries:
   - {message: Shot glasses can now only hold 10u of liquid., type: Tweak}
   id: 2174
   time: '2022-08-20T02:27:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Most circuitry has been resprited., type: Tweak}
+  - {message: Most computers now have department-based sprites for their circuit board.,
+    type: Add}
+  id: 2175
+  time: '2022-08-20T02:50:19.0000000+00:00'
