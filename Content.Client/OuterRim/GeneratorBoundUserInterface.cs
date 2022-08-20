@@ -9,7 +9,7 @@ public sealed class GeneratorBoundUserInterface : BoundUserInterface
 {
     private GeneratorWindow? _window;
 
-    public GeneratorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public GeneratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
