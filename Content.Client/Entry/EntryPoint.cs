@@ -20,6 +20,7 @@ using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation;
+using Content.Client.Radiation.Overlays;
 using Content.Client.Sandbox;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
@@ -190,6 +191,7 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new SingularityOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
+            overlayMgr.AddOverlay(new RadiationViewOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();

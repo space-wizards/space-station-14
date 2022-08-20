@@ -256,4 +256,5 @@
       - state: rtg_damaged
       - state: rtg_glow
   - type: RadiationSource # ideally only when opened.
+    radsPerSecond: 5
     range: 2
