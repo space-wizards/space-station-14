@@ -13,6 +13,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: InteractionPopup
+    interactDelay: 0.2
     successChance: 0.8
     interactSuccessString: petting-success-generic
     interactFailureString: petting-failure-generic
@@ -31,6 +32,6 @@
     capacity: 10000
   - type: HTN
     rootTask: RangedCombatCompound
-  - type: AiFactionTag
-    factions:
-      - Syndicate
+  #- type: AiFactionTag
+  #  factions:
+  #    - Syndicate
