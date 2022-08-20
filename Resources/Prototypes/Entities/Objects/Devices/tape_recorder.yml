@@ -7,7 +7,7 @@
     - type: Sprite
       sprite: Objects/Devices/tape_recorder.rsi
       state: taperecorder_empty
-      netsync: False
+      netsync: false
     - type: Item
       sprite: Objects/Devices/tape_recorder.rsi
       heldPrefix: taperecorder_empty
@@ -52,7 +52,7 @@
       - state: tape_greyscale
       - state: tape_ribbonoverlay
         visible: false
-      netsync: False
+      netsync: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi
       heldPrefix: tape_greyscale
