@@ -129,6 +129,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<PlayTimeTrackingManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
+            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, 2);
 
             _escapeMenuOwner.Initialize();
 
