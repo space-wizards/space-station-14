@@ -11,6 +11,7 @@
   - type: Clothing
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
+    capacity: 52
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -23,6 +24,7 @@
         - Flare
         - CableCoil
         - CigPack
+        - TRayScanner
       components:
         - AirlockPainter
         - SignalLinker

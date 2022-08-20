@@ -36,7 +36,7 @@
   - type: Sprite
     state: coilhv-30
   - type: Item
-    size: 10
+    size: 3
     heldPrefix: coilhv
   - type: CablePlacer
     cablePrototypeID: CableHV
@@ -72,7 +72,7 @@
   - type: Sprite
     state: coilmv-30
   - type: Item
-    size: 10
+    size: 2
     heldPrefix: coilmv
   - type: CablePlacer
     cablePrototypeID: CableMV
@@ -107,7 +107,7 @@
   - type: Sprite
     state: coillv-30
   - type: Item
-    size: 10
+    size: 2
     heldPrefix: coillv
   - type: CablePlacer
     cablePrototypeID: CableApcExtension

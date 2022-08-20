@@ -445,6 +445,9 @@
   id: TrashBag
 
 - type: Tag
+  id: TRayScanner
+
+- type: Tag
   id: VehicleKey
 
 - type: Tag
