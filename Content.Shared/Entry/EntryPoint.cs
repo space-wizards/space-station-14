@@ -34,14 +34,14 @@ namespace Content.Shared.Entry
         {
             base.PostInit();
 
-            _initTileDefinitions();
+            InitTileDefinitions();
             IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
             IoCManager.Resolve<MarkingManager>().Initialize();
 
             var configMan = IoCManager.Resolve<IConfigurationManager>();
 #if FULL_RELEASE
             configMan.OverrideDefault(CVars.NetBufferSize, 2);
-#else
+#elif DEBUG
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
             configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
@@ -53,7 +53,7 @@ namespace Content.Shared.Entry
 
         }
 
-        private void _initTileDefinitions()
+        private void InitTileDefinitions()
         {
             // Register space first because I'm a hard coding hack.
             var spaceDef = _prototypeManager.Index<ContentTileDefinition>(ContentTileDefinition.SpaceID);
