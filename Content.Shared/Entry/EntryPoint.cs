@@ -39,9 +39,7 @@ namespace Content.Shared.Entry
             IoCManager.Resolve<MarkingManager>().Initialize();
 
             var configMan = IoCManager.Resolve<IConfigurationManager>();
-#if FULL_RELEASE
-            configMan.OverrideDefault(CVars.NetInterpRatio, 2);
-#elif DEBUG
+#if DEBUG
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
             configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
@@ -50,7 +48,6 @@ namespace Content.Shared.Entry
             // just leaving this disabled.
             // configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
 #endif
-
         }
 
         private void InitTileDefinitions()
