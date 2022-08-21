@@ -11,6 +11,8 @@
         map: ["analyzer"]
     netsync: false
   - type: GasAnalyzer
+  - type: Item
+    size: 5
   - type: ActivatableUI
     key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
@@ -27,3 +29,5 @@
   - type: Tag
     tags:
       - DroneUsable
+      - GasAnalyzer
+
