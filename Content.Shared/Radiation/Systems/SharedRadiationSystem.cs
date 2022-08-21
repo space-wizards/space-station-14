@@ -17,10 +17,6 @@ public abstract partial class SharedRadiationSystem : EntitySystem
         Direction.NorthEast, Direction.NorthWest, Direction.SouthEast, Direction.SouthWest
     };
 
-    public MapId MapId;
-    public EntityUid gridUid;
-    public Dictionary<Vector2i, float> visitedTiles = new();
-
     public override void Initialize()
     {
         base.Initialize();

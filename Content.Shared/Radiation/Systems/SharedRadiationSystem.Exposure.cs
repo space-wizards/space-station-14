@@ -5,10 +5,17 @@ namespace Content.Shared.Radiation.Systems;
 
 public partial class SharedRadiationSystem
 {
+    private const float DistanceScore = 1f;
+
     public Dictionary<EntityUid, Dictionary<Vector2i, float>> _radiationMap = new();
 
     private void UpdateRadSources()
     {
+        foreach (var (_, map) in _radiationMap)
+        {
+            map.Clear();
+        }
+
         foreach (var comp in EntityManager.EntityQuery<RadiationSourceComponent>())
         {
             var ent = comp.Owner;
@@ -19,47 +26,47 @@ public partial class SharedRadiationSystem
 
     public void CalculateRadiationMap(MapCoordinates epicenter, float radsPerSecond)
     {
-        MapId = epicenter.MapId;
-
-        Vector2i initialTile;
-        if (_mapManager.TryFindGridAt(epicenter, out var candidateGrid) &&
-            candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef) )
-        {
-            gridUid = tileRef.GridUid;
-            initialTile = tileRef.GridIndices;
-        }
-        else
+        if (!_mapManager.TryFindGridAt(epicenter, out var candidateGrid) ||
+            !candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef))
         {
             return;
         }
 
-        var query = GetEntityQuery<RadiationBlockerComponent>();
+        var gridUid = tileRef.GridUid;
+        if (!_radiationMap.ContainsKey(gridUid))
+        {
+            _radiationMap.Add(gridUid, new Dictionary<Vector2i, float>());
+        }
+        var map = _radiationMap[gridUid];
 
-        visitedTiles.Clear();
+        _resistancePerTile.TryGetValue(gridUid, out var resistance);
+        var initialTile = tileRef.GridIndices;
+
         var visitNext = new Queue<(Vector2i, float)>();
+        var visitedTiles = new HashSet<Vector2i>();
         visitNext.Enqueue((initialTile, radsPerSecond));
 
         do
         {
             var (current, incomingRads) = visitNext.Dequeue();
-            if (visitedTiles.ContainsKey(current) || incomingRads <= 0f)
+            if (visitedTiles.Contains(current) || incomingRads <= 0f)
                 continue;
+            visitedTiles.Add(current);
 
-            visitedTiles.Add(current, incomingRads);
+            if (map.ContainsKey(current))
+                map[current] += incomingRads;
+            else
+                map[current] = incomingRads;
 
-            // here is material absorption
+            // do resistance
             var nextRad = incomingRads;
-            var ents = candidateGrid.GetAnchoredEntities(current);
-            foreach (var uid in ents)
+            if (resistance != null && resistance.TryGetValue(current, out var res))
             {
-                if (!query.TryGetComponent(uid, out var blocker))
-                    continue;
-                nextRad -= blocker.RadResistance;
+                nextRad -= res;
             }
 
-
             // and also remove by distance
-            nextRad -= 1f;
+            nextRad -= DistanceScore;
             // if no radiation power left - don't propagate further
             if (nextRad <= 0)
                 continue;

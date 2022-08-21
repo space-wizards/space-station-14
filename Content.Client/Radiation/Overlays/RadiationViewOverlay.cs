@@ -52,19 +52,7 @@ public sealed class RadiationViewOverlay : Overlay
         var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
         var radSys = EntitySystem.Get<RadiationSystem>();
 
-        /*{
-            if (!_mapManager.TryGetGrid(radSys.gridUid, out var grid))
-                return;
-
-            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
-            var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
-            gridBounds = invMatrix.TransformBox(args.WorldBounds);
-            DrawText(handle, gridBounds, matrix, radSys.visitedTiles, Color.White, grid.TileSize);
-        }*/
-
-
-        var radBlockSys = EntitySystem.Get<RadiationBlockerSystem>();
-        foreach (var (gridUid, resGrid) in radBlockSys._resistancePerTile)
+        foreach (var (gridUid, resGrid) in radSys._radiationMap)
         {
             if (!_mapManager.TryGetGrid(gridUid, out var grid))
                 continue;
@@ -72,34 +60,49 @@ public sealed class RadiationViewOverlay : Overlay
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
             var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             gridBounds = invMatrix.TransformBox(args.WorldBounds);
-            DrawText(handle, gridBounds, matrix, resGrid, Color.Gray, grid.TileSize);
+            DrawText(handle, gridBounds, matrix, resGrid, Color.White, grid.TileSize);
+        }
+
+        foreach (var (gridUid, resGrid) in radSys._resistancePerTile)
+        {
+            if (!_mapManager.TryGetGrid(gridUid, out var grid))
+                continue;
+
+            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            gridBounds = invMatrix.TransformBox(args.WorldBounds);
+            DrawText(handle, gridBounds, matrix, resGrid, Color.Gray, grid.TileSize, 0.25f);
         }
     }
 
     private void DrawWorld(in OverlayDrawArgs args)
     {
         var radSys = EntitySystem.Get<RadiationSystem>();
-        if (!_mapManager.TryGetGrid(radSys.gridUid, out var grid))
-            return;
 
-        var handle = args.WorldHandle;
+        foreach (var (gridUid, map) in radSys._radiationMap)
+        {
+            if (!_mapManager.TryGetGrid(gridUid, out var grid))
+                continue;
 
-        var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
-        var gridXform = xformQuery.GetComponent(grid.GridEntityId);
-        var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            var handle = args.WorldHandle;
 
-        var gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
-        handle.SetTransform(worldMatrix);
-        DrawTiles(handle, gridBounds, radSys.visitedTiles);
+            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+
+            var gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
+            handle.SetTransform(worldMatrix);
+            DrawTiles(handle, gridBounds, map);
+        }
     }
 
     private void DrawText(DrawingHandleScreen handle, Box2 gridBounds,
         Matrix3 transform, Dictionary<Vector2i, float> tiles, Color color,
-        ushort tileSize = 1)
+        ushort tileSize = 1, float margin = 0.5f)
     {
         foreach (var (tile, rad) in tiles)
         {
-            var centre = ((Vector2) tile + 0.5f) * tileSize;
+            var centre = ((Vector2) tile + margin) * tileSize;
 
             // is the center of this tile visible to the user?
             if (!gridBounds.Contains(centre))
@@ -114,7 +117,7 @@ public sealed class RadiationViewOverlay : Overlay
             else
                 screenCenter += (-8, -8);
 
-            handle.DrawString(_font, screenCenter, rad.ToString("F2"));
+            handle.DrawString(_font, screenCenter, rad.ToString("F2"), color);
         }
     }
 
