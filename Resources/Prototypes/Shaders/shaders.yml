@@ -55,3 +55,18 @@
     pixelSize: 32, 32
     alphaCutoff: 0
     removeTransparency: false
+
+- type: shader
+  id: BlurryVisionX
+  kind: source
+  path: "/Textures/Shaders/blurryx.swsl"
+
+- type: shader
+  id: BlurryVisionY
+  kind: source
+  path: "/Textures/Shaders/blurryy.swsl"
+
+- type: shader
+  id: Dim
+  kind: source
+  path: "/Textures/Shaders/dim.swsl"

@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: MedicalScanner
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: medical scanner
   description: A bulky medical scanner.
   components:
@@ -28,9 +28,6 @@
       - MachineMask
       layer:
       - MachineLayer
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:

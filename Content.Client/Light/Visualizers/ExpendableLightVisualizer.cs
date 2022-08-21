@@ -12,6 +12,7 @@ namespace Content.Client.Light.Visualizers
     [UsedImplicitly]
     public sealed class ExpendableLightVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

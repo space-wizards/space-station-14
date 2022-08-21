@@ -4,6 +4,7 @@
   name: GuardianBase
   id: MobGuardianBase
   description: guardian
+  save: false
   components:
     - type: GhostTakeoverAvailable
       makeSentient: true

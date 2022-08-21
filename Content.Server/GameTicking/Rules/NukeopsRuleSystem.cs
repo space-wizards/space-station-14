@@ -7,7 +7,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
 using Content.Server.Nuke;
-using Content.Server.Players;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -18,7 +17,6 @@ using Content.Shared.Dataset;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -34,7 +32,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;

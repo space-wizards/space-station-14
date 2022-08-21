@@ -1,0 +1,91 @@
+using Content.Shared.FixedPoint;
+using Content.Shared.Store;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Audio;
+
+namespace Content.Server.Store.Components;
+
+/// <summary>
+/// This component manages a store which players can use to purchase different listings
+/// through the ui. The currency, listings, and categories are defined in yaml.
+/// </summary>
+[RegisterComponent]
+public sealed class StoreComponent : Component
+{
+    /// <summary>
+    /// The default preset for the store. Is overriden by default values specified on the component.
+    /// </summary>
+    [DataField("preset", customTypeSerializer: typeof(PrototypeIdSerializer<StorePresetPrototype>))]
+    public string? Preset;
+
+    /// <summary>
+    /// All the listing categories that are available on this store.
+    /// The available listings are partially based on the categories.
+    /// </summary>
+    [DataField("categories", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StoreCategoryPrototype>))]
+    public HashSet<string> Categories = new();
+
+    /// <summary>
+    /// The total amount of currency that can be used in the store.
+    /// The string represents the ID of te currency prototype, where the
+    /// float is that amount.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("balance", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
+    public Dictionary<string, FixedPoint2> Balance = new();
+
+    /// <summary>
+    /// The list of currencies that can be inserted into this store.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), DataField("currencyWhitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<CurrencyPrototype>))]
+    public HashSet<string> CurrencyWhitelist = new();
+
+    /// <summary>
+    /// The person who "owns" the store/account. Used if you want the listings to be fixed
+    /// regardless of who activated it. I.E. role specific items for uplinks.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntityUid? AccountOwner = null;
+
+    /// <summary>
+    /// All listings, including those that aren't available to the buyer
+    /// </summary>
+    public HashSet<ListingData> Listings = new();
+
+    /// <summary>
+    /// All available listings from the last time that it was checked.
+    /// </summary>
+    [ViewVariables]
+    public HashSet<ListingData> LastAvailableListings = new();
+
+    /// <summary>
+    /// checks whether or not the store has been opened yet.
+    /// </summary>
+    public bool Opened = false;
+
+    #region audio
+    /// <summary>
+    /// The sound played to the buyer when a purchase is succesfully made.
+    /// </summary>
+    [ViewVariables]
+    [DataField("buySuccessSound")]
+    public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
+
+    /// <summary>
+    /// The sound played to the buyer when a purchase fails.
+    /// </summary>
+    [ViewVariables]
+    [DataField("insufficientFundsSound")]
+    public SoundSpecifier InsufficientFundsSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
+    #endregion
+}
+
+/// <summary>
+/// Event that is broadcast when a store is added to an entity
+/// </summary>
+public sealed class StoreAddedEvent : EntityEventArgs { };
+/// <summary>
+/// Event that is broadcast when a store is removed from an entity
+/// </summary>
+public sealed class StoreRemovedEvent : EntityEventArgs { };

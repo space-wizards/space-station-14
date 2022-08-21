@@ -61,6 +61,14 @@
   components:
   - type: Sprite
     state: fries-carrot
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: JuiceCarrot
+          Quantity: 20
 # Tastes like carrots, salt.
 
 - type: entity
