@@ -139,16 +139,6 @@
       damage:
         groups:
           Burn: 1
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.3,-0.3,0.3,0.3"
-          hard: false
-          id: projectile
-          mask:
-            - Impassable
-            - BulletImpassable
     - type: PointLight
       enabled: true
       color: "#ff4300"
