@@ -364,9 +364,9 @@
   time: 10
   reagents:
     Water: 10
+    Egg: 6
   solids:
     Nettle: 1
-    FoodEgg: 1
     FoodPotato: 1
 
 - type: microwaveMealRecipe

@@ -74,7 +74,8 @@
   - type: Sprite
     layers:
     - state: margherita-slice
-# Tastes like crust, tomato, cheese.
+  - type: SliceableFood
+    slice: FoodPizzaMeatSlice
 
 - type: entity
   name: meat pizza
@@ -133,6 +134,17 @@
     - state: vegetable
   - type: SliceableFood
     slice: FoodPizzaVegetableSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: JuiceCarrot
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
 
 - type: entity
   name: slice of vegetable pizza
@@ -143,6 +155,18 @@
   - type: Sprite
     layers:
     - state: vegetable-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: JuiceCarrot
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
+
 # Tastes like crust, tomato, cheese, carrot.
 
 - type: entity

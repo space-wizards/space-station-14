@@ -41,6 +41,21 @@
             "name": "zombie-turn"
         },
         {
+            "name": "shop"
+        },
+        {
+            "name": "blight"
+        },
+        {
+            "name": "defile"
+        },
+        {
+            "name": "overloadlight"
+        },
+        {
+            "name": "malfunction"
+        },
+        {
             "name": "fire_breath"
         }
     ]

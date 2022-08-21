@@ -1,4 +1,5 @@
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Dataset;
 using Content.Shared.Disease;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -43,5 +44,11 @@ namespace Content.Server.RatKing
         /// </summary>
         [ViewVariables, DataField("molesMiasmaPerDomain")]
         public float MolesMiasmaPerDomain = 100f;
+
+        // Both of these are used to generate the random name for rat king.
+        [DataField("titleNameDataset", customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
+        public string TitleNameDataset = "RegalRatNameTitle";
+        [DataField("kingdomNameDataset", customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
+        public string KingdomNameDataset = "RegalRatNameKingdom";
     }
 };

@@ -33,6 +33,7 @@ namespace Content.Client.ParticleAccelerator
             _states.Add(ParticleAcceleratorVisualState.Level3, _baseState + "p3");
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -47,6 +48,7 @@ namespace Content.Client.ParticleAccelerator
             }
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/tree/dfb73d28e68aa56c34c7c539448f713b78b6d4d5 and modified.",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "full"
+      },
+      {
+        "name": "plastitanium0",
+        "directions": 4
+      },
+      {
+        "name": "plastitanium1",
+        "directions": 4
+      },
+      {
+        "name": "plastitanium2",
+        "directions": 4
+      },
+      {
+        "name": "plastitanium3",
+        "directions": 4
+      },
+      {
+        "name": "plastitanium4",
+        "directions": 4
+      },
+      {
+        "name": "plastitanium5",
+        "directions": 4
+      },
+      {
+        "name": "plastitanium6",
+        "directions": 4
+      },
+      {
+        "name": "plastitanium7",
+        "directions": 4
+      }
+    ]
+  }
+  

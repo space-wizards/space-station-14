@@ -497,7 +497,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
-    
+
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCentcomFormalDress
@@ -507,8 +507,8 @@
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi   
-    
+    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
+
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHosFormal
@@ -518,10 +518,10 @@
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi      
+    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: UnsensoredClothingUniformSkirtBase
   id: ClothingUniformJumpskirtOperative
   name: operative jumpskirt
   description: Uniform for elite syndicate operatives performing tactical operations in deep space.
@@ -529,7 +529,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi  
+    sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -552,4 +552,3 @@
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
-    

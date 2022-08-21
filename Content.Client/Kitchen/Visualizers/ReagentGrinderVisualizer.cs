@@ -7,6 +7,7 @@ namespace Content.Client.Kitchen.Visualizers
 {
     public sealed class ReagentGrinderVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

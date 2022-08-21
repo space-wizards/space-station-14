@@ -12,6 +12,8 @@ namespace Content.Server.Disposal.Tube.Components
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
+        public virtual string ContainerId => "DisposalTube";
+
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
@@ -135,7 +137,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             base.Initialize();
 
-            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
+            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, ContainerId);
             Owner.EnsureComponent<AnchorableComponent>();
         }
 

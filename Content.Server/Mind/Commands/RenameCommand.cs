@@ -62,7 +62,7 @@ public sealed class RenameCommand : IConsoleCommand
             {
                 foreach (var idCardComponent in entMan.EntityQuery<IdCardComponent>())
                 {
-                    if (idCardComponent.OriginalOwnerName != oldName)
+                    if (idCardComponent.OriginalEntityName != oldName)
                         continue;
                     idCardSystem.TryChangeFullName(idCardComponent.Owner, name, idCardComponent);
                 }

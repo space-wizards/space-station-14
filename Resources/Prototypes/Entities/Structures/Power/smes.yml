@@ -2,7 +2,7 @@
 - type: entity
   abstract: true
   id: BaseSMES
-  parent: BaseMachine
+  parent: [ BaseMachine, ConstructibleMachine ]
   name: SMES
   description: A high-capacity superconducting magnetic energy storage (SMES) unit.
   placement:
@@ -51,18 +51,11 @@
       energy: 1.6
       color: "#c9c042"
       castShadows: false
-    - type: Construction
-      graph: Machine
-      node: machine
     - type: Wires
       BoardName: "SMES"
       LayoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
-    - type: ContainerContainer
-      containers:
-        machine_parts: !type:Container
-        machine_board: !type:Container
     - type: StationInfiniteBatteryTarget
 
 # SMES' in use

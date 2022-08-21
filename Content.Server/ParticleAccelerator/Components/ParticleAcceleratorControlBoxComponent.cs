@@ -191,7 +191,12 @@ namespace Content.Server.ParticleAccelerator.Components
 
         protected override void OnRemove()
         {
-            UserInterface?.CloseAll();
+            Master = null;
+            foreach (var part in AllParts())
+            {
+                part.Master = null;
+            }
+
             base.OnRemove();
         }
 
@@ -331,12 +336,12 @@ namespace Content.Server.ParticleAccelerator.Components
             _partEmitterCenter = null;
             _partEmitterRight = null;
 
+            var xform = _entMan.GetComponent<TransformComponent>(Owner);
+
             // Find fuel chamber first by scanning cardinals.
-            if (_entMan.GetComponent<TransformComponent>(Owner).Anchored)
+            if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out IMapGridComponent? grid))
             {
-                var grid = _mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridUid!.Value);
-                var coords = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
-                foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
+                foreach (var maybeFuel in grid.Grid.GetCardinalNeighborCells(xform.Coordinates))
                 {
                     if (_entMan.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
@@ -354,7 +359,7 @@ namespace Content.Server.ParticleAccelerator.Components
             // Align ourselves to match fuel chamber orientation.
             // This means that if you mess up the orientation of the control box it's not a big deal,
             // because the sprite is far from obvious about the orientation.
-            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = _entMan.GetComponent<TransformComponent>(_partFuelChamber.Owner).LocalRotation;
+            xform.LocalRotation = _entMan.GetComponent<TransformComponent>(_partFuelChamber.Owner).LocalRotation;
 
             var offsetEndCap = RotateOffset((1, 1));
             var offsetPowerBox = RotateOffset((1, -1));

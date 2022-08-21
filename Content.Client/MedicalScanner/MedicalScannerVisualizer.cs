@@ -11,6 +11,7 @@ namespace Content.Client.MedicalScanner
     [UsedImplicitly]
     public sealed class MedicalScannerVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

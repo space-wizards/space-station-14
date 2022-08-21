@@ -7,6 +7,7 @@ namespace Content.Client.Xenoarchaeology.XenoArtifacts;
 
 public sealed class RandomArtifactVisualizer : AppearanceVisualizer
 {
+    [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
     public override void OnChangeData(AppearanceComponent component)
     {
         base.OnChangeData(component);
