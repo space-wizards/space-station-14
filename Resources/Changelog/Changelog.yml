@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: A greater variety of miscellaneous trash can now be found around the
-      station., type: Tweak}
-  id: 1677
-  time: '2022-06-11T14:25:38.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Slowed down parallax significiantly. Space should feel much, much vaster
@@ -2938,3 +2932,9 @@ Entries:
       filter., type: Tweak}
   id: 2176
   time: '2022-08-20T20:17:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the classic "space station 14" sign, coming to a station near
+      you.', type: Add}
+  id: 2177
+  time: '2022-08-21T11:44:38.0000000+00:00'
