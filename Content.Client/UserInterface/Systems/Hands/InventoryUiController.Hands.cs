@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Content.Client.Gameplay;
+﻿using Content.Client.Gameplay;
 using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
@@ -11,6 +10,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Hands;
 
@@ -93,7 +93,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private void LoadPlayerHands(HandsComponent handsComp)
     {
-        Debug.Assert(_playerHandsComponent == null);
+        DebugTools.Assert(_playerHandsComponent == null);
         if (HandsGui != null)
             HandsGui.Visible = true;
 
