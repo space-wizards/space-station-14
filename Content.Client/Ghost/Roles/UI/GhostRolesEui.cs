@@ -5,7 +5,6 @@ using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Ghost.Roles.UI
 {

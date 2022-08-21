@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
@@ -8,10 +7,7 @@ using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Database;
-using Content.Shared.Follower;
-using Content.Shared.Follower.Components;
 using Content.Shared.GameTicking;
-using Content.Shared.Ghost.Roles;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Server.Player;
