@@ -10,7 +10,7 @@ namespace Content.Client.Configurable.UI
     {
         public Regex? Validation { get; internal set; }
 
-        public ConfigurationBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ConfigurationBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

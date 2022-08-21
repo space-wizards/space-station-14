@@ -11,7 +11,7 @@ public sealed class IFFConsoleBoundUserInterface : BoundUserInterface
 {
     private IFFConsoleWindow? _window;
 
-    public IFFConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public IFFConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
 
     }

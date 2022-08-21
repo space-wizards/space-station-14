@@ -16,7 +16,7 @@ namespace Content.Client.Inventory
         [ViewVariables]
         private StrippingMenu? _strippingMenu;
 
-        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
