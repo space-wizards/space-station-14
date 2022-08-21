@@ -21,6 +21,10 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   id: SpeedLoaderCap

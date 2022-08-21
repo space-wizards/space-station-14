@@ -37,6 +37,9 @@
   id: Bottle
 
 - type: Tag
+  id: BulletFoam
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
@@ -196,6 +199,9 @@
   id: Flashlight
 
 - type: Tag
+  id: Flower
+
+- type: Tag
   id: Folder
 
 - type: Tag
@@ -303,6 +309,9 @@
   id: Matchstick
 
 - type: Tag
+  id: MailingUnitElectronics
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -322,6 +331,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NukeOpsUplink
 
 - type: Tag
   id: Ointment

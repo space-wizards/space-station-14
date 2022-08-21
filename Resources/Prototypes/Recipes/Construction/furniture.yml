@@ -5,7 +5,7 @@
   graph: Seat
   startNode: start
   targetNode: chair
-  category: Furniture
+  category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -22,7 +22,7 @@
   graph: Seat
   startNode: start
   targetNode: stool
-  category: Furniture
+  category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -39,7 +39,7 @@
   graph: Seat
   startNode: start
   targetNode: stoolBar
-  category: Furniture
+  category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -56,7 +56,7 @@
   graph: Seat
   startNode: start
   targetNode: chairOffice
-  category: Furniture
+  category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -73,7 +73,7 @@
   graph: Seat
   startNode: start
   targetNode: chairOfficeDark
-  category: Furniture
+  category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -90,7 +90,7 @@
   graph: Seat
   startNode: start
   targetNode: chairComfy
-  category: Furniture
+  category: construction-category-furniture
   description: It looks comfy.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -107,7 +107,7 @@
   graph: Seat
   startNode: start
   targetNode: chairPilotSeat
-  category: Furniture
+  category: construction-category-furniture
   description: Fit for a captain.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -124,7 +124,7 @@
   graph: Seat
   startNode: start
   targetNode: chairWood
-  category: Furniture
+  category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -141,7 +141,7 @@
   graph: RitualSeat
   startNode: start
   targetNode: chairRitual
-  category: Furniture
+  category: construction-category-furniture
   description: A strangely carved chair.
   icon:
     sprite: Structures/Furniture/chairs.rsi
@@ -159,7 +159,7 @@
   graph: Table
   startNode: start
   targetNode: Table
-  category: Furniture
+  category: construction-category-furniture
   description: A square piece of metal standing on four metal legs.
   icon:
     sprite: Structures/Furniture/Tables/generic.rsi
@@ -176,7 +176,7 @@
   graph: Table
   startNode: start
   targetNode: TableReinforced
-  category: Furniture
+  category: construction-category-furniture
   description: A square piece of metal standing on four metal legs. Extra robust.
   icon:
     sprite: Structures/Furniture/Tables/reinforced.rsi
@@ -193,7 +193,7 @@
   graph: Table
   startNode: start
   targetNode: TableGlass
-  category: Furniture
+  category: construction-category-furniture
   description: A square piece of glass, standing on four metal legs.
   icon:
     sprite: Structures/Furniture/Tables/glass.rsi
@@ -210,7 +210,7 @@
   graph: Table
   startNode: start
   targetNode: TableReinforcedGlass
-  category: Furniture
+  category: construction-category-furniture
   description: A square piece of glass, standing on four metal legs. Extra robust.
   icon:
     sprite: Structures/Furniture/Tables/r_glass.rsi
@@ -227,7 +227,7 @@
   graph: Table
   startNode: start
   targetNode: TablePlasmaGlass
-  category: Furniture
+  category: construction-category-furniture
   description: A square piece of plasma glass, standing on four metal legs. Pretty!
   icon:
     sprite: Structures/Furniture/Tables/plasma.rsi
@@ -244,7 +244,7 @@
   graph: Table
   startNode: start
   targetNode: TableWood
-  category: Furniture
+  category: construction-category-furniture
   description: Do not apply fire to this. Rumour says it burns easily.
   icon:
     sprite: Structures/Furniture/Tables/wood.rsi
@@ -261,7 +261,7 @@
   graph: Table
   startNode: start
   targetNode: TableCarpet
-  category: Furniture
+  category: construction-category-furniture
   description: A square piece of wood standing on four legs covered by a cloth. (What did you expect?)
   icon:
     sprite: Structures/Furniture/Tables/carpet.rsi
@@ -278,7 +278,7 @@
   graph: Table
   startNode: start
   targetNode: CounterMetal
-  category: Furniture
+  category: construction-category-furniture
   description: Looks like a good place to put a drink down.
   icon:
     sprite: Structures/Furniture/Tables/countermetal.rsi
@@ -295,7 +295,7 @@
   graph: Table
   startNode: start
   targetNode: CounterWood
-  category: Furniture
+  category: construction-category-furniture
   description: Do not apply fire to this. Rumour says it burns easily.
   icon:
     sprite: Structures/Furniture/Tables/counterwood.rsi
@@ -313,8 +313,8 @@
   graph: Toilet
   startNode: start
   targetNode: toilet
-  category: Furniture
-  description: A human excrement flushing apparatus
+  category: construction-category-furniture
+  description: A human excrement flushing apparatus.
   icon:
     sprite: Structures/Furniture/toilet.rsi
     state: closed_toilet_seat_up
@@ -332,7 +332,7 @@
   graph: bed
   startNode: start
   targetNode: bed
-  category: Furniture
+  category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/furniture.rsi
     state: bed
@@ -349,7 +349,7 @@
   graph: bed
   startNode: start
   targetNode: medicalbed
-  category: Furniture
+  category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/furniture.rsi
     state: bed-MED
@@ -366,7 +366,7 @@
   graph: bed
   startNode: start
   targetNode: dogbed
-  category: Furniture
+  category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/furniture.rsi
     state: dogbed
@@ -384,7 +384,7 @@
   graph: Rack
   startNode: start
   targetNode: Rack
-  category: Furniture
+  category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/furniture.rsi
     state: rack
@@ -401,7 +401,7 @@
   graph: MeatSpike
   startNode: start
   targetNode: MeatSpike
-  category: Furniture
+  category: construction-category-furniture
   icon:
     sprite: Structures/meat_spike.rsi
     state: spike

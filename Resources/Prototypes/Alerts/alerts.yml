@@ -12,6 +12,7 @@
     - category: Buckled
     - alertType: Pulling
     - category: Piloting
+    - alertType: Corporeal
     - alertType: Stun
     - category: Breathing # Vox gang not calling this oxygen
     - category: Pressure

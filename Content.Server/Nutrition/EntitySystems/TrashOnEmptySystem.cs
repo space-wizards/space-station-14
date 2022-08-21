@@ -30,8 +30,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void CheckSolutions(TrashOnEmptyComponent component)
         {
-            EntityManager.EnsureComponent<TagComponent>(component.Owner);
-
             if (!EntityManager.HasComponent<SolutionContainerManagerComponent>((component).Owner))
                 return;
 

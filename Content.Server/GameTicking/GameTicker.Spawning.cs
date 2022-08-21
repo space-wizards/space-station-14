@@ -231,7 +231,7 @@ namespace Content.Server.GameTicking
 
         public void MakeJoinGame(IPlayerSession player, EntityUid station, string? jobId = null)
         {
-            if (!_playersInLobby.ContainsKey(player))
+            if (!_playerGameStatuses.ContainsKey(player.UserId))
                 return;
 
             if (!_userDb.IsLoadComplete(player))
@@ -265,8 +265,8 @@ namespace Content.Server.GameTicking
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
             newMind.TransferTo(mob);
 
-            _playersInLobby[player] = LobbyPlayerStatus.Observer;
-            RaiseNetworkEvent(GetStatusSingle(player, LobbyPlayerStatus.Observer));
+            _playerGameStatuses[player.UserId] = PlayerGameStatus.JoinedGame;
+            RaiseNetworkEvent(GetStatusSingle(player, PlayerGameStatus.JoinedGame));
         }
 
         #region Mob Spawning Helpers

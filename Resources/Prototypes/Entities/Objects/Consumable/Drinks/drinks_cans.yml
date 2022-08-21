@@ -27,6 +27,12 @@
       - state: icon
         map: ["enum.DrinkCanVisualLayers.Icon"]
     netsync: false
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
   - type: DrainableSolution
     solution: drink
   - type: Appearance
@@ -34,6 +40,8 @@
     - type: DrinkCanVisualizer
       stateClosed: icon
       stateOpen: icon_open
+  - type: Spillable
+    solution: drink
   - type: ItemCooldown
   - type: Recyclable
   - type: SpaceGarbage
