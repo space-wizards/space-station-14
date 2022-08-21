@@ -247,14 +247,18 @@ namespace Content.Client.LateJoin
 
                         string? reason = null;
 
-                        if (value == 0 || !tracker.IsAllowed(prototype, out reason))
+                        if (tracker.IsAllowed(prototype, out reason) == false)
                         {
-                            jobButton.Disabled = true;
-
                             if (!string.IsNullOrEmpty(reason))
                             {
                                 jobButton.ToolTip = reason;
+                                jobButton.Disabled = true;
                             }
+                        }
+
+                        if (value == 0)
+                        {
+                            jobButton.Disabled = true;
                         }
 
                         _jobButtons[id][prototype.ID] = jobButton;
