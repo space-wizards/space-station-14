@@ -1049,7 +1049,7 @@ namespace Content.Shared.CCVar
         /// Adds a period at the end of a sentence if the sentence ends in a letter.
         /// </summary>
         public static readonly CVarDef<bool> ChatPunctuation =
-            CVarDef.Create("ic.punctuation", false, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("ic.punctuation", false, CVar.SERVER);
 
         /*
          * Salvage
