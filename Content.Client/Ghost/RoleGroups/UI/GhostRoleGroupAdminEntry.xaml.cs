@@ -24,7 +24,7 @@ public sealed partial class GhostRoleGroupAdminEntry : BoxContainer
         IoCManager.InjectDependencies(this);
 
         Title.Text = $"[{group.GroupIdentifier}] - {group.Name}";
-        Owner.Text = "Owned By: " + group.OwnerName;
+        Owner.Text = group.OwnerName;
         Description.SetMessage(group.Description);
         DetailsButton.Text = "+ " + _loc.GetString("ghost-role-groups-window-details-button");
 
