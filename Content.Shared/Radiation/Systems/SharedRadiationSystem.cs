@@ -1,3 +1,4 @@
+using Content.Shared.Radiation.Components;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Radiation.Systems;
@@ -9,7 +10,11 @@ public abstract class SharedRadiationSystem : EntitySystem
     private readonly Direction[] _directions =
     {
         Direction.North, Direction.South, Direction.East, Direction.West,
-        //Direction.NorthEast, Direction.NorthWest, Direction.SouthEast, Direction.SouthWest
+    };
+
+    private readonly Direction[] _otherDirections =
+    {
+        Direction.NorthEast, Direction.NorthWest, Direction.SouthEast, Direction.SouthWest
     };
 
     public MapId MapId;
@@ -44,6 +49,8 @@ public abstract class SharedRadiationSystem : EntitySystem
             return;
         }
 
+        var query = GetEntityQuery<RadiationBlockerComponent>();
+
         visitedTiles.Clear();
         var visitNext = new Queue<(Vector2i, float)>();
         visitNext.Enqueue((initialTile, radsPerSecond));
@@ -51,13 +58,21 @@ public abstract class SharedRadiationSystem : EntitySystem
         do
         {
             var (current, incomingRads) = visitNext.Dequeue();
-            if (visitedTiles.ContainsKey(current))
+            if (visitedTiles.ContainsKey(current) || incomingRads <= 0f)
                 continue;
 
             visitedTiles.Add(current, incomingRads);
 
             // here is material absorption
             var nextRad = incomingRads;
+            var ents = candidateGrid.GetAnchoredEntities(current);
+            foreach (var uid in ents)
+            {
+                if (!query.TryGetComponent(uid, out var blocker))
+                    continue;
+                nextRad -= blocker.RadResistance;
+            }
+
 
             // and also remove by distance
             nextRad -= 1f;

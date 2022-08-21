@@ -119,6 +119,8 @@
     node: glassAirlock
   - type: PaintableAirlock
     group: Windoor
+  - type: RadiationBlocker
+    resistance: 2
 
 - type: entity
   parent: AirlockGlass
