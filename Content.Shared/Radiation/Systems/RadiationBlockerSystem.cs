@@ -9,20 +9,32 @@ public sealed class RadiationBlockerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<RadiationBlockerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<RadiationBlockerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RadiationBlockerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<RadiationBlockerComponent, ReAnchorEvent>(OnReAnchor);
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+    }
+
+    private void OnInit(EntityUid uid, RadiationBlockerComponent component, ComponentInit args)
+    {
+        AddTile(uid, component);
+    }
+
+    private void OnShutdown(EntityUid uid, RadiationBlockerComponent component, ComponentShutdown args)
+    {
+        RemoveTile(uid, component);
     }
 
     private void OnAnchorChanged(EntityUid uid, RadiationBlockerComponent component, ref AnchorStateChangedEvent args)
     {
         if (args.Anchored)
         {
-            OnTileAdded(uid, component);
+            AddTile(uid, component);
         }
         else
         {
-            OnTileRemoved(uid, component);
+            RemoveTile(uid, component);
         }
     }
 
@@ -30,9 +42,9 @@ public sealed class RadiationBlockerSystem : EntitySystem
     {
         // probably grid was split
         // we need to remove entity from old resistance map
-        OnTileRemoved(uid, component);
+        RemoveTile(uid, component);
         // and move it to the new one
-        OnTileAdded(uid, component);
+        AddTile(uid, component);
     }
 
     private void OnGridRemoved(GridRemovalEvent ev)
@@ -40,15 +52,21 @@ public sealed class RadiationBlockerSystem : EntitySystem
         _resistancePerTile.Remove(ev.EntityUid);
     }
 
-    private void OnTileAdded(EntityUid uid, RadiationBlockerComponent component)
+    private void AddTile(EntityUid uid, RadiationBlockerComponent component)
     {
+        // check that last position was removed
+        if (component.LastPosition != null)
+        {
+            RemoveTile(uid, component);
+        }
+
         // check if entity even provide some rad protection
         if (!component.Enabled || component.RadResistance <= 0)
             return;
 
         // check if it's on a grid
         var trs = Transform(uid);
-        if (trs.GridUid == null || !TryComp(trs.GridUid, out IMapGridComponent? grid))
+        if (!trs.Anchored || trs.GridUid == null || !TryComp(trs.GridUid, out IMapGridComponent? grid))
             return;
 
         // save resistance into rad protection grid
@@ -60,7 +78,7 @@ public sealed class RadiationBlockerSystem : EntitySystem
         component.LastPosition = (gridId, tilePos);
     }
 
-    private void OnTileRemoved(EntityUid uid, RadiationBlockerComponent component)
+    private void RemoveTile(EntityUid uid, RadiationBlockerComponent component)
     {
         // check if blocker was placed on grid before component was removed
         if (component.LastPosition == null)
@@ -69,6 +87,7 @@ public sealed class RadiationBlockerSystem : EntitySystem
 
         // try to remove
         RemoveFromTile(gridId, tilePos, component.RadResistance);
+        component.LastPosition = null;
     }
 
     private void AddToTile(EntityUid gridId, Vector2i tilePos, float radResistance)
