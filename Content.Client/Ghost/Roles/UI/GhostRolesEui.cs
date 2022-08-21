@@ -68,7 +68,18 @@ namespace Content.Client.Ghost.Roles.UI
 
             _window.OnGroupRequested += info =>
             {
-                SendMessage(new GhostRoleGroupLotteryRequestMessage(info.Identifier));
+                _windowRules?.Close();
+                _windowRules = new GhostRoleRulesWindow(Loc.GetString("ghost-role-component-default-rules"), _ =>
+                {
+                    SendMessage(new GhostRoleGroupLotteryRequestMessage(info.Identifier));
+                    _windowRules?.Close();
+                });
+                _windowRulesId = info.Name;
+                _windowRules.OnClose += () =>
+                {
+                    _windowRules = null;
+                };
+                _windowRules.OpenCentered();
             };
 
             _window.OnGroupCancelled += info =>
