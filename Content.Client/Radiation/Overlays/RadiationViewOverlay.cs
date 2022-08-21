@@ -1,4 +1,5 @@
 using Content.Client.Radiation.Systems;
+using Content.Shared.Radiation.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
@@ -30,8 +31,8 @@ public sealed class RadiationViewOverlay : Overlay
     {
         var radSys = EntitySystem.Get<RadiationSystem>();
 
-        if (radSys.MapId != args.Viewport.Eye?.Position.MapId)
-            return;
+        //if (radSys.MapId != args.Viewport.Eye?.Position.MapId)
+          //  return;
 
         switch (args.Space)
         {
@@ -51,13 +52,28 @@ public sealed class RadiationViewOverlay : Overlay
         var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
         var radSys = EntitySystem.Get<RadiationSystem>();
 
-        if (!_mapManager.TryGetGrid(radSys.gridUid, out var grid))
-            return;
+        /*{
+            if (!_mapManager.TryGetGrid(radSys.gridUid, out var grid))
+                return;
 
-        var gridXform = xformQuery.GetComponent(grid.GridEntityId);
-        var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
-        gridBounds = invMatrix.TransformBox(args.WorldBounds);
-        DrawText(handle, gridBounds, matrix, radSys.visitedTiles, grid.TileSize);
+            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            gridBounds = invMatrix.TransformBox(args.WorldBounds);
+            DrawText(handle, gridBounds, matrix, radSys.visitedTiles, Color.White, grid.TileSize);
+        }*/
+
+
+        var radBlockSys = EntitySystem.Get<RadiationBlockerSystem>();
+        foreach (var (gridUid, resGrid) in radBlockSys._resistancePerTile)
+        {
+            if (!_mapManager.TryGetGrid(gridUid, out var grid))
+                continue;
+
+            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            gridBounds = invMatrix.TransformBox(args.WorldBounds);
+            DrawText(handle, gridBounds, matrix, resGrid, Color.Gray, grid.TileSize);
+        }
     }
 
     private void DrawWorld(in OverlayDrawArgs args)
@@ -78,7 +94,8 @@ public sealed class RadiationViewOverlay : Overlay
     }
 
     private void DrawText(DrawingHandleScreen handle, Box2 gridBounds,
-        Matrix3 transform, Dictionary<Vector2i, float> tiles, ushort tileSize = 1)
+        Matrix3 transform, Dictionary<Vector2i, float> tiles, Color color,
+        ushort tileSize = 1)
     {
         foreach (var (tile, rad) in tiles)
         {
