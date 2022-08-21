@@ -8,7 +8,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
     public sealed class GasTankBoundUserInterface
         : BoundUserInterface
     {
-        public GasTankBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) :
+        public GasTankBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) :
             base(owner, uiKey)
         {
         }

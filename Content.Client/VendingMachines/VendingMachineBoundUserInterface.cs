@@ -14,7 +14,7 @@ namespace Content.Client.VendingMachines
 
         public SharedVendingMachineComponent? VendingMachine { get; private set; }
 
-        public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
             SendMessage(new InventorySyncRequestMessage());
         }

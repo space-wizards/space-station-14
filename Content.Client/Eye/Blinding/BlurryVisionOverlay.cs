@@ -14,15 +14,13 @@ namespace Content.Client.Eye.Blinding
 
         public override bool RequestScreenTexture => true;
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        private readonly ShaderInstance _blurryVisionXShader;
-        private readonly ShaderInstance _blurryVisionYShader;
+        private readonly ShaderInstance _dim;
         private BlurryVisionComponent _blurryVisionComponent = default!;
 
         public BlurryVisionOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _blurryVisionXShader = _prototypeManager.Index<ShaderPrototype>("BlurryVisionX").InstanceUnique();
-            _blurryVisionYShader = _prototypeManager.Index<ShaderPrototype>("BlurryVisionY").InstanceUnique();
+            _dim = _prototypeManager.Index<ShaderPrototype>("Dim").InstanceUnique();
         }
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -51,18 +49,17 @@ namespace Content.Client.Eye.Blinding
             if (ScreenTexture == null)
                 return;
 
-            _blurryVisionXShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _blurryVisionXShader?.SetParameter("BLUR_AMOUNT", (_blurryVisionComponent.Magnitude / 10));
-            _blurryVisionYShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _blurryVisionYShader?.SetParameter("BLUR_AMOUNT", (_blurryVisionComponent.Magnitude / 10));
+            var opacity = -(_blurryVisionComponent.Magnitude / 15) + 0.9f;
+
+            _dim.SetParameter("DAMAGE_AMOUNT", opacity);
 
             var worldHandle = args.WorldHandle;
             var viewport = args.WorldBounds;
+
+            worldHandle.UseShader(_dim);
             worldHandle.SetTransform(Matrix3.Identity);
-            worldHandle.UseShader(_blurryVisionXShader);
-            worldHandle.DrawRect(viewport, Color.White);
-            worldHandle.UseShader(_blurryVisionYShader);
-            worldHandle.DrawRect(viewport, Color.White);
+            worldHandle.DrawRect(viewport, Color.Black);
+            worldHandle.UseShader(null);
         }
     }
 }

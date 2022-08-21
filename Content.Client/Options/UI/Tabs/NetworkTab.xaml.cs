@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Client.GameStates;
 
 namespace Content.Client.Options.UI.Tabs
 {
@@ -11,6 +12,7 @@ namespace Content.Client.Options.UI.Tabs
     public sealed partial class NetworkTab : Control
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IClientGameStateManager _stateMan = default!;
 
         public NetworkTab()
         {
@@ -20,6 +22,7 @@ namespace Content.Client.Options.UI.Tabs
             ApplyButton.OnPressed += OnApplyButtonPressed;
             ResetButton.OnPressed += OnResetButtonPressed;
             NetInterpRatioSlider.OnValueChanged += OnNetInterpRatioSliderChanged;
+            NetInterpRatioSlider.MinValue = _stateMan.MinBufferSize;
 
             Reset();
         }
@@ -39,7 +42,7 @@ namespace Content.Client.Options.UI.Tabs
 
         private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            _cfg.SetCVar(CVars.NetInterpRatio, (int) NetInterpRatioSlider.Value);
+            _cfg.SetCVar(CVars.NetBufferSize, (int) NetInterpRatioSlider.Value - _stateMan.MinBufferSize);
             _cfg.SaveToFile();
             UpdateChanges();
         }
@@ -51,13 +54,13 @@ namespace Content.Client.Options.UI.Tabs
 
         private void Reset()
         {
-            NetInterpRatioSlider.Value = _cfg.GetCVar(CVars.NetInterpRatio);
+            NetInterpRatioSlider.Value = _cfg.GetCVar(CVars.NetBufferSize) + _stateMan.MinBufferSize;
             UpdateChanges();
         }
 
         private void UpdateChanges()
         {
-            var isEverythingSame = NetInterpRatioSlider.Value == _cfg.GetCVar(CVars.NetInterpRatio);
+            var isEverythingSame = NetInterpRatioSlider.Value == _cfg.GetCVar(CVars.NetBufferSize) + _stateMan.MinBufferSize;
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
             NetInterpRatioLabel.Text = NetInterpRatioSlider.Value.ToString();

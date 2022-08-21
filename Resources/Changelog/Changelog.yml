@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nukies are fixed again., type: Fix}
-  id: 1676
-  time: '2022-06-11T14:18:58.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: A greater variety of miscellaneous trash can now be found around the
@@ -2937,3 +2932,9 @@ Entries:
     type: Add}
   id: 2175
   time: '2022-08-20T02:50:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The blurry effect from eye damage has been replaced with a dim overlay
+      filter., type: Tweak}
+  id: 2176
+  time: '2022-08-20T20:17:58.0000000+00:00'

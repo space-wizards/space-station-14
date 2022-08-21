@@ -9,7 +9,6 @@ using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
-using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
@@ -26,13 +25,16 @@ using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Gravity;
 using Content.Shared.Lathe;
 using Content.Shared.Markers;
-using Content.Shared.VendingMachines;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
+#if FULL_RELEASE
+using Robust.Shared;
+using Robust.Shared.Configuration;
+#endif
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -80,6 +82,11 @@ namespace Content.Client.Entry
 
             IoCManager.BuildGraph();
             IoCManager.InjectDependencies(this);
+
+#if FULL_RELEASE
+            // if FULL_RELEASE, because otherwise this breaks some integration tests.
+            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, 2);
+#endif
 
             _componentFactory.DoAutoRegistrations();
             _componentFactory.IgnoreMissingComponents();
