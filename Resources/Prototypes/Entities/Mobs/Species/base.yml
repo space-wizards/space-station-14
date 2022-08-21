@@ -283,7 +283,6 @@
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
-  - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon

@@ -1,4 +1,5 @@
-﻿using Content.Client.Gameplay;
+﻿using System.Diagnostics;
+using Content.Client.Gameplay;
 using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
@@ -92,6 +93,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private void LoadPlayerHands(HandsComponent handsComp)
     {
+        Debug.Assert(_playerHandsComponent == null);
         if (HandsGui != null)
             HandsGui.Visible = true;
 

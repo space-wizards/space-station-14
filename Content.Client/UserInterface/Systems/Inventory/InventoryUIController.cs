@@ -43,7 +43,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateExited(GameplayState state)
     {
-        CommandBinds.Unregister<InventoryUIController>();
+        CommandBinds.Unregister<ClientInventorySystem>();
     }
 
     private void InventoryButtonPressed(ButtonEventArgs args)
@@ -170,7 +170,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         button.Pressed += ItemPressed;
         button.StoragePressed += StoragePressed;
         slotGroup.AddButton(button);
-        button.SlotName = data.SlotName;
     }
 
     private void RemoveSlot(SlotData data)

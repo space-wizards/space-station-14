@@ -59,9 +59,23 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 _ = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(controlled.Value);
 
                 // find the alertsui
-                clientAlertsUI =
-                    clientUIMgr.StateRoot.Children.FirstOrDefault(c => c is AlertsUI) as AlertsUI;
+
+                clientAlertsUI = FindAlertsUI(clientUIMgr.ActiveScreen);
                 Assert.NotNull(clientAlertsUI);
+
+                AlertsUI? FindAlertsUI(Control control)
+                {
+                    if (control is AlertsUI alertUI)
+                        return alertUI;
+                    foreach (var child in control.Children)
+                    {
+                        var found = FindAlertsUI(child);
+                        if (found != null)
+                            return found;
+                    }
+
+                    return null;
+                }
 
                 // we should be seeing 3 alerts - our health, and the 2 debug alerts, in a specific order.
                 Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(3));

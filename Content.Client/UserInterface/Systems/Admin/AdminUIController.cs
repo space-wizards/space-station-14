@@ -52,6 +52,8 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
 
     private void AdminStatusUpdated()
     {
+        if (_window == null)
+            return;
         AdminButton.Visible = CanOpen();
     }
 

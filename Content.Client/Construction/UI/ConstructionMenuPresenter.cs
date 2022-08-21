@@ -330,7 +330,10 @@ namespace Content.Client.Construction.UI
             system.ToggleCraftingWindow += SystemOnToggleMenu;
             system.CraftingAvailabilityChanged += SystemCraftingAvailabilityChanged;
             system.ConstructionGuideAvailable += SystemGuideAvailable;
-            CraftingAvailable = system.CraftingEnabled;
+            if (_uiManager.GetActiveUIWidgetOrNull<MenuBar>() != null)
+            {
+                CraftingAvailable = system.CraftingEnabled;
+            }
         }
 
         private void UnbindFromSystem()
@@ -348,6 +351,8 @@ namespace Content.Client.Construction.UI
 
         private void SystemCraftingAvailabilityChanged(object? sender, CraftingAvailabilityChangedArgs e)
         {
+            if (_uiManager.ActiveScreen == null)
+                return;
             CraftingAvailable = e.Available;
         }
 

@@ -1,4 +1,5 @@
-﻿using Content.Client.Administration.Managers;
+﻿using System.Diagnostics;
+using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
 using Content.Client.Markers;
 using Content.Client.Sandbox;
@@ -7,6 +8,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.DecalPlacer;
 using Content.Client.UserInterface.Systems.Sandbox.Windows;
 using Content.Shared.Input;
+using JetBrains.Annotations;
 using Robust.Client.Debugging;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -22,6 +24,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Sandbox;
 
 // TODO hud refactor should part of this be in engine?
+[UsedImplicitly]
 public sealed class SandboxUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,IOnSystemChanged<SandboxSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
@@ -46,7 +49,6 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
     public void OnStateEntered(GameplayState state)
     {
         SandboxButton.OnPressed += SandboxButtonPressed;
-        _admin.AdminStatusUpdated += CheckStatus;
         CreateWindow();
         _input.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
             InputCmdHandler.FromDelegate(_ => EntitySpawningController.ToggleWindow()));
@@ -64,12 +66,14 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
 
     public void OnSystemLoaded(SandboxSystem system)
     {
+        _admin.AdminStatusUpdated += CheckStatus;
         system.SandboxEnabled += CheckStatus;
         system.SandboxDisabled += CheckStatus;
     }
 
     public void OnSystemUnloaded(SandboxSystem system)
     {
+        _admin.AdminStatusUpdated -= CheckStatus;
         system.SandboxEnabled -= CheckStatus;
         system.SandboxDisabled -= CheckStatus;
     }
@@ -236,6 +240,6 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
 
     public void OnStateExited(GameplayState state)
     {
-        CommandBinds.Unregister<SandboxUIController>();
+        CommandBinds.Unregister<SandboxSystem>();
     }
 }
