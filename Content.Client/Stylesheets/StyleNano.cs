@@ -1407,7 +1407,7 @@ namespace Content.Client.Stylesheets
                 Element<Label>().Class("Disabled")
                     .Prop("font-color", DisabledFore),
 
-                //PDA
+                //PDA - Backgrounds
                 Element<PanelContainer>().Class("PDAContentBackground")
                     .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenBoth)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
@@ -1423,6 +1423,10 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class("PDABorderRect")
                     .Prop(PanelContainer.StylePropertyPanel, AngleBorderRect),
 
+                Element<PanelContainer>().Class("BackgroundDark")
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
+
+                //PDA - Buttons
                 Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.NormalBgColor))
                     .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.EnabledFgColor)),
@@ -1439,6 +1443,14 @@ namespace Content.Client.Stylesheets
                     .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.NormalBgColor))
                     .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.DisabledFgColor)),
 
+                Element<PDAProgramItem>().Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(PDAProgramItem.StylePropertyBgColor, Color.FromHex(PDAProgramItem.NormalBgColor)),
+
+                Element<PDAProgramItem>().Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(PDAProgramItem.StylePropertyBgColor, Color.FromHex(PDAProgramItem.HoverColor)),
+
+                Element<PDAProgramItem>().Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(PDAProgramItem.StylePropertyBgColor, Color.FromHex(PDAProgramItem.HoverColor)),
 
             }).ToList());
         }
