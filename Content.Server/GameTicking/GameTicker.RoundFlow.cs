@@ -114,6 +114,8 @@ namespace Content.Server.GameTicking
         /// <returns>All loaded entities and grids.</returns>
         public (IReadOnlyList<EntityUid>, IReadOnlyList<EntityUid>) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
         {
+            // Okay I specifically didn't set LoadMap here because this is typically called onto a new map.
+            // whereas the command can also be used on an existing map.
             var loadOpts = loadOptions ?? new MapLoadOptions();
 
             var ev = new PreGameMapLoad(targetMapId, map, loadOpts);
