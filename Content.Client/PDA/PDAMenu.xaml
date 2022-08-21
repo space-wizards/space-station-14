@@ -38,39 +38,42 @@
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
+            <BoxContainer Orientation="Vertical"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          MinSize="50 50"
+                          Name="ProgramList"
+                          Margin="4"/>
+        </ScrollContainer>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
+            <BoxContainer Orientation="Vertical"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          MinSize="50 50"
+                          Name="Settings">
+                <pda:PDASettingsButton Name="AccessRingtoneButton"
+                                       Access="Public"
+                                       Text="{Loc 'comp-pda-ui-ringtone-button'}"
+                                       Description="{Loc 'comp-pda-ui-ringtone-button-description'}"/>
+                <pda:PDASettingsButton Name="CrewManifestButton"
+                                       Access="Public"
+                                       Text="{Loc 'crew-manifest-button-label'}"
+                                       Description="{Loc 'crew-manifest-button-description'}"
+                                       Visible="False" />
+                <pda:PDASettingsButton Name="ActivateUplinkButton"
+                                       Access="Public"
+                                       Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}"
+                                       Description="{Loc 'pda-bound-user-interface-uplink-tab-description'}"/>
+                <pda:PDASettingsButton Name="ActivateMusicButton"
+                                       Access="Public"
+                                       Text="{Loc 'pda-bound-user-interface-music-button'}"
+                                       Description="{Loc 'pda-bound-user-interface-music-button-description'}"/>
+            </BoxContainer>
+        </ScrollContainer>
         <BoxContainer Orientation="Vertical"
                       VerticalExpand="True"
                       HorizontalExpand="True"
-                      MinSize="50 50"
-                      Name="ProgramList">
-        </BoxContainer>
-        <BoxContainer Orientation="Vertical"
-                      VerticalExpand="True"
-                      HorizontalExpand="True"
-                      MinSize="50 50"
-                      Name="Settings">
-            <pda:PDASettingsButton Name="AccessRingtoneButton"
-                                   Access="Public"
-                                   Text="{Loc 'comp-pda-ui-ringtone-button'}"
-                                   Description="{Loc 'comp-pda-ui-ringtone-button-description'}"/>
-            <pda:PDASettingsButton Name="CrewManifestButton"
-                                   Access="Public"
-                                   Text="{Loc 'crew-manifest-button-label'}"
-                                   Description="{Loc 'crew-manifest-button-description'}"
-                                   Visible="False" />
-            <pda:PDASettingsButton Name="ActivateUplinkButton"
-                                   Access="Public"
-                                   Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}"
-                                   Description="{Loc 'pda-bound-user-interface-uplink-tab-description'}"/>
-            <pda:PDASettingsButton Name="ActivateMusicButton"
-                                   Access="Public"
-                                   Text="{Loc 'pda-bound-user-interface-music-button'}"
-                                   Description="{Loc 'pda-bound-user-interface-music-button-description'}"/>
-        </BoxContainer>
-        <BoxContainer Orientation="Vertical"
-                      VerticalExpand="True"
-                      HorizontalExpand="True"
-                      MinSize="50 50"
                       Name="ProgramView"
                       Access="Public">
         </BoxContainer>

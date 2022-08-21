@@ -10,5 +10,8 @@ public sealed partial class NotekeeperUiFragment : BoxContainer
     public NotekeeperUiFragment()
     {
         RobustXamlLoader.Load(this);
+        Orientation = LayoutOrientation.Vertical;
+        HorizontalExpand = true;
+        VerticalExpand = true;
     }
 }
