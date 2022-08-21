@@ -156,3 +156,8 @@ ui-options-function-shuttle-rotate-left = Поворот налево
 ui-options-function-shuttle-rotate-right = Поворот направо
 ui-options-function-shuttle-brake = Торможение
 ui-options-net-interp-ratio = Сетевое сглаживание
+ui-options-net-interp-ratio-tooltip =
+    Увеличение этого параметра, как правило, делает игру
+    более устойчивой к потере пакетов, однако при этом
+    это так же добавляет немного больше задержки и
+    требует от клиента предсказывать больше будущих тиков.
