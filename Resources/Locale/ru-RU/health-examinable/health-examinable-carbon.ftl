@@ -10,4 +10,4 @@ health-examinable-carbon-Piercing-50 = [color=crimson]{ CAPITALIZE($target) } и
 health-examinable-carbon-Heat-25 = [color=orange]{ CAPITALIZE($target) } имеет лёгкие ожоги на теле.[/color]
 health-examinable-carbon-Heat-50 = [color=orange]{ CAPITALIZE($target) } имеет сильные ожоги на теле.[/color]
 health-examinable-carbon-Heat-75 = [color=orange]{ CAPITALIZE($target) } имеет ожоги третьей степени на теле![/color]
-health-examinable-carbon-Shock-50 = [color=lightgoldenrod]{ CAPITALIZE($target) } имеет следы поражения током по всему телу![/color]
+health-examinable-carbon-Shock-50 = [color=lightgoldenrodyellow]{ CAPITALIZE($target) } имеет следы поражения током по всему телу![/color]
