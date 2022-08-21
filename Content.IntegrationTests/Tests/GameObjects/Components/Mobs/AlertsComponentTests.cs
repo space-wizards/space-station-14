@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 clientAlertsUI = FindAlertsUI(clientUIMgr.ActiveScreen);
                 Assert.NotNull(clientAlertsUI);
 
-                AlertsUI? FindAlertsUI(Control control)
+                AlertsUI FindAlertsUI(Control control)
                 {
                     if (control is AlertsUI alertUI)
                         return alertUI;
