@@ -44,6 +44,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private MapId? _nukiePlanet;
     private EntityUid? _nukieOutpost;
+    private EntityUid? _nukieShuttle;
 
     public override string Prototype => "Nukeops";
 
@@ -68,6 +69,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     ///     Players who played as an operative at some point in the round.
     /// </summary>
     private readonly HashSet<IPlayerSession> _operativePlayers = new();
+
 
     public override void Initialize()
     {
@@ -97,7 +99,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnComponentRemove(EntityUid uid, NukeOperativeComponent component, ComponentRemove args)
     {
-        CheckOperativesAreDead();
+        CheckRoundShouldEnd();
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
@@ -122,20 +124,38 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
     }
 
-    private void CheckOperativesAreDead()
+    private void CheckRoundShouldEnd()
     {
         if (!RuleAdded)
             return;
 
-        var query = EntityQuery<NukeOperativeComponent, MobStateComponent>(true);
-        if(query.All(ent => ent.Item2.CurrentState == DamageState.Dead || !ent.Item1.Running))
-            _roundEndSystem.EndRound();
+        MapId? shuttleMapId = EntityManager.EntityExists(_nukieShuttle)
+            ? Transform(_nukieShuttle!.Value).MapID
+            : null;
+
+        // Check if there are nuke operatives still alive on the same map as the shuttle.
+        // If there are, the round can continue.
+        var operatives = EntityQuery<NukeOperativeComponent, MobStateComponent, TransformComponent>(true);
+        var operativesAlive = operatives
+            .Where(ent => ent.Item3.MapID == shuttleMapId)
+            .Any(ent => ent.Item2.CurrentState == DamageState.Alive && ent.Item1.Running);
+
+        if (operativesAlive)
+            return; // There are living operatives than can access the shuttle.
+
+        // Check that there are spawns available and that they can access the shuttle.
+        var spawnsAvailable = EntityQuery<NukeOperativeSpawnerComponent>(true).Any();
+        if (spawnsAvailable && shuttleMapId == _nukiePlanet)
+            return; // Ghost spawns can still access the shuttle. Continue the round.
+
+        // The shuttle is inaccessible to both living nuke operatives and yet to spawn nuke operatives.
+        _roundEndSystem.EndRound();
     }
 
     private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
     {
         if(ev.CurrentMobState == DamageState.Dead)
-            CheckOperativesAreDead();
+            CheckRoundShouldEnd();
     }
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
@@ -328,6 +348,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _nukiePlanet = mapId;
         _nukieOutpost = outpost;
+        _nukieShuttle = shuttleId;
 
         return true;
     }
