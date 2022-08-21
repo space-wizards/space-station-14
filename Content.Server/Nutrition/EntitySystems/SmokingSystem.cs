@@ -9,6 +9,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Smoking;
@@ -28,6 +29,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -121,10 +123,14 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent(), true);
                     if(smokable.State == SmokableState.Burnt &&
-                        containerManager != null &&
-                        _inventorySystem.IsEntityInSlots(containerManager.Owner, smokable.Owner, "mask", "l_hand", "r_hand"))
+                        containerManager != null)
                     {
-                        //Drop the thing
+                        if (_inventorySystem.IsEntityInSlots(containerManager.Owner, smokable.Owner, "mask") &&
+                            _inventorySystem.TryUnequip(containerManager.Owner, "mask"))
+                        {
+                            var target = Transform(containerManager.Owner);
+                            _interactionSystem.DoDrop(containerManager.Owner, smokable.Owner, target.Coordinates, true);
+                        }
                     }
                 }
 
