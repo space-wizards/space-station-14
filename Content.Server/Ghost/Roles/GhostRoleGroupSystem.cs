@@ -210,8 +210,8 @@ public sealed class GhostRoleGroupSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Creates the role group and activate it for the user if they do not currently have
-    ///     an active role group.
+    /// Creates the role group and activate it for the user if they do not currently have
+    /// an active role group.
     /// </summary>
     /// <param name="session">The session of the creator.</param>
     /// <param name="name"></param>
@@ -414,6 +414,12 @@ public sealed class GhostRoleGroupSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Get the role group details associated with the identifier.
+    /// </summary>
+    /// <param name="identifier">The identifier of the role group.</param>
+    /// <param name="group">The role group. Output parameter.</param>
+    /// <returns>True if the role group exists; Otherwise false.</returns>
     public bool TryGetRoleGroup(uint identifier, [NotNullWhen(true)] out RoleGroupEntry? group)
     {
         return _roleGroupEntries.TryGetValue(identifier, out group);
@@ -499,7 +505,6 @@ public sealed class GhostRoleGroupSystem : EntitySystem
 /// The state for a single role group. Role groups are owned by a player and can be in three states:
 /// <list type="bullet">
 ///     <item><see cref="GhostRoleGroupStatus.Editing"/> - The role group can have entities added to it and is not available for lottery.</item>
-///     <item><see cref="GhostRoleGroupStatus.Releasing"/> - The role group is waiting to be added into a lottery. Entities can no longer be added.</item>
 ///     <item><see cref="GhostRoleGroupStatus.Released"/> - The role group is now in a lottery. Player's can request to enter the lottery.</item>
 /// </list>
 /// </summary>

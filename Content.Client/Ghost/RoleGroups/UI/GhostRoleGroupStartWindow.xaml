@@ -1,5 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-               Title="Start Role Group">
+               Title="{Loc 'ghost-role-groups-start-window-title'}">
     <BoxContainer Orientation="Vertical" SeparationOverride="5">
         <BoxContainer Orientation="Horizontal">
             <Label Name="RoleNameLabel" MinSize="150 0" Text="{Loc 'ghost-role-groups-start-window-role-name-label'}" />
