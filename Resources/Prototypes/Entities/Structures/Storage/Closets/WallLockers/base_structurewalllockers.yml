@@ -10,21 +10,12 @@
   - type: InteractionOutline
   - type: WallMount
     arc: 360
-  - type: AccessReader
-  - type: Lock
-  - type: Weldable
   - type: Sprite
     drawdepth: WallMountedItems
     netsync: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: door
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Destructible
     thresholds:
     - trigger:
