@@ -256,11 +256,11 @@ namespace Content.Client.LateJoin
                                 jobButton.ToolTip = reason;
                             }
                         }
-
-                        else if (value == 0);
+                        else if (value == 0)
                         {
                             jobButton.Disabled = true;
                         }
+
                         _jobButtons[id][prototype.ID] = jobButton;
                     }
                 }
