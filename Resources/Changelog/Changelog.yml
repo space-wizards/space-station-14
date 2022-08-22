@@ -1,4 +1,10 @@
 Entries:
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer eat chocolate bars through their wrappers or spawn
+      infinite wrappers from certain snacks., type: Fix}
+  id: 1679
+  time: '2022-06-12T01:06:52.0000000+00:00'
 - author: themias
   changes:
   - {message: Stun batons now use internal battery instead of a power cell; can be
@@ -2933,8 +2939,3 @@ Entries:
   - {message: Tweaked playtime requirement tooltip text slightly, type: Tweak}
   id: 2178
   time: '2022-08-21T19:14:24.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: Mice no longer have to eat an entire bakery to stay alive, type: Tweak}
-  id: 2179
-  time: '2022-08-21T20:42:01.0000000+00:00'
