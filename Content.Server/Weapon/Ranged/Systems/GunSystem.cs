@@ -225,6 +225,9 @@ public sealed partial class GunSystem : SharedGunSystem
 
     public void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)
     {
+        if (Deleted(otherEntity))
+            return;
+
         // Like projectiles and melee,
         // 1. Entity specific sound
         // 2. Ammo's sound
@@ -237,24 +240,20 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
             {
-                SoundSystem.Play(damageSoundType!.GetSound(),
-                    Filter.Pvs(otherEntity, entityManager: EntityManager),
-                    otherEntity, AudioHelpers.WithVariation(DamagePitchVariation));
-
+                Audio.PlayPvs(damageSoundType, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
             else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
             {
-                SoundSystem.Play(damageSoundGroup!.GetSound(),
-                    Filter.Pvs(otherEntity, entityManager: EntityManager),
-                    otherEntity, AudioHelpers.WithVariation(DamagePitchVariation));
-
+                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
         }
 
         if (!playedSound && weaponSound != null)
-            SoundSystem.Play(weaponSound.GetSound(), Filter.Pvs(otherEntity, entityManager: EntityManager), otherEntity);
+        {
+            Audio.PlayPvs(weaponSound, otherEntity);
+        }
     }
 
     // TODO: Pseudo RNG so the client can predict these.
