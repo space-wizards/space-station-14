@@ -24,7 +24,7 @@
       - AirSensor
       - GasVent
       - GasScrubber
-  - type: Tags
+  - type: Tag
     tags:
       - FireAlarm
   - type: Clickable

@@ -22,7 +22,7 @@
       - AirSensor
       - GasVent
       - GasScrubber
-  - type: Tags
+  - type: Tag
     tags:
       - AirAlarm
   - type: AtmosDevice
