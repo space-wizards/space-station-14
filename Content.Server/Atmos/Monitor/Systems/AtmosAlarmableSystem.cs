@@ -51,6 +51,14 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 Reset(uid, component);
             }
+            else
+            {
+                TryUpdateAlert(
+                    uid,
+                    TryGetHighestAlert(uid, out var alarm) ? alarm.Value : AtmosMonitorAlarmType.Normal,
+                    component,
+                false);
+            }
         }
 
         private void OnPacketRecv(EntityUid uid, AtmosAlarmableComponent component, DeviceNetworkPacketEvent args)
