@@ -23,6 +23,7 @@
     qualities:
       - Prying
     speed: 1.5
+    forcePowered: true
   - type: MultipleTool
     statusShowBehavior: true
     entries:

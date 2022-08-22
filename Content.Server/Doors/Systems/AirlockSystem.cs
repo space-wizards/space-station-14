@@ -1,5 +1,6 @@
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
+using Content.Shared.Tools.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
@@ -141,6 +142,8 @@ namespace Content.Server.Doors.Systems
             }
             if (component.IsPowered())
             {
+                if (TryComp<ToolComponent>(args.Tool, out var tool) && tool.ForcePowered)
+                    return;
                 component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
                 args.Cancel();
             }

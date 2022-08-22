@@ -6,6 +6,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Systems;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
@@ -30,6 +31,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
 
     public override void Initialize()
     {
@@ -40,6 +42,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         // Mob prying doors
         SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
+        SubscribeLocalEvent<DoorComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
 
         SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
@@ -168,6 +171,12 @@ public sealed class DoorSystem : SharedDoorSystem
         });
     }
 
+    private void OnGetPryMod(EntityUid uid, DoorComponent component, DoorGetPryTimeModifierEvent args)
+    {
+        if (_power.IsPowered(uid))
+            args.PryTimeModifier *= component.PoweredPryModifier;
+    }
+
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
@@ -180,7 +189,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (!force)
         {
-            var canEv = new BeforeDoorPryEvent(user);
+            var canEv = new BeforeDoorPryEvent(user, tool);
             RaiseLocalEvent(target, canEv, false);
 
             if (canEv.Cancelled)

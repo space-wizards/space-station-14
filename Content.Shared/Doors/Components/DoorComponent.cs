@@ -63,6 +63,12 @@ public sealed class DoorComponent : Component, ISerializationHooks
     public readonly TimeSpan EmagDuration = TimeSpan.FromSeconds(0.8f);
 
     /// <summary>
+    ///     Pry modifier for a powered door.
+    /// </summary>
+    [DataField("poweredPryModifier")]
+    public readonly float PoweredPryModifier = 2.5f;
+
+    /// <summary>
     ///     When the door is active, this is the time when the state will next update.
     /// </summary>
     public TimeSpan? NextStateChange;
