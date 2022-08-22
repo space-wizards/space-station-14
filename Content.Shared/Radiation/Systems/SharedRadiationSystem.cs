@@ -7,16 +7,6 @@ public abstract partial class SharedRadiationSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
 
-    private readonly Direction[] _directions =
-    {
-        Direction.North, Direction.South, Direction.East, Direction.West,
-    };
-
-    private readonly Direction[] _otherDirections =
-    {
-        Direction.NorthEast, Direction.NorthWest, Direction.SouthEast, Direction.SouthWest
-    };
-
     private const float RadiationCooldown = 1.0f;
     private float _accumulator;
 
@@ -37,6 +27,7 @@ public abstract partial class SharedRadiationSystem : EntitySystem
             _accumulator -= RadiationCooldown;
 
             UpdateRadSources();
+            UpdateReceivers();
         }
     }
 

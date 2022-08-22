@@ -8,6 +8,11 @@ public partial class SharedRadiationSystem
 
     public Dictionary<EntityUid, Dictionary<Vector2i, float>> _radiationMap = new();
 
+    private readonly Direction[] _directions =
+    {
+        Direction.North, Direction.South, Direction.East, Direction.West,
+    };
+
     private void UpdateRadSources()
     {
         foreach (var (_, map) in _radiationMap)
