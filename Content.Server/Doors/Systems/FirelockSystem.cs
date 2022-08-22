@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Doors.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
@@ -76,6 +77,9 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
         {
+            if (!this.IsPowered(uid, EntityManager))
+                args.Cancel();
+
             // Make firelocks autoclose, but only if the last alarm type it
             // remembers was a danger. This is to prevent people from
             // flooding hallways with endless bad air/fire.

@@ -160,6 +160,8 @@ namespace Content.Server.Atmos.Monitor.Systems
                         var air = _atmosphereSystem.GetContainingMixture(uid, true);
                         component.TileGas = air;
                     }
+
+                    Alert(uid, component.LastAlarmState);
                 }
             }
         }
