@@ -24,6 +24,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -423,7 +424,8 @@ public abstract class SharedDoorSystem : EntitySystem
             yield break;
 
         // TODO SLOTH fix electro's code.
-        var doorAABB = physics.GetWorldAABB();
+        // ReSharper disable once InconsistentNaming
+        var doorAABB = _entityLookup.GetWorldAABB(uid);
 
         foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
         {
@@ -437,7 +439,7 @@ public abstract class SharedDoorSystem : EntitySystem
                 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 
-            if (otherPhysics.GetWorldAABB().IntersectPercentage(doorAABB) < IntersectPercentage)
+            if (_entityLookup.GetWorldAABB(otherPhysics.Owner).IntersectPercentage(doorAABB) < IntersectPercentage)
                 continue;
 
             yield return otherPhysics.Owner;

@@ -317,7 +317,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (!Resolve(uid, ref door))
             return;
 
-        DoorState lastState = door.State;
+        var lastState = door.State;
 
         SetState(uid, DoorState.Opening, door);
 
