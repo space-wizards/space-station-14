@@ -1,0 +1,10 @@
+lobby-state-paused = Pausado
+lobby-state-right-now-question = Agora?
+lobby-state-right-now-confirmation = Agora
+lobby-state-round-start-countdown-text = A rodada começará em: {$timeLeft}
+lobby-state-ready-button-join-state = Entrar
+lobby-state-ready-button-ready-up-state = Pronto
+lobby-state-player-status-not-ready = Não Pronto
+lobby-state-player-status-ready = Pronto
+lobby-state-player-status-observer = Observador
+lobby-state-player-status-station-time =  O tempo da estação é: {$stationTime}

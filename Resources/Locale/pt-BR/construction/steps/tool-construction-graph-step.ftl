@@ -1,0 +1,1 @@
+construction-use-tool-entity = Agora, use um(a) [color=cyan]{$toolName}[/color].

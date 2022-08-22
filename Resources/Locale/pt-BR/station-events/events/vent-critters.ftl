@@ -1,0 +1,1 @@
+station-event-vent-spiders-start-announcement = Baseado em { $data }, nós acreditamos que uma pequena colônia de seres desconhecidos se instalaram dentro das ventilações da estação e tomamos medidas para dirigi-los para fora.

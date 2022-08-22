@@ -1,0 +1,13 @@
+accessory-VoxHairShortQuills = Espinho Vox Curto
+accessory-VoxHairKingly = Vox Real
+accessory-VoxHairAfro = Vox Afro
+accessory-VoxHairMohawk = Vox Moicano
+accessory-VoxHairYasuhiro = Dreads Altos Vox
+accessory-VoxHairHorns = Chifres Vox
+accessory-VoxHairNights = Vox Dorminhoco
+accessory-VoxHairSurf = Vox Surfista
+accessory-VoxHairCropped = Vox Cortadinho
+accessory-VoxHairRuffhawk = Vox Anos 90
+accessory-VoxHairRows =  Tranças Apertadas Vox
+accessory-VoxHairMange = Vox Falho
+accessory-VoxHairPony = Rabo de Cavalo Vox

@@ -1,0 +1,11 @@
+advertisement-cigs-1 = O cigarro espacial não fede, assim como um cigarro deve.
+advertisement-cigs-2 = O sabor de aventura e liberdade!
+advertisement-cigs-3 = Fume!
+advertisement-cigs-4 = Não acredite na mídia - fume hoje!
+advertisement-cigs-5 = Não faz mal!
+advertisement-cigs-6 = Não acredite nos cientistas!
+advertisement-cigs-7 = Isto é saudável!
+advertisement-cigs-8 = Não pare, compre mais!
+advertisement-cigs-9 = Paraíso da nicotina.
+advertisement-cigs-10 = Os melhores cigarros desde 2150.
+advertisement-cigs-11 = Cigarros vencedores do oscar.

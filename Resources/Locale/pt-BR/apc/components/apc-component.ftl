@@ -1,0 +1,1 @@
+apc-component-insufficient-access = Permissão insuficiente!

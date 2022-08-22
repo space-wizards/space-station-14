@@ -1,0 +1,17 @@
+stamp-component-stamped-name-default = Uma pessoa muito importante
+stamp-component-stamped-name-mime = Mímico
+stamp-component-stamped-name-captain = Capitão
+stamp-component-stamped-name-centcom = CentCom
+stamp-component-stamped-name-chaplain = Padre
+stamp-component-stamped-name-clown = Palhaço
+stamp-component-stamped-name-cmo = Médico Chefe
+stamp-component-stamped-name-denied = NEGADO
+stamp-component-stamped-name-approved = APROVADO
+stamp-component-stamped-name-hop = Chefe dos Funcionários
+stamp-component-stamped-name-hos = Segurança Chefe
+stamp-component-stamped-name-qm = Intendente de Carga
+stamp-component-stamped-name-rd = Diretor de Pesquisa
+stamp-component-stamped-name-warden = Diretor de Segurança
+stamp-component-stamped-name-trader = Mercante
+stamp-component-stamped-name-syndicate = Sindicato
+stamp-component-stamped-name-ce = Engenheiro Chefe
