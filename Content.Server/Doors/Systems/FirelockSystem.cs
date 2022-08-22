@@ -66,7 +66,7 @@ namespace Content.Server.Doors.Systems
             // Make firelocks autoclose, but only if the last alarm type it
             // remembers was a danger. This is to prevent people from
             // flooding hallways with endless bad air/fire.
-            if (_atmosAlarmable.TryGetHighestAlert(uid, out var alarm) && alarm == AtmosMonitorAlarmType.Danger)
+            if (_atmosAlarmable.TryGetHighestAlert(uid, out var alarm) && alarm != AtmosMonitorAlarmType.Danger)
                 args.Cancel();
         }
 
