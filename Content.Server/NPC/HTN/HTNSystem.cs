@@ -7,6 +7,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Server.NPC.Systems;
 using JetBrains.Annotations;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN;
@@ -18,6 +19,8 @@ public sealed class HTNSystem : EntitySystem
 
     private ISawmill _sawmill = default!;
     private readonly JobQueue _planQueue = new();
+
+    private HashSet<ICommonSession> _subscribers = new();
 
     // Hierarchical Task Network
     public override void Initialize()
