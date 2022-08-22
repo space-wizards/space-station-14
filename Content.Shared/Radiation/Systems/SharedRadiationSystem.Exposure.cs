@@ -1,4 +1,3 @@
-using Content.Shared.Radiation.Components;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Radiation.Systems;
@@ -46,10 +45,13 @@ public partial class SharedRadiationSystem
         var visitedTiles = new HashSet<Vector2i>();
         visitNext.Enqueue((initialTile, radsPerSecond));
 
+        var counter = 0;
         do
         {
+            counter++;
+
             var (current, incomingRads) = visitNext.Dequeue();
-            if (visitedTiles.Contains(current) || incomingRads <= 0f)
+            if (visitedTiles.Contains(current))
                 continue;
             visitedTiles.Add(current);
 
@@ -74,9 +76,13 @@ public partial class SharedRadiationSystem
             foreach (var dir in _directions)
             {
                 var next = current.Offset(dir);
-                visitNext.Enqueue((next, nextRad));
+                if (!visitedTiles.Contains(next))
+                    visitNext.Enqueue((next, nextRad));
             }
 
         } while (visitNext.Count != 0);
+
+        Logger.Debug($"Visited tiles {visitedTiles.Count}");
+        Logger.Debug($"Cycle iterations {counter}");
     }
 }
