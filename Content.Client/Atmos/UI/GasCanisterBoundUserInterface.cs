@@ -14,7 +14,7 @@ namespace Content.Client.Atmos.UI
 
         private GasCanisterWindow? _window;
 
-        public GasCanisterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public GasCanisterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

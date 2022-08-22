@@ -34,6 +34,7 @@
     capacity: 500
   - type: Weldable
   - type: PlaceableSurface
+    isPlaceable: false # defaults to closed.
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -61,6 +62,7 @@
     containers:
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
+  - type: ItemSlots
 
 - type: entity
   id: CrateBaseSecure
@@ -97,6 +99,7 @@
     capacity: 500
   - type: Weldable
   - type: PlaceableSurface
+    isPlaceable: false # defaults to closed.
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
@@ -123,3 +126,10 @@
   - type: Construction
     graph: CrateSecure
     node: cratesecure
+    containers:
+    - entity_storage
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: ItemSlots

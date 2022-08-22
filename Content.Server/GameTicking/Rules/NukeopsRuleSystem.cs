@@ -20,6 +20,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
+using System.Data;
+using Content.Server.Traitor.Uplink;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -35,6 +37,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;

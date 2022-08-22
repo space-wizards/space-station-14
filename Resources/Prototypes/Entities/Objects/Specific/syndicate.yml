@@ -15,9 +15,11 @@
     count: 20
     max: 999999 # todo: add support for unlimited stacks
     stackType: Telecrystal
-  - type: Telecrystal
   - type: StackPrice
     price: 200
+  - type: Currency
+    price:
+      Telecrystal: 1
 
 - type: entity
   parent: Telecrystal
@@ -61,45 +63,55 @@
     heldPrefix: old-radio
   - type: UserInterface
     interfaces:
-    - key: enum.UplinkUiKey.Key
-      type: UplinkBoundUserInterface
-  - type: Uplink
-    activatesInHands: true
-
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    preset: StorePresetUplink
+    balance: 
+      Telecrystal: 0
+  
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio20TC
   suffix: 20 TC
   components:
-  - type: Uplink
-    presetInfo:
-      balance: 20
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 20
 
-
-#Default Nuclear Operative amount, not considering crew count
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio25TC
   suffix: 25 TC
   components:
-  - type: Uplink
-    presetInfo:
-      balance: 25
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 25
 
+#this uplink MUST be used for nukeops, as it has the tag for filtering the listing.
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio40TC
-  suffix: 40 TC
+  suffix: 40 TC, NukeOps
   components:
-  - type: Uplink
-    presetInfo:
-      balance: 40
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 40
+  - type: Tag
+    tags:
+    - NukeOpsUplink
 
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadioDebug
   suffix: Debug
   components:
-  - type: Uplink
-    presetInfo:
-      balance: 9999
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 99999

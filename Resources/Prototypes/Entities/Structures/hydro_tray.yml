@@ -1,6 +1,6 @@
 - type: entity
   name: hydroponics tray
-  parent: hydroponicsSoil
+  parent: [ hydroponicsSoil, ConstructibleMachine]
   id: hydroponicsTray
   description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
@@ -66,9 +66,6 @@
           False: { visible: false }
   - type: PlantHolder
     drawWarnings: true
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:

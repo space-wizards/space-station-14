@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Autolathe
   name: autolathe
   description: It produces items using metal and glass.
@@ -21,6 +21,7 @@
   - type: LatheVisuals
     idleState: icon
     runningState: building
+  - type: WiresVisuals
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -33,9 +34,6 @@
       - MachineMask
       layer:
       - MachineLayer
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:
@@ -85,7 +83,7 @@
         - Ingot
 
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Protolathe
   name: protolathe
   description: Converts raw materials into useful objects.
@@ -107,6 +105,7 @@
   - type: LatheVisuals
     idleState: icon
     runningState: building
+  - type: WiresVisuals
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -120,9 +119,6 @@
       layer:
       - MachineLayer
   - type: ResearchClient
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:
@@ -455,6 +451,9 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
+      - ClothingOuterWinterMusician
+      - ClothingOuterWinterClown
+      - ClothingOuterWinterMime
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false

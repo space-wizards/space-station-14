@@ -182,9 +182,11 @@ namespace Content.Server.Nutrition.EntitySystems
 
             UpdateAppearance(component);
 
-            // Synchronize solution in drink
-            EnsureComp<RefillableSolutionComponent>(uid).Solution = component.SolutionName;
-            EnsureComp<DrainableSolutionComponent>(uid).Solution = component.SolutionName;
+            if (TryComp(uid, out RefillableSolutionComponent? refillComp))
+                refillComp.Solution = component.SolutionName;
+
+            if (TryComp(uid, out DrainableSolutionComponent? drainComp))
+                drainComp.Solution = component.SolutionName;
         }
 
         private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangedEvent args)

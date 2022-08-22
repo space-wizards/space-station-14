@@ -12,7 +12,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 {
     private ShuttleConsoleWindow? _window;
 
-    public ShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+    public ShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
     protected override void Open()
     {
