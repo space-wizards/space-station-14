@@ -33,39 +33,18 @@ namespace Content.Server.Atmos.Monitor.Systems
     {
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
         [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
+        [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         #region Device Network API
-        /// <summary>
-        ///     Command to set device data within the air alarm's network.
-        /// </summary>
-        public const string AirAlarmSetData = "air_alarm_set_device_data";
-
-        /// <summary>
-        ///     Command to request a sync from devices in an air alarm's network.
-        /// </summary>
-        public const string AirAlarmSyncCmd = "air_alarm_sync_devices";
 
         /// <summary>
         ///     Command to set an air alarm's mode.
         /// </summary>
         public const string AirAlarmSetMode = "air_alarm_set_mode";
-
-        // -- Packet Data --
-
-        /// <summary>
-        ///     Data response to an AirAlarmSetData command.
-        /// </summary>
-        public const string AirAlarmSetDataStatus = "air_alarm_set_device_data_status";
-
-        /// <summary>
-        ///     Data response to an AirAlarmSync command. Contains
-        ///     IAtmosDeviceData in this system's implementation.
-        /// </summary>
-        public const string AirAlarmSyncData = "air_alarm_device_sync_data";
 
         // -- API --
 
@@ -408,7 +387,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             switch (cmd)
             {
                 case AtmosDeviceNetworkSystem.SyncData:
-                    if (!args.Data.TryGetValue(AirAlarmSyncData, out IAtmosDeviceData? data)
+                    if (!args.Data.TryGetValue(AtmosDeviceNetworkSystem.SyncData, out IAtmosDeviceData? data)
                         || !controller.CanSync)
                         break;
 
@@ -532,10 +511,15 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             var deviceCount = alarm.VentData.Count + alarm.ScrubberData.Count + alarm.SensorData.Count;
 
+            if (!_atmosAlarmable.TryGetHighestAlert(uid, out var highestAlarm))
+            {
+                highestAlarm = AtmosMonitorAlarmType.Normal;
+            }
+
             _uiSystem.TrySetUiState(
                 uid,
                 SharedAirAlarmInterfaceKey.Key,
-                new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, alarmable.HighestNetworkState));
+                new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, highestAlarm.Value));
         }
 
         private const float _delay = 8f;

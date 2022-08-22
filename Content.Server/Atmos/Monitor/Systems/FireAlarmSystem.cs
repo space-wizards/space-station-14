@@ -12,7 +12,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 {
     public sealed class FireAlarmSystem : EntitySystem
     {
-        [Dependency] private readonly AtmosMonitorSystem _monitorSystem = default!;
+        [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
@@ -26,17 +26,20 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
                 return;
 
-            if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor)
-                && EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
-                && this.IsPowered(uid, EntityManager))
+            if (this.IsPowered(uid, EntityManager))
             {
-                if (monitor.HighestAlarmInNetwork == AtmosMonitorAlarmType.Normal)
+                if (!_atmosAlarmable.TryGetHighestAlert(uid, out var alarm))
                 {
-                    _monitorSystem.Alert(uid, AtmosMonitorAlarmType.Danger);
+                    alarm = AtmosMonitorAlarmType.Normal;
+                }
+
+                if (alarm == AtmosMonitorAlarmType.Normal)
+                {
+                    _atmosAlarmable.ForceAlert(uid, AtmosMonitorAlarmType.Danger);
                 }
                 else
                 {
-                    _monitorSystem.ResetAll(uid);
+                    _atmosAlarmable.ResetAllOnNetwork(uid);
                 }
             }
         }
@@ -48,7 +51,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 if (atmosMonitor?.MonitorFire == true)
                 {
                     atmosMonitor.MonitorFire = false;
-                    _monitorSystem.Alert(uid, AtmosMonitorAlarmType.Emagged);
+                    _atmosAlarmable.ForceAlert(uid, AtmosMonitorAlarmType.Emagged);
                     args.Handled = true;
                 }
             }

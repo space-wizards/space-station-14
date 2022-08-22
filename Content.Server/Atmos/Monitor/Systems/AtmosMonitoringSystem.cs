@@ -343,10 +343,12 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
 
 
+            /*
             string source = string.Empty;
             if (alarms == null) alarms = new List<AtmosMonitorThresholdType>();
             var prototype = Prototype(monitor.Owner);
             if (prototype != null) source = prototype.ID;
+            */
 
             var payload = new NetworkPayload
             {

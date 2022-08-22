@@ -12,6 +12,7 @@ namespace Content.Server.Doors.Systems
     public sealed class FirelockSystem : EntitySystem
     {
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+        [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
 
         public override void Initialize()
         {
@@ -65,12 +66,7 @@ namespace Content.Server.Doors.Systems
             // Make firelocks autoclose, but only if the last alarm type it
             // remembers was a danger. This is to prevent people from
             // flooding hallways with endless bad air/fire.
-            if (!EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable))
-            {
-                args.Cancel();
-                return;
-            }
-            if (alarmable.HighestNetworkState != AtmosMonitorAlarmType.Danger)
+            if (_atmosAlarmable.TryGetHighestAlert(uid, out var alarm) && alarm == AtmosMonitorAlarmType.Danger)
                 args.Cancel();
         }
 

@@ -161,8 +161,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
 
                     return;
-                case AtmosDeviceNetworkSystem.SetState:
-                    if (!args.Data.TryGetValue(AtmosDeviceNetworkSystem.SetState, out GasVentScrubberData? setData))
+                case DeviceNetworkConstants.CmdSetState:
+                    if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out GasVentScrubberData? setData))
                         break;
 
                     component.FromAirAlarmData(setData);

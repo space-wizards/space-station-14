@@ -17,7 +17,7 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
     private string _text = "NETW";
     private Color _color = Color.Orange;
 
-    private AtmosMonitorSystem _atmosMonitorSystem = default!;
+    private AtmosAlarmableSystem _atmosAlarmableSystem = default!;
 
     public override object StatusKey { get; } = AtmosMonitorAlarmWireActionKeys.Network;
 
@@ -27,7 +27,12 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
 
         if (IsPowered(wire.Owner) && EntityManager.TryGetComponent<AtmosMonitorComponent>(wire.Owner, out var monitor))
         {
-            lightState = monitor.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger
+            if (!_atmosAlarmableSystem.TryGetHighestAlert(wire.Owner, out var alarm))
+            {
+                alarm = AtmosMonitorAlarmType.Normal;
+            }
+
+            lightState = alarm == AtmosMonitorAlarmType.Danger
                 ? StatusLightState.BlinkingFast
                 : StatusLightState.On;
         }
@@ -42,7 +47,7 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
     {
         base.Initialize();
 
-        _atmosMonitorSystem = EntitySystem.Get<AtmosMonitorSystem>();
+        _atmosAlarmableSystem = EntitySystem.Get<AtmosAlarmableSystem>();
     }
 
     public override bool Cut(EntityUid user, Wire wire)
@@ -69,7 +74,7 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
     {
         if (_alarmOnPulse)
         {
-            _atmosMonitorSystem.Alert(wire.Owner, AtmosMonitorAlarmType.Danger);
+            _atmosAlarmableSystem.ForceAlert(wire.Owner, AtmosMonitorAlarmType.Danger);
         }
 
         return true;
