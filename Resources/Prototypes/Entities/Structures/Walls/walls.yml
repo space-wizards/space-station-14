@@ -45,7 +45,7 @@
     sizeY: 32
   - type: Airtight
   - type: RadiationBlocker
-    resistance: 8
+    resistance: 5
 
 - type: entity
   parent: BaseWall
@@ -451,7 +451,7 @@
   - type: StaticPrice
     price: 41.5 # total material cost. If you change the recipe for the wall you should recalculate this.
   - type: RadiationBlocker
-    resistance: 5
+    resistance: 8
 
 # Riveting
 - type: entity
