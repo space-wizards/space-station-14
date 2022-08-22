@@ -103,9 +103,9 @@ grids:
   - ind: -2,1
     tiles: NAAAATQAAAM4AAABOAAAAToAAAA6AAAANAAAAzQAAAA0AAABNAAAADQAAAE0AAAANAAAATQAAAI0AAAAOgAAADQAAAI0AAAAOAAAATgAAAE6AAAAOgAAADoAAAA0AAAANAAAADQAAAM0AAADNAAAAzQAAAE0AAACNAAAAjoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANAAAAjQAAAE0AAABNAAAADQAAAM0AAABNAAAAjQAAAE6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADQAAAA0AAAANAAAAzQAAAE0AAABNAAAAzQAAAI0AAABOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANAAAATQAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAADNAAAAjoAAAA0AAABNAAAATQAAAM0AAABNAAAAjQAAAM0AAABNAAAADQAAAA0AAADNAAAAzQAAAA6AAAANAAAADQAAAM0AAAANAAAAjQAAAI0AAABNAAAADQAAAE0AAADNAAAADQAAAA0AAABNAAAAjQAAAM0AAABOgAAADQAAAA0AAACOgAAADQAAAI0AAADNAAAAjQAAAI0AAADNAAAADQAAAM0AAAANAAAATQAAAA0AAADNAAAADQAAAI6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAAANAAAADQAAAI6AAAAOgAAADoAAAA0AAABNAAAAjQAAAM0AAAAOgAAADYAAAA6AAAAFQAAAhUAAAE6AAAAOgAAADQAAAI6AAAAOgAAADoAAAA6AAAANAAAAjQAAAE0AAADNAAAAjoAAAA2AAAAOgAAABUAAAI0AAABNAAAADQAAAE0AAAANAAAAjoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADgAAAE6AAAAOgAAADoAAAAVAAABNAAAATQAAAA0AAABNAAAAzQAAAM6AAAAOgAAADoAAAA6AAAAOAAAADgAAAA4AAABOgAAADYAAAA6AAAAFQAAAxUAAAMVAAAAFQAAAxUAAAEVAAAAOgAAADoAAAA6AAAAOgAAADgAAAE4AAADOAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA4AAADOAAAAzgAAAM6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOAAAAzgAAAM4AAACOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAABUAAAIVAAACFQAAAQ==
   - ind: -3,1
-    tiles: AAAAAAAAAAA6AAAAOgAAADoAAAA0AAABNAAAATQAAAM0AAABNAAAAzQAAAA0AAABNAAAAjQAAAM0AAAANAAAAwAAAAAAAAAAOgAAADoAAAA6AAAANAAAAzQAAAA0AAADNAAAADQAAAA0AAABNAAAADQAAAA0AAABNAAAAToAAAAAAAAAAAAAADoAAAA6AAAAOgAAADQAAAM0AAACNAAAADQAAAM0AAAANAAAAjQAAAA0AAABNAAAADQAAAM6AAAAAAAAAAAAAAA6AAAAOgAAADoAAAA0AAAANAAAAzQAAAE0AAABNAAAAzQAAAI0AAACNAAAAjQAAAI0AAABOgAAAAAAAAAAAAAAOgAAADoAAAA6AAAANAAAADQAAAE0AAADNAAAATQAAAA0AAABNAAAAjQAAAM0AAADNAAAAjoAAAAAAAAAAAAAADkAAAA5AAAAOgAAADQAAAI0AAADNAAAADQAAAA0AAACNAAAADQAAAI0AAAANAAAAjQAAAM6AAAAAAAAAAAAAAA5AAAAOgAAADoAAAA6AAAANAAAATQAAAM6AAAAOgAAADQAAAM0AAADNAAAATQAAAM0AAACNAAAAwAAAAAAAAAAOQAAADoAAAA0AAABNAAAADQAAAE0AAACNAAAADoAAAA0AAADNAAAAjQAAAA0AAADNAAAAjoAAAAAAAAAAAAAADkAAAA6AAAANAAAAzQAAAA0AAABNAAAAjQAAAI6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADQAAAA0AAADNAAAAzQAAAI0AAABOgAAADYAAAA6AAAAOgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAACNAAAAzQAAAM0AAAANAAAAzoAAAA2AAAAOgAAADoAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANAAAATQAAAA0AAACNAAAAjQAAAI6AAAANgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADQAAAA0AAADNAAAADQAAAM0AAADOgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA6AAAANgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAAA==
+    tiles: AAAAAAAAAAA6AAAAOgAAADoAAAA0AAABNAAAATQAAAM0AAABNAAAAzQAAAA0AAABNAAAAjQAAAM0AAAANAAAAwAAAAAAAAAAOgAAADoAAAA6AAAANAAAAzQAAAA0AAADNAAAADQAAAA0AAABNAAAADQAAAA0AAABNAAAAToAAAAAAAAAAAAAADoAAAA6AAAAOgAAADQAAAM0AAACNAAAADQAAAM0AAAANAAAAjQAAAA0AAABNAAAADQAAAM6AAAAAAAAAAAAAAA6AAAAOgAAADoAAAA0AAAANAAAAzQAAAE0AAABNAAAAzQAAAI0AAACNAAAAjQAAAI0AAABOgAAAAAAAAAAAAAAOgAAADoAAAA6AAAANAAAADQAAAE0AAADNAAAATQAAAA0AAABNAAAAjQAAAM0AAADNAAAAjoAAAAAAAAAAAAAAAAAAAA5AAAAOgAAADQAAAI0AAADNAAAADQAAAA0AAACNAAAADQAAAI0AAAANAAAAjQAAAM6AAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAANAAAATQAAAM6AAAAOgAAADQAAAM0AAADNAAAATQAAAM0AAACNAAAAwAAAAAAAAAAAAAAADoAAAA0AAABNAAAADQAAAE0AAACNAAAADoAAAA0AAADNAAAAjQAAAA0AAADNAAAAjoAAAAAAAAAAAAAAAAAAAA6AAAANAAAAzQAAAA0AAABNAAAAjQAAAI6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAOgAAADQAAAA0AAADNAAAAzQAAAI0AAABOgAAADYAAAA6AAAAOgAAADYAAAA6AAAAOgAAAAAAAAAAAAAAAAAAADoAAAA0AAACNAAAAzQAAAM0AAAANAAAAzoAAAA2AAAAOgAAADoAAAA2AAAAOgAAADoAAAAAAAAAAAAAAAAAAAA6AAAANAAAATQAAAA0AAACNAAAAjQAAAI6AAAANgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAOgAAADQAAAA0AAADNAAAADQAAAM0AAADOgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAANgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAAA==
   - ind: -3,0
-    tiles: CgAAABUAAAA0AAADNAAAATQAAAM0AAACNAAAAjQAAAM0AAACNAAAAzQAAAE0AAAANAAAAjQAAAI0AAAANAAAAzoAAAAVAAADNAAAATQAAAE6AAAANAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAACNAAAADQAAAM0AAADOgAAADQAAAI0AAAANAAAATQAAAM0AAADNAAAATQAAAA6AAAANAAAADQAAAA0AAAANAAAADQAAAI0AAAANAAAADoAAAA0AAACNAAAATQAAAE0AAABNAAAADQAAAA0AAABOgAAADQAAAI0AAABNAAAAToAAAA6AAAAOgAAADoAAAA6AAAANAAAAzQAAAM0AAACNAAAADQAAAA0AAACNAAAAjQAAAM0AAAANAAAADQAAAE6AAAAOgAAADYAAAA6AAAANAAAATQAAAM0AAAANAAAATQAAAM0AAAANAAAAzQAAAE0AAABNAAAAjQAAAM0AAACNgAAADoAAAA2AAAAOgAAADQAAAA0AAAANAAAATQAAAE0AAADNAAAAjQAAAE0AAAAOgAAADQAAAE0AAABNAAAAToAAAA6AAAANgAAADoAAAA6AAAAOgAAADQAAAA6AAAAOgAAADQAAAE6AAAAOgAAADoAAAA0AAABNAAAADQAAAI6AAAAOgAAADoAAAA6AAAANAAAADQAAAE0AAADNAAAATQAAAI0AAABNAAAAzQAAAM6AAAANAAAAzQAAAI6AAAAOgAAADoAAAA6AAAAOgAAADQAAAM0AAADNAAAATQAAAE0AAACNAAAADQAAAA0AAACNAAAAjQAAAA0AAADOgAAAAAAAAAAAAAAOQAAADoAAAA0AAAANAAAATQAAAI0AAADNAAAAjQAAAM0AAAANAAAATQAAAM0AAAANAAAAjoAAAAAAAAAAAAAADkAAAA6AAAAOgAAADQAAAA0AAAANAAAAjQAAAE0AAADNAAAAjQAAAE0AAACNAAAAjQAAAM0AAADAAAAAAAAAAA5AAAAOQAAADoAAAA0AAADNAAAATQAAAA0AAAANAAAADQAAAI0AAACNAAAAjQAAAI0AAABOgAAAAAAAAAAAAAAOQAAADkAAAA6AAAANAAAAjQAAAA0AAACNAAAATQAAAA0AAABNAAAAzQAAAE0AAABNAAAADoAAAAAAAAAAAAAADoAAAA6AAAAOgAAADQAAAE0AAAANAAAATQAAAE0AAACNAAAATQAAAM0AAAANAAAAzQAAAI6AAAAAAAAAAAAAAA6AAAAOgAAADoAAAA0AAACNAAAAzQAAAI0AAADNAAAAzQAAAI0AAACNAAAATQAAAI0AAADOgAAAA==
+    tiles: CgAAABUAAAA0AAADNAAAATQAAAM0AAACNAAAAjQAAAM0AAACNAAAAzQAAAE0AAAANAAAAjQAAAI0AAAANAAAAzoAAAAVAAADNAAAATQAAAE6AAAANAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAACNAAAADQAAAM0AAADOgAAADQAAAI0AAAANAAAATQAAAM0AAADNAAAATQAAAA6AAAANAAAADQAAAA0AAAANAAAADQAAAI0AAAANAAAADoAAAA0AAACNAAAATQAAAE0AAABNAAAADQAAAA0AAABOgAAADQAAAI0AAABNAAAAToAAAA6AAAAOgAAADoAAAA6AAAANAAAAzQAAAM0AAACNAAAADQAAAA0AAACNAAAAjQAAAM0AAAANAAAADQAAAE6AAAAOgAAADYAAAA6AAAANAAAATQAAAM0AAAANAAAATQAAAM0AAAANAAAAzQAAAE0AAABNAAAAjQAAAM0AAACNgAAADoAAAA2AAAAOgAAADQAAAA0AAAANAAAATQAAAE0AAADNAAAAjQAAAE0AAAAOgAAADQAAAE0AAABNAAAAToAAAA6AAAANgAAADoAAAA6AAAAOgAAADQAAAA6AAAAOgAAADQAAAE6AAAAOgAAADoAAAA0AAABNAAAADQAAAI6AAAAOgAAADoAAAA6AAAANAAAADQAAAE0AAADNAAAATQAAAI0AAABNAAAAzQAAAM6AAAANAAAAzQAAAI6AAAAOgAAADoAAAA6AAAAOgAAADQAAAM0AAADNAAAATQAAAE0AAACNAAAADQAAAA0AAACNAAAAjQAAAA0AAADOgAAAAAAAAAAAAAAAAAAADoAAAA0AAAANAAAATQAAAI0AAADNAAAAjQAAAM0AAAANAAAATQAAAM0AAAANAAAAjoAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADQAAAA0AAAANAAAAjQAAAE0AAADNAAAAjQAAAE0AAACNAAAAjQAAAM0AAADAAAAAAAAAAAAAAAAOQAAADoAAAA0AAADNAAAATQAAAA0AAAANAAAADQAAAI0AAACNAAAAjQAAAI0AAABOgAAAAAAAAAAAAAAAAAAADkAAAA6AAAANAAAAjQAAAA0AAACNAAAATQAAAA0AAABNAAAAzQAAAE0AAABNAAAADoAAAAAAAAAAAAAADoAAAA6AAAAOgAAADQAAAE0AAAANAAAATQAAAE0AAACNAAAATQAAAM0AAAANAAAAzQAAAI6AAAAAAAAAAAAAAA6AAAAOgAAADoAAAA0AAACNAAAAzQAAAI0AAADNAAAAzQAAAI0AAACNAAAATQAAAI0AAADOgAAAA==
   - ind: -3,-1
     tiles: OgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA2AAAAOgAAABUAAAEVAAACFQAAAzoAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAVAAABFQAAADoAAAA4AAACOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAAhUAAAEVAAABOAAAADgAAAA4AAACOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADgAAAM4AAADOAAAAToAAAA1AAAAOgAAADoAAAA6AAAANQAAADoAAAA6AAAAOgAAADoAAAAVAAACFQAAAxUAAAA4AAACOAAAAjgAAAI6AAAANQAAADUAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAAhUAAAM6AAAAOAAAAzgAAAM4AAAAOgAAADoAAAA1AAAAOgAAADUAAAA1AAAANQAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADgAAAA4AAAAOAAAAjoAAAA6AAAANQAAADUAAAA1AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOAAAADgAAAA4AAAAOAAAAjgAAAI6AAAANQAAADoAAAA1AAAANQAAADUAAAA1AAAAOgAAADoAAAA2AAAAOgAAADgAAAE4AAABOAAAAToAAAA6AAAAOgAAADoAAAA6AAAANQAAADoAAAA6AAAAOgAAADoAAAA6AAAANgAAADoAAAA4AAADOAAAATgAAAA0AAAANAAAAzQAAAM0AAABNQAAADUAAAA6AAAAOgAAADoAAAA2AAAAOgAAADYAAAA6AAAAOAAAADgAAAA4AAADNAAAAzQAAAI0AAAANAAAAToAAAA6AAAAOgAAADoAAAA6AAAANgAAADoAAAA2AAAAOgAAADgAAAM4AAAAOAAAAToAAAAVAAABNAAAATQAAAE6AAAANAAAADQAAAE0AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADgAAAIKAAAAFQAAATQAAAA0AAACNAAAAzQAAAM0AAACNAAAAjQAAAI0AAACNAAAATQAAAE0AAADNAAAATQAAAA0AAABCgAAABUAAAM0AAAANAAAAzQAAAI0AAADNAAAATQAAAA0AAABNAAAATQAAAE0AAAANAAAAjQAAAA0AAABNAAAAg==
   - ind: 0,1
@@ -163,7 +163,7 @@ grids:
   - ind: 4,0
     tiles: OQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAAAAAAAAAAAAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAAAAAAAAAAAAAAAAAAAAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAAAAAAAOQAAAAAAAAAAAAAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAAAAAAAAAAAA5AAAAAAAAAAAAAAAAAAAAAAAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOgAAADoAAAA6AAAAOgAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAA5AAAAAAAAADkAAAA5AAAAOQAAAAAAAAA5AAAAAAAAADkAAAAAAAAAAAAAADoAAAA6AAAAOgAAAAAAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA6AAAAOgAAADoAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADkAAAAAAAAAOgAAADoAAAA6AAAAAAAAAA==
   - ind: -3,2
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA2AAAAOgAAADoAAAA6AAAANgAAADoAAAA2AAAAOgAAADoAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAANgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA2AAAANgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAANgAAADYAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA2AAAANgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA2AAAANgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADkAAAA5AAAAAAAAAAAAAAAAAAAAOQAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAAAAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAOQAAAAAAAAA6AAAAOgAAAA==
+    tiles: AAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA2AAAAOgAAADoAAAA6AAAANgAAADoAAAA2AAAAOgAAADoAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAANgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA2AAAANgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAANgAAADYAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA2AAAANgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA2AAAANgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADkAAAA5AAAAAAAAAAAAAAAAAAAAOQAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAAAAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAOQAAAAAAAAA6AAAAOgAAAA==
   - ind: -1,-3
     tiles: FQAAABUAAAEVAAABFQAAAxUAAAIVAAADFQAAABUAAAM6AAAAOgAAADYAAAA6AAAANAAAAzQAAAA0AAADOgAAABUAAAIVAAAAFQAAAhUAAAEVAAADFQAAAhUAAAMVAAACOgAAADoAAAA6AAAAOgAAADQAAAM0AAABNAAAAjoAAAA6AAAAFQAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANgAAADoAAAA0AAACNAAAAjQAAAM6AAAAFQAAAzcAAAA3AAADOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAANAAAATQAAAI0AAABOgAAADcAAAE3AAACNwAAAjoAAAAmAAAAJgAAACYAAAA6AAAAOgAAADoAAAA2AAAAOgAAADQAAAM0AAABNAAAAToAAAA3AAADNwAAAzcAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANgAAADoAAAA0AAAANAAAAzQAAAI6AAAANwAAAjcAAAI3AAACOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAANAAAAzQAAAM0AAAAOgAAABUAAAIVAAAAFQAAAjoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADQAAAA0AAACNAAAAjoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAAANAAAAjQAAAM6AAAANwAAAzcAAAA0AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANAAAADQAAAA0AAAAOgAAADcAAAM3AAACNAAAAzoAAAA2AAAANgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADQAAAM0AAADNAAAADoAAAA3AAAANwAAATQAAAE6AAAANgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAAANAAAADQAAAI0AAADNwAAAjcAAAM3AAAAOgAAADYAAAA6AAAANwAAADcAAAA3AAABNwAAAjoAAAA0AAABNAAAATQAAAI0AAADNAAAAzcAAAI3AAABNAAAAjoAAAA2AAAAOgAAADcAAAE3AAABNwAAADcAAAI6AAAANAAAATQAAAA0AAAANAAAATQAAAM3AAABNwAAAzQAAAE6AAAANgAAADoAAAA3AAABNwAAATcAAAM3AAABOgAAADQAAAE0AAABNAAAADQAAAI6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANwAAAjcAAAI3AAACNwAAADoAAAA6AAAANAAAAjQAAAI0AAABOgAAAA==
   - ind: 0,-3
@@ -3386,14 +3386,14 @@ entities:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: -37,6
-        245:
+        2287:
+          color: '#FFFFFFFF'
+          id: WarnCornerSmallNW
+          coordinates: -42,28
+        2280:
           color: '#A4610696'
-          id: ThreeQuarterTileOverlayGreyscale
+          id: QuarterTileOverlayGreyscale90
           coordinates: -44,28
-        246:
-          color: '#A4610696'
-          id: ThreeQuarterTileOverlayGreyscale90
-          coordinates: -40,28
         247:
           color: '#A4610696'
           id: ThreeQuarterTileOverlayGreyscale180
@@ -3402,10 +3402,10 @@ entities:
           color: '#A4610696'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: -44,23
-        249:
+        2277:
           color: '#A4610696'
-          id: ThreeQuarterTileOverlayGreyscale270
-          coordinates: -44,26
+          id: HalfTileOverlayGreyscale90
+          coordinates: -40,26
         250:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
@@ -3422,23 +3422,23 @@ entities:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: -40,25
-        254:
+        2275:
+          color: '#A4610696'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -44,27
+        2279:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
-          coordinates: -40,26
-        255:
-          color: '#A4610696'
-          id: HalfTileOverlayGreyscale90
-          coordinates: -40,27
-        256:
+          coordinates: -40,28
+        2282:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -41,28
-        257:
+        2283:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -42,28
-        258:
+        2284:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -43,28
@@ -3742,21 +3742,18 @@ entities:
           color: '#FFFFFFFF'
           id: WarningLineCornerFlipped
           coordinates: -43,12
-        349:
-          angle: -1.5707963267948966 rad
+        2289:
           color: '#FFFFFFFF'
-          id: WarningLine
-          coordinates: -44,27
-        350:
-          angle: -1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: WarningLineCornerFlipped
-          coordinates: -44,26
-        351:
-          angle: -1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: WarningLineCorner
+          id: DirtLight
+          coordinates: -43,28
+        2276:
+          color: '#A4610696'
+          id: HalfTileOverlayGreyscale270
           coordinates: -44,28
+        2286:
+          color: '#FFFFFFFF'
+          id: WarnLineW
+          coordinates: -43,28
         352:
           color: '#FFFFFFFF'
           id: WarningLine
@@ -3835,11 +3832,10 @@ entities:
           color: '#A4610696'
           id: FullTileOverlayGreyscale
           coordinates: -33,22
-        417:
-          cleanable: True
+        2288:
           color: '#FFFFFFFF'
           id: DirtHeavy
-          coordinates: -44,27
+          coordinates: -44,28
         418:
           cleanable: True
           color: '#FFFFFFFF'
@@ -3865,11 +3861,10 @@ entities:
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -41,25
-        423:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -40,26
+        2274:
+          color: '#A4610696'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -44,26
         424:
           cleanable: True
           color: '#FFFFFFFF'
@@ -3980,11 +3975,10 @@ entities:
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -42,27
-        446:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -41,28
+        2281:
+          color: '#A4610696'
+          id: QuarterTileOverlayGreyscale
+          coordinates: -40,28
         447:
           cleanable: True
           color: '#FFFFFFFF'
@@ -4050,10 +4044,9 @@ entities:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -41,26
-        462:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
+        2278:
+          color: '#A4610696'
+          id: HalfTileOverlayGreyscale90
           coordinates: -40,27
         463:
           cleanable: True
@@ -4065,10 +4058,9 @@ entities:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -43,27
-        465:
-          cleanable: True
+        2285:
           color: '#FFFFFFFF'
-          id: DirtLight
+          id: WarnLineW
           coordinates: -44,28
         466:
           cleanable: True
@@ -4324,6 +4316,22 @@ entities:
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -42,26
+        2290:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -44,27
+        2291:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -41,28
+        2292:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -40,26
+        2293:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -44,26
       -2,-1:
         528:
           color: '#FFFFFFFF'
@@ -7815,15 +7823,15 @@ entities:
           color: '#79150096'
           id: QuarterTileOverlayGreyscale270
           coordinates: -2,-60
-        2272:
+        2271:
           color: '#D4D4D496'
           id: QuarterTileOverlayGreyscale180
           coordinates: -4,-60
-        2273:
+        2272:
           color: '#D4D4D496'
           id: QuarterTileOverlayGreyscale180
           coordinates: -3,-60
-        2274:
+        2273:
           color: '#D4D4D496'
           id: QuarterTileOverlayGreyscale180
           coordinates: -2,-60
@@ -23931,9 +23939,9 @@ entities:
       13,-59: 0
       13,-58: 0
       13,-57: 0
-      13,-56: 0
-      13,-55: 0
-      13,-54: 0
+      13,-56: 5
+      13,-55: 5
+      13,-54: 5
       13,-53: 0
       13,-52: 0
       13,-51: 0
@@ -23945,9 +23953,9 @@ entities:
       14,-59: 0
       14,-58: 0
       14,-57: 0
-      14,-56: 0
-      14,-55: 0
-      14,-54: 0
+      14,-56: 5
+      14,-55: 5
+      14,-54: 5
       14,-53: 0
       14,-52: 0
       14,-51: 0
@@ -23960,9 +23968,9 @@ entities:
       15,-59: 0
       15,-58: 0
       15,-57: 0
-      15,-56: 0
-      15,-55: 0
-      15,-54: 0
+      15,-56: 5
+      15,-55: 5
+      15,-54: 5
       15,-53: 0
       15,-52: 0
       15,-51: 0
@@ -24087,13 +24095,13 @@ entities:
       -34,-73: 0
       -34,-69: 0
       -33,-75: 0
-      -33,-74: 6
+      -33,-74: 0
       -33,-73: 0
-      -33,-72: 7
-      -33,-71: 8
-      -33,-70: 9
+      -33,-72: 0
+      -33,-71: 0
+      -33,-70: 0
       -33,-69: 0
-      -32,-75: 10
+      -32,-75: 0
       -32,-74: 0
       -32,-73: 0
       -32,-72: 0
@@ -24124,7 +24132,7 @@ entities:
       -30,-67: 0
       -30,-66: 0
       -30,-65: 0
-      -29,-75: 11
+      -29,-75: 0
       -29,-74: 0
       -29,-73: 0
       -29,-72: 0
@@ -24135,7 +24143,7 @@ entities:
       -29,-67: 0
       -29,-66: 0
       -29,-65: 0
-      -28,-75: 12
+      -28,-75: 0
       -28,-74: 0
       -28,-73: 0
       -28,-72: 0
@@ -24146,7 +24154,7 @@ entities:
       -28,-67: 0
       -28,-66: 0
       -28,-65: 0
-      -27,-75: 13
+      -27,-75: 0
       -27,-74: 0
       -27,-73: 0
       -27,-72: 0
@@ -25319,296 +25327,296 @@ entities:
       30,-84: 0
       30,-83: 0
       31,-85: 0
-      61,11: 5
-      61,12: 5
-      61,13: 5
-      61,14: 5
-      61,15: 5
-      62,11: 5
-      62,12: 5
-      62,14: 5
-      62,15: 5
-      63,12: 5
-      63,13: 5
-      63,14: 5
-      63,15: 5
-      61,16: 5
-      61,17: 5
-      61,18: 5
-      61,19: 5
-      61,20: 5
-      61,21: 5
-      61,22: 5
-      61,23: 5
-      61,24: 5
-      61,25: 5
-      61,26: 5
-      61,27: 5
-      61,28: 5
-      61,29: 5
-      61,30: 5
-      62,16: 5
-      62,17: 5
-      62,18: 5
-      62,19: 5
-      62,20: 5
-      62,21: 5
-      62,22: 5
-      62,23: 5
-      62,24: 5
-      62,25: 5
-      62,26: 5
-      62,28: 5
-      62,29: 5
-      63,16: 5
-      63,17: 5
-      63,18: 5
-      63,19: 5
-      63,20: 5
-      63,21: 5
-      63,22: 5
-      63,23: 5
-      63,24: 5
-      63,25: 5
-      63,26: 5
-      63,27: 5
-      63,28: 5
-      63,29: 5
-      64,11: 5
-      64,12: 5
-      64,14: 5
-      64,15: 5
-      65,11: 5
-      65,12: 5
-      65,13: 5
-      65,14: 5
-      65,15: 5
-      66,12: 5
-      66,14: 5
-      66,15: 5
-      67,11: 5
-      67,12: 5
-      67,13: 5
-      67,14: 5
-      67,15: 5
-      68,12: 5
-      68,13: 5
-      68,14: 5
-      68,15: 5
-      69,11: 5
-      69,12: 5
-      69,13: 5
-      69,14: 5
-      69,15: 5
-      70,14: 5
-      70,15: 5
-      71,10: 5
-      71,11: 5
-      71,13: 5
-      71,14: 5
-      71,15: 5
-      72,14: 5
-      72,15: 5
-      73,10: 5
-      73,11: 5
-      73,12: 5
-      73,14: 5
-      73,15: 5
-      74,10: 5
-      74,11: 5
-      74,12: 5
-      74,14: 5
-      74,15: 5
-      75,14: 5
-      76,10: 5
-      76,11: 5
-      76,12: 5
-      76,13: 5
-      76,14: 5
-      76,15: 5
-      77,10: 5
-      77,11: 5
-      77,12: 5
-      77,13: 5
-      77,14: 5
-      77,15: 5
-      78,10: 5
-      78,11: 5
-      78,12: 5
-      78,13: 5
-      78,14: 5
-      78,15: 5
-      64,16: 5
-      64,17: 5
-      64,18: 5
-      64,19: 5
-      64,20: 5
-      64,21: 5
-      64,22: 5
-      64,23: 5
-      64,24: 5
-      64,25: 5
-      64,26: 5
-      64,28: 5
-      64,29: 5
-      65,16: 5
-      65,20: 5
-      65,24: 5
-      65,25: 5
-      65,26: 5
-      65,27: 5
-      65,28: 5
-      65,29: 5
-      66,16: 5
-      66,20: 5
-      66,24: 5
-      66,25: 5
-      66,26: 5
-      66,28: 5
-      66,29: 5
-      67,16: 5
-      67,20: 5
-      67,24: 5
-      67,25: 5
-      67,26: 5
-      67,27: 5
-      67,28: 5
-      67,29: 5
-      67,30: 5
-      68,16: 5
-      68,17: 5
-      68,18: 5
-      68,19: 5
-      68,20: 5
-      68,21: 5
-      68,22: 5
-      68,23: 5
-      68,24: 5
-      68,25: 5
-      68,26: 5
-      68,27: 5
-      68,28: 5
-      68,29: 5
-      68,30: 5
-      69,16: 5
-      69,20: 5
-      69,24: 5
-      69,25: 5
-      69,26: 5
-      69,27: 5
-      69,28: 5
-      69,29: 5
-      70,16: 5
-      70,20: 5
-      70,24: 5
-      70,25: 5
-      70,26: 5
-      70,28: 5
-      70,29: 5
-      71,16: 5
-      71,20: 5
-      71,24: 5
-      71,25: 5
-      71,26: 5
-      71,27: 5
-      71,28: 5
-      71,29: 5
-      72,16: 5
-      72,17: 5
-      72,18: 5
-      72,19: 5
-      72,20: 5
-      72,21: 5
-      72,22: 5
-      72,23: 5
-      72,24: 5
-      72,25: 5
-      72,26: 5
-      72,28: 5
-      72,29: 5
-      73,16: 5
-      73,17: 5
-      73,18: 5
-      73,19: 5
-      73,20: 5
-      73,21: 5
-      73,22: 5
-      73,23: 5
-      73,24: 5
-      73,25: 5
-      73,26: 5
-      73,27: 5
-      73,28: 5
-      73,29: 5
-      73,30: 5
-      74,16: 5
-      74,17: 5
-      74,18: 5
-      74,19: 5
-      74,20: 5
-      74,21: 5
-      74,22: 5
-      74,23: 5
-      74,24: 5
-      74,25: 5
-      74,26: 5
-      74,28: 5
-      74,29: 5
-      74,30: 5
-      75,18: 5
-      75,19: 5
-      75,20: 5
-      75,21: 5
-      75,22: 5
-      75,26: 5
-      75,28: 5
-      75,29: 5
-      75,30: 5
-      76,16: 5
-      76,17: 5
-      76,18: 5
-      76,19: 5
-      76,20: 5
-      76,21: 5
-      76,22: 5
-      76,23: 5
-      76,24: 5
-      76,25: 5
-      76,26: 5
-      76,27: 5
-      76,28: 5
-      76,29: 5
-      76,30: 5
-      77,16: 5
-      77,17: 5
-      77,18: 5
-      77,19: 5
-      77,20: 5
-      77,21: 5
-      77,22: 5
-      77,23: 5
-      77,24: 5
-      77,25: 5
-      77,26: 5
-      77,27: 5
-      77,28: 5
-      77,29: 5
-      77,30: 5
-      78,16: 5
-      78,17: 5
-      78,18: 5
-      78,19: 5
-      78,20: 5
-      78,21: 5
-      78,22: 5
-      78,23: 5
-      78,24: 5
-      78,25: 5
-      78,26: 5
-      78,27: 5
-      78,28: 5
-      78,29: 5
-      78,30: 5
+      61,11: 0
+      61,12: 0
+      61,13: 0
+      61,14: 0
+      61,15: 0
+      62,11: 0
+      62,12: 0
+      62,14: 0
+      62,15: 0
+      63,12: 0
+      63,13: 0
+      63,14: 0
+      63,15: 0
+      61,16: 0
+      61,17: 0
+      61,18: 0
+      61,19: 0
+      61,20: 0
+      61,21: 0
+      61,22: 0
+      61,23: 0
+      61,24: 0
+      61,25: 0
+      61,26: 0
+      61,27: 0
+      61,28: 0
+      61,29: 0
+      61,30: 0
+      62,16: 0
+      62,17: 0
+      62,18: 0
+      62,19: 0
+      62,20: 0
+      62,21: 0
+      62,22: 0
+      62,23: 0
+      62,24: 0
+      62,25: 0
+      62,26: 0
+      62,28: 0
+      62,29: 0
+      63,16: 0
+      63,17: 0
+      63,18: 0
+      63,19: 0
+      63,20: 0
+      63,21: 0
+      63,22: 0
+      63,23: 0
+      63,24: 0
+      63,25: 0
+      63,26: 0
+      63,27: 0
+      63,28: 0
+      63,29: 0
+      64,11: 0
+      64,12: 0
+      64,14: 0
+      64,15: 0
+      65,11: 0
+      65,12: 0
+      65,13: 0
+      65,14: 0
+      65,15: 0
+      66,12: 0
+      66,14: 0
+      66,15: 0
+      67,11: 0
+      67,12: 0
+      67,13: 0
+      67,14: 0
+      67,15: 0
+      68,12: 0
+      68,13: 0
+      68,14: 0
+      68,15: 0
+      69,11: 0
+      69,12: 0
+      69,13: 0
+      69,14: 0
+      69,15: 0
+      70,14: 0
+      70,15: 0
+      71,10: 0
+      71,11: 0
+      71,13: 0
+      71,14: 0
+      71,15: 0
+      72,14: 0
+      72,15: 0
+      73,10: 0
+      73,11: 0
+      73,12: 0
+      73,14: 0
+      73,15: 0
+      74,10: 0
+      74,11: 0
+      74,12: 0
+      74,14: 0
+      74,15: 0
+      75,14: 0
+      76,10: 0
+      76,11: 0
+      76,12: 0
+      76,13: 0
+      76,14: 0
+      76,15: 0
+      77,10: 0
+      77,11: 0
+      77,12: 0
+      77,13: 0
+      77,14: 0
+      77,15: 0
+      78,10: 0
+      78,11: 0
+      78,12: 0
+      78,13: 0
+      78,14: 0
+      78,15: 0
+      64,16: 0
+      64,17: 0
+      64,18: 0
+      64,19: 0
+      64,20: 0
+      64,21: 0
+      64,22: 0
+      64,23: 0
+      64,24: 0
+      64,25: 0
+      64,26: 0
+      64,28: 0
+      64,29: 0
+      65,16: 0
+      65,20: 0
+      65,24: 0
+      65,25: 0
+      65,26: 0
+      65,27: 0
+      65,28: 0
+      65,29: 0
+      66,16: 0
+      66,20: 0
+      66,24: 0
+      66,25: 0
+      66,26: 0
+      66,28: 0
+      66,29: 0
+      67,16: 0
+      67,20: 0
+      67,24: 0
+      67,25: 0
+      67,26: 0
+      67,27: 0
+      67,28: 0
+      67,29: 0
+      67,30: 0
+      68,16: 0
+      68,17: 0
+      68,18: 0
+      68,19: 0
+      68,20: 0
+      68,21: 0
+      68,22: 0
+      68,23: 0
+      68,24: 0
+      68,25: 0
+      68,26: 0
+      68,27: 0
+      68,28: 0
+      68,29: 0
+      68,30: 0
+      69,16: 0
+      69,20: 0
+      69,24: 0
+      69,25: 0
+      69,26: 0
+      69,27: 0
+      69,28: 0
+      69,29: 0
+      70,16: 0
+      70,20: 0
+      70,24: 0
+      70,25: 0
+      70,26: 0
+      70,28: 0
+      70,29: 0
+      71,16: 0
+      71,20: 0
+      71,24: 0
+      71,25: 0
+      71,26: 0
+      71,27: 0
+      71,28: 0
+      71,29: 0
+      72,16: 0
+      72,17: 0
+      72,18: 0
+      72,19: 0
+      72,20: 0
+      72,21: 0
+      72,22: 0
+      72,23: 0
+      72,24: 0
+      72,25: 0
+      72,26: 0
+      72,28: 0
+      72,29: 0
+      73,16: 0
+      73,17: 0
+      73,18: 0
+      73,19: 0
+      73,20: 0
+      73,21: 0
+      73,22: 0
+      73,23: 0
+      73,24: 0
+      73,25: 0
+      73,26: 0
+      73,27: 0
+      73,28: 0
+      73,29: 0
+      73,30: 0
+      74,16: 0
+      74,17: 0
+      74,18: 0
+      74,19: 0
+      74,20: 0
+      74,21: 0
+      74,22: 0
+      74,23: 0
+      74,24: 0
+      74,25: 0
+      74,26: 0
+      74,28: 0
+      74,29: 0
+      74,30: 0
+      75,18: 0
+      75,19: 0
+      75,20: 0
+      75,21: 0
+      75,22: 0
+      75,26: 0
+      75,28: 0
+      75,29: 0
+      75,30: 0
+      76,16: 0
+      76,17: 0
+      76,18: 0
+      76,19: 0
+      76,20: 0
+      76,21: 0
+      76,22: 0
+      76,23: 0
+      76,24: 0
+      76,25: 0
+      76,26: 0
+      76,27: 0
+      76,28: 0
+      76,29: 0
+      76,30: 0
+      77,16: 0
+      77,17: 0
+      77,18: 0
+      77,19: 0
+      77,20: 0
+      77,21: 0
+      77,22: 0
+      77,23: 0
+      77,24: 0
+      77,25: 0
+      77,26: 0
+      77,27: 0
+      77,28: 0
+      77,29: 0
+      77,30: 0
+      78,16: 0
+      78,17: 0
+      78,18: 0
+      78,19: 0
+      78,20: 0
+      78,21: 0
+      78,22: 0
+      78,23: 0
+      78,24: 0
+      78,25: 0
+      78,26: 0
+      78,27: 0
+      78,28: 0
+      78,29: 0
+      78,30: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -25690,126 +25698,6 @@ entities:
       moles:
       - 0
       - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 220.53749
-      moles:
-      - 16.36866
-      - 61.57734
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 189.4181
-      moles:
-      - 14.030298
-      - 52.780647
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 168.67155
-      moles:
-      - 12.471369
-      - 46.916103
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 189.4179
-      moles:
-      - 14.030282
-      - 52.780586
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 220.5375
-      moles:
-      - 16.36866
-      - 61.57734
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 189.41812
-      moles:
-      - 14.030298
-      - 52.780647
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 168.67157
-      moles:
-      - 12.471369
-      - 46.9161
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 189.4179
-      moles:
-      - 14.030281
-      - 52.780586
       - 0
       - 0
       - 0
@@ -32927,7 +32815,7 @@ entities:
     type: Transform
 - uid: 951
   components:
-  - index: 5
+  - index: 4
     type: Map
 - uid: 952
   type: CableApcExtension
@@ -49964,9 +49852,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 3434
-  type: WaterTankFull
+  type: Grille
   components:
-  - pos: -42.5,28.5
+  - pos: -44.5,24.5
     parent: 0
     type: Transform
 - uid: 3435
@@ -50006,39 +49894,39 @@ entities:
     parent: 0
     type: Transform
 - uid: 3441
-  type: WallReinforced
+  type: AirlockExternalGlassLocked
   components:
-  - pos: -44.5,29.5
+  - pos: -44.5,32.5
     parent: 0
     type: Transform
 - uid: 3442
-  type: WallReinforced
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: -42.5,29.5
+    parent: 0
+    type: Transform
+- uid: 3443
+  type: ReinforcedWindow
+  components:
+  - pos: -44.5,30.5
+    parent: 0
+    type: Transform
+- uid: 3444
+  type: ReinforcedWindow
   components:
   - pos: -44.5,28.5
     parent: 0
     type: Transform
-- uid: 3443
-  type: WallReinforced
-  components:
-  - pos: -44.5,26.5
-    parent: 0
-    type: Transform
-- uid: 3444
-  type: WallReinforced
-  components:
-  - pos: -44.5,25.5
-    parent: 0
-    type: Transform
 - uid: 3445
-  type: WallReinforced
+  type: AirlockExternalGlassLocked
   components:
-  - pos: -42.5,29.5
+  - pos: -44.5,33.5
     parent: 0
     type: Transform
 - uid: 3446
   type: WallReinforced
   components:
-  - pos: -43.5,29.5
+  - pos: -44.5,27.5
     parent: 0
     type: Transform
 - uid: 3447
@@ -50213,63 +50101,76 @@ entities:
     parent: 0
     type: Transform
 - uid: 3475
-  type: ReinforcedWindow
+  type: CableApcExtension
   components:
-  - pos: -45.5,25.5
+  - pos: -42.5,32.5
     parent: 0
     type: Transform
 - uid: 3476
-  type: ReinforcedWindow
+  type: PoweredSmallLight
   components:
-  - pos: -46.5,25.5
+  - rot: -1.5707963267948966 rad
+    pos: -42.5,32.5
     parent: 0
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 3477
-  type: ReinforcedWindow
+  type: Catwalk
   components:
-  - pos: -47.5,25.5
+  - pos: -43.5,33.5
     parent: 0
     type: Transform
 - uid: 3478
-  type: ReinforcedWindow
+  type: Catwalk
   components:
-  - pos: -47.5,26.5
+  - pos: -43.5,32.5
     parent: 0
     type: Transform
 - uid: 3479
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -47.5,28.5
+  - pos: -44.5,29.5
     parent: 0
     type: Transform
 - uid: 3480
   type: ReinforcedWindow
   components:
-  - pos: -47.5,29.5
+  - pos: -44.5,24.5
     parent: 0
     type: Transform
 - uid: 3481
-  type: ReinforcedWindow
+  type: VendingMachineTankDispenserEVA
   components:
-  - pos: -46.5,29.5
+  - name: tank dispenser
+    type: MetaData
+  - pos: -43.5,25.5
     parent: 0
     type: Transform
 - uid: 3482
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -45.5,29.5
+  - pos: -44.5,25.5
     parent: 0
     type: Transform
 - uid: 3483
-  type: ReinforcedWindow
+  type: GasPipeStraight
   components:
-  - pos: -44.5,23.5
+  - pos: -42.5,30.5
     parent: 0
     type: Transform
 - uid: 3484
-  type: ReinforcedWindow
+  type: Catwalk
   components:
-  - pos: -44.5,24.5
+  - pos: -43.5,31.5
     parent: 0
     type: Transform
 - uid: 3485
@@ -50892,15 +50793,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 3582
-  type: Rack
+  type: AirlockExternalGlassLocked
   components:
-  - pos: -43.5,25.5
+  - pos: -43.5,29.5
     parent: 0
     type: Transform
 - uid: 3583
   type: Pickaxe
   components:
-  - pos: -43.41838,25.545294
+  - pos: -43.5036,24.391258
     parent: 0
     type: Transform
 - uid: 3584
@@ -51239,7 +51140,7 @@ entities:
 - uid: 3637
   type: Shovel
   components:
-  - pos: -43.499786,25.490883
+  - pos: -43.644226,24.625633
     parent: 0
     type: Transform
 - uid: 3638
@@ -51303,9 +51204,9 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 3645
-  type: Flare
+  type: CableApcExtension
   components:
-  - pos: -46.34626,28.618279
+  - pos: -42.5,30.5
     parent: 0
     type: Transform
 - uid: 3646
@@ -51321,9 +51222,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 3648
-  type: Flare
+  type: Grille
   components:
-  - pos: -46.59626,28.633904
+  - pos: -44.5,26.5
     parent: 0
     type: Transform
 - uid: 3649
@@ -51699,13 +51600,13 @@ entities:
 - uid: 3699
   type: Pickaxe
   components:
-  - pos: -43.51213,25.639044
+  - pos: -43.550476,24.406883
     parent: 0
     type: Transform
 - uid: 3700
   type: Pickaxe
   components:
-  - pos: -43.340256,25.420294
+  - pos: -43.5661,24.391258
     parent: 0
     type: Transform
 - uid: 3701
@@ -52133,10 +52034,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 3758
-  type: SalvageMagnet
+  type: Grille
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -43.5,26.5
+  - pos: -44.5,30.5
     parent: 0
     type: Transform
 - uid: 3759
@@ -53063,15 +52963,17 @@ entities:
     parent: 0
     type: Transform
 - uid: 3882
-  type: AirlockExternalGlassLocked
+  type: VendingMachineSalvage
   components:
-  - pos: -44.5,27.5
+  - name: Salvage Equipment
+    type: MetaData
+  - pos: -41.5,28.5
     parent: 0
     type: Transform
 - uid: 3883
-  type: AirlockExternalGlassLocked
+  type: GasPipeStraight
   components:
-  - pos: -47.5,27.5
+  - pos: -42.5,29.5
     parent: 0
     type: Transform
 - uid: 3884
@@ -54797,19 +54699,11 @@ entities:
     parent: 0
     type: Transform
 - uid: 4063
-  type: Poweredlight
+  type: CableApcExtension
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,26.5
+  - pos: -42.5,29.5
     parent: 0
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4064
   type: Table
   components:
@@ -54841,22 +54735,11 @@ entities:
     parent: 0
     type: Transform
 - uid: 4069
-  type: PoweredSmallLight
+  type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -45.5,26.5
+  - pos: -44.5,31.5
     parent: 0
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4070
   type: ComfyChair
   components:
@@ -55057,29 +54940,31 @@ entities:
     parent: 0
     type: Transform
 - uid: 4098
-  type: WeldingFuelTankFull
+  type: ReinforcedWindow
   components:
-  - pos: -45.5,26.5
+  - pos: -44.5,26.5
     parent: 0
     type: Transform
 - uid: 4099
-  type: OxygenCanister
+  type: CableApcExtension
   components:
-  - pos: -45.5,28.5
+  - pos: -42.5,31.5
     parent: 0
     type: Transform
 - uid: 4100
-  type: ClosetEmergencyFilledRandom
+  type: Poweredlight
   components:
-  - pos: -43.5,28.5
+  - rot: 1.5707963267948966 rad
+    pos: -43.5,27.5
     parent: 0
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      entity_storage: !type:Container
-        ents: []
-    type: ContainerContainer
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 4101
   type: LockerSalvageSpecialistFilled
   components:
@@ -55590,32 +55475,24 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 4162
-  type: GasPipeStraight
+  type: SalvageMagnet
   components:
   - rot: -1.5707963267948966 rad
-    pos: -42.5,27.5
+    pos: -43.5,26.5
     parent: 0
     type: Transform
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 4163
-  type: GasPipeStraight
+  type: Catwalk
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -43.5,27.5
+  - pos: -43.5,30.5
     parent: 0
     type: Transform
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 4164
-  type: GasPipeStraight
+  type: SignMagneticsMed
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -44.5,27.5
+  - pos: -41.5,29.5
     parent: 0
     type: Transform
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 4165
   type: GasPipeBend
   components:
@@ -57041,14 +56918,11 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 4327
-  type: GasVentPump
+  type: Grille
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -45.5,27.5
+  - pos: -44.5,28.5
     parent: 0
     type: Transform
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 4328
   type: GasVentPump
   components:
@@ -58081,63 +57955,46 @@ entities:
     parent: 0
     type: Transform
 - uid: 4456
-  type: Grille
+  type: GasPipeStraight
+  components:
+  - pos: -42.5,28.5
+    parent: 0
+    type: Transform
+- uid: 4457
+  type: GasVentPump
+  components:
+  - pos: -42.5,31.5
+    parent: 0
+    type: Transform
+- uid: 4458
+  type: CableApcExtension
+  components:
+  - pos: -42.5,28.5
+    parent: 0
+    type: Transform
+- uid: 4459
+  type: WallReinforced
   components:
   - pos: -44.5,23.5
     parent: 0
     type: Transform
-- uid: 4457
-  type: Grille
-  components:
-  - pos: -44.5,24.5
-    parent: 0
-    type: Transform
-- uid: 4458
-  type: Grille
-  components:
-  - pos: -45.5,25.5
-    parent: 0
-    type: Transform
-- uid: 4459
-  type: Grille
-  components:
-  - pos: -46.5,25.5
-    parent: 0
-    type: Transform
 - uid: 4460
-  type: Grille
+  type: GasPipeBend
   components:
-  - pos: -47.5,25.5
+  - rot: 3.141592653589793 rad
+    pos: -42.5,27.5
     parent: 0
     type: Transform
 - uid: 4461
-  type: Grille
+  type: FirelockGlass
   components:
-  - pos: -47.5,26.5
+  - pos: -40.5,22.5
     parent: 0
     type: Transform
 - uid: 4462
-  type: Grille
+  type: FirelockGlass
   components:
-  - pos: -47.5,28.5
-    parent: 0
-    type: Transform
-- uid: 4463
-  type: Grille
-  components:
-  - pos: -47.5,29.5
-    parent: 0
-    type: Transform
-- uid: 4464
-  type: Grille
-  components:
-  - pos: -46.5,29.5
-    parent: 0
-    type: Transform
-- uid: 4465
-  type: Grille
-  components:
-  - pos: -45.5,29.5
+  - pos: -41.5,22.5
     parent: 0
     type: Transform
 - uid: 4466
@@ -59424,30 +59281,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: -42.5,27.5
-    parent: 0
-    type: Transform
-- uid: 4680
-  type: CableApcExtension
-  components:
-  - pos: -43.5,27.5
-    parent: 0
-    type: Transform
-- uid: 4681
-  type: CableApcExtension
-  components:
-  - pos: -44.5,27.5
-    parent: 0
-    type: Transform
-- uid: 4682
-  type: CableApcExtension
-  components:
-  - pos: -45.5,27.5
-    parent: 0
-    type: Transform
-- uid: 4683
-  type: CableApcExtension
-  components:
-  - pos: -46.5,27.5
     parent: 0
     type: Transform
 - uid: 4684
@@ -99859,14 +99692,6 @@ entities:
   type: FirelockGlass
   components:
   - pos: 1.5,41.5
-    parent: 0
-    type: Transform
-- uid: 10544
-  type: VendingMachineSalvage
-  components:
-  - name: Salvage Equipment
-    type: MetaData
-  - pos: -41.5,28.5
     parent: 0
     type: Transform
 - uid: 10545
@@ -193425,13 +193250,6 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: -33.5,18.5
-    parent: 0
-    type: Transform
-- uid: 24271
-  type: EmergencyLight
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,25.5
     parent: 0
     type: Transform
 - uid: 24272
