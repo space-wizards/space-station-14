@@ -71,6 +71,12 @@ namespace Content.Server.Atmos.Monitor.Components
         [ViewVariables]
         public Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
 
+        /// <summary>
+        ///     Registered devices in this atmos monitor. Alerts will be sent directly
+        ///     to these devices.
+        /// </summary>
+        [ViewVariables] public HashSet<string> RegisteredDevices = new();
+
         // Calculates the highest alarm in the network, including itself.
         [ViewVariables]
         public AtmosMonitorAlarmType HighestAlarmInNetwork

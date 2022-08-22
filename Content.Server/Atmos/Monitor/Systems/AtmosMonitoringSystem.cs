@@ -51,28 +51,13 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
 
-        public const string AtmosMonitorGetDataCmd = "atmos_monitor_get_data";
 
         // Packet data
-        /// <summary>
-        ///     Data response that contains the threshold types in an atmos monitor alarm.
-        /// </summary>
-        public const string AtmosMonitorAlarmThresholdTypes = "atmos_monitor_alarm_threshold_types";
 
         /// <summary>
         ///     Data response that contains the source of an atmos alarm.
         /// </summary>
         public const string AtmosMonitorAlarmSrc = "atmos_monitor_alarm_source";
-
-        /// <summary>
-        ///     Data response that contains the maximum alarm in an atmos alarm network.
-        /// </summary>
-        public const string AtmosMonitorAlarmNetMax = "atmos_monitor_alarm_net_max";
-
-        /// <summary>
-        ///     Data response that contains the last state recorded by this air monitor.
-        /// </summary>
-        public const string AtmosMonitorAtmosData = "atmos_monitor_atmos_data";
 
         public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
 
@@ -128,43 +113,20 @@ namespace Content.Server.Atmos.Monitor.Systems
             // sync the internal 'last alarm state' from
             // the other alarms, so that we can calculate
             // the highest network alarm state at any time
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
-                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable)
-                || !EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
+            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
+            {
                 return;
-
-            // ignore packets from self, ignore from different frequency
-            if (netConn.Address == args.SenderAddress) return;
-
-            var responseKey = string.Empty;
+            }
 
             switch (cmd)
             {
-                /*
-                // sync on alarm or explicit sync
-                case AtmosMonitorAlarmCmd:
-                case AtmosMonitorAlarmSyncCmd:
-                    if (args.Data.TryGetValue(AtmosMonitorAlarmSrc, out string? src)
-                        && alarmable.AlarmedByPrototypes.Contains(src)
-                        && args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosMonitorAlarmType state)
-                        && !component.NetworkAlarmStates.TryAdd(args.SenderAddress, state))
-                        component.NetworkAlarmStates[args.SenderAddress] = state;
+                case AtmosDeviceNetworkSystem.RegisterDevice:
+                    component.RegisteredDevices.Add(args.SenderAddress);
                     break;
-                    */
                 case AtmosMonitorAlarmResetCmd:
                     Reset(uid);
                     // Don't clear alarm states here.
                     break;
-                /*
-                case AtmosMonitorAlarmResetAllCmd:
-                    if (args.Data.TryGetValue(AtmosMonitorAlarmSrc, out string? resetSrc)
-                        && alarmable.AlarmedByPrototypes.Contains(resetSrc))
-                    {
-                        component.LastAlarmState = AtmosMonitorAlarmType.Normal;
-                        component.NetworkAlarmStates.Clear();
-                    }
-                    break;
-                    */
                 case AtmosMonitorSetThresholdCmd:
                     if (args.Data.TryGetValue(AtmosMonitorThresholdData, out AtmosAlarmThreshold? thresholdData)
                         && args.Data.TryGetValue(AtmosMonitorThresholdDataType, out AtmosMonitorThresholdType? thresholdType))
@@ -174,9 +136,9 @@ namespace Content.Server.Atmos.Monitor.Systems
                     }
 
                     break;
-                case AtmosMonitorGetDataCmd:
+                case AtmosDeviceNetworkSystem.SyncData:
                     var payload = new NetworkPayload();
-                    payload.Add(DeviceNetworkConstants.Command, AtmosMonitorAtmosData);
+                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
                     if (component.TileGas != null)
                     {
                         var gases = new Dictionary<Gas, float>();
@@ -185,7 +147,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                             gases.Add(gas, component.TileGas.GetMoles(gas));
                         }
 
-                        payload.Add(AtmosMonitorAtmosData, new AtmosSensorData(
+                        payload.Add(AtmosDeviceNetworkSystem.SyncData, new AtmosSensorData(
                             component.TileGas.Pressure,
                             component.TileGas.Temperature,
                             component.TileGas.TotalMoles,
@@ -418,12 +380,13 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 [DeviceNetworkConstants.Command] = AtmosMonitorAlarmCmd,
                 [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
-                [AtmosMonitorAlarmNetMax] = monitor.HighestAlarmInNetwork,
-                [AtmosMonitorAlarmThresholdTypes] = alarms,
                 [AtmosMonitorAlarmSrc] = source
             };
 
-            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
+            foreach (var addr in monitor.RegisteredDevices)
+            {
+                _deviceNetSystem.QueuePacket(monitor.Owner, addr, payload);
+            }
         }
 
         /// <summary>

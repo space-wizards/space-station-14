@@ -32,7 +32,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     public sealed class AirAlarmSystem : EntitySystem
     {
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
-        [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;
+        [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
@@ -76,54 +76,36 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <param name="data">The data to send to the device.</param>
         public void SetData(EntityUid uid, string address, IAtmosDeviceData data)
         {
-            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
-                && !monitor.NetEnabled)
-                return;
-
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AirAlarmSetData,
-                // [AirAlarmTypeData] = type,
-                [AirAlarmSetData] = data
-            };
-
-            _deviceNet.QueuePacket(uid, address, payload);
+            _atmosDevNetSystem.SetDeviceState(uid, address, data);
+            _atmosDevNetSystem.Sync(uid, address);
         }
 
         /// <summary>
         ///     Broadcast a sync packet to an air alarm's local network.
         /// </summary>
-        public void SyncAllDevices(EntityUid uid)
+        private void SyncAllDevices(EntityUid uid)
         {
-            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
-                && !monitor.NetEnabled)
-                return;
-
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AirAlarmSyncCmd
-            };
-
-            _deviceNet.QueuePacket(uid, null, payload);
+            _atmosDevNetSystem.Sync(uid, null);
         }
 
         /// <summary>
         ///     Send a sync packet to a specific device from an air alarm.
         /// </summary>
         /// <param name="address">The address of the device.</param>
-        public void SyncDevice(EntityUid uid, string address)
+        private void SyncDevice(EntityUid uid, string address)
         {
-            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
-                && !monitor.NetEnabled)
-                return;
+            _atmosDevNetSystem.Sync(uid, address);
+        }
 
-
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AirAlarmSyncCmd
-            };
-
-            _deviceNet.QueuePacket(uid, address, payload);
+        /// <summary>
+        ///     Register and synchronize with all devices
+        ///     on this network.
+        /// </summary>
+        /// <param name="uid"></param>
+        public void SyncRegisterAllDevices(EntityUid uid)
+        {
+            _atmosDevNetSystem.Register(uid, null);
+            _atmosDevNetSystem.Sync(uid, null);
         }
 
         /// <summary>
@@ -284,7 +266,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 component.ScrubberData.Clear();
                 component.SensorData.Clear();
 
-                SyncAllDevices(uid);
+                SyncRegisterAllDevices(uid);
             }
         }
 
@@ -425,7 +407,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             switch (cmd)
             {
-                case AirAlarmSyncData:
+                case AtmosDeviceNetworkSystem.SyncData:
                     if (!args.Data.TryGetValue(AirAlarmSyncData, out IAtmosDeviceData? data)
                         || !controller.CanSync)
                         break;
@@ -451,16 +433,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                     }
 
                     UpdateUI(uid, controller);
-
-                    return;
-                case AirAlarmSetDataStatus:
-                    if (!args.Data.TryGetValue(AirAlarmSetDataStatus, out bool dataStatus))
-                        break;
-
-                    // Sync data to interface.
-                    // This should say if the result
-                    // failed, or succeeded. Don't save it.l
-                    SyncDevice(uid, args.SenderAddress);
 
                     return;
                 case AirAlarmSetMode:

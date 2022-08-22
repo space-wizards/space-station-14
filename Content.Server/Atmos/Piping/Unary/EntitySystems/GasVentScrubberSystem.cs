@@ -154,23 +154,19 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             switch (cmd)
             {
-                case AirAlarmSystem.AirAlarmSyncCmd:
-                    payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
-                    payload.Add(AirAlarmSystem.AirAlarmSyncData, component.ToAirAlarmData());
+                case AtmosDeviceNetworkSystem.SyncData:
+                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
+                    payload.Add(AtmosDeviceNetworkSystem.SyncData, component.ToAirAlarmData());
 
                     _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
 
                     return;
-                case AirAlarmSystem.AirAlarmSetData:
-                    if (!args.Data.TryGetValue(AirAlarmSystem.AirAlarmSetData, out GasVentScrubberData? setData))
+                case AtmosDeviceNetworkSystem.SetState:
+                    if (!args.Data.TryGetValue(AtmosDeviceNetworkSystem.SetState, out GasVentScrubberData? setData))
                         break;
 
                     component.FromAirAlarmData(setData);
                     UpdateState(uid, component);
-                    payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSetDataStatus);
-                    payload.Add(AirAlarmSystem.AirAlarmSetDataStatus, true);
-
-                    _deviceNetSystem.QueuePacket(uid, null, payload, device: netConn);
 
                     return;
             }
