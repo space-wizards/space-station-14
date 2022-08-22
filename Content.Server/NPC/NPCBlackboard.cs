@@ -22,7 +22,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {MedibotInjectRange, 4f},
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
-        {"MovementRange", 0.5f},
+        {"MovementRange", 1.5f},
         {"RangedRange", 7f},
         {"RotateSpeed", MathF.PI},
         {"VisionRadius", 7f},
