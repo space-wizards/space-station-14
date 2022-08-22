@@ -31,6 +31,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -281,9 +282,9 @@ public sealed class DoorSystem : SharedDoorSystem
         if (string.IsNullOrEmpty(door.BoardPrototype))
             return;
 
-        var container = uid.EnsureContainer<Container>("board", out var existed);
+        var container = _containerSystem.EnsureContainer<Container>(uid, "board", out var existed);
 
-        if (existed & container.ContainedEntities.Count != 0)
+        if (existed && container.ContainedEntities.Count != 0)
         {
             // We already contain a board. Note: We don't check if it's the right one!
             return;
