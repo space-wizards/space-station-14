@@ -1149,13 +1149,15 @@
   id: BugSpray
   reactants:
     TripleSec:
+      amount: 2
+    LemonLime:
       amount: 1
-    SodaWater:
-      amount: 1
-    Champagne:
+    Rum:
+      amount: 2
+    Vodka:
       amount: 1
   products:
-    BugSpray: 3
+    BugSpray: 5
 
 - type: reaction
   id: JackRose
