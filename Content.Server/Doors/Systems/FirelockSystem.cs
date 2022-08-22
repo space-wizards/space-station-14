@@ -22,6 +22,7 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<FirelockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
             SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, BeforeDoorPryEvent>(OnBeforeDoorPry);
+            SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
             SubscribeLocalEvent<FirelockComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
@@ -59,6 +60,18 @@ namespace Content.Server.Doors.Systems
             {
                 component.Owner.PopupMessage(args.User, Loc.GetString("firelock-component-is-holding-fire-message"));
             }
+        }
+
+        private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
+        {
+            var ev = new BeforeDoorAutoCloseEvent();
+            RaiseLocalEvent(uid, ev);
+            if (ev.Cancelled)
+            {
+                return;
+            }
+
+            _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
         }
 
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
