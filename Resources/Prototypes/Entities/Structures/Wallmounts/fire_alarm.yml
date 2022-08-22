@@ -16,9 +16,6 @@
     sendBroadcastAttemptEvent: true
   - type: DeviceList
   - type: WiredNetworkConnection
-  - type: AtmosMonitor
-    monitorFire: true
-    displayMaxAlarmInNet: true
   - type: AtmosDevice
   - type: AtmosAlarmable
     syncWith:
