@@ -822,11 +822,13 @@
   reactants:
     Wine:
       amount: 10
+    Ice:
+      amount: 1
     Enzyme:
       amount: 10
       catalyst: true
   products:
-    Grappa: 10
+    Grappa: 11
 
 - type: reaction
   id: WhiskeySour
