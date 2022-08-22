@@ -13,6 +13,8 @@
     deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
+    sendBroadcastAttemptEvent: true
+  - type: DeviceList
   - type: ApcNetworkConnection
   - type: AtmosMonitor
     monitorFire: true

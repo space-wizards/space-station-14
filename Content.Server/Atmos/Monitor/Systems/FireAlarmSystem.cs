@@ -1,5 +1,6 @@
 using Content.Server.AlertLevel;
 using Content.Server.Atmos.Monitor.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.AlertLevel;
@@ -12,13 +13,21 @@ namespace Content.Server.Atmos.Monitor.Systems
 {
     public sealed class FireAlarmSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
         [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<FireAlarmComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<FireAlarmComponent, DeviceListUpdateEvent>(OnDeviceListSync);
             SubscribeLocalEvent<FireAlarmComponent, GotEmaggedEvent>(OnEmagged);
+        }
+
+        private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, DeviceListUpdateEvent args)
+        {
+            _atmosDevNet.Register(uid, null);
+            _atmosDevNet.Sync(uid, null);
         }
 
         private void OnInteractHand(EntityUid uid, FireAlarmComponent component, InteractHandEvent args)
