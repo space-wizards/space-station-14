@@ -11,11 +11,6 @@ namespace Content.Server.Atmos.Monitor.Systems;
 public sealed class AtmosDeviceNetworkSystem : EntitySystem
 {
     /// <summary>
-    ///     Any information about atmosphere that a device can scan.
-    /// </summary>
-    public const string AtmosData = "atmos_atmosphere_data";
-
-    /// <summary>
     ///     Register a device's address on this device.
     /// </summary>
     public const string RegisterDevice = "atmos_register_device";
@@ -24,11 +19,6 @@ public sealed class AtmosDeviceNetworkSystem : EntitySystem
     ///     Synchronize the data this device has with the sender.
     /// </summary>
     public const string SyncData = "atmos_sync_data";
-
-    /// <summary>
-    ///     Set the state of this device using the contained data.
-    /// </summary>
-    public const string SetState = "atmos_set_state";
 
     [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
 
@@ -56,8 +46,8 @@ public sealed class AtmosDeviceNetworkSystem : EntitySystem
     {
         var payload = new NetworkPayload()
         {
-            [DeviceNetworkConstants.Command] = SetState,
-            [SetState] = data
+            [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
+            [DeviceNetworkConstants.CmdSetState] = data
         };
 
         _deviceNet.QueuePacket(uid, address, payload);

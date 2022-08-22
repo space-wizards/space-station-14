@@ -1,5 +1,7 @@
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Atmos.Monitor.Components
 {
@@ -41,12 +43,10 @@ namespace Content.Server.Atmos.Monitor.Components
         public float AlarmVolume { get; set; } = -10;
 
         /// <summary>
-        ///     List of prototypes that this alarmable can
-        ///     sync with - this is so that you can sync without
-        ///     having to worry about cross-contamination.
+        ///     List of tags to check for when synchronizing alarms.
         /// </summary>
-        [DataField("syncWith")]
-        public List<string> SyncWithPrototypes { get; } = new();
+        [DataField("syncWith", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]
+        public HashSet<string> SyncWithTags { get; } = new();
 
         /// <summary>
         ///     If this device should receive only. If it can only

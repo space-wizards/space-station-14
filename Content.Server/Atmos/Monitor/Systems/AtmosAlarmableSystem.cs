@@ -18,6 +18,15 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
 
         /// <summary>
+        ///     An alarm. Has three valid states: Normal, Warning, Danger.
+        ///     Will attempt to fetch the tags from the alarming entity
+        ///     to send over.
+        /// </summary>
+        public const string AlertCmd = "atmos_alarm";
+
+        public const string AlertSource = "atmos_alarm_source";
+
+        /// <summary>
         ///     Syncs alerts from this alarm receiver to other alarm receivers.
         ///     Creates a network effect as a result. Note: if the alert receiver
         ///     is not aware of the device beforehand, it will not sync.
@@ -47,38 +56,57 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
                 return;
 
-            if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
+            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
+                || !args.Data.TryGetValue(AlertSource, out List<string>? sourceTags))
+            {
+                return;
+            }
+
+            var isValid = false;
+            foreach (var source in sourceTags)
+            {
+                if (component.SyncWithTags.Contains(source))
+                {
+                    isValid = true;
+                    break;
+                }
+            }
+
+            if (!isValid)
             {
                 return;
             }
 
             switch (cmd)
             {
-                case AtmosMonitorSystem.AtmosMonitorAlarmCmd:
+                case AlertCmd:
                     // Set the alert state, and then cache it so we can calculate
                     // the maximum alarm state at all times.
-                    if (args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosMonitorAlarmType state))
+                    if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosMonitorAlarmType state))
                     {
-                        if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))
-                        {
-                            component.NetworkAlarmStates.Add(args.SenderAddress, state);
-                        }
-                        else
-                        {
-                            component.NetworkAlarmStates[args.SenderAddress] = state;
-                        }
-
-                        if (!TryGetHighestAlert(uid, out var netMax, component))
-                        {
-                            netMax = AtmosMonitorAlarmType.Normal;
-                        }
-
-                        component.LastAlarmState = netMax.Value;
-
-                        UpdateAppearance(uid, netMax.Value);
-                        PlayAlertSound(uid, netMax.Value, component);
-                        RaiseLocalEvent(component.Owner, new AtmosMonitorAlarmEvent(state, netMax.Value), true);
+                        return;
                     }
+
+                    if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))
+                    {
+                        component.NetworkAlarmStates.Add(args.SenderAddress, state);
+                    }
+                    else
+                    {
+                        component.NetworkAlarmStates[args.SenderAddress] = state;
+                    }
+
+                    if (!TryGetHighestAlert(uid, out var netMax, component))
+                    {
+                        netMax = AtmosMonitorAlarmType.Normal;
+                    }
+
+                    component.LastAlarmState = netMax.Value;
+
+                    UpdateAppearance(uid, netMax.Value);
+                    PlayAlertSound(uid, netMax.Value, component);
+                    RaiseLocalEvent(component.Owner, new AtmosMonitorAlarmEvent(state, netMax.Value), true);
+
                     break;
                 case ResetAll:
                     Reset(uid, component);
@@ -121,10 +149,46 @@ namespace Content.Server.Atmos.Monitor.Systems
             var payload = new NetworkPayload
             {
                 [DeviceNetworkConstants.Command] = SyncAlerts,
-                [SyncAlerts] = alarmable.NetworkAlarmStates
+                [SyncAlerts] = alarmable.NetworkAlarmStates,
+                [AlertSource] = alarmable.SyncWithTags
             };
 
             _deviceNet.QueuePacket(uid, address, payload);
+        }
+
+        /// <summary>
+        ///     Forces this alarmable to have a specific alert. This will not be reset until the alarmable
+        ///     is manually reset. This will store the alarmable as a device in its network states, and sync
+        ///     it to the rest of the network.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="alarmType"></param>
+        /// <param name="alarmable"></param>
+        public void ForceAlert(EntityUid uid, AtmosMonitorAlarmType alarmType,
+            AtmosAlarmableComponent? alarmable = null, DeviceNetworkComponent? devNet = null)
+        {
+            if (!Resolve(uid, ref alarmable, ref devNet))
+            {
+                return;
+            }
+
+            alarmable.LastAlarmState = alarmType;
+
+            if (!alarmable.NetworkAlarmStates.TryAdd(devNet.Address, alarmType))
+            {
+                alarmable.NetworkAlarmStates[devNet.Address] = alarmType;
+            }
+
+            var payload = new NetworkPayload
+            {
+                [DeviceNetworkConstants.Command] = AlertCmd,
+                [DeviceNetworkConstants.CmdSetState] = alarmType,
+                [AlertSource] = alarmable.SyncWithTags
+            };
+
+            _deviceNet.QueuePacket(uid, null, payload);
+
+            RaiseLocalEvent(uid, new AtmosMonitorAlarmEvent(alarmType, alarmType));
         }
 
         /// <summary>
@@ -158,7 +222,8 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             var payload = new NetworkPayload
             {
-                [DeviceNetworkConstants.Command] = ResetAll
+                [DeviceNetworkConstants.Command] = ResetAll,
+                [AlertSource] = alarmable.SyncWithTags
             };
 
             _deviceNet.QueuePacket(uid, null, payload);
@@ -171,7 +236,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <param name="alarm"></param>
         /// <param name="alarmable"></param>
         /// <returns></returns>
-        private bool TryGetHighestAlert(EntityUid uid, [NotNullWhen(true)] out AtmosMonitorAlarmType? alarm,
+        public bool TryGetHighestAlert(EntityUid uid, [NotNullWhen(true)] out AtmosMonitorAlarmType? alarm,
             AtmosAlarmableComponent? alarmable = null)
         {
             alarm = null;

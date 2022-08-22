@@ -9,6 +9,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -332,9 +333,15 @@ namespace Content.Server.Atmos.Monitor.Systems
         ///	is synced between monitors the moment a monitor sends out an alarm,
         ///	or if it is explicitly synced (see ResetAll/Sync).
         /// </remarks>
-        private void BroadcastAlertPacket(AtmosMonitorComponent monitor, IEnumerable<AtmosMonitorThresholdType>? alarms = null)
+        private void BroadcastAlertPacket(AtmosMonitorComponent monitor, IEnumerable<AtmosMonitorThresholdType>? alarms = null, TagComponent? tags = null)
         {
             if (!monitor.NetEnabled) return;
+
+            if (!Resolve(monitor.Owner, ref tags))
+            {
+                return;
+            }
+
 
             string source = string.Empty;
             if (alarms == null) alarms = new List<AtmosMonitorThresholdType>();
@@ -343,9 +350,9 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             var payload = new NetworkPayload
             {
-                [DeviceNetworkConstants.Command] = AtmosMonitorAlarmCmd,
+                [DeviceNetworkConstants.Command] = AtmosAlarmableSystem.AlertCmd,
                 [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
-                [AtmosMonitorAlarmSrc] = source
+                [AtmosAlarmableSystem.AlertSource] = tags.Tags
             };
 
             foreach (var addr in monitor.RegisteredDevices)
