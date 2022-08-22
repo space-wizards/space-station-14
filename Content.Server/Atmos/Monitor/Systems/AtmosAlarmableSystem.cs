@@ -83,7 +83,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                         return;
                     }
 
-                    if (args.Data.TryGetValue(AlertTypes, out HashSet<AtmosMonitorThresholdType>? types))
+                    if (args.Data.TryGetValue(AlertTypes, out HashSet<AtmosMonitorThresholdType>? types) && component.MonitorAlertTypes != null)
                     {
                         isValid = types.Any(type => component.MonitorAlertTypes.Contains(type));
 

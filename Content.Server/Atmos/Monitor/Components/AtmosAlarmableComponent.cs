@@ -49,7 +49,7 @@ namespace Content.Server.Atmos.Monitor.Components
         public HashSet<string> SyncWithTags { get; } = new();
 
         [DataField("monitorAlertTypes")]
-        public HashSet<AtmosMonitorThresholdType> MonitorAlertTypes { get; } = new();
+        public HashSet<AtmosMonitorThresholdType>? MonitorAlertTypes { get; }
 
         /// <summary>
         ///     If this device should receive only. If it can only
