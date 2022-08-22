@@ -7,7 +7,7 @@
     - type: AtmosAlarmable
       syncWith:
         - FireAlarm
-        - AirSensor
+        - AirAlarm
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork

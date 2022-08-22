@@ -109,8 +109,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                     Reset(uid, component);
                     break;
                 case SyncAlerts:
-                    // Synchronize alerts, but only if they're already known by this monitor.
-                    // This should help eliminate the chain effect, especially with
                     if (!args.Data.TryGetValue(SyncAlerts,
                             out IReadOnlyDictionary<string, AtmosMonitorAlarmType>? alarms))
                     {
@@ -119,7 +117,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
                     foreach (var (key, alarm) in alarms)
                     {
-                        if (component.NetworkAlarmStates.ContainsKey(key))
+                        if (!component.NetworkAlarmStates.TryAdd(key, alarm))
                         {
                             component.NetworkAlarmStates[key] = alarm;
                         }
