@@ -193,3 +193,11 @@
   desc: reagent-desc-juice-watermelon
   physicalDesc: reagent-physical-desc-sweet
   color: "#EF3520"
+
+- type: reagent
+  id: TripleCitrus
+  name: reagent-name-triple-citrus
+  parent: BaseDrink
+  desc: reagent-desc-triple-citrus
+  physicalDesc: reagent-physical-desc-saucey
+  color: "#EEFF00"

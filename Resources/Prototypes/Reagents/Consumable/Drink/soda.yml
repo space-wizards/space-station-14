@@ -115,6 +115,30 @@
   color: "#9F3400"
 
 - type: reagent
+  id: SolDry
+  name: reagent-name-sol-dry
+  parent: BaseSoda
+  desc: reagent-desc-sol-dry
+  physicalDesc: reagent-physical-desc-fizzy
+  color: "#9F3400"
+
+- type: reagent
+  id: MonkeyEnergy
+  name: reagent-name-monkey-energy
+  parent: BaseSoda
+  desc: reagent-desc-monkey-energy
+  physicalDesc: reagent-physical-desc-fizzy
+  color: "#f39b03"
+
+- type: reagent
+  id: GreyBull
+  name: reagent-name-grey-bull
+  parent: BaseSoda
+  desc: reagent-desc-grey-bull
+  physicalDesc: reagent-physical-desc-fizzy
+  color: "#EEFF00"
+
+- type: reagent
   id: FourteenLoko
   name: reagent-name-fourteen-loko
   parent: BaseSoda

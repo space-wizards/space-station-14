@@ -42,3 +42,12 @@ reagent-desc-starkist = A sweet, orange flavored soft drink.
 
 reagent-name-fourteen-loko = Fourteen Loko
 reagent-desc-fourteen-loko = A highly processed liquid substance barely-passing intergalatic health standards for a soft drink.
+
+reagent-name-sol-dry = sol dry
+reagent-desc-sol-dry = A soothing, mellow drink made from ginger.
+
+reagent-name-monkey-energy = monkey energy
+reagent-desc-monkey-energy = The only drink that will make you unleash the ape.
+
+reagent-name-grey-bull = grey bull
+reagent-desc-grey-bull = Grey Bull, it gives you gloves!

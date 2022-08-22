@@ -1503,3 +1503,15 @@
       amount: 1
   products:
     Pilk: 2
+
+- type: reaction
+  id: TripleCitrus
+  reactants:
+    JuiceLime:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+  products:
+    TripleCitrus: 3
