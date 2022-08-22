@@ -33,7 +33,6 @@
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-sensor
       sendBroadcastAttemptEvent: true
-    - type: DeviceList
     - type: WiredNetworkConnection
     - type: AtmosDevice
     - type: AtmosMonitor
