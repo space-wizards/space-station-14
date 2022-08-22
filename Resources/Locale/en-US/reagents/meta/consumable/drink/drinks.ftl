@@ -70,8 +70,8 @@ reagent-desc-dry-ramen = Dry noodles and salt.
 reagent-name-hot-ramen = hot ramen
 reagent-desc-hot-ramen = Hot noodles.
 
-reagent-name-hot-cocao = hot cocao
-reagent-desc-hot-cocao = Made with love! And cocao beans.
+reagent-name-hot-cocoa = hot cocoa
+reagent-desc-hot-cocoa = Made with love! And cocoa beans.
 
 reagent-name-pilk = pilk
 reagent-desc-pilk = A sickening mixture of milk and cola.
