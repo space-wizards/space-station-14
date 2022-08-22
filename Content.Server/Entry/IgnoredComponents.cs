@@ -17,7 +17,8 @@ namespace Content.Server.Entry
             "CharacterInfo",
             "HandheldGPS",
             "CableVisualizer",
-            "CartridgeUi"
+            "CartridgeUi",
+            "PDABorderColor"
         };
     }
 }

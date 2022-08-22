@@ -1,5 +1,6 @@
 ﻿<pda:PDAWindow  xmlns="https://spacestation14.io"
                 xmlns:pda="clr-namespace:Content.Client.PDA"
+                xmlns:ui="clr-namespace:Content.Client.HUD.UI"
                 MinSize="576 450"
                 SetSize="576 450">
     <!-- This: (Margin="1 1 3 0") is necessary so the navigation bar doesn't sticks into the black content border. -->
@@ -77,5 +78,11 @@
                       Name="ProgramView"
                       Access="Public">
         </BoxContainer>
+    </BoxContainer>
+    <BoxContainer Name="ContentFooter" HorizontalExpand="True" SetHeight="28" Margin="1 0 2 1">
+        <ui:StripeBack HasBottomEdge="False" HasMargins="False" HorizontalExpand="True">
+            <Label Text="Robust#OS ™" VerticalAlignment="Center" Margin="6 0" StyleClasses="PDAContentFooterText"/>
+            <Label Text="csl-A533FEA" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6 0" StyleClasses="PDAContentFooterText"/>
+        </ui:StripeBack>
     </BoxContainer>
 </pda:PDAWindow>

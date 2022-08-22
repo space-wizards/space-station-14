@@ -1,5 +1,4 @@
 using Content.Client.CartridgeLoader;
-using Content.Client.Message;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
@@ -15,10 +14,10 @@ namespace Content.Client.PDA
     [UsedImplicitly]
     public sealed class PDABoundUserInterface : CartridgeLoaderBoundUserInterface
     {
+        [Dependency] private readonly IEntityManager? _entityManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private PDAMenu? _menu;
-        //private List<EntityUid> _availablePrograms = new();
 
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -71,18 +70,18 @@ namespace Content.Client.PDA
                 SendMessage(new PDAShowRingtoneMessage());
             };
 
-            //Refresh installation status of available programs
-            /*_menu.ProgramListButton.OnPressed += _ =>
-            {
-                var programs = GetCartridgeComponents(_availablePrograms);
-                _menu.UpdateAvailablePrograms(programs);
-            };*/
-
             _menu.OnProgramItemPressed += ActivateCartridge;
             _menu.OnInstallButtonPressed += InstallCartridge;
             _menu.OnUninstallButtonPressed += UninstallCartridge;
             _menu.ProgramCloseButton.OnPressed += _ => DeactivateActiveCartridge();
 
+            var borderColorComponent = getBorderColorComponent();
+            if (borderColorComponent == null)
+                return;
+
+            _menu.BorderColor = borderColorComponent.BorderColor;
+            _menu.AccentHColor = borderColorComponent.AccentHColor;
+            _menu.AccentVColor = borderColorComponent.AccentVColor;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -125,6 +124,12 @@ namespace Content.Client.PDA
                 return;
 
             _menu?.Dispose();
+        }
+
+        private PDABorderColorComponent? getBorderColorComponent()
+        {
+            var owner = Owner.Owner;
+            return _entityManager?.GetComponentOrNull<PDABorderColorComponent>(owner);
         }
     }
 }

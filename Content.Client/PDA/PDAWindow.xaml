@@ -3,7 +3,8 @@
                 MouseFilter="Stop">
     <PanelContainer Name="Background" Access="Public" StyleClasses="PDABackgroundRect" />
     <!-- The negative markin fixes a gap between the window edges and the decorative panel -->
-    <PanelContainer Name="Accent" Margin="-1 170 -2 170" Access="Public" StyleClasses="PDABackground" />
+    <PanelContainer Name="AccentH" Margin="-1 170 -2 170" Access="Public" StyleClasses="PDABackground" />
+    <PanelContainer Name="AccentV" Margin="220 -1 220 -1" Access="Public" StyleClasses="PDABackground" />
     <PanelContainer Name="Border" StyleClasses="PDABorderRect" />
     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
         <!--Heading-->
@@ -23,8 +24,8 @@
             </Control>
         </Control>
         <!--Footer-->
-        <BoxContainer Orientation="Horizontal" SetHeight="26">
-
+        <BoxContainer Orientation="Horizontal" SetHeight="28">
+            <Label Text="Personal Digital Assistant" StyleClasses="PDAWindowFooterText" Margin="32 0 0 6"/>
         </BoxContainer>
     </BoxContainer>
 </pda:PDAWindow>

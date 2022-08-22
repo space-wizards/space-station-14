@@ -130,44 +130,41 @@ namespace Content.Client.PDA
             var itemCount = 1;
             ProgramList.AddChild(row);
 
-            while (itemCount < 20)
+            foreach (var (uid, component) in programs)
             {
-                foreach (var (uid, component) in programs)
+                //Create a new row every second program item starting from the first
+                if (itemCount % 2 != 0)
                 {
-                    //Create a new row every second program item starting from the first
-                    if (itemCount % 2 != 0)
-                    {
-                        row = CreateProgramListRow();
-                        ProgramList.AddChild(row);
-                    }
-
-                    var item = new PDAProgramItem();
-
-                    if (component.Icon is not null)
-                        item.Icon.SetFromSpriteSpecifier(component.Icon);
-
-                    item.OnPressed += _ => OnProgramItemPressed?.Invoke(uid);
-
-                    switch (component.InstallationStatus)
-                    {
-                        case InstallationStatus.Cartridge:
-                            item.InstallButton.Visible = true;
-                            item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-install-button");
-                            item.InstallButton.OnPressed += _ => OnInstallButtonPressed?.Invoke(uid);
-                            break;
-                        case InstallationStatus.Installed:
-                            item.InstallButton.Visible = true;
-                            item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-uninstall-button");
-                            item.InstallButton.OnPressed += _ => OnUninstallButtonPressed?.Invoke(uid);
-                            break;
-                    }
-
-                    item.ProgramName.Text = component.ProgramName;
-                    item.SetHeight = 20;
-                    row.AddChild(item);
-
-                    itemCount++;
+                    row = CreateProgramListRow();
+                    ProgramList.AddChild(row);
                 }
+
+                var item = new PDAProgramItem();
+
+                if (component.Icon is not null)
+                    item.Icon.SetFromSpriteSpecifier(component.Icon);
+
+                item.OnPressed += _ => OnProgramItemPressed?.Invoke(uid);
+
+                switch (component.InstallationStatus)
+                {
+                    case InstallationStatus.Cartridge:
+                        item.InstallButton.Visible = true;
+                        item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-install-button");
+                        item.InstallButton.OnPressed += _ => OnInstallButtonPressed?.Invoke(uid);
+                        break;
+                    case InstallationStatus.Installed:
+                        item.InstallButton.Visible = true;
+                        item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-uninstall-button");
+                        item.InstallButton.OnPressed += _ => OnUninstallButtonPressed?.Invoke(uid);
+                        break;
+                }
+
+                item.ProgramName.Text = component.ProgramName;
+                item.SetHeight = 20;
+                row.AddChild(item);
+
+                itemCount++;
             }
 
             //Add a filler item to the last row when it only contains one item

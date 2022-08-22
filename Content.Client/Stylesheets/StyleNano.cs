@@ -1418,7 +1418,7 @@ namespace Content.Client.Stylesheets
 
                 Element<PanelContainer>().Class("PDABackgroundRect")
                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#717059")),
 
                 Element<PanelContainer>().Class("PDABorderRect")
                     .Prop(PanelContainer.StylePropertyPanel, AngleBorderRect),
@@ -1451,6 +1451,15 @@ namespace Content.Client.Stylesheets
 
                 Element<PDAProgramItem>().Pseudo(ContainerButton.StylePseudoClassPressed)
                     .Prop(PDAProgramItem.StylePropertyBgColor, Color.FromHex(PDAProgramItem.HoverColor)),
+
+                //PDA - Text
+                Element<Label>().Class("PDAContentFooterText")
+                    .Prop(Label.StylePropertyFont, notoSans10)
+                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
+
+                Element<Label>().Class("PDAWindowFooterText")
+                    .Prop(Label.StylePropertyFont, notoSans10)
+                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
 
             }).ToList());
         }

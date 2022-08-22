@@ -8,6 +8,36 @@ namespace Content.Client.PDA;
 [GenerateTypedNameReferences]
 public partial class PDAWindow : BaseWindow
 {
+
+    public string? BorderColor
+    {
+        get => Background.ActualModulateSelf.ToHex();
+
+        set => Background.ModulateSelfOverride = Color.FromHex(value, Color.White);
+    }
+
+    public string? AccentHColor
+    {
+        get => AccentH.ActualModulateSelf.ToHex();
+
+        set
+        {
+            AccentH.ModulateSelfOverride = Color. FromHex(value, Color.White);
+            AccentH.Visible = value != null;
+        }
+    }
+
+    public string? AccentVColor
+    {
+        get => AccentV.ActualModulateSelf.ToHex();
+
+        set
+        {
+            AccentV.ModulateSelfOverride = Color. FromHex(value, Color.White);
+            AccentV.Visible = value != null;
+        }
+    }
+
     public PDAWindow()
     {
         RobustXamlLoader.Load(this);
@@ -15,8 +45,8 @@ public partial class PDAWindow : BaseWindow
         CloseButton.OnPressed += _ => Close();
         XamlChildren = ContentsContainer.Children;
 
-        Background.ModulateSelfOverride = Color.FromHex("#949137");
-        Accent.ModulateSelfOverride = Color.FromHex("#447987");
+        AccentH.Visible = false;
+        AccentV.Visible = false;
     }
 
     protected override DragMode GetDragModeFor(Vector2 relativeMousePos)

@@ -3,7 +3,6 @@ using Content.Server.UserInterface;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Interaction;
 using Robust.Server.Containers;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -14,7 +13,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 {
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
-    private const string ContainerName = "program_container";
+    private const string ContainerName = "program-container";
 
     public override void Initialize()
     {
