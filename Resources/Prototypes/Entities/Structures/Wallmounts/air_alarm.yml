@@ -17,7 +17,14 @@
   - type: WiredNetworkConnection
   - type: DeviceList
   - type: AtmosAlarmable
-    alarmedBy: ["AirSensor"]
+    syncWith:
+      - AirAlarm
+      - AirSensor
+      - GasVent
+      - GasScrubber
+  - type: Tags
+    tags:
+      - AirAlarm
   - type: AtmosDevice
   - type: AirAlarm
   - type: Clickable

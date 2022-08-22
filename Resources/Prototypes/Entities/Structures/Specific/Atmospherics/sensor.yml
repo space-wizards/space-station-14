@@ -36,8 +36,6 @@
     - type: DeviceList
     - type: WiredNetworkConnection
     - type: AtmosDevice
-    - type: AtmosAlarmable
-      alarmedBy: ["AirSensor"]
     - type: AtmosMonitor
       temperatureThreshold: stationTemperature
       pressureThreshold: stationPressure
@@ -51,6 +49,9 @@
         Miasma: danger
         NitrousOxide: danger
         Frezon: danger
+    - type: Tag
+      tags:
+        - AirSensor
     - type: AccessReader
       access: [ [ "Atmospherics" ] ]
     - type: Sprite

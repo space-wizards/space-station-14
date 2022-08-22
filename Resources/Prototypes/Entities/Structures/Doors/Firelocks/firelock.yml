@@ -5,9 +5,9 @@
   description: Apply crowbar.
   components:
     - type: AtmosAlarmable
-      alarmedBy:
-      - FireAlarm
-      - AirSensor
+      syncWith:
+        - FireAlarm
+        - AirSensor
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork

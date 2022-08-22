@@ -34,6 +34,22 @@
       sendBroadcastAttemptEvent: true
     - type: WiredNetworkConnection
     - type: AtmosDevice
+    - type: AtmosMonitor
+      temperatureThreshold: stationTemperature
+      pressureThreshold: stationPressure
+      gasThresholds:
+        Oxygen: stationOxygen
+        Nitrogen: ignore
+        CarbonDioxide: stationCO2
+        Plasma: danger # everything below is usually bad
+        Tritium: danger
+        WaterVapor: danger
+        Miasma: danger
+        NitrousOxide: danger
+        Frezon: danger
+    - type: Tag
+      tags:
+        - GasVent
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -107,6 +123,22 @@
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
+    - type: AtmosMonitor
+      temperatureThreshold: stationTemperature
+      pressureThreshold: stationPressure
+      gasThresholds:
+        Oxygen: stationOxygen
+        Nitrogen: ignore
+        CarbonDioxide: stationCO2
+        Plasma: danger # everything below is usually bad
+        Tritium: danger
+        WaterVapor: danger
+        Miasma: danger
+        NitrousOxide: danger
+        Frezon: danger
+    - type: Tag
+      tags:
+        - GasScrubber
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects

@@ -19,7 +19,14 @@
     displayMaxAlarmInNet: true
   - type: AtmosDevice
   - type: AtmosAlarmable
-    alarmedBy: ["FireAlarm"] # alarm itself, network effect
+    syncWith:
+      - FireAlarm
+      - AirSensor
+      - GasVent
+      - GasScrubber
+  - type: Tags
+    tags:
+      - FireAlarm
   - type: Clickable
   - type: InteractionOutline
   - type: FireAlarm
