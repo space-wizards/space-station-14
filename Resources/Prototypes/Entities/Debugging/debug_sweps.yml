@@ -21,9 +21,6 @@
       - FullAuto
   - type: AmmoCounter
   - type: ChamberMagazineAmmoProvider
-    whitelist:
-      tags:
-        - Debug
   - type: ItemSlots
     slots:
       gun_magazine:
