@@ -600,16 +600,18 @@
   products:
     RedMead: 2
 
-- type: reaction
-  id: Mead
-  reactants:
-    Honey:
-      amount: 2
-    Enzyme:
-      amount: 5
-      catalyst: true
-  products:
-    Mead: 2
+
+# Need Honey
+#- type: reaction
+#  id: Mead
+#  reactants:
+#    Honey:
+#      amount: 2
+#    Enzyme:
+#      amount: 5
+#      catalyst: true
+#  products:
+#    Mead: 2
 
 - type: reaction
   id: IcedBeer
@@ -631,15 +633,16 @@
   products:
     Grog: 2
 
-- type: reaction
-  id: AcidSpit
-  reactants:
-    Acid:
-      amount: 1
-    Wine:
-      amount: 5
-  products:
-    AcidSpit: 6
+# Need Acid
+#- type: reaction
+#  id: AcidSpit
+#  reactants:
+#    Acid:
+#      amount: 1
+#    Wine:
+#      amount: 5
+#  products:
+#    AcidSpit: 6
 
 - type: reaction
   id: Amasec
@@ -685,15 +688,16 @@
   products:
     Andalusia: 3
 
-- type: reaction
-  id: Neurotoxin
-  reactants:
-    PanGalacticGargleBlaster:
-      amount: 1
-    Morphine:
-      amount: 1
-  products:
-    Neurotoxin: 2
+# Need Morphine
+#- type: reaction
+#  id: Neurotoxin
+#  reactants:
+#    PanGalacticGargleBlaster:
+#      amount: 1
+#    Morphine:
+#      amount: 1
+#  products:
+#    Neurotoxin: 2
 
 - type: reaction
   id: SnowWhite
@@ -879,7 +883,7 @@
       amount: 5
     Cream:
       amount: 5
-    EggYolk:
+    Egg:
       amount: 2
   products:
     Eggnog: 15
@@ -930,17 +934,18 @@
   products:
     Stinger: 15
 
-- type: reaction
-  id: QuintupleSec
-  reactants:
-    QuadrupleSec:
-      amount: 5
-    ClownsTears:
-      amount: 5
-    SyndicateBomb:
-      amount: 5
-  products:
-    QuintupleSec: 15
+# Need Clowns Tears
+#- type: reaction
+#  id: QuintupleSec
+#  reactants:
+#    QuadrupleSec:
+#      amount: 5
+#    ClownsTears:
+#      amount: 5
+#    SyndicateBomb:
+#      amount: 5
+#  products:
+#    QuintupleSec: 15
 
 - type: reaction
   id: BastionBourbon
@@ -956,19 +961,20 @@
   products:
     BastionBourbon: 2
 
-- type: reaction
-  id: SquirtCider
-  reactants:
-    Water:
-      amount: 2
-    JuiceTomato:
-      amount: 2
-    Nutriment:
-      amount: 1
-    Salt:
-      amount: 1
-  products:
-    SquirtCider: 4
+# Need Salt
+#- type: reaction
+#  id: SquirtCider
+#  reactants:
+#    Water:
+#      amount: 2
+#    JuiceTomato:
+#      amount: 2
+#    Nutriment:
+#      amount: 1
+#    Salt:
+#      amount: 1
+#  products:
+#    SquirtCider: 4
 
 - type: reaction
   id: FringeWeaver
@@ -1211,17 +1217,18 @@
   products:
     Duplex: 4
 
-- type: reaction
-  id: Trappist
-  reactants:
-    Ale:
-      amount: 2
-    HolyWater:
-      amount: 2
-    Sugar:
-      amount: 1
-  products:
-    Trappist: 5
+# Need Holy Water
+#- type: reaction
+#  id: Trappist
+#  reactants:
+#    Ale:
+#      amount: 2
+#    HolyWater:
+#      amount: 2
+#    Sugar:
+#      amount: 1
+#  products:
+#    Trappist: 5
 
 #Need Bluespace and Bluespace Crystals
 #- type: reaction
@@ -1243,7 +1250,7 @@
       amount: 10
     LizardWine:
       amount: 10
-    EggYolk:
+    Egg:
       amount: 2
     Gold:
       amount: 5

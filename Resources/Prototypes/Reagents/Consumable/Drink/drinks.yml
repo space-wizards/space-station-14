@@ -288,6 +288,22 @@
         factor: 4
 
 - type: reagent
+  id: HotCocoa
+  name: reagent-name-hot-cocoa
+  parent: BaseDrink
+  desc: reagent-desc-hot-cocoa
+  physicalDesc: reagent-physical-desc-aromatic
+  color: "#403010"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
   id: Pilk
   name: reagent-name-pilk
   parent: BaseDrink
