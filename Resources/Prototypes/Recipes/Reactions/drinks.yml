@@ -1,3 +1,5 @@
+# Alchoholic Cocktails
+
 - type: reaction
   id: Goldschlager
   reactants:
@@ -31,14 +33,61 @@
 - type: reaction
   id: Moonshine
   reactants:
-    Tequila:
-      amount: 1
-    Vodka:
-      amount: 1
-    Whiskey:
-      amount: 1
+    Nutriment:
+      amount: 5
+    Sugar:
+      amount: 5
+    Enzyme:
+      amount: 5
+      catalyst: true
   products:
-    Moonshine: 3
+    Moonshine: 10
+
+- type: reaction
+  id: Wine
+  reactants:
+    JuiceGrape:
+      amount: 10
+    Enzyme:
+      amount: 5
+      catalyst: true
+  products:
+    Wine: 10
+
+- type: reaction
+  id: Beer
+  reactants:
+    Flour:
+      amount: 10
+    Enzyme:
+      amount: 5
+      catalyst: true
+  products:
+    Beer: 10
+
+- type: reaction
+  id: Vodka
+  reactants:
+    JuicePotato:
+      amount: 10
+    Enzyme:
+      amount: 5
+      catalyst: true
+  products:
+    Vodka: 10
+
+- type: reaction
+  id: CoffeeLiqueur
+  reactants:
+    Coffee:
+      amount: 5
+    Sugar:
+      amount: 5
+    Enzyme:
+      amount: 5
+      catalyst: true
+  products:
+    CoffeeLiqueur: 10
 
 - type: reaction
   id: GinTonic
@@ -222,7 +271,18 @@
   products:
     GreenBeer: 5
 
-#Hooch
+- type: reaction
+  id: Hooch
+  reactants:
+    Ethanol:
+      amount: 2
+    Fuel:
+      amount: 1
+    Enzyme:
+      amount: 1
+      catalyst: true
+  products:
+    Hooch: 3
 
 - type: reaction
   id: IrishCoffee
@@ -498,6 +558,18 @@
   id: Painkiller
   reactants:
     CremeDeCoconut:
+      amount: 5
+    JuicePineapple:
+      amount: 4
+    JuiceOrange:
+      amount: 1
+  products:
+    Painkiller: 10
+
+- type: reaction
+  id: PinaColada
+  reactants:
+    CremeDeCoconut:
       amount: 1
     JuicePineapple:
       amount: 3
@@ -506,7 +578,7 @@
     JuiceLime:
       amount: 1
   products:
-    Painkiller: 10
+    PinaColada: 5
 
 - type: reaction
   id: Sbiten
@@ -527,6 +599,17 @@
       amount: 1
   products:
     RedMead: 2
+
+- type: reaction
+  id: Mead
+  reactants:
+    Honey:
+      amount: 2
+    Enzyme:
+      amount: 5
+      catalyst: true
+  products:
+    Mead: 2
 
 - type: reaction
   id: IcedBeer
@@ -730,7 +813,16 @@
   products:
     DrunkenBlumpkin: 4
 
-#Grappa
+- type: reaction
+  id: Grappa
+  reactants:
+    Wine:
+      amount: 10
+    Enzyme:
+      amount: 10
+      catalyst: true
+  products:
+    Grappa: 10
 
 - type: reaction
   id: WhiskeySour
@@ -910,7 +1002,16 @@
   products:
     CreviceSpike: 6
 
-# Sake
+- type: reaction
+  id: Sake
+  reactants:
+    Rice:
+      amount: 10
+    Enzyme:
+      amount: 5
+      catalyst: true
+  products:
+    Sake: 10
 
 - type: reaction
   id: PeppermintPatty
@@ -1245,6 +1346,10 @@
       amount: 1
   products:
     TheHat: 1
+
+
+### Misc
+
 
 - type: reaction
   id: CafeLatte
