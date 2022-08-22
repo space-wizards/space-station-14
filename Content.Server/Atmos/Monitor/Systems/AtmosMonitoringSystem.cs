@@ -99,10 +99,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                 case AtmosDeviceNetworkSystem.RegisterDevice:
                     component.RegisteredDevices.Add(args.SenderAddress);
                     break;
-                case AtmosAlarmableSystem.ResetAll:
-                    Reset(uid);
-                    // Don't clear alarm states here.
-                    break;
                 case AtmosMonitorSetThresholdCmd:
                     if (args.Data.TryGetValue(AtmosMonitorThresholdData, out AtmosAlarmThreshold? thresholdData)
                         && args.Data.TryGetValue(AtmosMonitorThresholdDataType, out AtmosMonitorThresholdType? thresholdType))
