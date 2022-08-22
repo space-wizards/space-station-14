@@ -259,7 +259,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             foreach (var alarmState in alarmable.NetworkAlarmStates.Values)
             {
-                alarm = alarm < alarmState ? alarmState : alarm;
+                alarm = alarm == null || alarm < alarmState ? alarmState : alarm;
             }
 
             return alarm != null;
