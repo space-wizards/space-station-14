@@ -1,6 +1,5 @@
 using Content.Server.AlertLevel;
 using Content.Server.Atmos.Monitor.Components;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -27,16 +26,8 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, DeviceListUpdateEvent args)
         {
-            foreach (var ent in args.Devices)
-            {
-                if (!TryComp<DeviceNetworkComponent>(ent, out var devNet))
-                {
-                    continue;
-                }
-
-                _atmosDevNet.Register(uid, devNet.Address);
-                _atmosDevNet.Sync(uid, devNet.Address);
-            }
+            _atmosDevNet.Register(uid, null);
+            _atmosDevNet.Sync(uid, null);
         }
 
         private void OnInteractHand(EntityUid uid, FireAlarmComponent component, InteractHandEvent args)
