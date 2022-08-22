@@ -175,7 +175,8 @@
       amount: 2
     Vermouth:
       amount: 1
-    Plasma: 2
+    Plasma:
+      amount: 2
   products:
     ToxinsSpecial: 5
 
