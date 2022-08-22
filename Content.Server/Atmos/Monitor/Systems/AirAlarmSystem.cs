@@ -105,21 +105,6 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
-        /// <summary>
-        ///     Reset a single sensor's state.
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="address"></param>
-        private void ResetSensor(EntityUid uid, string address)
-        {
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AtmosMonitorSystem.AtmosMonitorAlarmResetCmd,
-            };
-
-            _deviceNet.QueuePacket(uid, address, payload);
-        }
-
         private void SetThreshold(EntityUid uid, string address, AtmosMonitorThresholdType type,
             AtmosAlarmThreshold threshold, Gas? gas = null)
         {

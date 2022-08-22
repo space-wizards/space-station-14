@@ -26,39 +26,13 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         // Commands
-        /// <summary>
-        ///     Command to alarm the network that something has happened.
-        /// </summary>
-        public const string AtmosMonitorAlarmCmd = "atmos_monitor_alarm_update";
-
-        /// <summary>
-        ///     Command to sync this monitor's alarm state with the rest of the network.
-        /// </summary>
-        public const string AtmosMonitorAlarmSyncCmd = "atmos_monitor_alarm_sync";
-
-        /// <summary>
-        ///     Command to reset a single alarm.
-        /// </summary>
-        public const string AtmosMonitorAlarmResetCmd = "atmos_monitor_alarm_reset";
-
-        /// <summary>
-        ///     Command to reset all alarms on a network.
-        /// </summary>
-        public const string AtmosMonitorAlarmResetAllCmd = "atmos_monitor_alarm_reset_all";
-
         public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
 
 
         // Packet data
-
-        /// <summary>
-        ///     Data response that contains the source of an atmos alarm.
-        /// </summary>
-        public const string AtmosMonitorAlarmSrc = "atmos_monitor_alarm_source";
 
         public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
 
@@ -124,7 +98,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 case AtmosDeviceNetworkSystem.RegisterDevice:
                     component.RegisteredDevices.Add(args.SenderAddress);
                     break;
-                case AtmosMonitorAlarmResetCmd:
+                case AtmosAlarmableSystem.ResetAll:
                     Reset(uid);
                     // Don't clear alarm states here.
                     break;
@@ -307,17 +281,9 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <summary>
         ///     Resets a single monitor's alarm.
         /// </summary>
-        public void Reset(EntityUid uid) =>
-            Alert(uid, AtmosMonitorAlarmType.Normal);
-
-        /// <summary>
-        ///     Resets a network's alarms, using this monitor as a source.
-        /// </summary>
-        /// <remarks>
-        ///     The resulting packet will have this monitor set as the source, using its prototype ID if it has one - otherwise just sending an empty string.
-        /// </remarks>
-        public void ResetAll(EntityUid uid, AtmosMonitorComponent? monitor = null)
+        private void Reset(EntityUid uid)
         {
+            Alert(uid, AtmosMonitorAlarmType.Normal);
         }
 
         /// <summary>
@@ -341,14 +307,6 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 return;
             }
-
-
-            /*
-            string source = string.Empty;
-            if (alarms == null) alarms = new List<AtmosMonitorThresholdType>();
-            var prototype = Prototype(monitor.Owner);
-            if (prototype != null) source = prototype.ID;
-            */
 
             var payload = new NetworkPayload
             {
