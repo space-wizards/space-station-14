@@ -6045,10 +6045,6 @@ entities:
   - pos: 1.5,2.5
     parent: 4
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 430
   type: ResearchAndDevelopmentServer
   components:

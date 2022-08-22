@@ -18896,10 +18896,6 @@ entities:
   - pos: 37.5,-9.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1628
   type: FoodBoxDonkpocket
   components:
@@ -23784,10 +23780,6 @@ entities:
   - pos: 37.5,36.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2330
   type: WardrobePrison
   components:
@@ -69527,10 +69519,6 @@ entities:
   - pos: 107.5,-10.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8899
   type: FoodBoxDonkpocketGondola
   components:

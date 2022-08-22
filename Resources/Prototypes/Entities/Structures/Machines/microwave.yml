@@ -5,12 +5,6 @@
   description: It's magic.
   components:
   - type: Microwave
-  - type: SolutionContainerManager
-    solutions:
-      microwave:
-        maxVol: 100
-  - type: RefillableSolution
-    solution: microwave
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -18,7 +12,7 @@
         enum.MicrowaveVisualizerLayers.Base:
           Idle: { state: "mw" }
           Broken: { state: "mwb" }
-          aCooking: { state: "mw" }
+          Cooking: { state: "mw" }
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           Idle: { state: "mw_unlit" }
           Broken: { state: "mw_unlit" }
@@ -64,3 +58,6 @@
         acts: ["Breakage"]
   - type: ApcPowerReceiver
     powerLoad: 400
+  - type: ContainerContainer
+    containers:
+      microwave_entity_container: !type:Container

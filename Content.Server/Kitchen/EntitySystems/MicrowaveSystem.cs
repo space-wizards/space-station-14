@@ -170,7 +170,6 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnInit(EntityUid uid, MicrowaveComponent component, ComponentInit ags)
         {
             component.Storage = _container.EnsureContainer<Container>(uid,"microwave_entity_container");
-            SetAppearance(component, MicrowaveVisualState.Idle);
         }
 
         private void OnSuicide(EntityUid uid, MicrowaveComponent component, SuicideEvent args)
@@ -377,7 +376,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 CanSatisfyRecipe(component, r, solidsDict, reagentDict)).FirstOrDefault(r => r.Item2 > 0);
 
             _audio.PlayPvs(component.StartCookingSound, uid);
-            var activeComp = AddComp<ActiveMicrowaveComponent>(uid);
+            var activeComp = AddComp<ActiveMicrowaveComponent>(uid); //microwave is now cooking
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.TotalTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.PortionedRecipe = portionedRecipe;

@@ -20195,10 +20195,6 @@ entities:
   - pos: 13.5,19.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1619
   type: SignArmory
   components:
@@ -39437,10 +39433,6 @@ entities:
   - pos: -15.5,1.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4136
   type: FirelockGlass
   components:
