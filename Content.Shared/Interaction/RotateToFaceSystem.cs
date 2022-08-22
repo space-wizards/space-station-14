@@ -18,6 +18,48 @@ namespace Content.Shared.Interaction
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+        /// <summary>
+        /// Tries to rotate the entity towards the target rotation. Returns false if it needs to keep rotating.
+        /// </summary>
+        public bool TryRotateTo(EntityUid uid, Angle goalRotation, float frameTime, Angle tolerance, double rotationSpeed = float.MaxValue, TransformComponent? xform = null)
+        {
+            if (!Resolve(uid, ref xform))
+                return true;
+
+            // If we have a max rotation speed then do that.
+            // We'll rotate even if we can't shoot, looks better.
+            if (rotationSpeed < float.MaxValue)
+            {
+                var worldRot = _transform.GetWorldRotation(xform);
+
+                var rotationDiff = Angle.ShortestDistance(worldRot, goalRotation).Theta;
+                var maxRotate = rotationSpeed * frameTime;
+
+                if (Math.Abs(rotationDiff) > maxRotate)
+                {
+                    var goalTheta = worldRot + Math.Sign(rotationDiff) * maxRotate;
+                    _transform.SetWorldRotation(xform, goalTheta);
+                    rotationDiff = (goalRotation - goalTheta);
+
+                    if (Math.Abs(rotationDiff) > tolerance)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                _transform.SetWorldRotation(xform, goalRotation);
+            }
+            else
+            {
+                _transform.SetWorldRotation(xform, goalRotation);
+            }
+
+            return true;
+        }
 
         public bool TryFaceCoordinates(EntityUid user, Vector2 coordinates, TransformComponent? xform = null)
         {

@@ -87,7 +87,7 @@ public sealed class HTNSystem : EntitySystem
                 }
                 else
                 {
-                    _sawmill.Error($"Unable to find HTNTask fopr {proto} on {compound.ID}");
+                    _sawmill.Error($"Unable to find HTNTask for {proto} on {compound.ID}");
                 }
             }
 

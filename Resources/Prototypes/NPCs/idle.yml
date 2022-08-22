@@ -16,6 +16,30 @@
         - !type:PulledPrecondition
           isPulled: false
 
+# Spin to a random rotation and idle.
+- type: htnCompound
+  id: IdleSpinCompound
+  branches:
+    - tasks:
+        - id: WaitIdleTimePrimitive
+    # Pick a new angle and spin there
+    - tasks:
+        - id: PickRandomRotationPrimitive
+        - id: RotateToTargetPrimitive
+        - id: SetIdleTimePrimitive
+        - id: WaitIdleTimePrimitive
+
+
+# Primitives
+- type: htnPrimitive
+  id: PickRandomRotationPrimitive
+  operator: !type:PickRandomRotationOperator
+    targetKey: RotateTarget
+
+- type: htnPrimitive
+  id: RotateToTargetPrimitive
+  operator: !type:RotateToTargetOperator
+    targetKey: RotateTarget
 
 - type: htnPrimitive
   id: PickAccessiblePrimitive

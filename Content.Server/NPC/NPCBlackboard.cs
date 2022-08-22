@@ -24,6 +24,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {"MinimumIdleTime", 2f},
         {"MovementRange", 0.5f},
         {"RangedRange", 7f},
+        {"RotateSpeed", MathF.PI},
         {"VisionRadius", 7f},
     };
 
@@ -194,6 +195,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string Owner = "Owner";
     public const string OwnerCoordinates = "OwnerCoordinates";
     public const string MovementTarget = "MovementTarget";
+    public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
     public const float MeleeRange = 1f;
 

@@ -6,6 +6,8 @@
     - tasks:
         - id: PickRangedTargetPrimitive
         - id: RangedAttackTargetPrimitive
+    - tasks:
+        - id: IdleSpinCompound
 
 - type: htnCompound
   id: RangedCombatCompound

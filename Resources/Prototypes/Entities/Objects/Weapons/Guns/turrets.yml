@@ -42,8 +42,6 @@
     - type: HTN
       rootTask: TurretCompound
       blackboard:
-        TurretRotationSpeed: !type:Double
-          180
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
     - type: AiFactionTag

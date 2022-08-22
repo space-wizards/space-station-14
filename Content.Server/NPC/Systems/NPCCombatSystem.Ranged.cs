@@ -1,11 +1,14 @@
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
+using Content.Shared.Interaction;
 using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
+    [Dependency] private readonly RotateToFaceSystem _rotate = default!;
+
     // TODO: Don't predict for hitscan
     private const float ShootSpeed = 20f;
 
@@ -123,31 +126,9 @@ public sealed partial class NPCCombatSystem
             var goalRotation = (targetSpot - worldPos).ToWorldAngle();
             var rotationSpeed = comp.RotationSpeed;
 
-            // We'll rotate even if we can't shoot, looks better.
-            if (rotationSpeed != null)
+            if (!_rotate.TryRotateTo(comp.Owner, goalRotation, frameTime, comp.AccuracyThreshold, rotationSpeed?.Theta ?? double.MaxValue, xform))
             {
-                var rotationDiff = Angle.ShortestDistance(worldRot, goalRotation).Theta;
-                var maxRotate = rotationSpeed.Value.Theta * frameTime;
-
-                if (Math.Abs(rotationDiff) > maxRotate)
-                {
-                    var goalTheta = worldRot + Math.Sign(rotationDiff) * maxRotate;
-                    _transform.SetWorldRotation(xform, goalTheta);
-                    rotationDiff = (goalRotation - goalTheta);
-
-                    if (Math.Abs(rotationDiff) > comp.AccuracyThreshold)
-                    {
-                        continue;
-                    }
-                }
-                else
-                {
-                    _transform.SetWorldRotation(xform, goalRotation);
-                }
-            }
-            else
-            {
-                _transform.SetWorldRotation(xform, goalRotation);
+                continue;
             }
 
             // TODO: LOS
