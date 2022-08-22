@@ -321,7 +321,7 @@
         amount: 0.2275
 
 - type: reagent
-  id: WineLizard
+  id: LizardWine
   name: reagent-name-lizard-wine
   parent: BaseAlcohol
   desc: reagent-desc-lizard-wine
@@ -1069,6 +1069,23 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2275
+
+- type: reagent
+  id: Sbiten
+  name: reagent-name-sbiten
+  parent: BaseAlcohol
+  desc: reagent-desc-sbiten
+  physicalDesc: reagent-physical-desc-strong-smelling
+  color: "#d8d5ae"
+  spritePath: glass_sbiten.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.455
 
 - type: reagent
   id: RedMead

@@ -182,6 +182,9 @@ reagent-desc-bahama-mama = A tropical cocktail with a complex blend of flavors.
 reagent-name-singulo = Singulo
 reagent-desc-singulo = A blue-space beverage!
 
+reagent-name-sbiten = Sbiten
+reagent-desc-sbiten = A spicy Vodka! Might be a little hot for the little guys!
+
 reagent-name-red-mead = Red Mead
 reagent-desc-red-mead = The true Viking drink! Even though it has a strange red color.
 

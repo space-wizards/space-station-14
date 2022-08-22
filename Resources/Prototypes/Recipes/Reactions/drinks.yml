@@ -276,7 +276,7 @@
   reactants:
     Ethanol:
       amount: 2
-    Fuel:
+    WeldingFuel:
       amount: 1
     Enzyme:
       amount: 1
@@ -585,7 +585,7 @@
   reactants:
     Vodka:
       amount: 10
-    Capsaicin:
+    CapsaicinOil:
       amount: 1
   products:
     Sbiten: 10
@@ -913,7 +913,7 @@
   reactants:
     Cream:
       amount: 5
-    CreamDeMenthe:
+    CremeDeMenthe:
       amount: 5
     CremeDeCacao:
       amount: 5
@@ -925,7 +925,7 @@
   reactants:
     Cognac:
       amount: 10
-    CreamDeMenthe:
+    CremeDeMenthe:
       amount: 5
   products:
     Stinger: 15
@@ -997,7 +997,7 @@
   reactants:
     JuiceLime:
       amount: 2
-    Capsaicin:
+    CapsaicinOil:
       amount: 4
   products:
     CreviceSpike: 6
@@ -1036,7 +1036,7 @@
       amount: 1
     CremeDeCacao:
       amount: 1
-    Creme:
+    Cream:
       amount: 1
   products:
     Alexander: 3
@@ -1111,7 +1111,7 @@
   products:
     Fanciulli: 2
 
-#branca_menta
+#branca_menta trademarked i think
 
 - type: reaction
   id: BlankPaper
@@ -1223,17 +1223,18 @@
   products:
     Trappist: 5
 
-- type: reaction
-  id: Blazaam
-  reactants:
-    Gin:
-      amount: 2
-    JuicePeach:
-      amount: 1
-    Bluespace:
-      amount: 1
-  products:
-    Blazaam: 3
+#Need Bluespace and Bluespace Crystals
+#- type: reaction
+#  id: Blazaam
+#  reactants:
+#    Gin:
+#      amount: 2
+#    JuicePeach:
+#      amount: 1
+#    Bluespace:
+#      amount: 1
+#  products:
+#    Blazaam: 3
 
 - type: reaction
   id: PlanetCracker
@@ -1252,7 +1253,7 @@
 - type: reaction
   id: MaunaLoa
   reactants:
-    Capsaicin:
+    CapsaicinOil:
       amount: 2
     CoffeeLiqueur:
       amount: 1
@@ -1307,21 +1308,22 @@
   products:
     GingerAmaretto: 4
 
-- type: reaction
-  id: TheJuice
-  reactants:
-    MushroomTea:
-      amount: 1
-    Bluespace:
-      amount: 1
-    MindbreakerToxin:
-      amount: 1
-    Neurotoxin:
-      amount: 1
-    Morphine:
-      amount: 1
-  products:
-    TheJuice: 5
+# Need MushroomTea and Bluespace
+#- type: reaction
+#  id: TheJuice
+#  reactants:
+#    MushroomTea:
+#      amount: 1
+#    Bluespace:
+#      amount: 1
+#   MindbreakerToxin:
+#     amount: 1
+#   Neurotoxin:
+#     amount: 1
+#    Morphine:
+#      amount: 1
+#  products:
+#    TheJuice: 5
 
 - type: reaction
   id: Helianthus
@@ -1334,18 +1336,6 @@
       amount: 1
   products:
     Helianthus: 5
-
-- type: reaction
-  id: TheHat
-  reactants:
-    Ethanol:
-      amount: 1
-    Water:
-      amount: 1
-    PlumWine:
-      amount: 1
-  products:
-    TheHat: 1
 
 
 ### Misc
