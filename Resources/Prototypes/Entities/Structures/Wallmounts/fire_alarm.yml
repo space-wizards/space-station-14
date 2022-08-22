@@ -15,7 +15,7 @@
     transmitFrequencyId: AtmosMonitor
     sendBroadcastAttemptEvent: true
   - type: DeviceList
-  - type: ApcNetworkConnection
+  - type: WiredNetworkConnection
   - type: AtmosMonitor
     monitorFire: true
     displayMaxAlarmInNet: true

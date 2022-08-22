@@ -132,17 +132,21 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
-        private void TryUpdateAlert(EntityUid uid, AtmosMonitorAlarmType type, AtmosAlarmableComponent alarmable)
+        private void TryUpdateAlert(EntityUid uid, AtmosMonitorAlarmType type, AtmosAlarmableComponent alarmable, bool sync = true)
         {
             if (alarmable.LastAlarmState == type)
             {
                 return;
             }
 
+            if (sync)
+            {
+                SyncAlertsToNetwork(uid, null, alarmable);
+            }
+
             alarmable.LastAlarmState = type;
             UpdateAppearance(uid, type);
             PlayAlertSound(uid, type, alarmable);
-            SyncAlertsToNetwork(uid, null, alarmable);
             RaiseLocalEvent(uid, new AtmosMonitorAlarmEvent(type, type), true);
         }
 
@@ -178,9 +182,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
-            alarmable.LastAlarmState = alarmType;
-
-            RaiseLocalEvent(uid, new AtmosMonitorAlarmEvent(alarmType, alarmType));
+            TryUpdateAlert(uid, alarmType, alarmable, false);
 
             if (alarmable.ReceiveOnly)
             {
@@ -214,10 +216,9 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
-            alarmable.LastAlarmState = AtmosMonitorAlarmType.Normal;
-            alarmable.NetworkAlarmStates.Clear();
+            TryUpdateAlert(uid, AtmosMonitorAlarmType.Normal, alarmable, false);
 
-            RaiseLocalEvent(uid, new AtmosMonitorAlarmEvent(AtmosMonitorAlarmType.Normal, AtmosMonitorAlarmType.Normal));
+            alarmable.NetworkAlarmStates.Clear();
         }
 
         public void ResetAllOnNetwork(EntityUid uid, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
