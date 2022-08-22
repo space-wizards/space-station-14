@@ -25,6 +25,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -169,7 +170,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
-        appearance.SetData(DoorVisuals.State, door.State);
+        _appearance.SetData(uid, DoorVisuals.State, door.State);
     }
     #endregion
 
