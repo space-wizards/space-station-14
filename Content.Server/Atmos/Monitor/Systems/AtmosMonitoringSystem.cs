@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.EntitySystems;
@@ -31,8 +32,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         // Commands
         public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
 
-
         // Packet data
+        public const string AlertTypes = "atmos_monitor_alert_types";
 
         public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
 
@@ -314,6 +315,11 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
                 [AtmosAlarmableSystem.AlertSource] = tags.Tags
             };
+
+            if (alarms != null)
+            {
+                payload.Add(AtmosAlarmableSystem.AlertTypes, alarms.ToHashSet());
+            }
 
             foreach (var addr in monitor.RegisteredDevices)
             {

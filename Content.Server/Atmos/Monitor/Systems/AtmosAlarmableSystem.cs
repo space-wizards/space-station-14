@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
@@ -26,6 +27,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         public const string AlertCmd = "atmos_alarm";
 
         public const string AlertSource = "atmos_alarm_source";
+
+        public const string AlertTypes = "atmos_alarm_types";
 
         /// <summary>
         ///     Syncs alerts from this alarm receiver to other alarm receivers.
@@ -63,15 +66,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
-            var isValid = false;
-            foreach (var source in sourceTags)
-            {
-                if (component.SyncWithTags.Contains(source))
-                {
-                    isValid = true;
-                    break;
-                }
-            }
+            var isValid = sourceTags.Any(source => component.SyncWithTags.Contains(source));
 
             if (!isValid)
             {
@@ -86,6 +81,16 @@ namespace Content.Server.Atmos.Monitor.Systems
                     if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosMonitorAlarmType state))
                     {
                         return;
+                    }
+
+                    if (args.Data.TryGetValue(AlertTypes, out HashSet<AtmosMonitorThresholdType>? types))
+                    {
+                        isValid = types.Any(type => component.MonitorAlertTypes.Contains(type));
+
+                        if (!isValid)
+                        {
+                            break;
+                        }
                     }
 
                     if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))

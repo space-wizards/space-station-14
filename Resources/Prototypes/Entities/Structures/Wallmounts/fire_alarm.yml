@@ -23,6 +23,8 @@
       - AirSensor
       - GasVent
       - GasScrubber
+    monitorAlertTypes:
+      - Temperature
   - type: Tag
     tags:
       - FireAlarm

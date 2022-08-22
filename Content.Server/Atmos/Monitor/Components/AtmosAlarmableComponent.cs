@@ -48,6 +48,9 @@ namespace Content.Server.Atmos.Monitor.Components
         [DataField("syncWith", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]
         public HashSet<string> SyncWithTags { get; } = new();
 
+        [DataField("monitorAlertTypes")]
+        public HashSet<AtmosMonitorThresholdType> MonitorAlertTypes { get; } = new();
+
         /// <summary>
         ///     If this device should receive only. If it can only
         ///     receive, that means that attempting to sync outwards
