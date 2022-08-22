@@ -15,6 +15,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
 
         /// <summary>
         ///     Syncs alerts from this alarm receiver to other alarm receivers.
@@ -22,6 +23,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         ///     is not aware of the device beforehand, it will not sync.
         /// </summary>
         public const string SyncAlerts = "atmos_alarmable_sync_alerts";
+
+        public const string ResetAll = "atmos_alarmable_reset_all";
 
         public override void Initialize()
         {
@@ -77,6 +80,9 @@ namespace Content.Server.Atmos.Monitor.Systems
                         RaiseLocalEvent(component.Owner, new AtmosMonitorAlarmEvent(state, netMax.Value), true);
                     }
                     break;
+                case ResetAll:
+                    Reset(uid, component);
+                    break;
                 case SyncAlerts:
                     // Synchronize alerts, but only if they're already known by this monitor.
                     // This should help eliminate the chain effect, especially with
@@ -105,6 +111,22 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
+        public void SyncAlertsToNetwork(EntityUid uid, string? address = null, AtmosAlarmableComponent? alarmable = null)
+        {
+            if (!Resolve(uid, ref alarmable) || alarmable.ReceiveOnly)
+            {
+                return;
+            }
+
+            var payload = new NetworkPayload
+            {
+                [DeviceNetworkConstants.Command] = SyncAlerts,
+                [SyncAlerts] = alarmable.NetworkAlarmStates
+            };
+
+            _deviceNet.QueuePacket(uid, address, payload);
+        }
+
         /// <summary>
         ///     Resets the state of this alarmable to normal.
         /// </summary>
@@ -120,7 +142,26 @@ namespace Content.Server.Atmos.Monitor.Systems
             alarmable.LastAlarmState = AtmosMonitorAlarmType.Normal;
             alarmable.NetworkAlarmStates.Clear();
 
+            SyncAlertsToNetwork(uid);
             RaiseLocalEvent(uid, new AtmosMonitorAlarmEvent(AtmosMonitorAlarmType.Normal, AtmosMonitorAlarmType.Normal));
+        }
+
+        public void ResetAllOnNetwork(EntityUid uid, AtmosAlarmableComponent? alarmable = null)
+        {
+            if (!Resolve(uid, ref alarmable))
+            {
+                return;
+            }
+
+            alarmable.LastAlarmState = AtmosMonitorAlarmType.Normal;
+            alarmable.NetworkAlarmStates.Clear();
+
+            var payload = new NetworkPayload
+            {
+                [DeviceNetworkConstants.Command] = ResetAll
+            };
+
+            _deviceNet.QueuePacket(uid, null, payload);
         }
 
         /// <summary>

@@ -28,13 +28,10 @@ namespace Content.Server.Atmos.Monitor.Components
     public sealed class AtmosAlarmableComponent : Component
     {
         [ViewVariables]
-        public List<EntityUid> LinkedMonitors { get; set; } = new();
-
-        [ViewVariables]
-        public Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
+        public readonly Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
 
         [ViewVariables] public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
-        [ViewVariables] public AtmosMonitorAlarmType HighestNetworkState = AtmosMonitorAlarmType.Normal;
+
         [ViewVariables] public bool IgnoreAlarms { get; set; } = false;
 
         [DataField("alarmSound")]
@@ -44,11 +41,19 @@ namespace Content.Server.Atmos.Monitor.Components
         public float AlarmVolume { get; set; } = -10;
 
         /// <summary>
-        ///     List of prototypes that this alarmable can be
-        ///     alarmed by - must be a prototype with AtmosMonitor
-        ///     attached to it
+        ///     List of prototypes that this alarmable can
+        ///     sync with - this is so that you can sync without
+        ///     having to worry about cross-contamination.
         /// </summary>
-        [DataField("alarmedBy")]
-        public List<string> AlarmedByPrototypes { get; } = new();
+        [DataField("syncWith")]
+        public List<string> SyncWithPrototypes { get; } = new();
+
+        /// <summary>
+        ///     If this device should receive only. If it can only
+        ///     receive, that means that attempting to sync outwards
+        ///     will result in nothing happening.
+        /// </summary>
+        [DataField("receiveOnly")]
+        public bool ReceiveOnly { get; }
     }
 }

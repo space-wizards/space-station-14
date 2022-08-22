@@ -22,11 +22,6 @@ namespace Content.Server.Atmos.Monitor.Components
         [ViewVariables]
         public bool NetEnabled = true;
 
-        // Entities that the monitor will alarm. Stores only EntityUids, is populated
-        // when this component starts up.
-        [ViewVariables]
-        public List<EntityUid> LinkedEntities = new();
-
         [DataField("temperatureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThreshold>)))]
         public readonly string? TemperatureThresholdId;
 
@@ -64,34 +59,10 @@ namespace Content.Server.Atmos.Monitor.Components
         [ViewVariables]
         public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
 
-        // feeling real dirty about this one
-        // Caches the alarm states it recieves from the rest of the network.
-        // This is so that the highest alarm in the network can be calculated
-        // from any monitor without having to reping every alarm.
-        [ViewVariables]
-        public Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
-
         /// <summary>
         ///     Registered devices in this atmos monitor. Alerts will be sent directly
         ///     to these devices.
         /// </summary>
         [ViewVariables] public HashSet<string> RegisteredDevices = new();
-
-        // Calculates the highest alarm in the network, including itself.
-        [ViewVariables]
-        public AtmosMonitorAlarmType HighestAlarmInNetwork
-        {
-            get
-            {
-                var state = AtmosMonitorAlarmType.Normal;
-                foreach (var (_, netState) in NetworkAlarmStates)
-                    if (state < netState)
-                        state = netState;
-
-                if (LastAlarmState > state) state = LastAlarmState;
-
-                return state;
-            }
-        }
     }
 }

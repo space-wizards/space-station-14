@@ -300,9 +300,6 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             BroadcastAlertPacket(monitor, alarms);
 
-            if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent? alarmable)
-                && !alarmable.IgnoreAlarms)
-                RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork), true);
             // TODO: Central system that grabs *all* alarms from wired network
         }
 
@@ -320,38 +317,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// </remarks>
         public void ResetAll(EntityUid uid, AtmosMonitorComponent? monitor = null)
         {
-            if (!Resolve(uid, ref monitor)) return;
-
-            var prototype = Prototype(monitor.Owner);
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AtmosMonitorAlarmResetAllCmd,
-                [AtmosMonitorAlarmSrc] = prototype != null ? prototype.ID : string.Empty
-            };
-
-            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
-            monitor.NetworkAlarmStates.Clear();
-
-            Alert(uid, AtmosMonitorAlarmType.Normal, null, monitor);
-        }
-
-        // (TODO: maybe just cache monitors in other monitors?)
-        /// <summary>
-        ///     Syncs the current state of this monitor to the network (to avoid alerting other monitors).
-        /// </summary>
-        private void Sync(AtmosMonitorComponent monitor)
-        {
-            if (!monitor.NetEnabled) return;
-
-            var prototype = Prototype(monitor.Owner);
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AtmosMonitorAlarmSyncCmd,
-                [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
-                [AtmosMonitorAlarmSrc] = prototype != null ? prototype.ID : string.Empty
-            };
-
-            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
         }
 
         /// <summary>
