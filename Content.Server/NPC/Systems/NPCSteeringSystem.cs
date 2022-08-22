@@ -359,8 +359,8 @@ namespace Content.Server.NPC.Systems
         {
             // Depending on what's going on we may return the target or a pathfind node.
 
-            // If it's the last node then just head to the target.
-            if (steering.CurrentPath.Count > 1 && steering.CurrentPath.TryPeek(out var nextTarget))
+            // Even if we're at the last node may not be able to head to target in case we get stuck on a corner or the likes.
+            if (steering.CurrentPath.Count >= 1 && steering.CurrentPath.TryPeek(out var nextTarget))
             {
                 return new EntityCoordinates(nextTarget.GridUid, (Vector2) nextTarget.GridIndices + 0.5f);
             }
