@@ -30,6 +30,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {
@@ -158,7 +159,11 @@ public sealed class DoorSystem : SharedDoorSystem
 
     private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality)) return;
+        if (!args.CanInteract || !TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality))
+            return;
+
+        if (!_interactionSystem.InRangeUnobstructed(args.User, uid))
+            return;
 
         args.Verbs.Add(new AlternativeVerb()
         {
@@ -173,7 +178,8 @@ public sealed class DoorSystem : SharedDoorSystem
     /// </summary>
     private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
     {
-        if (door.BeingPried) return false;
+        if (door.BeingPried)
+            return false;
 
         if (door.State == DoorState.Welded)
             return false;
