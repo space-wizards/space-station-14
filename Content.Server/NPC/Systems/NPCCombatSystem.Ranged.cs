@@ -12,7 +12,7 @@ public sealed partial class NPCCombatSystem
     /// <summary>
     /// Cooldown on raycasting to check LOS.
     /// </summary>
-    private const float UnoccludedCooldown = 0.2f;
+    public const float UnoccludedCooldown = 0.2f;
 
     private void InitializeRanged()
     {
@@ -80,7 +80,7 @@ public sealed partial class NPCCombatSystem
                 continue;
             }
 
-            comp.LOSAccumulator += frameTime;
+            comp.LOSAccumulator -= frameTime;
 
             var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
             var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
@@ -91,9 +91,9 @@ public sealed partial class NPCCombatSystem
 
             // TODO: Should be doing these raycasts in parallel
             // Ideally we'd have 2 steps, 1. to go over the normal details for shooting and then 2. to handle beep / rotate / shoot
-            if (comp.LOSAccumulator > UnoccludedCooldown)
+            if (comp.LOSAccumulator < 0f)
             {
-                comp.LOSAccumulator -= UnoccludedCooldown;
+                comp.LOSAccumulator += UnoccludedCooldown;
                 comp.TargetInLOS = _interaction.InRangeUnobstructed(comp.Owner, comp.Target, distance + 0.1f);
             }
 

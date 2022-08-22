@@ -5,39 +5,47 @@
   parent: BaseStructure
   description: A ballistic machine gun auto-turret.
   components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/turrets.rsi
-    drawdepth: WallMountedItems
-    layers:
-      - state: syndie_lethal
-  - type: Clickable
-  - type: InteractionOutline
-  - type: InteractionPopup
-    interactDelay: 0.2
-    successChance: 0.8
-    interactSuccessString: petting-success-generic
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Effects/double_beep.ogg
-  - type: CombatMode
-  - type: Gun
-    fireRate: 6
-    selectedMode: FullAuto
-    availableModes:
-      - FullAuto
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
-  # TODO: Power ammo provider?
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifle
-    capacity: 10000
-  - type: HTN
-    rootTask: TurretCompound
-    blackboard:
-      TurretRotationSpeed: !type:Double
-        180
-      SoundTargetInLOS: !type:SoundPathSpecifier
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/Guns/turrets.rsi
+      drawdepth: WallMountedItems
+      layers:
+        - state: syndie_lethal
+    - type: Clickable
+    - type: InteractionOutline
+    - type: InteractionPopup
+      interactDelay: 0.2
+      successChance: 0.8
+      interactSuccessString: petting-success-generic
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
         path: /Audio/Effects/double_beep.ogg
-  - type: AiFactionTag
-    factions:
-      - Syndicate
+    - type: CombatMode
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: Gun
+      fireRate: 6
+      selectedMode: FullAuto
+      availableModes:
+        - FullAuto
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
+    # TODO: Power ammo provider?
+    - type: BallisticAmmoProvider
+      proto: CartridgeCaselessRifle
+      capacity: 10000
+    - type: HTN
+      rootTask: TurretCompound
+      blackboard:
+        TurretRotationSpeed: !type:Double
+          180
+        SoundTargetInLOS: !type:SoundPathSpecifier
+          path: /Audio/Effects/double_beep.ogg
+    - type: AiFactionTag
+      factions:
+        - Syndicate
