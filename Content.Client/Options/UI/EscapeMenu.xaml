@@ -1,6 +1,7 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+﻿<ui1:EscapeMenu xmlns="https://spacestation14.io"
             xmlns:changelog="clr-namespace:Content.Client.Changelog"
             xmlns:ui="clr-namespace:Content.Client.Voting.UI"
+            xmlns:ui1="clr-namespace:Content.Client.Options.UI"
             Title="{Loc 'ui-escape-title'}"
             Resizable="False">
 
@@ -13,4 +14,4 @@
         <Button Access="Public" Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
         <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
     </BoxContainer>
-</DefaultWindow>
+</ui1:EscapeMenu>
