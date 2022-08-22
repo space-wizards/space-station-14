@@ -12,8 +12,21 @@
   - type: RefillableSolution
     solution: microwave
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: MicrowaveVisualizer
+      enum.PowerDeviceVisuals.VisualState:
+        enum.MicrowaveVisualizerLayers.Base:
+          Idle: { state: "mw" }
+          Broken: { state: "mwb" }
+          aCooking: { state: "mw" }
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          Idle: { state: "mw_unlit" }
+          Broken: { state: "mw_unlit" }
+          Cooking: { state: "mw_running_unlit" }
+      enum.PowerDeviceVisuals.Powered:
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          True: { visible: true }
+          False: { visible: false }   
   - type: ActivatableUI
     key: enum.MicrowaveUiKey.Key
   - type: UserInterface
