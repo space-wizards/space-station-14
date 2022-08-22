@@ -559,10 +559,10 @@
         amount: 0.39
 
 - type: reagent
-  id: MartiniVodka
-  name: reagent-name-martini-vodka
+  id: VodkaMartini
+  name: reagent-name-vodka-martini
   parent: BaseAlcohol
-  desc: reagent-desc-martini-vodka
+  desc: reagent-desc-vodka-martini
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#cddcad"
   spritePath: glass_martini.rsi
