@@ -68,7 +68,6 @@ public sealed class AirAlarmModeFactory
         AirAlarmMode.Fill => _fillMode,
         AirAlarmMode.Panic => _panicMode,
         AirAlarmMode.None => _noneMode,
-        AirAlarmMode.Replace => new AirAlarmReplaceMode(),
         _ => null
     };
 }
@@ -165,49 +164,6 @@ public sealed class AirAlarmFillMode : AirAlarmModeExecutor
         foreach (var (addr, device) in alarm.ScrubberData)
         {
             AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.FillModePreset);
-        }
-    }
-}
-
-public sealed class AirAlarmReplaceMode : AirAlarmModeExecutor, IAirAlarmModeUpdate
-{
-    private AirAlarmComponent? _alarm;
-    private float _lastPressure = Atmospherics.OneAtmosphere;
-
-    public string NetOwner { get; set; } = string.Empty;
-
-    public override void Execute(EntityUid uid)
-    {
-        if (!EntityManager.TryGetComponent(uid, out _alarm))
-            return;
-
-        SetSiphon(uid);
-    }
-
-    public void Update(EntityUid uid)
-    {
-        if (_alarm == null)
-            return;
-
-        // just a little pointer
-
-        _lastPressure = AirAlarmSystem.CalculatePressureAverage(_alarm);
-        if (_lastPressure <= 0.2f) // anything below and it might get stuck
-        {
-            AirAlarmSystem.SetMode(uid, NetOwner!, AirAlarmMode.Filtering, false, false);
-        }
-    }
-
-    private void SetSiphon(EntityUid uid)
-    {
-        foreach (var (addr, device) in _alarm!.VentData)
-        {
-            AirAlarmSystem.SetData(uid, addr, GasVentPumpData.ReplaceModePreset);
-        }
-
-        foreach (var (addr, device) in _alarm!.ScrubberData)
-        {
-            AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.ReplaceModePreset);
         }
     }
 }
