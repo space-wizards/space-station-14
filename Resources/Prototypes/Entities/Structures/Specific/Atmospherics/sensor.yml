@@ -50,6 +50,9 @@
         - AirSensor
     - type: AccessReader
       access: [ [ "Atmospherics" ] ]
+    - type: Construction
+      graph: AirSensor
+      node: sensor
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -67,6 +70,9 @@
     - type: Anchorable
     - type: Clickable
     - type: InteractionOutline
+    - type: Construction
+      graph: AirSensor
+      node: assembly
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
