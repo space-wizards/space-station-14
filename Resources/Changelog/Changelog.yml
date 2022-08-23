@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Stun batons now use internal battery instead of a power cell; can be
-      inserted into a recharger again, type: Tweak}
-  id: 1680
-  time: '2022-06-12T01:20:03.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixed round end sounds playing even if you have the "Lobby & Round-end
@@ -2939,3 +2933,16 @@ Entries:
       from fatal poisoning!', type: Add}
   id: 2179
   time: '2022-08-22T08:50:46.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Touched up and re-shaded the Medical, Cargo, and Scientist jumpsuit
+      sprites.', type: Tweak}
+  - {message: Touched up and re-shaded all three labcoats., type: Tweak}
+  - {message: Medical backpacks and satchels now correctly use a blue cross instead
+      of a green one., type: Tweak}
+  - {message: Recolored the Cargo cap to reflect the new colors the jumpsuit has.,
+    type: Tweak}
+  - {message: Gave the Quartermaster a unique recolored cap that reflects his new
+      jumpsuit colors., type: Add}
+  id: 2180
+  time: '2022-08-23T02:28:11.0000000+00:00'
