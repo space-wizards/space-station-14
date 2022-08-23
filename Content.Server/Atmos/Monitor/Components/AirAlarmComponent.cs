@@ -15,10 +15,10 @@ public sealed class AirAlarmComponent : Component
 
     [ViewVariables] public AirAlarmTab CurrentTab { get; set; }
 
-    public Dictionary<string, IAtmosDeviceData> DeviceData = new();
-    public Dictionary<string, GasVentPumpData> VentData = new();
-    public Dictionary<string, GasVentScrubberData> ScrubberData = new();
-    public Dictionary<string, AtmosSensorData> SensorData = new();
+    public readonly HashSet<string> KnownDevices = new();
+    public readonly Dictionary<string, GasVentPumpData> VentData = new();
+    public readonly Dictionary<string, GasVentScrubberData> ScrubberData = new();
+    public readonly Dictionary<string, AtmosSensorData> SensorData = new();
 
     public HashSet<NetUserId> ActivePlayers = new();
 

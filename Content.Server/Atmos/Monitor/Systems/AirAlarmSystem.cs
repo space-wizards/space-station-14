@@ -182,6 +182,7 @@ public sealed class AirAlarmSystem : EntitySystem
         {
             ForceCloseAllInterfaces(uid);
             component.CurrentModeUpdater = null;
+            component.KnownDevices.Clear();
             component.ScrubberData.Clear();
             component.SensorData.Clear();
             component.VentData.Clear();
@@ -232,6 +233,7 @@ public sealed class AirAlarmSystem : EntitySystem
     {
         if (AccessCheck(uid, args.Session.AttachedEntity, component))
         {
+            component.KnownDevices.Clear();
             component.VentData.Clear();
             component.ScrubberData.Clear();
             component.SensorData.Clear();
@@ -384,8 +386,6 @@ public sealed class AirAlarmSystem : EntitySystem
 
                 // Save into component.
                 // Sync data to interface.
-                // _airAlarmDataSystem.UpdateDeviceData(uid, args.SenderAddress, data);
-                //
                 switch (data)
                 {
                     case GasVentPumpData ventData:
@@ -401,6 +401,8 @@ public sealed class AirAlarmSystem : EntitySystem
                             controller.SensorData[args.SenderAddress] = sensorData;
                         break;
                 }
+
+                controller.KnownDevices.Add(args.SenderAddress);
 
                 UpdateUI(uid, controller);
 
@@ -500,7 +502,7 @@ public sealed class AirAlarmSystem : EntitySystem
             }
         }
 
-        var deviceCount = alarm.VentData.Count + alarm.ScrubberData.Count + alarm.SensorData.Count;
+        var deviceCount = alarm.KnownDevices.Count;
 
         if (!_atmosAlarmable.TryGetHighestAlert(uid, out var highestAlarm))
         {
