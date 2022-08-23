@@ -275,6 +275,21 @@
   conditions:
   - !type:WallmountCondition {}
 
+- type: construction
+  name: air sensor
+  id: AirSensor
+  graph: AirSensor
+  startNode: start
+  targetNode: sensor
+  category: construction-category-structures
+  description: An air sensor. Senses air.
+  icon:
+    sprite: Structures/Specific/Atmospherics/sensor.rsi
+    state: gsensor1
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+
 # ATMOS PIPES
 - type: construction
   name: gas pipe half
