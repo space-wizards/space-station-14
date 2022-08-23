@@ -88,26 +88,30 @@ namespace Content.Server.Atmos.Monitor.Systems
                     // the maximum alarm state at all times.
                     if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosMonitorAlarmType state))
                     {
-                        return;
+                        break;
                     }
 
                     if (args.Data.TryGetValue(AlertTypes, out HashSet<AtmosMonitorThresholdType>? types) && component.MonitorAlertTypes != null)
                     {
                         isValid = types.Any(type => component.MonitorAlertTypes.Contains(type));
-
-                        if (!isValid)
-                        {
-                            break;
-                        }
                     }
 
                     if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))
                     {
+                        if (!isValid)
+                        {
+                            break;
+                        }
+
                         component.NetworkAlarmStates.Add(args.SenderAddress, state);
                     }
                     else
                     {
-                        component.NetworkAlarmStates[args.SenderAddress] = state;
+                        // This is because if the alert is no longer valid,
+                        // it may mean that the threshold we need to look at has
+                        // been removed from the threshold types passed:
+                        // basically, we need to reset this state to normal here.
+                        component.NetworkAlarmStates[args.SenderAddress] = isValid ? state : AtmosMonitorAlarmType.Normal;
                     }
 
                     if (!TryGetHighestAlert(uid, out var netMax, component))
