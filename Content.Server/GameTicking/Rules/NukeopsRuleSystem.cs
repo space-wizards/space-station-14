@@ -21,6 +21,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
 using System.Data;
+using Content.Server.NPC.Components;
+using Content.Server.NPC.Systems;
 using Content.Server.Traitor.Uplink;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -284,8 +286,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             newMind.AddRole(new TraitorRole(newMind, _prototypeManager.Index<AntagPrototype>(role)));
 
             var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
-            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
-            EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(mob);
+            MetaData(mob).EntityName = name;
+            AddComp<RandomHumanoidAppearanceComponent>(mob);
+            // TODO: God this sucks.
+            var faction = EnsureComp<AiFactionTagComponent>(mob);
+            faction.Factions |= Faction.Syndicate;
+            faction.Factions &= ~Faction.NanoTrasen;
 
             newMind.TransferTo(mob);
             _stationSpawningSystem.EquipStartingGear(mob, gear, null);
