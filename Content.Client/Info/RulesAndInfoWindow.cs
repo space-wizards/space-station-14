@@ -1,4 +1,5 @@
 using Content.Client.Options.UI;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Shared.CCVar;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -56,7 +57,7 @@ namespace Content.Client.Info
             AddSection(tutorialList, Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
             AddSection(tutorialList, Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
 
-            infoControlSection.ControlsButton.OnPressed += _ => optionsMenu.OpenCentered();
+            infoControlSection.ControlsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().OpenWindow();
         }
 
         private static void AddSection(Info info, Control control)

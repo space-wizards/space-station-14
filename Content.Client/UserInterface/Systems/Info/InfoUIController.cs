@@ -2,18 +2,18 @@
 using Content.Client.Gameplay;
 using Content.Client.Info;
 using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Systems.Character;
 using Content.Shared.Input;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Info;
 
 public sealed class InfoUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<BwoinkSystem>
 {
-    private RulesAndInfoWindow? _window;
-    private MenuButton InfoButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InfoButton;
+    private RulesAndInfoWindow? _infoWindow;
+    private MenuButton? _infoButton;
 
     public void OnSystemLoaded(BwoinkSystem system)
     {
@@ -29,17 +29,24 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
 
     private void AdminReceivedAHelp()
     {
-        SetInfoRed(true);
+        _infoButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
     }
 
     private void AdminOpenedAHelp()
     {
-        SetInfoRed(false);
+        _infoButton?.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
     }
 
     public void OnStateEntered(GameplayState state)
     {
-        InfoButton.OnPressed += InfoButtonPressed;
+        DebugTools.Assert(_infoWindow == null);
+        _infoButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InfoButton;
+        _infoButton.OnPressed += InfoButtonPressed;
+
+        _infoWindow = UIManager.CreateWindow<RulesAndInfoWindow>();
+        _infoWindow.OnClose += () => { _infoButton.Pressed = false; };
+        _infoWindow.OnOpen +=  () => { _infoButton.Pressed = true; };
+
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenInfo,
@@ -49,7 +56,12 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
 
     public void OnStateExited(GameplayState state)
     {
+        _infoWindow?.DisposeAllChildren();
+        _infoWindow = null;
         CommandBinds.Unregister<InfoUIController>();
+        if (_infoButton == null)
+            return;
+        _infoButton.OnPressed -= InfoButtonPressed;
     }
 
     private void InfoButtonPressed(BaseButton.ButtonEventArgs args)
@@ -57,38 +69,17 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
         ToggleWindow();
     }
 
-    private void CreateWindow()
+    public void ToggleWindow()
     {
-        _window = UIManager.CreateWindow<RulesAndInfoWindow>();
-        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
-    }
-    private void CloseWindow()
-    {
-        _window?.Close();
-        InfoButton.Pressed = false;
-    }
-
-    private void ToggleWindow()
-    {
-        if (_window == null)
-        {
-            CreateWindow();
-        }
-
-        if (_window!.IsOpen)
-        {
-            CloseWindow();
+        if (_infoWindow == null)
             return;
+        if (_infoWindow.IsOpen)
+        {
+            _infoWindow.Close();
         }
-        _window.Open();
-        InfoButton.Pressed = true;
-    }
-
-    public void SetInfoRed(bool value)
-    {
-        if (value)
-            InfoButton.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
         else
-            InfoButton.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
+        {
+            _infoWindow.OpenCentered();
+        }
     }
 }

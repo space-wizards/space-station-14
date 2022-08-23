@@ -1,9 +1,8 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client.Info;
 using Content.Client.Links;
-using Content.Client.MainMenu;
-using Content.Client.Options.UI;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Info;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Input;
@@ -12,7 +11,6 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
-using TerraFX.Interop.Windows;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
@@ -26,42 +24,40 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
     private Options.UI.EscapeMenu? _escapeWindow;
     private RulesAndInfoWindow? _rulesAndInfoWindow;
-    private OptionsMenu? _optionsWindow;
 
     private MenuButton? _escapeButton;
 
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_escapeWindow == null);
-
         _escapeButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().EscapeButton;
         _escapeButton.OnPressed += EscapeButtonOnOnPressed;
 
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
-        _escapeWindow.OnClose += OnEscapeClosed;
+        _escapeWindow.OnClose += () => { _escapeButton.Pressed = false; };
+        _escapeWindow.OnOpen +=  () => { _escapeButton.Pressed = true; };
+
         _escapeWindow.RulesButton.OnPressed += _ =>
         {
-            CloseWindow();
-            _rulesAndInfoWindow ??= UIManager.CreateWindow<RulesAndInfoWindow>();
-            _rulesAndInfoWindow.OpenCentered();
+            CloseEscapeWindow();
+            UIManager.GetUIController<InfoUIController>().ToggleWindow();
         };
 
         _escapeWindow.DisconnectButton.OnPressed += _ =>
         {
-            CloseWindow();
+            CloseEscapeWindow();
             _console.ExecuteCommand("disconnect");
         };
 
         _escapeWindow.OptionsButton.OnPressed += _ =>
         {
-            CloseWindow();
-            _optionsWindow ??= UIManager.CreateWindow<OptionsMenu>();
-            _optionsWindow.OpenCentered();
+            CloseEscapeWindow();
+            UIManager.GetUIController<OptionsUIController>().ToggleWindow();
         };
 
         _escapeWindow.QuitButton.OnPressed += _ =>
         {
-            CloseWindow();
+            CloseEscapeWindow();
             _console.ExecuteCommand("quit");
         };
 
@@ -92,12 +88,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         ToggleWindow();
     }
 
-    private void OnEscapeClosed()
-    {
-        _escapeButton!.Pressed = false;
-    }
-
-    private void CloseWindow()
+    private void CloseEscapeWindow()
     {
         _escapeWindow?.Close();
     }
@@ -106,14 +97,15 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     {
         if (_escapeWindow == null)
             return;
-        if (_escapeWindow.IsOpen != true)
+
+        if (_escapeWindow.IsOpen)
         {
-            _escapeWindow.OpenCentered();
-            _escapeButton!.Pressed = true;
+            CloseEscapeWindow();
         }
         else
         {
-            CloseWindow();
+            _escapeWindow.OpenCentered();
+            _escapeButton!.Pressed = true;
         }
     }
 }
