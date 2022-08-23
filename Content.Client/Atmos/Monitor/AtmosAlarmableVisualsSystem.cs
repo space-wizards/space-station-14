@@ -12,7 +12,6 @@ namespace Content.Client.Atmos.Monitor;
 
 public sealed class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmableVisualsComponent>
 {
-    [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
     protected override void OnAppearanceChange(EntityUid uid, AtmosAlarmableVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null || !args.Sprite.LayerMapTryGet(component.LayerMap, out int layer))
