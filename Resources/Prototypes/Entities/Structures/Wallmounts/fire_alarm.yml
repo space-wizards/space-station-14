@@ -25,6 +25,14 @@
       - GasScrubber
     monitorAlertTypes:
       - Temperature
+  - type: AtmosAlarmableVisuals
+    layerMap: "fireAlarmState"
+    alarmStates:
+      Normal: fire_off
+      Warning: fire_off # shouldn't be alarming at a warning
+      Danger: fire_on
+      Emagged: fire_emagged
+    hideOnDepowered: [ "fireAlarmState" ]
   - type: Tag
     tags:
       - FireAlarm
@@ -34,15 +42,6 @@
   - type: AccessReader
     access: [ [ "Atmospherics" ] ]
   - type: Appearance
-    visuals:
-    - type: AtmosMonitorVisualizer
-      layerMap: "fireAlarmState"
-      alarmStates:
-        Normal: fire_off
-        Warning: fire_off # shouldn't be alarming at a warning
-        Danger: fire_on
-        Emagged: fire_emagged
-      hideOnDepowered: ["fireAlarmState"]
   - type: WiresVisuals
   - type: AlertLevelDisplay
     alertVisuals:

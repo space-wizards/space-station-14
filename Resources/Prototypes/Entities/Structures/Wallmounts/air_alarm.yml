@@ -22,6 +22,14 @@
       - AirSensor
       - GasVent
       - GasScrubber
+  - type: AtmosAlarmableVisuals
+    layerMap: "airAlarmBase"
+    alarmStates:
+      Normal: alarm0
+      Warning: alarm2
+      Danger: alarm1
+    setOnDepowered:
+      airAlarmBase: alarmp
   - type: Tag
     tags:
       - AirAlarm
@@ -41,15 +49,6 @@
   - type: AccessReader
     access: [["Atmospherics"]]
   - type: Appearance
-    visuals:
-    - type: AtmosMonitorVisualizer
-      layerMap: "airAlarmBase"
-      alarmStates:
-        Normal: alarm0
-        Warning: alarm2
-        Danger: alarm1
-      setOnDepowered:
-        airAlarmBase: alarmp
   - type: WiresVisuals
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
