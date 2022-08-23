@@ -9,7 +9,6 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Popups;
 using Content.Shared.Temperature;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
@@ -228,11 +227,15 @@ namespace Content.Server.Tools
                     var drained = _solutionContainerSystem.Drain(target, targetSolution,  trans);
                     _solutionContainerSystem.TryAddSolution(uid, welderSolution, drained);
                     SoundSystem.Play(welder.WelderRefill.GetSound(), Filter.Pvs(uid), uid);
-                    target.PopupMessage(args.User, Loc.GetString("welder-component-after-interact-refueled-message"));
+                    _popupSystem.PopupEntity(Loc.GetString("welder-component-after-interact-refueled-message"), uid, Filter.Entities(args.User));
+                }
+                else if (welderSolution.AvailableVolume <= 0)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("welder-component-already-full"), uid, Filter.Entities(args.User));
                 }
                 else
                 {
-                    target.PopupMessage(args.User, Loc.GetString("welder-component-no-fuel-in-tank", ("owner", args.Target)));
+                    _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-in-tank", ("owner", args.Target)), uid, Filter.Entities(args.User));
                 }
             }
 

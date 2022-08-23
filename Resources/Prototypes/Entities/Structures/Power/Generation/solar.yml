@@ -43,6 +43,7 @@
   id: SolarPanel
   parent: SolarPanelBasePhysSprite
   name: solar panel
+  description: A solar panel that generates power.
   components:
   - type: PowerSupplier
     supplyRampTolerance: 500
@@ -72,6 +73,7 @@
   id: SolarPanelBroken
   parent: SolarPanelBasePhysSprite
   name: solar panel
+  description: A broken solar panel.
   suffix: Broken
   components:
   - type: Sprite
@@ -146,6 +148,7 @@
 - type: entity
   id: SolarTracker
   name: solar tracker
+  description: A solar tracker. Tracks the nearest star.
   placement:
     mode: SnapgridCenter
   components:

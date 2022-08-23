@@ -22,6 +22,8 @@
     solution: drink
   - type: RefillableSolution
     solution: drink
+  - type: DrainableSolution
+    solution: drink
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key

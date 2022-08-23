@@ -30,6 +30,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -94,11 +95,12 @@ public sealed class DoorSystem : SharedDoorSystem
     /// Selectively send sound to clients, taking care to not send the double-audio.
     /// </summary>
     /// <param name="uid">The audio source</param>
-    /// <param name="sound">The sound</param>
+    /// <param name="soundSpecifier">The sound</param>
+    /// <param name="audioParams">The audio parameters.</param>
     /// <param name="predictingPlayer">The user (if any) that instigated an interaction</param>
     /// <param name="predicted">Whether this interaction would have been predicted. If the predicting player is null,
     /// this assumes it would have been predicted by all players in PVS range.</param>
-    protected override void PlaySound(EntityUid uid, string sound, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
+    protected override void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
     {
         // If this sound would have been predicted by all clients, do not play any audio.
         if (predicted && predictingPlayer == null)
@@ -113,7 +115,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
 
         // send the sound to players.
-        SoundSystem.Play(sound, filter, uid, audioParams);
+        Audio.Play(soundSpecifier, filter, uid, audioParams);
     }
 
 #region DoAfters
@@ -158,7 +160,11 @@ public sealed class DoorSystem : SharedDoorSystem
 
     private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality)) return;
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        if (!TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality))
+            return;
 
         args.Verbs.Add(new AlternativeVerb()
         {
@@ -173,7 +179,8 @@ public sealed class DoorSystem : SharedDoorSystem
     /// </summary>
     private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
     {
-        if (door.BeingPried) return false;
+        if (door.BeingPried)
+            return false;
 
         if (door.State == DoorState.Welded)
             return false;
@@ -274,9 +281,9 @@ public sealed class DoorSystem : SharedDoorSystem
         if (string.IsNullOrEmpty(door.BoardPrototype))
             return;
 
-        var container = uid.EnsureContainer<Container>("board", out var existed);
+        var container = _containerSystem.EnsureContainer<Container>(uid, "board", out var existed);
 
-        if (existed & container.ContainedEntities.Count != 0)
+        if (existed && container.ContainedEntities.Count != 0)
         {
             // We already contain a board. Note: We don't check if it's the right one!
             return;
@@ -298,7 +305,7 @@ public sealed class DoorSystem : SharedDoorSystem
             if (door.State == DoorState.Closed)
             {
                 SetState(uid, DoorState.Emagging, door);
-                PlaySound(uid, door.SparkSound.GetSound(), AudioParams.Default.WithVolume(8), args.UserUid, false);
+                PlaySound(uid, door.SparkSound, AudioParams.Default.WithVolume(8), args.UserUid, false);
                 args.Handled = true;
             }
         }
@@ -309,12 +316,12 @@ public sealed class DoorSystem : SharedDoorSystem
         if (!Resolve(uid, ref door))
             return;
 
-        DoorState lastState = door.State;
+        var lastState = door.State;
 
         SetState(uid, DoorState.Opening, door);
 
         if (door.OpenSound != null)
-            PlaySound(uid, door.OpenSound.GetSound(), AudioParams.Default.WithVolume(-5), user, predicted);
+            PlaySound(uid, door.OpenSound, AudioParams.Default.WithVolume(-5), user, predicted);
 
         if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
             airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());

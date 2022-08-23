@@ -22,6 +22,11 @@
   - type: Construction
     graph: SignalSwitchGraph
     node: SignalSwitchNode
+  - type: Fixtures
+  - type: SignalTransmitter
+    outputs:
+      On: []
+      Off: []
 
 - type: entity
   id: SignalButton
@@ -49,6 +54,10 @@
   - type: Construction
     graph: SignalButtonGraph
     node: SignalButtonNode
+  - type: Fixtures
+  - type: SignalTransmitter
+    outputs:
+      Pressed: []
 
 - type: entity
   id: ApcNetSwitch
@@ -79,6 +88,7 @@
     - type: Construction
       graph: LightSwitchGraph
       node: LightSwitchNode
+    - type: Fixtures
 
 - type: entity
   id: TwoWayLever
@@ -120,3 +130,8 @@
     - type: Construction
       graph: LeverGraph
       node: LeverNode
+    - type: SignalTransmitter
+      outputs:
+        Left: []
+        Right: []
+        Middle: []

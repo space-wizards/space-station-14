@@ -18,9 +18,9 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-
+        
         _window = new AirAlarmWindow();
-
+        
         if (State != null) UpdateState(State);
 
         _window.OpenCentered();

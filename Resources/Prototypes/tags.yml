@@ -43,6 +43,9 @@
   id: Bottle
 
 - type: Tag
+  id: BulletFoam
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
@@ -343,6 +346,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NukeOpsUplink
 
 - type: Tag
   id: Ointment

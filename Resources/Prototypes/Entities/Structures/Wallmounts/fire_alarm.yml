@@ -43,7 +43,7 @@
         Danger: fire_on
         Emagged: fire_emagged
       hideOnDepowered: ["fireAlarmState"]
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: AlertLevelDisplay
     alertVisuals:
       green: fire_0
