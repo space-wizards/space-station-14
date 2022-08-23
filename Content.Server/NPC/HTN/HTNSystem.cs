@@ -1,12 +1,16 @@
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Content.Server.Administration.Managers;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Server.NPC.Systems;
+using Content.Shared.Administration;
+using Content.Shared.NPC;
 using JetBrains.Annotations;
+using Robust.Server.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
@@ -14,6 +18,7 @@ namespace Content.Server.NPC.HTN;
 
 public sealed class HTNSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
 
@@ -29,9 +34,24 @@ public sealed class HTNSystem : EntitySystem
         _sawmill = Logger.GetSawmill("npc.htn");
         SubscribeLocalEvent<HTNComponent, ComponentStartup>(OnHTNStartup);
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
+        SubscribeNetworkEvent<RequestHTNMessage>(OnHTNMessage);
 
         _prototypeManager.PrototypesReloaded += OnPrototypeLoad;
         OnLoad();
+    }
+
+    private void OnHTNMessage(RequestHTNMessage msg, EntitySessionEventArgs args)
+    {
+        if (!_admin.HasAdminFlag((IPlayerSession) args.SenderSession, AdminFlags.Debug))
+        {
+            _subscribers.Remove(args.SenderSession);
+            return;
+        }
+
+        if (_subscribers.Add(args.SenderSession))
+            return;
+
+        _subscribers.Remove(args.SenderSession);
     }
 
     public override void Shutdown()
@@ -173,6 +193,29 @@ public sealed class HTNSystem : EntitySystem
                     if (comp.Plan != null)
                     {
                         StartupTask(comp.Plan.Tasks[comp.Plan.Index], comp.Blackboard, comp.Plan.Effects[comp.Plan.Index]);
+                    }
+
+                    // Send debug info
+                    foreach (var session in _subscribers)
+                    {
+                        var text = new StringBuilder();
+
+                        if (comp.Plan != null)
+                        {
+                            text.AppendLine($"BTR: {string.Join(", ", comp.Plan.BranchTraversalRecord)}");
+                            text.AppendLine($"tasks:");
+
+                            foreach (var task in comp.Plan.Tasks)
+                            {
+                                text.AppendLine($"- {task.ID}");
+                            }
+                        }
+
+                        RaiseNetworkEvent(new HTNMessage()
+                        {
+                            Uid = comp.Owner,
+                            Text = text.ToString(),
+                        }, session.ConnectedClient);
                     }
                 }
 
