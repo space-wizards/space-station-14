@@ -653,12 +653,12 @@ namespace Content.Server.Storage.EntitySystems
                     DebugTools.Assert(storedStorageComp != storageComp, $"Storage component contains itself!? Entity: {uid}");
                 }
 
-                if (TryComp(entity, out ServerUserInterfaceComponent? uiComponent))
+                if (!TryComp(entity, out ServerUserInterfaceComponent? ui))
+                    continue;
+
+                foreach (var bui in ui.Interfaces.Values)
                 {
-                    foreach (var ui in uiComponent.Interfaces)
-                    {
-                        ui.Close(session);
-                    }
+                    _uiSystem.TryClose(entity, bui.UiKey, session, ui);
                 }
             }
         }
