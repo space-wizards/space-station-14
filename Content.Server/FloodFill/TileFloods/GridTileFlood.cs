@@ -1,14 +1,13 @@
-using Content.Server.FloodFill;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
-using static Content.Server.Explosion.EntitySystems.ExplosionSystem;
+using static Content.Server.FloodFill.FloodFillSystem;
 
-namespace Content.Server.Explosion.EntitySystems;
+namespace Content.Server.FloodFill;
 
 /// <summary>
-///     See <see cref="ExplosionTileFlood"/>. Each instance of this class corresponds to a seperate grid.
+///     See <see cref="TileFlood"/>. Each instance of this class corresponds to a separate grid.
 /// </summary>
-public sealed class ExplosionGridTileFlood : ExplosionTileFlood
+public sealed class GridTileFlood : TileFlood
 {
     public IMapGrid Grid;
     private bool _needToTransform = false;
@@ -22,7 +21,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
     // destroy the airtight entity.
     private Dictionary<int, List<(Vector2i, AtmosDirection)>> _delayedNeighbors = new();
 
-    private Dictionary<Vector2i, ExplosionSystem.TileData> _airtightMap;
+    private Dictionary<Vector2i, TileData> _airtightMap;
 
     private float _maxIntensity;
     private float _intensityStepSize;
@@ -33,15 +32,14 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 
     public HashSet<Vector2i> SpaceJump = new();
 
-    private Dictionary<Vector2i, ExplosionSystem.NeighborFlag> _edgeTiles;
+    private Dictionary<Vector2i, NeighborFlag> _edgeTiles;
 
-    public ExplosionGridTileFlood(
+    public GridTileFlood(
         IMapGrid grid,
-        Dictionary<Vector2i, ExplosionSystem.TileData> airtightMap,
+        Dictionary<Vector2i, TileData> airtightMap,
         float maxIntensity,
         float intensityStepSize,
-        int typeIndex,
-        Dictionary<Vector2i, ExplosionSystem.NeighborFlag> edgeTiles,
+        Dictionary<Vector2i, NeighborFlag> edgeTiles,
         EntityUid? referenceGrid,
         Matrix3 spaceMatrix,
         Angle spaceAngle)
@@ -50,7 +48,6 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
         _airtightMap = airtightMap;
         _maxIntensity = maxIntensity;
         _intensityStepSize = intensityStepSize;
-        _typeIndex = typeIndex;
         _edgeTiles = edgeTiles;
 
         // initialise SpaceTiles
@@ -58,8 +55,8 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
         {
             for (var i = 0; i < NeighbourVectors.Length; i++)
             {
-                var dir = (ExplosionSystem.NeighborFlag) (1 << i);
-                if ((spaceNeighbors & dir) != ExplosionSystem.NeighborFlag.Invalid)
+                var dir = (NeighborFlag) (1 << i);
+                if ((spaceNeighbors & dir) != NeighborFlag.Invalid)
                     _spaceTiles.Add(tile + NeighbourVectors[i]);
             }
         }
@@ -187,7 +184,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
             NewBlockedTiles.Add(tile);
 
             // At what explosion iteration would this blocker be destroyed?
-            var clearIteration = iteration + (int) MathF.Ceiling(tileData.ExplosionTolerance[_typeIndex] / _intensityStepSize);
+            var clearIteration = iteration + (int) MathF.Ceiling(tileData.Tolerance[_typeIndex] / _intensityStepSize);
             if (FreedTileLists.TryGetValue(clearIteration, out var list))
                 list.Add(tile);
             else
@@ -257,7 +254,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
             if (_airtightMap.TryGetValue(tile, out var tileData))
             {
                 blockedDirections = tileData.BlockedDirections;
-                sealIntegrity = tileData.ExplosionTolerance[_typeIndex];
+                sealIntegrity = tileData.Tolerance[_typeIndex];
             }
 
             // First, yield any neighboring tiles that are not blocked by airtight entities on this tile

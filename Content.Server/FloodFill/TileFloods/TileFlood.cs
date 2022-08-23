@@ -1,8 +1,6 @@
 using Content.Shared.Atmos;
-using System.Runtime.CompilerServices;
-using Content.Server.FloodFill;
 
-namespace Content.Server.Explosion.EntitySystems;
+namespace Content.Server.FloodFill;
 
 /// <summary>
 ///     This class exists to facilitate the iterative neighbor-finding / flooding algorithm used by explosions in <see
@@ -14,7 +12,7 @@ namespace Content.Server.Explosion.EntitySystems;
 ///     perform a neighbor-finding iteration to expand the explosion area. It also has some functionality that allows
 ///     tiles to move between grids/space.
 /// </remarks>
-public abstract class ExplosionTileFlood
+public abstract class TileFlood
 {
     // Main tile data sets, mapping iterations onto tile lists
     public Dictionary<int, List<Vector2i>> TileLists = new();
