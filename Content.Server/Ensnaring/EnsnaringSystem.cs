@@ -107,8 +107,8 @@ public sealed class EnsnaringSystem : EntitySystem
             BreakOnDamage = false,
             BreakOnStun = true,
             NeedHand = true,
-            TargetFinishedEvent = new FreeEnsnareDoAfterComplete(component),
-            TargetCancelledEvent = new FreeEnsnareDoAfterCancel(component),
+            TargetFinishedEvent = new FreeEnsnareDoAfterComplete(component.Owner),
+            TargetCancelledEvent = new FreeEnsnareDoAfterCancel(component.Owner),
         };
 
         _doAfter.DoAfter(doAfterEventArgs);

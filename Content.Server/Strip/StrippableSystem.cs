@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Threading;
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
@@ -17,6 +18,7 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Server.Strip
@@ -92,7 +94,7 @@ namespace Content.Server.Strip
                 foreach (var entity in ensnared.Container.ContainedEntities)
                 {
                     if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
-                        return;
+                        continue;
 
                     if (entity != args.Ensnare)
                         continue;

@@ -43,7 +43,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, SharedEnsnareableComponent? component, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref component, ref appearance))
+        if (!Resolve(uid, ref component, ref appearance, false))
             return;
 
         appearance.SetData(EnsnareableVisuals.IsEnsnared, component.IsEnsnared);

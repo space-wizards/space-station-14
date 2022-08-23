@@ -21,11 +21,11 @@ public sealed class EnsnaringComponent : SharedEnsnaringComponent
 /// </summary>
 public sealed class FreeEnsnareDoAfterComplete : EntityEventArgs
 {
-    public readonly EnsnaringComponent? EnsnaringComponent;
+    public readonly EntityUid EnsnaringEntity;
 
-    public FreeEnsnareDoAfterComplete(EnsnaringComponent ensnaringComponent)
+    public FreeEnsnareDoAfterComplete(EntityUid ensnaringEntity)
     {
-        EnsnaringComponent = ensnaringComponent;
+        EnsnaringEntity = ensnaringEntity;
     }
 }
 
@@ -34,10 +34,10 @@ public sealed class FreeEnsnareDoAfterComplete : EntityEventArgs
 /// </summary>
 public sealed class FreeEnsnareDoAfterCancel : EntityEventArgs
 {
-    public readonly EnsnaringComponent? EnsnaringComponent;
+    public readonly EntityUid EnsnaringEntity;
 
-    public FreeEnsnareDoAfterCancel(EnsnaringComponent ensnaringComponent)
+    public FreeEnsnareDoAfterCancel(EntityUid ensnaringEntity)
     {
-        EnsnaringComponent = ensnaringComponent;
+        EnsnaringEntity = ensnaringEntity;
     }
 }

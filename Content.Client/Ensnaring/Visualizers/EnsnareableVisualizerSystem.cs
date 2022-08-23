@@ -23,14 +23,14 @@ public sealed class EnsnareableVisualizerSystem : VisualizerSystem<EnsnareableVi
 
     protected override void OnAppearanceChange(EntityUid uid, EnsnareableVisualizerComponent component, ref AppearanceChangeEvent args)
     {
-        if (TryComp<SpriteComponent>(uid, out var sprite) && args.Component.TryGetData(EnsnareableVisuals.IsEnsnared, out bool isEnsnared))
+        if (args.Component.TryGetData(EnsnareableVisuals.IsEnsnared, out bool isEnsnared))
         {
-            if (component.Sprite != null)
+            if (args.Sprite != null && component.Sprite != null)
             {
-                sprite.LayerSetRSI(EnsnaredVisualLayers.Ensnared, component.Sprite);
+                args.Sprite.LayerSetRSI(EnsnaredVisualLayers.Ensnared, component.Sprite);
+                args.Sprite.LayerSetState(EnsnaredVisualLayers.Ensnared, component.State);
+                args.Sprite.LayerSetVisible(EnsnaredVisualLayers.Ensnared, isEnsnared);
             }
-            sprite.LayerSetState(EnsnaredVisualLayers.Ensnared, component.State);
-            sprite.LayerSetVisible(EnsnaredVisualLayers.Ensnared, isEnsnared);
         }
     }
 }
