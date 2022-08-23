@@ -36,7 +36,6 @@ namespace Content.IntegrationTests.Tests
 
                     foreach (var proto in protoManager.EnumeratePrototypes<GameMapPrototype>())
                     {
-                        // Listen I'm a coder not a mapper and waystation doesn't work.
                         if (proto.MapPath.ToString().StartsWith("/Maps/Test/"))
                             continue;
 
