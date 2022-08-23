@@ -73,10 +73,14 @@ public sealed class DamageOverlay : Overlay
         {
             DeadLevel = 1f;
         }
-        else if (!DeadLevel.Equals(0f))
+        else if (!MathHelper.CloseTo(0f, DeadLevel, 0.001f))
         {
             var diff = -DeadLevel;
             DeadLevel += GetDiff(diff, lastFrameTime);
+        }
+        else
+        {
+            DeadLevel = 0f;
         }
 
         if (!MathHelper.CloseTo(_oldBruteLevel, BruteLevel, 0.001f))
@@ -84,17 +88,29 @@ public sealed class DamageOverlay : Overlay
             var diff = BruteLevel - _oldBruteLevel;
             _oldBruteLevel += GetDiff(diff, lastFrameTime);
         }
+        else
+        {
+            _oldBruteLevel = BruteLevel;
+        }
 
         if (!MathHelper.CloseTo(_oldOxygenLevel, OxygenLevel, 0.001f))
         {
             var diff = OxygenLevel - _oldOxygenLevel;
             _oldOxygenLevel += GetDiff(diff, lastFrameTime);
         }
+        else
+        {
+            _oldOxygenLevel = OxygenLevel;
+        }
 
         if (!MathHelper.CloseTo(_oldCritLevel, CritLevel, 0.001f))
         {
             var diff = CritLevel - _oldCritLevel;
             _oldCritLevel += GetDiff(diff, lastFrameTime);
+        }
+        else
+        {
+            _oldCritLevel = CritLevel;
         }
 
         /*
