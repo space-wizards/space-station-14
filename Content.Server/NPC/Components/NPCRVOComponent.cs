@@ -35,7 +35,4 @@ public sealed class NPCRVOComponent : Component
 
     [ViewVariables]
     public readonly HashSet<EntityUid> AgentNeighbors = new();
-
-    [ViewVariables]
-    public readonly List<ORCALine> OrcaLines = new();
 }
