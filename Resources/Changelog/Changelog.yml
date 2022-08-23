@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed round end sounds playing even if you have the "Lobby & Round-end
-      Music" option disabled in the game's settings., type: Fix}
-  id: 1681
-  time: '2022-06-12T01:23:29.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Waystation now has cameras., type: Add}
@@ -2946,3 +2940,8 @@ Entries:
       jumpsuit colors., type: Add}
   id: 2180
   time: '2022-08-23T02:28:11.0000000+00:00'
+- author: TekuNut
+  changes:
+  - {message: Xenos can no longer pry doors open from afar., type: Fix}
+  id: 2181
+  time: '2022-08-23T10:31:54.0000000+00:00'
