@@ -16,7 +16,7 @@ namespace Content.Server.Atmos.Monitor.Components
     //
     // AtmosMonitor -> AtmosDeviceUpdateEvent
     // -> Threshold calculation
-    // -> AtmosMonitorAlarmEvent
+    // -> AtmosAlarmEvent
     // -> Everything linked to that monitor (targetted)
 
     /// <summary>

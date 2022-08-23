@@ -38,7 +38,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceUpdateEvent>(OnGasVentPumpUpdated);
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceDisabledEvent>(OnGasVentPumpLeaveAtmosphere);
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceEnabledEvent>(OnGasVentPumpEnterAtmosphere);
-            SubscribeLocalEvent<GasVentPumpComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<GasVentPumpComponent, AtmosAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentPumpComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<GasVentPumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
             SubscribeLocalEvent<GasVentPumpComponent, ComponentInit>(OnInit);
@@ -158,13 +158,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             UpdateState(uid, component);
         }
 
-        private void OnAtmosAlarm(EntityUid uid, GasVentPumpComponent component, AtmosMonitorAlarmEvent args)
+        private void OnAtmosAlarm(EntityUid uid, GasVentPumpComponent component, AtmosAlarmEvent args)
         {
-            if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+            if (args.AlarmType == AtmosMonitorAlarmType.Danger)
             {
                 component.Enabled = false;
             }
-            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+            else if (args.AlarmType == AtmosMonitorAlarmType.Normal)
             {
                 component.Enabled = true;
             }

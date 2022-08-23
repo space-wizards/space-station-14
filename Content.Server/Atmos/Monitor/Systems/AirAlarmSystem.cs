@@ -152,7 +152,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             SubscribeLocalEvent<AirAlarmComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
             SubscribeLocalEvent<AirAlarmComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
-            SubscribeLocalEvent<AirAlarmComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<AirAlarmComponent, AtmosAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<AirAlarmComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmResyncAllDevicesMessage>(OnResyncAll);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
@@ -283,7 +283,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             return true;
         }
 
-        private void OnAtmosAlarm(EntityUid uid, AirAlarmComponent component, AtmosMonitorAlarmEvent args)
+        private void OnAtmosAlarm(EntityUid uid, AirAlarmComponent component, AtmosAlarmEvent args)
         {
             if (component.ActivePlayers.Count != 0)
             {
@@ -294,11 +294,11 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)) addr = netConn.Address;
 
 
-            if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+            if (args.AlarmType == AtmosMonitorAlarmType.Danger)
             {
                 SetMode(uid, addr, AirAlarmMode.None, true, false);
             }
-            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+            else if (args.AlarmType == AtmosMonitorAlarmType.Normal)
             {
                 SetMode(uid, addr, AirAlarmMode.Filtering, true, false);
             }

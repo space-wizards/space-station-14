@@ -164,7 +164,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             alarmable.LastAlarmState = type;
             UpdateAppearance(uid, type);
             PlayAlertSound(uid, type, alarmable);
-            RaiseLocalEvent(uid, new AtmosMonitorAlarmEvent(type, type), true);
+            RaiseLocalEvent(uid, new AtmosAlarmEvent(type), true);
         }
 
         public void SyncAlertsToNetwork(EntityUid uid, string? address = null, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
@@ -292,6 +292,16 @@ namespace Content.Server.Atmos.Monitor.Systems
         private void UpdateAppearance(EntityUid uid, AtmosMonitorAlarmType alarm)
         {
             _appearance.SetData(uid, AtmosMonitorVisuals.AlarmType, alarm);
+        }
+    }
+
+    public sealed class AtmosAlarmEvent : EntityEventArgs
+    {
+        public AtmosMonitorAlarmType AlarmType { get; }
+
+        public AtmosAlarmEvent(AtmosMonitorAlarmType netMax)
+        {
+            AlarmType = netMax;
         }
     }
 }

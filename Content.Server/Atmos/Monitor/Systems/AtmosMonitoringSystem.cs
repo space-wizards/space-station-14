@@ -380,16 +380,4 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         }
     }
-
-    public sealed class AtmosMonitorAlarmEvent : EntityEventArgs
-    {
-        public AtmosMonitorAlarmType Type { get; }
-        public AtmosMonitorAlarmType HighestNetworkType { get; }
-
-        public AtmosMonitorAlarmEvent(AtmosMonitorAlarmType type, AtmosMonitorAlarmType netMax)
-        {
-            Type = type;
-            HighestNetworkType = netMax;
-        }
-    }
 }
