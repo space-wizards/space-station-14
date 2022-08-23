@@ -5,14 +5,11 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Item
-      size: 10
     - type: Transform
       anchored: true
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
-    - type: Anchorable
     - type: Destructible
       thresholds:
       - trigger:
@@ -59,3 +56,20 @@
       sprite: Structures/Specific/Atmospherics/sensor.rsi
       layers:
         - state: gsensor1
+
+- type: entity
+  id: AirSensorAssembly
+  name: air sensor assembly
+  description: Air sensor assembly. An assembly of air sensors?
+  components:
+    - type: Item
+      size: 10
+    - type: Anchorable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      netsync: false
+      drawdepth: FloorObjects
+      sprite: Structures/Specific/Atmospherics/sensor.rsi
+      layers:
+        - state: gsensor0
