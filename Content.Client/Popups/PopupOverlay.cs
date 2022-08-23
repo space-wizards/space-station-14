@@ -51,27 +51,35 @@ public sealed class PopupOverlay : Overlay
             if (mapPos.MapId != args.MapId)
                 continue;
 
+            // Don't do WorldAABB check as it's most likely in-range and we don't want to clip if the entity goes off screen I guess?
+            // TODO: Need to draw oriented vertically to screen (look at DoAfterOverlay?)
+            var position = mapPos.Position;
+
             // worldHandle.
-
-            // Don't do WorldAABB check as it's most likely in-range and we don't want to clip if the entity goes off screen I guesws?
-            /*
-            worldHandle.Draw
-
-            if (Entity == null)
-                screenCoords = _eyeManager.CoordinatesToScreen(InitialPos);
-            else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent? xform)
-                     && xform.MapID == _eyeManager.CurrentMap)
-                screenCoords = _eyeManager.CoordinatesToScreen(xform.Coordinates);
-            else
+            switch (popup.Type)
             {
-                Visible = false;
-                if (Entity != null && _entityManager.Deleted(Entity))
-                    TotalTime += PopupLifetime;
-                return;
+                case PopupType.SmallCaution:
+                    worldHandle.DrawString(_smallFont, popup.InitialPos.Position, popup.Text, Color.Red);
+                    break;
+                case PopupType.Medium:
+                    worldHandle.DrawString(_mediumFont, popup.InitialPos.Position, popup.Text, Color.LightGray);
+                    break;
+                case PopupType.MediumCaution:
+                    worldHandle.DrawString(_mediumFont, popup.InitialPos.Position, popup.Text, Color.Red);
+                    break;
+                case PopupType.Large:
+                    worldHandle.DrawString(_largeFont, popup.InitialPos.Position, popup.Text, Color.LightGray);
+                    break;
+                case PopupType.LargeCaution:
+                    worldHandle.DrawString(_largeFont, popup.InitialPos.Position, popup.Text, Color.Red);
+                    break;
+                case PopupType.Small:
+                default:
+                    worldHandle.DrawString(_smallFont, popup.InitialPos.Position, popup.Text, Color.White);
+                    break;
             }
 
-            Visible = true;
-            var position = screenCoords.Position / UIScale - DesiredSize / 2;
+            /*
             LayoutContainer.SetPosition(this, position - (0, 20 * (TotalTime * TotalTime + TotalTime)));
             */
         }
