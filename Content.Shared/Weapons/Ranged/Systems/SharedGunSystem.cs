@@ -45,6 +45,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
     [Dependency] protected readonly TagSystem TagSystem = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
 
     protected ISawmill Sawmill = default!;
