@@ -5,40 +5,107 @@ namespace Content.Server.FloodFill;
 
 public partial class FloodFillSystem
 {
-    // array indices match NeighborFlags shifts.
-    public static readonly Vector2i[] NeighbourVectors =
-    {
-        new (0, 1),
-        new (1, 1),
-        new (1, 0),
-        new (1, -1),
-        new (0, -1),
-        new (-1, -1),
-        new (-1, 0),
-        new (-1, 1)
-    };
-
-    public static bool AnyNeighborBlocked(NeighborFlag neighbors, AtmosDirection blockedDirs)
-    {
-        if ((neighbors & NeighborFlag.North) == NeighborFlag.North && (blockedDirs & AtmosDirection.North) == AtmosDirection.North)
-            return true;
-
-        if ((neighbors & NeighborFlag.South) == NeighborFlag.South && (blockedDirs & AtmosDirection.South) == AtmosDirection.South)
-            return true;
-
-        if ((neighbors & NeighborFlag.East) == NeighborFlag.East && (blockedDirs & AtmosDirection.East) == AtmosDirection.East)
-            return true;
-
-        if ((neighbors & NeighborFlag.West) == NeighborFlag.West && (blockedDirs & AtmosDirection.West) == AtmosDirection.West)
-            return true;
-
-        return false;
-    }
-
-    /// <summary>
+     /// <summary>
     ///     Set of tiles of each grid that are directly adjacent to space, along with the directions that face space.
     /// </summary>
     private Dictionary<EntityUid, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
+
+     public override void Initialize()
+     {
+         base.Initialize();
+         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
+         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+     }
+
+     /// <summary>
+     ///     On grid startup, prepare a map of grid edges.
+     /// </summary>
+     private void OnGridStartup(GridStartupEvent ev)
+     {
+         var grid = _mapManager.GetGrid(ev.GridId);
+
+         Dictionary<Vector2i, NeighborFlag> edges = new();
+         _gridEdges[ev.EntityUid] = edges;
+
+         foreach (var tileRef in grid.GetAllTiles())
+         {
+             if (IsEdge(grid, tileRef.GridIndices, out var dir))
+                 edges.Add(tileRef.GridIndices, dir);
+         }
+     }
+
+     private void OnGridRemoved(GridRemovalEvent ev)
+     {
+         _gridEdges.Remove(ev.EntityUid);
+     }
+
+         /// <summary>
+    ///     When a tile is updated, we might need to update the grid edge maps.
+    /// </summary>
+    private void OnTileChanged(TileChangedEvent ev)
+    {
+        // only need to update the grid-edge map if a tile was added or removed from the grid.
+        if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
+            return;
+
+        if (!_mapManager.TryGetGrid(ev.Entity, out var grid))
+            return;
+
+        var tileRef = ev.NewTile;
+
+        if (!_gridEdges.TryGetValue(tileRef.GridUid, out var edges))
+        {
+            edges = new();
+            _gridEdges[tileRef.GridUid] = edges;
+        }
+
+        if (tileRef.Tile.IsEmpty)
+        {
+            // if the tile is empty, it cannot itself be an edge tile.
+            edges.Remove(tileRef.GridIndices);
+
+            // add any valid neighbours to the list of edge-tiles
+            for (var i = 0; i < NeighbourVectors.Length; i++)
+            {
+                var neighbourIndex = tileRef.GridIndices + NeighbourVectors[i];
+
+                if (grid.TryGetTileRef(neighbourIndex, out var neighbourTile) && !neighbourTile.Tile.IsEmpty)
+                {
+                    var oppositeDirection = (NeighborFlag) (1 << ((i + 4) % 8));
+                    edges[neighbourIndex] = edges.GetValueOrDefault(neighbourIndex) | oppositeDirection;
+                }
+            }
+
+            return;
+        }
+
+        // the tile is not empty space, but was previously. So update directly adjacent neighbours, which may no longer
+        // be edge tiles.
+        for (var i = 0; i < NeighbourVectors.Length; i++)
+        {
+            var neighbourIndex = tileRef.GridIndices + NeighbourVectors[i];
+
+            if (edges.TryGetValue(neighbourIndex, out var neighborSpaceDir))
+            {
+                var oppositeDirection = (NeighborFlag) (1 << ((i + 4) % 8));
+                neighborSpaceDir &= ~oppositeDirection;
+                if (neighborSpaceDir == NeighborFlag.Invalid)
+                {
+                    // no longer an edge tile
+                    edges.Remove(neighbourIndex);
+                    continue;
+                }
+
+                edges[neighbourIndex] = neighborSpaceDir;
+            }
+        }
+
+        // finally check if the new tile is itself an edge tile
+        if (IsEdge(grid, tileRef.GridIndices, out var spaceDir))
+            edges.Add(tileRef.GridIndices, spaceDir);
+    }
+
 
     /// <summary>
     ///     Take our map of grid edges, where each is defined in their own grid's reference frame, and map those
@@ -220,4 +287,52 @@ public partial class FloodFillSystem
         }
     }
 
+    /// <summary>
+    ///     Check whether a tile is on the edge of a grid (i.e., whether it borders space).
+    /// </summary>
+    /// <remarks>
+    ///     Optionally ignore a specific Vector2i. Used by <see cref="OnTileChanged"/> when we already know that a
+    ///     given tile is not space. This avoids unnecessary TryGetTileRef calls.
+    /// </remarks>
+    private bool IsEdge(IMapGrid grid, Vector2i index, out NeighborFlag spaceDirections)
+    {
+        spaceDirections = NeighborFlag.Invalid;
+        for (var i = 0; i < NeighbourVectors.Length; i++)
+        {
+            if (!grid.TryGetTileRef(index + NeighbourVectors[i], out var neighborTile) || neighborTile.Tile.IsEmpty)
+                spaceDirections |= (NeighborFlag) (1 << i);
+        }
+
+        return spaceDirections != NeighborFlag.Invalid;
+    }
+
+    // array indices match NeighborFlags shifts.
+    public static readonly Vector2i[] NeighbourVectors =
+    {
+        new (0, 1),
+        new (1, 1),
+        new (1, 0),
+        new (1, -1),
+        new (0, -1),
+        new (-1, -1),
+        new (-1, 0),
+        new (-1, 1)
+    };
+
+    public static bool AnyNeighborBlocked(NeighborFlag neighbors, AtmosDirection blockedDirs)
+    {
+        if ((neighbors & NeighborFlag.North) == NeighborFlag.North && (blockedDirs & AtmosDirection.North) == AtmosDirection.North)
+            return true;
+
+        if ((neighbors & NeighborFlag.South) == NeighborFlag.South && (blockedDirs & AtmosDirection.South) == AtmosDirection.South)
+            return true;
+
+        if ((neighbors & NeighborFlag.East) == NeighborFlag.East && (blockedDirs & AtmosDirection.East) == AtmosDirection.East)
+            return true;
+
+        if ((neighbors & NeighborFlag.West) == NeighborFlag.West && (blockedDirs & AtmosDirection.West) == AtmosDirection.West)
+            return true;
+
+        return false;
+    }
 }

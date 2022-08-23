@@ -66,9 +66,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // handled in ExplosionSystem.GridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
-        SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
-        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
 
