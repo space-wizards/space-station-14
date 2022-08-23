@@ -1,5 +1,0 @@
-- type: entity
-  id: WallLocker
-  parent: WallLockerBase
-  name: wall locker
-  description: A locker built into the wall.

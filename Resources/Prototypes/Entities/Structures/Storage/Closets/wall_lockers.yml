@@ -1,15 +1,13 @@
 - type: entity
-  id: WallLockerBase
+  id: BaseWallLocker
   placement:
     mode: SnapgridCenter
   abstract: true
   components:
   - type: Clickable
-  - type: Transform
-    noRot: true
   - type: InteractionOutline
   - type: WallMount
-    arc: 360
+    arc: 180
   - type: Sprite
     drawdepth: WallMountedItems
     netsync: false
@@ -42,3 +40,9 @@
     containers:
       storagebase: !type:Container
         ents: []
+
+- type: entity
+  id: WallLocker
+  parent: BaseWallLocker
+  name: wall locker
+  description: A locker built into the wall.
