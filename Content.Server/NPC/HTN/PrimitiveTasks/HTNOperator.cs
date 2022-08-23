@@ -11,7 +11,6 @@ public abstract class HTNOperator
     /// <summary>
     /// Called once whenever prototypes reload. Typically used to inject dependencies.
     /// </summary>
-    /// <param name="sysManager"></param>
     public virtual void Initialize(IEntitySystemManager sysManager)
     {
         IoCManager.InjectDependencies(this);
@@ -21,7 +20,8 @@ public abstract class HTNOperator
     /// Called during planning.
     /// </summary>
     /// <param name="blackboard">The blackboard for the NPC.</param>
-    /// <returns>Whether the plan is still valid and the effects to apply to the blackboard. These may get re-applied during execution.</returns>
+    /// <returns>Whether the plan is still valid and the effects to apply to the blackboard.
+    /// These get re-applied during execution and are up to the operator to use or discard.</returns>
     public virtual async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
     {
         return (true, null);
@@ -29,8 +29,7 @@ public abstract class HTNOperator
 
     /// <summary>
     /// Called during the NPC's regular updates. If the logic requires coordination between NPCs (e.g. steering or combat)
-    /// this may be better off
-    /// using a component and letting an external system handling it.
+    /// this may be better off using a component and letting an external system handling it.
     /// </summary>
     public virtual HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {

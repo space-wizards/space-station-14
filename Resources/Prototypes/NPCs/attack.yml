@@ -1,7 +1,7 @@
 # -- Ranged --
+# Tries to shoot a target in LOS in range.
 - type: htnCompound
   id: TurretCompound
-  desc: Tries to shoot a target in LOS in range.
   branches:
     - tasks:
         - id: PickRangedTargetPrimitive
@@ -9,17 +9,17 @@
     - tasks:
         - id: IdleSpinCompound
 
+# Tries to shoot a target at range.
 - type: htnCompound
   id: RangedCombatCompound
-  desc: Tries to shoot a target at range.
   branches:
     - tasks:
         - id: PickRangedTargetPrimitive
         - id: RangedAttackTargetCompound
 
+# Tries to ranged attack our target.
 - type: htnCompound
   id: RangedAttackTargetCompound
-  desc: Tries to ranged attack our target.
   preconditions:
     - !type:KeyExistsPrecondition
       key: CombatTarget
@@ -38,9 +38,9 @@
   id: PickRangedTargetPrimitive
   operator: !type:PickRangedTargetOperator
 
+# Attacks the specified target if they're in LOS.
 - type: htnPrimitive
   id: RangedAttackTargetPrimitive
-  desc: Attacks the specified target if they're in LOS.
   operator: !type:RangedOperator
     targetKey: CombatTarget
   preconditions:
@@ -56,18 +56,18 @@
 
 
 # -- Melee --
+# Selects a target in melee and tries to attack it.
 - type: htnCompound
   id: MeleeCombatCompound
-  desc: Selects a target in melee and tries to attack it.
   branches:
     # Unarmed combat
     - tasks:
         - id: PickMeleeTargetPrimitive
         - id: MeleeAttackTargetCompound
 
+# Tries to melee attack our target.
 - type: htnCompound
   id: MeleeAttackTargetCompound
-  desc: Tries to melee attack our target.
   preconditions:
     - !type:KeyExistsPrecondition
       key: CombatTarget
@@ -86,9 +86,9 @@
   id: PickMeleeTargetPrimitive
   operator: !type:PickMeleeTargetOperator
 
+# Attacks the specified target if they're in range.
 - type: htnPrimitive
   id: MeleeAttackTargetPrimitive
-  desc: Attacks the specified target if they're in range.
   operator: !type:MeleeOperator
     targetKey: CombatTarget
   preconditions:
@@ -98,9 +98,9 @@
       targetKey: CombatTarget
       rangeKey: MeleeRange
 
+# Moves the owner into range of the combat target.
 - type: htnPrimitive
   id: MoveToCombatTargetPrimitive
-  desc: Moves the owner into range of the combat target.
   operator: !type:MoveToOperator
     pathfindInPlanning: true
     removeKeyOnFinish: false

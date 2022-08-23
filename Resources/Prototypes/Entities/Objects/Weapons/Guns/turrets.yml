@@ -58,7 +58,7 @@
     # TODO: Power ammo provider?
     - type: BallisticAmmoProvider
       proto: CartridgeCaselessRifle
-      capacity: 10000
+      capacity: 500
     - type: HTN
       rootTask: TurretCompound
       blackboard:

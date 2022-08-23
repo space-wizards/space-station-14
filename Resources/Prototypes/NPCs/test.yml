@@ -1,6 +1,6 @@
+# Selects a random pathfind point and tries to move there.
 - type: htnCompound
   id: MoveToPathfindPointCompound
-  desc: Selects a random pathfind point and tries to move there.
   branches:
     - tasks:
         - id: PickPathfindPointPrimitive

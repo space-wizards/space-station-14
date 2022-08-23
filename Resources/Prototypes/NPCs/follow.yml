@@ -1,9 +1,9 @@
 # There are limitations to this ATM. The pathfinder is too slow to check accessibility well
 # and reachable only takes in an entity so sometimes the follow idle spot is outside of the follow range
 
+# Follows the specified target.
 - type: htnCompound
   id: FollowCompound
-  desc: Follows the specified target.
   branches:
     # Head to follow target
     - tasks:
