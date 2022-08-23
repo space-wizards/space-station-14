@@ -26,6 +26,7 @@ public sealed class GridTileFlood : TileFlood
 
     private readonly float _maxIntensity;
     private readonly float _intensityStepSize;
+    private readonly int _typeIndex;
 
     private readonly UniqueVector2iSet _spaceTiles = new();
     private readonly UniqueVector2iSet _processedSpaceTiles = new();
@@ -39,6 +40,7 @@ public sealed class GridTileFlood : TileFlood
         Dictionary<Vector2i, TileData> airtightMap,
         float maxIntensity,
         float intensityStepSize,
+        int typeIndex,
         Dictionary<Vector2i, NeighborFlag> edgeTiles,
         EntityUid? referenceGrid,
         Matrix3 spaceMatrix,
@@ -49,6 +51,7 @@ public sealed class GridTileFlood : TileFlood
         _maxIntensity = maxIntensity;
         _intensityStepSize = intensityStepSize;
         _edgeTiles = edgeTiles;
+        _typeIndex = typeIndex;
 
         // initialise SpaceTiles
         foreach (var (tile, spaceNeighbors) in _edgeTiles)
@@ -184,7 +187,7 @@ public sealed class GridTileFlood : TileFlood
             NewBlockedTiles.Add(tile);
 
             // At what explosion iteration would this blocker be destroyed?
-            var clearIteration = iteration + (int) MathF.Ceiling(tileData.Tolerance / _intensityStepSize);
+            var clearIteration = iteration + (int) MathF.Ceiling(tileData.Tolerance[_typeIndex] / _intensityStepSize);
             if (FreedTileLists.TryGetValue(clearIteration, out var list))
                 list.Add(tile);
             else
@@ -254,7 +257,7 @@ public sealed class GridTileFlood : TileFlood
             if (_airtightMap.TryGetValue(tile, out var tileData))
             {
                 blockedDirections = tileData.BlockedDirections;
-                sealIntegrity = tileData.Tolerance;
+                sealIntegrity = tileData.Tolerance[_typeIndex];
             }
 
             // First, yield any neighboring tiles that are not blocked by airtight entities on this tile

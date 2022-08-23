@@ -17,8 +17,9 @@ public sealed partial class FloodFillSystem : EntitySystem
     public int MaxIterations { get; private set; }
     public int MaxArea { get; private set; }
 
-    private (int, List<float>, SpaceTileFlood?, Dictionary<EntityUid, GridTileFlood>, Matrix3)? DoFloodTile(
+    public (int, List<float>, SpaceTileFlood?, Dictionary<EntityUid, GridTileFlood>, Matrix3)? DoFloodTile(
             MapCoordinates epicenter,
+            int typeIndex,
             float totalIntensity,
             float slope,
             float maxIntensity,
@@ -91,6 +92,7 @@ public sealed partial class FloodFillSystem : EntitySystem
                 airtightMap,
                 maxIntensity,
                 stepSize,
+                typeIndex,
                 _gridEdges[epicentreGrid.Value],
                 referenceGrid,
                 spaceMatrix,
@@ -179,6 +181,7 @@ public sealed partial class FloodFillSystem : EntitySystem
                         airtightMap,
                         maxIntensity,
                         stepSize,
+                        typeIndex,
                         _gridEdges[grid],
                         referenceGrid,
                         spaceMatrix,
@@ -371,12 +374,12 @@ public enum NeighborFlag : byte
 /// </summary>
 public struct TileData
 {
-    public TileData(float tolerance, AtmosDirection blockedDirections)
+    public TileData(float[] tolerance, AtmosDirection blockedDirections)
     {
         Tolerance = tolerance;
         BlockedDirections = blockedDirections;
     }
 
-    public float Tolerance;
+    public float[] Tolerance;
     public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
 }

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
+using Content.Shared.FloodFill.TileFloods;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
@@ -559,8 +560,8 @@ sealed class Explosion
     /// </summary>
     public Explosion(ExplosionSystem system,
         ExplosionPrototype explosionType,
-        ExplosionSpaceTileFlood? spaceData,
-        List<ExplosionGridTileFlood> gridData,
+        SpaceTileFlood? spaceData,
+        List<GridTileFlood> gridData,
         List<float> tileSetIntensity,
         MapCoordinates epicenter,
         Matrix3 spaceMatrix,

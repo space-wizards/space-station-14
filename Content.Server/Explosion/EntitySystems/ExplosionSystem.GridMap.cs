@@ -354,33 +354,3 @@ public sealed partial class ExplosionSystem : EntitySystem
             new (-1, 1)
         };
 }
-
-/// <summary>
-///     This class has information about the space equivalent of an airtight entity blocking explosions: the edges of grids.
-/// </summary>
-public sealed class BlockedSpaceTile
-{
-    /// <summary>
-    ///     What directions of this tile are not blocked?
-    /// </summary>
-    public AtmosDirection UnblockedDirections = AtmosDirection.All;
-
-    /// <summary>
-    ///     The set of grid edge-tiles that are blocking this space tile.
-    /// </summary>
-    public List<GridEdgeData> BlockingGridEdges = new();
-
-    public sealed class GridEdgeData
-    {
-        public Vector2i Tile;
-        public EntityUid? Grid;
-        public Box2Rotated Box;
-
-        public GridEdgeData(Vector2i tile, EntityUid? grid, Vector2 center, Angle angle, float size)
-        {
-            Tile = tile;
-            Grid = grid;
-            Box = new(Box2.CenteredAround(center, (size, size)), angle, center);
-        }
-    }
-}

@@ -2,11 +2,14 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
+using Content.Server.FloodFill;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Shared.Administration;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
+using Content.Shared.FloodFill.TileFloods;
 using Content.Shared.GameTicking;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
@@ -16,6 +19,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -35,6 +39,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly FloodFillSystem _floodFill = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -265,7 +270,13 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!_mapManager.MapExists(epicenter.MapId))
             return null;
 
-        var results = GetExplosionTiles(epicenter, type.ID, totalIntensity, slope, maxTileIntensity);
+        if (!_explosionTypes.TryGetValue(type.ID, out var typeIndex))
+        {
+            Logger.Error("Attempted to spawn explosion using a prototype that was not defined during initialization. Explosion prototype hot-reload is not currently supported.");
+            return null;
+        }
+
+        var results = _floodFill.DoFloodTile(epicenter, typeIndex, totalIntensity, slope, maxTileIntensity, _airtightMap);
 
         if (results == null)
             return null;
@@ -303,7 +314,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Constructor for the shared <see cref="ExplosionEvent"/> using the server-exclusive explosion classes.
     /// </summary>
-    internal ExplosionEvent GetExplosionEvent(MapCoordinates epicenter, string id, Matrix3 spaceMatrix, ExplosionSpaceTileFlood? spaceData, IEnumerable<ExplosionGridTileFlood> gridData, List<float> iterationIntensity)
+    internal ExplosionEvent GetExplosionEvent(MapCoordinates epicenter, string id, Matrix3 spaceMatrix, SpaceTileFlood? spaceData, IEnumerable<GridTileFlood> gridData, List<float> iterationIntensity)
     {
         var spaceTiles = spaceData?.TileLists;
 
@@ -314,6 +325,36 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix, spaceData?.TileSize ?? DefaultTileSize);
+    }
+
+    public ExplosionEvent? GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest request)
+    {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        if (!_explosionTypes.TryGetValue(request.TypeId, out var typeIndex))
+        {
+            Logger.Error("Attempted to spawn explosion using a prototype that was not defined during initialization. Explosion prototype hot-reload is not currently supported.");
+            return null;
+        }
+
+        var results = _floodFill.DoFloodTile(
+            request.Epicenter,
+            typeIndex,
+            request.TotalIntensity,
+            request.IntensitySlope,
+            request.MaxIntensity,
+            _airtightMap);
+
+        if (results == null)
+            return null;
+
+        var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
+
+        Logger.Info($"Generated explosion preview with {area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
+
+        // the explosion event that **would** be sent to all clients, if it were a real explosion.
+        return GetExplosionEvent(request.Epicenter, request.TypeId, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
     }
 
     private void CameraShake(float range, MapCoordinates epicenter, float totalIntensity)
