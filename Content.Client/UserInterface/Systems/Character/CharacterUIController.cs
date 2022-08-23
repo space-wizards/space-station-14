@@ -5,33 +5,38 @@ using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Utility;
 using static Content.Client.CharacterInfo.CharacterInfoSystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Character;
 
+[UsedImplicitly]
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     private CharacterWindow? _window;
-    private MenuButton CharacterButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().CharacterButton;
-
-
-    public override void Initialize()
-    {
-        _window = UIManager.CreateWindow<CharacterWindow>();
-        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
-    }
+    private MenuButton? _characterButton;
 
     public void OnStateEntered(GameplayState state)
     {
-        CharacterButton.OnPressed += CharacterButtonPressed;
+        DebugTools.Assert(_window == null);
+        _characterButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().CharacterButton;
+        _characterButton.OnPressed += CharacterButtonPressed;
+
+        _window = UIManager.CreateWindow<CharacterWindow>();
+        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
+
+        _window.OnClose += () => { _characterButton.Pressed = false; };
+        _window.OnOpen += () => { _characterButton.Pressed = true; };
+
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
                  InputCmdHandler.FromDelegate(_ => ToggleWindow()))
@@ -40,7 +45,12 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateExited(GameplayState state)
     {
+        _window?.DisposeAllChildren();
+        _window = null;
         CommandBinds.Unregister<CharacterUIController>();
+        if (_characterButton == null)
+            return;
+        _characterButton.OnPressed -= CharacterButtonPressed;
     }
 
     public void OnSystemLoaded(CharacterInfoSystem system)
@@ -117,17 +127,20 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     private void CloseWindow()
     {
         _window!.Close();
-        CharacterButton.Pressed = false;
     }
 
     private void ToggleWindow()
     {
-        if (!_window!.IsOpen)
+        if (_window == null)
+            return;
+        if (_window.IsOpen)
+        {
+            CloseWindow();
+        }
+        else
         {
             _characterInfo.RequestCharacterInfo();
             _window.Open();
-            return;
         }
-        CloseWindow();
     }
 }

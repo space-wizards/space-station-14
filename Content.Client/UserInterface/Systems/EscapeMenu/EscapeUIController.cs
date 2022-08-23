@@ -19,11 +19,9 @@ namespace Content.Client.UserInterface.Systems.EscapeMenu;
 public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
-    [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IUriOpener _uri = default!;
 
     private Options.UI.EscapeMenu? _escapeWindow;
-    private RulesAndInfoWindow? _rulesAndInfoWindow;
 
     private MenuButton? _escapeButton;
 
@@ -40,7 +38,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.RulesButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
-            UIManager.GetUIController<InfoUIController>().ToggleWindow();
+            UIManager.GetUIController<InfoUIController>().OpenWindow();
         };
 
         _escapeWindow.DisconnectButton.OnPressed += _ =>
@@ -52,7 +50,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.OptionsButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
-            UIManager.GetUIController<OptionsUIController>().ToggleWindow();
+            UIManager.GetUIController<OptionsUIController>().OpenWindow();
         };
 
         _escapeWindow.QuitButton.OnPressed += _ =>

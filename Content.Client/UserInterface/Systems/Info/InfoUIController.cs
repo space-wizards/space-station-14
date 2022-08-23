@@ -69,7 +69,12 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
         ToggleWindow();
     }
 
-    public void ToggleWindow()
+    public void OpenWindow()
+    {
+        _infoWindow?.OpenCentered();
+    }
+
+    private void ToggleWindow()
     {
         if (_infoWindow == null)
             return;
@@ -79,7 +84,7 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
         }
         else
         {
-            _infoWindow.OpenCentered();
+            _infoWindow?.OpenCentered();
         }
     }
 }
