@@ -66,7 +66,6 @@
           sensor:
             True: { state: gsensor1 }
             False: { state: gsensor0 }
-
     - type: Construction
       graph: AirSensor
       node: sensor
