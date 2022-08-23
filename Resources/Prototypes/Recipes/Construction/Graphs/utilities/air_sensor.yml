@@ -11,10 +11,14 @@
              doAfter: 1
     - node: assembly
       entity: AirSensorAssembly
+      actions:
         - !type:SpriteStateChange
           state: gsensor0
       edges:
         - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
@@ -24,7 +28,7 @@
               doAfter: 2
         - to: sensor
           conditions:
-            - !type:EntityAnchored
+            - !type:EntityAnchored {}
           steps:
             - tool: Welding
               doAfter: 5
