@@ -1,5 +1,7 @@
 # So the way things are done as of now is that Salvages are measured by world AABBs in their maps.
 # Remember, first two coordinates should be the minimum X/Y, second two should be maximum.
+# You can also use the salvageruler command to get these, once you're sure the transform's been reset.
+# Ultimately, you should still be keeping the maps centred.
 
 # "Small"-class maps - Max size square: 7x7, indicated size: 3.5
 
@@ -7,7 +9,7 @@
   id: small1
   name: "Small / Engineering Storage 1"
   mapPath: /Maps/Salvage/small-1.yml
-  bounds: "-3.5,-3.5,3.5,3.5"
+  bounds: "-2.5,-3.5,3.5,3.5"
 
 - type: salvageMap
   id: small2
@@ -19,13 +21,13 @@
   id: small-ship-1
   name: "Small / Ship 1 (Pill)"
   mapPath: /Maps/Salvage/small-ship-1.yml
-  bounds: "-3.5,-3.5,3.5,3.5"
+  bounds: "-1.5,-0.5,2.5,1.5"
 
 - type: salvageMap
   id: small3
   name: "Small / Laundromat 1"
   mapPath: /Maps/Salvage/small-3.yml
-  bounds: "-3.5,-3.5,3.5,3.5"
+  bounds: "-3.5,-3.5,2.5,3.5"
 
 - type: salvageMap
   id: smallAISurveyDrone
@@ -71,37 +73,37 @@
   id: mediumLibraryWreck
   name: "Medium / Abandoned Library"
   mapPath: /Maps/Salvage/medium-library.yml
-  bounds: "-7.5,-7.5,7.5,7.5"
+  bounds: "-8.5,-8.5,6.5,7.5"
 
 - type: salvageMap
   id: mediumCargoWreck
   name: "Medium / Cargo Department Wreck"
   mapPath: /Maps/Salvage/cargo-1.yml
-  bounds: "-7.5,-7.5,7.5,7.5"
+  bounds: "-5.5,-5.5,5.5,9.5"
 
 - type: salvageMap
   id: mediumPirateWreck
   name: "Medium / Pirate Barge Fragment"
   mapPath: /Maps/Salvage/medium-pirate.yml
-  bounds: "-7.5,-7.5,7.5,7.5"
+  bounds: "-3.5,-9.5,6.5,7.5"
 
 - type: salvageMap
   id: tickColony
   name: "Space Tick colony"
   mapPath: /Maps/Salvage/tick-colony.yml
-  bounds: "-8.5,-8.5,8.5,8.5"
+  bounds: "-6,-7,5,7"
 
 - type: salvageMap
   id: cargoDock
   name: "Asteroid Cargo Dock"
   mapPath: /Maps/Salvage/medium-dock.yml
-  bounds: "-8.5,-8.5,8.5,8.5"
+  bounds: "-7,-6,4,8"
 
 - type: salvageMap
   id: spaceWaffleHome
   name: "Waffle Home"
   mapPath: /Maps/Salvage/wh-salvage.yml
-  bounds: "-12,-12,12,12"
+  bounds: "-13,-12,14,11"
 
 - type: salvageMap
   id: mediumShuttleWreck
@@ -113,13 +115,13 @@
   id: mediumPetHospital
   name: "Medium / Pet and Bear Hospital"
   mapPath: /Maps/Salvage/medium-pet-hospital.yml
-  bounds: "-8.5,-8.5,8.5,8.5"
+  bounds: "-5.5,-8.5,5.5,8.5"
 
 - type: salvageMap
   id: mediumCrashedShuttle
   name: "Crashed Shuttle"
   mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
-  bounds: "-9.5,-9.5,9.5,9.5"
+  bounds: "-7,-8,5,9"
 
 # """Large""" maps
 
@@ -127,17 +129,17 @@
   id: stationstation
   name: "StationStation"
   mapPath: /Maps/Salvage/stationstation.yml
-  bounds: "-24,-24,24,24"
+  bounds: "-17,-15,35,29"
 
 - type: salvageMap
   id: asteroidBase
   name: "Asteroid Base"
   mapPath: /Maps/Salvage/asteroid-base.yml
-  bounds: "-16,-16,16,16"
+  bounds: "-12,-13,15,11"
 
 - type: salvageMap
   id: ruinCargoBase
   name: "Ruined Cargo Storage"
   mapPath: /Maps/Salvage/ruin-cargo-salvage.yml
-  bounds: "-22.5,-22.5,22.5,22.5"
+  bounds: "-15,-13,22,14"
 
