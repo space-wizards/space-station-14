@@ -177,7 +177,10 @@ namespace Content.Server.Atmos.Monitor.Systems
             // somebody else can reset it :sunglasses:
             if (component.MonitorFire
                 && component.LastAlarmState != AtmosMonitorAlarmType.Danger)
-                Alert(uid, AtmosMonitorAlarmType.Danger, new []{ AtmosMonitorThresholdType.Temperature }, component); // technically???
+            {
+                component.TrippedThresholds.Add(AtmosMonitorThresholdType.Temperature);
+                Alert(uid, AtmosMonitorAlarmType.Danger, null, component); // technically???
+            }
 
             // only monitor state elevation so that stuff gets alarmed quicker during a fire,
             // let the atmos update loop handle when temperature starts to reach different
@@ -185,7 +188,10 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (component.TemperatureThreshold != null
                 && component.TemperatureThreshold.CheckThreshold(args.Temperature, out var temperatureState)
                 && temperatureState > component.LastAlarmState)
-                Alert(uid, AtmosMonitorAlarmType.Danger, new []{ AtmosMonitorThresholdType.Temperature }, component);
+            {
+                component.TrippedThresholds.Add(AtmosMonitorThresholdType.Temperature);
+                Alert(uid, AtmosMonitorAlarmType.Danger, null, component);
+            }
         }
 
         private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
@@ -224,26 +230,40 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!Resolve(uid, ref monitor)) return;
 
             AtmosMonitorAlarmType state = AtmosMonitorAlarmType.Normal;
-            List<AtmosMonitorThresholdType> alarmTypes = new();
+            HashSet<AtmosMonitorThresholdType> alarmTypes = new(monitor.TrippedThresholds);
 
             if (monitor.TemperatureThreshold != null
-                && monitor.TemperatureThreshold.CheckThreshold(air.Temperature, out var temperatureState)
-                && temperatureState > state)
+                && monitor.TemperatureThreshold.CheckThreshold(air.Temperature, out var temperatureState))
             {
-                state = temperatureState;
-                alarmTypes.Add(AtmosMonitorThresholdType.Temperature);
+                if (temperatureState > state)
+                {
+                    state = temperatureState;
+                    alarmTypes.Add(AtmosMonitorThresholdType.Temperature);
+                }
+                else if (temperatureState == AtmosMonitorAlarmType.Normal)
+                {
+                    alarmTypes.Remove(AtmosMonitorThresholdType.Temperature);
+                }
             }
 
             if (monitor.PressureThreshold != null
                 && monitor.PressureThreshold.CheckThreshold(air.Pressure, out var pressureState)
-                && pressureState > state)
+                )
             {
-                state = pressureState;
-                alarmTypes.Add(AtmosMonitorThresholdType.Pressure);
+                if (pressureState > state)
+                {
+                    state = pressureState;
+                    alarmTypes.Add(AtmosMonitorThresholdType.Pressure);
+                }
+                else if (pressureState == AtmosMonitorAlarmType.Normal)
+                {
+                    alarmTypes.Remove(AtmosMonitorThresholdType.Pressure);
+                }
             }
 
             if (monitor.GasThresholds != null)
             {
+                var tripped = false;
                 foreach (var (gas, threshold) in monitor.GasThresholds)
                 {
                     var gasRatio = air.GetMoles(gas) / air.TotalMoles;
@@ -251,14 +271,23 @@ namespace Content.Server.Atmos.Monitor.Systems
                         && gasState > state)
                     {
                         state = gasState;
-                        alarmTypes.Add(AtmosMonitorThresholdType.Gas);
+                        tripped = true;
                     }
+                }
+
+                if (tripped)
+                {
+                    alarmTypes.Add(AtmosMonitorThresholdType.Gas);
+                }
+                else
+                {
+                    alarmTypes.Remove(AtmosMonitorThresholdType.Gas);
                 }
             }
 
             // if the state of the current air doesn't match the last alarm state,
             // we update the state
-            if (state != monitor.LastAlarmState)
+            if (state != monitor.LastAlarmState && !alarmTypes.SetEquals(monitor.TrippedThresholds))
             {
                 Alert(uid, state, alarmTypes, monitor);
             }
@@ -269,14 +298,14 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// </summary>
         /// <param name="state">The alarm state to set this monitor to.</param>
         /// <param name="alarms">The alarms that caused this alarm state.</param>
-        public void Alert(EntityUid uid, AtmosMonitorAlarmType state, IEnumerable<AtmosMonitorThresholdType>? alarms = null, AtmosMonitorComponent? monitor = null)
+        public void Alert(EntityUid uid, AtmosMonitorAlarmType state, HashSet<AtmosMonitorThresholdType>? alarms = null, AtmosMonitorComponent? monitor = null)
         {
             if (!Resolve(uid, ref monitor)) return;
-            monitor.LastAlarmState = state;
-            if (EntityManager.TryGetComponent(monitor.Owner, out AppearanceComponent? appearanceComponent))
-                appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, monitor.LastAlarmState);
 
-            BroadcastAlertPacket(monitor, alarms);
+            monitor.LastAlarmState = state;
+            monitor.TrippedThresholds = alarms ?? monitor.TrippedThresholds;
+
+            BroadcastAlertPacket(monitor);
 
             // TODO: Central system that grabs *all* alarms from wired network
         }
@@ -302,7 +331,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         ///	is synced between monitors the moment a monitor sends out an alarm,
         ///	or if it is explicitly synced (see ResetAll/Sync).
         /// </remarks>
-        private void BroadcastAlertPacket(AtmosMonitorComponent monitor, IEnumerable<AtmosMonitorThresholdType>? alarms = null, TagComponent? tags = null)
+        private void BroadcastAlertPacket(AtmosMonitorComponent monitor, TagComponent? tags = null)
         {
             if (!monitor.NetEnabled) return;
 
@@ -315,13 +344,9 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 [DeviceNetworkConstants.Command] = AtmosAlarmableSystem.AlertCmd,
                 [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
-                [AtmosAlarmableSystem.AlertSource] = tags.Tags
+                [AtmosAlarmableSystem.AlertSource] = tags.Tags,
+                [AtmosAlarmableSystem.AlertTypes] = monitor.TrippedThresholds
             };
-
-            if (alarms != null)
-            {
-                payload.Add(AtmosAlarmableSystem.AlertTypes, alarms.ToHashSet());
-            }
 
             foreach (var addr in monitor.RegisteredDevices)
             {
