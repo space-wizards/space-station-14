@@ -59,7 +59,7 @@ namespace Content.Server.Atmos.Monitor.Components
         [ViewVariables]
         public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
 
-        public HashSet<AtmosMonitorThresholdType> TrippedThresholds = new();
+        [ViewVariables] public HashSet<AtmosMonitorThresholdType> TrippedThresholds = new();
 
         /// <summary>
         ///     Registered devices in this atmos monitor. Alerts will be sent directly
