@@ -18,12 +18,5 @@ namespace Content.Shared.Tools.Components
 
         [DataField("useSound")]
         public SoundSpecifier? UseSound { get; set; }
-
-        /// <summary>
-        /// Whether this tool will overcome checks that normally
-        /// reject tool use if the target is powered. E.g., airlock prying
-        /// </summary>
-        [DataField("forcePowered")]
-        public bool ForcePowered = false;
     }
 }

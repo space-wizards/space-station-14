@@ -142,7 +142,7 @@ namespace Content.Server.Doors.Systems
             }
             if (component.IsPowered())
             {
-                if (TryComp<ToolComponent>(args.Tool, out var tool) && tool.ForcePowered)
+                if (HasComp<ToolForcePoweredComponent>(args.Tool))
                     return;
                 component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
                 args.Cancel();
