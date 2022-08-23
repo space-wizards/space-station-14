@@ -272,7 +272,7 @@ namespace Content.Server.Salvage
                     var randomOffset = _random.NextAngle().ToWorldVec() * randomRadius;
                     spawnLocation = spl.Position + randomOffset;
 
-                    var box2 = Box2.CenteredAround(spawnLocation, new Vector2(attemptedMap.Size * 2.0f, attemptedMap.Size * 2.0f));
+                    var box2 = Box2.CenteredAround(spawnLocation + attemptedMap.Bounds.Center, attemptedMap.Bounds.Size);
                     var box2rot = new Box2Rotated(box2, spAngle, spawnLocation);
 
                     // This doesn't stop it from spawning on top of random things in space
