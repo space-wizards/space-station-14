@@ -287,7 +287,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             // if the state of the current air doesn't match the last alarm state,
             // we update the state
-            if (state != monitor.LastAlarmState && !alarmTypes.SetEquals(monitor.TrippedThresholds))
+            if (state != monitor.LastAlarmState || !alarmTypes.SetEquals(monitor.TrippedThresholds))
             {
                 Alert(uid, state, alarmTypes, monitor);
             }
