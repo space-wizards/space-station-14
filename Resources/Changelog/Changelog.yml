@@ -1,21 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed round end sounds playing even if you have the "Lobby & Round-end
-      Music" option disabled in the game's settings., type: Fix}
-  id: 1681
-  time: '2022-06-12T01:23:29.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Waystation now has cameras., type: Add}
-  id: 1682
-  time: '2022-06-12T01:28:19.0000000+00:00'
-- author: ninruB
-  changes:
-  - {message: 'Added ore bags, a funky new bag for salvage specialists that can be
-      found in their lockers!', type: Add}
-  id: 1683
-  time: '2022-06-12T01:57:02.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Items now correctly pass through plastic flaps. Cargo players rejoice!,
@@ -2946,3 +2929,19 @@ Entries:
       jumpsuit colors., type: Add}
   id: 2180
   time: '2022-08-23T02:28:11.0000000+00:00'
+- author: TekuNut
+  changes:
+  - {message: Xenos can no longer pry doors open from afar., type: Fix}
+  id: 2181
+  time: '2022-08-23T10:31:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed players being unable to suppress their inner ballerina (fix player's
+      getting stuck with angular velocity. no more eternal spinning)., type: Fix}
+  id: 2182
+  time: '2022-08-23T11:59:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Shields no longer randomly break upon healing the user., type: Fix}
+  id: 2183
+  time: '2022-08-23T12:00:06.0000000+00:00'
