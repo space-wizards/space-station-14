@@ -161,10 +161,10 @@ public sealed class DoorSystem : SharedDoorSystem
 
     private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality))
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
-        if (!_interactionSystem.InRangeUnobstructed(args.User, uid))
+        if (!TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality))
             return;
 
         args.Verbs.Add(new AlternativeVerb()
