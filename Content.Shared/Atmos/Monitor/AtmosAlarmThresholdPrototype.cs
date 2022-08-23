@@ -96,7 +96,7 @@ namespace Content.Shared.Atmos.Monitor
                 return true;
             }
 
-            return false;
+            return true;
         }
 
         // set the primary bound, takes a hard value
