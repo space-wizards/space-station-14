@@ -20,6 +20,16 @@
             acts: ["Destruction"]
     - type: Physics
       canCollide: false
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          mass: 5
+          mask:
+            - ItemMask
+          restitution: 0.3
+          friction: 0.2
     - type: Clickable
     - type: InteractionOutline
     - type: ApcPowerReceiver
@@ -61,6 +71,7 @@
         - state: gsensor1
 
 - type: entity
+  parent: BaseItem
   id: AirSensorAssembly
   name: air sensor assembly
   description: Air sensor assembly. An assembly of air sensors?
@@ -68,8 +79,6 @@
     - type: Item
       size: 10
     - type: Anchorable
-    - type: Clickable
-    - type: InteractionOutline
     - type: Construction
       graph: AirSensor
       node: assembly
