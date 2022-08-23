@@ -1,23 +1,23 @@
 using Content.Shared.Atmos;
 
-namespace Content.Server.FloodFill;
+namespace Content.Shared.FloodFill.TileFloods;
 
 /// <summary>
-///     This class exists to facilitate the iterative neighbor-finding / flooding algorithm used by explosions in <see
-///     cref="ExplosionSystem.GetExplosionTiles"/>. This is the base class for <see cref="ExplosionSpaceTileFlood"/> and
-///     <see cref="ExplosionGridTileFlood"/>, each of which contains additional code fro logic specific to grids or space.
+///     This class exists to facilitate the iterative neighbor-finding / flooding algorithm used by explosions
+///     and other systems. This is the base class for <see cref="SpaceTileFlood"/> and
+///     <see cref="GridTileFlood"/>, each of which contains additional code fro logic specific to grids or space.
 /// </summary>
 /// <remarks>
-///     The class stores information about the tiles that the explosion has currently reached, and provides functions to
-///     perform a neighbor-finding iteration to expand the explosion area. It also has some functionality that allows
+///     The class stores information about the tiles that the flood has currently reached, and provides functions to
+///     perform a neighbor-finding iteration to expand the flood area. It also has some functionality that allows
 ///     tiles to move between grids/space.
 /// </remarks>
 public abstract class TileFlood
 {
     // Main tile data sets, mapping iterations onto tile lists
-    public Dictionary<int, List<Vector2i>> TileLists = new();
-    protected Dictionary<int, List<Vector2i>> BlockedTileLists = new();
-    protected Dictionary<int, HashSet<Vector2i>> FreedTileLists = new();
+    public readonly Dictionary<int, List<Vector2i>> TileLists = new();
+    protected readonly Dictionary<int, List<Vector2i>> BlockedTileLists = new();
+    protected readonly Dictionary<int, HashSet<Vector2i>> FreedTileLists = new();
 
     // The new tile lists added each iteration. I **could** just pass these along to every function, but IMO it is more
     // readable if they are just private variables.
@@ -26,9 +26,9 @@ public abstract class TileFlood
     protected HashSet<Vector2i> NewFreedTiles = default!;
 
     // HashSets used to ensure uniqueness of tiles. Prevents the explosion from looping back in on itself.
-    protected UniqueVector2iSet ProcessedTiles = new();
-    protected UniqueVector2iSet UnenteredBlockedTiles = new();
-    protected UniqueVector2iSet EnteredBlockedTiles = new();
+    protected readonly UniqueVector2iSet ProcessedTiles = new();
+    protected readonly UniqueVector2iSet UnenteredBlockedTiles = new();
+    protected readonly UniqueVector2iSet EnteredBlockedTiles = new();
 
     public abstract void InitTile(Vector2i initialTile);
 
@@ -38,7 +38,7 @@ public abstract class TileFlood
 
     protected void AddNewDiagonalTiles(int iteration, IEnumerable<Vector2i> tiles, bool ignoreLocalBlocker = false)
     {
-        AtmosDirection entryDirection = AtmosDirection.Invalid;
+        var entryDirection = AtmosDirection.Invalid;
         foreach (var tile in tiles)
         {
             var freeDirections = ignoreLocalBlocker ? AtmosDirection.All : GetUnblockedDirectionOrAll(tile);

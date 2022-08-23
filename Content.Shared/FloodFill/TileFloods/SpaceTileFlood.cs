@@ -1,20 +1,21 @@
+using Content.Server.FloodFill;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
-namespace Content.Server.FloodFill;
+namespace Content.Shared.FloodFill.TileFloods;
 
 public sealed class SpaceTileFlood : TileFlood
 {
     /// <summary>
     ///     The keys of this dictionary correspond to space tiles that intersect a grid. The values have information
-    ///     about what grid (which could be more than one), and in what directions the space-based explosion is allowed
+    ///     about what grid (which could be more than one), and in what directions the space-based flood is allowed
     ///     to propagate from this tile.
     /// </summary>
     private readonly Dictionary<Vector2i, BlockedSpaceTile> _gridBlockMap;
 
     /// <summary>
     ///     After every iteration, this data set will store all the grid-tiles that were reached as a result of the
-    ///     explosion expanding in space.
+    ///     flood expanding in space.
     /// </summary>
     public Dictionary<EntityUid, HashSet<Vector2i>> GridJump = new();
 
@@ -93,7 +94,7 @@ public sealed class SpaceTileFlood : TileFlood
                 var direction = (AtmosDirection) (1 << i);
 
                 if (!unblockedDirections.IsFlagSet(direction))
-                    continue; // explosion cannot propagate in this direction. Ever.
+                    continue; // flood cannot propagate in this direction. Ever.
 
                 ProcessNewTile(iteration, tile.Offset(direction), direction.GetOpposite());
             }
@@ -105,7 +106,7 @@ public sealed class SpaceTileFlood : TileFlood
         ProcessedTiles.Add(initialTile);
         TileLists[0] = new() { initialTile };
 
-        // It might be the case that the initial space-explosion tile actually overlaps on a grid. In that case we
+        // It might be the case that the initial space-flood tile actually overlaps on a grid. In that case we
         // need to manually add it to the `spaceToGridTiles` dictionary. This would normally be done automatically
         // during the neighbor finding steps.
         if (_gridBlockMap.TryGetValue(initialTile, out var blocker))
@@ -129,11 +130,11 @@ public sealed class SpaceTileFlood : TileFlood
             if (EnteredBlockedTiles.Contains(tile))
                 return;
 
-            // Did the explosion already attempt to enter this tile from some other direction?
+            // Did the flood already attempt to enter this tile from some other direction?
             if (!UnenteredBlockedTiles.Add(tile))
                 return;
 
-            // First time the explosion is reaching this tile.
+            // First time the flood is reaching this tile.
             NewBlockedTiles.Add(tile);
             JumpToGrid(blocker);
         }
@@ -142,7 +143,7 @@ public sealed class SpaceTileFlood : TileFlood
         if (!EnteredBlockedTiles.Add(tile))
             return;
 
-        // Did the explosion already attempt to enter this tile from some other direction?
+        // Did the flood already attempt to enter this tile from some other direction?
         if (UnenteredBlockedTiles.Contains(tile))
         {
             NewFreedTiles.Add(tile);

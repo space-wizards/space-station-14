@@ -1,6 +1,7 @@
 using Content.Shared.Atmos;
 using System.Runtime.CompilerServices;
 using Content.Server.FloodFill;
+using Content.Shared.FloodFill.TileFloods;
 
 namespace Content.Server.Explosion.EntitySystems;
 

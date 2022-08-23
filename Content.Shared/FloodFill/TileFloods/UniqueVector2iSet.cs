@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Content.Server.FloodFill;
+namespace Content.Shared.FloodFill.TileFloods;
 
 /// <summary>
 ///     This is a data structure can be used to ensure the uniqueness of Vector2i indices.
@@ -9,11 +9,12 @@ namespace Content.Server.FloodFill;
 ///     This basically exists to replace the use of HashSet{Vector2i} if all you need is the the functions Contains()
 ///     and Add(). This is both faster and apparently allocates less. Does not support iterating over contents
 /// </remarks>
+// ReSharper disable once InconsistentNaming
 public sealed class UniqueVector2iSet
 {
     private const int ChunkSize = 32; // # of bits in an integer.
 
-    private Dictionary<Vector2i, VectorChunk> _chunks = new();
+    private readonly Dictionary<Vector2i, VectorChunk> _chunks = new();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector2i ToChunkIndices(Vector2i indices)

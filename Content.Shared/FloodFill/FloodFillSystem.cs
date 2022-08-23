@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Atmos;
+using Content.Shared.FloodFill.TileFloods;
 using Robust.Shared.Map;
 
 namespace Content.Server.FloodFill;
@@ -370,12 +371,12 @@ public enum NeighborFlag : byte
 /// </summary>
 public struct TileData
 {
-    public TileData(float[] tolerance, AtmosDirection blockedDirections)
+    public TileData(float tolerance, AtmosDirection blockedDirections)
     {
         Tolerance = tolerance;
         BlockedDirections = blockedDirections;
     }
 
-    public float[] Tolerance;
+    public float Tolerance;
     public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
 }

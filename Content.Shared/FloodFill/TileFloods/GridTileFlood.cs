@@ -1,38 +1,38 @@
+using Content.Server.FloodFill;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 using static Content.Server.FloodFill.FloodFillSystem;
 
-namespace Content.Server.FloodFill;
+namespace Content.Shared.FloodFill.TileFloods;
 
 /// <summary>
 ///     See <see cref="TileFlood"/>. Each instance of this class corresponds to a separate grid.
 /// </summary>
 public sealed class GridTileFlood : TileFlood
 {
-    public IMapGrid Grid;
-    private bool _needToTransform = false;
+    public readonly IMapGrid Grid;
+    private readonly bool _needToTransform;
 
-    private Matrix3 _matrix = Matrix3.Identity;
-    private Vector2 _offset;
+    private readonly Matrix3 _matrix = Matrix3.Identity;
+    private readonly Vector2 _offset;
 
     // Tiles which neighbor an exploding tile, but have not yet had the explosion spread to them due to an
     // airtight entity on the exploding tile that prevents the explosion from spreading in that direction. These
     // will be added as a neighbor after some delay, once the explosion on that tile is sufficiently strong to
     // destroy the airtight entity.
-    private Dictionary<int, List<(Vector2i, AtmosDirection)>> _delayedNeighbors = new();
+    private readonly Dictionary<int, List<(Vector2i, AtmosDirection)>> _delayedNeighbors = new();
 
-    private Dictionary<Vector2i, TileData> _airtightMap;
+    private readonly Dictionary<Vector2i, TileData> _airtightMap;
 
-    private float _maxIntensity;
-    private float _intensityStepSize;
-    private int _typeIndex;
+    private readonly float _maxIntensity;
+    private readonly float _intensityStepSize;
 
-    private UniqueVector2iSet _spaceTiles = new();
-    private UniqueVector2iSet _processedSpaceTiles = new();
+    private readonly UniqueVector2iSet _spaceTiles = new();
+    private readonly UniqueVector2iSet _processedSpaceTiles = new();
 
     public HashSet<Vector2i> SpaceJump = new();
 
-    private Dictionary<Vector2i, NeighborFlag> _edgeTiles;
+    private readonly Dictionary<Vector2i, NeighborFlag> _edgeTiles;
 
     public GridTileFlood(
         IMapGrid grid,
@@ -112,13 +112,13 @@ public sealed class GridTileFlood : TileFlood
 
         // Add adjacent tiles
         if (TileLists.TryGetValue(iteration - 2, out var adjacent))
-            AddNewAdjacentTiles(iteration, adjacent, false);
+            AddNewAdjacentTiles(iteration, adjacent);
         if (FreedTileLists.TryGetValue(iteration - 2, out var delayedAdjacent))
             AddNewAdjacentTiles(iteration, delayedAdjacent, true);
 
         // Add diagonal tiles
         if (TileLists.TryGetValue(iteration - 3, out var diagonal))
-            AddNewDiagonalTiles(iteration, diagonal, false);
+            AddNewDiagonalTiles(iteration, diagonal);
         if (FreedTileLists.TryGetValue(iteration - 3, out var delayedDiagonal))
             AddNewDiagonalTiles(iteration, delayedDiagonal, true);
 
@@ -184,7 +184,7 @@ public sealed class GridTileFlood : TileFlood
             NewBlockedTiles.Add(tile);
 
             // At what explosion iteration would this blocker be destroyed?
-            var clearIteration = iteration + (int) MathF.Ceiling(tileData.Tolerance[_typeIndex] / _intensityStepSize);
+            var clearIteration = iteration + (int) MathF.Ceiling(tileData.Tolerance / _intensityStepSize);
             if (FreedTileLists.TryGetValue(clearIteration, out var list))
                 list.Add(tile);
             else
@@ -254,7 +254,7 @@ public sealed class GridTileFlood : TileFlood
             if (_airtightMap.TryGetValue(tile, out var tileData))
             {
                 blockedDirections = tileData.BlockedDirections;
-                sealIntegrity = tileData.Tolerance[_typeIndex];
+                sealIntegrity = tileData.Tolerance;
             }
 
             // First, yield any neighboring tiles that are not blocked by airtight entities on this tile
