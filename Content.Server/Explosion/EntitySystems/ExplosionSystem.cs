@@ -274,7 +274,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             return null;
         }
 
-        var results = _floodFill.DoFloodTile(epicenter, typeIndex, totalIntensity, slope, maxTileIntensity, _airtightMap);
+        var results = _floodFill.DoFloodTile(epicenter, typeIndex, totalIntensity,
+            slope, maxTileIntensity, _airtightMap, MaxIterations, MaxArea);
 
         if (results == null)
             return null;
@@ -342,7 +343,9 @@ public sealed partial class ExplosionSystem : EntitySystem
             request.TotalIntensity,
             request.IntensitySlope,
             request.MaxIntensity,
-            _airtightMap);
+            _airtightMap,
+            MaxIterations,
+            MaxArea);
 
         if (results == null)
             return null;

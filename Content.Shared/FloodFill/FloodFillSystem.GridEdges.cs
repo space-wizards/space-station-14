@@ -10,14 +10,6 @@ public partial class FloodFillSystem
     /// </summary>
     private Dictionary<EntityUid, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
 
-     public override void Initialize()
-     {
-         base.Initialize();
-         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
-         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
-         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
-     }
-
      /// <summary>
      ///     On grid startup, prepare a map of grid edges.
      /// </summary>

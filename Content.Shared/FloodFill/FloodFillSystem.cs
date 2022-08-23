@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.FloodFill.TileFloods;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
 namespace Content.Server.FloodFill;
@@ -8,14 +9,20 @@ namespace Content.Server.FloodFill;
 public sealed partial class FloodFillSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
     /// </summary>
     public const ushort DefaultTileSize = 1;
 
-    public int MaxIterations { get; private set; }
-    public int MaxArea { get; private set; }
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
+        SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+    }
 
     public (int, List<float>, SpaceTileFlood?, Dictionary<EntityUid, GridTileFlood>, Matrix3)? DoFloodTile(
             MapCoordinates epicenter,
@@ -23,14 +30,16 @@ public sealed partial class FloodFillSystem : EntitySystem
             float totalIntensity,
             float slope,
             float maxIntensity,
-            Dictionary<EntityUid, Dictionary<Vector2i, TileData>> toleranceMap)
+            Dictionary<EntityUid, Dictionary<Vector2i, TileData>> toleranceMap,
+            int maxIterations,
+            int maxArea)
     {
         if (totalIntensity <= 0 || slope <= 0)
             return null;
 
         Vector2i initialTile;
         EntityUid? epicentreGrid = null;
-        var (localGrids, referenceGrid, maxDistance) = GetLocalGrids(epicenter, totalIntensity, slope, maxIntensity);
+        var (localGrids, referenceGrid, maxDistance) = GetLocalGrids(epicenter, totalIntensity, slope, maxIntensity, maxIterations);
 
         if (_mapManager.TryFindGridAt(epicenter, out var candidateGrid) &&
             candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef) &&
@@ -129,7 +138,7 @@ public sealed partial class FloodFillSystem : EntitySystem
         var intensityUnchangedLastLoop = false;
 
         // Main flood-fill / neighbor-finding loop
-        while (remainingIntensity > 0 && iteration <= MaxIterations && totalTiles < MaxArea)
+        while (remainingIntensity > 0 && iteration <= maxIterations && totalTiles < maxArea)
         {
             previousIntensity = remainingIntensity;
 
@@ -237,7 +246,7 @@ public sealed partial class FloodFillSystem : EntitySystem
     }
 
     public (List<EntityUid>, EntityUid?, float) GetLocalGrids(MapCoordinates epicenter, float totalIntensity,
-        float slope, float maxIntensity)
+        float slope, float maxIntensity, int maxIterations)
     {
         // Get the explosion radius (approx radius if it were in open-space). Note that if the explosion is confined in
         // some directions but not in others, the actual explosion may reach further than this distance from the
@@ -245,7 +254,7 @@ public sealed partial class FloodFillSystem : EntitySystem
         var radius = 0.5f + IntensityToRadius(totalIntensity, slope, maxIntensity);
 
         // to avoid a silly lookup for silly input numbers, cap the radius to half of the theoretical maximum (lookup area gets doubled later on).
-        radius = Math.Min(radius, MaxIterations / 4);
+        radius = Math.Min(radius, maxIterations / 4);
 
         EntityUid? referenceGrid = null;
         float mass = 0;
