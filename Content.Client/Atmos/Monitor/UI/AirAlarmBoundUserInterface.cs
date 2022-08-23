@@ -12,15 +12,15 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
 {
     private AirAlarmWindow? _window;
 
-    public AirAlarmBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public AirAlarmBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {}
 
     protected override void Open()
     {
         base.Open();
-        
+
         _window = new AirAlarmWindow();
-        
+
         if (State != null) UpdateState(State);
 
         _window.OpenCentered();
