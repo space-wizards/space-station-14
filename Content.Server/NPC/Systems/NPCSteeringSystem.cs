@@ -122,11 +122,6 @@ namespace Content.Server.NPC.Systems
             {
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, frameTime);
             }
-
-            if (CollisionAvoidanceEnabled)
-            {
-                CollisionAvoidance(npcs);
-            }
         }
 
         private void SetDirection(InputMoverComponent component, Vector2 value)
