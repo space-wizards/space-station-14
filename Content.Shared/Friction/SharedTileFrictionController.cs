@@ -102,8 +102,8 @@ namespace Content.Shared.Friction
                 // If we're sandwiched between 2 pullers reduce friction
                 // Might be better to make this dynamic and check how many are in the pull chain?
                 // Either way should be much faster for now.
-                if (pullableQuery.TryGetComponent(body.Owner, out var pullable) && pullable.BeingPulled &&
-                    pullerQuery.TryGetComponent(body.Owner, out var puller) && puller.Pulling != null)
+                if (pullerQuery.TryGetComponent(body.Owner, out var puller) && puller.Pulling != null &&
+                    pullableQuery.TryGetComponent(body.Owner, out var pullable) && pullable.BeingPulled)
                 {
                     bodyModifier *= 0.2f;
                 }
