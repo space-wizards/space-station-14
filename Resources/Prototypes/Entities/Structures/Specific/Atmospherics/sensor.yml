@@ -60,6 +60,13 @@
         - AirSensor
     - type: AccessReader
       access: [ [ "Atmospherics" ] ]
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          sensor:
+            True: { state: gsensor1 }
+            False: { state: gsensor0 }
+
     - type: Construction
       graph: AirSensor
       node: sensor
@@ -69,6 +76,7 @@
       sprite: Structures/Specific/Atmospherics/sensor.rsi
       layers:
         - state: gsensor1
+          map: [ "sensor" ]
 
 - type: entity
   parent: BaseItem
