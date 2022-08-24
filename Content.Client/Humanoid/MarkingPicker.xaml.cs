@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Stylesheets;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Species;
 using Content.Shared.Markings;
@@ -12,15 +7,11 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Markings
+namespace Content.Client.Humanoid
 {
     [GenerateTypedNameReferences]
     public sealed partial class MarkingPicker : Control
