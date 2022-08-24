@@ -21,7 +21,7 @@
 - type: cargoProduct
   id: SecurityNonLethal
   icon:
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: icon
   product: CrateSecurityNonlethal
   cost: 1500
