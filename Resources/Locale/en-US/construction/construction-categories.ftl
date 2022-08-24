@@ -1,4 +1,5 @@
-﻿construction-category-furniture = Furniture
+﻿construction-category-all = All
+construction-category-furniture = Furniture
 construction-category-storage = Storage
 construction-category-tools = Tools
 construction-category-materials = Materials
