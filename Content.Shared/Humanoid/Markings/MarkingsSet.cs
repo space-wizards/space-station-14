@@ -200,6 +200,16 @@ public sealed class MarkingSet
         }
     }
 
+    public int PointsLeft(MarkingCategories category)
+    {
+        if (!_points.TryGetValue(category, out var points))
+        {
+            return -1;
+        }
+
+        return points.Points;
+    }
+
     /// <summary>
     ///     Add a marking to the front of the category's list of markings.
     /// </summary>
