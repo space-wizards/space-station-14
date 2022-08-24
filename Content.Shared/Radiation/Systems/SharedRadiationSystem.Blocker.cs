@@ -1,3 +1,4 @@
+using Content.Shared.FloodFill;
 using Content.Shared.Radiation.Components;
 
 namespace Content.Shared.Radiation.Systems;
@@ -6,7 +7,7 @@ namespace Content.Shared.Radiation.Systems;
 // When blocker is anchored it's cached in resistance map by occupied tile
 public partial class SharedRadiationSystem
 {
-    public Dictionary<EntityUid, Dictionary<Vector2i, float>> _resistancePerTile = new();
+    public Dictionary<EntityUid, Dictionary<Vector2i, TileData>> _resistancePerTile = new();
 
     private void InitRadBlocking()
     {
@@ -96,7 +97,7 @@ public partial class SharedRadiationSystem
         // get existing rad resistance grid or create it if it doesn't exist
         if (!_resistancePerTile.ContainsKey(gridId))
         {
-            _resistancePerTile.Add(gridId, new Dictionary<Vector2i, float>());
+            _resistancePerTile.Add(gridId, new Dictionary<Vector2i, TileData>());
         }
         var grid = _resistancePerTile[gridId];
 
@@ -104,9 +105,9 @@ public partial class SharedRadiationSystem
         var newResistance = radResistance;
         if (grid.TryGetValue(tilePos, out var existingResistance))
         {
-            newResistance += existingResistance;
+            newResistance += existingResistance.Tolerance[0];
         }
-        grid[tilePos] = newResistance;
+        grid[tilePos].Tolerance[0] = newResistance;
     }
 
     private void RemoveFromTile(EntityUid gridId, Vector2i tilePos, float radResistance)
@@ -119,10 +120,10 @@ public partial class SharedRadiationSystem
         // subtract resistance from tile
         if (!grid.TryGetValue(tilePos, out var existingResistance))
             return;
-        existingResistance -= radResistance;
+        existingResistance.Tolerance[0] -= radResistance;
 
         // remove tile from grid if no resistance left
-        if (existingResistance > 0)
+        if (existingResistance.Tolerance[0] > 0)
             grid[tilePos] = existingResistance;
         else
             grid.Remove(tilePos);

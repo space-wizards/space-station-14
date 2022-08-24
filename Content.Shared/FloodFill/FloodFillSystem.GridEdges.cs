@@ -1,7 +1,7 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
-namespace Content.Server.FloodFill;
+namespace Content.Shared.FloodFill;
 
 public partial class FloodFillSystem
 {
@@ -153,7 +153,7 @@ public partial class FloodFillSystem
                 continue;
             }
 
-            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+            var xforms = GetEntityQuery<TransformComponent>();
             var xform = xforms.GetComponent(grid.GridEntityId);
             var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 

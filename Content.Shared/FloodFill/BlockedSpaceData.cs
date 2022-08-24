@@ -1,5 +1,7 @@
 using Content.Shared.Atmos;
 
+namespace Content.Shared.FloodFill;
+
 /// <summary>
 ///     This class has information about the space equivalent of an airtight entity blocking explosions: the edges of grids.
 /// </summary>

@@ -1,7 +1,6 @@
-using Content.Server.FloodFill;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
-using static Content.Server.FloodFill.FloodFillSystem;
+using static Content.Shared.FloodFill.FloodFillSystem;
 
 namespace Content.Shared.FloodFill.TileFloods;
 

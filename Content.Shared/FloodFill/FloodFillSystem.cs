@@ -4,7 +4,7 @@ using Content.Shared.FloodFill.TileFloods;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
-namespace Content.Server.FloodFill;
+namespace Content.Shared.FloodFill;
 
 public sealed partial class FloodFillSystem : EntitySystem
 {
@@ -24,7 +24,7 @@ public sealed partial class FloodFillSystem : EntitySystem
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
     }
 
-    public (int, List<float>, SpaceTileFlood?, Dictionary<EntityUid, GridTileFlood>, Matrix3)? DoFloodTile(
+    public FloodFillResult? DoFloodTile(
             MapCoordinates epicenter,
             int typeIndex,
             float totalIntensity,
@@ -120,8 +120,12 @@ public sealed partial class FloodFillSystem : EntitySystem
 
         // Is this even a multi-tile explosion?
         if (totalIntensity < stepSize)
+        {
             // Bit anticlimactic. All that set up for nothing....
-            return (1, new List<float> { totalIntensity }, spaceData, gridData, spaceMatrix);
+            return new FloodFillResult(1, new List<float> { totalIntensity },
+                spaceData, gridData, spaceMatrix);
+        }
+
 
         // These variables keep track of the total intensity we have distributed
         List<int> tilesInIteration = new() { 1 };
@@ -242,7 +246,7 @@ public sealed partial class FloodFillSystem : EntitySystem
         }
         spaceData?.CleanUp();
 
-        return (totalTiles, iterationIntensity, spaceData, gridData, spaceMatrix);
+        return new FloodFillResult(totalTiles, iterationIntensity, spaceData, gridData, spaceMatrix);
     }
 
     public (List<EntityUid>, EntityUid?, float) GetLocalGrids(MapCoordinates epicenter, float totalIntensity,
@@ -352,6 +356,25 @@ public sealed partial class FloodFillSystem : EntitySystem
         }
 
         return r0 * (MathF.Sqrt(12 * totalIntensity/ v0 - 3) / 6 + 0.5f);
+    }
+}
+
+public sealed class FloodFillResult
+{
+    public readonly int Area;
+    public readonly List<float> IterationIntensity;
+    public readonly SpaceTileFlood? SpaceData;
+    public readonly Dictionary<EntityUid, GridTileFlood> GridData;
+    public readonly Matrix3 SpaceMatrix;
+
+    public FloodFillResult(int area, List<float> iterationIntensity, SpaceTileFlood? spaceData,
+        Dictionary<EntityUid, GridTileFlood> gridData, Matrix3 spaceMatrix)
+    {
+        Area = area;
+        IterationIntensity = iterationIntensity;
+        SpaceData = spaceData;
+        GridData = gridData;
+        SpaceMatrix = spaceMatrix;
     }
 }
 

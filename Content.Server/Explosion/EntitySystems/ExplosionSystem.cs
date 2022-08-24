@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
-using Content.Server.FloodFill;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Camera;
@@ -21,6 +20,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using FloodFillSystem = Content.Shared.FloodFill.FloodFillSystem;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -274,35 +274,35 @@ public sealed partial class ExplosionSystem : EntitySystem
             return null;
         }
 
-        var results = _floodFill.DoFloodTile(epicenter, typeIndex, totalIntensity,
+        var ff = _floodFill.DoFloodTile(epicenter, typeIndex, totalIntensity,
             slope, maxTileIntensity, _airtightMap, MaxIterations, MaxArea);
 
-        if (results == null)
+        if (ff == null)
             return null;
 
-        var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
 
-        RaiseNetworkEvent(GetExplosionEvent(epicenter, type.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity));
+        RaiseNetworkEvent(GetExplosionEvent(epicenter, type.ID, ff.SpaceMatrix,
+            ff.SpaceData, ff.GridData.Values, ff.IterationIntensity));
 
         // camera shake
-        CameraShake(iterationIntensity.Count * 2.5f, epicenter, totalIntensity);
+        CameraShake(ff.IterationIntensity.Count * 2.5f, epicenter, totalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
         var mapEntityCoords = EntityCoordinates.FromMap(EntityManager, _mapManager.GetMapEntityId(epicenter.MapId), epicenter);
 
         // play sound.
-        var audioRange = iterationIntensity.Count * 5;
+        var audioRange = ff.IterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
         SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
 
         return new Explosion(this,
             type,
-            spaceData,
-            gridData.Values.ToList(),
-            iterationIntensity,
+            ff.SpaceData,
+            ff.GridData.Values.ToList(),
+            ff.IterationIntensity,
             epicenter,
-            spaceMatrix,
-            area,
+            ff.SpaceMatrix,
+            ff.Area,
             tileBreakScale,
             maxTileBreak,
             canCreateVacuum,
@@ -337,7 +337,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             return null;
         }
 
-        var results = _floodFill.DoFloodTile(
+        var ff = _floodFill.DoFloodTile(
             request.Epicenter,
             typeIndex,
             request.TotalIntensity,
@@ -347,15 +347,14 @@ public sealed partial class ExplosionSystem : EntitySystem
             MaxIterations,
             MaxArea);
 
-        if (results == null)
+
+        if (ff == null)
             return null;
-
-        var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
-
-        Logger.Info($"Generated explosion preview with {area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
+        Logger.Info($"Generated explosion preview with {ff.Area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
 
         // the explosion event that **would** be sent to all clients, if it were a real explosion.
-        return GetExplosionEvent(request.Epicenter, request.TypeId, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
+        return GetExplosionEvent(request.Epicenter, request.TypeId, ff.SpaceMatrix, ff.SpaceData,
+            ff.GridData.Values, ff.IterationIntensity);
     }
 
     private void CameraShake(float range, MapCoordinates epicenter, float totalIntensity)
