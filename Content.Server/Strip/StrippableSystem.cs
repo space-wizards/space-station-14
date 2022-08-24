@@ -1,9 +1,13 @@
+using System.ComponentModel;
 using System.Threading;
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
+using Content.Server.Ensnaring;
+using Content.Server.Ensnaring.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory;
 using Content.Server.UserInterface;
+using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -14,6 +18,7 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Server.Strip
@@ -24,6 +29,7 @@ namespace Content.Server.Strip
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly EnsnareableSystem _ensnaring = default!;
 
         // TODO: ECS popups. Not all of these have ECS equivalents yet.
 
@@ -36,11 +42,13 @@ namespace Content.Server.Strip
             SubscribeLocalEvent<StrippableComponent, DidUnequipEvent>(OnDidUnequip);
             SubscribeLocalEvent<StrippableComponent, ComponentInit>(OnCompInit);
             SubscribeLocalEvent<StrippableComponent, CuffedStateChangeEvent>(OnCuffStateChange);
+            SubscribeLocalEvent<StrippableComponent, EnsnaredChangedEvent>(OnEnsnareChange);
 
             // BUI
             SubscribeLocalEvent<StrippableComponent, StrippingInventoryButtonPressed>(OnStripInvButtonMessage);
             SubscribeLocalEvent<StrippableComponent, StrippingHandButtonPressed>(OnStripHandMessage);
             SubscribeLocalEvent<StrippableComponent, StrippingHandcuffButtonPressed>(OnStripHandcuffMessage);
+            SubscribeLocalEvent<StrippableComponent, StrippingEnsnareButtonPressed>(OnStripEnsnareMessage);
 
             SubscribeLocalEvent<StrippableComponent, OpenStrippingCompleteEvent>(OnOpenStripComplete);
             SubscribeLocalEvent<StrippableComponent, OpenStrippingCancelledEvent>(OnOpenStripCancelled);
@@ -73,6 +81,26 @@ namespace Content.Server.Strip
                     cuffed.TryUncuff(user, entity);
                     return;
                 }
+            }
+        }
+
+        private void OnStripEnsnareMessage(EntityUid uid, StrippableComponent component, StrippingEnsnareButtonPressed args)
+        {
+            if (args.Session.AttachedEntity is not {Valid: true} user)
+                return;
+
+            var ensnareQuery = GetEntityQuery<EnsnareableComponent>();
+
+            foreach (var entity in ensnareQuery.GetComponent(uid).Container.ContainedEntities)
+            {
+                if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
+                    continue;
+
+                if (entity != args.Ensnare)
+                    continue;
+
+                _ensnaring.TryFree(component.Owner, ensnaring, user);
+                return;
             }
         }
 
@@ -154,6 +182,11 @@ namespace Content.Server.Strip
             UpdateState(uid, component);
         }
 
+        private void OnEnsnareChange(EntityUid uid, StrippableComponent component, EnsnaredChangedEvent args)
+        {
+            SendUpdate(uid, component);
+        }
+
         private void OnDidUnequip(EntityUid uid, StrippableComponent component, DidUnequipEvent args)
         {
             SendUpdate(uid, component);
@@ -174,6 +207,7 @@ namespace Content.Server.Strip
             }
 
             var cuffs = new Dictionary<EntityUid, string>();
+            var ensnare = new Dictionary<EntityUid, string>();
             var inventory = new Dictionary<(string ID, string Name), string>();
             var hands = new Dictionary<string, string>();
 
@@ -183,6 +217,17 @@ namespace Content.Server.Strip
                 {
                     var name = Name(entity);
                     cuffs.Add(entity, name);
+                }
+            }
+
+            var ensnareQuery = GetEntityQuery<EnsnareableComponent>();
+
+            if (ensnareQuery.TryGetComponent(uid, out var _))
+            {
+                foreach (var entity in ensnareQuery.GetComponent(uid).Container.ContainedEntities)
+                {
+                    var name = Name(entity);
+                    ensnare.Add(entity, name);
                 }
             }
 
@@ -223,7 +268,7 @@ namespace Content.Server.Strip
                 }
             }
 
-            bui.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
+            bui.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs, ensnare));
         }
 
         private void AddStripVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<Verb> args)
