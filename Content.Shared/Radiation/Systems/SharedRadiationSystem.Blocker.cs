@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Content.Shared.FloodFill;
 using Content.Shared.Radiation.Components;
 
@@ -107,7 +108,9 @@ public partial class SharedRadiationSystem
         {
             newResistance += existingResistance.Tolerance[0];
         }
-        grid[tilePos].Tolerance[0] = newResistance;
+
+        grid[tilePos] = new TileData(new[] { newResistance },
+            AtmosDirection.All);
     }
 
     private void RemoveFromTile(EntityUid gridId, Vector2i tilePos, float radResistance)

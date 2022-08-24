@@ -40,5 +40,23 @@ public partial class SharedRadiationSystem
             1000000
         );
 
+        if (ff == null)
+            return;
+
+        foreach (var (gridUid, gridFlood) in ff.GridData)
+        {
+            var dict = new Dictionary<Vector2i, float>();
+            foreach (var (iter, poses) in gridFlood.TileLists)
+            {
+                var rads = ff.IterationIntensity[iter];
+                foreach (var pos in poses)
+                {
+                    dict[pos] = rads;
+                }
+            }
+
+            _radiationMap[gridUid] = dict;
+        }
+
     }
 }

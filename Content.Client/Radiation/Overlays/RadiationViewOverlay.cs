@@ -71,7 +71,7 @@ public sealed class RadiationViewOverlay : Overlay
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
             var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             gridBounds = invMatrix.TransformBox(args.WorldBounds);
-            DrawText(handle, gridBounds, matrix, resGrid, Color.Gray, grid.TileSize, 0.25f);
+            //DrawText(handle, gridBounds, matrix, resGrid, Color.Gray, grid.TileSize, 0.25f);
         }
     }
 
