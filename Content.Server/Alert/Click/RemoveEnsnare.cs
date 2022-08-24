@@ -10,11 +10,12 @@ public sealed class RemoveEnsnare : IAlertClick
 {
     public void AlertClicked(EntityUid player)
     {
-        if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out EnsnareableComponent? ensnareableComponent))
+        var entManager = IoCManager.Resolve<IEntityManager>();
+        if (entManager.TryGetComponent(player, out EnsnareableComponent? ensnareableComponent))
         {
             foreach (var ensnare in ensnareableComponent.Container.ContainedEntities)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ensnare, out EnsnaringComponent? ensnaringComponent))
+                if (!entManager.TryGetComponent(ensnare, out EnsnaringComponent? ensnaringComponent))
                     return;
 
                 EntitySystem.Get<EnsnaringSystem>().TryFree(player, ensnaringComponent);
