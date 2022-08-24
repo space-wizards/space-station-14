@@ -25,7 +25,7 @@ public abstract class TileFlood
     protected List<Vector2i> NewBlockedTiles = default!;
     protected HashSet<Vector2i> NewFreedTiles = default!;
 
-    // HashSets used to ensure uniqueness of tiles. Prevents the explosion from looping back in on itself.
+    // HashSets used to ensure uniqueness of tiles. Prevents the flood from looping back in on itself.
     protected readonly UniqueVector2iSet ProcessedTiles = new();
     protected readonly UniqueVector2iSet UnenteredBlockedTiles = new();
     protected readonly UniqueVector2iSet EnteredBlockedTiles = new();

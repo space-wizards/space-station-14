@@ -22,7 +22,7 @@ public sealed class GridTileFlood : TileFlood
     // destroy the airtight entity.
     private readonly Dictionary<int, List<(Vector2i, AtmosDirection)>> _delayedNeighbors = new();
 
-    private readonly Dictionary<Vector2i, TileData> _airtightMap;
+    private readonly Dictionary<Vector2i, TileData> _toleranceMap;
 
     private readonly float _maxIntensity;
     private readonly float _intensityStepSize;
@@ -37,7 +37,7 @@ public sealed class GridTileFlood : TileFlood
 
     public GridTileFlood(
         IMapGrid grid,
-        Dictionary<Vector2i, TileData> airtightMap,
+        Dictionary<Vector2i, TileData> toleranceMap,
         float maxIntensity,
         float intensityStepSize,
         int typeIndex,
@@ -47,7 +47,7 @@ public sealed class GridTileFlood : TileFlood
         Angle spaceAngle)
     {
         Grid = grid;
-        _airtightMap = airtightMap;
+        _toleranceMap = toleranceMap;
         _maxIntensity = maxIntensity;
         _intensityStepSize = intensityStepSize;
         _edgeTiles = edgeTiles;
@@ -82,7 +82,7 @@ public sealed class GridTileFlood : TileFlood
     {
         TileLists[0] = new() { initialTile };
 
-        if (_airtightMap.ContainsKey(initialTile))
+        if (_toleranceMap.ContainsKey(initialTile))
             EnteredBlockedTiles.Add(initialTile);
         else
             ProcessedTiles.Add(initialTile);
@@ -149,7 +149,7 @@ public sealed class GridTileFlood : TileFlood
     protected override void ProcessNewTile(int iteration, Vector2i tile, AtmosDirection entryDirections)
     {
         // Is there an airtight blocker on this tile?
-        if (!_airtightMap.TryGetValue(tile, out var tileData))
+        if (!_toleranceMap.TryGetValue(tile, out var tileData))
         {
             // No blocker. Ezy. Though maybe this a space tile?
 
@@ -254,7 +254,7 @@ public sealed class GridTileFlood : TileFlood
             float sealIntegrity = 0;
 
             // Note that if (grid, tile) is not a valid key, then airtight.BlockedDirections will default to 0 (no blocked directions)
-            if (_airtightMap.TryGetValue(tile, out var tileData))
+            if (_toleranceMap.TryGetValue(tile, out var tileData))
             {
                 blockedDirections = tileData.BlockedDirections;
                 sealIntegrity = tileData.Tolerance[_typeIndex];
@@ -303,6 +303,6 @@ public sealed class GridTileFlood : TileFlood
 
     protected override AtmosDirection GetUnblockedDirectionOrAll(Vector2i tile)
     {
-        return ~_airtightMap.GetValueOrDefault(tile).BlockedDirections;
+        return ~_toleranceMap.GetValueOrDefault(tile).BlockedDirections;
     }
 }

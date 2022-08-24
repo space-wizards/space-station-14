@@ -4,6 +4,9 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.FloodFill.TileFloods;
 
+/// <summary>
+///     See <see cref="TileFlood"/>.
+/// </summary>
 public sealed class SpaceTileFlood : TileFlood
 {
     /// <summary>
@@ -21,7 +24,11 @@ public sealed class SpaceTileFlood : TileFlood
 
     public readonly ushort TileSize;
 
-    public SpaceTileFlood(FloodFillSystem system, MapCoordinates epicentre, EntityUid? referenceGrid, List<EntityUid> localGrids, float maxDistance)
+    public SpaceTileFlood(FloodFillSystem system,
+        MapCoordinates epicentre,
+        EntityUid? referenceGrid,
+        List<EntityUid> localGrids,
+        float maxDistance)
     {
         (_gridBlockMap, TileSize) = system.TransformGridEdges(epicentre, referenceGrid, localGrids, maxDistance);
         system.GetUnblockedDirections(_gridBlockMap, TileSize);
