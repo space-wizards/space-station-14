@@ -344,7 +344,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            humanoid.BaseLayers.Add(key, baseLayer);
+            if (!humanoid.BaseLayers.TryAdd(key, baseLayer))
+            {
+                humanoid.BaseLayers[key] = baseLayer;
+            }
         }
 
         if (customBaseSprites == null)
@@ -359,13 +362,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            if (humanoid.BaseLayers.ContainsKey(key))
+            if (!humanoid.BaseLayers.TryAdd(key, baseLayer))
             {
                 humanoid.BaseLayers[key] = baseLayer;
-                continue;
             }
-
-            humanoid.BaseLayers.Add(key, baseLayer);
         }
     }
 
