@@ -17,7 +17,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual, DataDefinition]
-public class ListingData : IEquatable<ListingData>
+public class ListingData : IEquatable<ListingData>, ICloneable
 {
     /// <summary>
     /// The name of the listing. If empty, uses the entity's name (if present)
@@ -122,21 +122,21 @@ public class ListingData : IEquatable<ListingData>
     /// DON'T BE DUMB AND MODIFY THE PROTOTYPES
     /// </summary>
     /// <returns>A unique copy of the listing data.</returns>
-    public ListingData Clone()
+    public object Clone()
     {
-        return new ListingData()
+        return new ListingData
         {
-            Name = this.Name,
-            Description = this.Description,
-            Categories = this.Categories,
-            Cost = this.Cost,
-            Conditions = this.Conditions,
-            Icon = this.Icon,
-            Priority = this.Priority,
-            ProductEntity = this.ProductEntity,
-            ProductAction = this.ProductAction,
-            ProductEvent = this.ProductEvent,
-            PurchaseAmount = this.PurchaseAmount,
+            Name = Name,
+            Description = Description,
+            Categories = Categories,
+            Cost = Cost,
+            Conditions = Conditions,
+            Icon = Icon,
+            Priority = Priority,
+            ProductEntity = ProductEntity,
+            ProductAction = ProductAction,
+            ProductEvent = ProductEvent,
+            PurchaseAmount = PurchaseAmount,
         };
     }
 }

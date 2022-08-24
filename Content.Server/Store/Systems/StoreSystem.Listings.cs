@@ -27,7 +27,7 @@ public sealed partial class StoreSystem : EntitySystem
 
         foreach (var listing in allListings)
         {
-            allData.Add(listing.Clone());
+            allData.Add((ListingData) listing.Clone());
         }
 
         return allData;
