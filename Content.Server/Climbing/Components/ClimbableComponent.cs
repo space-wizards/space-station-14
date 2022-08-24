@@ -17,9 +17,15 @@ public sealed class ClimbableComponent : SharedClimbableComponent
     public float ClimbDelay = 0.8f;
 
     /// <summary>
-    /// Make people bonk when they try to climb, if <see cref="CCVars.GameTableBonk"/> is set.
+    /// If set, people can bonk on this if <see cref="CCVars.GameTableBonk"/> is set or if they are clumsy.
     /// </summary>
     [ViewVariables] [DataField("bonk")] public bool Bonk = false;
+
+    /// <summary>
+    /// Chance of bonk triggering if the user is clumsy.
+    /// </summary>
+    [ViewVariables] [DataField("bonkClumsyChance")]
+    public float BonkClumsyChance = 0.75f;
 
     /// <summary>
     /// Sound to play when bonking.
