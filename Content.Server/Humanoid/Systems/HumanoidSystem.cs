@@ -43,6 +43,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             return;
         }
 
+        SetSpecies(uid, humanoid.Species, false, humanoid);
+
         if (!string.IsNullOrEmpty(humanoid.Initial)
             && _prototypeManager.TryIndex(humanoid.Initial, out HumanoidMarkingStartingSet? startingSet))
         {
@@ -74,7 +76,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             return;
         }
 
-        humanoid.Species = profile.Species;
+        SetSpecies(uid, profile.Species, false, humanoid);
         humanoid.Sex = profile.Sex;
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
@@ -112,6 +114,25 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         targetHumanoid.CurrentMarkings = new(sourceHumanoid.CurrentMarkings);
 
         Synchronize(target, targetHumanoid);
+    }
+
+    public void SetSpecies(EntityUid uid, string species, bool sync = true, HumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        humanoid.Species = species;
+        var prototype = _prototypeManager.Index<SpeciesPrototype>(species);
+        humanoid.CurrentMarkings.FilterSpecies(species, _markingManager);
+        var oldMarkings = humanoid.CurrentMarkings.GetForwardEnumerator().ToList();
+        humanoid.CurrentMarkings = new(oldMarkings, prototype.MarkingPoints, _markingManager, _prototypeManager);
+
+        if (sync)
+        {
+            Synchronize(uid, humanoid);
+        }
     }
 
     public void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, HumanoidComponent? humanoid = null)

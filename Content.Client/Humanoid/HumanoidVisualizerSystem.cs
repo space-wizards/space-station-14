@@ -32,26 +32,17 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        if (component.Species != data.Species)
+        if (data.CustomBaseLayerInfo.Count != 0)
         {
-            if (data.CustomBaseLayerInfo.Count != 0)
-            {
-                MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo);
-            }
-            else
-            {
-                MergeCustomBaseSprites(uid, baseSprites.Sprites, null);
-            }
-
-            ApplyBaseSprites(uid);
-            component.Species = data.Species;
+            MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo);
+        }
+        else
+        {
+            MergeCustomBaseSprites(uid, baseSprites.Sprites, null);
         }
 
-        if (component.SkinColor != data.SkinColor)
-        {
-            ApplySkinColor(uid, data.SkinColor);
-            component.SkinColor = data.SkinColor;
-        }
+        ApplyBaseSprites(uid);
+        ApplySkinColor(uid, data.SkinColor);
 
         if (data.CustomBaseLayerInfo.Count != 0)
         {
@@ -144,7 +135,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible);
         }
 
-        if (dirtyRangeStart >= 0)
+        if (dirtyRangeStart >= 0 && newMarkings.Count > 0)
         {
             var range = newMarkings.GetRange(dirtyRangeStart, newMarkings.Count - 1);
 
