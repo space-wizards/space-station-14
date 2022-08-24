@@ -106,7 +106,7 @@
   roundStart: false
   prototype: MobDwarf
   dollPrototype: MobDwarfDummy
-  skinColoration: ReptilianToned
+  skinColoration: HumanToned
 
 - type: species
   id: Reptilian
@@ -217,13 +217,12 @@
 - type: markingPoints
   id: MobSlimeMarkingLimits
   points:
-    layerPoints:
-      Legs:
-        points: 2
-        required: false
-      Arms:
-        points: 4
-        required: false
+    Legs:
+      points: 2
+      required: false
+    Arms:
+      points: 4
+      required: false
 
 - type: species
   id: Skeleton

@@ -4,6 +4,7 @@ using Content.Shared.Markings;
 
 namespace Content.Server.Humanoid;
 
+[RegisterComponent]
 public sealed class HumanoidComponent : SharedHumanoidComponent
 {
     public MarkingSet CurrentMarkings = new();

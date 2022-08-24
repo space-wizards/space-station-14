@@ -5,6 +5,7 @@ using Content.Shared.Markings;
 
 namespace Content.Client.Humanoid;
 
+[RegisterComponent]
 public sealed class HumanoidComponent : SharedHumanoidComponent
 {
     public List<Marking> CurrentMarkings = new();

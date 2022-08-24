@@ -36,7 +36,7 @@
       layer:
       - MachineLayer
   - type: CharacterInfo
-  - type: HumanoidAppearance
+  - type: Humanoid
   - type: AnimationPlayer
   - type: MeleeWeapon
     range: 1.5
