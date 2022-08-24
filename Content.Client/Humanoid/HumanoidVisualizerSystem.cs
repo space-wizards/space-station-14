@@ -137,11 +137,11 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         if (dirtyRangeStart >= 0 && newMarkings.Count > 0)
         {
-            var range = newMarkings.GetRange(dirtyRangeStart, newMarkings.Count - 1);
+            var range = newMarkings.GetRange(dirtyRangeStart, newMarkings.Count - dirtyRangeStart);
 
             if (humanoid.CurrentMarkings.Count > 0)
             {
-                var oldRange = humanoid.CurrentMarkings.GetRange(dirtyRangeStart, newMarkings.Count - 1);
+                var oldRange = humanoid.CurrentMarkings.GetRange(dirtyRangeStart, humanoid.CurrentMarkings.Count - dirtyRangeStart);
                 ClearMarkings(uid, oldRange, humanoid);
             }
 
