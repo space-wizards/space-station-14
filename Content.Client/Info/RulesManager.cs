@@ -17,7 +17,9 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
+    private InfoSection rulesSection = new InfoSection("", "", false);
     private bool _shouldShowRules;
 
     public void Initialize()
@@ -71,5 +73,21 @@ public sealed class RulesManager : SharedRulesManager
     {
         var message = _netManager.CreateNetMessage<RulesAcceptedMessage>();
         _netManager.ClientSendMessage(message);
+    }
+
+    public void UpdateRules()
+    {
+        var rules = _sysMan.GetEntitySystem<InfoSystem>().Rules;
+        rulesSection.SetText(rules.Title, rules.Text, true);
+    }
+
+    public Control RulesSection()
+    {
+        if (rulesSection.Disposed)
+        {
+            rulesSection = new InfoSection("", "", false);
+        }
+        UpdateRules();
+        return rulesSection;
     }
 }
