@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Ensnaring.Components;
-using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.IdentityManagement;
@@ -11,16 +10,13 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Ensnaring;
 
-public sealed class EnsnaringSystem : EntitySystem
+public sealed partial class EnsnareableSystem
 {
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
 
-    public override void Initialize()
+    public void InitializeEnsnaring()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<EnsnaringComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<EnsnaringComponent, StepTriggerAttemptEvent>(AttemptStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, StepTriggeredEvent>(OnStepTrigger);

@@ -29,7 +29,7 @@ namespace Content.Server.Strip
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly EnsnaringSystem _ensnaring = default!;
+        [Dependency] private readonly EnsnareableSystem _ensnaring = default!;
 
         // TODO: ECS popups. Not all of these have ECS equivalents yet.
 

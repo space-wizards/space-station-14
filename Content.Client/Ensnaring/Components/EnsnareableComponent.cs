@@ -5,5 +5,9 @@ namespace Content.Client.Ensnaring.Components;
 [ComponentReference(typeof(SharedEnsnareableComponent))]
 public sealed class EnsnareableComponent : SharedEnsnareableComponent
 {
+    [DataField("sprite")]
+    public string? Sprite;
 
+    [DataField("state")]
+    public string? State;
 }

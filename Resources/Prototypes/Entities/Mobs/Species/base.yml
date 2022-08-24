@@ -281,12 +281,12 @@
     alternateState: Standing
     fireStackAlternateState: 3
   - type: EnsnareableVisualizer
-    sprite: Objects/Misc/ensnare.rsi
-    state: icon
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
   - type: Ensnareable
+    sprite: Objects/Misc/ensnare.rsi
+    state: icon
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle

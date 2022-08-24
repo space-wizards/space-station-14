@@ -9,15 +9,16 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Ensnaring;
 
-public sealed class EnsnareableSystem : SharedEnsnareableSystem
+public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly EnsnaringSystem _ensnaring = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        InitializeEnsnaring();
 
         SubscribeLocalEvent<EnsnareableComponent, ComponentInit>(OnEnsnareableInit);
         SubscribeLocalEvent<EnsnareableComponent, FreeEnsnareDoAfterComplete>(OnFreeComplete);
@@ -41,7 +42,7 @@ public sealed class EnsnareableSystem : SharedEnsnareableSystem
         _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.EnsnaringEntity)),
             uid, Filter.Entities(uid), PopupType.Large);
 
-        _ensnaring.UpdateAlert(component);
+        UpdateAlert(component);
         var ev = new EnsnareRemoveEvent();
         RaiseLocalEvent(uid, ev, false);
 
