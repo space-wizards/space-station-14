@@ -8,7 +8,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid;
 
-[RegisterComponent]
 public abstract class SharedHumanoidComponent : Component
 {
     /// <summary>
