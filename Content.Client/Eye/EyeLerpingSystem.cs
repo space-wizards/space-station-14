@@ -42,6 +42,11 @@ public sealed class EyeLerpingSystem : EntitySystem
         lerpInfo.TargetRotation = GetRotation(uid, xformQuery, mover);
         lerpInfo.LastRotation = lerpInfo.TargetRotation;
 
+        if (xformQuery.TryGetComponent(uid, out var xform))
+        {
+            lerpInfo.MapId = xform.MapID;
+        }
+
         if (component.Eye != null)
         {
             component.Eye.Rotation = lerpInfo.TargetRotation;
@@ -83,6 +88,15 @@ public sealed class EyeLerpingSystem : EntitySystem
             moverQuery.TryGetComponent(entity, out var mover);
 
             lerpInfo.TargetRotation = GetRotation(entity, xformQuery, mover);
+
+            if (xformQuery.TryGetComponent(entity, out var xform))
+            {
+                // If we traverse maps then don't lerp.
+                if (xform.MapID != lerpInfo.MapId)
+                {
+                    lerpInfo.LastRotation = lerpInfo.TargetRotation;
+                }
+            }
         }
 
         foreach (var eye in foundEyes)
@@ -160,5 +174,10 @@ public sealed class EyeLerpingSystem : EntitySystem
     {
         public Angle LastRotation;
         public Angle TargetRotation;
+
+        /// <summary>
+        /// If we go to a new map then don't lerp and snap instantly.
+        /// </summary>
+        public MapId MapId;
     }
 }
