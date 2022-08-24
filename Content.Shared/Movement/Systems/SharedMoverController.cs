@@ -179,12 +179,12 @@ namespace Content.Shared.Movement.Systems
                         // If we went from grid -> map we'll preserve our worldrotation
                         if (relative != null && _mapManager.IsMap(relative.Value))
                         {
-                            targetRotation = currentRotation.FlipPositive();
+                            targetRotation = currentRotation.FlipPositive().Reduced();
                         }
                         // If we went from grid -> grid OR grid -> map then snap the target to cardinal and lerp there.
                         else if (relative != null && _mapManager.IsGrid(relative.Value))
                         {
-                            targetRotation = mover.RelativeRotation.GetCardinalDir().ToAngle();
+                            targetRotation = mover.RelativeRotation.GetCardinalDir().ToAngle().Reduced();
                         }
 
                         Sawmill.Debug($"Updated relative movement entity from {mover.RelativeEntity} to {relative}");
@@ -214,7 +214,7 @@ namespace Content.Shared.Movement.Systems
                 mover.RelativeRotation = mover.TargetRelativeRotation;
             }
 
-            var parentRotation = GetParentGridAngle(xform, mover);
+            var parentRotation = GetParentGridAngle(mover);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
             DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));

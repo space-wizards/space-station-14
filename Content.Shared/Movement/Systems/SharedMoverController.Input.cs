@@ -90,7 +90,7 @@ namespace Content.Shared.Movement.Systems
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
 
-        protected Angle GetParentGridAngle(TransformComponent xform, InputMoverComponent mover)
+        public Angle GetParentGridAngle(InputMoverComponent mover)
         {
             var rotation = mover.RelativeRotation;
 
@@ -102,6 +102,9 @@ namespace Content.Shared.Movement.Systems
 
         private void OnInputParentChange(EntityUid uid, InputMoverComponent component, ref EntParentChangedMessage args)
         {
+            if (component.LifeStage < ComponentLifeStage.Initialized)
+                return;
+
             // If we change our grid / map then delay updating our LastGridAngle.
             var relative = args.Transform.GridUid;
             relative ??= args.Transform.MapUid;
@@ -169,6 +172,7 @@ namespace Content.Shared.Movement.Systems
                 return;
 
             component.RelativeEntity = xform.GridUid ?? xform.MapUid;
+            component.TargetRelativeRotation = Angle.Zero;
         }
 
         private void HandleRunChange(EntityUid uid, ushort subTick, bool walking)
