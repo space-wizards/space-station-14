@@ -180,14 +180,14 @@ public sealed class HumanoidSpeciesSpriteLayer : IPrototype
     ///     If this sprite layer should allow markings or not.
     /// </summary>
     [DataField("allowsMarkings")]
-    public bool AllowsMarkings;
+    public bool AllowsMarkings = true;
 
     /// <summary>
     ///     If this layer should always match the
     ///     skin tone in a character profile.
     /// </summary>
     [DataField("matchSkin")]
-    public bool MatchSkin;
+    public bool MatchSkin = true;
 
     /// <summary>
     ///     If any markings that go on this layer should

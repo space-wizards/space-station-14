@@ -11,22 +11,6 @@
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
-  - type: Markings
-    layerPoints:
-      Tail:
-        points: 1
-        required: true
-        defaultMarkings: [LizardTailSmooth]
-      Snout:
-        points: 1
-        required: true
-        defaultMarkings: [LizardSnoutRound]
-      HeadTop:
-        points: 1
-        required: false
-      HeadSide:
-        points: 1
-        required: false
   - type: Sprite
     netsync: false
     noRot: true
