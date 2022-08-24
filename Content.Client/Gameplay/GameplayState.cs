@@ -50,7 +50,7 @@ namespace Content.Client.Gameplay
             _eyeManager.MainViewport = Viewport.Viewport;
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
             _fpsCounter = new FpsCounter(_gameTiming);
-            UserInterfaceManager.StateRoot.AddChild(_fpsCounter);
+            UserInterfaceManager.PopupRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
         }
