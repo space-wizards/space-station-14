@@ -138,7 +138,9 @@
     LHand: MobReptilianLHand
     RHand: MobReptilianRHand
     LLeg: MobReptilianLLeg
+    RLeg: MobReptilianRLeg
     LFoot: MobReptilianLFoot
+    RFoot: MobReptilianRFoot
 
 - type: markingPoints
   id: MobReptilianMarkingLimits
@@ -183,6 +185,12 @@
     state: l_hand
 
 - type: humanoidBaseSprite
+  id: MobReptilianLArm
+  baseSprite:
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
   id: MobReptilianLFoot
   baseSprite:
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -199,6 +207,12 @@
   baseSprite:
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobReptilianRArm
+  baseSprite:
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: r_arm
 
 - type: humanoidBaseSprite
   id: MobReptilianRFoot
