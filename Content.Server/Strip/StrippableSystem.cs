@@ -89,19 +89,18 @@ namespace Content.Server.Strip
             if (args.Session.AttachedEntity is not {Valid: true} user)
                 return;
 
-            if (TryComp<EnsnareableComponent>(component.Owner, out var ensnared))
+            var ensnareQuery = GetEntityQuery<EnsnareableComponent>();
+
+            foreach (var entity in ensnareQuery.GetComponent(uid).Container.ContainedEntities)
             {
-                foreach (var entity in ensnared.Container.ContainedEntities)
-                {
-                    if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
-                        continue;
+                if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
+                    continue;
 
-                    if (entity != args.Ensnare)
-                        continue;
+                if (entity != args.Ensnare)
+                    continue;
 
-                    _ensnaring.TryFree(component.Owner, ensnaring, user);
-                    return;
-                }
+                _ensnaring.TryFree(component.Owner, ensnaring, user);
+                return;
             }
         }
 
@@ -221,9 +220,11 @@ namespace Content.Server.Strip
                 }
             }
 
-            if (TryComp<EnsnareableComponent>(uid, out var ensnared))
+            var ensnareQuery = GetEntityQuery<EnsnareableComponent>();
+
+            if (ensnareQuery.TryGetComponent(uid, out var _))
             {
-                foreach (var entity in ensnared.Container.ContainedEntities)
+                foreach (var entity in ensnareQuery.GetComponent(uid).Container.ContainedEntities)
                 {
                     var name = Name(entity);
                     ensnare.Add(entity, name);
