@@ -25,5 +25,11 @@ namespace Content.Server.Repairable
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("doAfterDelay")]
         public int DoAfterDelay = 1;
+
+        /// <summary>
+        /// A multiplier that will be applied to the above if an entity is repairing themselves.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("selfRepairPenalty")]
+        public float SelfRepairPenalty = 3f;
     }
 }

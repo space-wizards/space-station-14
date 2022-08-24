@@ -1,6 +1,5 @@
+using Content.Shared.Research.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using static Content.Shared.Research.Components.SharedResearchClientComponent;
 
 namespace Content.Client.Research.UI
 {
@@ -8,7 +7,7 @@ namespace Content.Client.Research.UI
     {
         private ResearchClientServerSelectionMenu? _menu;
 
-        public ResearchClientBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ResearchClientBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
             SendMessage(new ResearchClientSyncMessage());
         }

@@ -1,9 +1,9 @@
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Friend(typeof(UtensilSystem))]
+    [RegisterComponent, Access(typeof(UtensilSystem))]
     public sealed class UtensilComponent : Component
     {
         [DataField("types")]

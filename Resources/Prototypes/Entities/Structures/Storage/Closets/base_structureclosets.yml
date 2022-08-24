@@ -38,9 +38,13 @@
       layer:
       - MachineLayer
   - type: EntityStorage
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
   - type: Weldable
   - type: PlaceableSurface
     placeCentered: true
+    isPlaceable: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

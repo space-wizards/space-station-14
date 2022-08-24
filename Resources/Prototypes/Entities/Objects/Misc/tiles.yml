@@ -43,16 +43,35 @@
   - type: Sprite
     state: steel
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
-      - plating
-      - floor_steel
+      - Plating
+      - FloorSteel
   - type: Stack
     stackType: FloorTileSteel
   - type: Construction
     graph: TileSteel
     node: steeltile
+
+- type: entity
+  name: steel tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMetalDiamond
+  components:
+  - type: Sprite
+    state: metaldiamond
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMetalDiamond
+  - type: Stack
+    stackType: FloorTileMetalDiamond
+#  - type: Construction
+#    graph: TileSteel
+#    node: steeltile
 
 - type: entity
   name: wood floor
@@ -62,11 +81,11 @@
   - type: Sprite
     state: wood
   - type: Item
-    HeldPrefix: wood
+    heldPrefix: wood
   - type: FloorTile
     outputs:
-      - plating
-      - floor_wood
+      - Plating
+      - FloorWood
   - type: Stack
     stackType: FloorTileWood
   - type: Construction
@@ -81,11 +100,11 @@
   - type: Sprite
     state: white
   - type: Item
-    HeldPrefix: white
+    heldPrefix: white
   - type: FloorTile
     outputs:
-      - plating
-      - floor_white
+      - Plating
+      - FloorWhite
   - type: Stack
     stackType: FloorTileWhite
   - type: Construction
@@ -100,11 +119,11 @@
   - type: Sprite
     state: dark
   - type: Item
-    HeldPrefix: dark
+    heldPrefix: dark
   - type: FloorTile
     outputs:
-      - plating
-      - floor_dark
+      - Plating
+      - FloorDark
   - type: Stack
     stackType: FloorTileDark
   - type: Construction
@@ -119,11 +138,11 @@
   - type: Sprite
     state: techfloor
   - type: Item
-    HeldPrefix: dark
+    heldPrefix: dark
   - type: FloorTile
     outputs:
-      - plating
-      - floor_techmaint
+      - Plating
+      - FloorTechMaint
   - type: Stack
     stackType: FloorTileTechmaint
 
@@ -135,11 +154,11 @@
   - type: Sprite
     state: reinforced
   - type: Item
-    HeldPrefix: reinforced
+    heldPrefix: reinforced
   - type: FloorTile
     outputs:
-      - plating
-      - floor_reinforced
+      - Plating
+      - FloorReinforced
   - type: Stack
     stackType: FloorTileReinforced
 
@@ -153,11 +172,11 @@
   - type: Sprite
     state: monofloor
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
-      - plating
-      - floor_mono
+      - Plating
+      - FloorMono
   - type: Stack
     stackType: FloorTileMono
 
@@ -169,11 +188,11 @@
   - type: Sprite
     state: lino
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
-      - plating
-      - floor_lino
+      - Plating
+      - FloorLino
   - type: Stack
     stackType: FloorTileLino
 
@@ -185,11 +204,11 @@
   - type: Sprite
     state: dirty
   - type: Item
-    HeldPrefix: dirty
+    heldPrefix: dirty
   - type: FloorTile
     outputs:
-      - plating
-      - floor_steel_dirty
+      - Plating
+      - FloorSteelDirty
   - type: Stack
     stackType: FloorTileDirty
 
@@ -201,11 +220,11 @@
   - type: Sprite
     state: dark
   - type: Item
-    HeldPrefix: dark
+    heldPrefix: dark
   - type: FloorTile
     outputs:
-      - plating
-      - floor_elevator_shaft
+      - Plating
+      - FloorElevatorShaft
   - type: Stack
     stackType: FloorTileElevatorShaft
 
@@ -217,11 +236,11 @@
   - type: Sprite
     state: rockvault
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
-      - plating
-      - floor_rock_vault
+      - Plating
+      - FloorRockVault
   - type: Stack
     stackType: FloorTileRockVault
 
@@ -233,11 +252,11 @@
   - type: Sprite
     state: blue
   - type: Item
-    HeldPrefix: carpet-blue
+    heldPrefix: carpet-blue
   - type: FloorTile
     outputs:
-      - plating
-      - floor_blue
+      - Plating
+      - FloorBlue
   - type: Stack
     stackType: FloorTileBlue
 
@@ -250,11 +269,11 @@
   - type: Sprite
     state: showroom
   - type: Item
-    HeldPrefix: showroom
+    heldPrefix: showroom
   - type: FloorTile
     outputs:
-      - plating
-      - floor_freezer
+      - Plating
+      - FloorFreezer
   - type: Stack
     stackType: FloorTileFreezer
 
@@ -266,11 +285,11 @@
   - type: Sprite
     state: showroom
   - type: Item
-    HeldPrefix: showroom
+    heldPrefix: showroom
   - type: FloorTile
     outputs:
-      - plating
-      - floor_showroom
+      - Plating
+      - FloorShowroom
   - type: Stack
     stackType: FloorTileShowroom
 
@@ -282,11 +301,11 @@
   - type: Sprite
     state: hydro
   - type: Item
-    HeldPrefix: hydro
+    heldPrefix: hydro
   - type: FloorTile
     outputs:
-      - plating
-      - floor_hydro
+      - Plating
+      - FloorHydro
   - type: Stack
     stackType: FloorTileHydro
 
@@ -298,11 +317,11 @@
   - type: Sprite
     state: bar
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
-      - plating
-      - floor_bar
+      - Plating
+      - FloorBar
   - type: Stack
     stackType: FloorTileBar
 
@@ -314,11 +333,11 @@
   - type: Sprite
     state: clown
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
-      - plating
-      - floor_clown
+      - Plating
+      - FloorClown
   - type: Stack
     stackType: FloorTileClown
 
@@ -330,11 +349,11 @@
   - type: Sprite
     state: mime
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
-      - plating
-      - floor_mime
+      - Plating
+      - FloorMime
   - type: Stack
     stackType: FloorTileMime
 
@@ -346,11 +365,11 @@
   - type: Sprite
     state: kitchen
   - type: Item
-    HeldPrefix: dark
+    heldPrefix: dark
   - type: FloorTile
     outputs:
-      - plating
-      - floor_kitchen
+      - Plating
+      - FloorKitchen
   - type: Stack
     stackType: FloorTileKitchen
 
@@ -362,11 +381,11 @@
   - type: Sprite
     state: laundry
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: FloorTile
     outputs:
-      - plating
-      - floor_laundry
+      - Plating
+      - FloorLaundry
   - type: Stack
     stackType: FloorTileLaundry
 
@@ -379,13 +398,29 @@
   - type: Sprite
     state: arcadeblue
   - type: Item
-    HeldPrefix: arcadeblue
+    heldPrefix: arcadeblue
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorArcadeBlue
   - type: Stack
     stackType: FloorTileStackArcadeBlue
+
+- type: entity
+  name: blue arcade floor
+  parent: FloorTileItemBase
+  id: FloorTileItemArcadeBlue2
+  components:
+  - type: Sprite
+    state: arcadeblue2
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorArcadeBlue2
+  - type: Stack
+    stackType: FloorTileStackArcadeBlue2
 
 - type: entity
   name: red arcade floor
@@ -395,10 +430,10 @@
   - type: Sprite
     state: arcadered
   - type: Item
-    HeldPrefix: arcadered
+    heldPrefix: arcadered
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorArcadeRed
   - type: Stack
     stackType: FloorTileStackArcadeRed
@@ -411,13 +446,77 @@
   - type: Sprite
     state: eighties
   - type: Item
-    HeldPrefix: eighties
+    heldPrefix: eighties
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorEighties
   - type: Stack
     stackType: FloorTileStackEighties
+
+- type: entity
+  name: clown carpet floor
+  parent: FloorTileItemBase
+  id: FloorTileItemCarpetClown
+  components:
+  - type: Sprite
+    state: carpetclown
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorCarpetClown
+  - type: Stack
+    stackType: FloorTileStackCarpetClown
+
+- type: entity
+  name: office carpet floor
+  parent: FloorTileItemBase
+  id: FloorTileItemCarpetOffice
+  components:
+  - type: Sprite
+    state: carpetoffice
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorCarpetOffice
+  - type: Stack
+    stackType: FloorTileStackCarpetOffice
+
+- type: entity
+  name: boxing ring floor
+  parent: FloorTileItemBase
+  id: FloorTileItemBoxing
+  components:
+  - type: Sprite
+    state: boxing
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorBoxing
+  - type: Stack
+    stackType: FloorTileStackBoxing
+
+- type: entity
+  name: gym floor
+  parent: FloorTileItemBase
+  id: FloorTileItemGym
+  components:
+  - type: Sprite
+    state: gym
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorGym
+  - type: Stack
+    stackType: FloorTileStackGym
 
 # Shuttles
 - type: entity
@@ -428,10 +527,10 @@
   - type: Sprite
     state: shuttlewhite
   - type: Item
-    HeldPrefix: shuttlewhite
+    heldPrefix: shuttlewhite
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorShuttleWhite
   - type: Stack
     stackType: FloorTileStackShuttleWhite
@@ -444,10 +543,10 @@
   - type: Sprite
     state: shuttleblue
   - type: Item
-    HeldPrefix: shuttleblue
+    heldPrefix: shuttleblue
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorShuttleBlue
   - type: Stack
     stackType: FloorTileStackShuttleBlue
@@ -460,10 +559,10 @@
   - type: Sprite
     state: shuttleorange
   - type: Item
-    HeldPrefix: shuttleorange
+    heldPrefix: shuttleorange
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorShuttleOrange
   - type: Stack
     stackType: FloorTileStackShuttleOrange
@@ -476,10 +575,10 @@
   - type: Sprite
     state: shuttlepurple
   - type: Item
-    HeldPrefix: shuttlepurple
+    heldPrefix: shuttlepurple
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorShuttlePurple
   - type: Stack
     stackType: FloorTileStackShuttlePurple
@@ -492,10 +591,10 @@
   - type: Sprite
     state: shuttlered
   - type: Item
-    HeldPrefix: shuttlered
+    heldPrefix: shuttlered
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorShuttleRed
   - type: Stack
     stackType: FloorTileStackShuttleRed
@@ -509,11 +608,11 @@
   - type: Sprite
     state: gold
   - type: Item
-    HeldPrefix: gold
+    heldPrefix: gold
   - type: FloorTile
     outputs:
-      - plating
-      - floor_gold
+      - Plating
+      - FloorGold
   - type: Stack
     stackType: FloorTileGold
 
@@ -525,11 +624,11 @@
   - type: Sprite
     state: silver
   - type: Item
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: FloorTile
     outputs:
-      - plating
-      - floor_silver
+      - Plating
+      - FloorSilver
   - type: Stack
     stackType: FloorTileSilver
 
@@ -542,11 +641,11 @@
   - type: Sprite
     state: gcircuit
   - type: Item
-    HeldPrefix: gcircuit
+    heldPrefix: gcircuit
   - type: FloorTile
     outputs:
-      - plating
-      - floor_green_circuit
+      - Plating
+      - FloorGreenCircuit
   - type: Stack
     stackType: FloorTileGCircuit
 
@@ -558,11 +657,11 @@
   - type: Sprite
     state: bcircuit
   - type: Item
-    HeldPrefix: bcircuit
+    heldPrefix: bcircuit
   - type: FloorTile
     outputs:
-      - plating
-      - floor_blue_circuit
+      - Plating
+      - FloorBlueCircuit
   - type: Stack
     stackType: FloorTileBCircuit
 
@@ -575,11 +674,11 @@
   - type: Sprite
     state: grass
   - type: Item
-    HeldPrefix: grass
+    heldPrefix: grass
   - type: FloorTile
     outputs:
-      - plating
-      - floor_grass
+      - Plating
+      - FloorGrass
   - type: Stack
     stackType: FloorTileGrass
 
@@ -591,10 +690,10 @@
   - type: Sprite
     state: grassjungle
   - type: Item
-    HeldPrefix: grassjungle
+    heldPrefix: grassjungle
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
       - FloorGrassJungle
   - type: Stack
     stackType: FloorTileGrassJungle
@@ -607,10 +706,10 @@
   - type: Sprite
     state: snow
   - type: Item
-    HeldPrefix: snow
+    heldPrefix: snow
   - type: FloorTile
     outputs:
-      - plating
-      - floor_snow
+      - Plating
+      - FloorSnow
   - type: Stack
     stackType: FloorTileSnow

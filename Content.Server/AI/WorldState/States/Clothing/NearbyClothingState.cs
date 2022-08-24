@@ -17,11 +17,11 @@ namespace Content.Server.AI.WorldState.States.Clothing
             var result = new List<EntityUid>();
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(Owner, out AiControllerComponent? controller))
+            if (!entMan.TryGetComponent(Owner, out NPCComponent? controller))
             {
                 return result;
             }
-            var containerSystem = IoCManager.Resolve<ContainerSystem>();
+            var containerSystem = entMan.EntitySysManager.GetEntitySystem<ContainerSystem>();
             foreach (var entity in Visibility.GetNearestEntities(entMan.GetComponent<TransformComponent>(Owner).Coordinates, typeof(ClothingComponent), controller.VisionRadius))
             {
                 if (containerSystem.TryGetContainingContainer(entity, out var container))

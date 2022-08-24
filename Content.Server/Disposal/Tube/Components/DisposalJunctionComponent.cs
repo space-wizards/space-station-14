@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.Random;
 
@@ -7,8 +7,11 @@ namespace Content.Server.Disposal.Tube.Components
     [Virtual]
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [ComponentReference(typeof(DisposalTubeComponent))]
     public class DisposalJunctionComponent : DisposalTubeComponent
     {
+        public override string ContainerId => "DisposalJunction";
+
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -36,7 +39,7 @@ namespace Content.Server.Disposal.Tube.Components
             {
                 return _random.Pick(directions);
             }
-
+            
             return next;
         }
     }

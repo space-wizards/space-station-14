@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
+using Robust.Client.Timing;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -30,42 +33,14 @@ namespace Content.IntegrationTests.Tests.Networking
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
     [TestFixture]
-    public sealed class SimplePredictReconcileTest : ContentIntegrationTest
+    public sealed class SimplePredictReconcileTest
     {
         [Test]
         public async Task Test()
         {
-            // Initialize client & server with text component and system registered.
-            // They can't be registered/detected automatically.
-            var (client, server) = await StartConnectedServerDummyTickerClientPair(
-                new ClientContentIntegrationOption
-                {
-                    // This test is designed around specific timing values and when I wrote it interpolation was off.
-                    // As such, I would have to update half this test to make sure it works with interpolation.
-                    // I'm kinda lazy.
-                    CVarOverrides =
-                    {
-                        {CVars.NetInterp.Name, "false"},
-                        {CVars.NetPVS.Name, "false"}
-                    },
-                    ContentBeforeIoC = () =>
-                    {
-                        IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
-                    }
-                },
-                new ServerContentIntegrationOption
-                {
-                    CVarOverrides =
-                    {
-                        {CVars.NetPVS.Name, "false"}
-                    },
-                    ContentBeforeIoC = () =>
-                    {
-                        IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
-                    }
-                });
+            await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, DummyTicker = true});
+            var server = pairTracker.Pair.Server;
+            var client = pairTracker.Pair.Client;
 
             // Pull in all dependencies we need.
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
@@ -73,8 +48,12 @@ namespace Content.IntegrationTests.Tests.Networking
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var cEntityManager = client.ResolveDependency<IEntityManager>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
-            var cGameTiming = client.ResolveDependency<IGameTiming>();
+            var cGameTiming = client.ResolveDependency<IClientGameTiming>();
             var cGameStateManager = client.ResolveDependency<IClientGameStateManager>();
+            var cfg = client.ResolveDependency<IConfigurationManager>();
+            var log = cfg.GetCVar(CVars.NetLogging);
+
+            //cfg.SetCVar(CVars.NetLogging, true);
 
             EntityUid serverEnt = default;
             PredictionTestComponent serverComponent = default!;
@@ -85,7 +64,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var clientSystem = client.ResolveDependency<IEntitySystemManager>()
                 .GetEntitySystem<PredictionTestEntitySystem>();
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
@@ -98,16 +77,14 @@ namespace Content.IntegrationTests.Tests.Networking
             });
 
             // Run some ticks so that
-            await RunTicksSync(client, server, 3);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 3);
 
-            // Due to technical things with the game state processor it has an extra state in the buffer here.
-            // This burns through it real quick, but I'm not sure it should be there?
-            // Under normal operation (read: not integration test) this gets corrected for via tick time adjustment,
-            // so it's probably not an issue?
+            // Check client buffer is full
+            Assert.That(cGameStateManager.CurrentBufferSize, Is.EqualTo(cGameStateManager.TargetBufferSize));
+
+            // This isn't required anymore, but the test had this for the sake of "technical things", and I cbf shifting
+            // all the tick times over. So it stays.
             await client.WaitRunTicks(1);
-
-            // 2 is target buffer size.
-            Assert.That(cGameStateManager.CurrentBufferSize, Is.EqualTo(2));
 
             await client.WaitPost(() =>
             {
@@ -125,7 +102,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             // Client last ran tick 15 meaning it's ahead of the last server tick it processed (12)
             Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(16)));
-            Assert.That(cGameStateManager.CurServerTick, Is.EqualTo(new GameTick(12)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(12)));
 
             // *** I am using block scopes to visually distinguish these sections of the test to make it more readable.
 
@@ -201,7 +178,7 @@ namespace Content.IntegrationTests.Tests.Networking
             // Assert timing is still correct, should be but it's a good reference for the rest of the test.
             Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(18)));
             Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(20)));
-            Assert.That(cGameStateManager.CurServerTick, Is.EqualTo(new GameTick(16)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(16)));
 
             {
                 // Send event to server to change flag again, this time to disable it..
@@ -272,7 +249,7 @@ namespace Content.IntegrationTests.Tests.Networking
             // Assert timing is still correct.
             Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(22)));
             Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(24)));
-            Assert.That(cGameStateManager.CurServerTick, Is.EqualTo(new GameTick(20)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(20)));
 
             {
                 // Send first event to disable the flag (reminder: it never got accepted by the server).
@@ -387,10 +364,13 @@ namespace Content.IntegrationTests.Tests.Networking
                     Assert.That(clientComponent.Foo, Is.True);
                 }
             }
+            
+            cfg.SetCVar(CVars.NetLogging, log);
+            await pairTracker.CleanReturnAsync();
         }
 
         [NetworkedComponent()]
-        private sealed class PredictionTestComponent : Component
+        public sealed class PredictionTestComponent : Component
         {
             private bool _foo;
 
@@ -432,7 +412,7 @@ namespace Content.IntegrationTests.Tests.Networking
         }
 
         [Reflect(false)]
-        private sealed class PredictionTestEntitySystem : EntitySystem
+        public sealed class PredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
 

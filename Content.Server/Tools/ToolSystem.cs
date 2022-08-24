@@ -1,29 +1,31 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Audio;
+using Content.Shared.Item;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Content.Server.Tools
 {
     // TODO move tool system to shared, and make it a friend of Tool Component.
-    public sealed partial class ToolSystem : EntitySystem
+    public sealed partial class ToolSystem : SharedToolSystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedItemSystem _itemSystem = default!;
 
         public override void Initialize()
         {
@@ -31,7 +33,6 @@ namespace Content.Server.Tools
 
             InitializeTilePrying();
             InitializeWelders();
-            InitializeMultipleTools();
 
             SubscribeLocalEvent<ToolDoAfterComplete>(OnDoAfterComplete);
             SubscribeLocalEvent<ToolDoAfterCancelled>(OnDoAfterCancelled);
@@ -244,8 +245,8 @@ namespace Content.Server.Tools
                 return;
 
             // Pass tool.Owner to Filter.Pvs to avoid a TryGetEntity call.
-            SoundSystem.Play(Filter.Pvs(tool.Owner), sound.GetSound(), uid,
-                AudioHelpers.WithVariation(0.175f).WithVolume(-5f));
+            SoundSystem.Play(sound.GetSound(), Filter.Pvs(tool.Owner),
+                uid, AudioHelpers.WithVariation(0.175f).WithVolume(-5f));
         }
 
         public override void Update(float frameTime)

@@ -11,6 +11,8 @@ namespace Content.Shared.Body.Components
     [NetworkedComponent()]
     public abstract class SharedBodyPartComponent : Component
     {
+        public const string ContainerId = "bodypart";
+
         [Dependency] private readonly IEntityManager _entMan = default!;
         private SharedBodyComponent? _body;
 
@@ -255,28 +257,26 @@ namespace Content.Shared.Body.Components
 
         private void AddedToBody(SharedBodyComponent body)
         {
-            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = 0;
-            _entMan.GetComponent<TransformComponent>(Owner).AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
             {
-                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body), true);
             }
         }
 
         private void RemovedFromBody(SharedBodyComponent old)
         {
-            if (!_entMan.GetComponent<TransformComponent>(Owner).Deleted)
+            if (_entMan.TryGetComponent<TransformComponent>(Owner, out var transformComponent))
             {
-                _entMan.GetComponent<TransformComponent>(Owner).AttachToGridOrMap();
+                transformComponent.AttachToGridOrMap();
             }
 
             OnRemovedFromBody(old);
 
             foreach (var mechanism in _mechanisms)
             {
-                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old), true);
             }
         }
 
@@ -287,12 +287,17 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     Gibs the body part.
         /// </summary>
-        public virtual void Gib()
+        public virtual HashSet<EntityUid> Gib()
         {
+            var gibs = new HashSet<EntityUid>();
+
             foreach (var mechanism in _mechanisms)
             {
+                gibs.Add(mechanism.Owner);
                 RemoveMechanism(mechanism);
             }
+
+            return gibs;
         }
     }
 

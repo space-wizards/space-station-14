@@ -15,7 +15,7 @@ public sealed class ExplosionDebugOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
 
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
-    public Dictionary<GridId, Dictionary<int, List<Vector2i>>> Tiles = new();
+    public Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles = new();
     public List<float> Intensity = new();
     public float TotalIntensity;
     public float Slope;
@@ -148,6 +148,7 @@ public sealed class ExplosionDebugOverlay : Overlay
         handle.SetTransform(SpaceMatrix);
 
         DrawTiles(handle, gridBounds, SpaceTiles, SpaceTileSize);
+        handle.SetTransform(Matrix3.Identity);
     }
 
     private void DrawTiles(

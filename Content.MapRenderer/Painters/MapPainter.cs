@@ -1,58 +1,32 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
-using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SpriteComponent = Robust.Server.GameObjects.SpriteComponent;
+using SpriteComponent = Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
-    public sealed class MapPainter : ContentIntegrationTest
+    public sealed class MapPainter
     {
-        public async IAsyncEnumerable<Image> Paint(string map)
+        public async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var clientOptions = new ClientContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    [CVars.NetPVS.Name] = "false"
-                },
-                Pool = false,
-                FailureLogLevel = LogLevel.Fatal
-            };
-
-            var serverOptions = new ServerContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    [CCVars.GameMap.Name] = map,
-                    [CVars.NetPVS.Name] = "false"
-                },
-                Pool = false,
-                FailureLogLevel = LogLevel.Fatal
-            };
-
-            var (client, server) = await StartConnectedServerClientPair(clientOptions, serverOptions);
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-            await RunTicksSync(client, server, 10);
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings(){ Map = map });
+            var server = pairTracker.Pair.Server;
+            var client = pairTracker.Pair.Client;
 
             Console.WriteLine($"Loaded client and server in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
 
@@ -63,7 +37,7 @@ namespace Content.MapRenderer.Painters
 
             await client.WaitPost(() =>
             {
-                if (cEntityManager.TryGetComponent(cPlayerManager.LocalPlayer!.ControlledEntity!, out Robust.Client.GameObjects.SpriteComponent? sprite))
+                if (cEntityManager.TryGetComponent(cPlayerManager.LocalPlayer!.ControlledEntity!, out SpriteComponent? sprite))
                 {
                     sprite.Visible = false;
                 }
@@ -72,15 +46,7 @@ namespace Content.MapRenderer.Painters
             var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
-            await server.WaitPost(() =>
-            {
-                if (sEntityManager.TryGetComponent(sPlayerManager.ServerSessions.Single().AttachedEntity!, out SpriteComponent? sprite))
-                {
-                    sprite.Visible = false;
-                }
-            });
-
-            await RunTicksSync(client, server, 10);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -106,11 +72,18 @@ namespace Content.MapRenderer.Painters
                 }
             });
 
-            await RunTicksSync(client, server, 10);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             foreach (var grid in grids)
             {
+                // Skip empty grids
+                if (grid.LocalAABB.IsEmpty())
+                {
+                    Console.WriteLine($"Warning: Grid {grid.GridEntityId} was empty. Skipping image rendering.");
+                    continue;
+                }
+
                 var tileXSize = grid.TileSize * TilePainter.TileImageSize;
                 var tileYSize = grid.TileSize * TilePainter.TileImageSize;
 
@@ -134,13 +107,17 @@ namespace Content.MapRenderer.Painters
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
 
-                yield return gridCanvas;
+                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas);
+                renderedImage.GridUid = grid.GridEntityId;
+                renderedImage.Offset = grid.WorldPosition;
+
+                yield return renderedImage;
             }
 
             // We don't care if it fails as we have already saved the images.
             try
             {
-                await OneTimeTearDown();
+                await pairTracker.CleanReturnAsync();
             }
             catch
             {

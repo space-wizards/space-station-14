@@ -16,7 +16,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -45,6 +44,9 @@
     supplyRampTolerance: 500
   - type: Anchorable
   - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -149,7 +151,7 @@
     supplyRate: 3000
 
 - type: entity
-  parent: BaseGenerator
+  parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorPlasma
   suffix: Plasma, 5kW
   components:
@@ -158,9 +160,6 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Wires
     BoardName: "GeneratorPlasma"
     LayoutId: GeneratorPlasma
@@ -168,7 +167,7 @@
     board: GeneratorPlasmaMachineCircuitboard
 
 - type: entity
-  parent: BaseGenerator
+  parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorUranium
   suffix: Uranium, 15kW
   components:
@@ -177,15 +176,11 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Wires
     BoardName: "GeneratorUranium"
     LayoutId: GeneratorUranium
   - type: Machine
     board: GeneratorUraniumMachineCircuitboard
-
 
 - type: entity
   parent: BaseGeneratorWallmount

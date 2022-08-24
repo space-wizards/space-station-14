@@ -1,3 +1,6 @@
+using Content.Server.CombatMode.Disarm;
+using Content.Server.Kitchen.Components;
+using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -15,6 +18,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedRgbLightControllerSystem _rgbSystem = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
 
         public override void Initialize()
         {
@@ -63,12 +67,23 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if (!comp.Activated)
                 return;
 
-            if (TryComp(comp.Owner, out SharedItemComponent? item))
+            if (TryComp(comp.Owner, out ItemComponent? item))
             {
-                item.Size = 5;
+                _item.SetSize(comp.Owner, 5, item);
             }
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.DeActivateSound.GetSound(), comp.Owner);
+            if (TryComp<DisarmMalusComponent>(comp.Owner, out var malus))
+            {
+                malus.Malus -= comp.litDisarmMalus;
+            }
+
+            if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
+                weaponComp.HitSound = comp.OnHitOff;
+
+            if (comp.IsSharp)
+                RemComp<SharpComponent>(comp.Owner);
+
+            SoundSystem.Play(comp.DeActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
             comp.Activated = false;
         }
@@ -78,12 +93,23 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if (comp.Activated)
                 return;
 
-            if (TryComp(comp.Owner, out SharedItemComponent? item))
+            if (TryComp(comp.Owner, out ItemComponent? item))
             {
-                item.Size = 9999;
+                _item.SetSize(comp.Owner, 9999, item);
             }
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.ActivateSound.GetSound(), comp.Owner);
+            if (comp.IsSharp)
+                EnsureComp<SharpComponent>(comp.Owner);
+
+            if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
+                weaponComp.HitSound = comp.OnHitOn;
+
+            SoundSystem.Play(comp.ActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
+
+            if (TryComp<DisarmMalusComponent>(comp.Owner, out var malus))
+            {
+                malus.Malus += comp.litDisarmMalus;
+            }
 
             comp.Activated = true;
         }

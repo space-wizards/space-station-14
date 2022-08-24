@@ -1,0 +1,11 @@
+﻿- type: instantAction
+  id: Knock
+  name: action-name-spell-knock
+  description: action-description-spell-knock
+  useDelay: 10
+  speech: action-speech-spell-knock
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: knock
+  serverEvent: !type:KnockSpellEvent

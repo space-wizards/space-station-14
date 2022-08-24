@@ -5,10 +5,13 @@
   startingInventory:
     ClothingUniformJumpsuitChaplain: 2
     ClothingUniformJumpskirtChaplain: 2
+    ClothingUniformJumpsuitMonasticRobeDark: 1
+    ClothingUniformJumpsuitMonasticRobeLight: 1
     ClothingOuterHoodieChaplain: 1
     ClothingOuterHoodieBlack: 1
     ClothingHeadHatHoodChaplainHood: 1
     ClothingHeadHatHoodNunHood: 1
+    ClothingOuterNunRobe: 1
     ClothingHeadHatFez: 1
     ClothingHeadHatPlaguedoctor: 1
     ClothingHeadHatWitch: 1

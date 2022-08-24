@@ -15,29 +15,26 @@ namespace Content.Server.Power.Components
         private CellChargerStatus _status;
 
         [DataField("chargeRate")]
-        private int _chargeRate = 100;
-
-        [DataField("transferEfficiency")]
-        private float _transferEfficiency = 0.85f;
+        public int ChargeRate = 20;
 
         [DataField("chargerSlot", required: true)]
         public ItemSlot ChargerSlot = new();
 
         private CellChargerStatus GetStatus()
         {
-            if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) &&
-                !receiver.Powered)
+            if (!_entMan.TryGetComponent<TransformComponent>(Owner, out var xform) ||
+                !xform.Anchored ||
+                _entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) && !receiver.Powered)
             {
                 return CellChargerStatus.Off;
             }
+
             if (!ChargerSlot.HasItem)
-            {
                 return CellChargerStatus.Empty;
-            }
+
             if (HeldBattery != null && Math.Abs(HeldBattery.MaxCharge - HeldBattery.CurrentCharge) < 0.01)
-            {
                 return CellChargerStatus.Charged;
-            }
+
             return CellChargerStatus.Charging;
         }
 
@@ -66,7 +63,7 @@ namespace Content.Server.Power.Components
                     appearance?.SetData(CellVisual.Light, CellChargerStatus.Empty);
                     break;
                 case CellChargerStatus.Charging:
-                    receiver.Load = (int) (_chargeRate / _transferEfficiency);
+                    receiver.Load = ChargeRate;
                     appearance?.SetData(CellVisual.Light, CellChargerStatus.Charging);
                     break;
                 case CellChargerStatus.Charged:
@@ -83,9 +80,8 @@ namespace Content.Server.Power.Components
         public void OnUpdate(float frameTime) //todo: make single system for this
         {
             if (_status == CellChargerStatus.Empty || _status == CellChargerStatus.Charged || !ChargerSlot.HasItem)
-            {
                 return;
-            }
+
             TransferPower(frameTime);
         }
 
@@ -98,16 +94,15 @@ namespace Content.Server.Power.Components
             }
 
             if (HeldBattery == null)
-            {
                 return;
-            }
 
-            HeldBattery.CurrentCharge += _chargeRate * frameTime;
+            HeldBattery.CurrentCharge += ChargeRate * frameTime;
             // Just so the sprite won't be set to 99.99999% visibility
             if (HeldBattery.MaxCharge - HeldBattery.CurrentCharge < 0.01)
             {
                 HeldBattery.CurrentCharge = HeldBattery.MaxCharge;
             }
+
             UpdateStatus();
         }
     }

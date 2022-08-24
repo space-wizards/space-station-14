@@ -103,7 +103,7 @@ namespace Content.Shared.Standing
             // TODO audio prediction
             if (playSound && _netMan.IsServer)
             {
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), standingState.DownSound.GetSound(), uid, AudioHelpers.WithVariation(0.25f));
+                SoundSystem.Play(standingState.DownSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
             }
 
             return true;

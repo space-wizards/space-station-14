@@ -8,9 +8,19 @@ namespace Content.Shared.Audio
         /// <summary>
         ///     Returns a random pitch.
         /// </summary>
+        [Obsolete("Use variation datafield.")]
         public static AudioParams WithVariation(float amplitude)
         {
-            var scale = (float)(IoCManager.Resolve<IRobustRandom>().NextGaussian(1, amplitude));
+            return WithVariation(amplitude, null);
+        }
+
+        /// <summary>
+        ///     Returns a random pitch.
+        /// </summary>
+        public static AudioParams WithVariation(float amplitude, IRobustRandom? rand)
+        {
+            IoCManager.Resolve(ref rand);
+            var scale = (float) rand.NextGaussian(1, amplitude);
             return AudioParams.Default.WithPitchScale(scale);
         }
 
@@ -43,16 +53,11 @@ namespace Content.Shared.Audio
         /// Returns a pitch multiplier shifted by a random number of semitones within variation.
         /// </summary>
         /// <param name="variation">Max number of semitones to shift in either direction. Values above 12 have no effect.</param>
-        public static AudioParams WithSemitoneVariation(int variation)
+        public static AudioParams WithSemitoneVariation(int variation, IRobustRandom? rand)
         {
+            IoCManager.Resolve(ref rand);
             variation = Math.Clamp(variation, 0, 12);
-            return ShiftSemitone(IoCManager.Resolve<IRobustRandom>().Next(-variation, variation));
-        }
-
-        public static string GetRandomFileFromSoundCollection(string name)
-        {
-            var soundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(name);
-            return IoCManager.Resolve<IRobustRandom>().Pick(soundCollection.PickFiles).ToString();
+            return ShiftSemitone(rand.Next(-variation, variation));
         }
     }
 }

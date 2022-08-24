@@ -6,7 +6,7 @@ namespace Content.Server.Singularity.Components
     ///     Generates electricity from radiation.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(RadiationCollectorSystem))]
+    [Access(typeof(RadiationCollectorSystem))]
     public sealed class RadiationCollectorComponent : Component
     {
         /// <summary>

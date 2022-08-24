@@ -1,13 +1,13 @@
 using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
-using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
 using Content.Shared.Doors.Systems;
 using Content.Shared.EntityList;
@@ -15,9 +15,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Roles;
-using Content.Shared.Sound;
 using Content.Shared.Suspicion;
-using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -48,6 +46,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     public override string Prototype => "Suspicion";
 
@@ -96,7 +95,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnRoundStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.SuspicionMinPlayers);
@@ -118,7 +117,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnPlayersAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minTraitors = _cfg.GetCVar(CCVars.SuspicionMinTraitors);
@@ -173,16 +172,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             mind!.AddRole(traitorRole);
             traitors.Add(traitorRole);
 
-            // creadth: we need to create uplink for the antag.
-            // PDA should be in place already, so we just need to
-            // initiate uplink account.
-            var uplinkAccount = new UplinkAccount(traitorStartingBalance, mind.OwnedEntity!);
-            var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-            accounts.AddNewAccount(uplinkAccount);
-
             // try to place uplink
-            if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                    .AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
+            if (!_uplink.AddUplink(mind.OwnedEntity!.Value, traitorStartingBalance))
                 continue;
         }
 
@@ -215,7 +206,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         var filter = Filter.Empty()
             .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
-        SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
+        SoundSystem.Play(_addedSound.GetSound(), filter, AudioParams.Default);
 
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 
@@ -287,7 +278,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void CheckWinConditions()
     {
-        if (!Enabled || !_cfg.GetCVar(CCVars.GameLobbyEnableWin))
+        if (!RuleAdded || !_cfg.GetCVar(CCVars.GameLobbyEnableWin))
             return;
 
         var traitorsAlive = 0;
@@ -456,7 +447,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnLateJoinRefresh(RefreshLateJoinAllowedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         ev.Disallow();

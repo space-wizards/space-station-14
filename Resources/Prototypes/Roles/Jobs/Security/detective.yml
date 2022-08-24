@@ -1,0 +1,35 @@
+- type: job
+  id: Detective
+  name: job-name-detective
+  playTimeTracker: JobDetective
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 3600
+  startingGear: DetectiveGear
+  icon: "Detective"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  access:
+  - Security
+  - Brig
+  - Maintenance
+  - Service
+
+- type: startingGear
+  id: DetectiveGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDetective
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSunglasses
+    head: ClothingHeadHatFedoraBrown
+    outerClothing: ClothingOuterVestDetective
+    id: DetectivePDA
+    ears: ClothingHeadsetSecurity
+    pocket1: ForensicPad
+    pocket2: ForensicScanner
+    belt: ClothingBeltHolster
+  innerclothingskirt: ClothingUniformJumpskirtDetective
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

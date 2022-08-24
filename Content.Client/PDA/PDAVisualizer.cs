@@ -25,10 +25,12 @@ namespace Content.Client.PDA
             IDLight
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var sprite = entityManager.GetComponent<ISpriteComponent>(entity);
 
             if (_state != null)
             {
@@ -39,25 +41,25 @@ namespace Content.Client.PDA
             sprite.LayerSetShader(PDAVisualLayers.Flashlight, "unshaded");
             sprite.LayerMapSet(PDAVisualLayers.IDLight, sprite.AddLayerState("id_overlay"));
             sprite.LayerSetShader(PDAVisualLayers.IDLight, "unshaded");
+
+            var appearance = entityManager.GetComponent<PDAComponent>(entity);
+            sprite.LayerSetVisible(PDAVisualLayers.IDLight, appearance.IdSlot.StartingItem != null);
         }
 
-
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
             if (component.TryGetData(UnpoweredFlashlightVisuals.LightOn, out bool isFlashlightOn))
             {
                 sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isFlashlightOn);
             }
-
             if (component.TryGetData(PDAVisuals.IDCardInserted, out bool isCardInserted))
             {
                 sprite.LayerSetVisible(PDAVisualLayers.IDLight, isCardInserted);
             }
-
         }
     }
 }

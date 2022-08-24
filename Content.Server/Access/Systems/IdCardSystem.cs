@@ -1,36 +1,37 @@
-using Content.Shared.Hands.Components;
-using Content.Shared.Inventory;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.PDA;
+using Content.Shared.Database;
+using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Access.Systems
 {
     public sealed class IdCardSystem : SharedIdCardSystem
     {
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<IdCardComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<IdCardComponent, BeingMicrowavedEvent>(OnMicrowaved);
         }
 
-        private void OnInit(EntityUid uid, IdCardComponent id, ComponentInit args)
+        private void OnMapInit(EntityUid uid, IdCardComponent id, MapInitEvent args)
         {
-            id.OriginalOwnerName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
+            // On one hand, these prototypes should default to having the correct name. On the other hand, id cards are
+            // rarely ever spawned in on their own without an owner, so this is fine.
+            id.OriginalEntityName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
             UpdateEntityName(uid, id);
         }
 
@@ -46,7 +47,7 @@ namespace Content.Server.Access.Systems
                     if (transformComponent != null)
                     {
                         _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
-                         transformComponent.Coordinates, Filter.Pvs(uid));
+                         transformComponent.Coordinates, Filter.Pvs(uid), PopupType.Medium);
                         EntityManager.SpawnEntity("FoodBadRecipe",
                             transformComponent.Coordinates);
                     }
@@ -63,7 +64,7 @@ namespace Content.Server.Access.Systems
                 else
                 {
                     _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)),
-                        uid, Filter.Pvs(uid));
+                        uid, Filter.Pvs(uid), PopupType.Medium);
                 }
 
                 // Give them a wonderful new access to compensate for everything
@@ -72,21 +73,39 @@ namespace Content.Server.Access.Systems
             }
         }
 
-        public bool TryChangeJobTitle(EntityUid uid, string jobTitle, IdCardComponent? id = null)
+        /// <summary>
+        /// Attempts to change the job title of a card.
+        /// Returns true/false.
+        /// </summary>
+        /// <remarks>
+        /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
+        /// </remarks>
+        public bool TryChangeJobTitle(EntityUid uid, string jobTitle, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
                 return false;
 
-            // TODO: Whenever we get admin logging these should be logged
             if (jobTitle.Length > SharedIdCardConsoleComponent.MaxJobTitleLength)
                 jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
 
             id.JobTitle = jobTitle;
+            Dirty(id);
             UpdateEntityName(uid, id);
+
+            if (player != null)
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(id.Owner):entity} to {jobTitle} ");
             return true;
         }
 
-        public bool TryChangeFullName(EntityUid uid, string fullName, IdCardComponent? id = null)
+        /// <summary>
+        /// Attempts to change the full name of a card.
+        /// Returns true/false.
+        /// </summary>
+        /// <remarks>
+        /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
+        /// </remarks>
+        public bool TryChangeFullName(EntityUid uid, string fullName, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
                 return false;
@@ -95,7 +114,12 @@ namespace Content.Server.Access.Systems
                 fullName = fullName[..SharedIdCardConsoleComponent.MaxFullNameLength];
 
             id.FullName = fullName;
+            Dirty(id);
             UpdateEntityName(uid, id);
+
+            if (player != null)
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(id.Owner):entity} to {fullName} ");
             return true;
         }
 
@@ -113,7 +137,7 @@ namespace Content.Server.Access.Systems
 
             if (string.IsNullOrWhiteSpace(id.FullName) && string.IsNullOrWhiteSpace(id.JobTitle))
             {
-                EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalOwnerName;
+                EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalEntityName;
                 return;
             }
 
@@ -121,57 +145,12 @@ namespace Content.Server.Access.Systems
 
             var val = string.IsNullOrWhiteSpace(id.FullName)
                 ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
-                    ("originalOwnerName", id.OriginalOwnerName),
+                    ("originalOwnerName", id.OriginalEntityName),
                     ("jobSuffix", jobSuffix))
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                     ("fullName", id.FullName),
                     ("jobSuffix", jobSuffix));
             EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
-        }
-
-        /// <summary>
-        ///     Attempt to find an ID card on an entity. This will look in the entity itself, in the entity's hands, and
-        ///     in the entity's inventory.
-        /// </summary>
-        public bool TryFindIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
-        {
-            // check held item?
-            if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
-                hands.ActiveHandEntity is EntityUid heldItem &&
-                TryGetIdCard(heldItem, out idCard))
-            {
-                return true;
-            }
-
-            // check entity itself
-            if (TryGetIdCard(uid, out idCard))
-                return true;
-
-            // check inventory slot?
-            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && TryGetIdCard(idUid.Value, out idCard))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Attempt to get an id card component from an entity, either by getting it directly from the entity, or by
-        ///     getting the contained id from a <see cref="PDAComponent"/>.
-        /// </summary>
-        public bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
-        {
-            if (EntityManager.TryGetComponent(uid, out idCard))
-                return true;
-
-            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) && pda.ContainedID != null)
-            {
-                idCard = pda.ContainedID;
-                return true;
-            }
-
-            return false;
         }
     }
 }

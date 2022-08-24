@@ -37,7 +37,7 @@ public sealed class AdminLogBulk : IConsoleCommand
                 return;
         }
 
-        var logs = EntitySystem.Get<AdminLogSystem>();
+        var logManager = IoCManager.Resolve<IAdminLogManager>();
 
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -46,14 +46,14 @@ public sealed class AdminLogBulk : IConsoleCommand
         {
             Parallel.For(0, amount, _ =>
             {
-                logs.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
+                logManager.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
             });
         }
         else
         {
             for (var i = 0; i < amount; i++)
             {
-                logs.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
+                logManager.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
             }
         }
 

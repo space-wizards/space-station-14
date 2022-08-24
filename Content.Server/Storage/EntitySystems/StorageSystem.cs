@@ -28,6 +28,7 @@ using Content.Server.Popups;
 using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Movement.Events;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -39,12 +40,14 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
+        [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -65,7 +68,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
 
             SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
-            SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
+            SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
@@ -82,17 +85,16 @@ namespace Content.Server.Storage.EntitySystems
             UpdateStorageUI(uid, storageComp);
         }
 
-        private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
+        private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
         {
             if (!EntityManager.HasComponent<HandsComponent>(args.Entity))
                 return;
 
-            if (_gameTiming.CurTime <
-                component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
+            if (_gameTiming.CurTime < component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
                 return;
 
             component.LastInternalOpenAttempt = _gameTiming.CurTime;
-            component.TryOpenStorage(args.Entity);
+            _entityStorage.TryOpenStorage(args.Entity, component.Owner);
         }
 
 
@@ -101,7 +103,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!component.CanOpen(args.User, silent: true))
+            if (!_entityStorage.CanOpen(args.User, args.Target, silent: true, component))
                 return;
 
             InteractionVerb verb = new();
@@ -115,7 +117,7 @@ namespace Content.Server.Storage.EntitySystems
                 verb.Text = Loc.GetString("verb-common-open");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
             }
-            verb.Act = () => component.ToggleOpen(args.User);
+            verb.Act = () => _entityStorage.ToggleOpen(args.User, args.Target, component);
             args.Verbs.Add(verb);
         }
 
@@ -235,13 +237,13 @@ namespace Content.Server.Storage.EntitySystems
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<SharedItemComponent>(eventArgs.Target.Value)))
+            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<ItemComponent>(eventArgs.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
                 foreach (var entity in _entityLookupSystem.GetEntitiesInRange(eventArgs.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
                 {
                     if (entity == eventArgs.User
-                        || !HasComp<SharedItemComponent>(entity)
+                        || !HasComp<ItemComponent>(entity)
                         || !_interactionSystem.InRangeUnobstructed(eventArgs.User, entity))
                         continue;
 
@@ -271,7 +273,7 @@ namespace Content.Server.Storage.EntitySystems
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                     if (_containerSystem.IsEntityInContainer(entity)
                         || entity == eventArgs.User
-                        || !HasComp<SharedItemComponent>(entity))
+                        || !HasComp<ItemComponent>(entity))
                         continue;
 
                     if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(entity, out var transformEnt))
@@ -290,7 +292,7 @@ namespace Content.Server.Storage.EntitySystems
                 if (successfullyInserted.Count > 0)
                 {
                     if (storageComp.StorageInsertSound is not null)
-                        SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
+                        SoundSystem.Play(storageComp.StorageInsertSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, AudioParams.Default);
                     RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions));
                 }
                 return;
@@ -303,7 +305,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 if (_containerSystem.IsEntityInContainer(target)
                     || target == eventArgs.User
-                    || !HasComp<SharedItemComponent>(target))
+                    || !HasComp<ItemComponent>(target))
                     return;
 
                 if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
@@ -348,6 +350,12 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Session.AttachedEntity is not EntityUid player)
                 return;
 
+            if (!Exists(args.InteractedItemUID))
+            {
+                Logger.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
+                return;
+            }
+
             if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID))
                 return;
 
@@ -360,10 +368,10 @@ namespace Content.Server.Storage.EntitySystems
 
             // If the user's active hand is empty, try pick up the item.
             if (hands.ActiveHandEntity == null)
-            {   
+            {
                 if (_sharedHandsSystem.TryPickupAnyHand(player, args.InteractedItemUID, handsComp: hands)
                     && storageComp.StorageRemoveSound != null)
-                        SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageRemoveSound.GetSound(), uid, AudioParams.Default);
+                        SoundSystem.Play(storageComp.StorageRemoveSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, AudioParams.Default);
                 return;
             }
 
@@ -401,7 +409,7 @@ namespace Content.Server.Storage.EntitySystems
                 UpdateStorageVisualization(uid, storageComp);
 
                 if (storageComp.StorageCloseSound is not null)
-                    SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageCloseSound.GetSound(), uid, storageComp.StorageCloseSound.Params);
+                    SoundSystem.Play(storageComp.StorageCloseSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, storageComp.StorageCloseSound.Params);
             }
         }
 
@@ -431,7 +439,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
-            var itemQuery = GetEntityQuery<SharedItemComponent>();
+            var itemQuery = GetEntityQuery<ItemComponent>();
 
             foreach (var entity in storageComp.Storage.ContainedEntities)
             {
@@ -473,47 +481,68 @@ namespace Content.Server.Storage.EntitySystems
         ///     Verifies if an entity can be stored and if it fits
         /// </summary>
         /// <param name="entity">The entity to check</param>
+        /// <param name="reason">If returning false, the reason displayed to the player</param>
         /// <returns>true if it can be inserted, false otherwise</returns>
-        public bool CanInsert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null)
+        public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, ServerStorageComponent? storageComp = null)
         {
             if (!Resolve(uid, ref storageComp))
+            {
+                reason = null;
                 return false;
+            }
 
             if (TryComp(insertEnt, out ServerStorageComponent? storage) &&
                 storage.StorageCapacityMax >= storageComp.StorageCapacityMax)
+            {
+                reason = "comp-storage-insufficient-capacity";
                 return false;
+            }
 
-            if (TryComp(insertEnt, out SharedItemComponent? itemComp) &&
+            if (TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
+            {
+                reason = "comp-storage-insufficient-capacity";
                 return false;
+            }
 
             if (storageComp.Whitelist?.IsValid(insertEnt, EntityManager) == false)
+            {
+                reason = "comp-storage-invalid-container";
                 return false;
+            }
 
             if (storageComp.Blacklist?.IsValid(insertEnt, EntityManager) == true)
+            {
+                reason = "comp-storage-invalid-container";
                 return false;
+            }
 
             if (TryComp(insertEnt, out TransformComponent? transformComp) && transformComp.Anchored)
+            {
+                reason = "comp-storage-anchored-failure";
                 return false;
+            }
 
+            reason = null;
             return true;
         }
 
         /// <summary>
         ///     Inserts into the storage container
         /// </summary>
-        /// <param name="entity">The entity to insert</param>
         /// <returns>true if the entity was inserted, false otherwise</returns>
-        public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null)
+        public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null, bool playSound = true)
         {
             if (!Resolve(uid, ref storageComp))
                 return false;
 
-            if (!CanInsert(uid, insertEnt, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
+            if (!CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
                 return false;
 
-            if (storageComp.StorageInsertSound is not null)
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
+            if (playSound && storageComp.StorageInsertSound is not null)
+            {
+                _audio.PlayPvs(storageComp.StorageInsertSound, uid);
+            }
 
             RecalculateStorageUsed(storageComp);
             UpdateStorageUI(uid, storageComp);
@@ -549,9 +578,9 @@ namespace Content.Server.Storage.EntitySystems
 
             var toInsert = hands.ActiveHandEntity;
 
-            if (!CanInsert(uid, toInsert.Value, storageComp) || !_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
+            if (!CanInsert(uid, toInsert.Value, out var reason, storageComp) || !_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                Popup(uid, player, "comp-storage-cant-insert", storageComp);
+                Popup(uid, player, reason ?? "comp-storage-cant-insert", storageComp);
                 return false;
             }
 
@@ -593,7 +622,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             if (storageComp.StorageOpenSound is not null)
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageOpenSound.GetSound(), uid, storageComp.StorageOpenSound.Params);
+                SoundSystem.Play(storageComp.StorageOpenSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, storageComp.StorageOpenSound.Params);
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 
@@ -624,12 +653,12 @@ namespace Content.Server.Storage.EntitySystems
                     DebugTools.Assert(storedStorageComp != storageComp, $"Storage component contains itself!? Entity: {uid}");
                 }
 
-                if (TryComp(entity, out ServerUserInterfaceComponent? uiComponent))
+                if (!TryComp(entity, out ServerUserInterfaceComponent? ui))
+                    continue;
+
+                foreach (var bui in ui.Interfaces.Values)
                 {
-                    foreach (var ui in uiComponent.Interfaces)
-                    {
-                        ui.Close(session);
-                    }
+                    _uiSystem.TryClose(entity, bui.UiKey, session, ui);
                 }
             }
         }

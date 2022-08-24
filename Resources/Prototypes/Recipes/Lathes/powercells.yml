@@ -1,16 +1,20 @@
 - type: latheRecipe
-  id: PowerCellSmallStandard
-  icon: Objects/Power/PowerCells/power_cell_small_st.rsi/s_st.png
-  result: PowerCellSmallStandardPrinted
+  id: PowerCellSmall
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: small
+  result: PowerCellSmallPrinted
   completetime: 1
   materials:
     Steel: 100
     Plastic: 50
 
 - type: latheRecipe
-  id: PowerCellSmallHigh
-  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi/s_hi.png
-  result: PowerCellSmallHighPrinted
+  id: PowerCellMedium
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: medium
+  result: PowerCellMediumPrinted
   completetime: 6
   materials:
     Steel: 300
@@ -19,75 +23,14 @@
     Gold: 10
 
 - type: latheRecipe
-  id: PowerCellSmallSuper
-  icon: Objects/Power/PowerCells/power_cell_small_sup.rsi/s_sup.png
-  result: PowerCellSmallSuperPrinted
+  id: PowerCellHigh
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: high
+  result: PowerCellHighPrinted
   completetime: 10
   materials:
     Steel: 300
     Glass: 400
     Plastic: 200
     Gold: 50
-
-# The resource required is scaled to their power capacity 
-- type: latheRecipe
-  id: PowerCellMediumStandard
-  icon: Objects/Power/PowerCells/power_cell_medium_st.rsi/m_st.png
-  result: PowerCellMediumStandardPrinted
-  completetime: 1
-  materials:
-    Steel: 600
-    Plastic: 300
-
-- type: latheRecipe
-  id: PowerCellMediumHigh
-  icon: Objects/Power/PowerCells/power_cell_medium_hi.rsi/m_hi.png
-  result: PowerCellMediumHighPrinted
-  completetime: 6
-  materials:
-    Steel: 1800
-    Glass: 1800
-    Plastic: 600
-    Gold: 60
-
-- type: latheRecipe
-  id: PowerCellMediumSuper
-  icon: Objects/Power/PowerCells/power_cell_medium_sup.rsi/m_sup.png
-  result: PowerCellMediumSuperPrinted
-  completetime: 10
-  materials:
-    Steel: 1800
-    Glass: 2400
-    Plastic: 1200
-    Gold: 300
-
-- type: latheRecipe
-  id: PowerCellLargeStandard
-  icon: Objects/Power/PowerCells/power_cell_large_st.rsi/l_st.png
-  result: PowerCellLargeStandardPrinted
-  completetime: 1
-  materials:
-    Steel: 2500
-    Plastic: 1250
-
-- type: latheRecipe
-  id: PowerCellLargeHigh
-  icon: Objects/Power/PowerCells/power_cell_large_hi.rsi/l_hi.png
-  result: PowerCellLargeHighPrinted
-  completetime: 6
-  materials:
-    Steel: 7500
-    Glass: 7500
-    Plastic: 2500
-    Gold: 250
-
-- type: latheRecipe
-  id: PowerCellLargeSuper
-  icon: Objects/Power/PowerCells/power_cell_large_sup.rsi/l_sup.png
-  result: PowerCellLargeSuperPrinted
-  completetime: 10
-  materials:
-    Steel: 7500
-    Glass: 10000
-    Plastic: 5000
-    Gold: 1250

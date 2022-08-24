@@ -9,7 +9,7 @@ namespace Content.Server.Station.Components;
 /// <summary>
 /// Stores information about a station's job selection.
 /// </summary>
-[RegisterComponent, Friend(typeof(StationJobsSystem)), PublicAPI]
+[RegisterComponent, Access(typeof(StationJobsSystem)), PublicAPI]
 public sealed class StationJobsComponent : Component
 {
     /// <summary>
@@ -26,6 +26,11 @@ public sealed class StationJobsComponent : Component
     /// Current total jobs.
     /// </summary>
     [DataField("totalJobs")] public int TotalJobs;
+
+    /// <summary>
+    /// Station is running on extended access.
+    /// </summary>
+    [DataField("extendedAccess")] public bool ExtendedAccess;
 
     /// <summary>
     /// The percentage of jobs remaining.

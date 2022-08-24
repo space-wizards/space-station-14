@@ -1,5 +1,5 @@
 using Content.Shared.Damage;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Weapon.Melee.EnergySword
 {
@@ -11,6 +11,9 @@ namespace Content.Server.Weapon.Melee.EnergySword
         public bool Hacked = false;
 
         public bool Activated = false;
+
+        [DataField("isSharp")]
+        public bool IsSharp = true;
 
         /// <summary>
         ///     RGB cycle rate for hacked e-swords.
@@ -24,6 +27,12 @@ namespace Content.Server.Weapon.Melee.EnergySword
         [DataField("deActivateSound")]
         public SoundSpecifier DeActivateSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/ebladeoff.ogg");
 
+        [DataField("onHitOn")]
+        public SoundSpecifier OnHitOn { get; set; } = new SoundPathSpecifier("/Audio/Weapons/eblade1.ogg");
+
+        [DataField("onHitOff")]
+        public SoundSpecifier OnHitOff { get; set; } = new SoundPathSpecifier("/Audio/Weapons/genhit1.ogg");
+
         [DataField("colorOptions")]
         public List<Color> ColorOptions = new()
         {
@@ -34,7 +43,10 @@ namespace Content.Server.Weapon.Melee.EnergySword
             Color.MediumOrchid
         };
 
-        [DataField("litDamageBonus", required: true)]
-        public DamageSpecifier LitDamageBonus = default!;
+        [DataField("litDamageBonus")]
+        public DamageSpecifier LitDamageBonus = new();
+
+        [DataField("litDisarmMalus")]
+        public float litDisarmMalus = 0.6f;
     }
 }

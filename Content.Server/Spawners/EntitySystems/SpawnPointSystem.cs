@@ -31,14 +31,22 @@ public sealed class SpawnPointSystem : EntitySystem
 
             if (_gameTicker.RunLevel == GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.LateJoin)
             {
-                args.SpawnResult = _stationSpawning.SpawnPlayerMob(xform.Coordinates, args.Job,
-                    args.HumanoidCharacterProfile);
+                args.SpawnResult = _stationSpawning.SpawnPlayerMob(
+                    xform.Coordinates,
+                    args.Job,
+                    args.HumanoidCharacterProfile,
+                    args.Station);
+
                 return;
             }
             else if (_gameTicker.RunLevel != GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.Job && (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype.ID))
             {
-                args.SpawnResult = _stationSpawning.SpawnPlayerMob(xform.Coordinates, args.Job,
-                    args.HumanoidCharacterProfile);
+                args.SpawnResult = _stationSpawning.SpawnPlayerMob(
+                    xform.Coordinates,
+                    args.Job,
+                    args.HumanoidCharacterProfile,
+                    args.Station);
+
                 return;
             }
         }
@@ -48,7 +56,12 @@ public sealed class SpawnPointSystem : EntitySystem
         foreach (var spawnPoint in points)
         {
             var xform = Transform(spawnPoint.Owner);
-            args.SpawnResult = _stationSpawning.SpawnPlayerMob(xform.Coordinates, args.Job, args.HumanoidCharacterProfile);
+            args.SpawnResult = _stationSpawning.SpawnPlayerMob(
+                xform.Coordinates,
+                args.Job,
+                args.HumanoidCharacterProfile,
+                args.Station);
+
             return;
         }
 

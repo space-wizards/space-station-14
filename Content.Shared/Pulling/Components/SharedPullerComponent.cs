@@ -1,16 +1,22 @@
 ﻿namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
-    [Friend(typeof(SharedPullingStateManagementSystem))]
+    [Access(typeof(SharedPullingStateManagementSystem))]
     public sealed class SharedPullerComponent : Component
     {
         // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
-        public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.75f;
+        public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.9f;
 
-        public float SprintSpeedModifier => Pulling == default ? 1.0f : 0.75f;
+        public float SprintSpeedModifier => Pulling == default ? 1.0f : 0.9f;
 
         [ViewVariables]
         public EntityUid? Pulling { get; set; }
+
+        /// <summary>
+        ///     Does this entity need hands to be able to pull something?
+        /// </summary>
+        [DataField("needsHands")]
+        public bool NeedsHands = true;
 
         protected override void Shutdown()
         {

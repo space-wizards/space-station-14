@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Follower;
@@ -10,7 +11,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture, TestOf(typeof(FollowerSystem))]
-public sealed class FollowerSystemTest : ContentIntegrationTest
+public sealed class FollowerSystemTest
 {
     /// <summary>
     ///     This test ensures that deleting a map while an entity follows another doesn't throw any exceptions.
@@ -18,8 +19,8 @@ public sealed class FollowerSystemTest : ContentIntegrationTest
     [Test]
     public async Task FollowerMapDeleteTest()
     {
-        var server = StartServerDummyTicker();
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new (){NoClient = true});
+        var server = pairTracker.Pair.Server;
 
         await server.WaitPost(() =>
         {
@@ -42,22 +43,8 @@ public sealed class FollowerSystemTest : ContentIntegrationTest
 
             followerSystem.StartFollowingEntity(follower, followed);
 
-            foreach (var ent in entMan.GetEntities().ToArray())
-            {
-                // Let's skip entities that have been deleted, as we want to get their TransformComp for extra info.
-                if (entMan.Deleted(ent))
-                {
-                    logger.Info($"Skipping {entMan.ToPrettyString(ent)}...");
-                    continue;
-                }
-
-                // Log some information about the entity before we delete it.
-                var transform = entMan.GetComponent<TransformComponent>(ent);
-                logger.Info($"Deleting entity {entMan.ToPrettyString(ent)}... Parent: {entMan.ToPrettyString(transform.ParentUid)} | Children: {string.Join(", ", transform.Children.Select(c => entMan.ToPrettyString(c.Owner)))}");
-
-                // Actually delete the entity now.
-                entMan.DeleteEntity(ent);
-            }
+            entMan.DeleteEntity(mapMan.GetMapEntityId(map));
         });
+        await pairTracker.CleanReturnAsync();
     }
 }

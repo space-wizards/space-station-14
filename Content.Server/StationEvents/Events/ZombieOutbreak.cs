@@ -1,56 +1,41 @@
-using Robust.Shared.Random;
-using Content.Server.Chat.Managers;
-using Content.Server.Disease.Zombie.Components;
 using Content.Shared.MobState.Components;
-using Content.Shared.Sound;
+using Content.Server.Zombies;
 
 namespace Content.Server.StationEvents.Events
 {
     /// <summary>
     /// Revives several dead entities as zombies
     /// </summary>
-    public sealed class ZombieOutbreak : StationEvent
+    public sealed class ZombieOutbreak : StationEventSystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
 
-        public override string Name => "ZombieOutbreak";
-        public override int EarliestStart => 50;
-        public override float Weight => WeightLow / 2;
-
-        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
-        protected override float EndAfter => 1.0f;
-
-        public override int? MaxOccurrences => 1;
+        public override string Prototype => "ZombieOutbreak";
 
         /// <summary>
-        /// Finds 1-3 random, dead entities accross the station
+        /// Finds 1-3 random, dead entities across the station
         /// and turns them into zombies.
         /// </summary>
-        public override void Startup()
+        public override void Started()
         {
-            base.Startup();
+            base.Started();
             List<MobStateComponent> deadList = new();
-            foreach (var mobState in _entityManager.EntityQuery<MobStateComponent>())
+            foreach (var mobState in EntityManager.EntityQuery<MobStateComponent>())
             {
                 if (mobState.IsDead() || mobState.IsCritical())
                     deadList.Add(mobState);
             }
-            _random.Shuffle(deadList);
+            RobustRandom.Shuffle(deadList);
 
-            var toInfect = _random.Next(1, 3);
+            var toInfect = RobustRandom.Next(1, 3);
 
-            /// Now we give it to people in the list of dead entities earlier.
             foreach (var target in deadList)
             {
                 if (toInfect-- == 0)
                     break;
 
-                _entityManager.EnsureComponent<DiseaseZombieComponent>(target.Owner);
+                _zombify.ZombifyEntity(target.Owner);
             }
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-zombie-outbreak-announcement"),
-            playDefaultSound: false, colorOverride: Color.DarkMagenta);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
@@ -63,7 +64,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem
 
     private void RunDelayedCheck()
     {
-        if (!Enabled || _deadCheckTimer != null)
+        if (!RuleAdded || _deadCheckTimer != null)
             return;
 
         _deadCheckTimer = DeadCheckDelay;
@@ -71,7 +72,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem
 
     public override void Update(float frameTime)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         // If the restart timer is active, that means the round is ending soon, no need to check for winners.

@@ -11,7 +11,7 @@ namespace Content.Server.Repairable
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
         public override void Initialize()
         {
@@ -24,20 +24,26 @@ namespace Content.Server.Repairable
             if (!EntityManager.TryGetComponent(component.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
+            float delay = component.DoAfterDelay;
+
+            // Add a penalty to how long it takes if the user is repairing itself
+            if (args.User == args.Target)
+                delay *= component.SelfRepairPenalty;
+
             // Can the tool actually repair this, does it have enough fuel?
-            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
+            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, delay, component.QualityNeeded))
                 return;
 
             if (component.Damage != null)
             {
                 var damageChanged = _damageableSystem.TryChangeDamage(uid, component.Damage, true, false);
-                _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.Total}");
+                _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.Total}");
             }
             else
             {
                 // Repair all damage
                 _damageableSystem.SetAllDamage(damageable, 0);
-                _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health");
+                _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health");
             }
 
 

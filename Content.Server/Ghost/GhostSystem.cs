@@ -4,6 +4,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Storage.Components;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
@@ -11,7 +12,7 @@ using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -43,7 +44,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
 
-            SubscribeLocalEvent<GhostOnMoveComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<GhostOnMoveComponent, MoveInputEvent>(OnRelayMoveInput);
 
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
@@ -51,6 +52,7 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         }
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
@@ -62,10 +64,9 @@ namespace Content.Server.Ghost
             var booCounter = 0;
             foreach (var ent in ents)
             {
-                var ghostBoo = new GhostBooEvent();
-                RaiseLocalEvent(ent, ghostBoo);
+                var handled = DoGhostBooEvent(ent);
 
-                if (ghostBoo.Handled)
+                if (handled)
                     booCounter++;
 
                 if (booCounter >= component.BooMaxTargets)
@@ -75,7 +76,7 @@ namespace Content.Server.Ghost
             args.Handled = true;
         }
 
-        private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, RelayMoveInputEvent args)
+        private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
             // Let's not ghost if our mind is visiting...
             if (EntityManager.HasComponent<VisitingMindComponent>(uid)) return;
@@ -264,6 +265,19 @@ namespace Content.Server.Ghost
             players.Remove(except);
 
             return players;
+        }
+
+        public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
+        public bool DoGhostBooEvent(EntityUid target)
+        {
+            var ghostBoo = new GhostBooEvent();
+            RaiseLocalEvent(target, ghostBoo, true);
+
+            return ghostBoo.Handled;
         }
     }
 }

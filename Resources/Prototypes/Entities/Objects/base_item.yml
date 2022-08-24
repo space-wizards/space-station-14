@@ -5,6 +5,8 @@
   components:
   - type: Item
     size: 5
+  - type: StaticPrice
+    price: 5
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -20,6 +22,7 @@
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
+    canCollide: false # most entities start asleep.
   - type: Fixtures
     fixtures:
     - shape:
@@ -46,3 +49,8 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+

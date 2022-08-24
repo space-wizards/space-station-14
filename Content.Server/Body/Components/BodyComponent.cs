@@ -2,7 +2,6 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -89,10 +88,10 @@ namespace Content.Server.Body.Components
             // These have already been forcefully removed from containers so run it here.
             foreach (var part in gibs)
             {
-                _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs));
+                _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs), true);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _gibSound.GetSound(), coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(_gibSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), coordinates, AudioHelpers.WithVariation(0.025f));
 
             if (_entMan.TryGetComponent(Owner, out ContainerManagerComponent? container))
             {

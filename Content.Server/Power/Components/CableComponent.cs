@@ -9,7 +9,7 @@ namespace Content.Server.Power.Components
     ///     Allows the attached entity to be destroyed by a cutting tool, dropping a piece of cable.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(CableSystem))]
+    [Access(typeof(CableSystem))]
     public sealed class CableComponent : Component
     {
         [DataField("cableDroppedOnCutPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

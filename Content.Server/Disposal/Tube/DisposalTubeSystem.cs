@@ -1,8 +1,11 @@
+using System.Text;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Disposal.Components;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -23,48 +26,14 @@ namespace Content.Server.Disposal.Tube
             base.Initialize();
 
             SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
-            SubscribeLocalEvent<DisposalTubeComponent, RelayMovementEntityEvent>(OnRelayMovement);
+            SubscribeLocalEvent<DisposalTubeComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<DisposalTubeComponent, BreakageEventArgs>(OnBreak);
-            SubscribeLocalEvent<DisposalTaggerComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
-            SubscribeLocalEvent<DisposalRouterComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
             SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
             SubscribeLocalEvent<DisposalTaggerComponent, ActivatableUIOpenAttemptEvent>(OnOpenTaggerUIAttempt);
 
         }
 
-        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetVerbsEvent<InteractionVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-                return;
-            var player = actor.PlayerSession;
-
-            InteractionVerb verb = new();
-            verb.Text = Loc.GetString("configure-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            verb.Act = () => component.OpenUserInterface(actor);
-            args.Verbs.Add(verb);
-        }
-
-        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetVerbsEvent<InteractionVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-                return;
-            var player = actor.PlayerSession;
-
-            InteractionVerb verb = new();
-            verb.Text = Loc.GetString("configure-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            verb.Act = () => component.OpenUserInterface(actor);
-            args.Verbs.Add(verb);
-        }
-
-        private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, RelayMovementEntityEvent args)
+        private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, ref ContainerRelayMovementEntityEvent args)
         {
             if (_gameTiming.CurTime < component.LastClang + DisposalTubeComponent.ClangDelay)
             {
@@ -72,7 +41,7 @@ namespace Content.Server.Disposal.Tube
             }
 
             component.LastClang = _gameTiming.CurTime;
-            SoundSystem.Play(Filter.Pvs(uid), component.ClangSound.GetSound(), uid);
+            SoundSystem.Play(component.ClangSound.GetSound(), Filter.Pvs(uid), uid);
         }
 
         private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)
@@ -93,9 +62,11 @@ namespace Content.Server.Disposal.Tube
             {
                 args.Cancel();
             }
+
+            UpdateRouterUserInterface(router);
         }
 
-        private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent router, ActivatableUIOpenAttemptEvent args)
+        private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent tagger, ActivatableUIOpenAttemptEvent args)
         {
             if (!TryComp<HandsComponent>(args.User, out var hands))
             {
@@ -108,8 +79,34 @@ namespace Content.Server.Disposal.Tube
             {
                 args.Cancel();
             }
+
+            tagger.UserInterface?.SetState(new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(tagger.Tag));
         }
 
+        /// <summary>
+        /// Gets component data to be used to update the user interface client-side.
+        /// </summary>
+        /// <returns>Returns a <see cref="SharedDisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
+        private void UpdateRouterUserInterface(DisposalRouterComponent router)
+        {
+            if (router.Tags.Count <= 0)
+            {
+                router.UserInterface?.SetState(new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(""));
+                return;
+            }
+
+            var taglist = new StringBuilder();
+
+            foreach (var tag in router.Tags)
+            {
+                taglist.Append(tag);
+                taglist.Append(", ");
+            }
+
+            taglist.Remove(taglist.Length - 2, 2);
+
+            router.UserInterface?.SetState(new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(taglist.ToString()));
+        }
 
         private static void BodyTypeChanged(
             EntityUid uid,
@@ -125,8 +122,11 @@ namespace Content.Server.Disposal.Tube
                 return null;
             var oppositeDirection = nextDirection.GetOpposite();
 
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(targetTube.Owner).GridID);
-            var position = EntityManager.GetComponent<TransformComponent>(targetTube.Owner).Coordinates;
+            var xform = Transform(targetTube.Owner);
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+                return null;
+
+            var position = xform.Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
                 if (!EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))

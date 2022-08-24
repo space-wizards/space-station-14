@@ -5,8 +5,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
@@ -32,7 +33,7 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
-            SubscribeLocalEvent<SlowedDownComponent, ComponentRemove>(OnSlowRemove);
+            SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
 
             SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
             SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
@@ -112,8 +113,10 @@ namespace Content.Shared.Stunnable
             _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 
-        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentRemove args)
+        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentShutdown args)
         {
+            component.SprintSpeedModifier = 1f;
+            component.WalkSpeedModifier = 1f;
             _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 
@@ -202,12 +205,15 @@ namespace Content.Shared.Stunnable
             if (args.Handled || knocked.HelpTimer > 0f)
                 return;
 
+            if (HasComp<SleepingComponent>(uid))
+                return;
+
             // Set it to half the help interval so helping is actually useful...
             knocked.HelpTimer = knocked.HelpInterval/2f;
 
             _statusEffectSystem.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
 
-            SoundSystem.Play(Filter.Pvs(uid), knocked.StunAttemptSound.GetSound(), uid, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(knocked.StunAttemptSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f));
 
             knocked.Dirty();
 

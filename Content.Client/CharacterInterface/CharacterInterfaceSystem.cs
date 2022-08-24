@@ -81,13 +81,18 @@ namespace Content.Client.CharacterInterface
                 return;
 
             _gameHud.CharacterButtonVisible = true;
-            _gameHud.CharacterButtonToggled += b =>
-            {
-                if (b)
-                    comp.Window.OpenCentered();
-                else
-                    comp.Window.Close();
-            };
+            _gameHud.CharacterButtonToggled += ToggleWindow;
+        }
+
+        private void ToggleWindow(bool toggle)
+        {
+            if (!TryComp(_playerManager.LocalPlayer?.Session?.AttachedEntity, out CharacterInterfaceComponent? comp))
+                return;
+
+            if (toggle)
+                comp.Window?.OpenCentered();
+            else
+                comp.Window?.Close();
         }
 
         private void OnPlayerDetached(EntityUid uid, CharacterInterfaceComponent comp, PlayerDetachedEvent args)
@@ -96,6 +101,7 @@ namespace Content.Client.CharacterInterface
                 return;
 
             _gameHud.CharacterButtonVisible = false;
+            _gameHud.CharacterButtonToggled -= ToggleWindow;
             comp.Window.Close();
         }
 

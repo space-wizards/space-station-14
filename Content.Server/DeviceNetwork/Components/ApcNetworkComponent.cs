@@ -4,7 +4,7 @@ using Content.Server.NodeContainer.Nodes;
 namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
-    [Friend(typeof(ApcNetworkSystem))]
+    [Access(typeof(ApcNetworkSystem))]
     [ComponentProtoName("ApcNetworkConnection")]
     public sealed class ApcNetworkComponent : Component
     {

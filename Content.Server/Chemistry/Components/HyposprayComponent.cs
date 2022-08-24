@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Interaction.Components;
@@ -6,11 +5,12 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -66,7 +66,7 @@ namespace Content.Server.Chemistry.Components
             if (!solutionsSys.TryGetInjectableSolution(target.Value, out var targetSolution))
             {
                 user.PopupMessage(user,
-                    Loc.GetString("hypospray-cant-inject", ("target", target)));
+                    Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, _entMan))));
                 return false;
             }
 
@@ -80,7 +80,7 @@ namespace Content.Server.Chemistry.Components
                 meleeSys.SendLunge(angle, user);
             }
 
-            SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
+            SoundSystem.Play(_injectSound.GetSound(), Filter.Pvs(user), user);
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(TransferAmount, targetSolution.AvailableVolume);

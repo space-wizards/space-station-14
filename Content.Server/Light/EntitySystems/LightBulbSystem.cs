@@ -65,7 +65,7 @@ namespace Content.Server.Light.EntitySystems
             if (!Resolve(uid, ref bulb))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(uid), bulb.BreakSound.GetSound(), uid);
+            SoundSystem.Play(bulb.BreakSound.GetSound(), Filter.Pvs(uid), uid);
         }
 
         private void UpdateAppearance(EntityUid uid, LightBulbComponent? bulb = null,

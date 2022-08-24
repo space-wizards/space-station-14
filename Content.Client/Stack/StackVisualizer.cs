@@ -78,6 +78,7 @@ namespace Content.Client.Stack
 
         [DataField("sprite")] private ResourcePath? _spritePath;
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -97,12 +98,13 @@ namespace Content.Client.Stack
             }
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.TryGetComponent(component.Owner, out ISpriteComponent spriteComponent))
+            if (entities.TryGetComponent(component.Owner, out ISpriteComponent? spriteComponent))
             {
                 if (_isComposite)
                 {

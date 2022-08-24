@@ -2,7 +2,7 @@ using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using static Content.Shared.Chemistry.Components.MovespeedModifierMetabolismComponent;
 
 namespace Content.Shared.Chemistry

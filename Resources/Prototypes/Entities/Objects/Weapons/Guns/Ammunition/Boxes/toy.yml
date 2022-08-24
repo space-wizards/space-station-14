@@ -4,11 +4,17 @@
   id: BoxDonkSoftBase
   name: foamdart box
   components:
-  - type: AmmoBox
-    caliber: Rocket
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
     capacity: 30
   - type: Sprite
     netsync: false
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 # Boxes
 - type: entity
@@ -16,9 +22,9 @@
   id: BoxDonkSoftBox
   name: foam dart box
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     capacity: 40
-    fillPrototype: BulletDonkSoft
+    proto: BulletFoam
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foambox
@@ -28,9 +34,9 @@
   id: BoxCartridgeCap
   name: cap gun cartridge box
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     capacity: 20
-    fillPrototype: CartridgeCap
+    proto: CartridgeCap
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
     state: box

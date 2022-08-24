@@ -1,6 +1,7 @@
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Materials
@@ -13,8 +14,8 @@ namespace Content.Shared.Materials
     public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [ParentDataField(typeof(AbstractPrototypeIdSerializer<MaterialPrototype>))]
-        public string? Parent { get; } = null;
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
+        public string[]? Parents { get; }
 
         [ViewVariables]
         [AbstractDataFieldAttribute]
@@ -42,5 +43,11 @@ namespace Content.Shared.Materials
         [ViewVariables]
         [DataField("icon")]
         public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
+
+        /// <summary>
+        /// The price per cm3.
+        /// </summary>
+        [DataField("price", required: true)]
+        public double Price = 0;
     }
 }

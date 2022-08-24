@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
@@ -33,6 +33,7 @@ namespace Content.Client.ParticleAccelerator
             _states.Add(ParticleAcceleratorVisualState.Level3, _baseState + "p3");
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -47,12 +48,13 @@ namespace Content.Client.ParticleAccelerator
             }
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
             if (!component.TryGetData(ParticleAcceleratorVisuals.VisualState, out ParticleAcceleratorVisualState state))
             {
                 state = ParticleAcceleratorVisualState.Unpowered;

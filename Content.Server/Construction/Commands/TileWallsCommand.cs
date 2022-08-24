@@ -17,14 +17,14 @@ namespace Content.Server.Construction.Commands
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
-        public const string TilePrototypeID = "plating";
+        public const string TilePrototypeID = "Plating";
         public const string WallTag = "Wall";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            GridId gridId;
+            EntityUid? gridId;
 
             switch (args.Length)
             {
@@ -35,16 +35,16 @@ namespace Content.Server.Construction.Commands
                         return;
                     }
 
-                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridID;
+                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                     break;
                 case 1:
-                    if (!int.TryParse(args[0], out var id))
+                    if (!EntityUid.TryParse(args[0], out var id))
                     {
-                        shell.WriteLine($"{args[0]} is not a valid integer.");
+                        shell.WriteLine($"{args[0]} is not a valid entity.");
                         return;
                     }
 
-                    gridId = new GridId(id);
+                    gridId = id;
                     break;
                 default:
                     shell.WriteLine(Help);

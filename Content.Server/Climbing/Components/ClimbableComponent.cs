@@ -3,6 +3,7 @@ using Content.Shared.Climbing;
 namespace Content.Server.Climbing.Components;
 
 [RegisterComponent]
+[ComponentReference(typeof(SharedClimbableComponent))]
 public sealed class ClimbableComponent : SharedClimbableComponent
 {
     /// <summary>

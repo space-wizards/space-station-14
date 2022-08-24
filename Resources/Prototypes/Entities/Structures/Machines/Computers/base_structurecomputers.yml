@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: ComputerFrame
-  id: ComputerBase
+  id: BaseComputer
   name: computer
   placement:
     mode: SnapgridCenter
@@ -49,3 +49,7 @@
   - type: EmitSoundOnUIOpen
     sound:
       collection: Keyboard
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+        ents: []

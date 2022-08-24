@@ -61,6 +61,14 @@
   components:
   - type: Sprite
     state: fries-carrot
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: JuiceCarrot
+          Quantity: 20
 # Tastes like carrots, salt.
 
 - type: entity
@@ -177,7 +185,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
-        - ReagentId: CapsaicinOil
+        - ReagentId: CarpoToxin
           Quantity: 3
 # Tastes like fish, batter, hot peppers.
 
@@ -334,6 +342,15 @@
   components:
   - type: Sprite
     state: memoryLeek
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Allicin
+          Quantity: 5
 # Tastes like pain.
 
 - type: entity
@@ -366,6 +383,25 @@
     - type: Sprite
       state: queso
 # Its queso! Everyone loves queso... Right?.
+
+- type: entity
+  name: Sashimi
+  parent: FoodMealBase
+  id: FoodMealSashimi
+  description: Its taste can only be described as "Exotic". The poisoning though? That's pretty common.
+  components:
+  - type: Sprite
+    state: sashimi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: CarpoToxin
+          Quantity: 15
+# tastes exotic
 
 - type: entity
   name: enchiladas

@@ -10,16 +10,15 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(PardonCommand))]
-    public sealed class PardonCommand : ContentIntegrationTest
+    public sealed class PardonCommand
     {
         private static readonly TimeSpan MarginOfError = TimeSpan.FromMinutes(1);
 
         [Test]
         public async Task PardonTest()
         {
-            var (client, server) = await StartConnectedServerClientPair();
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+            await using var pairTracker = await PoolManager.GetServerClient(new (){Destructive = true});
+            var server = pairTracker.Pair.Server;
 
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
             var sConsole = server.ResolveDependency<IServerConsoleHost>();
@@ -122,6 +121,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 // The list is still returned since that ignores pardons
                 Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

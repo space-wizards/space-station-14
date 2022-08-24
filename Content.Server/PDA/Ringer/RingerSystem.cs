@@ -18,7 +18,7 @@ namespace Content.Server.PDA.Ringer
             base.Initialize();
 
             // General Event Subscriptions
-            SubscribeLocalEvent<RingerComponent, ComponentInit>(RandomizeRingtone);
+            SubscribeLocalEvent<RingerComponent, MapInitEvent>(RandomizeRingtone);
             // RingerBoundUserInterface Subscriptions
             SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
             SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(RingerPlayRingtone);
@@ -46,7 +46,7 @@ namespace Content.Server.PDA.Ringer
             UpdateRingerRingtone(ringer, args.Ringtone);
         }
 
-        public void RandomizeRingtone(EntityUid uid, RingerComponent ringer, ComponentInit args)
+        public void RandomizeRingtone(EntityUid uid, RingerComponent ringer, MapInitEvent args)
         {
             // Default to using C pentatonic so it at least sounds not terrible.
             var notes = new[]
@@ -106,11 +106,9 @@ namespace Content.Server.PDA.Ringer
                 ringer.TimeElapsed -= NoteDelay;
                 var ringerXform = Transform(ringer.Owner);
 
-                SoundSystem.Play(
+                SoundSystem.Play(GetSound(ringer.Ringtone[ringer.NoteCount]),
                     Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
-                    GetSound(ringer.Ringtone[ringer.NoteCount]),
-                    ringer.Owner,
-                    AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume));
+                    ringer.Owner, AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume));
 
                 ringer.NoteCount++;
 

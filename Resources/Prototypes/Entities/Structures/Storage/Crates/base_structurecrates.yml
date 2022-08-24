@@ -27,13 +27,14 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - MachineMask
+      - SmallMobMask #this is so they can go under plastic flaps
       layer:
       - MachineLayer
   - type: EntityStorage
-    Capacity: 500
+    capacity: 500
   - type: Weldable
   - type: PlaceableSurface
+    isPlaceable: false # defaults to closed.
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -57,7 +58,11 @@
       whitelist:
         components:
         - Paper
-
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: ItemSlots
 
 - type: entity
   id: CrateBaseSecure
@@ -87,13 +92,14 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - MachineMask
+      - SmallMobMask
       layer:
       - MachineLayer
   - type: EntityStorage
-    Capacity: 500
+    capacity: 500
   - type: Weldable
   - type: PlaceableSurface
+    isPlaceable: false # defaults to closed.
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
@@ -120,3 +126,10 @@
   - type: Construction
     graph: CrateSecure
     node: cratesecure
+    containers:
+    - entity_storage
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: ItemSlots

@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
@@ -41,20 +42,19 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
-        public const float InteractionRange = 2;
+        public const float InteractionRange = 2f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
-        public const float MaxRaycastRange = 100;
+        public const float MaxRaycastRange = 100f;
 
         public delegate bool Ignored(EntityUid entity);
 
@@ -149,7 +149,7 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            UserInteraction(user.Value, coords, uid, altInteract: true);
+            UserInteraction(user.Value, coords, uid, altInteract: true, checkAccess: ShouldCheckAccess(user.Value));
 
             return false;
         }
@@ -163,9 +163,16 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null);
+            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null, checkAccess: ShouldCheckAccess(userEntity.Value));
 
             return false;
+        }
+
+        private bool ShouldCheckAccess(EntityUid user)
+        {
+            // This is for Admin/mapping convenience. If ever there are other ghosts that can still interact, this check
+            // might need to be more selective.
+            return !HasComp<SharedGhostComponent>(user);
         }
 
         /// <summary>
@@ -222,7 +229,14 @@ namespace Content.Shared.Interaction
 
             // Does the user have hands?
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
+            {
+                if (target != null)
+                {
+                    var ev = new InteractNoHandEvent(user, target.Value);
+                    RaiseLocalEvent(user, ev, true);
+                }
                 return;
+            }
 
             var inRangeUnobstructed = target == null
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
@@ -272,8 +286,8 @@ namespace Content.Shared.Interaction
         {
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
-            RaiseLocalEvent(target, message);
-            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
+            RaiseLocalEvent(target, message, true);
+            _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
             if (message.Handled)
                 return;
 
@@ -299,7 +313,7 @@ namespace Content.Shared.Interaction
             if (target != null)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
-                RaiseLocalEvent(target.Value, rangedMsg);
+                RaiseLocalEvent(target.Value, rangedMsg, true);
 
                 if (rangedMsg.Handled)
                     return;
@@ -462,7 +476,7 @@ namespace Content.Shared.Interaction
 
             bool ignoreAnchored = false;
 
-            if (HasComp<SharedItemComponent>(target) && TryComp(target, out PhysicsComponent? physics) && physics.CanCollide)
+            if (HasComp<ItemComponent>(target) && TryComp(target, out PhysicsComponent? physics) && physics.CanCollide)
             {
                 // If the target is an item, we ignore any colliding entities. Currently done so that if items get stuck
                 // inside of walls, users can still pick them up.
@@ -592,7 +606,7 @@ namespace Content.Shared.Interaction
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public async void InteractUsing(
+        public void InteractUsing(
             EntityUid user,
             EntityUid used,
             EntityUid target,
@@ -611,19 +625,9 @@ namespace Content.Shared.Interaction
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
-            RaiseLocalEvent(target, interactUsingEvent);
+            RaiseLocalEvent(target, interactUsingEvent, true);
             if (interactUsingEvent.Handled)
                 return;
-
-            var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
-            var interactUsings = AllComps<IInteractUsing>(target).OrderByDescending(x => x.Priority);
-
-            foreach (var interactUsing in interactUsings)
-            {
-                // If an InteractUsing returns a status completion we finish our interaction
-                if (await interactUsing.InteractUsing(interactUsingEventArgs))
-                    return;
-            }
 
             InteractDoAfter(user, used, target, clickLocation, canReach: true);
         }
@@ -631,7 +635,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Used when clicking on an entity resulted in no other interaction. Used for low-priority interactions.
         /// </summary>
-        public async void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
+        public void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
             if (target is {Valid: false})
                 target = null;
@@ -640,15 +644,6 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, afterInteractEvent, false);
             if (afterInteractEvent.Handled)
                 return;
-
-            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
-            var afterInteracts = AllComps<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                if (await afterInteract.AfterInteract(afterInteractEventArgs))
-                    return;
-            }
 
             if (target == null)
                 return;
@@ -669,7 +664,7 @@ namespace Content.Shared.Interaction
             if (Deleted(uid))
                 return false;
 
-            InteractionActivate(user.Value, uid);
+            InteractionActivate(user.Value, uid, checkAccess: ShouldCheckAccess(user.Value));
             return false;
         }
 
@@ -709,23 +704,12 @@ namespace Content.Shared.Interaction
                 return false;
 
             var activateMsg = new ActivateInWorldEvent(user, used);
-            RaiseLocalEvent(used, activateMsg);
-            if (activateMsg.Handled)
-            {
-                _useDelay.BeginDelay(used, delayComponent);
-                _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
-                return true;
-            }
-
-            var activatable = AllComps<IActivate>(used).FirstOrDefault();
-            if (activatable == null)
+            RaiseLocalEvent(used, activateMsg, true);
+            if (!activateMsg.Handled)
                 return false;
 
-            activatable.Activate(new ActivateEventArgs(user, used));
-
-            // No way to check success.
             _useDelay.BeginDelay(used, delayComponent);
-            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
         }
         #endregion
@@ -758,7 +742,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             var useMsg = new UseInHandEvent(user);
-            RaiseLocalEvent(used, useMsg);
+            RaiseLocalEvent(used, useMsg, true);
             if (useMsg.Handled)
             {
                 _useDelay.BeginDelay(used, delayComponent);
@@ -797,23 +781,23 @@ namespace Content.Shared.Interaction
         public void ThrownInteraction(EntityUid user, EntityUid thrown)
         {
             var throwMsg = new ThrownEvent(user, thrown);
-            RaiseLocalEvent(thrown, throwMsg);
+            RaiseLocalEvent(thrown, throwMsg, true);
             if (throwMsg.Handled)
             {
-                _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
+                _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
                 return;
             }
 
-            _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
+            _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
         }
         #endregion
 
         public void DroppedInteraction(EntityUid user, EntityUid item)
         {
             var dropMsg = new DroppedEvent(user);
-            RaiseLocalEvent(item, dropMsg);
+            RaiseLocalEvent(item, dropMsg, true);
             if (dropMsg.Handled)
-                _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
+                _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
             Transform(item).LocalRotation = Angle.Zero;
         }
         #endregion

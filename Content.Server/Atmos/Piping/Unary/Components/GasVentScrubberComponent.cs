@@ -6,7 +6,7 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    [Friend(typeof(GasVentScrubberSystem))]
+    [Access(typeof(GasVentScrubberSystem))]
     public sealed class GasVentScrubberComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

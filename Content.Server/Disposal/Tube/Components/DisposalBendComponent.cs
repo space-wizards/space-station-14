@@ -1,11 +1,14 @@
-﻿using Content.Server.Disposal.Unit.Components;
+using Content.Server.Disposal.Unit.Components;
 
 namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [ComponentReference(typeof(DisposalTubeComponent))]
     public sealed class DisposalBendComponent : DisposalTubeComponent
     {
+        public override string ContainerId => "DisposalBend";
+
         [DataField("sideDegrees")]
         private int _sideDegrees = -90;
 

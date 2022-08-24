@@ -1,5 +1,8 @@
 ﻿using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Players.PlayTimeTracking;
+using Content.Server.Roles;
+using Content.Server.Station.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
@@ -14,6 +17,7 @@ public sealed partial class StationJobsSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleBanManager _roleBanManager = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -51,6 +55,8 @@ public sealed partial class StationJobsSystem
     public Dictionary<NetUserId, (string, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
+
+        InitializeRoundStart();
 
         if (profiles.Count == 0)
             return new Dictionary<NetUserId, (string, EntityUid)>();
@@ -304,6 +310,24 @@ public sealed partial class StationJobsSystem
         }
     }
 
+    public void CalcExtendedAccess(Dictionary<EntityUid, int> jobsCount)
+    {
+        // Calculate whether stations need to be on extended access or not.
+        foreach (var (station, count) in jobsCount)
+        {
+            var jobs = Comp<StationJobsComponent>(station);
+            var data = Comp<StationDataComponent>(station);
+
+            var thresh = data.StationConfig?.ExtendedAccessThreshold ?? -1;
+
+            jobs.ExtendedAccess = count <= thresh;
+
+            Logger.DebugS(
+                "station", "Station {Station} on extended access: {ExtendedAccess}",
+                Name(station), jobs.ExtendedAccess);
+        }
+    }
+
     /// <summary>
     /// Gets all jobs that the input players have that match the given weight and priority.
     /// </summary>
@@ -318,11 +342,15 @@ public sealed partial class StationJobsSystem
         foreach (var (player, profile) in profiles)
         {
             var roleBans = _roleBanManager.GetJobBans(player);
+            var profileJobs = profile.JobPriorities.Keys.ToList();
+            _playTime.RemoveDisallowedJobs(player, ref profileJobs);
 
             List<string>? availableJobs = null;
 
-            foreach (var (jobId, priority) in profile.JobPriorities)
+            foreach (var jobId in profileJobs)
             {
+                var priority = profile.JobPriorities[jobId];
+
                 if (!(priority == selectedPriority || selectedPriority is null))
                     continue;
 
@@ -336,7 +364,6 @@ public sealed partial class StationJobsSystem
                     continue;
 
                 availableJobs ??= new List<string>(profile.JobPriorities.Count);
-
                 availableJobs.Add(jobId);
             }
 

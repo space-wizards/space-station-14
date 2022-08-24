@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Projectiles;
 using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
 using Content.Server.Storage.Components;
@@ -24,7 +25,7 @@ namespace Content.Server.Singularity.EntitySystems
     public sealed class EmitterSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -56,7 +57,7 @@ namespace Content.Server.Singularity.EntitySystems
                     component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)));
                 }
 
-                _adminLog.Add(LogType.Emitter,
+                _adminLogger.Add(LogType.Emitter,
                     component.IsOn ? LogImpact.Medium : LogImpact.High,
                     $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter}");
             }
@@ -187,7 +188,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            projectileComponent.IgnoreEntity(component.Owner);
+            Get<ProjectileSystem>().SetShooter(projectileComponent, component.Owner);
 
             physicsComponent
                 .LinearVelocity = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * 20f;
@@ -196,8 +197,8 @@ namespace Content.Server.Singularity.EntitySystems
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => EntityManager.DeleteEntity(projectile));
 
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
-                AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
+            SoundSystem.Play(component.FireSound.GetSound(), Filter.Pvs(component.Owner),
+                component.Owner, AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
         }
 
         private void UpdateAppearance(EmitterComponent component)

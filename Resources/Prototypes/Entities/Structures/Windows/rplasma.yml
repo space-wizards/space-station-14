@@ -42,13 +42,14 @@
     graph: Window
     node: reinforcedPlasmaWindow
   - type: Appearance
-    visuals:
-    - type: DamageVisualizer
-      thresholds: [4, 8, 12]
-      damageDivisor: 36
-      trackAllDamage: true
-      damageOverlay:
-        sprite: Structures/Windows/cracks.rsi
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 36
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 20.75
 
 - type: entity
   id: PlasmaReinforcedWindowDirectional
@@ -95,3 +96,5 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 20.75

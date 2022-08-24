@@ -11,18 +11,13 @@ namespace Content.Shared.Research.Components
     {
         [DataField("technologies")] private List<string> _technologyIds = new();
 
-        protected List<TechnologyPrototype> _technologies = new();
-
-        /// <summary>
-        ///     A read-only list of unlocked technologies.
-        /// </summary>
-        public IReadOnlyList<TechnologyPrototype> Technologies => _technologies;
+        public List<TechnologyPrototype> Technologies = new();
 
         void ISerializationHooks.BeforeSerialization()
         {
             var techIds = new List<string>();
 
-            foreach (var tech in _technologies)
+            foreach (var tech in Technologies)
             {
                 techIds.Add(tech.ID);
             }
@@ -38,7 +33,7 @@ namespace Content.Shared.Research.Components
             {
                 if (prototypeManager.TryIndex(id, out TechnologyPrototype? tech))
                 {
-                    _technologies.Add(tech);
+                    Technologies.Add(tech);
                 }
             }
         }
@@ -61,7 +56,7 @@ namespace Content.Shared.Research.Components
         {
             List<string> techIds = new List<string>();
 
-            foreach (var tech in _technologies)
+            foreach (var tech in Technologies)
             {
                 techIds.Add(tech.ID);
             }
@@ -76,7 +71,7 @@ namespace Content.Shared.Research.Components
         /// <returns>Whether it is unlocked or not</returns>
         public bool IsTechnologyUnlocked(TechnologyPrototype technology)
         {
-            return _technologies.Contains(technology);
+            return Technologies.Contains(technology);
         }
 
         /// <summary>

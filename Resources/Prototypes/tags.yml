@@ -22,6 +22,9 @@
   id: BodyBag
 
 - type: Tag
+  id: BorgArm
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -32,6 +35,9 @@
 
 - type: Tag
   id: Bottle
+
+- type: Tag
+  id: BulletFoam
 
 - type: Tag
   id: CableCoil
@@ -52,7 +58,37 @@
   id: CaptainSabre
 
 - type: Tag
+  id: Carp
+
+- type: Tag
   id: Cartridge
+
+- type: Tag
+  id: CartridgeAntiMaterial
+
+- type: Tag
+  id: CartridgeCap
+
+- type: Tag
+  id: CartridgeCaselessRifle
+
+- type: Tag
+  id: CartridgeHeavyRifle
+
+- type: Tag
+  id: CartridgeLightRifle
+
+- type: Tag
+  id: CartridgeMagnum
+
+- type: Tag
+  id: CartridgePistol
+
+- type: Tag
+  id: CartridgeRifle
+
+- type: Tag
+  id: CartridgeRocket
 
 - type: Tag
   id: CigFilter
@@ -112,6 +148,9 @@
   id: Dice
 
 - type: Tag
+  id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
+
+- type: Tag
   id: Document
 
 - type: Tag
@@ -160,6 +199,9 @@
   id: Flashlight
 
 - type: Tag
+  id: Flower
+
+- type: Tag
   id: Folder
 
 - type: Tag
@@ -176,6 +218,12 @@
 
 - type: Tag
   id: GlassBeaker
+
+- type: Tag
+  id: Grenade
+
+- type: Tag
+  id: GunsDisabled # Allow certain entities to not use guns without complicating the system with an event
 
 - type: Tag
   id: Handcuffs
@@ -207,8 +255,64 @@
 - type: Tag
   id: Machete
 
+# Magazines ordered by slot then caliber
+
+- type: Tag
+  id: MagazineCalico
+
+- type: Tag
+  id: MagazineCaselessRifle
+
+- type: Tag
+  id: MagazineHeavyRifle
+
+- type: Tag
+  id: MagazineHeavyRifleBox
+
+- type: Tag
+  id: MagazineLightRifle
+
+- type: Tag
+  id: MagazineLightRifleBox
+
+- type: Tag
+  id: MagazineLightRiflePan
+
+- type: Tag
+  id: MagazineMagnum
+
+- type: Tag
+  id: MagazinePistol
+
+- type: Tag
+  id: MagazinePistolCaselessRifle
+
+- type: Tag
+  id: MagazinePistolHighCapacity
+
+- type: Tag
+  id: MagazinePistolSubMachineGunTopMounted
+
+- type: Tag
+  id: MagazineRifle
+
+- type: Tag
+  id: MagazineShotgun
+
+- type: Tag
+  id: MagazineMagnumSubMachineGun
+
+- type: Tag
+  id: MagazinePistolSubMachineGun
+
 - type: Tag
   id: Matchstick
+
+- type: Tag
+  id: MailingUnitElectronics
+
+- type: Tag
+  id: Medkit
 
 - type: Tag
   id: Metal
@@ -227,6 +331,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NukeOpsUplink
 
 - type: Tag
   id: Ointment
@@ -266,7 +373,7 @@
 
 - type: Tag
   id: PlantSampleTaker
-  
+
 - type: Tag
   id: Plastic
 
@@ -274,8 +381,11 @@
   id: Powerdrill
 
 - type: Tag
+  id: ProximitySensor
+
+- type: Tag
   id: PussyWagonKeys
-  
+
 - type: Tag
   id: RawMaterial
 
@@ -302,7 +412,7 @@
   id: Sheet
 
 - type: Tag
-  id: ShotgunShell
+  id: ShellShotgun
 
 - type: Tag
   id: Shovel
@@ -318,6 +428,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: Syndicate
 
 - type: Tag
   id: SyndicateSegwayKeys
@@ -342,6 +455,12 @@
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: WizardWand # that evil vvizard vvand
+
+- type: Tag
+  id: WizardStaff
 
 - type: Tag
   id: Wirecutter

@@ -51,6 +51,8 @@
                 <BoxContainer Name="TopRightContainer">
                     <BoxContainer Name="LogImpactContainer" Orientation="Horizontal"/>
                     <Control HorizontalExpand="True"/>
+                    <Label Name="Count" Access="Public"/>
+                    <Control HorizontalExpand="True"/>
                     <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">

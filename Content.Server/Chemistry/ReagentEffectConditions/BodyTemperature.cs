@@ -1,4 +1,4 @@
-﻿using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         public float Max = float.MaxValue;
         public override bool Condition(ReagentEffectArgs args)
         {
-            if (args.EntityManager.TryGetComponent(args.SolutionEntity, out TemperatureComponent temp))
+            if (args.EntityManager.TryGetComponent(args.SolutionEntity, out TemperatureComponent? temp))
             {
                 if (temp.CurrentTemperature > Min && temp.CurrentTemperature < Max)
                     return true;

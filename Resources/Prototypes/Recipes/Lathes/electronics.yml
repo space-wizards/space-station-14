@@ -8,6 +8,15 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: MailingUnitElectronics
+  icon: Objects/Misc/module.rsi/net_wired.png
+  result: MailingUnitElectronics
+  completetime: 4
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: DoorElectronics
   icon: Objects/Misc/module.rsi/door_electronics.png
   result: DoorElectronics
@@ -48,6 +57,16 @@
   id: ThermomachineFreezerMachineCircuitBoard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ThermomachineFreezerMachineCircuitBoard
+  completetime: 4
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+
+- type: latheRecipe
+  id: PortableScrubberMachineCircuitBoard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: PortableScrubberMachineCircuitBoard
   completetime: 4
   materials:
     Steel: 150
@@ -287,6 +306,15 @@
      Glass: 900
 
 - type: latheRecipe
+  id: CloningConsoleComputerCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CloningConsoleComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: MicrowaveMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: MicrowaveMachineCircuitboard
@@ -294,3 +322,75 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceCameraRouterCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceCameraRouterCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceCameraWirelessRouterCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceCameraWirelessRouterCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceWirelessCameraAnchoredCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceWirelessCameraAnchoredCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceWirelessCameraMovableCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceWirelessCameraMovableCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceCameraMonitorCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceCameraMonitorCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceWirelessCameraMonitorCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceWirelessCameraMonitorCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: ComputerTelevisionCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ComputerTelevisionCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: EmitterCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: EmitterCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900

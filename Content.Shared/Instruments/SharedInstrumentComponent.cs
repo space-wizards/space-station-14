@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Instruments;
 
-[NetworkedComponent, Friend(typeof(SharedInstrumentSystem))]
+[NetworkedComponent, Access(typeof(SharedInstrumentSystem))]
 public abstract class SharedInstrumentComponent : Component
 {
     [ViewVariables]
@@ -26,6 +26,7 @@ public abstract class SharedInstrumentComponent : Component
     public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    [Access(typeof(SharedInstrumentSystem), Other = AccessPermissions.ReadWrite)] // FIXME Friends
     public bool DirtyRenderer { get; set; }
 }
 

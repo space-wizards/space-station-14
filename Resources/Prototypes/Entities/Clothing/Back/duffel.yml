@@ -7,14 +7,18 @@
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
     state: icon
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel.rsi
+  - type: Item
     size: 9999
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - back
   - type: Storage
     capacity: 120
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
@@ -31,8 +35,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/engineering.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -41,8 +43,6 @@
   description: A large duffel bag for holding extra medical supplies.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/medical.rsi
-  - type: Clothing
     sprite: Clothing/Back/Duffels/medical.rsi
 
 - type: entity
@@ -53,8 +53,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/captain.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/captain.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -64,8 +62,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/clown.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/clown.rsi
+  - type: Storage
     storageOpenSound:
       collection: BikeHorn
 
@@ -77,8 +74,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/security.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/security.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -87,8 +82,6 @@
   description: A large duffel bag for holding extra beakers and test tubes.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/chemistry.rsi
-  - type: Clothing
     sprite: Clothing/Back/Duffels/chemistry.rsi
 
 - type: entity
@@ -99,12 +92,10 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/mime.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/mime.rsi
     storageOpenSound:
-      collection: null    
+      collection: null
     storageInsertSound:
-      collection: null      
+      collection: null
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -113,8 +104,6 @@
   description: A large duffel bag for holding extra science related goods.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/science.rsi
-  - type: Clothing
     sprite: Clothing/Back/Duffels/science.rsi
 
 - type: entity
@@ -125,8 +114,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/syndicate.rsi
+  - type: Storage
+    capacity: 131
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -136,9 +125,10 @@
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
     state: icon-ammo
+  - type: Item
+    heldPrefix: ammo
   - type: Clothing
-    sprite: Clothing/Back/Duffels/syndicate.rsi
-    HeldPrefix: ammo
+    equippedPrefix: ammo
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -148,9 +138,10 @@
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
     state: icon-med
+  - type: Item
+    heldPrefix: med
   - type: Clothing
-    sprite: Clothing/Back/Duffels/syndicate.rsi
-    HeldPrefix: med
+    equippedPrefix: med
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -165,7 +156,5 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/holding.rsi
   - type: Storage
     capacity: 10000

@@ -7,7 +7,7 @@ namespace Content.Server.Kitchen.Components
     /// Tag component that denotes an entity as Extractable
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(ReagentGrinderSystem))]
+    [Access(typeof(ReagentGrinderSystem))]
     public sealed class ExtractableComponent : Component
     {
         [ViewVariables]

@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using Content.Server.Database;
+using Content.Shared.CCVar;
 using Content.Shared.Info;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 
 namespace Content.Server.Info;
@@ -9,6 +11,7 @@ public sealed class RulesManager : SharedRulesManager
 {
     [Dependency] private readonly IServerDbManager _dbManager = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private static DateTime LastValidReadTime => DateTime.UtcNow - TimeSpan.FromDays(60);
 
@@ -22,7 +25,7 @@ public sealed class RulesManager : SharedRulesManager
 
     private async void OnConnected(object? sender, NetChannelArgs e)
     {
-        if (IPAddress.IsLoopback(e.Channel.RemoteEndPoint.Address))
+        if (IPAddress.IsLoopback(e.Channel.RemoteEndPoint.Address) && _cfg.GetCVar(CCVars.RulesExemptLocal))
         {
             return;
         }

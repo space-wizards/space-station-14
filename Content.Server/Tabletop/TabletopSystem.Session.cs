@@ -14,7 +14,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         /// <param name="tabletop">The tabletop game in question.</param>
         /// <returns>The session for the given tabletop game.</returns>
-        private TabletopSession EnsureSession(TabletopGameComponent tabletop)
+        public TabletopSession EnsureSession(TabletopGameComponent tabletop)
         {
             // We already have a session, return it
             // TODO: if tables are connected, treat them as a single entity. This can be done by sharing the session.

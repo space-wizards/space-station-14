@@ -51,6 +51,9 @@
       path: /Audio/Machines/airlock_close.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Weldable
     fuel: 3
     time: 3
@@ -58,7 +61,7 @@
   - type: Appearance
     visuals:
     - type: AirlockVisualizer
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
   - type: ExtensionCableReceiver

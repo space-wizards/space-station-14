@@ -1,15 +1,24 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
+using Content.Server.Sticky.Events;
+using Content.Shared.Actions;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using Content.Shared.Database;
+using Content.Shared.Explosion;
+using Content.Shared.Interaction;
+using Content.Shared.Payload.Components;
+using Content.Shared.StepTrigger.Systems;
+using Robust.Server.Containers;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -35,7 +44,8 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -44,8 +54,11 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeProximity();
             InitializeOnUse();
             InitializeSignal();
+            InitializeTimedCollide();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
+            SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -55,6 +68,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
             _explosions.TriggerExplosive(uid, user: args.User);
+            args.Handled = true;
         }
 
         #region Flash
@@ -62,12 +76,14 @@ namespace Content.Server.Explosion.EntitySystems
         {
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
+            args.Handled = true;
         }
         #endregion
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
             EntityManager.QueueDeleteEntity(uid);
+            args.Handled = true;
         }
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
@@ -76,11 +92,22 @@ namespace Content.Server.Explosion.EntitySystems
 				Trigger(component.Owner);
         }
 
+        private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
+        {
+            Trigger(component.Owner, args.User);
+            args.Handled = true;
+        }
 
-        public void Trigger(EntityUid trigger, EntityUid? user = null)
+        private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
+        {
+            Trigger(uid, args.Tripper);
+        }
+
+        public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
-            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
+            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent, true);
+            return triggerEvent.Handled;
         }
 
         public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound, AudioParams beepParams)
@@ -97,12 +124,28 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (user != null)
             {
-                _logSystem.Add(LogType.Trigger,
-                    $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
+                // Check if entity is bomb/mod. grenade/etc
+                if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
+                    TryComp(container.ContainedEntities.First(), out ChemicalPayloadComponent? chemicalPayloadComponent))
+                {
+                    // If a beaker is missing, the entity won't explode, so no reason to log it
+                    if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||
+                        !TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
+                        return;
+
+                    _adminLogger.Add(LogType.Trigger,
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.Trigger,
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
+                }
+
             }
             else
             {
-                _logSystem.Add(LogType.Trigger,
+                _adminLogger.Add(LogType.Trigger,
                     $"{delay} second timer trigger started on entity {ToPrettyString(uid):timer}");
             }
 
@@ -124,6 +167,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             UpdateProximity(frameTime);
             UpdateTimer(frameTime);
+            UpdateTimedCollide(frameTime);
         }
 
         private void UpdateTimer(float frameTime)
@@ -146,7 +190,7 @@ namespace Content.Server.Explosion.EntitySystems
 
                 timer.TimeUntilBeep += timer.BeepInterval;
                 var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
-                SoundSystem.Play(filter, timer.BeepSound.GetSound(), timer.Owner, timer.BeepParams);
+                SoundSystem.Play(timer.BeepSound.GetSound(), filter, timer.Owner, timer.BeepParams);
             }
 
             foreach (var uid in toRemove)
