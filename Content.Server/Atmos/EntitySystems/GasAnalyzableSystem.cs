@@ -21,6 +21,7 @@ namespace Content.Server.Atmos.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasAnalyzableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+            SubscribeLocalEvent<GasAnalyzerComponent, BoundUIClosedEvent>((_,c,_) => c.UpdateAppearance(false));
         }
 
         private void OnGetExamineVerbs(EntityUid uid, GasAnalyzableComponent component, GetVerbsEvent<ExamineVerb> args)

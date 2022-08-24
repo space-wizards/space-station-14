@@ -41,7 +41,7 @@ namespace Content.Server.AI.Operators.Inventory
 
             if (!storageComponent.Open)
             {
-                IoCManager.Resolve<EntityStorageSystem>().ToggleOpen(_owner, _target, storageComponent);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityStorageSystem>().ToggleOpen(_owner, _target, storageComponent);
             }
 
             var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
