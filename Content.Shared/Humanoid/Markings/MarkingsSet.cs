@@ -165,7 +165,7 @@ public sealed class MarkingSet
 
         foreach (var (category, points) in _points)
         {
-            if (points.Points <= 0)
+            if (points.Points <= 0 || points.DefaultMarkings.Count <= 0)
             {
                 continue;
             }
