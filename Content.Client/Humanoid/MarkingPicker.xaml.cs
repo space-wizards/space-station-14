@@ -46,10 +46,9 @@ namespace Content.Client.Markings
         private string _currentSpecies = SharedHumanoidSystem.DefaultSpecies;
         public Color CurrentSkinColor = Color.White;
 
-        public void SetData(List<Marking> newMarkings, string species, Color skinColor)
+        public void SetData(MarkingSet newMarkings, string species, Color skinColor)
         {
-            var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
-            _currentMarkings = new(newMarkings, speciesPrototype.MarkingPoints, _markingManager, _prototypeManager);
+            _currentMarkings = newMarkings;
             _currentSpecies = species;
             CurrentSkinColor = skinColor;
 

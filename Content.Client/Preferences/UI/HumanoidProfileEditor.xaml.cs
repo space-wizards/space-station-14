@@ -512,12 +512,12 @@ namespace Content.Client.Preferences.UI
             IsDirty = true;
         }
 
-        private void OnMarkingChange(List<Marking> markings)
+        private void OnMarkingChange(MarkingSet markings)
         {
             if (Profile is null)
                 return;
 
-            Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings));
+            Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings.GetForwardEnumerator().ToList()));
             NeedsDummyRebuild = true;
             IsDirty = true;
         }
@@ -853,7 +853,6 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            _markingSet = new(Profile.Appearance.Markings);
             CMarkings.SetData(_markingSet, Profile.Species, Profile.Appearance.SkinColor);
         }
 
