@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Asteroid walls now have reduced ore yield. Look out for designated mining
-      areas and salvage asteroids., type: Tweak}
-  id: 1685
-  time: '2022-06-12T02:58:35.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Most gun sizes have been increased., type: Tweak}
@@ -2944,3 +2938,11 @@ Entries:
   - {message: Added wall lockers, type: Add}
   id: 2184
   time: '2022-08-24T07:08:57.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Adds the Ensnaring Component. If a player gets ensnared by something
+      with it, their movement will be impeded.', type: Add}
+  - {message: Bolas no longer have a knockdown/stun chance and now ensnare instead.,
+    type: Tweak}
+  id: 2185
+  time: '2022-08-24T14:50:31.0000000+00:00'
