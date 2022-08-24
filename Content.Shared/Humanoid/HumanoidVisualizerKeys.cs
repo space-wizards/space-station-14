@@ -10,7 +10,7 @@ public enum HumanoidVisualizerKey
 }
 
 [Serializable, NetSerializable]
-public sealed class HumanoidVisualizerData
+public sealed class HumanoidVisualizerData : ICloneable
 {
     public HumanoidVisualizerData(string species, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayerInfo, Color skinColor, List<HumanoidVisualLayers> layerVisibility, List<Marking> markings)
     {
@@ -26,4 +26,9 @@ public sealed class HumanoidVisualizerData
     public Color SkinColor { get; }
     public List<HumanoidVisualLayers> LayerVisibility { get; }
     public List<Marking> Markings { get; }
+
+    public object Clone()
+    {
+        return new HumanoidVisualizerData(Species, new(CustomBaseLayerInfo), SkinColor, new(LayerVisibility), new(Markings));
+    }
 }
