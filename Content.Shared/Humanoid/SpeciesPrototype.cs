@@ -26,7 +26,7 @@ public sealed class SpeciesPrototype : IPrototype
     ///     (i.e., young human person, young lizard person, etc.)
     /// </summary>
     [DataField("descriptor")]
-    public string Descriptor { get; } = Loc.GetString("humanoid-descriptor");
+    public string Descriptor { get; } = "humanoid";
 
     /// <summary>
     /// Whether the species is available "at round start" (In the character editor)

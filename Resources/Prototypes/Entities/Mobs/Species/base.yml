@@ -203,7 +203,8 @@
     heatDamage:
       types:
         Heat: 0.1 #per second, scales with temperature & other constants
-  - type: HumanoidAppearance
+  - type: Humanoid
+    species: Human
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
@@ -405,7 +406,6 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Markings
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
@@ -419,7 +419,8 @@
         - MobMask
         layer:
         - MobLayer
-    - type: HumanoidAppearance
+    - type: Humanoid
+      species: Human
     - type: Body
       template: HumanoidTemplate
       preset: HumanPreset
