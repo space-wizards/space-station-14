@@ -17,7 +17,6 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
     public override void Initialize()
     {
         SubscribeLocalEvent<HumanoidComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<HumanoidComponent, PlayerSpawnCompleteEvent>(OnSpawnComplete);
     }
 
     private void Synchronize(EntityUid uid, HumanoidComponent? component = null)
@@ -59,14 +58,12 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             }
         }
 
-        EnsureDefaultMarkings(uid, humanoid);
+        if (humanoid.AlwaysEnsureDefault)
+        {
+            EnsureDefaultMarkings(uid, humanoid);
+        }
 
         Synchronize(uid, humanoid);
-    }
-
-    private void OnSpawnComplete(EntityUid uid, HumanoidComponent humanoid, PlayerSpawnCompleteEvent args)
-    {
-        LoadProfile(uid, args.Profile, humanoid);
     }
 
     public void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidComponent? humanoid = null)
