@@ -1,5 +1,6 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
+using Content.Server.Humanoid;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.IdentityManagement;
@@ -118,7 +119,7 @@ public class IdentitySystem : SharedIdentitySystem
     /// </summary>
     private IdentityRepresentation GetIdentityRepresentation(EntityUid target,
         InventoryComponent? inventory=null,
-        HumanoidAppearanceComponent? appearance=null)
+        HumanoidComponent? appearance=null)
     {
         int age = HumanoidCharacterProfile.MinimumAge;
         Gender gender = Gender.Neuter;
@@ -126,8 +127,9 @@ public class IdentitySystem : SharedIdentitySystem
         // Always use their actual age and gender, since that can't really be changed by an ID.
         if (Resolve(target, ref appearance, false))
         {
-            gender = appearance.Gender;
-            age = appearance.Age;
+            // TODO: Fix this before merge
+            gender = default; // appearance.Gender;
+            age = 30; // appearance.Age;
         }
 
         var trueName = Name(target);
