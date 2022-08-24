@@ -302,6 +302,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
+        humanoid.SkinColor = skinColor;
+
         foreach (var (layer, spriteInfo) in humanoid.BaseLayers)
         {
             if (!spriteInfo.MatchSkin)
