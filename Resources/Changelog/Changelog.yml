@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Items now correctly pass through plastic flaps. Cargo players rejoice!,
-    type: Fix}
-  id: 1684
-  time: '2022-06-12T02:40:15.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Asteroid walls now have reduced ore yield. Look out for designated mining
@@ -2945,3 +2939,8 @@ Entries:
   - {message: Shields no longer randomly break upon healing the user., type: Fix}
   id: 2183
   time: '2022-08-23T12:00:06.0000000+00:00'
+- author: martin69420
+  changes:
+  - {message: Added wall lockers, type: Add}
+  id: 2184
+  time: '2022-08-24T07:08:57.0000000+00:00'
