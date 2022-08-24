@@ -2,10 +2,12 @@ using Content.Server.Climbing.Components;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Climbing;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
@@ -16,17 +18,21 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
+using SharpZstd.Interop;
 
 namespace Content.Server.Climbing;
 
 [UsedImplicitly]
 public sealed class ClimbSystem : SharedClimbSystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -34,6 +40,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -80,6 +87,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
             return;
 
+        if (ShouldBonk(component))
+            return;
+
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
@@ -96,11 +106,28 @@ public sealed class ClimbSystem : SharedClimbSystem
         TryMoveEntity(component, args.User, args.Dragged, args.Target);
     }
 
+    private bool ShouldBonk(ClimbableComponent comp)
+    {
+        return comp.Bonk && _cfg.GetCVar(CCVars.GameTableBonk);
+    }
+
     private void TryMoveEntity(ClimbableComponent component, EntityUid user, EntityUid entityToMove,
         EntityUid climbable)
     {
         if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
+
+        if (ShouldBonk(component))
+        {
+            _audioSystem.PlayPvs(component.BonkSound, component.Owner);
+
+            _stunSystem.TryKnockdown(user, TimeSpan.FromSeconds(component.BonkTime), true);
+
+            if (component.BonkDamage is { } bonkDmg)
+                _damageableSystem.TryChangeDamage(user, bonkDmg, true);
+
+            return;
+        }
 
         _doAfterSystem.DoAfter(new DoAfterEventArgs(entityToMove, component.ClimbDelay, default, climbable)
         {
