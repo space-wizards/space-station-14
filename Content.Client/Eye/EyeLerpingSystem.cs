@@ -52,7 +52,7 @@ public sealed class EyeLerpingSystem : EntitySystem
     {
         if (!_activeEyes.ContainsKey(uid))
         {
-            _activeEyes.Add(uid, new());
+            _activeEyes.Add(uid, new EyeLerpInformation());
         }
     }
 
@@ -68,24 +68,6 @@ public sealed class EyeLerpingSystem : EntitySystem
     {
         if (!_gameTiming.IsFirstTimePredicted)
             return;
-
-        // Always do this one.
-        LerpPlayerEye(frameTime);
-
-        foreach (var (entity, info) in _activeEyes)
-        {
-            LerpEntityEye(entity, info, frameTime);
-        }
-
-        if (_toRemove.Count != 0)
-        {
-            foreach (var entity in _toRemove)
-            {
-                RemoveEye(entity);
-            }
-
-            _toRemove.Clear();
-        }
     }
 
     private void LerpPlayerEye(float frameTime)
@@ -97,7 +79,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         if (!TryComp(mob, out InputMoverComponent? mover))
             return;
 
-        LerpEye(_eyeManager.CurrentEye, frameTime, mover.LastGridAngle, _playerActiveEye);
+        LerpEye(_eyeManager.CurrentEye, frameTime, mover.RelativeAngle, _playerActiveEye);
     }
 
     private void LerpEntityEye(EntityUid uid, EyeLerpInformation info, float frameTime)

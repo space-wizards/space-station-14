@@ -44,6 +44,7 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentInit>(OnInputInit);
             SubscribeLocalEvent<InputMoverComponent, ComponentGetState>(OnInputGetState);
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnInputHandleState);
+            SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
         }
 
         private void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
@@ -55,16 +56,29 @@ namespace Content.Shared.Movement.Systems
 
         private void OnInputHandleState(EntityUid uid, InputMoverComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not InputMoverComponentState state) return;
+            if (args.Current is not InputMoverComponentState state)
+                return;
+
             component.HeldMoveButtons = state.Buttons;
             component.LastInputTick = GameTick.Zero;
             component.LastInputSubTick = 0;
             component.CanMove = state.CanMove;
+
+            component.RelativeRotation = state.RelativeRotation;
+            component.TargetRelativeRotation = state.TargetRelativeRotation;
+            component.RelativeEntity = state.RelativeEntity;
+            component.LerpAccumulator = state.LerpAccumulator;
         }
 
         private void OnInputGetState(EntityUid uid, InputMoverComponent component, ref ComponentGetState args)
         {
-            args.State = new InputMoverComponentState(component.HeldMoveButtons, component.CanMove);
+            args.State = new InputMoverComponentState(
+                component.HeldMoveButtons,
+                component.CanMove,
+                component.RelativeRotation,
+                component.TargetRelativeRotation,
+                component.RelativeEntity,
+                component.LerpAccumulator);
         }
 
         private void ShutdownInput()
@@ -75,6 +89,33 @@ namespace Content.Shared.Movement.Systems
         public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
+
+        protected Angle GetParentGridAngle(TransformComponent xform, InputMoverComponent mover)
+        {
+            var rotation = mover.RelativeRotation;
+
+            if (TryComp<TransformComponent>(mover.RelativeEntity, out var relativeXform))
+                return relativeXform.WorldRotation + rotation;
+
+            return rotation;
+        }
+
+        private void OnInputParentChange(EntityUid uid, InputMoverComponent component, ref EntParentChangedMessage args)
+        {
+            // If we change our grid / map then delay updating our LastGridAngle.
+            var relative = args.Transform.GridUid;
+            relative ??= args.Transform.MapUid;
+
+            // If we go on a grid and back off then just reset the accumulator.
+            if (relative == component.RelativeEntity)
+            {
+                component.LerpAccumulator = 0f;
+                return;
+            }
+
+            // TODO: Lerp to the specific angle.
+            component.LerpAccumulator = InputMoverComponent.LerpTime;
+        }
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
         {
@@ -124,9 +165,10 @@ namespace Content.Shared.Movement.Systems
         {
             var xform = Transform(uid);
 
-            if (!xform.ParentUid.IsValid()) return;
+            if (!xform.ParentUid.IsValid())
+                return;
 
-            component.LastGridAngle = Transform(xform.ParentUid).WorldRotation;
+            component.RelativeEntity = xform.GridUid ?? xform.MapUid;
         }
 
         private void HandleRunChange(EntityUid uid, ushort subTick, bool walking)
@@ -343,11 +385,20 @@ namespace Content.Shared.Movement.Systems
         {
             public MoveButtons Buttons { get; }
             public readonly bool CanMove;
+            // TODO: Comments ya wanker
+            public Angle RelativeRotation;
+            public Angle TargetRelativeRotation;
+            public EntityUid? RelativeEntity;
+            public float LerpAccumulator = 0f;
 
-            public InputMoverComponentState(MoveButtons buttons, bool canMove)
+            public InputMoverComponentState(MoveButtons buttons, bool canMove, Angle relativeRotation, Angle targetRelativeRotation, EntityUid? relativeEntity, float lerpAccumulator)
             {
                 Buttons = buttons;
                 CanMove = canMove;
+                RelativeRotation = relativeRotation;
+                TargetRelativeRotation = targetRelativeRotation;
+                RelativeEntity = relativeEntity;
+                LerpAccumulator = lerpAccumulator;
             }
         }
 

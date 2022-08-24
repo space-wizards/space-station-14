@@ -47,19 +47,11 @@ namespace Content.Client.Physics.Controllers
                 {
                     return;
                 }
-
-                if (TryComp<InputMoverComponent>(xform.ParentUid, out var parentMover))
-                {
-                    mover.LastGridAngle = parentMover.LastGridAngle;
-                }
             }
             else if (!TryComp(player, out body))
             {
                 return;
             }
-
-            if (xform.GridUid != null)
-                mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
             // Essentially we only want to set our mob to predicted so every other entity we just interpolate
             // (i.e. only see what the server has sent us).

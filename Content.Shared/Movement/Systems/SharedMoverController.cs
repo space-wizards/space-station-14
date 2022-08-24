@@ -44,6 +44,8 @@ namespace Content.Shared.Movement.Systems
         private const float FootstepVolume = 3f;
         private const float FootstepWalkingAddedVolumeMultiplier = 0f;
 
+        protected ISawmill Sawmill = default!;
+
         /// <summary>
         /// <see cref="CCVars.StopSpeed"/>
         /// </summary>
@@ -59,6 +61,7 @@ namespace Content.Shared.Movement.Systems
         public override void Initialize()
         {
             base.Initialize();
+            Sawmill = Logger.GetSawmill("mover");
             InitializeFootsteps();
             InitializeInput();
             InitializeMob();
@@ -85,14 +88,6 @@ namespace Content.Shared.Movement.Systems
         {
             base.UpdateAfterSolve(prediction, frameTime);
             UsedMobMovement.Clear();
-        }
-
-        protected Angle GetParentGridAngle(TransformComponent xform, InputMoverComponent mover)
-        {
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
-                return mover.LastGridAngle;
-
-            return grid.WorldRotation;
         }
 
         /// <summary>
@@ -134,12 +129,6 @@ namespace Content.Shared.Movement.Systems
                     if (!touching && TryComp<MobMoverComponent>(xform.Owner, out var mobMover))
                         touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsComponent);
                 }
-
-                if (!touching)
-                {
-                    if (xform.GridUid != null)
-                        mover.LastGridAngle = GetParentGridAngle(xform, mover);
-                }
             }
 
             // Regular movement.
@@ -151,6 +140,79 @@ namespace Content.Shared.Movement.Systems
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
             var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
+
+            // Update relative movement
+            if (mover.LerpAccumulator > 0f)
+            {
+                mover.LerpAccumulator -= frameTime;
+
+                if (mover.LerpAccumulator <= 0f)
+                {
+                    mover.LerpAccumulator = 0f;
+                    var relative = xform.GridUid;
+                    relative ??= xform.MapUid;
+
+                    // So essentially what we want:
+                    // 1. If we go from grid to map then preserve our rotation and continue as usual
+                    // 2. If we go from grid -> grid then (after lerp time) snap to nearest cardinal (probably imperceptible)
+                    // 3. If we go from map -> grid then (after lerp time) snap to nearest cardinal
+
+                    if (!mover.RelativeEntity.Equals(relative))
+                    {
+                        // Okay need to get our old relative rotation with respect to our new relative rotation
+                        // e.g. if we were right side up on our current grid need to get what that is on our new grid.
+                        Angle currentRotation = Angle.Zero;
+                        Angle targetRotation = Angle.Zero;
+
+                        // Get our current relative rotation
+                        if (TryComp<TransformComponent>(mover.RelativeEntity, out var oldRelativeXform))
+                        {
+                            currentRotation = oldRelativeXform.WorldRotation + mover.RelativeRotation;
+                        }
+
+                        if (TryComp<TransformComponent>(relative, out var relativeXform))
+                        {
+                            // This is our current rotation relative to our new parent.
+                            mover.RelativeRotation = (currentRotation - relativeXform.WorldRotation).FlipPositive();
+                        }
+
+                        // If we went from grid -> map we'll preserve our worldrotation
+                        if (relative != null && _mapManager.IsMap(relative.Value))
+                        {
+                            targetRotation = currentRotation.FlipPositive();
+                        }
+                        // If we went from grid -> grid OR grid -> map then snap the target to cardinal and lerp there.
+                        else if (relative != null && _mapManager.IsGrid(relative.Value))
+                        {
+                            targetRotation = mover.RelativeRotation.GetCardinalDir().ToAngle();
+                        }
+
+                        Sawmill.Debug($"Updated relative movement entity from {mover.RelativeEntity} to {relative}");
+                        mover.RelativeEntity = relative;
+                        mover.TargetRelativeRotation = targetRotation;
+                        Dirty(mover);
+                    }
+                }
+            }
+
+            // if we've just traversed then lerp to our target rotation.
+            if (!MathHelper.CloseTo(mover.RelativeRotation, mover.TargetRelativeRotation, 0.01))
+            {
+                var diff = Angle.ShortestDistance(mover.RelativeRotation, mover.TargetRelativeRotation);
+                var adjustment = diff * 5f * frameTime;
+
+                if (diff < 0)
+                    adjustment = Math.Clamp(adjustment, diff, -diff);
+                else
+                    adjustment = Math.Clamp(adjustment, -diff, diff);
+
+                mover.RelativeRotation += adjustment;
+                Dirty(mover);
+            }
+            else
+            {
+                mover.RelativeRotation = mover.TargetRelativeRotation;
+            }
 
             var parentRotation = GetParentGridAngle(xform, mover);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
@@ -189,9 +251,6 @@ namespace Content.Shared.Movement.Systems
 
             var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
             Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
-
-            if (xform.GridUid != EntityUid.Invalid)
-                mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
             {

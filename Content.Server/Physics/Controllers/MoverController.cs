@@ -46,11 +46,6 @@ namespace Content.Server.Physics.Controllers
                     {
                         continue;
                     }
-
-                    if (TryComp<InputMoverComponent>(xform.ParentUid, out var parentMover))
-                    {
-                        mover.LastGridAngle = parentMover.LastGridAngle;
-                    }
                 }
                 else if (!bodyQuery.TryGetComponent(mover.Owner, out body))
                 {
