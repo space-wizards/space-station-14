@@ -3,6 +3,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -27,6 +28,15 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupCoordinatesEvent>(OnPopupCoordinatesEvent);
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+            IoCManager.Resolve<IOverlayManager>()
+                .AddOverlay(new PopupOverlay(EntityManager, IoCManager.Resolve<IResourceCache>(), this));
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            IoCManager.Resolve<IOverlayManager>()
+                .RemoveOverlay<PopupOverlay>();
         }
 
         #region Actual Implementation
@@ -122,18 +132,6 @@ namespace Content.Client.Popups
 
         #endregion
 
-        private static string GetStyleClass(PopupType type) =>
-            type switch
-            {
-                PopupType.Small => StyleNano.StyleClassPopupMessageSmall,
-                PopupType.SmallCaution => StyleNano.StyleClassPopupMessageSmallCaution,
-                PopupType.Medium => StyleNano.StyleClassPopupMessageMedium,
-                PopupType.MediumCaution => StyleNano.StyleClassPopupMessageMediumCaution,
-                PopupType.Large => StyleNano.StyleClassPopupMessageLarge,
-                PopupType.LargeCaution => StyleNano.StyleClassPopupMessageLargeCaution,
-                _ => StyleNano.StyleClassPopupMessageSmall
-            };
-
         public override void FrameUpdate(float frameTime)
         {
             if (_aliveWorldLabels.Count == 0 && _aliveCursorLabels.Count == 0)
@@ -174,9 +172,9 @@ namespace Content.Client.Popups
 
         public sealed class CursorPopupLabel : PopupLabel
         {
-            public ScreenCoordinates InitialPos { get; set; }
+            public ScreenCoordinates InitialPos;
 
-            public CursorPopupLabel(ScreenCoordinates screenCoords) : base()
+            public CursorPopupLabel(ScreenCoordinates screenCoords)
             {
                 InitialPos = screenCoords;
             }
@@ -187,7 +185,7 @@ namespace Content.Client.Popups
             /// <summary>
             /// The original EntityCoordinates of the label.
             /// </summary>
-            public EntityCoordinates InitialPos { get; set; }
+            public EntityCoordinates InitialPos;
 
             public WorldPopupLabel(EntityCoordinates coordinates)
             {
