@@ -15,13 +15,9 @@ namespace Content.Client.Info
         [Dependency] private readonly IResourceCache _resourceManager = default!;
         [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
-        private OptionsMenu optionsMenu;
-
         public RulesAndInfoWindow()
         {
             IoCManager.InjectDependencies(this);
-
-            optionsMenu = new OptionsMenu();
 
             Title = Loc.GetString("ui-info-title");
 

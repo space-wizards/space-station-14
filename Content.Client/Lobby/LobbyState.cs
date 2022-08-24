@@ -27,6 +27,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Content.Client.UserInterface.Systems;
 using Content.Client.Options.UI;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 
 
 namespace Content.Client.Lobby
@@ -102,7 +103,7 @@ namespace Content.Client.Lobby
             };
 
             _lobby.LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
-            _lobby.OptionsButton.OnPressed += _ => new OptionsMenu().Open();
+            _lobby.OptionsButton.OnPressed += _ => _userInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
 
 
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
