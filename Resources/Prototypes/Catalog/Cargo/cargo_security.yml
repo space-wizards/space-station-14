@@ -22,7 +22,7 @@
   id: SecurityNonLethal
   icon:
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
-    state: icon
+    state: base
   product: CrateSecurityNonlethal
   cost: 1500
   category: Security
