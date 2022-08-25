@@ -835,6 +835,13 @@ namespace Content.Shared.Interaction
                 return false;
             }
 
+            if (!Exists(userEntity))
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
+                return false;
+            }
+
             return true;
         }
     }
