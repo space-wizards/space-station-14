@@ -55,8 +55,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         var layerVis = data.LayerVisibility.ToHashSet();
         var layerVisDirty = ReplaceHiddenLayers(uid, layerVis, component);
 
-
-        DiffAndApplyMarkings(uid, data.Markings, layerVisDirty);
+        DiffAndApplyMarkings(uid, data.Markings, layer, layerVisDirty);
     }
 
     private bool ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
@@ -287,7 +286,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
             humanoid.BaseLayers.TryGetValue(markingPrototype.BodyPart, out var setting);
 
-            if (markingPrototype.FollowSkinColor || colors == null)
+            if (markingPrototype.FollowSkinColor || colors == null || setting is { MarkingsMatchSkin: true})
             {
                 var skinColor = humanoid.SkinColor;
                 if (setting is { MarkingsMatchSkin: true })
