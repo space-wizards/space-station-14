@@ -2,6 +2,16 @@ namespace Content.Shared.Humanoid;
 
 public static class SkinColor
 {
+    public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.25f, 0.2f, 1f, 1f));
+
+    public static Color ValidTintedHuesSkinTone(Color color)
+    {
+        var hsv = Color.ToHsv(color);
+        hsv.Y = .1f;
+
+        return Color.FromHsv(hsv);
+    }
+
     public static Color HumanSkinTone(int tone)
     {
         if (tone < 0 || tone > 100)

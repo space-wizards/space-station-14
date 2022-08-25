@@ -125,7 +125,6 @@ namespace Content.Shared.Humanoid
             var hairColor = ClampColor(appearance.HairColor);
             var facialHairColor = ClampColor(appearance.FacialHairColor);
             var eyeColor = ClampColor(appearance.EyeColor);
-            var skinColor = ClampColor(appearance.SkinColor);
 
             var proto = IoCManager.Resolve<IPrototypeManager>();
             var markingManager = IoCManager.Resolve<MarkingManager>();
@@ -141,11 +140,30 @@ namespace Content.Shared.Humanoid
             }
 
             var markingSet = new MarkingSet();
+            var skinColor = appearance.SkinColor;
             if (proto.TryIndex(species, out SpeciesPrototype? speciesProto))
             {
                 markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
                 markingSet.EnsureValid(markingManager);
                 markingSet.FilterSpecies(species, markingManager);
+
+                switch (speciesProto.SkinColoration)
+                {
+                    case SpeciesSkinColor.HumanToned:
+                        if (!Humanoid.SkinColor.VerifyHumanSkinTone(skinColor))
+                        {
+                            skinColor = Humanoid.SkinColor.ValidHumanSkinTone;
+                        }
+
+                        break;
+                    case SpeciesSkinColor.TintedHues:
+                        if (!Humanoid.SkinColor.VerifyTintedHues(skinColor))
+                        {
+                            skinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(skinColor);
+                        }
+
+                        break;
+                }
             }
 
             return new HumanoidCharacterAppearance(
