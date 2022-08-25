@@ -44,6 +44,10 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             {
                 _slot = -1;
             }
+            else if (_slot == -1)
+            {
+                _slot = 0;
+            }
 
             return _slot;
         }
