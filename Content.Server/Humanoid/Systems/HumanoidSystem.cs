@@ -38,7 +38,6 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
     {
         if (string.IsNullOrEmpty(humanoid.Species))
         {
-            // this is an invalid state
             return;
         }
 
@@ -58,10 +57,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             }
         }
 
-        if (humanoid.AlwaysEnsureDefault)
-        {
-            EnsureDefaultMarkings(uid, humanoid);
-        }
+        EnsureDefaultMarkings(uid, humanoid);
 
         Synchronize(uid, humanoid);
     }
@@ -78,6 +74,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
         SetBaseLayerColor(uid, HumanoidVisualLayers.Eyes, profile.Appearance.EyeColor, false);
+
+        humanoid.CurrentMarkings.Clear();
 
         // Hair/facial hair - this may eventually be deprecated.
 

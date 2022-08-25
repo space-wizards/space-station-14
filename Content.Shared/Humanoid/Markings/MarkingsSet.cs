@@ -341,6 +341,14 @@ public sealed class MarkingSet
         return true;
     }
 
+    public void Clear()
+    {
+        foreach (var category in Enum.GetValues<MarkingCategories>())
+        {
+            RemoveCategory(category);
+        }
+    }
+
     public int FindIndexOf(MarkingCategories category, string id)
     {
         if (!_markings.TryGetValue(category, out var markings))

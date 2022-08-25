@@ -17,6 +17,4 @@ public sealed class HumanoidComponent : SharedHumanoidComponent
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
-
-    [DataField("alwaysEnsureDefault")] public bool AlwaysEnsureDefault;
 }
