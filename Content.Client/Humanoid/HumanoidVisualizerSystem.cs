@@ -53,18 +53,23 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         }
 
         var layerVis = data.LayerVisibility.ToHashSet();
-        ReplaceHiddenLayers(uid, layerVis, component);
+        var layerVisDirty = ReplaceHiddenLayers(uid, layerVis, component);
 
 
-        DiffAndApplyMarkings(uid, data.Markings);
+        DiffAndApplyMarkings(uid, data.Markings, layerVisDirty);
     }
 
-    private void ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
+    private bool ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
         HumanoidComponent? humanoid)
     {
         if (!Resolve(uid, ref humanoid))
         {
-            return;
+            return false;
+        }
+
+        if (hiddenLayers.SetEquals(humanoid.HiddenLayers))
+        {
+            return false;
         }
 
         SetSpriteVisibility(uid, hiddenLayers, false);
@@ -75,6 +80,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         humanoid.HiddenLayers.Clear();
         humanoid.HiddenLayers.UnionWith(hiddenLayers);
+
+        return true;
     }
 
     private void SetSpriteVisibility(EntityUid uid, HashSet<HumanoidVisualLayers> layers, bool visibility, SpriteComponent? sprite = null)
@@ -97,6 +104,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
     private void DiffAndApplyMarkings(EntityUid uid,
         List<Marking> newMarkings,
+        bool hiddenLayersDirty,
         HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
@@ -119,7 +127,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
             // otherwise, we add the current marking to dirtyMarkings if it has different
             // settings
-            if (humanoid.CurrentMarkings[i] != newMarkings[i])
+            // however: if the hidden layers are set to dirty, then we need to
+            // instead just add every single marking, since we don't know ahead of time
+            // where these markings go
+            if (humanoid.CurrentMarkings[i] != newMarkings[i] || hiddenLayersDirty)
             {
                 dirtyMarkings.Add(i);
             }

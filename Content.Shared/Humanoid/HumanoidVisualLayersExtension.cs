@@ -14,6 +14,50 @@ namespace Content.Shared.CharacterAppearance
                 _ => false
             };
         }
+
+        /// <summary>
+        ///     Sublayers. Any other layers that may visually depend on this layer existing.
+        ///     For example, the head has layers such as eyes, hair, etc. depending on it.
+        /// </summary>
+        /// <param name="layer"></param>
+        /// <returns>Enumerable of layers that depend on that given layer. Empty, otherwise.</returns>
+        /// <remarks>This could eventually be replaced by a body system implementation.</remarks>
+        public static IEnumerable<HumanoidVisualLayers> Sublayers(HumanoidVisualLayers layer)
+        {
+            switch (layer)
+            {
+                case HumanoidVisualLayers.Head:
+                    yield return HumanoidVisualLayers.Head;
+                    yield return HumanoidVisualLayers.Eyes;
+                    yield return HumanoidVisualLayers.HeadSide;
+                    yield return HumanoidVisualLayers.HeadTop;
+                    yield return HumanoidVisualLayers.Hair;
+                    yield return HumanoidVisualLayers.FacialHair;
+                    break;
+                case HumanoidVisualLayers.LArm:
+                    yield return HumanoidVisualLayers.LArm;
+                    yield return HumanoidVisualLayers.LHand;
+                    break;
+                case HumanoidVisualLayers.RArm:
+                    yield return HumanoidVisualLayers.RArm;
+                    yield return HumanoidVisualLayers.RHand;
+                    break;
+                case HumanoidVisualLayers.LLeg:
+                    yield return HumanoidVisualLayers.LLeg;
+                    yield return HumanoidVisualLayers.LFoot;
+                    break;
+                case HumanoidVisualLayers.RLeg:
+                    yield return HumanoidVisualLayers.RLeg;
+                    yield return HumanoidVisualLayers.RFoot;
+                    break;
+                case HumanoidVisualLayers.Chest:
+                    yield return HumanoidVisualLayers.Chest;
+                    break;
+                default:
+                    yield break;
+            }
+        }
+
         public static IEnumerable<HumanoidVisualLayers> ToHumanoidLayers(this SharedBodyPartComponent part)
         {
             switch (part.PartType)
