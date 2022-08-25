@@ -1,7 +1,8 @@
+using Content.Server.FloodFill.Data;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
-namespace Content.Shared.FloodFill.TileFloods;
+namespace Content.Server.FloodFill.TileFloods;
 
 /// <summary>
 ///     See <see cref="TileFlood"/>.

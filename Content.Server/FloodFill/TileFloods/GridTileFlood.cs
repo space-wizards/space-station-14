@@ -1,8 +1,9 @@
+using Content.Server.FloodFill.Data;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
-using static Content.Shared.FloodFill.FloodFillSystem;
+using static Content.Server.FloodFill.FloodFillSystem;
 
-namespace Content.Shared.FloodFill.TileFloods;
+namespace Content.Server.FloodFill.TileFloods;
 
 /// <summary>
 ///     See <see cref="TileFlood"/>. Each instance of this class corresponds to a separate grid.
@@ -21,11 +22,11 @@ public sealed class GridTileFlood : TileFlood
     // destroy the airtight entity.
     private readonly Dictionary<int, List<(Vector2i, AtmosDirection)>> _delayedNeighbors = new();
 
-    private readonly Dictionary<Vector2i, TileData> _toleranceMap;
+    private readonly Dictionary<Vector2i, TileData> _resistanceMap;
 
     private readonly float _maxIntensity;
     private readonly float _intensityStepSize;
-    private readonly int _typeIndex;
+    private readonly int _toleranceIndex;
 
     private readonly UniqueVector2iSet _spaceTiles = new();
     private readonly UniqueVector2iSet _processedSpaceTiles = new();
@@ -36,21 +37,21 @@ public sealed class GridTileFlood : TileFlood
 
     public GridTileFlood(
         IMapGrid grid,
-        Dictionary<Vector2i, TileData> toleranceMap,
+        Dictionary<Vector2i, TileData> resistanceMap,
         float maxIntensity,
         float intensityStepSize,
-        int typeIndex,
+        int toleranceIndex,
         Dictionary<Vector2i, NeighborFlag> edgeTiles,
         EntityUid? referenceGrid,
         Matrix3 spaceMatrix,
         Angle spaceAngle)
     {
         Grid = grid;
-        _toleranceMap = toleranceMap;
+        _resistanceMap = resistanceMap;
         _maxIntensity = maxIntensity;
         _intensityStepSize = intensityStepSize;
         _edgeTiles = edgeTiles;
-        _typeIndex = typeIndex;
+        _toleranceIndex = toleranceIndex;
 
         // initialise SpaceTiles
         foreach (var (tile, spaceNeighbors) in _edgeTiles)
@@ -81,7 +82,7 @@ public sealed class GridTileFlood : TileFlood
     {
         TileLists[0] = new() { initialTile };
 
-        if (_toleranceMap.ContainsKey(initialTile))
+        if (_resistanceMap.ContainsKey(initialTile))
             EnteredBlockedTiles.Add(initialTile);
         else
             ProcessedTiles.Add(initialTile);
@@ -148,7 +149,7 @@ public sealed class GridTileFlood : TileFlood
     protected override void ProcessNewTile(int iteration, Vector2i tile, AtmosDirection entryDirections)
     {
         // Is there an airtight blocker on this tile?
-        if (!_toleranceMap.TryGetValue(tile, out var tileData))
+        if (!_resistanceMap.TryGetValue(tile, out var tileData))
         {
             // No blocker. Ezy. Though maybe this a space tile?
 
@@ -186,7 +187,7 @@ public sealed class GridTileFlood : TileFlood
             NewBlockedTiles.Add(tile);
 
             // At what explosion iteration would this blocker be destroyed?
-            var clearIteration = iteration + (int) MathF.Ceiling(tileData.Tolerance[_typeIndex] / _intensityStepSize);
+            var clearIteration = iteration + (int) MathF.Ceiling(tileData.Tolerance[_toleranceIndex] / _intensityStepSize);
             if (FreedTileLists.TryGetValue(clearIteration, out var list))
                 list.Add(tile);
             else
@@ -253,10 +254,10 @@ public sealed class GridTileFlood : TileFlood
             float sealIntegrity = 0;
 
             // Note that if (grid, tile) is not a valid key, then airtight.BlockedDirections will default to 0 (no blocked directions)
-            if (_toleranceMap.TryGetValue(tile, out var tileData))
+            if (_resistanceMap.TryGetValue(tile, out var tileData))
             {
                 blockedDirections = tileData.BlockedDirections;
-                sealIntegrity = tileData.Tolerance[_typeIndex];
+                sealIntegrity = tileData.Tolerance[_toleranceIndex];
             }
 
             // First, yield any neighboring tiles that are not blocked by airtight entities on this tile
@@ -302,6 +303,6 @@ public sealed class GridTileFlood : TileFlood
 
     protected override AtmosDirection GetUnblockedDirectionOrAll(Vector2i tile)
     {
-        return ~_toleranceMap.GetValueOrDefault(tile).BlockedDirections;
+        return ~_resistanceMap.GetValueOrDefault(tile).BlockedDirections;
     }
 }

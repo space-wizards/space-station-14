@@ -2,13 +2,13 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
+using Content.Server.FloodFill.TileFloods;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
-using Content.Shared.FloodFill.TileFloods;
 using Content.Shared.GameTicking;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
@@ -20,7 +20,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using FloodFillSystem = Content.Shared.FloodFill.FloodFillSystem;
+using FloodFillSystem = Content.Server.FloodFill.FloodFillSystem;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -274,8 +274,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             return null;
         }
 
-        var ff = _floodFill.DoFloodTile(epicenter, typeIndex, totalIntensity,
-            slope, maxTileIntensity, _airtightMap, MaxIterations, MaxArea);
+        var ff = _floodFill.DoFloodTile(epicenter, totalIntensity, slope,
+            maxTileIntensity, _airtightMap, typeIndex, MaxIterations, MaxArea);
 
         if (ff == null)
             return null;
@@ -339,11 +339,11 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         var ff = _floodFill.DoFloodTile(
             request.Epicenter,
-            typeIndex,
             request.TotalIntensity,
             request.IntensitySlope,
             request.MaxIntensity,
             _airtightMap,
+            typeIndex,
             MaxIterations,
             MaxArea);
 

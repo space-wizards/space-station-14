@@ -1,13 +1,13 @@
-﻿using Content.Shared.FloodFill;
-using Content.Shared.Radiation.Components;
+﻿using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using FloodFillSystem = Content.Server.FloodFill.FloodFillSystem;
 
 namespace Content.Server.Radiation.Systems;
 
-public sealed class RadiationSystem : SharedRadiationSystem
+public sealed partial class RadiationSystem : SharedRadiationSystem
 {
     private const float Slope = 1f;
 
@@ -19,6 +19,12 @@ public sealed class RadiationSystem : SharedRadiationSystem
 
     private const float RadiationCooldown = 1.0f;
     private float _accumulator;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        InitRadBlocking();
+    }
 
     public override void Update(float frameTime)
     {
@@ -57,11 +63,11 @@ public sealed class RadiationSystem : SharedRadiationSystem
         stopwatch.Start();
 
         var ff = _floodFill.DoFloodTile(epicenter,
-            0,
             radsPerSecond,
             Slope,
             float.MaxValue,
             _resistancePerTile,
+            0,
             100000,
             1000000
         );

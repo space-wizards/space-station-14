@@ -1,10 +1,10 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Destructible;
+using Content.Server.FloodFill.Data;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;
-using Content.Shared.FloodFill;
 using Robust.Shared.Map;
 
 namespace Content.Server.Explosion.EntitySystems;

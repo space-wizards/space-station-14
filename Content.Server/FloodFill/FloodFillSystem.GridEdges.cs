@@ -1,8 +1,11 @@
+using Content.Server.FloodFill.Data;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
-namespace Content.Shared.FloodFill;
+namespace Content.Server.FloodFill;
 
+// Calculate and store grid edges tiles for each grid.
+// Also transform them for incoming fill flood.
 public partial class FloodFillSystem
 {
      /// <summary>
@@ -15,7 +18,7 @@ public partial class FloodFillSystem
      /// </summary>
      private void OnGridStartup(GridStartupEvent ev)
      {
-         var grid = _mapManager.GetGrid(ev.GridId);
+         var grid = _mapManager.GetGrid(ev.EntityUid);
 
          Dictionary<Vector2i, NeighborFlag> edges = new();
          _gridEdges[ev.EntityUid] = edges;
@@ -32,7 +35,7 @@ public partial class FloodFillSystem
          _gridEdges.Remove(ev.EntityUid);
      }
 
-         /// <summary>
+    /// <summary>
     ///     When a tile is updated, we might need to update the grid edge maps.
     /// </summary>
     private void OnTileChanged(TileChangedEvent ev)
@@ -98,7 +101,6 @@ public partial class FloodFillSystem
             edges.Add(tileRef.GridIndices, spaceDir);
     }
 
-
     /// <summary>
     ///     Take our map of grid edges, where each is defined in their own grid's reference frame, and map those
     ///     edges all onto one grids reference frame.
@@ -155,9 +157,9 @@ public partial class FloodFillSystem
 
             var xforms = GetEntityQuery<TransformComponent>();
             var xform = xforms.GetComponent(grid.GridEntityId);
-            var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
+            var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrix) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
-            var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
+            var localEpicentre = (Vector2i) invGridWorldMatrix.Transform(epicentre.Position);
             var matrix = offsetMatrix * gridWorldMatrix * targetMatrix;
             var angle = gridWorldRotation - targetAngle;
 

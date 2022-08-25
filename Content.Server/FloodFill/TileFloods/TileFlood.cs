@@ -1,6 +1,7 @@
+using Content.Server.FloodFill.Data;
 using Content.Shared.Atmos;
 
-namespace Content.Shared.FloodFill.TileFloods;
+namespace Content.Server.FloodFill.TileFloods;
 
 /// <summary>
 ///     This class exists to facilitate the iterative neighbor-finding / flooding algorithm used by explosions

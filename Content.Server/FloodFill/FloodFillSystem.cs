@@ -1,15 +1,13 @@
 using System.Linq;
-using Content.Shared.Atmos;
-using Content.Shared.FloodFill.TileFloods;
-using Robust.Shared.Configuration;
+using Content.Server.FloodFill.Data;
+using Content.Server.FloodFill.TileFloods;
 using Robust.Shared.Map;
 
-namespace Content.Shared.FloodFill;
+namespace Content.Server.FloodFill;
 
 public sealed partial class FloodFillSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -24,13 +22,26 @@ public sealed partial class FloodFillSystem : EntitySystem
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
     }
 
+    /// <summary>
+    ///     Start fill flood algorithm from selected position.
+    /// </summary>
+    /// <param name="epicenter">The center of the fill flood algorithm.</param>
+    /// <param name="totalIntensity">The total "energy" of tile flood. This governs the overall size of the
+    /// tile flood.</param>
+    /// <param name="slope">How quickly does the intensity decrease when moving away from the epicenter.</param>
+    /// <param name="maxIntensity">The maximum intensity that the flood can have at any given tile.</param>
+    /// <param name="resistanceMap">The map of resistance to incoming flood intensity. First key is grid uid,
+    /// second is position of resistance tile on a grid.</param>
+    /// <param name="toleranceIndex">Index for tolerance array in <see cref="TileData"/> in resistance map.</param>
+    /// <param name="maxIterations">Max amount of iterations that fill flood allowed to do.</param>
+    /// <param name="maxArea">Max amount of tiles that </param>
     public FloodFillResult? DoFloodTile(
             MapCoordinates epicenter,
-            int typeIndex,
             float totalIntensity,
             float slope,
             float maxIntensity,
-            Dictionary<EntityUid, Dictionary<Vector2i, TileData>> toleranceMap,
+            Dictionary<EntityUid, Dictionary<Vector2i, TileData>> resistanceMap,
+            int toleranceIndex,
             int maxIterations,
             int maxArea)
     {
@@ -93,7 +104,7 @@ public sealed partial class FloodFillSystem : EntitySystem
             // set up the initial `gridData` instance
             encounteredGrids.Add(epicentreGrid.Value);
 
-            if (!toleranceMap.TryGetValue(epicentreGrid.Value, out var airtightMap))
+            if (!resistanceMap.TryGetValue(epicentreGrid.Value, out var airtightMap))
                 airtightMap = new();
 
             var initialGridData = new GridTileFlood(
@@ -101,7 +112,7 @@ public sealed partial class FloodFillSystem : EntitySystem
                 airtightMap,
                 maxIntensity,
                 stepSize,
-                typeIndex,
+                toleranceIndex,
                 _gridEdges[epicentreGrid.Value],
                 referenceGrid,
                 spaceMatrix,
@@ -154,7 +165,7 @@ public sealed partial class FloodFillSystem : EntitySystem
                 if (tilesInIteration[i] * intensityIncrease >= remainingIntensity)
                 {
                     // there is not enough intensity left to distribute. add a fractional amount and break.
-                    iterationIntensity[i] += (float) remainingIntensity / tilesInIteration[i];
+                    iterationIntensity[i] += remainingIntensity / tilesInIteration[i];
                     remainingIntensity = 0;
                     break;
                 }
@@ -167,7 +178,8 @@ public sealed partial class FloodFillSystem : EntitySystem
                     maxIntensityIndex++;
             }
 
-            if (remainingIntensity <= 0) break;
+            if (remainingIntensity <= 0)
+                break;
 
             // Next, we will add a new iteration of tiles
 
@@ -186,7 +198,7 @@ public sealed partial class FloodFillSystem : EntitySystem
                 // is this a new grid, for which we must create a new explosion data set
                 if (!gridData.TryGetValue(grid, out var data))
                 {
-                    if (!toleranceMap.TryGetValue(grid, out var airtightMap))
+                    if (!resistanceMap.TryGetValue(grid, out var airtightMap))
                         airtightMap = new();
 
                     data = new GridTileFlood(
@@ -194,7 +206,7 @@ public sealed partial class FloodFillSystem : EntitySystem
                         airtightMap,
                         maxIntensity,
                         stepSize,
-                        typeIndex,
+                        toleranceIndex,
                         _gridEdges[grid],
                         referenceGrid,
                         spaceMatrix,
@@ -220,7 +232,7 @@ public sealed partial class FloodFillSystem : EntitySystem
             tilesInIteration.Add(newTileCount);
             if (newTileCount * stepSize >= remainingIntensity)
             {
-                iterationIntensity.Add((float) remainingIntensity / newTileCount);
+                iterationIntensity.Add(remainingIntensity / newTileCount);
                 break;
             }
 
@@ -357,61 +369,4 @@ public sealed partial class FloodFillSystem : EntitySystem
 
         return r0 * (MathF.Sqrt(12 * totalIntensity/ v0 - 3) / 6 + 0.5f);
     }
-}
-
-public sealed class FloodFillResult
-{
-    public readonly int Area;
-    public readonly List<float> IterationIntensity;
-    public readonly SpaceTileFlood? SpaceData;
-    public readonly Dictionary<EntityUid, GridTileFlood> GridData;
-    public readonly Matrix3 SpaceMatrix;
-
-    public FloodFillResult(int area, List<float> iterationIntensity, SpaceTileFlood? spaceData,
-        Dictionary<EntityUid, GridTileFlood> gridData, Matrix3 spaceMatrix)
-    {
-        Area = area;
-        IterationIntensity = iterationIntensity;
-        SpaceData = spaceData;
-        GridData = gridData;
-        SpaceMatrix = spaceMatrix;
-    }
-}
-
-// yeah this is now the third direction flag enum, and the 5th (afaik) direction enum overall.....
-/// <summary>
-///     Directional bitflags used to denote the neighbouring tiles of some tile on a grid.. Differ from atmos and
-///     normal directional flags as NorthEast != North | East
-/// </summary>
-[Flags]
-public enum NeighborFlag : byte
-{
-    Invalid = 0,
-    North = 1 << 0,
-    NorthEast = 1 << 1,
-    East = 1 << 2,
-    SouthEast = 1 << 3,
-    South = 1 << 4,
-    SouthWest = 1 << 5,
-    West = 1 << 6,
-    NorthWest = 1 << 7,
-
-    Cardinal = North | East | South | West,
-    Diagonal = NorthEast | SouthEast | SouthWest | NorthWest,
-    Any = Cardinal | Diagonal
-}
-
-/// <summary>
-///     Data struct that describes the blocking entities on a tile.
-/// </summary>
-public struct TileData
-{
-    public TileData(float[] tolerance, AtmosDirection blockedDirections)
-    {
-        Tolerance = tolerance;
-        BlockedDirections = blockedDirections;
-    }
-
-    public float[] Tolerance;
-    public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
 }

@@ -1,18 +1,11 @@
 using Content.Shared.Radiation.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using FloodFillSystem = Content.Shared.FloodFill.FloodFillSystem;
 
 namespace Content.Shared.Radiation.Systems;
 
 public abstract partial class SharedRadiationSystem : EntitySystem
 {
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        InitRadBlocking();
-    }
 
 }
 

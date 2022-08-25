@@ -1,9 +1,9 @@
 using Content.Shared.Atmos;
 
-namespace Content.Shared.FloodFill;
+namespace Content.Server.FloodFill.Data;
 
 /// <summary>
-///     This class has information about the space equivalent of an airtight entity blocking explosions: the edges of grids.
+///     This class has information about the space equivalent of an entity blocking grid flood: the edges of grids.
 /// </summary>
 public sealed class BlockedSpaceTile
 {
@@ -15,7 +15,7 @@ public sealed class BlockedSpaceTile
     /// <summary>
     ///     The set of grid edge-tiles that are blocking this space tile.
     /// </summary>
-    public List<GridEdgeData> BlockingGridEdges = new();
+    public readonly List<GridEdgeData> BlockingGridEdges = new();
 
     public sealed class GridEdgeData
     {
