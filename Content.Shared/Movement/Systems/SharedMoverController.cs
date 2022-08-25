@@ -202,10 +202,10 @@ namespace Content.Shared.Movement.Systems
             var angleDiff = Angle.ShortestDistance(mover.RelativeRotation, mover.TargetRelativeRotation);
 
             // if we've just traversed then lerp to our target rotation.
-            if (!angleDiff.EqualsApprox(Angle.Zero, 0.01))
+            if (!angleDiff.EqualsApprox(Angle.Zero, 0.005))
             {
                 var adjustment = angleDiff * 5f * frameTime;
-                var minAdjustment = 0.01 * frameTime;
+                var minAdjustment = 0.005 * frameTime;
 
                 if (angleDiff < 0)
                 {
@@ -219,10 +219,6 @@ namespace Content.Shared.Movement.Systems
                 }
 
                 mover.RelativeRotation += adjustment;
-                if (mover.Owner == new EntityUid(11818))
-                {
-                    Logger.Debug($"Relative mover is {mover.RelativeRotation}");
-                }
                 Dirty(mover);
             }
             else if (!angleDiff.Equals(Angle.Zero))
@@ -285,9 +281,7 @@ namespace Content.Shared.Movement.Systems
                     rotateXform = xform;
                 }
 
-                rotateXform.WorldRotation = xform.GridUid != null
-                    ? total.ToAngle()
-                    : worldTotal.ToAngle();
+                rotateXform.WorldRotation = worldTotal.ToWorldAngle();
                 rotateXform.DeferUpdates = false;
 
                 if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) &&
