@@ -150,6 +150,7 @@ public sealed class ClothingVisualsSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
+        /*
         if (component.InSlot == "head"
             && _tagSystem.HasTag(uid, "HidesHair")
             && TryComp(args.Equipee, out SpriteComponent? sprite))
@@ -160,6 +161,7 @@ public sealed class ClothingVisualsSystem : EntitySystem
             if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hair))
                 sprite[hair].Visible = true;
         }
+        */
 
         component.InSlot = null;
     }
@@ -198,6 +200,7 @@ public sealed class ClothingVisualsSystem : EntitySystem
     {
         component.InSlot = args.Slot;
 
+        /*
         if (args.Slot == "head"
             && _tagSystem.HasTag(uid, "HidesHair")
             && TryComp(args.Equipee, out SpriteComponent? sprite))
@@ -208,6 +211,7 @@ public sealed class ClothingVisualsSystem : EntitySystem
             if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hair))
                 sprite[hair].Visible = false;
         }
+        */
 
         RenderEquipment(args.Equipee, uid, args.Slot, clothingComponent: component);
     }

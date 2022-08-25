@@ -45,9 +45,6 @@
       required: false
 
 - type: humanoidBaseSprite
-  id: MobVoxoidAnyMarking
-
-- type: humanoidBaseSprite
   id: MobVoxHead
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
