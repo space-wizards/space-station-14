@@ -39,6 +39,7 @@ namespace Content.Client.Decals
             // Shouldn't need to clear cached textures unless the prototypes get reloaded.
             var handle = args.WorldHandle;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+            var eyeAngle = args.Viewport.Eye?.Rotation ?? Angle.Zero;
 
             foreach (var (gridId, zIndexDictionary) in _decals.DecalRenderIndex)
             {
@@ -53,7 +54,9 @@ namespace Content.Client.Decals
                 if (xform.MapID != args.MapId)
                     continue;
 
-                handle.SetTransform(_transform.GetWorldMatrix(xform, xformQuery));
+                var (_, worldRot, worldMatrix) = xform.GetWorldPositionRotationMatrix(xformQuery);
+
+                handle.SetTransform(worldMatrix);
 
                 foreach (var (_, decals) in zIndexDictionary)
                 {
@@ -66,10 +69,23 @@ namespace Content.Client.Decals
                             _cachedTextures[decal.Id] = texture;
                         }
 
-                        if (decal.Angle.Equals(Angle.Zero))
+                        if (!_prototypeManager.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
+                            continue;
+
+                        var cardinal = Angle.Zero;
+
+                        if (decalProto.SnapCardinals)
+                        {
+                            var worldAngle = eyeAngle + worldRot;
+                            cardinal = worldAngle.GetCardinalDir().ToAngle();
+                        }
+
+                        var angle = decal.Angle - cardinal;
+
+                        if (angle.Equals(Angle.Zero))
                             handle.DrawTexture(texture, decal.Coordinates, decal.Color);
                         else
-                            handle.DrawTexture(texture, decal.Coordinates, decal.Angle, decal.Color);
+                            handle.DrawTexture(texture, decal.Coordinates, angle, decal.Color);
                     }
                 }
             }
@@ -81,11 +97,9 @@ namespace Content.Client.Decals
         {
             if (_prototypeManager.TryIndex<DecalPrototype>(id, out var proto))
                 return proto.Sprite;
-            else
-            {
-                Logger.Error($"Unknown decal prototype: {id}");
-                return new SpriteSpecifier.Texture(new ResourcePath("/Textures/noSprite.png"));
-            }
+
+            Logger.Error($"Unknown decal prototype: {id}");
+            return new SpriteSpecifier.Texture(new ResourcePath("/Textures/noSprite.png"));
         }
     }
 }
