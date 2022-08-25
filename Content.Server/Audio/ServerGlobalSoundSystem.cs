@@ -36,7 +36,7 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
 
     private Filter GetStationAndPvs(EntityUid source)
     {
-        var stationFilter = _stationSystem.GetInStation(source);
+        var stationFilter = _stationSystem.GetInOwningStation(source);
         stationFilter.AddPlayersByPvs(source, entityManager: EntityManager);
         return stationFilter;
     }
