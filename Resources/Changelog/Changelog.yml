@@ -1,15 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: ERT shuttle updated to Dart V2., type: Tweak}
-  id: 1689
-  time: '2022-06-12T06:17:16.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed issue where firelocks on top of closed doors could not be pried
-      open, type: Fix}
-  id: 1690
-  time: '2022-06-13T03:24:32.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fixed spent state for large cartridge casing., type: Fix}
@@ -2940,3 +2929,13 @@ Entries:
   - {message: Boxing gloves now have the fist weapon arc., type: Fix}
   id: 2188
   time: '2022-08-25T13:38:14.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Clowns now go BONK on tables, type: Add}
+  id: 2189
+  time: '2022-08-25T13:41:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Popups for wielding now display the correct text., type: Fix}
+  id: 2190
+  time: '2022-08-25T13:42:13.0000000+00:00'
