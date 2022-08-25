@@ -89,6 +89,7 @@ public sealed class EyeLerpingSystem : EntitySystem
 
             lerpInfo.TargetRotation = GetRotation(entity, xformQuery, mover);
 
+            // TODO: Waste of a trycomp, but at least for now it stops the egregious lerps.
             if (xformQuery.TryGetComponent(entity, out var xform))
             {
                 // If we traverse maps then don't lerp.

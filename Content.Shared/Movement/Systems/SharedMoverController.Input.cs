@@ -2,7 +2,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -30,6 +29,9 @@ namespace Content.Shared.Movement.Systems
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(this))
+                .Bind(EngineKeyFunctions.CameraRotateLeft, new CameraRotateInputCmdHandler(this, Direction.West))
+                .Bind(EngineKeyFunctions.CameraRotateRight, new CameraRotateInputCmdHandler(this, Direction.East))
+                .Bind(EngineKeyFunctions.CameraReset, new CameraResetInputCmdHandler(this))
                 // TODO: Relay
                 // Shuttle
                 .Bind(ContentKeyFunctions.ShuttleStrafeUp, new ShuttleInputCmdHandler(this, ShuttleButtons.StrafeUp))
@@ -89,6 +91,24 @@ namespace Content.Shared.Movement.Systems
         public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
+
+        public void RotateCamera(EntityUid uid, Angle angle)
+        {
+            if (!TryComp<InputMoverComponent>(uid, out var mover))
+                return;
+
+            mover.TargetRelativeRotation += angle;
+            Dirty(mover);
+        }
+
+        public void ResetCamera(EntityUid uid)
+        {
+            if (!TryComp<InputMoverComponent>(uid, out var mover) || mover.TargetRelativeRotation.Equals(Angle.Zero))
+                return;
+
+            mover.TargetRelativeRotation = Angle.Zero;
+            Dirty(mover);
+        }
 
         public Angle GetParentGridAngle(InputMoverComponent mover)
         {
@@ -346,9 +366,53 @@ namespace Content.Shared.Movement.Systems
             return (buttons & flag) == flag;
         }
 
+        private sealed class CameraRotateInputCmdHandler : InputCmdHandler
+        {
+            private readonly SharedMoverController _controller;
+            private readonly Angle _angle;
+
+            public CameraRotateInputCmdHandler(SharedMoverController controller, Direction direction)
+            {
+                _controller = controller;
+                _angle = direction.ToAngle();
+            }
+
+            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            {
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+
+                if (full.State != BoundKeyState.Up)
+                    return false;
+
+                _controller.RotateCamera(session.AttachedEntity.Value, _angle);
+                return false;
+            }
+        }
+
+        private sealed class CameraResetInputCmdHandler : InputCmdHandler
+        {
+            private readonly SharedMoverController _controller;
+
+            public CameraResetInputCmdHandler(SharedMoverController controller)
+            {
+                _controller = controller;
+            }
+
+            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            {
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+
+                if (full.State != BoundKeyState.Up)
+                    return false;
+
+                _controller.ResetCamera(session.AttachedEntity.Value);
+                return false;
+            }
+        }
+
         private sealed class MoverDirInputCmdHandler : InputCmdHandler
         {
-            private SharedMoverController _controller;
+            private readonly SharedMoverController _controller;
             private readonly Direction _dir;
 
             public MoverDirInputCmdHandler(SharedMoverController controller, Direction dir)

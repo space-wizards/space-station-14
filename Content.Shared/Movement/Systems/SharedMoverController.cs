@@ -17,6 +17,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Input.Binding;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -161,8 +162,8 @@ namespace Content.Shared.Movement.Systems
                     {
                         // Okay need to get our old relative rotation with respect to our new relative rotation
                         // e.g. if we were right side up on our current grid need to get what that is on our new grid.
-                        Angle currentRotation = Angle.Zero;
-                        Angle targetRotation = Angle.Zero;
+                        var currentRotation = Angle.Zero;
+                        var targetRotation = Angle.Zero;
 
                         // Get our current relative rotation
                         if (TryComp<TransformComponent>(mover.RelativeEntity, out var oldRelativeXform))
