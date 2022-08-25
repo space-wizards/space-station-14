@@ -55,7 +55,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         var layerVis = data.LayerVisibility.ToHashSet();
         var layerVisDirty = ReplaceHiddenLayers(uid, layerVis, component);
 
-        DiffAndApplyMarkings(uid, data.Markings, layer, layerVisDirty);
+        DiffAndApplyMarkings(uid, data.Markings, layerVisDirty);
     }
 
     private bool ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
