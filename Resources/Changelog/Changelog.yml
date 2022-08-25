@@ -1,11 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added new APC variants for mappers. Construction graphs to follow in
-      a later PR., type: Add}
-  - {message: Standard APC is now 5x bigger in power capacity., type: Tweak}
-  id: 1687
-  time: '2022-06-12T05:34:16.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Zombies now do reduced damage to other zombies., type: Tweak}
@@ -2946,3 +2939,8 @@ Entries:
   - {message: WallmountSubstationElectronics Are now printable., type: Fix}
   id: 2186
   time: '2022-08-25T13:23:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer inject chems into cigarettes., type: Remove}
+  id: 2187
+  time: '2022-08-25T13:35:23.0000000+00:00'
