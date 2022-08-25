@@ -29,7 +29,9 @@
     LHand: MobHumanLHand
     RHand: MobHumanRHand
     LLeg: MobHumanLLeg
+    RLeg: MobHumanRLeg
     LFoot: MobHumanLFoot
+    RFoot: MobHumanRFoot
 
 - type: markingPoints
   id: MobHumanMarkingLimits
@@ -49,6 +51,9 @@
     Arms:
       points: 2
       required: false
+
+- type: humanoidBaseSprite
+  id: MobHumanoidAnyMarking
 
 - type: humanoidBaseSprite
   id: MobHumanHead
