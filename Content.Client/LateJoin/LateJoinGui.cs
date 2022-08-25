@@ -229,11 +229,13 @@ namespace Content.Client.LateJoin
                         icon.Texture = specifier.Frame0();
                         jobSelector.AddChild(icon);
 
+                        var jobTime = (int) tracker.playtimeForRole(prototype).TotalMinutes;
+
                         var jobLabel = new Label
                         {
                             Text = value != null ?
-                                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.LocalizedName), ("amount", value)) :
-                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.LocalizedName))
+                                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.LocalizedName), ("amount", value), ("playtime", jobTime)) :
+                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.LocalizedName), ("playtime", jobTime))
                         };
 
                         jobSelector.AddChild(jobLabel);

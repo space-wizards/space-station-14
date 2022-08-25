@@ -32,12 +32,17 @@ namespace Content.Client.Info
 
             var wikiButton = new Button {Text = Loc.GetString("server-info-wiki-button")};
             wikiButton.OnPressed += args => uriOpener.OpenUri(UILinks.Wiki);
+
+            var statsButton = new Button{Text= Loc.GetString("server-info-stats-button")};
+            statsButton.OnPressed += args => new StatsWindow().Open();
+
             var changelogButton = new ChangelogButton();
             buttons.AddChild(changelogButton);
             buttons.AddChild(rulesButton);
             buttons.AddChild(discordButton);
             buttons.AddChild(websiteButton);
             buttons.AddChild(wikiButton);
+            buttons.AddChild(statsButton);
         }
     }
 }

@@ -85,4 +85,12 @@ public sealed class PlayTimeTrackingManager
         reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString();
         return reason == null;
     }
+
+    public TimeSpan playtimeForRole(JobPrototype job)
+    {
+        var playtime = _roles;
+        var jobName = job.PlayTimeTracker;
+        playtime.TryGetValue(jobName, out var otherTime);
+        return otherTime;
+    }
 }
