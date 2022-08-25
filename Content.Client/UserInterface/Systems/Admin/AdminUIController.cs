@@ -5,6 +5,7 @@ using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
 using Content.Shared.Input;
+using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -12,49 +13,66 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Network;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Admin;
 
+[UsedImplicitly]
 public sealed class AdminUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
     [Dependency] private readonly IClientConsoleHost _conHost = default!;
     [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     [UISystemDependency] private readonly VerbSystem _verbs = default!;
 
     private AdminMenuWindow? _window;
+    private MenuButton? _adminButton;
 
-    private MenuButton AdminButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().AdminButton;
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
+            InputCmdHandler.FromDelegate(_ => Toggle()));
+    }
 
     public void OnStateEntered(GameplayState state)
     {
-        // Reset the AdminMenu Window on disconnect
-        _net.Disconnect += (_, _) => ResetWindow();
-        if (_window == null) //create the window if it is null
-            CreateWindow();
-        _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
-            InputCmdHandler.FromDelegate(_ => Toggle()));
+        DebugTools.Assert(_window == null);
+        _window = UIManager.CreateWindow<AdminMenuWindow>();
+        _adminButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().AdminButton;
+        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
+        _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
+        _window.OnOpen += () => _adminButton.Pressed = true;
+        _window.OnClose += () => _adminButton.Pressed = false;
 
         _admin.AdminStatusUpdated += AdminStatusUpdated;
-        AdminButton.OnPressed += AdminButtonPressed;
+
+        _adminButton.OnPressed += AdminButtonPressed;
         AdminStatusUpdated();
     }
 
     public void OnStateExited(GameplayState state)
     {
+        _window?.DisposeAllChildren();
+        _window = null;
         CommandBinds.Unregister<AdminUIController>();
+
+        _admin.AdminStatusUpdated -= AdminStatusUpdated;
+
+        if (_adminButton == null)
+            return;
+        _adminButton.Pressed = false;
+        _adminButton.OnPressed -= AdminButtonPressed;
+        _adminButton = null;
     }
 
     private void AdminStatusUpdated()
     {
-        if (_window == null)
-            return;
-        AdminButton.Visible = CanOpen();
+        _adminButton!.Visible = _conGroups.CanAdminMenu();
     }
 
     private void AdminButtonPressed(ButtonEventArgs args)
@@ -62,61 +80,16 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         Toggle();
     }
 
-    private void Open()
-    {
-        _window!.Open();
-        AdminButton.Pressed = true;
-    }
-
-    private void Close()
-    {
-        _window?.Close();
-        AdminButton.Pressed = false;
-    }
-
-    /// <summary>
-    /// Checks if the player can open the window
-    /// </summary>
-    /// <returns>True if the player is allowed</returns>
-    public bool CanOpen()
-    {
-        return _conGroups.CanAdminMenu();
-    }
-
-    /// <summary>
-    /// Checks if the player can open the window and tries to open it
-    /// </summary>
-    public void TryOpen()
-    {
-        if (CanOpen())
-            Open();
-    }
-
-    public void Toggle()
+    private void Toggle()
     {
         if (_window is {IsOpen: true})
         {
-            Close();
+            _window.Close();
         }
-        else
+        else if (_conGroups.CanAdminMenu())
         {
-            TryOpen();
+            _window?.Open();
         }
-    }
-
-    private void CreateWindow()
-    {
-        _window = UIManager.CreateWindow<AdminMenuWindow>();
-        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.Center);
-        _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
-        _window.OnClose += Close;
-    }
-
-    public void ResetWindow()
-    {
-        _window?.Close();
-        _window?.Dispose();
-        _window = null;
     }
 
     private void PlayerTabEntryPressed(ButtonEventArgs args)

@@ -84,6 +84,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         if (_escapeButton == null)
             return;
         _escapeButton.OnPressed -= EscapeButtonOnOnPressed;
+        _escapeButton.Pressed = false;
         _escapeButton = null;
     }
 

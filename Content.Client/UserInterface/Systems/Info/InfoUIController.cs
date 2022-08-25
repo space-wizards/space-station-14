@@ -62,6 +62,8 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
         if (_infoButton == null)
             return;
         _infoButton.OnPressed -= InfoButtonPressed;
+        _infoButton.Pressed = false;
+        _infoButton = null;
     }
 
     private void InfoButtonPressed(BaseButton.ButtonEventArgs args)
