@@ -1,4 +1,3 @@
-using Content.Server.FloodFill.Data;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
@@ -328,5 +327,58 @@ public partial class FloodFillSystem
             return true;
 
         return false;
+    }
+}
+
+// yeah this is now the third direction flag enum, and the 5th (afaik) direction enum overall.....
+/// <summary>
+///     Directional bitflags used to denote the neighbouring tiles of some tile on a grid.. Differ from atmos and
+///     normal directional flags as NorthEast != North | East
+/// </summary>
+[Flags]
+public enum NeighborFlag : byte
+{
+    Invalid = 0,
+    North = 1 << 0,
+    NorthEast = 1 << 1,
+    East = 1 << 2,
+    SouthEast = 1 << 3,
+    South = 1 << 4,
+    SouthWest = 1 << 5,
+    West = 1 << 6,
+    NorthWest = 1 << 7,
+
+    Cardinal = North | East | South | West,
+    Diagonal = NorthEast | SouthEast | SouthWest | NorthWest,
+    Any = Cardinal | Diagonal
+}
+
+/// <summary>
+///     This class has information about the space equivalent of an entity blocking grid flood: the edges of grids.
+/// </summary>
+public sealed class BlockedSpaceTile
+{
+    /// <summary>
+    ///     What directions of this tile are not blocked?
+    /// </summary>
+    public AtmosDirection UnblockedDirections = AtmosDirection.All;
+
+    /// <summary>
+    ///     The set of grid edge-tiles that are blocking this space tile.
+    /// </summary>
+    public readonly List<GridEdgeData> BlockingGridEdges = new();
+
+    public sealed class GridEdgeData
+    {
+        public Vector2i Tile;
+        public EntityUid? Grid;
+        public Box2Rotated Box;
+
+        public GridEdgeData(Vector2i tile, EntityUid? grid, Vector2 center, Angle angle, float size)
+        {
+            Tile = tile;
+            Grid = grid;
+            Box = new(Box2.CenteredAround(center, (size, size)), angle, center);
+        }
     }
 }

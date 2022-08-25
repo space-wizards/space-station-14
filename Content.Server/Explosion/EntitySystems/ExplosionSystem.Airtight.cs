@@ -1,6 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Destructible;
-using Content.Server.FloodFill.Data;
+using Content.Server.FloodFill;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;

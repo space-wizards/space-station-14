@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Content.Server.FloodFill.Data;
+namespace Content.Server.FloodFill.TileFloods;
 
 /// <summary>
 ///     This is a data structure can be used to ensure the uniqueness of Vector2i indices.

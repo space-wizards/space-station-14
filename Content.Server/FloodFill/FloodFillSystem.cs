@@ -1,10 +1,11 @@
 using System.Linq;
-using Content.Server.FloodFill.Data;
 using Content.Server.FloodFill.TileFloods;
+using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
 namespace Content.Server.FloodFill;
 
+// ReSharper disable CompareOfFloatsByEqualityOperator
 public sealed partial class FloodFillSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -270,6 +271,7 @@ public sealed partial class FloodFillSystem : EntitySystem
         var radius = 0.5f + IntensityToRadius(totalIntensity, slope, maxIntensity);
 
         // to avoid a silly lookup for silly input numbers, cap the radius to half of the theoretical maximum (lookup area gets doubled later on).
+        // ReSharper disable once PossibleLossOfFraction
         radius = Math.Min(radius, maxIterations / 4);
 
         EntityUid? referenceGrid = null;
@@ -368,5 +370,32 @@ public sealed partial class FloodFillSystem : EntitySystem
         }
 
         return r0 * (MathF.Sqrt(12 * totalIntensity/ v0 - 3) / 6 + 0.5f);
+    }
+}
+
+/// <summary>
+///     Data struct that describes the entities blocking fill flood on a tile.
+/// </summary>
+public struct TileData
+{
+    /// <summary>
+    ///     Resistance towards further fill flood propagation.
+    ///     You can save different type of tolerance into different indexes of array.
+    /// </summary>
+    /// <example>
+    ///     In explosion system each tolerance element is mapped
+    ///     into resistance to different types of explosion.
+    /// </example>
+    public readonly float[] Tolerance;
+
+    /// <summary>
+    ///     From what incoming direction of fill flood will be blocked by tolerance.
+    /// </summary>
+    public readonly AtmosDirection BlockedDirections = AtmosDirection.Invalid;
+
+    public TileData(float[] tolerance, AtmosDirection blockedDirections)
+    {
+        Tolerance = tolerance;
+        BlockedDirections = blockedDirections;
     }
 }

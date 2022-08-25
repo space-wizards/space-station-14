@@ -1,4 +1,3 @@
-using Content.Server.FloodFill.Data;
 using Content.Shared.Atmos;
 
 namespace Content.Server.FloodFill.TileFloods;

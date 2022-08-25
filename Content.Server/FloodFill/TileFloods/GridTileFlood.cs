@@ -1,4 +1,3 @@
-using Content.Server.FloodFill.Data;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 using static Content.Server.FloodFill.FloodFillSystem;

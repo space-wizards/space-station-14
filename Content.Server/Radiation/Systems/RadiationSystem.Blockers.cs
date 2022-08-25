@@ -1,4 +1,4 @@
-using Content.Server.FloodFill.Data;
+using Content.Server.FloodFill;
 using Content.Shared.Atmos;
 using Content.Shared.Radiation.Components;
 
