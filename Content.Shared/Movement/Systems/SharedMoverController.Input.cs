@@ -2,6 +2,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -16,6 +17,8 @@ namespace Content.Shared.Movement.Systems
     /// </summary>
     public abstract partial class SharedMoverController
     {
+        public bool CameraRotationLocked { get; private set; }
+
         private void InitializeInput()
         {
             var moveUpCmdHandler = new MoverDirInputCmdHandler(this, Direction.North);
@@ -47,6 +50,13 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentGetState>(OnInputGetState);
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnInputHandleState);
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
+
+            _configManager.OnValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked, true);
+        }
+
+        private void SetCameraRotationLocked(bool obj)
+        {
+            CameraRotationLocked = obj;
         }
 
         private void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
@@ -86,6 +96,7 @@ namespace Content.Shared.Movement.Systems
         private void ShutdownInput()
         {
             CommandBinds.Unregister<SharedMoverController>();
+            _configManager.UnsubValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked);
         }
 
         public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
@@ -94,7 +105,7 @@ namespace Content.Shared.Movement.Systems
 
         public void RotateCamera(EntityUid uid, Angle angle)
         {
-            if (!TryComp<InputMoverComponent>(uid, out var mover))
+            if (CameraRotationLocked || !TryComp<InputMoverComponent>(uid, out var mover))
                 return;
 
             mover.TargetRelativeRotation += angle;
@@ -103,7 +114,7 @@ namespace Content.Shared.Movement.Systems
 
         public void ResetCamera(EntityUid uid)
         {
-            if (!TryComp<InputMoverComponent>(uid, out var mover) || mover.TargetRelativeRotation.Equals(Angle.Zero))
+            if (CameraRotationLocked || !TryComp<InputMoverComponent>(uid, out var mover) || mover.TargetRelativeRotation.Equals(Angle.Zero))
                 return;
 
             mover.TargetRelativeRotation = Angle.Zero;

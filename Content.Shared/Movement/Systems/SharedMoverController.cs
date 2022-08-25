@@ -183,9 +183,13 @@ namespace Content.Shared.Movement.Systems
                             targetRotation = currentRotation.FlipPositive().Reduced();
                         }
                         // If we went from grid -> grid OR grid -> map then snap the target to cardinal and lerp there.
+                        // OR just rotate to zero (depending on cvar)
                         else if (relative != null && _mapManager.IsGrid(relative.Value))
                         {
-                            targetRotation = mover.RelativeRotation.GetCardinalDir().ToAngle().Reduced();
+                            if (CameraRotationLocked)
+                                targetRotation = Angle.Zero;
+                            else
+                                targetRotation = mover.RelativeRotation.GetCardinalDir().ToAngle().Reduced();
                         }
 
                         Sawmill.Debug($"Updated relative movement entity from {mover.RelativeEntity} to {relative}");

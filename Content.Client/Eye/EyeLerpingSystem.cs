@@ -167,7 +167,8 @@ public sealed class EyeLerpingSystem : EntitySystem
             if (!_activeEyes.TryGetValue(entity, out var lerpInfo))
                 continue;
 
-            eye.Rotation = (lerpInfo.TargetRotation - lerpInfo.LastRotation) * tickFraction + lerpInfo.LastRotation;
+            var shortest = Angle.ShortestDistance(lerpInfo.LastRotation, lerpInfo.TargetRotation);
+            eye.Rotation = shortest * tickFraction + lerpInfo.LastRotation;
         }
     }
 
