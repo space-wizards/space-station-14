@@ -1,13 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now do reduced damage to other zombies., type: Tweak}
-  - {message: Dead and crit enemies now automatically zombify., type: Fix}
-  - {message: Mice who are zombified are now able to attack., type: Fix}
-  - {message: Mice can no longer be revived in cloning pods nor will they become humans
-      when cloned., type: Fix}
-  id: 1688
-  time: '2022-06-12T05:53:13.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: ERT shuttle updated to Dart V2., type: Tweak}
@@ -2944,3 +2935,8 @@ Entries:
   - {message: You can no longer inject chems into cigarettes., type: Remove}
   id: 2187
   time: '2022-08-25T13:35:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Boxing gloves now have the fist weapon arc., type: Fix}
+  id: 2188
+  time: '2022-08-25T13:38:14.0000000+00:00'
