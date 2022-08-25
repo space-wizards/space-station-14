@@ -793,6 +793,7 @@
   components:
   - type: Sprite
     state: securearea
+    snapCardinals: true
 
 - type: entity
   parent: BaseSign
