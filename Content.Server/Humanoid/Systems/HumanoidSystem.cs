@@ -15,13 +15,11 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<HumanoidComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<HumanoidComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<HumanoidComponent, GotUnequippedEvent>(OnGotUnequipped);
+
     }
 
     private void Synchronize(EntityUid uid, HumanoidComponent? component = null)
@@ -65,34 +63,6 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         EnsureDefaultMarkings(uid, humanoid);
 
         Synchronize(uid, humanoid);
-    }
-
-    private void OnGotEquipped(EntityUid uid, HumanoidComponent component, GotEquippedEvent args)
-    {
-        if (args.Slot == "head"
-            && _tagSystem.HasTag(args.Equipment, "HidesHair"))
-        {
-            foreach (var layer in HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head))
-            {
-                component.HiddenLayers.Add(layer);
-            }
-        }
-
-        Synchronize(uid, component);
-    }
-
-    private void OnGotUnequipped(EntityUid uid, HumanoidComponent component, GotUnequippedEvent args)
-    {
-        if (args.Slot == "head"
-            && _tagSystem.HasTag(args.Equipment, "HidesHair"))
-        {
-            foreach (var layer in HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head))
-            {
-                component.HiddenLayers.Remove(layer);
-            }
-        }
-
-        Synchronize(uid, component);
     }
 
     public void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidComponent? humanoid = null)
@@ -234,6 +204,29 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         else
         {
             humanoid.HiddenLayers.Add(layer);
+        }
+
+        Synchronize(uid, humanoid);
+    }
+
+    public void SetLayersVisibility(EntityUid uid, IEnumerable<HumanoidVisualLayers> layers, bool visible,
+        HumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        foreach (var layer in layers)
+        {
+            if (visible)
+            {
+                humanoid.HiddenLayers.Remove(layer);
+            }
+            else
+            {
+                humanoid.HiddenLayers.Add(layer);
+            }
         }
 
         Synchronize(uid, humanoid);

@@ -14,7 +14,7 @@
     template: HumanoidTemplate
     preset: SlimePreset
   - type: Humanoid
-    species: Slime
+    species: SlimePerson
   - type: Speech
     speechSounds: Slime
   - type: Damageable
@@ -83,4 +83,4 @@
   description: A dummy slime meant to be used in character setup.
   components:
     - type: Humanoid
-      species: Slime
+      species: SlimePerson
