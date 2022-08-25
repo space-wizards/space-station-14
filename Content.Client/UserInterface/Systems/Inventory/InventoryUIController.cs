@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -20,30 +21,38 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
-    private InventoryWindow? _inventoryWindow;
     private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites = new();
-    private MenuButton InventoryButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InventoryButton;
 
-    public override void Initialize()
-    {
-        _inventoryWindow = UIManager.CreateWindow<InventoryWindow>();
-        LayoutContainer.SetAnchorPreset(_inventoryWindow,LayoutContainer.LayoutPreset.Center);
-        _inventoryWindow!.OnClose += OnInventoryClosed;
-    }
+    private InventoryWindow? _inventoryWindow;
+    private MenuButton? _inventoryButton;
 
     public void OnStateEntered(GameplayState state)
     {
+        DebugTools.Assert(_inventoryWindow == null);
+        _inventoryWindow = UIManager.CreateWindow<InventoryWindow>();
+        _inventoryButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InventoryButton;
+        LayoutContainer.SetAnchorPreset(_inventoryWindow,LayoutContainer.LayoutPreset.Center);
+        _inventoryWindow.OnClose += () => { _inventoryButton.Pressed = false; };
+        _inventoryWindow.OnOpen += () => { _inventoryButton.Pressed = true; };
+
         //bind open inventory key to OpenInventoryMenu;
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryMenu()))
             .Register<ClientInventorySystem>();
-
-        UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InventoryButton.OnPressed += InventoryButtonPressed;
+        _inventoryButton.OnPressed += InventoryButtonPressed;
     }
 
     public void OnStateExited(GameplayState state)
     {
+        _inventoryWindow?.DisposeAllChildren();
+        _inventoryWindow = null;
         CommandBinds.Unregister<ClientInventorySystem>();
+
+        if (_inventoryButton == null)
+            return;
+        _inventoryButton.OnPressed -= InventoryButtonPressed;
+        _inventoryButton.Pressed = false;
+        _inventoryButton = null;
     }
 
     private void InventoryButtonPressed(ButtonEventArgs args)
@@ -75,12 +84,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, tuple.sprite, tuple.showStorage);
             SpriteUpdated(update);
         }
-        InventoryButton.Pressed = true;
-    }
-
-    public void CloseWindow()
-    {
-        _inventoryWindow!.Close();
     }
 
     public void ToggleInventoryMenu()
@@ -88,15 +91,10 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         UpdateInventoryWindow(_playerInventory);
         if (_inventoryWindow!.IsOpen)
         {
-            CloseWindow();
+            _inventoryWindow!.Close();
             return;
         }
         _inventoryWindow.Open();
-    }
-
-    private void OnInventoryClosed()
-    {
-        InventoryButton.Pressed = false;
     }
 
     // Neuron Activation

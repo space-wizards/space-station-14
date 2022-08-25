@@ -51,6 +51,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         if (_characterButton == null)
             return;
         _characterButton.OnPressed -= CharacterButtonPressed;
+        _characterButton.Pressed = false;
+        _characterButton = null;
     }
 
     public void OnSystemLoaded(CharacterInfoSystem system)
