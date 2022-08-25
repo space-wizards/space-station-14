@@ -128,7 +128,7 @@ namespace Content.Client.Humanoid
             _currentMarkings.FilterSpecies(_currentSpecies, _markingManager);
 
             // walk backwards through the list for visual purposes
-            foreach (var marking in _currentMarkings.GetReverseEnumerator())
+            foreach (var marking in _currentMarkings.GetReverseEnumerator(_selectedMarkingCategory))
             {
                 if (!_markingManager.TryGetMarking(marking, out var newMarking))
                 {
@@ -241,6 +241,7 @@ namespace Content.Client.Humanoid
             CMarkingCategoryButton.SelectId(category.Id);
             _selectedMarkingCategory = _markingCategories[category.Id];
             Populate();
+            PopulateUsed();
             UpdatePoints();
         }
 

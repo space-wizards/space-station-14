@@ -457,12 +457,34 @@ public sealed class MarkingSet
         return new ForwardMarkingEnumerator(markings);
     }
 
+    public ForwardMarkingEnumerator GetForwardEnumerator(MarkingCategories category)
+    {
+        var markings = new List<Marking>();
+        if (_markings.TryGetValue(category, out var listing))
+        {
+            markings = new(listing);
+        }
+
+        return new ForwardMarkingEnumerator(markings);
+    }
+
     public ReverseMarkingEnumerator GetReverseEnumerator()
     {
         var markings = new List<Marking>();
         foreach (var (_, list) in _markings)
         {
             markings.AddRange(list);
+        }
+
+        return new ReverseMarkingEnumerator(markings);
+    }
+
+    public ReverseMarkingEnumerator GetReverseEnumerator(MarkingCategories category)
+    {
+        var markings = new List<Marking>();
+        if (_markings.TryGetValue(category, out var listing))
+        {
+            markings = new(listing);
         }
 
         return new ReverseMarkingEnumerator(markings);
