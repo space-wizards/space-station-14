@@ -542,30 +542,13 @@ namespace Content.Client.Preferences.UI
             {
                 case SpeciesSkinColor.HumanToned:
                 {
-                    var range = _skinColor.Value;
                     if (!_skinColor.Visible)
                     {
                         _skinColor.Visible = true;
                         _rgbSkinColorContainer.Visible = false;
                     }
 
-                    var rangeOffset = (int) range - 20;
-
-                    float hue = 25;
-                    float sat = 20;
-                    float val = 100;
-
-                    if (rangeOffset <= 0)
-                    {
-                        hue += Math.Abs(rangeOffset);
-                    }
-                    else
-                    {
-                        sat += rangeOffset;
-                        val -= rangeOffset;
-                    }
-
-                    var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
+                    var color = SkinColor.HumanSkinTone((int) _skinColor.Value);
 
                     CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
@@ -579,10 +562,8 @@ namespace Content.Client.Preferences.UI
                         _rgbSkinColorContainer.Visible = true;
                     }
 
-                    var color = new Color(_rgbSkinColorSelector.Color.R, _rgbSkinColorSelector.Color.G, _rgbSkinColorSelector.Color.B);
-
-                    CMarkings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    CMarkings.CurrentSkinColor = _rgbSkinColorSelector.Color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(_rgbSkinColorSelector.Color));
                     break;
                 }
                 case SpeciesSkinColor.TintedHues:
@@ -593,11 +574,7 @@ namespace Content.Client.Preferences.UI
                         _rgbSkinColorContainer.Visible = true;
                     }
 
-                    // a little hacky in order to convert rgb --> hsv --> rgb
-                    var color = new Color(_rgbSkinColorSelector.Color.R, _rgbSkinColorSelector.Color.G, _rgbSkinColorSelector.Color.B);
-                    var newColor = Color.ToHsv(color);
-                    newColor.Y = .1f;
-                    color = Color.FromHsv(newColor);
+                    var color = SkinColor.TintedHues(_rgbSkinColorSelector.Color);
 
                     CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
@@ -802,20 +779,8 @@ namespace Content.Client.Preferences.UI
                         _rgbSkinColorContainer.Visible = false;
                     }
 
-                    var color = Color.ToHsv(Profile.Appearance.SkinColor);
-                    // check for hue/value first, if hue is lower than this percentage
-                    // and value is 1.0
-                    // then it'll be hue
-                    if (Math.Clamp(color.X, 25f / 360f, 1) > 25f / 360f
-                        && color.Z == 1.0)
-                    {
-                        _skinColor.Value = Math.Abs(45 - (color.X * 360));
-                    }
-                    // otherwise it'll directly be the saturation
-                    else
-                    {
-                        _skinColor.Value = color.Y * 100;
-                    }
+                    _skinColor.Value = SkinColor.HumanSkinToneFromColor(Profile.Appearance.SkinColor);
+
                     break;
                 }
                 case SpeciesSkinColor.Hues:
