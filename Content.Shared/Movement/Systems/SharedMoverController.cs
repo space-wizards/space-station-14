@@ -202,7 +202,7 @@ namespace Content.Shared.Movement.Systems
             var angleDiff = Angle.ShortestDistance(mover.RelativeRotation, mover.TargetRelativeRotation);
 
             // if we've just traversed then lerp to our target rotation.
-            if (!angleDiff.EqualsApprox(Angle.Zero, 0.005))
+            if (!angleDiff.EqualsApprox(Angle.Zero, 0.001))
             {
                 var adjustment = angleDiff * 5f * frameTime;
                 var minAdjustment = 0.005 * frameTime;

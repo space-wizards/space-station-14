@@ -10,6 +10,7 @@
     noRot: true
   - type: Sprite
     netsync: false
+    noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
     - state: crate

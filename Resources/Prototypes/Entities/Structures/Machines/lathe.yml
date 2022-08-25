@@ -90,6 +90,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    snapCardinals: true
     netsync: false
     layers:
     - state: icon

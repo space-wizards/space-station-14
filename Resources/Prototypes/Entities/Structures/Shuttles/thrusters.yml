@@ -91,6 +91,7 @@
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
+    snapCardinals: true
     layers:
     - state: base
       map: ["enum.ThrusterVisualLayers.Base"]

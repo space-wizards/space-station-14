@@ -44,6 +44,8 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/rndpointsource.rsi
+    snapCardinals: true
+    netsync: false
     layers:
     - state: rndpointsource-off
     - state: rndpointsource
