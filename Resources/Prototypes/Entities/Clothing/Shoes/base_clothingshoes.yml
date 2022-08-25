@@ -8,8 +8,3 @@
     - FEET
   - type: Sprite
     state: icon
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: MaterialCloth1
-      amount: 1
