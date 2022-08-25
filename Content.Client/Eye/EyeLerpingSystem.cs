@@ -89,7 +89,7 @@ public sealed class EyeLerpingSystem : EntitySystem
             xformQuery.TryGetComponent(entity, out var xform);
             lerpInfo.LastRotation = eye.Rotation;
             lerpInfo.TargetRotation = GetRotation(xformQuery, mover, xform);
-            
+
             if (xform != null)
             {
                 // If we traverse maps then don't lerp.
