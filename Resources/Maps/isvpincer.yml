@@ -73,7 +73,7 @@ grids:
   - ind: -2,-1
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADkAAAA5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADoAAAAYAAAAGAAAABgAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAA6AAAAFQAAABUAAAAVAAAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAABUAAAAVAAAAFQAAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAAVAAAAFQAAABUAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAFQAAABUAAAAVAAAAFQAAAA==
   - ind: -1,0
-    tiles: KwAAADYAAAAVAAAAFQAAABUAAAAaAAAAGgAAABUAAAA4AAAAOAAAADgAAAArAAAAKwAAACsAAAA6AAAAOgAAACsAAAA2AAAANgAAADYAAAA0AAAAGgAAABoAAAA0AAAAOAAAADgAAAA4AAAAKwAAADoAAAA6AAAAOgAAADkAAAA6AAAAOgAAADoAAAA6AAAANAAAABUAAAAVAAAANAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA5AAAAOgAAADoAAAA6AAAAOgAAADYAAAAVAAAAFQAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOQAAADoAAAA6AAAAOgAAADoAAAA2AAAAFQAAABUAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADkAAAA5AAAAOgAAADoAAAA6AAAANgAAABUAAAAVAAAANgAAACsAAAA6AAAAOgAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADoAAAA2AAAANgAAADYAAAAVAAAAFQAAADYAAAA2AAAANgAAADoAAAA5AAAAAAAAAAAAAAAAAAAAAAAAADkAAAA6AAAANgAAABUAAAAVAAAAKQAAACkAAAAVAAAAFQAAADYAAAA6AAAAOQAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAOgAAADYAAAAVAAAAFQAAACkAAAApAAAAFQAAABUAAAA2AAAAOgAAADkAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADYAAAA2AAAANgAAADYAAAAVAAAAFQAAADYAAAA2AAAANgAAADoAAAA5AAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAABUAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAA2AAAANgAAADYAAAA6AAAANgAAABUAAAAVAAAANgAAADoAAAAlAAAAJQAAABUAAAAVAAAAOgAAAAAAAAAAAAAAFQAAABUAAAAVAAAAOgAAADYAAAAVAAAAFQAAADYAAAA6AAAAJQAAACUAAAAVAAAAFQAAADoAAAAAAAAAAAAAABUAAAAVAAAAFQAAADoAAAA2AAAAFQAAABUAAAA2AAAAOgAAACUAAAAlAAAAJQAAACUAAAA0AAAAAAAAAAAAAAAVAAAAFQAAABUAAAAVAAAANgAAABUAAAAVAAAANgAAABUAAAAlAAAAJQAAACUAAAAlAAAAOgAAAAAAAAAAAAAAFQAAABUAAAAVAAAANAAAADYAAAAVAAAAFQAAADYAAAA0AAAAJQAAACUAAAAlAAAAJQAAADQAAAAAAAAAAAAAAA==
+    tiles: KwAAABUAAAAVAAAAFQAAABUAAAAaAAAAGgAAABUAAAA4AAAAOAAAADgAAAArAAAAKwAAACsAAAA6AAAAOgAAACsAAAAVAAAAFQAAABUAAAA0AAAAGgAAABoAAAA0AAAAOAAAADgAAAA4AAAAKwAAADoAAAA6AAAAOgAAADkAAAA6AAAAOgAAADoAAAA6AAAANAAAABUAAAAVAAAANAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA5AAAAOgAAADoAAAA6AAAAOgAAADYAAAAVAAAAFQAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOQAAADoAAAA6AAAAOgAAADoAAAA2AAAAFQAAABUAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADkAAAA5AAAAOgAAADoAAAA6AAAANgAAABUAAAAVAAAANgAAACsAAAA6AAAAOgAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADoAAAA2AAAANgAAADYAAAAVAAAAFQAAADYAAAA2AAAANgAAADoAAAA5AAAAAAAAAAAAAAAAAAAAAAAAADkAAAA6AAAANgAAABUAAAAVAAAAKQAAACkAAAAVAAAAFQAAADYAAAA6AAAAOQAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAOgAAADYAAAAVAAAAFQAAACkAAAApAAAAFQAAABUAAAA2AAAAOgAAADkAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADYAAAA2AAAANgAAADYAAAAVAAAAFQAAADYAAAA2AAAANgAAADoAAAA5AAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAABUAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAA2AAAANgAAADYAAAA6AAAANgAAABUAAAAVAAAANgAAADoAAAAlAAAAJQAAABUAAAAVAAAAOgAAAAAAAAAAAAAAFQAAABUAAAAVAAAAOgAAADYAAAAVAAAAFQAAADYAAAA6AAAAJQAAACUAAAAVAAAAFQAAADoAAAAAAAAAAAAAABUAAAAVAAAAFQAAADoAAAA2AAAAFQAAABUAAAA2AAAAOgAAACUAAAAlAAAAJQAAACUAAAA0AAAAAAAAAAAAAAAVAAAAFQAAABUAAAAVAAAANgAAABUAAAAVAAAANgAAABUAAAAlAAAAJQAAACUAAAAlAAAAOgAAAAAAAAAAAAAAFQAAABUAAAAVAAAANAAAADYAAAAVAAAAFQAAADYAAAA0AAAAJQAAACUAAAAlAAAAJQAAADQAAAAAAAAAAAAAAA==
   - ind: -2,0
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAArAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADkAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAA6AAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAOQAAADkAAAA5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAANgAAAA==
   - ind: -1,1
@@ -327,9 +327,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 39
-  type: Paper
+  type: FirelockGlass
   components:
-  - pos: -6.539706,13.606817
+  - pos: -7.5,14.5
     parent: 71
     type: Transform
 - uid: 40
@@ -667,10 +667,6 @@ entities:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -17,12
-        16:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale270
-          coordinates: -17,13
         17:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
@@ -815,6 +811,10 @@ entities:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: -15,0
+        62:
+          color: '#D381C996'
+          id: ThreeQuarterTileOverlayGreyscale180
+          coordinates: -14,11
     type: DecalGrid
   - tiles:
       -9,-1: 0
@@ -1361,10 +1361,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 82
-  type: TableReinforcedGlass
+  type: Catwalk
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -11.5,13.5
+  - pos: -16.5,1.5
     parent: 71
     type: Transform
 - uid: 83
@@ -1819,9 +1818,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 156
-  type: WallSolid
+  type: FirelockGlass
   components:
-  - pos: -7.5,13.5
+  - pos: -12.5,13.5
     parent: 71
     type: Transform
 - uid: 157
@@ -1858,9 +1857,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 162
-  type: WallSolid
+  type: FirelockGlass
   components:
-  - pos: -12.5,13.5
+  - pos: -12.5,14.5
     parent: 71
     type: Transform
 - uid: 163
@@ -2477,10 +2476,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 254
-  type: ComputerRadar
+  type: LockerSalvageSpecialistFilled
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -16.5,-3.5
+  - pos: -13.5,1.5
     parent: 71
     type: Transform
 - uid: 255
@@ -2606,9 +2604,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 274
-  type: ClosetEmergencyFilledRandom
+  type: AcousticGuitarInstrument
   components:
-  - pos: -12.5,1.5
+  - pos: -17.523748,1.6626217
     parent: 71
     type: Transform
 - uid: 275
@@ -2696,19 +2694,13 @@ entities:
     parent: 71
     type: Transform
 - uid: 286
-  type: OreProcessor
+  type: VendingMachineSalvage
   components:
-  - pos: -13.5,1.5
+  - name: Salvage Equipment
+    type: MetaData
+  - pos: -14.5,1.5
     parent: 71
     type: Transform
-  - materialWhiteList:
-    - Steel
-    - Glass
-    - Plasma
-    - Uranium
-    - Gold
-    - Silver
-    type: Lathe
 - uid: 287
   type: CableHV
   components:
@@ -3382,10 +3374,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 396
-  type: TableReinforcedGlass
+  type: Catwalk
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -8.5,13.5
+  - pos: -13.5,4.5
     parent: 71
     type: Transform
 - uid: 397
@@ -3448,13 +3439,13 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 401
-  type: LockerSalvageSpecialistFilled
+  type: ComputerRadar
   components:
-  - pos: -19.5,-0.5
+  - pos: -17.5,-0.5
     parent: 71
     type: Transform
 - uid: 402
-  type: LockerSalvageSpecialistFilled
+  type: CrateEmptySpawner
   components:
   - pos: -18.5,-0.5
     parent: 71
@@ -3467,11 +3458,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 404
-  type: VendingMachineSalvage
+  type: LockerSalvageSpecialistFilled
   components:
-  - name: Salvage Equipment
-    type: MetaData
-  - pos: -17.5,-0.5
+  - pos: -12.5,1.5
     parent: 71
     type: Transform
 - uid: 405
@@ -3697,7 +3686,7 @@ entities:
     parent: 71
     type: Transform
 - uid: 437
-  type: ClosetMaintenanceFilledRandom
+  type: Table
   components:
   - pos: -17.5,1.5
     parent: 71
@@ -3741,9 +3730,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 444
-  type: Paper
+  type: FirelockGlass
   components:
-  - pos: -6.570956,13.559942
+  - pos: -7.5,13.5
     parent: 71
     type: Transform
 - uid: 445
@@ -3767,9 +3756,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 448
-  type: Paper
+  type: AirlockCommandGlass
   components:
-  - pos: -6.649081,13.481817
+  - pos: -7.5,13.5
     parent: 71
     type: Transform
 - uid: 449
@@ -4053,9 +4042,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 490
-  type: FoodTinMRETrash
+  type: RandomFoodSingle
   components:
-  - pos: -6.5968,9.662424
+  - pos: -6.5,9.5
     parent: 71
     type: Transform
 - uid: 491
@@ -4099,9 +4088,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 497
-  type: TableCounterMetal
+  type: AirlockCommandGlass
   components:
-  - pos: -6.5,13.5
+  - pos: -12.5,13.5
     parent: 71
     type: Transform
 - uid: 498
@@ -4527,9 +4516,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 557
-  type: PenCap
+  type: SheetPlasma
   components:
-  - pos: -8.671875,13.546875
+  - pos: -17.513441,1.5801404
     parent: 71
     type: Transform
 - uid: 558
@@ -4602,12 +4591,11 @@ entities:
 - uid: 566
   type: SignBridge
   components:
-  - rot: 3.141592653589793 rad
-    pos: -8.5,10.5
+  - pos: -8.5,10.5
     parent: 71
     type: Transform
 - uid: 567
-  type: CounterWoodFrame
+  type: TableCounterWood
   components:
   - pos: -6.5,0.5
     parent: 71
@@ -4743,9 +4731,9 @@ entities:
     parent: 71
     type: Transform
 - uid: 587
-  type: SignMinerDock
+  type: Catwalk
   components:
-  - pos: -11.5,0.5
+  - pos: -6.5,4.5
     parent: 71
     type: Transform
 - uid: 588
@@ -4767,11 +4755,19 @@ entities:
     parent: 71
     type: Transform
 - uid: 591
-  type: CrateEmptySpawner
+  type: OreProcessor
   components:
-  - pos: -14.5,1.5
+  - pos: -19.5,-0.5
     parent: 71
     type: Transform
+  - materialWhiteList:
+    - Steel
+    - Glass
+    - Plasma
+    - Uranium
+    - Gold
+    - Silver
+    type: Lathe
 - uid: 592
   type: Catwalk
   components:
@@ -4842,15 +4838,15 @@ entities:
     parent: 71
     type: Transform
 - uid: 600
-  type: Paper
+  type: Catwalk
   components:
-  - pos: -8.46875,13.65625
+  - pos: -14.5,3.5
     parent: 71
     type: Transform
 - uid: 601
-  type: Paper
+  type: Catwalk
   components:
-  - pos: -8.484375,13.65625
+  - pos: -15.5,3.5
     parent: 71
     type: Transform
 - uid: 602
@@ -4893,10 +4889,9 @@ entities:
       id: docking
     type: Fixtures
 - uid: 604
-  type: BoxFolderBlue
+  type: Catwalk
   components:
-  - rot: 3.141592653589793 rad
-    pos: -8.375,13.65625
+  - pos: -13.5,3.5
     parent: 71
     type: Transform
 - uid: 605
@@ -4912,19 +4907,108 @@ entities:
     parent: 71
     type: Transform
 - uid: 607
-  type: Paper
+  type: Catwalk
   components:
-  - pos: -8.546875,13.6875
+  - pos: -16.5,3.5
     parent: 71
     type: Transform
 - uid: 608
-  type: Paper
+  type: Catwalk
   components:
-  - pos: -8.421875,13.703125
+  - pos: -16.5,2.5
     parent: 71
     type: Transform
 - uid: 609
   components:
-  - index: 3
+  - index: 5
     type: Map
+- uid: 610
+  type: Catwalk
+  components:
+  - pos: -6.5,3.5
+    parent: 71
+    type: Transform
+- uid: 611
+  type: Catwalk
+  components:
+  - pos: -5.5,3.5
+    parent: 71
+    type: Transform
+- uid: 612
+  type: Catwalk
+  components:
+  - pos: -4.5,3.5
+    parent: 71
+    type: Transform
+- uid: 613
+  type: Catwalk
+  components:
+  - pos: -3.5,3.5
+    parent: 71
+    type: Transform
+- uid: 614
+  type: Catwalk
+  components:
+  - pos: -3.5,2.5
+    parent: 71
+    type: Transform
+- uid: 615
+  type: Catwalk
+  components:
+  - pos: -3.5,1.5
+    parent: 71
+    type: Transform
+- uid: 616
+  type: DisposalUnit
+  components:
+  - pos: -6.5,7.5
+    parent: 71
+    type: Transform
+- uid: 617
+  type: PoweredSmallLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -9.5,0.5
+    parent: 71
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 618
+  type: CableApcExtension
+  components:
+  - pos: -11.5,-0.5
+    parent: 71
+    type: Transform
+- uid: 619
+  type: CableApcExtension
+  components:
+  - pos: -10.5,-0.5
+    parent: 71
+    type: Transform
+- uid: 620
+  type: CableApcExtension
+  components:
+  - pos: -9.5,-0.5
+    parent: 71
+    type: Transform
+- uid: 621
+  type: CableApcExtension
+  components:
+  - pos: -9.5,0.5
+    parent: 71
+    type: Transform
+- uid: 622
+  type: VendingMachineSciDrobe
+  components:
+  - pos: -14.5,15.5
+    parent: 71
+    type: Transform
 ...
