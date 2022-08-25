@@ -98,13 +98,13 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: r_foot
 
-
-
 - type: species
   id: Dwarf
   name: species-name-dwarf
   roundStart: false
   prototype: MobDwarf
+  sprites: MobHumanSprites
+  markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
 
@@ -126,8 +126,6 @@
   sprites:
     Head: MobReptilianHead
     Snout: MobHumanoidAnyMarking
-    Hair: MobHumanoidAnyMarking
-    FacialHair: MobHumanoidAnyMarking
     Chest: MobReptilianTorso
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
@@ -267,6 +265,8 @@
   name: Skeleton
   roundStart: false #unspooky, change it in october
   prototype: MobSkeletonPerson
+  sprites: MobSkeletonSprites
+  markingLimits: MobHumanMarkingLimits
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
 

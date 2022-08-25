@@ -243,7 +243,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        if (!sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
+        if (!sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer)
+            || !humanoid.BaseLayers.ContainsKey(markingPrototype.BodyPart))
         {
             return;
         }
