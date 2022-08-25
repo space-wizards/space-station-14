@@ -318,9 +318,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var mapId = _mapManager.CreateMap();
 
-
-
-        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, path.ToString());
+        var (_, outpost) = _mapLoader.LoadGrid(mapId, path.ToString());
         if (outpost == null)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
@@ -328,7 +326,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath.ToString(), new MapLoadOptions()
+        var (_, shuttleId) = _mapLoader.LoadGrid(mapId, shuttlePath, new MapLoadOptions()
         {
             Offset = Vector2.One * 1000f,
         });

@@ -25,6 +25,9 @@ public abstract partial class SharedGunSystem
 
     private void OnChamberMagazineExamine(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ExaminedEvent args)
     {
+        if (!args.IsInDetailsRange)
+            return;
+
         var (count, _) = GetChamberMagazineCountCapacity(component);
         args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
     }
