@@ -42,12 +42,12 @@ namespace Content.Server.Body.Systems
         {
             base.Update(frameTime);
 
-            foreach (var (respirator, body, state) in
-                     EntityManager.EntityQuery<RespiratorComponent, SharedBodyComponent, MobStateComponent>())
+            foreach (var (respirator, body) in
+                     EntityManager.EntityQuery<RespiratorComponent, SharedBodyComponent>())
             {
                 var uid = respirator.Owner;
 
-                if (_mobState.IsDead(state.Owner, state))
+                if (_mobState.IsDead(uid))
                 {
                     continue;
                 }
@@ -59,7 +59,7 @@ namespace Content.Server.Body.Systems
                 respirator.AccumulatedFrametime -= respirator.CycleDelay;
                 UpdateSaturation(respirator.Owner, -respirator.CycleDelay, respirator);
 
-                if (!_mobState.IsIncapacitated(state.Owner, state)) // cannot breathe in crit.
+                if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
                 {
                     switch (respirator.Status)
                     {
