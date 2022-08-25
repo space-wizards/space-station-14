@@ -14,6 +14,9 @@ public sealed class RadiationViewOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
 
+    public Dictionary<EntityUid, Dictionary<Vector2i, float>> _radiationMap = new();
+    public List<(Matrix3, Dictionary<Vector2i, float>)> SpaceMap = new();
+
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
 
     private readonly Font _font;
@@ -29,8 +32,6 @@ public sealed class RadiationViewOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var radSys = EntitySystem.Get<RadiationSystem>();
-
         //if (radSys.MapId != args.Viewport.Eye?.Position.MapId)
           //  return;
 
@@ -50,9 +51,8 @@ public sealed class RadiationViewOverlay : Overlay
         var handle = args.ScreenHandle;
         Box2 gridBounds;
         var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
-        var radSys = EntitySystem.Get<RadiationSystem>();
 
-        foreach (var (gridUid, resGrid) in radSys._radiationMap)
+        foreach (var (gridUid, resGrid) in _radiationMap)
         {
             if (!_mapManager.TryGetGrid(gridUid, out var grid))
                 continue;
@@ -63,7 +63,13 @@ public sealed class RadiationViewOverlay : Overlay
             DrawText(handle, gridBounds, matrix, resGrid, Color.White, grid.TileSize);
         }
 
-        foreach (var (gridUid, resGrid) in radSys._resistancePerTile)
+        foreach (var (mat, map) in SpaceMap)
+        {
+            gridBounds = Matrix3.Invert(mat).TransformBox(args.WorldBounds);
+            DrawText(handle, gridBounds, mat, map, Color.White);
+        }
+
+        /*foreach (var (gridUid, resGrid) in radSys._resistancePerTile)
         {
             if (!_mapManager.TryGetGrid(gridUid, out var grid))
                 continue;
@@ -72,19 +78,18 @@ public sealed class RadiationViewOverlay : Overlay
             var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             gridBounds = invMatrix.TransformBox(args.WorldBounds);
             //DrawText(handle, gridBounds, matrix, resGrid, Color.Gray, grid.TileSize, 0.25f);
-        }
+        }*/
     }
 
     private void DrawWorld(in OverlayDrawArgs args)
     {
         var radSys = EntitySystem.Get<RadiationSystem>();
 
-        foreach (var (gridUid, map) in radSys._radiationMap)
+        var handle = args.WorldHandle;
+        foreach (var (gridUid, map) in _radiationMap)
         {
             if (!_mapManager.TryGetGrid(gridUid, out var grid))
                 continue;
-
-            var handle = args.WorldHandle;
 
             var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
@@ -94,6 +99,14 @@ public sealed class RadiationViewOverlay : Overlay
             handle.SetTransform(worldMatrix);
             DrawTiles(handle, gridBounds, map);
         }
+
+        foreach (var (mat, map) in SpaceMap)
+        {
+            var gridBounds = Matrix3.Invert(mat).TransformBox(args.WorldBounds);
+            handle.SetTransform(mat);
+            DrawTiles(handle, gridBounds, map);
+        }
+        handle.SetTransform(Matrix3.Identity);
     }
 
     private void DrawText(DrawingHandleScreen handle, Box2 gridBounds,

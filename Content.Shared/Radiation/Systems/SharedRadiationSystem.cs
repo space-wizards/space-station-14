@@ -1,16 +1,12 @@
 using Content.Shared.Radiation.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 using FloodFillSystem = Content.Shared.FloodFill.FloodFillSystem;
 
 namespace Content.Shared.Radiation.Systems;
 
 public abstract partial class SharedRadiationSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly FloodFillSystem _floodFill = default!;
-
-    private const float RadiationCooldown = 1.0f;
-    private float _accumulator;
 
     public override void Initialize()
     {
@@ -18,20 +14,18 @@ public abstract partial class SharedRadiationSystem : EntitySystem
         InitRadBlocking();
     }
 
-    public override void Update(float frameTime)
+}
+
+[Serializable, NetSerializable]
+public sealed class RadiationUpdate : EntityEventArgs
+{
+    public readonly Dictionary<EntityUid, Dictionary<Vector2i, float>> RadiationMap;
+    public List<(Matrix3, Dictionary<Vector2i, float>)> SpaceMap;
+
+    public RadiationUpdate(Dictionary<EntityUid, Dictionary<Vector2i, float>> radiationMap,
+        List<(Matrix3, Dictionary<Vector2i, float>)> spaceMap)
     {
-        base.Update(frameTime);
-
-        _accumulator += frameTime;
-
-        while (_accumulator > RadiationCooldown)
-        {
-            _accumulator -= RadiationCooldown;
-
-            UpdateRadSources();
-            UpdateReceivers();
-        }
+        RadiationMap = radiationMap;
+        SpaceMap = spaceMap;
     }
-
-
 }
