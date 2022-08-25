@@ -3,7 +3,6 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
 using Robust.Shared.Physics;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Physics.Controllers
@@ -23,7 +22,17 @@ namespace Content.Client.Physics.Controllers
             if (TryComp<RelayInputMoverComponent>(player, out var relayMover))
             {
                 if (relayMover.RelayEntity != null)
+                {
+                    if (TryComp<InputMoverComponent>(player, out var mover) &&
+                        TryComp<InputMoverComponent>(relayMover.RelayEntity, out var relayed))
+                    {
+                        relayed.RelativeEntity = mover.RelativeEntity;
+                        relayed.RelativeRotation = mover.RelativeRotation;
+                        relayed.TargetRelativeRotation = mover.RelativeRotation;
+                    }
+
                     HandleClientsideMovement(relayMover.RelayEntity.Value, frameTime);
+                }
             }
 
             HandleClientsideMovement(player, frameTime);

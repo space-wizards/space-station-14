@@ -29,11 +29,22 @@ namespace Content.Server.Physics.Controllers
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
+            var moverQuery = GetEntityQuery<InputMoverComponent>();
 
             foreach (var mover in EntityQuery<InputMoverComponent>(true))
             {
-                if (!xformQuery.TryGetComponent(mover.Owner, out var xform) ||
-                    relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed.RelayEntity != null)
+                if (relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed.RelayEntity != null)
+                {
+                    if (moverQuery.TryGetComponent(relayed.RelayEntity, out var relayMover))
+                    {
+                        relayMover.RelativeEntity = mover.RelativeEntity;
+                        relayMover.RelativeRotation = mover.RelativeRotation;
+                        relayMover.TargetRelativeRotation = mover.TargetRelativeRotation;
+                        continue;
+                    }
+                }
+
+                if (!xformQuery.TryGetComponent(mover.Owner, out var xform))
                 {
                     continue;
                 }
