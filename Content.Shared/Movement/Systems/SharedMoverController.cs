@@ -285,9 +285,9 @@ namespace Content.Shared.Movement.Systems
                     rotateXform = xform;
                 }
 
-                rotateXform.LocalRotation = xform.GridUid != null
-                    ? total.ToWorldAngle()
-                    : worldTotal.ToWorldAngle();
+                rotateXform.WorldRotation = xform.GridUid != null
+                    ? total.ToAngle()
+                    : worldTotal.ToAngle();
                 rotateXform.DeferUpdates = false;
 
                 if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) &&
