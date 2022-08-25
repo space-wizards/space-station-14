@@ -5,6 +5,15 @@ namespace Content.Shared.CharacterAppearance
 {
     public static class HumanoidVisualLayersExtension
     {
+        public static bool HasSexMorph(HumanoidVisualLayers layer)
+        {
+            return layer switch
+            {
+                HumanoidVisualLayers.Chest => true,
+                HumanoidVisualLayers.Head => true,
+                _ => false
+            };
+        }
         public static IEnumerable<HumanoidVisualLayers> ToHumanoidLayers(this SharedBodyPartComponent part)
         {
             switch (part.PartType)

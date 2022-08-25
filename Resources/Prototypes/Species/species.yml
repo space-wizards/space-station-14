@@ -164,13 +164,37 @@
   id: MobReptilianHead
   baseSprite:
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: head_m #TODO: Sex-based part selection
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobReptilianHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobReptilianHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: head_f
 
 - type: humanoidBaseSprite
   id: MobReptilianTorso
   baseSprite:
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: torso_m #TODO: Sex-based part selection
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobReptilianTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobReptilianTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: torso_f
 
 - type: humanoidBaseSprite
   id: MobReptilianLLeg
