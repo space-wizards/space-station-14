@@ -10,7 +10,7 @@ namespace Content.Client.HealthAnalyzer.UI
     {
         private HealthAnalyzerWindow? _window;
 
-        public HealthAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public HealthAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

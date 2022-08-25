@@ -20,6 +20,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
+using System.Data;
+using Content.Server.Traitor.Uplink;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -35,6 +37,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
@@ -192,7 +195,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var shuttlePath = "/Maps/infiltrator.yml";
         var mapId = _mapManager.CreateMap();
 
-        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, "/Maps/nukieplanet.yml");
+        var (_, outpost) = _mapLoader.LoadGrid(mapId, "/Maps/nukieplanet.yml");
 
         if (outpost == null)
         {
@@ -201,7 +204,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
+        var (_, shuttleId) = _mapLoader.LoadGrid(mapId, shuttlePath, new MapLoadOptions()
         {
             Offset = Vector2.One * 1000f,
         });

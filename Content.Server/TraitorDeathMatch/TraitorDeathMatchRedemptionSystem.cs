@@ -1,7 +1,9 @@
-﻿using Content.Server.Mind.Components;
-using Content.Server.Traitor.Uplink.Account;
-using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Mind.Components;
 using Content.Server.TraitorDeathMatch.Components;
+using Content.Server.Store.Components;
+using Content.Server.Store.Systems;
+using Content.Server.Traitor.Uplink;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -12,8 +14,11 @@ namespace Content.Server.TraitorDeathMatch;
 public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly UplinkAccountsSystem _uplink = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+
+    private const string TcCurrencyPrototype = "Telecrystal";
 
     public override void Initialize()
     {
@@ -43,7 +48,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             return;
         }
 
-        if (!EntityManager.TryGetComponent<UplinkComponent>(args.Used, out var victimUplink))
+        if (!EntityManager.TryGetComponent<StoreComponent>(args.Used, out var victimUplink))
         {
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
@@ -72,10 +77,10 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             return;
         }
 
-        UplinkComponent? userUplink = null;
+        StoreComponent? userUplink = null;
 
         if (_inventory.TryGetSlotEntity(args.User, "id", out var pdaUid) &&
-            EntityManager.TryGetComponent<UplinkComponent>(pdaUid, out var userUplinkComponent))
+            EntityManager.TryGetComponent<StoreComponent>(pdaUid, out var userUplinkComponent))
             userUplink = userUplinkComponent;
 
         if (userUplink == null)
@@ -88,35 +93,13 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             return;
         }
 
+
         // We have finally determined both PDA components. FINALLY.
 
-        var userAccount = userUplink.UplinkAccount;
-        var victimAccount = victimUplink.UplinkAccount;
-
-        if (userAccount == null)
-        {
-            _popup.PopupEntity(Loc.GetString(
-                "traitor-death-match-redemption-component-interact-using-main-message",
-                ("secondMessage",
-                    Loc.GetString(
-                        "traitor-death-match-redemption-component-interact-using-user-no-uplink-account-message"))), uid, Filter.Entities(args.User));
-            return;
-        }
-
-        if (victimAccount == null)
-        {
-            _popup.PopupEntity(Loc.GetString(
-                "traitor-death-match-redemption-component-interact-using-main-message",
-                ("secondMessage",
-                    Loc.GetString(
-                        "traitor-death-match-redemption-component-interact-using-victim-no-uplink-account-message"))), uid, Filter.Entities(args.User));
-            return;
-        }
-
-        // 4 is the per-PDA bonus amount.
-        var transferAmount = victimAccount.Balance + 4;
-        _uplink.SetBalance(victimAccount, 0);
-        _uplink.AddToBalance(userAccount, transferAmount);
+        // 4 is the per-PDA bonus amount
+        var transferAmount = _uplink.GetTCBalance(victimUplink) + 4;
+        victimUplink.Balance.Clear();
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>() { {"Telecrystal", FixedPoint2.New(transferAmount)}}, userUplink);
 
         EntityManager.DeleteEntity(victimUplink.Owner);
 
