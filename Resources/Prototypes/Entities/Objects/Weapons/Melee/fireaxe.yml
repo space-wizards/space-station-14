@@ -48,8 +48,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
     state: icon
-  - type: Item
-    size: 20
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
     quickEquip: false

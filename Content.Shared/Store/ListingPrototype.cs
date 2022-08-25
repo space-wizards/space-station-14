@@ -17,7 +17,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual, DataDefinition]
-public class ListingData : IEquatable<ListingData>
+public class ListingData : IEquatable<ListingData>, ICloneable
 {
     /// <summary>
     /// The name of the listing. If empty, uses the entity's name (if present)
@@ -115,6 +115,29 @@ public class ListingData : IEquatable<ListingData>
             return false;
 
         return true;
+    }
+
+    /// <summary>
+    /// Creates a unique instance of a listing. ALWAWYS USE THIS WHEN ENUMERATING LISTING PROTOTYPES
+    /// DON'T BE DUMB AND MODIFY THE PROTOTYPES
+    /// </summary>
+    /// <returns>A unique copy of the listing data.</returns>
+    public object Clone()
+    {
+        return new ListingData
+        {
+            Name = Name,
+            Description = Description,
+            Categories = Categories,
+            Cost = Cost,
+            Conditions = Conditions,
+            Icon = Icon,
+            Priority = Priority,
+            ProductEntity = ProductEntity,
+            ProductAction = ProductAction,
+            ProductEvent = ProductEvent,
+            PurchaseAmount = PurchaseAmount,
+        };
     }
 }
 
