@@ -11,7 +11,6 @@ namespace Content.Client.Decals
     public sealed class DecalOverlay : Overlay
     {
         private readonly DecalSystem _decals;
-        private readonly SharedTransformSystem _transform;
         private readonly SpriteSystem _sprites;
         private readonly IEntityManager _entManager;
         private readonly IPrototypeManager _prototypeManager;
@@ -22,13 +21,11 @@ namespace Content.Client.Decals
 
         public DecalOverlay(
             DecalSystem decals,
-            SharedTransformSystem transforms,
             SpriteSystem sprites,
             IEntityManager entManager,
             IPrototypeManager prototypeManager)
         {
             _decals = decals;
-            _transform = transforms;
             _sprites = sprites;
             _entManager = entManager;
             _prototypeManager = prototypeManager;
@@ -43,7 +40,8 @@ namespace Content.Client.Decals
 
             foreach (var (gridId, zIndexDictionary) in _decals.DecalRenderIndex)
             {
-                if (zIndexDictionary.Count == 0) continue;
+                if (zIndexDictionary.Count == 0)
+                    continue;
 
                 if (!xformQuery.TryGetComponent(gridId, out var xform))
                 {
