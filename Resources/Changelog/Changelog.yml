@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Most gun sizes have been increased., type: Tweak}
-  id: 1686
-  time: '2022-06-12T05:30:03.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added new APC variants for mappers. Construction graphs to follow in
@@ -2946,3 +2941,8 @@ Entries:
     type: Tweak}
   id: 2185
   time: '2022-08-24T14:50:31.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: WallmountSubstationElectronics Are now printable., type: Fix}
+  id: 2186
+  time: '2022-08-25T13:23:03.0000000+00:00'
