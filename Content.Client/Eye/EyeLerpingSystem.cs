@@ -35,22 +35,23 @@ public sealed class EyeLerpingSystem : EntitySystem
 
     private void OnEyeStartup(EntityUid uid, EyeComponent component, ComponentStartup args)
     {
+        if (component.Eye == null)
+            return;
+
         // If the eye starts up then don't lerp at all.
         var xformQuery = GetEntityQuery<TransformComponent>();
         TryComp<InputMoverComponent>(uid, out var mover);
+        xformQuery.TryGetComponent(uid, out var xform);
         var lerpInfo = _activeEyes.GetOrNew(uid);
-        lerpInfo.TargetRotation = GetRotation(uid, xformQuery, mover);
+        lerpInfo.TargetRotation = GetRotation(xformQuery, mover, xform);
         lerpInfo.LastRotation = lerpInfo.TargetRotation;
 
-        if (xformQuery.TryGetComponent(uid, out var xform))
+        if (xform != null)
         {
             lerpInfo.MapId = xform.MapID;
         }
 
-        if (component.Eye != null)
-        {
-            component.Eye.Rotation = lerpInfo.TargetRotation;
-        }
+        component.Eye.Rotation = lerpInfo.TargetRotation;
     }
 
     private void OnEyeShutdown(EntityUid uid, EyeComponent component, ComponentShutdown args)
@@ -83,14 +84,13 @@ public sealed class EyeLerpingSystem : EntitySystem
         foreach (var (eye, entity) in GetEyes())
         {
             var lerpInfo = _activeEyes.GetOrNew(entity);
-            lerpInfo.LastRotation = eye.Rotation;
             foundEyes.Add(entity);
             moverQuery.TryGetComponent(entity, out var mover);
-
-            lerpInfo.TargetRotation = GetRotation(entity, xformQuery, mover);
-
-            // TODO: Waste of a trycomp, but at least for now it stops the egregious lerps.
-            if (xformQuery.TryGetComponent(entity, out var xform))
+            xformQuery.TryGetComponent(entity, out var xform);
+            lerpInfo.LastRotation = eye.Rotation;
+            lerpInfo.TargetRotation = GetRotation(xformQuery, mover, xform);
+            
+            if (xform != null)
             {
                 // If we traverse maps then don't lerp.
                 if (xform.MapID != lerpInfo.MapId)
@@ -109,7 +109,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         }
     }
 
-    private Angle GetRotation(EntityUid uid, EntityQuery<TransformComponent> xformQuery, InputMoverComponent? mover = null)
+    private Angle GetRotation(EntityQuery<TransformComponent> xformQuery, InputMoverComponent? mover = null, TransformComponent? xform = null)
     {
         // If we can move then tie our eye to our inputs (these also get lerped so it should be fine).
         if (mover != null)
@@ -117,10 +117,8 @@ public sealed class EyeLerpingSystem : EntitySystem
             return -_mover.GetParentGridAngle(mover);
         }
 
-        // TODO: Transform system
-
         // if not tied to a mover then lock it to map / grid
-        if (xformQuery.TryGetComponent(uid, out var xform))
+        if (xform != null)
         {
             var relative = xform.GridUid;
             relative ??= xform.MapUid;
@@ -161,6 +159,7 @@ public sealed class EyeLerpingSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         var tickFraction = (float) _gameTiming.TickFraction / ushort.MaxValue;
+        var lerpMinimum = 0.01;
 
         foreach (var (eye, entity) in GetEyes())
         {
@@ -168,6 +167,13 @@ public sealed class EyeLerpingSystem : EntitySystem
                 continue;
 
             var shortest = Angle.ShortestDistance(lerpInfo.LastRotation, lerpInfo.TargetRotation);
+
+            if (Math.Abs(shortest.Theta) < lerpMinimum)
+            {
+                eye.Rotation = lerpInfo.TargetRotation;
+                continue;
+            }
+
             eye.Rotation = shortest * tickFraction + lerpInfo.LastRotation;
         }
     }

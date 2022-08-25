@@ -98,7 +98,8 @@ namespace Content.Shared.Movement.Systems
             InputMoverComponent mover,
             PhysicsComponent physicsComponent,
             TransformComponent xform,
-            float frameTime)
+            float frameTime,
+            EntityQuery<TransformComponent> xformQuery)
         {
             DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
@@ -145,6 +146,7 @@ namespace Content.Shared.Movement.Systems
             // Update relative movement
             if (mover.LerpAccumulator > 0f)
             {
+                Dirty(mover);
                 mover.LerpAccumulator -= frameTime;
 
                 if (mover.LerpAccumulator <= 0f)
@@ -166,12 +168,12 @@ namespace Content.Shared.Movement.Systems
                         var targetRotation = Angle.Zero;
 
                         // Get our current relative rotation
-                        if (TryComp<TransformComponent>(mover.RelativeEntity, out var oldRelativeXform))
+                        if (xformQuery.TryGetComponent(mover.RelativeEntity, out var oldRelativeXform))
                         {
                             currentRotation = oldRelativeXform.WorldRotation + mover.RelativeRotation;
                         }
 
-                        if (TryComp<TransformComponent>(relative, out var relativeXform))
+                        if (xformQuery.TryGetComponent(relative, out var relativeXform))
                         {
                             // This is our current rotation relative to our new parent.
                             mover.RelativeRotation = (currentRotation - relativeXform.WorldRotation).FlipPositive();
@@ -192,31 +194,42 @@ namespace Content.Shared.Movement.Systems
                                 targetRotation = mover.RelativeRotation.GetCardinalDir().ToAngle().Reduced();
                         }
 
-                        Sawmill.Debug($"Updated relative movement entity from {mover.RelativeEntity} to {relative}");
                         mover.RelativeEntity = relative;
                         mover.TargetRelativeRotation = targetRotation;
-                        Dirty(mover);
                     }
                 }
             }
 
-            // if we've just traversed then lerp to our target rotation.
-            if (!MathHelper.CloseTo(mover.RelativeRotation, mover.TargetRelativeRotation, 0.01))
-            {
-                var diff = Angle.ShortestDistance(mover.RelativeRotation, mover.TargetRelativeRotation);
-                var adjustment = diff * 5f * frameTime;
+            var angleDiff = Angle.ShortestDistance(mover.RelativeRotation, mover.TargetRelativeRotation);
 
-                if (diff < 0)
-                    adjustment = Math.Clamp(adjustment, diff, -diff);
+            // if we've just traversed then lerp to our target rotation.
+            if (!angleDiff.EqualsApprox(Angle.Zero, 0.01))
+            {
+                var adjustment = angleDiff * 5f * frameTime;
+                var minAdjustment = 0.01 * frameTime;
+
+                if (angleDiff < 0)
+                {
+                    adjustment = Math.Min(adjustment, minAdjustment);
+                    adjustment = Math.Clamp(adjustment, angleDiff, -angleDiff);
+                }
                 else
-                    adjustment = Math.Clamp(adjustment, -diff, diff);
+                {
+                    adjustment = Math.Max(adjustment, minAdjustment);
+                    adjustment = Math.Clamp(adjustment, -angleDiff, angleDiff);
+                }
 
                 mover.RelativeRotation += adjustment;
+                if (mover.Owner == new EntityUid(11818))
+                {
+                    Logger.Debug($"Relative mover is {mover.RelativeRotation}");
+                }
                 Dirty(mover);
             }
-            else
+            else if (!angleDiff.Equals(Angle.Zero))
             {
                 mover.RelativeRotation = mover.TargetRelativeRotation;
+                Dirty(mover);
             }
 
             var parentRotation = GetParentGridAngle(mover);

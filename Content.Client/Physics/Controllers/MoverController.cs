@@ -31,8 +31,10 @@ namespace Content.Client.Physics.Controllers
 
         private void HandleClientsideMovement(EntityUid player, float frameTime)
         {
+            var xformQuery = GetEntityQuery<TransformComponent>();
+
             if (!TryComp(player, out InputMoverComponent? mover) ||
-                !TryComp(player, out TransformComponent? xform))
+                !xformQuery.TryGetComponent(player, out var xform))
             {
                 return;
             }
@@ -90,7 +92,7 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(mover, body, xformMover, frameTime);
+            HandleMobMovement(mover, body, xformMover, frameTime, xformQuery);
         }
 
         protected override bool CanSound()

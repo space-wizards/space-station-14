@@ -126,29 +126,35 @@ namespace Content.Shared.Movement.Systems
             var rotation = mover.RelativeRotation;
 
             if (TryComp<TransformComponent>(mover.RelativeEntity, out var relativeXform))
-                return relativeXform.WorldRotation + rotation;
+                return (relativeXform.WorldRotation + rotation);
 
             return rotation;
         }
 
         private void OnInputParentChange(EntityUid uid, InputMoverComponent component, ref EntParentChangedMessage args)
         {
-            if (component.LifeStage < ComponentLifeStage.Initialized)
-                return;
-
             // If we change our grid / map then delay updating our LastGridAngle.
             var relative = args.Transform.GridUid;
             relative ??= args.Transform.MapUid;
+
+            if (component.LifeStage < ComponentLifeStage.Running)
+            {
+                component.RelativeEntity = relative;
+                Dirty(component);
+                return;
+            }
 
             // If we go on a grid and back off then just reset the accumulator.
             if (relative == component.RelativeEntity)
             {
                 component.LerpAccumulator = 0f;
+                Dirty(component);
                 return;
             }
 
             // TODO: Lerp to the specific angle.
             component.LerpAccumulator = InputMoverComponent.LerpTime;
+            Dirty(component);
         }
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)

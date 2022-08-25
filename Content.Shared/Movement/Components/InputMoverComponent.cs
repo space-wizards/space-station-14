@@ -55,8 +55,7 @@ namespace Content.Shared.Movement.Components
         /// <summary>
         /// The current relative rotation. This will lerp towards the <see cref="TargetRelativeRotation"/>.
         /// </summary>
-        [ViewVariables]
-        public Angle RelativeRotation = Angle.Zero;
+        [ViewVariables] public Angle RelativeRotation;
 
         /// <summary>
         /// If we traverse on / off a grid then set a timer to update our relative inputs.
