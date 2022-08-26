@@ -10,11 +10,8 @@
   icon: "AtmosphericTechnician"
   supervisors: job-supervisors-ce
   canBeAntag: false
-  access:
-  - Maintenance
-  - Engineering
-  - External
-  - Atmospherics
+  accessGroups:
+    - AllAccess
 
 - type: startingGear
   id: AtmosphericTechnicianGear
