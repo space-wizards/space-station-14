@@ -12,6 +12,7 @@ public sealed class RadiationSystem : SharedRadiationSystem
     {
         base.Initialize();
         SubscribeNetworkEvent<RadiationUpdate>(OnUpdate);
+        SubscribeNetworkEvent<RadiationRaysUpdate>(OnRayUpdate);
     }
 
     private void OnUpdate(RadiationUpdate ev)
@@ -21,5 +22,12 @@ public sealed class RadiationSystem : SharedRadiationSystem
         overlay._radiationMap = ev.RadiationMap;
         overlay.SpaceMap = ev.SpaceMap;
 
+    }
+
+    private void OnRayUpdate(RadiationRaysUpdate ev)
+    {
+        if (!_overlayMan.TryGetOverlay(out RadiationRayOverlay? overlay) || overlay == null)
+            return;
+        overlay.Rays = ev.Rays;
     }
 }

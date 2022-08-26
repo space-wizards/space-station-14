@@ -192,6 +192,7 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
             overlayMgr.AddOverlay(new RadiationViewOverlay());
+            overlayMgr.AddOverlay(new RadiationRayOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();

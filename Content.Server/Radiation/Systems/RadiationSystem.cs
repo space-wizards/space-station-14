@@ -13,6 +13,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
 
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly FloodFillSystem _floodFill = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     public Dictionary<EntityUid, Dictionary<Vector2i, float>> _radiationMap = new();
     public List<(Matrix3, Dictionary<Vector2i, float>)> _spaceMap = new();
@@ -34,9 +35,10 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         while (_accumulator > RadiationCooldown)
         {
             _accumulator -= RadiationCooldown;
+            RaycastUpdate();
 
-            UpdateRadSources();
-            UpdateReceivers();
+            //UpdateRadSources();
+            //UpdateReceivers();
         }
     }
 
