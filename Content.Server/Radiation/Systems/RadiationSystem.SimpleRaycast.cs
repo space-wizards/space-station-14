@@ -3,6 +3,7 @@ using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -13,6 +14,9 @@ public partial class RadiationSystem
     public void RaycastUpdate()
     {
         var list = new List<RadRayResult>();
+
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
 
         var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
         foreach (var source in EntityQuery<RadiationSourceComponent>())
@@ -27,6 +31,8 @@ public partial class RadiationSystem
                     list.Add(ray);
             }
         }
+
+        Logger.Info($"Raycasted radiation {stopwatch.Elapsed.TotalMilliseconds}ms");
 
         RaiseNetworkEvent(new RadiationRaysUpdate(list));
     }
