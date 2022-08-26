@@ -195,7 +195,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var shuttlePath = "/Maps/infiltrator.yml";
         var mapId = _mapManager.CreateMap();
 
-        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, "/Maps/nukieplanet.yml");
+        var (_, outpost) = _mapLoader.LoadGrid(mapId, "/Maps/nukieplanet.yml");
 
         if (outpost == null)
         {
@@ -204,7 +204,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
+        var (_, shuttleId) = _mapLoader.LoadGrid(mapId, shuttlePath, new MapLoadOptions()
         {
             Offset = Vector2.One * 1000f,
         });

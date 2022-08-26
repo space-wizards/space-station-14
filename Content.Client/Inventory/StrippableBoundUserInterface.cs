@@ -12,6 +12,7 @@ namespace Content.Client.Inventory
         public Dictionary<(string ID, string Name), string>? Inventory { get; private set; }
         public Dictionary<string, string>? Hands { get; private set; }
         public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
+        public Dictionary<EntityUid, string>? Ensnare { get; private set; }
 
         [ViewVariables]
         private StrippingMenu? _strippingMenu;
@@ -79,6 +80,17 @@ namespace Content.Client.Inventory
                     });
                 }
             }
+
+            if (Ensnare != null)
+            {
+                foreach (var (id, name) in Ensnare)
+                {
+                    _strippingMenu.AddButton(Loc.GetString("strippable-bound-user-interface-stripping-menu-ensnare-button"), name, (ev) =>
+                    {
+                        SendMessage(new StrippingEnsnareButtonPressed(id));
+                    });
+                }
+            }
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -90,6 +102,7 @@ namespace Content.Client.Inventory
             Inventory = stripState.Inventory;
             Hands = stripState.Hands;
             Handcuffs = stripState.Handcuffs;
+            Ensnare = stripState.Ensnare;
 
             UpdateMenu();
         }

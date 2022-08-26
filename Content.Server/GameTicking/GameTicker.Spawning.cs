@@ -25,7 +25,7 @@ namespace Content.Server.GameTicking
     {
         private const string ObserverPrototypeName = "MobObserver";
 
-        [ViewVariables(VVAccess.ReadWrite), Obsolete("Due for removal when observer spawning is refactored.")]
+        [ViewVariables(VVAccess.ReadWrite), Obsolete("Due for removal when observer spawning is refactored.")] // See also: MindComponent's OnShutdown shitcode
         private EntityCoordinates _spawnPoint;
 
         /// <summary>
@@ -281,7 +281,11 @@ namespace Content.Server.GameTicking
         #region Spawn Points
         public EntityCoordinates GetObserverSpawnPoint()
         {
-            var location = _spawnPoint;
+            // TODO rename this to TryGetObserverSpawnPoint to make it clear that the result might be invalid. Or at
+            // least try try more fallback values, like randomly spawning them in any available map or just creating a
+            // "we fucked up" map. Its better than dumping them into the void.
+
+            var location = _spawnPoint.IsValid(EntityManager) ? _spawnPoint : EntityCoordinates.Invalid;
 
             _possiblePositions.Clear();
 
