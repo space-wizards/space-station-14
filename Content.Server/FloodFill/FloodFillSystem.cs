@@ -89,7 +89,7 @@ public sealed partial class FloodFillSystem : EntitySystem
         HashSet<EntityUid> encounteredGrids = new();
         Dictionary<EntityUid, HashSet<Vector2i>>? previousGridJump;
 
-        // variables for transforming between grid and space-coordiantes
+        // variables for transforming between grid and space-coordinates
         var spaceMatrix = Matrix3.Identity;
         var spaceAngle = Angle.Zero;
         if (referenceGrid != null)

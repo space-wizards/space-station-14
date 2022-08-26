@@ -1,9 +1,8 @@
-﻿using Content.Shared.Radiation.Components;
+﻿using Content.Server.FloodFill;
+using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Timing;
-using FloodFillSystem = Content.Server.FloodFill.FloodFillSystem;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -59,9 +58,6 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
 
     public void CalculateRadiationMap(MapCoordinates epicenter, float radsPerSecond)
     {
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-
         var ff = _floodFill.DoFloodTile(epicenter,
             radsPerSecond,
             Slope,
@@ -74,21 +70,25 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
 
         if (ff == null)
             return;
-        Logger.Info($"Generated radiation map with {ff.Area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
 
         foreach (var (gridUid, gridFlood) in ff.GridData)
         {
-            var dict = new Dictionary<Vector2i, float>();
+            if (!_radiationMap.ContainsKey(gridUid))
+                _radiationMap.Add(gridUid, new Dictionary<Vector2i, float>());
+            var dict = _radiationMap[gridUid];
+
             foreach (var (iter, poses) in gridFlood.TileLists)
             {
                 var rads = ff.IterationIntensity[iter];
                 foreach (var pos in poses)
                 {
-                    dict[pos] = rads;
+                    var r = rads;
+                    if (dict.TryGetValue(pos, out var rad))
+                        r += rad;
+
+                    dict[pos] = r;
                 }
             }
-
-            _radiationMap[gridUid] = dict;
         }
 
         if (ff.SpaceData != null)
@@ -113,17 +113,33 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     {
         foreach (var receiver in EntityQuery<RadiationReceiverComponent>())
         {
+            float rads = 0;
+
             var mapCoordinates = Transform(receiver.Owner).MapPosition;
-            if (!_mapManager.TryFindGridAt(mapCoordinates, out var candidateGrid) ||
-                !candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(mapCoordinates.Position), out var tileRef))
+            if (_mapManager.TryFindGridAt(mapCoordinates, out var candidateGrid) &&
+                candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(mapCoordinates.Position), out var tileRef))
             {
-                return;
+                var gridUid = tileRef.GridUid;
+                var pos = tileRef.GridIndices;
+                if (!_radiationMap.TryGetValue(gridUid, out var map) || !map.TryGetValue(pos, out rads))
+                    return;
+            }
+            else
+            {
+                foreach (var (mat, map) in _spaceMap)
+                {
+                    var invMat = mat.Invert();
+                    var pos = invMat * mapCoordinates.Position;
+                    var gridPos = new Vector2i(
+                        (int)Math.Floor(pos.X),
+                        (int)Math.Floor(pos.Y));
+
+                    if (map.TryGetValue(gridPos, out var r))
+                        rads += r;
+                }
             }
 
-            var gridUid = tileRef.GridUid;
-            var pos = tileRef.GridIndices;
-            if (!_radiationMap.TryGetValue(gridUid, out var map) ||
-                !map.TryGetValue(pos, out var rads))
+            if (rads == 0)
                 return;
 
             var ev = new OnIrradiatedEvent(RadiationCooldown, rads);
