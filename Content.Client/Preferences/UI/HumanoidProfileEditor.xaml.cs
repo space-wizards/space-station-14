@@ -847,10 +847,7 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            var pointsProto = _prototypeManager
-                .Index<SpeciesPrototype>(Profile.Species).MarkingPoints;
-            _markingSet = new(Profile.Appearance.Markings, pointsProto, _markingManager);
-            CMarkings.SetData(_markingSet, Profile.Species, Profile.Appearance.SkinColor);
+            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species, Profile.Appearance.SkinColor);
         }
 
         private void UpdateSpecies()

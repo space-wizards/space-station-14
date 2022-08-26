@@ -37,9 +37,12 @@ namespace Content.Client.Humanoid
         private string _currentSpecies = SharedHumanoidSystem.DefaultSpecies;
         public Color CurrentSkinColor = Color.White;
 
-        public void SetData(MarkingSet newMarkings, string species, Color skinColor)
+        public void SetData(List<Marking> newMarkings, string species, Color skinColor)
         {
-            _currentMarkings = new(newMarkings); // markings are a ref type (a mistake)
+            var pointsProto = _prototypeManager
+                .Index<SpeciesPrototype>(species).MarkingPoints;
+            _currentMarkings = new(newMarkings, pointsProto, _markingManager);
+            _currentMarkings.FilterSpecies(species); // should be validated server-side but it can't hurt
             _currentSpecies = species;
             CurrentSkinColor = skinColor;
 
@@ -222,6 +225,7 @@ namespace Content.Client.Humanoid
             var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
 
             _currentMarkings = new(markingList, speciesPrototype.MarkingPoints, _markingManager, _prototypeManager);
+            _currentMarkings.FilterSpecies(species);
 
             Populate();
             PopulateUsed();
@@ -321,9 +325,13 @@ namespace Content.Client.Humanoid
         {
             if (_selectedUnusedMarking is null) return;
 
+            if (_currentMarkings.PointsLeft(_selectedMarkingCategory) == 0)
+            {
+                return;
+            }
+
             var marking = (MarkingPrototype) _selectedUnusedMarking.Metadata!;
 
-            UpdatePoints();
 
             var markingObject = marking.AsMarking();
             for (var i = 0; i < markingObject.MarkingColors.Count; i++)
@@ -332,6 +340,8 @@ namespace Content.Client.Humanoid
             }
 
             _currentMarkings.AddBack(_selectedMarkingCategory, markingObject);
+
+            UpdatePoints();
 
             CMarkingsUnused.Remove(_selectedUnusedMarking);
             var item = new ItemList.Item(CMarkingsUsed)
@@ -353,9 +363,10 @@ namespace Content.Client.Humanoid
 
             var marking = (MarkingPrototype) _selectedMarking.Metadata!;
 
+            _currentMarkings.Remove(_selectedMarkingCategory, marking.ID);
+
             UpdatePoints();
 
-            _currentMarkings.Remove(_selectedMarkingCategory, marking.ID);
             CMarkingsUsed.Remove(_selectedMarking);
 
             if (marking.MarkingCategory == _selectedMarkingCategory)
