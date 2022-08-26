@@ -17,6 +17,11 @@
   - UseFoodInInventoryExp
 
 - type: behaviorSet
+  id: FoliageHunger
+  actions:
+  - EatFoliageExp
+
+- type: behaviorSet
   id: Idle
   actions:
   - CloseLastEntityStorage

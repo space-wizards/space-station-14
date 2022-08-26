@@ -77,3 +77,4 @@
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
+    - type: Foliage

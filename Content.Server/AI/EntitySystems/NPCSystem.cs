@@ -36,7 +36,7 @@ namespace Content.Server.AI.EntitySystems
             base.Initialize();
             // Makes physics etc debugging easier.
 #if DEBUG
-            _configurationManager.OverrideDefault(CCVars.NPCEnabled, false);
+            _configurationManager.OverrideDefault(CCVars.NPCEnabled, true);
 #endif
 
             _sawmill = Logger.GetSawmill("npc");

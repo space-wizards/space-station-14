@@ -508,6 +508,20 @@
     interactFailureString: petting-failure-goat
     interactSuccessSound:
       path: /Audio/Animals/goat_bah.ogg
+  - type: UtilityNPC
+    behaviorSets:
+    - Idle
+    - FoliageHunger
+  - type: Hunger
+  - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    hitSound:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 5
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
