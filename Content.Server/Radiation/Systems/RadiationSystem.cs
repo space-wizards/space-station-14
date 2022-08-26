@@ -3,6 +3,7 @@ using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -48,16 +49,25 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         }
         _spaceMap.Clear();
 
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
         foreach (var comp in EntityManager.EntityQuery<RadiationSourceComponent>())
         {
             var ent = comp.Owner;
             var cords = Transform(ent).MapPosition;
             CalculateRadiationMap(cords, comp.RadsPerSecond);
         }
+        Logger.Info($"Generated radiation map {stopwatch.Elapsed.TotalMilliseconds}ms");
+
+        RaiseNetworkEvent(new RadiationUpdate(_radiationMap, _spaceMap));
+
     }
 
     public void CalculateRadiationMap(MapCoordinates epicenter, float radsPerSecond)
     {
+
+
         var ff = _floodFill.DoFloodTile(epicenter,
             radsPerSecond,
             Slope,
@@ -70,6 +80,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
 
         if (ff == null)
             return;
+
 
         foreach (var (gridUid, gridFlood) in ff.GridData)
         {
@@ -105,8 +116,6 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
 
             _spaceMap.Add((ff.SpaceMatrix, dict));
         }
-
-        RaiseNetworkEvent(new RadiationUpdate(_radiationMap, _spaceMap));
     }
 
     private void UpdateReceivers()
@@ -122,7 +131,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
                 var gridUid = tileRef.GridUid;
                 var pos = tileRef.GridIndices;
                 if (!_radiationMap.TryGetValue(gridUid, out var map) || !map.TryGetValue(pos, out rads))
-                    return;
+                    continue;
             }
             else
             {
@@ -140,7 +149,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
             }
 
             if (rads == 0)
-                return;
+                continue;
 
             var ev = new OnIrradiatedEvent(RadiationCooldown, rads);
             RaiseLocalEvent(receiver.Owner, ev);
