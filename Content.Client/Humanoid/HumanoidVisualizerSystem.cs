@@ -166,7 +166,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible);
         }
 
-        if (humanoid.CurrentMarkings.Count < newMarkings.Count)
+        if (humanoid.CurrentMarkings.Count < newMarkings.Count && dirtyRangeStart < 0)
         {
             dirtyRangeStart = humanoid.CurrentMarkings.Count;
         }

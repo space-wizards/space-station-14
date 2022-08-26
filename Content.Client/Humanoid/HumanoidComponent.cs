@@ -8,7 +8,7 @@ namespace Content.Client.Humanoid;
 [RegisterComponent]
 public sealed class HumanoidComponent : SharedHumanoidComponent
 {
-    public List<Marking> CurrentMarkings = new();
+    [ViewVariables] public List<Marking> CurrentMarkings = new();
 
     public Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> BaseLayers = new();
 }
