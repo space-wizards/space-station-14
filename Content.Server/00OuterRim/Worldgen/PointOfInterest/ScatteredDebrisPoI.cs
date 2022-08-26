@@ -30,7 +30,7 @@ public sealed class ScatteredDebrisPoI : PointOfInterestGenerator
 
         foreach (var point in debrisPoints)
         {
-            var (_, grid) = mapLoader.LoadBlueprint(worldChunkSys.WorldMap, random.Pick(Maps), new MapLoadOptions()
+            var (_, grid) = mapLoader.LoadGrid(worldChunkSys.WorldMap, random.Pick(Maps), new MapLoadOptions()
             {
                 Offset = center + point,
                 Rotation = random.NextAngle()
