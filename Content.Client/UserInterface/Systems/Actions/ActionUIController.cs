@@ -32,12 +32,9 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
 
-    private const int PageAmount = 9;
-    private const int ButtonAmount = 10;
-
+    private const int DefaultPageIndex = 1;
     private ActionButtonContainer? _container;
     private readonly List<ActionPage> _pages = new();
-    private readonly ActionPage _defaultPage;
     private int _currentPageIndex;
     private readonly DragDropHelper<ActionButton> _menuDragHelper;
     private readonly TextureRect _dragShadow;
@@ -59,12 +56,13 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
             MouseFilter = MouseFilterMode.Ignore
         };
 
-        for (var i = 0; i < PageAmount; i++)
+        var pageCount = ContentKeyFunctions.GetLoadoutBoundKeys().Length;
+        var buttonCount = ContentKeyFunctions.GetHotbarBoundKeys().Length;
+        for (var i = 0; i < pageCount; i++)
         {
-            CreatePage();
+            var page = new ActionPage(buttonCount);
+            _pages.Add(page);
         }
-
-        _defaultPage = _pages[0];
     }
 
     public void OnStateEntered(GameplayState state)
@@ -76,47 +74,28 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         UIManager.PopupRoot.AddChild(_dragShadow);
         CreateWindow();
 
-        CommandBinds.Builder
+        var builder = CommandBinds.Builder;
+        var hotbarKeys = ContentKeyFunctions.GetHotbarBoundKeys();
+        for (var i = 0; i < hotbarKeys.Length; i++)
+        {
+            var boundId = i; // This is needed, because the lambda captures it.
+            var boundKey = hotbarKeys[i];
+            builder = builder.Bind(boundKey,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(boundId)));
+        }
+
+        var loadoutKeys = ContentKeyFunctions.GetLoadoutBoundKeys();
+        for (var i = 0; i < loadoutKeys.Length; i++)
+        {
+            var boundId = i; // This is needed, because the lambda captures it.
+            var boundKey = loadoutKeys[i];
+            builder = builder.Bind(boundKey,
+                InputCmdHandler.FromDelegate(_ => ChangePage(boundId)));
+        }
+
+        builder
             .Bind(ContentKeyFunctions.OpenActionsMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .Bind(ContentKeyFunctions.Hotbar0,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(9)))
-            .Bind(ContentKeyFunctions.Hotbar1,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(0)))
-            .Bind(ContentKeyFunctions.Hotbar2,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(1)))
-            .Bind(ContentKeyFunctions.Hotbar3,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(2)))
-            .Bind(ContentKeyFunctions.Hotbar4,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(3)))
-            .Bind(ContentKeyFunctions.Hotbar5,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(4)))
-            .Bind(ContentKeyFunctions.Hotbar6,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(5)))
-            .Bind(ContentKeyFunctions.Hotbar7,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(6)))
-            .Bind(ContentKeyFunctions.Hotbar8,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(7)))
-            .Bind(ContentKeyFunctions.Hotbar9,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(8)))
-            .Bind(ContentKeyFunctions.Loadout1,
-                InputCmdHandler.FromDelegate(_ => ChangePage(0)))
-            .Bind(ContentKeyFunctions.Loadout2,
-                InputCmdHandler.FromDelegate(_ => ChangePage(1)))
-            .Bind(ContentKeyFunctions.Loadout3,
-                InputCmdHandler.FromDelegate(_ => ChangePage(2)))
-            .Bind(ContentKeyFunctions.Loadout4,
-                InputCmdHandler.FromDelegate(_ => ChangePage(3)))
-            .Bind(ContentKeyFunctions.Loadout5,
-                InputCmdHandler.FromDelegate(_ => ChangePage(4)))
-            .Bind(ContentKeyFunctions.Loadout6,
-                InputCmdHandler.FromDelegate(_ => ChangePage(5)))
-            .Bind(ContentKeyFunctions.Loadout7,
-                InputCmdHandler.FromDelegate(_ => ChangePage(6)))
-            .Bind(ContentKeyFunctions.Loadout8,
-                InputCmdHandler.FromDelegate(_ => ChangePage(7)))
-            .Bind(ContentKeyFunctions.Loadout9,
-                InputCmdHandler.FromDelegate(_ => ChangePage(8)))
             .Register<ActionUIController>();
     }
 
@@ -130,11 +109,12 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     private void ChangePage(int index)
     {
+        var lastPage = _pages.Count - 1;
         if (index < 0)
         {
-            index = PageAmount - 1;
+            index = lastPage;
         }
-        else if (index > PageAmount - 1)
+        else if (index > lastPage)
         {
             index = 0;
         }
@@ -143,7 +123,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         var page = _pages[_currentPageIndex];
         _container?.SetActionData(page);
 
-        ActionsBar.PageButtons.Label.Text = $"{_currentPageIndex + 1}";
+        ActionsBar.PageButtons.Label.Text = $"{_currentPageIndex}";
     }
 
     private void OnLeftArrowPressed(ButtonEventArgs args)
@@ -490,7 +470,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
     private void OnComponentLinked(ActionsComponent component)
     {
         LoadDefaultActions(component);
-        _container?.SetActionData(_defaultPage);
+        _container?.SetActionData(_pages[DefaultPageIndex]);
     }
 
     private void OnComponentUnlinked()
@@ -499,48 +479,39 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         //TODO: Clear button data
     }
 
-    private void CreatePage()
-    {
-        var page = new ActionPage(ButtonAmount);
-        _pages.Add(page);
-    }
-
     private void LoadDefaultActions(ActionsComponent component)
     {
-        List<ActionType> actions = new();
-        foreach (var actionType in component.Actions)
+        var actions = component.Actions.Where(actionType => actionType.AutoPopulate).ToList();
+
+        var offset = 0;
+        var totalPages = _pages.Count;
+        var pagesLeft = totalPages;
+        var currentPage = DefaultPageIndex;
+        while (pagesLeft > 0)
         {
-            if (actionType.AutoPopulate)
+            var page = _pages[currentPage];
+            var pageSize = page.Size;
+
+            for (var slot = 0; slot < pageSize; slot++)
             {
-                actions.Add(actionType);
-            }
-        }
-
-        if (actions.Count == 0)
-        {
-            return;
-        }
-
-        var loopedPageIndex = 0;
-        var loopedPage = _pages[loopedPageIndex];
-        loopedPage.Clear();
-
-        for (var i = 0; i < actions.Count; i++)
-        {
-            var mod = i % ButtonAmount;
-            if (i != 0 && mod == 0)
-            {
-                loopedPageIndex++;
-                loopedPage = _pages[loopedPageIndex];
-                loopedPage.Clear();
+                var actionIndex = slot + offset;
+                if (actionIndex < actions.Count)
+                {
+                    page[slot] = actions[slot + offset];
+                }
+                else
+                {
+                    page[slot] = null;
+                }
             }
 
-            if (loopedPageIndex >= PageAmount - 1)
+            offset += pageSize;
+            currentPage++;
+            if (currentPage == totalPages)
             {
-                break;
+                currentPage = 0;
             }
-
-            loopedPage[mod] = actions[i];
+            pagesLeft--;
         }
     }
 
@@ -569,6 +540,8 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         {
             Array.Fill(_data, null);
         }
+
+        public int Size => _data.Length;
     }
 
     public void OnStateExited(GameplayState state)

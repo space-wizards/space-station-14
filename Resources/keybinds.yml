@@ -425,6 +425,10 @@ binds:
 - function: Hotbar9
   type: State
   key: Num9
+- function: Loadout0
+  type: State
+  key: Num0
+  mod1: Shift
 - function: Loadout1
   type: State
   key: Num1

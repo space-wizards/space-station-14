@@ -13,29 +13,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Name="ActionsContainer"
-            Access="Public"
-        >
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar0}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar1}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar2}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar3}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar4}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar5}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar6}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar7}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar8}"/>
-            <controls:ActionButton
-                KeyBind="{x:Static in:ContentKeyFunctions.Hotbar9}"/>
-        </controls:ActionButtonContainer>
+            Access="Public"/>
         <controls:ActionPageButtons Name="PageButtons" Access="Public"/>
     </BoxContainer>
 </widgets:ActionsBar>
