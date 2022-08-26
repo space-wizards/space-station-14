@@ -36,6 +36,7 @@
   description: action-description-disarm
   icon: Interface/Actions/disarmOff.png
   iconOn: Interface/Actions/disarm.png
+  repeat: true
   useDelay: 1.5
   interactOnMiss: true
   event: !type:DisarmActionEvent
@@ -52,7 +53,7 @@
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
   userPopup: action-popup-combat
-  popupToggleSuffix: -disabling
+  popupToggleSuffix: -enabled
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
@@ -77,3 +78,19 @@
   icon: Objects/Consumable/Food/egg.rsi/icon.png
   useDelay: 60
   serverEvent: !type:EggLayInstantActionEvent
+
+- type: instantAction
+  id: Sleep
+  name: action-name-sleep
+  description: action-desc-sleep
+  checkCanInteract: false
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  event: !type:SleepActionEvent
+
+- type: instantAction
+  id: Wake
+  name: action-name-wake
+  description: action-desc-wake
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  checkCanInteract: false
+  event: !type:WakeActionEvent

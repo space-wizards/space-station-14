@@ -16,6 +16,7 @@ ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby & Round-end Music
+ui-options-restart-sounds = Round Restart Sounds
 ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-station-ambience = Station Ambience
@@ -168,4 +169,8 @@ ui-options-function-shuttle-brake = Brake
 
 ## Network menu
 
-ui-options-net-interp-ratio = Network Smoothing
+ui-options-net-interp-ratio = State buffer size
+ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game
+                                      more resistant to packet-loss, however in doing
+                                      so it effectively adds slightly more latency and
+                                      requires the client to predict more future ticks.

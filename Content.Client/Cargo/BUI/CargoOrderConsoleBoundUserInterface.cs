@@ -39,7 +39,7 @@ namespace Content.Client.Cargo.BUI
         /// </summary>
         private CargoProductPrototype? _product;
 
-        public CargoOrderConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public CargoOrderConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

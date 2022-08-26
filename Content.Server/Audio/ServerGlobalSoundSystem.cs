@@ -3,7 +3,6 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Audio;
-using Content.Shared.Sound;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
@@ -37,7 +36,7 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
 
     private Filter GetStationAndPvs(EntityUid source)
     {
-        var stationFilter = _stationSystem.GetInStation(source);
+        var stationFilter = _stationSystem.GetInOwningStation(source);
         stationFilter.AddPlayersByPvs(source, entityManager: EntityManager);
         return stationFilter;
     }

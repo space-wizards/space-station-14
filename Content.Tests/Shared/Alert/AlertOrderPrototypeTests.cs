@@ -17,6 +17,7 @@ namespace Content.Tests.Shared.Alert
   id: testAlertOrder
   order:
     - alertType: Handcuffed
+    - alertType: Ensnared
     - category: Pressure
     - category: Hunger
     - alertType: Hot
@@ -26,35 +27,48 @@ namespace Content.Tests.Shared.Alert
 
 - type: alert
   id: LowPressure
+  icons: []
   category: Pressure
 
 - type: alert
   id: HighPressure
+  icons: []
   category: Pressure
 
 - type: alert
   id: Peckish
+  icons: []
   category: Hunger
 
 - type: alert
   id: Stun
+  icons: []
 
 - type: alert
   id: Handcuffed
+  icons: []
+
+- type: alert
+  id: Ensnared
+  icons: []
 
 - type: alert
   id: Hot
+  icons: []
   category: Temperature
 
 - type: alert
   id: Cold
+  icons: []
   category: Temperature
 
 - type: alert
   id: Weightless
+  icons: []
 
 - type: alert
   id: PilotingShuttle
+  icons: []
 ";
 
         [Test]
@@ -73,6 +87,7 @@ namespace Content.Tests.Shared.Alert
             // ensure they sort according to our expected criteria
             var expectedOrder = new List<AlertType>();
             expectedOrder.Add(AlertType.Handcuffed);
+            expectedOrder.Add(AlertType.Ensnared);
             expectedOrder.Add(AlertType.HighPressure);
             // stuff with only category + same category ordered by enum value
             expectedOrder.Add(AlertType.Peckish);

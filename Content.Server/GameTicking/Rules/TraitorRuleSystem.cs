@@ -1,18 +1,16 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
+using Content.Server.Store.Systems;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
-using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory;
 using Content.Shared.Roles;
-using Content.Shared.Sound;
-using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -31,6 +29,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     public override string Prototype => "Traitor";
 
@@ -38,9 +40,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     public List<TraitorRole> Traitors = new();
 
     private const string TraitorPrototypeID = "Traitor";
+    private const string TraitorUplinkPresetId = "StorePresetUplink";
 
     public int TotalTraitors => Traitors.Count;
     public string[] Codewords = new string[3];
+
+    private int _playersPerTraitor => _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
+    private int _maxTraitors => _cfg.GetCVar(CCVars.TraitorMaxTraitors);
 
     public override void Initialize()
     {
@@ -48,6 +54,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
@@ -107,9 +114,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var playersPerTraitor = _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
-        var maxTraitors = _cfg.GetCVar(CCVars.TraitorMaxTraitors);
-        var numTraitors = MathHelper.Clamp(ev.Players.Length / playersPerTraitor, 1, maxTraitors);
+        var numTraitors = MathHelper.Clamp(ev.Players.Length / _playersPerTraitor, 1, _maxTraitors);
+        var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
 
         var traitorPool = FindPotentialTraitors(ev);
         var selectedTraitors = PickTraitors(numTraitors, traitorPool);
@@ -154,7 +160,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             Logger.InfoS("preset", "Insufficient ready players to fill up with traitors, stopping the selection.");
             return results;
         }
-        
+
         for (var i = 0; i < traitorCount; i++)
         {
             results.Add(_random.PickAndTake(prefList));
@@ -173,16 +179,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         }
 
         // creadth: we need to create uplink for the antag.
-        // PDA should be in place already, so we just need to
-        // initiate uplink account.
+        // PDA should be in place already
         DebugTools.AssertNotNull(mind.OwnedEntity);
 
         var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
-        var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity!);
-        var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-        accounts.AddNewAccount(uplinkAccount);
 
-        if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>().AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
+        if (!_uplink.AddUplink(mind.OwnedEntity!.Value, startingBalance))
             return false;
 
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
@@ -209,6 +211,48 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddPlayer(traitor), AudioParams.Default);
         return true;
+    }
+
+    private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
+    {
+        if (!RuleAdded)
+            return;
+        if (TotalTraitors >= _maxTraitors)
+            return;
+        if (!ev.LateJoin)
+            return;
+        if (!ev.Profile.AntagPreferences.Contains(TraitorPrototypeID))
+            return;
+
+
+        if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
+            return;
+
+        if (!job.CanBeAntag)
+            return;
+
+        // the nth player we adjust our probabilities around
+        int target = ((_playersPerTraitor * TotalTraitors) + 1);
+
+        float chance = (1f / _playersPerTraitor);
+
+        /// If we have too many traitors, divide by how many players below target for next traitor we are.
+        if (ev.JoinOrder < target)
+        {
+            chance /= (target - ev.JoinOrder);
+        } else // Tick up towards 100% chance.
+        {
+            chance *= ((ev.JoinOrder + 1) - target);
+        }
+        if (chance > 1)
+            chance = 1;
+
+        // Now that we've calculated our chance, roll and make them a traitor if we roll under.
+        // You get one shot.
+        if (_random.Prob((float) chance))
+        {
+            MakeTraitor(ev.Player);
+        }
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)

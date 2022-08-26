@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Buckle.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
@@ -7,13 +6,14 @@ using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Systems;
-using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.Shuttles.Events;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -162,7 +162,6 @@ public sealed partial class ShuttleSystem
         if (!TrySetupFTL(component, out var hyperspace))
             return;
 
-        hyperspace.State = FTLState.Starting;
         hyperspace.StartupTime = startupTime;
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
@@ -194,6 +193,7 @@ public sealed partial class ShuttleSystem
         SetDocks(uid, false);
 
         component = AddComp<FTLComponent>(uid);
+        component.State = FTLState.Starting;
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
@@ -308,13 +308,16 @@ public sealed partial class ShuttleSystem
                     comp.State = FTLState.Cooldown;
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(comp.Owner);
+                    RaiseLocalEvent(new HyperspaceJumpCompletedEvent());
                     break;
                 case FTLState.Cooldown:
                     RemComp<FTLComponent>(comp.Owner);
                     _console.RefreshShuttleConsoles(comp.Owner);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    _sawmill.Error($"Found invalid FTL state {comp.State} for {comp.Owner}");
+                    RemComp<FTLComponent>(comp.Owner);
+                    break;
             }
         }
     }
@@ -409,7 +412,11 @@ public sealed partial class ShuttleSystem
     {
         if (!TryComp<TransformComponent>(component.Owner, out var xform) ||
             !TryComp<TransformComponent>(targetUid, out var targetXform) ||
-            targetXform.MapUid == null) return false;
+            targetXform.MapUid == null ||
+            !targetXform.MapUid.Value.IsValid())
+        {
+            return false;
+        }
 
         var config = GetDockingConfig(component, targetUid);
 
@@ -437,11 +444,16 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool TryFTLProximity(ShuttleComponent component, EntityUid targetUid, TransformComponent? xform = null, TransformComponent? targetXform = null)
     {
-        if (!Resolve(targetUid, ref targetXform) || targetXform.MapUid == null || !Resolve(component.Owner, ref xform)) return false;
+        if (!Resolve(targetUid, ref targetXform) ||
+            targetXform.MapUid == null ||
+            !targetXform.MapUid.Value.IsValid() ||
+            !Resolve(component.Owner, ref xform))
+        {
+            return false;
+        }
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
-        Box2? aabb = null;
 
         // Spawn nearby.
         // We essentially expand the Box2 of the target area until nothing else is added then we know it's valid.
@@ -454,7 +466,7 @@ public sealed partial class ShuttleSystem
         var lastCount = 1;
         var mapId = targetXform.MapID;
 
-        while (iteration < 3)
+        while (iteration < FTLProximityIterations)
         {
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, targetAABB))
             {
@@ -475,7 +487,8 @@ public sealed partial class ShuttleSystem
             lastCount = nearbyGrids.Count;
 
             // Mishap moment, dense asteroid field or whatever
-            if (iteration != 3) continue;
+            if (iteration != FTLProximityIterations)
+                continue;
 
             foreach (var grid in _mapManager.GetAllGrids())
             {

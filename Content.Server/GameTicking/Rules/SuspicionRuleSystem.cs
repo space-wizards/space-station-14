@@ -8,7 +8,6 @@ using Content.Server.Station.Components;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
-using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
 using Content.Shared.Doors.Systems;
 using Content.Shared.EntityList;
@@ -16,9 +15,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Roles;
-using Content.Shared.Sound;
 using Content.Shared.Suspicion;
-using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -49,6 +46,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     public override string Prototype => "Suspicion";
 
@@ -174,16 +172,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             mind!.AddRole(traitorRole);
             traitors.Add(traitorRole);
 
-            // creadth: we need to create uplink for the antag.
-            // PDA should be in place already, so we just need to
-            // initiate uplink account.
-            var uplinkAccount = new UplinkAccount(traitorStartingBalance, mind.OwnedEntity!);
-            var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-            accounts.AddNewAccount(uplinkAccount);
-
             // try to place uplink
-            if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                    .AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
+            if (!_uplink.AddUplink(mind.OwnedEntity!.Value, traitorStartingBalance))
                 continue;
         }
 

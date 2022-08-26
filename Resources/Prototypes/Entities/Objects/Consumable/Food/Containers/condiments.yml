@@ -11,6 +11,7 @@
   components:
   - type: Drink
     solution: food
+    refillable: false
     openSounds:
       collection: packetOpenSounds
   - type: DrawableSolution
@@ -19,7 +20,9 @@
     solution: food
   - type: DrainableSolution
     solution: food
-    # Note NOT refillable
+    # Note NOT refillable. 
+    # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
+    # Well its fixed now, but I want to share my pain.
   - type: SolutionContainerManager
     solutions:
       food:
@@ -33,6 +36,8 @@
   - type: Icon
     sprite: Objects/Consumable/Food/condiments.rsi
     state: packet-empty
+  - type: TrashOnEmpty
+    solution: food
 
 - type: entity
   parent: FoodCondimentPacket
@@ -56,10 +61,9 @@
   - type: Icon
     state: packet-astrotame
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -83,10 +87,9 @@
   - type: Icon
     state: packet-bbq
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -110,10 +113,9 @@
   - type: Icon
     state: packet-cornoil
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -137,10 +139,9 @@
   - type: Icon
     state: packet-frostoil
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -164,10 +165,9 @@
   - type: Icon
     state: packet-greygoo
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -191,10 +191,9 @@
   - type: Icon
     state: packet-hotsauce
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -217,10 +216,9 @@
   - type: Icon
     state: packet-ketchup
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -243,10 +241,9 @@
   - type: Icon
     state: packet-pepper
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -271,10 +268,9 @@
   - type: Icon
     state: packet-salt
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -297,10 +293,9 @@
   - type: Icon
     state: packet-soysauce
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
   parent: FoodCondimentPacket
@@ -323,10 +318,9 @@
   - type: Icon
     state: packet-sugar
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 # Bottles
 
@@ -340,6 +334,10 @@
     solution: food
     openSounds:
       collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -353,10 +351,11 @@
     sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-empty
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-alpha-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-alpha-
+  - type: TrashOnEmpty
+    solution: food
 
 - type: entity
   parent: FoodCondimentBottle
@@ -486,6 +485,10 @@
     solution: food
     openSounds:
       collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -497,10 +500,11 @@
     sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-s-empty
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 3
-      fillBaseName: bottle-s-alpha-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: bottle-s-alpha-
+  - type: TrashOnEmpty
+    solution: food
 
 - type: entity
   parent: FoodCondimentBottleSmall

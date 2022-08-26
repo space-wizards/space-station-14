@@ -1,5 +1,5 @@
 using Content.Shared.Light;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

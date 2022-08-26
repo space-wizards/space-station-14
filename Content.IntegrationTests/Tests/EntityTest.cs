@@ -21,6 +21,7 @@ namespace Content.IntegrationTests.Tests
         public async Task SpawnTest()
         {
             //TODO: Run this test in a for loop, and figure out why garbage is ending up in the Entities list on cleanup.
+            //If this gets fixed, see also UninitializedSaveTest.
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Dirty = true, Destructive = true});
             var server = pairTracker.Pair.Server;
 
@@ -43,7 +44,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
@@ -101,6 +102,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
+                "StationData", // errors when removed mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
             };
 
@@ -127,7 +129,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
@@ -195,6 +197,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
+                "StationData", // errors when deleted mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
             };
 
@@ -221,7 +224,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
 
                 grid.SetTile(Vector2i.Zero, tile);

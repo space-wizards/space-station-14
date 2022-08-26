@@ -133,7 +133,7 @@ namespace Content.Server.Salvage
                     if (_salvageGridStates.TryGetValue(magnetTranform.GridID, out var salvageGridState))
                     {
                         var remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
-                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", remainingTime.TotalSeconds)));
+                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
                     }
                     else
                     {
@@ -288,7 +288,7 @@ namespace Content.Server.Salvage
                 Offset = spl.Position
             };
 
-            var (_, salvageEntityId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
+            var (_, salvageEntityId) = _mapLoader.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);
             if (salvageEntityId == null)
             {
                 Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-spawn-debris-disintegrated");

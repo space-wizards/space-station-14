@@ -13,7 +13,7 @@ namespace Content.Client.Storage
     {
         [ViewVariables] private StorageWindow? _window;
 
-        public StorageBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public StorageBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -31,7 +31,7 @@ namespace Content.Client.Storage
                 _window.StorageContainerButton.OnPressed += TouchedContainerButton;
 
                 _window.OnClose += Close;
-                _window.OpenCentered();
+                _window.OpenCenteredLeft();
             }
             else
             {

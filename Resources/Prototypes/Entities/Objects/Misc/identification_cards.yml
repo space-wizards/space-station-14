@@ -8,12 +8,14 @@
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
   - type: Clothing
-    Slots:
+    slots:
     - idcard
     sprite: Objects/Misc/id_cards.rsi
-    HeldPrefix: default
+  - type: Item
+    heldPrefix: default
   - type: Access
   - type: IdCard
+  - type: StationRecordKeyStorage
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -89,8 +91,8 @@
     layers:
     - state: gold
     - state: idcaptain
-  - type: Clothing
-    HeldPrefix: gold
+  - type: Item
+    heldPrefix: gold
   - type: PresetIdCard
     job: Captain
 
@@ -319,8 +321,8 @@
     layers:
     - state: silver
     - state: idheadofpersonnel
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfPersonnel
 
@@ -333,8 +335,8 @@
     layers:
     - state: silver
     - state: idchiefengineer
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: ChiefEngineer
 
@@ -347,8 +349,8 @@
     layers:
     - state: silver
     - state: idchiefmedicalofficer
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: ChiefMedicalOfficer
 
@@ -361,8 +363,8 @@
     layers:
     - state: silver
     - state: idresearchdirector
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: ResearchDirector
 
@@ -375,8 +377,8 @@
     layers:
     - state: silver
     - state: idheadofsecurity
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfSecurity
 
@@ -389,8 +391,8 @@
     layers:
     - state: gold
     - state: idcentcom
-  - type: Clothing
-    HeldPrefix: gold
+  - type: Item
+    heldPrefix: gold
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
@@ -406,8 +408,8 @@
     layers:
     - state: gold
     - state: ert_commander # we have the sprites but don't need individual ID entities for now.
-  - type: Clothing
-    HeldPrefix: gold
+  - type: Item
+    heldPrefix: gold
 
 - type: entity
   parent: IDCardStandard
@@ -417,8 +419,8 @@
   - type: Sprite
     layers:
     - state: centcom
-  - type: Clothing
-    HeldPrefix: blue
+  - type: Item
+    heldPrefix: blue
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
@@ -445,8 +447,8 @@
   - type: Sprite
     layers:
     - state: centcom
-  - type: Clothing
-    HeldPrefix: blue
+  - type: Item
+    heldPrefix: blue
   - type: IdCard
     jobTitle: Centcom Agent
 
@@ -510,6 +512,18 @@
     - state: default
   - type: PresetIdCard
     job: Reporter
+
+- type: entity
+  parent: IDCardStandard
+  id: BoxerIDCard
+  name: boxer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idboxer
+  - type: PresetIdCard
+    job: Boxer
 
 - type: entity
   parent: IDCardStandard

@@ -51,7 +51,7 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.InGame:
                 {
-                    _prefsManager.OnClientConnected(session);
+                    _userDb.ClientConnected(session);
 
                     var data = session.ContentData();
 
@@ -66,13 +66,13 @@ namespace Content.Server.GameTicking
                         }
 
 
-                        SpawnWaitPrefs();
+                        SpawnWaitDb();
                     }
                     else
                     {
                         if (data.Mind.CurrentEntity == null)
                         {
-                            SpawnWaitPrefs();
+                            SpawnWaitDb();
                         }
                         else
                         {
@@ -86,20 +86,18 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Disconnected:
                 {
-                    if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
-
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
 
-                    _prefsManager.OnClientDisconnected(session);
+                    _userDb.ClientDisconnected(session);
                     break;
                 }
             }
             //When the status of a player changes, update the server info text
             UpdateInfoText();
 
-            async void SpawnWaitPrefs()
+            async void SpawnWaitDb()
             {
-                await _prefsManager.WaitPreferencesLoaded(session);
+                await _userDb.WaitLoadComplete(session);
                 SpawnPlayer(session, EntityUid.Invalid);
             }
 
@@ -121,18 +119,14 @@ namespace Content.Server.GameTicking
         {
             _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
 
-            if (_playersInLobby.ContainsKey(session))
-                _playersInLobby.Remove(session);
-
-            _playersInGame.Add(session.UserId);
+            _playerGameStatuses[session.UserId] = PlayerGameStatus.JoinedGame;
 
             RaiseNetworkEvent(new TickerJoinGameEvent(), session.ConnectedClient);
         }
 
         private void PlayerJoinLobby(IPlayerSession session)
         {
-            _playersInLobby[session] = LobbyPlayerStatus.NotReady;
-            _playersInGame.Remove(session.UserId);
+            _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
 
             var client = session.ConnectedClient;
             RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);

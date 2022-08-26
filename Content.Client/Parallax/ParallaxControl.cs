@@ -32,7 +32,7 @@ public sealed class ParallaxControl : Control
         foreach (var layer in _parallaxManager.GetParallaxLayers("FastSpace"))
         {
             var tex = layer.Texture;
-            var texSize = (tex.Size.X * (int) Size.X, tex.Size.Y * (int) Size.X) * layer.Config.Scale.Floored() / 540;
+            var texSize = (tex.Size.X * (int) Size.X, tex.Size.Y * (int) Size.X) * layer.Config.Scale.Floored() / 1920;
             var ourSize = PixelSize;
 
             var currentTime = (float) _timing.RealTime.TotalSeconds;

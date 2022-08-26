@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ConveyorBelt
   name: conveyor belt
   description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
@@ -18,13 +18,18 @@
     drawdepth: FloorObjects
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
   - type: Conveyor
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: ConveyorVisualizer
-      state_running: conveyor_started_cw
-      state_stopped: conveyor_stopped_cw
-      state_reversed: conveyor_started_cw_r
+      enum.ConveyorVisuals.State:
+        enum.ConveyorState.Off:
+          Off: { state: conveyor_stopped_cw }
+          Forward: { state: conveyor_started_cw }
+          Reverse: { state: conveyor_started_cw_r }
   - type: Construction
     graph: ConveyorGraph
     node: entity

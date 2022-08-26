@@ -26,7 +26,7 @@ namespace Content.Client.Computer
         }
 
         // Alas, this constructor has to be copied to the subclass. :(
-        public ComputerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+        public ComputerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
@@ -58,7 +58,7 @@ namespace Content.Client.Computer
     [Virtual]
     public class ComputerBoundUserInterfaceBase : BoundUserInterface
     {
-        public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+        public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
         public new void SendMessage(BoundUserInterfaceMessage msg)
         {

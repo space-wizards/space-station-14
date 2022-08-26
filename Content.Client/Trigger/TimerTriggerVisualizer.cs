@@ -1,13 +1,9 @@
-using System;
-using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Trigger
 {
@@ -39,11 +35,13 @@ namespace Content.Client.Trigger
             }
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             IoCManager.Resolve<IEntityManager>().EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();

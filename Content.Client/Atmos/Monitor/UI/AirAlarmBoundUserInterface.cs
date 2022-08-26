@@ -12,7 +12,7 @@ namespace Content.Client.Atmos.Monitor.UI
     {
         private AirAlarmWindow? _window;
 
-        public AirAlarmBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public AirAlarmBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {}
 
         protected override void Open()

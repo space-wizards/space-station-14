@@ -182,9 +182,11 @@ namespace Content.Server.Nutrition.EntitySystems
 
             UpdateAppearance(component);
 
-            // Synchronize solution in drink
-            EnsureComp<RefillableSolutionComponent>(uid).Solution = component.SolutionName;
-            EnsureComp<DrainableSolutionComponent>(uid).Solution = component.SolutionName;
+            if (TryComp(uid, out RefillableSolutionComponent? refillComp))
+                refillComp.Solution = component.SolutionName;
+
+            if (TryComp(uid, out DrainableSolutionComponent? drainComp))
+                drainComp.Solution = component.SolutionName;
         }
 
         private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangedEvent args)
@@ -250,7 +252,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forceDrink)
             {
-                var userName = Identity.Name(user, EntityManager);
+                var userName = Identity.Entity(user, EntityManager);
 
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-force-feed", ("user", userName)),
                     user, Filter.Entities(target));
@@ -335,8 +337,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forceDrink)
             {
-                var targetName = Identity.Name(uid, EntityManager);
-                var userName = Identity.Name(args.User, EntityManager);
+                var targetName = Identity.Entity(uid, EntityManager);
+                var userName = Identity.Entity(args.User, EntityManager);
 
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-force-feed-success", ("user", userName)), uid, Filter.Entities(uid));

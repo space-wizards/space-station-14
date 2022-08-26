@@ -50,7 +50,7 @@ public sealed class EntityStorageSystem : EntitySystem
         component.Contents.OccludesLight = component.OccludesLight;
 
         if (TryComp<ConstructionComponent>(uid, out var construction))
-            _construction.AddContainer(uid, nameof(EntityStorageComponent), construction);
+            _construction.AddContainer(uid, ContainerName, construction);
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var placeable))
             _placeableSurface.SetPlaceable(uid, component.Open, placeable);
@@ -208,9 +208,9 @@ public sealed class EntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool TryOpenStorage(EntityUid user, EntityUid target)
+    public bool TryOpenStorage(EntityUid user, EntityUid target, bool silent = false)
     {
-        if (!CanOpen(user, target))
+        if (!CanOpen(user, target, silent))
             return false;
 
         OpenStorage(target);
@@ -305,10 +305,10 @@ public sealed class EntityStorageSystem : EntitySystem
             return false;
 
         var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
-        var storageIsItem = HasComp<SharedItemComponent>(container);
+        var storageIsItem = HasComp<ItemComponent>(container);
 
         var allowedToEat = whitelist == null
-            ? HasComp<SharedItemComponent>(toInsert)
+            ? HasComp<ItemComponent>(toInsert)
             : whitelist.IsValid(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
@@ -357,12 +357,12 @@ public sealed class EntityStorageSystem : EntitySystem
         }
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var surface))
-            _placeableSurface.SetPlaceable(uid, true, surface);
+            _placeableSurface.SetPlaceable(uid, component.Open, surface);
 
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
             appearance.SetData(StorageVisuals.Open, component.Open);
-            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
+            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Any());
         }
     }
 }

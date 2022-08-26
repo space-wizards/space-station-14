@@ -1,5 +1,4 @@
 using System.Threading;
-using Content.Server.Chat;
 using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
@@ -20,6 +19,8 @@ using Content.Shared.Inventory.Events;
 using Content.Server.Nutrition.EntitySystems;
 using Robust.Shared.Utility;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Item;
+using Content.Server.MobState;
 
 namespace Content.Server.Disease
 {
@@ -37,14 +38,14 @@ namespace Content.Server.Disease
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
-
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
-            SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
-            SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
+            SubscribeLocalEvent<DiseasedComponent, UserInteractedWithItemEvent>(OnUserInteractDiseased);
+            SubscribeLocalEvent<DiseasedComponent, ItemInteractedWithEvent>(OnTargetInteractDiseased);
             SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
@@ -88,7 +89,7 @@ namespace Content.Server.Disease
             {
                 DebugTools.Assert(carrierComp.Diseases.Count > 0);
 
-                if (mobState.IsDead())
+                if (_mobStateSystem.IsDead(mobState.Owner, mobState))
                 {
                     if (_random.Prob(0.005f * frameTime)) //Mean time to remove is 200 seconds per disease
                         CureDisease(carrierComp, _random.Pick(carrierComp.Diseases));
@@ -198,7 +199,7 @@ namespace Content.Server.Disease
             if (!TryComp<ClothingComponent>(uid, out var clothing))
                 return;
             // Is the clothing in its actual slot?
-            if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
+            if (!clothing.Slots.HasFlag(args.SlotFlags))
                 return;
             // Give the user the component's disease resist
             if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
@@ -246,21 +247,19 @@ namespace Content.Server.Disease
         }
 
         /// <summary>
-        /// Called when someone interacts with a diseased person with an empty hand
-        /// to check if they get infected
+        /// When a diseased person interacts with something, check infection.
         /// </summary>
-        private void OnInteractDiseasedHand(EntityUid uid, DiseasedComponent component, InteractHandEvent args)
+        private void OnUserInteractDiseased(EntityUid uid, DiseasedComponent component, UserInteractedWithItemEvent args)
         {
-            InteractWithDiseased(args.Target, args.User);
+            InteractWithDiseased(args.User, args.Item);
         }
 
         /// <summary>
-        /// Called when someone interacts with a diseased person with any object
-        /// to check if they get infected
+        /// When a diseased person is interacted with, check infection.
         /// </summary>
-        private void OnInteractDiseasedUsing(EntityUid uid, DiseasedComponent component, InteractUsingEvent args)
+        private void OnTargetInteractDiseased(EntityUid uid, DiseasedComponent component, ItemInteractedWithEvent args)
         {
-            InteractWithDiseased(args.Target, args.User);
+            InteractWithDiseased(args.Item, args.User);
         }
 
         private void OnEntitySpeak(EntityUid uid, DiseasedComponent component, EntitySpokeEvent args)
@@ -387,7 +386,7 @@ namespace Content.Server.Disease
                     return;
             }
 
-            var freshDisease = _serializationManager.CreateCopy(addedDisease);
+            var freshDisease = _serializationManager.Copy(addedDisease);
 
             if (freshDisease == null) return;
 

@@ -1,0 +1,75 @@
+- type: department
+  id: Cargo
+  roles:
+  - CargoTechnician
+  - Quartermaster
+  - SalvageSpecialist
+
+- type: department
+  id: Civilian
+  roles:
+  - Bartender
+  - Botanist
+  - Chaplain
+  - Chef
+  - Clown
+  - HeadOfPersonnel
+  - Janitor
+  - Lawyer
+  - Librarian
+  - MedicalIntern
+  - Mime
+  - Musician
+  - Passenger
+  - Reporter
+  - SecurityCadet
+  - ServiceWorker
+  - TechnicalAssistant
+
+- type: department
+  id: Command
+  roles:
+  - Captain
+  - CentralCommandOfficial
+  - ChiefEngineer
+  - ChiefMedicalOfficer
+  - ERTEngineer
+  - ERTJanitor
+  - ERTLeader
+  - ERTMedical
+  - ERTSecurity
+  - HeadOfPersonnel
+  - HeadOfSecurity
+  - ResearchDirector
+
+- type: department
+  id: Engineering
+  roles:
+  - AtmosphericTechnician
+  - ChiefEngineer
+  - StationEngineer
+  - TechnicalAssistant
+
+- type: department
+  id: Medical
+  roles:
+  - Chemist
+  - ChiefMedicalOfficer
+  - MedicalDoctor
+  - MedicalIntern
+  - Psychologist
+
+- type: department
+  id: Security
+  roles:
+  - HeadOfSecurity
+  - SecurityCadet
+  - SecurityOfficer
+  - Detective
+  - Warden
+
+- type: department
+  id: Science
+  roles:
+  - ResearchDirector
+  - Scientist

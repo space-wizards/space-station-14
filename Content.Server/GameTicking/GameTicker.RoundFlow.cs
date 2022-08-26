@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Announcements;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
@@ -10,7 +8,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
@@ -21,6 +18,9 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Threading.Tasks;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameTicking
 {
@@ -151,7 +151,7 @@ namespace Content.Server.GameTicking
 
             RoundLengthMetric.Set(0);
 
-            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+            var playerIds = _playerGameStatuses.Keys.Select(player => player.UserId).ToArray();
             var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
             // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
             // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.
@@ -167,37 +167,32 @@ namespace Content.Server.GameTicking
             var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
 
-            List<IPlayerSession> readyPlayers;
-            if (LobbyEnabled)
-            {
-                readyPlayers = _playersInLobby.Where(p => p.Value == LobbyPlayerStatus.Ready).Select(p => p.Key)
-                    .ToList();
-            }
-            else
-            {
-                readyPlayers = _playersInLobby.Keys.ToList();
-            }
+            var readyPlayers = new List<IPlayerSession>();
+            var readyPlayerProfiles = new Dictionary<NetUserId, HumanoidCharacterProfile>();
 
-            readyPlayers.RemoveAll(p =>
+            foreach (var (userId, status) in _playerGameStatuses)
             {
-                if (_roleBanManager.GetRoleBans(p.UserId) != null)
-                    return false;
-                Logger.ErrorS("RoleBans", $"Role bans for player {p} {p.UserId} have not been loaded yet.");
-                return true;
-            });
-
-            // Get the profiles for each player for easier lookup.
-            var profiles = _prefsManager.GetSelectedProfilesForPlayers(
-                    readyPlayers
-                        .Select(p => p.UserId).ToList())
-                .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
-
-            foreach (var readyPlayer in readyPlayers)
-            {
-                if (!profiles.ContainsKey(readyPlayer.UserId))
+                if (LobbyEnabled && status != PlayerGameStatus.ReadyToPlay) continue;
+                if (!_playerManager.TryGetSessionById(userId, out var session)) continue;
+#if DEBUG
+                DebugTools.Assert(_userDb.IsLoadComplete(session), $"Player was readied up but didn't have user DB data loaded yet??");
+#endif
+                if (_roleBanManager.GetRoleBans(userId) == null)
                 {
-                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Random());
+                    Logger.ErrorS("RoleBans", $"Role bans for player {session} {userId} have not been loaded yet.");
+                    continue;
                 }
+                readyPlayers.Add(session);
+                HumanoidCharacterProfile profile;
+                if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
+                {
+                    profile = (HumanoidCharacterProfile) preferences.GetProfile(preferences.SelectedCharacterIndex);
+                }
+                else
+                {
+                    profile = HumanoidCharacterProfile.Random();
+                }
+                readyPlayerProfiles.Add(userId, profile);
             }
 
             var origReadyPlayers = readyPlayers.ToArray();
@@ -208,12 +203,12 @@ namespace Content.Server.GameTicking
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);
 
-            SpawnPlayers(readyPlayers, profiles, force);
+            SpawnPlayers(readyPlayers, readyPlayerProfiles, force);
 
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
 
-            _roundStartTimeSpan = _gameTiming.RealTime;
+            _roundStartTimeSpan = _gameTiming.CurTime;
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
@@ -334,7 +329,6 @@ namespace Content.Server.GameTicking
             }
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
-            _playersInGame.Clear();
 
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
@@ -356,6 +350,8 @@ namespace Content.Server.GameTicking
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
 
             RoundNumberMetric.Inc();
+
+            PlayersJoinedRoundNormally = 0;
 
             RunLevel = GameRunLevel.PreRoundLobby;
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
@@ -437,6 +433,11 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(ev, Filter.Broadcast());
 
             DisallowLateJoin = false;
+            _playerGameStatuses.Clear();
+            foreach (var session in _playerManager.ServerSessions)
+            {
+                _playerGameStatuses[session.UserId] = LobbyEnabled ?  PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
+            }
         }
 
         public bool DelayStart(TimeSpan time)
@@ -474,7 +475,7 @@ namespace Content.Server.GameTicking
 
         public TimeSpan RoundDuration()
         {
-            return _gameTiming.RealTime.Subtract(_roundStartTimeSpan);
+            return _gameTiming.CurTime.Subtract(_roundStartTimeSpan);
         }
 
         private void AnnounceRound()

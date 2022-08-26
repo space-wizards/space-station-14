@@ -43,7 +43,7 @@
   - type: Sprite
     state: steel_3
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -53,7 +53,7 @@
       - steel_3
   - type: FloorTile
     outputs:
-    - plating
+    - Plating
 
 - type: entity
   parent: SheetSteel
@@ -81,7 +81,7 @@
   - type: Sprite
     state: plasteel_3
   - type: Item
-    HeldPrefix: plasteel
+    heldPrefix: plasteel
   - type: Appearance
     visuals:
     - type: StackVisualizer
