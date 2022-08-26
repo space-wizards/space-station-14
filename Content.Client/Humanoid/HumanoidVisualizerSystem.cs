@@ -391,6 +391,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
+        humanoid.BaseLayers.Clear();
+
         foreach (var (key, id) in baseSprites)
         {
             var sexMorph = humanoid.Sex switch
