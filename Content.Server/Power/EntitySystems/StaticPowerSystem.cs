@@ -1,4 +1,4 @@
-using Content.Server.OuterRim.Generator;
+using Content.Server._00OuterRim.Generator;
 using Content.Server.Power.Components;
 
 namespace Content.Server.Power.EntitySystems;
