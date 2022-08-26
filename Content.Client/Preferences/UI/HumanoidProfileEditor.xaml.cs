@@ -682,9 +682,6 @@ namespace Content.Client.Preferences.UI
         {
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
-            var pointsProto = _prototypeManager
-                .Index<SpeciesPrototype>(Profile.Species).MarkingPoints;
-            _markingSet = new(Profile.Appearance.Markings, pointsProto, _markingManager);
 
             NeedsDummyRebuild = true;
             UpdateControls();
@@ -850,6 +847,9 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
+            var pointsProto = _prototypeManager
+                .Index<SpeciesPrototype>(Profile.Species).MarkingPoints;
+            _markingSet = new(Profile.Appearance.Markings, pointsProto, _markingManager);
             CMarkings.SetData(_markingSet, Profile.Species, Profile.Appearance.SkinColor);
         }
 
