@@ -61,6 +61,7 @@ public static class PoolManager
     private static int PairId;
     private static object PairLock = new();
     private static List<Pair> Pairs = new();
+    private static Exception PoolFailureReason;
 
     private static async Task ConfigurePrototypes(RobustIntegrationTest.IntegrationInstance instance,
         PoolSettings settings)
@@ -410,10 +411,27 @@ public static class PoolManager
 
     private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings)
     {
-        var client = await GenerateClient(poolSettings);
-        var server = await GenerateServer(poolSettings);
+        Pair pair;
+        if (PoolFailureReason != null)
+        {
+            Assert.Inconclusive(@"
+In a different test, the pool manager had an exception when trying to create a server/client pair.
+Instead of risking that the pool manager will fail at creating a server/client pairs for every single test,
+we are just going to end this here to save a lot of time. This is the exception that started this:\n {0}", PoolFailureReason);
+        }
 
-        var pair = new Pair { Server = server, Client = client, PairId = Interlocked.Increment(ref PairId)};
+        try
+        {
+            var client = await GenerateClient(poolSettings);
+            var server = await GenerateServer(poolSettings);
+            pair = new Pair { Server = server, Client = client, PairId = Interlocked.Increment(ref PairId) };
+        }
+        catch (Exception ex)
+        {
+            PoolFailureReason = ex;
+            throw;
+        }
+
         if (!poolSettings.NotConnected)
         {
             pair.Client.SetConnectTarget(pair.Server);
@@ -426,7 +444,7 @@ public static class PoolManager
                 }
             });
             await ReallyBeIdle(pair, 10);
-            await client.WaitRunTicks(1);
+            await pair.Client.WaitRunTicks(1);
         }
         return pair;
     }

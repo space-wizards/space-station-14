@@ -270,6 +270,7 @@
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
+      - WallmountSubstationElectronics
       - EmitterCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard

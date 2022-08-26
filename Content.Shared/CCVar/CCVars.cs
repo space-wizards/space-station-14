@@ -231,6 +231,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> PanicBunkerMinAccountAge =
             CVarDef.Create("game.panic_bunker.min_account_age", 1440, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Make people bonk when trying to climb certain objects like tables.
+        /// </summary>
+        public static readonly CVarDef<bool> GameTableBonk =
+            CVarDef.Create("game.table_bonk", false, CVar.SERVERONLY);
+
         public static readonly CVarDef<bool> AllowRespawns =
             CVarDef.Create("game.allow_respawns", true, CVar.REPLICATED | CVar.SERVER);
 

@@ -1,77 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Stun batons now use internal battery instead of a power cell; can be
-      inserted into a recharger again, type: Tweak}
-  id: 1680
-  time: '2022-06-12T01:20:03.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixed round end sounds playing even if you have the "Lobby & Round-end
-      Music" option disabled in the game's settings., type: Fix}
-  id: 1681
-  time: '2022-06-12T01:23:29.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Waystation now has cameras., type: Add}
-  id: 1682
-  time: '2022-06-12T01:28:19.0000000+00:00'
-- author: ninruB
-  changes:
-  - {message: 'Added ore bags, a funky new bag for salvage specialists that can be
-      found in their lockers!', type: Add}
-  id: 1683
-  time: '2022-06-12T01:57:02.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Items now correctly pass through plastic flaps. Cargo players rejoice!,
-    type: Fix}
-  id: 1684
-  time: '2022-06-12T02:40:15.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Asteroid walls now have reduced ore yield. Look out for designated mining
-      areas and salvage asteroids., type: Tweak}
-  id: 1685
-  time: '2022-06-12T02:58:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Most gun sizes have been increased., type: Tweak}
-  id: 1686
-  time: '2022-06-12T05:30:03.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added new APC variants for mappers. Construction graphs to follow in
-      a later PR., type: Add}
-  - {message: Standard APC is now 5x bigger in power capacity., type: Tweak}
-  id: 1687
-  time: '2022-06-12T05:34:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now do reduced damage to other zombies., type: Tweak}
-  - {message: Dead and crit enemies now automatically zombify., type: Fix}
-  - {message: Mice who are zombified are now able to attack., type: Fix}
-  - {message: Mice can no longer be revived in cloning pods nor will they become humans
-      when cloned., type: Fix}
-  id: 1688
-  time: '2022-06-12T05:53:13.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: ERT shuttle updated to Dart V2., type: Tweak}
-  id: 1689
-  time: '2022-06-12T06:17:16.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed issue where firelocks on top of closed doors could not be pried
-      open, type: Fix}
-  id: 1690
-  time: '2022-06-13T03:24:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed spent state for large cartridge casing., type: Fix}
-  - {message: Fixed cobra magazine so it actually goes into the gun., type: Fix}
-  id: 1691
-  time: '2022-06-13T09:30:16.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Solar's Best Hot Drinks now only have half as much coffee and tea in
@@ -2939,3 +2866,76 @@ Entries:
       from fatal poisoning!', type: Add}
   id: 2179
   time: '2022-08-22T08:50:46.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Touched up and re-shaded the Medical, Cargo, and Scientist jumpsuit
+      sprites.', type: Tweak}
+  - {message: Touched up and re-shaded all three labcoats., type: Tweak}
+  - {message: Medical backpacks and satchels now correctly use a blue cross instead
+      of a green one., type: Tweak}
+  - {message: Recolored the Cargo cap to reflect the new colors the jumpsuit has.,
+    type: Tweak}
+  - {message: Gave the Quartermaster a unique recolored cap that reflects his new
+      jumpsuit colors., type: Add}
+  id: 2180
+  time: '2022-08-23T02:28:11.0000000+00:00'
+- author: TekuNut
+  changes:
+  - {message: Xenos can no longer pry doors open from afar., type: Fix}
+  id: 2181
+  time: '2022-08-23T10:31:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed players being unable to suppress their inner ballerina (fix player's
+      getting stuck with angular velocity. no more eternal spinning)., type: Fix}
+  id: 2182
+  time: '2022-08-23T11:59:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Shields no longer randomly break upon healing the user., type: Fix}
+  id: 2183
+  time: '2022-08-23T12:00:06.0000000+00:00'
+- author: martin69420
+  changes:
+  - {message: Added wall lockers, type: Add}
+  id: 2184
+  time: '2022-08-24T07:08:57.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Adds the Ensnaring Component. If a player gets ensnared by something
+      with it, their movement will be impeded.', type: Add}
+  - {message: Bolas no longer have a knockdown/stun chance and now ensnare instead.,
+    type: Tweak}
+  id: 2185
+  time: '2022-08-24T14:50:31.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: WallmountSubstationElectronics Are now printable., type: Fix}
+  id: 2186
+  time: '2022-08-25T13:23:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer inject chems into cigarettes., type: Remove}
+  id: 2187
+  time: '2022-08-25T13:35:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Boxing gloves now have the fist weapon arc., type: Fix}
+  id: 2188
+  time: '2022-08-25T13:38:14.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Clowns now go BONK on tables, type: Add}
+  id: 2189
+  time: '2022-08-25T13:41:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Popups for wielding now display the correct text., type: Fix}
+  id: 2190
+  time: '2022-08-25T13:42:13.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Removed ratatouille (held mice and holo parasites no longer affect what
+      direction a player is facing), type: Fix}
+  id: 2191
+  time: '2022-08-25T23:39:25.0000000+00:00'
