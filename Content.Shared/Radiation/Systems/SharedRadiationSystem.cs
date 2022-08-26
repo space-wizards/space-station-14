@@ -1,3 +1,4 @@
+using System.Linq;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -41,13 +42,13 @@ public sealed class RadRayResult
     public readonly EntityUid DestUid;
     public readonly Vector2 DestPos;
     public readonly MapId MapId;
-    public readonly List<Vector2> Blockers;
+    public readonly List<(Vector2, float)> Blockers;
     public readonly float SourceRads;
     public readonly float ReceivedRads;
 
     public RadRayResult(EntityUid sourceUid, Vector2 sourcePos,
         EntityUid destUid, Vector2 destPos, MapId mapId,
-        List<Vector2> blockers, float sourceRads, float receivedRads)
+        List<(Vector2, float)> blockers, float sourceRads, float receivedRads)
     {
         SourceUid = sourceUid;
         SourcePos = sourcePos;
@@ -59,5 +60,21 @@ public sealed class RadRayResult
         ReceivedRads = receivedRads;
     }
 
-    public bool ReachedDestination => ReceivedRads != 0;
+    public bool ReachedDestination => ReceivedRads > 0;
+
+    public Vector2 LastPos
+    {
+        get
+        {
+            if (ReachedDestination)
+                return DestPos;
+
+            // this shouldn't really happen
+            if (Blockers.Count == 0)
+                return DestPos;
+
+            var (lastBlocker, _) = Blockers.Last();
+            return lastBlocker;
+        }
+    }
 }

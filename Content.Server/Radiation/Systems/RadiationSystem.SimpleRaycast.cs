@@ -53,14 +53,14 @@ public partial class RadiationSystem
         var results = _physicsSystem.IntersectRay(sourcePos.MapId, ray,
             dist, returnOnFirstHit: false);
 
-        var blockers = new List<Vector2>();
+        var blockers = new List<(Vector2, float)>();
         foreach (var obstacle in results)
         {
             if (!blockerQuery.TryGetComponent(obstacle.HitEntity, out var blocker))
                 continue;
 
-            blockers.Add(obstacle.HitPos);
             rads -= blocker.RadResistance;
+            blockers.Add((obstacle.HitPos, rads));
             if (rads <= MinRads)
             {
                 return new RadRayResult(sourceUid, sourcePos.Position, destUid, destPos.Position,
