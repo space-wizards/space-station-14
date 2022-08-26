@@ -120,6 +120,14 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         var dirtyMarkings = new List<int>();
         var dirtyRangeStart = humanoid.CurrentMarkings.Count == 0 ? 0 : -1;
 
+        // edge cases:
+        // humanoid.CurrentMarkings < newMarkings.Count
+        // - check if count matches this condition before diffing
+        // - if count is unequal, set dirty range to start from humanoid.CurrentMarkings.Count
+        // humanoid.CurrentMarkings > newMarkings.Count, no dirty markings
+        // - break count upon meeting this condition
+        // - clear markings from newMarkings.Count to humanoid.CurrentMarkings.Count - newMarkings.Count
+
         for (var i = 0; i < humanoid.CurrentMarkings.Count; i++)
         {
             // if we've reached the end of the new set of markings,
@@ -158,6 +166,11 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible);
         }
 
+        if (humanoid.CurrentMarkings.Count < newMarkings.Count)
+        {
+            dirtyRangeStart = humanoid.CurrentMarkings.Count;
+        }
+
         if (dirtyRangeStart >= 0)
         {
             var range = newMarkings.GetRange(dirtyRangeStart, newMarkings.Count - dirtyRangeStart);
@@ -176,9 +189,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             {
                 ClearAllMarkings(uid);
             }
-            else
+            else if (humanoid.CurrentMarkings.Count > newMarkings.Count)
             {
-                var rangeStart = humanoid.CurrentMarkings.Count - newMarkings.Count;
+                var rangeStart = newMarkings.Count;
                 var rangeCount = humanoid.CurrentMarkings.Count - newMarkings.Count;
                 var range = humanoid.CurrentMarkings.GetRange(rangeStart, rangeCount);
 
