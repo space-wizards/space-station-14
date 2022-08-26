@@ -938,15 +938,7 @@ namespace Content.Client.Preferences.UI
             }
             */
 
-            EntitySystem.Get<SharedHumanoidSystem>().SetAppearance(_previewDummy!.Value,
-                Profile.Species,
-                new()
-                {
-                    { HumanoidVisualLayers.Eyes, new(string.Empty, Profile.Appearance.EyeColor) }
-                },
-                Profile.Appearance.SkinColor,
-                new(),
-                _markingSet.GetForwardEnumerator().ToList());
+            EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
 
