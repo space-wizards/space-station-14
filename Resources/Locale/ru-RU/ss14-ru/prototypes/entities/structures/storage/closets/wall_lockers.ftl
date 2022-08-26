@@ -1,6 +1,6 @@
 ent-BaseWallLocker = { "" }
     .desc = { "" }
     .suffix = { "" }
-ent-WallLocker = wall locker
-    .desc = A locker built into the wall.
+ent-WallLocker = настенный шкафчик
+    .desc = Встроенный в стену шкафчик.
     .suffix = { "" }

@@ -16,5 +16,5 @@ strip-verb-get-data-text = Раздеть
 
 strippable-bound-user-interface-stripping-menu-title = Инвентарь { $ownerName }
 strippable-bound-user-interface-stripping-menu-handcuffs-button = Наручники
-strippable-bound-user-interface-stripping-menu-ensnare-button = Leg Restraints
+strippable-bound-user-interface-stripping-menu-ensnare-button = Ограничители ног
 strippable-bound-user-interface-stripping-menu-obfuscate = Занято
