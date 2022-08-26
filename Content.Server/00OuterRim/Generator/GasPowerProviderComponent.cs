@@ -19,7 +19,7 @@ public sealed class GasPowerProviderComponent : Component
     [DataField("plasmaMolesConsumedSec")]
     public float PlasmaMolesConsumedSec = 1.55975875833f / 4;
     [DataField("pressureConsumedSec")]
-    public float PressureConsumedSec = 0.25f;
+    public float PressureConsumedSec = 5f;
     [ViewVariables]
     public TimeSpan LastProcess { get; set; } = TimeSpan.Zero;
 
