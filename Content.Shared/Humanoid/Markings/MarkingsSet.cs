@@ -277,6 +277,17 @@ public sealed class MarkingSet
         return markings;
     }
 
+    public void Replace(MarkingCategories category, int index, Marking marking)
+    {
+        if (index < 0 || !_markings.TryGetValue(category, out var markings)
+            || index >= markings.Count)
+        {
+            return;
+        }
+
+        markings[index] = marking;
+    }
+
     public bool Remove(MarkingCategories category, string id)
     {
         if (!_markings.TryGetValue(category, out var markings))

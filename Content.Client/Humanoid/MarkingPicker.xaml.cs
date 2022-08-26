@@ -309,7 +309,11 @@ namespace Content.Client.Humanoid
             if (markingIndex < 0) return;
 
             _selectedMarking.IconModulate = _currentMarkingColors[colorIndex];
-            _currentMarkings[_selectedMarkingCategory][markingIndex].SetColor(colorIndex, _currentMarkingColors[colorIndex]);
+
+            var marking = new Marking(_currentMarkings[_selectedMarkingCategory][markingIndex]);
+            marking.SetColor(colorIndex, _currentMarkingColors[colorIndex]);
+            _currentMarkings.Replace(_selectedMarkingCategory, markingIndex, marking);
+
             OnMarkingColorChange?.Invoke(_currentMarkings);
         }
 
