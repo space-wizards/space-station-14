@@ -8,3 +8,14 @@
     - FEET
   - type: Sprite
     state: icon
+
+- type: entity
+  abstract: true
+  parent: ClothingShoesBase
+  id: ClothingShoesBaseButcherable
+  components:
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1
