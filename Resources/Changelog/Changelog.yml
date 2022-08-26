@@ -1,42 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Most gun sizes have been increased., type: Tweak}
-  id: 1686
-  time: '2022-06-12T05:30:03.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added new APC variants for mappers. Construction graphs to follow in
-      a later PR., type: Add}
-  - {message: Standard APC is now 5x bigger in power capacity., type: Tweak}
-  id: 1687
-  time: '2022-06-12T05:34:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now do reduced damage to other zombies., type: Tweak}
-  - {message: Dead and crit enemies now automatically zombify., type: Fix}
-  - {message: Mice who are zombified are now able to attack., type: Fix}
-  - {message: Mice can no longer be revived in cloning pods nor will they become humans
-      when cloned., type: Fix}
-  id: 1688
-  time: '2022-06-12T05:53:13.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: ERT shuttle updated to Dart V2., type: Tweak}
-  id: 1689
-  time: '2022-06-12T06:17:16.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed issue where firelocks on top of closed doors could not be pried
-      open, type: Fix}
-  id: 1690
-  time: '2022-06-13T03:24:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed spent state for large cartridge casing., type: Fix}
-  - {message: Fixed cobra magazine so it actually goes into the gun., type: Fix}
-  id: 1691
-  time: '2022-06-13T09:30:16.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Solar's Best Hot Drinks now only have half as much coffee and tea in
@@ -2946,3 +2908,34 @@ Entries:
     type: Tweak}
   id: 2185
   time: '2022-08-24T14:50:31.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: WallmountSubstationElectronics Are now printable., type: Fix}
+  id: 2186
+  time: '2022-08-25T13:23:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer inject chems into cigarettes., type: Remove}
+  id: 2187
+  time: '2022-08-25T13:35:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Boxing gloves now have the fist weapon arc., type: Fix}
+  id: 2188
+  time: '2022-08-25T13:38:14.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Clowns now go BONK on tables, type: Add}
+  id: 2189
+  time: '2022-08-25T13:41:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Popups for wielding now display the correct text., type: Fix}
+  id: 2190
+  time: '2022-08-25T13:42:13.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Removed ratatouille (held mice and holo parasites no longer affect what
+      direction a player is facing), type: Fix}
+  id: 2191
+  time: '2022-08-25T23:39:25.0000000+00:00'
