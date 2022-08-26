@@ -490,6 +490,38 @@ namespace Content.Client.Preferences.UI
 
             #endregion FlavorText
 
+            #region Dummy
+            var species = Profile?.Species ?? SharedHumanoidSystem.DefaultSpecies;
+            var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
+
+            if (_previewDummy != null)
+                _entMan.DeleteEntity(_previewDummy!.Value);
+
+            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+            _lastSpecies = species;
+            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
+
+            _previewSprite = new SpriteView
+            {
+                Sprite = sprite,
+                Scale = (6, 6),
+                OverrideDirection = Direction.South,
+                VerticalAlignment = VAlignment.Center,
+                SizeFlagsStretchRatio = 1
+            };
+            _previewSpriteControl.AddChild(_previewSprite);
+
+            _previewSpriteSide = new SpriteView
+            {
+                Sprite = sprite,
+                Scale = (6, 6),
+                OverrideDirection = Direction.East,
+                VerticalAlignment = VAlignment.Center,
+                SizeFlagsStretchRatio = 1
+            };
+            _previewSpriteSideControl.AddChild(_previewSpriteSide);
+            #endregion Dummy
+
             #endregion Left
 
             if (preferencesManager.ServerDataLoaded)
@@ -898,11 +930,13 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
+            /* dear fuck this needs to not happen ever again
             if (_needsDummyRebuild)
             {
                 RebuildSpriteView(); // Species change also requires sprite rebuild, so we'll do that now.
                 _needsDummyRebuild = false;
             }
+            */
 
             EntitySystem.Get<SharedHumanoidSystem>().SetAppearance(_previewDummy!.Value,
                 Profile.Species,
