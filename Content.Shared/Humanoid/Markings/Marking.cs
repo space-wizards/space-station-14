@@ -33,7 +33,7 @@ namespace Content.Shared.Markings
 
         public Marking(Marking other)
         {
-            MarkingId = MarkingId;
+            MarkingId = other.MarkingId;
             _markingColors = new(other.MarkingColors);
             Visible = other.Visible;
             Forced = other.Forced;
