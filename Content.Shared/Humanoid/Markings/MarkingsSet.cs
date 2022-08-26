@@ -117,6 +117,8 @@ public sealed class MarkingSet
     {
         IoCManager.Resolve(ref markingManager);
 
+        var toRemove = new List<(MarkingCategories category, string id)>();
+
         foreach (var (category, list) in _markings)
         {
             foreach (var marking in list)
@@ -125,9 +127,14 @@ public sealed class MarkingSet
                     || prototype.SpeciesRestrictions != null
                     && !prototype.SpeciesRestrictions.Contains(species))
                 {
-                    Remove(category, marking.MarkingId);
+                    toRemove.Add((category, marking.MarkingId));
                 }
             }
+        }
+
+        foreach (var remove in toRemove)
+        {
+            Remove(remove.category, remove.id);
         }
     }
 
