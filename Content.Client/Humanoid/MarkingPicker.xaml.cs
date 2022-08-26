@@ -39,7 +39,7 @@ namespace Content.Client.Humanoid
 
         public void SetData(MarkingSet newMarkings, string species, Color skinColor)
         {
-            _currentMarkings = newMarkings;
+            _currentMarkings = new(newMarkings); // markings are a ref type (a mistake)
             _currentSpecies = species;
             CurrentSkinColor = skinColor;
 
