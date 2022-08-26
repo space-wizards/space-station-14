@@ -35,7 +35,8 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         while (_accumulator > RadiationCooldown)
         {
             _accumulator -= RadiationCooldown;
-            RaycastUpdate();
+            //RaycastUpdate();
+            UpdateOld();
 
             //UpdateRadSources();
             //UpdateReceivers();
