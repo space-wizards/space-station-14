@@ -24,7 +24,7 @@ namespace Content.Server.AI.EntitySystems
         /// <summary>
         /// Whether any NPCs are allowed to run at all.
         /// </summary>
-        public bool Enabled { get; set; } = true;
+        public bool Enabled { get; set; } = false;
 
         private int _maxUpdates;
 
