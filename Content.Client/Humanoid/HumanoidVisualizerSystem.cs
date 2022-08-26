@@ -178,7 +178,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             }
             else
             {
-                var rangeStart = humanoid.CurrentMarkings.Count - newMarkings.Count + 1;
+                var rangeStart = humanoid.CurrentMarkings.Count - newMarkings.Count;
                 var rangeCount = humanoid.CurrentMarkings.Count - newMarkings.Count;
                 var range = humanoid.CurrentMarkings.GetRange(rangeStart, rangeCount);
 
