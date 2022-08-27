@@ -17,6 +17,9 @@
       whitelist:
         components:
           - PowerCell
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Appearance

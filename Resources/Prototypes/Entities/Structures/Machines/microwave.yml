@@ -49,5 +49,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 400

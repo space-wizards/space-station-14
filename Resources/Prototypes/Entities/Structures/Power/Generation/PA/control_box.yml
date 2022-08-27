@@ -17,6 +17,9 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
+    - type: Temperature
+    - type: ApcPassiveHeater
+    - type: AtmosExposed
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: ParticleAcceleratorControlBox

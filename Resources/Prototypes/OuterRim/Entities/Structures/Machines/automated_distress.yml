@@ -7,6 +7,9 @@
     - type: Sprite
       sprite: Structures/Machines/server.rsi
       state: server
+    - type: Temperature
+    - type: ApcPassiveHeater
+    - type: AtmosExposed
     - type: ApcPowerReceiver
       powerLoad: 20
       priority: Low

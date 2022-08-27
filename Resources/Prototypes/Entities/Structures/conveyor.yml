@@ -16,6 +16,9 @@
     sprite: Structures/conveyor.rsi
     state: conveyor_started_cw
     drawdepth: FloorObjects
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Physics

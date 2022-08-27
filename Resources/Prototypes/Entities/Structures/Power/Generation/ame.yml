@@ -65,7 +65,10 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-#  - type: ApcPowerReceiver
+#  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
+  - type: ApcPowerReceiver
 #  - type: ExtensionCableReceiver
   - type: PowerSupplier
     supplyRate: 0

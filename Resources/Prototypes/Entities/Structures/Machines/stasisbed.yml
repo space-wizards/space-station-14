@@ -16,6 +16,9 @@
       map: ["enum.StasisBedVisualLayers.IsOn"]
   - type: StasisBedVisuals
   - type: Appearance
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver

@@ -11,6 +11,9 @@
     state: server
   - type: ResearchServer
   - type: TechnologyDatabase
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 20
     priority: Low

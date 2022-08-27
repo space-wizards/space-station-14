@@ -40,6 +40,9 @@
     sprite: Structures/Machines/juicer.rsi
     state: juicer0
     drawdepth: SmallObjects
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: ItemSlots

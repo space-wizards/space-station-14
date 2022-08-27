@@ -13,6 +13,9 @@
     enabled: false
     usesApcPower: true
   - type: WallMount
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Eye

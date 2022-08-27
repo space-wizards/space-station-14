@@ -1327,7 +1327,7 @@ entities:
     parent: 1
     type: Transform
   - remainingFuel: 30
-    type: Generator
+    type: SolidFuelGenerator
 - uid: 78
   type: ThrusterGas
   components:

@@ -12,6 +12,7 @@ using Content.Shared.Inventory;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Server.Temperature.Systems
 {
@@ -22,6 +23,7 @@ namespace Content.Server.Temperature.Systems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         /// <summary>
         ///     All the components that will have their damage updated at the end of the tick.
@@ -105,12 +107,17 @@ namespace Content.Server.Temperature.Systems
             if (transform.MapUid == null)
                 return;
 
-            var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+            var position = args.Coordinates.ToVector2i(EntityManager, _mapManager);
 
             var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
             var tileHeatCapacity = _atmosphereSystem.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
             var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
             ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature );
+            args.GasMixture.Temperature =
+                ((args.GasMixture.Temperature * tileHeatCapacity) -
+                 (heat * temperature.AtmosTemperatureTransferEfficiency)) / tileHeatCapacity; // make sure we trade heat back to the tile too.
+            if (transform.GridUid is not null)
+                _atmosphereSystem.InvalidateTile(transform.GridUid.Value, position);
         }
 
         private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)

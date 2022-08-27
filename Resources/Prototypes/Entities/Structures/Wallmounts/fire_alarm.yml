@@ -4,6 +4,9 @@
   description: A fire alarm. Spicy!
   components:
   - type: WallMount
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: Electrified
     enabled: false

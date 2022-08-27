@@ -1,0 +1,50 @@
+﻿- type: entity
+  id: ThermalPipework
+  name: thermal pump
+  description: A wall-mounted bi-directional heatpump for rapid transfer between spaces, including space. A label on the backplate indicates it's rated for 100W of radiative dissipation and is equipped with an automatic shutoff.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      texture: /Textures/OuterRim/interior_heatsink.png
+      drawDepth: WallMountedItems
+    - type: Temperature
+    - type: ApcPassiveHeater
+    - type: AtmosExposed
+    - type: ApcPowerReceiver
+      powerLoad: 5
+    - type: ExtensionCableReceiver
+    - type: ThermalTransmitter
+      watts: 100
+    - type: Damageable
+    - type: Clickable
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 2
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.10,-0.10,0.10,0.10"
+          mass: 20
+          mask:
+            - MachineMask
+          layer:
+            - HighImpassable
+    - type: Transform
+      anchored: true

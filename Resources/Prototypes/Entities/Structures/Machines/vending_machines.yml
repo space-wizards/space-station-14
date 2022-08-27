@@ -62,6 +62,9 @@
     castShadows: false
     radius: 1.5
   - type: LitOnPowered
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
@@ -574,7 +577,7 @@
     radius: 1.5
     energy: 1.6
     color: "#326e3f"
-    
+
 - type: entity
   parent: VendingMachineSeedsUnlocked
   id: VendingMachineSeeds

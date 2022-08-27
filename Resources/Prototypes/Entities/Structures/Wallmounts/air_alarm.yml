@@ -4,6 +4,9 @@
   description: An air alarm. Alarms... air?
   components:
   - type: WallMount
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: Electrified
     enabled: false

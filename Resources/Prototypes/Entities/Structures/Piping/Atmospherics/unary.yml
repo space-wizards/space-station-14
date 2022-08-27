@@ -25,6 +25,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Temperature
+    - type: ApcPassiveHeater
+    - type: AtmosExposed
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
@@ -101,6 +104,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Temperature
+    - type: ApcPassiveHeater
+    - type: AtmosExposed
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork

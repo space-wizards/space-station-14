@@ -167,6 +167,9 @@
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: wirelessmachine
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Anchorable

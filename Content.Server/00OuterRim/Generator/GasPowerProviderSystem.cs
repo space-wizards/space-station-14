@@ -63,7 +63,7 @@ public sealed class GasPowerProviderSystem : EntitySystem
             var pres = component.PressureConsumedSec * timeDelta;
             if (pipe.Air.Pressure >= pres)
             {
-                pipe.Air.Remove((pres * 100.0f) / (Atmospherics.R * pipe.Air.Temperature));
+                pipe.Air.Remove((pres * 100.0f) / (Shared.Atmos.Atmospherics.R * pipe.Air.Temperature));
                 SetPowered(uid, component, true);
             }
             else

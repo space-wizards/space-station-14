@@ -12,6 +12,9 @@
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
     emagPack: ChemDispenserEmaggedInventory
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Destructible

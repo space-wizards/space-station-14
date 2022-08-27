@@ -83,6 +83,9 @@
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -248,6 +251,9 @@
     damage:
       types:
         Heat: 5
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -286,6 +292,9 @@
     offset: "0, 0.2"
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/cone.png
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Battery

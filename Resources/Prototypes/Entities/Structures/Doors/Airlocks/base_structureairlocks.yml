@@ -62,6 +62,9 @@
     visuals:
     - type: AirlockVisualizer
   - type: WiresVisuals
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 20
   - type: ExtensionCableReceiver

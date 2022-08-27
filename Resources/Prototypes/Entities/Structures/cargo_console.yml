@@ -43,6 +43,9 @@
                 max: 1
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 100 # TODO if we keep this make it spike power draw when teleporting
   - type: ExtensionCableReceiver

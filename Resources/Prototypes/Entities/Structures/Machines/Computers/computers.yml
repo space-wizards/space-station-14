@@ -322,6 +322,9 @@
       type: ResearchConsoleBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 100
     priority: Low
@@ -408,6 +411,9 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: Computer
@@ -599,6 +605,9 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: dna
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 310 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
   - type: Computer

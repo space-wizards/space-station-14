@@ -17,6 +17,9 @@
     - Supply
   - type: SalvageMagnet
     offset: 0, -32
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 250 # TODO change this to a HV power draw that really hits the grid hard WHEN active
 
@@ -29,6 +32,9 @@
   components:
   - type: SalvageMagnet
     offset: 0, -12
+  - type: Temperature
+  - type: ApcPassiveHeater
+  - type: AtmosExposed
   - type: ApcPowerReceiver
     powerLoad: 100
 
