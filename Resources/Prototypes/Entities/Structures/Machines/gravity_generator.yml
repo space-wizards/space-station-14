@@ -53,7 +53,7 @@
         acts: ["Breakage"]
   - type: GravityGenerator
     idlePower: 50
-    activePower: 2500
+    activePower: 250
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
   - type: UserInterface
@@ -104,6 +104,6 @@
       - WallLayer
   - type: GravityGenerator
     idlePower: 15
-    activePower: 500
+    activePower: 50
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
