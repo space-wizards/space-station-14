@@ -501,23 +501,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkDrGibbGlass
-  name: Dr. Gibb glass
-  description: Dr. Gibb. Not as dangerous as the name might imply.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: DrGibb
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/dr_gibb_glass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkErikaSurprise
   name: erika surprise
   description: The surprise is, it's green!
@@ -532,23 +515,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/erikasurprise.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkFourteenLokoGlass
-  name: Fourteen loko glass
-  description: This is a container of Fourteen Loko, it appears to be of the highest quality. The drink, not the container.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: FourteenLoko
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/fourteen_loko_glass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -637,50 +603,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkGrapeJuice
-  name: grape juice
-  description: It's grrrrrape!
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceGrape
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/grapejuice.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkGrapeSodaGlass
-  name: grape soda glass
-  description: Looks like a delicious drink!
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/gsodaglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkGreenTeaGlass
-  name: green tea glass
-  description: Tasty green tea. It has antioxidants; it's good for you!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: GreenTea
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_green.rsi #Placeholder
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkGrenadineGlass
   name: grenadine syrup glass
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
@@ -742,67 +664,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkIcedCoffeeGlass
-  name: iced coffee glass
-  description: A drink to perk you up and refresh you!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: IcedCoffee
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkIcedGreenTeaGlass
-  name: iced green tea glass
-  description: It looks like green tea with ice. One might even call it iced green tea.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: IcedGreenTea
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_green.rsi #Placeholder
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkIcedTeaGlass
-  name: iced tea
-  description: A refreshing southern beverage.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: IcedTea
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/icedteaglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkIcedBeerGlass
-  name: iced beer glass
-  description: A beer so frosty, the air around it freezes.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/iced_beerglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkIceGlass
   name: ice glass
   description: Generally, you're supposed to put something else in there too...
@@ -816,24 +677,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkIceCreamGlass
-  name: ice cream glass
-  description: A glass full of good old ice cream. Might want a spoon.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: IceCream
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/icecreamglass.rsi
-    state: icon
 
 - type: entity
   parent: DrinkGlassBase
@@ -915,74 +758,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kiraspecial.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkLemonadeGlass
-  name: lemonade glass
-  description: Oh the nostalgia...
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Lemonade
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkLemonJuice
-  name: lemon juice
-  description: Sour...
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceLemon
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkLemonLime
-  name: lemon lime
-  description: A tangy substance made of 0.5% natural citrus!
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: LemonLime
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/lemonlime.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkLimeJuice
-  name: lime juice
-  description: It's some sweet-sour lime juice.
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceLime
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/limejuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1104,16 +879,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkMilkshake
-  name: milkshake
-  description: Glorious brainfreezing mixture.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/milkshake.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkMojito
   name: mojito
   description: Fresh from Spesscuba.
@@ -1182,23 +947,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkOrangeJuice
-  name: orange juice
-  description: Vitamins! Yay!
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceOrange
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/orangejuice.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkPatronGlass
   name: patron glass
   description: Drinking patron in the bar, with all the subpar ladies.
@@ -1213,23 +961,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkPoisonBerryJuice
-  name: poison berry juice
-  description: Looks like some deadly juice.
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceBerryPoison
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1264,42 +995,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rewriter.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRootBeerGlass
-  name: root beer glass
-  description: Fizzy, foamy, and full of sweet, non-caffienated goodness.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: RootBeer
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRootBeerFloatGlass
-  name: root beer float glass
-  description: Fizzy, foamy, and now with ice cream on top! Amazing!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: RootBeerFloat
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
-    state: icon
 
 - type: entity
   parent: DrinkGlassBase
@@ -1371,22 +1066,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkGlassWhite
-  name: milk
-  description: White and nutritious goodness!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Milk
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_white.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkSilencerGlass
   name: silencer glass
   description: A drink from Mime Heaven.
@@ -1438,57 +1117,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkSoyLatte
-  name: soy latte
-  description: A nice and refrshing beverage while you are reading.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: SoyLatte
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/soy_latte.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkSpaceUpGlass
-  name: space-up glass
-  description: Space-up. It helps keep your cool.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: SpaceUp
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/space-up_glass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkSpaceMountainWindGlass
-  name: space mountain wind glass
-  description: Space Mountain Wind. As you know, there are no mountains in space, only wind.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: SpaceMountainWind
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/space_mountain_wind_glass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkSyndicatebomb
   name: syndicate bomb
   description: Tastes like terrorism!
@@ -1502,38 +1130,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkTeaGlass
-  name: tea glass
-  description: Tasty black tea. It has antioxidants; it's good for you!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Tea
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/teaglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkTeapot
-  name: teapot  # short and stout
-  description: An elegant teapot. It simply oozes class.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: Tea
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/teapot.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1585,23 +1181,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkTomatoJuice
-  name: tomato juice
-  description: Are you sure this is tomato juice?
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1670,40 +1249,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkWaterJug
-  name: water jug
-  description: Stay hydrated
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Water
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/water.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkWatermelonJuice
-  name: watermelon juice
-  description: Delicious juice made from watermelon.
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceWatermelon
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/watermelon.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1802,3 +1347,20 @@
               Quantity: 50
     - type: Sprite
       sprite: Objects/Consumable/Drinks/kvass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkFourteenLokoGlass
+  name: Fourteen loko glass
+  description: This is a container of Fourteen Loko, it appears to be of the highest quality. The drink, not the container.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: FourteenLoko
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/fourteen_loko_glass.rsi
