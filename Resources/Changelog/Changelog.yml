@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Solar's Best Hot Drinks now only have half as much coffee and tea in
-      them., type: Tweak}
-  id: 1692
-  time: '2022-06-14T07:13:31.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Tweak pistol firerate from 8 -> 6 and cobra firerate from 8 -> 4., type: Tweak}
@@ -2939,3 +2933,9 @@ Entries:
       direction a player is facing), type: Fix}
   id: 2191
   time: '2022-08-25T23:39:25.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: nonlethals crate icon no longer suggests that crate contains tasers
+      (crate actually contains disablers), type: Fix}
+  id: 2192
+  time: '2022-08-27T05:54:24.0000000+00:00'
