@@ -53,6 +53,9 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
             case "raycast":
                 _engine = RadiationEngine.Raycast;
                 break;
+            case "gridcast":
+                _engine = RadiationEngine.Gridcast;
+                break;
             default:
                 Logger.Error($"Unknown radiation engine {engineName}");
                 break;
@@ -79,6 +82,9 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
                     break;
                 case RadiationEngine.Raycast:
                     RaycastUpdate();
+                    break;
+                case RadiationEngine.Gridcast:
+                    UpdateGridcast();
                     break;
             }
         }
@@ -205,5 +211,6 @@ public enum RadiationEngine
 {
     Range,
     Grid,
-    Raycast
+    Raycast,
+    Gridcast
 }

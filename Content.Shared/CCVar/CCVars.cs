@@ -616,7 +616,7 @@ namespace Content.Shared.CCVar
          * Radiation
          */
         public static readonly CVarDef<string> RadiationEngine =
-            CVarDef.Create("radiation.engine", "grid", CVar.SERVERONLY);
+            CVarDef.Create("radiation.engine", "gridcast", CVar.SERVERONLY);
 
 
         /*

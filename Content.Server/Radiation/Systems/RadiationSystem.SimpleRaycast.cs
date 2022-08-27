@@ -14,7 +14,7 @@ public partial class RadiationSystem
 
     public void RaycastUpdate()
     {
-        var rays = new List<RadRayResult>();
+        var rays = new LinkedList<RadRayResult>();
 
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -30,7 +30,7 @@ public partial class RadiationSystem
                 var ray = Irradiate(sourceUid, source, sourcePos, dest, blockerQuery);
                 if (ray != null)
                 {
-                    rays.Add(ray);
+                    rays.AddLast(ray);
                 }
             }
         }
