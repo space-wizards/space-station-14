@@ -99,23 +99,36 @@ public partial class RadiationSystem
 
     private IEnumerable<Vector2i>? MultiGridLine(TransformComponent sourceTrs, TransformComponent destTrs)
     {
+        // get direction from rad source to destination and its distance
         var sourceWorldPos = sourceTrs.WorldPosition;
         var destWorldPos = destTrs.WorldPosition;
         var dir = destWorldPos - sourceWorldPos;
         var dist = dir.Length;
-        var ray = new Ray(sourceWorldPos, dir.Normalized);
 
+        // todo: update rad here and check if it's positive
+
+        // do a raycast to get list of all grids that this rad ray going to visit
+        // because of grid overlapping it can visit same grid several times
+        var ray = new Ray(sourceWorldPos, dir.Normalized);
         var raycastResults = _mapManager.Raycast(sourceTrs.MapID, ray, dist, false);
+
+        // todo: no grids found - so no blockers. trivial case
+
+        // get them as list of grids
+        var gridsToVisit = new List<IMapGrid>();
         foreach (var result in raycastResults)
         {
-            //Logger.Debug($"Hit grid on: {result.HitPos}");
+            if (!TryComp(result.HitEntity, out IMapGridComponent? grid))
+                continue;
+            gridsToVisit.Add(grid.Grid);
         }
+
         yield break;
 
         // there is two cases
         // if source is located in space or if on a grid
         // lets start with a grid case and get grid position of source
-        if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
+        /*if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
             yield break;
         var currentGrid = grid.Grid;
         var sourceGridPos = currentGrid.TileIndicesFor(sourceTrs.Coordinates);
@@ -140,7 +153,7 @@ public partial class RadiationSystem
             // oh, we left a grid and now in open space
             // lets find next grid on our way
             // var worldPos = currentGrid.LocalToWorld(localPos);
-        }
+        }*/
 
 
     }
