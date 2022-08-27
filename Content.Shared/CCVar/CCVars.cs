@@ -1128,7 +1128,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<bool> WorldGenEnabled =
-            CVarDef.Create("worldgen.enabled", false, CVar.SERVERONLY);
+            CVarDef.Create("worldgen.enabled", true, CVar.SERVERONLY);
 
         public static readonly CVarDef<string> SpawnBiome =
             CVarDef.Create("worldgen.spawn_biome", "SpawnBiome", CVar.SERVERONLY);
