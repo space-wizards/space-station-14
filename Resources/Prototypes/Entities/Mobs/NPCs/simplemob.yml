@@ -72,6 +72,7 @@
           -0.25
   - type: Damageable
     damageContainer: Biological
+  - type: RadiationReceiver
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true

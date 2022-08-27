@@ -1,7 +1,9 @@
 ﻿using Content.Server.FloodFill;
+using Content.Shared.CCVar;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -14,6 +16,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly FloodFillSystem _floodFill = default!;
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public Dictionary<EntityUid, Dictionary<Vector2i, float>> _radiationMap = new();
     public List<(Matrix3, Dictionary<Vector2i, float>)> _spaceMap = new();
@@ -21,10 +24,39 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     private const float RadiationCooldown = 1.0f;
     private float _accumulator;
 
+    private RadiationEngine _engine;
+
     public override void Initialize()
     {
         base.Initialize();
         InitRadBlocking();
+
+        _cfg.OnValueChanged(CCVars.RadiationEngine, SetEngine, true);
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _cfg.UnsubValueChanged(CCVars.RadiationEngine, SetEngine);
+    }
+
+    private void SetEngine(string engineName)
+    {
+        switch (engineName)
+        {
+            case "range":
+                _engine = RadiationEngine.Range;
+                break;
+            case "grid":
+                _engine = RadiationEngine.Grid;
+                break;
+            case "raycast":
+                _engine = RadiationEngine.Raycast;
+                break;
+            default:
+                Logger.Error($"Unknown radiation engine {engineName}");
+                break;
+        }
     }
 
     public override void Update(float frameTime)
@@ -35,11 +67,20 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         while (_accumulator > RadiationCooldown)
         {
             _accumulator -= RadiationCooldown;
-            //RaycastUpdate();
-            UpdateOld();
 
-            //UpdateRadSources();
-            //UpdateReceivers();
+            switch (_engine)
+            {
+                case RadiationEngine.Range:
+                    UpdateOld();
+                    break;
+                case RadiationEngine.Grid:
+                    UpdateRadSources();
+                    UpdateReceivers();
+                    break;
+                case RadiationEngine.Raycast:
+                    RaycastUpdate();
+                    break;
+            }
         }
     }
 
@@ -158,4 +199,11 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
             RaiseLocalEvent(receiver.Owner, ev);
         }
     }
+}
+
+public enum RadiationEngine
+{
+    Range,
+    Grid,
+    Raycast
 }

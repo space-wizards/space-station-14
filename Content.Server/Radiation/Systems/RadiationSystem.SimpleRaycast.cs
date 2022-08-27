@@ -1,5 +1,6 @@
 using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -13,7 +14,7 @@ public partial class RadiationSystem
 
     public void RaycastUpdate()
     {
-        var list = new List<RadRayResult>();
+        var rays = new List<RadRayResult>();
 
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -28,13 +29,24 @@ public partial class RadiationSystem
             {
                 var ray = Irradiate(sourceUid, source, sourcePos, dest, blockerQuery);
                 if (ray != null)
-                    list.Add(ray);
+                {
+                    rays.Add(ray);
+                }
             }
         }
 
         Logger.Info($"Raycasted radiation {stopwatch.Elapsed.TotalMilliseconds}ms");
 
-        RaiseNetworkEvent(new RadiationRaysUpdate(list));
+        foreach (var ray in rays)
+        {
+            if (!ray.ReachedDestination)
+                continue;
+
+            var ev = new OnIrradiatedEvent(RadiationCooldown, ray.ReceivedRads);
+            RaiseLocalEvent(ray.DestUid, ev);
+        }
+
+        //RaiseNetworkEvent(new RadiationRaysUpdate(rays));
     }
 
     private RadRayResult? Irradiate(EntityUid sourceUid, RadiationSourceComponent source, MapCoordinates sourcePos,

@@ -613,6 +613,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
 
         /*
+         * Radiation
+         */
+        public static readonly CVarDef<string> RadiationEngine =
+            CVarDef.Create("radiation.engine", "grid", CVar.SERVERONLY);
+
+
+        /*
          * Admin logs
          */
 

@@ -9,6 +9,8 @@ public partial class RadiationSystem
 
     private void UpdateOld()
     {
+        var hashSet = new HashSet<EntityUid>();
+
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
@@ -17,10 +19,15 @@ public partial class RadiationSystem
             var ents = _lookup.GetEntitiesInRange(source.Owner, source.Range);
             foreach (var uid in ents)
             {
-                RaiseLocalEvent(uid, new OnIrradiatedEvent(1f, 1f));
+                hashSet.Add(uid);
             }
         }
 
         Logger.Info($"Range radiation {stopwatch.Elapsed.TotalMilliseconds}ms");
+
+        foreach (var uid in hashSet)
+        {
+            RaiseLocalEvent(uid, new OnIrradiatedEvent(1f, 1f));
+        }
     }
 }
