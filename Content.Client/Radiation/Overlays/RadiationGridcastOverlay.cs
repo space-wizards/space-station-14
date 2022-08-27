@@ -10,7 +10,7 @@ public sealed class RadiationGridcastOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
 
-    public Dictionary<EntityUid, List<List<Vector2i>>>? Lines;
+    public Dictionary<EntityUid, List<(List<Vector2i>, float)>>? Lines;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -46,7 +46,7 @@ public sealed class RadiationGridcastOverlay : Overlay
             var gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
             handle.SetTransform(worldMatrix);
 
-            foreach (var line in lines)
+            foreach (var (line, _) in lines)
             {
                 DrawTiles(handle, gridBounds, line);
             }
@@ -59,7 +59,7 @@ public sealed class RadiationGridcastOverlay : Overlay
         List<Vector2i> tiles, ushort tileSize = 1)
     {
         var color = Color.Green;
-        color.A = 0.2f;
+        color.A = 0.5f;
 
         foreach (var tile in tiles)
         {

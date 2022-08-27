@@ -1,5 +1,7 @@
+using Content.Server.FloodFill;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
@@ -14,7 +16,7 @@ public partial class RadiationSystem
         var sourceQuery = EntityQuery<RadiationSourceComponent, TransformComponent>();
         var destQuery = EntityQuery<RadiationReceiverComponent, TransformComponent>();
 
-        var linesDict = new Dictionary<EntityUid, List<List<Vector2i>>>();
+        var linesDict = new Dictionary<EntityUid, List<(List<Vector2i>, float)>>();
         foreach (var (source, sourceTrs) in sourceQuery)
         {
             if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
@@ -27,15 +29,13 @@ public partial class RadiationSystem
 
             var sourcePos = sourceTrs.WorldPosition;
             var sourceGridPos = grid.Grid.TileIndicesFor(sourceTrs.Coordinates);
+            var resistanceMap = _resistancePerTile[gridUid];
 
             foreach (var (dest, destTrs) in destQuery)
             {
-                var dir = (destTrs.WorldPosition - sourcePos).Ceiled();
-                var destGridPos = sourceGridPos + dir;
-
-                var line = Line(sourceGridPos.X, sourceGridPos.Y,
-                    destGridPos.X, destGridPos.Y);
-                lines.Add(line);
+                var line = IrradiateLine(source, sourceGridPos, destTrs, resistanceMap);
+                if (line != null)
+                    lines.Add(line.Value);
             }
         }
 
@@ -44,10 +44,37 @@ public partial class RadiationSystem
         RaiseNetworkEvent(new RadiationGridcastUpdate(linesDict));
     }
 
-    public List<Vector2i> Line(int x, int y, int x2, int y2)
+    private (List<Vector2i>, float)? IrradiateLine(RadiationSourceComponent source,
+        Vector2i sourceGridPos, TransformComponent destTrs,
+        Dictionary<Vector2i, TileData> resistanceMap)
     {
-        var list = new List<Vector2i>();
+        if (destTrs.GridUid == null || !TryComp(destTrs.GridUid, out IMapGridComponent? destGrid))
+            return null;
+        var destGridPos = destGrid.Grid.TileIndicesFor(destTrs.Coordinates);
 
+        var linesPoints = Line(sourceGridPos.X, sourceGridPos.Y,
+            destGridPos.X, destGridPos.Y);
+
+        var visitedPoints = new List<Vector2i>();
+        var rads = source.RadsPerSecond;
+        foreach (var point in linesPoints)
+        {
+            visitedPoints.Add(point);
+            if (resistanceMap.TryGetValue(point, out var resData))
+            {
+                rads -= resData.Tolerance[0];
+                if (rads <= MinRads)
+                {
+                    return (visitedPoints, 0f);
+                }
+            }
+        }
+
+        return (visitedPoints, rads);
+    }
+
+    public IEnumerable<Vector2i> Line(int x, int y, int x2, int y2)
+    {
         var w = x2 - x;
         var h = y2 - y;
         int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
@@ -63,6 +90,8 @@ public partial class RadiationSystem
             dx2 = -1;
         else if (w > 0)
             dx2 = 1;
+
+
         var longest = Math.Abs(w);
         var shortest = Math.Abs(h);
         if (!(longest > shortest))
@@ -79,7 +108,7 @@ public partial class RadiationSystem
         var numerator = longest >> 1;
         for (var i = 0; i <= longest; i++)
         {
-            list.Add(new Vector2i(x, y));
+            yield return new Vector2i(x, y);
             numerator += shortest;
             if (!(numerator < longest))
             {
@@ -93,7 +122,5 @@ public partial class RadiationSystem
                 y += dy2;
             }
         }
-
-        return list;
     }
 }

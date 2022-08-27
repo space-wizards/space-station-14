@@ -82,9 +82,9 @@ public sealed class RadRayResult
 [Serializable, NetSerializable]
 public sealed class RadiationGridcastUpdate : EntityEventArgs
 {
-    public Dictionary<EntityUid, List<List<Vector2i>>> Lines;
+    public Dictionary<EntityUid, List<(List<Vector2i>, float)>> Lines;
 
-    public RadiationGridcastUpdate(Dictionary<EntityUid, List<List<Vector2i>>> lines)
+    public RadiationGridcastUpdate(Dictionary<EntityUid, List<(List<Vector2i>, float)>> lines)
     {
         Lines = lines;
     }
