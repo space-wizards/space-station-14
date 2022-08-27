@@ -37,7 +37,8 @@ namespace Content.Server.Disposal.Tube.Components
         public abstract Direction NextDirection(DisposalHolderComponent holder);
 
         // TODO: Make disposal pipes extend the grid
-        private void Connect()
+        // ???
+        public void Connect()
         {
             if (_connected)
             {
@@ -89,70 +90,12 @@ namespace Content.Server.Disposal.Tube.Components
             Owner.PopupMessage(entity, Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)));
         }
 
-        private void UpdateVisualState()
-        {
-            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
-            {
-                return;
-            }
-
-            // TODO this should just generalized into some anchored-visuals system/comp, this has nothing to do with disposal tubes.
-            var state = _entMan.GetComponent<TransformComponent>(Owner).Anchored
-                ? DisposalTubeVisualState.Anchored
-                : DisposalTubeVisualState.Free;
-
-            appearance.SetData(DisposalTubeVisuals.VisualState, state);
-        }
-
-        public void AnchoredChanged()
-        {
-            if (!_entMan.TryGetComponent(Owner, out PhysicsComponent? physics))
-            {
-                return;
-            }
-
-            if (physics.BodyType == BodyType.Static)
-            {
-                OnAnchor();
-            }
-            else
-            {
-                OnUnAnchor();
-            }
-        }
-
-        private void OnAnchor()
-        {
-            Connect();
-            UpdateVisualState();
-        }
-
-        private void OnUnAnchor()
-        {
-            Disconnect();
-            UpdateVisualState();
-        }
-
         protected override void Initialize()
         {
             base.Initialize();
 
             Contents = ContainerHelpers.EnsureContainer<Container>(Owner, ContainerId);
             Owner.EnsureComponent<AnchorableComponent>();
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            Owner.EnsureComponent<PhysicsComponent>(out var physicsComponent);
-            if (physicsComponent.BodyType != BodyType.Static)
-            {
-                return;
-            }
-
-            Connect();
-            UpdateVisualState();
         }
 
         protected override void OnRemove()

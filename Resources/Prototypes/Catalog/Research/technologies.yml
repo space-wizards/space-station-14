@@ -310,13 +310,9 @@
     - APCElectronics
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
-    - WallmountSubstationElectronics
-    - WallmountGeneratorElectronics
-    - WallmountGeneratorAPUElectronics
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
-    - GeneratorUraniumMachineCircuitboard
     - Signaller
     - SignalTrigger
 
@@ -334,7 +330,6 @@
     - WallmountSubstationElectronics
     - WallmountGeneratorElectronics
     - WallmountGeneratorAPUElectronics
-    - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
 
 - type: technology
