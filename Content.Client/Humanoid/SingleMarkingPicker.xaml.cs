@@ -85,6 +85,8 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         get => _category;
         set
         {
+            _category = value;
+
             if (!string.IsNullOrEmpty(_species))
             {
                 PopulateList();
@@ -152,6 +154,8 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         {
             return;
         }
+
+        MarkingList.Clear();
 
         var dict = _markingManager.MarkingsByCategoryAndSpecies(Category, _species);
 
