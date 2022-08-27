@@ -1,7 +1,9 @@
+using System.Linq;
 using Content.Server.FloodFill;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
@@ -17,9 +19,10 @@ public partial class RadiationSystem
         var destQuery = EntityQuery<RadiationReceiverComponent, TransformComponent>();
 
         var linesDict = new Dictionary<EntityUid, List<(List<Vector2i>, float)>>();
+        var list = new List<RayCastResults>();
         foreach (var (source, sourceTrs) in sourceQuery)
         {
-            if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
+            /*if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
                 continue;
 
             var gridUid = sourceTrs.GridUid.Value;
@@ -29,17 +32,24 @@ public partial class RadiationSystem
 
             var sourcePos = sourceTrs.WorldPosition;
             var sourceGridPos = grid.Grid.TileIndicesFor(sourceTrs.Coordinates);
-            var resistanceMap = _resistancePerTile[gridUid];
+            var resistanceMap = _resistancePerTile[gridUid];*/
 
             foreach (var (dest, destTrs) in destQuery)
             {
-                var line = IrradiateLine(source, sourceGridPos, destTrs, resistanceMap);
+                list = Raycast(sourceTrs, destTrs).ToList();
+
+                /*var line = IrradiateLine(source, sourceGridPos, destTrs, resistanceMap);
                 if (line != null)
-                    lines.Add(line.Value);
+                    lines.Add(line.Value);*/
             }
         }
 
         Logger.Info($"Gridcast radiation {stopwatch.Elapsed.TotalMilliseconds}ms");
+
+        foreach (var res in list)
+        {
+            Logger.Debug($"GridUid {res.HitEntity} Point {res.HitPos}, Distance {res.Distance}");
+        }
 
         RaiseNetworkEvent(new RadiationGridcastUpdate(linesDict));
     }
@@ -74,9 +84,34 @@ public partial class RadiationSystem
     }
 
 
-
-    private IEnumerable<Vector2i> MultiGridLine(TransformComponent sourceTrs, TransformComponent destTrs)
+    private IEnumerable<RayCastResults> Raycast(TransformComponent sourceTrs, TransformComponent destTrs)
     {
+        var sourceWorldPos = sourceTrs.WorldPosition;
+        var destWorldPos = destTrs.WorldPosition;
+        var dir = destWorldPos - sourceWorldPos;
+        var dist = dir.Length;
+        var ray = new Ray(sourceWorldPos, dir.Normalized);
+
+        var raycastResults = _mapManager.Raycast(sourceTrs.MapID, ray, dist, false);
+        return raycastResults;
+    }
+
+
+    private IEnumerable<Vector2i>? MultiGridLine(TransformComponent sourceTrs, TransformComponent destTrs)
+    {
+        var sourceWorldPos = sourceTrs.WorldPosition;
+        var destWorldPos = destTrs.WorldPosition;
+        var dir = destWorldPos - sourceWorldPos;
+        var dist = dir.Length;
+        var ray = new Ray(sourceWorldPos, dir.Normalized);
+
+        var raycastResults = _mapManager.Raycast(sourceTrs.MapID, ray, dist, false);
+        foreach (var result in raycastResults)
+        {
+            //Logger.Debug($"Hit grid on: {result.HitPos}");
+        }
+        yield break;
+
         // there is two cases
         // if source is located in space or if on a grid
         // lets start with a grid case and get grid position of source
@@ -84,13 +119,6 @@ public partial class RadiationSystem
             yield break;
         var currentGrid = grid.Grid;
         var sourceGridPos = currentGrid.TileIndicesFor(sourceTrs.Coordinates);
-
-        // get edges map
-        if (!_floodFill._gridEdges.TryGetValue(currentGrid.GridEntityId, out var edges))
-        {
-            Logger.Error($"Grid {currentGrid.GridEntityId} doesn't have edges map");
-            yield break;
-        }
 
         // lets assume that target is placed on a same grid
         var destGridPos = currentGrid.TileIndicesFor(destTrs.WorldPosition);
@@ -103,12 +131,15 @@ public partial class RadiationSystem
             // blah blah, we are moving and doing checks
             yield return pos;
 
-            // if we started moving on a grid
-            // and object is located on another grid
-            // that means sooner or latter we will reach space by crossing grid edge
+            // check if we left a grid
+            // todo: GridTileToLocal can be removed
+            var localPos = currentGrid.GridTileToLocal(pos).Position;
+            if (currentGrid.LocalAABB.Contains(localPos))
+                continue;
 
-
-            if (edges.c)
+            // oh, we left a grid and now in open space
+            // lets find next grid on our way
+            // var worldPos = currentGrid.LocalToWorld(localPos);
         }
 
 
