@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Server._00OuterRim.Atmospherics;
 
 /// <summary>
-/// This handles...
+/// This handles thermal devices, namely thermal pumps.
 /// </summary>
 public sealed class ThermalTransferSystem : EntitySystem
 {
