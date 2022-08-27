@@ -73,7 +73,8 @@
   - type: ContainerContainer
     containers:
       DisposalUnit: !type:Container
-
+  - type: ApcPowerReceiver
+    powerLoad: 20
 - type: entity
   id: DisposalUnit
   parent: DisposalUnitBase

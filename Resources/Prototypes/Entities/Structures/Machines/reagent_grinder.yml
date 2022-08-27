@@ -44,7 +44,7 @@
   - type: ApcPassiveHeater
   - type: AtmosExposed
   - type: ApcPowerReceiver
-    powerLoad: 300
+    powerLoad: 30
   - type: ItemSlots
   - type: ContainerContainer
     containers:
