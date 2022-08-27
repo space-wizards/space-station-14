@@ -78,3 +78,14 @@ public sealed class RadRayResult
         }
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class RadiationGridcastUpdate : EntityEventArgs
+{
+    public Dictionary<EntityUid, List<List<Vector2i>>> Lines;
+
+    public RadiationGridcastUpdate(Dictionary<EntityUid, List<List<Vector2i>>> lines)
+    {
+        Lines = lines;
+    }
+}

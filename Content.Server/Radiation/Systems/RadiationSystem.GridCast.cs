@@ -1,4 +1,5 @@
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
@@ -13,11 +14,16 @@ public partial class RadiationSystem
         var sourceQuery = EntityQuery<RadiationSourceComponent, TransformComponent>();
         var destQuery = EntityQuery<RadiationReceiverComponent, TransformComponent>();
 
-        var lines = new List<List<Vector2i>>();
+        var linesDict = new Dictionary<EntityUid, List<List<Vector2i>>>();
         foreach (var (source, sourceTrs) in sourceQuery)
         {
             if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
                 continue;
+
+            var gridUid = sourceTrs.GridUid.Value;
+            if (!linesDict.ContainsKey(gridUid))
+                linesDict.Add(sourceTrs.GridUid.Value, new());
+            var lines = linesDict[gridUid];
 
             var sourcePos = sourceTrs.WorldPosition;
             var sourceGridPos = grid.Grid.TileIndicesFor(sourceTrs.Coordinates);
@@ -34,6 +40,8 @@ public partial class RadiationSystem
         }
 
         Logger.Info($"Gridcast radiation {stopwatch.Elapsed.TotalMilliseconds}ms");
+
+        RaiseNetworkEvent(new RadiationGridcastUpdate(linesDict));
     }
 
     public List<Vector2i> Line(int x, int y, int x2, int y2)
