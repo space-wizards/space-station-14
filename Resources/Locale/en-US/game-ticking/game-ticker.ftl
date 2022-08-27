@@ -22,5 +22,5 @@ player-join-message = Player {$name} joined the server!
 # Displayed in chat to admins when a player leaves
 player-leave-message = Player {$name} left the server!
 
-latejoin-arrival-announcement = {$character} ({$job}) has arrived at the station!
-latejoin-arrival-sender = Station
+latejoin-arrival-announcement = {$character} ({$job}) has been awoken from cryosleep on-schedule.
+latejoin-arrival-sender = Vessel Control
