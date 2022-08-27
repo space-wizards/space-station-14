@@ -606,39 +606,39 @@ entities:
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: -19,-4
-        29:
+        28:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -19,-1
-        30:
+        29:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -18,-1
-        31:
+        30:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: -20,-3
-        32:
+        31:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: -20,-2
-        33:
+        32:
           color: '#A4610696'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -20,-1
-        34:
+        33:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -20,-4
-        59:
+        58:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -17,-1
-        60:
+        59:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -16,-1
-        61:
+        60:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: -15,-1
@@ -667,151 +667,151 @@ entities:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -17,12
-        17:
+        16:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -17,14
-        18:
+        17:
           color: '#D381C996'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -17,15
-        19:
+        18:
           color: '#334E6DC8'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -12,15
-        20:
+        19:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,14
-        21:
+        20:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,13
-        22:
+        21:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,12
-        23:
+        22:
           color: '#334E6DC8'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: -12,11
-        24:
+        23:
           color: '#334E6DC8'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: -9,11
-        25:
+        24:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: -9,12
-        26:
+        25:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: -9,13
-        27:
+        26:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: -9,14
-        28:
+        27:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: -9,15
-        35:
+        34:
           color: '#9FED5896'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -14,9
-        36:
+        35:
           color: '#9FED5896'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: -7,9
-        37:
+        36:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale
           coordinates: -13,9
-        38:
+        37:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale
           coordinates: -12,9
-        39:
+        38:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale
           coordinates: -9,9
-        40:
+        39:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale
           coordinates: -8,9
-        41:
+        40:
           color: '#9FED5896'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: -7,6
-        42:
+        41:
           color: '#9FED5896'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: -14,6
-        43:
+        42:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale180
           coordinates: -13,6
-        44:
+        43:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale180
           coordinates: -8,6
-        45:
+        44:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,4
-        46:
+        45:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,3
-        47:
+        46:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -9,5
-        48:
+        47:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -9,4
-        49:
+        48:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -9,3
-        50:
+        49:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,5
-        51:
+        50:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: -14,7
-        52:
+        51:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: -14,8
-        53:
+        52:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -7,7
-        54:
+        53:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -7,8
-        55:
+        54:
           color: '#A4610696'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: -13,1
-        56:
+        55:
           color: '#A4610696'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -15,1
-        57:
+        56:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -14,1
-        58:
+        57:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: -15,0
-        62:
+        61:
           color: '#D381C996'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: -14,11
@@ -4920,7 +4920,7 @@ entities:
     type: Transform
 - uid: 609
   components:
-  - index: 5
+  - index: 11
     type: Map
 - uid: 610
   type: Catwalk
@@ -5009,6 +5009,285 @@ entities:
   type: VendingMachineSciDrobe
   components:
   - pos: -14.5,15.5
+    parent: 71
+    type: Transform
+- uid: 623
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -11.5,1.5
+    parent: 71
+    type: Transform
+- uid: 624
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -8.5,1.5
+    parent: 71
+    type: Transform
+- uid: 625
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,1.5
+    parent: 71
+    type: Transform
+- uid: 626
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,3.5
+    parent: 71
+    type: Transform
+- uid: 627
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -18.5,1.5
+    parent: 71
+    type: Transform
+- uid: 628
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -18.5,3.5
+    parent: 71
+    type: Transform
+- uid: 629
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -13.5,10.5
+    parent: 71
+    type: Transform
+- uid: 630
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -6.5,10.5
+    parent: 71
+    type: Transform
+- uid: 631
+  type: ThermalPipework
+  components:
+  - pos: -7.5,11.5
+    parent: 71
+    type: Transform
+- uid: 632
+  type: ThermalPipework
+  components:
+  - pos: -12.5,11.5
+    parent: 71
+    type: Transform
+- uid: 633
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -17.5,12.5
+    parent: 71
+    type: Transform
+- uid: 634
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -17.5,14.5
+    parent: 71
+    type: Transform
+- uid: 635
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,13.5
+    parent: 71
+    type: Transform
+- uid: 636
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -3.5,10.5
+    parent: 71
+    type: Transform
+- uid: 637
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -17.5,0.5
+    parent: 71
+    type: Transform
+- uid: 638
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,0.5
+    parent: 71
+    type: Transform
+- uid: 639
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -4.5,1.5
+    parent: 71
+    type: Transform
+- uid: 640
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -15.5,1.5
+    parent: 71
+    type: Transform
+- uid: 641
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -16.5,4.5
+    parent: 71
+    type: Transform
+- uid: 642
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -15.5,4.5
+    parent: 71
+    type: Transform
+- uid: 643
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -3.5,4.5
+    parent: 71
+    type: Transform
+- uid: 644
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -4.5,4.5
+    parent: 71
+    type: Transform
+- uid: 645
+  type: ThermalPipework
+  components:
+  - pos: -17.5,13.5
+    parent: 71
+    type: Transform
+- uid: 646
+  type: ThermalPipework
+  components:
+  - pos: -17.5,15.5
+    parent: 71
+    type: Transform
+- uid: 647
+  type: ThermalPipework
+  components:
+  - pos: -17.5,11.5
+    parent: 71
+    type: Transform
+- uid: 648
+  type: ThermalPipework
+  components:
+  - pos: -2.5,15.5
+    parent: 71
+    type: Transform
+- uid: 649
+  type: ThermalPipework
+  components:
+  - pos: -7.5,15.5
+    parent: 71
+    type: Transform
+- uid: 650
+  type: ThermalPipework
+  components:
+  - pos: -12.5,12.5
+    parent: 71
+    type: Transform
+- uid: 651
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,4.5
+    parent: 71
+    type: Transform
+- uid: 652
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -17.5,4.5
+    parent: 71
+    type: Transform
+- uid: 653
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -11.5,0.5
+    parent: 71
+    type: Transform
+- uid: 654
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -12.5,-2.5
+    parent: 71
+    type: Transform
+- uid: 655
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -13.5,-2.5
+    parent: 71
+    type: Transform
+- uid: 656
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -14.5,-2.5
+    parent: 71
+    type: Transform
+- uid: 657
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -7.5,-2.5
+    parent: 71
+    type: Transform
+- uid: 658
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -6.5,-2.5
+    parent: 71
+    type: Transform
+- uid: 659
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,-2.5
+    parent: 71
+    type: Transform
+- uid: 660
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,2.5
+    parent: 71
+    type: Transform
+- uid: 661
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -6.5,2.5
+    parent: 71
+    type: Transform
+- uid: 662
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -13.5,2.5
+    parent: 71
+    type: Transform
+- uid: 663
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -14.5,2.5
     parent: 71
     type: Transform
 ...

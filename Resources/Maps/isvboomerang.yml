@@ -83,7 +83,7 @@ grids:
 entities:
 - uid: 0
   components:
-  - index: 3
+  - index: 7
     type: Map
 - uid: 1
   components:
@@ -836,7 +836,7 @@ entities:
   - pos: 0.5,-0.5
     parent: 1
     type: Transform
-  - SecondsUntilStateChange: -8576.662
+  - SecondsUntilStateChange: -9195.656
     state: Opening
     type: Door
   - inputs:
@@ -1115,7 +1115,7 @@ entities:
   - pos: 7.5,-0.5
     parent: 1
     type: Transform
-  - SecondsUntilStateChange: -9192.527
+  - SecondsUntilStateChange: -9811.521
     state: Closing
     type: Door
   - inputs:
@@ -1137,7 +1137,7 @@ entities:
   - pos: 6.5,-0.5
     parent: 1
     type: Transform
-  - SecondsUntilStateChange: -9192.527
+  - SecondsUntilStateChange: -9811.521
     state: Closing
     type: Door
   - inputs:
@@ -5302,6 +5302,20 @@ entities:
     pos: 2.1966145,13.122591
     parent: 1
     type: Transform
+- uid: 592
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,6.5
+    parent: 1
+    type: Transform
+- uid: 593
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,10.5
+    parent: 1
+    type: Transform
 - uid: 594
   type: GasPipeTJunction
   components:
@@ -5376,6 +5390,255 @@ entities:
   type: PillTricordrazine
   components:
   - pos: 8.442211,21.675922
+    parent: 1
+    type: Transform
+- uid: 606
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 5.5,7.5
+    parent: 1
+    type: Transform
+- uid: 607
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 9.5,5.5
+    parent: 1
+    type: Transform
+- uid: 608
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,7.5
+    parent: 1
+    type: Transform
+- uid: 609
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 4.5,-0.5
+    parent: 1
+    type: Transform
+- uid: 610
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 4.5,15.5
+    parent: 1
+    type: Transform
+- uid: 611
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 2.5,19.5
+    parent: 1
+    type: Transform
+- uid: 612
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 4.5,23.5
+    parent: 1
+    type: Transform
+- uid: 613
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,26.5
+    parent: 1
+    type: Transform
+- uid: 614
+  type: ThermalPipework
+  components:
+  - pos: -0.5,9.5
+    parent: 1
+    type: Transform
+- uid: 615
+  type: ThermalPipework
+  components:
+  - pos: 10.5,8.5
+    parent: 1
+    type: Transform
+- uid: 616
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 8.5,15.5
+    parent: 1
+    type: Transform
+- uid: 617
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 9.5,10.5
+    parent: 1
+    type: Transform
+- uid: 618
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 4.5,19.5
+    parent: 1
+    type: Transform
+- uid: 619
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 9.5,20.5
+    parent: 1
+    type: Transform
+- uid: 620
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 3.5,20.5
+    parent: 1
+    type: Transform
+- uid: 621
+  type: ThermalPipework
+  components:
+  - pos: 10.5,17.5
+    parent: 1
+    type: Transform
+- uid: 622
+  type: ThermalPipework
+  components:
+  - pos: 10.5,16.5
+    parent: 1
+    type: Transform
+- uid: 623
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 5.5,-0.5
+    parent: 1
+    type: Transform
+- uid: 624
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,-0.5
+    parent: 1
+    type: Transform
+- uid: 625
+  type: ThermalPipework
+  components:
+  - pos: 9.5,2.5
+    parent: 1
+    type: Transform
+- uid: 626
+  type: ThermalPipework
+  components:
+  - pos: 9.5,3.5
+    parent: 1
+    type: Transform
+- uid: 627
+  type: ThermalPipework
+  components:
+  - pos: 8.5,0.5
+    parent: 1
+    type: Transform
+- uid: 628
+  type: ThermalPipework
+  components:
+  - pos: 9.5,6.5
+    parent: 1
+    type: Transform
+- uid: 629
+  type: ThermalPipework
+  components:
+  - pos: 10.5,9.5
+    parent: 1
+    type: Transform
+- uid: 630
+  type: ThermalPipework
+  components:
+  - pos: 5.5,9.5
+    parent: 1
+    type: Transform
+- uid: 631
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 6.5,4.5
+    parent: 1
+    type: Transform
+- uid: 632
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 8.5,4.5
+    parent: 1
+    type: Transform
+- uid: 633
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,6.5
+    parent: 1
+    type: Transform
+- uid: 634
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 1.5,10.5
+    parent: 1
+    type: Transform
+- uid: 635
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 9.5,15.5
+    parent: 1
+    type: Transform
+- uid: 636
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,16.5
+    parent: 1
+    type: Transform
+- uid: 637
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,18.5
+    parent: 1
+    type: Transform
+- uid: 638
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 3.5,16.5
+    parent: 1
+    type: Transform
+- uid: 639
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 3.5,18.5
+    parent: 1
+    type: Transform
+- uid: 640
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 9.5,21.5
+    parent: 1
+    type: Transform
+- uid: 641
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 9.5,22.5
+    parent: 1
+    type: Transform
+- uid: 642
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 9.5,23.5
     parent: 1
     type: Transform
 ...

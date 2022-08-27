@@ -89,7 +89,7 @@ entities:
     type: Transform
 - uid: 1
   components:
-  - index: 7
+  - index: 12
     type: Map
 - uid: 2
   components:
@@ -4055,6 +4055,177 @@ entities:
   type: ThermomachineHeaterMachineCircuitBoard
   components:
   - pos: -6.3505588,-12.556952
+    parent: 2
+    type: Transform
+- uid: 535
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -5.5,-1.5
+    parent: 2
+    type: Transform
+- uid: 536
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -5.5,-0.5
+    parent: 2
+    type: Transform
+- uid: 537
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 4.5,-1.5
+    parent: 2
+    type: Transform
+- uid: 538
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 4.5,-0.5
+    parent: 2
+    type: Transform
+- uid: 539
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -8.5,-8.5
+    parent: 2
+    type: Transform
+- uid: 540
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -7.5,-8.5
+    parent: 2
+    type: Transform
+- uid: 541
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -6.5,-13.5
+    parent: 2
+    type: Transform
+- uid: 542
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -4.5,-13.5
+    parent: 2
+    type: Transform
+- uid: 543
+  type: ThermalPipework
+  components:
+  - pos: -3.5,-15.5
+    parent: 2
+    type: Transform
+- uid: 544
+  type: ThermalPipework
+  components:
+  - pos: -3.5,-14.5
+    parent: 2
+    type: Transform
+- uid: 545
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,-13.5
+    parent: 2
+    type: Transform
+- uid: 546
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-12.5
+    parent: 2
+    type: Transform
+- uid: 547
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-11.5
+    parent: 2
+    type: Transform
+- uid: 548
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,-13.5
+    parent: 2
+    type: Transform
+- uid: 549
+  type: ThermalPipework
+  components:
+  - pos: 2.5,-15.5
+    parent: 2
+    type: Transform
+- uid: 550
+  type: ThermalPipework
+  components:
+  - pos: 2.5,-14.5
+    parent: 2
+    type: Transform
+- uid: 551
+  type: ThermalPipework
+  components:
+  - pos: 5.5,-12.5
+    parent: 2
+    type: Transform
+- uid: 552
+  type: ThermalPipework
+  components:
+  - pos: 5.5,-11.5
+    parent: 2
+    type: Transform
+- uid: 553
+  type: ThermalPipework
+  components:
+  - pos: 8.5,-7.5
+    parent: 2
+    type: Transform
+- uid: 554
+  type: ThermalPipework
+  components:
+  - pos: 8.5,-8.5
+    parent: 2
+    type: Transform
+- uid: 555
+  type: ThermalPipework
+  components:
+  - pos: 8.5,-9.5
+    parent: 2
+    type: Transform
+- uid: 556
+  type: ThermalPipework
+  components:
+  - pos: 8.5,-10.5
+    parent: 2
+    type: Transform
+- uid: 557
+  type: ThermalPipework
+  components:
+  - pos: 8.5,-11.5
+    parent: 2
+    type: Transform
+- uid: 558
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,-10.5
+    parent: 2
+    type: Transform
+- uid: 559
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -0.5,-10.5
+    parent: 2
+    type: Transform
+- uid: 560
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-10.5
     parent: 2
     type: Transform
 ...

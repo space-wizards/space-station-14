@@ -273,7 +273,7 @@ entities:
     type: BecomesStation
 - uid: 7
   components:
-  - index: 8
+  - index: 10
     type: Map
 - uid: 8
   type: GasPipeTJunction
@@ -1705,6 +1705,86 @@ entities:
   type: ThermomachineHeaterMachineCircuitBoard
   components:
   - pos: -0.680549,11.853664
+    parent: 6
+    type: Transform
+- uid: 190
+  type: ThermalPipework
+  components:
+  - pos: -1.5,2.5
+    parent: 6
+    type: Transform
+- uid: 191
+  type: ThermalPipework
+  components:
+  - pos: -1.5,3.5
+    parent: 6
+    type: Transform
+- uid: 192
+  type: ThermalPipework
+  components:
+  - pos: 4.5,2.5
+    parent: 6
+    type: Transform
+- uid: 193
+  type: ThermalPipework
+  components:
+  - pos: 4.5,3.5
+    parent: 6
+    type: Transform
+- uid: 194
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,10.5
+    parent: 6
+    type: Transform
+- uid: 195
+  type: ThermalPipework
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -0.5,10.5
+    parent: 6
+    type: Transform
+- uid: 196
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,9.5
+    parent: 6
+    type: Transform
+- uid: 197
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 4.5,9.5
+    parent: 6
+    type: Transform
+- uid: 198
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 4.5,11.5
+    parent: 6
+    type: Transform
+- uid: 199
+  type: ThermalPipework
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,11.5
+    parent: 6
+    type: Transform
+- uid: 200
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 2.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 201
+  type: ThermalPipework
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,-0.5
     parent: 6
     type: Transform
 ...
