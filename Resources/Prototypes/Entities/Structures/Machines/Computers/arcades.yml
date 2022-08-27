@@ -6,7 +6,7 @@
   parent: BaseComputer
   components:
   - type: ApcPowerReceiver
-    powerLoad: 350
+    powerLoad: 35
     priority: Low
   - type: ExtensionCableReceiver
   - type: PointLight

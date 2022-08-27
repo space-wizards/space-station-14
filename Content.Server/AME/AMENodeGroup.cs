@@ -140,7 +140,7 @@ namespace Content.Server.AME
                 }
                 // Note the float conversions. The maths will completely fail if not done using floats.
                 // Oh, and don't ever stuff the result of this in an int. Seriously.
-                return (((float) fuel) / CoreCount) * fuel * 20000;
+                return (((float) fuel) / CoreCount) * fuel * 2000;
             }
             return 0;
         }

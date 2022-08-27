@@ -14,16 +14,16 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SharedGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<SharedGeneratorComponent, SetTargetPowerMessage>(OnTargetPowerSet);
+        SubscribeLocalEvent<SharedSolidFuelGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<SharedSolidFuelGeneratorComponent, SetTargetPowerMessage>(OnTargetPowerSet);
     }
 
-    private void OnTargetPowerSet(EntityUid uid, SharedGeneratorComponent component, SetTargetPowerMessage args)
+    private void OnTargetPowerSet(EntityUid uid, SharedSolidFuelGeneratorComponent component, SetTargetPowerMessage args)
     {
-        component.TargetPower = args.TargetPower * 1000;
+        component.TargetPower = args.TargetPower * 100;
     }
 
-    private void OnInteractUsing(EntityUid uid, SharedGeneratorComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, SharedSolidFuelGeneratorComponent component, InteractUsingEvent args)
     {
         if (!TryComp(args.Used, out MaterialComponent? mat) || !TryComp(args.Used, out StackComponent? stack))
             return;
@@ -40,7 +40,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     {
         base.Update(frameTime);
 
-        foreach (var (gen, supplier, xform) in EntityQuery<SharedGeneratorComponent, PowerSupplierComponent, TransformComponent>())
+        foreach (var (gen, supplier, xform) in EntityQuery<SharedSolidFuelGeneratorComponent, PowerSupplierComponent, TransformComponent>())
         {
             supplier.Enabled = !(gen.RemainingFuel <= 0.0f || xform.Anchored == false);
 
@@ -53,11 +53,11 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         }
     }
 
-    private void UpdateUi(SharedGeneratorComponent comp)
+    private void UpdateUi(SharedSolidFuelGeneratorComponent comp)
     {
         if (!_uiSystem.IsUiOpen(comp.Owner, GeneratorComponentUiKey.Key))
             return;
 
-        _uiSystem.TrySetUiState(comp.Owner, GeneratorComponentUiKey.Key, new GeneratorComponentBuiState(comp));
+        _uiSystem.TrySetUiState(comp.Owner, GeneratorComponentUiKey.Key, new SolidFuelGeneratorComponentBuiState(comp));
     }
 }

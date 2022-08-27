@@ -52,7 +52,7 @@
     - key: enum.ChemMasterUiKey.Key
       type: ChemMasterBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 250
+    powerLoad: 25
   # Machine / Construction stuff
   - type: Wires
     BoardName: "chem_master"

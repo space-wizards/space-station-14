@@ -39,9 +39,9 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerSupplier
-    supplyRate: 3000
-    supplyRampRate: 500
-    supplyRampTolerance: 500
+    supplyRate: 300
+    supplyRampRate: 50
+    supplyRampTolerance: 50
   - type: Anchorable
   - type: Pullable
   - type: Damageable
@@ -110,9 +110,9 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerSupplier
-    supplyRate: 3000
-    supplyRampRate: 500
-    supplyRampTolerance: 500
+    supplyRate: 300
+    supplyRampRate: 50
+    supplyRampTolerance: 50
 
 # Construction Frames
 
@@ -148,16 +148,16 @@
   suffix: Basic, 3kW
   components:
   - type: PowerSupplier
-    supplyRate: 3000
+    supplyRate: 300
 
 - type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorPlasma
-  suffix: Plasma, 5kW
+  suffix: Plasma, 15kW
   components:
   - type: PowerSupplier
-    supplyRate: 30000
-  - type: Generator
+    supplyRate: 0
+  - type: SolidFuelGenerator
   - type: ActivatableUI
     key: enum.GeneratorComponentUiKey.Key
   - type: UserInterface
@@ -178,7 +178,7 @@
   id: GeneratorUranium
   suffix: Uranium, 15kW
   components:
-  - type: Generator
+  - type: SolidFuelGenerator
     optimalBurnRate: 0.00208333333
     fuelMaterial: Uranium
   - type: ActivatableUI
@@ -188,7 +188,7 @@
       - key: enum.GeneratorComponentUiKey.Key
         type: GeneratorBoundUserInterface
   - type: PowerSupplier
-    supplyRate: 60000
+    supplyRate: 0
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
@@ -204,7 +204,7 @@
   suffix: Basic, 3kW
   components:
   - type: PowerSupplier
-    supplyRate: 3000
+    supplyRate: 300
   - type: Construction
     graph: WallmountGenerator
     node: generator
@@ -217,7 +217,7 @@
   suffix: APU, 6kW
   components:
   - type: PowerSupplier
-    supplyRate: 6000
+    supplyRate: 600
   - type: Construction
     graph: WallmountGenerator
     node: APU
@@ -232,7 +232,7 @@
   suffix: 10kW
   components:
   - type: PowerSupplier
-    supplyRate: 10000 # supposed to be low power at no fuel cost to power derelicts
+    supplyRate: 1000 # supposed to be low power at no fuel cost to power derelicts
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg
@@ -250,7 +250,7 @@
   suffix: 10kW
   components:
   - type: PowerSupplier
-    supplyRate: 10000
+    supplyRate: 100
   - type: Sprite
     netsync: false
     sprite: Structures/Power/Generation/rtg.rsi

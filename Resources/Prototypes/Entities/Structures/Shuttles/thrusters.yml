@@ -42,7 +42,7 @@
   components:
   - type: Thruster
   - type: ApcPowerReceiver
-    powerLoad: 1500
+    powerLoad: 150
   - type: ExtensionCableReceiver
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
@@ -122,7 +122,7 @@
   parent: BaseThruster
   components:
   - type: ApcPowerReceiver
-    powerLoad: 1500
+    powerLoad: 150
   - type: ExtensionCableReceiver
   - type: Thruster
     thrusterType: Angular

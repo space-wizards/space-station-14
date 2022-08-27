@@ -17,7 +17,7 @@
   - type: StasisBedVisuals
   - type: Appearance
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 100
   - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic

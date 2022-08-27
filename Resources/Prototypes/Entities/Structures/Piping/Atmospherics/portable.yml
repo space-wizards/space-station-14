@@ -46,7 +46,7 @@
         rotationsEnabled: false
         volume: 1
   - type: ApcPowerReceiver
-    powerLoad: 2000
+    powerLoad: 200
   - type: ExtensionCableReceiver
   - type: Appearance
     visuals:

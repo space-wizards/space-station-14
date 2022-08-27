@@ -41,7 +41,7 @@
   id: BaseMachinePowered
   components:
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 100
   - type: ExtensionCableReceiver
 
 - type: entity

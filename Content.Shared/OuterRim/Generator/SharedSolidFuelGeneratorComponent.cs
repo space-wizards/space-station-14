@@ -6,15 +6,15 @@ namespace Content.Shared.OuterRim.Generator;
 /// This is used for...
 /// </summary>
 [RegisterComponent]
-public sealed class SharedGeneratorComponent : Component
+public sealed class SharedSolidFuelGeneratorComponent : Component
 {
     [DataField("remainingFuel"), ViewVariables(VVAccess.ReadWrite)]
     public float RemainingFuel = 0.0f;
 
     [DataField("targetPower"), ViewVariables(VVAccess.ReadWrite)]
-    public float TargetPower = 15_000.0f;
+    public float TargetPower = 1_500.0f;
     [DataField("optimalPower"), ViewVariables(VVAccess.ReadWrite)]
-    public float OptimalPower = 15_000.0f;
+    public float OptimalPower = 1_500.0f;
     [DataField("optimalBurnRate"), ViewVariables(VVAccess.ReadWrite)]
     public float OptimalBurnRate = 1 / 60.0f; // Once every 60 seconds.
 
@@ -37,17 +37,17 @@ public sealed class SetTargetPowerMessage : BoundUserInterfaceMessage
 }
 
 /// <summary>
-/// Contains network state for SharedGeneratorComponent.
+/// Contains network state for SharedSolidFuelGeneratorComponent.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class GeneratorComponentBuiState : BoundUserInterfaceState
+public sealed class SolidFuelGeneratorComponentBuiState : BoundUserInterfaceState
 {
     public float RemainingFuel;
     public float TargetPower;
     public float OptimalPower;
     public float OptimalBurnRate; // Once every 120 seconds.
 
-    public GeneratorComponentBuiState(SharedGeneratorComponent component)
+    public SolidFuelGeneratorComponentBuiState(SharedSolidFuelGeneratorComponent component)
     {
         RemainingFuel = component.RemainingFuel;
         TargetPower = component.TargetPower;

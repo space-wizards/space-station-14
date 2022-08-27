@@ -46,8 +46,8 @@
   description: A solar panel that generates power.
   components:
   - type: PowerSupplier
-    supplyRampTolerance: 500
-    supplyRampRate: 500
+    supplyRampTolerance: 50
+    supplyRampRate: 50
   - type: SolarPanel
   - type: Damageable
     damageContainer: Inorganic

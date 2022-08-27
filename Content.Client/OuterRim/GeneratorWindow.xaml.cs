@@ -22,9 +22,9 @@ public sealed partial class GeneratorWindow : FancyWindow
     }
 
 
-    private GeneratorComponentBuiState? _lastState;
+    private SolidFuelGeneratorComponentBuiState? _lastState;
 
-    public void Update(GeneratorComponentBuiState state)
+    public void Update(SolidFuelGeneratorComponentBuiState state)
     {
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         if (_lastState?.TargetPower != state.TargetPower)

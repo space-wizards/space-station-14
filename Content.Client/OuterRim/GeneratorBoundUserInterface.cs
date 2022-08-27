@@ -24,7 +24,7 @@ public sealed class GeneratorBoundUserInterface : BoundUserInterface
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
-        _window?.Update((GeneratorComponentBuiState)state);
+        _window?.Update((SolidFuelGeneratorComponentBuiState)state);
     }
 
     protected override void Dispose(bool disposing)

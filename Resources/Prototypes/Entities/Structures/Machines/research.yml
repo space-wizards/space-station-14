@@ -12,7 +12,7 @@
   - type: ResearchServer
   - type: TechnologyDatabase
   - type: ApcPowerReceiver
-    powerLoad: 200
+    powerLoad: 20
     priority: Low
   - type: ExtensionCableReceiver
   - type: Destructible
