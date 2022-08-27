@@ -270,6 +270,7 @@
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
+      - WallmountSubstationElectronics
       - EmitterCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
@@ -451,6 +452,9 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
+      - ClothingOuterWinterMusician
+      - ClothingOuterWinterClown
+      - ClothingOuterWinterMime
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false

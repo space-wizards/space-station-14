@@ -177,7 +177,7 @@
   id: DisposalRouter
   parent: DisposalPipeBase
   name: disposal router
-  description: A three-way router. Entities with matching tags get routed to the side.
+  description: A three-way router. Entities with matching tags get routed to the side via configurable filters.
   components:
   - type: Sprite
     drawdepth: ThickPipe

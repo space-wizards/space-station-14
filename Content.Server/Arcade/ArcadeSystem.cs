@@ -1,10 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Arcade.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;
 using Robust.Shared.Utility;
 using Robust.Server.GameObjects;
-
+using Robust.Server.Player;
 
 namespace Content.Server.Arcade
 {
@@ -19,6 +19,7 @@ namespace Content.Server.Arcade
             base.Initialize();
             SubscribeLocalEvent<BlockGameArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
             SubscribeLocalEvent<SpaceVillainArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpenSV);
+            SubscribeLocalEvent<BlockGameArcadeComponent, BoundUIClosedEvent>((_,c,args) => c.UnRegisterPlayerSession((IPlayerSession)args.Session));
             InitializeBlockGame();
             InitializeSpaceVillain();
         }

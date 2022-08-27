@@ -142,7 +142,7 @@
   graph: DisposalMachine
   startNode: start
   targetNode: mailing_unit
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:

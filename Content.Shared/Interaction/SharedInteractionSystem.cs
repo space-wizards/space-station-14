@@ -119,9 +119,8 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
         {
-            var coords = Transform(msg.ItemUid).Coordinates;
             // client sanitization
-            if (!ValidateClientInput(args.SenderSession, coords, msg.ItemUid, out var user))
+            if (!TryComp(msg.ItemUid, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, msg.ItemUid, out var user))
             {
                 Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
@@ -134,7 +133,7 @@ namespace Content.Shared.Interaction
 
             if (msg.AltInteract)
                 // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(user.Value, coords, msg.ItemUid, msg.AltInteract);
+                UserInteraction(user.Value, itemXform.Coordinates, msg.ItemUid, msg.AltInteract);
             else
                 // User used 'E'. We want to activate it, not simulate clicking on the item
                 InteractionActivate(user.Value, msg.ItemUid);
@@ -832,6 +831,13 @@ namespace Content.Shared.Interaction
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with no attached entity. Session={session}");
+                return false;
+            }
+
+            if (!Exists(userEntity))
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
                 return false;
             }
 

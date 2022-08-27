@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/2bf6d888bd89e614ec4d83fefa2130231e7ddc3d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon",
+      "directions": 4
+    }
+  ]
+}
