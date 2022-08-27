@@ -189,7 +189,10 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         for (var i = 0; i < marking.MarkingColors.Count; i++)
         {
-            var selector = new ColorSelectorSliders();
+            var selector = new ColorSelectorSliders
+            {
+                HorizontalExpand = true
+            };
             selector.Color = marking.MarkingColors[i];
 
             var colorIndex = i;

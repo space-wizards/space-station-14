@@ -99,7 +99,7 @@
                             <!-- Hair -->
                             <prefUi:HighlightedContainer>
                                 <BoxContainer Orientation="Horizontal">
-                                    <humanoid:SingleMarkingPicker Name="CHairStylePicker" Category="Hair" HorizontalAlignment="Center" />
+                                    <humanoid:SingleMarkingPicker Name="CHairStylePicker" Category="Hair" />
                                     <humanoid:SingleMarkingPicker Name="CFacialHairPicker" Category="FacialHair" />
                                 </BoxContainer>
                             </prefUi:HighlightedContainer>
