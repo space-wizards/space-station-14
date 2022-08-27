@@ -269,20 +269,8 @@ namespace Content.Shared.Movement.Systems
             {
                 // This should have its event run during island solver soooo
                 xform.DeferUpdates = true;
-                TransformComponent rotateXform;
-
-                // If we're in a container then relay rotation to the parent instead
-                if (_container.TryGetContainingContainer(xform.Owner, out var container))
-                {
-                    rotateXform = Transform(container.Owner);
-                }
-                else
-                {
-                    rotateXform = xform;
-                }
-
-                rotateXform.WorldRotation = worldTotal.ToWorldAngle();
-                rotateXform.DeferUpdates = false;
+                xform.WorldRotation = worldTotal.ToWorldAngle();
+                xform.DeferUpdates = false;
 
                 if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) &&
                     TryGetSound(weightless, mover, mobMover, xform, out var sound))
