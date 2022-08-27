@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Tweak pistol firerate from 8 -> 6 and cobra firerate from 8 -> 4., type: Tweak}
-  id: 1693
-  time: '2022-06-14T07:19:51.0000000+00:00'
 - author: KIBORG04
   changes:
   - {message: Entities without hands (like mice) can no longer perform some actions.,
@@ -2939,3 +2934,9 @@ Entries:
       (crate actually contains disablers), type: Fix}
   id: 2192
   time: '2022-08-27T05:54:24.0000000+00:00'
+- author: FunkySphere
+  changes:
+  - {message: Margherita pizza slice is no longer sliceable into multiple meat pizza
+      slices., type: Fix}
+  id: 2193
+  time: '2022-08-27T09:59:16.0000000+00:00'
