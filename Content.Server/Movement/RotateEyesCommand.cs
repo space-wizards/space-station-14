@@ -8,7 +8,7 @@ namespace Content.Server.Movement;
 [AdminCommand(AdminFlags.Fun)]
 public sealed class RotateEyesCommand : IConsoleCommand
 {
-    public string Command => "rotate_eyes";
+    public string Command => "rotateeyes";
     public string Description => $"Rotates every player's current eye to the specified rotation";
     public string Help => $"{Command} <degrees (default 0)>.";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -27,10 +27,18 @@ public sealed class RotateEyesCommand : IConsoleCommand
             rotation = Angle.FromDegrees(degrees);
         }
 
+        var count = 0;
+
         foreach (var mover in entManager.EntityQuery<InputMoverComponent>(true))
         {
+            if (mover.TargetRelativeRotation.Equals(rotation))
+                continue;
+
             mover.TargetRelativeRotation = rotation;
-            shell.WriteLine($"Set {entManager.ToPrettyString(mover.Owner)} rotation to {rotation.Degrees} degrees");
+            entManager.Dirty(mover);
+            count++;
         }
+
+        shell.WriteLine($"Set {count} eye rotations.");
     }
 }
