@@ -10,7 +10,7 @@ public partial class FloodFillSystem
      /// <summary>
     ///     Set of tiles of each grid that are directly adjacent to space, along with the directions that face space.
     /// </summary>
-    private readonly Dictionary<EntityUid, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
+    public readonly Dictionary<EntityUid, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
 
      /// <summary>
      ///     On grid startup, prepare a map of grid edges.

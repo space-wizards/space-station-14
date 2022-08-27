@@ -60,19 +60,62 @@ public partial class RadiationSystem
         foreach (var point in linesPoints)
         {
             visitedPoints.Add(point);
-            if (resistanceMap.TryGetValue(point, out var resData))
+            if (!resistanceMap.TryGetValue(point, out var resData))
+                continue;
+
+            rads -= resData.Tolerance[0];
+            if (rads <= MinRads)
             {
-                rads -= resData.Tolerance[0];
-                if (rads <= MinRads)
-                {
-                    return (visitedPoints, 0f);
-                }
+                return (visitedPoints, 0f);
             }
         }
 
         return (visitedPoints, rads);
     }
 
+
+
+    private IEnumerable<Vector2i> MultiGridLine(TransformComponent sourceTrs, TransformComponent destTrs)
+    {
+        // there is two cases
+        // if source is located in space or if on a grid
+        // lets start with a grid case and get grid position of source
+        if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
+            yield break;
+        var currentGrid = grid.Grid;
+        var sourceGridPos = currentGrid.TileIndicesFor(sourceTrs.Coordinates);
+
+        // get edges map
+        if (!_floodFill._gridEdges.TryGetValue(currentGrid.GridEntityId, out var edges))
+        {
+            Logger.Error($"Grid {currentGrid.GridEntityId} doesn't have edges map");
+            yield break;
+        }
+
+        // lets assume that target is placed on a same grid
+        var destGridPos = currentGrid.TileIndicesFor(destTrs.WorldPosition);
+
+        // lets start moving on the grid in direction of destination
+        var lineEnumerator = Line(sourceGridPos.X, sourceGridPos.Y,
+            destGridPos.X, destGridPos.Y);
+        foreach (var pos in lineEnumerator)
+        {
+            // blah blah, we are moving and doing checks
+            yield return pos;
+
+            // if we started moving on a grid
+            // and object is located on another grid
+            // that means sooner or latter we will reach space by crossing grid edge
+
+
+            if (edges.c)
+        }
+
+
+    }
+
+    // https://stackoverflow.com/questions/11678693/all-cases-covered-bresenhams-line-algorithm
+    // need to rewrite to make any sense
     public IEnumerable<Vector2i> Line(int x, int y, int x2, int y2)
     {
         var w = x2 - x;
