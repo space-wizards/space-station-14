@@ -66,7 +66,7 @@
   - type: ApcPassiveHeater
   - type: AtmosExposed
   - type: ApcPowerReceiver
-    powerLoad: 20
+    powerLoad: 10
   - type: ExtensionCableReceiver
   - type: Electrified
     enabled: false
