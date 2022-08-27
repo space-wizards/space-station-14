@@ -74,7 +74,6 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     }
 
     // amount of slots to show
-    private uint _pointsUsed;
     private uint _totalPoints;
 
     private bool _ignoreItemSelected;
@@ -241,7 +240,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             return;
         }
 
-        for (var i = 0; i < _pointsUsed; i++)
+        for (var i = 0; i < PointsUsed; i++)
         {
             SlotSelector.AddItem($"Slot {i + 1}", i);
 
