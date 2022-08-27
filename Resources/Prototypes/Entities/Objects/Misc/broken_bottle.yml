@@ -13,7 +13,7 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottle_broken.rsi
-    state: icon
+    state: bottle_broken
   - type: DamageOtherOnHit
     damage:
       types:

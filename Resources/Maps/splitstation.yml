@@ -187844,25 +187844,6 @@ entities:
         - 21983
         - 5279
     type: ContainerContainer
-- uid: 21982
-  type: DrinkRamen
-  components:
-  - pos: 21.629147,-24.091316
-    parent: 69
-    type: Transform
-  - solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - Quantity: 30
-          ReagentId: DryRamen
-        - Quantity: 10
-          ReagentId: Water
-    type: SolutionContainerManager
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21983
   type: ClothingOuterCoatGentle
   components:

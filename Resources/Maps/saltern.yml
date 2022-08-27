@@ -64790,16 +64790,6 @@ entities:
   - containers:
       ReagentDispenser-beaker: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 7434
-  type: DrinkRootBeerFloatGlass
-  components:
-  - pos: -9.804572,-28.532251
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 7435
   type: WallReinforced
   components:
@@ -67835,16 +67825,6 @@ entities:
   - pos: -13.5,24.5
     parent: 852
     type: Transform
-- uid: 7848
-  type: DrinkRamen
-  components:
-  - pos: -13.225656,24.798891
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 7849
   type: TableWood
   components:
