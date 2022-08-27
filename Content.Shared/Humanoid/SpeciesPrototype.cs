@@ -52,29 +52,8 @@ public sealed class SpeciesPrototype : IPrototype
     [DataField("markingLimits")]
     public string MarkingPoints { get; } = default!;
 
-    // The bottom two fields need to be replaced with component variants instead,
-    // to avoid having entity prototype bloat. What the goal here is that instead,
-    // species prototypes will hold the components that the entity will have,
-    // and the base entity will instead hold a set of components that will always
-    // be ensured.
-    //
-    // An alternative approach is to have a base humanoid entity, and then have
-    // variants that are pointed to by a species prototype. The base entity
-    // should hold every single 'base' humanoid component, while the variants
-    // will add or modify the humanoid components dependent on the species
-    // balance required. Currently, all 'base' species are variants of the
-    // human entity with some changes, which is causing some prototype bloat.
-    // Having a base humanoid, and then having a spec
-    //
-    // I may take the second approach, as that doesn't require reimplementing
-    // component registries. It's probably more better anyways
-    //
-    // This idea was originally thought of by Moony.
-
-
     /// <summary>
     ///     Humanoid species variant used by this entity.
-    ///     TODO: Invariants based on parent prototype? (i.e., all species prototypes must be children of a base)
     /// </summary>
     [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype { get; } = default!;
