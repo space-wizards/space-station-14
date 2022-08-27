@@ -85,6 +85,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         set
         {
             _category = value;
+            CategoryName.Text = Loc.GetString($"marking-category-{_category}");
 
             if (!string.IsNullOrEmpty(_species))
             {

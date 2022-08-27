@@ -6,9 +6,13 @@ markings-rank-up = Up
 markings-rank-down = Down
 marking-points-remaining = Markings left: {$points}
 marking-used = {$marking-name} ({$marking-category})
+marking-slot-add = Add
+marking-slot-remove = Remove
 
 # Categories
 
+markings-category-Hair = Hair
+markings-category-FacialHair = Facial Hair
 markings-category-Head = Head
 markings-category-HeadTop = Head (Top)
 markings-category-HeadSide = Head (Side)

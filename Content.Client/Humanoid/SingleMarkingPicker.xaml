@@ -3,10 +3,11 @@
               HorizontalExpand="True"
               VerticalExpand="True">
     <!-- "Slot" selection -->
+    <Label Name="CategoryName" />
     <BoxContainer Name="SlotSelectorContainer" VerticalExpand="True" HorizontalExpand="True">
         <OptionButton Name="SlotSelector" HorizontalExpand="True" />
-        <Button Name="AddButton" />
-        <Button Name="RemoveButton" />
+        <Button Name="AddButton" Text="{Loc 'marking-slot-add'}"/>
+        <Button Name="RemoveButton" Text="{Loc 'marking-slot-remove'}"/>
     </BoxContainer>
     <!-- Item list -->
     <BoxContainer Name="MarkingSelectorContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
