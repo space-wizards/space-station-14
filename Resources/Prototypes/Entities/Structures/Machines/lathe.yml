@@ -460,6 +460,7 @@
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false
+    snapCardinals: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
