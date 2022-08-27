@@ -56,7 +56,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
             var actionBlocker = entityManager.EntitySysManager.GetEntitySystem<ActionBlockerSystem>();
             var standingState = entityManager.EntitySysManager.GetEntitySystem<StandingStateSystem>();
 
@@ -219,7 +219,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await server.WaitIdleAsync();
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
             var handsSys = entityManager.EntitySysManager.GetEntitySystem<SharedHandsSystem>();
 
             await server.WaitAssertion(() =>
@@ -296,7 +296,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
 
             EntityUid human = default;
             EntityUid chair = default;

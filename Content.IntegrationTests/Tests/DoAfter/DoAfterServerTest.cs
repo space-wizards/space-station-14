@@ -29,9 +29,9 @@ namespace Content.IntegrationTests.Tests.DoAfter
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var doafter = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
 
             // That it finishes successfully
             await server.WaitPost(() =>
@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var cancelToken = new CancellationTokenSource();
                 var args = new DoAfterEventArgs(mob, tickTime / 2, cancelToken.Token);
-                task = doafter.WaitDoAfter(args);
+                task = doAfterSystem.WaitDoAfter(args);
             });
 
             await server.WaitRunTicks(1);
@@ -60,9 +60,9 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var doafter = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
 
             await server.WaitPost(() =>
             {
@@ -72,7 +72,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var cancelToken = new CancellationTokenSource();
                 var args = new DoAfterEventArgs(mob, tickTime * 2, cancelToken.Token);
-                task = doafter.WaitDoAfter(args);
+                task = doAfterSystem.WaitDoAfter(args);
                 cancelToken.Cancel();
             });
 
