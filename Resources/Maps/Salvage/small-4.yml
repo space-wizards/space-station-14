@@ -80,7 +80,7 @@ entities:
 - uid: 0
   components:
   - pos: 0.5,0.5
-    parent: 37
+    parent: null
     type: Transform
   - index: 0
     type: MapGrid
@@ -349,10 +349,6 @@ entities:
     pos: 0.5,-2.5
     parent: 0
     type: Transform
-- uid: 37
-  components:
-  - index: 3
-    type: Map
 - uid: 38
   type: AirlockAssembly
   components:
