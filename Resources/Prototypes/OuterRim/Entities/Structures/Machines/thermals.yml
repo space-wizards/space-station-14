@@ -6,7 +6,8 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      texture: /Textures/OuterRim/interior_heatsink.png
+      sprite: /Textures/OuterRim/thermals.rsi
+      state: interior_heatsink
       drawDepth: WallMountedItems
     - type: Temperature
     - type: ApcPassiveHeater
@@ -22,7 +23,7 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 300
+            damage: 20
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -48,3 +49,47 @@
             - HighImpassable
     - type: Transform
       anchored: true
+    - type: Construction
+      graph: ThermalPipework
+      node: thermalPipework
+
+- type: constructionGraph
+  id: ThermalPipework
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: thermalPipework
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+    - node: thermalPipework
+      entity: ThermalPipework
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity { }
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+- type: construction
+  name: thermal pump
+  id: ThermalPipework
+  graph: ThermalPipework
+  startNode: start
+  targetNode: thermalPipework
+  category: construction-category-utilities
+  description: "Allows transferring heat through walls and radiating it into space. Magic!"
+  icon:
+    sprite: /Textures/OuterRim/thermals.rsi
+    state: interior_heatsink
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
