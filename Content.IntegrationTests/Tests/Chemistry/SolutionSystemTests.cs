@@ -32,6 +32,7 @@ public sealed class SolutionSystemTests
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
+        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var testMap = await PoolManager.CreateTestMap(pairTracker);
         var coordinates = testMap.GridCoords;
 
@@ -46,11 +47,11 @@ public sealed class SolutionSystemTests
             var originalWater = new Solution("Water", waterQuantity);
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
-            Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+            Assert.That(containerSystem
                 .TryGetSolution(beaker, "beaker", out var solution));
 
             solution.AddSolution(originalWater);
-            Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+            Assert.That(containerSystem
                 .TryAddSolution(beaker, solution, oilAdded));
 
             solution.ContainsReagent("Water", out var water);
@@ -73,6 +74,7 @@ public sealed class SolutionSystemTests
         var testMap = await PoolManager.CreateTestMap(pairTracker);
 
         var entityManager = server.ResolveDependency<IEntityManager>();
+        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -86,11 +88,11 @@ public sealed class SolutionSystemTests
             var originalWater = new Solution("Water", waterQuantity);
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
-            Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+            Assert.That(containerSystem
                 .TryGetSolution(beaker, "beaker", out var solution));
 
             solution.AddSolution(originalWater);
-            Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+            Assert.That(containerSystem
                 .TryAddSolution(beaker, solution, oilAdded), Is.False);
 
             solution.ContainsReagent("Water", out var water);
@@ -112,6 +114,7 @@ public sealed class SolutionSystemTests
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -127,11 +130,11 @@ public sealed class SolutionSystemTests
             var originalWater = new Solution("Water", waterQuantity);
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
-            Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+            Assert.That(containerSystem
                 .TryGetSolution(beaker, "beaker", out var solution));
 
             solution.AddSolution(originalWater);
-            Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+            Assert.That(containerSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out var overflowingSolution));
 
             Assert.That(solution.CurrentVolume, Is.EqualTo(FixedPoint2.New(threshold)));
@@ -158,6 +161,7 @@ public sealed class SolutionSystemTests
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
+        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var testMap = await PoolManager.CreateTestMap(pairTracker);
         var coordinates = testMap.GridCoords;
 
@@ -174,11 +178,11 @@ public sealed class SolutionSystemTests
             var originalWater = new Solution("Water", waterQuantity);
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
-            Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+            Assert.That(containerSystem
                 .TryGetSolution(beaker, "beaker", out var solution));
 
             solution.AddSolution(originalWater);
-            Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+            Assert.That(containerSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out _),
                 Is.False);
         });
