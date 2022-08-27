@@ -31,6 +31,17 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             _prototypeManager);
         markings.EnsureDefault(profile.Appearance.SkinColor, _markingManager);
 
+        // legacy: remove in the future?
+        markings.RemoveCategory(MarkingCategories.Hair);
+        markings.RemoveCategory(MarkingCategories.FacialHair);
+
+        var hair = new Marking(profile.Appearance.HairStyleId, new[] { profile.Appearance.HairColor });
+        markings.AddBack(MarkingCategories.Hair, hair);
+
+        var facialHair = new Marking(profile.Appearance.FacialHairStyleId,
+            new[] { profile.Appearance.FacialHairColor });
+        markings.AddBack(MarkingCategories.FacialHair, facialHair);
+
         SetAppearance(uid,
             profile.Species,
             customBaseLayers,
