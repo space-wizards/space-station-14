@@ -318,21 +318,24 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var mapId = _mapManager.CreateMap();
 
-        var (_, outpost) = _mapLoader.LoadGrid(mapId, path.ToString());
-        if (outpost == null)
+        var (_, outpostGrids) = _mapLoader.LoadMap(mapId, path.ToString());
+        if (outpostGrids.Count == 0)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
             return false;
         }
 
+        // Assume the first grid is the outpost grid.
+        _nukieOutpost = outpostGrids[0];
+
         // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadGrid(mapId, shuttlePath, new MapLoadOptions()
+        var (_, shuttleId) = _mapLoader.LoadGrid(mapId, shuttlePath.ToString(), new MapLoadOptions()
         {
             Offset = Vector2.One * 1000f,
         });
 
         // Naughty, someone saved the shuttle as a map.
-        if (Deleted(outpost))
+        if (Deleted(shuttleId))
         {
             Logger.ErrorS("nukeops", $"Tried to load nukeops shuttle as a map, aborting.");
             _mapManager.DeleteMap(mapId);
@@ -341,11 +344,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, _nukieOutpost.Value);
         }
 
         _nukiePlanet = mapId;
-        _nukieOutpost = outpost;
         _nukieShuttle = shuttleId;
 
         return true;
@@ -361,17 +363,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         switch (spawnNumber)
         {
             case 0:
-                name = $"Commander " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.EliteNames]);
+                name = $"Commander " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.EliteNames]);
                 role = _nukeopsRuleConfig.CommanderRolePrototype;
                 gear = _nukeopsRuleConfig.CommanderStartGearPrototype;
                 break;
             case 1:
-                name = $"Agent " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.NormalNames]);
+                name = $"Agent " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
                 role = _nukeopsRuleConfig.OperativeRoleProto;
                 gear = _nukeopsRuleConfig.MedicStartGearPrototype;
                 break;
             default:
-                name = $"Operator " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.NormalNames]);
+                name = $"Operator " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
                 role = _nukeopsRuleConfig.OperativeRoleProto;
                 gear = _nukeopsRuleConfig.OperativeStartGearPrototype;
                 break;
@@ -439,7 +441,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 newMind.AddRole(new TraitorRole(newMind, nukeOpsAntag));
 
                 newMind.TransferTo(mob);
-            } else if (addSpawnPoints)
+            }
+            else if (addSpawnPoints)
             {
                 var spawnPoint = EntityManager.SpawnEntity(_nukeopsRuleConfig.GhostSpawnPointProto, _random.Pick(spawns));
                 var spawner = EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
@@ -538,7 +541,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var query = EntityQuery<NukeOperativeComponent, MindComponent>(true);
         foreach (var (_, mindComp) in query)
         {
-            if (mindComp?.Mind?.TryGetSession(out var session) == true)
+            if (mindComp.Mind?.TryGetSession(out var session) == true)
                 _operativePlayers.Add(session);
         }
 
