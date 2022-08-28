@@ -1,3 +1,4 @@
+using Content.Shared.Radiation.Systems;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -10,7 +11,7 @@ public sealed class RadiationGridcastOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
 
-    public Dictionary<EntityUid, List<(List<Vector2i>, float)>>? Lines;
+    public List<RadiationRay>? Rays;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -33,12 +34,20 @@ public sealed class RadiationGridcastOverlay : Overlay
     {
         var handle = args.WorldHandle;
 
-        if (Lines == null)
+        if (Rays == null)
             return;
 
-        foreach (var (gridUid, lines) in Lines)
+        // draw lines
+        foreach (var ray in Rays)
         {
-            if (!_mapManager.TryGetGrid(gridUid, out var grid))
+            if (!ray.IsGridcast)
+                handle.DrawLine(ray.Source, ray.Destination, Color.Red);
+        }
+
+        // draw tiles
+        foreach (var ray in Rays)
+        {
+            if (ray.Grid == null || !_mapManager.TryGetGrid(ray.Grid, out var grid))
                 continue;
             var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
@@ -46,22 +55,19 @@ public sealed class RadiationGridcastOverlay : Overlay
             var gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
             handle.SetTransform(worldMatrix);
 
-            foreach (var (line, _) in lines)
-            {
-                DrawTiles(handle, gridBounds, line);
-            }
+            DrawTiles(handle, gridBounds, ray.VisitedTiles);
 
             handle.SetTransform(Matrix3.Identity);
         }
     }
 
     private void DrawTiles(DrawingHandleWorld handle, Box2 gridBounds,
-        List<Vector2i> tiles, ushort tileSize = 1)
+        List<(Vector2i, float)> tiles, ushort tileSize = 1)
     {
         var color = Color.Green;
         color.A = 0.5f;
 
-        foreach (var tile in tiles)
+        foreach (var (tile, _) in tiles)
         {
             var centre = ((Vector2) tile + 0.5f) * tileSize;
 

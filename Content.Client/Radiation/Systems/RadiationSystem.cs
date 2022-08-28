@@ -36,7 +36,7 @@ public sealed class RadiationSystem : SharedRadiationSystem
     {
         if (!_overlayMan.TryGetOverlay(out RadiationGridcastOverlay? overlay) || overlay == null)
             return;
-        overlay.Lines = ev.Lines;
+        overlay.Rays = ev.Rays;
     }
 
 }

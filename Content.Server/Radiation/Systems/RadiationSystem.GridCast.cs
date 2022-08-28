@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
@@ -19,18 +20,20 @@ public partial class RadiationSystem
         var sourceQuery = EntityQuery<RadiationSourceComponent, TransformComponent>();
         var destQuery = EntityQuery<RadiationReceiverComponent, TransformComponent>();
 
-        var list = new List<RadiationRay>();
+        var rays = new List<RadiationRay>();
         foreach (var (source, sourceTrs) in sourceQuery)
         {
             foreach (var (dest, destTrs) in destQuery)
             {
                 var ray = Irradiate(sourceTrs, destTrs, source.RadsPerSecond);
                 if (ray != null)
-                    list.Add(ray);
+                    rays.Add(ray);
             }
         }
 
         Logger.Info($"Gridcast radiation {stopwatch.Elapsed.TotalMilliseconds}ms");
+
+        RaiseNetworkEvent(new RadiationGridcastUpdate(rays));
     }
 
     private RadiationRay? Irradiate(TransformComponent sourceTrs, TransformComponent destTrs,
@@ -130,7 +133,7 @@ public partial class RadiationSystem
         var radRay = new RadiationRay
         {
             Source = ray.Position,
-            Destination = ray.Position + ray.Direction,
+            Destination = ray.Position + ray.Direction *distance,
             Rads = incomingRads,
             Blockers = blockers
         };
@@ -205,17 +208,5 @@ public partial class RadiationSystem
                 y += dy2;
             }
         }
-    }
-
-    public sealed class RadiationRay
-    {
-        public Vector2 Source;
-        public Vector2 Destination;
-        public float Rads;
-
-        public EntityUid? Grid;
-        public List<(Vector2i, float)> VisitedTiles = new();
-
-        public List<(Vector2, float)> Blockers = new();
     }
 }
