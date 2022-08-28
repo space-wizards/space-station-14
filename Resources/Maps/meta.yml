@@ -37535,10 +37535,6 @@ entities:
   - pos: -4.5,-16.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1633
   type: WallSolid
   components:
@@ -43106,20 +43102,12 @@ entities:
   - pos: 26.5,-10.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2483
   type: KitchenMicrowave
   components:
   - pos: 30.5,-10.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2484
   type: KitchenReagentGrinder
   components:
@@ -50409,10 +50397,6 @@ entities:
   - pos: -28.5,12.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 3524
   type: DonkpocketBoxSpawner
   components:
@@ -77325,10 +77309,6 @@ entities:
   - pos: -12.5,55.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7219
   type: ReinforcedWindow
   components:
@@ -99072,10 +99052,6 @@ entities:
   - pos: 13.5,42.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 10455
   type: Rack
   components:
@@ -112170,10 +112146,6 @@ entities:
   - pos: 53.5,8.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 12307
   type: SignSecureMed
   components:
@@ -153128,10 +153100,6 @@ entities:
   - pos: -48.5,-16.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 18397
   type: FoodCondimentBottleEnzyme
   components:
@@ -160633,10 +160601,6 @@ entities:
   - pos: 14.5,-38.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 19515
   type: DonkpocketBoxSpawner
   components:

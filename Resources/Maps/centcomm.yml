@@ -24507,10 +24507,6 @@ entities:
   - pos: 43.5,38.5
     parent: 55
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2881
   type: KitchenReagentGrinder
   components:
