@@ -10,6 +10,7 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
+    netsync: false
     state: spear
   #- type: MeleeWeapon
   #  damage:
@@ -19,6 +20,12 @@
   #  arcwidth: 0
   #  arc: spear
   - type: NewMeleeWeapon
+    damage:
+      types:
+        Piercing: 10
+    range: 1.5
+    arcWidth: 0
+    arcEffect: spear
   - type: DamageOtherOnHit
     damage:
       types:

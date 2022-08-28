@@ -8,12 +8,6 @@ namespace Content.Shared.Weapon.Melee.Components
     [RegisterComponent, NetworkedComponent]
     public sealed class MeleeWeaponComponent : Component
     {
-        /// <summary>
-        /// Do we only attack our clicked entity or do we do wide attacks?
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool PrecisionMode = false;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
         public SoundSpecifier? HitSound;
