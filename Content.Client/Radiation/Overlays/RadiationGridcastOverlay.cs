@@ -1,5 +1,6 @@
 using Content.Shared.Radiation.Systems;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 
@@ -11,22 +12,65 @@ public sealed class RadiationGridcastOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
 
+    private readonly Font _font;
+
     public List<RadiationRay>? Rays;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
 
     public RadiationGridcastOverlay()
     {
         IoCManager.InjectDependencies(this);
+
+        var cache = IoCManager.Resolve<IResourceCache>();
+        _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
         switch (args.Space)
         {
+            case OverlaySpace.ScreenSpace:
+                DrawScreen(args);
+                break;
             case OverlaySpace.WorldSpace:
                 DrawWorld(args);
                 break;
+        }
+    }
+
+    private void DrawScreen(OverlayDrawArgs args)
+    {
+        if (Rays == null)
+            return;
+
+        var handle = args.ScreenHandle;
+        foreach (var ray in Rays)
+        {
+            if (ray.ReachedDestination)
+            {
+                var screenCenter = _eyeManager.WorldToScreen(ray.Destination);
+                handle.DrawString(_font, screenCenter, ray.Rads.ToString("F2"), 2f, Color.White);
+            }
+
+            foreach (var (blockerPos, rads) in ray.Blockers)
+            {
+                var screenCenter = _eyeManager.WorldToScreen(blockerPos);
+                handle.DrawString(_font, screenCenter, rads.ToString("F2"), 1.5f, Color.White);
+            }
+
+            if (_mapManager.TryGetGrid(ray.Grid, out var grid))
+            {
+                foreach (var (tile, rads) in ray.VisitedTiles)
+                {
+                    if (rads == null)
+                        continue;
+
+                    var worldPos = grid.GridTileToWorldPos(tile);
+                    var screenCenter = _eyeManager.WorldToScreen(worldPos);
+                    handle.DrawString(_font, screenCenter, rads.Value.ToString("F2"), 1.5f, Color.White);
+                }
+            }
         }
     }
 
@@ -59,13 +103,13 @@ public sealed class RadiationGridcastOverlay : Overlay
             handle.SetTransform(worldMatrix);
 
             DrawTiles(handle, gridBounds, ray.VisitedTiles);
-
-            handle.SetTransform(Matrix3.Identity);
         }
+
+        handle.SetTransform(Matrix3.Identity);
     }
 
     private void DrawTiles(DrawingHandleWorld handle, Box2 gridBounds,
-        List<(Vector2i, float)> tiles, ushort tileSize = 1)
+        List<(Vector2i, float?)> tiles, ushort tileSize = 1)
     {
         var color = Color.Green;
         color.A = 0.5f;

@@ -98,7 +98,7 @@ public sealed class RadiationRay
     public float Rads;
 
     public EntityUid? Grid;
-    public List<(Vector2i, float)> VisitedTiles = new();
+    public List<(Vector2i, float?)> VisitedTiles = new();
 
     public List<(Vector2, float)> Blockers = new();
 

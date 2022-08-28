@@ -97,7 +97,7 @@ public partial class RadiationSystem
     private RadiationRay Gridcast(EntityUid gridUid, Vector2 sourceWorld, Vector2 destWorld,
         float incomingRads)
     {
-        var visitedTiles = new List<(Vector2i, float)>();
+        var visitedTiles = new List<(Vector2i, float?)>();
         var radRay = new RadiationRay
         {
             Source = sourceWorld,
@@ -119,8 +119,14 @@ public partial class RadiationSystem
         foreach (var point in line)
         {
             if (resistanceMap.TryGetValue(point, out var resData))
+            {
                 radRay.Rads -= resData.Tolerance[0];
-            visitedTiles.Add((point, radRay.Rads));
+                visitedTiles.Add((point, radRay.Rads));
+            }
+            else
+            {
+                visitedTiles.Add((point, null));
+            }
 
             if (radRay.Rads <= MinRads)
                 return radRay;
