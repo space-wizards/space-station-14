@@ -15,7 +15,6 @@ namespace Content.Client.Eui
         [Dependency] private readonly IClientNetManager _net = default!;
         [Dependency] private readonly IReflectionManager _refl = default!;
         [Dependency] private readonly IDynamicTypeFactory _dtf = default!;
-        [Dependency] private readonly ILogManager _log = default!;
 
         private readonly Dictionary<uint, EuiData> _openUis = new();
 
