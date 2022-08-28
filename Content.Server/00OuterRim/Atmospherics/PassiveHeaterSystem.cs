@@ -58,7 +58,7 @@ public sealed class PassiveHeaterSystem : EntitySystem
         foreach (var (heater, apcReceiver, temperature, xform) in EntityQuery<ApcPassiveHeaterComponent, ApcPowerReceiverComponent, TemperatureComponent, TransformComponent>())
         {
             if (!apcReceiver.Powered)
-                return;
+                continue;
 
             // Author's note: I initially forgot the frametime factor and baked myself alive.
             _temperatureSystem.ChangeHeat(temperature.Owner, apcReceiver.Load * frameTime, true, temperature);
