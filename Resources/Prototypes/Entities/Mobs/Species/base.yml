@@ -211,6 +211,7 @@
       types:
         Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
+    atmosTemperatureTransferEfficiency: 0.0333 # If we're too conductive we need a lot of heat to do anything.
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
@@ -228,11 +229,11 @@
   - type: Damageable
     damageContainer: Biological
   - type: ThermalRegulator
-    metabolismHeat: 800
+    metabolismHeat: 600
     radiatedHeat: 100
     implicitHeatRegulation: 500
-    sweatHeatRegulation: 400
-    shiveringHeatRegulation: 750
+    sweatHeatRegulation: 500
+    shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
