@@ -219,68 +219,78 @@ public static class PoolManager
     /// </summary>
     /// <param name="poolSettings">See <see cref="PoolSettings"/></param>
     /// <returns></returns>
-    public static async Task<PairTracker> GetServerClient(PoolSettings poolSettings = null,
-        [System.Runtime.CompilerServices.CallerFilePath] string testMethodFilePath = "",
-        [System.Runtime.CompilerServices.CallerMemberName] string testMethodName = "") =>
-        await GetServerClientPair(poolSettings ?? new PoolSettings(), $"{testMethodFilePath}, {testMethodName}");
+    public static async Task<PairTracker> GetServerClient(PoolSettings poolSettings = null) =>
+        await GetServerClientPair(poolSettings ?? new PoolSettings());
 
-    private static async Task<PairTracker> GetServerClientPair(PoolSettings poolSettings, string testMethodName)
+    private static async Task<PairTracker> GetServerClientPair(PoolSettings poolSettings)
     {
+        DieIfPoolFailure();
+        var currentTestName = poolSettings.TestName ?? TestContext.CurrentContext.Test.Name;
+        var poolRetrieveTimeWatch = new Stopwatch();
+        await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Called by test {currentTestName}");
         Pair pair = null;
         try
         {
-            var poolRetrieveTimeWatch = new Stopwatch();
             poolRetrieveTimeWatch.Start();
-            await TestContext.Out.WriteLineAsync("Getting server/client");
             if (poolSettings.MustBeNew)
             {
-                await TestContext.Out.WriteLineAsync($"Creating, because must be new pair");
+                await TestContext.Out.WriteLineAsync(
+                    $"{nameof(GetServerClientPair)}: Creating pair, because settings of pool settings");
                 pair = await CreateServerClientPair(poolSettings);
             }
             else
             {
+                await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Looking in pool for a suitable pair");
                 pair = GrabOptimalPair(poolSettings);
                 if (pair != null)
                 {
+                    await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Suitable pair found");
                     var canSkip = pair.Settings.CanFastRecycle(poolSettings);
 
-                    if (!canSkip)
+                    if (canSkip)
                     {
-                        await TestContext.Out.WriteLineAsync($"Cleaning existing pair");
-                        await CleanPooledPair(poolSettings, pair);
+                        await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleanup not needed, Skipping cleanup of pair");
                     }
                     else
                     {
-                        await TestContext.Out.WriteLineAsync($"Skip cleanup pair");
+                        await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleaning existing pair");
+                        await CleanPooledPair(poolSettings, pair);
                     }
                 }
                 else
                 {
-                    await TestContext.Out.WriteLineAsync($"Creating, because pool empty");
+                    await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Creating a new pair, no suitable pair found in pool");
                     pair = await CreateServerClientPair(poolSettings);
                 }
             }
 
-            var poolRetrieveTime = poolRetrieveTimeWatch.Elapsed;
-            await TestContext.Out.WriteLineAsync(
-                $"Got server/client (id:{pair.PairId},uses:{pair.TestHistory.Count}) in {poolRetrieveTime.TotalMilliseconds} ms");
-            pair.Settings = poolSettings;
-            pair.TestHistory.Add(testMethodName);
-            var usageWatch = new Stopwatch();
-            usageWatch.Start();
-            return new PairTracker()
-            {
-                Pair = pair,
-                UsageWatch = usageWatch
-            };
         }
         finally
         {
-            if (pair != null)
+            if (pair != null && pair.TestHistory.Count > 1)
             {
-                TestContext.Out.WriteLine($"Test History|\n{string.Join('\n', pair.TestHistory)}\n|Test History End");
+                await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History Start");
+                for (int i = 0; i < pair.TestHistory.Count - 1; i++)
+                {
+                    await TestContext.Out.WriteLineAsync($"- Pair {pair.PairId} Test #{i}: {pair.TestHistory[i]}");
+                }
+                await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History End");
             }
         }
+        var poolRetrieveTime = poolRetrieveTimeWatch.Elapsed;
+        await TestContext.Out.WriteLineAsync(
+            $"{nameof(GetServerClientPair)}: Retrieving pair {pair.PairId} from pool took {poolRetrieveTime.TotalMilliseconds} ms");
+        await TestContext.Out.WriteLineAsync(
+            $"{nameof(GetServerClientPair)}: Returning pair {pair.PairId}");
+        pair.Settings = poolSettings;
+        pair.TestHistory.Add(currentTestName);
+        var usageWatch = new Stopwatch();
+        usageWatch.Start();
+        return new PairTracker
+        {
+            Pair = pair,
+            UsageWatch = usageWatch
+        };
     }
 
     private static Pair GrabOptimalPair(PoolSettings poolSettings)
@@ -409,9 +419,8 @@ public static class PoolManager
         await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Done recycling");
     }
 
-    private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings)
+    private static void DieIfPoolFailure()
     {
-        Pair pair;
         if (PoolFailureReason != null)
         {
             Assert.Inconclusive(@"
@@ -419,7 +428,10 @@ In a different test, the pool manager had an exception when trying to create a s
 Instead of risking that the pool manager will fail at creating a server/client pairs for every single test,
 we are just going to end this here to save a lot of time. This is the exception that started this:\n {0}", PoolFailureReason);
         }
-
+    }
+    private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings)
+    {
+        Pair pair;
         try
         {
             var client = await GenerateClient(poolSettings);
@@ -655,6 +667,11 @@ public sealed class PoolSettings
     public bool NoServer { get; init; }
 
     /// <summary>
+    /// Overrides the test name detection, and uses this in the test history instead
+    /// </summary>
+    public string TestName { get; set; }
+
+    /// <summary>
     /// Tries to guess if we can skip recycling the server/client pair.
     /// </summary>
     /// <param name="nextSettings">The next set of settings the old pair will be set to</param>
@@ -709,19 +726,19 @@ public sealed class PairTracker : IAsyncDisposable
     private async Task OnDirtyDispose()
     {
         var usageTime = UsageWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"Dirty: Test returned in {usageTime.TotalMilliseconds} ms");
+        await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Test gave back pair {Pair.PairId} in {usageTime.TotalMilliseconds} ms");
         var dirtyWatch = new Stopwatch();
         dirtyWatch.Start();
         Pair.Client.Dispose();
         Pair.Server.Dispose();
         var disposeTime = dirtyWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"Dirty: Disposed in {disposeTime.TotalMilliseconds} ms");
+        await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Disposed pair {Pair.PairId} in {disposeTime.TotalMilliseconds} ms");
     }
 
     private async Task OnCleanDispose()
     {
         var usageTime = UsageWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"Clean: Test returned in {usageTime.TotalMilliseconds} ms");
+        await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: Test borrowed pair {Pair.PairId} for {usageTime.TotalMilliseconds} ms");
         var cleanWatch = new Stopwatch();
         cleanWatch.Start();
         // Let any last minute failures the test cause happen.
@@ -730,12 +747,12 @@ public sealed class PairTracker : IAsyncDisposable
         {
             if (Pair.Client.IsAlive == false)
             {
-                throw new Exception("Test killed the client", Pair.Client.UnhandledException);
+                throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}:", Pair.Client.UnhandledException);
             }
 
             if (Pair.Server.IsAlive == false)
             {
-                throw new Exception("Test killed the server", Pair.Server.UnhandledException);
+                throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the server in pair {Pair.PairId}:", Pair.Server.UnhandledException);
             }
         }
 
@@ -744,17 +761,17 @@ public sealed class PairTracker : IAsyncDisposable
             Pair.Client.Dispose();
             Pair.Server.Dispose();
             var returnTime2 = cleanWatch.Elapsed;
-            await TestContext.Out.WriteLineAsync($"Clean: Clean disposed in {returnTime2.TotalMilliseconds} ms");
+            await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: Clean disposed in {returnTime2.TotalMilliseconds} ms");
             return;
         }
 
         var sRuntimeLog = Pair.Server.ResolveDependency<IRuntimeLog>();
-        if (sRuntimeLog.ExceptionCount > 0) throw new Exception("Server logged exceptions");
+        if (sRuntimeLog.ExceptionCount > 0) throw new Exception($"{nameof(CleanReturnAsync)}: Server logged exceptions");
         var cRuntimeLog = Pair.Client.ResolveDependency<IRuntimeLog>();
-        if (cRuntimeLog.ExceptionCount > 0) throw new Exception("Client logged exceptions");
+        if (cRuntimeLog.ExceptionCount > 0) throw new Exception($"{nameof(CleanReturnAsync)}: Client logged exceptions");
         PoolManager.NoCheckReturn(Pair);
         var returnTime = cleanWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"Clean: Clean returned to pool in {returnTime.TotalMilliseconds} ms");
+        await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: PoolManager took {returnTime.TotalMilliseconds} ms to put pair {Pair.PairId} back into the pool");
     }
     public Stopwatch UsageWatch { get; set; }
     public Pair Pair { get; init; }
@@ -765,18 +782,17 @@ public sealed class PairTracker : IAsyncDisposable
         switch (disposed)
         {
             case 0:
-                await TestContext.Out.WriteLineAsync("Clean Return Start");
+                await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: Return of pair {Pair.PairId} started");
                 break;
             case 1:
-                throw new Exception("Already called clean return before");
+                throw new Exception($"{nameof(CleanReturnAsync)}: Already clean returned");
             case 2:
-                throw new Exception("Already dirty disposed");
+                throw new Exception($"{nameof(CleanReturnAsync)}: Already dirty disposed");
             default:
-                throw new Exception("Unexpected disposed value");
+                throw new Exception($"{nameof(CleanReturnAsync)}: Unexpected disposed value");
         }
 
         await OnCleanDispose();
-        await TestContext.Out.WriteLineAsync($"Clean Return Exiting");
     }
 
     public async ValueTask DisposeAsync()
@@ -785,18 +801,16 @@ public sealed class PairTracker : IAsyncDisposable
         switch (disposed)
         {
             case 0:
-                await TestContext.Out.WriteLineAsync("Dirty Return Start");
+                await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Dirty return of pair {Pair.PairId} started");
                 break;
             case 1:
-                await TestContext.Out.WriteLineAsync("Dirty Return - Already Clean Disposed");
+                await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Pair {Pair.PairId} was properly clean disposed");
                 return;
             case 2:
-                throw new Exception("Already called dirty return before");
+                throw new Exception($"{nameof(DisposeAsync)}: Already dirty disposed pair {Pair.PairId}");
             default:
-                throw new Exception("Unexpected disposed value");
+                throw new Exception($"{nameof(DisposeAsync)}: Unexpected disposed value");
         }
-
         await OnDirtyDispose();
-        await TestContext.Out.WriteLineAsync($"Dirty Return Exiting");
     }
 }
