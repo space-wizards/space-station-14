@@ -66,9 +66,9 @@ public partial class RadiationSystem
         // lets check how many grids are between source and destination
         // do a raycast to get list of all grids that this rad is going to visit
         // it should be pretty cheap because we do it only on grid bounds
-        var ray = new Ray(sourceWorldPos, dir.Normalized);
-        var raycastResults = _mapManager.Raycast(mapId, ray, dist, false).ToList();
-        var gridsCount = raycastResults.Count;
+        var box = Box2.FromTwoPoints(sourceWorldPos, destWorldPos);
+        var grids = _mapManager.FindGridsIntersecting(mapId, box, true).ToList();
+        var gridsCount = grids.Count;
 
         if (gridsCount == 0)
         {
@@ -83,12 +83,12 @@ public partial class RadiationSystem
         else if (gridsCount == 1)
         {
             // one grid found - use it for gridcast
-            return Gridcast(raycastResults[0].HitEntity, sourceWorldPos, destWorldPos, rads);
+            return Gridcast(grids[0].GridEntityId, sourceWorldPos, destWorldPos, rads);
         }
         else
         {
             // more than one grid - fallback to raycast
-            return Raycast(mapId, ray, dist, rads);
+            return Raycast(mapId, sourceWorldPos, dir.Normalized, dist, rads);
         }
     }
 
@@ -127,19 +127,19 @@ public partial class RadiationSystem
         return radRay;
     }
 
-    private RadiationRay Raycast(MapId mapId, Ray ray, float distance, float incomingRads)
+    private RadiationRay Raycast(MapId mapId, Vector2 sourceWorld, Vector2 dir, float distance, float incomingRads)
     {
         var blockers = new List<(Vector2, float)>();
         var radRay = new RadiationRay
         {
-            Source = ray.Position,
-            Destination = ray.Position + ray.Direction *distance,
+            Source = sourceWorld,
+            Destination = sourceWorld + dir * distance,
             Rads = incomingRads,
             Blockers = blockers
         };
 
         // do raycast to the physics
-        var colRay = new CollisionRay(ray.Position, ray.Direction, (int) CollisionGroup.Impassable);
+        var colRay = new CollisionRay(sourceWorld, dir, (int) CollisionGroup.Impassable);
         var results = _physicsSystem.IntersectRay(mapId, colRay, distance, returnOnFirstHit: false);
 
         var rads = incomingRads;
