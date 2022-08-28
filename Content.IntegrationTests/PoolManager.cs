@@ -766,6 +766,7 @@ public sealed class PairTracker : IAsyncDisposable
         {
             Pair.Client.Dispose();
             Pair.Server.Dispose();
+            await PoolManager.ReallyBeIdle(Pair);
             var returnTime2 = cleanWatch.Elapsed;
             await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: Clean disposed in {returnTime2.TotalMilliseconds} ms");
             return;
