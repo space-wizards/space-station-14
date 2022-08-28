@@ -14,7 +14,7 @@ namespace Content.Shared.Traits
         public string ID { get; } = default!;
 
         /// <summary>
-        ///     The name of this antag as displayed to players.
+        ///     The name of this trait.
         /// </summary>
         [DataField("name")]
         public string Name { get; } = string.Empty;
