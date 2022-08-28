@@ -16,10 +16,8 @@ public sealed class GasPowerProviderComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public GasMixture Buffer { get; } = new(100.0f);
 
-    [DataField("plasmaMolesConsumedSec")]
-    public float PlasmaMolesConsumedSec = 1.55975875833f / 4;
-    [DataField("pressureConsumedSec")]
-    public float PressureConsumedSec = 5f;
+    [DataField("plasmaMolesConsumedSec")] public float PlasmaMolesConsumedSec = 1.55975875833f / 4;
+    [DataField("pressureConsumedSec")] public float PressureConsumedSec = 100f;
     [ViewVariables]
     public TimeSpan LastProcess { get; set; } = TimeSpan.Zero;
 
