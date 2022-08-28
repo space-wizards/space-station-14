@@ -1,15 +1,19 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Popups;
 using Content.Shared.Targeting;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode
 {
     public abstract class SharedCombatModeSystem : EntitySystem
     {
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] protected readonly IGameTiming Timing = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
         public override void Initialize()
         {
@@ -18,6 +22,20 @@ namespace Content.Shared.CombatMode
             SubscribeLocalEvent<SharedCombatModeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<SharedCombatModeComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<SharedCombatModeComponent, ToggleCombatActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<SharedCombatModeComponent, TogglePrecisionModeEvent>(OnPrecisionToggle);
+        }
+
+        private void OnPrecisionToggle(EntityUid uid, SharedCombatModeComponent component, TogglePrecisionModeEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            component.PrecisionMode ^= true;
+            Dirty(component);
+            args.Handled = true;
+
+            if (component.PrecisionAction != null)
+                _actionsSystem.SetToggled(component.PrecisionAction, component.PrecisionMode);
         }
 
         private void OnStartup(EntityUid uid, SharedCombatModeComponent component, ComponentStartup args)
@@ -40,6 +58,9 @@ namespace Content.Shared.CombatMode
 
             if (component.DisarmAction != null && component.CanDisarm)
                 _actionsSystem.AddAction(uid, component.DisarmAction, null);
+
+            if (component.PrecisionAction != null)
+                _actionsSystem.AddAction(uid, component.PrecisionAction, null);
         }
 
         private void OnShutdown(EntityUid uid, SharedCombatModeComponent component, ComponentShutdown args)
@@ -68,11 +89,13 @@ namespace Content.Shared.CombatMode
         [Serializable, NetSerializable]
         protected sealed class CombatModeComponentState : ComponentState
         {
+            public bool PrecisionMode;
             public bool IsInCombatMode { get; }
             public TargetingZone TargetingZone { get; }
 
-            public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
+            public CombatModeComponentState(bool precisionMode, bool isInCombatMode, TargetingZone targetingZone)
             {
+                PrecisionMode = precisionMode;
                 IsInCombatMode = isInCombatMode;
                 TargetingZone = targetingZone;
             }

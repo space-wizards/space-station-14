@@ -1,10 +1,14 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Weapon.Melee;
+using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -15,7 +19,9 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
+    [Dependency] protected readonly SharedInteractionSystem _interaction = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly TagSystem TagSystem = default!;
 
@@ -30,7 +36,8 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<NewMeleeWeaponComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeAllEvent<StartAttackEvent>(OnAttackStart);
-        SubscribeAllEvent<ReleaseWideAttackEvent>(OnReleaseAttack);
+        SubscribeAllEvent<ReleaseWideAttackEvent>(OnReleaseWide);
+        SubscribeAllEvent<ReleasePreciseAttackEvent>(OnReleasePrecise);
         SubscribeAllEvent<StopAttackEvent>(StopAttack);
     }
 
@@ -101,7 +108,6 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     protected sealed class NewMeleeWeaponComponentState : ComponentState
     {
         public bool Active;
-        public TimeSpan NextAttack;
         public float WindupAccumulator;
     }
 
@@ -125,27 +131,46 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         Sawmill.Debug($"Started weapon attack");
     }
 
-    protected virtual void OnReleaseAttack(ReleaseWideAttackEvent ev, EntitySessionEventArgs args)
+    private bool TryRelease(ReleaseAttackEvent ev, EntitySessionEventArgs args, [NotNullWhen(true)] out NewMeleeWeaponComponent? component)
     {
+        component = null;
+
         if (args.SenderSession.AttachedEntity == null ||
-            !TryComp<NewMeleeWeaponComponent>(ev.Weapon, out var weapon))
+            !TryComp(ev.Weapon, out component))
         {
-            return;
+            return false;
         }
 
         var userWeapon = GetWeapon(args.SenderSession.AttachedEntity.Value);
 
-        if (userWeapon != weapon)
+        if (userWeapon != component)
+            return false;
+
+        if (!component.Active)
+            return false;
+
+        if (component.WindupAccumulator < component.WindupTime)
+            return false;
+
+        return true;
+    }
+
+    protected virtual void OnReleasePrecise(ReleasePreciseAttackEvent msg, EntitySessionEventArgs args)
+    {
+        if (!TryRelease(msg, args, out var component))
             return;
 
-        if (!userWeapon.Active)
+        Sawmill.Debug($"Released precise weapon attack on {ToPrettyString(msg.Target)}");
+        AttemptAttack(args.SenderSession.AttachedEntity!.Value, component, msg);
+    }
+
+    protected virtual void OnReleaseWide(ReleaseWideAttackEvent msg, EntitySessionEventArgs args)
+    {
+        if (!TryRelease(msg, args, out var component))
             return;
 
-        Sawmill.Debug("Released weapon attack");
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, ev);
-        userWeapon.Active = false;
-        userWeapon.WindupAccumulator = 0f;
-        Dirty(userWeapon);
+        Sawmill.Debug("Released wide weapon attack");
+        AttemptAttack(args.SenderSession.AttachedEntity!.Value, component, msg);
     }
 
     protected virtual void StopAttack(StopAttackEvent ev, EntitySessionEventArgs args)
@@ -179,7 +204,6 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         args.State = new NewMeleeWeaponComponentState
         {
             Active = component.Active,
-            NextAttack = component.NextAttack,
             WindupAccumulator = component.WindupAccumulator,
         };
     }
@@ -190,7 +214,6 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
             return;
 
         component.Active = state.Active;
-        component.NextAttack = state.NextAttack;
         component.WindupAccumulator = state.WindupAccumulator;
     }
 
@@ -211,25 +234,38 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         return gun;
     }
 
+    private void PlaySound(EntityUid uid, ICommonSession session)
+    {
+
+    }
+
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
     private void AttemptAttack(EntityUid user, NewMeleeWeaponComponent weapon, ReleaseAttackEvent attack)
     {
+        // Don't check for active because some other caller may be doing this?
         if (weapon.WindupAccumulator < weapon.WindupTime)
             return;
 
+        if (!TryComp<TransformComponent>(user, out var userXform))
+            return;
+
         // Attack confirmed
+        Audio.PlayPredicted(weapon.SwingSound, weapon.Owner, user);
+
         // TODO: Do the swing on client and server
         // TODO: If attack hits on server send the hit thing
         // TODO: Play the animation on shared (client for you + server for others)
-        List<EntityUid> hit;
+        var hit = new ValueList<EntityUid>();
 
         switch (attack)
         {
             case ReleasePreciseAttackEvent precise:
+                DoPreciseAttack(user, precise, weapon);
                 break;
             case ReleaseWideAttackEvent wide:
+                // TODO: Show swing on shared
                 break;
             default:
                 throw new NotImplementedException();
@@ -237,7 +273,13 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
         // TODO: Play the hit effect on each hit entity lerped.
 
+        weapon.Active = false;
         weapon.WindupAccumulator = 0f;
         Dirty(weapon);
+    }
+
+    protected virtual void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, NewMeleeWeaponComponent component)
+    {
+
     }
 }

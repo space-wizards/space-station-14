@@ -43,7 +43,7 @@ namespace Content.Server.CombatMode
 
         private void OnGetState(EntityUid uid, SharedCombatModeComponent component, ref ComponentGetState args)
         {
-            args.State = new CombatModeComponentState(component.IsInCombatMode, component.ActiveZone);
+            args.State = new CombatModeComponentState(component.PrecisionMode, component.IsInCombatMode, component.ActiveZone);
         }
 
         private void OnEntityActionPerform(EntityUid uid, SharedCombatModeComponent component, DisarmActionEvent args)

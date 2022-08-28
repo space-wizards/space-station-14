@@ -5,12 +5,31 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.CombatMode
 {
     [NetworkedComponent()]
     public abstract class SharedCombatModeComponent : Component
     {
+        [ViewVariables, DataField("precisionAction")]
+        public InstantAction? PrecisionAction = new()
+        {
+            Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Melee/spear.rsi"), "spear"),
+            Name = "action-name-precision",
+            Description = "action-description-precision",
+            UserPopup = "action-popup-precision",
+            PopupToggleSuffix = "-enabled",
+            // TODO: Needs a sound for toggle
+            Event = new TogglePrecisionModeEvent(),
+        };
+
+        /// <summary>
+        /// Precision targeting. When precision is enabled we attack what our mouse is over rather than as an arc attack.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("precisionMode")]
+        public bool PrecisionMode;
+
         private bool _isInCombatMode;
         private TargetingZone _activeZone;
 

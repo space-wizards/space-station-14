@@ -7,6 +7,7 @@ using Robust.Client.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 
 namespace Content.Client.CombatMode
 {
@@ -32,6 +33,7 @@ namespace Content.Client.CombatMode
             if (args.Current is not CombatModeComponentState state)
                 return;
 
+            component.PrecisionMode = state.PrecisionMode;
             component.IsInCombatMode = state.IsInCombatMode;
             component.ActiveZone = state.TargetingZone;
         }
