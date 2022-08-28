@@ -6,6 +6,10 @@ namespace Content.Shared.Weapons.Melee;
 [RegisterComponent, NetworkedComponent]
 public sealed class NewMeleeWeaponComponent : Component
 {
+    // TODO: When predicted comp change.
+    [ViewVariables]
+    public bool Active;
+
     // TODO: Can't use accumulator because we'd need an active component and client can't predict changing it.
     /// <summary>
     /// Next time this melee weapon can attack.

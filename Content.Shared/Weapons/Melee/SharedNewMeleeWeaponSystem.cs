@@ -7,6 +7,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Melee;
 
@@ -38,9 +39,19 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         base.Update(frameTime);
 
         // Anything that's active is assumed to be winding up so.
-        foreach (var (_, comp) in EntityQuery<ActiveNewMeleeWeaponComponent, NewMeleeWeaponComponent>())
+        foreach (var comp in EntityQuery<NewMeleeWeaponComponent>())
         {
+            if (!comp.Active)
+            {
+                DebugTools.Assert(comp.WindupAccumulator.Equals(0f));
+                continue;
+            }
+
+            if (comp.WindupAccumulator.Equals(comp.WindupTime))
+                continue;
+
             comp.WindupAccumulator = MathF.Min(comp.WindupTime, comp.WindupAccumulator + frameTime);
+            Dirty(comp);
         }
     }
 
@@ -55,9 +66,11 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         public EntityUid Weapon;
     }
 
+    // TODO: Did I always have to mark abstracts as serializable???
     /// <summary>
     /// Raised when an attack hold is ended after windup.
     /// </summary>
+    [Serializable, NetSerializable]
     protected abstract class ReleaseAttackEvent : EntityEventArgs
     {
         public EntityUid Weapon;
@@ -87,6 +100,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class NewMeleeWeaponComponentState : ComponentState
     {
+        public bool Active;
         public TimeSpan NextAttack;
         public float WindupAccumulator;
     }
@@ -103,7 +117,11 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         if (weapon?.Owner != msg.Weapon)
             return;
 
-        EnsureComp<ActiveNewMeleeWeaponComponent>(msg.Weapon);
+        if (weapon.Active)
+            return;
+
+        weapon.Active = true;
+        Dirty(weapon);
         Sawmill.Debug($"Started weapon attack");
     }
 
@@ -120,9 +138,14 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         if (userWeapon != weapon)
             return;
 
+        if (!userWeapon.Active)
+            return;
+
         Sawmill.Debug("Released weapon attack");
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, ev.Coordinates);
-        RemComp<ActiveNewMeleeWeaponComponent>(ev.Weapon);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, ev);
+        userWeapon.Active = false;
+        userWeapon.WindupAccumulator = 0f;
+        Dirty(userWeapon);
     }
 
     protected virtual void StopAttack(StopAttackEvent ev, EntitySessionEventArgs args)
@@ -142,9 +165,12 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         if (weapon.WindupAccumulator <= 0f)
             return;
 
+        if (!userWeapon.Active)
+            return;
+
         Sawmill.Debug("Stopped weapon attack");
         weapon.WindupAccumulator = 0f;
-        RemComp<ActiveNewMeleeWeaponComponent>(ev.Weapon);
+        userWeapon.Active = false;
         Dirty(weapon);
     }
 
@@ -152,6 +178,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     {
         args.State = new NewMeleeWeaponComponentState
         {
+            Active = component.Active,
             NextAttack = component.NextAttack,
             WindupAccumulator = component.WindupAccumulator,
         };
@@ -162,6 +189,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         if (args.Current is not NewMeleeWeaponComponentState state)
             return;
 
+        component.Active = state.Active;
         component.NextAttack = state.NextAttack;
         component.WindupAccumulator = state.WindupAccumulator;
     }

@@ -27,8 +27,11 @@ public sealed class MeleeWindupOverlay : Overlay
         var tickTime = (float) _timing.TickPeriod.TotalSeconds;
         var tickFraction = _timing.TickFraction / (float) ushort.MaxValue * tickTime;
 
-        foreach (var (_, comp) in _entManager.EntityQuery<ActiveNewMeleeWeaponComponent, NewMeleeWeaponComponent>())
+        foreach (var comp in _entManager.EntityQuery<NewMeleeWeaponComponent>())
         {
+            if (!comp.Active)
+                continue;
+
             if (!xformQuery.TryGetComponent(comp.Owner, out var xform) ||
                 xform.MapID != args.MapId)
             {
@@ -56,7 +59,7 @@ public sealed class MeleeWindupOverlay : Overlay
 
             var lerp = fraction.Equals(0f) ? 0f : tickFraction;
 
-            handle.DrawCircle(worldPos, 0.25f * MathF.Min(1f, (comp.WindupAccumulator / comp.WindupTime + lerp)), color.WithAlpha(0.25f));
+            handle.DrawCircle(worldPos, 0.25f * MathF.Min(1f, (fraction + lerp)), color.WithAlpha(0.25f));
         }
     }
 }

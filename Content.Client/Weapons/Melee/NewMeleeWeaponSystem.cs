@@ -21,7 +21,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
-        var overlay = _overlayManager.AddOverlay(new MeleeWindupOverlay());
+        _overlayManager.AddOverlay(new MeleeWindupOverlay());
     }
 
     public override void Shutdown()
@@ -32,6 +32,8 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 
     public override void Update(float frameTime)
     {
+        base.Update(frameTime);
+
         if (!Timing.IsFirstTimePredicted)
             return;
 
@@ -54,6 +56,8 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         {
             if (weapon.WindupAccumulator > 0f)
             {
+                // Active + windupaccumulator handled in the event handlers.
+
                 if (weapon.WindupAccumulator < weapon.WindupTime)
                 {
                     EntityManager.RaisePredictiveEvent(new StopAttackEvent()
@@ -96,8 +100,6 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                 Weapon = weapon.Owner,
             });
         }
-
-        base.Update(frameTime);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
