@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Eui;
+using Robust.Client.GameStates;
+using Robust.Client.State;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Reflection;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Eui
 {
@@ -12,6 +15,7 @@ namespace Content.Client.Eui
         [Dependency] private readonly IClientNetManager _net = default!;
         [Dependency] private readonly IReflectionManager _refl = default!;
         [Dependency] private readonly IDynamicTypeFactory _dtf = default!;
+        [Dependency] private readonly ILogManager _log = default!;
 
         private readonly Dictionary<uint, EuiData> _openUis = new();
 
@@ -20,6 +24,12 @@ namespace Content.Client.Eui
             _net.RegisterNetMessage<MsgEuiCtl>(RxMsgCtl);
             _net.RegisterNetMessage<MsgEuiState>(RxMsgState);
             _net.RegisterNetMessage<MsgEuiMessage>(RxMsgMessage);
+            _net.Disconnect += NetOnDisconnect;
+        }
+
+        private void NetOnDisconnect(object? sender, NetDisconnectedArgs e)
+        {
+            _openUis.Clear();
         }
 
         private void RxMsgMessage(MsgEuiMessage message)
@@ -36,26 +46,22 @@ namespace Content.Client.Eui
 
         private void RxMsgCtl(MsgEuiCtl message)
         {
-            switch (message.Type)
+            // Will always close the window first when getting a control message
+            if (_openUis.TryGetValue(message.Id, out var openEui))
             {
-                case MsgEuiCtl.CtlType.Open:
-                    var euiType = _refl.LooseGetType(message.OpenType);
-                    var instance = _dtf.CreateInstance<BaseEui>(euiType);
-                    instance.Initialize(this, message.Id);
-                    instance.Opened();
-                    _openUis.Add(message.Id, new EuiData(instance));
-                    break;
-
-                case MsgEuiCtl.CtlType.Close:
-                    var dat = _openUis[message.Id];
-                    dat.Eui.Closed();
-                    _openUis.Remove(message.Id);
-
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
+                openEui.Eui.Closed();
+                _openUis.Remove(message.Id);
             }
+
+            if (message.Type != MsgEuiCtl.CtlType.Open)
+                return;
+
+            // Will open/re-open the window if the server wants the eui opened.
+            var euiType = _refl.LooseGetType(message.OpenType);
+            var instance = _dtf.CreateInstance<BaseEui>(euiType);
+            instance.Initialize(this, message.Id);
+            instance.Opened();
+            _openUis.Add(message.Id, new EuiData(instance));
         }
 
         private sealed class EuiData
