@@ -2,8 +2,10 @@
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Tools;
 
@@ -82,8 +84,9 @@ public sealed partial class ToolSystem
         component.CancelTokenSource = tokenSource;
 
         var delay = component.Delay;
-        if (!tileDef.IsSpace && newDef.IsSpace)
+        if (!tileDef.IsSpace && newDef.IsSpace) // TODO Add atmos decompression check
             delay += component.VacuumDelay;
+            _popupSystem.PopupCursor(Loc.GetString("comp-lattice-cutting-unsafe-warning"), Filter.Entities(user), PopupType.MediumCaution);
 
         if (UseTool(component.Owner, user, null, 0f, delay, new[] {component.QualityNeeded},
                 new LatticeCuttingCompleteEvent
