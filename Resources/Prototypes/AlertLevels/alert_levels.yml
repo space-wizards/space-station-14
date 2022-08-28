@@ -32,7 +32,7 @@
       sound:
         path: /Audio/Misc/siren.ogg
         params:
-          volume: -0.1
+          volume: -2
       disableSelection: true
       color: PaleVioletRed
       emergencyLightColor: PaleVioletRed
@@ -43,7 +43,7 @@
       sound:
         path: /Audio/Misc/delta.ogg
         params:
-          volume: -0.3
+          volume: -3
       disableSelection: true
       color: DarkRed
       emergencyLightColor: Orange
@@ -55,7 +55,7 @@
       sound:
         path: /Audio/Misc/epsilon.ogg
         params:
-          volume: -0.1
+          volume: -2
       disableSelection: true
       color: DarkViolet
       emergencyLightColor: DarkViolet
