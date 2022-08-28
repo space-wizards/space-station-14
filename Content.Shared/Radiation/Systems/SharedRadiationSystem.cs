@@ -103,4 +103,21 @@ public sealed class RadiationRay
     public List<(Vector2, float)> Blockers = new();
 
     public bool IsGridcast => Grid != null;
+    public bool ReachedDestination => Rads > 0;
+
+    public Vector2 LastPos
+    {
+        get
+        {
+            if (ReachedDestination)
+                return Destination;
+
+            // this shouldn't really happen
+            if (Blockers.Count == 0)
+                return Destination;
+
+            var (lastBlocker, _) = Blockers.Last();
+            return lastBlocker;
+        }
+    }
 }

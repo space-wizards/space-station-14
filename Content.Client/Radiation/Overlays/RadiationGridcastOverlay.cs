@@ -37,14 +37,17 @@ public sealed class RadiationGridcastOverlay : Overlay
         if (Rays == null)
             return;
 
-        // draw lines
+        // draw lines for raycasts
         foreach (var ray in Rays)
         {
             if (!ray.IsGridcast)
-                handle.DrawLine(ray.Source, ray.Destination, Color.Red);
+            {
+                handle.DrawLine(ray.Source, ray.LastPos, Color.Red);
+            }
+
         }
 
-        // draw tiles
+        // draw tiles for gridcasts
         foreach (var ray in Rays)
         {
             if (ray.Grid == null || !_mapManager.TryGetGrid(ray.Grid, out var grid))

@@ -17,15 +17,17 @@ public partial class RadiationSystem
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var sourceQuery = EntityQuery<RadiationSourceComponent, TransformComponent>();
-        var destQuery = EntityQuery<RadiationReceiverComponent, TransformComponent>();
+        var sources = EntityQuery<RadiationSourceComponent, TransformComponent>().ToArray();
+        var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>().ToArray();
+
+        var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
 
         var rays = new List<RadiationRay>();
-        foreach (var (source, sourceTrs) in sourceQuery)
+        foreach (var (source, sourceTrs) in sources)
         {
-            foreach (var (dest, destTrs) in destQuery)
+            foreach (var (_, destTrs) in destinations)
             {
-                var ray = Irradiate(sourceTrs, destTrs, source.RadsPerSecond);
+                var ray = Irradiate(sourceTrs, destTrs, source.RadsPerSecond, blockerQuery);
                 if (ray != null)
                     rays.Add(ray);
             }
@@ -36,8 +38,8 @@ public partial class RadiationSystem
         RaiseNetworkEvent(new RadiationGridcastUpdate(rays));
     }
 
-    private RadiationRay? Irradiate(TransformComponent sourceTrs, TransformComponent destTrs,
-        float incomingRads)
+    private RadiationRay? Irradiate(TransformComponent sourceTrs, TransformComponent destTrs, float incomingRads,
+        EntityQuery<RadiationBlockerComponent> blockerQuery)
     {
         // lets first check that source and destination on the same map
         if (sourceTrs.MapID != destTrs.MapID)
@@ -67,8 +69,8 @@ public partial class RadiationSystem
         // do a raycast to get list of all grids that this rad is going to visit
         // it should be pretty cheap because we do it only on grid bounds
         var box = Box2.FromTwoPoints(sourceWorldPos, destWorldPos);
-        var grids = _mapManager.FindGridsIntersecting(mapId, box, true).ToList();
-        var gridsCount = grids.Count;
+        var grids = _mapManager.FindGridsIntersecting(mapId, box, true).ToArray();
+        var gridsCount = grids.Length;
 
         if (gridsCount == 0)
         {
@@ -88,7 +90,7 @@ public partial class RadiationSystem
         else
         {
             // more than one grid - fallback to raycast
-            return Raycast(mapId, sourceWorldPos, dir.Normalized, dist, rads);
+            return Raycast(mapId, sourceWorldPos, dir.Normalized, dist, rads, blockerQuery);
         }
     }
 
@@ -127,7 +129,8 @@ public partial class RadiationSystem
         return radRay;
     }
 
-    private RadiationRay Raycast(MapId mapId, Vector2 sourceWorld, Vector2 dir, float distance, float incomingRads)
+    private RadiationRay Raycast(MapId mapId, Vector2 sourceWorld, Vector2 dir, float distance, float incomingRads,
+        EntityQuery<RadiationBlockerComponent> blockerQuery)
     {
         var blockers = new List<(Vector2, float)>();
         var radRay = new RadiationRay
@@ -142,15 +145,19 @@ public partial class RadiationSystem
         var colRay = new CollisionRay(sourceWorld, dir, (int) CollisionGroup.Impassable);
         var results = _physicsSystem.IntersectRay(mapId, colRay, distance, returnOnFirstHit: false);
 
-        var rads = incomingRads;
-        var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
         foreach (var obstacle in results)
         {
             if (!blockerQuery.TryGetComponent(obstacle.HitEntity, out var blocker))
                 continue;
 
-            rads -= blocker.RadResistance;
-            blockers.Add((obstacle.HitPos, rads));
+            radRay.Rads -= blocker.RadResistance;
+            blockers.Add((obstacle.HitPos, radRay.Rads));
+
+            if (radRay.Rads <= MinRads)
+            {
+                radRay.Rads = 0;
+                break;
+            }
         }
 
         return radRay;
