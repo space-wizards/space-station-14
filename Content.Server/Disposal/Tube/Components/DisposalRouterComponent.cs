@@ -14,17 +14,19 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(DisposalTubeComponent))]
     public sealed class DisposalRouterComponent : DisposalJunctionComponent
     {
+        public override string ContainerId => "DisposalRouter";
+
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         [ViewVariables]
-        private readonly HashSet<string> _tags = new();
+        public readonly HashSet<string> Tags = new();
 
         [ViewVariables]
         public bool Anchored =>
             !_entMan.TryGetComponent(Owner, out IPhysBody? physics) ||
             physics.BodyType == BodyType.Static;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
 
         [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
@@ -32,7 +34,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             var directions = ConnectableDirections();
 
-            if (holder.Tags.Overlaps(_tags))
+            if (holder.Tags.Overlaps(Tags))
             {
                 return directions[1];
             }
@@ -48,8 +50,6 @@ namespace Content.Server.Disposal.Tube.Components
             {
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
-
-            UpdateUserInterface();
         }
 
         /// <summary>
@@ -72,43 +72,13 @@ namespace Content.Server.Disposal.Tube.Components
             //Check for correct message and ignore maleformed strings
             if (msg.Action == UiAction.Ok && TagRegex.IsMatch(msg.Tags))
             {
-                _tags.Clear();
+                Tags.Clear();
                 foreach (var tag in msg.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
                 {
-                    _tags.Add(tag.Trim());
+                    Tags.Add(tag.Trim());
                     ClickSound();
                 }
             }
-        }
-
-        /// <summary>
-        /// Gets component data to be used to update the user interface client-side.
-        /// </summary>
-        /// <returns>Returns a <see cref="DisposalRouterUserInterfaceState"/></returns>
-        private DisposalRouterUserInterfaceState GetUserInterfaceState()
-        {
-            if (_tags.Count <= 0)
-            {
-                return new DisposalRouterUserInterfaceState("");
-            }
-
-            var taglist = new StringBuilder();
-
-            foreach (var tag in _tags)
-            {
-                taglist.Append(tag);
-                taglist.Append(", ");
-            }
-
-            taglist.Remove(taglist.Length - 2, 2);
-
-            return new DisposalRouterUserInterfaceState(taglist.ToString());
-        }
-
-        private void UpdateUserInterface()
-        {
-            var state = GetUserInterfaceState();
-            UserInterface?.SetState(state);
         }
 
         private void ClickSound()
@@ -120,12 +90,6 @@ namespace Content.Server.Disposal.Tube.Components
         {
             UserInterface?.CloseAll();
             base.OnRemove();
-        }
-
-        public void OpenUserInterface(ActorComponent actor)
-        {
-            UpdateUserInterface();
-            UserInterface?.Open(actor.PlayerSession);
         }
     }
 }

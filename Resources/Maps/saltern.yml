@@ -4,7 +4,7 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
+  0: Space
   1: FloorArcadeBlue
   2: FloorArcadeBlue2
   3: FloorArcadeRed
@@ -26,42 +26,42 @@ tilemap:
   19: FloorShuttlePurple
   20: FloorShuttleRed
   21: FloorShuttleWhite
-  22: floor_asteroid_coarse_sand0
-  23: floor_asteroid_coarse_sand1
-  24: floor_asteroid_coarse_sand2
-  25: floor_asteroid_coarse_sand_dug
-  26: floor_asteroid_sand
-  27: floor_asteroid_tile
-  28: floor_bar
-  29: floor_blue
-  30: floor_blue_circuit
-  31: floor_clown
-  32: floor_dark
-  33: floor_elevator_shaft
-  34: floor_freezer
-  35: floor_glass
-  36: floor_gold
-  37: floor_grass
-  38: floor_green_circuit
-  39: floor_hydro
-  40: floor_kitchen
-  41: floor_laundry
-  42: floor_lino
-  43: floor_mime
-  44: floor_mono
-  45: floor_reinforced
-  46: floor_rglass
-  47: floor_rock_vault
-  48: floor_showroom
-  49: floor_silver
-  50: floor_snow
-  51: floor_steel
-  52: floor_steel_dirty
-  53: floor_techmaint
-  54: floor_white
-  55: floor_wood
-  56: lattice
-  57: plating
+  22: FloorAsteroidCoarseSand0
+  23: FloorAsteroidCoarseSand1
+  24: FloorAsteroidCoarseSand2
+  25: FloorAsteroidCoarseSandDug
+  26: FloorAsteroidSand
+  27: FloorAsteroidTile
+  28: FloorBar
+  29: FloorBlue
+  30: FloorBlueCircuit
+  31: FloorClown
+  32: FloorDark
+  33: FloorElevatorShaft
+  34: FloorFreezer
+  35: FloorGlass
+  36: FloorGold
+  37: FloorGrass
+  38: FloorGreenCircuit
+  39: FloorHydro
+  40: FloorKitchen
+  41: FloorLaundry
+  42: FloorLino
+  43: FloorMime
+  44: FloorMono
+  45: FloorReinforced
+  46: FloorRGlass
+  47: FloorRockVault
+  48: FloorShowroom
+  49: FloorSilver
+  50: FloorSnow
+  51: FloorSteel
+  52: FloorSteelDirty
+  53: FloorTechMaint
+  54: FloorWhite
+  55: FloorWood
+  56: Lattice
+  57: Plating
 grids:
 - settings:
     chunksize: 16
@@ -149,22 +149,6 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADgAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAOAAAADgAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAOAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAOQAAADkAAAA5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADkAAAAgAAAAIAAAAA==
   - ind: -2,-3
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADgAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAOAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAAOQAAADkAAAA4AAAAAAAAAAAAAAA4AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAOQAAADkAAAA5AAAAIAAAACAAAAA5AAAAOAAAAAAAAAAAAAAAOAAAADkAAAA5AAAAOQAAADkAAAA1AAAANQAAADUAAAA1AAAANQAAAA==
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks: []
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks: []
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks: []
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks: []
 entities:
 - uid: 0
   type: FirelockGlass
@@ -16478,10 +16462,6 @@ entities:
     pos: -14.5,-1.5
     parent: 852
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 894
   type: Table
   components:
@@ -40881,10 +40861,6 @@ entities:
   - pos: -7.5,-28.5
     parent: 852
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4222
   type: GasPipeStraight
   components:
@@ -71387,25 +71363,6 @@ entities:
   - pos: 38.5,26.5
     parent: 852
     type: Transform
-- uid: 8370
-  components:
-  - pos: -4.0828176,-36.69003
-    parent: 658
-    type: Transform
-  - index: 1
-    type: MapGrid
-  - angularDamping: 0.05
-    linearDamping: 0.05
-    fixedRotation: False
-    bodyType: Dynamic
-    type: Physics
-  - fixtures: []
-    type: Fixtures
-  - gravityShakeSound: !type:SoundPathSpecifier
-      path: /Audio/Effects/alert.ogg
-    type: Gravity
-  - chunkCollection: {}
-    type: DecalGrid
 - uid: 8371
   type: Grille
   components:
@@ -71424,25 +71381,6 @@ entities:
   - pos: 1.5,-38.5
     parent: 852
     type: Transform
-- uid: 8374
-  components:
-  - pos: 16.442314,-37.900513
-    parent: 658
-    type: Transform
-  - index: 2
-    type: MapGrid
-  - angularDamping: 0.05
-    linearDamping: 0.05
-    fixedRotation: False
-    bodyType: Dynamic
-    type: Physics
-  - fixtures: []
-    type: Fixtures
-  - gravityShakeSound: !type:SoundPathSpecifier
-      path: /Audio/Effects/alert.ogg
-    type: Gravity
-  - chunkCollection: {}
-    type: DecalGrid
 - uid: 8375
   type: GrilleBroken
   components:
@@ -71484,44 +71422,6 @@ entities:
     pos: 31.5,-38.5
     parent: 852
     type: Transform
-- uid: 8381
-  components:
-  - pos: 38.86631,-37.97411
-    parent: 658
-    type: Transform
-  - index: 3
-    type: MapGrid
-  - angularDamping: 0.05
-    linearDamping: 0.05
-    fixedRotation: False
-    bodyType: Dynamic
-    type: Physics
-  - fixtures: []
-    type: Fixtures
-  - gravityShakeSound: !type:SoundPathSpecifier
-      path: /Audio/Effects/alert.ogg
-    type: Gravity
-  - chunkCollection: {}
-    type: DecalGrid
-- uid: 8382
-  components:
-  - pos: 44.788185,-37.833485
-    parent: 658
-    type: Transform
-  - index: 4
-    type: MapGrid
-  - angularDamping: 0.05
-    linearDamping: 0.05
-    fixedRotation: False
-    bodyType: Dynamic
-    type: Physics
-  - fixtures: []
-    type: Fixtures
-  - gravityShakeSound: !type:SoundPathSpecifier
-      path: /Audio/Effects/alert.ogg
-    type: Gravity
-  - chunkCollection: {}
-    type: DecalGrid
 - uid: 8383
   type: GrilleBroken
   components:

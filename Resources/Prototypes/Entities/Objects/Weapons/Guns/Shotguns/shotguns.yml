@@ -11,6 +11,7 @@
       - state: icon
         map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
+    # If you update this also update the bulldog's size.
     size: 30
   - type: AmmoCounter
   - type: Gun
@@ -31,6 +32,10 @@
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: Bulldog
@@ -49,6 +54,7 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
+    size: 30
   - type: Gun
     fireRate: 2
     selectedMode: FullAuto

@@ -58,14 +58,14 @@ public sealed partial class GunSystem : SharedGunSystem
                             for (var i = 0; i < cartridge.Count; i++)
                             {
                                 var uid = Spawn(cartridge.Prototype, fromCoordinates);
-                                ShootProjectile(uid, angles[i].ToVec(), user);
+                                ShootProjectile(uid, angles[i].ToVec(), user, gun.ProjectileSpeed);
                                 shotProjectiles.Add(uid);
                             }
                         }
                         else
                         {
                             var uid = Spawn(cartridge.Prototype, fromCoordinates);
-                            ShootProjectile(uid, mapDirection, user);
+                            ShootProjectile(uid, mapDirection, user, gun.ProjectileSpeed);
                             shotProjectiles.Add(uid);
                         }
 
@@ -98,11 +98,11 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         RemComp<AmmoComponent>(newAmmo.Owner);
                         // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
-                        ThrowingSystem.TryThrow(newAmmo.Owner, mapDirection, 20f, user);
+                        ThrowingSystem.TryThrow(newAmmo.Owner, mapDirection, gun.ProjectileSpeed, user);
                         break;
                     }
 
-                    ShootProjectile(newAmmo.Owner, mapDirection, user);
+                    ShootProjectile(newAmmo.Owner, mapDirection, user, gun.ProjectileSpeed);
                     break;
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
@@ -155,11 +155,11 @@ public sealed partial class GunSystem : SharedGunSystem
         }, false);
     }
 
-    public void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null)
+    public void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null, float speed = 20f)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
         physics.BodyStatus = BodyStatus.InAir;
-        physics.LinearVelocity = direction.Normalized * 20f;
+        physics.LinearVelocity = direction.Normalized * speed;
 
         if (user != null)
         {
@@ -225,6 +225,9 @@ public sealed partial class GunSystem : SharedGunSystem
 
     public void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)
     {
+        if (Deleted(otherEntity))
+            return;
+
         // Like projectiles and melee,
         // 1. Entity specific sound
         // 2. Ammo's sound
@@ -237,24 +240,20 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
             {
-                SoundSystem.Play(damageSoundType!.GetSound(),
-                    Filter.Pvs(otherEntity, entityManager: EntityManager),
-                    otherEntity, AudioHelpers.WithVariation(DamagePitchVariation));
-
+                Audio.PlayPvs(damageSoundType, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
             else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
             {
-                SoundSystem.Play(damageSoundGroup!.GetSound(),
-                    Filter.Pvs(otherEntity, entityManager: EntityManager),
-                    otherEntity, AudioHelpers.WithVariation(DamagePitchVariation));
-
+                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
         }
 
         if (!playedSound && weaponSound != null)
-            SoundSystem.Play(weaponSound.GetSound(), Filter.Pvs(otherEntity, entityManager: EntityManager), otherEntity);
+        {
+            Audio.PlayPvs(weaponSound, otherEntity);
+        }
     }
 
     // TODO: Pseudo RNG so the client can predict these.

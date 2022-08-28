@@ -407,6 +407,11 @@
         damage:
           types:
             Poison: 3
+      - !type:ChemVomit
+        probability: 0.15
+        conditions:
+          - !type:ReagentThreshold
+            min: 30
       - !type:GenericStatusEffect
         key: PressureImmunity
         component: PressureImmunity
@@ -658,3 +663,14 @@
         reagent: Ultravasculine
         amount: 0.5
 
+- type: reagent
+  id: Oculine
+  name: reagent-name-oculine
+  desc: reagent-desc-oculine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-translucent
+  color: "#404040"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ChemHealEyeDamage

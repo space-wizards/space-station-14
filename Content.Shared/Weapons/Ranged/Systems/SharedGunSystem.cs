@@ -45,6 +45,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
     [Dependency] protected readonly TagSystem TagSystem = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
 
     protected ISawmill Sawmill = default!;
@@ -154,19 +155,18 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     public GunComponent? GetGun(EntityUid entity)
     {
-        if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) ||
-            hands.ActiveHandEntity is not { } held)
-        {
-            return null;
-        }
-
-        if (!EntityManager.TryGetComponent(held, out GunComponent? gun))
-            return null;
-
         if (!_combatMode.IsInCombatMode(entity))
             return null;
 
-        return gun;
+        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+            hands.ActiveHandEntity is { } held &&
+            TryComp(held, out GunComponent? gun))
+        {
+            return gun;
+        }
+
+        // Last resort is check if the entity itself is a gun.
+        return !TryComp(entity, out gun) ? null : gun;
     }
 
     private void StopShooting(GunComponent gun)

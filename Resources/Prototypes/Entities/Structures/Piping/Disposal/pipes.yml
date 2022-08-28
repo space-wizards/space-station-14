@@ -49,6 +49,10 @@
         node: broken
   - type: Rotatable
   - type: Pullable
+  - type: CollideOnAnchor
+  - type: ContainerContainer
+    containers:
+      DisposalTube: !type:Container
 
 - type: entity
   id: DisposalHolder
@@ -56,6 +60,9 @@
   name: disposal holder
   components:
   - type: DisposalHolder
+  - type: ContainerContainer
+    containers:
+      DisposalHolder: !type:Container
 
 # Pipes
 
@@ -79,7 +86,7 @@
   id: DisposalPipe
   parent: DisposalPipeBase
   name: disposal pipe segment
-  description: A huge pipe segment used for constructing disposal systems
+  description: A huge pipe segment used for constructing disposal systems.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -88,6 +95,9 @@
     - map: [ "pipe" ]
       state: conpipe-s
   - type: DisposalTransit
+  - type: ContainerContainer
+    containers:
+      DisposalTransit: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -102,7 +112,7 @@
   id: DisposalTagger
   parent: DisposalPipeBase
   name: disposal pipe tagger
-  description: A pipe that tags entities for routing
+  description: A pipe that tags entities for routing.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -111,6 +121,9 @@
     - map: [ "pipe" ]
       state: conpipe-tagger
   - type: DisposalTagger
+  - type: ContainerContainer
+    containers:
+      DisposalTagger: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -131,7 +144,7 @@
   id: DisposalTrunk
   parent: DisposalPipeBase
   name: disposal trunk
-  description: A pipe trunk used as an entry point for disposal systems
+  description: A pipe trunk used as an entry point for disposal systems.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -140,6 +153,9 @@
     - map: [ "pipe" ]
       state: conpipe-t
   - type: DisposalEntry
+  - type: ContainerContainer
+    containers:
+      DisposalEntry: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -161,7 +177,7 @@
   id: DisposalRouter
   parent: DisposalPipeBase
   name: disposal router
-  description: A three-way router. Entities with matching tags get routed to the side
+  description: A three-way router. Entities with matching tags get routed to the side via configurable filters.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -174,6 +190,9 @@
     - 0
     - -90
     - 180
+  - type: ContainerContainer
+    containers:
+      DisposalRouter: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -201,6 +220,7 @@
 
 - type: entity
   id: DisposalRouterFlipped
+  description: A three-way router. Entities with matching tags get routed to the side.
   parent: DisposalRouter
   suffix: flipped
   components:
@@ -215,6 +235,9 @@
     - 0
     - 90
     - 180
+  - type: ContainerContainer
+    containers:
+      DisposalRouter: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -235,7 +258,7 @@
   id: DisposalJunction
   parent: DisposalPipeBase
   name: disposal junction
-  description: A three-way junction. The arrow indicates where items exit
+  description: A three-way junction. The arrow indicates where items exit.
   components:
   - type: Sprite
     drawdepth: ThickPipe
@@ -249,6 +272,9 @@
     - 0
     - -90
     - 180
+  - type: ContainerContainer
+    containers:
+      DisposalJunction: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -270,6 +296,7 @@
 
 - type: entity
   id: DisposalJunctionFlipped
+  description: A three-way junction. The arrow indicates where items exit.
   parent: DisposalJunction
   suffix: flipped
   components:
@@ -284,6 +311,9 @@
     - 0
     - 90
     - 180
+  - type: ContainerContainer
+    containers:
+      DisposalJunction: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -317,6 +347,9 @@
     - 0
     - 90
     - -90
+  - type: ContainerContainer
+    containers:
+      DisposalJunction: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -347,6 +380,9 @@
     - map: [ "pipe" ]
       state: conpipe-c
   - type: DisposalBend
+  - type: ContainerContainer
+    containers:
+      DisposalBend: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:

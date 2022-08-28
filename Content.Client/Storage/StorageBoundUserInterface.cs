@@ -13,7 +13,7 @@ namespace Content.Client.Storage
     {
         [ViewVariables] private StorageWindow? _window;
 
-        public StorageBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public StorageBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

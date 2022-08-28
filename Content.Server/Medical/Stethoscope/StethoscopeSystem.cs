@@ -17,10 +17,9 @@ namespace Content.Server.Medical
 {
     public sealed class StethoscopeSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
