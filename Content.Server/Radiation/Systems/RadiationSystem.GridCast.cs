@@ -27,7 +27,7 @@ public partial class RadiationSystem
         {
             foreach (var (_, destTrs) in destinations)
             {
-                var ray = Irradiate(sourceTrs, destTrs, source.RadsPerSecond, blockerQuery);
+                var ray = Irradiate(sourceTrs, destTrs, source.RadsPerSecond, source.Slope, blockerQuery);
                 if (ray != null)
                     rays.Add(ray);
             }
@@ -38,7 +38,8 @@ public partial class RadiationSystem
         RaiseNetworkEvent(new RadiationGridcastUpdate(rays));
     }
 
-    private RadiationRay? Irradiate(TransformComponent sourceTrs, TransformComponent destTrs, float incomingRads,
+    private RadiationRay? Irradiate(TransformComponent sourceTrs, TransformComponent destTrs,
+        float incomingRads, float slope,
         EntityQuery<RadiationBlockerComponent> blockerQuery)
     {
         // lets first check that source and destination on the same map
@@ -53,7 +54,8 @@ public partial class RadiationSystem
         var dist = dir.Length;
 
         // will it even reach destination considering distance penalty
-        var rads = dist > 1f ? incomingRads / dist : incomingRads;
+        var slopeDist = slope * dist;
+        var rads = slopeDist > 1f ? incomingRads / slopeDist : incomingRads;
         if (rads <= MinRads)
             return null;
 

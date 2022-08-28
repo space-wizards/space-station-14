@@ -17,4 +17,8 @@ public sealed class RadiationSourceComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("range")]
     public float Range = 5f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("slope")]
+    public float Slope = 0.5f;
 }
