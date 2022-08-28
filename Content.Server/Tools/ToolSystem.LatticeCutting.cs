@@ -81,7 +81,11 @@ public sealed partial class ToolSystem
         var tokenSource = new CancellationTokenSource();
         component.CancelTokenSource = tokenSource;
 
-        if (UseTool(component.Owner, user, null, 0f, component.Delay, new[] {component.QualityNeeded},
+        var delay = component.Delay;
+        if (!tileDef.IsSpace && newDef.IsSpace)
+            delay += component.VacuumDelay;
+
+        if (UseTool(component.Owner, user, null, 0f, delay, new[] {component.QualityNeeded},
                 new LatticeCuttingCompleteEvent
                 {
                     Coordinates = clickLocation
