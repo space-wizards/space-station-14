@@ -28,6 +28,10 @@ namespace Content.Client.Eui
 
         private void NetOnDisconnect(object? sender, NetDisconnectedArgs e)
         {
+            foreach (var openUi in _openUis)
+            {
+                openUi.Value.Eui.Closed();
+            }
             _openUis.Clear();
         }
 
