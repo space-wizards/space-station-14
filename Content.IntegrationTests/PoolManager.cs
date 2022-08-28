@@ -222,10 +222,16 @@ public static class PoolManager
     public static async Task<PairTracker> GetServerClient(PoolSettings poolSettings = null) =>
         await GetServerClientPair(poolSettings ?? new PoolSettings());
 
+    private static string GetDefaultTestName()
+    {
+        return TestContext.CurrentContext.Test.FullName
+            .Replace("Content.IntegrationTests.Tests.", "");
+    }
+
     private static async Task<PairTracker> GetServerClientPair(PoolSettings poolSettings)
     {
         DieIfPoolFailure();
-        var currentTestName = poolSettings.TestName ?? TestContext.CurrentContext.Test.Name;
+        var currentTestName = poolSettings.TestName ?? GetDefaultTestName();
         var poolRetrieveTimeWatch = new Stopwatch();
         await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Called by test {currentTestName}");
         Pair pair = null;
