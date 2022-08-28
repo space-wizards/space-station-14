@@ -1,7 +1,6 @@
 using System.Linq;
-using Content.Server.FloodFill;
+using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
-using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
@@ -10,6 +9,8 @@ namespace Content.Server.Radiation.Systems;
 
 public partial class RadiationSystem
 {
+    private const bool SimplifiedSameGrid = true;
+
     private void UpdateGridcast()
     {
         var stopwatch = new Stopwatch();
@@ -18,149 +19,144 @@ public partial class RadiationSystem
         var sourceQuery = EntityQuery<RadiationSourceComponent, TransformComponent>();
         var destQuery = EntityQuery<RadiationReceiverComponent, TransformComponent>();
 
-        var linesDict = new Dictionary<EntityUid, List<(List<Vector2i>, float)>>();
-        var list = new List<RayCastResults>();
+        var list = new List<RadiationRay>();
         foreach (var (source, sourceTrs) in sourceQuery)
         {
-            /*if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
-                continue;
-
-            var gridUid = sourceTrs.GridUid.Value;
-            if (!linesDict.ContainsKey(gridUid))
-                linesDict.Add(sourceTrs.GridUid.Value, new());
-            var lines = linesDict[gridUid];
-
-            var sourcePos = sourceTrs.WorldPosition;
-            var sourceGridPos = grid.Grid.TileIndicesFor(sourceTrs.Coordinates);
-            var resistanceMap = _resistancePerTile[gridUid];*/
-
             foreach (var (dest, destTrs) in destQuery)
             {
-                list = Raycast(sourceTrs, destTrs).ToList();
-
-                /*var line = IrradiateLine(source, sourceGridPos, destTrs, resistanceMap);
-                if (line != null)
-                    lines.Add(line.Value);*/
+                var ray = Irradiate(sourceTrs, destTrs, source.RadsPerSecond);
+                if (ray != null)
+                    list.Add(ray);
             }
         }
 
         Logger.Info($"Gridcast radiation {stopwatch.Elapsed.TotalMilliseconds}ms");
-
-        foreach (var res in list)
-        {
-            Logger.Debug($"GridUid {res.HitEntity} Point {res.HitPos}, Distance {res.Distance}");
-        }
-
-        RaiseNetworkEvent(new RadiationGridcastUpdate(linesDict));
     }
 
-    private (List<Vector2i>, float)? IrradiateLine(RadiationSourceComponent source,
-        Vector2i sourceGridPos, TransformComponent destTrs,
-        Dictionary<Vector2i, TileData> resistanceMap)
+    private RadiationRay? Irradiate(TransformComponent sourceTrs, TransformComponent destTrs,
+        float incomingRads)
     {
-        if (destTrs.GridUid == null || !TryComp(destTrs.GridUid, out IMapGridComponent? destGrid))
+        // lets first check that source and destination on the same map
+        if (sourceTrs.MapID != destTrs.MapID)
             return null;
-        var destGridPos = destGrid.Grid.TileIndicesFor(destTrs.Coordinates);
+        var mapId = sourceTrs.MapID;
 
-        var linesPoints = Line(sourceGridPos.X, sourceGridPos.Y,
-            destGridPos.X, destGridPos.Y);
-
-        var visitedPoints = new List<Vector2i>();
-        var rads = source.RadsPerSecond;
-        foreach (var point in linesPoints)
-        {
-            visitedPoints.Add(point);
-            if (!resistanceMap.TryGetValue(point, out var resData))
-                continue;
-
-            rads -= resData.Tolerance[0];
-            if (rads <= MinRads)
-            {
-                return (visitedPoints, 0f);
-            }
-        }
-
-        return (visitedPoints, rads);
-    }
-
-
-    private IEnumerable<RayCastResults> Raycast(TransformComponent sourceTrs, TransformComponent destTrs)
-    {
-        var sourceWorldPos = sourceTrs.WorldPosition;
-        var destWorldPos = destTrs.WorldPosition;
-        var dir = destWorldPos - sourceWorldPos;
-        var dist = dir.Length;
-        var ray = new Ray(sourceWorldPos, dir.Normalized);
-
-        var raycastResults = _mapManager.Raycast(sourceTrs.MapID, ray, dist, false);
-        return raycastResults;
-    }
-
-
-    private IEnumerable<Vector2i>? MultiGridLine(TransformComponent sourceTrs, TransformComponent destTrs)
-    {
         // get direction from rad source to destination and its distance
         var sourceWorldPos = sourceTrs.WorldPosition;
         var destWorldPos = destTrs.WorldPosition;
         var dir = destWorldPos - sourceWorldPos;
         var dist = dir.Length;
 
-        // todo: update rad here and check if it's positive
+        // will it even reach destination considering distance penalty
+        var rads = dist > 1f ? incomingRads / dist : incomingRads;
+        if (rads <= MinRads)
+            return null;
 
-        // do a raycast to get list of all grids that this rad ray going to visit
-        // because of grid overlapping it can visit same grid several times
-        var ray = new Ray(sourceWorldPos, dir.Normalized);
-        var raycastResults = _mapManager.Raycast(sourceTrs.MapID, ray, dist, false);
-
-        // todo: no grids found - so no blockers. trivial case
-
-        // get them as list of grids
-        var gridsToVisit = new List<IMapGrid>();
-        foreach (var result in raycastResults)
+        // if source and destination on the same grid it's possible that
+        // between them can be another grid (ie. shuttle in center of donut station)
+        // however we can do simplification and ignore that case
+        if (SimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
-            if (!TryComp(result.HitEntity, out IMapGridComponent? grid))
-                continue;
-            gridsToVisit.Add(grid.Grid);
+            return Gridcast(sourceTrs.GridUid.Value, sourceWorldPos, destWorldPos, rads);
         }
 
-        yield break;
+        // lets check how many grids are between source and destination
+        // do a raycast to get list of all grids that this rad is going to visit
+        // it should be pretty cheap because we do it only on grid bounds
+        var ray = new Ray(sourceWorldPos, dir.Normalized);
+        var raycastResults = _mapManager.Raycast(mapId, ray, dist, false).ToList();
+        var gridsCount = raycastResults.Count;
 
-        // there is two cases
-        // if source is located in space or if on a grid
-        // lets start with a grid case and get grid position of source
-        /*if (sourceTrs.GridUid == null || !TryComp(sourceTrs.GridUid, out IMapGridComponent? grid))
-            yield break;
-        var currentGrid = grid.Grid;
-        var sourceGridPos = currentGrid.TileIndicesFor(sourceTrs.Coordinates);
-
-        // lets assume that target is placed on a same grid
-        var destGridPos = currentGrid.TileIndicesFor(destTrs.WorldPosition);
-
-        // lets start moving on the grid in direction of destination
-        var lineEnumerator = Line(sourceGridPos.X, sourceGridPos.Y,
-            destGridPos.X, destGridPos.Y);
-        foreach (var pos in lineEnumerator)
+        if (gridsCount == 0)
         {
-            // blah blah, we are moving and doing checks
-            yield return pos;
+            // no grids found - so no blockers (just distance penalty)
+            return new RadiationRay
+            {
+                Source = sourceWorldPos,
+                Destination = destWorldPos,
+                Rads = rads
+            };
+        }
+        else if (gridsCount == 1)
+        {
+            // one grid found - use it for gridcast
+            return Gridcast(raycastResults[0].HitEntity, sourceWorldPos, destWorldPos, rads);
+        }
+        else
+        {
+            // more than one grid - fallback to raycast
+            return Raycast(mapId, ray, dist, rads);
+        }
+    }
 
-            // check if we left a grid
-            // todo: GridTileToLocal can be removed
-            var localPos = currentGrid.GridTileToLocal(pos).Position;
-            if (currentGrid.LocalAABB.Contains(localPos))
+    private RadiationRay Gridcast(EntityUid gridUid, Vector2 sourceWorld, Vector2 destWorld,
+        float incomingRads)
+    {
+        var visitedTiles = new List<(Vector2i, float)>();
+        var radRay = new RadiationRay
+        {
+            Source = sourceWorld,
+            Destination = destWorld,
+            Rads = incomingRads,
+            Grid = gridUid,
+            VisitedTiles = visitedTiles
+        };
+
+        if (!_resistancePerTile.TryGetValue(gridUid, out var resistanceMap))
+            return radRay;
+
+        if (!TryComp(gridUid, out IMapGridComponent? grid))
+            return radRay;
+        var sourceGridPos = grid.Grid.TileIndicesFor(sourceWorld);
+        var destGridPos = grid.Grid.TileIndicesFor(destWorld);
+        var line = Line(sourceGridPos.X, sourceGridPos.Y, destGridPos.X, destGridPos.Y);
+
+        foreach (var point in line)
+        {
+            if (resistanceMap.TryGetValue(point, out var resData))
+                radRay.Rads -= resData.Tolerance[0];
+            visitedTiles.Add((point, radRay.Rads));
+
+            if (radRay.Rads <= MinRads)
+                return radRay;
+        }
+
+        return radRay;
+    }
+
+    private RadiationRay Raycast(MapId mapId, Ray ray, float distance, float incomingRads)
+    {
+        var blockers = new List<(Vector2, float)>();
+        var radRay = new RadiationRay
+        {
+            Source = ray.Position,
+            Destination = ray.Position + ray.Direction,
+            Rads = incomingRads,
+            Blockers = blockers
+        };
+
+        // do raycast to the physics
+        var colRay = new CollisionRay(ray.Position, ray.Direction, (int) CollisionGroup.Impassable);
+        var results = _physicsSystem.IntersectRay(mapId, colRay, distance, returnOnFirstHit: false);
+
+        var rads = incomingRads;
+        var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
+        foreach (var obstacle in results)
+        {
+            if (!blockerQuery.TryGetComponent(obstacle.HitEntity, out var blocker))
                 continue;
 
-            // oh, we left a grid and now in open space
-            // lets find next grid on our way
-            // var worldPos = currentGrid.LocalToWorld(localPos);
-        }*/
+            rads -= blocker.RadResistance;
+            blockers.Add((obstacle.HitPos, rads));
+        }
 
-
+        return radRay;
     }
+
 
     // https://stackoverflow.com/questions/11678693/all-cases-covered-bresenhams-line-algorithm
     // need to rewrite to make any sense
-    public IEnumerable<Vector2i> Line(int x, int y, int x2, int y2)
+    private IEnumerable<Vector2i> Line(int x, int y, int x2, int y2)
     {
         var w = x2 - x;
         var h = y2 - y;
@@ -209,5 +205,17 @@ public partial class RadiationSystem
                 y += dy2;
             }
         }
+    }
+
+    public sealed class RadiationRay
+    {
+        public Vector2 Source;
+        public Vector2 Destination;
+        public float Rads;
+
+        public EntityUid? Grid;
+        public List<(Vector2i, float)> VisitedTiles = new();
+
+        public List<(Vector2, float)> Blockers = new();
     }
 }
