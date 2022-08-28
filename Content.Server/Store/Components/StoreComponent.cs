@@ -71,13 +71,6 @@ public sealed class StoreComponent : Component
     [ViewVariables]
     [DataField("buySuccessSound")]
     public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
-
-    /// <summary>
-    /// The sound played to the buyer when a purchase fails.
-    /// </summary>
-    [ViewVariables]
-    [DataField("insufficientFundsSound")]
-    public SoundSpecifier InsufficientFundsSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
     #endregion
 }
 

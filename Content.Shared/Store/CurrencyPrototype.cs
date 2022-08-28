@@ -1,6 +1,6 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Store;
 
@@ -18,22 +18,18 @@ public sealed class CurrencyPrototype : IPrototype
     public string ID { get; } = default!;
 
     /// <summary>
-    /// The Loc string used for displaying the balance of a certain currency at the top of the store ui
+    /// The Loc string used for displaying the currency in the store ui.
+    /// doesn't necessarily refer to the full name of the currency, only
+    /// that which is displayed to the user.
     /// </summary>
-    [DataField("balanceDisplay")]
-    public string BalanceDisplay { get; } = string.Empty;
-
-    /// <summary>
-    /// The Loc string used for displaying the price of listings in store UI
-    /// </summary>
-    [DataField("priceDisplay")]
-    public string PriceDisplay { get; } = string.Empty;
+    [DataField("displayName")]
+    public string DisplayName { get; } = string.Empty;
 
     /// <summary>
     /// The physical entity of the currency
     /// </summary>
-    [DataField("entityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? EntityId { get; }
+    [DataField("cash")] //TODO: you get your customTypeSerializer when FixedPoint2 works in them! -emo
+    public Dictionary<FixedPoint2, string>? Cash { get; }
 
     /// <summary>
     /// Whether or not this currency can be withdrawn from a shop by a player. Requires a valid entityId.
