@@ -7,7 +7,6 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Decoration/fireplace.rsi
-    snapCardinals: true
     layers:
       - state: fireplace
       - state: fireplace_fire4
