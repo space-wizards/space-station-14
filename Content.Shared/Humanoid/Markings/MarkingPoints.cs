@@ -37,6 +37,13 @@ public sealed class MarkingPointsPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
+    /// <summary>
+    ///     If the user of this marking point set is only allowed to
+    ///     use whitelisted markings, and not globally usable markings.
+    ///     Only used for validation and profile construction. Ignored anywhere else.
+    /// </summary>
+    [DataField("onlyWhitelisted")] public bool OnlyWhitelisted;
+
     [DataField("points", required: true)]
     public Dictionary<MarkingCategories, MarkingPoints> Points { get; } = default!;
 }

@@ -296,6 +296,42 @@ namespace Content.Client.Preferences.UI
                 IsDirty = true;
             };
 
+            _hairPicker.OnSlotAdd += delegate()
+            {
+                if (Profile is null)
+                    return;
+
+                var hair = _markingManager.MarkingsByCategoryAndSpecies(MarkingCategories.Hair, Profile.Species).Keys
+                    .FirstOrDefault();
+
+                if (string.IsNullOrEmpty(hair))
+                    return;
+
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithHairStyleName(hair)
+                );
+
+                IsDirty = true;
+            };
+
+            _facialHairPicker.OnSlotAdd += delegate()
+            {
+                if (Profile is null)
+                    return;
+
+                var hair = _markingManager.MarkingsByCategoryAndSpecies(MarkingCategories.FacialHair, Profile.Species).Keys
+                    .FirstOrDefault();
+
+                if (string.IsNullOrEmpty(hair))
+                    return;
+
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithFacialHairStyleName(hair)
+                );
+
+                IsDirty = true;
+            };
+
             #endregion Hair
 
             #region Clothing
