@@ -26,7 +26,7 @@ public sealed partial class ToolSystem
     private void OnLatticeCutComplete(EntityUid uid, LatticeCuttingComponent component, LatticeCuttingCompleteEvent args)
     {
         component.CancelTokenSource = null;
-        var gridUid = Transform(uid).GridUid;
+        var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (gridUid == null)
             return;
         var grid = _mapManager.GetGrid(gridUid.Value);
@@ -45,14 +45,14 @@ public sealed partial class ToolSystem
     private void OnLatticeCuttingAfterInteract(EntityUid uid, LatticeCuttingComponent component,
         AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach)
+        if (args.Handled || !args.CanReach || args.Target != null)
             return;
 
         if (TryCut(args.User, component, args.ClickLocation))
             args.Handled = true;
     }
 
-    private bool TryCut(EntityUid user, LatticeCuttingComponent component, EntityCoordinates  clickLocation)
+    private bool TryCut(EntityUid user, LatticeCuttingComponent component, EntityCoordinates clickLocation)
     {
         if (component.CancelTokenSource != null)
             return true;
@@ -88,7 +88,7 @@ public sealed partial class ToolSystem
             delay += component.VacuumDelay;
             _popupSystem.PopupCursor(Loc.GetString("comp-lattice-cutting-unsafe-warning"), Filter.Entities(user), PopupType.MediumCaution);
 
-        if (UseTool(component.Owner, user, null, 0f, delay, new[] {component.QualityNeeded},
+        if (!UseTool(component.Owner, user, null, 0f, delay, new[] {component.QualityNeeded},
                 new LatticeCuttingCompleteEvent
                 {
                     Coordinates = clickLocation
