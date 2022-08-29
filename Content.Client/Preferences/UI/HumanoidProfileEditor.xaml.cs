@@ -276,6 +276,26 @@ namespace Content.Client.Preferences.UI
                 IsDirty = true;
             };
 
+            _hairPicker.OnSlotRemove += _ =>
+            {
+                if (Profile is null)
+                    return;
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithHairStyleName(HairStyles.DefaultHairStyle)
+                );
+                IsDirty = true;
+            };
+
+            _facialHairPicker.OnSlotRemove += _ =>
+            {
+                if (Profile is null)
+                    return;
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithFacialHairStyleName(HairStyles.DefaultFacialHairStyle)
+                );
+                IsDirty = true;
+            };
+
             #endregion Hair
 
             #region Clothing
@@ -897,12 +917,24 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
+            var hairMarking = Profile.Appearance.HairStyleId switch
+            {
+                HairStyles.DefaultHairStyle => new List<Marking>(),
+                _ => new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }) },
+            };
+
+            var facialHairMarking = Profile.Appearance.FacialHairStyleId switch
+            {
+                HairStyles.DefaultFacialHairStyle => new List<Marking>(),
+                _ => new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) },
+            };
+
             _hairPicker.UpdateData(
-                new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }) },
+                hairMarking,
                 Profile.Species,
                 1);
             _facialHairPicker.UpdateData(
-                new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) },
+                facialHairMarking,
                 Profile.Species,
                 1);
         }
