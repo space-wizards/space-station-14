@@ -1,4 +1,5 @@
 parse-bool-fail = Unable to parse {$arg} as a bool
+parse-float-fail = Unable to parse {$arg} as a float
 
 lockeyes-command-description = Prevents eyes from being rotated any further
 lockeyes-command-help = lockeyes <true/false>
