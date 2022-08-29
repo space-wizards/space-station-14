@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -27,6 +28,10 @@ public sealed class NewMeleeWeaponComponent : Component
     [DataField("damage", required:true)]
     [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = default!;
+
+    [DataField("bluntStaminaDamageFactor")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
 
     #region Precision Attack
 
@@ -61,6 +66,10 @@ public sealed class NewMeleeWeaponComponent : Component
     // We do not predict the below sounds in case the client thinks but the server disagrees. If this were the case
     // then a player may doubt if the target actually took damage or not.
     // If overwatch and apex do this then we probably should too.
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("hitSound")]
+    public SoundSpecifier? HitSound;
 
     /// <summary>
     /// This gets played if damage is done.

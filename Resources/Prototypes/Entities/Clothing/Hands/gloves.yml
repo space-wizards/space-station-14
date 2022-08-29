@@ -11,7 +11,8 @@
   - type: BoxingGloves
   - type: StaminaDamageOnHit
     damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
-    knockdownSound: /Audio/Weapons/boxingbell.ogg
+    # This needs to be moved to boxinggloves
+    #knockdownSound: /Audio/Weapons/boxingbell.ogg
   - type: MeleeWeapon
     damage:
       types:
