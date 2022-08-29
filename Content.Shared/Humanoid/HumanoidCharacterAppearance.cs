@@ -79,10 +79,19 @@ namespace Content.Shared.Humanoid
                 HairStyles.DefaultFacialHairStyle,
                 Color.Black,
                 Color.Black,
-                Color.FromHex("#C0967F"),
+                Humanoid.SkinColor.ValidHumanSkinTone,
                 new ()
             );
         }
+
+        private static IReadOnlyList<Color> RealisticEyeColors = new List<Color>
+        {
+            Color.Brown,
+            Color.Gray,
+            Color.Azure,
+            Color.SteelBlue,
+            Color.Black
+        };
 
         public static HumanoidCharacterAppearance Random(string species, Sex sex)
         {
@@ -104,7 +113,33 @@ namespace Content.Shared.Humanoid
                 .WithBlue(RandomizeColor(newHairColor.B));
 
             // TODO: Add random eye and skin color
-            return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, Color.Black, Color.FromHex("#C0967F"), new ());
+
+            var newEyeColor = random.Pick(RealisticEyeColors);
+
+            var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
+
+            var newSkinColor = Humanoid.SkinColor.ValidHumanSkinTone;
+            switch (skinType)
+            {
+                case SpeciesSkinColor.HumanToned:
+                    var tone = random.Next(0, 100);
+                    newSkinColor = Humanoid.SkinColor.HumanSkinTone(tone);
+                    break;
+                case SpeciesSkinColor.Hues:
+                case SpeciesSkinColor.TintedHues:
+                    var rbyte = random.Next(0, 255);
+                    var gbyte = random.Next(0, 255);
+                    var bbyte = random.Next(0, 255);
+                    newSkinColor = new Color(rbyte, gbyte, bbyte);
+                    break;
+            }
+
+            if (skinType == SpeciesSkinColor.TintedHues)
+            {
+                newSkinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(newSkinColor);
+            }
+
+            return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new ());
 
             float RandomizeColor(float channel)
             {
