@@ -16,11 +16,11 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
-    [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _network = default!;
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly MovementSpeedModifierSystem MovementSpeedModifier = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
 
     public override void Initialize()
@@ -181,8 +181,7 @@ public abstract class SharedJetpackSystem : EntitySystem
             MovementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
-        TryComp<AppearanceComponent>(component.Owner, out var appearance);
-        appearance?.SetData(JetpackVisuals.Enabled, enabled);
+        Appearance.SetData(component.Owner, JetpackVisuals.Enabled, enabled);
         Dirty(component);
     }
 
