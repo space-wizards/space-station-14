@@ -1,13 +1,9 @@
 ﻿using System.Threading;
-using Content.Server.Atmos.Components;
 using Content.Server.Tools.Components;
-using Content.Shared.Atmos;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
-using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 
 namespace Content.Server.Tools;
 
@@ -82,30 +78,7 @@ public sealed partial class ToolSystem
         var tokenSource = new CancellationTokenSource();
         component.CancelTokenSource = tokenSource;
 
-        var delay = component.Delay;
-        if (!tileDef.IsSpace && newDef.IsSpace)
-        {
-            var mapPressure = 0f;
-            var mapUid = _mapManager.GetMapEntityId(mapGrid.ParentMapId);
-            if (TryComp<MapAtmosphereComponent>(mapUid, out var mapAtmosphereComponent)
-                && !mapAtmosphereComponent.Space
-                && mapAtmosphereComponent.Mixture != null)
-                mapPressure = mapAtmosphereComponent.Mixture.Pressure;
-
-            var mixes = _atmosphereSystem.GetAdjacentTileMixtures(mapGrid.GridEntityId, tile.GridIndices);
-            foreach (var mix in mixes)
-            {
-                if (Math.Abs(mix.Pressure - mapPressure) <= Atmospherics.HazardLowPressure)
-                    continue;
-
-                delay += component.VacuumDelay;
-                _popupSystem.PopupCursor(Loc.GetString("comp-lattice-cutting-unsafe-warning"), Filter.Entities(user),
-                    PopupType.MediumCaution);
-                break;
-            }
-        }
-
-        if (!UseTool(component.Owner, user, null, 0f, delay, new[] {component.QualityNeeded},
+        if (!UseTool(component.Owner, user, null, 0f, component.Delay, new[] {component.QualityNeeded},
                 new LatticeCuttingCompleteEvent
                 {
                     Coordinates = clickLocation
