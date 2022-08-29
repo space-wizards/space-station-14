@@ -212,7 +212,7 @@
         Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     atmosTemperatureTransferEfficiency: 0.0333 # If we're too conductive we need a lot of heat to do anything.
-    heatDamageThreshold: 360
+    heatDamageThreshold: 327.15
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42

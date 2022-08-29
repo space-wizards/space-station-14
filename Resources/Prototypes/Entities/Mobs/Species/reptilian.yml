@@ -142,7 +142,7 @@
       types:
         Piercing: 5
   - type: Temperature
-    heatDamageThreshold: 400
+    heatDamageThreshold: 350
     coldDamageThreshold: 265
     currentTemperature: 310.15
     specificHeat: 46
