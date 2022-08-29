@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Humanoid.Species;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -113,18 +114,30 @@ public sealed class MarkingSet
         _points = MarkingPoints.CloneMarkingPointDictionary(other._points);
     }
 
-    public void FilterSpecies(string species, MarkingManager? markingManager = null)
+    public void FilterSpecies(string species, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
     {
         IoCManager.Resolve(ref markingManager);
+        IoCManager.Resolve(ref prototypeManager);
 
         var toRemove = new List<(MarkingCategories category, string id)>();
+        var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
+        var onlyWhitelisted = prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
 
         foreach (var (category, list) in _markings)
         {
             foreach (var marking in list)
             {
-                if (!markingManager.TryGetMarking(marking, out var prototype)
-                    || prototype.SpeciesRestrictions != null
+                if (!markingManager.TryGetMarking(marking, out var prototype))
+                {
+                    continue;
+                }
+
+                if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+                {
+                    toRemove.Add((category, marking.MarkingId));
+                }
+
+                if (prototype.SpeciesRestrictions != null
                     && !prototype.SpeciesRestrictions.Contains(species))
                 {
                     toRemove.Add((category, marking.MarkingId));
