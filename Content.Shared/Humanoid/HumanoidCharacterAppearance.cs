@@ -100,9 +100,11 @@ namespace Content.Shared.Humanoid
             var hairStyles = markingManager.MarkingsByCategoryAndSpecies(MarkingCategories.Hair, species).Keys.ToList();
             var facialHairStyles = markingManager.MarkingsByCategoryAndSpecies(MarkingCategories.FacialHair, species).Keys.ToList();
 
-            var newHairStyle = random.Pick(hairStyles);
+            var newHairStyle = hairStyles.Count > 0
+                ? random.Pick(hairStyles)
+                : HairStyles.DefaultHairStyle;
 
-            var newFacialHairStyle = sex == Sex.Female
+            var newFacialHairStyle = facialHairStyles.Count == 0 || sex == Sex.Female
                 ? HairStyles.DefaultFacialHairStyle
                 : random.Pick(facialHairStyles);
 
