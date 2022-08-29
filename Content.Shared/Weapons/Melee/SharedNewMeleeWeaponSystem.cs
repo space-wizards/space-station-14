@@ -1,14 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Tag;
-using Content.Shared.Weapon.Melee;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -79,12 +76,12 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     protected abstract class ReleaseAttackEvent : EntityEventArgs
     {
         public EntityUid Weapon;
+        public EntityCoordinates Coordinates;
     }
 
     [Serializable, NetSerializable]
     protected sealed class ReleaseWideAttackEvent : ReleaseAttackEvent
     {
-        public EntityCoordinates Coordinates;
     }
 
     [Serializable, NetSerializable]
@@ -264,7 +261,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
                 throw new NotImplementedException();
         }
 
-        // TODO: Play the hit effect on each hit entity lerped.
+        DoLungeAnimation(user, attack.Coordinates.ToMap(EntityManager));
 
         weapon.Active = false;
         weapon.WindupAccumulator = 0f;
@@ -279,5 +276,35 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     protected virtual void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, NewMeleeWeaponComponent component)
     {
 
+    }
+
+    protected void DoLungeAnimation(EntityUid user, MapCoordinates coordinates)
+    {
+        // TODO: Assert that offset eyes are still okay.
+        if (!TryComp<TransformComponent>(user, out var userXform))
+            return;
+
+        var invMatrix = userXform.InvWorldMatrix;
+        var localPos = invMatrix.Transform(coordinates.Position);
+
+        if (localPos.LengthSquared <= 0f)
+            return;
+
+        localPos = userXform.LocalRotation.RotateVec(localPos);
+        DoLunge(user, localPos);
+    }
+
+    protected abstract void DoLunge(EntityUid user, Vector2 localPos);
+
+    [Serializable, NetSerializable]
+    protected sealed class MeleeLungeEvent : EntityEventArgs
+    {
+        public EntityUid Entity;
+        public Vector2 LocalPos;
+
+        public MeleeLungeEvent(Vector2 localPos)
+        {
+            LocalPos = localPos;
+        }
     }
 }

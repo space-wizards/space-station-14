@@ -53,6 +53,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         base.Initialize();
         _overlayManager.AddOverlay(new MeleeWindupOverlay());
         SubscribeNetworkEvent<MeleeEffectEvent>(OnMeleeEffect);
+        SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
     }
 
     private void OnMeleeEffect(MeleeEffectEvent msg)
@@ -131,14 +132,14 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                         // TODO: UI Refactor update I assume
                         if (_stateManager.CurrentState is GameScreen screen)
                         {
-                            target = screen.GetEntityUnderPosition(
-                                _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition));
+                            target = screen.GetEntityUnderPosition(mousePos);
                         }
 
                         EntityManager.RaisePredictiveEvent(new ReleasePreciseAttackEvent()
                         {
                             Weapon = weapon.Owner,
                             Target = target ?? EntityUid.Invalid,
+                            Coordinates = coordinates,
                         });
                     }
                     else
@@ -176,23 +177,6 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, NewMeleeWeaponComponent component)
     {
         base.DoPreciseAttack(user, ev, component);
-
-        if (TryComp<TransformComponent>(ev.Target, out var targetXform) &&
-            TryComp<TransformComponent>(user, out var userXform))
-        {
-            var invMatrix = userXform.InvWorldMatrix;
-            var targetPos = targetXform.WorldPosition;
-            var localPos = invMatrix.Transform(targetPos);
-
-            if (localPos.LengthSquared > 0f)
-            {
-                localPos = userXform.LocalRotation.RotateVec(localPos);
-                var animation = GetLungeAnimation(localPos);
-
-                _animation.Stop(user, MeleeLungeKey);
-                _animation.Play(user, animation, MeleeLungeKey);
-            }
-        }
     }
 
     protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, NewMeleeWeaponComponent component)
@@ -200,13 +184,26 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         base.DoWideAttack(user, ev, component);
     }
 
+    private void OnMeleeLunge(MeleeLungeEvent ev)
+    {
+        DoLunge(ev.Entity, ev.LocalPos);
+    }
+
+    protected override void DoLunge(EntityUid user, Vector2 localPos)
+    {
+        var animation = GetLungeAnimation(localPos);
+
+        _animation.Stop(user, MeleeLungeKey);
+        _animation.Play(user, animation, MeleeLungeKey);
+    }
+
     private Animation GetLungeAnimation(Vector2 direction)
     {
-        var length = 0.3;
+        const float length = 0.3f;
 
-        return new()
+        return new Animation
         {
-            Length = TimeSpan.FromSeconds(0.3),
+            Length = TimeSpan.FromSeconds(length),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty()
@@ -217,7 +214,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(direction.Normalized * 0.2f, 0f),
-                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0.3f)
+                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, length)
                     }
                 }
             }

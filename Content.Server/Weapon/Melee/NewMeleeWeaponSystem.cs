@@ -21,7 +21,16 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 
-    public const float DamagePitchVariation = 0.15f;
+    public const float DamagePitchVariation = 0.05f;
+
+    // TODO:
+    // - Sprite lerping -> Check rotated eyes
+    // - Eye kick?
+    // - Arc
+    // - Wide attack
+    // - Better overlay
+    // - Port
+    // - CVars to toggle some stuff
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
     {
@@ -95,6 +104,11 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         {
             RaiseNetworkEvent(new MeleeEffectEvent(targets), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
         }
+    }
+
+    protected override void DoLunge(EntityUid user, Vector2 localPos)
+    {
+        RaiseNetworkEvent(new MeleeLungeEvent(localPos), Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
 
     private void PlayHitSound(EntityUid target, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)
