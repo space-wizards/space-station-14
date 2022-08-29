@@ -80,12 +80,30 @@ public sealed class RadRayResult
 }
 
 [Serializable, NetSerializable]
-public sealed class RadiationGridcastUpdate : EntityEventArgs
+public sealed class OnRadiationViewToggledEvent : EntityEventArgs
 {
-    public List<RadiationRay> Rays;
+    public readonly bool IsEnabled;
 
-    public RadiationGridcastUpdate(List<RadiationRay> rays)
+    public OnRadiationViewToggledEvent(bool isEnabled)
     {
+        IsEnabled = isEnabled;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class OnRadiationViewUpdateEvent : EntityEventArgs
+{
+    public readonly double ElapsedTime;
+    public readonly int TotalSources;
+    public readonly int TotalReceivers;
+    public readonly List<RadiationRay> Rays;
+    public int TotalRaysCount => Rays.Count;
+
+    public OnRadiationViewUpdateEvent(double elapsedTime, int totalSources, int totalReceivers, List<RadiationRay> rays)
+    {
+        ElapsedTime = elapsedTime;
+        TotalSources = totalSources;
+        TotalReceivers = totalReceivers;
         Rays = rays;
     }
 }

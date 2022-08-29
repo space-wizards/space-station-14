@@ -13,7 +13,9 @@ public sealed class RadiationSystem : SharedRadiationSystem
         base.Initialize();
         SubscribeNetworkEvent<RadiationUpdate>(OnUpdate);
         SubscribeNetworkEvent<RadiationRaysUpdate>(OnRayUpdate);
-        SubscribeNetworkEvent<RadiationGridcastUpdate>(OnGridcastUpdate);
+
+        SubscribeNetworkEvent<OnRadiationViewToggledEvent>(OnViewToggled);
+        SubscribeNetworkEvent<OnRadiationViewUpdateEvent>(OnViewUpdate);
     }
 
     private void OnUpdate(RadiationUpdate ev)
@@ -32,11 +34,22 @@ public sealed class RadiationSystem : SharedRadiationSystem
         overlay.Rays = ev.Rays;
     }
 
-    private void OnGridcastUpdate(RadiationGridcastUpdate ev)
+    private void OnViewToggled(OnRadiationViewToggledEvent ev)
+    {
+        if (ev.IsEnabled)
+            _overlayMan.AddOverlay(new RadiationGridcastOverlay());
+        else
+            _overlayMan.RemoveOverlay<RadiationGridcastOverlay>();
+    }
+
+    private void OnViewUpdate(OnRadiationViewUpdateEvent ev)
     {
         if (!_overlayMan.TryGetOverlay(out RadiationGridcastOverlay? overlay) || overlay == null)
             return;
+
+        var str = $"Radiation update: {ev.ElapsedTime}ms with. Receivers: {ev.TotalReceivers}, " +
+                  $"Sources: {ev.TotalSources}, Rays: {ev.TotalRaysCount}";
+        Logger.Info(str);
         overlay.Rays = ev.Rays;
     }
-
 }

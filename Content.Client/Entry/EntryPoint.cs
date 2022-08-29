@@ -191,9 +191,6 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new SingularityOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
-            overlayMgr.AddOverlay(new RadiationViewOverlay());
-            overlayMgr.AddOverlay(new RadiationRayOverlay());
-            overlayMgr.AddOverlay(new RadiationGridcastOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();

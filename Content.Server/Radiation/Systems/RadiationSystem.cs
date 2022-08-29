@@ -1,10 +1,17 @@
-﻿using Content.Server.FloodFill;
+﻿using System.Linq;
+using Content.Server.Administration;
+using Content.Server.FloodFill;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
+using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
@@ -90,13 +97,13 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         }
     }
 
-
     private void UpdateRadSources()
     {
         foreach (var (_, map) in _radiationMap)
         {
             map.Clear();
         }
+
         _spaceMap.Clear();
 
         var stopwatch = new Stopwatch();
@@ -108,6 +115,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
             var cords = Transform(ent).MapPosition;
             CalculateRadiationMap(cords, comp.RadsPerSecond);
         }
+
         Logger.Info($"Generated radiation map {stopwatch.Elapsed.TotalMilliseconds}ms");
 
         RaiseNetworkEvent(new RadiationUpdate(_radiationMap, _spaceMap));
@@ -116,8 +124,6 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
 
     public void CalculateRadiationMap(MapCoordinates epicenter, float radsPerSecond)
     {
-
-
         var ff = _floodFill.DoFloodTile(epicenter,
             radsPerSecond,
             Slope,
@@ -190,8 +196,8 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
                     var invMat = mat.Invert();
                     var pos = invMat * mapCoordinates.Position;
                     var gridPos = new Vector2i(
-                        (int)Math.Floor(pos.X),
-                        (int)Math.Floor(pos.Y));
+                        (int) Math.Floor(pos.X),
+                        (int) Math.Floor(pos.Y));
 
                     if (map.TryGetValue(gridPos, out var r))
                         rads += r;
@@ -204,6 +210,57 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
             var ev = new OnIrradiatedEvent(RadiationCooldown, rads);
             RaiseLocalEvent(receiver.Owner, ev);
         }
+    }
+
+    private readonly HashSet<ICommonSession> _debugSessions = new();
+
+    public void ToggleDebugView(ICommonSession session)
+    {
+        bool isEnabled;
+        if (!_debugSessions.Contains(session))
+        {
+            _debugSessions.Add(session);
+            isEnabled = true;
+        }
+        else
+        {
+            _debugSessions.Remove(session);
+            isEnabled = false;
+        }
+
+        var ev = new OnRadiationViewToggledEvent(isEnabled);
+        RaiseNetworkEvent(ev, session.ConnectedClient);
+    }
+
+    private void UpdateDebugView(OnRadiationViewUpdateEvent ev)
+    {
+        var sessions = _debugSessions.ToArray();
+        foreach (var session in sessions)
+        {
+            if (session.Status != SessionStatus.InGame)
+                _debugSessions.Remove(session);
+            RaiseNetworkEvent(ev, session.ConnectedClient);
+        }
+    }
+}
+
+/// <summary>
+///     Toggle visibility of radiation rays coming from rad sources.
+/// </summary>
+[AdminCommand(AdminFlags.Admin)]
+public sealed class RadiationViewCommand : IConsoleCommand
+{
+    public string Command => "showradiation";
+    public string Description => Loc.GetString("radiation-command-description");
+    public string Help => Loc.GetString("radiation-command-help");
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        var session = shell.Player;
+        if (session == null)
+            return;
+
+        EntitySystem.Get<RadiationSystem>().ToggleDebugView(session);
     }
 }
 

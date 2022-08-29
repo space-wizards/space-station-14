@@ -36,7 +36,8 @@ public partial class RadiationSystem
         var totalSources = sources.Length;
         var totalReceivers = destinations.Length;
 
-        RaiseNetworkEvent(new RadiationGridcastUpdate(rays));
+        var ev = new OnRadiationViewUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
+        UpdateDebugView(ev);
     }
 
     private RadiationRay? Irradiate(TransformComponent sourceTrs, TransformComponent destTrs,
