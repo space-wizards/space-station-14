@@ -129,6 +129,7 @@ public sealed class MarkingSet
             {
                 if (!markingManager.TryGetMarking(marking, out var prototype))
                 {
+                    toRemove.Add((category, marking.MarkingId));
                     continue;
                 }
 
