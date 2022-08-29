@@ -22,7 +22,7 @@ public sealed class SatiateNicotineCraving : ReagentEffect
         if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out SmokerTraitComponent? trait))
             return;
 
-        var smokerTraitSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SmokerTraitSystem>();
+        var smokerTraitSystem = args.EntityManager.System<SmokerTraitSystem>();
         smokerTraitSystem.UpdateCraving(trait, -args.Quantity.Float() * SatiationFactor);
     }
 }
