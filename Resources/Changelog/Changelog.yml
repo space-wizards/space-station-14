@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Syndie gas masks now provide protection from flashbangs, type: Tweak}
-  id: 1695
-  time: '2022-06-15T07:04:53.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added the Rat King. This regal rodent wants your food and will summon
@@ -2940,3 +2935,10 @@ Entries:
     type: Fix}
   id: 2194
   time: '2022-08-28T22:34:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Moving between grids should now be smooth., type: Fix}
+  - {message: Fixed the eye rotation on spawn and also when the shuttle goes FTL.,
+    type: Fix}
+  id: 2195
+  time: '2022-08-29T05:05:53.0000000+00:00'
