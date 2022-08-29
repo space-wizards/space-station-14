@@ -210,6 +210,7 @@ namespace Content.Client.Preferences.UI
             {
                 CSpeciesButton.SelectId(args.Id);
                 SetSpecies(_speciesList[args.Id].ID);
+                UpdateHairPickers();
                 OnSkinColorOnValueChanged();
             };
 
