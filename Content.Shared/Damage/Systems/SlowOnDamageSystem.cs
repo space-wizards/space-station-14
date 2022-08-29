@@ -18,6 +18,9 @@ namespace Content.Shared.Damage
 
         private void OnRefreshMovespeed(EntityUid uid, SlowOnDamageComponent component, RefreshMovementSpeedModifiersEvent args)
         {
+            if (args.Entity != uid)
+                return;
+
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
                 return;
 

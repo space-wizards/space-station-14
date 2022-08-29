@@ -31,6 +31,9 @@ public sealed class CorporealSystem : EntitySystem
 
     private void OnRefresh(EntityUid uid, CorporealComponent component, RefreshMovementSpeedModifiersEvent args)
     {
+        if (args.Entity != uid)
+            return;
+
         args.ModifySpeed(component.MovementSpeedDebuff, component.MovementSpeedDebuff);
     }
     

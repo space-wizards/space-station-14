@@ -43,6 +43,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
+            if (args.Entity != uid)
+                return;
+
             if (_jetpack.IsUserFlying(component.Owner))
                 return;
 

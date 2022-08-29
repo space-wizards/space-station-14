@@ -199,6 +199,9 @@ namespace Content.Server.Dragon
 
         private void OnDragonMove(EntityUid uid, DragonComponent component, RefreshMovementSpeedModifiersEvent args)
         {
+            if (args.Entity != uid)
+                return;
+
             if (component.Weakened)
             {
                 args.ModifySpeed(0.5f, 0.5f);

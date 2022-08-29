@@ -39,7 +39,7 @@ namespace Content.Shared.Movement.Systems
             if (!Resolve(uid, ref move, false))
                 return;
 
-            var ev = new RefreshMovementSpeedModifiersEvent();
+            var ev = new RefreshMovementSpeedModifiersEvent(uid);
             RaiseLocalEvent(uid, ev);
 
             if (MathHelper.CloseTo(ev.WalkSpeedModifier, move.WalkSpeedModifier) &&
@@ -81,8 +81,16 @@ namespace Content.Shared.Movement.Systems
     {
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
+        // TODO make this part of IInventoryRelayEvent
+        public EntityUid Entity { get; private set; }
+
         public float WalkSpeedModifier { get; private set; } = 1.0f;
         public float SprintSpeedModifier { get; private set; } = 1.0f;
+
+        public RefreshMovementSpeedModifiersEvent(EntityUid entity)
+        {
+            Entity = entity;
+        }
 
         public void ModifySpeed(float walk, float sprint)
         {

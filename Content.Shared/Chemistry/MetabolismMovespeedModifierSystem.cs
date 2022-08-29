@@ -46,6 +46,9 @@ namespace Content.Shared.Chemistry
 
         private void OnRefreshMovespeed(EntityUid uid, MovespeedModifierMetabolismComponent component, RefreshMovementSpeedModifiersEvent args)
         {
+            if (args.Entity != uid)
+                return;
+
             args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 

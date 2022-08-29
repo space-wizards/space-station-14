@@ -62,6 +62,9 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, RefreshMovementSpeedModifiersEvent args)
     {
+        if (args.Entity == uid)  // sentient clothing doesn't innately slow itself.
+            return;
+
         if (!component.Enabled)
             return;
 

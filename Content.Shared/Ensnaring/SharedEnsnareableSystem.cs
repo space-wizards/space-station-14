@@ -1,4 +1,4 @@
-﻿using Content.Shared.Ensnaring.Components;
+using Content.Shared.Ensnaring.Components;
 using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Ensnaring;
@@ -49,6 +49,9 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
     private void MovementSpeedModify(EntityUid uid, SharedEnsnareableComponent component, RefreshMovementSpeedModifiersEvent args)
     {
+        if (args.Entity != uid)
+            return;
+
         if (!component.IsEnsnared)
             return;
 

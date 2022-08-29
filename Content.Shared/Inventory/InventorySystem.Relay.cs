@@ -23,6 +23,8 @@ public partial class InventorySystem
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs, IInventoryRelayEvent
     {
+        // TODO check if this inventory belongs to the original target. I.e., they aren't wearing a mouse on their head, which is itself wearing a wee lil hat.
+
         var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this, args.TargetSlots);
         while(containerEnumerator.MoveNext(out var container))
         {
@@ -45,4 +47,6 @@ public interface IInventoryRelayEvent
     ///     "equipped" by the user.
     /// </remarks>
     public SlotFlags TargetSlots { get; }
+
+    //TODO: add Target entity
 }

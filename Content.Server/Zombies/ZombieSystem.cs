@@ -55,6 +55,9 @@ namespace Content.Server.Zombies
 
         private void OnRefreshSpeed(EntityUid uid, ZombieComponent component, RefreshMovementSpeedModifiersEvent args)
         {
+            if (args.Entity != uid)
+                return;
+
             var mod = component.ZombieMovementSpeedDebuff;
             args.ModifySpeed(mod, mod);
         }
