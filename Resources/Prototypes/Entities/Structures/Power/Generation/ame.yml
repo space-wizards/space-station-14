@@ -9,6 +9,7 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
+    snapCardinals: true
     sprite: Structures/Power/Generation/ame.rsi
     state: control
   - type: Physics

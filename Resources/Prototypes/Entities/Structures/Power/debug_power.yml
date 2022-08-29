@@ -94,6 +94,7 @@
     tags:
       - Debug
   - type: Clickable
+  - type: PowerNetworkBattery
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures

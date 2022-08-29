@@ -22,6 +22,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
+    noRot: true
     layers:
     - state: icon
       map: ["enum.PortableScrubberVisualLayers.IsRunning"]

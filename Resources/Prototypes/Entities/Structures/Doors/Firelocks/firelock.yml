@@ -31,6 +31,7 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
+      snapCardinals: true
       layers:
         - state: closed
           map: ["enum.DoorVisualLayers.Base"]
@@ -131,6 +132,7 @@
   components:
     - type: Sprite
       sprite: Structures/Doors/edge_door_hazard.rsi
+      snapCardinals: false
     - type: Airtight
       fixVacuum: true
       airBlocked: false

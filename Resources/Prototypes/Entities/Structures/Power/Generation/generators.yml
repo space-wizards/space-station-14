@@ -32,6 +32,8 @@
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
+    netsync: false
+    snapCardinals: true
   - type: NodeContainer
     examinable: true
     nodes:

@@ -176,7 +176,6 @@ namespace Content.Server.GameTicking
             var gridUids = gridIds.ToList();
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, gridUids, stationName));
 
-            _spawnPoint = _mapManager.GetGrid(gridIds[0]).ToCoordinates();
             return (entities, gridUids);
         }
 

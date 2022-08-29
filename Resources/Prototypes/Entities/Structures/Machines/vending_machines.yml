@@ -15,6 +15,7 @@
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/empty.rsi
     netsync: false
+    snapCardinals: true
   - type: Physics
     bodyType: Static
   - type: Transform
