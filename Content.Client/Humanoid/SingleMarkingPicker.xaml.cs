@@ -149,8 +149,10 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             throw new ArgumentException("Tried to populate marking list without a set species!");
         }
 
+        _markingPrototypeCache ??= _markingManager.MarkingsByCategoryAndSpecies(Category, _species);
+
         MarkingSelectorContainer.Visible = _markings != null && _markings.Count != 0;
-        if (_markings == null || _markings.Count == 0 || _markingPrototypeCache == null)
+        if (_markings == null || _markings.Count == 0)
         {
             return;
         }
@@ -258,6 +260,8 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         }
 
         AddButton.Disabled = PointsLeft == 0;
+        AddButton.HorizontalExpand = Slot < 0;
         RemoveButton.Disabled = PointsUsed == 0;
+        RemoveButton.HorizontalExpand = Slot < 0;
     }
 }

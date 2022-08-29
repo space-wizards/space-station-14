@@ -4,7 +4,7 @@
               VerticalExpand="True">
     <!-- "Slot" selection -->
     <Label Name="CategoryName" />
-    <BoxContainer Name="SlotSelectorContainer" VerticalExpand="True" HorizontalExpand="True">
+    <BoxContainer Name="SlotSelectorContainer" HorizontalExpand="True">
         <OptionButton Name="SlotSelector" HorizontalExpand="True" />
         <Button Name="AddButton" Text="{Loc 'marking-slot-add'}"/>
         <Button Name="RemoveButton" Text="{Loc 'marking-slot-remove'}"/>
