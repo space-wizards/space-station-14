@@ -176,6 +176,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     private void PopulateColors()
     {
         if (_markings == null
+            || _markings.Count == 0
             || !_markingManager.TryGetMarking(_markings[Slot], out var proto))
         {
             return;

@@ -112,7 +112,7 @@ namespace Content.Shared.Humanoid
                 .WithGreen(RandomizeColor(newHairColor.G))
                 .WithBlue(RandomizeColor(newHairColor.B));
 
-            // TODO: Add random eye and skin color
+            // TODO: Add random markings
 
             var newEyeColor = random.Pick(RealisticEyeColors);
 
