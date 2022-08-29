@@ -8,6 +8,8 @@ namespace Content.Shared.Foldable;
 [UsedImplicitly]
 public abstract class SharedFoldableSystem : EntitySystem
 {
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -47,9 +49,7 @@ public abstract class SharedFoldableSystem : EntitySystem
     {
         component.IsFolded = folded;
         Dirty(component);
-
-        if (TryComp(component.Owner, out AppearanceComponent? appearance))
-            appearance.SetData(FoldedVisuals.State, folded);
+        Appearance.SetData(component.Owner, FoldedVisuals.State, folded);
     }
 
     private void OnInsertEvent(EntityUid uid, FoldableComponent component, ContainerGettingInsertedAttemptEvent args)

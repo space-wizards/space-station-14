@@ -129,7 +129,6 @@ public sealed class PrototypeSaveTest
         "UniformPrinter",
         "OreProcessor",
         "MedicalScanner",
-        "KitchenMicrowave",
         "MagazinePistolSubMachineGunTopMounted",
         "Recycler",
         "EpinephrineChemistryBottle",
@@ -235,7 +234,7 @@ public sealed class PrototypeSaveTest
                 {
                     uid = entityMan.SpawnEntity(prototype.ID, testLocation);
                     server.RunTicks(1);
-                    
+
                     // get default prototype data
                     Dictionary<string, MappingDataNode> protoData = new();
                     try

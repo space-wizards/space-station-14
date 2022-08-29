@@ -110,7 +110,7 @@ public abstract partial class SharedGunSystem
         }
         else
         {
-            appearance?.SetData(AmmoVisuals.MagLoaded, false);
+            Appearance.SetData(uid, AmmoVisuals.MagLoaded, false, appearance);
             return;
         }
 
