@@ -37,6 +37,29 @@ namespace Content.Client.Humanoid
         private string _currentSpecies = SharedHumanoidSystem.DefaultSpecies;
         public Color CurrentSkinColor = Color.White;
 
+        private readonly HashSet<MarkingCategories> _ignoreCategories = new();
+
+        public string IgnoreCategories
+        {
+            get => string.Join(',',  _ignoreCategories);
+            set
+            {
+                _ignoreCategories.Clear();
+                var split = value.Split(',');
+                foreach (var category in split)
+                {
+                    if (!Enum.TryParse(category, out MarkingCategories categoryParse))
+                    {
+                        continue;
+                    }
+
+                    _ignoreCategories.Add(categoryParse);
+                }
+
+                Populate();
+            }
+        }
+
         public void SetData(List<Marking> newMarkings, string species, Color skinColor)
         {
             var pointsProto = _prototypeManager
@@ -57,11 +80,6 @@ namespace Content.Client.Humanoid
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            for (int i = 0; i < _markingCategories.Count; i++)
-            {
-                CMarkingCategoryButton.AddItem(Loc.GetString($"markings-category-{_markingCategories[i].ToString()}"), i);
-            }
-            CMarkingCategoryButton.SelectId(_markingCategories.IndexOf(MarkingCategories.Chest));
             CMarkingCategoryButton.OnItemSelected +=  OnCategoryChange;
             CMarkingsUnused.OnItemSelected += item =>
                _selectedUnusedMarking = CMarkingsUnused[item.ItemIndex];
@@ -101,6 +119,17 @@ namespace Content.Client.Humanoid
 
         public void Populate()
         {
+            for (var i = 0; i < _markingCategories.Count; i++)
+            {
+                if (_ignoreCategories.Contains(_markingCategories[i]))
+                {
+                    continue;
+                }
+
+                CMarkingCategoryButton.AddItem(Loc.GetString($"markings-category-{_markingCategories[i].ToString()}"), i);
+            }
+            CMarkingCategoryButton.SelectId(_markingCategories.IndexOf(_selectedMarkingCategory));
+
             CMarkingsUnused.Clear();
             _selectedUnusedMarking = null;
 
