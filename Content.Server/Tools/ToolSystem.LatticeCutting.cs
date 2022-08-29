@@ -31,8 +31,8 @@ public sealed partial class ToolSystem
         var tile = grid.GetTileRef(args.Coordinates);
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
+            || !tileDef.CanWirecutter
             || tileDef.BaseTurfs.Count == 0
-            || _tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef
             || tile.IsBlockedTurf(true))
             return;
 
