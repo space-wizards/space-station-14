@@ -283,6 +283,7 @@ namespace Content.Client.Preferences.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairStyleName(HairStyles.DefaultHairStyle)
                 );
+                UpdateHairPickers();
                 IsDirty = true;
             };
 
@@ -293,6 +294,7 @@ namespace Content.Client.Preferences.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairStyleName(HairStyles.DefaultFacialHairStyle)
                 );
+                UpdateHairPickers();
                 IsDirty = true;
             };
 
@@ -311,6 +313,8 @@ namespace Content.Client.Preferences.UI
                     Profile.Appearance.WithHairStyleName(hair)
                 );
 
+                UpdateHairPickers();
+
                 IsDirty = true;
             };
 
@@ -328,6 +332,8 @@ namespace Content.Client.Preferences.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairStyleName(hair)
                 );
+
+                UpdateHairPickers();
 
                 IsDirty = true;
             };

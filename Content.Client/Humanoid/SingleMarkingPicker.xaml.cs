@@ -244,6 +244,8 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         SlotSelector.Visible = Slot >= 0;
         AddButton.HorizontalExpand = Slot < 0;
         RemoveButton.HorizontalExpand = Slot < 0;
+        AddButton.Disabled = PointsLeft == 0;
+        RemoveButton.Disabled = PointsUsed == 0;
         SlotSelector.Clear();
 
         if (Slot < 0)
@@ -260,8 +262,5 @@ public sealed partial class SingleMarkingPicker : BoxContainer
                 SlotSelector.SelectId(i);
             }
         }
-
-        AddButton.Disabled = PointsLeft == 0;
-        RemoveButton.Disabled = PointsUsed == 0;
     }
 }
