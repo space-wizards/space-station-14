@@ -9,8 +9,8 @@ namespace Content.Server.Movement;
 public sealed class RotateEyesCommand : IConsoleCommand
 {
     public string Command => "rotateeyes";
-    public string Description => $"Rotates every player's current eye to the specified rotation";
-    public string Help => $"{Command} <degrees (default 0)>.";
+    public string Description => Loc.GetString("rotateeyes-command-description");
+    public string Help => Loc.GetString("rotateeyes-command-help");
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var entManager = IoCManager.Resolve<IEntityManager>();
@@ -20,7 +20,7 @@ public sealed class RotateEyesCommand : IConsoleCommand
         {
             if (!float.TryParse(args[0], out var degrees))
             {
-                shell.WriteError($"Unable to parse {args[0]}");
+                shell.WriteError(Loc.GetString("parse-float-fail", ("arg", args[0])));
                 return;
             }
 
@@ -39,6 +39,6 @@ public sealed class RotateEyesCommand : IConsoleCommand
             count++;
         }
 
-        shell.WriteLine($"Set {count} eye rotations.");
+        shell.WriteLine(Loc.GetString("rotateeyes-command-count", ("count", count)));
     }
 }

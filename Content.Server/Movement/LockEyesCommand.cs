@@ -9,8 +9,8 @@ namespace Content.Server.Movement;
 public sealed class LockEyesCommand : IConsoleCommand
 {
     public string Command => $"lockeyes";
-    public string Description => "Prevents eyes from being rotated any further";
-    public string Help => $"{Command} <true/false>";
+    public string Description => Loc.GetString("lockeyes-command-description");
+    public string Help => Loc.GetString("lockeyes-command-help");
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -21,7 +21,7 @@ public sealed class LockEyesCommand : IConsoleCommand
 
         if (!bool.TryParse(args[0], out var value))
         {
-            shell.WriteError($"Unable to parse {args[0]} as a bool");
+            shell.WriteError(Loc.GetString("parse-bool-fail", ("args", args[0])));
             return;
         }
 
