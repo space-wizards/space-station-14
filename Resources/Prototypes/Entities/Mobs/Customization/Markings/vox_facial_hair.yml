@@ -2,6 +2,7 @@
   id: VoxFacialHairColonel
   bodyPart: FacialHair
   markingCategory: FacialHair
+  speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: vox_colonel_s
@@ -9,6 +10,7 @@
   id: VoxFacialHairFu
   bodyPart: FacialHair
   markingCategory: FacialHair
+  speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: vox_fu_s
@@ -16,6 +18,7 @@
   id: VoxFacialHairNeck
   bodyPart: FacialHair
   markingCategory: FacialHair
+  speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: vox_neck_s
@@ -23,6 +26,7 @@
   id: VoxFacialHairBeard
   bodyPart: FacialHair
   markingCategory: FacialHair
+  speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: vox_beard_s
@@ -30,6 +34,7 @@
   id: VoxFacialHairRuffBeard
   bodyPart: FacialHair
   markingCategory: FacialHair
+  speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: vox_ruff_beard_s

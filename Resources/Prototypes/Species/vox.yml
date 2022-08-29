@@ -27,6 +27,7 @@
 
 - type: markingPoints
   id: MobVoxMarkingLimits
+  onlyWhitelisted: true
   points:
     Hair:
       points: 1
