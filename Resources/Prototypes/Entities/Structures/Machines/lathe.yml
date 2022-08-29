@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
+    snapCardinals: true
     netsync: false
     layers:
     - state: icon
@@ -90,6 +91,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    snapCardinals: true
     netsync: false
     layers:
     - state: icon
@@ -458,6 +460,7 @@
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false
+    snapCardinals: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]

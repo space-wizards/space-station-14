@@ -17,7 +17,7 @@ namespace Content.Shared.Movement.Systems
     /// </summary>
     public abstract partial class SharedMoverController
     {
-        public bool CameraRotationLocked { get; private set; }
+        public bool CameraRotationLocked { get; set; }
 
         private void InitializeInput()
         {
