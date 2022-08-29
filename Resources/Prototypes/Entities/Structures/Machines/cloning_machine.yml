@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: CloningPod
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: cloning pod
   description: A Cloning Pod. 50% reliable.
   components:
@@ -11,6 +11,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/cloning.rsi
+    snapCardinals: true
     layers:
       - state: pod_0
   - type: Physics
@@ -25,9 +26,6 @@
       - MachineMask
       layer:
       - MachineLayer
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:

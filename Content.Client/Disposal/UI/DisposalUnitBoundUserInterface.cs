@@ -20,7 +20,7 @@ namespace Content.Client.Disposal.UI
         public MailingUnitWindow? MailingUnitWindow;
         public DisposalUnitWindow? DisposalUnitWindow;
 
-        public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

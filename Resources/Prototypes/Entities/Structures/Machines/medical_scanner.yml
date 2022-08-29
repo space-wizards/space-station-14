@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: MedicalScanner
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: medical scanner
   description: A bulky medical scanner.
   components:
@@ -11,6 +11,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/scanner.rsi
+    snapCardinals: true
     layers:
     - state: open
       map: ["enum.MedicalScannerVisualLayers.Machine"]
@@ -28,9 +29,6 @@
       - MachineMask
       layer:
       - MachineLayer
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:

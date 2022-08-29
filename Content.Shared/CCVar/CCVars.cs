@@ -231,6 +231,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> PanicBunkerMinAccountAge =
             CVarDef.Create("game.panic_bunker.min_account_age", 1440, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Make people bonk when trying to climb certain objects like tables.
+        /// </summary>
+        public static readonly CVarDef<bool> GameTableBonk =
+            CVarDef.Create("game.table_bonk", false, CVar.SERVERONLY);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.
@@ -901,6 +907,16 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
+
+        // Look this is technically eye behavior but its main impact is shuttles so I just dumped it here.
+        /// <summary>
+        /// If true then the camera will match the grid / map and is unchangeable.
+        /// - When traversing grids it will snap to 0 degrees rotation.
+        /// False means the player has control over the camera rotation.
+        /// - When traversing grids it will snap to the nearest cardinal which will generally be imperceptible.
+        /// </summary>
+        public static readonly CVarDef<bool> CameraRotationLocked =
+            CVarDef.Create("shuttle.camera_rotation_locked", false, CVar.REPLICATED);
 
         /// <summary>
         /// Whether cargo shuttles are enabled.
