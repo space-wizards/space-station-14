@@ -150,16 +150,14 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         }
 
         MarkingSelectorContainer.Visible = _markings != null && _markings.Count != 0;
-        if (_markings == null || _markings.Count == 0)
+        if (_markings == null || _markings.Count == 0 || _markingPrototypeCache == null)
         {
             return;
         }
 
         MarkingList.Clear();
 
-        var dict = _markingManager.MarkingsByCategoryAndSpecies(Category, _species);
-
-        foreach (var (id, marking) in dict)
+        foreach (var (id, marking) in _markingPrototypeCache)
         {
             var item = MarkingList.AddItem(id, marking.Sprites[0].Frame0());
             item.Metadata = marking.ID;
@@ -224,7 +222,14 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             throw new ArgumentException("Attempted to select non-existent marking.");
         }
 
-        _markings![Slot] = proto.AsMarking();
+        var oldMarking = _markings![Slot];
+        _markings[Slot] = proto.AsMarking();
+
+        for (var i = 0; i < _markings[Slot].MarkingColors.Count && i < oldMarking.MarkingColors.Count; i++)
+        {
+            _markings[Slot].SetColor(i, oldMarking.MarkingColors[i]);
+        }
+
         PopulateColors();
 
         OnMarkingSelect!((_slot, id));
