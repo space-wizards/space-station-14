@@ -1,6 +1,5 @@
 using Content.Client.Viewport;
 using Content.Shared.CombatMode;
-using Content.Shared.Weapon.Melee;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -8,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
+using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -24,8 +24,12 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
-    private const string MeleeAnimationKey = "melee-effect";
+    private const string MeleeLungeKey = "melee-lunge";
+    private const string MeleeEffectKey = "melee-effect";
 
+    /// <summary>
+    /// Plays the red effect whenever the server confirms something is hit
+    /// </summary>
     private static readonly Animation MeleeEffectAnimation = new()
     {
         Length = TimeSpan.FromSeconds(0.3),
@@ -58,8 +62,8 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
             if (Deleted(ent))
                 continue;
 
-            _animation.Stop(ent, MeleeAnimationKey);
-            _animation.Play(ent, MeleeEffectAnimation, MeleeAnimationKey);
+            _animation.Stop(ent, MeleeEffectKey);
+            _animation.Play(ent, MeleeEffectAnimation, MeleeEffectKey);
         }
     }
 
@@ -167,5 +171,56 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
             return;
 
         PopupSystem.PopupEntity(message, uid.Value, Filter.Local());
+    }
+
+    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, NewMeleeWeaponComponent component)
+    {
+        base.DoPreciseAttack(user, ev, component);
+
+        if (TryComp<TransformComponent>(ev.Target, out var targetXform) &&
+            TryComp<TransformComponent>(user, out var userXform))
+        {
+            var invMatrix = userXform.InvWorldMatrix;
+            var targetPos = targetXform.WorldPosition;
+            var localPos = invMatrix.Transform(targetPos);
+
+            if (localPos.LengthSquared > 0f)
+            {
+                localPos = userXform.LocalRotation.RotateVec(localPos);
+                var animation = GetLungeAnimation(localPos);
+
+                _animation.Stop(user, MeleeLungeKey);
+                _animation.Play(user, animation, MeleeLungeKey);
+            }
+        }
+    }
+
+    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, NewMeleeWeaponComponent component)
+    {
+        base.DoWideAttack(user, ev, component);
+    }
+
+    private Animation GetLungeAnimation(Vector2 direction)
+    {
+        var length = 0.3;
+
+        return new()
+        {
+            Length = TimeSpan.FromSeconds(0.3),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Offset),
+                    InterpolationMode = AnimationInterpolationMode.Cubic,
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(direction.Normalized * 0.2f, 0f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0.3f)
+                    }
+                }
+            }
+        };
     }
 }

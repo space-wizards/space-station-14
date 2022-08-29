@@ -2,10 +2,10 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Systems;
 using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -18,6 +18,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public const float DamagePitchVariation = 0.15f;

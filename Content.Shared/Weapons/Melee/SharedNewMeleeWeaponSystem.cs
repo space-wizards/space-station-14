@@ -21,9 +21,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
-    [Dependency] protected readonly SharedInteractionSystem _interaction = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected readonly TagSystem TagSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -234,11 +232,6 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         return gun;
     }
 
-    private void PlaySound(EntityUid uid, ICommonSession session)
-    {
-
-    }
-
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
@@ -265,7 +258,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
                 DoPreciseAttack(user, precise, weapon);
                 break;
             case ReleaseWideAttackEvent wide:
-                // TODO: Show swing on shared
+                DoWideAttack(user, wide, weapon);
                 break;
             default:
                 throw new NotImplementedException();
@@ -279,6 +272,11 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     }
 
     protected virtual void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, NewMeleeWeaponComponent component)
+    {
+
+    }
+
+    protected virtual void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, NewMeleeWeaponComponent component)
     {
 
     }
