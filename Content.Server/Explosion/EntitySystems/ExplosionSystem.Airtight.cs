@@ -158,7 +158,9 @@ public sealed partial class ExplosionSystem : EntitySystem
                 damagePerIntensity += value * Math.Max(0, ev.DamageCoefficient);
             }
 
-            explosionTolerance[index] = (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity);
+            explosionTolerance[index] = damagePerIntensity > 0
+                ? (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity)
+                : float.MaxValue;
         }
 
         return explosionTolerance;
