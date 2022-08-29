@@ -8,7 +8,6 @@ namespace Content.Server.Traits;
 public sealed class TraitSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
     public override void Initialize()
@@ -34,7 +33,7 @@ public sealed class TraitSystem : EntitySystem
             {
                 var comp = (Component) _serializationManager.Copy(entry.Component);
                 comp.Owner = args.Mob;
-                _entityManager.AddComponent(args.Mob, comp);
+                EntityManager.AddComponent(args.Mob, comp);
             }
         }
     }
