@@ -147,12 +147,15 @@ namespace Content.Shared.Movement.Systems
             // If we go on a grid and back off then just reset the accumulator.
             if (relative == component.RelativeEntity)
             {
-                component.LerpAccumulator = 0f;
-                Dirty(component);
+                if (component.LerpAccumulator != 0f)
+                {
+                    component.LerpAccumulator = 0f;
+                    Dirty(component);
+                }
+
                 return;
             }
 
-            // TODO: Lerp to the specific angle.
             component.LerpAccumulator = InputMoverComponent.LerpTime;
             Dirty(component);
         }
@@ -470,8 +473,15 @@ namespace Content.Shared.Movement.Systems
         {
             public MoveButtons Buttons { get; }
             public readonly bool CanMove;
-            // TODO: Comments ya wanker
+
+            /// <summary>
+            /// Our current rotation for movement purposes. This is lerping towards <see cref="TargetRelativeRotation"/>
+            /// </summary>
             public Angle RelativeRotation;
+
+            /// <summary>
+            /// Target rotation relative to the <see cref="RelativeEntity"/>. Typically 0
+            /// </summary>
             public Angle TargetRelativeRotation;
             public EntityUid? RelativeEntity;
             public float LerpAccumulator = 0f;
@@ -489,8 +499,8 @@ namespace Content.Shared.Movement.Systems
 
         private sealed class ShuttleInputCmdHandler : InputCmdHandler
         {
-            private SharedMoverController _controller;
-            private ShuttleButtons _button;
+            private readonly SharedMoverController _controller;
+            private readonly ShuttleButtons _button;
 
             public ShuttleInputCmdHandler(SharedMoverController controller, ShuttleButtons button)
             {
