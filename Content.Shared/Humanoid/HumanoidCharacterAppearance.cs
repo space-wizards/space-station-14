@@ -171,7 +171,7 @@ namespace Content.Shared.Humanoid
 
             if (!markingManager.MarkingsByCategory(MarkingCategories.FacialHair).ContainsKey(facialHairStyleId))
             {
-                hairStyleId = HairStyles.DefaultFacialHairStyle;
+                facialHairStyleId = HairStyles.DefaultFacialHairStyle;
             }
 
             var markingSet = new MarkingSet();
