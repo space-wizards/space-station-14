@@ -2,6 +2,7 @@ using Content.Client.Viewport;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapon.Melee;
 using Content.Shared.Weapons.Melee;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -20,12 +21,46 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
+
+    private const string MeleeAnimationKey = "melee-effect";
+
+    private static readonly Animation MeleeEffectAnimation = new()
+    {
+        Length = TimeSpan.FromSeconds(0.3),
+        AnimationTracks =
+        {
+            new AnimationTrackComponentProperty()
+            {
+                ComponentType = typeof(SpriteComponent),
+                Property = nameof(SpriteComponent.Color),
+                KeyFrames =
+                {
+                    new AnimationTrackProperty.KeyFrame(Color.Red, 0f),
+                    new AnimationTrackProperty.KeyFrame(Color.White, 0.3f)
+                }
+            }
+        }
+    };
 
     public override void Initialize()
     {
         base.Initialize();
         _overlayManager.AddOverlay(new MeleeWindupOverlay());
+        SubscribeNetworkEvent<MeleeEffectEvent>(OnMeleeEffect);
+    }
+
+    private void OnMeleeEffect(MeleeEffectEvent msg)
+    {
+        foreach (var ent in msg.HitEntities)
+        {
+            if (Deleted(ent))
+                continue;
+
+            _animation.Stop(ent, MeleeAnimationKey);
+            _animation.Play(ent, MeleeEffectAnimation, MeleeAnimationKey);
+        }
     }
 
     public override void Shutdown()

@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Damage.Systems;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Administration.Logs;
@@ -14,9 +15,9 @@ namespace Content.Server.Weapon.Melee;
 
 public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedAdminLogSystem _adminLogger = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public const float DamagePitchVariation = 0.15f;
@@ -33,8 +34,10 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     {
         base.DoPreciseAttack(user, ev, component);
 
+        // Can't attack yourself
         // Not in LOS.
-        if (Deleted(ev.Target) ||
+        if (user == ev.Target ||
+            Deleted(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
             !_interaction.InRangeUnobstructed(user, ev.Target))
         {
@@ -48,8 +51,10 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         if (hitEvent.Handled)
             return;
 
-        var targets = new[] { ev.Target };
-        // SendAnimation(comp.ClickArc, angle, user, owner, targets, comp.ClickAttackEffect, false);
+        var targets = new List<EntityUid>(1)
+        {
+            ev.Target
+        };
 
         RaiseLocalEvent(ev.Target, new AttackedEvent(component.Owner, user, targetXform.Coordinates), true);
 
@@ -83,6 +88,11 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
             {
                 Audio.PlayPvs(component.NoDamageSound, component.Owner);
             }
+        }
+
+        if (damageResult != null)
+        {
+            RaiseNetworkEvent(new MeleeEffectEvent(targets), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
         }
     }
 
