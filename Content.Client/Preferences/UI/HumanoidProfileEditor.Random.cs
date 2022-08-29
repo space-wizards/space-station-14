@@ -16,14 +16,8 @@ namespace Content.Client.Preferences.UI
         private void RandomizeEverything()
         {
             Profile = HumanoidCharacterProfile.Random();
-            UpdateSexControls();
-            UpdateGenderControls();
-            UpdateClothingControls();
-            UpdateAgeEdit();
-            UpdateNameEdit();
-            UpdateHairPickers();
-            UpdateEyePickers();
-            UpdateSkinColor();
+            UpdateControls();
+            IsDirty = true;
         }
 
         private void RandomizeName()
