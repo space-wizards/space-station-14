@@ -19,7 +19,6 @@ public partial class RadiationSystem
 
         var sources = EntityQuery<RadiationSourceComponent, TransformComponent>().ToArray();
         var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>().ToArray();
-
         var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
 
         var rays = new List<RadiationRay>();
@@ -64,7 +63,7 @@ public partial class RadiationSystem
         // however we can do simplification and ignore that case
         if (SimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
-            return Gridcast(sourceTrs.GridUid.Value, sourceWorldPos, destWorldPos, rads);
+            return Gridcast(mapId, sourceTrs.GridUid.Value, sourceWorldPos, destWorldPos, rads);
         }
 
         // lets check how many grids are between source and destination
@@ -87,7 +86,7 @@ public partial class RadiationSystem
         else if (gridsCount == 1)
         {
             // one grid found - use it for gridcast
-            return Gridcast(grids[0].GridEntityId, sourceWorldPos, destWorldPos, rads);
+            return Gridcast(mapId, grids[0].GridEntityId, sourceWorldPos, destWorldPos, rads);
         }
         else
         {
@@ -96,12 +95,13 @@ public partial class RadiationSystem
         }
     }
 
-    private RadiationRay Gridcast(EntityUid gridUid, Vector2 sourceWorld, Vector2 destWorld,
-        float incomingRads)
+    private RadiationRay Gridcast(MapId mapId, EntityUid gridUid,
+        Vector2 sourceWorld, Vector2 destWorld, float incomingRads)
     {
         var visitedTiles = new List<(Vector2i, float?)>();
         var radRay = new RadiationRay
         {
+            MapId = mapId,
             Source = sourceWorld,
             Destination = destWorld,
             Rads = incomingRads,
@@ -144,6 +144,7 @@ public partial class RadiationSystem
         var blockers = new List<(Vector2, float)>();
         var radRay = new RadiationRay
         {
+            MapId = mapId,
             Source = sourceWorld,
             Destination = sourceWorld + dir * distance,
             Rads = incomingRads,

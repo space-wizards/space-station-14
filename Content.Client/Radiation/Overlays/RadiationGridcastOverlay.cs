@@ -47,6 +47,9 @@ public sealed class RadiationGridcastOverlay : Overlay
         var handle = args.ScreenHandle;
         foreach (var ray in Rays)
         {
+            if (ray.MapId != args.MapId)
+                continue;
+
             if (ray.ReachedDestination)
             {
                 var screenCenter = _eyeManager.WorldToScreen(ray.Destination);
@@ -84,6 +87,9 @@ public sealed class RadiationGridcastOverlay : Overlay
         // draw lines for raycasts
         foreach (var ray in Rays)
         {
+            if (ray.MapId != args.MapId)
+                continue;
+
             if (!ray.IsGridcast)
             {
                 handle.DrawLine(ray.Source, ray.LastPos, Color.Red);

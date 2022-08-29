@@ -93,6 +93,7 @@ public sealed class RadiationGridcastUpdate : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class RadiationRay
 {
+    public MapId MapId;
     public Vector2 Source;
     public Vector2 Destination;
     public float Rads;
