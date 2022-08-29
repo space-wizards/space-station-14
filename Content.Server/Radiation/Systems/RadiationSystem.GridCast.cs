@@ -112,6 +112,7 @@ public partial class RadiationSystem
         if (!_resistancePerTile.TryGetValue(gridUid, out var resistanceMap))
             return radRay;
 
+        // todo: entity queries doesn't support interface - use it when IMapGridComponent will be removed
         if (!TryComp(gridUid, out IMapGridComponent? grid))
             return radRay;
         var sourceGridPos = grid.Grid.TileIndicesFor(sourceWorld);
@@ -172,46 +173,34 @@ public partial class RadiationSystem
     }
 
 
+    // bresenhams line algorithm
+    // this is slightly rewritten version of code bellow
     // https://stackoverflow.com/questions/11678693/all-cases-covered-bresenhams-line-algorithm
-    // need to rewrite to make any sense
     private IEnumerable<Vector2i> Line(int x, int y, int x2, int y2)
     {
         var w = x2 - x;
         var h = y2 - y;
-        int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
-        if (w < 0)
-            dx1 = -1;
-        else if (w > 0)
-            dx1 = 1;
-        if (h < 0)
-            dy1 = -1;
-        else if (h > 0)
-            dy1 = 1;
-        if (w < 0)
-            dx2 = -1;
-        else if (w > 0)
-            dx2 = 1;
 
+        var dx1 = Math.Sign(w);
+        var dy1 = Math.Sign(h);
+        var dx2 = Math.Sign(w);
+        var dy2 = 0;
 
         var longest = Math.Abs(w);
         var shortest = Math.Abs(h);
-        if (!(longest > shortest))
+        if (longest <= shortest)
         {
-            longest = Math.Abs(h);
-            shortest = Math.Abs(w);
-            if (h < 0)
-                dy2 = -1;
-            else if (h > 0)
-                dy2 = 1;
+            (longest, shortest) = (shortest, longest);
             dx2 = 0;
+            dy2 = Math.Sign(h);
         }
 
-        var numerator = longest >> 1;
+        var numerator = longest / 2;
         for (var i = 0; i <= longest; i++)
         {
             yield return new Vector2i(x, y);
             numerator += shortest;
-            if (!(numerator < longest))
+            if (numerator >= longest)
             {
                 numerator -= longest;
                 x += dx1;
