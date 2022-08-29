@@ -119,6 +119,7 @@ namespace Content.Client.Humanoid
 
         public void Populate()
         {
+            CMarkingCategoryButton.Clear();
             for (var i = 0; i < _markingCategories.Count; i++)
             {
                 if (_ignoreCategories.Contains(_markingCategories[i]))
