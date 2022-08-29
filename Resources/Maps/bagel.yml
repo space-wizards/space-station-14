@@ -38450,10 +38450,6 @@ entities:
   - pos: -63.5,-11.5
     parent: 60
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2049
   type: BodyBag_Container
   components:
@@ -42656,10 +42652,6 @@ entities:
   - pos: 25.5,-30.5
     parent: 60
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2609
   type: Table
   components:
@@ -42684,10 +42676,6 @@ entities:
   - pos: 25.5,-34.5
     parent: 60
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2613
   type: KitchenReagentGrinder
   components:
@@ -83863,10 +83851,6 @@ entities:
   - pos: -34.5,2.5
     parent: 60
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8381
   type: ShuttersNormalOpen
   components:
@@ -114937,10 +114921,6 @@ entities:
   - pos: 51.5,18.5
     parent: 60
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 13215
   type: Table
   components:
@@ -132555,10 +132535,6 @@ entities:
   - pos: 6.5,21.5
     parent: 60
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 15714
   type: FoodBoxDonkpocketPizza
   components:

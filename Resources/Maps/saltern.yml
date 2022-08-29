@@ -16462,10 +16462,6 @@ entities:
     pos: -14.5,-1.5
     parent: 852
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 894
   type: Table
   components:
@@ -40865,10 +40861,6 @@ entities:
   - pos: -7.5,-28.5
     parent: 852
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4222
   type: GasPipeStraight
   components:

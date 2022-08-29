@@ -69,7 +69,13 @@ namespace Content.IntegrationTests.Tests
                 task = Task.Run(static async () =>
                 {
                     await Task.Yield();
-                    await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{Disconnected = true});
+                    await using var pairTracker = await PoolManager.GetServerClient(
+                        new PoolSettings
+                        {
+                            Disconnected = true,
+                            TestName = $"{nameof(PostMapInitTest)}.{nameof(GetMapNames)}"
+                        }
+                    );
                     var server = pairTracker.Pair.Server;
                     var resourceManager = server.ResolveDependency<IResourceManager>();
                     var mapFolder = new ResourcePath("/Maps");

@@ -25906,20 +25906,12 @@ entities:
   - pos: -14.5,11.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 484
   type: KitchenMicrowave
   components:
   - pos: -15.5,11.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 485
   type: KitchenReagentGrinder
   components:
@@ -73172,10 +73164,6 @@ entities:
   - pos: -38.5,-4.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7300
   type: DrinkMug
   components:
@@ -86671,10 +86659,6 @@ entities:
   - pos: 1.5,-28.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9177
   type: DonkpocketBoxSpawner
   components:
@@ -95175,10 +95159,6 @@ entities:
   - pos: -49.5,63.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 10414
   type: WheatSeeds
   components:
@@ -158332,10 +158312,6 @@ entities:
   - pos: -79.5,-55.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 19539
   type: KitchenReagentGrinder
   components:
@@ -168811,10 +168787,6 @@ entities:
   - pos: -58.5,52.5
     parent: 30
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 21156
   type: StoolBar
   components:

@@ -22360,10 +22360,6 @@ entities:
   - pos: 17.5,10.5
     parent: 130
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 371
   type: KitchenSpike
   components:
@@ -24299,10 +24295,6 @@ entities:
   - pos: -29.5,30.5
     parent: 130
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 661
   type: Table
   components:
@@ -35166,10 +35158,6 @@ entities:
   - pos: 45.5,24.5
     parent: 130
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2239
   type: WallSolid
   components:
@@ -35668,10 +35656,6 @@ entities:
   - pos: 18.5,-17.5
     parent: 130
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2308
   type: Chair
   components:
@@ -83871,10 +83855,6 @@ entities:
   - pos: 16.5,10.5
     parent: 130
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8747
   type: WallReinforced
   components:
@@ -120415,10 +120395,6 @@ entities:
   - pos: -69.5,-13.5
     parent: 130
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 13576
   type: DonkpocketBoxSpawner
   components:
@@ -151260,10 +151236,6 @@ entities:
   - pos: 33.5,-17.5
     parent: 130
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 17915
   type: Table
   components:
