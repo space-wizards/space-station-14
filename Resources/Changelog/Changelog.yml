@@ -1,9 +1,4 @@
 Entries:
-- author: Delete
-  changes:
-  - {message: Fireplaces provide useful light, type: Add}
-  id: 1697
-  time: '2022-06-16T01:02:51.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'You can no longer break pulls on cuffed people if someone else is pulling.
@@ -2941,3 +2936,8 @@ Entries:
   - {message: 'magboots, galoshes and flippers no longer butcherable', type: Tweak}
   id: 2196
   time: '2022-08-29T17:59:17.0000000+00:00'
+- author: LordEclipse
+  changes:
+  - {message: Medical Intern PDA's now have Health Analyzers built into them., type: Tweak}
+  id: 2197
+  time: '2022-08-29T23:32:20.0000000+00:00'
