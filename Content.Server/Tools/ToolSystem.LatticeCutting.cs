@@ -1,5 +1,7 @@
 ﻿using System.Threading;
+using Content.Server.Atmos.Components;
 using Content.Server.Tools.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
@@ -31,7 +33,6 @@ public sealed partial class ToolSystem
             return;
         var grid = _mapManager.GetGrid(gridUid.Value);
         var tile = grid.GetTileRef(args.Coordinates);
-        var snapPos = grid.TileIndicesFor(args.Coordinates);
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || tileDef.BaseTurfs.Count == 0
@@ -39,7 +40,7 @@ public sealed partial class ToolSystem
             || tile.IsBlockedTurf(true))
             return;
 
-        grid.SetTile(snapPos, new Tile(newDef.TileId));
+        tile.CutTile(_mapManager, _tileDefinitionManager, EntityManager);
     }
 
     private void OnLatticeCuttingAfterInteract(EntityUid uid, LatticeCuttingComponent component,
@@ -72,12 +73,10 @@ public sealed partial class ToolSystem
             return false;
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
+            || !tileDef.CanWirecutter
             || tileDef.BaseTurfs.Count == 0
             || _tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef
             || tile.IsBlockedTurf(true))
-            return false;
-
-        if (tileDef.ID != "Plating" && tileDef.ID != "Lattice")
             return false;
 
         var tokenSource = new CancellationTokenSource();
