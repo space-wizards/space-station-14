@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Monitor;
 
 [Serializable, NetSerializable]
-public enum AtmosMonitorAlarmType : sbyte
+public enum AtmosAlarmType : sbyte
 {
     Normal = 0,
     Warning = 1,

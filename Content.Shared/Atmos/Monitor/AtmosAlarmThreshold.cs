@@ -9,11 +9,11 @@ namespace Content.Shared.Atmos.Monitor;
 [Serializable, NetSerializable]
 public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
 {
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
     [ViewVariables]
     [DataField("ignore")]
-    public bool Ignore = false;
+    public bool Ignore;
 
     // zero bounds are not allowed - just
     // set the bound to null if you want
@@ -41,19 +41,14 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
     public float? LowerWarningPercentage { get; private set; }
 
     [ViewVariables]
-    public float? UpperWarningBound
-    {
-        get => CalculateWarningBound(AtmosMonitorThresholdBound.Upper);
-    }
+    public float? UpperWarningBound => CalculateWarningBound(AtmosMonitorThresholdBound.Upper);
 
     [ViewVariables]
-    public float? LowerWarningBound
-    {
-        get => CalculateWarningBound(AtmosMonitorThresholdBound.Lower);
-    }
+    public float? LowerWarningBound => CalculateWarningBound(AtmosMonitorThresholdBound.Lower);
 
     public AtmosAlarmThreshold()
-    {}
+    {
+    }
 
     public AtmosAlarmThreshold(AtmosAlarmThreshold other)
     {
@@ -80,19 +75,22 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
     }
 
     // utility function to check a threshold against some calculated value
-    public bool CheckThreshold(float value, out AtmosMonitorAlarmType state)
+    public bool CheckThreshold(float value, out AtmosAlarmType state)
     {
-        state = AtmosMonitorAlarmType.Normal;
-        if (Ignore) return false;
+        state = AtmosAlarmType.Normal;
+        if (Ignore)
+        {
+            return false;
+        }
 
         if (value >= UpperBound || value <= LowerBound)
         {
-            state = AtmosMonitorAlarmType.Danger;
+            state = AtmosAlarmType.Danger;
             return true;
         }
         if (value >= UpperWarningBound || value <= LowerWarningBound)
         {
-            state = AtmosMonitorAlarmType.Warning;
+            state = AtmosAlarmType.Warning;
             return true;
         }
 
@@ -117,7 +115,7 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
             return true;
         }
 
-        float value = (float) input;
+        var value = (float) input;
 
         if (value <= 0f || float.IsNaN(value))
             return false;
@@ -141,7 +139,7 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
                 break;
         }
 
-        bool isValid = true;
+        var isValid = true;
         if (targetValue != null)
         {
             var result = targetValue.Value.target.CompareTo(value);
@@ -191,8 +189,8 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
                 if (UpperBound == null)
                     return false;
 
-                float upperWarning = (float) (input / UpperBound);
-                float upperTestValue = (upperWarning * (float) UpperBound);
+                var upperWarning = (float) (input / UpperBound);
+                var upperTestValue = upperWarning * (float) UpperBound;
 
                 if (upperWarning > 1f
                     || upperTestValue < LowerWarningBound
@@ -206,8 +204,8 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
                 if (LowerBound == null)
                     return false;
 
-                float lowerWarning = (float) (input / LowerBound);
-                float testValue = (lowerWarning * (float) LowerBound);
+                var lowerWarning = (float) (input / LowerBound);
+                var testValue = lowerWarning * (float) LowerBound;
 
                 if (lowerWarning < 1f
                     || testValue > UpperWarningBound
@@ -265,6 +263,5 @@ public enum AtmosMonitorThresholdType
 [Serializable, NetSerializable]
 public enum AtmosMonitorVisuals : byte
 {
-    Offset,
     AlarmType,
 }

@@ -9,7 +9,7 @@ public sealed class AtmosAlarmableVisualsComponent : Component
     public string LayerMap { get; } = string.Empty;
 
     [DataField("alarmStates")]
-    public readonly Dictionary<AtmosMonitorAlarmType, string> AlarmStates = new();
+    public readonly Dictionary<AtmosAlarmType, string> AlarmStates = new();
 
     [DataField("hideOnDepowered")]
     public readonly List<string>? HideOnDepowered;

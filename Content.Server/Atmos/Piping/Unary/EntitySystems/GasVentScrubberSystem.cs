@@ -126,11 +126,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnAtmosAlarm(EntityUid uid, GasVentScrubberComponent component, AtmosAlarmEvent args)
         {
-            if (args.AlarmType == AtmosMonitorAlarmType.Danger)
+            if (args.AlarmType == AtmosAlarmType.Danger)
             {
                 component.Enabled = false;
             }
-            else if (args.AlarmType == AtmosMonitorAlarmType.Normal)
+            else if (args.AlarmType == AtmosAlarmType.Normal)
             {
                 component.Enabled = true;
             }

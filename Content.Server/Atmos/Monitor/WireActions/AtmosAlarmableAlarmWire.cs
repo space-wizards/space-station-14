@@ -29,10 +29,10 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
         {
             if (!_atmosAlarmableSystem.TryGetHighestAlert(wire.Owner, out var alarm))
             {
-                alarm = AtmosMonitorAlarmType.Normal;
+                alarm = AtmosAlarmType.Normal;
             }
 
-            lightState = alarm == AtmosMonitorAlarmType.Danger
+            lightState = alarm == AtmosAlarmType.Danger
                 ? StatusLightState.BlinkingFast
                 : StatusLightState.On;
         }
@@ -47,14 +47,14 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
     {
         base.Initialize();
 
-        _atmosAlarmableSystem = EntitySystem.Get<AtmosAlarmableSystem>();
+        _atmosAlarmableSystem = EntityManager.System<AtmosAlarmableSystem>();
     }
 
     public override bool Cut(EntityUid user, Wire wire)
     {
-        if (EntityManager.TryGetComponent<AtmosMonitorComponent>(wire.Owner, out var monitor))
+        if (EntityManager.TryGetComponent<AtmosAlarmableComponent>(wire.Owner, out var monitor))
         {
-            monitor.NetEnabled = false;
+            monitor.IgnoreAlarms = true;
         }
 
         return true;
@@ -62,9 +62,9 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
-        if (EntityManager.TryGetComponent<AtmosMonitorComponent>(wire.Owner, out var monitor))
+        if (EntityManager.TryGetComponent<AtmosAlarmableComponent>(wire.Owner, out var monitor))
         {
-            monitor.NetEnabled = true;
+            monitor.IgnoreAlarms = false;
         }
 
         return true;
@@ -74,7 +74,7 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
     {
         if (_alarmOnPulse)
         {
-            _atmosAlarmableSystem.ForceAlert(wire.Owner, AtmosMonitorAlarmType.Danger);
+            _atmosAlarmableSystem.ForceAlert(wire.Owner, AtmosAlarmType.Danger);
         }
 
         return true;

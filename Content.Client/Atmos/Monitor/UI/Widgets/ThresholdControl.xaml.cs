@@ -208,18 +208,18 @@ public sealed partial class ThresholdControl : BoxContainer
             _modifier = modifier > 0 ? modifier : 1;
             _value = value;
 
-            this.HorizontalExpand = true;
-            this.Orientation = LayoutOrientation.Vertical;
+            HorizontalExpand = true;
+            Orientation = LayoutOrientation.Vertical;
 
-            this.AddChild(new Label { Text = Loc.GetString($"air-alarm-ui-thresholds-{name}") });
+            AddChild(new Label { Text = Loc.GetString($"air-alarm-ui-thresholds-{name}") });
             _bound = new FloatSpinBox(.01f, 2);
-            this.AddChild(_bound);
+            AddChild(_bound);
 
             _boundEnabled = new CheckBox
             {
                 Text = Loc.GetString("Enabled")
             };
-            this.AddChild(_boundEnabled);
+            AddChild(_boundEnabled);
 
             _bound.Value = ModifiedValue ?? 0;
             _lastValue = _value ?? 0;
@@ -289,7 +289,9 @@ public sealed partial class ThresholdControl : BoxContainer
             OnValidBoundChanged!.Invoke();
         }
 
-        private bool ValidateThreshold(float value) => (_value != null) && (value >= 0);
-
+        private bool ValidateThreshold(float value)
+        {
+            return _value != null && value >= 0;
+        }
     }
 }

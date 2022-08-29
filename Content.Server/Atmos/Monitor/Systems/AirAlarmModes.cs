@@ -62,14 +62,17 @@ public sealed class AirAlarmModeFactory
 
     // still not a fan since ReplaceMode must have an allocation
     // but it's whatever
-    public static IAirAlarmMode? ModeToExecutor(AirAlarmMode mode) => mode switch
+    public static IAirAlarmMode? ModeToExecutor(AirAlarmMode mode)
     {
-        AirAlarmMode.Filtering => _filterMode,
-        AirAlarmMode.Fill => _fillMode,
-        AirAlarmMode.Panic => _panicMode,
-        AirAlarmMode.None => _noneMode,
-        _ => null
-    };
+        return mode switch
+        {
+            AirAlarmMode.Filtering => _filterMode,
+            AirAlarmMode.Fill => _fillMode,
+            AirAlarmMode.Panic => _panicMode,
+            AirAlarmMode.None => _noneMode,
+            _ => null
+        };
+    }
 }
 
 // like a tiny little EntitySystem

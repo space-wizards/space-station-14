@@ -6,7 +6,7 @@ namespace Content.Shared.Atmos.Monitor;
 [Serializable, NetSerializable]
 public sealed class AtmosSensorData : IAtmosDeviceData
 {
-    public AtmosSensorData(float pressure, float temperature, float totalMoles, AtmosMonitorAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
+    public AtmosSensorData(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
     {
         Pressure = pressure;
         Temperature = temperature;
@@ -39,7 +39,7 @@ public sealed class AtmosSensorData : IAtmosDeviceData
     /// <summary>
     ///     Current alarm state of this sensor. Does not reflect the highest alarm state on the network.
     /// </summary>
-    public AtmosMonitorAlarmType AlarmState { get; }
+    public AtmosAlarmType AlarmState { get; }
     /// <summary>
     ///     Current number of gases on this sensor.
     /// </summary>

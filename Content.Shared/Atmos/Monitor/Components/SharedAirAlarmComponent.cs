@@ -36,7 +36,7 @@ public interface IAtmosDeviceData
 [Serializable, NetSerializable]
 public sealed class AirAlarmUIState : BoundUserInterfaceState
 {
-    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosMonitorAlarmType alarmType)
+    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosAlarmType alarmType)
     {
         Address = address;
         DeviceCount = deviceCount;
@@ -61,7 +61,7 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
     public Dictionary<string, IAtmosDeviceData> DeviceData { get; }
     public AirAlarmMode Mode { get; }
     public AirAlarmTab Tab { get; }
-    public AtmosMonitorAlarmType AlarmType { get; }
+    public AtmosAlarmType AlarmType { get; }
 }
 
 [Serializable, NetSerializable]

@@ -29,9 +29,9 @@ namespace Content.Server.Atmos.Monitor.Components;
 public sealed class AtmosAlarmableComponent : Component
 {
     [ViewVariables]
-    public readonly Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
+    public readonly Dictionary<string, AtmosAlarmType> NetworkAlarmStates = new();
 
-    [ViewVariables] public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
+    [ViewVariables] public AtmosAlarmType LastAlarmState = AtmosAlarmType.Normal;
 
     [ViewVariables] public bool IgnoreAlarms { get; set; } = false;
 

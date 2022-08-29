@@ -34,7 +34,7 @@ public sealed partial class ScrubberControl : BoxContainer
     {
         RobustXamlLoader.Load(this);
 
-        this.Name = address;
+        Name = address;
 
         _data = data;
         _address = address;
@@ -64,7 +64,9 @@ public sealed partial class ScrubberControl : BoxContainer
         _volumeRate.IsValid += value => value >= 0;
 
         foreach (var value in Enum.GetValues<ScrubberPumpDirection>())
+        {
             _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);
+        }
 
         _pumpDirection.SelectId((int) _data.PumpDirection);
         _pumpDirection.OnItemSelected += args =>
@@ -116,7 +118,9 @@ public sealed partial class ScrubberControl : BoxContainer
         var intersect = _data.FilterGases.Intersect(data.FilterGases);
 
         foreach (var value in Enum.GetValues<Gas>())
+        {
             if (!intersect.Contains(value))
                 _gasControls[value].Pressed = false;
+        }
     }
 }

@@ -55,7 +55,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
         {
             TryUpdateAlert(
                 uid,
-                TryGetHighestAlert(uid, out var alarm) ? alarm.Value : AtmosMonitorAlarmType.Normal,
+                TryGetHighestAlert(uid, out var alarm) ? alarm.Value : AtmosAlarmType.Normal,
                 component,
                 false);
         }
@@ -86,7 +86,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
             case AlertCmd:
                 // Set the alert state, and then cache it so we can calculate
                 // the maximum alarm state at all times.
-                if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosMonitorAlarmType state))
+                if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosAlarmType state))
                 {
                     break;
                 }
@@ -111,12 +111,12 @@ public sealed class AtmosAlarmableSystem : EntitySystem
                     // it may mean that the threshold we need to look at has
                     // been removed from the threshold types passed:
                     // basically, we need to reset this state to normal here.
-                    component.NetworkAlarmStates[args.SenderAddress] = isValid ? state : AtmosMonitorAlarmType.Normal;
+                    component.NetworkAlarmStates[args.SenderAddress] = isValid ? state : AtmosAlarmType.Normal;
                 }
 
                 if (!TryGetHighestAlert(uid, out var netMax, component))
                 {
-                    netMax = AtmosMonitorAlarmType.Normal;
+                    netMax = AtmosAlarmType.Normal;
                 }
 
                 TryUpdateAlert(uid, netMax.Value, component);
@@ -127,7 +127,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
                 break;
             case SyncAlerts:
                 if (!args.Data.TryGetValue(SyncAlerts,
-                        out IReadOnlyDictionary<string, AtmosMonitorAlarmType>? alarms))
+                        out IReadOnlyDictionary<string, AtmosAlarmType>? alarms))
                 {
                     break;
                 }
@@ -149,7 +149,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
         }
     }
 
-    private void TryUpdateAlert(EntityUid uid, AtmosMonitorAlarmType type, AtmosAlarmableComponent alarmable, bool sync = true)
+    private void TryUpdateAlert(EntityUid uid, AtmosAlarmType type, AtmosAlarmableComponent alarmable, bool sync = true)
     {
         if (alarmable.LastAlarmState == type)
         {
@@ -191,7 +191,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="alarmType"></param>
     /// <param name="alarmable"></param>
-    public void ForceAlert(EntityUid uid, AtmosMonitorAlarmType alarmType,
+    public void ForceAlert(EntityUid uid, AtmosAlarmType alarmType,
         AtmosAlarmableComponent? alarmable = null, DeviceNetworkComponent? devNet = null, TagComponent? tags = null)
     {
         if (!Resolve(uid, ref alarmable, ref devNet, ref tags))
@@ -233,7 +233,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
             return;
         }
 
-        TryUpdateAlert(uid, AtmosMonitorAlarmType.Normal, alarmable, false);
+        TryUpdateAlert(uid, AtmosAlarmType.Normal, alarmable, false);
 
         alarmable.NetworkAlarmStates.Clear();
     }
@@ -263,7 +263,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     /// <param name="alarm"></param>
     /// <param name="alarmable"></param>
     /// <returns></returns>
-    public bool TryGetHighestAlert(EntityUid uid, [NotNullWhen(true)] out AtmosMonitorAlarmType? alarm,
+    public bool TryGetHighestAlert(EntityUid uid, [NotNullWhen(true)] out AtmosAlarmType? alarm,
         AtmosAlarmableComponent? alarmable = null)
     {
         alarm = null;
@@ -281,15 +281,15 @@ public sealed class AtmosAlarmableSystem : EntitySystem
         return alarm != null;
     }
 
-    private void PlayAlertSound(EntityUid uid, AtmosMonitorAlarmType alarm, AtmosAlarmableComponent alarmable)
+    private void PlayAlertSound(EntityUid uid, AtmosAlarmType alarm, AtmosAlarmableComponent alarmable)
     {
-        if (alarm == AtmosMonitorAlarmType.Danger)
+        if (alarm == AtmosAlarmType.Danger)
         {
             _audioSystem.PlayPvs(alarmable.AlarmSound, uid, AudioParams.Default.WithVolume(alarmable.AlarmVolume));
         }
     }
 
-    private void UpdateAppearance(EntityUid uid, AtmosMonitorAlarmType alarm)
+    private void UpdateAppearance(EntityUid uid, AtmosAlarmType alarm)
     {
         _appearance.SetData(uid, AtmosMonitorVisuals.AlarmType, alarm);
     }
@@ -297,9 +297,9 @@ public sealed class AtmosAlarmableSystem : EntitySystem
 
 public sealed class AtmosAlarmEvent : EntityEventArgs
 {
-    public AtmosMonitorAlarmType AlarmType { get; }
+    public AtmosAlarmType AlarmType { get; }
 
-    public AtmosAlarmEvent(AtmosMonitorAlarmType netMax)
+    public AtmosAlarmEvent(AtmosAlarmType netMax)
     {
         AlarmType = netMax;
     }

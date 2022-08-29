@@ -14,27 +14,39 @@ public sealed class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmabl
 {
     protected override void OnAppearanceChange(EntityUid uid, AtmosAlarmableVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null || !args.Sprite.LayerMapTryGet(component.LayerMap, out int layer))
+        if (args.Sprite == null || !args.Sprite.LayerMapTryGet(component.LayerMap, out var layer))
             return;
 
-        if (args.AppearanceData.TryGetValue(PowerDeviceVisuals.Powered, out var poweredObject)
-            && poweredObject is bool powered)
+        if (!args.AppearanceData.TryGetValue(PowerDeviceVisuals.Powered, out var poweredObject) ||
+            poweredObject is not bool powered)
         {
-            if (component.HideOnDepowered != null)
-                foreach (var visLayer in component.HideOnDepowered)
-                    if (args.Sprite.LayerMapTryGet(visLayer, out int powerVisibilityLayer))
-                        args.Sprite.LayerSetVisible(powerVisibilityLayer, powered);
+            return;
+        }
 
-            if (component.SetOnDepowered != null && !powered)
-                foreach (var (setLayer, powerState) in component.SetOnDepowered)
-                    if (args.Sprite.LayerMapTryGet(setLayer, out int setStateLayer))
-                        args.Sprite.LayerSetState(setStateLayer, new RSI.StateId(powerState));
+        if (component.HideOnDepowered != null)
+        {
+            foreach (var visLayer in component.HideOnDepowered)
+            {
+                if (args.Sprite.LayerMapTryGet(visLayer, out int powerVisibilityLayer))
+                    args.Sprite.LayerSetVisible(powerVisibilityLayer, powered);
+            }
+        }
 
-            if (args.AppearanceData.TryGetValue(AtmosMonitorVisuals.AlarmType, out var alarmTypeObject)
-                && alarmTypeObject is AtmosMonitorAlarmType alarmType
-                && powered
-                && component.AlarmStates.TryGetValue(alarmType, out var state))
-                    args.Sprite.LayerSetState(layer, new RSI.StateId(state));
+        if (component.SetOnDepowered != null && !powered)
+        {
+            foreach (var (setLayer, powerState) in component.SetOnDepowered)
+            {
+                if (args.Sprite.LayerMapTryGet(setLayer, out int setStateLayer))
+                    args.Sprite.LayerSetState(setStateLayer, new RSI.StateId(powerState));
+            }
+        }
+
+        if (args.AppearanceData.TryGetValue(AtmosMonitorVisuals.AlarmType, out var alarmTypeObject)
+            && alarmTypeObject is AtmosAlarmType alarmType
+            && powered
+            && component.AlarmStates.TryGetValue(alarmType, out var state))
+        {
+            args.Sprite.LayerSetState(layer, new RSI.StateId(state));
         }
     }
 }

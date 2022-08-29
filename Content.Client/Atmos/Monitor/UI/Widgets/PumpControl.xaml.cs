@@ -29,7 +29,7 @@ public sealed partial class PumpControl : BoxContainer
     {
         RobustXamlLoader.Load(this);
 
-        this.Name = address;
+        Name = address;
 
         _data = data;
         _address = address;
@@ -60,7 +60,9 @@ public sealed partial class PumpControl : BoxContainer
         _externalBound.IsValid += value => value >= 0;
 
         foreach (var value in Enum.GetValues<VentPumpDirection>())
+        {
             _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);
+        }
 
         _pumpDirection.SelectId((int) _data.PumpDirection);
         _pumpDirection.OnItemSelected += args =>
@@ -71,7 +73,9 @@ public sealed partial class PumpControl : BoxContainer
         };
 
         foreach (var value in Enum.GetValues<VentPressureBound>())
+        {
             _pressureCheck.AddItem(Loc.GetString($"{value}"), (int) value);
+        }
 
         _pressureCheck.SelectId((int) _data.PressureChecks);
         _pressureCheck.OnItemSelected += args =>

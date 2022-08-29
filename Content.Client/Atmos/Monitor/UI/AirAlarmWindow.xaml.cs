@@ -50,7 +50,9 @@ public sealed partial class AirAlarmWindow : DefaultWindow
         RobustXamlLoader.Load(this);
 
         foreach (var mode in Enum.GetValues<AirAlarmMode>())
+        {
             _modes.AddItem($"{mode}", (int) mode);
+        }
 
         _modes.OnItemSelected += args =>
         {

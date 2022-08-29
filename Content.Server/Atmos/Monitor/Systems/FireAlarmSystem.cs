@@ -39,12 +39,12 @@ public sealed class FireAlarmSystem : EntitySystem
         {
             if (!_atmosAlarmable.TryGetHighestAlert(uid, out var alarm))
             {
-                alarm = AtmosMonitorAlarmType.Normal;
+                alarm = AtmosAlarmType.Normal;
             }
 
-            if (alarm == AtmosMonitorAlarmType.Normal)
+            if (alarm == AtmosAlarmType.Normal)
             {
-                _atmosAlarmable.ForceAlert(uid, AtmosMonitorAlarmType.Danger);
+                _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Danger);
             }
             else
             {
@@ -58,7 +58,7 @@ public sealed class FireAlarmSystem : EntitySystem
         if (TryComp<AtmosAlarmableComponent>(uid, out var alarmable))
         {
             // Remove the atmos alarmable component permanently from this device.
-            _atmosAlarmable.ForceAlert(uid, AtmosMonitorAlarmType.Emagged, alarmable);
+            _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Emagged, alarmable);
             RemCompDeferred<AtmosAlarmableComponent>(uid);
         }
     }

@@ -57,7 +57,7 @@ public sealed class AtmosMonitorComponent : Component
 
     // Stores the last alarm state of this alarm.
     [ViewVariables]
-    public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
+    public AtmosAlarmType LastAlarmState = AtmosAlarmType.Normal;
 
     [ViewVariables] public HashSet<AtmosMonitorThresholdType> TrippedThresholds = new();
 
