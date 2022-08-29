@@ -56,7 +56,7 @@ namespace Content.Client.Humanoid
                     _ignoreCategories.Add(categoryParse);
                 }
 
-                Populate();
+                SetupCategoryButtons();
             }
         }
 
@@ -80,6 +80,7 @@ namespace Content.Client.Humanoid
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
+            SetupCategoryButtons();
             CMarkingCategoryButton.OnItemSelected +=  OnCategoryChange;
             CMarkingsUnused.OnItemSelected += item =>
                _selectedUnusedMarking = CMarkingsUnused[item.ItemIndex];
@@ -95,6 +96,21 @@ namespace Content.Client.Humanoid
             CMarkingRankUp.OnPressed += _ => SwapMarkingUp();
             CMarkingRankDown.OnPressed += _ => SwapMarkingDown();
         }
+
+        private void SetupCategoryButtons()
+        {
+            CMarkingCategoryButton.Clear();
+            for (var i = 0; i < _markingCategories.Count; i++)
+            {
+                if (_ignoreCategories.Contains(_markingCategories[i]))
+                {
+                    continue;
+                }
+
+                CMarkingCategoryButton.AddItem(Loc.GetString($"markings-category-{_markingCategories[i].ToString()}"), i);
+            }
+            CMarkingCategoryButton.SelectId(_markingCategories.IndexOf(_selectedMarkingCategory));
+}
 
         private string GetMarkingName(MarkingPrototype marking) => Loc.GetString($"marking-{marking.ID}");
 
@@ -119,18 +135,6 @@ namespace Content.Client.Humanoid
 
         public void Populate()
         {
-            CMarkingCategoryButton.Clear();
-            for (var i = 0; i < _markingCategories.Count; i++)
-            {
-                if (_ignoreCategories.Contains(_markingCategories[i]))
-                {
-                    continue;
-                }
-
-                CMarkingCategoryButton.AddItem(Loc.GetString($"markings-category-{_markingCategories[i].ToString()}"), i);
-            }
-            CMarkingCategoryButton.SelectId(_markingCategories.IndexOf(_selectedMarkingCategory));
-
             CMarkingsUnused.Clear();
             _selectedUnusedMarking = null;
 
@@ -241,6 +245,8 @@ namespace Content.Client.Humanoid
 
             return true;
         }
+
+
 
         // repopulate in case markings are restricted,
         // and also filter out any markings that are now invalid
