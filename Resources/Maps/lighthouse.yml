@@ -23745,10 +23745,6 @@ entities:
   - pos: -12.5,-7.5
     parent: 100
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 134
   type: GasValve
   components:
@@ -30930,10 +30926,6 @@ entities:
   - pos: -27.5,23.5
     parent: 100
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1212
   type: Table
   components:
@@ -35365,10 +35357,6 @@ entities:
   - pos: 0.5,47.5
     parent: 100
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1832
   type: WaterCooler
   components:
@@ -36878,10 +36866,6 @@ entities:
   - pos: 29.5,47.5
     parent: 100
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2035
   type: Barricade
   components:
@@ -58148,10 +58132,6 @@ entities:
   - pos: -9.5,43.5
     parent: 100
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 5146
   type: BoxMouthSwab
   components:
@@ -58236,10 +58216,6 @@ entities:
   - pos: -38.5,-8.5
     parent: 100
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 5158
   type: DonkpocketBoxSpawner
   components:
@@ -125315,10 +125291,6 @@ entities:
   - pos: -2.5,-28.5
     parent: 100
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 13882
   type: trayScanner
   components:

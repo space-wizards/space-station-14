@@ -321,7 +321,12 @@ namespace Content.Server.GameTicking
                 return spawn;
             }
 
-            // Just pick a pick at this point I guess.
+            if (_mapManager.MapExists(DefaultMap))
+            {
+                return new EntityCoordinates(_mapManager.GetMapEntityId(DefaultMap), Vector2.Zero);
+            }
+
+            // Just pick a point at this point I guess.
             foreach (var map in _mapManager.GetAllMapIds())
             {
                 var mapUid = _mapManager.GetMapEntityId(map);
