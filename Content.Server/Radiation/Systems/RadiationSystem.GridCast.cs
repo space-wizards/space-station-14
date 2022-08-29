@@ -32,7 +32,9 @@ public partial class RadiationSystem
             }
         }
 
-        Logger.Info($"Gridcast radiation {stopwatch.Elapsed.TotalMilliseconds}ms");
+        var elapsedTime = stopwatch.Elapsed.TotalMilliseconds;
+        var totalSources = sources.Length;
+        var totalReceivers = destinations.Length;
 
         RaiseNetworkEvent(new RadiationGridcastUpdate(rays));
     }
@@ -109,16 +111,19 @@ public partial class RadiationSystem
             VisitedTiles = visitedTiles
         };
 
+        // if grid doesn't have resistance map just apply distance penalty
         if (!_resistancePerTile.TryGetValue(gridUid, out var resistanceMap))
             return radRay;
 
+        // get coordinate of source and destination in grid coordinates
         // todo: entity queries doesn't support interface - use it when IMapGridComponent will be removed
         if (!TryComp(gridUid, out IMapGridComponent? grid))
             return radRay;
-        var sourceGridPos = grid.Grid.TileIndicesFor(sourceWorld);
-        var destGridPos = grid.Grid.TileIndicesFor(destWorld);
-        var line = Line(sourceGridPos.X, sourceGridPos.Y, destGridPos.X, destGridPos.Y);
+        var sourceGrid = grid.Grid.TileIndicesFor(sourceWorld);
+        var destGrid = grid.Grid.TileIndicesFor(destWorld);
 
+        // iterate tiles in grid line from source to destination
+        var line = Line(sourceGrid.X, sourceGrid.Y, destGrid.X, destGrid.Y);
         foreach (var point in line)
         {
             if (resistanceMap.TryGetValue(point, out var resData))

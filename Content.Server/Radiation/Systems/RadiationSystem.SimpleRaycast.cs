@@ -10,7 +10,7 @@ namespace Content.Server.Radiation.Systems;
 
 public partial class RadiationSystem
 {
-    private const float MinRads = 0.1f;
+    private const float MinRads = 0.5f;
 
     public void RaycastUpdate()
     {
