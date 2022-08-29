@@ -2,7 +2,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Shuttles.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -17,6 +17,8 @@ namespace Content.Shared.Movement.Systems
     /// </summary>
     public abstract partial class SharedMoverController
     {
+        public bool CameraRotationLocked { get; private set; }
+
         private void InitializeInput()
         {
             var moveUpCmdHandler = new MoverDirInputCmdHandler(this, Direction.North);
@@ -30,6 +32,9 @@ namespace Content.Shared.Movement.Systems
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(this))
+                .Bind(EngineKeyFunctions.CameraRotateLeft, new CameraRotateInputCmdHandler(this, Direction.West))
+                .Bind(EngineKeyFunctions.CameraRotateRight, new CameraRotateInputCmdHandler(this, Direction.East))
+                .Bind(EngineKeyFunctions.CameraReset, new CameraResetInputCmdHandler(this))
                 // TODO: Relay
                 // Shuttle
                 .Bind(ContentKeyFunctions.ShuttleStrafeUp, new ShuttleInputCmdHandler(this, ShuttleButtons.StrafeUp))
@@ -44,6 +49,14 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentInit>(OnInputInit);
             SubscribeLocalEvent<InputMoverComponent, ComponentGetState>(OnInputGetState);
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnInputHandleState);
+            SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
+
+            _configManager.OnValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked, true);
+        }
+
+        private void SetCameraRotationLocked(bool obj)
+        {
+            CameraRotationLocked = obj;
         }
 
         private void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
@@ -55,26 +68,97 @@ namespace Content.Shared.Movement.Systems
 
         private void OnInputHandleState(EntityUid uid, InputMoverComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not InputMoverComponentState state) return;
+            if (args.Current is not InputMoverComponentState state)
+                return;
+
             component.HeldMoveButtons = state.Buttons;
             component.LastInputTick = GameTick.Zero;
             component.LastInputSubTick = 0;
             component.CanMove = state.CanMove;
+
+            component.RelativeRotation = state.RelativeRotation;
+            component.TargetRelativeRotation = state.TargetRelativeRotation;
+            component.RelativeEntity = state.RelativeEntity;
+            component.LerpAccumulator = state.LerpAccumulator;
         }
 
         private void OnInputGetState(EntityUid uid, InputMoverComponent component, ref ComponentGetState args)
         {
-            args.State = new InputMoverComponentState(component.HeldMoveButtons, component.CanMove);
+            args.State = new InputMoverComponentState(
+                component.HeldMoveButtons,
+                component.CanMove,
+                component.RelativeRotation,
+                component.TargetRelativeRotation,
+                component.RelativeEntity,
+                component.LerpAccumulator);
         }
 
         private void ShutdownInput()
         {
             CommandBinds.Unregister<SharedMoverController>();
+            _configManager.UnsubValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked);
         }
 
         public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
+
+        public void RotateCamera(EntityUid uid, Angle angle)
+        {
+            if (CameraRotationLocked || !TryComp<InputMoverComponent>(uid, out var mover))
+                return;
+
+            mover.TargetRelativeRotation += angle;
+            Dirty(mover);
+        }
+
+        public void ResetCamera(EntityUid uid)
+        {
+            if (CameraRotationLocked || !TryComp<InputMoverComponent>(uid, out var mover) || mover.TargetRelativeRotation.Equals(Angle.Zero))
+                return;
+
+            mover.TargetRelativeRotation = Angle.Zero;
+            Dirty(mover);
+        }
+
+        public Angle GetParentGridAngle(InputMoverComponent mover)
+        {
+            var rotation = mover.RelativeRotation;
+
+            if (TryComp<TransformComponent>(mover.RelativeEntity, out var relativeXform))
+                return (relativeXform.WorldRotation + rotation);
+
+            return rotation;
+        }
+
+        private void OnInputParentChange(EntityUid uid, InputMoverComponent component, ref EntParentChangedMessage args)
+        {
+            // If we change our grid / map then delay updating our LastGridAngle.
+            var relative = args.Transform.GridUid;
+            relative ??= args.Transform.MapUid;
+
+            if (component.LifeStage < ComponentLifeStage.Running)
+            {
+                component.RelativeEntity = relative;
+                Dirty(component);
+                return;
+            }
+
+            // If we go on a grid and back off then just reset the accumulator.
+            if (relative == component.RelativeEntity)
+            {
+                if (component.LerpAccumulator != 0f)
+                {
+                    component.LerpAccumulator = 0f;
+                    Dirty(component);
+                }
+
+                return;
+            }
+
+            component.LerpAccumulator = InputMoverComponent.LerpTime;
+            Dirty(component);
+        }
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
         {
@@ -124,9 +208,11 @@ namespace Content.Shared.Movement.Systems
         {
             var xform = Transform(uid);
 
-            if (!xform.ParentUid.IsValid()) return;
+            if (!xform.ParentUid.IsValid())
+                return;
 
-            component.LastGridAngle = Transform(xform.ParentUid).WorldRotation;
+            component.RelativeEntity = xform.GridUid ?? xform.MapUid;
+            component.TargetRelativeRotation = Angle.Zero;
         }
 
         private void HandleRunChange(EntityUid uid, ushort subTick, bool walking)
@@ -300,9 +386,53 @@ namespace Content.Shared.Movement.Systems
             return (buttons & flag) == flag;
         }
 
+        private sealed class CameraRotateInputCmdHandler : InputCmdHandler
+        {
+            private readonly SharedMoverController _controller;
+            private readonly Angle _angle;
+
+            public CameraRotateInputCmdHandler(SharedMoverController controller, Direction direction)
+            {
+                _controller = controller;
+                _angle = direction.ToAngle();
+            }
+
+            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            {
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+
+                if (full.State != BoundKeyState.Up)
+                    return false;
+
+                _controller.RotateCamera(session.AttachedEntity.Value, _angle);
+                return false;
+            }
+        }
+
+        private sealed class CameraResetInputCmdHandler : InputCmdHandler
+        {
+            private readonly SharedMoverController _controller;
+
+            public CameraResetInputCmdHandler(SharedMoverController controller)
+            {
+                _controller = controller;
+            }
+
+            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            {
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+
+                if (full.State != BoundKeyState.Up)
+                    return false;
+
+                _controller.ResetCamera(session.AttachedEntity.Value);
+                return false;
+            }
+        }
+
         private sealed class MoverDirInputCmdHandler : InputCmdHandler
         {
-            private SharedMoverController _controller;
+            private readonly SharedMoverController _controller;
             private readonly Direction _dir;
 
             public MoverDirInputCmdHandler(SharedMoverController controller, Direction dir)
@@ -344,17 +474,33 @@ namespace Content.Shared.Movement.Systems
             public MoveButtons Buttons { get; }
             public readonly bool CanMove;
 
-            public InputMoverComponentState(MoveButtons buttons, bool canMove)
+            /// <summary>
+            /// Our current rotation for movement purposes. This is lerping towards <see cref="TargetRelativeRotation"/>
+            /// </summary>
+            public Angle RelativeRotation;
+
+            /// <summary>
+            /// Target rotation relative to the <see cref="RelativeEntity"/>. Typically 0
+            /// </summary>
+            public Angle TargetRelativeRotation;
+            public EntityUid? RelativeEntity;
+            public float LerpAccumulator = 0f;
+
+            public InputMoverComponentState(MoveButtons buttons, bool canMove, Angle relativeRotation, Angle targetRelativeRotation, EntityUid? relativeEntity, float lerpAccumulator)
             {
                 Buttons = buttons;
                 CanMove = canMove;
+                RelativeRotation = relativeRotation;
+                TargetRelativeRotation = targetRelativeRotation;
+                RelativeEntity = relativeEntity;
+                LerpAccumulator = lerpAccumulator;
             }
         }
 
         private sealed class ShuttleInputCmdHandler : InputCmdHandler
         {
-            private SharedMoverController _controller;
-            private ShuttleButtons _button;
+            private readonly SharedMoverController _controller;
+            private readonly ShuttleButtons _button;
 
             public ShuttleInputCmdHandler(SharedMoverController controller, ShuttleButtons button)
             {
