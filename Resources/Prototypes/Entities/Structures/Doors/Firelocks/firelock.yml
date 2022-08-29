@@ -129,6 +129,7 @@
   components:
     - type: Sprite
       sprite: Structures/Doors/edge_door_hazard.rsi
+      snapCardinals: false
     - type: Airtight
       fixVacuum: true
       airBlocked: false

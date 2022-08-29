@@ -123,7 +123,7 @@
       needsPower: false
       powerLoad: 0
     - type: Sprite
-      sprite: Structures/Shuttles/thruster.rsi
+      sprite: Structures/Shuttles/gyroscope.rsi
       layers:
         - state: base
           map: ["enum.ThrusterVisualLayers.Base"]

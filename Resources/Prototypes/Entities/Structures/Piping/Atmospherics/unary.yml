@@ -195,7 +195,6 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-      snapCardinals: true
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
