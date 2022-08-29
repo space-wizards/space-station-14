@@ -473,11 +473,6 @@ namespace Content.Shared.Movement.Systems
         {
             public MoveButtons Buttons { get; }
             public readonly bool CanMove;
-            // TODO: Comments ya wanker
-            public Angle RelativeRotation;
-            public Angle TargetRelativeRotation;
-            public EntityUid? RelativeEntity;
-            public float LerpAccumulator = 0f;
 
             /// <summary>
             /// Our current rotation for movement purposes. This is lerping towards <see cref="TargetRelativeRotation"/>
