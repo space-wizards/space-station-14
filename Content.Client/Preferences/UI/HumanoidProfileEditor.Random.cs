@@ -23,8 +23,7 @@ namespace Content.Client.Preferences.UI
             UpdateNameEdit();
             UpdateHairPickers();
             UpdateEyePickers();
-
-            _skinColor.Value = _random.Next(0, 100);
+            UpdateSkinColor();
         }
 
         private void RandomizeName()

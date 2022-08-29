@@ -127,11 +127,10 @@ namespace Content.Shared.Humanoid
                     break;
                 case SpeciesSkinColor.Hues:
                 case SpeciesSkinColor.TintedHues:
-                    var color = random.Pick(Color.GetAllDefaultColors().ToList()).Value;
-                    newSkinColor = color
-                        .WithRed(RandomizeColor(color.R))
-                        .WithGreen(RandomizeColor(color.G))
-                        .WithBlue(RandomizeColor(color.B));
+                    var rbyte = random.Next(0, 255);
+                    var gbyte = random.Next(0, 255);
+                    var bbyte = random.Next(0, 255);
+                    newSkinColor = new Color(rbyte, gbyte, bbyte);
                     break;
             }
 
