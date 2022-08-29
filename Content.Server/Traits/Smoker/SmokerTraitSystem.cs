@@ -7,6 +7,7 @@ public sealed class SmokerTraitSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
     private float _accumulatedFrameTime;
 
@@ -76,8 +77,12 @@ public sealed class SmokerTraitSystem : EntitySystem
         UpdateEffects(component);
     }
 
-    private static void OnRefreshMovespeed(EntityUid uid, SmokerTraitComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshMovespeed(EntityUid uid, SmokerTraitComponent component, RefreshMovementSpeedModifiersEvent args)
     {
+        // TODO: This should really be taken care of somewhere else
+        if (_jetpack.IsUserFlying(component.Owner))
+            return;
+
         var mod = component.CurrentThreshold == CravingThreshold.Intense ? 0.9f : 1.0f;
         args.ModifySpeed(mod, mod);
     }
