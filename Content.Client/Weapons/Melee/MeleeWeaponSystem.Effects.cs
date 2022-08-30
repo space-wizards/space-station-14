@@ -1,6 +1,8 @@
+using Content.Shared.Weapons;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -26,12 +28,27 @@ public sealed partial class MeleeWeaponSystem
 
     private const string DamageAnimationKey = "damage-effect";
 
+    private void InitializeEffect()
+    {
+        SubscribeLocalEvent<DamageEffectComponent, AnimationCompletedEvent>(OnEffectAnimation);
+    }
+
+    private void OnEffectAnimation(EntityUid uid, DamageEffectComponent component, AnimationCompletedEvent args)
+    {
+        if (TryComp<SpriteComponent>(uid, out var sprite))
+        {
+            sprite.Color = component.Color;
+        }
+
+        RemCompDeferred<DamageEffectComponent>(uid);
+    }
+
     /// <summary>
     /// Gets the red effect animation whenever the server confirms something is hit
     /// </summary>
-    public Animation? GetDamageAnimation(EntityUid uid)
+    public Animation? GetDamageAnimation(EntityUid uid, SpriteComponent? sprite = null)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!Resolve(uid, ref sprite, false))
             return null;
 
         // 90% of them are going to be this so why allocate a new class.
@@ -49,8 +66,8 @@ public sealed partial class MeleeWeaponSystem
                     Property = nameof(SpriteComponent.Color),
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(Color.Red, 0f),
-                        new AnimationTrackProperty.KeyFrame(Color.White, 0.3f)
+                        new AnimationTrackProperty.KeyFrame(Color.Red * sprite.Color, 0f),
+                        new AnimationTrackProperty.KeyFrame(sprite.Color, 0.3f)
                     }
                 }
             }
@@ -62,14 +79,32 @@ public sealed partial class MeleeWeaponSystem
         if (Deleted(ev.Entity))
             return;
 
+        var player = EnsureComp<AnimationPlayerComponent>(ev.Entity);
+
         // Need to stop the existing animation first to ensure the sprite color is fixed.
         // Otherwise we might lerp to a red colour instead.
-        _animation.Stop(ev.Entity, DamageAnimationKey);
-        var animation = GetDamageAnimation(ev.Entity);
+        if (_animation.HasRunningAnimation(ev.Entity, player, DamageAnimationKey))
+        {
+            _animation.Stop(ev.Entity, player, DamageAnimationKey);
+        }
+
+        if (!TryComp<SpriteComponent>(ev.Entity, out var sprite))
+        {
+            return;
+        }
+
+        if (TryComp<DamageEffectComponent>(ev.Entity, out var effect))
+        {
+            sprite.Color = effect.Color;
+        }
+
+        var animation = GetDamageAnimation(ev.Entity, sprite);
 
         if (animation == null)
             return;
 
-        _animation.Play(ev.Entity, DefaultDamageAnimation, DamageAnimationKey);
+        var comp = EnsureComp<DamageEffectComponent>(ev.Entity);
+        comp.Color = sprite.Color;
+        _animation.Play(player, DefaultDamageAnimation, DamageAnimationKey);
     }
 }

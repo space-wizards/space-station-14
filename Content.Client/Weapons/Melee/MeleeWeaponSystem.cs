@@ -22,6 +22,7 @@ namespace Content.Client.Weapons.Melee
 
         public override void Initialize()
         {
+            InitializeEffect();
             SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
             SubscribeNetworkEvent<PlayLungeAnimationMessage>(PlayLunge);
             SubscribeNetworkEvent<DamageEffectEvent>(OnDamageEffect);
