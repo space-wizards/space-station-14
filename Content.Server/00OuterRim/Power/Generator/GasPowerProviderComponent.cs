@@ -1,6 +1,6 @@
 ﻿using Content.Server.Atmos;
 
-namespace Content.Server._00OuterRim.Generator;
+namespace Content.Server._00OuterRim.Power.Generator;
 
 /// <summary>
 /// This is used for...

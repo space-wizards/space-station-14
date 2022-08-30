@@ -2,7 +2,7 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server._00OuterRim.Generator;
+namespace Content.Server._00OuterRim.Power.Generator;
 
 /// <summary>
 /// This is used for...

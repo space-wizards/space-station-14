@@ -1,4 +1,4 @@
-﻿namespace Content.Server._00OuterRim.Generator;
+﻿namespace Content.Server._00OuterRim.Power.Generator;
 
 /// <summary>
 /// This is used for allowing you to insert fuel into gens.

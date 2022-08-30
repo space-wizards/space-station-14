@@ -6,7 +6,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Robust.Shared.Timing;
 
-namespace Content.Server._00OuterRim.Generator;
+namespace Content.Server._00OuterRim.Power.Generator;
 
 /// <summary>
 /// This handles...

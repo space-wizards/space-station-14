@@ -1,5 +1,4 @@
-﻿using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
+﻿using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
@@ -8,7 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.OuterRim.Generator;
 using Robust.Server.GameObjects;
 
-namespace Content.Server._00OuterRim.Generator;
+namespace Content.Server._00OuterRim.Power.Generator;
 
 /// <inheritdoc/>
 public sealed class GeneratorSystem : SharedGeneratorSystem
