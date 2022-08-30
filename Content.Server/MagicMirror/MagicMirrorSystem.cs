@@ -82,7 +82,8 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         _humanoid.SetMarkingColor(message.Session.AttachedEntity.Value, category, message.Slot, message.Colors);
 
-        UpdateInterface(uid, message.Session.AttachedEntity.Value, message.Session);
+        // using this makes the UI feel like total ass
+        // UpdateInterface(uid, message.Session.AttachedEntity.Value, message.Session);
     }
 
     private void OnMagicMirrorRemoveSlot(EntityUid uid, MagicMirrorComponent component,
