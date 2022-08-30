@@ -8,7 +8,7 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 {
     private MagicMirrorWindow? _window;
 
-    public MagicMirrorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public MagicMirrorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
