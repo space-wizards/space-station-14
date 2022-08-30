@@ -295,7 +295,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         if (index < 0
             || !Resolve(uid, ref humanoid)
             || !humanoid.CurrentMarkings.TryGetCategory(category, out var markings)
-            || markings.Count > index)
+            || index >= markings.Count)
         {
             return;
         }
