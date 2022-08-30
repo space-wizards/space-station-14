@@ -9,18 +9,18 @@
 		{"name": "LLeg_Brute_20", "directions": 4},
 		{"name": "RArm_Brute_20", "directions": 4},
 		{"name": "RLeg_Brute_20", "directions": 4},
-		{"name": "Torso_Brute_20", "directions": 4},
+		{"name": "Chest_Brute_20", "directions": 4},
 		{"name": "Head_Brute_40", "directions": 4},
 		{"name": "LArm_Brute_40", "directions": 4},
 		{"name": "LLeg_Brute_40", "directions": 4},
 		{"name": "RArm_Brute_40", "directions": 4},
 		{"name": "RLeg_Brute_40", "directions": 4},
-		{"name": "Torso_Brute_40", "directions": 4},
+		{"name": "Chest_Brute_40", "directions": 4},
 		{"name": "Head_Brute_100", "directions": 4},
 		{"name": "LArm_Brute_100", "directions": 4},
 		{"name": "LLeg_Brute_100", "directions": 4},
 		{"name": "RArm_Brute_100", "directions": 4},
 		{"name": "RLeg_Brute_100", "directions": 4},
-		{"name": "Torso_Brute_100", "directions": 4}
+		{"name": "Chest_Brute_100", "directions": 4}
 	]
 }

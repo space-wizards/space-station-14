@@ -9,18 +9,18 @@
 		{"name": "LLeg_Burn_20", "directions": 4},
 		{"name": "RArm_Burn_20", "directions": 4},
 		{"name": "RLeg_Burn_20", "directions": 4},
-		{"name": "Torso_Burn_20", "directions": 4},
+		{"name": "Chest_Burn_20", "directions": 4},
 		{"name": "Head_Burn_40", "directions": 4},
 		{"name": "LArm_Burn_40", "directions": 4},
 		{"name": "LLeg_Burn_40", "directions": 4},
 		{"name": "RArm_Burn_40", "directions": 4},
 		{"name": "RLeg_Burn_40", "directions": 4},
-		{"name": "Torso_Burn_40", "directions": 4},
+		{"name": "Chest_Burn_40", "directions": 4},
 		{"name": "Head_Burn_100", "directions": 4},
 		{"name": "LArm_Burn_100", "directions": 4},
 		{"name": "LLeg_Burn_100", "directions": 4},
 		{"name": "RArm_Burn_100", "directions": 4},
 		{"name": "RLeg_Burn_100", "directions": 4},
-		{"name": "Torso_Burn_100", "directions": 4}
+		{"name": "Chest_Burn_100", "directions": 4}
 	]
 }
