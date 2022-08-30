@@ -24,15 +24,15 @@ public sealed partial class MagicMirrorWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
 
-        HairPicker.OnMarkingSelect += OnHairSelected;
-        HairPicker.OnColorChanged += OnHairColorChanged;
-        HairPicker.OnSlotRemove += OnHairSlotRemoved;
-        HairPicker.OnSlotAdd += OnHairSlotAdded;
+        HairPicker.OnMarkingSelect += args => OnHairSelected!(args);
+        HairPicker.OnColorChanged += args => OnHairColorChanged!(args);
+        HairPicker.OnSlotRemove += args => OnHairSlotRemoved!(args);
+        HairPicker.OnSlotAdd += delegate { OnHairSlotAdded!(); };
 
-        FacialHairPicker.OnMarkingSelect += OnFacialHairSelected;
-        FacialHairPicker.OnColorChanged += OnFacialHairColorChanged;
-        FacialHairPicker.OnSlotRemove += OnFacialHairSlotRemoved;
-        FacialHairPicker.OnSlotAdd += OnFacialHairSlotAdded;
+        FacialHairPicker.OnMarkingSelect += args => OnFacialHairSelected!(args);
+        FacialHairPicker.OnColorChanged += args => OnFacialHairColorChanged!(args);
+        FacialHairPicker.OnSlotRemove += args => OnFacialHairSlotRemoved!(args);
+        FacialHairPicker.OnSlotAdd += delegate { OnFacialHairSlotAdded!(); };
     }
 
     public void UpdateState(MagicMirrorUiData state)

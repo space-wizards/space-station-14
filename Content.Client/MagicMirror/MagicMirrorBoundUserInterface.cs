@@ -18,8 +18,6 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 
         _window = new();
 
-        _window.OpenCentered();
-
         _window.OnHairSelected += tuple => SelectHair(MagicMirrorCategory.Hair, tuple.id, tuple.slot);
         _window.OnHairColorChanged += args => ChangeColor(MagicMirrorCategory.Hair, args.marking, args.slot);
         _window.OnHairSlotAdded += delegate() { AddSlot(MagicMirrorCategory.Hair); };
@@ -30,6 +28,8 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
             args => ChangeColor(MagicMirrorCategory.FacialHair, args.marking, args.slot);
         _window.OnFacialHairSlotAdded += delegate() { AddSlot(MagicMirrorCategory.FacialHair); };
         _window.OnFacialHairSlotRemoved += args => RemoveSlot(MagicMirrorCategory.FacialHair, args);
+
+        _window.OpenCentered();
     }
 
     private void SelectHair(MagicMirrorCategory category, string marking, int slot)
