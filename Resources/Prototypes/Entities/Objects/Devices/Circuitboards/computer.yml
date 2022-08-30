@@ -29,6 +29,8 @@
   name: power monitoring computer board
   description: A computer printed circuit board for a power monitoring computer.
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerPowerMonitoring
 
@@ -38,6 +40,8 @@
   name: medical records computer board
   description: A computer printed circuit board for a medical records computer.
   components:
+    - type: Sprite
+      state: cpu_medical
     - type: ComputerBoard
       prototype: ComputerMedicalRecords
 
@@ -47,6 +51,8 @@
   name: criminal records computer board
   description: A computer printed circuit board for a criminal records computer.
   components:
+    - type: Sprite
+      state: cpu_security
     - type: ComputerBoard
       prototype: ComputerCriminalRecords
 
@@ -56,6 +62,8 @@
   name: supply ordering computer board
   description: A computer printed circuit board for a supply ordering console.
   components:
+    - type: Sprite
+      state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerCargoOrders
     - type: StaticPrice
@@ -67,6 +75,8 @@
   name: supply request computer board
   description: A computer printed circuit board for a supply request console.
   components:
+    - type: Sprite
+      state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerCargoOrders
 
@@ -102,6 +112,8 @@
   id: PowerMonitoringComputerCircuitboard
   name: power monitoring computer board
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerPowerMonitoring
 
@@ -111,6 +123,8 @@
   name: R&D computer board
   description: A computer printed circuit board for a R&D console.
   components:
+    - type: Sprite
+      state: cpu_science
     - type: ComputerBoard
       prototype: ComputerResearchAndDevelopment
 
@@ -129,6 +143,8 @@
   name: ID card computer board
   description: A computer printed circuit board for an ID card console.
   components:
+    - type: Sprite
+      state: cpu_command
     - type: ComputerBoard
       prototype: ComputerId
     - type: StaticPrice
@@ -140,6 +156,8 @@
   name: body scanner computer board
   description: A computer printed circuit board for a body scanner console.
   components:
+    - type: Sprite
+      state: cpu_medical
     - type: ComputerBoard
       prototype: computerBodyScanner
 
@@ -149,6 +167,8 @@
   name: communications computer board
   description: A computer printed circuit board for a communications console.
   components:
+    - type: Sprite
+      state: cpu_command
     - type: ComputerBoard
       prototype: ComputerComms
 
@@ -175,6 +195,8 @@
   name: solar control computer board
   description: A computer printed circuit board for a solar control console.
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerSolarControl
 
@@ -202,6 +224,8 @@
   name: PA control box computer board
   description: A computer printed circuit board for a particle accelerator control box.
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ParticleAcceleratorControlBoxUnfinished
 
@@ -229,5 +253,7 @@
   name: cloning console computer board
   description: A computer printed circuit board for a cloning console.
   components:
+    - type: Sprite
+      state: cpu_medical
     - type: ComputerBoard
       prototype: ComputerCloningConsole

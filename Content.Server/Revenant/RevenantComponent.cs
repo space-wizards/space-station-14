@@ -4,6 +4,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using System.Threading;
 using Content.Shared.FixedPoint;
+using Content.Shared.Store;
 
 namespace Content.Server.Revenant;
 
@@ -17,11 +18,8 @@ public sealed class RevenantComponent : SharedRevenantComponent
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 Essence = 75;
 
-    /// <summary>
-    /// Used for purchasing shop items.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 StolenEssence = 0;
+    [DataField("stolenEssenceCurrencyPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<CurrencyPrototype>))]
+    public string StolenEssenceCurrencyPrototype = "StolenEssence";
 
     /// <summary>
     /// The entity's current max amount of essence. Can be increased
@@ -189,12 +187,6 @@ public sealed class RevenantComponent : SharedRevenantComponent
     [ViewVariables(VVAccess.ReadWrite), DataField("malfunctionRadius")]
     public float MalfunctionRadius = 3.5f;
     #endregion
-
-    /// <summary>
-    /// Stores all of the currently unlockable abilities in the shop.
-    /// </summary>
-    [ViewVariables]
-    public Dictionary<RevenantStoreListingPrototype, bool> Listings = new ();
 }
 
 public sealed class SoulSearchDoAfterComplete : EntityEventArgs

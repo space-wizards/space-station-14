@@ -7,7 +7,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 {
     private GeneralStationRecordConsoleWindow? _window = default!;
 
-    public GeneralStationRecordConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public GeneralStationRecordConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {}
 
     protected override void Open()

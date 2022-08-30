@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesChef
   name: chef shoes
   description: Sturdy shoes that minimize injury from falling objects or knives.
@@ -10,7 +10,7 @@
     sprite: Clothing/Shoes/Specific/chef.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesClown
   name: clown shoes
   description: "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -24,7 +24,7 @@
       collection: FootstepClown
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesBling
   name: bling clown shoes
   description: Made of refined bananium and shined with the pulp of a fresh banana peel. These make a flashy statement.
@@ -44,7 +44,7 @@
     color: "#FFD800"
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesCult
   name: cult shoes
   description: A pair of boots worn by the followers of Nar'Sie.
@@ -67,7 +67,7 @@
   - type: NoSlip
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesSpaceNinja
   name: space ninja shoes
   description: A pair of nano-enhanced boots with built-in magnetic suction cups.
@@ -79,7 +79,7 @@
   - type: NoSlip
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesSwat
   name: swat shoes
   description: When you want to turn up the heat.
@@ -90,7 +90,7 @@
     sprite: Clothing/Shoes/Specific/swat.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesWizard
   name: wizard shoes
   description: A pair of magic shoes.

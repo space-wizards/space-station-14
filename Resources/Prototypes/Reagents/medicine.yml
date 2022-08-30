@@ -407,6 +407,11 @@
         damage:
           types:
             Poison: 3
+      - !type:ChemVomit
+        probability: 0.15
+        conditions:
+          - !type:ReagentThreshold
+            min: 30
       - !type:GenericStatusEffect
         key: PressureImmunity
         component: PressureImmunity
