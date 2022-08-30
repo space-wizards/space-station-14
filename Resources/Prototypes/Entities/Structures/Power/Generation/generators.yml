@@ -160,6 +160,8 @@
   - type: PowerSupplier
     supplyRate: 0
   - type: SolidFuelGenerator
+    targetPower: 2000
+    optimalPower: 2000
   - type: ActivatableUI
     key: enum.GeneratorComponentUiKey.Key
   - type: UserInterface
@@ -181,6 +183,8 @@
   suffix: Uranium, 15kW
   components:
   - type: SolidFuelGenerator
+    targetPower: 2000
+    optimalPower: 2000
     optimalBurnRate: 0.00208333333
     fuelMaterial: Uranium
   - type: ActivatableUI
