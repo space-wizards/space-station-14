@@ -1,4 +1,5 @@
-﻿using Content.Shared.Movement.Systems;
+using Content.Shared.Inventory;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
@@ -15,7 +16,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<ClothingSpeedModifierComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
+        SubscribeLocalEvent<ClothingSpeedModifierComponent, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshMoveSpeed);
     }
 
     // Public API
@@ -60,11 +61,11 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         }
     }
 
-    private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
         if (!component.Enabled)
             return;
 
-        args.ModifySpeed(component.WalkModifier, component.SprintModifier);
+        args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
     }
 }
