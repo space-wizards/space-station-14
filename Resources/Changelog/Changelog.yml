@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Holofans now use power cells and not a custom recharge system., type: Tweak}
-  id: 1703
-  time: '2022-06-16T08:30:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Power cell bloat has been removed as it's never been used. Only small
       cells remain., type: Remove}
   id: 1704
@@ -2931,3 +2926,9 @@ Entries:
   - {message: The Cargo Tech and QM job icons have been swapped., type: Fix}
   id: 2202
   time: '2022-08-30T02:39:23.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Silicons will no longer take damage from glass shards. Flying mobs are
+      still bugged., type: Fix}
+  id: 2203
+  time: '2022-08-30T06:15:25.0000000+00:00'
