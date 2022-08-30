@@ -257,14 +257,14 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             {
                 var layerCount = spriteComponent.AllLayers.Count();
                 var index = spriteComponent.LayerMapGet(layer);
-                var layerState = spriteComponent.LayerGetState(index).ToString()!;
+                // var layerState = spriteComponent.LayerGetState(index).ToString()!;
 
                 if (index + 1 != layerCount)
                 {
                     index += 1;
                 }
 
-                damageVisComp.LayerMapKeyStates.Add(layer, layerState);
+                damageVisComp.LayerMapKeyStates.Add(layer, layer.ToString()!);
 
                 // If we're an overlay, and we're targeting groups,
                 // we reserve layers per damage group.
@@ -274,7 +274,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                     {
                         AddDamageLayerToSprite(spriteComponent,
                             sprite,
-                            $"{layerState}_{group}_{damageVisComp.Thresholds[1]}",
+                            $"{layer}_{group}_{damageVisComp.Thresholds[1]}",
                             $"{layer}{group}",
                             index);
                     }
@@ -288,7 +288,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                 {
                     AddDamageLayerToSprite(spriteComponent,
                         damageVisComp.DamageOverlay,
-                        $"{layerState}_{damageVisComp.Thresholds[1]}",
+                        $"{layer}_{damageVisComp.Thresholds[1]}",
                         $"{layer}trackDamage",
                         index);
                     damageVisComp.DisabledLayers.Add(layer, false);
