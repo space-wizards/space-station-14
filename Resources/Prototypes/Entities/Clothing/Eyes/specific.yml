@@ -5,6 +5,8 @@
   description: Useful both for security and cargonia.
   suffix: Chameleon
   components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
       netsync: false

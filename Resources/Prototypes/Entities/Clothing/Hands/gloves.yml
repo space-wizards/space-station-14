@@ -242,6 +242,8 @@
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
   description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
   components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Hands/Gloves/Color/black.rsi
     - type: Clothing
