@@ -83,10 +83,7 @@ public sealed class RulesManager : SharedRulesManager
 
     public Control RulesSection()
     {
-        if (rulesSection.Disposed)
-        {
-            rulesSection = new InfoSection("", "", false);
-        }
+        rulesSection = new InfoSection("", "", false);
         UpdateRules();
         return rulesSection;
     }
