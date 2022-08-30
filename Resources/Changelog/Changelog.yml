@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Shuttles now have a docking camera to make docking easier., type: Add}
-  id: 1700
-  time: '2022-06-16T05:28:17.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Total door hacking time reduced from 5s to 2.5s, type: Tweak}
   id: 1701
   time: '2022-06-16T06:14:35.0000000+00:00'
@@ -2930,3 +2925,9 @@ Entries:
   - {message: Added biomass material and biomass reclaimers., type: Add}
   id: 2199
   time: '2022-08-30T02:31:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The zombie midround event now just starts zombie mode., type: Add}
+  - {message: Zombie melee infection rates have been lowered., type: Tweak}
+  id: 2200
+  time: '2022-08-30T02:35:19.0000000+00:00'
