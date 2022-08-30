@@ -57,6 +57,6 @@
   description: A dummy reptilian meant to be used in character setup.
   components:
   - type: Humanoid
-    species: Lizard
+    species: Reptilian
 
 #Weh
