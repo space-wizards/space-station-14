@@ -17,6 +17,7 @@ namespace Content.Server.UserInterface
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {
@@ -56,11 +57,7 @@ namespace Content.Server.UserInterface
             if (!TryComp(args.Performer, out ActorComponent? actor))
                 return;
 
-            if (!component.TryGetBoundUserInterface(args.Key, out var bui))
-                return;
-
-            bui.Toggle(actor.PlayerSession);
-            args.Handled = true;
+            args.Handled = _uiSystem.TryToggleUi(uid, args.Key, actor.PlayerSession);
         }
 
         private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)

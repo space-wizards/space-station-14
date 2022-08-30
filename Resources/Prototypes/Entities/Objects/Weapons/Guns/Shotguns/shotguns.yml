@@ -11,6 +11,7 @@
       - state: icon
         map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
+    # If you update this also update the bulldog's size.
     size: 30
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
@@ -37,6 +38,10 @@
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: Bulldog

@@ -10,6 +10,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -46,7 +47,6 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
@@ -120,9 +120,8 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
         {
-            var coords = Transform(msg.ItemUid).Coordinates;
             // client sanitization
-            if (!ValidateClientInput(args.SenderSession, coords, msg.ItemUid, out var user))
+            if (!TryComp(msg.ItemUid, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, msg.ItemUid, out var user))
             {
                 Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
@@ -135,7 +134,7 @@ namespace Content.Shared.Interaction
 
             if (msg.AltInteract)
                 // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(user.Value, coords, msg.ItemUid, msg.AltInteract);
+                UserInteraction(user.Value, itemXform.Coordinates, msg.ItemUid, msg.AltInteract);
             else
                 // User used 'E'. We want to activate it, not simulate clicking on the item
                 InteractionActivate(user.Value, msg.ItemUid);
@@ -230,7 +229,14 @@ namespace Content.Shared.Interaction
 
             // Does the user have hands?
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
+            {
+                if (target != null)
+                {
+                    var ev = new InteractNoHandEvent(user, target.Value);
+                    RaiseLocalEvent(user, ev, true);
+                }
                 return;
+            }
 
             var inRangeUnobstructed = target == null
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
@@ -600,7 +606,7 @@ namespace Content.Shared.Interaction
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public async void InteractUsing(
+        public void InteractUsing(
             EntityUid user,
             EntityUid used,
             EntityUid target,
@@ -629,7 +635,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Used when clicking on an entity resulted in no other interaction. Used for low-priority interactions.
         /// </summary>
-        public async void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
+        public void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
             if (target is {Valid: false})
                 target = null;
@@ -792,7 +798,16 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(item, dropMsg, true);
             if (dropMsg.Handled)
                 _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
-            Transform(item).LocalRotation = Angle.Zero;
+
+            // If the dropper is rotated then use their targetrelativerotation as the drop rotation
+            var rotation = Angle.Zero;
+
+            if (TryComp<InputMoverComponent>(user, out var mover))
+            {
+                rotation = mover.TargetRelativeRotation;
+            }
+
+            Transform(item).LocalRotation = rotation;
         }
         #endregion
 
@@ -826,6 +841,13 @@ namespace Content.Shared.Interaction
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with no attached entity. Session={session}");
+                return false;
+            }
+
+            if (!Exists(userEntity))
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
                 return false;
             }
 

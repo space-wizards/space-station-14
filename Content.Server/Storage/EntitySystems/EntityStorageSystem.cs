@@ -50,7 +50,7 @@ public sealed class EntityStorageSystem : EntitySystem
         component.Contents.OccludesLight = component.OccludesLight;
 
         if (TryComp<ConstructionComponent>(uid, out var construction))
-            _construction.AddContainer(uid, nameof(EntityStorageComponent), construction);
+            _construction.AddContainer(uid, ContainerName, construction);
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var placeable))
             _placeableSurface.SetPlaceable(uid, component.Open, placeable);
@@ -208,9 +208,9 @@ public sealed class EntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool TryOpenStorage(EntityUid user, EntityUid target)
+    public bool TryOpenStorage(EntityUid user, EntityUid target, bool silent = false)
     {
-        if (!CanOpen(user, target))
+        if (!CanOpen(user, target, silent))
             return false;
 
         OpenStorage(target);

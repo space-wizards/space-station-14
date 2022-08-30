@@ -1232,13 +1232,10 @@
     states:
       Alive:
         Base: snake
-  - type: Appearance
-    visuals:
-    - type: RotationVisualizer
-# It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
-     # looks stupid, Rotation visualizer for now
-     # dead: dead
-     # crit: dead
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat

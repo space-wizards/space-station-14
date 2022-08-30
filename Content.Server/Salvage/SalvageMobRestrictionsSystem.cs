@@ -1,11 +1,13 @@
 using Content.Shared.Damage;
 using Content.Server.Body.Components;
+using Content.Server.MobState;
 
 namespace Content.Server.Salvage;
 
 public sealed class SalvageMobRestrictionsSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -49,6 +51,7 @@ public sealed class SalvageMobRestrictionsSystem : EntitySystem
         foreach (var target in component.MobsToKill)
         {
             if (Deleted(target, metaQuery)) continue;
+            if (_mobStateSystem.IsDead(target)) continue; // DONT WASTE BIOMASS
             if (bodyQuery.TryGetComponent(target, out var body))
             {
                 // Just because.

@@ -32,7 +32,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
     [ViewVariables]
@@ -156,7 +155,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             aabb.Union(aabbs[i]);
         }
 
-        var (_, gridId) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
+        var (_, gridId) = _mapLoader.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
         {
             Offset = aabb.Center + MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f
         });

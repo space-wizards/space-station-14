@@ -17,7 +17,7 @@ namespace Content.Client.Chemistry.UI
         private ReagentDispenserWindow? _window;
         private ReagentDispenserBoundUserInterfaceState? _lastState;
 
-        public ReagentDispenserBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ReagentDispenserBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

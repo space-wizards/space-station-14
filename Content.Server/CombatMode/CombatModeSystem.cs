@@ -104,7 +104,7 @@ namespace Content.Server.CombatMode
             SoundSystem.Play(component.DisarmSuccessSound.GetSound(), filterAll, args.Performer, AudioHelpers.WithVariation(0.025f));
             _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
-            var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = HasComp<DisarmProneComponent>(args.Target) ? 1.0f : chance };
+            var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = (1 - chance) };
             RaiseLocalEvent(args.Target, eventArgs, true);
         }
 

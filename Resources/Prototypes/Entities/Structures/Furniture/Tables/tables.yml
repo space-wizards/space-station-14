@@ -45,7 +45,7 @@
   - type: Construction
     graph: Table
     node: TableFrame
-    
+
 - type: entity
   id: CounterWoodFrame
   parent: BaseStructure
@@ -216,6 +216,12 @@
   - type: Construction
     graph: Table
     node: TableReinforced
+  - type: Climbable
+    # Reinforced tables are extra tough
+    bonkDamage:
+      types:
+        Blunt: 8
+    bonkTime: 3
 
 - type: entity
   id: TableGlass
@@ -490,7 +496,7 @@
   - type: Construction
     graph: Table
     node: CounterWood
-      
+
 - type: entity
   id: TableCounterMetal
   parent: CounterMetalFrame

@@ -19,7 +19,7 @@ namespace Content.Client.Atmos.UI
         private GasMixerWindow? _window;
         private const float MaxPressure = Atmospherics.MaxOutputPressure;
 
-        public GasMixerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public GasMixerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

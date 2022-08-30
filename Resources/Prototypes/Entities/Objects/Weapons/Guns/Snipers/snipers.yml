@@ -32,6 +32,10 @@
     whitelist:
       tags:
       - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: Kardashev-Mosin

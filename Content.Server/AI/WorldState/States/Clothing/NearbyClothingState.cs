@@ -21,7 +21,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
             {
                 return result;
             }
-            var containerSystem = IoCManager.Resolve<ContainerSystem>();
+            var containerSystem = entMan.EntitySysManager.GetEntitySystem<ContainerSystem>();
             foreach (var entity in Visibility.GetNearestEntities(entMan.GetComponent<TransformComponent>(Owner).Coordinates, typeof(ClothingComponent), controller.VisionRadius))
             {
                 if (containerSystem.TryGetContainingContainer(entity, out var container))

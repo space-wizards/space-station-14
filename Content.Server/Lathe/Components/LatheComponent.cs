@@ -1,10 +1,7 @@
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
-using Content.Shared.Whitelist;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Content.Shared.Materials;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Lathe.Components
@@ -12,20 +9,6 @@ namespace Content.Server.Lathe.Components
     [RegisterComponent]
     public sealed class LatheComponent : SharedLatheComponent
     {
-        /// <summary>
-        /// Whitelist for specifying the kind of materials that can be insert into the lathe
-        /// </summary>
-        [ViewVariables]
-        [DataField("whitelist")] 
-        public EntityWhitelist? LatheWhitelist;
-
-        /// <summary>
-        /// Whitelist generated on runtime for what items are specifically used for the lathe's recipes.
-        /// </summary>
-        [ViewVariables]
-        [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
-        public List<string> MaterialWhiteList = new();
-
         /// <summary>
         /// The lathe's construction queue
         /// </summary>
@@ -49,12 +32,6 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         [DataField("producingSound")]
         public SoundSpecifier? ProducingSound;
-        
-        /// <summary>
-        /// The sound that plays when inserting an item into the lathe, if any
-        /// </summary>
-        [DataField("insertingSound")]
-        public SoundSpecifier? InsertingSound;
 
         /// <summmary>
         /// The lathe's UI.
