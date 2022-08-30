@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Total door hacking time reduced from 5s to 2.5s, type: Tweak}
-  id: 1701
-  time: '2022-06-16T06:14:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Nerfed gun damage by 30% across the board., type: Tweak}
   id: 1702
   time: '2022-06-16T06:15:08.0000000+00:00'
@@ -2931,3 +2926,8 @@ Entries:
   - {message: Zombie melee infection rates have been lowered., type: Tweak}
   id: 2200
   time: '2022-08-30T02:35:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed issues with ID cards displaying whitespace and empty names., type: Fix}
+  id: 2201
+  time: '2022-08-30T02:38:01.0000000+00:00'
