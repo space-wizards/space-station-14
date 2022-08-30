@@ -91,6 +91,9 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 
         EnsureDefaultMarkings(uid, humanoid);
 
+        humanoid.Gender = profile.Gender;
+        humanoid.Age = profile.Age;
+
         Synchronize(uid);
     }
 

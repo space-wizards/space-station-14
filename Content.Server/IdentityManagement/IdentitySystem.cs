@@ -127,9 +127,8 @@ public class IdentitySystem : SharedIdentitySystem
         // Always use their actual age and gender, since that can't really be changed by an ID.
         if (Resolve(target, ref appearance, false))
         {
-            // TODO: Fix this before merge
-            gender = default; // appearance.Gender;
-            age = 30; // appearance.Age;
+            gender = appearance.Gender;
+            age = appearance.Age;
         }
 
         var trueName = Name(target);
