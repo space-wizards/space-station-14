@@ -107,6 +107,8 @@
   suffix: Chameleon
   description: Stylish black shoes.
   components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Shoes/Color/black.rsi
       netsync: false

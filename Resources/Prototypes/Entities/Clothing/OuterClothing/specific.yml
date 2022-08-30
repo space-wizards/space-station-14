@@ -5,6 +5,8 @@
   description: A thick vest with a rubbery, water-resistant shell.
   suffix: Chameleon
   components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/OuterClothing/Vests/vest.rsi
       netsync: false
