@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
 
 namespace Content.Server.Projectiles
@@ -32,7 +33,7 @@ namespace Content.Server.Projectiles
             args.State = new ProjectileComponentState(component.Shooter, component.IgnoreShooter);
         }
 
-        private void OnStartCollide(EntityUid uid, ProjectileComponent component, StartCollideEvent args)
+        private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
         {
             // This is so entities that shouldn't get a collision are ignored.
             if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)

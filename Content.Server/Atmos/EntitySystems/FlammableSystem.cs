@@ -20,7 +20,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -73,7 +76,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         }
 
-        private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, StartCollideEvent args)
+        private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, ref StartCollideEvent args)
         {
             var otherFixture = args.OtherFixture.Body.Owner;
 
@@ -116,7 +119,7 @@ namespace Content.Server.Atmos.EntitySystems
             args.Handled = true;
         }
 
-        private void OnCollideEvent(EntityUid uid, FlammableComponent flammable, StartCollideEvent args)
+        private void OnCollideEvent(EntityUid uid, FlammableComponent flammable, ref StartCollideEvent args)
         {
             var otherUid = args.OtherFixture.Body.Owner;
 

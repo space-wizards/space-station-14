@@ -20,6 +20,7 @@ using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

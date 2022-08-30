@@ -3,7 +3,10 @@ using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Singularity
 {
@@ -49,13 +52,12 @@ namespace Content.Shared.Singularity
             SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(OnPreventCollide);
         }
 
-        protected void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        protected void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, ref PreventCollideEvent args)
         {
-            PreventCollide(uid, component, args);
+            PreventCollide(uid, component, ref args);
         }
 
-        protected virtual bool PreventCollide(EntityUid uid, SharedSingularityComponent component,
-            PreventCollideEvent args)
+        protected virtual bool PreventCollide(EntityUid uid, SharedSingularityComponent component, ref PreventCollideEvent args)
         {
             var otherUid = args.BodyB.Owner;
 
@@ -63,7 +65,7 @@ namespace Content.Shared.Singularity
             if (EntityManager.HasComponent<IMapGridComponent>(otherUid) ||
                 EntityManager.HasComponent<SharedGhostComponent>(otherUid))
             {
-                args.Cancel();
+                args.Cancelled = true;
                 return true;
             }
 
@@ -74,7 +76,7 @@ namespace Content.Shared.Singularity
             {
                 if (component.Level > 4)
                 {
-                    args.Cancel();
+                    args.Cancelled = true;
                 }
 
                 return true;

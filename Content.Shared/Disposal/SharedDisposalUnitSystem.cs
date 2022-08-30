@@ -7,6 +7,7 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Disposal
@@ -28,7 +29,7 @@ namespace Content.Shared.Disposal
             SubscribeLocalEvent<SharedDisposalUnitComponent, CanDragDropOnEvent>(OnCanDragDropOn);
         }
 
-        private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
+        private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, ref PreventCollideEvent args)
         {
             var otherBody = args.BodyB.Owner;
 
@@ -36,13 +37,13 @@ namespace Content.Shared.Disposal
             if (EntityManager.HasComponent<ItemComponent>(otherBody) &&
                 !EntityManager.HasComponent<ThrownItemComponent>(otherBody))
             {
-                args.Cancel();
+                args.Cancelled = true;
                 return;
             }
 
             if (component.RecentlyEjected.Contains(otherBody))
             {
-                args.Cancel();
+                args.Cancelled = true;
             }
         }
 

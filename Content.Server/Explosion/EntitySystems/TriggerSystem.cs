@@ -19,6 +19,8 @@ using Content.Shared.Payload.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -86,7 +88,7 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
-        private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
+        private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
 			if(args.OurFixture.ID == component.FixtureID)
 				Trigger(component.Owner);

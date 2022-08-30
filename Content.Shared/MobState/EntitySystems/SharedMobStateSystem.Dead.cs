@@ -1,4 +1,5 @@
 using Content.Shared.FixedPoint;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.MobState.EntitySystems;
 

@@ -6,6 +6,7 @@ using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Slippery
 {

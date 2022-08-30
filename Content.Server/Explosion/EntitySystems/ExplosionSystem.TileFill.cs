@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Explosion;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -12,7 +13,7 @@ namespace Content.Server.Explosion.EntitySystems;
 public sealed partial class ExplosionSystem : EntitySystem
 {
     /// <summary>
-    ///     This is the main explosion generating function. 
+    ///     This is the main explosion generating function.
     /// </summary>
     /// <param name="epicenter">The center of the explosion</param>
     /// <param name="typeID">The explosion type. this determines the explosion damage</param>
@@ -124,7 +125,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (totalIntensity < stepSize)
             // Bit anticlimactic. All that set up for nothing....
             return (1, new List<float> { totalIntensity }, spaceData, gridData, spaceMatrix);
-        
+
         // These variables keep track of the total intensity we have distributed
         List<int> tilesInIteration = new() { 1 };
         List<float> iterationIntensity = new() {stepSize};

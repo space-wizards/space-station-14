@@ -1,5 +1,7 @@
 ﻿using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {

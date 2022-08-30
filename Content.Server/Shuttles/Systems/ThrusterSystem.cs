@@ -15,7 +15,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -418,7 +421,7 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        private void OnStartCollide(EntityUid uid, ThrusterComponent component, StartCollideEvent args)
+        private void OnStartCollide(EntityUid uid, ThrusterComponent component, ref StartCollideEvent args)
         {
             if (args.OurFixture.ID != BurnFixture) return;
 
@@ -426,7 +429,7 @@ namespace Content.Server.Shuttles.Systems
             component.Colliding.Add((args.OtherFixture.Body).Owner);
         }
 
-        private void OnEndCollide(EntityUid uid, ThrusterComponent component, EndCollideEvent args)
+        private void OnEndCollide(EntityUid uid, ThrusterComponent component, ref EndCollideEvent args)
         {
             if (args.OurFixture.ID != BurnFixture) return;
 
