@@ -230,8 +230,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             // the layer key just doesn't exist, we skip it.
             foreach (var key in damageVisComp.TargetLayers)
             {
-                if (!spriteComponent.LayerMapTryGet(key, out var index)
-                    || spriteComponent.LayerGetState(index).ToString() == null)
+                if (!spriteComponent.LayerMapTryGet(key, out var index))
                 {
                     Logger.WarningS(SawmillName, $"Layer at key {key} was invalid for entity {entity}.");
                     continue;
@@ -253,7 +252,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             // Otherwise, we start reserving layers. Since the filtering
             // loop above ensures that all of these layers are not null,
             // and have valid state IDs, there should be no issues.
-            foreach (object layer in damageVisComp.TargetLayerMapKeys)
+            foreach (var layer in damageVisComp.TargetLayerMapKeys)
             {
                 var layerCount = spriteComponent.AllLayers.Count();
                 var index = spriteComponent.LayerMapGet(layer);
@@ -264,7 +263,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                     index += 1;
                 }
 
-                damageVisComp.LayerMapKeyStates.Add(layer, layer.ToString()!);
+                damageVisComp.LayerMapKeyStates.Add(layer, layer.ToString());
 
                 // If we're an overlay, and we're targeting groups,
                 // we reserve layers per damage group.
