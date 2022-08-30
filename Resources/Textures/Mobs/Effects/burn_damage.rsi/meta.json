@@ -21,6 +21,6 @@
 		{"name": "LLeg_Burn_100", "directions": 4},
 		{"name": "RArm_Burn_100", "directions": 4},
 		{"name": "RLeg_Burn_100", "directions": 4},
-		{"name": "Torso_Burn_100", "directions": 4},
+		{"name": "Torso_Burn_100", "directions": 4}
 	]
 }

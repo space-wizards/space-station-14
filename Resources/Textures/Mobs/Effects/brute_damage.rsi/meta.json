@@ -21,6 +21,6 @@
 		{"name": "LLeg_Brute_100", "directions": 4},
 		{"name": "RArm_Brute_100", "directions": 4},
 		{"name": "RLeg_Brute_100", "directions": 4},
-		{"name": "Torso_Brute_100", "directions": 4},
+		{"name": "Torso_Brute_100", "directions": 4}
 	]
 }
