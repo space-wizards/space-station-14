@@ -301,6 +301,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
 
         humanoid.CurrentMarkings.Remove(category, index);
+
+        Synchronize(uid, humanoid);
     }
 
     public void SetMarkingId(EntityUid uid, MarkingCategories category, int index, string markingId, HumanoidComponent? humanoid = null)
@@ -321,6 +323,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
 
         humanoid.CurrentMarkings.Replace(category, index, marking);
+
+        Synchronize(uid, humanoid);
     }
 
     public void SetMarkingColor(EntityUid uid, MarkingCategories category, int index, List<Color> colors,
@@ -338,6 +342,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         {
             markings[index].SetColor(i, colors[i]);
         }
+
+        Synchronize(uid, humanoid);
     }
 
     private void EnsureDefaultMarkings(EntityUid uid, HumanoidComponent? humanoid)
