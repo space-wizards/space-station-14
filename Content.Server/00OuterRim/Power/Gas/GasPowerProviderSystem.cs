@@ -3,10 +3,9 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Content.Shared.Atmos;
 using Robust.Shared.Timing;
 
-namespace Content.Server._00OuterRim.Power.Generator;
+namespace Content.Server._00OuterRim.Power.Gas;
 
 /// <summary>
 /// This handles...
@@ -48,9 +47,9 @@ public sealed class GasPowerProviderSystem : EntitySystem
 
         if (pipe.Air.Temperature <= component.MaxTemperature)
         {
-            if (pipe.Air.Moles[(int) Gas.Plasma] > component.PlasmaMolesConsumedSec * timeDelta)
+            if (pipe.Air.Moles[(int) Shared.Atmos.Gas.Plasma] > component.PlasmaMolesConsumedSec * timeDelta)
             {
-                pipe.Air.AdjustMoles(Gas.Plasma, -component.PlasmaMolesConsumedSec * timeDelta);
+                pipe.Air.AdjustMoles(Shared.Atmos.Gas.Plasma, -component.PlasmaMolesConsumedSec * timeDelta);
                 SetPowered(uid, component, true);
             }
             else

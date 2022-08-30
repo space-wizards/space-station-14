@@ -1,3 +1,4 @@
+using Content.Server._00OuterRim.Power.Gas;
 using Content.Server._00OuterRim.Power.Generator;
 using Content.Server.Power.Components;
 
