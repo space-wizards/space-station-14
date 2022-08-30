@@ -30,6 +30,7 @@
   - type: Clickable
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
+    noRot: true
     layers:
     - state: mopbucket
     - state: mopbucket_water-1

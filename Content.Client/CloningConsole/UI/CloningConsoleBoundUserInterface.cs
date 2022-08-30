@@ -9,7 +9,7 @@ namespace Content.Client.CloningConsole.UI
     {
         private CloningConsoleWindow? _window;
 
-        public CloningConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public CloningConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

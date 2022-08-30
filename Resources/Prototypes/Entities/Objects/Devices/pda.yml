@@ -106,7 +106,7 @@
   parent: BasePDA
   id: MedicalInternPDA
   name: medical intern PDA
-  description: Why isn't it white?
+  description: Why isn't it white? Has a built-in health analyzer.
   components:
   - type: PDA
     id: MedicalInternIDCard
@@ -116,6 +116,8 @@
       state: pda-internmed
   - type: Icon
     state: pda-internmed
+  - type: HealthAnalyzer
+    scanDelay: 1.4
 
 - type: entity
   parent: BasePDA

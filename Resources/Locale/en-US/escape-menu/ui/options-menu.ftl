@@ -66,6 +66,7 @@ ui-options-bind-reset = Reset
 ui-options-key-prompt = Press a key...
 
 ui-options-header-movement = Movement
+ui-options-header-camera = Camera
 ui-options-header-interaction-basic = Basic Interaction
 ui-options-header-interaction-adv = Advanced Interaction
 ui-options-header-ui = User Interface
@@ -83,6 +84,10 @@ ui-options-function-move-left = Move Left
 ui-options-function-move-down = Move Down
 ui-options-function-move-right = Move Right
 ui-options-function-walk = Walk
+
+ui-options-function-camera-rotate-left = Rotate left
+ui-options-function-camera-rotate-right = Rotate right
+ui-options-function-camera-reset = Reset
 
 ui-options-function-use = Use
 ui-options-function-wide-attack = Wide attack
@@ -169,4 +174,8 @@ ui-options-function-shuttle-brake = Brake
 
 ## Network menu
 
-ui-options-net-interp-ratio = Network Smoothing
+ui-options-net-interp-ratio = State buffer size
+ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game
+                                      more resistant to packet-loss, however in doing
+                                      so it effectively adds slightly more latency and
+                                      requires the client to predict more future ticks.

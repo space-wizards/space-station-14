@@ -14,7 +14,7 @@
         prob: 0.5
       - id: ClothingShoesColorBrown
         prob: 0.7
-      - id: ClothingHeadHatCargosoft
+      - id: ClothingHeadHatQMsoft
         prob: 0.8
       - id: SupplyRequestComputerCircuitboard
       - id: SupplyComputerCircuitboard
