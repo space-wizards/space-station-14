@@ -48,7 +48,7 @@ namespace Content.Server.Medical
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
         {
             base.Initialize();
-            scannerComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"{scannerComponent.Name}-bodyContainer");
+            scannerComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"scanner-bodyContainer");
             _signalSystem.EnsureReceiverPorts(uid, MedicalScannerComponent.ScannerPort);
         }
 

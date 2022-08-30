@@ -1003,6 +1003,17 @@ namespace Content.Shared.CCVar
                 CVar.REPLICATED);
 
         /*
+         * Biomass
+         */
+
+        /// <summary>
+        ///     Enabled: Cloning has 70% cost and reclaimer will refuse to reclaim corpses with souls. (For LRP).
+        ///     Disabled: Cloning has full biomass cost and reclaimer can reclaim corpses with souls. (Playtested and balanced for MRP+).
+        /// </summary>
+        public static readonly CVarDef<bool> BiomassEasyMode =
+            CVarDef.Create("biomass.easy_mode", true, CVar.SERVERONLY);
+
+        /*
          * VIEWPORT
          */
 
