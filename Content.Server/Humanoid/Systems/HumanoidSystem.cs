@@ -309,7 +309,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             || !_markingManager.MarkingsByCategory(category).TryGetValue(markingId, out var markingPrototype)
             || !Resolve(uid, ref humanoid)
             || !humanoid.CurrentMarkings.TryGetCategory(category, out var markings)
-            || markings.Count >= index)
+            || index >= markings.Count)
         {
             return;
         }
@@ -329,7 +329,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         if (index < 0
             || !Resolve(uid, ref humanoid)
             || !humanoid.CurrentMarkings.TryGetCategory(category, out var markings)
-            || markings.Count > index)
+            || index >= markings.Count)
         {
             return;
         }
