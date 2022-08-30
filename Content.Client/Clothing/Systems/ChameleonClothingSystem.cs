@@ -86,6 +86,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void PrepareAllVariants()
     {
+        _data.Clear();
         var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
 
         foreach (var proto in prototypes)
