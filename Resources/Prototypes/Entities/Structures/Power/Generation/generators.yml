@@ -155,13 +155,14 @@
 - type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorPlasma
-  suffix: Plasma, 15kW
+  suffix: Plasma, 20hW
   components:
   - type: PowerSupplier
     supplyRate: 0
   - type: SolidFuelGenerator
     targetPower: 2000
     optimalPower: 2000
+  - type: SolidFuelGeneratorAdapter
   - type: ActivatableUI
     key: enum.GeneratorComponentUiKey.Key
   - type: UserInterface
@@ -180,12 +181,13 @@
 - type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorUranium
-  suffix: Uranium, 15kW
+  suffix: Uranium, 20hW
   components:
   - type: SolidFuelGenerator
     targetPower: 2000
     optimalPower: 2000
     optimalBurnRate: 0.00208333333
+  - type: SolidFuelGeneratorAdapter
     fuelMaterial: Uranium
   - type: ActivatableUI
     key: enum.GeneratorComponentUiKey.Key
@@ -203,6 +205,43 @@
     LayoutId: GeneratorUranium
   - type: Machine
     board: GeneratorUraniumMachineCircuitboard
+
+- type: entity
+  parent: [ BaseGenerator, ConstructibleMachine ]
+  id: GeneratorBiofuel
+  suffix: Biofuel, 20hW
+  components:
+    - type: PowerSupplier
+      supplyRate: 0
+    - type: SolidFuelGenerator
+      targetPower: 2000
+      optimalPower: 2000
+      optimalBurnRate: 0.00555555555 # 1/180
+    - type: ChemicalFuelGeneratorAdapter
+      chemConversionFactors:
+        Nutriment: 0.05
+        Flour: 0.05
+        Oats: 0.05
+        Vitamin: 0.1
+        Water: 0.0
+        JuiceCarrot: 0.05
+        PulpedBananaPeel: 0.2
+        Histamine: 0.0125
+    - type: ActivatableUI
+      key: enum.GeneratorComponentUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.GeneratorComponentUiKey.Key
+          type: GeneratorBoundUserInterface
+    - type: Sprite
+      sprite: Structures/Power/Generation/portable_generator.rsi
+      state: portgen2_1
+    - type: Wires
+      BoardName: "GeneratorBiofuel"
+      LayoutId: GeneratorBiofuel
+    - type: Machine
+      board: GeneratorBiofuelMachineCircuitboard
+
 
 - type: entity
   parent: BaseGeneratorWallmount

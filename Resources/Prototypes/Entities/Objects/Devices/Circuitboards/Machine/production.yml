@@ -361,6 +361,20 @@
         CableHV: 5
 
 - type: entity
+  id: GeneratorBiofuelMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generator (biofuel) machine board
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: GeneratorBiofuel
+      requirements:
+        Capacitor: 1
+      materialRequirements:
+        CableHV: 5
+
+- type: entity
   id: GeneratorUraniumMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: generator (uranium) machine board

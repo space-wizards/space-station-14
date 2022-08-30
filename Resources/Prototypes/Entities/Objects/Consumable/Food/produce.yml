@@ -12,6 +12,8 @@
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
+  - type: ChemicalFuelGeneratorDirectSource
+    solution: food
   - type: Extractable
     grindableSolutionName: food
 

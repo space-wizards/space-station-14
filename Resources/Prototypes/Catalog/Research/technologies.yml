@@ -315,6 +315,7 @@
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
+    - GeneratorBiofuelMachineCircuitboard
     - Signaller
     - SignalTrigger
 
@@ -331,6 +332,7 @@
   unlockedRecipes:
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
+    - GeneratorBiofuelMachineCircuitboard
 
 - type: technology
   name: technologies-applied-musicology

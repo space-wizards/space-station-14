@@ -279,6 +279,15 @@
      Glass: 350
 
 - type: latheRecipe
+  id: GeneratorBiofuelMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: GeneratorBiofuelMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 50
+    Glass: 350
+
+- type: latheRecipe
   id: WallmountGeneratorElectronics
   icon: Objects/Misc/module.rsi/id_mod.png
   result: WallmountGeneratorElectronics

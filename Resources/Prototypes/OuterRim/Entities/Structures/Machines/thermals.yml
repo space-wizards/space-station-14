@@ -16,7 +16,7 @@
       powerLoad: 5
     - type: ExtensionCableReceiver
     - type: ThermalTransmitter
-      watts: 100
+      watts: 400
     - type: Damageable
     - type: Clickable
     - type: Destructible

@@ -1,6 +1,8 @@
-﻿using Content.Server.Materials;
+﻿using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Interaction;
 using Content.Shared.OuterRim.Generator;
 using Robust.Server.GameObjects;
@@ -14,8 +16,49 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SharedSolidFuelGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, InteractUsingEvent>(OnSolidFuelAdapterInteractUsing);
+        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, InteractUsingEvent>(OnChemicalFuelAdapterInteractUsing);
         SubscribeLocalEvent<SharedSolidFuelGeneratorComponent, SetTargetPowerMessage>(OnTargetPowerSet);
+    }
+
+    private void OnChemicalFuelAdapterInteractUsing(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp(args.Used, out SolutionContainerManagerComponent? solutions) || !TryComp(uid, out SharedSolidFuelGeneratorComponent? generator))
+            return;
+
+        if (!(component.Whitelist?.IsValid(args.Used) ?? true))
+            return;
+
+        if (TryComp(args.Used, out ChemicalFuelGeneratorDirectSourceComponent? source))
+        {
+            if (!solutions.Solutions.ContainsKey(source.Solution))
+            {
+                Logger.Error($"Couldn't get solution {source.Solution} on {ToPrettyString(args.Used)}");
+                return;
+            }
+
+            var solution = solutions.Solutions[source.Solution];
+            generator.RemainingFuel += ReagentsToFuel(component, solution);
+            solution.RemoveAllSolution();
+            QueueDel(args.Used);
+        }
+    }
+
+    private float ReagentsToFuel(ChemicalFuelGeneratorAdapterComponent component, Solution solution)
+    {
+        var total = 0.0f;
+        foreach (var reagent in solution.Contents)
+        {
+            if (!component.ChemConversionFactors.ContainsKey(reagent.ReagentId))
+                continue;
+
+            total += reagent.Quantity.Float() * component.ChemConversionFactors[reagent.ReagentId];
+        }
+
+        return total;
     }
 
     private void OnTargetPowerSet(EntityUid uid, SharedSolidFuelGeneratorComponent component, SetTargetPowerMessage args)
@@ -23,16 +66,20 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         component.TargetPower = args.TargetPower * 100;
     }
 
-    private void OnInteractUsing(EntityUid uid, SharedSolidFuelGeneratorComponent component, InteractUsingEvent args)
+    private void OnSolidFuelAdapterInteractUsing(EntityUid uid, SolidFuelGeneratorAdapterComponent component, InteractUsingEvent args)
     {
-        if (!TryComp(args.Used, out MaterialComponent? mat) || !TryComp(args.Used, out StackComponent? stack))
+        if (args.Handled)
+            return;
+
+        if (!TryComp(args.Used, out MaterialComponent? mat) || !TryComp(args.Used, out StackComponent? stack) || !TryComp(uid, out SharedSolidFuelGeneratorComponent? generator))
             return;
 
         if (!mat.MaterialIds.Contains(component.FuelMaterial))
             return;
 
-        component.RemainingFuel += stack.Count;
+        generator.RemainingFuel += stack.Count;
         QueueDel(args.Used);
+        args.Handled = true;
         return;
     }
 
