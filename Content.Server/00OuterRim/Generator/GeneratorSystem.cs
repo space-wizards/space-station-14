@@ -1,4 +1,5 @@
-﻿using Content.Server.Chemistry.Components.SolutionManager;
+﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
@@ -44,6 +45,8 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             generator.RemainingFuel += ReagentsToFuel(component, solution);
             solution.RemoveAllSolution();
             QueueDel(args.Used);
+            args.Handled = true;
+            return;
         }
     }
 
