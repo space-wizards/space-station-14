@@ -5,3 +5,6 @@
   components:
   - type: Sprite
     netsync: false
+  - type: Tag
+    tags:
+      - WhitelistChameleon

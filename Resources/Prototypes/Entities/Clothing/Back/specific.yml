@@ -5,6 +5,8 @@
   description: You wear this on your back and put items into it.
   suffix: Chameleon
   components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Back/Backpacks/backpack.rsi
       netsync: false
