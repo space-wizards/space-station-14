@@ -5,9 +5,6 @@
   description: Regular black gloves that do not keep you from frying.
   suffix: Chameleon
   components:
-    - type: Tag
-      tags:
-        - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Hands/Gloves/Color/black.rsi
       netsync: false

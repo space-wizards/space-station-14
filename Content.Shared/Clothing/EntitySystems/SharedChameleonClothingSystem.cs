@@ -52,8 +52,8 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         if (proto.Abstract || proto.NoSpawn)
             return false;
 
-        // check if it isn't marked as invalid chameleon target
-        if (proto.TryGetComponent(out TagComponent? tags, _factory) && tags.Tags.Contains("IgnoreChameleon"))
+        // check if it is marked as valid chameleon target
+        if (!proto.TryGetComponent(out TagComponent? tags, _factory) || !tags.Tags.Contains("WhitelistChameleon"))
             return false;
 
         // check if it's valid clothing

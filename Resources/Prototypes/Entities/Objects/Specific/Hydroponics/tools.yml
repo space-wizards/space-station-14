@@ -45,9 +45,6 @@
   id: HydroponicsToolScythe
   description: A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow.
   components:
-  - type: Tag
-    tags:
-      - IgnoreChameleon
   - type: Sharp
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi

@@ -5,9 +5,6 @@
   description: A stylish striped red scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
   suffix: Chameleon
   components:
-    - type: Tag
-      tags:
-        - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Neck/Scarfs/red.rsi
       netsync: false

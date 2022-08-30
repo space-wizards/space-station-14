@@ -107,9 +107,6 @@
   suffix: Chameleon
   description: Stylish black shoes.
   components:
-    - type: Tag
-      tags:
-        - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Shoes/Color/black.rsi
       netsync: false

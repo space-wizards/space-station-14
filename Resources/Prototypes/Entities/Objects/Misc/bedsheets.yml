@@ -9,9 +9,6 @@
     snap:
     - Bed
   components:
-  - type: Tag
-    tags:
-      - IgnoreChameleon
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
     netsync: false

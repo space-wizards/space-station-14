@@ -190,7 +190,7 @@
   id: FireAxe
 
 - type: Tag
-  id: IgnoreChameleon
+  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics

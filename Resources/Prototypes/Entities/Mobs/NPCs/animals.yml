@@ -810,7 +810,6 @@
     tags:
     - Trash
     - CannotSuicide
-    - IgnoreChameleon # yep, mouses are actually hats
   - type: Recyclable
   - type: Respirator
     damage:

@@ -3,9 +3,6 @@
   parent: BaseItem
   id: GasTankBase
   components:
-  - type: Tag
-    tags:
-      - IgnoreChameleon
   - type: Sprite
     sprite: Objects/Tanks/generic.rsi
     state: icon

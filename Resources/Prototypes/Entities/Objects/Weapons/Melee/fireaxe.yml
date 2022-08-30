@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - FireAxe
-    - IgnoreChameleon
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/fireaxe.rsi

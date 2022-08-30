@@ -97,7 +97,6 @@
   - type: Tag
     tags:
     - StringInstrument
-    - IgnoreChameleon
   - type: Item
     sprite: Objects/Fun/Instruments/guitar.rsi
     size: 24

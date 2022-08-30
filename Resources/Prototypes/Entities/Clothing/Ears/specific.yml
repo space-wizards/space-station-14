@@ -5,9 +5,6 @@
   description: An updated, modular intercom that fits over the head. Takes encryption keys.
   suffix: Chameleon
   components:
-    - type: Tag
-      tags:
-        - IgnoreChameleon
     - type: Sprite
       sprite: Clothing/Ears/Headsets/base.rsi
       netsync: false
