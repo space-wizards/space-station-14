@@ -47,6 +47,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -349,6 +350,12 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Session.AttachedEntity is not EntityUid player)
                 return;
 
+            if (!Exists(args.InteractedItemUID))
+            {
+                Logger.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
+                return;
+            }
+
             if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID))
                 return;
 
@@ -523,9 +530,8 @@ namespace Content.Server.Storage.EntitySystems
         /// <summary>
         ///     Inserts into the storage container
         /// </summary>
-        /// <param name="entity">The entity to insert</param>
         /// <returns>true if the entity was inserted, false otherwise</returns>
-        public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null)
+        public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null, bool playSound = true)
         {
             if (!Resolve(uid, ref storageComp))
                 return false;
@@ -533,8 +539,10 @@ namespace Content.Server.Storage.EntitySystems
             if (!CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
                 return false;
 
-            if (storageComp.StorageInsertSound is not null)
-                SoundSystem.Play(storageComp.StorageInsertSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, AudioParams.Default);
+            if (playSound && storageComp.StorageInsertSound is not null)
+            {
+                _audio.PlayPvs(storageComp.StorageInsertSound, uid);
+            }
 
             RecalculateStorageUsed(storageComp);
             UpdateStorageUI(uid, storageComp);
@@ -645,12 +653,12 @@ namespace Content.Server.Storage.EntitySystems
                     DebugTools.Assert(storedStorageComp != storageComp, $"Storage component contains itself!? Entity: {uid}");
                 }
 
-                if (TryComp(entity, out ServerUserInterfaceComponent? uiComponent))
+                if (!TryComp(entity, out ServerUserInterfaceComponent? ui))
+                    continue;
+
+                foreach (var bui in ui.Interfaces.Values)
                 {
-                    foreach (var ui in uiComponent.Interfaces)
-                    {
-                        ui.Close(session);
-                    }
+                    _uiSystem.TryClose(entity, bui.UiKey, session, ui);
                 }
             }
         }

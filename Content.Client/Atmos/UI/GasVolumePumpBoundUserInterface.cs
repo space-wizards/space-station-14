@@ -16,7 +16,7 @@ namespace Content.Client.Atmos.UI
         private GasVolumePumpWindow? _window;
         private const float MaxTransferRate = Atmospherics.MaxTransferRate;
 
-        public GasVolumePumpBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public GasVolumePumpBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

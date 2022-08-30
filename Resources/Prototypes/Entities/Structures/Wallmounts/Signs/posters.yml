@@ -8,6 +8,7 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
+    snapCardinals: true
   - type: Destructible
     thresholds:
     - trigger:

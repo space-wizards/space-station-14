@@ -69,13 +69,14 @@ public sealed partial class ChemistrySystem
         }
         else if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Draw)
         {
-            /// Draw from a bloodstream, if the target has that
+            // Draw from a bloodstream, if the target has that
             if (TryComp<BloodstreamComponent>(target, out var stream))
             {
                 TryDraw(component, target, stream.BloodSolution, user, stream);
                 return;
             }
-            /// Draw from an object (food, beaker, etc)
+
+            // Draw from an object (food, beaker, etc)
             if (_solutions.TryGetDrawableSolution(target, out var drawableSolution))
             {
                 TryDraw(component, target, drawableSolution, user);
@@ -111,7 +112,8 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorAfterInteract(EntityUid uid, InjectorComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach) return;
+        if (args.Handled || !args.CanReach)
+            return;
 
         if (component.CancelToken != null)
         {
@@ -146,7 +148,8 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorUse(EntityUid uid, InjectorComponent component, UseInHandEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
 
         Toggle(component, args.User);
         args.Handled = true;
@@ -200,11 +203,11 @@ public sealed partial class ChemistrySystem
                 ("user", userName)), user, Filter.Entities(target));
 
             // Check if the target is incapacitated or in combat mode and modify time accordingly.
-            if (TryComp<MobStateComponent>(target, out var mobState) && mobState.IsIncapacitated())
+            if (_mobState.IsIncapacitated(target))
             {
                 actualDelay /= 2;
             }
-            else if (TryComp<CombatModeComponent>(target, out var combat) && combat.IsInCombatMode)
+            else if (_combat.IsInCombatMode(target))
             {
                 // Slightly increase the delay when the target is in combat mode. Helps prevents cheese injections in
                 // combat with fast syringes & lag.

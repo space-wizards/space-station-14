@@ -66,6 +66,11 @@
     key: walls
     mode: NoSprite
   - type: DoorSignalControl
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock
@@ -127,6 +132,12 @@
   - type: Construction
     graph: Shutters
     node: ShuttersRadiation
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
 
 - type: entity
   id: ShuttersWindow
@@ -154,6 +165,10 @@
   - type: Construction
     graph: Shutters
     node: ShuttersWindow
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
 
 # Frame for construction
 - type: entity

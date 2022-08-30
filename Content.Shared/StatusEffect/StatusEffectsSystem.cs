@@ -92,7 +92,7 @@ namespace Content.Shared.StatusEffect
         /// <typeparam name="T">The component type to add and remove from the entity.</typeparam>
         public bool TryAddStatusEffect<T>(EntityUid uid, string key, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null)
-            where T: Component, new()
+            where T : Component, new()
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -152,7 +152,7 @@ namespace Content.Shared.StatusEffect
         ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -168,10 +168,10 @@ namespace Content.Shared.StatusEffect
             if (HasStatusEffect(uid, key, status))
             {
                 status.ActiveEffects[key].CooldownRefresh = refresh;
-                if(refresh)
+                if (refresh)
                 {
                     //Making sure we don't reset a longer cooldown by applying a shorter one.
-                    if((status.ActiveEffects[key].Cooldown.Item2 - _gameTiming.CurTime) < time)
+                    if ((status.ActiveEffects[key].Cooldown.Item2 - _gameTiming.CurTime) < time)
                     {
                         //Refresh cooldown time.
                         status.ActiveEffects[key].Cooldown = cooldown;
@@ -196,7 +196,7 @@ namespace Content.Shared.StatusEffect
             }
 
             Dirty(status);
-            // event?
+            RaiseLocalEvent(uid, new StatusEffectAddedEvent(uid, key));
             return true;
         }
 
@@ -238,7 +238,7 @@ namespace Content.Shared.StatusEffect
         ///     That's up to the removed component to handle itself when it's removed.
         /// </remarks>
         public bool TryRemoveStatusEffect(EntityUid uid, string key,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -258,7 +258,7 @@ namespace Content.Shared.StatusEffect
                 // Maybe a badmin badminned the component away,
                 // or perhaps, on the client, the component deletion sync
                 // was faster than prediction could predict. Either way, let's not assume the component exists.
-                if(EntityManager.HasComponent(uid, type))
+                if (EntityManager.HasComponent(uid, type))
                     EntityManager.RemoveComponent(uid, type);
             }
 
@@ -274,7 +274,7 @@ namespace Content.Shared.StatusEffect
             }
 
             Dirty(status);
-            // event?
+            RaiseLocalEvent(uid, new StatusEffectEndedEvent(uid, key));
             return true;
         }
 
@@ -293,7 +293,7 @@ namespace Content.Shared.StatusEffect
             bool failed = false;
             foreach (var effect in status.ActiveEffects)
             {
-                if(!TryRemoveStatusEffect(uid, effect.Key, status))
+                if (!TryRemoveStatusEffect(uid, effect.Key, status))
                     failed = true;
             }
 
@@ -308,7 +308,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="key">The status effect ID to check for</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool HasStatusEffect(EntityUid uid, string key,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -346,7 +346,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryAddTime(EntityUid uid, string key, TimeSpan time,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -377,7 +377,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -446,6 +446,32 @@ namespace Content.Shared.StatusEffect
 
             time = status.ActiveEffects[key].Cooldown;
             return true;
+        }
+    }
+
+    public readonly struct StatusEffectAddedEvent
+    {
+        public readonly EntityUid Uid;
+
+        public readonly string Key;
+
+        public StatusEffectAddedEvent(EntityUid uid, string key)
+        {
+            Uid = uid;
+            Key = key;
+        }
+    }
+
+    public readonly struct StatusEffectEndedEvent
+    {
+        public readonly EntityUid Uid;
+
+        public readonly string Key;
+
+        public StatusEffectEndedEvent(EntityUid uid, string key)
+        {
+            Uid = uid;
+            Key = key;
         }
     }
 }

@@ -66,11 +66,15 @@ namespace Content.Shared.Disposal
                 return false;
             }
 
+            //Check if the entity is a mob and if mobs can be inserted
+            if (EntityManager.HasComponent<MobStateComponent>(entity) && !component.MobsCanEnter)
+                return false;
 
             if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
+                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) &&
+                      (!component.MobsCanEnter || damageState.IsDead())))
                 {
                     return false;
                 }

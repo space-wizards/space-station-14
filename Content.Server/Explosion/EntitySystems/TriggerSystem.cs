@@ -126,7 +126,8 @@ namespace Content.Server.Explosion.EntitySystems
             {
                 // Check if entity is bomb/mod. grenade/etc
                 if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
-                    TryComp(container.ContainedEntities.First(), out ChemicalPayloadComponent? chemicalPayloadComponent))
+                    container.ContainedEntities.Count > 0 &&
+                    TryComp(container.ContainedEntities[0], out ChemicalPayloadComponent? chemicalPayloadComponent))
                 {
                     // If a beaker is missing, the entity won't explode, so no reason to log it
                     if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||

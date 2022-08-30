@@ -198,3 +198,58 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: North
+
+- type: entity
+  parent: GasPipeBase
+  id: PressureControlledValve
+  name: pneumatic valve
+  description: Valve controlled by pressure.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AtmosDevice
+    - type: SubFloorHide
+      blockInteractions: false
+      blockAmbience: false
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        control:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: West
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeTJunction
+          rotation: -90
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: off
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FilterVisuals.Enabled:
+          enabled:
+            True: { state: on }
+            False: { state: off }
+    - type: PipeColorVisuals
+    - type: PressureControlledValve
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: Construction
+      graph: GasTrinary
+      node: pneumaticvalve

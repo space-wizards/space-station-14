@@ -288,7 +288,7 @@ namespace Content.Server.Salvage
                 Offset = spl.Position
             };
 
-            var (_, salvageEntityId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
+            var (_, salvageEntityId) = _mapLoader.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);
             if (salvageEntityId == null)
             {
                 Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-spawn-debris-disintegrated");

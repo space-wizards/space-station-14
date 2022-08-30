@@ -19,6 +19,33 @@
       min: 15
 
 - type: disease
+  id: SpectralTiredness
+  name: spectral tiredness
+  infectious: false
+  effects:
+    - !type:DiseaseGenericStatusEffect
+      probability: 0.03
+      key: ForcedSleep
+      component: ForcedSleeping
+      time: 3
+      type: Add
+    - !type:DiseaseSnough
+      probability: 0.025
+      snoughMessage: disease-yawn
+      snoughSound:
+        collection: Yawns
+    - !type:DiseaseHealthChange
+      probability: 0.02
+      damage:
+        types:
+          Poison: 4
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 240
+    - !type:DiseaseBedrestCure
+      maxLength: 60
+
+- type: disease
   id: StageIIIALungCancer
   name: Stage IIIA Lung Cancer
   infectious: false

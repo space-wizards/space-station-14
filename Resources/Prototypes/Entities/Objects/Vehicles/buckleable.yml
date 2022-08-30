@@ -38,7 +38,7 @@
       mask:
       - MobMask
       layer:
-      - MobLayer
+      - TableLayer
   - type: VehicleVisuals
   - type: Appearance
   - type: Repairable

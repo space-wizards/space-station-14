@@ -9,9 +9,11 @@
     - category: Internals
     - alertType: Fire
     - alertType: Handcuffed
+    - alertType: Ensnared
     - category: Buckled
     - alertType: Pulling
     - category: Piloting
+    - alertType: Corporeal
     - alertType: Stun
     - category: Breathing # Vox gang not calling this oxygen
     - category: Pressure
@@ -118,6 +120,13 @@
   icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
   name: "[color=yellow]Handcuffed[/color]"
   description: "You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist."
+
+- type: alert
+  id: Ensnared
+  onClick: !type:RemoveEnsnare  { }
+  icons: [ /Textures/Interface/Alerts/ensnared.rsi/ensnared.png ]
+  name: "[color=yellow]Ensnared[/color]"
+  description: "You're [color=yellow]ensnared[/color] and is impairing your ability to move."
 
 - type: alert
   id: Buckled
