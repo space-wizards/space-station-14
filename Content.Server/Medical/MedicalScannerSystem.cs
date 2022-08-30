@@ -94,6 +94,7 @@ namespace Content.Server.Medical
                 verb.Act = () => EjectBody(uid, component);
                 verb.Category = VerbCategory.Eject;
                 verb.Text = Loc.GetString("medical-scanner-verb-noun-occupant");
+                verb.Priority = 1; // Promote to top to make ejecting the ALT-click action
                 args.Verbs.Add(verb);
             }
 
