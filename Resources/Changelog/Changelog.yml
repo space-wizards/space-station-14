@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'You can no longer break pulls on cuffed people if someone else is pulling.
-      Sorry griefers, maybe sec will be tolerable to play now.', type: Tweak}
-  id: 1698
-  time: '2022-06-16T01:10:03.0000000+00:00'
 - author: CrudeWax
   changes:
   - {message: Nanotrasen's deeper research into the space-faring carpfish has proven
@@ -2941,3 +2935,8 @@ Entries:
   - {message: Medical Intern PDA's now have Health Analyzers built into them., type: Tweak}
   id: 2197
   time: '2022-08-29T23:32:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pull chains with your besties should be much faster., type: Tweak}
+  id: 2198
+  time: '2022-08-30T02:19:25.0000000+00:00'
