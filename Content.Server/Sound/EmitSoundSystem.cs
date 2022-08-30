@@ -128,6 +128,8 @@ namespace Content.Server.Sound
 
         private void TryEmitSound(BaseEmitSoundComponent component)
         {
+            if (component.Sound == null)
+                return;
             _audioSystem.PlayPvs(component.Sound, component.Owner, component.Sound.Params.AddVolume(-2f));
         }
     }
