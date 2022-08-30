@@ -1,8 +1,7 @@
-using Content.Shared.CharacterAppearance;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Markings
+namespace Content.Shared.Humanoid.Markings
 {
     [Prototype("marking")]
     public sealed class MarkingPrototype : IPrototype

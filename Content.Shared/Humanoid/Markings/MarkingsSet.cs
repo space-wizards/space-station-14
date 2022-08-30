@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Humanoid.Species;
+using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared.Markings;
+namespace Content.Shared.Humanoid.Markings;
 
 // the better version of MarkingsSet
 // This one should ensure that a set is valid. Dependency retrieval is

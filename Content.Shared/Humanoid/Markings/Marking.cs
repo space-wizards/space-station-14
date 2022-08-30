@@ -1,7 +1,7 @@
 using System.Linq;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Markings
+namespace Content.Shared.Humanoid.Markings
 {
     [Serializable, NetSerializable]
     public sealed class Marking : IEquatable<Marking>, IComparable<Marking>, IComparable<string>

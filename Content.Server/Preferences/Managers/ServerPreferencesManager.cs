@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Humanoid;
 using Content.Shared.CCVar;
-using Content.Shared.Humanoid.Species;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;

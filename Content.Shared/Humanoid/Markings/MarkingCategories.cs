@@ -1,7 +1,6 @@
-using Content.Shared.CharacterAppearance;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Markings
+namespace Content.Shared.Humanoid.Markings
 {
     [Serializable, NetSerializable]
     public enum MarkingCategories : byte
@@ -42,20 +41,6 @@ namespace Content.Shared.Markings
                 HumanoidVisualLayers.RFoot => MarkingCategories.Legs,
                 HumanoidVisualLayers.Tail => MarkingCategories.Tail,
                 _ => MarkingCategories.Overlay
-            };
-        }
-
-        public static bool IsReplaceable(MarkingCategories category)
-        {
-            return category switch
-            {
-                MarkingCategories.Hair => true,
-                MarkingCategories.FacialHair => true,
-                MarkingCategories.HeadTop => true,
-                MarkingCategories.HeadSide => true,
-                MarkingCategories.Snout => true,
-                MarkingCategories.Tail => true,
-                _ => false,
             };
         }
     }

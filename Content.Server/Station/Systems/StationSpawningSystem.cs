@@ -10,7 +10,7 @@ using Content.Server.Station.Components;
 using Content.Server.Mind.Commands;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.Humanoid.Species;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;

@@ -1,8 +1,4 @@
-using Content.Shared.CharacterAppearance;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-
-namespace Content.Shared.Markings
+namespace Content.Shared.Humanoid.Markings
 {
     [RegisterComponent]
     public sealed class MarkingsComponent : Component

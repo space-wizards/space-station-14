@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Humanoid.Species;
+using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Markings
+namespace Content.Shared.Humanoid.Markings
 {
     public sealed class MarkingManager
     {

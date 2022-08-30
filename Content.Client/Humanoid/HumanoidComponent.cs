@@ -1,7 +1,6 @@
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Species;
-using Content.Shared.Markings;
+using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Client.Humanoid;
 

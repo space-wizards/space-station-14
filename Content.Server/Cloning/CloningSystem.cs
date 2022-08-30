@@ -12,7 +12,7 @@ using Content.Shared.Cloning;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MobState;
-using Content.Shared.Humanoid.Species;
+using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Server.Cloning.Systems
 {

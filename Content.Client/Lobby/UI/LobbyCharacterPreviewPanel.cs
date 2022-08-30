@@ -5,7 +5,7 @@ using Content.Client.Inventory;
 using Content.Client.Preferences;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.GameTicking;
-using Content.Shared.Humanoid.Species;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;

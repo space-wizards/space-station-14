@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.Humanoid;
 using Content.Server.UserInterface;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.MagicMirror;
-using Content.Shared.Markings;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Players;

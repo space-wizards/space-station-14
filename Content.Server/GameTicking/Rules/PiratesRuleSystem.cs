@@ -7,7 +7,6 @@ using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
 using Content.Shared.Roles;
 using Robust.Server.Maps;

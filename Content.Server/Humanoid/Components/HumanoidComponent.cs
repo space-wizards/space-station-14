@@ -1,6 +1,5 @@
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
-using Content.Shared.Markings;
+using Content.Shared.Humanoid.Markings;
 
 namespace Content.Server.Humanoid;
 

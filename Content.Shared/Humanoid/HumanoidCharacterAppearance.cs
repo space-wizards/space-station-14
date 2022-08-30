@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using Content.Shared.CharacterAppearance;
-using Content.Shared.Humanoid.Species;
-using Content.Shared.Markings;
+using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -123,12 +122,12 @@ namespace Content.Shared.Humanoid
             var newSkinColor = Humanoid.SkinColor.ValidHumanSkinTone;
             switch (skinType)
             {
-                case SpeciesSkinColor.HumanToned:
+                case HumanoidSkinColor.HumanToned:
                     var tone = random.Next(0, 100);
                     newSkinColor = Humanoid.SkinColor.HumanSkinTone(tone);
                     break;
-                case SpeciesSkinColor.Hues:
-                case SpeciesSkinColor.TintedHues:
+                case HumanoidSkinColor.Hues:
+                case HumanoidSkinColor.TintedHues:
                     var rbyte = random.Next(0, 255);
                     var gbyte = random.Next(0, 255);
                     var bbyte = random.Next(0, 255);
@@ -136,7 +135,7 @@ namespace Content.Shared.Humanoid
                     break;
             }
 
-            if (skinType == SpeciesSkinColor.TintedHues)
+            if (skinType == HumanoidSkinColor.TintedHues)
             {
                 newSkinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(newSkinColor);
             }
@@ -186,14 +185,14 @@ namespace Content.Shared.Humanoid
 
                 switch (speciesProto.SkinColoration)
                 {
-                    case SpeciesSkinColor.HumanToned:
+                    case HumanoidSkinColor.HumanToned:
                         if (!Humanoid.SkinColor.VerifyHumanSkinTone(skinColor))
                         {
                             skinColor = Humanoid.SkinColor.ValidHumanSkinTone;
                         }
 
                         break;
-                    case SpeciesSkinColor.TintedHues:
+                    case HumanoidSkinColor.TintedHues:
                         if (!Humanoid.SkinColor.VerifyTintedHues(skinColor))
                         {
                             skinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(skinColor);

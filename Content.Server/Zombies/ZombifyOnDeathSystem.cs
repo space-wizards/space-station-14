@@ -27,7 +27,7 @@ using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
-using Content.Shared.CharacterAppearance;
+using Content.Shared.Humanoid;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 

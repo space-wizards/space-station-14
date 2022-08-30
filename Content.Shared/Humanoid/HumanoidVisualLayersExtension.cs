@@ -1,7 +1,7 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 
-namespace Content.Shared.CharacterAppearance
+namespace Content.Shared.Humanoid
 {
     public static class HumanoidVisualLayersExtension
     {
@@ -33,6 +33,7 @@ namespace Content.Shared.CharacterAppearance
                     yield return HumanoidVisualLayers.HeadTop;
                     yield return HumanoidVisualLayers.Hair;
                     yield return HumanoidVisualLayers.FacialHair;
+                    yield return HumanoidVisualLayers.Snout;
                     break;
                 case HumanoidVisualLayers.LArm:
                     yield return HumanoidVisualLayers.LArm;
@@ -52,6 +53,7 @@ namespace Content.Shared.CharacterAppearance
                     break;
                 case HumanoidVisualLayers.Chest:
                     yield return HumanoidVisualLayers.Chest;
+                    yield return HumanoidVisualLayers.Tail;
                     break;
                 default:
                     yield break;

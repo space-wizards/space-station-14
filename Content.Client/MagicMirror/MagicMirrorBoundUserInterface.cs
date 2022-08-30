@@ -1,5 +1,5 @@
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.MagicMirror;
-using Content.Shared.Markings;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.MagicMirror;

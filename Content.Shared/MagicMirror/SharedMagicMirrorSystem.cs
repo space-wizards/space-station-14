@@ -1,4 +1,4 @@
-using Content.Shared.Markings;
+using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MagicMirror;

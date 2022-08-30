@@ -1,10 +1,9 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Species;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;

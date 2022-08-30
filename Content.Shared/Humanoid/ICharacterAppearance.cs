@@ -1,5 +1,5 @@
 
-namespace Content.Shared.CharacterAppearance
+namespace Content.Shared.Humanoid
 {
     public interface ICharacterAppearance
     {

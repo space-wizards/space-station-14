@@ -97,3 +97,10 @@ public static class SkinColor
         return Color.ToHsv(color).Y != .1f;
     }
 }
+
+public enum HumanoidSkinColor : byte
+{
+    HumanToned,
+    Hues,
+    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
+}

@@ -1,6 +1,6 @@
 using Content.Server.Humanoid;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Tag;
 

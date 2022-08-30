@@ -1,7 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Shared.Markings;
+namespace Content.Shared.Humanoid.Markings;
 
 [DataDefinition]
 public sealed class MarkingPoints

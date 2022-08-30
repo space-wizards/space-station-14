@@ -1,6 +1,4 @@
 using System.Linq;
-using Content.Shared.CharacterAppearance;
-using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -16,10 +14,6 @@ public abstract class SharedHumanoidComponent : Component
     /// </summary>
     [DataField("species")]
     public string Species { get; set; } = default!;
-
-
-
-
 
     /// <summary>
     ///     The initial sprites that this humanoid should
@@ -65,19 +59,6 @@ public abstract class SharedHumanoidComponent : Component
 
     [DataField("sex")]
     public Sex Sex = Sex.Male;
-}
-
-[Prototype("humanoidMarkingStartingSet")]
-public sealed class HumanoidMarkingStartingSet : IPrototype
-{
-    [IdDataField]
-    public string ID { get; } = default!;
-
-    [DataField("customBaseLayers")]
-    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
-
-    [DataField("markings")]
-    public List<Marking> Markings = new();
 }
 
 [DataDefinition]
