@@ -35,7 +35,7 @@ public sealed partial class MagicMirrorWindow : DefaultWindow
         FacialHairPicker.OnSlotAdd += OnFacialHairSlotAdded;
     }
 
-    public void UpdateState(MagicMirrorUiState state)
+    public void UpdateState(MagicMirrorUiData state)
     {
         HairPicker.UpdateData(state.Hair, state.Species, state.HairSlotTotal);
         FacialHairPicker.UpdateData(state.FacialHair, state.Species, state.FacialHairSlotTotal);

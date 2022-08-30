@@ -290,6 +290,56 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             Synchronize(uid, humanoid);
     }
 
+    public void RemoveMarking(EntityUid uid, MarkingCategories category, int index, HumanoidComponent? humanoid = null)
+    {
+        if (index < 0
+            || !Resolve(uid, ref humanoid)
+            || !humanoid.CurrentMarkings.TryGetCategory(category, out var markings)
+            || markings.Count > index)
+        {
+            return;
+        }
+
+        humanoid.CurrentMarkings.Remove(category, index);
+    }
+
+    public void SetMarkingId(EntityUid uid, MarkingCategories category, int index, string markingId, HumanoidComponent? humanoid = null)
+    {
+        if (index < 0
+            || !_markingManager.MarkingsByCategory(category).TryGetValue(markingId, out var markingPrototype)
+            || !Resolve(uid, ref humanoid)
+            || !humanoid.CurrentMarkings.TryGetCategory(category, out var markings)
+            || markings.Count >= index)
+        {
+            return;
+        }
+
+        var marking = markingPrototype.AsMarking();
+        for (var i = 0; i < marking.MarkingColors.Count && i < markings[index].MarkingColors.Count; i++)
+        {
+            marking.SetColor(i, markings[index].MarkingColors[i]);
+        }
+
+        humanoid.CurrentMarkings.Replace(category, index, marking);
+    }
+
+    public void SetMarkingColor(EntityUid uid, MarkingCategories category, int index, List<Color> colors,
+        HumanoidComponent? humanoid = null)
+    {
+        if (index < 0
+            || !Resolve(uid, ref humanoid)
+            || !humanoid.CurrentMarkings.TryGetCategory(category, out var markings)
+            || markings.Count > index)
+        {
+            return;
+        }
+
+        for (var i = 0; i < markings[index].MarkingColors.Count && i < colors.Count; i++)
+        {
+            markings[index].SetColor(i, colors[i]);
+        }
+    }
+
     private void EnsureDefaultMarkings(EntityUid uid, HumanoidComponent? humanoid)
     {
         if (!Resolve(uid, ref humanoid))

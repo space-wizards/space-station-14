@@ -7,6 +7,7 @@ namespace Content.Client.MagicMirror;
 public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 {
     private MagicMirrorWindow? _window;
+
     public MagicMirrorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
     }
@@ -25,7 +26,8 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
         _window.OnHairSlotRemoved += args => RemoveSlot(MagicMirrorCategory.Hair, args);
 
         _window.OnFacialHairSelected += tuple => SelectHair(MagicMirrorCategory.FacialHair, tuple.id, tuple.slot);
-        _window.OnFacialHairColorChanged += args => ChangeColor(MagicMirrorCategory.FacialHair, args.marking, args.slot);
+        _window.OnFacialHairColorChanged +=
+            args => ChangeColor(MagicMirrorCategory.FacialHair, args.marking, args.slot);
         _window.OnFacialHairSlotAdded += delegate() { AddSlot(MagicMirrorCategory.FacialHair); };
         _window.OnFacialHairSlotRemoved += args => RemoveSlot(MagicMirrorCategory.FacialHair, args);
     }
@@ -50,15 +52,16 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
         SendMessage(new MagicMirrorAddSlotMessage(category));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        base.UpdateState(state);
+        base.ReceiveMessage(message);
 
-        if (state is not MagicMirrorUiState cast || _window == null)
+        if (message is not MagicMirrorUiData data || _window == null)
         {
             return;
         }
 
-        _window.UpdateState(cast);
+        _window.UpdateState(data);
     }
 }
+

@@ -84,9 +84,9 @@ public sealed class MagicMirrorAddSlotMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class MagicMirrorUiState : BoundUserInterfaceState
+public sealed class MagicMirrorUiData : BoundUserInterfaceMessage
 {
-    public MagicMirrorUiState(string species, List<Marking> hair, uint hairSlotTotal, List<Marking> facialHair, uint facialHairSlotTotal)
+    public MagicMirrorUiData(string species, List<Marking> hair, int hairSlotTotal, List<Marking> facialHair, int facialHairSlotTotal)
     {
         Species = species;
         Hair = hair;
@@ -98,9 +98,9 @@ public sealed class MagicMirrorUiState : BoundUserInterfaceState
     public string Species { get; }
 
     public List<Marking> Hair { get; }
-    public uint HairSlotTotal { get; }
+    public int HairSlotTotal { get; }
 
     public List<Marking> FacialHair { get; }
-    public uint FacialHairSlotTotal { get; }
+    public int FacialHairSlotTotal { get; }
 
 }

@@ -74,7 +74,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     }
 
     // amount of slots to show
-    private uint _totalPoints;
+    private int _totalPoints;
 
     private bool _ignoreItemSelected;
 
@@ -98,8 +98,25 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     private string? _species;
     private List<Marking>? _markings;
 
-    private int PointsLeft => _markings != null ? (int) _totalPoints - _markings.Count : 0;
-    private int PointsUsed => _markings != null ? _markings.Count : 0;
+    private int PointsLeft
+    {
+        get
+        {
+            if (_markings == null)
+            {
+                return 0;
+            }
+
+            if (_totalPoints < 0)
+            {
+                return -1;
+            }
+
+            return _totalPoints - _markings.Count;
+        }
+    }
+
+    private int PointsUsed => _markings?.Count ?? 0;
 
     public SingleMarkingPicker()
     {
@@ -123,7 +140,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         };
     }
 
-    public void UpdateData(List<Marking> markings, string species, uint totalPoints)
+    public void UpdateData(List<Marking> markings, string species, int totalPoints)
     {
         _markings = markings;
         _species = species;
@@ -244,7 +261,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         SlotSelector.Visible = Slot >= 0;
         AddButton.HorizontalExpand = Slot < 0;
         RemoveButton.HorizontalExpand = Slot < 0;
-        AddButton.Disabled = PointsLeft == 0;
+        AddButton.Disabled = PointsLeft == 0 && _totalPoints > -1 ;
         RemoveButton.Disabled = PointsUsed == 0;
         SlotSelector.Clear();
 
