@@ -15,7 +15,7 @@
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Chest: MobVoxTorso
-    Eyes: MobHumanoidEyes
+    Eyes: MobVoxEyes
     LArm: MobVoxLArm
     RArm: MobVoxRArm
     LHand: MobVoxLHand
@@ -44,6 +44,12 @@
     Arms:
       points: 2
       required: false
+
+- type: humanoidBaseSprite
+  id: MobVoxEyes
+  baseSprite:
+    sprite: Mobs/Customization/eyes.rsi
+    state: vox_eyes_s
 
 - type: humanoidBaseSprite
   id: MobVoxHead

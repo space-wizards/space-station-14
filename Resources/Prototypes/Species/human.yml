@@ -57,6 +57,12 @@
       required: false
 
 - type: humanoidBaseSprite
+  id: MobHumanoidEyes
+  baseSprite:
+    sprite: Mobs/Customization/eyes.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
   id: MobHumanoidAnyMarking
 
 - type: humanoidBaseSprite
