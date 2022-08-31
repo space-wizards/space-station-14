@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: DetDrobeInventory
-  name: DetDrobe
-  spriteName: detdrobe
   startingInventory:
     ClothingUniformJumpsuitDetective: 2
     ClothingUniformJumpskirtDetective: 2

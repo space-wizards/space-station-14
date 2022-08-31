@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: NanoMedInventory
-  name: NanoMed
-  spriteName: wallmed
   startingInventory:
     Brutepack: 5
     Ointment: 5

@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: EngiDrobeInventory
-  name: EngiDrobe
-  spriteName: engidrobe
   startingInventory:
     ClothingBackpackDuffelEngineering: 3
     ClothingBackpackSatchelEngineering: 3
