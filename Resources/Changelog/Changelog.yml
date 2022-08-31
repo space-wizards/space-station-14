@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Pulse Pistol and Captains Antique Pistol are now size 10., type: Tweak}
-  id: 1705
-  time: '2022-06-16T09:16:53.0000000+00:00'
 - author: Rane
   changes:
   - {message: All mobs will now gib after enough damage., type: Fix}
@@ -2932,3 +2927,9 @@ Entries:
       the recipe., type: Add}
   id: 2204
   time: '2022-08-31T07:28:40.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Lattice cutting is here! Apply wirecutters to lattice to deconstruct
+      it., type: Add}
+  id: 2205
+  time: '2022-08-31T08:24:51.0000000+00:00'
