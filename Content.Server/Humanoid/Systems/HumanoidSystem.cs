@@ -239,7 +239,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             }
             else
             {
-                if (permanent && humanoid.PermanentlyHidden.Contains(layer))
+                if (permanent)
                 {
                     humanoid.PermanentlyHidden.Add(layer);
                 }
