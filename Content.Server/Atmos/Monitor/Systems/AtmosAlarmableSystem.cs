@@ -41,8 +41,18 @@ public sealed class AtmosAlarmableSystem : EntitySystem
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<AtmosAlarmableComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<AtmosAlarmableComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         SubscribeLocalEvent<AtmosAlarmableComponent, PowerChangedEvent>(OnPowerChange);
+    }
+
+    private void OnInit(EntityUid uid, AtmosAlarmableComponent component, ComponentInit args)
+    {
+        TryUpdateAlert(
+            uid,
+            TryGetHighestAlert(uid, out var alarm) ? alarm.Value : AtmosAlarmType.Normal,
+            component,
+            false);
     }
 
     private void OnPowerChange(EntityUid uid, AtmosAlarmableComponent component, PowerChangedEvent args)
