@@ -349,6 +349,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>? customBaseSprites,
         HumanoidComponent humanoid)
     {
+        var dirty = false;
         var newBaseLayers = new Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer>();
 
         foreach (var (key, id) in baseSprites)
@@ -367,22 +368,19 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
             if (!newBaseLayers.TryAdd(key, baseLayer))
             {
-                if (baseLayer != newBaseLayers[key])
-                {
-                    dirty = true;
-                }
-
                 newBaseLayers[key] = baseLayer;
-            }
-            else
-            {
-                dirty = true;
             }
         }
 
         if (customBaseSprites == null)
         {
-            return;
+            if (!humanoid.BaseLayers.SequenceEqual(newBaseLayers))
+            {
+                humanoid.BaseLayers = newBaseLayers;
+                dirty = true;
+            }
+
+            return dirty;
         }
 
         foreach (var (key, info) in customBaseSprites)
@@ -401,10 +399,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         if (!humanoid.BaseLayers.SequenceEqual(newBaseLayers))
         {
             humanoid.BaseLayers = newBaseLayers;
-            return true;
+            dirty = true;
         }
 
-        return false;
+        return dirty;
     }
 
     private void ApplyBaseSprites(EntityUid uid,
