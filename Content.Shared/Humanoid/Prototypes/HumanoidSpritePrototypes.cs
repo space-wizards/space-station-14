@@ -25,7 +25,7 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
 }
 
 [Prototype("humanoidBaseSprite")]
-public sealed class HumanoidSpeciesSpriteLayer : IPrototype
+public sealed record HumanoidSpeciesSpriteLayer : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;

@@ -36,17 +36,21 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
+        bool dirty;
         if (data.CustomBaseLayerInfo.Count != 0)
         {
-            MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo, component);
+            dirty = MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo, component);
         }
         else
         {
-            MergeCustomBaseSprites(uid, baseSprites.Sprites, null, component);
+            dirty = MergeCustomBaseSprites(uid, baseSprites.Sprites, null, component);
         }
 
-        ApplyBaseSprites(uid, component, args.Sprite);
-        ApplySkinColor(uid, data.SkinColor, component, args.Sprite);
+        if (dirty)
+        {
+            ApplyBaseSprites(uid, component, args.Sprite);
+            ApplySkinColor(uid, data.SkinColor, component, args.Sprite);
+        }
 
         if (data.CustomBaseLayerInfo.Count != 0)
         {
@@ -341,11 +345,11 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         sprite[index].Color = color;
     }
 
-    private void MergeCustomBaseSprites(EntityUid uid, Dictionary<HumanoidVisualLayers, string> baseSprites,
+    private bool MergeCustomBaseSprites(EntityUid uid, Dictionary<HumanoidVisualLayers, string> baseSprites,
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>? customBaseSprites,
         HumanoidComponent humanoid)
     {
-        humanoid.BaseLayers.Clear();
+        var newBaseLayers = new Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer>();
 
         foreach (var (key, id) in baseSprites)
         {
@@ -361,9 +365,18 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            if (!humanoid.BaseLayers.TryAdd(key, baseLayer))
+            if (!newBaseLayers.TryAdd(key, baseLayer))
             {
-                humanoid.BaseLayers[key] = baseLayer;
+                if (baseLayer != newBaseLayers[key])
+                {
+                    dirty = true;
+                }
+
+                newBaseLayers[key] = baseLayer;
+            }
+            else
+            {
+                dirty = true;
             }
         }
 
@@ -379,11 +392,19 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            if (!humanoid.BaseLayers.TryAdd(key, baseLayer))
+            if (!newBaseLayers.TryAdd(key, baseLayer))
             {
-                humanoid.BaseLayers[key] = baseLayer;
+                newBaseLayers[key] = baseLayer;
             }
         }
+
+        if (!humanoid.BaseLayers.SequenceEqual(newBaseLayers))
+        {
+            humanoid.BaseLayers = newBaseLayers;
+            return true;
+        }
+
+        return false;
     }
 
     private void ApplyBaseSprites(EntityUid uid,
