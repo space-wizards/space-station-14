@@ -93,6 +93,55 @@
         acts: [ "Destruction" ]
   - type: StationInfiniteBatteryTarget
 
+# APC under construction
+- type: entity
+  noSpawn: true
+  id: EmptyAPC
+  name: Empty APC
+  suffix: No electronics
+  description: A control terminal for the area's electrical systems, lacking the electronics.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Power/apc.rsi
+    state: apc0
+  - type: Appearance
+    visuals:
+    - type: ApcVisualizer
+  - type: Construction
+    graph: APC
+    node: apcEmpty
+  - type: WallMount
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
 # APCs in use
 - type: entity
   parent: BaseAPC

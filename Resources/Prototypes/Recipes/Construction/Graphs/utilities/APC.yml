@@ -4,10 +4,36 @@
   graph:
     - node: start
       edges:
-        - to: apc
+        - to: apcEmpty
           steps:
             - material: Steel
               amount: 3
 
+    - node: apcEmpty
+      entity: EmptyAPC
+      edges:
+        - to: apc
+          steps:
+            - component: ApcElectronics
+              name: "APC electronics"
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+      
+
     - node: apc
       entity: BaseAPC
+      edges:
+        - to: apcEmpty
+          steps:
+            - tool: Prying
+              doAfter: 2
+              completed:
+                - !type:GivePrototype
+                  prototype: APCElectronics
