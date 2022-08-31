@@ -71,6 +71,9 @@
       - Spade
       - CableStack
       - HandheldGPSBasic
+      - TRayScanner
+      - GasAnalyzer
+      - UtilityBelt
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
   - type: ActivatableUIRequiresPower
