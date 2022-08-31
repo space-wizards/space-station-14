@@ -52,6 +52,9 @@
       - ForceNoFixRotations
   - type: PaintableAirlock
     group: Shuttle
+  - type: Construction
+    graph: AirlockShuttle
+    node: airlock
 
 - type: entity
   id: AirlockGlassShuttle
@@ -87,3 +90,18 @@
     group: ShuttleGlass
   - type: Door
     occludes: false
+
+- type: entity
+  id: AirlockShuttleAssembly
+  parent: AirlockAssembly
+  name: external airlock assembly
+  suffix: Docking
+  description: An incomplete structure necessary for connecting two space craft together.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    state: closed
+  - type: Construction
+    graph: AirlockShuttle
+    node: assembly
