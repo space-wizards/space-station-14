@@ -1,10 +1,4 @@
 Entries:
-- author: ProfanedBane
-  changes:
-  - {message: 'Whilst uncuffing someone, the handcuffs are placed in the your hand,
-      rather than under the person being uncuffed.', type: Add}
-  id: 1710
-  time: '2022-06-16T09:42:32.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: Ghost role delay is now a cvar, type: Add}
@@ -2927,3 +2921,8 @@ Entries:
   - {message: Portable Flasher, type: Fix}
   id: 2209
   time: '2022-08-31T12:27:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Damage overlay in the corners should no longer show when dead., type: Fix}
+  id: 2210
+  time: '2022-08-31T12:43:19.0000000+00:00'
