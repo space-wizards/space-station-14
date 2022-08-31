@@ -6,5 +6,13 @@ namespace Content.Client.Weapons.Melee.Components;
 [RegisterComponent]
 public sealed class WeaponArcVisualsComponent : Component
 {
+    [ViewVariables, DataField("animation")]
+    public WeaponArcAnimation Animation = WeaponArcAnimation.None;
+}
 
+public enum WeaponArcAnimation : byte
+{
+    None,
+    Thrust,
+    Arc,
 }

@@ -24,8 +24,6 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
-    private ISawmill _sawmill = default!;
-
     private const string MeleeLungeKey = "melee-lunge";
     private const string MeleeEffectKey = "melee-effect";
 
@@ -53,7 +51,6 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("melee");
         InitializeArcs();
         _overlayManager.AddOverlay(new MeleeWindupOverlay());
         SubscribeNetworkEvent<MeleeEffectEvent>(OnMeleeEffect);
@@ -178,16 +175,6 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         PopupSystem.PopupEntity(message, uid.Value, Filter.Local());
     }
 
-    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, NewMeleeWeaponComponent component)
-    {
-        base.DoPreciseAttack(user, ev, component);
-    }
-
-    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, NewMeleeWeaponComponent component)
-    {
-        base.DoWideAttack(user, ev, component);
-    }
-
     private void OnMeleeLunge(MeleeLungeEvent ev)
     {
         DoLunge(ev.Entity, ev.LocalPos, ev.Animation);
@@ -207,11 +194,8 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 
             if (localPos != Vector2.Zero && TryComp<SpriteComponent>(animationUid, out var sprite))
             {
-                sprite.NoRotation = true;
                 sprite.Rotation = localPos.ToWorldAngle();
-
                 var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
-
                 sprite.Offset = localPos.Normalized * distance;
             }
         }

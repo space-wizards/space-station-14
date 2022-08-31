@@ -6,8 +6,12 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -19,6 +23,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public const float DamagePitchVariation = 0.05f;
@@ -48,8 +53,10 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         // Not in LOS.
         if (user == ev.Target ||
             Deleted(ev.Target) ||
+            // For consistency with wide attacks stuff needs damageable.
+            !HasComp<DamageableComponent>(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
-            !_interaction.InRangeUnobstructed(user, ev.Target))
+            !_interaction.InRangeUnobstructed(user, ev.Target, component.Range))
         {
             return;
         }
@@ -105,6 +112,132 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         {
             RaiseNetworkEvent(new MeleeEffectEvent(targets), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
         }
+    }
+
+    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, NewMeleeWeaponComponent component)
+    {
+        base.DoWideAttack(user, ev, component);
+
+        // TODO: This is copy-paste as fuck with DoPreciseAttack
+        if (!TryComp<TransformComponent>(user, out var userXform))
+        {
+            return;
+        }
+
+        var targetMap = ev.Coordinates.ToMap(EntityManager);
+
+        if (targetMap.MapId != userXform.MapID)
+        {
+            return;
+        }
+
+        var userPos = userXform.WorldPosition;
+        var direction = targetMap.Position - userPos;
+        var distance = Math.Min(component.Range, direction.Length);
+
+        // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
+        var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user);
+
+        if (entities.Count == 0)
+            return;
+
+        var targets = new List<EntityUid>();
+        var damageQuery = GetEntityQuery<DamageableComponent>();
+
+        foreach (var entity in entities)
+        {
+            if (entity == user ||
+                !damageQuery.HasComponent(entity))
+                continue;
+
+            targets.Add(entity);
+        }
+
+        // Raise event before doing damage so we can cancel damage if the event is handled
+        var hitEvent = new MeleeHitEvent(targets, user, component.Damage);
+        RaiseLocalEvent(component.Owner, hitEvent);
+
+        if (hitEvent.Handled)
+            return;
+
+        // For stuff that cares about it being attacked.
+        foreach (var target in targets)
+        {
+            RaiseLocalEvent(target, new AttackedEvent(component.Owner, user, Transform(target).Coordinates));
+        }
+
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(component.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+        var appliedDamage = new DamageSpecifier();
+
+        foreach (var entity in targets)
+        {
+            RaiseLocalEvent(entity, new AttackedEvent(component.Owner, user, ev.Coordinates));
+
+            var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage);
+
+            if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
+            {
+                appliedDamage += damageResult;
+
+                if (component.Owner == user)
+                    _adminLogger.Add(LogType.MeleeHit,
+                        $"{ToPrettyString(user):user} melee attacked {ToPrettyString(entity):target} using their hands and dealt {damageResult.Total:damage} damage");
+                else
+                    _adminLogger.Add(LogType.MeleeHit,
+                        $"{ToPrettyString(user):user} melee attacked {ToPrettyString(entity):target} using {ToPrettyString(component.Owner):used} and dealt {damageResult.Total:damage} damage");
+            }
+        }
+
+        if (entities.Count != 0)
+        {
+            if (appliedDamage.Total > FixedPoint2.Zero)
+            {
+                var target = entities.First();
+                PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
+            }
+            else
+            {
+                if (hitEvent.HitSoundOverride != null)
+                {
+                    Audio.PlayPvs(hitEvent.HitSoundOverride, component.Owner);
+                }
+                else
+                {
+                    Audio.PlayPvs(component.NoDamageSound, component.Owner);
+                }
+            }
+        }
+
+        if (appliedDamage.Total > FixedPoint2.Zero)
+        {
+            RaiseNetworkEvent(new MeleeEffectEvent(targets), Filter.Pvs(Transform(targets[0]).Coordinates, entityMan: EntityManager));
+        }
+    }
+
+    private HashSet<EntityUid> ArcRayCast(Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId, EntityUid ignore)
+    {
+        // TODO: This is pretty sucky.
+        var widthRad = arcWidth;
+        var increments = 1 + 35 * (int) Math.Ceiling(widthRad / (2 * Math.PI));
+        var increment = widthRad / increments;
+        var baseAngle = angle - widthRad / 2;
+
+        var resSet = new HashSet<EntityUid>();
+
+        for (var i = 0; i < increments; i++)
+        {
+            var castAngle = new Angle(baseAngle + increment * i);
+            var res = _physics.IntersectRay(mapId,
+                new CollisionRay(position, castAngle.ToWorldVec(),
+                    (int) (CollisionGroup.MobMask | CollisionGroup.Opaque)), range, ignore, false).ToList();
+
+            if (res.Count != 0)
+            {
+                resSet.Add(res[0].HitEntity);
+            }
+        }
+
+        return resSet;
     }
 
     protected override void DoLunge(EntityUid user, Vector2 localPos, string? animation)

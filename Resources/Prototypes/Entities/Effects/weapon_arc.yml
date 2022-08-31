@@ -1,9 +1,10 @@
 - type: entity
-  id: WeaponArcTwo
+  # Just fades out with no movement animation
+  id: WeaponArcStatic
   noSpawn: true
-  abstract: true
   components:
   - type: Sprite
+    noRot: true
     sprite: Effects/arcs.rsi
     state: spear
     netsync: false
@@ -17,20 +18,17 @@
 
 - type: entity
   id: WeaponArcThrust
-  parent: WeaponArcTwo
-  # components:
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      animation: Thrust
 
   # TODO: Hold for 0.1, thrust out n distance, then fade out
 
 - type: entity
   id: WeaponArcSlash
-  parent: WeaponArcTwo
+  parent: WeaponArcStatic
+  noSpawn: true
   # components:
-  # TODO: Slash over 0.1, then hold and fade out
-
-
-- type: entity
-  id: WeaponArcStatic
-  # Just fades out with no movement animation
-  parent: WeaponArcTwo
   # TODO: Slash over 0.1, then hold and fade out

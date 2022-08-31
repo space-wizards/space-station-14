@@ -238,16 +238,9 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         if (weapon.WindupAccumulator < weapon.WindupTime)
             return;
 
-        if (!TryComp<TransformComponent>(user, out var userXform))
-            return;
-
         // Attack confirmed
+        // Play a sound to give instant feedback; same with playing the animations
         Audio.PlayPredicted(weapon.SwingSound, weapon.Owner, user);
-
-        // TODO: Do the swing on client and server
-        // TODO: If attack hits on server send the hit thing
-        // TODO: Play the animation on shared (client for you + server for others)
-        var hit = new ValueList<EntityUid>();
 
         switch (attack)
         {

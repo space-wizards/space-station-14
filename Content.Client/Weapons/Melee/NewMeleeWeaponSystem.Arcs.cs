@@ -17,7 +17,7 @@ public sealed partial class NewMeleeWeaponSystem
 
         if (animation == null)
         {
-            _sawmill.Error($"Unable to get animation component for melee arc {ToPrettyString(uid)}");
+            Sawmill.Error($"Unable to get animation component for melee arc {ToPrettyString(uid)}");
             return;
         }
 

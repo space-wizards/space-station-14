@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -35,26 +36,14 @@ public sealed class NewMeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
 
-    #region Precision Attack
-
-    #endregion
-
-    #region Wide Attack
+    [ViewVariables(VVAccess.ReadWrite), DataField("range")]
+    public float Range = SharedInteractionSystem.InteractionRange;
 
     /// <summary>
-    /// Arc width of a wide attack.
+    /// Total width of the angle for wide attacks.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("arcWidth")]
-    public Angle ArcWidth { get; set; } = Angle.FromDegrees(90);
-
-    /// <summary>
-    /// Effect to play on attack.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("arcEffect")]
-    public string? ArcEffect = null;
-
-    #endregion
+    [ViewVariables(VVAccess.ReadWrite), DataField("angle")]
+    public Angle Angle = Angle.Zero;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Animation = "WeaponArcStatic";
