@@ -1,9 +1,12 @@
 using System.Linq;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -12,6 +15,7 @@ namespace Content.Client.Humanoid;
 
 public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponent>
 {
+    [Dependency] private IResourceCache _resourceCache = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private MarkingManager _markingManager = default!;
 
@@ -42,14 +46,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         ApplyBaseSprites(uid);
         ApplySkinColor(uid, data.SkinColor);
-
-        if (data.CustomBaseLayerInfo.Count != 0)
-        {
-            foreach (var (layer, info) in data.CustomBaseLayerInfo)
-            {
-                SetBaseLayerColor(uid, layer, info.Color);
-            }
-        }
 
         var layerVis = data.LayerVisibility.ToHashSet();
         var layerVisDirty = ReplaceHiddenLayers(uid, layerVis, component);
@@ -346,14 +342,17 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
     private void ApplySkinColor(EntityUid uid,
         Color skinColor,
         HumanoidComponent? humanoid = null,
-        SpriteComponent? spriteComp = null)
+        SpriteComponent? spriteComp = null,
+        SharedBodyComponent? body = null)
     {
-        if (!Resolve(uid, ref humanoid, ref spriteComp))
+        if (!Resolve(uid, ref humanoid, ref spriteComp, ref body))
         {
             return;
         }
 
         humanoid.SkinColor = skinColor;
+
+        var slots = new Dictionary<(BodyPartType, BodyPartSymmetry), Color>();
 
         foreach (var (layer, spriteInfo) in humanoid.BaseLayers)
         {
@@ -366,6 +365,23 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             color.A = spriteInfo.LayerAlpha;
 
             SetBaseLayerColor(uid, layer, color, spriteComp);
+
+            var slot = layer.ToBodyPartType();
+            if (slot.partType != BodyPartType.Other)
+            {
+                slots.Add(slot, color);
+            }
+        }
+
+        foreach (var slot in body.Slots)
+        {
+            if (slot.Part == null
+                || !slots.TryGetValue((slot.PartType, slot.Part.Symmetry),  out var color))
+            {
+                continue;
+            }
+
+            SetBodySpriteColor(slot, color);
         }
     }
 
@@ -379,6 +395,16 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         }
 
         sprite[index].Color = color;
+    }
+
+    private void SetBodySpriteColor(BodyPartSlot slot, Color color, SpriteComponent? partSprite = null)
+    {
+        if (slot.Part == null || !Resolve(slot.Part.Owner, ref partSprite) || !partSprite.AllLayers.Any())
+        {
+            return;
+        }
+
+        partSprite[0].Color = color;
     }
 
     private void MergeCustomBaseSprites(EntityUid uid, Dictionary<HumanoidVisualLayers, string> baseSprites,
@@ -433,12 +459,15 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
     private void ApplyBaseSprites(EntityUid uid,
         HumanoidComponent? humanoid = null,
-        SpriteComponent? spriteComp = null)
+        SpriteComponent? spriteComp = null,
+        SharedBodyComponent? body = null)
     {
-        if (!Resolve(uid, ref humanoid, ref spriteComp))
+        if (!Resolve(uid, ref humanoid, ref spriteComp, ref body))
         {
             return;
         }
+
+        var slotInfo = new Dictionary<(BodyPartType, BodyPartSymmetry), HumanoidSpeciesSpriteLayer>();
 
         foreach (var (layer, spriteInfo) in humanoid.BaseLayers)
         {
@@ -454,6 +483,52 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                         spriteComp.LayerSetTexture(index, texture.TexturePath);
                         break;
                 }
+
+                var slot = layer.ToBodyPartType();
+                if (slot.partType != BodyPartType.Other)
+                {
+                    slotInfo.Add(slot, spriteInfo);
+                }
+            }
+        }
+
+        // This probably shouldn't be here. I'll leave it in here for now.
+        // This is kind of expensive to do because you have to allocate the entire dictionary so
+        foreach (var slot in body.Slots)
+        {
+            if (slot.Part == null
+                || !slotInfo.TryGetValue((slot.PartType, slot.Part.Symmetry), out var spriteInfo)
+                || !TryComp<SpriteComponent>(slot.Part.Owner, out var partSprite))
+            {
+                continue;
+            }
+
+            if (!partSprite.AllLayers.Any())
+            {
+                continue;
+            }
+
+            switch (spriteInfo.BaseSprite)
+            {
+                case SpriteSpecifier.Rsi rsi:
+                    if (!_resourceCache.TryGetResource(rsi.RsiPath, out RSIResource? rsiResource))
+                    {
+                        break;
+                    }
+
+                    partSprite[0].Rsi = rsiResource.RSI;
+                    partSprite[0].RsiState = rsi.RsiState;
+
+                    break;
+                case SpriteSpecifier.Texture texture:
+                    if (!_resourceCache.TryGetResource(texture.TexturePath, out TextureResource? textureResource))
+                    {
+                        break;
+                    }
+
+                    partSprite[0].Texture = textureResource.Texture;
+
+                    break;
             }
         }
     }

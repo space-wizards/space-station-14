@@ -60,8 +60,41 @@ namespace Content.Shared.Humanoid
             }
         }
 
-        public static IEnumerable<HumanoidVisualLayers> ToHumanoidLayers(this SharedBodyPartComponent part)
+        public static (BodyPartType partType, BodyPartSymmetry symmetry) ToBodyPartType(this HumanoidVisualLayers layer)
         {
+            switch (layer)
+            {
+                case HumanoidVisualLayers.Head:
+                    return (BodyPartType.Head, BodyPartSymmetry.None);
+                case HumanoidVisualLayers.Chest:
+                    return (BodyPartType.Torso, BodyPartSymmetry.None);
+                case HumanoidVisualLayers.Tail:
+                    return (BodyPartType.Tail, BodyPartSymmetry.None);
+                case HumanoidVisualLayers.LArm:
+                    return (BodyPartType.Arm, BodyPartSymmetry.Left);
+                case HumanoidVisualLayers.LHand:
+                    return (BodyPartType.Hand, BodyPartSymmetry.Left);
+                case HumanoidVisualLayers.RArm:
+                    return (BodyPartType.Arm, BodyPartSymmetry.Right);
+                case HumanoidVisualLayers.RHand:
+                    return (BodyPartType.Hand, BodyPartSymmetry.Right);
+                case HumanoidVisualLayers.LLeg:
+                    return (BodyPartType.Leg, BodyPartSymmetry.Left);
+                case HumanoidVisualLayers.LFoot:
+                    return (BodyPartType.Foot, BodyPartSymmetry.Left);
+                case HumanoidVisualLayers.RLeg:
+                    return (BodyPartType.Leg, BodyPartSymmetry.Right);
+                case HumanoidVisualLayers.RFoot:
+                    return (BodyPartType.Foot, BodyPartSymmetry.Right);
+                default:
+                    return (BodyPartType.Other, BodyPartSymmetry.None);
+            }
+        }
+
+        public static IEnumerable<HumanoidVisualLayers> ToHumanoidLayers(this BodyPartSlot part)
+        {
+            var symmetry = part.Part?.Symmetry ?? BodyPartSymmetry.None;
+
             switch (part.PartType)
             {
                 case BodyPartType.Other:
@@ -74,6 +107,7 @@ namespace Content.Shared.Humanoid
                     break;
                 case BodyPartType.Head:
                     yield return HumanoidVisualLayers.Head;
+                    /* Are you going to hide all of these? Do a call to sublayers instead.
                     yield return HumanoidVisualLayers.Snout;
                     yield return HumanoidVisualLayers.HeadSide;
                     yield return HumanoidVisualLayers.HeadTop;
@@ -81,9 +115,10 @@ namespace Content.Shared.Humanoid
                     yield return HumanoidVisualLayers.FacialHair;
                     yield return HumanoidVisualLayers.Hair;
                     yield return HumanoidVisualLayers.StencilMask;
+                    */
                     break;
                 case BodyPartType.Arm:
-                    switch (part.Symmetry)
+                    switch (symmetry)
                     {
                         case BodyPartSymmetry.None:
                             yield break;
@@ -98,7 +133,7 @@ namespace Content.Shared.Humanoid
                     }
                     yield break;
                 case BodyPartType.Hand:
-                    switch (part.Symmetry)
+                    switch (symmetry)
                     {
                         case BodyPartSymmetry.None:
                             yield break;
@@ -113,7 +148,7 @@ namespace Content.Shared.Humanoid
                     }
                     yield break;
                 case BodyPartType.Leg:
-                    switch (part.Symmetry)
+                    switch (symmetry)
                     {
                         case BodyPartSymmetry.None:
                             yield break;
@@ -128,7 +163,7 @@ namespace Content.Shared.Humanoid
                     }
                     yield break;
                 case BodyPartType.Foot:
-                    switch (part.Symmetry)
+                    switch (symmetry)
                     {
                         case BodyPartSymmetry.None:
                             yield break;
