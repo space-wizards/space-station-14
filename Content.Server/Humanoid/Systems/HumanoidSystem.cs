@@ -6,12 +6,13 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
 using Content.Shared.Tag;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Humanoid;
 
-public sealed class HumanoidSystem : SharedHumanoidSystem
+public sealed partial class HumanoidSystem : SharedHumanoidSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
@@ -19,7 +20,8 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
     public override void Initialize()
     {
         SubscribeLocalEvent<HumanoidComponent, ComponentInit>(OnInit);
-
+        SubscribeLocalEvent<HumanoidComponent, HumanoidMarkingModifierMarkingSetMessage>(OnMarkingsSet);
+        SubscribeLocalEvent<HumanoidComponent, GetVerbsEvent<Verb>>(OnVerbsRequest);
     }
 
     private void Synchronize(EntityUid uid, HumanoidComponent? component = null)

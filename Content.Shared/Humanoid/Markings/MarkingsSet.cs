@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid.Markings;
 
@@ -16,6 +17,14 @@ namespace Content.Shared.Humanoid.Markings;
 // and build the set from there. We can also just send a list and rebuild
 // the set without validating points (we're assuming that the server
 
+/// <summary>
+///     Marking set. For humanoid markings.
+/// </summary>
+/// <remarks>
+///     This is serializable for the admin panel that sets markings on demand for a player.
+///     Most APIs that accept a set of markings usually use a List<Marking> instead.
+/// </remarks>
+[Serializable, NetSerializable]
 public sealed class MarkingSet
 {
     /// <summary>
