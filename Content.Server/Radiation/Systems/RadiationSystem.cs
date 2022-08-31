@@ -10,25 +10,30 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    private const float RadiationCooldown = 1.0f;
     private float _accumulator;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeCvars();
         InitRadBlocking();
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        UnsubscribeCvars();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
         _accumulator += frameTime;
+        if (_accumulator < GridcastUpdateRate)
+            return;
 
-        while (_accumulator > RadiationCooldown)
-        {
-            _accumulator -= RadiationCooldown;
-
-            UpdateGridcast();
-        }
+        UpdateGridcast();
+        _accumulator = 0f;
     }
 }

@@ -8,6 +8,7 @@ using Robust.Shared.Players;
 
 namespace Content.Server.Radiation.Systems;
 
+// radiation overview logic
 public partial class RadiationSystem
 {
     private readonly HashSet<ICommonSession> _debugSessions = new();
@@ -33,6 +34,9 @@ public partial class RadiationSystem
         RaiseNetworkEvent(ev, session.ConnectedClient);
     }
 
+    /// <summary>
+    ///     Send new information for radiation view.
+    /// </summary>
     private void UpdateDebugView(OnRadiationViewUpdateEvent ev)
     {
         var sessions = _debugSessions.ToArray();

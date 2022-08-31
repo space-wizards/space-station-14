@@ -2,8 +2,12 @@ using Content.Shared.Radiation.Components;
 
 namespace Content.Server.Radiation.Systems;
 
+// create and update map of radiation blockers
 public partial class RadiationSystem
 {
+    // dict of grid uid -> grid pos -> resistance value
+    // no float value - no resistance on this tile
+    // if grid has no resistance tile - it should be deleted
     private readonly Dictionary<EntityUid, Dictionary<Vector2i, float>> _resistancePerTile = new();
 
     private void InitRadBlocking()
@@ -123,6 +127,10 @@ public partial class RadiationSystem
         if (existingResistance > 0)
             grid[tilePos] = existingResistance;
         else
+        {
             grid.Remove(tilePos);
+            if (grid.Count == 0)
+                _resistancePerTile.Remove(gridId);
+        }
     }
 }

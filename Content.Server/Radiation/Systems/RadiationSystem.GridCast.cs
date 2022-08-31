@@ -9,10 +9,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
 
+// main algorithm that fire radiation rays to target
 public partial class RadiationSystem
 {
-    private const bool SimplifiedSameGrid = true;
-
     private void UpdateGridcast()
     {
         var stopwatch = new Stopwatch();
@@ -59,13 +58,13 @@ public partial class RadiationSystem
         // will it even reach destination considering distance penalty
         var slopeDist = slope * dist;
         var rads = slopeDist > 1f ? incomingRads / slopeDist : incomingRads;
-        if (rads <= MinRads)
+        if (rads <= MinIntensity)
             return null;
 
         // if source and destination on the same grid it's possible that
         // between them can be another grid (ie. shuttle in center of donut station)
         // however we can do simplification and ignore that case
-        if (SimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
+        if (GridcastSimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
             return Gridcast(mapId, sourceTrs.GridUid.Value, sourceWorldPos, destWorldPos, rads);
         }
@@ -138,7 +137,7 @@ public partial class RadiationSystem
                 visitedTiles.Add((point, null));
             }
 
-            if (radRay.Rads <= MinRads)
+            if (radRay.Rads <= MinIntensity)
                 return radRay;
         }
 
@@ -170,7 +169,7 @@ public partial class RadiationSystem
             radRay.Rads -= blocker.RadResistance;
             blockers.Add((obstacle.HitPos, radRay.Rads));
 
-            if (radRay.Rads <= MinRads)
+            if (radRay.Rads <= MinIntensity)
             {
                 radRay.Rads = 0;
                 break;
