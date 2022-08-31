@@ -36,7 +36,7 @@ public partial class RadiationSystem
         var totalSources = sources.Length;
         var totalReceivers = destinations.Length;
 
-        var ev = new OnRadiationViewUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
+        var ev = new OnRadiationOverlayUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
         UpdateDebugView(ev);
     }
 

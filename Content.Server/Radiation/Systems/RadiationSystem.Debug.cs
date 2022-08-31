@@ -30,14 +30,14 @@ public partial class RadiationSystem
             isEnabled = false;
         }
 
-        var ev = new OnRadiationViewToggledEvent(isEnabled);
+        var ev = new OnRadiationOverlayToggledEvent(isEnabled);
         RaiseNetworkEvent(ev, session.ConnectedClient);
     }
 
     /// <summary>
     ///     Send new information for radiation view.
     /// </summary>
-    private void UpdateDebugView(OnRadiationViewUpdateEvent ev)
+    private void UpdateDebugView(OnRadiationOverlayUpdateEvent ev)
     {
         var sessions = _debugSessions.ToArray();
         foreach (var session in sessions)

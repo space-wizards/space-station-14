@@ -1,4 +1,5 @@
 using Content.Client.Radiation.Overlays;
+using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Robust.Client.Graphics;
 
@@ -10,45 +11,25 @@ public sealed class RadiationSystem : SharedRadiationSystem
 
     public override void Initialize()
     {
-        base.Initialize();
-        SubscribeNetworkEvent<RadiationUpdate>(OnUpdate);
-        SubscribeNetworkEvent<RadiationRaysUpdate>(OnRayUpdate);
-
-        SubscribeNetworkEvent<OnRadiationViewToggledEvent>(OnViewToggled);
-        SubscribeNetworkEvent<OnRadiationViewUpdateEvent>(OnViewUpdate);
+        SubscribeNetworkEvent<OnRadiationOverlayToggledEvent>(OnOverlayToggled);
+        SubscribeNetworkEvent<OnRadiationOverlayUpdateEvent>(OnOverlayUpdate);
     }
 
-    private void OnUpdate(RadiationUpdate ev)
-    {
-        if (!_overlayMan.TryGetOverlay(out RadiationViewOverlay? overlay) || overlay == null)
-            return;
-        overlay._radiationMap = ev.RadiationMap;
-        overlay.SpaceMap = ev.SpaceMap;
-
-    }
-
-    private void OnRayUpdate(RadiationRaysUpdate ev)
-    {
-        if (!_overlayMan.TryGetOverlay(out RadiationRayOverlay? overlay) || overlay == null)
-            return;
-        overlay.Rays = ev.Rays;
-    }
-
-    private void OnViewToggled(OnRadiationViewToggledEvent ev)
+    private void OnOverlayToggled(OnRadiationOverlayToggledEvent ev)
     {
         if (ev.IsEnabled)
-            _overlayMan.AddOverlay(new RadiationGridcastOverlay());
+            _overlayMan.AddOverlay(new RadiationDebugOverlay());
         else
-            _overlayMan.RemoveOverlay<RadiationGridcastOverlay>();
+            _overlayMan.RemoveOverlay<RadiationDebugOverlay>();
     }
 
-    private void OnViewUpdate(OnRadiationViewUpdateEvent ev)
+    private void OnOverlayUpdate(OnRadiationOverlayUpdateEvent ev)
     {
-        if (!_overlayMan.TryGetOverlay(out RadiationGridcastOverlay? overlay) || overlay == null)
+        if (!_overlayMan.TryGetOverlay(out RadiationDebugOverlay? overlay))
             return;
 
-        var str = $"Radiation update: {ev.ElapsedTime}ms with. Receivers: {ev.TotalReceivers}, " +
-                  $"Sources: {ev.TotalSources}, Rays: {ev.TotalRaysCount}";
+        var str = $"Radiation update: {ev.ElapsedTimeMs}ms with. Receivers: {ev.ReceiversCount}, " +
+                  $"Sources: {ev.SourcesCount}, Rays: {ev.Rays.Count}";
         Logger.Info(str);
         overlay.Rays = ev.Rays;
     }

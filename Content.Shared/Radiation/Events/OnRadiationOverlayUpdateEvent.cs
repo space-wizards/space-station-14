@@ -13,7 +13,7 @@ namespace Content.Shared.Radiation.Events;
 ///     Will be sent only to clients that activated radiation view using console command.
 /// </remarks>
 [Serializable, NetSerializable]
-public sealed class OnRadiationViewUpdateEvent : EntityEventArgs
+public sealed class OnRadiationOverlayUpdateEvent : EntityEventArgs
 {
     /// <summary>
     ///     Total time in milliseconds that server took to do radiation processing.
@@ -36,7 +36,7 @@ public sealed class OnRadiationViewUpdateEvent : EntityEventArgs
     /// </summary>
     public readonly List<RadiationRay> Rays;
 
-    public OnRadiationViewUpdateEvent(double elapsedTimeMs, int sourcesCount, int receiversCount, List<RadiationRay> rays)
+    public OnRadiationOverlayUpdateEvent(double elapsedTimeMs, int sourcesCount, int receiversCount, List<RadiationRay> rays)
     {
         ElapsedTimeMs = elapsedTimeMs;
         SourcesCount = sourcesCount;
@@ -47,17 +47,17 @@ public sealed class OnRadiationViewUpdateEvent : EntityEventArgs
 
 /// <summary>
 ///     Raised when server enabled/disabled radiation debug view for client.
-///     After that client will start/stop receiving <see cref="OnRadiationViewUpdateEvent"/>.
+///     After that client will start/stop receiving <see cref="OnRadiationOverlayUpdateEvent"/>.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class OnRadiationViewToggledEvent : EntityEventArgs
+public sealed class OnRadiationOverlayToggledEvent : EntityEventArgs
 {
     /// <summary>
     ///     Does debug radiation view enabled.
     /// </summary>
     public readonly bool IsEnabled;
 
-    public OnRadiationViewToggledEvent(bool isEnabled)
+    public OnRadiationOverlayToggledEvent(bool isEnabled)
     {
         IsEnabled = isEnabled;
     }

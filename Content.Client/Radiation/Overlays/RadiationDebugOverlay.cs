@@ -7,7 +7,7 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Radiation.Overlays;
 
-public sealed class RadiationGridcastOverlay : Overlay
+public sealed class RadiationDebugOverlay : Overlay
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -19,7 +19,7 @@ public sealed class RadiationGridcastOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
 
-    public RadiationGridcastOverlay()
+    public RadiationDebugOverlay()
     {
         IoCManager.InjectDependencies(this);
 
