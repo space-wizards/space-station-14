@@ -61,13 +61,35 @@ public sealed partial class MarkingPicker : Control
     }
 
     public bool Forced { get; set; }
+    public bool IgnoreSpecies { get; set; }
 
     public void SetData(List<Marking> newMarkings, string species, Color skinColor)
     {
         var pointsProto = _prototypeManager
             .Index<SpeciesPrototype>(species).MarkingPoints;
         _currentMarkings = new(newMarkings, pointsProto, _markingManager);
-        _currentMarkings.FilterSpecies(species); // should be validated server-side but it can't hurt
+
+        if (IgnoreSpecies)
+        {
+            _currentMarkings.FilterSpecies(species); // should be validated server-side but it can't hurt
+        }
+
+        _currentSpecies = species;
+        CurrentSkinColor = skinColor;
+
+        Populate();
+        PopulateUsed();
+    }
+
+    public void SetData(MarkingSet set, string species, Color skinColor)
+    {
+        _currentMarkings = set;
+
+        if (IgnoreSpecies)
+        {
+            _currentMarkings.FilterSpecies(species); // should be validated server-side but it can't hurt
+        }
+
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
 
@@ -140,7 +162,10 @@ public sealed partial class MarkingPicker : Control
         CMarkingsUnused.Clear();
         _selectedUnusedMarking = null;
 
-        var markings = _markingManager.MarkingsByCategoryAndSpecies(_selectedMarkingCategory, _currentSpecies);
+        var markings = IgnoreSpecies
+            ? _markingManager.MarkingsByCategory(_selectedMarkingCategory)
+            : _markingManager.MarkingsByCategoryAndSpecies(_selectedMarkingCategory, _currentSpecies);
+
         foreach (var marking in markings.Values)
         {
             if (_currentMarkings.TryGetCategory(_selectedMarkingCategory, out var listing)

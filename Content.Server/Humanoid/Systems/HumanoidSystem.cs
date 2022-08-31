@@ -251,7 +251,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         Synchronize(uid, humanoid);
     }
 
-    public void AddMarking(EntityUid uid, string marking, Color? color = null, bool sync = true, HumanoidComponent? humanoid = null)
+    public void AddMarking(EntityUid uid, string marking, Color? color = null, bool sync = true, bool forced = false, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid)
             || !_markingManager.Markings.TryGetValue(marking, out var prototype))
@@ -260,6 +260,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
 
         var markingObject = prototype.AsMarking();
+        markingObject.Forced = forced;
         if (color != null)
         {
             for (var i = 0; i < prototype.Sprites.Count; i++)
@@ -274,7 +275,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             Synchronize(uid, humanoid);
     }
 
-    public void AddMarking(EntityUid uid, string marking, IReadOnlyList<Color> colors, bool sync = true, HumanoidComponent? humanoid = null)
+    public void AddMarking(EntityUid uid, string marking, IReadOnlyList<Color> colors, bool sync = true, bool forced = false, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid)
             || !_markingManager.Markings.TryGetValue(marking, out var prototype))
@@ -282,7 +283,9 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             return;
         }
 
-        humanoid.CurrentMarkings.AddBack(prototype.MarkingCategory, new Marking(marking, colors));
+        var markingObject = new Marking(marking, colors);
+        markingObject.Forced = forced;
+        humanoid.CurrentMarkings.AddBack(prototype.MarkingCategory, markingObject);
 
         if (sync)
             Synchronize(uid, humanoid);
