@@ -217,7 +217,7 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                             break;
                         case WeaponArcAnimation.None:
                             sprite.Offset = localPos.Normalized * distance;
-                            _animation.Play(animationUid, GetFadeout(sprite), "melee-fade");
+                            _animation.Play(animationUid, GetStaticAnimation(sprite), "melee-fade");
                             break;
                     }
                 }
@@ -229,7 +229,9 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     {
         // TODO: Weapon based arc
         var arc = Angle.FromDegrees(45);
-        var length = 0.15f;
+        var slashStart = 0.03f;
+        var slashEnd = 0.065f;
+        var length = slashEnd + 0.05f;
         var startRotation = sprite.Rotation - arc / 2;
         var endRotation = sprite.Rotation + arc / 2;
         sprite.NoRotation = true;
@@ -246,7 +248,8 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(startRotation, 0f),
-                        new AnimationTrackProperty.KeyFrame(endRotation, length)
+                        new AnimationTrackProperty.KeyFrame(startRotation, slashStart),
+                        new AnimationTrackProperty.KeyFrame(endRotation, slashEnd)
                     }
                 },
                 new AnimationTrackComponentProperty()
@@ -256,10 +259,20 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(startRotation.RotateVec(new Vector2(0f, -1f)), 0f),
-                        new AnimationTrackProperty.KeyFrame(endRotation.RotateVec(new Vector2(0f, -1f)), length)
+                        new AnimationTrackProperty.KeyFrame(startRotation.RotateVec(new Vector2(0f, -1f)), slashStart),
+                        new AnimationTrackProperty.KeyFrame(endRotation.RotateVec(new Vector2(0f, -1f)), slashEnd)
+                    }
+                },
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Color),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(sprite.Color, slashEnd),
+                        new AnimationTrackProperty.KeyFrame(sprite.Color.WithAlpha(0f), length),
                     }
                 }
-
             }
         };
     }
@@ -267,6 +280,7 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     private Animation GetThrustAnimation(SpriteComponent sprite, float distance)
     {
         var length = 0.15f;
+        var thrustEnd = 0.05f;
 
         return new Animation()
         {
@@ -280,11 +294,20 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance / 5f)), 0f),
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance)), 0.05f),
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance)), length)
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance)), thrustEnd),
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance)), length),
+                    }
+                },
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Color),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(sprite.Color, thrustEnd),
+                        new AnimationTrackProperty.KeyFrame(sprite.Color.WithAlpha(0f), length),
                     }
                 }
-
             }
         };
     }
@@ -292,7 +315,7 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     /// <summary>
     /// Get the fadeout for static weapon arcs.
     /// </summary>
-    private Animation GetFadeout(SpriteComponent sprite)
+    private Animation GetStaticAnimation(SpriteComponent sprite)
     {
         var length = 0.15f;
 
