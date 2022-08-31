@@ -1,17 +1,6 @@
 Entries:
 - author: Emisse
   changes:
-  - {message: 'Bagelstation now has a unique job, the Reporter. They exist to follow
-      the nukies around trying to get an interview and blatantly ignore any and all
-      ideas of "safety".', type: Add}
-  - {message: 'Marathon now has a unique job, Psychologist. Interview the clown to
-      discover the true machinations that drive their enigma of a mind, realize you''re
-      just a worse doctor with a cool outfit. These two roles are station exclusives,
-      and won''t be seen anywhere else.', type: Add}
-  id: 1707
-  time: '2022-06-16T09:28:38.0000000+00:00'
-- author: Emisse
-  changes:
   - {message: 'Bicaridine, Dermaline, and Hyronalin all OD at 30u. Hyronalin has a
       low base chance to induce vomiting.', type: Add}
   id: 1708
@@ -2933,3 +2922,8 @@ Entries:
   - {message: A new Wizard's Den Roleplay server will be coming soon., type: Add}
   id: 2206
   time: '2022-08-31T10:25:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Area pickup no longer picks up on cancellation., type: Fix}
+  id: 2207
+  time: '2022-08-31T12:09:31.0000000+00:00'
