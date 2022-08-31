@@ -6,6 +6,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
 using Content.Shared.Tag;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Humanoid;
@@ -92,6 +93,12 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         EnsureDefaultMarkings(uid, humanoid);
 
         humanoid.Gender = profile.Gender;
+
+        if (TryComp<GrammarComponent>(uid, out var grammar))
+        {
+            grammar.Gender = profile.Gender;
+        }
+
         humanoid.Age = profile.Age;
 
         Synchronize(uid);
