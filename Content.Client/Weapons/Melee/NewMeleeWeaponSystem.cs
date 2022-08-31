@@ -2,6 +2,7 @@ using Content.Client.Viewport;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

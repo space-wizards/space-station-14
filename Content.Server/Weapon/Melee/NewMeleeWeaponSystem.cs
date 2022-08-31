@@ -1,15 +1,20 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Damage.Systems;
 using Content.Server.Weapon.Melee.Components;
+using Content.Server.Weapon.Melee.Events;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
@@ -21,9 +26,11 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public const float DamagePitchVariation = 0.05f;
@@ -31,11 +38,15 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     // TODO:
     // - Sprite lerping -> Check rotated eyes
     // - Eye kick?
-    // - Arc
-    // - Wide attack
     // - Better overlay
     // - Port
     // - CVars to toggle some stuff
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+    }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
     {
@@ -326,5 +337,35 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         }
 
         return highestDamageType;
+    }
+
+    private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
+    {
+        if (!_solutions.TryGetInjectableSolution(owner, out var solutionContainer))
+            return;
+
+        var hitBloodstreams = new List<BloodstreamComponent>();
+        foreach (var entity in args.HitEntities)
+        {
+            if (Deleted(entity))
+                continue;
+
+            if (EntityManager.TryGetComponent<BloodstreamComponent?>(entity, out var bloodstream))
+                hitBloodstreams.Add(bloodstream);
+        }
+
+        if (hitBloodstreams.Count < 1)
+            return;
+
+        var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
+        var removedVol = removedSolution.TotalVolume;
+        var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
+        var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);
+
+        foreach (var bloodstream in hitBloodstreams)
+        {
+            var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
+            _bloodstream.TryAddToChemicals((bloodstream).Owner, individualInjection, bloodstream);
+        }
     }
 }

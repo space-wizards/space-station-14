@@ -1,6 +1,7 @@
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
 using Content.Server.Weapon.Melee.Components;
+using Content.Server.Weapon.Melee.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;

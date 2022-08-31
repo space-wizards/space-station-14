@@ -5,6 +5,7 @@ using Content.Server.Weapon.Melee.Components;
 using Content.Server.Clothing.Components;
 using Content.Server.Damage.Components;
 using Content.Server.Damage.Events;
+using Content.Server.Weapon.Melee.Events;
 using Content.Shared.Weapon.Melee.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

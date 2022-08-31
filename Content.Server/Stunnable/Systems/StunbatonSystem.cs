@@ -6,6 +6,7 @@ using Content.Server.Power.Events;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
+using Content.Server.Weapon.Melee.Events;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;

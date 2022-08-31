@@ -2,10 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
-using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -271,7 +269,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
     }
 
-    protected void DoLungeAnimation(EntityUid user, MapCoordinates coordinates, string? animation)
+    private void DoLungeAnimation(EntityUid user, MapCoordinates coordinates, string? animation)
     {
         // TODO: Assert that offset eyes are still okay.
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -288,23 +286,4 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
     }
 
     protected abstract void DoLunge(EntityUid user, Vector2 localPos, string? animation);
-
-    [Serializable, NetSerializable]
-    protected sealed class MeleeLungeEvent : EntityEventArgs
-    {
-        public EntityUid Entity;
-        public Vector2 LocalPos;
-
-        /// <summary>
-        /// Entity to spawn for the animation
-        /// </summary>
-        public string? Animation;
-
-        public MeleeLungeEvent(EntityUid uid, Vector2 localPos, string? animation)
-        {
-            Entity = uid;
-            LocalPos = localPos;
-            Animation = animation;
-        }
-    }
 }
