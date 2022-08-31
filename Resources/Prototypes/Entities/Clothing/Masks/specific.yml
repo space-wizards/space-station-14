@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingMaskGas
+  parent: ClothingMaskBase
   id: ClothingMaskGasChameleon
   name: gas mask
   description: A face-covering mask that can be connected to an air supply.
