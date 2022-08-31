@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: All mobs will now gib after enough damage., type: Fix}
-  id: 1706
-  time: '2022-06-16T09:25:51.0000000+00:00'
 - author: Emisse
   changes:
   - {message: 'Bagelstation now has a unique job, the Reporter. They exist to follow
@@ -2933,3 +2928,8 @@ Entries:
       it., type: Add}
   id: 2205
   time: '2022-08-31T08:24:51.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: A new Wizard's Den Roleplay server will be coming soon., type: Add}
+  id: 2206
+  time: '2022-08-31T10:25:14.0000000+00:00'
