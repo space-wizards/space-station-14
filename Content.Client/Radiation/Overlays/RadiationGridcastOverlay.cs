@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Radiation.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -92,7 +93,14 @@ public sealed class RadiationGridcastOverlay : Overlay
 
             if (!ray.IsGridcast)
             {
-                handle.DrawLine(ray.Source, ray.LastPos, Color.Red);
+                var lastPos = ray.Destination;
+                if (!ray.ReachedDestination)
+                {
+                    var (lastBlocker, _) = ray.Blockers.LastOrDefault();
+                    lastPos = lastBlocker;
+                }
+
+                handle.DrawLine(ray.Source, lastPos, Color.Red);
             }
 
         }

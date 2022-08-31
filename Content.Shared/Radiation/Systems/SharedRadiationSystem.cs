@@ -4,139 +4,61 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radiation.Systems;
 
-public abstract partial class SharedRadiationSystem : EntitySystem
+public abstract class SharedRadiationSystem : EntitySystem
 {
 
 }
 
-[Serializable, NetSerializable]
-public sealed class RadiationUpdate : EntityEventArgs
-{
-    public readonly Dictionary<EntityUid, Dictionary<Vector2i, float>> RadiationMap;
-    public List<(Matrix3, Dictionary<Vector2i, float>)> SpaceMap;
-
-    public RadiationUpdate(Dictionary<EntityUid, Dictionary<Vector2i, float>> radiationMap,
-        List<(Matrix3, Dictionary<Vector2i, float>)> spaceMap)
-    {
-        RadiationMap = radiationMap;
-        SpaceMap = spaceMap;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class RadiationRaysUpdate : EntityEventArgs
-{
-    public readonly List<RadRayResult> Rays;
-
-    public RadiationRaysUpdate(List<RadRayResult> rays)
-    {
-        Rays = rays;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class RadRayResult
-{
-    public readonly EntityUid SourceUid;
-    public readonly Vector2 SourcePos;
-    public readonly EntityUid DestUid;
-    public readonly Vector2 DestPos;
-    public readonly MapId MapId;
-    public readonly List<(Vector2, float)> Blockers;
-    public readonly float SourceRads;
-    public readonly float ReceivedRads;
-
-    public RadRayResult(EntityUid sourceUid, Vector2 sourcePos,
-        EntityUid destUid, Vector2 destPos, MapId mapId,
-        List<(Vector2, float)> blockers, float sourceRads, float receivedRads)
-    {
-        SourceUid = sourceUid;
-        SourcePos = sourcePos;
-        DestUid = destUid;
-        DestPos = destPos;
-        MapId = mapId;
-        Blockers = blockers;
-        SourceRads = sourceRads;
-        ReceivedRads = receivedRads;
-    }
-
-    public bool ReachedDestination => ReceivedRads > 0;
-
-    public Vector2 LastPos
-    {
-        get
-        {
-            if (ReachedDestination)
-                return DestPos;
-
-            // this shouldn't really happen
-            if (Blockers.Count == 0)
-                return DestPos;
-
-            var (lastBlocker, _) = Blockers.Last();
-            return lastBlocker;
-        }
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class OnRadiationViewToggledEvent : EntityEventArgs
-{
-    public readonly bool IsEnabled;
-
-    public OnRadiationViewToggledEvent(bool isEnabled)
-    {
-        IsEnabled = isEnabled;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class OnRadiationViewUpdateEvent : EntityEventArgs
-{
-    public readonly double ElapsedTime;
-    public readonly int TotalSources;
-    public readonly int TotalReceivers;
-    public readonly List<RadiationRay> Rays;
-    public int TotalRaysCount => Rays.Count;
-
-    public OnRadiationViewUpdateEvent(double elapsedTime, int totalSources, int totalReceivers, List<RadiationRay> rays)
-    {
-        ElapsedTime = elapsedTime;
-        TotalSources = totalSources;
-        TotalReceivers = totalReceivers;
-        Rays = rays;
-    }
-}
-
+/// <summary>
+///     Radiation ray emitted by radiation source towards radiation receiver.
+///     Contains all information about encountered radiation blockers.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class RadiationRay
 {
+    /// <summary>
+    ///     Map on which source and receiver are placed.
+    /// </summary>
     public MapId MapId;
+    /// <summary>
+    ///     World coordinates of radiation source.
+    /// </summary>
     public Vector2 Source;
+    /// <summary>
+    ///     World coordinates of radiation receiver.
+    /// </summary>
     public Vector2 Destination;
+    /// <summary>
+    ///     How much rads intensity reached radiation receiver.
+    /// </summary>
     public float Rads;
 
-    public EntityUid? Grid;
-    public List<(Vector2i, float?)> VisitedTiles = new();
-
-    public List<(Vector2, float)> Blockers = new();
-
-    public bool IsGridcast => Grid != null;
+    /// <summary>
+    ///     Does rad ray reached destination or loose all intensity in blockers?
+    /// </summary>
     public bool ReachedDestination => Rads > 0;
 
-    public Vector2 LastPos
-    {
-        get
-        {
-            if (ReachedDestination)
-                return Destination;
+    /// <summary>
+    ///     Does radiation traveled by grid tiles (gridcast) or world coordinates (raycast)?
+    /// </summary>
+    public bool IsGridcast => Grid != null;
 
-            // this shouldn't really happen
-            if (Blockers.Count == 0)
-                return Destination;
+    /// <summary>
+    ///     Grid uid on which gridcast traveled. If it wasn't gridcast
+    ///     will be set to null. Right now gridcast can travel only on one grid.
+    /// </summary>
+    public EntityUid? Grid;
+    /// <summary>
+    ///     All tiles visited by gridcast. If radiation has encountered blockers on this tile
+    ///     will have float with updated radiation value. Empty if not gridcast.
+    /// </summary>
+    /// <remarks>Last tile may have negative value if ray lost all intensity.</remarks>
+    public List<(Vector2i, float?)> VisitedTiles = new();
 
-            var (lastBlocker, _) = Blockers.Last();
-            return lastBlocker;
-        }
-    }
+    /// <summary>
+    ///     All blockers visited by raycast. Consist of pairs of impact point in world space
+    ///     and float with updated radiation value. Empty if not raycast.
+    /// </summary>
+    /// <remarks>Last position may have negative value if ray lost all intensity.</remarks>
+    public List<(Vector2, float)> Blockers = new();
 }
