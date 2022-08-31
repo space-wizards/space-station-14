@@ -14,7 +14,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Tools.Innate;
@@ -30,7 +29,6 @@ namespace Content.Server.Drone
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
 
         public override void Initialize()
@@ -80,7 +78,7 @@ namespace Content.Server.Drone
 
         private void OnMobStateChanged(EntityUid uid, DroneComponent drone, MobStateChangedEvent args)
         {
-            if (_mobStateSystem.IsDead(uid))
+            if (args.CurrentMobState == DamageState.Dead)
             {
                 if (TryComp<InnateToolComponent>(uid, out var innate))
                     _innateToolSystem.Cleanup(uid, innate);

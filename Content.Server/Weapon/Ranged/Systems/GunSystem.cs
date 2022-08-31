@@ -233,7 +233,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         // woops the other entity is deleted
         // someone needs to handle this better. for now i'm just gonna make it not crash the server -rane
-        if (!HasComp<TransformComponent>(otherEntity))
+        if (Deleted(otherEntity))
             return;
 
         if (!forceWeaponSound && modifiedDamage != null && modifiedDamage.Total > 0 && TryComp<RangedDamageSoundComponent>(otherEntity, out var rangedSound))
