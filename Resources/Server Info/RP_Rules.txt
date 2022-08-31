@@ -73,7 +73,7 @@ Core Rules
     - These roles must exhibit some competency. Incompetence can result in a job ban. Command roles are designed to lead and manage departments first and do second. They are not intended to become do-it-all members of their departments.
     - Crew promoted to acting heads of staff must step down when an official head of staff arrives at the station. This is to prevent confusion with the chain of command when the new player arrives.
 
-[color=#a4885c]20.[/color] In the absence of a captain, the Head of Personnel or Head of Security must serve as acting captain or split the duties of the captain between themselves. In the absence of a captain, HoP, and HoS, the other command staff have equal standing in determining the acting captain.
+[color=#a4885c]20.[/color] In the absence of a captain, the Head of Personnel or Head of Security (in that order) must serve as acting captain or split the duties of the captain between themselves. In the absence of a captain, HoP, and HoS, the other command staff have equal standing in determining the acting captain.
     - Only command staff may serve as acting captain. Acting departmental heads and regular crew may not serve as acting captain.
     - An acting captain may fill in for decisions that require the captain’s authorization, but may not run the station and its departments, nor are they privy to the captain’s equipment or access, with exceptions for the command headset and nuke disk.
 
