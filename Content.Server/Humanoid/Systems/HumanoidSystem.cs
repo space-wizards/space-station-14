@@ -21,21 +21,18 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 
     }
 
-    public void Synchronize(EntityUid uid, HumanoidComponent? component = null)
+    private void Synchronize(EntityUid uid, HumanoidComponent? component = null)
     {
         if (!Resolve(uid, ref component))
         {
             return;
         }
 
-        var layers = new HashSet<HumanoidVisualLayers>(component.HiddenLayers);
-        layers.UnionWith(component.PermanentlyHidden);
-
         SetAppearance(uid,
             component.Species,
             component.CustomBaseLayers,
             component.SkinColor,
-            layers.ToList(),
+            component.HiddenLayers.ToList(),
             component.CurrentMarkings.GetForwardEnumerator().ToList());
     }
 
@@ -195,7 +192,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             Synchronize(uid, humanoid);
     }
 
-    public void ToggleHiddenLayer(EntityUid uid, HumanoidVisualLayers layer, bool permanent = false, HumanoidComponent? humanoid = null)
+    public void ToggleHiddenLayer(EntityUid uid, HumanoidVisualLayers layer, HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
         {
@@ -214,7 +211,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         Synchronize(uid, humanoid);
     }
 
-    public void SetLayersVisibility(EntityUid uid, IEnumerable<HumanoidVisualLayers> layers, bool visible, bool permanent = false,
+    public void SetLayersVisibility(EntityUid uid, IEnumerable<HumanoidVisualLayers> layers, bool visible,
         HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
@@ -226,20 +223,10 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         {
             if (visible)
             {
-                if (permanent && humanoid.PermanentlyHidden.Contains(layer))
-                {
-                    humanoid.PermanentlyHidden.Remove(layer);
-                }
-
                 humanoid.HiddenLayers.Remove(layer);
             }
             else
             {
-                if (permanent && humanoid.PermanentlyHidden.Contains(layer))
-                {
-                    humanoid.PermanentlyHidden.Add(layer);
-                }
-
                 humanoid.HiddenLayers.Add(layer);
             }
         }
