@@ -3,6 +3,7 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Humanoid;
+using Content.Shared.Preferences;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -32,11 +33,14 @@ namespace Content.Server.Body.Components
 
             _partContainer.Insert(part.Owner);
 
-            var layer = slot.ToHumanoidLayers();
-            if (layer != null)
+            if (_entMan.HasComponent<HumanoidComponent>(Owner))
             {
-                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, layers, true, true);
+                var layer = slot.ToHumanoidLayers();
+                if (layer != null)
+                {
+                    var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+                    _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, layers, true, true);
+                }
             }
         }
 
@@ -47,11 +51,14 @@ namespace Content.Server.Body.Components
             _partContainer.ForceRemove(part.Owner);
             part.Owner.RandomOffset(0.25f);
 
-            var layer = slot.ToHumanoidLayers();
-            if (layer != null)
+            if (_entMan.HasComponent<HumanoidComponent>(Owner))
             {
-                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, layers, false, true);
+                var layer = slot.ToHumanoidLayers();
+                if (layer != null)
+                {
+                    var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+                    _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, layers, false, true);
+                }
             }
         }
 
