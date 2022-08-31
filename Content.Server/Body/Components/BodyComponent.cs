@@ -92,8 +92,6 @@ namespace Content.Server.Body.Components
             {
                 part.Dirty();
             }
-
-            _entMan.System<HumanoidSystem>().Synchronize(Owner);
         }
 
         public override HashSet<EntityUid> Gib(bool gibParts = false)

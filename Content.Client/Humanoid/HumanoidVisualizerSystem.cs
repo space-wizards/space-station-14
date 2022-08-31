@@ -373,15 +373,14 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             }
         }
 
-        foreach (var slot in body.Slots)
+        foreach (var (part, _) in body.Parts)
         {
-            if (slot.Part == null
-                || !slots.TryGetValue((slot.PartType, slot.Part.Symmetry), out var color))
+            if (!slots.TryGetValue((part.PartType, part.Symmetry), out var color))
             {
                 continue;
             }
 
-            SetBodySpriteColor(slot, color);
+            SetBodySpriteColor(part, color);
         }
     }
 
@@ -397,9 +396,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         sprite[index].Color = color;
     }
 
-    private void SetBodySpriteColor(BodyPartSlot slot, Color color, SpriteComponent? partSprite = null)
+    private void SetBodySpriteColor(SharedBodyPartComponent slot, Color color, SpriteComponent? partSprite = null)
     {
-        if (slot.Part == null || !Resolve(slot.Part.Owner, ref partSprite) || !partSprite.AllLayers.Any())
+        if (!Resolve(slot.Owner, ref partSprite) || !partSprite.AllLayers.Any())
         {
             return;
         }
@@ -494,11 +493,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         // This probably shouldn't be here. I'll leave it in here for now.
         // This is kind of expensive to do because you have to allocate the entire dictionary so
-        foreach (var slot in body.Slots)
+        foreach (var (part, _) in body.Parts)
         {
-            if (slot.Part == null
-                || !slotInfo.TryGetValue((slot.PartType, slot.Part.Symmetry), out var spriteInfo)
-                || !TryComp<SpriteComponent>(slot.Part.Owner, out var partSprite))
+            if (!slotInfo.TryGetValue((part.PartType, part.Symmetry), out var spriteInfo)
+                || !TryComp<SpriteComponent>(part.Owner, out var partSprite))
             {
                 continue;
             }
