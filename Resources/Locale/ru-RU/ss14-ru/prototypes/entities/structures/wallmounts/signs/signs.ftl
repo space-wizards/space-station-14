@@ -1,6 +1,9 @@
 ent-PaintingMonkey = картина обезьяны
     .desc = Отвергни эволюцию, стань манки.
     .suffix = { "" }
+ent-BaseSignDirectional = { ent-BaseSign }
+    .desc = { ent-BaseSign.desc }
+    .suffix = { "" }
 ent-SignDirectionalBar = знак "бар"
     .desc = Указатель в сторону бара.
     .suffix = { "" }
