@@ -509,7 +509,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             switch (spriteInfo.BaseSprite)
             {
                 case SpriteSpecifier.Rsi rsi:
-                    if (partSprite[0].Rsi != null && partSprite[0].Rsi?.Path == rsi.RsiPath &&
+                    if (partSprite[0].ActualRsi != null && partSprite[0].ActualRsi?.Path == rsi.RsiPath &&
                         partSprite[0].RsiState == rsi.RsiState)
                     {
                         break;
