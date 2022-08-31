@@ -1,6 +1,5 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Destructible;
-using Content.Server.FloodFill;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
@@ -165,5 +164,20 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         return explosionTolerance;
+    }
+
+    /// <summary>
+    ///     Data struct that describes the explosion-blocking airtight entities on a tile.
+    /// </summary>
+    public struct TileData
+    {
+        public TileData(float[] explosionTolerance, AtmosDirection blockedDirections)
+        {
+            ExplosionTolerance = explosionTolerance;
+            BlockedDirections = blockedDirections;
+        }
+
+        public float[] ExplosionTolerance;
+        public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
     }
 }
