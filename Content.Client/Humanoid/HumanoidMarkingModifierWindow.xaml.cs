@@ -8,7 +8,7 @@ namespace Content.Client.Humanoid;
 // hack for a panel that modifies an entity's markings on demand
 
 [GenerateTypedNameReferences]
-public sealed class HumanoidMarkingModifierWindow : DefaultWindow
+public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
 {
     public Action<MarkingSet>? OnMarkingAdded;
     public Action<MarkingSet>? OnMarkingRemoved;
@@ -23,6 +23,11 @@ public sealed class HumanoidMarkingModifierWindow : DefaultWindow
         MarkingPickerWidget.OnMarkingRemoved += OnMarkingRemoved;
         MarkingPickerWidget.OnMarkingColorChange += OnMarkingColorChange;
         MarkingPickerWidget.OnMarkingRankChange += OnMarkingRankChange;
+        MarkingForced.OnToggled += args => MarkingPickerWidget.Forced = args.Pressed;
+        MarkingIgnoreSpecies.OnToggled += args => MarkingPickerWidget.Forced = args.Pressed;
+
+        MarkingPickerWidget.Forced = MarkingForced.Pressed;
+        MarkingPickerWidget.IgnoreSpecies = MarkingForced.Pressed;
     }
 
     public void SetMarkings(MarkingSet markings, string species, Color skinColor)
