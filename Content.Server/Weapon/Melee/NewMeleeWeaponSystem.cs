@@ -66,7 +66,8 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
             ev.Target
         };
 
-        RaiseLocalEvent(ev.Target, new AttackedEvent(component.Owner, user, targetXform.Coordinates), true);
+        // For stuff that cares about it being attacked.
+        RaiseLocalEvent(ev.Target, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(component.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
         var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage);
@@ -106,9 +107,9 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         }
     }
 
-    protected override void DoLunge(EntityUid user, Vector2 localPos)
+    protected override void DoLunge(EntityUid user, Vector2 localPos, string? animation)
     {
-        RaiseNetworkEvent(new MeleeLungeEvent(localPos), Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
+        RaiseNetworkEvent(new MeleeLungeEvent(user, localPos, animation), Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
 
     private void PlayHitSound(EntityUid target, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)

@@ -261,7 +261,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
                 throw new NotImplementedException();
         }
 
-        DoLungeAnimation(user, attack.Coordinates.ToMap(EntityManager));
+        DoLungeAnimation(user, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
 
         weapon.Active = false;
         weapon.WindupAccumulator = 0f;
@@ -278,7 +278,7 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
 
     }
 
-    protected void DoLungeAnimation(EntityUid user, MapCoordinates coordinates)
+    protected void DoLungeAnimation(EntityUid user, MapCoordinates coordinates, string? animation)
     {
         // TODO: Assert that offset eyes are still okay.
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -291,10 +291,10 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
             return;
 
         localPos = userXform.LocalRotation.RotateVec(localPos);
-        DoLunge(user, localPos);
+        DoLunge(user, localPos, animation);
     }
 
-    protected abstract void DoLunge(EntityUid user, Vector2 localPos);
+    protected abstract void DoLunge(EntityUid user, Vector2 localPos, string? animation);
 
     [Serializable, NetSerializable]
     protected sealed class MeleeLungeEvent : EntityEventArgs
@@ -302,9 +302,16 @@ public abstract class SharedNewMeleeWeaponSystem : EntitySystem
         public EntityUid Entity;
         public Vector2 LocalPos;
 
-        public MeleeLungeEvent(Vector2 localPos)
+        /// <summary>
+        /// Entity to spawn for the animation
+        /// </summary>
+        public string? Animation;
+
+        public MeleeLungeEvent(EntityUid uid, Vector2 localPos, string? animation)
         {
+            Entity = uid;
             LocalPos = localPos;
+            Animation = animation;
         }
     }
 }

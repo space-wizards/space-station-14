@@ -1,12 +1,36 @@
 - type: entity
-  id: WeaponArc
-  save: false
+  id: WeaponArcTwo
   noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     sprite: Effects/arcs.rsi
+    state: spear
     netsync: false
-    noRot: false
-    offset: 0, -0.85
     drawdepth: Effects
-  - type: MeleeWeaponArcAnimation
+  - type: EffectVisuals
+  - type: WeaponArcVisuals
+
+# TODO: Try red for only 0.1, same with lunge
+# TODO: Camera recoil (try it as a shake, i.e. zoom out and then rotate slightly maybe)
+# See https://github.com/gasgiant/Camera-Shake
+
+- type: entity
+  id: WeaponArcThrust
+  parent: WeaponArcTwo
+  # components:
+
+  # TODO: Hold for 0.1, thrust out n distance, then fade out
+
+- type: entity
+  id: WeaponArcSlash
+  parent: WeaponArcTwo
+  # components:
+  # TODO: Slash over 0.1, then hold and fade out
+
+
+- type: entity
+  id: WeaponArcStatic
+  # Just fades out with no movement animation
+  parent: WeaponArcTwo
+  # TODO: Slash over 0.1, then hold and fade out

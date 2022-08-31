@@ -2,6 +2,8 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Melee;
 
@@ -53,6 +55,9 @@ public sealed class NewMeleeWeaponComponent : Component
     public string? ArcEffect = null;
 
     #endregion
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string Animation = "WeaponArcStatic";
 
     // Sounds
 

@@ -14,7 +14,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Weapons.Melee;
 
-public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
+public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
@@ -32,7 +32,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     /// </summary>
     private static readonly Animation MeleeEffectAnimation = new()
     {
-        Length = TimeSpan.FromSeconds(0.3),
+        Length = TimeSpan.FromSeconds(0.15),
         AnimationTracks =
         {
             new AnimationTrackComponentProperty()
@@ -42,7 +42,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                 KeyFrames =
                 {
                     new AnimationTrackProperty.KeyFrame(Color.Red, 0f),
-                    new AnimationTrackProperty.KeyFrame(Color.White, 0.3f)
+                    new AnimationTrackProperty.KeyFrame(Color.White, 0.15f)
                 }
             }
         }
@@ -51,6 +51,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeArcs();
         _overlayManager.AddOverlay(new MeleeWindupOverlay());
         SubscribeNetworkEvent<MeleeEffectEvent>(OnMeleeEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
@@ -186,20 +187,36 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 
     private void OnMeleeLunge(MeleeLungeEvent ev)
     {
-        DoLunge(ev.Entity, ev.LocalPos);
+        DoLunge(ev.Entity, ev.LocalPos, ev.Animation);
     }
 
-    protected override void DoLunge(EntityUid user, Vector2 localPos)
+    protected override void DoLunge(EntityUid user, Vector2 localPos, string? animation)
     {
-        var animation = GetLungeAnimation(localPos);
+        var lunge = GetLungeAnimation(localPos);
 
         _animation.Stop(user, MeleeLungeKey);
-        _animation.Play(user, animation, MeleeLungeKey);
+        _animation.Play(user, lunge, MeleeLungeKey);
+
+        // Clientside entity to spawn
+        if (animation != null)
+        {
+            var animationUid = Spawn(animation, new EntityCoordinates(user, Vector2.Zero));
+
+            if (localPos != Vector2.Zero && TryComp<SpriteComponent>(animationUid, out var sprite))
+            {
+                sprite.NoRotation = true;
+                sprite.Rotation = localPos.ToWorldAngle();
+
+                var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
+
+                sprite.Offset = localPos.Normalized * distance;
+            }
+        }
     }
 
     private Animation GetLungeAnimation(Vector2 direction)
     {
-        const float length = 0.3f;
+        const float length = 0.1f;
 
         return new Animation
         {
@@ -210,10 +227,10 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
                 {
                     ComponentType = typeof(SpriteComponent),
                     Property = nameof(SpriteComponent.Offset),
-                    InterpolationMode = AnimationInterpolationMode.Cubic,
+                    InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized * 0.2f, 0f),
+                        new AnimationTrackProperty.KeyFrame(direction.Normalized * 0.15f, 0f),
                         new AnimationTrackProperty.KeyFrame(Vector2.Zero, length)
                     }
                 }
