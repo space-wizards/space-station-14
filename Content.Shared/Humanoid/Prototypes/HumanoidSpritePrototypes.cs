@@ -25,7 +25,7 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
 }
 
 [Prototype("humanoidBaseSprite")]
-public sealed record HumanoidSpeciesSpriteLayer : IPrototype
+public sealed class HumanoidSpeciesSpriteLayer : IPrototype, IEquatable<HumanoidSpeciesSpriteLayer>
 {
     [IdDataField]
     public string ID { get; } = default!;
@@ -88,6 +88,25 @@ public sealed record HumanoidSpeciesSpriteLayer : IPrototype
     /// </summary>
     [DataField("markingsMatchSkin")]
     public bool MarkingsMatchSkin;
+
+    public bool Equals(HumanoidSpeciesSpriteLayer? other)
+    {
+        if (ReferenceEquals(null, other))
+            return false;
+        if (ReferenceEquals(this, other))
+            return true;
+        return AllowsMarkings == other.AllowsMarkings && MatchSkin == other.MatchSkin && MarkingsMatchSkin == other.MarkingsMatchSkin && ID == other.ID && Equals(BaseSprite, other.BaseSprite) && ReplaceOnly == other.ReplaceOnly && LayerAlpha.Equals(other.LayerAlpha);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return ReferenceEquals(this, obj) || obj is HumanoidSpeciesSpriteLayer other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(AllowsMarkings, MatchSkin, MarkingsMatchSkin, ID, BaseSprite, ReplaceOnly, LayerAlpha);
+    }
 }
 
 [Prototype("humanoidMarkingStartingSet")]
