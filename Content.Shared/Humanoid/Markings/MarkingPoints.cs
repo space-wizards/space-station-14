@@ -1,9 +1,11 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Humanoid.Markings;
 
 [DataDefinition]
+[Serializable, NetSerializable]
 public sealed class MarkingPoints
 {
     [DataField("points", required: true)]
