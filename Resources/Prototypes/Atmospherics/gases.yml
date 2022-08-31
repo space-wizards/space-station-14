@@ -38,7 +38,7 @@
   gasOverlayState: plasma
   color: FF3300
   reagent: Plasma
-  pricePerMole: 2.5
+  pricePerMole: 0.1
 
 - type: gas
   id: 4
