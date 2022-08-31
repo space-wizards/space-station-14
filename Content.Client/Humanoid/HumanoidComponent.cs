@@ -10,4 +10,6 @@ public sealed class HumanoidComponent : SharedHumanoidComponent
     [ViewVariables] public List<Marking> CurrentMarkings = new();
 
     public Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> BaseLayers = new();
+
+    public string LastSpecies = default!;
 }
