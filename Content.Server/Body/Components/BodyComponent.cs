@@ -78,8 +78,6 @@ namespace Content.Server.Body.Components
 
                     SetPart(slot.Id, part);
                 }
-
-                _entMan.System<HumanoidSystem>().Synchronize(Owner);
             }
         }
 
@@ -94,6 +92,8 @@ namespace Content.Server.Body.Components
             {
                 part.Dirty();
             }
+
+            _entMan.System<HumanoidSystem>().Synchronize(Owner);
         }
 
         public override HashSet<EntityUid> Gib(bool gibParts = false)
