@@ -392,6 +392,11 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         bool IsDirty(Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> newBaseLayers)
         {
+            if (humanoid.BaseLayers.Count != newBaseLayers.Count)
+            {
+                return true;
+            }
+
             foreach (var (key, info) in humanoid.BaseLayers)
             {
                 if (!newBaseLayers.TryGetValue(key, out var newInfo))
