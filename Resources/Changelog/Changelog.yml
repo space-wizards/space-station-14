@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Power cell bloat has been removed as it's never been used. Only small
-      cells remain., type: Remove}
-  id: 1704
-  time: '2022-06-16T08:37:08.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Pulse Pistol and Captains Antique Pistol are now size 10., type: Tweak}
@@ -2932,3 +2926,9 @@ Entries:
       still bugged., type: Fix}
   id: 2203
   time: '2022-08-30T06:15:25.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Shuttle airlock construction complete! Check the construction menu for
+      the recipe., type: Add}
+  id: 2204
+  time: '2022-08-31T07:28:40.0000000+00:00'
