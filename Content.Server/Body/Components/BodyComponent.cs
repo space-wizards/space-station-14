@@ -1,6 +1,8 @@
+using Content.Server.Humanoid;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Humanoid;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -29,6 +31,16 @@ namespace Content.Server.Body.Components
             base.OnAddPart(slot, part);
 
             _partContainer.Insert(part.Owner);
+
+            if (_entMan.TryGetComponent<HumanoidComponent>(Owner, out var humanoid))
+            {
+                var layer = part.ToHumanoidLayers();
+                if (layer != null)
+                {
+                    var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+                    _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, layers, true, true, humanoid);
+                }
+            }
         }
 
         protected override void OnRemovePart(BodyPartSlot slot, SharedBodyPartComponent part)
@@ -37,6 +49,16 @@ namespace Content.Server.Body.Components
 
             _partContainer.ForceRemove(part.Owner);
             part.Owner.RandomOffset(0.25f);
+
+            if (_entMan.TryGetComponent<HumanoidComponent>(Owner, out var humanoid))
+            {
+                var layer = part.ToHumanoidLayers();
+                if (layer != null)
+                {
+                    var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+                    _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, layers, false, true, humanoid);
+                }
+            }
         }
 
         protected override void Initialize()

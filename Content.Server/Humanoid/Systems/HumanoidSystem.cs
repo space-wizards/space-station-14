@@ -218,7 +218,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         Synchronize(uid, humanoid);
     }
 
-    public void SetLayersVisibility(EntityUid uid, IEnumerable<HumanoidVisualLayers> layers, bool visible,
+    public void SetLayersVisibility(EntityUid uid, IEnumerable<HumanoidVisualLayers> layers, bool visible, bool permanent = false,
         HumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
@@ -230,10 +230,20 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         {
             if (visible)
             {
+                if (permanent && humanoid.PermanentlyHidden.Contains(layer))
+                {
+                    humanoid.PermanentlyHidden.Remove(layer);
+                }
+
                 humanoid.HiddenLayers.Remove(layer);
             }
             else
             {
+                if (permanent && humanoid.PermanentlyHidden.Contains(layer))
+                {
+                    humanoid.PermanentlyHidden.Add(layer);
+                }
+
                 humanoid.HiddenLayers.Add(layer);
             }
         }

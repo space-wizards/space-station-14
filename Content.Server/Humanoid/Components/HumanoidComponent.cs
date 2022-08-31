@@ -19,6 +19,8 @@ public sealed class HumanoidComponent : SharedHumanoidComponent
     [ViewVariables(VVAccess.ReadOnly)]
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
 
+    public HashSet<HumanoidVisualLayers> PermanentlyHidden = new();
+
     // Couldn't these be somewhere else?
     [ViewVariables] public Gender Gender = default!;
     [ViewVariables] public int Age = HumanoidCharacterProfile.MinimumAge;

@@ -60,91 +60,68 @@ namespace Content.Shared.Humanoid
             }
         }
 
-        public static IEnumerable<HumanoidVisualLayers> ToHumanoidLayers(this SharedBodyPartComponent part)
+        public static HumanoidVisualLayers? ToHumanoidLayers(this SharedBodyPartComponent part)
         {
             switch (part.PartType)
             {
                 case BodyPartType.Other:
-                    yield break;
+                    break;
                 case BodyPartType.Torso:
-                    yield return HumanoidVisualLayers.Chest;
-                    break;
+                    return HumanoidVisualLayers.Chest;
                 case BodyPartType.Tail:
-                    yield return HumanoidVisualLayers.Tail;
-                    break;
+                    return HumanoidVisualLayers.Tail;
                 case BodyPartType.Head:
-                    yield return HumanoidVisualLayers.Head;
-                    yield return HumanoidVisualLayers.Snout;
-                    yield return HumanoidVisualLayers.HeadSide;
-                    yield return HumanoidVisualLayers.HeadTop;
-                    yield return HumanoidVisualLayers.Eyes;
-                    yield return HumanoidVisualLayers.FacialHair;
-                    yield return HumanoidVisualLayers.Hair;
-                    yield return HumanoidVisualLayers.StencilMask;
+                    // use the Sublayers method to hide the rest of the parts,
+                    // if that's what you're looking for
+                    return HumanoidVisualLayers.Head;
                     break;
                 case BodyPartType.Arm:
                     switch (part.Symmetry)
                     {
                         case BodyPartSymmetry.None:
-                            yield break;
+                            break;
                         case BodyPartSymmetry.Left:
-                            yield return HumanoidVisualLayers.LArm;
-                            break;
+                            return HumanoidVisualLayers.LArm;
                         case BodyPartSymmetry.Right:
-                            yield return HumanoidVisualLayers.RArm;
-                            break;
-                        default:
-                            yield break;
+                            return HumanoidVisualLayers.RArm;
                     }
-                    yield break;
+                    break;
                 case BodyPartType.Hand:
                     switch (part.Symmetry)
                     {
                         case BodyPartSymmetry.None:
-                            yield break;
+                            break;
                         case BodyPartSymmetry.Left:
-                            yield return HumanoidVisualLayers.LHand;
-                            break;
+                            return HumanoidVisualLayers.LHand;
                         case BodyPartSymmetry.Right:
-                            yield return HumanoidVisualLayers.RHand;
-                            break;
-                        default:
-                            yield break;
+                            return HumanoidVisualLayers.RHand;
                     }
-                    yield break;
+                    break;
                 case BodyPartType.Leg:
                     switch (part.Symmetry)
                     {
                         case BodyPartSymmetry.None:
-                            yield break;
+                            break;
                         case BodyPartSymmetry.Left:
-                            yield return HumanoidVisualLayers.LLeg;
-                            break;
+                            return HumanoidVisualLayers.LLeg;
                         case BodyPartSymmetry.Right:
-                            yield return HumanoidVisualLayers.RLeg;
-                            break;
-                        default:
-                            yield break;
+                            return HumanoidVisualLayers.RLeg;
                     }
-                    yield break;
+                    break;
                 case BodyPartType.Foot:
                     switch (part.Symmetry)
                     {
                         case BodyPartSymmetry.None:
-                            yield break;
+                            break;
                         case BodyPartSymmetry.Left:
-                            yield return HumanoidVisualLayers.LFoot;
-                            break;
+                            return HumanoidVisualLayers.LFoot;
                         case BodyPartSymmetry.Right:
-                            yield return HumanoidVisualLayers.RFoot;
-                            break;
-                        default:
-                            yield break;
+                            return HumanoidVisualLayers.RFoot;
                     }
-                    yield break;
-                default:
-                    yield break;
+                    break;
             }
+
+            return null;
         }
     }
 }
