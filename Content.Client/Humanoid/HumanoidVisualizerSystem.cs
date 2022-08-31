@@ -396,10 +396,19 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             }
         }
 
-        if (!humanoid.BaseLayers.SequenceEqual(newBaseLayers))
+        foreach (var (key, info) in humanoid.BaseLayers)
         {
-            humanoid.BaseLayers = newBaseLayers;
-            dirty = true;
+            if (!newBaseLayers.TryGetValue(key, out var newInfo))
+            {
+                dirty = true;
+                break;
+            }
+
+            if (info != newInfo)
+            {
+                dirty = true;
+                break;
+            }
         }
 
         return dirty;
