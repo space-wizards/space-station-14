@@ -32,7 +32,12 @@ namespace Content.Server.Body.Components
 
             _partContainer.Insert(part.Owner);
 
-            _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, slot.ToHumanoidLayers(), true, true);
+            var layer = slot.ToHumanoidLayers();
+            if (layer != null)
+            {
+                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+                _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, layers, true, true);
+            }
         }
 
         protected override void OnRemovePart(BodyPartSlot slot, SharedBodyPartComponent part)
@@ -42,7 +47,12 @@ namespace Content.Server.Body.Components
             _partContainer.ForceRemove(part.Owner);
             part.Owner.RandomOffset(0.25f);
 
-            _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, slot.ToHumanoidLayers(), false, true);
+            var layer = slot.ToHumanoidLayers();
+            if (layer != null)
+            {
+                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+                _entMan.System<HumanoidSystem>().SetLayersVisibility(Owner, layers, false, true);
+            }
         }
 
         protected override void Initialize()
