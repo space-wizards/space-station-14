@@ -28,6 +28,7 @@ public sealed partial class HumanoidSystem
         {
             Text = "Modify markings",
             Category = VerbCategory.Tricks,
+            IconTexture = "/Textures/Mobs/Customization/reptilian_parts.rsi/tail_smooth.png",
             Act = () =>
             {
                 _uiSystem.TryOpen(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
