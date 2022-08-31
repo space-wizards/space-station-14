@@ -376,7 +376,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         foreach (var slot in body.Slots)
         {
             if (slot.Part == null
-                || !slots.TryGetValue((slot.PartType, slot.Part.Symmetry),  out var color))
+                || !slots.TryGetValue((slot.PartType, slot.Part.Symmetry), out var color))
             {
                 continue;
             }
@@ -511,6 +511,12 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             switch (spriteInfo.BaseSprite)
             {
                 case SpriteSpecifier.Rsi rsi:
+                    if (partSprite[0].Rsi != null && partSprite[0].Rsi?.Path == rsi.RsiPath &&
+                        partSprite[0].RsiState == rsi.RsiState)
+                    {
+                        break;
+                    }
+
                     if (!_resourceCache.TryGetResource(rsi.RsiPath, out RSIResource? rsiResource))
                     {
                         break;
