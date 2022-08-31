@@ -19,6 +19,11 @@ public sealed class HumanoidComponent : SharedHumanoidComponent
     [ViewVariables(VVAccess.ReadOnly)]
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
 
+    /// <summary>
+    ///     Permanently hidden layers. Attempting to toggle these temporarily will not work.
+    /// </summary>
+    public HashSet<HumanoidVisualLayers> PermanentlyHidden = new();
+
     // Couldn't these be somewhere else?
     [ViewVariables] public Gender Gender = default!;
     [ViewVariables] public int Age = HumanoidCharacterProfile.MinimumAge;
