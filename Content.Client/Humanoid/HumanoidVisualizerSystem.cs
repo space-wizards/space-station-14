@@ -407,7 +407,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                     break;
                 }
 
-                if (info != newInfo)
+                if (info.ID != newInfo.ID)
                 {
                     dirty = true;
                     break;

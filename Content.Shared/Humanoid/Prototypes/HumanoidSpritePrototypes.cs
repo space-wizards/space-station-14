@@ -25,7 +25,7 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
 }
 
 [Prototype("humanoidBaseSprite")]
-public sealed class HumanoidSpeciesSpriteLayer : IPrototype, IEquatable<HumanoidSpeciesSpriteLayer>
+public sealed class HumanoidSpeciesSpriteLayer : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
@@ -72,14 +72,14 @@ public sealed class HumanoidSpeciesSpriteLayer : IPrototype, IEquatable<Humanoid
     ///     If this sprite layer should allow markings or not.
     /// </summary>
     [DataField("allowsMarkings")]
-    public bool AllowsMarkings = true;
+    public bool AllowsMarkings { get; } = true;
 
     /// <summary>
     ///     If this layer should always match the
     ///     skin tone in a character profile.
     /// </summary>
     [DataField("matchSkin")]
-    public bool MatchSkin = true;
+    public bool MatchSkin { get; } = true;
 
     /// <summary>
     ///     If any markings that go on this layer should
@@ -87,26 +87,7 @@ public sealed class HumanoidSpeciesSpriteLayer : IPrototype, IEquatable<Humanoid
     ///     alpha.
     /// </summary>
     [DataField("markingsMatchSkin")]
-    public bool MarkingsMatchSkin;
-
-    public bool Equals(HumanoidSpeciesSpriteLayer? other)
-    {
-        if (ReferenceEquals(null, other))
-            return false;
-        if (ReferenceEquals(this, other))
-            return true;
-        return AllowsMarkings == other.AllowsMarkings && MatchSkin == other.MatchSkin && MarkingsMatchSkin == other.MarkingsMatchSkin && ID == other.ID && Equals(BaseSprite, other.BaseSprite) && ReplaceOnly == other.ReplaceOnly && LayerAlpha.Equals(other.LayerAlpha);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return ReferenceEquals(this, obj) || obj is HumanoidSpeciesSpriteLayer other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(AllowsMarkings, MatchSkin, MarkingsMatchSkin, ID, BaseSprite, ReplaceOnly, LayerAlpha);
-    }
+    public bool MarkingsMatchSkin { get; }
 }
 
 [Prototype("humanoidMarkingStartingSet")]
