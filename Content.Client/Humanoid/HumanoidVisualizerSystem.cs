@@ -349,7 +349,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>? customBaseSprites,
         HumanoidComponent humanoid)
     {
-        var dirty = false;
         var newBaseLayers = new Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer>();
 
         foreach (var (key, id) in baseSprites)
@@ -392,25 +391,35 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         bool IsDirty(Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> newBaseLayers)
         {
+            var dirty = false;
             if (humanoid.BaseLayers.Count != newBaseLayers.Count)
             {
-                return true;
+                dirty = true;
+                humanoid.BaseLayers = newBaseLayers;
+                return dirty;
             }
 
             foreach (var (key, info) in humanoid.BaseLayers)
             {
                 if (!newBaseLayers.TryGetValue(key, out var newInfo))
                 {
-                    return true;
+                    dirty = true;
+                    break;
                 }
 
                 if (info != newInfo)
                 {
-                    return true;
+                    dirty = true;
+                    break;
                 }
             }
 
-            return false;
+            if (dirty)
+            {
+                humanoid.BaseLayers = newBaseLayers;
+            }
+
+            return dirty;
         }
 
         return IsDirty(newBaseLayers);
