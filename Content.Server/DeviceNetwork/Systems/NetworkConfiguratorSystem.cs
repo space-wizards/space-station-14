@@ -30,6 +30,8 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<NetworkConfiguratorComponent, MapInitEvent>(OnMapInit);
+
         //Interaction
         SubscribeLocalEvent<NetworkConfiguratorComponent, AfterInteractEvent>((uid, component, args) => OnUsed(uid, component, args.Target, args.User, args.CanReach)); //TODO: Replace with utility verb?
 
@@ -63,6 +65,11 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         }
     }
 
+    private void OnMapInit(EntityUid uid, NetworkConfiguratorComponent component, MapInitEvent args)
+    {
+        component.Devices.Clear();
+    }
+
     private void TryAddNetworkDevice(EntityUid? targetUid, EntityUid configuratorUid, EntityUid userUid,
         NetworkConfiguratorComponent? configurator = null)
     {
@@ -77,10 +84,17 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         if (!targetUid.HasValue || !Resolve(targetUid.Value, ref device, false))
             return;
 
-        if (string.IsNullOrEmpty(device.Address))
+        var address = device.Address;
+        if (string.IsNullOrEmpty(address))
         {
-            _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", targetUid)), Filter.Entities(userUid));
-            return;
+            if (MetaData(targetUid.Value).EntityLifeStage == EntityLifeStage.MapInitialized)
+            {
+                _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", targetUid)),
+                    Filter.Entities(userUid));
+                return;
+            }
+
+            address = $"UID: {targetUid.Value.ToString()}";
         }
 
         if (configurator.Devices.ContainsValue(targetUid.Value))
@@ -89,7 +103,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             return;
         }
 
-        configurator.Devices.Add(device.Address, targetUid.Value);
+        configurator.Devices.Add(address, targetUid.Value);
         _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", device.Address), ("device", targetUid)),
             Filter.Entities(userUid), PopupType.Medium);
 
