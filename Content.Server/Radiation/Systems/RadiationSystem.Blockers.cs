@@ -1,12 +1,10 @@
-using Content.Server.FloodFill;
-using Content.Shared.Atmos;
 using Content.Shared.Radiation.Components;
 
 namespace Content.Server.Radiation.Systems;
 
 public partial class RadiationSystem
 {
-    public Dictionary<EntityUid, Dictionary<Vector2i, TileData>> _resistancePerTile = new();
+    private readonly Dictionary<EntityUid, Dictionary<Vector2i, float>> _resistancePerTile = new();
 
     private void InitRadBlocking()
     {
@@ -96,7 +94,7 @@ public partial class RadiationSystem
         // get existing rad resistance grid or create it if it doesn't exist
         if (!_resistancePerTile.ContainsKey(gridId))
         {
-            _resistancePerTile.Add(gridId, new Dictionary<Vector2i, TileData>());
+            _resistancePerTile.Add(gridId, new Dictionary<Vector2i, float>());
         }
         var grid = _resistancePerTile[gridId];
 
@@ -104,11 +102,9 @@ public partial class RadiationSystem
         var newResistance = radResistance;
         if (grid.TryGetValue(tilePos, out var existingResistance))
         {
-            newResistance += existingResistance.Tolerance[0];
+            newResistance += existingResistance;
         }
-
-        grid[tilePos] = new TileData(new[] { newResistance },
-            AtmosDirection.All);
+        grid[tilePos] = newResistance;
     }
 
     private void RemoveFromTile(EntityUid gridId, Vector2i tilePos, float radResistance)
@@ -121,10 +117,10 @@ public partial class RadiationSystem
         // subtract resistance from tile
         if (!grid.TryGetValue(tilePos, out var existingResistance))
             return;
-        existingResistance.Tolerance[0] -= radResistance;
+        existingResistance -= radResistance;
 
         // remove tile from grid if no resistance left
-        if (existingResistance.Tolerance[0] > 0)
+        if (existingResistance > 0)
             grid[tilePos] = existingResistance;
         else
             grid.Remove(tilePos);

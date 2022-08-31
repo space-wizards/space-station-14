@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -70,8 +71,8 @@ public partial class RadiationSystem
         }
 
         // lets check how many grids are between source and destination
-        // do a raycast to get list of all grids that this rad is going to visit
-        // it should be pretty cheap because we do it only on grid bounds
+        // do a box intersection test between target and destination
+        // it's not very precise, but really cheap
         var box = Box2.FromTwoPoints(sourceWorldPos, destWorldPos);
         var grids = _mapManager.FindGridsIntersecting(mapId, box, true).ToArray();
         var gridsCount = grids.Length;
@@ -129,7 +130,7 @@ public partial class RadiationSystem
         {
             if (resistanceMap.TryGetValue(point, out var resData))
             {
-                radRay.Rads -= resData.Tolerance[0];
+                radRay.Rads -= resData;
                 visitedTiles.Add((point, radRay.Rads));
             }
             else
