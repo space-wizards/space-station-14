@@ -46,7 +46,7 @@ public sealed class NewMeleeWeaponComponent : Component
     public Angle Angle = Angle.Zero;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Animation = "WeaponArcStatic";
+    public string Animation = "WeaponArcThrust";
 
     // Sounds
 

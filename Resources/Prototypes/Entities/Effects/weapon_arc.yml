@@ -4,7 +4,6 @@
   noSpawn: true
   components:
   - type: Sprite
-    noRot: true
     sprite: Effects/arcs.rsi
     state: spear
     netsync: false
@@ -30,5 +29,6 @@
   id: WeaponArcSlash
   parent: WeaponArcStatic
   noSpawn: true
-  # components:
-  # TODO: Slash over 0.1, then hold and fade out
+  components:
+    - type: WeaponArcVisuals
+      animation: Slash

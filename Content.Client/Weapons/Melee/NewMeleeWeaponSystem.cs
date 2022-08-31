@@ -1,4 +1,5 @@
 using Content.Client.Viewport;
+using Content.Client.Weapons.Melee.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.Animations;
@@ -51,7 +52,6 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
-        InitializeArcs();
         _overlayManager.AddOverlay(new MeleeWindupOverlay());
         SubscribeNetworkEvent<MeleeEffectEvent>(OnMeleeEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
@@ -180,10 +180,17 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         DoLunge(ev.Entity, ev.LocalPos, ev.Animation);
     }
 
+    /// <summary>
+    /// Does all of the melee effects for a player that are predicted, i.e. character lunge and weapon animation.
+    /// </summary>
     protected override void DoLunge(EntityUid user, Vector2 localPos, string? animation)
     {
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
         var lunge = GetLungeAnimation(localPos);
 
+        // Stop any existing lunges on the user.
         _animation.Stop(user, MeleeLungeKey);
         _animation.Play(user, lunge, MeleeLungeKey);
 
@@ -194,16 +201,126 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
 
             if (localPos != Vector2.Zero && TryComp<SpriteComponent>(animationUid, out var sprite))
             {
-                sprite.Rotation = localPos.ToWorldAngle();
-                var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
-                sprite.Offset = localPos.Normalized * distance;
+                if (TryComp<WeaponArcVisualsComponent>(animationUid, out var arcComponent))
+                {
+                    sprite.NoRotation = true;
+                    sprite.Rotation = localPos.ToWorldAngle();
+                    var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
+
+                    switch (arcComponent.Animation)
+                    {
+                        case WeaponArcAnimation.Slash:
+                            _animation.Play(animationUid, GetSlashAnimation(sprite), "melee-slash");
+                            break;
+                        case WeaponArcAnimation.Thrust:
+                            _animation.Play(animationUid, GetThrustAnimation(sprite, distance), "melee-thrust");
+                            break;
+                        case WeaponArcAnimation.None:
+                            sprite.Offset = localPos.Normalized * distance;
+                            _animation.Play(animationUid, GetFadeout(sprite), "melee-fade");
+                            break;
+                    }
+                }
             }
         }
     }
 
+    private Animation GetSlashAnimation(SpriteComponent sprite)
+    {
+        // TODO: Weapon based arc
+        var arc = Angle.FromDegrees(45);
+        var length = 0.15f;
+        var startRotation = sprite.Rotation - arc / 2;
+        var endRotation = sprite.Rotation + arc / 2;
+        sprite.NoRotation = true;
+
+        return new Animation()
+        {
+            Length = TimeSpan.FromSeconds(length),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(startRotation, 0f),
+                        new AnimationTrackProperty.KeyFrame(endRotation, length)
+                    }
+                },
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Offset),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(startRotation.RotateVec(new Vector2(0f, -1f)), 0f),
+                        new AnimationTrackProperty.KeyFrame(endRotation.RotateVec(new Vector2(0f, -1f)), length)
+                    }
+                }
+
+            }
+        };
+    }
+
+    private Animation GetThrustAnimation(SpriteComponent sprite, float distance)
+    {
+        var length = 0.15f;
+
+        return new Animation()
+        {
+            Length = TimeSpan.FromSeconds(length),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Offset),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance / 5f)), 0f),
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance)), 0.05f),
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance)), length)
+                    }
+                }
+
+            }
+        };
+    }
+
+    /// <summary>
+    /// Get the fadeout for static weapon arcs.
+    /// </summary>
+    private Animation GetFadeout(SpriteComponent sprite)
+    {
+        var length = 0.15f;
+
+        return new()
+        {
+            Length = TimeSpan.FromSeconds(length),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Color),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(sprite.Color, 0f),
+                        new AnimationTrackProperty.KeyFrame(sprite.Color.WithAlpha(0f), length)
+                    }
+                }
+            }
+        };
+    }
+
+    /// <summary>
+    /// Get the sprite offset animation to use for mob lunges.
+    /// </summary>
     private Animation GetLungeAnimation(Vector2 direction)
     {
-        const float length = 0.1f;
+        var length = 0.1f;
 
         return new Animation
         {
