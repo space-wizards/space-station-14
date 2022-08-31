@@ -17,11 +17,14 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     // This function is called on a server after user selected new outfit.
     // And after that on a client after state was updated.
     // This 100% makes sure that server and client have exactly same data.
-    protected virtual void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
+    protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.SelectedId) ||
             !_proto.TryIndex(component.SelectedId, out EntityPrototype? proto))
             return;
+
+        // world sprite icon
+        UpdateSprite(uid, proto);
 
         // copy name and description
         var meta = MetaData(uid);
@@ -42,6 +45,8 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
     }
+
+    protected virtual void UpdateSprite(EntityUid uid, EntityPrototype proto) { }
 
     /// <summary>
     ///     Check if this entity prototype is valid target for chameleon item.

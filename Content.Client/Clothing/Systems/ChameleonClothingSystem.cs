@@ -53,14 +53,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         UpdateVisuals(uid, component);
     }
 
-    protected override void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
+    protected override void UpdateSprite(EntityUid uid, EntityPrototype proto)
     {
-        base.UpdateVisuals(uid, component);
-        if (string.IsNullOrEmpty(component.SelectedId)
-            || !_proto.TryIndex(component.SelectedId, out EntityPrototype? proto))
-            return;
-
-        // world sprite icon
+        base.UpdateSprite(uid, proto);
         if (TryComp(uid, out SpriteComponent? sprite)
             && proto.TryGetComponent(out SpriteComponent? otherSprite, _factory))
         {
