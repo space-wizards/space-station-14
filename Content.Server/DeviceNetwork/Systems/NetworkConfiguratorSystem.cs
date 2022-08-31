@@ -68,6 +68,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     private void OnMapInit(EntityUid uid, NetworkConfiguratorComponent component, MapInitEvent args)
     {
         component.Devices.Clear();
+        UpdateUiState(uid, component);
     }
 
     private void TryAddNetworkDevice(EntityUid? targetUid, EntityUid configuratorUid, EntityUid userUid,
