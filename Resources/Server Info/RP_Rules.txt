@@ -64,8 +64,7 @@ Core Rules
     - Ahelping about an SSD/AFK player may grant an exception to this rule.
     - This does not apply to players that are catatonic, although needlessly killing or harming catatonic players is discouraged.
 
-[color=#a4885c]18.[/color] We now adhere to our own Standard Operating Procedure and Alert Procedure policy. These can be found at wiki.spacestation14.io.
-    - Calling the shuttle to end the round faster despite there being no significant threats to the station will likely result in it being recalled.
+[color=#a4885c]18.[/color] As mentioned above, [color=#ff0000]Space Law, Standard Operating Procedure and Alert Procedure policy/guidelines are expected to be adhered to[/color]. These can be found at wiki.spacestation14.io.
 
 [color=#ff0000]Command Rules[/color]
 
