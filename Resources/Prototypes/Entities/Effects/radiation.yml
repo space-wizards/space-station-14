@@ -8,7 +8,7 @@
     radsPerSecond: 5
   - type: TimedDespawn
     lifetime: 2
-  - type: PlayOnSpawn
+  - type: EmitSoundOnSpawn
     sound:
       collection:
         RadiationPulse

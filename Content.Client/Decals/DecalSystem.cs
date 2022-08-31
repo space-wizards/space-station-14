@@ -8,18 +8,17 @@ namespace Content.Client.Decals
     public sealed class DecalSystem : SharedDecalSystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly SharedTransformSystem _transforms = default!;
         [Dependency] private readonly SpriteSystem _sprites = default!;
 
         private DecalOverlay _overlay = default!;
-        public Dictionary<EntityUid, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
-        private Dictionary<EntityUid, Dictionary<uint, int>> _decalZIndexIndex = new();
+        public readonly Dictionary<EntityUid, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
+        private readonly Dictionary<EntityUid, Dictionary<uint, int>> _decalZIndexIndex = new();
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _overlay = new DecalOverlay(this, _transforms, _sprites, EntityManager, PrototypeManager);
+            _overlay = new DecalOverlay(this, _sprites, EntityManager, PrototypeManager);
             _overlayManager.AddOverlay(_overlay);
 
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
@@ -108,7 +107,7 @@ namespace Content.Client.Decals
                     chunkCollection[indices] = newChunkData;
 
                     foreach (var (uid, decal) in newChunkData)
-                    {       
+                    {
                         if (zIndexIndex.TryGetValue(uid, out var zIndex))
                             renderIndex[zIndex].Remove(uid);
 

@@ -18,7 +18,7 @@
   parent: BaseComputerCircuitboard
   id: AlertsComputerCircuitboard
   name: alerts computer board
-  description: A computer printed circuit board for an alerts computer
+  description: A computer printed circuit board for an alerts computer.
   components:
     - type: ComputerBoard
       prototype: ComputerAlert
@@ -27,8 +27,10 @@
   parent: BaseComputerCircuitboard
   id: PowerComputerCircuitboard
   name: power monitoring computer board
-  description: A computer printed circuit board for a power monitoring computer
+  description: A computer printed circuit board for a power monitoring computer.
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerPowerMonitoring
 
@@ -36,8 +38,10 @@
   parent: BaseComputerCircuitboard
   id: MedicalRecordsComputerCircuitboard
   name: medical records computer board
-  description: A computer printed circuit board for a medical records computer
+  description: A computer printed circuit board for a medical records computer.
   components:
+    - type: Sprite
+      state: cpu_medical
     - type: ComputerBoard
       prototype: ComputerMedicalRecords
 
@@ -45,8 +49,10 @@
   parent: BaseComputerCircuitboard
   id: CriminalRecordsComputerCircuitboard
   name: criminal records computer board
-  description: A computer printed circuit board for a criminal records computer
+  description: A computer printed circuit board for a criminal records computer.
   components:
+    - type: Sprite
+      state: cpu_security
     - type: ComputerBoard
       prototype: ComputerCriminalRecords
 
@@ -54,8 +60,10 @@
   parent: BaseComputerCircuitboard
   id: SupplyComputerCircuitboard
   name: supply ordering computer board
-  description: A computer printed circuit board for a supply ordering console
+  description: A computer printed circuit board for a supply ordering console.
   components:
+    - type: Sprite
+      state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerCargoOrders
     - type: StaticPrice
@@ -65,8 +73,10 @@
   parent: BaseComputerCircuitboard
   id: SupplyRequestComputerCircuitboard
   name: supply request computer board
-  description: A computer printed circuit board for a supply request console
+  description: A computer printed circuit board for a supply request console.
   components:
+    - type: Sprite
+      state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerCargoOrders
 
@@ -74,7 +84,7 @@
   parent: BaseComputerCircuitboard
   id: SurveillanceCameraMonitorCircuitboard
   name: surveillance camera monitor board
-  description: A computer printed circuit board for a surveillance camera monitor
+  description: A computer printed circuit board for a surveillance camera monitor.
   components:
     - type: ComputerBoard
       prototype: ComputerSurveillanceCameraMonitor
@@ -83,7 +93,7 @@
   parent: BaseComputerCircuitboard
   id: SurveillanceWirelessCameraMonitorCircuitboard
   name: surveillance wireless camera monitor board
-  description: A computer printed circuit board for a surveillance wireless camera monitor
+  description: A computer printed circuit board for a surveillance wireless camera monitor.
   components:
     - type: ComputerBoard
       prototype: ComputerSurveillanceWirelessCameraMonitor
@@ -92,7 +102,7 @@
   parent: BaseComputerCircuitboard
   id: ComputerTelevisionCircuitboard
   name: television board
-  description: A computer printed circuit board for a television
+  description: A computer printed circuit board for a television.
   components:
     - type: ComputerBoard
       prototype: ComputerTelevision
@@ -102,6 +112,8 @@
   id: PowerMonitoringComputerCircuitboard
   name: power monitoring computer board
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerPowerMonitoring
 
@@ -109,8 +121,10 @@
   parent: BaseComputerCircuitboard
   id: ResearchComputerCircuitboard
   name: R&D computer board
-  description: A computer printed circuit board for a R&D console
+  description: A computer printed circuit board for a R&D console.
   components:
+    - type: Sprite
+      state: cpu_science
     - type: ComputerBoard
       prototype: ComputerResearchAndDevelopment
 
@@ -118,7 +132,7 @@
   parent: BaseComputerCircuitboard
   id: CrewMonitoringComputerCircuitboard
   name: crew monitoring computer board
-  description: A computer printed circuit board for a crew monitoring console
+  description: A computer printed circuit board for a crew monitoring console.
   components:
     - type: ComputerBoard
       prototype: ComputerCrewMonitoring
@@ -127,8 +141,10 @@
   parent: BaseComputerCircuitboard
   id: IDComputerCircuitboard
   name: ID card computer board
-  description: A computer printed circuit board for an ID card console
+  description: A computer printed circuit board for an ID card console.
   components:
+    - type: Sprite
+      state: cpu_command
     - type: ComputerBoard
       prototype: ComputerId
     - type: StaticPrice
@@ -138,8 +154,10 @@
   parent: BaseComputerCircuitboard
   id: BodyScannerComputerCircuitboard
   name: body scanner computer board
-  description: A computer printed circuit board for a body scanner console
+  description: A computer printed circuit board for a body scanner console.
   components:
+    - type: Sprite
+      state: cpu_medical
     - type: ComputerBoard
       prototype: computerBodyScanner
 
@@ -147,8 +165,10 @@
   parent: BaseComputerCircuitboard
   id: CommsComputerCircuitboard
   name: communications computer board
-  description: A computer printed circuit board for a communications console
+  description: A computer printed circuit board for a communications console.
   components:
+    - type: Sprite
+      state: cpu_command
     - type: ComputerBoard
       prototype: ComputerComms
 
@@ -156,7 +176,7 @@
   parent: BaseComputerCircuitboard
   id: SyndicateCommsComputerCircuitboard
   name: syndicate communications computer board
-  description: A computer printed circuit board for a syndicate communications console
+  description: A computer printed circuit board for a syndicate communications console.
   components:
     - type: ComputerBoard
       prototype: SyndicateComputerComms
@@ -173,8 +193,10 @@
   parent: BaseComputerCircuitboard
   id: SolarControlComputerCircuitboard
   name: solar control computer board
-  description: A computer printed circuit board for a solar control console
+  description: A computer printed circuit board for a solar control console.
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerSolarControl
 
@@ -182,7 +204,7 @@
   parent: BaseComputerCircuitboard
   id: SpaceVillainArcadeComputerCircuitboard
   name: space villain arcade board
-  description: A computer printed circuit board for a space villain arcade cabinet
+  description: A computer printed circuit board for a space villain arcade cabinet.
   components:
     - type: ComputerBoard
       prototype: SpaceVillainArcade
@@ -191,7 +213,7 @@
   parent: BaseComputerCircuitboard
   id: BlockGameArcadeComputerCircuitboard
   name: block game arcade board
-  description: A computer printed circuit board for a block game arcade cabinet
+  description: A computer printed circuit board for a block game arcade cabinet.
   components:
     - type: ComputerBoard
       prototype: BlockGameArcade
@@ -200,8 +222,10 @@
   parent: BaseComputerCircuitboard
   id: ParticleAcceleratorComputerCircuitboard
   name: PA control box computer board
-  description: A computer printed circuit board for a particle accelerator control box
+  description: A computer printed circuit board for a particle accelerator control box.
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ParticleAcceleratorControlBoxUnfinished
 
@@ -209,7 +233,7 @@
   parent: BaseComputerCircuitboard
   id: ShuttleConsoleCircuitboard
   name: shuttle console board
-  description: A computer printed circuit board for a shuttle console
+  description: A computer printed circuit board for a shuttle console.
   components:
     - type: ComputerBoard
       prototype: ComputerShuttle
@@ -218,7 +242,7 @@
   parent: BaseComputerCircuitboard
   id: SyndicateShuttleConsoleCircuitboard
   name: syndicate shuttle console board
-  description: A computer printed circuit board for a syndicate shuttle console
+  description: A computer printed circuit board for a syndicate shuttle console.
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSyndie
@@ -227,7 +251,9 @@
   parent: BaseComputerCircuitboard
   id: CloningConsoleComputerCircuitboard
   name: cloning console computer board
-  description: A computer printed circuit board for a cloning console
+  description: A computer printed circuit board for a cloning console.
   components:
+    - type: Sprite
+      state: cpu_medical
     - type: ComputerBoard
       prototype: ComputerCloningConsole

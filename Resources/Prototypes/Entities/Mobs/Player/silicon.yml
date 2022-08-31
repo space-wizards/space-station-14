@@ -61,6 +61,9 @@
     safe: false
   - type: StandingState
   - type: Alerts
+  - type: Tag
+    tags:
+      - ShoesRequiredStepTriggerImmune
 
 - type: entity
   name: drone
@@ -162,6 +165,7 @@
     autoRot: true
   - type: Tag
     tags:
+      - ShoesRequiredStepTriggerImmune
       - CannotSuicide
 
 - type: entity

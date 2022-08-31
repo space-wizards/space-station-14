@@ -10,7 +10,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Kitchen.Components.SharedMicrowaveComponent;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -24,7 +23,7 @@ namespace Content.Client.Kitchen.UI
         private readonly Dictionary<int, EntityUid> _solids = new();
         private readonly Dictionary<int, Solution.ReagentQuantity> _reagents =new();
 
-        public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey)
+        public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner,uiKey)
         {
         }
 

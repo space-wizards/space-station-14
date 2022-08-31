@@ -74,8 +74,6 @@
   - type: Sprite
     layers:
     - state: margherita-slice
-  - type: SliceableFood
-    slice: FoodPizzaMeatSlice
 
 - type: entity
   name: meat pizza

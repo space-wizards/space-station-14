@@ -11,6 +11,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Piping/disposal.rsi
+    snapCardinals: true
     layers:
     - state: condisposal
       map: ["enum.DisposalUnitVisualLayers.Base"]
@@ -70,6 +71,9 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      DisposalUnit: !type:Container
 
 - type: entity
   id: DisposalUnit

@@ -199,6 +199,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitEngineeringHazard
+  name: hazard jumpsuit
+  description: Woven in a grungy, warm orange. Lets others around you know that you really mean business when it comes to work.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/engineering_hazard.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/engineering_hazard.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoP
   name: head of personnel's jumpsuit
   description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.

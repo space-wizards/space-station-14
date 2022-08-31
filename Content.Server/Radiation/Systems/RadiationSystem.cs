@@ -1,73 +1,14 @@
-﻿using System.Linq;
-using Content.Server.Administration;
-using Content.Server.FloodFill;
-using Content.Shared.Administration;
-using Content.Shared.CCVar;
-using Content.Shared.Radiation.Components;
-using Content.Shared.Radiation.Events;
-using Content.Shared.Radiation.Systems;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.Console;
-using Robust.Shared.Enums;
+﻿using Content.Shared.Radiation.Events;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
 
-public sealed partial class RadiationSystem : SharedRadiationSystem
+public sealed class RadiationSystem : EntitySystem
 {
-    private const float Slope = 1f;
-
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly FloodFillSystem _floodFill = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-
-    public Dictionary<EntityUid, Dictionary<Vector2i, float>> _radiationMap = new();
-    public List<(Matrix3, Dictionary<Vector2i, float>)> _spaceMap = new();
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     private const float RadiationCooldown = 1.0f;
     private float _accumulator;
-
-    private RadiationEngine _engine;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        InitRadBlocking();
-
-        _cfg.OnValueChanged(CCVars.RadiationEngine, SetEngine, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _cfg.UnsubValueChanged(CCVars.RadiationEngine, SetEngine);
-    }
-
-    private void SetEngine(string engineName)
-    {
-        switch (engineName)
-        {
-            case "range":
-                _engine = RadiationEngine.Range;
-                break;
-            case "grid":
-                _engine = RadiationEngine.Grid;
-                break;
-            case "raycast":
-                _engine = RadiationEngine.Raycast;
-                break;
-            case "gridcast":
-                _engine = RadiationEngine.Gridcast;
-                break;
-            default:
-                Logger.Error($"Unknown radiation engine {engineName}");
-                break;
-        }
-    }
 
     public override void Update(float frameTime)
     {
@@ -78,196 +19,34 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         {
             _accumulator -= RadiationCooldown;
 
-            switch (_engine)
+            // All code here runs effectively every RadiationCooldown seconds, so use that as the "frame time".
+            foreach (var comp in EntityManager.EntityQuery<RadiationSourceComponent>())
             {
-                case RadiationEngine.Range:
-                    UpdateOld();
-                    break;
-                case RadiationEngine.Grid:
-                    UpdateRadSources();
-                    UpdateReceivers();
-                    break;
-                case RadiationEngine.Raycast:
-                    RaycastUpdate();
-                    break;
-                case RadiationEngine.Gridcast:
-                    UpdateGridcast();
-                    break;
-            }
-        }
-    }
-
-    private void UpdateRadSources()
-    {
-        foreach (var (_, map) in _radiationMap)
-        {
-            map.Clear();
-        }
-
-        _spaceMap.Clear();
-
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-
-        foreach (var comp in EntityManager.EntityQuery<RadiationSourceComponent>())
-        {
-            var ent = comp.Owner;
-            var cords = Transform(ent).MapPosition;
-            CalculateRadiationMap(cords, comp.RadsPerSecond);
-        }
-
-        Logger.Info($"Generated radiation map {stopwatch.Elapsed.TotalMilliseconds}ms");
-
-        RaiseNetworkEvent(new RadiationUpdate(_radiationMap, _spaceMap));
-
-    }
-
-    public void CalculateRadiationMap(MapCoordinates epicenter, float radsPerSecond)
-    {
-        var ff = _floodFill.DoFloodTile(epicenter,
-            radsPerSecond,
-            Slope,
-            float.MaxValue,
-            _resistancePerTile,
-            0,
-            100000,
-            1000000
-        );
-
-        if (ff == null)
-            return;
-
-
-        foreach (var (gridUid, gridFlood) in ff.GridData)
-        {
-            if (!_radiationMap.ContainsKey(gridUid))
-                _radiationMap.Add(gridUid, new Dictionary<Vector2i, float>());
-            var dict = _radiationMap[gridUid];
-
-            foreach (var (iter, poses) in gridFlood.TileLists)
-            {
-                var rads = ff.IterationIntensity[iter];
-                foreach (var pos in poses)
-                {
-                    var r = rads;
-                    if (dict.TryGetValue(pos, out var rad))
-                        r += rad;
-
-                    dict[pos] = r;
-                }
-            }
-        }
-
-        if (ff.SpaceData != null)
-        {
-            var dict = new Dictionary<Vector2i, float>();
-            foreach (var (iter, poses) in ff.SpaceData.TileLists)
-            {
-                var rads = ff.IterationIntensity[iter];
-                foreach (var pos in poses)
-                {
-                    dict[pos] = rads;
-                }
-            }
-
-            _spaceMap.Add((ff.SpaceMatrix, dict));
-        }
-    }
-
-    private void UpdateReceivers()
-    {
-        foreach (var receiver in EntityQuery<RadiationReceiverComponent>())
-        {
-            float rads = 0;
-
-            var mapCoordinates = Transform(receiver.Owner).MapPosition;
-            if (_mapManager.TryFindGridAt(mapCoordinates, out var candidateGrid) &&
-                candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(mapCoordinates.Position), out var tileRef))
-            {
-                var gridUid = tileRef.GridUid;
-                var pos = tileRef.GridIndices;
-                if (!_radiationMap.TryGetValue(gridUid, out var map) || !map.TryGetValue(pos, out rads))
+                var ent = comp.Owner;
+                if (Deleted(ent))
                     continue;
-            }
-            else
-            {
-                foreach (var (mat, map) in _spaceMap)
-                {
-                    var invMat = mat.Invert();
-                    var pos = invMat * mapCoordinates.Position;
-                    var gridPos = new Vector2i(
-                        (int) Math.Floor(pos.X),
-                        (int) Math.Floor(pos.Y));
 
-                    if (map.TryGetValue(gridPos, out var r))
-                        rads += r;
-                }
+                var cords = Transform(ent).MapPosition;
+                IrradiateRange(cords, comp.Range, comp.RadsPerSecond, RadiationCooldown);
             }
+        }
+    }
 
-            if (rads == 0)
+    public void IrradiateRange(MapCoordinates coordinates, float range, float radsPerSecond, float time)
+    {
+        var lookUp = _lookup.GetEntitiesInRange(coordinates, range);
+        foreach (var uid in lookUp)
+        {
+            if (Deleted(uid))
                 continue;
 
-            var ev = new OnIrradiatedEvent(RadiationCooldown, rads);
-            RaiseLocalEvent(receiver.Owner, ev);
+            IrradiateEntity(uid, radsPerSecond, time);
         }
     }
 
-    private readonly HashSet<ICommonSession> _debugSessions = new();
-
-    public void ToggleDebugView(ICommonSession session)
+    public void IrradiateEntity(EntityUid uid, float radsPerSecond, float time)
     {
-        bool isEnabled;
-        if (!_debugSessions.Contains(session))
-        {
-            _debugSessions.Add(session);
-            isEnabled = true;
-        }
-        else
-        {
-            _debugSessions.Remove(session);
-            isEnabled = false;
-        }
-
-        var ev = new OnRadiationViewToggledEvent(isEnabled);
-        RaiseNetworkEvent(ev, session.ConnectedClient);
+        var msg = new OnIrradiatedEvent(time, radsPerSecond);
+        RaiseLocalEvent(uid, msg, true);
     }
-
-    private void UpdateDebugView(OnRadiationViewUpdateEvent ev)
-    {
-        var sessions = _debugSessions.ToArray();
-        foreach (var session in sessions)
-        {
-            if (session.Status != SessionStatus.InGame)
-                _debugSessions.Remove(session);
-            RaiseNetworkEvent(ev, session.ConnectedClient);
-        }
-    }
-}
-
-/// <summary>
-///     Toggle visibility of radiation rays coming from rad sources.
-/// </summary>
-[AdminCommand(AdminFlags.Admin)]
-public sealed class RadiationViewCommand : IConsoleCommand
-{
-    public string Command => "showradiation";
-    public string Description => Loc.GetString("radiation-command-description");
-    public string Help => Loc.GetString("radiation-command-help");
-
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
-    {
-        var session = shell.Player;
-        if (session == null)
-            return;
-
-        EntitySystem.Get<RadiationSystem>().ToggleDebugView(session);
-    }
-}
-
-public enum RadiationEngine
-{
-    Range,
-    Grid,
-    Raycast,
-    Gridcast
 }

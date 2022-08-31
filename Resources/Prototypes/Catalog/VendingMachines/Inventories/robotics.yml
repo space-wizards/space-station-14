@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: RobotechDeluxeInventory
-  name: Robotech Deluxe
-  spriteName: robotics
   startingInventory:
     #TO DO: add missing prototypes
     ClothingOuterCoatLab: 4

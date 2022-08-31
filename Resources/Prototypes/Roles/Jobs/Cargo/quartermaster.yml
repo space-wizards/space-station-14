@@ -25,7 +25,7 @@
 - type: startingGear
   id: QuartermasterGear
   equipment:
-    head: ClothingHeadHatCargosoft
+    head: ClothingHeadHatQMsoft
     jumpsuit: ClothingUniformJumpsuitQM
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBrown

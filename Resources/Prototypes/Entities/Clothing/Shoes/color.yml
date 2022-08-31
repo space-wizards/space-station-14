@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorBlack
   name: black shoes
   description: Stylish black shoes.
@@ -10,7 +10,7 @@
     sprite: Clothing/Shoes/Color/black.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorBlue
   name: blue shoes
   description: Stylish blue shoes.
@@ -21,7 +21,7 @@
     sprite: Clothing/Shoes/Color/blue.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorBrown
   name: brown shoes
   description: A pair of brown shoes.
@@ -32,7 +32,7 @@
     sprite: Clothing/Shoes/Color/brown.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorGreen
   name: green shoes
   description: Stylish green shoes.
@@ -43,7 +43,7 @@
     sprite: Clothing/Shoes/Color/green.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorOrange
   name: orange shoes
   description: Stylish orange shoes.
@@ -54,7 +54,7 @@
     sprite: Clothing/Shoes/Color/orange.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorPurple
   name: purple shoes
   description: Stylish purple shoes.
@@ -65,7 +65,7 @@
     sprite: Clothing/Shoes/Color/purple.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorRed
   name: red shoes
   description: Stylish red shoes.
@@ -76,7 +76,7 @@
     sprite: Clothing/Shoes/Color/red.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorWhite
   name: white shoes
   description: Don't take them off at your office Christmas party.
@@ -87,7 +87,7 @@
     sprite: Clothing/Shoes/Color/white.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorYellow
   name: yellow shoes
   description: Stylish yellow shoes.

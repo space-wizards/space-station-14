@@ -9,7 +9,7 @@ namespace Content.Client.CloningConsole.UI
     {
         private CloningConsoleWindow? _window;
 
-        public CloningConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public CloningConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -22,7 +22,6 @@ namespace Content.Client.CloningConsole.UI
             };
             _window.OnClose += Close;
             _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone));
-            _window.EjectButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Eject));
             _window.OpenCentered();
         }
 
@@ -43,7 +42,6 @@ namespace Content.Client.CloningConsole.UI
             {
                 _window.OnClose -= Close;
                 _window.CloneButton.OnPressed -= _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone));
-                _window.EjectButton.OnPressed -= _ => SendMessage(new UiButtonPressedMessage(UiButton.Eject));
             }
             _window?.Dispose();
         }

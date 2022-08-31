@@ -119,6 +119,32 @@
   - type: Stack
     count: 1
 
+- type: entity
+  parent: MaterialBase
+  id: MaterialBiomass
+  name: biomass
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Biomass: 1
+  - type: Stack
+    stackType: Biomass
+    count: 100
+    max: 100
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+    color: "#8A9A5B"
+
+- type: entity
+  parent: MaterialBiomass
+  id: MaterialBiomass1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
 # Following not used currently
 - type: entity
   parent: MaterialBase
