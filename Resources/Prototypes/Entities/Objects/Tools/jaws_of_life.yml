@@ -19,6 +19,7 @@
     slots:
       - Belt
   - type: TilePrying
+  - type: LatticeCutting
   - type: Tool
     qualities:
       - Prying

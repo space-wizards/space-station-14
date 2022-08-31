@@ -74,7 +74,7 @@ public sealed partial class ChatSystem
         }
 
         // Re-capitalize message since we removed the prefix.
-        message = SanitizeMessageCapital(source, message);
+        message = SanitizeMessageCapital(message);
 
         if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
             TryComp(entityUid, out HeadsetComponent? headset))
