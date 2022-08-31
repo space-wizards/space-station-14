@@ -6,8 +6,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cap.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/cap.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -16,8 +14,6 @@
   description: An exquisite dark and red cloak fitting for those who can assert dominance over wrongdoers. Take a stab at being civil in prosecution!
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/hos.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/hos.rsi
 
 - type: entity
@@ -28,8 +24,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ce.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/ce.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -38,8 +32,6 @@
   description: A sterile blue cloak with a green cross, radiating with a sense of duty and willingness to help others.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/cmo.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/cmo.rsi
 
 - type: entity
@@ -50,8 +42,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/rd.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/rd.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -60,8 +50,6 @@
   description: A strong brown cloak with a reflective stripe, while not as fancy as others, it does show your managing skills.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/qm.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/qm.rsi
 
 - type: entity
@@ -72,8 +60,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hop.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/hop.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -82,8 +68,6 @@
   description: An evil-looking red cloak with spikes on its shoulders.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/herald.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/herald.rsi
 
 - type: entity
@@ -94,8 +78,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -104,8 +86,6 @@
   description: A lavish and decorated cloak for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
 
 - type: entity
@@ -116,8 +96,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admin.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/admin.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -127,8 +105,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/miner.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Cloaks/miner.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -137,6 +113,4 @@
   description: Worn by high ranking vampires of the transylvanian society of vampires.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/trans.rsi
-  - type: Clothing
     sprite: Clothing/Neck/Cloaks/trans.rsi
