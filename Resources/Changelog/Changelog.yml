@@ -1,9 +1,4 @@
 Entries:
-- author: eclips_e
-  changes:
-  - {message: Added a wiki button to the escape menu, type: Add}
-  id: 1709
-  time: '2022-06-16T09:33:59.0000000+00:00'
 - author: ProfanedBane
   changes:
   - {message: 'Whilst uncuffing someone, the handcuffs are placed in the your hand,
@@ -2927,3 +2922,8 @@ Entries:
     type: Tweak}
   id: 2208
   time: '2022-08-31T12:12:09.0000000+00:00'
+- author: tomasalves8
+  changes:
+  - {message: Portable Flasher, type: Fix}
+  id: 2209
+  time: '2022-08-31T12:27:30.0000000+00:00'
