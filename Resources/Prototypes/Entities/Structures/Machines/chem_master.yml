@@ -9,6 +9,7 @@
   - type: Sprite
     sprite: Structures/Machines/mixer.rsi
     netsync: false
+    snapCardinals: true
     layers:
     - state: mixer_empty
     - state: mixer_screens

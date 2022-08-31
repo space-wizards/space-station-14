@@ -6,6 +6,7 @@ namespace Content.Shared.Ensnaring;
 public abstract class SharedEnsnareableSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifier = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
 
     public override void Initialize()
     {
@@ -25,7 +26,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         _speedModifier.RefreshMovementSpeedModifiers(uid);
 
         var ev = new EnsnaredChangedEvent(component.IsEnsnared);
-        RaiseLocalEvent(uid, ev, true);
+        RaiseLocalEvent(uid, ev);
     }
 
     private void OnEnsnareRemove(EntityUid uid, SharedEnsnareableComponent component, EnsnareRemoveEvent args)
@@ -33,7 +34,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         _speedModifier.RefreshMovementSpeedModifiers(uid);
 
         var ev = new EnsnaredChangedEvent(component.IsEnsnared);
-        RaiseLocalEvent(uid, ev, true);
+        RaiseLocalEvent(uid, ev);
     }
 
     private void OnEnsnareChange(EntityUid uid, SharedEnsnareableComponent component, EnsnaredChangedEvent args)
@@ -41,12 +42,9 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         UpdateAppearance(uid, component);
     }
 
-    private void UpdateAppearance(EntityUid uid, SharedEnsnareableComponent? component, AppearanceComponent? appearance = null)
+    private void UpdateAppearance(EntityUid uid, SharedEnsnareableComponent component, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref component, ref appearance, false))
-            return;
-
-        appearance.SetData(EnsnareableVisuals.IsEnsnared, component.IsEnsnared);
+        Appearance.SetData(uid, EnsnareableVisuals.IsEnsnared, component.IsEnsnared, appearance);
     }
 
     private void MovementSpeedModify(EntityUid uid, SharedEnsnareableComponent component, RefreshMovementSpeedModifiersEvent args)

@@ -12,6 +12,6 @@ namespace Content.Server.Sound.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound", required: true)]
-        public SoundSpecifier Sound { get; set; } = default!;
+        public SoundSpecifier? Sound;
     }
 }

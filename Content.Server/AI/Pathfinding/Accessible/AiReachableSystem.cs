@@ -445,10 +445,11 @@ namespace Content.Server.AI.Pathfinding.Accessible
             var parentChunk = node.ParentChunk;
 
             // No guarantee the node even has a region yet (if we're doing neighbor lookups)
-            if (!_regions[parentChunk.GridId].TryGetValue(parentChunk, out var regions))
-            {
+            if (!_regions.TryGetValue(parentChunk.GridId, out var chunk))
                 return null;
-            }
+
+            if (!chunk.TryGetValue(parentChunk, out var regions))
+                return null;
 
             foreach (var region in regions)
             {
