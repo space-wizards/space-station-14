@@ -33,7 +33,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             component.Species,
             component.CustomBaseLayers,
             component.SkinColor,
-            component.HiddenLayers.ToList(),
+            component.AllHiddenLayers.ToList(),
             component.CurrentMarkings.GetForwardEnumerator().ToList());
     }
 

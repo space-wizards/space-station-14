@@ -21,6 +21,17 @@ public sealed class HumanoidComponent : SharedHumanoidComponent
 
     public HashSet<HumanoidVisualLayers> PermanentlyHidden = new();
 
+    public HashSet<HumanoidVisualLayers> AllHiddenLayers
+    {
+        get
+        {
+            var result = new HashSet<HumanoidVisualLayers>(HiddenLayers);
+            result.UnionWith(PermanentlyHidden);
+
+            return result;
+        }
+    }
+
     // Couldn't these be somewhere else?
     [ViewVariables] public Gender Gender = default!;
     [ViewVariables] public int Age = HumanoidCharacterProfile.MinimumAge;
