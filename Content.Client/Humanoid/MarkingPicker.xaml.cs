@@ -60,6 +60,8 @@ public sealed partial class MarkingPicker : Control
         }
     }
 
+    public bool Forced { get; set; }
+
     public void SetData(List<Marking> newMarkings, string species, Color skinColor)
     {
         var pointsProto = _prototypeManager
@@ -172,9 +174,12 @@ public sealed partial class MarkingPicker : Control
                 continue;
             }
 
+            var text = Loc.GetString(marking.Forced ? "marking-used-forced" : "marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"),
+                ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}")));
+
             var _item = new ItemList.Item(CMarkingsUsed)
             {
-                Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"), ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}"))),
+                Text = text,
                 Icon = newMarking.Sprites[0].Frame0(),
                 Selectable = true,
                 Metadata = newMarking,
@@ -361,7 +366,7 @@ public sealed partial class MarkingPicker : Control
     {
         if (_selectedUnusedMarking is null) return;
 
-        if (_currentMarkings.PointsLeft(_selectedMarkingCategory) == 0)
+        if (_currentMarkings.PointsLeft(_selectedMarkingCategory) == 0 && !Forced)
         {
             return;
         }
@@ -374,6 +379,8 @@ public sealed partial class MarkingPicker : Control
         {
             markingObject.SetColor(i, CurrentSkinColor);
         }
+
+        markingObject.Forced = Forced;
 
         _currentMarkings.AddBack(_selectedMarkingCategory, markingObject);
 

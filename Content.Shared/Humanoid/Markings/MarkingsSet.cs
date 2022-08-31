@@ -237,7 +237,7 @@ public sealed class MarkingSet
     /// <param name="marking"></param>
     public void AddFront(MarkingCategories category, Marking marking)
     {
-        if (_points.TryGetValue(category, out var points))
+        if (!marking.Forced && _points.TryGetValue(category, out var points))
         {
             if (points.Points <= 0)
             {
@@ -263,7 +263,7 @@ public sealed class MarkingSet
     /// <param name="marking"></param>
     public void AddBack(MarkingCategories category, Marking marking)
     {
-        if (_points.TryGetValue(category, out var points))
+        if (!marking.Forced && _points.TryGetValue(category, out var points))
         {
             if (points.Points <= 0)
             {
@@ -349,7 +349,6 @@ public sealed class MarkingSet
 
     public bool RemoveCategory(MarkingCategories category)
     {
-        // TODO: This should re-add points.
         if (!_markings.TryGetValue(category, out var markings))
         {
             return false;

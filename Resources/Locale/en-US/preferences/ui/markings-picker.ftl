@@ -5,7 +5,8 @@ markings-remove = Remove Marking
 markings-rank-up = Up
 markings-rank-down = Down
 marking-points-remaining = Markings left: {$points}
-marking-used = {$marking-name} ({$marking-category})
+marking-used = {$marking-name}
+marking-used-forced = {$marking-name} (Forced)
 marking-slot-add = Add
 marking-slot-remove = Remove
 
