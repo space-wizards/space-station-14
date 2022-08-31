@@ -1,10 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: 'Bicaridine, Dermaline, and Hyronalin all OD at 30u. Hyronalin has a
-      low base chance to induce vomiting.', type: Add}
-  id: 1708
-  time: '2022-06-16T09:29:11.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: Added a wiki button to the escape menu, type: Add}
@@ -2927,3 +2921,9 @@ Entries:
   - {message: Area pickup no longer picks up on cancellation., type: Fix}
   id: 2207
   time: '2022-08-31T12:09:31.0000000+00:00'
+- author: DoctorBeard
+  changes:
+  - {message: vending machine animations and their behaviors are more consistent now,
+    type: Tweak}
+  id: 2208
+  time: '2022-08-31T12:12:09.0000000+00:00'
