@@ -24,6 +24,8 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
+    private ISawmill _sawmill = default!;
+
     private const string MeleeLungeKey = "melee-lunge";
     private const string MeleeEffectKey = "melee-effect";
 
@@ -51,6 +53,7 @@ public sealed partial class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill = Logger.GetSawmill("melee");
         InitializeArcs();
         _overlayManager.AddOverlay(new MeleeWindupOverlay());
         SubscribeNetworkEvent<MeleeEffectEvent>(OnMeleeEffect);
