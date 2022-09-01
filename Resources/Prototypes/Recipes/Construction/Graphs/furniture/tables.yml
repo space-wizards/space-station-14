@@ -87,8 +87,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-            prototype: MaterialWoodPlank1
-            amount: 1
+              prototype: MaterialWoodPlank1
+              amount: 1
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -104,8 +104,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-            prototype: SheetSteel1
-            amount: 1
+              prototype: SheetSteel1
+              amount: 1
           steps:
           - tool: Anchoring
             doAfter: 1
