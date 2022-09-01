@@ -158,7 +158,7 @@
   id: ZombieOutbreak
   config:
     !type:StationEventRuleConfiguration
-    id: ZombieOutbreak
+    id: Zombie
     earliestStart: 50
     weight: 2.5
     endAfter: 1

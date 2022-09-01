@@ -126,7 +126,7 @@
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
-    - CloningConsoleComputerCircuitboard
+    - BiomassReclaimerMachineCircuitboard
 
 - type: technology
   name: technologies-advanced-life-support
@@ -143,6 +143,7 @@
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
     - StasisBedMachineCircuitboard
+    - CloningConsoleComputerCircuitboard
 
 # Security Technology Tree
 
@@ -310,13 +311,9 @@
     - APCElectronics
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
-    - WallmountSubstationElectronics
-    - WallmountGeneratorElectronics
-    - WallmountGeneratorAPUElectronics
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
-    - GeneratorUraniumMachineCircuitboard
     - Signaller
     - SignalTrigger
 
@@ -334,7 +331,6 @@
     - WallmountSubstationElectronics
     - WallmountGeneratorElectronics
     - WallmountGeneratorAPUElectronics
-    - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
 
 - type: technology

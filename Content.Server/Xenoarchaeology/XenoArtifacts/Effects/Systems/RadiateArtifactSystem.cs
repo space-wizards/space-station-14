@@ -15,11 +15,6 @@ public sealed class RadiateArtifactSystem : EntitySystem
     private void OnActivate(EntityUid uid, RadiateArtifactComponent component, ArtifactActivatedEvent args)
     {
         var transform = Transform(uid);
-
-        var pulseUid = EntityManager.SpawnEntity(component.PulsePrototype, transform.Coordinates);
-        if (!TryComp(pulseUid, out RadiationPulseComponent? pulse))
-            return;
-
-        pulse.DoPulse();
+        EntityManager.SpawnEntity(component.PulsePrototype, transform.Coordinates);
     }
 }

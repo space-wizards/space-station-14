@@ -3,6 +3,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Rotatable;
 using JetBrains.Annotations;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.EntitySystems;
 
 namespace Content.Shared.Interaction
 {
@@ -16,6 +17,8 @@ namespace Content.Shared.Interaction
     public sealed class RotateToFaceSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+
         public bool TryFaceCoordinates(EntityUid user, Vector2 coordinates)
         {
             var diff = coordinates - EntityManager.GetComponent<TransformComponent>(user).MapPosition.Position;
@@ -27,9 +30,9 @@ namespace Content.Shared.Interaction
 
         public bool TryFaceAngle(EntityUid user, Angle diffAngle)
         {
-            if (_actionBlockerSystem.CanChangeDirection(user) && TryComp(user, out MobStateComponent? mob) && !mob.IsIncapacitated())
+            if (_actionBlockerSystem.CanChangeDirection(user) && !_mobState.IsIncapacitated(user))
             {
-                EntityManager.GetComponent<TransformComponent>(user).WorldRotation = diffAngle;
+                Transform(user).WorldRotation = diffAngle;
                 return true;
             }
             else
@@ -40,13 +43,13 @@ namespace Content.Shared.Interaction
                     if (suid != null)
                     {
                         // We're buckled to another object. Is that object rotatable?
-                        if (EntityManager.TryGetComponent<RotatableComponent>(suid.Value!, out var rotatable) && rotatable.RotateWhileAnchored)
+                        if (EntityManager.TryGetComponent<RotatableComponent>(suid.Value, out var rotatable) && rotatable.RotateWhileAnchored)
                         {
                             // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
                             // (Since the user being buckled to it holds it down with their weight.)
                             // This is logically equivalent to RotateWhileAnchored.
                             // Barstools and office chairs have independent wheels, while regular chairs don't.
-                            EntityManager.GetComponent<TransformComponent>(rotatable.Owner).WorldRotation = diffAngle;
+                            Transform(rotatable.Owner).WorldRotation = diffAngle;
                             return true;
                         }
                     }

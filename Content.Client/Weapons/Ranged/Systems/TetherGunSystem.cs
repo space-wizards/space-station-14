@@ -31,6 +31,12 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     {
         base.Initialize();
         SubscribeNetworkEvent<PredictTetherEvent>(OnPredictTether);
+        SubscribeNetworkEvent<TetherGunToggleMessage>(OnTetherGun);
+    }
+
+    private void OnTetherGun(TetherGunToggleMessage ev)
+    {
+        Enabled = ev.Enabled;
     }
 
     private void OnPredictTether(PredictTetherEvent ev)
