@@ -636,7 +636,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("radiation.gridcast.update_rate", 1.0f, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Ignores grids between rad source and receiver if they both are placed on same grid.
+        ///     If both radiation source and receiver are placed on same grid, ignore grids between them.
         ///     May get inaccurate result in some cases, but greatly boost performance in general.
         /// </summary>
         public static readonly CVarDef<bool> RadiationGridcastSimplifiedSameGrid =

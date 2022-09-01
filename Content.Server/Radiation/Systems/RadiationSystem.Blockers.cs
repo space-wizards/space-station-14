@@ -1,3 +1,5 @@
+using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
 using Content.Shared.Radiation.Components;
 
 namespace Content.Server.Radiation.Systems;
@@ -17,15 +19,21 @@ public partial class RadiationSystem
         SubscribeLocalEvent<RadiationBlockerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<RadiationBlockerComponent, ReAnchorEvent>(OnReAnchor);
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+
+        SubscribeLocalEvent<RadiationBlockerComponent, DoorStateChangedEvent>(OnDoorChanged);
     }
 
     private void OnInit(EntityUid uid, RadiationBlockerComponent component, ComponentInit args)
     {
+        if (!component.Enabled)
+            return;
         AddTile(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, RadiationBlockerComponent component, ComponentShutdown args)
     {
+        if (component.Enabled)
+            return;
         RemoveTile(uid, component);
     }
 
@@ -53,6 +61,28 @@ public partial class RadiationSystem
     private void OnGridRemoved(GridRemovalEvent ev)
     {
         _resistancePerTile.Remove(ev.EntityUid);
+    }
+
+    private void OnDoorChanged(EntityUid uid, RadiationBlockerComponent component, DoorStateChangedEvent args)
+    {
+        if (args.State == DoorState.Open)
+            SetEnabled(uid, false, component);
+        else if (args.State == DoorState.Closed)
+            SetEnabled(uid, true, component);
+    }
+
+    public void SetEnabled(EntityUid uid, bool isEnabled, RadiationBlockerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+        if (isEnabled == component.Enabled)
+            return;
+        component.Enabled = isEnabled;
+
+        if (!component.Enabled)
+            RemoveTile(uid, component);
+        else
+            AddTile(uid, component);
     }
 
     private void AddTile(EntityUid uid, RadiationBlockerComponent component)

@@ -8,7 +8,8 @@ using Robust.Shared.Players;
 
 namespace Content.Server.Radiation.Systems;
 
-// radiation overview logic
+// radiation overlay debug logic
+// rad rays send only to clients that enabled debug overlay
 public partial class RadiationSystem
 {
     private readonly HashSet<ICommonSession> _debugSessions = new();
