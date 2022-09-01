@@ -66,6 +66,10 @@
   id: MobHumanoidAnyMarking
 
 - type: humanoidBaseSprite
+  id: MobHumanoidMarkingMatchSkin
+  markingsMatchSkin: true
+
+- type: humanoidBaseSprite
   id: MobHumanHead
   baseSprite:
     sprite: Mobs/Species/Human/parts.rsi
