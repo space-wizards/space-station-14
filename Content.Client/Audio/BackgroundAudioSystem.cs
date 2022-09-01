@@ -8,7 +8,6 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -31,6 +30,7 @@ namespace Content.Client.Audio
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly ClientGameTicker _gameTicker = default!;
+        [Dependency] private readonly AudioSystem _audioSystem = default!;
 
         private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
         private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
@@ -60,7 +60,7 @@ namespace Content.Client.Audio
             _spaceAmbience = _prototypeManager.Index<SoundCollectionPrototype>("SpaceAmbienceBase");
             _currentCollection = _stationAmbience;
 
-            // TOOD: Ideally audio loading streamed better / we have more robust audio but this is quite annoying
+            // TODO: Ideally audio loading streamed better / we have more robust audio but this is quite annoying
             var cache = IoCManager.Resolve<IResourceCache>();
 
             foreach (var audio in _spaceAmbience.PickFiles)
@@ -134,8 +134,9 @@ namespace Content.Client.Audio
 
         private void EntParentChanged(ref EntParentChangedMessage message)
         {
-            if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity ||
-               !_timing.IsFirstTimePredicted) return;
+            if(_playMan.LocalPlayer is null
+               || _playMan.LocalPlayer.ControlledEntity != message.Entity
+               || !_timing.IsFirstTimePredicted) return;
 
             // Check if we traversed to grid.
             CheckAmbience(message.Transform);
@@ -212,7 +213,7 @@ namespace Content.Client.Audio
                 return;
             _playingCollection = _currentCollection;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
+            _ambientStream = _audioSystem.PlayGlobal(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()
@@ -305,7 +306,7 @@ namespace Content.Client.Audio
             {
                 return;
             }
-            _lobbyStream = SoundSystem.Play(file, Filter.Local(), _lobbyParams);
+            _lobbyStream = _audioSystem.PlayGlobal(file, Filter.Local(), _lobbyParams);
         }
 
         private void EndLobbyMusic()
