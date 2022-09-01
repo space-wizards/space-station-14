@@ -24,10 +24,10 @@
       layer:
       - AllMask
   - type: Singularity
-    radsPerLevel: 1
+    radsPerLevel: 2
   - type: SingularityDistortion
   - type: RadiationSource
-    range: 10
+    slope: 0.2 # its emit really far away
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1

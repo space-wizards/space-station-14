@@ -7,13 +7,13 @@ namespace Content.Shared.Radiation.Components;
 public sealed class RadiationSourceComponent : Component
 {
     /// <summary>
-    ///     Radiation intensity in center of the source. From there
-    ///     radiation rays will travel over distance and loose intensity
+    ///     Radiation intensity in center of the source in rads per second.
+    ///     From there radiation rays will travel over distance and loose intensity
     ///     when hit <see cref="RadiationBlockerComponent"/>.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("radsPerSecond")]
-    public float RadsPerSecond = 1;
+    [DataField("intensity")]
+    public float Intensity = 1;
 
     /// <summary>
     ///     Defines how fast radiation rays will loose intensity

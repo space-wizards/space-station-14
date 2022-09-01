@@ -28,7 +28,7 @@ public partial class RadiationSystem
             foreach (var (_, destTrs) in destinations)
             {
                 var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs,
-                    source.RadsPerSecond, source.Slope, blockerQuery);
+                    source.Intensity, source.Slope, blockerQuery);
                 if (ray != null)
                     rays.Add(ray);
             }
