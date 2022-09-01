@@ -82,16 +82,20 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
 
         public HumanoidBaseLayerModifier(HumanoidVisualLayers layer)
         {
+            HorizontalExpand = true;
+
             AddChild(new Label { Text = layer.ToString() });
             _enable = new CheckBox
             {
-                Text = "Enable"
+                Text = "Enable",
+                HorizontalAlignment = HAlignment.Right
             };
 
             AddChild(_enable);
             _infoBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
+                MinHeight = 250,
                 Visible = false
             };
             _enable.OnToggled += args =>

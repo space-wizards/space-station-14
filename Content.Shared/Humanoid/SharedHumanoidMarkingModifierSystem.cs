@@ -22,6 +22,7 @@ public sealed class HumanoidMarkingModifierMarkingSetMessage : BoundUserInterfac
     }
 }
 
+[Serializable, NetSerializable]
 public sealed class HumanoidMarkingModifierBaseLayersSetMessage : BoundUserInterfaceMessage
 {
     public HumanoidMarkingModifierBaseLayersSetMessage(HumanoidVisualLayers layer, CustomBaseLayerInfo? info, bool resendState)
