@@ -1,45 +1,12 @@
 ﻿- type: inventoryTemplate
   id: human
   slots:
-    - name: shoes
-      slotTexture: shoes
-      slotFlags: FEET
-      stripTime: 2
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
       uiContainer: Top
-      uiWindowPos: 1,3
-      displayName: Shoes
-    - name: jumpsuit
-      slotTexture: uniform
-      slotFlags: INNERCLOTHING
-      stripTime: 5
-      uiContainer: Top
-      uiWindowPos: 0,2
-      displayName: Jumpsuit
-    - name: outerClothing
-      slotTexture: suit
-      slotFlags: OUTERCLOTHING
-      stripTime: 5
-      uiContainer: Top
-      uiWindowPos: 1,2
-      displayName: Suit
-    - name: gloves
-      slotTexture: gloves
-      slotFlags: GLOVES
-      uiContainer: Top
-      uiWindowPos: 2,2
-      displayName: Gloves
-    - name: neck
-      slotTexture: neck
-      slotFlags: NECK
-      uiContainer: Top
-      uiWindowPos: 0,1
-      displayName: Neck
-    - name: mask
-      slotTexture: mask
-      slotFlags: MASK
-      uiContainer: Top
-      uiWindowPos: 1,1
-      displayName: Mask
+      uiWindowPos: 1,0
+      displayName: Head
     - name: eyes
       slotTexture: glasses
       slotFlags: EYES
@@ -54,12 +21,25 @@
       uiContainer: Top
       uiWindowPos: 2,0
       displayName: Ears
-    - name: head
-      slotTexture: head
-      slotFlags: HEAD
+    - name: mask
+      slotTexture: mask
+      slotFlags: MASK
       uiContainer: Top
-      uiWindowPos: 1,0
-      displayName: Head
+      uiWindowPos: 1,1
+      displayName: Mask
+    - name: neck
+      slotTexture: neck
+      slotFlags: NECK
+      uiContainer: Top
+      uiWindowPos: 0,1
+      displayName: Neck
+    - name: jumpsuit
+      slotTexture: uniform
+      slotFlags: INNERCLOTHING
+      stripTime: 5
+      uiContainer: Top
+      uiWindowPos: 0,2
+      displayName: Jumpsuit
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
@@ -78,14 +58,6 @@
       dependsOn: jumpsuit
       displayName: Pocket 2
       stripHidden: true
-    - name: suitstorage
-      slotTexture: suit_storage
-      slotFlags:   SUITSTORAGE
-      stripTime: 2
-      uiContainer: BottomLeft
-      uiWindowPos: 2,0
-      dependsOn: outerClothing
-      displayName: Suit Storage
     - name: id
       slotTexture: id
       slotFlags: IDCARD
@@ -94,6 +66,27 @@
       uiWindowPos: 2,1
       dependsOn: jumpsuit
       displayName: ID
+    - name: outerClothing
+      slotTexture: suit
+      slotFlags: OUTERCLOTHING
+      stripTime: 5
+      uiContainer: Top
+      uiWindowPos: 1,2
+      displayName: Suit
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags:   SUITSTORAGE
+      stripTime: 2
+      uiContainer: BottomLeft
+      uiWindowPos: 2,0
+      dependsOn: outerClothing
+      displayName: Suit Storage
+    - name: gloves
+      slotTexture: gloves
+      slotFlags: GLOVES
+      uiContainer: Top
+      uiWindowPos: 2,2
+      displayName: Gloves
     - name: belt
       slotTexture: belt
       slotFlags: BELT
@@ -108,3 +101,10 @@
       uiContainer: BottomLeft
       uiWindowPos: 3,0
       displayName: Back
+    - name: shoes
+      slotTexture: shoes
+      slotFlags: FEET
+      stripTime: 2
+      uiContainer: Top
+      uiWindowPos: 1,3
+      displayName: Shoes

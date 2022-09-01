@@ -61,6 +61,9 @@
     safe: false
   - type: StandingState
   - type: Alerts
+  - type: Tag
+    tags:
+      - ShoesRequiredStepTriggerImmune
 
 - type: entity
   name: drone
@@ -68,6 +71,7 @@
   parent: PlayerSiliconBase
   components:
   - type: Drone
+  - type: InnateTool
     tools:
       - id: ClothingBackpackSatchelDrone
       - id: trayScanner
@@ -162,6 +166,7 @@
     autoRot: true
   - type: Tag
     tags:
+      - ShoesRequiredStepTriggerImmune
       - CannotSuicide
 
 - type: entity
@@ -169,8 +174,7 @@
   id: Onestar
   parent: PlayerSiliconBase
   components:
-  - type: Drone
-    applyLaws: false
+  - type: InnateTool
     tools:
       - id: WeaponMinigun
       - id: EnergySword
@@ -184,7 +188,7 @@
     makeSentient: true
     name: Onestar Mecha
     description: You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
-    rules: Use your weapons to cause havok. You are an antagonist.
+    rules: Use your weapons to cause havoc. You are an antagonist.
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 2

@@ -395,7 +395,8 @@ namespace Content.Shared.Body.Components
             var gibs = new HashSet<EntityUid>();
             foreach (var part in SlotParts.Keys)
             {
-                if (!metaQuery.HasComponent(part.Owner))
+                if (!metaQuery.TryGetComponent(part.Owner, out var meta) ||
+                    meta.EntityLifeStage >= EntityLifeStage.Terminating)
                 {
                     SlotParts.Remove(part);
                     continue;

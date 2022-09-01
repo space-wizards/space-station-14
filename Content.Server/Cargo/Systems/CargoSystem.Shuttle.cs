@@ -287,7 +287,7 @@ public sealed partial class CargoSystem
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
         var name = _random.Pick(possibleNames);
 
-        var (_, shuttleUid) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
+        var (_, shuttleUid) = _loader.LoadGrid(CargoMap.Value, prototype.Path.ToString());
         var xform = Transform(shuttleUid!.Value);
         MetaData(shuttleUid!.Value).EntityName = name;
 

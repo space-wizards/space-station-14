@@ -10,6 +10,7 @@
     netsync: false
     sprite: Structures/Power/cell_recharger.rsi
     drawdepth: SmallObjects
+    snapCardinals: true
   - type: Charger
     chargerSlot:
       ejectOnInteract: true

@@ -119,7 +119,8 @@ public sealed class StationSystem : EntitySystem
     private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
     {
         if (_stations.Contains(uid) && // Was not deleted via DeleteStation()
-            _gameTicker.RunLevel == GameRunLevel.InRound) // And not due to a round restart
+            _gameTicker.RunLevel == GameRunLevel.InRound && // And not due to a round restart
+            _gameTicker.LobbyEnabled) // If there isn't a lobby, this is probably sandbox, single player, or a test
         {
             // printing a stack trace, rather than throwing an exception so that entity deletion continues as normal.
             Logger.Error($"Station entity {ToPrettyString(uid)} is getting deleted mid-round. Trace: {Environment.StackTrace}");
