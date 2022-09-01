@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: The Rat King and his servants now have an appropriate silly accent.,
-    type: Tweak}
-  id: 1716
-  time: '2022-06-18T02:36:19.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'There are more kinds of Exos than a simple slug with blades now. Some
@@ -2923,3 +2917,9 @@ Entries:
   - {message: Bots can now be stuffed into closets, type: Tweak}
   id: 2215
   time: '2022-09-01T02:40:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a poster celebrating the current state of our forthcoming server.,
+    type: Add}
+  id: 2216
+  time: '2022-09-01T02:56:27.0000000+00:00'
