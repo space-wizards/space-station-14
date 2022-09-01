@@ -1,3 +1,5 @@
+namespace Content.Shared.Radiation.Components;
+
 /// <summary>
 ///     Irradiate all objects in range.
 /// </summary>
@@ -5,19 +7,20 @@
 public sealed class RadiationSourceComponent : Component
 {
     /// <summary>
-    ///     How many rads per second receive irradiated object.
+    ///     Radiation intensity in center of the source. From there
+    ///     radiation rays will travel over distance and loose intensity
+    ///     when hit <see cref="RadiationBlockerComponent"/>.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("radsPerSecond")]
     public float RadsPerSecond = 1;
 
     /// <summary>
-    ///     Radius of radiation source.
+    ///     Defines how fast radiation rays will loose intensity
+    ///     over distance. The bigger the value, the shorter range
+    ///     of radiation source will be.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("range")]
-    public float Range = 5f;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float Slope = 0.5f;
+    [DataField("slope")]
+    public float Slope = 1f;
 }

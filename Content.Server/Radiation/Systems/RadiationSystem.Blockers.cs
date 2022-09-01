@@ -65,10 +65,15 @@ public partial class RadiationSystem
 
     private void OnDoorChanged(EntityUid uid, RadiationBlockerComponent component, DoorStateChangedEvent args)
     {
-        if (args.State == DoorState.Open)
-            SetEnabled(uid, false, component);
-        else if (args.State == DoorState.Closed)
-            SetEnabled(uid, true, component);
+        switch (args.State)
+        {
+            case DoorState.Open:
+                SetEnabled(uid, false, component);
+                break;
+            case DoorState.Closed:
+                SetEnabled(uid, true, component);
+                break;
+        }
     }
 
     public void SetEnabled(EntityUid uid, bool isEnabled, RadiationBlockerComponent? component = null)
@@ -88,7 +93,7 @@ public partial class RadiationSystem
     private void AddTile(EntityUid uid, RadiationBlockerComponent component)
     {
         // check that last position was removed
-        if (component.LastPosition != null)
+        if (component.CurrentPosition != null)
         {
             RemoveTile(uid, component);
         }
@@ -108,19 +113,19 @@ public partial class RadiationSystem
         AddToTile(gridId, tilePos, component.RadResistance);
 
         // and remember it as last valid position
-        component.LastPosition = (gridId, tilePos);
+        component.CurrentPosition = (gridId, tilePos);
     }
 
     private void RemoveTile(EntityUid uid, RadiationBlockerComponent component)
     {
         // check if blocker was placed on grid before component was removed
-        if (component.LastPosition == null)
+        if (component.CurrentPosition == null)
             return;
-        var (gridId, tilePos) = component.LastPosition.Value;
+        var (gridId, tilePos) = component.CurrentPosition.Value;
 
         // try to remove
         RemoveFromTile(gridId, tilePos, component.RadResistance);
-        component.LastPosition = null;
+        component.CurrentPosition = null;
     }
 
     private void AddToTile(EntityUid gridId, Vector2i tilePos, float radResistance)

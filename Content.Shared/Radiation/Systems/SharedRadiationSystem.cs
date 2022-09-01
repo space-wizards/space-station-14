@@ -10,7 +10,7 @@ public abstract class SharedRadiationSystem : EntitySystem
 }
 
 /// <summary>
-///     Radiation ray emitted by radiation source towards radiation receiver.
+///     Ray emitted by radiation source towards radiation receiver.
 ///     Contains all information about encountered radiation blockers.
 /// </summary>
 [Serializable, NetSerializable]
@@ -42,7 +42,7 @@ public sealed class RadiationRay
     public float Rads;
 
     /// <summary>
-    ///     Does rad ray reached destination or loose all intensity in blockers?
+    ///     Does rad ray reached destination or lost all intensity after blockers?
     /// </summary>
     public bool ReachedDestination => Rads > 0;
 

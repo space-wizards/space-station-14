@@ -1,5 +1,6 @@
 using Content.Shared.Ghost;
 using Content.Shared.Radiation;
+using Content.Shared.Radiation.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;

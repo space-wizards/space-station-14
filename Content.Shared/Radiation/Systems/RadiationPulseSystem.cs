@@ -26,7 +26,7 @@ public sealed class RadiationPulseSystem : EntitySystem
         // try to get radiation range or keep default visual range
         if (TryComp<RadiationSourceComponent>(uid, out var radSource))
         {
-            component.VisualRange = radSource.Range;
+            component.VisualRange = radSource.RadsPerSecond;
         }
     }
 }
