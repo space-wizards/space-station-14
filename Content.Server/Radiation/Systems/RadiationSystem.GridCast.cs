@@ -73,23 +73,27 @@ public partial class RadiationSystem
         // do a box intersection test between target and destination
         // it's not very precise, but really cheap
         var box = Box2.FromTwoPoints(sourceWorldPos, destWorldPos);
-        var grids = _mapManager.FindGridsIntersecting(mapId, box, true).ToArray();
-        var gridsCount = grids.Length;
+        var grids = _mapManager.FindGridsIntersecting(mapId, box, true);
 
-        if (gridsCount == 0)
+        // we are only interested in grids that has some radiation blockers
+        var resGrids = grids.Where(grid => _resistancePerTile.ContainsKey(grid.GridEntityId)).ToArray();
+        var resGridsCount = resGrids.Length;
+
+        if (resGridsCount == 0)
         {
             // no grids found - so no blockers (just distance penalty)
             return new RadiationRay
             {
+                MapId = mapId,
                 Source = sourceWorldPos,
                 Destination = destWorldPos,
                 Rads = rads
             };
         }
-        else if (gridsCount == 1)
+        else if (resGridsCount == 1)
         {
             // one grid found - use it for gridcast
-            return Gridcast(mapId, grids[0].GridEntityId, sourceWorldPos, destWorldPos, rads);
+            return Gridcast(mapId, resGrids[0].GridEntityId, sourceWorldPos, destWorldPos, rads);
         }
         else
         {
@@ -137,6 +141,7 @@ public partial class RadiationSystem
                 visitedTiles.Add((point, null));
             }
 
+            // no intensity left after blocker
             if (radRay.Rads <= MinIntensity)
                 return radRay;
         }
@@ -157,7 +162,6 @@ public partial class RadiationSystem
             Blockers = blockers
         };
 
-        // do raycast to the physics
         var colRay = new CollisionRay(sourceWorld, dir, (int) CollisionGroup.Impassable);
         var results = _physicsSystem.IntersectRay(mapId, colRay, distance, returnOnFirstHit: false);
 
@@ -170,10 +174,7 @@ public partial class RadiationSystem
             blockers.Add((obstacle.HitPos, radRay.Rads));
 
             if (radRay.Rads <= MinIntensity)
-            {
-                radRay.Rads = 0;
-                break;
-            }
+                return radRay;
         }
 
         return radRay;
