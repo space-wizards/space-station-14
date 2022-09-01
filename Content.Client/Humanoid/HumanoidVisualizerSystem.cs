@@ -268,7 +268,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        visible &= !humanoid.HiddenLayers.Contains(markingPrototype.BodyPart) && humanoid.BaseLayers.ContainsKey(markingPrototype.BodyPart);
+        visible &= !humanoid.HiddenLayers.Contains(markingPrototype.BodyPart);
+        visible &= humanoid.BaseLayers.TryGetValue(markingPrototype.BodyPart, out var setting)
+           && setting.AllowsMarkings;
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
@@ -288,20 +290,15 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
             sprite.LayerSetVisible(layerId, visible);
 
-            if (!visible)
+            if (!visible || setting == null) // this is kinda implied
             {
                 continue;
             }
 
-            humanoid.BaseLayers.TryGetValue(markingPrototype.BodyPart, out var setting);
-
-            if (markingPrototype.FollowSkinColor || colors == null || setting is { MarkingsMatchSkin: true})
+            if (markingPrototype.FollowSkinColor || colors == null || setting.MarkingsMatchSkin)
             {
                 var skinColor = humanoid.SkinColor;
-                if (setting is { MarkingsMatchSkin: true })
-                {
-                    skinColor.A = setting.LayerAlpha;
-                }
+                skinColor.A = setting.LayerAlpha;
 
                 sprite.LayerSetColor(layerId, skinColor);
             }
