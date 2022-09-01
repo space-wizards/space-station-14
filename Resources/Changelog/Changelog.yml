@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Holoparasites can no longer attack their owner while recalled using
-      wide attacks., type: Fix}
-  - {message: 'You can no longer wide attack inside of lockers, crates, etc.', type: Fix}
-  id: 1712
-  time: '2022-06-16T10:59:13.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Disarm chance now scales with relative health, relative mass, and status
@@ -2929,3 +2922,10 @@ Entries:
     type: Tweak}
   id: 2211
   time: '2022-08-31T13:09:54.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'The entire engineering department now spawns with some form of welding
+      protection, not just technical assistants.', type: Tweak}
+  - {message: Radiation hoods are no longer only cosmetic., type: Fix}
+  id: 2212
+  time: '2022-09-01T02:08:53.0000000+00:00'
