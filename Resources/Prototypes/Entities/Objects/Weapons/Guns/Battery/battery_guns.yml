@@ -272,6 +272,8 @@
       quickEquip: false
       slots:
         - Belt
+    - type: Item
+      size: 10
     - type: Gun
       fireRate: 2
       soundGunshot:
