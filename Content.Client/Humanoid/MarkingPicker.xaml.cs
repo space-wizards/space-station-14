@@ -61,7 +61,18 @@ public sealed partial class MarkingPicker : Control
     }
 
     public bool Forced { get; set; }
-    public bool IgnoreSpecies { get; set; }
+
+    private bool _ignoreSpecies;
+
+    public bool IgnoreSpecies
+    {
+        get => _ignoreSpecies;
+        set
+        {
+            _ignoreSpecies = value;
+            Populate();
+        }
+    }
 
     public void SetData(List<Marking> newMarkings, string species, Color skinColor)
     {
