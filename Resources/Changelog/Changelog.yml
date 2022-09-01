@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'There are more kinds of Exos than a simple slug with blades now. Some
-      are faster, some are stronger, and one might shoot, someday.', type: Add}
-  id: 1717
-  time: '2022-06-18T03:33:41.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added the remaining botany tools to the NutriVend machine., type: Tweak}
@@ -2923,3 +2917,11 @@ Entries:
     type: Add}
   id: 2216
   time: '2022-09-01T02:56:27.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Mini Jetpack now fits in your suit storage slot., type: Tweak}
+  - {message: 'All big guns fit on your back and most fit in suit storage. LMGs, Snipers
+      and Launchers are back only.', type: Tweak}
+  - {message: 'All handguns now fit on your belt slot (waistband right?)', type: Tweak}
+  id: 2217
+  time: '2022-09-01T03:21:13.0000000+00:00'
