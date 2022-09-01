@@ -21,6 +21,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
     {
         SubscribeLocalEvent<HumanoidComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HumanoidComponent, HumanoidMarkingModifierMarkingSetMessage>(OnMarkingsSet);
+        SubscribeLocalEvent<HumanoidComponent, HumanoidMarkingModifierBaseLayersSetMessage>(OnBaseLayersSet);
         SubscribeLocalEvent<HumanoidComponent, GetVerbsEvent<Verb>>(OnVerbsRequest);
     }
 

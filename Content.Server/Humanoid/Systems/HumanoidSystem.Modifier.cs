@@ -35,9 +35,41 @@ public sealed partial class HumanoidSystem
                 _uiSystem.TrySetUiState(
                     uid,
                     HumanoidMarkingModifierKey.Key,
-                    new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor));
+                    new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
             }
         });
+    }
+
+    private void OnBaseLayersSet(EntityUid uid, HumanoidComponent component,
+        HumanoidMarkingModifierBaseLayersSetMessage message)
+    {
+        if (message.Session is not IPlayerSession player
+            || !_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+        {
+            return;
+        }
+
+        if (message.Info == null)
+        {
+            component.CustomBaseLayers.Remove(message.Layer);
+        }
+        else
+        {
+            if (!component.CustomBaseLayers.TryAdd(message.Layer, message.Info))
+            {
+                component.CustomBaseLayers[message.Layer] = message.Info;
+            }
+        }
+
+        Synchronize(uid, component);
+
+        if (message.ResendState)
+        {
+            _uiSystem.TrySetUiState(
+                uid,
+                HumanoidMarkingModifierKey.Key,
+                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
+        }
     }
 
     private void OnMarkingsSet(EntityUid uid, HumanoidComponent component,
@@ -57,7 +89,7 @@ public sealed partial class HumanoidSystem
             _uiSystem.TrySetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
-                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor));
+                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
         }
 
     }

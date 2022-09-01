@@ -80,7 +80,7 @@ public sealed partial class MarkingPicker : Control
             .Index<SpeciesPrototype>(species).MarkingPoints;
         _currentMarkings = new(newMarkings, pointsProto, _markingManager);
 
-        if (IgnoreSpecies)
+        if (!IgnoreSpecies)
         {
             _currentMarkings.FilterSpecies(species); // should be validated server-side but it can't hurt
         }
@@ -96,7 +96,7 @@ public sealed partial class MarkingPicker : Control
     {
         _currentMarkings = set;
 
-        if (IgnoreSpecies)
+        if (!IgnoreSpecies)
         {
             _currentMarkings.FilterSpecies(species); // should be validated server-side but it can't hurt
         }

@@ -22,17 +22,33 @@ public sealed class HumanoidMarkingModifierMarkingSetMessage : BoundUserInterfac
     }
 }
 
+public sealed class HumanoidMarkingModifierBaseLayersSetMessage : BoundUserInterfaceMessage
+{
+    public HumanoidMarkingModifierBaseLayersSetMessage(HumanoidVisualLayers layer, CustomBaseLayerInfo? info, bool resendState)
+    {
+        Layer = layer;
+        Info = info;
+        ResendState = resendState;
+    }
+
+    public HumanoidVisualLayers Layer { get; }
+    public CustomBaseLayerInfo? Info { get; }
+    public bool ResendState { get; }
+}
+
 [Serializable, NetSerializable]
 public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
 {
-    public HumanoidMarkingModifierState(MarkingSet markingSet, string species, Color skinColor)
+    public HumanoidMarkingModifierState(MarkingSet markingSet, string species, Color skinColor, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayers)
     {
         MarkingSet = markingSet;
         Species = species;
         SkinColor = skinColor;
+        CustomBaseLayers = customBaseLayers;
     }
 
     public MarkingSet MarkingSet { get; }
     public string Species { get; }
     public Color SkinColor { get; }
+    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers { get; }
 }
