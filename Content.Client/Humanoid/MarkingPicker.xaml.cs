@@ -200,7 +200,10 @@ public sealed partial class MarkingPicker : Control
         CMarkingColors.Visible = false;
         _selectedMarking = null;
 
-        _currentMarkings.FilterSpecies(_currentSpecies, _markingManager);
+        if (!IgnoreSpecies)
+        {
+            _currentMarkings.FilterSpecies(_currentSpecies, _markingManager);
+        }
 
         // walk backwards through the list for visual purposes
         foreach (var marking in _currentMarkings.GetReverseEnumerator(_selectedMarkingCategory))
