@@ -4,3 +4,6 @@ ent-AirlockShuttle = наружный воздушный шлюз
 ent-AirlockGlassShuttle = наружный воздушный шлюз
     .desc = Необходим для соединения двух космических кораблей вместе.
     .suffix = Стеклянный, Стыковочный
+ent-AirlockShuttleAssembly = external airlock assembly
+    .desc = An incomplete structure necessary for connecting two space craft together.
+    .suffix = Docking

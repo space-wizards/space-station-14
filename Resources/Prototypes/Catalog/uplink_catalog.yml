@@ -554,15 +554,15 @@
 #  categories:
 #  - UplinkMisc
 
-- type: listing
-  id: UplinkGigacancerScanner
-  name: Ultragigacancer Health Analyzer
-  description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
-  productEntity: HandheldHealthAnalyzerGigacancer
-  cost:
-    Telecrystal: 5
-  categories:
-  - UplinkMisc
+# - type: listing
+#   id: UplinkGigacancerScanner
+#   name: Ultragigacancer Health Analyzer
+#   description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+#   productEntity: HandheldHealthAnalyzerGigacancer
+#   cost:
+#     Telecrystal: 5
+#   categories:
+#   - UplinkMisc
 
 - type: listing
   id: UplinkNocturineChemistryBottle

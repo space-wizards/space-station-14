@@ -1,8 +1,5 @@
 - type: vendingMachineInventory
   id: GoodCleanFunInventory
-  name: Good Clean Fun
-  animationDuration: 1.3
-  spriteName: games
   startingInventory:
     DiceBag: 4
     Paper: 8

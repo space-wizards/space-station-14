@@ -39,6 +39,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
@@ -310,8 +311,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             Dirty(cartridge);
 
         cartridge.Spent = spent;
-        if (!TryComp<AppearanceComponent>(cartridge.Owner, out var appearance)) return;
-        appearance.SetData(AmmoVisuals.Spent, spent);
+        Appearance.SetData(cartridge.Owner, AmmoVisuals.Spent, spent);
     }
 
     /// <summary>

@@ -44,7 +44,7 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 
         UpdateAlert(component);
         var ev = new EnsnareRemoveEvent();
-        RaiseLocalEvent(uid, ev, false);
+        RaiseLocalEvent(uid, ev);
 
         ensnaring.CancelToken = null;
     }

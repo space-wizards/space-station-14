@@ -1,6 +1,9 @@
 ent-PaintingMonkey = monkey painting
     .desc = Return to monky.
     .suffix = { "" }
+ent-BaseSignDirectional = { ent-BaseSign }
+    .desc = { ent-BaseSign.desc }
+    .suffix = { "" }
 ent-SignDirectionalBar = bar sign
     .desc = A direction sign, pointing out which way the bar is.
     .suffix = { "" }

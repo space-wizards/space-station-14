@@ -25,3 +25,5 @@ cloning-console-component-msg-already-cloning = Не готово: Конфли�
 cloning-console-component-msg-incomplete = Не готово: Клонирование в процессе
 cloning-console-component-msg-no-cloner = Не готово: Клонер не обнаружен
 cloning-console-component-msg-no-mind = Не готово: Душа неактивна
+cloning-console-chat-error = ERROR: INSUFFICIENT BIOMASS. CLONING THIS BODY REQUIRES { $units } UNITS OF BIOMASS.
+cloning-console-cellular-warning = WARNING: GENEFSCK CONFIDENCE SCORE IS { $percent }%. CLONING MAY HAVE UNEXPECTED RESULTS.

@@ -191,4 +191,4 @@
   - type: Clothing
     equippedPrefix: holding
   - type: Storage
-    capacity: 10000
+    capacity: 9999
