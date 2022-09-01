@@ -82,9 +82,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferRatio = (float)(pump.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds) / inlet.Air.Volume;
-
-            var removed = inlet.Air.RemoveRatio(transferRatio);
+            var removed = inlet.Air.RemoveVolume((float)(pump.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds));
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
