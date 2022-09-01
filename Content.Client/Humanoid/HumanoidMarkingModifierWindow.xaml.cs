@@ -86,6 +86,7 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
             Orientation = LayoutOrientation.Vertical;
             var labelBox = new BoxContainer
             {
+                MinWidth = 250,
                 HorizontalExpand = true
             };
             AddChild(labelBox);
@@ -101,7 +102,6 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
             _infoBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
-                MinHeight = 250,
                 Visible = false
             };
             _enable.OnToggled += args =>
