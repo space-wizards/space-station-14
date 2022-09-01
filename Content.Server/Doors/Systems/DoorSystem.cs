@@ -174,6 +174,7 @@ public sealed class DoorSystem : SharedDoorSystem
         });
     }
 
+
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
@@ -187,7 +188,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (!force)
         {
-            var canEv = new BeforeDoorPryEvent(user);
+            var canEv = new BeforeDoorPryEvent(user, tool);
             RaiseLocalEvent(target, canEv, false);
 
             if (canEv.Cancelled)
