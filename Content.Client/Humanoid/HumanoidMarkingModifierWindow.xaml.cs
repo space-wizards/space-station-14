@@ -111,6 +111,7 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
             _colorSliders = new();
             _colorSliders.OnColorChanged += color => OnStateChanged!();
             _infoBox.AddChild(_colorSliders);
+            AddChild(_infoBox);
         }
 
         public void SetState(bool enabled, string state, Color color)
