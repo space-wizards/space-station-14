@@ -13,6 +13,12 @@
   - type: Item
     # If you update this also update the bulldog's size.
     size: 30
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
@@ -53,8 +59,13 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     size: 30
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: Gun
     fireRate: 2
     selectedMode: FullAuto
@@ -94,8 +105,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-  - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Gun
     fireRate: 8
   - type: BallisticAmmoProvider
@@ -112,7 +121,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: BallisticAmmoProvider
 
@@ -124,7 +133,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: BallisticAmmoProvider
     capacity: 4
@@ -137,9 +146,10 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
     size: 10
-    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
