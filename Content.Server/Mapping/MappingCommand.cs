@@ -1,17 +1,18 @@
 // ReSharper disable once RedundantUsingDirective
 // Used to warn the player in big red letters in debug mode
 
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Robust.Server.Player;
-using Robust.Server.Console.Commands;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using Robust.Shared.ContentPack;
-using System.Linq;
 
-namespace Content.Server.GameTicking.Commands
+namespace Content.Server.Mapping
 {
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
     sealed class MappingCommand : IConsoleCommand
@@ -109,7 +110,11 @@ namespace Content.Server.GameTicking.Commands
                 shell.ExecuteCommand("aghost");
             }
 
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+
             shell.ExecuteCommand("sudo cvar events.enabled false");
+            if (cfg.GetCVar(CCVars.AutosaveEnabled))
+                shell.ExecuteCommand($"toggleautosave {mapId}");
             shell.ExecuteCommand($"tp 0 0 {mapId}");
             shell.RemoteExecuteCommand("mappingclientsidesetup");
             mapManager.SetMapPaused(mapId, true);
