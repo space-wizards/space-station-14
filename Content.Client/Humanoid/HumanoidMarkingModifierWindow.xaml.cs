@@ -19,10 +19,10 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
 
-        MarkingPickerWidget.OnMarkingAdded += OnMarkingAdded;
-        MarkingPickerWidget.OnMarkingRemoved += OnMarkingRemoved;
-        MarkingPickerWidget.OnMarkingColorChange += OnMarkingColorChange;
-        MarkingPickerWidget.OnMarkingRankChange += OnMarkingRankChange;
+        MarkingPickerWidget.OnMarkingAdded += set => OnMarkingAdded!(set);
+        MarkingPickerWidget.OnMarkingRemoved += set => OnMarkingRemoved!(set);
+        MarkingPickerWidget.OnMarkingColorChange += set => OnMarkingColorChange!(set);
+        MarkingPickerWidget.OnMarkingRankChange += set => OnMarkingRankChange!(set);
         MarkingForced.OnToggled += args => MarkingPickerWidget.Forced = args.Pressed;
         MarkingIgnoreSpecies.OnToggled += args => MarkingPickerWidget.Forced = args.Pressed;
 
