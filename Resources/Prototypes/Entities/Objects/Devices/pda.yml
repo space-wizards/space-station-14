@@ -632,7 +632,7 @@
     state: pda-syndi
 
 - type: entity
-  parent: HoSPDA
+  parent: CBURNPDA
   id: ERTLeaderPDA
   name: ERT PDA
   description: Red for firepower.
