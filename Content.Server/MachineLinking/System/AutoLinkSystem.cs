@@ -3,7 +3,7 @@ using Content.Server.MachineLinking.Components;
 namespace Content.Server.MachineLinking.System;
 
 /// <summary>
-/// This handles...
+/// This handles automatically linking autolinked entities at round-start.
 /// </summary>
 public sealed class AutoLinkSystem : EntitySystem
 {
