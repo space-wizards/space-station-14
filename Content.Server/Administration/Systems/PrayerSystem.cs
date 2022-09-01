@@ -1,24 +1,37 @@
-﻿using Content.Server.Chat.Systems;
+﻿using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Systems
 {
-    public sealed class PrayerSystem : EntitySystem
+    public sealed class PrayerSystem : SharedPrayerSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly BwoinkSystem _bwoinkSystem = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+
+        /// <summary>
+        /// Sends a popup and a chat message to the target.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="messageString"></param>
+        /// <param name="popupMessage"></param>
         public void SendSubtleMessage(IPlayerSession target, string messageString, string popupMessage = "You hear a voice in your head...")
         {
             if (target.AttachedEntity == null)
                 return;
-            // This works, but if someone can find a solution to
-            // sending a message to a specific client's chat box I'd really
-            // appreciate it.
-            _popupSystem.PopupEntity(popupMessage + " " + messageString, target.AttachedEntity.Value, Filter.Empty().AddPlayer(target), PopupType.Large);
+            _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, Filter.Empty().AddPlayer(target), PopupType.Large);
+            _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, popupMessage + " \"{0}\"", EntityUid.Invalid, false, target.ConnectedClient);
+        }
+
+        public void Pray(string prayed)
+        {
+            // todo add praying wtf
         }
     }
 }
