@@ -435,7 +435,7 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Item
-    size: 60
+    size: 50
   - type: Storage
     capacity: 60
     whitelist:
