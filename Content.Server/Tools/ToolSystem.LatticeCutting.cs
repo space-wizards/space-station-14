@@ -1,5 +1,7 @@
 ﻿using System.Threading;
+using Content.Server.Administration.Logs;
 using Content.Server.Tools.Components;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
@@ -9,6 +11,8 @@ namespace Content.Server.Tools;
 
 public sealed partial class ToolSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
     private void InitializeLatticeCutting()
     {
         SubscribeLocalEvent<LatticeCuttingComponent, AfterInteractEvent>(OnLatticeCuttingAfterInteract);
@@ -37,6 +41,7 @@ public sealed partial class ToolSystem
             return;
 
         tile.CutTile(_mapManager, _tileDefinitionManager, EntityManager);
+        _adminLogger.Add(LogType.LatticeCut, LogImpact.Medium, $"{ToPrettyString(args.User):user} cut the lattice at {args.Coordinates:target}");
     }
 
     private void OnLatticeCuttingAfterInteract(EntityUid uid, LatticeCuttingComponent component,
@@ -81,7 +86,8 @@ public sealed partial class ToolSystem
         if (!UseTool(component.Owner, user, null, 0f, component.Delay, new[] {component.QualityNeeded},
                 new LatticeCuttingCompleteEvent
                 {
-                    Coordinates = clickLocation
+                    Coordinates = clickLocation,
+                    User = user
                 }, new LatticeCuttingCancelledEvent(), toolComponent: tool, doAfterEventTarget: component.Owner,
                 cancelToken: tokenSource.Token))
             component.CancelTokenSource = null;
@@ -91,7 +97,8 @@ public sealed partial class ToolSystem
 
     private sealed class LatticeCuttingCompleteEvent : EntityEventArgs
     {
-        public EntityCoordinates Coordinates { get; set; }
+        public EntityCoordinates Coordinates;
+        public EntityUid User;
     }
 
     private sealed class LatticeCuttingCancelledEvent : EntityEventArgs
