@@ -1,7 +1,6 @@
 using Content.Server.AI.Components;
 using Content.Server.AI.Utils;
-using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Weapon.Melee.Components;
+using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 
 namespace Content.Server.AI.WorldState.States.Combat.Nearby

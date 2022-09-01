@@ -59,8 +59,8 @@
       name: action-name-disarm
   - type: MeleeWeapon
     range: 0.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 2

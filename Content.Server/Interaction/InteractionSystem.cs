@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
-using Content.Server.Weapon.Melee.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
@@ -12,8 +11,8 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Weapon.Melee.Components;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -243,30 +242,6 @@ namespace Content.Server.Interaction
                     InteractHand(user, target.Value);
                     return;
                 }
-            }
-
-            // TODO: Make this saner?
-            // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
-
-            var used = user;
-
-            // TODO: Unfuck this.
-            return;
-
-            if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) && HasComp<MeleeWeaponComponent>(gloves))
-                used = (EntityUid) gloves;
-
-            if (wideAttack)
-            {
-                var ev = new WideAttackEvent(used, user, coordinates);
-                RaiseLocalEvent(used, ev, false);
-                if (ev.Handled)
-                    _adminLogger.Add(LogType.AttackUnarmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
-            }
-            else
-            {
-                var ev = new ClickAttackEvent(used, user, coordinates, target);
-                RaiseLocalEvent(used, ev, false);
             }
         }
     }

@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Weapons.Melee;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class NewMeleeWeaponComponent : Component
+public sealed class MeleeWeaponComponent : Component
 {
     // TODO: When predicted comp change.
     [ViewVariables]

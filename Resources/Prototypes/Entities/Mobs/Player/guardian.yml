@@ -78,10 +78,9 @@
     - type: Pullable
     - type: MeleeWeapon
       range: 2
-      arcwidth: 30
-      arc: fist
-      cooldownTime: 0.7
-      arcCooldownTime: 0.7
+      angle: 30
+      animation: WeaponArcFist
+      windupTime: 0.7
       damage:
         types:
           Blunt: 22

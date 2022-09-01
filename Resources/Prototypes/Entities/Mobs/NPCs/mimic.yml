@@ -40,8 +40,8 @@
   - type: AnimationPlayer
   - type: MeleeWeapon
     range: 1.5
-    arcwidth: 0
-    arc: fist
+    angle: 0
+    animation: WeaponArcFist
     damage:
       types:
         Blunt: 20

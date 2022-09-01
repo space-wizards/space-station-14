@@ -31,7 +31,7 @@
     tags:
     - Payload # yes, you can make re-usable prank grenades
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       collection: BikeHorn
       params:
         variation: 0.125

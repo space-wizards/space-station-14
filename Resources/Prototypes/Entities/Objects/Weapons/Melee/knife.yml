@@ -15,7 +15,7 @@
     damage:
       types:
         Slash: 12
-    hitSound:
+    soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
     netsync: false

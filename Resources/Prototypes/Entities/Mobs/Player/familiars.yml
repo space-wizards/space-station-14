@@ -37,8 +37,8 @@
     rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
   - type: MeleeWeapon
     range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 8

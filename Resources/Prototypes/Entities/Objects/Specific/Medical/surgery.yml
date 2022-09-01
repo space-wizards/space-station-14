@@ -65,7 +65,7 @@
     damage:
       types:
         Slash: 12
-    hitSound:
+    soundHit:
       path: /Audio/Weapons/bladeslice.ogg
 
 - type: entity
@@ -171,7 +171,7 @@
     damage:
       groups:
         Brute: 10
-    hitSound:
+    soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
     qualities:
@@ -192,7 +192,7 @@
     damage:
       groups:
         Brute: 15
-    hitSound:
+    soundHit:
       path: /Audio/Items/drill_hit.ogg
   - type: Tool
     qualities:
@@ -213,7 +213,7 @@
     damage:
       groups:
         Brute: 20
-    hitSound:
+    soundHit:
       path: /Audio/Items/drill_hit.ogg
   - type: Tool
     qualities:

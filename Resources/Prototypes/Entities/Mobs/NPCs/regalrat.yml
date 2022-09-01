@@ -42,8 +42,8 @@
       200: Dead
   - type: MeleeWeapon
     range: 1
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 12
@@ -125,7 +125,7 @@
     scale: 1.2, 1.2
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: regalrat  
+      state: regalrat
   - type: MobState
     thresholds:
       0: Alive
@@ -133,8 +133,8 @@
       350: Dead
   - type: MeleeWeapon
     range: 1.5
-    arcwidth: 0
-    arc: fist
+    angle: 0
+    animation: WeaponArcFist
     damage:
       types:
         Blunt: 50 #oof ouch owie my bones
@@ -191,8 +191,8 @@
       60: Dead
   - type: MeleeWeapon
     range: 1
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 5

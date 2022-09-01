@@ -9,7 +9,7 @@
     damage:
       types:
         Slash: 7
-    hitSound:
+    soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/broken_bottle.rsi

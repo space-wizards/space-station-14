@@ -119,8 +119,8 @@
   - type: Examiner
   - type: MeleeWeapon
     range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 5

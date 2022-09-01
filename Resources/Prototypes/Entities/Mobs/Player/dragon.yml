@@ -84,7 +84,7 @@
         path: /Audio/Animals/space_dragon_roar.ogg
       soundPerceivedByOthers: false # A 75% chance for a loud roar would get old fast.
     - type: MeleeWeapon
-      hitSound:
+      soundHit:
         path: /Audio/Effects/bite.ogg
       damage:
         types:

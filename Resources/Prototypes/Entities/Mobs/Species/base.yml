@@ -291,11 +291,11 @@
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       collection: Punch
     range: 0.8
-    arcwidth: 30
-    arc: fist
+    angle: 30
+    animation: WeaponArcFist
     damage:
       types:
         Blunt: 5

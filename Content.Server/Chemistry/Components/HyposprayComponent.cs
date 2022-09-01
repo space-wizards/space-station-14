@@ -77,7 +77,8 @@ namespace Content.Server.Chemistry.Components
                 target.Value.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
                 var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
                 var angle = Angle.FromWorldVec(_entMan.GetComponent<TransformComponent>(target.Value).WorldPosition - _entMan.GetComponent<TransformComponent>(user).WorldPosition);
-                meleeSys.SendLunge(angle, user);
+                // TODO: This should just be using melee attacks...
+                // meleeSys.SendLunge(angle, user);
             }
 
             SoundSystem.Play(_injectSound.GetSound(), Filter.Pvs(user), user);

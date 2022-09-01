@@ -76,8 +76,8 @@
         Base: narsian_dead
   - type: MeleeWeapon
     range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5

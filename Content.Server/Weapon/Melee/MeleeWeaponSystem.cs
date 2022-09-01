@@ -1,12 +1,16 @@
 using System.Linq;
+using Content.Server.Administration.Components;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.CombatMode.Disarm;
+using Content.Server.Contests;
 using Content.Server.Damage.Systems;
 using Content.Server.Weapon.Melee.Components;
 using Content.Server.Weapon.Melee.Events;
+using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -22,11 +26,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Weapon.Melee;
 
-public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
+public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly ContestsSystem _contests = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -56,7 +61,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         PopupSystem.PopupEntity(message, uid.Value, Filter.Pvs(uid.Value, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
 
-    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, NewMeleeWeaponComponent component)
+    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component)
     {
         base.DoPreciseAttack(user, ev, component);
 
@@ -125,7 +130,7 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         }
     }
 
-    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, NewMeleeWeaponComponent component)
+    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component)
     {
         base.DoWideAttack(user, ev, component);
 
@@ -251,7 +256,27 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
         return resSet;
     }
 
-    protected override void DoLunge(EntityUid user, Vector2 localPos, string? animation)
+    private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
+    {
+        if (HasComp<DisarmProneComponent>(disarmer))
+            return 1.0f;
+
+        if (HasComp<DisarmProneComponent>(disarmed))
+            return 0.0f;
+
+        var contestResults = 1 - _contests.OverallStrengthContest(disarmer, disarmed);
+
+        float chance = (disarmerComp.BaseDisarmFailChance + contestResults);
+
+        if (inTargetHand != null && TryComp<DisarmMalusComponent>(inTargetHand, out var malus))
+        {
+            chance += malus.Malus;
+        }
+
+        return Math.Clamp(chance, 0f, 1f);
+    }
+
+    public override void DoLunge(EntityUid user, Vector2 localPos, string? animation)
     {
         RaiseNetworkEvent(new MeleeLungeEvent(user, localPos, animation), Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
@@ -345,16 +370,18 @@ public sealed class NewMeleeWeaponSystem : SharedNewMeleeWeaponSystem
             return;
 
         var hitBloodstreams = new List<BloodstreamComponent>();
+        var bloodQuery = GetEntityQuery<BloodstreamComponent>();
+
         foreach (var entity in args.HitEntities)
         {
             if (Deleted(entity))
                 continue;
 
-            if (EntityManager.TryGetComponent<BloodstreamComponent?>(entity, out var bloodstream))
+            if (bloodQuery.TryGetComponent(entity, out var bloodstream))
                 hitBloodstreams.Add(bloodstream);
         }
 
-        if (hitBloodstreams.Count < 1)
+        if (!hitBloodstreams.Any())
             return;
 
         var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);

@@ -62,8 +62,8 @@
     coldDamageThreshold: 0
   - type: MeleeWeapon
     range: 0.5
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       groups:
         Brute: 15

@@ -17,9 +17,9 @@
     damage:
       types:
         Blunt: 0.6
-    hitSound:
+    soundHit:
       collection: BoxingHit
-    arc: fist
+    animation: WeaponArcFist
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-red

@@ -30,14 +30,15 @@ namespace Content.Shared.CombatMode
         [ViewVariables(VVAccess.ReadWrite), DataField("precisionMode")]
         public bool PrecisionMode;
 
-        private bool _isInCombatMode;
-        private TargetingZone _activeZone;
+        #region Disarm
 
-        [DataField("disarmFailChance")]
-        public readonly float BaseDisarmFailChance = 0.4f;
+        /// <summary>
+        /// Whether we are set to disarm. If we are doing our own melee attacks then we will attempt to disarm instead.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("disarm")]
+        public bool? Disarm;
 
-        [DataField("pushChance")]
-        public readonly float BasePushFailChance = 0.4f;
+        public bool CanDisarm => Disarm != null;
 
         [DataField("disarmFailSound")]
         public readonly SoundSpecifier DisarmFailSound = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
@@ -48,11 +49,16 @@ namespace Content.Shared.CombatMode
         [DataField("disarmActionId", customTypeSerializer:typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
         public readonly string DisarmActionId = "Disarm";
 
-        [DataField("canDisarm")]
-        public bool CanDisarm;
+        [DataField("disarmFailChance")]
+        public readonly float BaseDisarmFailChance = 0.4f;
 
         [DataField("disarmAction")] // must be a data-field to properly save cooldown when saving game state.
         public EntityTargetAction? DisarmAction;
+
+        #endregion
+
+        private bool _isInCombatMode;
+        private TargetingZone _activeZone;
 
         [DataField("combatToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
         public readonly string CombatToggleActionId = "CombatModeToggle";

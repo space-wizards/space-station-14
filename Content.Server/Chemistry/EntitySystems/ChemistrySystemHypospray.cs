@@ -2,6 +2,7 @@ using Content.Server.Chemistry.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server.Chemistry.EntitySystems
 {

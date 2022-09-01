@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Melee;
+namespace Content.Shared.Weapons.Melee.Events;
 
 [Serializable, NetSerializable]
 public sealed class MeleeEffectEvent : EntityEventArgs

@@ -133,7 +133,7 @@
     damageContainer: Biological
     damageModifierSet: Scale
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Weapons/pierce.ogg
     range: 0.8
     arcwidth: 30

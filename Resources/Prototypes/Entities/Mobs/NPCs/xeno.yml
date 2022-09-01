@@ -9,7 +9,7 @@
   - type: DiseaseProtection
     protection: 1
   - type: CombatMode
-    canDisarm: true
+    disarm: false
   - type: InputMover
   - type: MobMover
   - type: UtilityNPC
@@ -64,10 +64,10 @@
           -0.25
   - type: MeleeWeapon
     range: 1.5
-    arcwidth: 0
-    hitSound:
+    angle: 0
+    soundHit:
      collection: AlienClaw
-    arc:
+    animation: WeaponArcClaw
     damage:
       groups:
         Brute: 20
@@ -193,7 +193,7 @@
     damage:
      groups:
        Brute: 40
-    cooldownTime: 2
+    windupTime: 2
   - type: SlowOnDamage
     speedModifierThresholds:
       1000: 0.7
@@ -231,7 +231,7 @@
     damage:
      groups:
        Brute: 35
-    cooldownTime: 1.5
+    windupTime: 1.5
   - type: SlowOnDamage
     speedModifierThresholds:
       450: 0.7
@@ -269,7 +269,7 @@
     damage:
      groups:
        Brute: 15
-    cooldownTime: 0.5
+    windupTime: 0.5
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
@@ -360,8 +360,8 @@
     - Xeno
   - type: MeleeWeapon
     range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5

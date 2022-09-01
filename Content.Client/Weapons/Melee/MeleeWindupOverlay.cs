@@ -1,4 +1,3 @@
-using Content.Shared.Weapon.Melee;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -27,7 +26,7 @@ public sealed class MeleeWindupOverlay : Overlay
         var tickTime = (float) _timing.TickPeriod.TotalSeconds;
         var tickFraction = _timing.TickFraction / (float) ushort.MaxValue * tickTime;
 
-        foreach (var comp in _entManager.EntityQuery<NewMeleeWeaponComponent>())
+        foreach (var comp in _entManager.EntityQuery<MeleeWeaponComponent>())
         {
             if (!comp.Active)
                 continue;
