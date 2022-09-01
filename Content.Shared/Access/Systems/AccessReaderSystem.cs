@@ -26,7 +26,9 @@ namespace Content.Shared.Access.Systems
 
         private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
         {
-            if (component.Enabled && (!IsAllowed(args.User, component) && uid is { Valid: true })) // If it's not valid, assume it's autolink and just let it through.
+            if (args.User == null) // AutoLink (and presumably future external linkers) have no user.
+                return;
+            if (component.Enabled && !IsAllowed(args.User.Value, component))
                 args.Cancel();
         }
 

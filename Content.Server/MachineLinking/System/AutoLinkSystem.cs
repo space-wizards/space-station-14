@@ -29,7 +29,7 @@ public sealed class AutoLinkSystem : EntitySystem
             if (rxXform.GridUid != xform.GridUid)
                 continue;
 
-            _signalLinkerSystem.TryLinkDefaults(receiver.Owner, uid, EntityUid.Invalid);
+            _signalLinkerSystem.TryLinkDefaults(receiver.Owner, uid, null);
         }
     }
 }
