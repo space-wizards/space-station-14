@@ -305,19 +305,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitordm.starting_balance", 20);
 
         /*
-         * Nukeops
-         */
-
-        public static readonly CVarDef<int> NukeopsMinPlayers =
-            CVarDef.Create("nukeops.min_players", 15);
-
-        public static readonly CVarDef<int> NukeopsMaxOps =
-            CVarDef.Create("nukeops.max_ops", 5);
-
-        public static readonly CVarDef<int> NukeopsPlayersPerOp =
-            CVarDef.Create("nukeops.players_per_op", 5);
-
-        /*
          * Zombie
          */
 
