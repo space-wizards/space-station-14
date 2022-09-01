@@ -61,9 +61,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         }
 
         var layerVis = data.LayerVisibility.ToHashSet();
-        var layerVisDirty = ReplaceHiddenLayers(uid, layerVis, component, args.Sprite);
+        dirty |= ReplaceHiddenLayers(uid, layerVis, component, args.Sprite);
 
-        DiffAndApplyMarkings(uid, data.Markings, layerVisDirty, component, args.Sprite);
+        DiffAndApplyMarkings(uid, data.Markings, dirty, component, args.Sprite);
     }
 
     private bool ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
@@ -101,7 +101,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
     private void DiffAndApplyMarkings(EntityUid uid,
         List<Marking> newMarkings,
-        bool hiddenLayersDirty,
+        bool layersDirty,
         HumanoidComponent humanoid,
         SpriteComponent sprite)
     {
@@ -144,7 +144,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             // however: if the hidden layers are set to dirty, then we need to
             // instead just add every single marking, since we don't know ahead of time
             // where these markings go
-            if (humanoid.CurrentMarkings[i] != newMarkings[i] || hiddenLayersDirty)
+            if (humanoid.CurrentMarkings[i] != newMarkings[i] || layersDirty)
             {
                 dirtyMarkings.Add(i);
             }
@@ -263,13 +263,12 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         HumanoidComponent humanoid,
         SpriteComponent sprite)
     {
-        if (!sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer)
-            || !humanoid.BaseLayers.ContainsKey(markingPrototype.BodyPart))
+        if (!sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
         {
             return;
         }
 
-        visible &= !humanoid.HiddenLayers.Contains(markingPrototype.BodyPart);
+        visible &= !humanoid.HiddenLayers.Contains(markingPrototype.BodyPart) && humanoid.BaseLayers.ContainsKey(markingPrototype.BodyPart);
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
