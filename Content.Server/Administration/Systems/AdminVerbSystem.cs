@@ -45,6 +45,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly PrayerSystem _prayerSystem = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -79,6 +80,23 @@ namespace Content.Server.Administration.Systems
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
+
+                    // Prayer
+                    // TODO: add functionality and icons
+                    Verb prayerVerb = new();
+                    prayerVerb.Text = Loc.GetString("subtle message");
+                    prayerVerb.Category = VerbCategory.Admin;
+                    // prayerVerb.IconTexture = "/Textures/Interface/gavel.svg.192dpi.png";
+                    prayerVerb.Act = () =>
+                    {
+                        _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>
+                        {
+                            _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, message, popupMessage == "" ? "You hear a voice in your head..." : popupMessage);
+                        });
+
+                    };
+                    prayerVerb.Impact = LogImpact.Low;
+                    args.Verbs.Add(prayerVerb);
 
                     // Freeze
                     var frozen = HasComp<AdminFrozenComponent>(args.Target);
