@@ -21,26 +21,37 @@ public partial class RadiationSystem
         var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>().ToArray();
         var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
 
+        // trace all rays from rad source to rad receivers
         var rays = new List<RadiationRay>();
         foreach (var (source, sourceTrs) in sources)
         {
             foreach (var (_, destTrs) in destinations)
             {
-                var ray = Irradiate(sourceTrs, destTrs, source.RadsPerSecond, source.Slope, blockerQuery);
+                var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs,
+                    source.RadsPerSecond, source.Slope, blockerQuery);
                 if (ray != null)
                     rays.Add(ray);
             }
         }
 
+        // update information for debug overlay
         var elapsedTime = stopwatch.Elapsed.TotalMilliseconds;
         var totalSources = sources.Length;
         var totalReceivers = destinations.Length;
-
         var ev = new OnRadiationOverlayUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
         UpdateDebugView(ev);
+
+        // send rads for each entity
+        foreach (var ray in rays)
+        {
+            if (ray.Rads <= 0)
+                continue;
+            IrradiateEntity(ray.DestinationUid, ray.Rads, GridcastUpdateRate);
+        }
     }
 
-    private RadiationRay? Irradiate(TransformComponent sourceTrs, TransformComponent destTrs,
+    private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs,
+        EntityUid destUid, TransformComponent destTrs,
         float incomingRads, float slope,
         EntityQuery<RadiationBlockerComponent> blockerQuery)
     {
@@ -50,9 +61,9 @@ public partial class RadiationSystem
         var mapId = sourceTrs.MapID;
 
         // get direction from rad source to destination and its distance
-        var sourceWorldPos = sourceTrs.WorldPosition;
-        var destWorldPos = destTrs.WorldPosition;
-        var dir = destWorldPos - sourceWorldPos;
+        var sourceWorld = sourceTrs.WorldPosition;
+        var destWorld = destTrs.WorldPosition;
+        var dir = destWorld - sourceWorld;
         var dist = dir.Length;
 
         // will it even reach destination considering distance penalty
@@ -66,13 +77,14 @@ public partial class RadiationSystem
         // however we can do simplification and ignore that case
         if (GridcastSimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
-            return Gridcast(mapId, sourceTrs.GridUid.Value, sourceWorldPos, destWorldPos, rads);
+            return Gridcast(mapId, sourceTrs.GridUid.Value, sourceUid, destUid,
+                sourceWorld, destWorld, rads);
         }
 
         // lets check how many grids are between source and destination
         // do a box intersection test between target and destination
         // it's not very precise, but really cheap
-        var box = Box2.FromTwoPoints(sourceWorldPos, destWorldPos);
+        var box = Box2.FromTwoPoints(sourceWorld, destWorld);
         var grids = _mapManager.FindGridsIntersecting(mapId, box, true);
 
         // we are only interested in grids that has some radiation blockers
@@ -82,36 +94,30 @@ public partial class RadiationSystem
         if (resGridsCount == 0)
         {
             // no grids found - so no blockers (just distance penalty)
-            return new RadiationRay
-            {
-                MapId = mapId,
-                Source = sourceWorldPos,
-                Destination = destWorldPos,
-                Rads = rads
-            };
+            return new RadiationRay(mapId, sourceUid,sourceWorld,
+                destUid,destWorld, rads);
         }
         else if (resGridsCount == 1)
         {
             // one grid found - use it for gridcast
-            return Gridcast(mapId, resGrids[0].GridEntityId, sourceWorldPos, destWorldPos, rads);
+            return Gridcast(mapId, resGrids[0].GridEntityId, sourceUid, destUid,
+                sourceWorld, destWorld, rads);
         }
         else
         {
             // more than one grid - fallback to raycast
-            return Raycast(mapId, sourceWorldPos, dir.Normalized, dist, rads, blockerQuery);
+            return Raycast(mapId, sourceUid, destUid, sourceWorld, destWorld,
+                dir.Normalized, dist, rads, blockerQuery);
         }
     }
 
-    private RadiationRay Gridcast(MapId mapId, EntityUid gridUid,
+    private RadiationRay Gridcast(MapId mapId, EntityUid gridUid, EntityUid sourceUid, EntityUid destUid,
         Vector2 sourceWorld, Vector2 destWorld, float incomingRads)
     {
         var visitedTiles = new List<(Vector2i, float?)>();
-        var radRay = new RadiationRay
+        var radRay = new RadiationRay(mapId, sourceUid,sourceWorld,
+            destUid,destWorld, incomingRads)
         {
-            MapId = mapId,
-            Source = sourceWorld,
-            Destination = destWorld,
-            Rads = incomingRads,
             Grid = gridUid,
             VisitedTiles = visitedTiles
         };
@@ -143,22 +149,23 @@ public partial class RadiationSystem
 
             // no intensity left after blocker
             if (radRay.Rads <= MinIntensity)
+            {
+                radRay.Rads = 0;
                 return radRay;
+            }
         }
 
         return radRay;
     }
 
-    private RadiationRay Raycast(MapId mapId, Vector2 sourceWorld, Vector2 dir, float distance, float incomingRads,
+    private RadiationRay Raycast(MapId mapId, EntityUid sourceUid, EntityUid destUid,
+        Vector2 sourceWorld, Vector2 destWorld, Vector2 dir, float distance, float incomingRads,
         EntityQuery<RadiationBlockerComponent> blockerQuery)
     {
         var blockers = new List<(Vector2, float)>();
-        var radRay = new RadiationRay
+        var radRay = new RadiationRay(mapId, sourceUid, sourceWorld,
+            destUid, destWorld, incomingRads)
         {
-            MapId = mapId,
-            Source = sourceWorld,
-            Destination = sourceWorld + dir * distance,
-            Rads = incomingRads,
             Blockers = blockers
         };
 
@@ -174,7 +181,10 @@ public partial class RadiationSystem
             blockers.Add((obstacle.HitPos, radRay.Rads));
 
             if (radRay.Rads <= MinIntensity)
+            {
+                radRay.Rads = 0;
                 return radRay;
+            }
         }
 
         return radRay;

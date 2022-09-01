@@ -1,4 +1,5 @@
-﻿using Content.Shared.Radiation.Systems;
+﻿using Content.Shared.Radiation.Events;
+using Content.Shared.Radiation.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
@@ -35,5 +36,11 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
 
         UpdateGridcast();
         _accumulator = 0f;
+    }
+
+    public void IrradiateEntity(EntityUid uid, float radsPerSecond, float time)
+    {
+        var msg = new OnIrradiatedEvent(time, radsPerSecond);
+        RaiseLocalEvent(uid, msg);
     }
 }

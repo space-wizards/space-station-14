@@ -1,4 +1,4 @@
-using System.Linq;
+using Content.Shared.Radiation.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -21,9 +21,17 @@ public sealed class RadiationRay
     /// </summary>
     public MapId MapId;
     /// <summary>
+    ///     Uid of entity with <see cref="RadiationSourceComponent"/>.
+    /// </summary>
+    public EntityUid SourceUid;
+    /// <summary>
     ///     World coordinates of radiation source.
     /// </summary>
     public Vector2 Source;
+    /// <summary>
+    ///     Uid of entity with <see cref="RadiationReceiverComponent"/>
+    /// </summary>
+    public EntityUid DestinationUid;
     /// <summary>
     ///     World coordinates of radiation receiver.
     /// </summary>
@@ -61,4 +69,15 @@ public sealed class RadiationRay
     /// </summary>
     /// <remarks>Last position may have negative value if ray lost all intensity.</remarks>
     public List<(Vector2, float)> Blockers = new();
+
+    public RadiationRay(MapId mapId, EntityUid sourceUid, Vector2 source,
+        EntityUid destinationUid, Vector2 destination, float rads)
+    {
+        MapId = mapId;
+        SourceUid = sourceUid;
+        Source = source;
+        DestinationUid = destinationUid;
+        Destination = destination;
+        Rads = rads;
+    }
 }
