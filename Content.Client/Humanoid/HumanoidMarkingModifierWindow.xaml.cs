@@ -110,9 +110,12 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
                 OnStateChanged!();
             };
 
+            var lineEditBox = new BoxContainer();
+            lineEditBox.AddChild(new Label { Text = "Prototype id: "});
             _lineEdit = new();
             _lineEdit.OnTextEntered += args => OnStateChanged!();
-            _infoBox.AddChild(_lineEdit);
+            lineEditBox.AddChild(_lineEdit);
+            _infoBox.AddChild(lineEditBox);
 
             _colorSliders = new();
             _colorSliders.OnColorChanged += color => OnStateChanged!();
