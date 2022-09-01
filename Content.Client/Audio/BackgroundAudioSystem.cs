@@ -32,11 +32,14 @@ namespace Content.Client.Audio
         [Dependency] private readonly ClientGameTicker _gameTicker = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
 
-        private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
+        private const float AmbientVolume = -10f;
+        private const float AmbientVolumeQuiet = -30f;
+
+        private readonly AudioParams _ambientParams = new(AmbientVolume, 1, "Master", 0, 0, 0, true, 0f);
         private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
-        private IPlayingAudioStream? _ambientStream;
-        private IPlayingAudioStream? _lobbyStream;
+        private AudioSystem.PlayingStream? _ambientStream;
+        private AudioSystem.PlayingStream? _lobbyStream;
 
         /// <summary>
         /// What is currently playing.
@@ -51,6 +54,20 @@ namespace Content.Client.Audio
 
         private SoundCollectionPrototype _spaceAmbience = default!;
         private SoundCollectionPrototype _stationAmbience = default!;
+
+        // TODO continue background music when transferring between space and station
+
+        private float _transitionVolume = AmbientVolume;
+
+        private int _transitionTime = 1500;
+        private TransitionState _transitioning = TransitionState.None;
+
+        private enum TransitionState
+        {
+            None,
+            In,
+            Out,
+        }
 
         public override void Initialize()
         {
@@ -118,6 +135,39 @@ namespace Content.Client.Audio
             EndLobbyMusic();
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            if (!_timing.InSimulation)
+                return;
+
+            switch (_transitioning)
+            {
+                case TransitionState.None:
+                    return;
+                case TransitionState.In:
+                    _transitionVolume += frameTime * 0.25f;
+                    break;
+                case TransitionState.Out:
+                    _transitionVolume -= frameTime * 0.25f;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (_transitioning == TransitionState.Out && _transitionVolume < AmbientVolumeQuiet)
+                _transitioning = TransitionState.None;
+            if (_transitioning == TransitionState.In && _transitionVolume >= AmbientVolume)
+            {
+                _transitioning = TransitionState.None;
+                _transitionVolume = AmbientVolume;
+            }
+
+            if (_ambientStream != null)
+                _ambientStream.Source.SetVolume(_transitionVolume);
+        }
+
         private void CheckAmbience(TransformComponent xform)
         {
             if (xform.GridUid != null)
@@ -148,11 +198,13 @@ namespace Content.Client.Audio
             _timerCancelTokenSource.Cancel();
             _currentCollection = newAmbience;
             _timerCancelTokenSource = new();
-            Timer.Spawn(1500, () =>
+            _transitionVolume = AmbientVolume;
+            _transitioning = TransitionState.Out;
+            Timer.Spawn(_playingCollection != null ? _transitionTime : 1, () =>
             {
+                _transitioning = TransitionState.In;
                 // If we traverse a few times then don't interrupt an existing song.
                 if (_playingCollection == _currentCollection) return;
-                EndAmbience();
                 StartAmbience();
             }, _timerCancelTokenSource.Token);
         }
@@ -213,7 +265,11 @@ namespace Content.Client.Audio
                 return;
             _playingCollection = _currentCollection;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
-            _ambientStream = _audioSystem.PlayGlobal(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
+            if (_audioSystem.PlayGlobal(file, Filter.Local(),
+                _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)))
+                as AudioSystem.PlayingStream is not { } playingStream)
+                return;
+            _ambientStream = playingStream;
         }
 
         private void EndAmbience()
@@ -306,7 +362,9 @@ namespace Content.Client.Audio
             {
                 return;
             }
-            _lobbyStream = _audioSystem.PlayGlobal(file, Filter.Local(), _lobbyParams);
+            if (_audioSystem.PlayGlobal(file, Filter.Local(), _lobbyParams) as AudioSystem.PlayingStream is not {} playingStream)
+                return;
+            _lobbyStream = playingStream;
         }
 
         private void EndLobbyMusic()
