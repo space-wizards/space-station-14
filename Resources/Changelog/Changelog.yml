@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Salvo oxygen tanks now start full, type: Fix}
-  id: 1720
-  time: '2022-06-18T23:20:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Rat Servants are now slightly stronger and slower., type: Tweak}
@@ -2925,3 +2920,8 @@ Entries:
   - {message: More tools are craftable in the autolathe., type: Add}
   id: 2219
   time: '2022-09-01T03:39:33.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Shotguns should now be much more effective in combat., type: Tweak}
+  id: 2220
+  time: '2022-09-01T06:39:11.0000000+00:00'
