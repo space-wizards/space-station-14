@@ -33,7 +33,7 @@ namespace Content.Client.Audio
         [Dependency] private readonly AudioSystem _audioSystem = default!;
 
         private const float AmbientVolume = -10f;
-        private const float AmbientVolumeQuiet = -30f;
+        private const float AmbientVolumeQuiet = -25f;
 
         private readonly AudioParams _ambientParams = new(AmbientVolume, 1, "Master", 0, 0, 0, true, 0f);
         private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
@@ -58,8 +58,10 @@ namespace Content.Client.Audio
         // TODO continue background music when transferring between space and station
 
         private float _transitionVolume = AmbientVolume;
+        private float _transitionFadeTimeSeconds = 5f;
+        private float _transitionFadeTime;
 
-        private int _transitionTime = 1500;
+        private int _transitionTime = 2000;
         private TransitionState _transitioning = TransitionState.None;
 
         private enum TransitionState
@@ -76,6 +78,7 @@ namespace Content.Client.Audio
             _stationAmbience = _prototypeManager.Index<SoundCollectionPrototype>("StationAmbienceBase");
             _spaceAmbience = _prototypeManager.Index<SoundCollectionPrototype>("SpaceAmbienceBase");
             _currentCollection = _stationAmbience;
+            _transitionFadeTime = (AmbientVolume - AmbientVolumeQuiet ) / _transitionFadeTimeSeconds;
 
             // TODO: Ideally audio loading streamed better / we have more robust audio but this is quite annoying
             var cache = IoCManager.Resolve<IResourceCache>();
@@ -147,18 +150,21 @@ namespace Content.Client.Audio
                 case TransitionState.None:
                     return;
                 case TransitionState.In:
-                    _transitionVolume += frameTime * 0.25f;
+                    _transitionVolume += frameTime * _transitionFadeTime;
                     break;
                 case TransitionState.Out:
-                    _transitionVolume -= frameTime * 0.25f;
+                    _transitionVolume -= frameTime * _transitionFadeTime;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
             if (_transitioning == TransitionState.Out && _transitionVolume < AmbientVolumeQuiet)
+            {
                 _transitioning = TransitionState.None;
-            if (_transitioning == TransitionState.In && _transitionVolume >= AmbientVolume)
+                _transitionVolume = AmbientVolumeQuiet;
+            }
+            if (_transitioning == TransitionState.In && _transitionVolume > AmbientVolume)
             {
                 _transitioning = TransitionState.None;
                 _transitionVolume = AmbientVolume;
@@ -198,7 +204,6 @@ namespace Content.Client.Audio
             _timerCancelTokenSource.Cancel();
             _currentCollection = newAmbience;
             _timerCancelTokenSource = new();
-            _transitionVolume = AmbientVolume;
             _transitioning = TransitionState.Out;
             Timer.Spawn(_playingCollection != null ? _transitionTime : 1, () =>
             {
