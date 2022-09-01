@@ -84,7 +84,7 @@ namespace Content.Server.Administration.Systems
                     // Prayer
                     // TODO: add functionality and icons
                     Verb prayerVerb = new();
-                    prayerVerb.Text = Loc.GetString("subtle message");
+                    prayerVerb.Text = Loc.GetString("prayer-verbs-message");
                     prayerVerb.Category = VerbCategory.Admin;
                     // prayerVerb.IconTexture = "/Textures/Interface/gavel.svg.192dpi.png";
                     prayerVerb.Act = () =>
@@ -93,7 +93,6 @@ namespace Content.Server.Administration.Systems
                         {
                             _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, message, popupMessage == "" ? "You hear a voice in your head..." : popupMessage);
                         });
-
                     };
                     prayerVerb.Impact = LogImpact.Low;
                     args.Verbs.Add(prayerVerb);
