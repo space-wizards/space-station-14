@@ -106,7 +106,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Gun
-    fireRate: 8
+    fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
