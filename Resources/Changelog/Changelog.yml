@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Certain station events will no longer be announced., type: Tweak}
-  id: 1719
-  time: '2022-06-18T03:53:02.0000000+00:00'
 - author: themias
   changes:
   - {message: Salvo oxygen tanks now start full, type: Fix}
@@ -2925,3 +2920,8 @@ Entries:
   - {message: Jaws of life can force open powered doors now., type: Add}
   id: 2218
   time: '2022-09-01T03:22:26.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: More tools are craftable in the autolathe., type: Add}
+  id: 2219
+  time: '2022-09-01T03:39:33.0000000+00:00'
