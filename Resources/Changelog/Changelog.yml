@@ -1,16 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: 'Disarm chance now scales with relative health, relative mass, and status
-      effects. It''s now a much, much worse tool to instantly win a fight you''re
-      losing.', type: Tweak}
-  - {message: You now need to use an empty hand to perform disarms., type: Tweak}
-  - {message: 'Purpose-built single-handed melee weapons now have a disarm malus,
-      making them much harder to disarm.', type: Add}
-  id: 1713
-  time: '2022-06-17T05:37:07.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Ported miasma from Nyano MRP., type: Add}
   - {message: Removed the radiation storm event., type: Remove}
   id: 1714
@@ -2929,3 +2919,8 @@ Entries:
   - {message: Radiation hoods are no longer only cosmetic., type: Fix}
   id: 2212
   time: '2022-09-01T02:08:53.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Increased stripping menu height and reordered inventory, type: Tweak}
+  id: 2213
+  time: '2022-09-01T02:21:02.0000000+00:00'
