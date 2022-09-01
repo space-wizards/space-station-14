@@ -1,9 +1,9 @@
-ent-AirlockShuttle = наружный воздушный шлюз
+ent-AirlockShuttle = стыковочный шлюз
     .desc = Необходим для соединения двух космических кораблей вместе.
     .suffix = Стыковочный
-ent-AirlockGlassShuttle = наружный воздушный шлюз
+ent-AirlockGlassShuttle = стыковочный шлюз
     .desc = Необходим для соединения двух космических кораблей вместе.
     .suffix = Стеклянный, Стыковочный
-ent-AirlockShuttleAssembly = external airlock assembly
-    .desc = An incomplete structure necessary for connecting two space craft together.
-    .suffix = Docking
+ent-AirlockShuttleAssembly = каркас стыковочного шлюза
+    .desc = Незавершенная конструкция, необходимая для соединения двух космических кораблей вместе.
+    .suffix = Стыковочный

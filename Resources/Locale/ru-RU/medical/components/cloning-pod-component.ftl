@@ -1,1 +1,1 @@
-cloning-pod-biomass = It currently has [color=red]{ $number }[/color] units of biomass.
+cloning-pod-biomass = Содержит [color=red]{ $number }[/color] единиц биомассы.
