@@ -91,7 +91,11 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
             };
             AddChild(labelBox);
 
-            labelBox.AddChild(new Label { Text = layer.ToString() });
+            labelBox.AddChild(new Label
+            {
+                HorizontalExpand = true,
+                Text = layer.ToString()
+            });
             _enable = new CheckBox
             {
                 Text = "Enable",
