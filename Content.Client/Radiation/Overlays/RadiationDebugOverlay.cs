@@ -105,7 +105,7 @@ public sealed class RadiationDebugOverlay : Overlay
 
         }
 
-        // draw tiles for gridcasts
+        // draw tiles for gridcast
         foreach (var ray in Rays)
         {
             if (ray.Grid == null || !_mapManager.TryGetGrid(ray.Grid, out var grid))
