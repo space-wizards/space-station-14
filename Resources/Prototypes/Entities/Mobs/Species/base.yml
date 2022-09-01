@@ -257,7 +257,7 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
-      - key: enum.HumanoidMarkingModifier.Key
+      - key: enum.HumanoidMarkingModifierKey.Key
         type: HumanoidMarkingModifierBoundUserInterface
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
@@ -377,5 +377,5 @@
       - type: RotationVisualizer
     - type: UserInterface
       interfaces:
-        - key: enum.HumanoidMarkingModifier.Key # sure, this can go here too
+        - key: enum.HumanoidMarkingModifierKey.Key # sure, this can go here too
           type: HumanoidMarkingModifierBoundUserInterface
