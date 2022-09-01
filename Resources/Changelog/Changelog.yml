@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Botany tools now fit on the botany belt., type: Tweak}
-  - {message: Airlock Painters now fit on utility belts., type: Tweak}
-  id: 1715
-  time: '2022-06-18T02:13:29.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: The Rat King and his servants now have an appropriate silly accent.,
@@ -2924,3 +2918,8 @@ Entries:
       in front of it.', type: Tweak}
   id: 2214
   time: '2022-09-01T02:25:05.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Bots can now be stuffed into closets, type: Tweak}
+  id: 2215
+  time: '2022-09-01T02:40:16.0000000+00:00'
