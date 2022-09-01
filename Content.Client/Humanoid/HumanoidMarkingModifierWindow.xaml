@@ -8,9 +8,9 @@
                 <CheckBox Name="MarkingIgnoreSpecies" Text="Ignore Species" Pressed="True" />
             </BoxContainer>
             <Label Text="Base layers" />
-            <Collapsible>
+            <Collapsible Orientation="Vertical" HorizontalExpand="True">
                 <CollapsibleHeading Title="BaseLayers" />
-                <CollapsibleBody>
+                <CollapsibleBody HorizontalExpand="True">
                     <BoxContainer Name="BaseLayersContainer" Orientation="Vertical" HorizontalExpand="True" />
                 </CollapsibleBody>
             </Collapsible>
