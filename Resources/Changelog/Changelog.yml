@@ -1,12 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Repairing yourself now takes 3 times as long as letting someone else
-      do it., type: Tweak}
-  id: 1722
-  time: '2022-06-19T05:50:43.0000000+00:00'
-- author: Rane
-  changes:
   - {message: 'Corpses now take longer to start rotting, but start rotting faster.',
     type: Tweak}
   - {message: Corpses that gib when rotting no longer dump organs everywhere., type: Tweak}
@@ -2923,3 +2917,9 @@ Entries:
   - {message: Fixed metal counter frame deconstruction, type: Fix}
   id: 2221
   time: '2022-09-01T07:21:39.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: 'The syndicate has opened it''s own clothing brand, the operative suit
+      and skirt have been added into the uplink', type: Add}
+  id: 2222
+  time: '2022-09-01T08:29:31.0000000+00:00'
