@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added the remaining botany tools to the NutriVend machine., type: Tweak}
-  id: 1718
-  time: '2022-06-18T03:34:10.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Certain station events will no longer be announced., type: Tweak}
@@ -2925,3 +2920,8 @@ Entries:
   - {message: 'All handguns now fit on your belt slot (waistband right?)', type: Tweak}
   id: 2217
   time: '2022-09-01T03:21:13.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Jaws of life can force open powered doors now., type: Add}
+  id: 2218
+  time: '2022-09-01T03:22:26.0000000+00:00'
