@@ -78,6 +78,8 @@
       - id: ClothingHandsGlovesCombat
       - id: ClothingBeltSyndieHolster
       - id: ClothingMaskGasSyndicate
+      - id: ClothingUniformJumpsuitOperative
+      - id: ClothingUniformJumpskirtOperative
 
 - type: entity
   id: ToolboxGoldFilled
