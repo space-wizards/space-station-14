@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Ported miasma from Nyano MRP., type: Add}
-  - {message: Removed the radiation storm event., type: Remove}
-  id: 1714
-  time: '2022-06-17T07:00:23.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Botany tools now fit on the botany belt., type: Tweak}
@@ -2924,3 +2918,9 @@ Entries:
   - {message: Increased stripping menu height and reordered inventory, type: Tweak}
   id: 2213
   time: '2022-09-01T02:21:02.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Salvages now spawn somewhere near the salvage magnet, rather than directly
+      in front of it.', type: Tweak}
+  id: 2214
+  time: '2022-09-01T02:25:05.0000000+00:00'
