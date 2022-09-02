@@ -50,7 +50,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private EntityUid? _targetStation;
-    private MapId? _targetStationMap;
+
+
 
     private enum WinType
     {
@@ -225,16 +226,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        var grid = data.Grids.FirstOrNull();
-        if (grid == null)
-        {
-            return;
-        }
-
-        // sussy? This will break in the future if stations begin to span multiple maps.
-        // For now, it's not a problem.
-        _targetStationMap = Transform(grid.Value).MapID;
-
         foreach (var nukie in EntityQuery<NukeOperativeComponent>())
         {
             if (!TryComp<ActorComponent>(nukie.Owner, out var actor))
@@ -394,13 +385,25 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             ? Transform(_nukieShuttle!.Value).MapID
             : null;
 
-        // Check if there are nuke operatives still alive on the same map as the shuttle.
+        // sussy? This will break in the future if stations begin to span multiple maps.
+        // For now, it's not a problem.
+        MapId? targetStationMap = null;
+        if (_targetStation != null && TryComp(_targetStation, out StationDataComponent? data))
+        {
+            var grid = data.Grids.FirstOrNull();
+            targetStationMap = grid != null
+                ? Transform(grid.Value).MapID
+                : null;
+        }
+
+        // Check if there are nuke operatives still alive on the same map as the shuttle,
+        // or on the same map as the station.
         // If there are, the round can continue.
         var operatives = EntityQuery<NukeOperativeComponent, MobStateComponent, TransformComponent>(true);
         var operativesAlive = operatives
             .Where(ent =>
                 ent.Item3.MapID == shuttleMapId
-                || ent.Item3.MapID == _targetStationMap)
+                || ent.Item3.MapID == targetStationMap)
             .Any(ent => ent.Item2.CurrentState == DamageState.Alive && ent.Item1.Running);
 
         if (operativesAlive)
