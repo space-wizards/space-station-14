@@ -36,6 +36,8 @@ namespace Content.Shared.Maps
 
         [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
 
+        [DataField("canWirecutter")] public bool CanWirecutter { get; private set; }
+
         /// <summary>
         /// These play when the mob has shoes on.
         /// </summary>

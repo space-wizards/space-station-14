@@ -61,7 +61,7 @@ namespace Content.Server.Zombies
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
         {
-            float baseChance = component.MaxZombieInfectionChance;
+            var baseChance = component.MaxZombieInfectionChance;
 
             if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
                 return baseChance;
@@ -90,7 +90,7 @@ namespace Content.Server.Zombies
             var max = component.MaxZombieInfectionChance;
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            float chance = (max-min) * ((total - items)/total) + min;
+            var chance = (max-min) * ((total - items)/total) + min;
             return chance;
         }
 
@@ -102,7 +102,7 @@ namespace Content.Server.Zombies
             if (!args.HitEntities.Any())
                 return;
 
-            foreach (EntityUid entity in args.HitEntities)
+            foreach (var entity in args.HitEntities)
             {
                 if (args.User == entity)
                     continue;
@@ -131,7 +131,7 @@ namespace Content.Server.Zombies
             }
         }
 
-        public void DoGroan(EntityUid uid, ActiveZombieComponent component)
+        private void DoGroan(EntityUid uid, ActiveZombieComponent component)
         {
             if (component.LastDamageGroanCooldown > 0)
                 return;

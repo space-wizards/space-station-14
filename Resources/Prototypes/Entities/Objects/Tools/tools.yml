@@ -34,6 +34,7 @@
           cutters: Rainbow
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
+  - type: LatticeCutting
 
 - type: entity
   name: screwdriver

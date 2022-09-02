@@ -73,5 +73,16 @@ namespace Content.Shared.Jittering
                     jittering.Frequency = frequency;
             }
         }
+
+        /// <summary>
+        /// For non mobs.
+        /// </summary>
+        public void AddJitter(EntityUid uid, float amplitude = 10f, float frequency = 4f)
+        {
+            var jitter = EnsureComp<JitteringComponent>(uid);
+            jitter.Amplitude = amplitude;
+            jitter.Frequency = frequency;
+            jitter.Dirty();
+        }
     }
 }

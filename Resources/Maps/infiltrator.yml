@@ -4451,10 +4451,6 @@ entities:
   - pos: 3.5,-19.5
     parent: 73
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 531
   type: FoodBoxDonkpocketPizza
   components:

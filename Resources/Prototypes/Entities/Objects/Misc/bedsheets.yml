@@ -12,6 +12,7 @@
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
     netsync: false
+    noRot: true
   - type: Item
     size: 10
   - type: Clothing

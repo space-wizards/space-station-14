@@ -53,7 +53,6 @@ public sealed partial class EnsnareableSystem
     /// <summary>
     /// Used where you want to try to ensnare an entity with the <see cref="EnsnareableComponent"/>
     /// </summary>
-    /// <param name="ensnaringEntity">The entity that will be used to ensnare</param>
     /// <param name="target">The entity that will be ensnared</param>
     /// <param name="component">The ensnaring component</param>
     public void TryEnsnare(EntityUid target, EnsnaringComponent component)
@@ -68,7 +67,7 @@ public sealed partial class EnsnareableSystem
 
         UpdateAlert(ensnareable);
         var ev = new EnsnareEvent(component.WalkSpeed, component.SprintSpeed);
-        RaiseLocalEvent(target, ev, false);
+        RaiseLocalEvent(target, ev);
     }
 
     /// <summary>
@@ -79,7 +78,7 @@ public sealed partial class EnsnareableSystem
     public void TryFree(EntityUid target, EnsnaringComponent component, EntityUid? user = null)
     {
         //Don't do anything if they don't have the ensnareable component.
-        if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
+        if (!HasComp<EnsnareableComponent>(target))
             return;
 
         if (component.CancelToken != null)
@@ -132,7 +131,7 @@ public sealed partial class EnsnareableSystem
 
         UpdateAlert(ensnareable);
         var ev = new EnsnareRemoveEvent();
-        RaiseLocalEvent(component.Owner, ev, false);
+        RaiseLocalEvent(component.Owner, ev);
     }
 
     public void UpdateAlert(EnsnareableComponent component)
