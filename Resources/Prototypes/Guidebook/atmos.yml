@@ -2,9 +2,3 @@
   id: Atmospherics
   name: Atmospherics
   text: "/Server Info/Guidebook/Atmospherics.txt"
-
-- type: guideEntry
-  id: HeatManagement
-  name: Heat Management
-  parent: Atmospherics
-  text: "/Server Info/Guidebook/HeatManagement.txt"

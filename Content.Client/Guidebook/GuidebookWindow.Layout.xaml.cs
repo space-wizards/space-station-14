@@ -151,8 +151,7 @@ public sealed partial class GuidebookWindow
                 control = parentStack.Pop();
                 return;
             }
-            case "embedEntityCaption":
-            case "embedEntity":
+            case var _ when args[0].StartsWith("embedEntity"):
             {
                 if (args.Length != 2 && args.Length != 3 && args.Length != 4)
                 {
@@ -162,7 +161,7 @@ public sealed partial class GuidebookWindow
 
                 var ent = args[1];
                 var scale = args.Length >= 2 ? float.Parse(args[2]) : 1.0f;
-                control = new GuideEntityEmbed(ent, args[0] == "embedEntityCaption")
+                control = new GuideEntityEmbed(ent, args[0].Contains("Caption"), args[0].Contains("Interactive"))
                 {
                     HorizontalAlignment = HAlignment.Center,
                     Scale = new Vector2(scale, scale),

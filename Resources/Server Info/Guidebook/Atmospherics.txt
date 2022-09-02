@@ -1,6 +1,6 @@
 ﻿    Atmospherics setups are a necessity for your long-term comfort but are generally undocumented, resulting in them being a bit tricky to set up. The following attempts to cover the basics.
 
-# Standard Mix
+#Standard Mix
     Breathing pure O2 or pure N2 is generally bad for the health of your crew, and it is recommended to instead aim for a mix of [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color] It's recommended that your gas mixer setup be set to output at least 1000kPa for faster re-pressurization of rooms.
 ?{|:Horizontal:Center
 ?embedEntityCaption:OxygenCanister:2
@@ -20,5 +20,9 @@
 ?|}
     During standard operation, if a vent detects that the outside environment is space, it will automatically cease operation until a minimum pressure is reached to avoid destruction of necessary gasses. This can be fixed by pressurizing the room up to that minimum pressure by refilling it with gas canister (potentially multiple, if the room is of significant size).
 
-# Reference Sheet
-    › Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]
+    Should you encounter a situation where scrubbers aren't cleaning a room fast enough, employ portable scrubbers by dragging them to the affected location and wrenching them down. They work much faster than typical scrubbers and can clean up a room quite quickly. Large spills may require you to employ multiple.
+?{|:Horizontal:Center
+?embedEntityCaption:PortableScrubber:2
+?|}
+#Reference Sheet
+    ›  Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]

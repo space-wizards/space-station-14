@@ -14,6 +14,7 @@
         <ScrollContainer Name="GuideScroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="2">
             <BoxContainer Orientation="Vertical" Name="GuideContainer" Margin="5 5 5 5">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="Select an entry."/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="If you're new, select the topmost entry to get started."/>
             </BoxContainer>
         </ScrollContainer>
     </BoxContainer>

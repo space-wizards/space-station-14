@@ -6,7 +6,10 @@
 # Emergency Treatment
     In the event of a serious emergency, there's a few things you can do to help ensure your long-term survival, including:
 
-    › If actively bleeding out, or simply withing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze to stem bleeding with.
-    › If going blind, carrots are a much easier way to treat the issue than chemistry should they be available.
+    › If entering critical condition, use the epi-pen from your emergency box, it'll make sure you don't end up unable to do anything. Epi-pens can also be used to revive people currently in crit on the floor, and to prolong the amount of time you have to deal with poisons/etc.
+    › Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation.
+    › If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze to stem bleeding with.
+    › In lieu of an actual health analyzer, simply examining yourself and using the detailed examine is a good way to figure out what wounds you have.
+    › If going blind, carrots are another way to treat the issue (as they contain Oculine, the chemistry drug used to treat blindness) should they be available.
     › Well-made meals (cooked food not from a vending machine) is generally much better for your overall health and can help heal smaller wounds more quickly.
-    › Simple bed rest cures the majority of diseases and also allows wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works. Simply sitting down also helps, albeit significantly less.
+    › Simple bed rest cures the majority of diseases and also allows wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works.
