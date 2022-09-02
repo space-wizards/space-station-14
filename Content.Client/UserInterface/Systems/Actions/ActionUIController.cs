@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Actions;
 using Content.Client.DragDrop;
@@ -16,6 +17,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using static Content.Client.Actions.ActionsSystem;
 using static Content.Client.UserInterface.Systems.Actions.Windows.ActionsWindow;
 using static Robust.Client.UserInterface.Control;
@@ -35,13 +37,13 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
     private const int DefaultPageIndex = 1;
     private ActionButtonContainer? _container;
     private readonly List<ActionPage> _pages = new();
-    private int _currentPageIndex;
+    private int _currentPageIndex = DefaultPageIndex;
     private readonly DragDropHelper<ActionButton> _menuDragHelper;
     private readonly TextureRect _dragShadow;
     private ActionsWindow? _window;
 
-    private ActionsBar ActionsBar => UIManager.GetActiveUIWidget<ActionsBar>();
-    private MenuButton ActionButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().ActionButton;
+    private ActionsBar? _actionsBar;
+    private MenuButton? _actionButton;
     private ActionPage CurrentPage => _pages[_currentPageIndex];
 
     public ActionUIController()
@@ -67,12 +69,24 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     public void OnStateEntered(GameplayState state)
     {
-        ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
-        ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-        ActionButton.OnPressed += ActionButtonPressed;
+        DebugTools.Assert(_window == null);
+        _window = UIManager.CreateWindow<ActionsWindow>();
+        _actionButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().ActionButton;
+        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
+        _window.OnClose += () => { _actionButton.Pressed = false; };
+        _window.OnOpen += () => { _actionButton.Pressed = true; };
+        _window.ClearButton.OnPressed += OnClearPressed;
+        _window.SearchBar.OnTextChanged += OnSearchChanged;
+        _window.FilterButton.OnItemSelected += OnFilterSelected;
+        UpdateFilterLabel();
+        SearchAndDisplay();
+
+        _actionsBar = UIManager.GetActiveUIWidget<ActionsBar>();
+        _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
+        _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
+        _actionButton.OnPressed += ActionButtonPressed;
         _dragShadow.Orphan();
         UIManager.PopupRoot.AddChild(_dragShadow);
-        CreateWindow();
 
         var builder = CommandBinds.Builder;
         var hotbarKeys = ContentKeyFunctions.GetHotbarBoundKeys();
@@ -99,6 +113,17 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
             .Register<ActionUIController>();
     }
 
+    public void OnStateExited(GameplayState state)
+    {
+        _window?.DisposeAllChildren();
+        _window = null;
+        _actionsBar!.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
+        _actionsBar!.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
+        _actionButton!.OnPressed -= ActionButtonPressed;
+        _actionButton!.Pressed = false;
+        CommandBinds.Unregister<ActionUIController>();
+    }
+
     private void TriggerAction(int index)
     {
         if (CurrentPage[index] is not { } type)
@@ -123,7 +148,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         var page = _pages[_currentPageIndex];
         _container?.SetActionData(page);
 
-        ActionsBar.PageButtons.Label.Text = $"{_currentPageIndex}";
+        _actionsBar!.PageButtons.Label.Text = $"{_currentPageIndex}";
     }
 
     private void OnLeftArrowPressed(ButtonEventArgs args)
@@ -141,26 +166,10 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         ToggleWindow();
     }
 
-    private void CreateWindow()
-    {
-        _window = UIManager.CreateWindow<ActionsWindow>();
-        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
-        _window.OnClose += OnWindowClosed;
-        _window.OnOpen += OnWindowOpen;
-        _window.ClearButton.OnPressed += OnClearPressed;
-        _window.SearchBar.OnTextChanged += OnSearchChanged;
-        _window.FilterButton.OnItemSelected += OnFilterSelected;
-        UpdateFilterLabel();
-        SearchAndDisplay();
-    }
-
     private void ToggleWindow()
     {
         if (_window == null)
-        {
-            CreateWindow();
             return;
-        }
 
         if (_window.IsOpen)
         {
@@ -305,16 +314,6 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         }
 
         _menuDragHelper.EndDrag();
-    }
-
-    private void OnWindowOpen()
-    {
-        ActionButton.Pressed = true;
-    }
-
-    private void OnWindowClosed()
-    {
-        ActionButton.Pressed = false;
     }
 
     private void OnClearPressed(ButtonEventArgs args)
@@ -542,10 +541,5 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         }
 
         public int Size => _data.Length;
-    }
-
-    public void OnStateExited(GameplayState state)
-    {
-        CommandBinds.Unregister<ActionUIController>();
     }
 }
