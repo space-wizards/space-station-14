@@ -12,10 +12,11 @@
     - node: apcEmpty
       entity: EmptyAPC
       edges:
-        - to: apcOpen
+        - to: apc
           steps:
             - component: ApcElectronics
               name: "APC electronics"
+              doAfter: 2
         - to: start
           completed:
             - !type:GivePrototype
@@ -26,27 +27,16 @@
             - tool: Screwing
               doAfter: 2
 
-    - node: apcOpen
-      entity: OpenAPC
+    - node: apc
+      entity: BaseAPC
       edges:
-        - to: apc
-          steps:
-            - tool: Screwing
-              doAfter: 2
         - to: apcEmpty
           completed:
             - !type:GivePrototype
               prototype: APCElectronics
+              amount: 1
+            - !type:DeleteEntity {}
           steps:
             - tool: Prying
-              doAfter: 2
-              
-
-    - node: apc
-      entity: BaseAPC
-      edges:
-        - to: apcOpen
-          steps:
-            - tool: Screwing
-              doAfter: 2
+              doAfter: 4
 

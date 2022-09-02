@@ -16,6 +16,12 @@ public sealed class ApcComponent : BaseApcNetComponent
     public ApcChargeState LastChargeState;
     public TimeSpan LastChargeStateTime;
 
+    /// <summary>
+    ///     Is the panel open for this entity's APC?
+    /// </summary>
+    [ViewVariables]
+    public bool IsApcOpen { get; set; }
+
     [ViewVariables]
     public ApcExternalPowerState LastExternalState;
     public TimeSpan LastUiUpdate;

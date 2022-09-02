@@ -39,6 +39,8 @@ namespace Content.Server.Power.EntitySystems
             UpdateApcState(uid, component);
         }
 
+        // TODO: Make APC:s need Screwing to update their sprite
+
         private void OnApcInit(EntityUid uid, ApcComponent component, MapInitEvent args)
         {
             UpdateApcState(uid, component);

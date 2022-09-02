@@ -93,7 +93,7 @@
         acts: [ "Destruction" ]
   - type: StationInfiniteBatteryTarget
 
-# APC opened
+# APC opened TODO: Remove this, 
 - type: entity
   id: OpenAPC
   name: Opened APC
