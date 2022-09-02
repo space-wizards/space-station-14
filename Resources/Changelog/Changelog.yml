@@ -1,10 +1,4 @@
 Entries:
-- author: SirDragooon
-  changes:
-  - {message: 'fixes Aloe Cream splitting, no longer turns into Ointment after splitting',
-    type: Fix}
-  id: 1724
-  time: '2022-06-19T11:13:12.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The bag for the China Lake Bundle now has 120 capacity to keep it in
@@ -2912,3 +2906,9 @@ Entries:
   - {message: Broken post lights should no longer show an error, type: Fix}
   id: 2223
   time: '2022-09-01T12:25:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Microwaves now properly heat up solutions. Resume meth production posthaste!,
+    type: Fix}
+  id: 2224
+  time: '2022-09-02T02:13:44.0000000+00:00'
