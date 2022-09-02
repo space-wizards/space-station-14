@@ -88,10 +88,11 @@ namespace Content.Server.Kitchen.EntitySystems
         /// <param name="time">The time on the microwave, in seconds.</param>
         private void AddTemperature(MicrowaveComponent component, float time)
         {
+            var heatToAdd = time * 100;
             foreach (var entity in component.Storage.ContainedEntities)
             {
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                    _temperature.ChangeHeat(entity, time / 10, false, tempComp);
+                    _temperature.ChangeHeat(entity, heatToAdd, false, tempComp);
 
                 if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                     continue;
@@ -100,7 +101,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     if (solution.Temperature > component.TemperatureUpperThreshold)
                         continue;
 
-                    _solutionContainer.AddThermalEnergy(entity, solution, time / 10);
+                    _solutionContainer.AddThermalEnergy(entity, solution, heatToAdd);
                 }
             }
         }
