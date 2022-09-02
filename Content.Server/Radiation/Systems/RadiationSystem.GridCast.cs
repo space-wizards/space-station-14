@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Radiation.Components;
 using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Events;
@@ -20,6 +21,7 @@ public partial class RadiationSystem
         var sources = EntityQuery<RadiationSourceComponent, TransformComponent>().ToArray();
         var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>().ToArray();
         var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
+        var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
 
         // trace all rays from rad source to rad receivers
         var rays = new List<RadiationRay>();
@@ -28,7 +30,7 @@ public partial class RadiationSystem
             foreach (var (_, destTrs) in destinations)
             {
                 var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs,
-                    source.Intensity, source.Slope, blockerQuery);
+                    source.Intensity, source.Slope, blockerQuery, resistanceQuery);
                 if (ray != null)
                     rays.Add(ray);
             }
@@ -53,7 +55,8 @@ public partial class RadiationSystem
     private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs,
         EntityUid destUid, TransformComponent destTrs,
         float incomingRads, float slope,
-        EntityQuery<RadiationBlockerComponent> blockerQuery)
+        EntityQuery<RadiationBlockerComponent> blockerQuery,
+        EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
     {
         // lets first check that source and destination on the same map
         if (sourceTrs.MapID != destTrs.MapID)
@@ -78,7 +81,7 @@ public partial class RadiationSystem
         if (GridcastSimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
             return Gridcast(mapId, sourceTrs.GridUid.Value, sourceUid, destUid,
-                sourceWorld, destWorld, rads);
+                sourceWorld, destWorld, rads, resistanceQuery);
         }
 
         // lets check how many grids are between source and destination
@@ -88,7 +91,7 @@ public partial class RadiationSystem
         var grids = _mapManager.FindGridsIntersecting(mapId, box, true);
 
         // we are only interested in grids that has some radiation blockers
-        var resGrids = grids.Where(grid => _resistancePerTile.ContainsKey(grid.GridEntityId)).ToArray();
+        var resGrids = grids.Where(grid => resistanceQuery.HasComponent(grid.GridEntityId)).ToArray();
         var resGridsCount = resGrids.Length;
 
         if (resGridsCount == 0)
@@ -101,7 +104,7 @@ public partial class RadiationSystem
         {
             // one grid found - use it for gridcast
             return Gridcast(mapId, resGrids[0].GridEntityId, sourceUid, destUid,
-                sourceWorld, destWorld, rads);
+                sourceWorld, destWorld, rads, resistanceQuery);
         }
         else
         {
@@ -112,7 +115,8 @@ public partial class RadiationSystem
     }
 
     private RadiationRay Gridcast(MapId mapId, EntityUid gridUid, EntityUid sourceUid, EntityUid destUid,
-        Vector2 sourceWorld, Vector2 destWorld, float incomingRads)
+        Vector2 sourceWorld, Vector2 destWorld, float incomingRads,
+        EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
     {
         var visitedTiles = new List<(Vector2i, float?)>();
         var radRay = new RadiationRay(mapId, sourceUid,sourceWorld,
@@ -123,8 +127,9 @@ public partial class RadiationSystem
         };
 
         // if grid doesn't have resistance map just apply distance penalty
-        if (!_resistancePerTile.TryGetValue(gridUid, out var resistanceMap))
+        if (!resistanceQuery.TryGetComponent(gridUid, out var resistance))
             return radRay;
+        var resistanceMap = resistance.ResistancePerTile;
 
         // get coordinate of source and destination in grid coordinates
         // todo: entity queries doesn't support interface - use it when IMapGridComponent will be removed

@@ -1,3 +1,4 @@
+using Content.Server.Radiation.Components;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Radiation.Components;
@@ -7,18 +8,12 @@ namespace Content.Server.Radiation.Systems;
 // create and update map of radiation blockers
 public partial class RadiationSystem
 {
-    // dict of grid uid -> grid pos -> resistance value
-    // no float value - no resistance on this tile
-    // if grid has no resistance tile - it should be deleted
-    private readonly Dictionary<EntityUid, Dictionary<Vector2i, float>> _resistancePerTile = new();
-
     private void InitRadBlocking()
     {
         SubscribeLocalEvent<RadiationBlockerComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<RadiationBlockerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RadiationBlockerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<RadiationBlockerComponent, ReAnchorEvent>(OnReAnchor);
-        SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
 
         SubscribeLocalEvent<RadiationBlockerComponent, DoorStateChangedEvent>(OnDoorChanged);
     }
@@ -56,11 +51,6 @@ public partial class RadiationSystem
         RemoveTile(uid, component);
         // and move it to the new one
         AddTile(uid, component);
-    }
-
-    private void OnGridRemoved(GridRemovalEvent ev)
-    {
-        _resistancePerTile.Remove(ev.EntityUid);
     }
 
     private void OnDoorChanged(EntityUid uid, RadiationBlockerComponent component, DoorStateChangedEvent args)
@@ -128,14 +118,11 @@ public partial class RadiationSystem
         component.CurrentPosition = null;
     }
 
-    private void AddToTile(EntityUid gridId, Vector2i tilePos, float radResistance)
+    private void AddToTile(EntityUid gridUid, Vector2i tilePos, float radResistance)
     {
         // get existing rad resistance grid or create it if it doesn't exist
-        if (!_resistancePerTile.ContainsKey(gridId))
-        {
-            _resistancePerTile.Add(gridId, new Dictionary<Vector2i, float>());
-        }
-        var grid = _resistancePerTile[gridId];
+        var resistance = EnsureComp<RadiationGridResistanceComponent>(gridUid);
+        var grid = resistance.ResistancePerTile;
 
         // add to existing cell more rad resistance
         var newResistance = radResistance;
@@ -146,12 +133,12 @@ public partial class RadiationSystem
         grid[tilePos] = newResistance;
     }
 
-    private void RemoveFromTile(EntityUid gridId, Vector2i tilePos, float radResistance)
+    private void RemoveFromTile(EntityUid gridUid, Vector2i tilePos, float radResistance)
     {
         // get grid
-        if (!_resistancePerTile.ContainsKey(gridId))
+        if (!TryComp(gridUid, out RadiationGridResistanceComponent? resistance))
             return;
-        var grid = _resistancePerTile[gridId];
+        var grid = resistance.ResistancePerTile;
 
         // subtract resistance from tile
         if (!grid.TryGetValue(tilePos, out var existingResistance))
@@ -165,7 +152,7 @@ public partial class RadiationSystem
         {
             grid.Remove(tilePos);
             if (grid.Count == 0)
-                _resistancePerTile.Remove(gridId);
+                RemComp(gridUid, resistance);
         }
     }
 }
