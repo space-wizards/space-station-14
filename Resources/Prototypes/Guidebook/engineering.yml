@@ -18,7 +18,7 @@
 
 - type: guideEntry
   id: Fires
-  name: Fires
+  name: Fires & Space
   parent: Atmospherics
   text: "/Server Info/Guidebook/Fires.txt"
 

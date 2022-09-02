@@ -1,0 +1,9 @@
+﻿- type: guideEntry
+  id: Controls
+  name: Controls
+  text: "/Server Info/Guidebook/Controls.txt"
+
+- type: guideEntry
+  id: Roleplaying
+  name: Roleplaying
+  text: "/Server Info/Guidebook/Roleplaying.txt"

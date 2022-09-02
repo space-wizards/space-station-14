@@ -6,4 +6,4 @@
     If you're just here to play, that's great! The [color=#a4885c]Where to start[/color] section of this entry will help you out, if you're looking to do a bit more with the game, you can join our discord and find our github page in the lobby.
 
 #Where to start
-    It's recommended to start with the [color=#a4885c]Controls[/color] guide, and then read the [color=#a4885c]Character Creation[/color] and [color=#a4885c]Jobs[/color] guides. Not all jobs or concepts will have guides yet, and it's strongly encouraged to help us write them if you're an experienced player!
+    It's recommended to start with the [color=#a4885c]Controls[/color] guide, and then read the [color=#a4885c]Character Creation[/color], [color=#a4885c]Roleplaying[/color], and [color=#a4885c]Jobs[/color] guides. Not all jobs or concepts will have guides yet, and it's strongly encouraged to help us write them if you're an experienced player!
