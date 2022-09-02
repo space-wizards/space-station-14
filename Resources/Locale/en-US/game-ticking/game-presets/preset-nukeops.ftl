@@ -16,6 +16,7 @@ nukeops-cond-active-on-station = The nuclear bomb was left armed on-station.
 nukeops-cond-active-on-centcom = The nuclear bomb was delivered to Central Command!
 nukeops-cond-disk-on-centcom = The crew escaped with the nuclear authentication disk.
 nukeops-cond-disk-not-on-centcom = The crew left the nuclear authentication disk behind.
+nukeops-cond-all-nukies-dead = The nuclear operatives were abandoned.
 nukeops-cond-all-nukies-dead = All nuclear operatives have died.
 nukeops-cond-some-nukies-dead = Some nuclear operatives died.
 nukeops-cond-no-nukies-dead = No nuclear operatives died.
