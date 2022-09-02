@@ -127,7 +127,7 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
-    capacity: 200
+    capacity: 250
 
 - type: entity
   parent: ClothingBackpackERTLeader

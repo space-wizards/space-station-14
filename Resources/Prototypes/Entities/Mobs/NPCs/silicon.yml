@@ -90,6 +90,9 @@
     context: "human"
   - type: InputMover
   - type: MobMover
+  - type: Body
+    template: BotTemplate
+    preset: BotPreset
 
 - type: entity
   parent: MobSiliconBase

@@ -142,6 +142,24 @@
     Glass: 300
 
 - type: latheRecipe
+  id: TRayScanner
+  icon: Objects/Tools/t-ray.rsi/tray-off.png
+  result: trayScanner
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
+  id: GasAnalyzer
+  icon: Objects/Specific/Atmos/gasanalyzer.rsi/icon.png
+  result: GasAnalyzer
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
   id: AirlockPainter
   icon: /Textures/Objects/Tools/airlock_painter.rsi/airlock_painter.png
   result: AirlockPainter
@@ -149,6 +167,15 @@
   materials:
     Steel: 300
     Plastic: 100
+
+- type: latheRecipe
+  id: UtilityBelt
+  icon: Clothing/Belt/utility.rsi/icon.png
+  result: ClothingBeltUtility
+  completetime: 2
+  materials:
+    Cloth: 100
+    Steel: 50
 
 - type: latheRecipe
   id: HolofanProjector

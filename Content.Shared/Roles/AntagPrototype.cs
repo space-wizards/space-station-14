@@ -8,6 +8,9 @@ namespace Content.Shared.Roles
     [Prototype("antag")]
     public sealed class AntagPrototype : IPrototype
     {
+        private string _name = string.Empty;
+        private string _objective = string.Empty;
+
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
@@ -16,13 +19,21 @@ namespace Content.Shared.Roles
         ///     The name of this antag as displayed to players.
         /// </summary>
         [DataField("name")]
-        public string Name { get; } = string.Empty;
+        public string Name
+        {
+            get => _name;
+            private set => _name = Loc.GetString(value);
+        }
 
         /// <summary>
         ///     The antag's objective, displayed at round-start to the player.
         /// </summary>
         [DataField("objective")]
-        public string Objective { get; private set; } = string.Empty;
+        public string Objective
+        {
+            get => _objective;
+            private set => _objective = Loc.GetString(value);
+        }
 
         /// <summary>
         ///     Whether or not the antag role is one of the bad guys.

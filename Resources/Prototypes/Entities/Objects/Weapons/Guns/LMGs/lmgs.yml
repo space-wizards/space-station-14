@@ -9,6 +9,11 @@
     netsync: false
   - type: Item
     size: 60
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    quickEquip: false
+    slots:
+    - Back
   - type: Gun
     minAngle: 4
     maxAngle: 20
@@ -60,8 +65,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 4
