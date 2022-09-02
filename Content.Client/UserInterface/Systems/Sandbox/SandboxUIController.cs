@@ -1,5 +1,4 @@
-﻿using Content.Client.Administration.Managers;
-using Content.Client.Gameplay;
+﻿using Content.Client.Gameplay;
 using Content.Client.Markers;
 using Content.Client.Sandbox;
 using Content.Client.SubFloor;
@@ -18,15 +17,15 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Sandbox;
 
 // TODO hud refactor should part of this be in engine?
 [UsedImplicitly]
-public sealed class SandboxUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,IOnSystemChanged<SandboxSystem>
+public sealed class SandboxUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<SandboxSystem>
 {
-    [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly ILightManager _light = default!;
@@ -43,12 +42,41 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
     private TileSpawningUIController TileSpawningController => UIManager.GetUIController<TileSpawningUIController>();
     private DecalPlacerUIController DecalPlacerController => UIManager.GetUIController<DecalPlacerUIController>();
 
-    private MenuButton SandboxButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().SandboxButton;
+    private MenuButton? _sandboxButton;
 
     public void OnStateEntered(GameplayState state)
     {
-        SandboxButton.OnPressed += SandboxButtonPressed;
-        CreateWindow();
+        DebugTools.Assert(_window == null);
+        _sandboxButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().SandboxButton;
+        _sandboxButton.OnPressed += SandboxButtonPressed;
+
+        _window = UIManager.CreateWindow<SandboxWindow>();
+        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.Center);
+        _window.ToggleLightButton.Pressed = !_light.Enabled;
+        _window.ToggleFovButton.Pressed = !_eye.CurrentEye.DrawFov;
+        _window.ToggleShadowsButton.Pressed = !_light.DrawShadows;
+        _window.ToggleSubfloorButton.Pressed = _subfloorHide.ShowAll;
+        _window.ShowMarkersButton.Pressed = _marker.MarkersVisible;
+        _window.ShowBbButton.Pressed = (_debugPhysics.Flags & PhysicsDebugFlags.Shapes) != 0x0;
+
+        _window.OnOpen += () => { _sandboxButton!.Pressed = true; };
+        _window.OnClose += () => { _sandboxButton!.Pressed = false; };
+
+        _window.RespawnButton.OnPressed += _ => _sandbox.Respawn();
+        _window.SpawnTilesButton.OnPressed += _ => TileSpawningController.ToggleWindow();
+        _window.SpawnEntitiesButton.OnPressed += _ => EntitySpawningController.ToggleWindow();
+        _window.SpawnDecalsButton.OnPressed += _ => DecalPlacerController.ToggleWindow();
+        _window.GiveFullAccessButton.OnPressed += _ => _sandbox.GiveAdminAccess();
+        _window.GiveAghostButton.OnPressed += _ => _sandbox.GiveAGhost();
+        _window.ToggleLightButton.OnToggled += _ => _sandbox.ToggleLight();
+        _window.ToggleFovButton.OnToggled += _ => _sandbox.ToggleFov();
+        _window.ToggleShadowsButton.OnToggled += _ => _sandbox.ToggleShadows();
+        _window.SuicideButton.OnPressed += _ => _sandbox.Suicide();
+        _window.ToggleSubfloorButton.OnPressed += _ => _sandbox.ToggleSubFloor();
+        _window.ShowMarkersButton.OnPressed += _ => _sandbox.ShowMarkers();
+        _window.ShowBbButton.OnPressed += _ => _sandbox.ShowBb();
+        _window.MachineLinkingButton.OnPressed += _ => _sandbox.MachineLinking();
+
         _input.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
             InputCmdHandler.FromDelegate(_ => EntitySpawningController.ToggleWindow()));
         _input.SetInputCommand(ContentKeyFunctions.OpenSandboxWindow,
@@ -63,18 +91,24 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
             .Register<SandboxSystem>();
     }
 
+    public void OnStateExited(GameplayState state)
+    {
+        _window!.DisposeAllChildren();
+        _window = null;
+        CommandBinds.Unregister<SandboxSystem>();
+
+        _sandboxButton!.Pressed = false;
+        _sandboxButton!.OnPressed -= SandboxButtonPressed;
+    }
+
     public void OnSystemLoaded(SandboxSystem system)
     {
-        _admin.AdminStatusUpdated += CheckStatus;
-        system.SandboxEnabled += CheckStatus;
-        system.SandboxDisabled += CheckStatus;
+        system.SandboxDisabled += CloseAll;
     }
 
     public void OnSystemUnloaded(SandboxSystem system)
     {
-        _admin.AdminStatusUpdated -= CheckStatus;
-        system.SandboxEnabled -= CheckStatus;
-        system.SandboxDisabled -= CheckStatus;
+        system.SandboxDisabled -= CloseAll;
     }
 
     private void SandboxButtonPressed(ButtonEventArgs args)
@@ -82,145 +116,12 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
         ToggleWindow();
     }
 
-    private void CreateWindow()
-    {
-        _window = UIManager.CreateWindow<SandboxWindow>();
-        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.Center);
-        _window.ToggleLightButton.Pressed = !_light.Enabled;
-        _window.ToggleFovButton.Pressed = !_eye.CurrentEye.DrawFov;
-        _window.ToggleShadowsButton.Pressed = !_light.DrawShadows;
-        _window.ToggleSubfloorButton.Pressed = _subfloorHide.ShowAll;
-        _window.ShowMarkersButton.Pressed = _marker.MarkersVisible;
-        _window.ShowBbButton.Pressed = (_debugPhysics.Flags & PhysicsDebugFlags.Shapes) != 0x0;
-
-        _window.OnClose += WindowOnClose;
-
-        _window.RespawnButton.OnPressed += OnRespawnPressed;
-        _window.SpawnTilesButton.OnPressed += OnSpawnTilesClicked;
-        _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesClicked;
-        _window.SpawnDecalsButton.OnPressed += OnSpawnDecalsClicked;
-        _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessClicked;
-        _window.GiveAghostButton.OnPressed += OnGiveAghostClicked;
-        _window.ToggleLightButton.OnToggled += OnToggleLightClicked;
-        _window.ToggleFovButton.OnToggled += OnToggleFovClicked;
-        _window.ToggleShadowsButton.OnToggled += OnToggleShadowsClicked;
-        _window.SuicideButton.OnPressed += OnSuicideClicked;
-        _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorClicked;
-        _window.ShowMarkersButton.OnPressed += OnShowMarkersClicked;
-        _window.ShowBbButton.OnPressed += OnShowBbClicked;
-        _window.MachineLinkingButton.OnPressed += OnMachineLinkingClicked;
-
-    }
-
-
-    private void OpenWindow()
-    {
-        if (_window == null)
-        {
-           CreateWindow();
-        }
-        _window!.Open();
-        SandboxButton.Pressed = true;
-    }
-
-    private void CloseWindow()
-    {
-        _window?.Close();
-        SandboxButton.Pressed = false;
-    }
-
-    private void CheckStatus()
-    {
-        if (!CanSandbox())
-            CloseAll();
-    }
-
     private void CloseAll()
     {
-        CloseWindow();
+        _window?.Close();
         EntitySpawningController.CloseWindow();
         TileSpawningController.CloseWindow();
         DecalPlacerController.CloseWindow();
-    }
-
-    private bool CanSandbox()
-    {
-        return _sandbox.SandboxAllowed || _admin.IsActive();
-    }
-
-    private void WindowOnClose()
-    {
-        SandboxButton.Pressed = false;
-    }
-
-    private void OnRespawnPressed(ButtonEventArgs args)
-    {
-        _sandbox.Respawn();
-    }
-
-    private void OnSpawnEntitiesClicked(ButtonEventArgs args)
-    {
-        EntitySpawningController.ToggleWindow();
-    }
-
-    private void OnSpawnTilesClicked(ButtonEventArgs args)
-    {
-        TileSpawningController.ToggleWindow();
-    }
-
-    private void OnSpawnDecalsClicked(ButtonEventArgs obj)
-    {
-        DecalPlacerController.ToggleWindow();
-    }
-
-    private void OnToggleLightClicked(ButtonEventArgs args)
-    {
-        _sandbox.ToggleLight();
-    }
-
-    private void OnToggleFovClicked(ButtonEventArgs args)
-    {
-        _sandbox.ToggleFov();
-    }
-
-    private void OnToggleShadowsClicked(ButtonEventArgs args)
-    {
-        _sandbox.ToggleShadows();
-    }
-
-    private void OnToggleSubfloorClicked(ButtonEventArgs args)
-    {
-        _sandbox.ToggleSubFloor();
-    }
-
-    private void OnShowMarkersClicked(ButtonEventArgs args)
-    {
-        _sandbox.ShowMarkers();
-    }
-
-    private void OnShowBbClicked(ButtonEventArgs args)
-    {
-        _sandbox.ShowBb();
-    }
-
-    private void OnMachineLinkingClicked(ButtonEventArgs args)
-    {
-        _sandbox.MachineLinking();
-    }
-
-    private void OnGiveAdminAccessClicked(ButtonEventArgs args)
-    {
-        _sandbox.GiveAdminAccess();
-    }
-
-    private void OnGiveAghostClicked(ButtonEventArgs args)
-    {
-        _sandbox.GiveAGhost();
-    }
-
-    private void OnSuicideClicked(ButtonEventArgs args)
-    {
-        _sandbox.Suicide();
     }
 
     private bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -228,17 +129,15 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
         return _sandbox.Copy(session, coords, uid);
     }
 
-    // TODO: These should check for command perms + be reset if the round is over.
     private void ToggleWindow()
     {
-        if (CanSandbox() && _window?.IsOpen != true)
-            OpenWindow();
+        if (_sandbox.SandboxAllowed && _window?.IsOpen != true)
+        {
+            _window!.Open();
+        }
         else
-            CloseWindow();
-    }
-
-    public void OnStateExited(GameplayState state)
-    {
-        CommandBinds.Unregister<SandboxSystem>();
+        {
+            _window?.Close();
+        }
     }
 }

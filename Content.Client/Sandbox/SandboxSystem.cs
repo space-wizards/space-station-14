@@ -16,56 +16,37 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlacementManager _placement = default!;
 
+        private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
-
         public event Action? SandboxEnabled;
         public event Action? SandboxDisabled;
 
         public override void Initialize()
         {
+            _adminManager.AdminStatusUpdated += CheckStatus;
             SubscribeNetworkEvent<MsgSandboxStatus>(OnSandboxStatus);
-            SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         }
 
         private void CheckStatus()
         {
-            if (CanSandbox())
-                Enable();
+            var currentStatus = _sandboxEnabled || _adminManager.IsActive();
+            if (currentStatus == SandboxAllowed)
+                return;
+            SandboxAllowed = currentStatus;
+            if (SandboxAllowed)
+            {
+                SandboxEnabled?.Invoke();
+            }
             else
-                Disable();
-        }
-
-        private bool CanSandbox()
-        {
-            return SandboxAllowed || _adminManager.IsActive();
-        }
-
-        private void Enable()
-        {
-            SandboxEnabled?.Invoke();
-        }
-
-        /// <summary>
-        /// Run when sandbox is disabled
-        /// </summary>
-        private void Disable()
-        {
-            SandboxDisabled?.Invoke();
-        }
-
-        private void OnRoundRestart(RoundRestartCleanupEvent ev)
-        {
-            // Go through and cleanup windows (even if they remain adminned better to just shut them).
-            Disable();
-
-            if (CanSandbox())
-                Enable();
+            {
+                SandboxDisabled?.Invoke();
+            }
         }
 
         public override void Shutdown()
         {
-            base.Shutdown();
             _adminManager.AdminStatusUpdated -= CheckStatus;
+            base.Shutdown();
         }
 
         private void OnSandboxStatus(MsgSandboxStatus ev)
@@ -73,14 +54,10 @@ namespace Content.Client.Sandbox
             SetAllowed(ev.SandboxAllowed);
         }
 
-        private void SetAllowed(bool newAllowed)
+        private void SetAllowed(bool sandboxEnabled)
         {
-            if (newAllowed == SandboxAllowed)
-                return;
-
-            SandboxAllowed = newAllowed;
-            if (!CanSandbox())
-                Disable();
+            _sandboxEnabled = sandboxEnabled;
+            CheckStatus();
         }
 
         public void Respawn()
@@ -105,7 +82,7 @@ namespace Content.Client.Sandbox
 
         public bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!CanSandbox())
+            if (!SandboxAllowed)
                 return false;
 
             // Try copy entity.
