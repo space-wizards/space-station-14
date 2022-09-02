@@ -1,19 +1,23 @@
-using Content.Client.Weapons.Ranged.Systems;
+using Content.Server.Administration;
+using Content.Server.Weapon.Ranged.Systems;
+using Content.Shared.Administration;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Console;
 
-namespace Content.Client.Weapons.Ranged;
+namespace Content.Server.Weapons.Ranged.Commands;
 
+[AdminCommand(AdminFlags.Fun)]
 public sealed class TetherGunCommand : IConsoleCommand
 {
-    public string Command => "tethergun";
+    public string Command => SharedTetherGunSystem.CommandName;
     public string Description => "Allows you to drag mobs around with your mouse.";
     public string Help => $"{Command}";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TetherGunSystem>();
-        system.Enabled ^= true;
+        system.Toggle(shell.Player);
 
-        if (system.Enabled)
+        if (system.IsEnabled(shell.Player))
             shell.WriteLine("Tether gun toggled on");
         else
             shell.WriteLine("Tether gun toggled off");

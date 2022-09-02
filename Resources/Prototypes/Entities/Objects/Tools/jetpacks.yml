@@ -166,8 +166,7 @@
       sprite: Objects/Tanks/Jetpacks/mini.rsi
       slots:
         - Back
-    - type: Item
-      size: 50
+        - suitStorage
 
 # Filled mini
 - type: entity

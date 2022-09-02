@@ -98,6 +98,11 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.MoveRight);
             AddButton(EngineKeyFunctions.Walk);
 
+            AddHeader("ui-options-header-camera");
+            AddButton(EngineKeyFunctions.CameraRotateLeft);
+            AddButton(EngineKeyFunctions.CameraRotateRight);
+            AddButton(EngineKeyFunctions.CameraReset);
+
             AddHeader("ui-options-header-interaction-basic");
             AddButton(EngineKeyFunctions.Use);
             AddButton(ContentKeyFunctions.UseItemInHand);

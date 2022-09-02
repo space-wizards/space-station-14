@@ -1,5 +1,7 @@
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.Tools.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
@@ -13,6 +15,7 @@ namespace Content.Server.Doors.Systems
     public sealed class AirlockSystem : SharedAirlockSystem
     {
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
 
         public override void Initialize()
         {
@@ -23,6 +26,7 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
             SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
+            SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
         }
 
@@ -132,6 +136,12 @@ namespace Content.Server.Doors.Systems
             }
         }
 
+        private void OnGetPryMod(EntityUid uid, AirlockComponent component, DoorGetPryTimeModifierEvent args)
+        {
+            if (_power.IsPowered(uid))
+                args.PryTimeModifier *= component.PoweredPryModifier;
+        }
+
         private void OnDoorPry(EntityUid uid, AirlockComponent component, BeforeDoorPryEvent args)
         {
             if (component.IsBolted())
@@ -141,6 +151,8 @@ namespace Content.Server.Doors.Systems
             }
             if (component.IsPowered())
             {
+                if (HasComp<ToolForcePoweredComponent>(args.Tool))
+                    return;
                 component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
                 args.Cancel();
             }

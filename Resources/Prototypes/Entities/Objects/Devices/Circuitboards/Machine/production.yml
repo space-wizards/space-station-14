@@ -260,6 +260,31 @@
         Glass: 1
 
 - type: entity
+  id: BiomassReclaimerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: biomass reclaimer machine board
+  description: A machine printed circuit board for a biomass reclaimer
+  components:
+    - type: MachineBoard
+      prototype: BiomassReclaimer
+      requirements:
+        Laser: 1
+        Manipulator: 1
+      tagRequirements:
+        Pipe:
+          Amount: 1
+          DefaultPrototype: GasPipeStraight
+          ExamineName: pipe
+        BorgArm:
+          Amount: 3
+          DefaultPrototype: LeftArmBorg
+          ExamineName: borg arm
+        Knife:
+          Amount: 3
+          DefaultPrototype: KitchenKnife
+          ExamineName: knife
+
+- type: entity
   id: HydroponicsTrayMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: hydroponics tray machine board

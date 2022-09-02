@@ -37,6 +37,7 @@ namespace Content.Server.Salvage
         private static readonly TimeSpan HoldTime = TimeSpan.FromMinutes(4);
         private static readonly TimeSpan DetachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan CooldownTime = TimeSpan.FromMinutes(1);
+        private static readonly int SalvageLocationPlaceAttempts = 16;
 
         // TODO: This is probably not compatible with multi-station
         private readonly Dictionary<GridId, SalvageGridState> _salvageGridStates = new();
@@ -239,7 +240,6 @@ namespace Content.Server.Salvage
         private bool SpawnSalvage(SalvageMagnetComponent component)
         {
             TryGetSalvagePlacementLocation(component, out var spl, out var spAngle);
-            SalvageMapPrototype? map = null;
 
             var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);
             List<SalvageMapPrototype> allSalvageMaps;
@@ -250,28 +250,40 @@ namespace Content.Server.Salvage
             else
             {
                 allSalvageMaps = new();
-                if (_prototypeManager.TryIndex<SalvageMapPrototype>(forcedSalvage, out map))
+                if (_prototypeManager.TryIndex<SalvageMapPrototype>(forcedSalvage, out var forcedMap))
                 {
-                    allSalvageMaps.Add(map);
+                    allSalvageMaps.Add(forcedMap);
                 }
                 else
                 {
                     Logger.ErrorS("c.s.salvage", $"Unable to get forced salvage map prototype {forcedSalvage}");
                 }
             }
+
+            SalvageMapPrototype? map = null;
+            Vector2 spawnLocation = Vector2.Zero;
+
             for (var i = 0; i < allSalvageMaps.Count; i++)
             {
-                map = _random.PickAndTake(allSalvageMaps);
-                var box2 = Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f));
-                var box2rot = new Box2Rotated(box2, spAngle, spl.Position);
-
-                // This doesn't stop it from spawning on top of random things in space
-                // Might be better like this, ghosts could stop it before
-                if (_mapManager.FindGridsIntersecting(spl.MapId, box2rot).Any())
+                SalvageMapPrototype attemptedMap = _random.PickAndTake(allSalvageMaps);
+                for (var attempt = 0; attempt < SalvageLocationPlaceAttempts; attempt++)
                 {
-                    map = null;
+                    var randomRadius = _random.NextFloat(component.OffsetRadiusMin, component.OffsetRadiusMax);
+                    var randomOffset = _random.NextAngle().ToWorldVec() * randomRadius;
+                    spawnLocation = spl.Position + randomOffset;
+
+                    var box2 = Box2.CenteredAround(spawnLocation + attemptedMap.Bounds.Center, attemptedMap.Bounds.Size);
+                    var box2rot = new Box2Rotated(box2, spAngle, spawnLocation);
+
+                    // This doesn't stop it from spawning on top of random things in space
+                    // Might be better like this, ghosts could stop it before
+                    if (!_mapManager.FindGridsIntersecting(spl.MapId, box2rot).Any())
+                    {
+                        map = attemptedMap;
+                        break;
+                    }
                 }
-                else
+                if (map != null)
                 {
                     break;
                 }
@@ -285,7 +297,7 @@ namespace Content.Server.Salvage
 
             var opts = new MapLoadOptions
             {
-                Offset = spl.Position
+                Offset = spawnLocation
             };
 
             var (_, salvageEntityId) = _mapLoader.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);

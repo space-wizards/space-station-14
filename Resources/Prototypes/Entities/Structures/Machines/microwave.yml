@@ -42,6 +42,7 @@
     netsync: false
     sprite: Structures/Machines/microwave.rsi
     drawdepth: SmallObjects
+    snapCardinals: true
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
