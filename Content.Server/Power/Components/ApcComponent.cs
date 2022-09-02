@@ -44,4 +44,11 @@ public sealed class ApcComponent : BaseApcNetComponent
     {
         apcNet.RemoveApc(this);
     }
+
+    [DataField("screwdriverOpenSound")]
+    public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
+
+    [DataField("screwdriverCloseSound")]
+    public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
+
 }

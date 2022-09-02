@@ -1,6 +1,7 @@
 using Content.Shared.APC;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -34,8 +35,12 @@ namespace Content.Client.Power.APC
             sprite.LayerMapSet(Layers.Lighting, sprite.AddLayerState("apco1-3"));
             sprite.LayerSetShader(Layers.Lighting, "unshaded");
 
+            sprite.LayerMapSet(Layers.Panel, sprite.AddLayerState("apc0"));
+            sprite.LayerSetShader(Layers.Panel, "unshaded");
+
             sprite.LayerMapSet(Layers.Environment, sprite.AddLayerState("apco2-3"));
             sprite.LayerSetShader(Layers.Environment, "unshaded");
+
         }
 
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
@@ -45,9 +50,21 @@ namespace Content.Client.Power.APC
 
             var ent = IoCManager.Resolve<IEntityManager>();
             var sprite = ent.GetComponent<ISpriteComponent>(component.Owner);
-            if (component.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var state))
+            if (component.TryGetData<ApcPanelState>(ApcVisuals.PanelState, out var stateP))
             {
-                switch (state)
+                switch (stateP)
+                {
+                    case ApcPanelState.Closed:
+                        sprite.LayerSetState(Layers.Panel, "apc0");
+                        break;
+                    case ApcPanelState.Open:
+                        sprite.LayerSetState(Layers.Panel, "apcframe");
+                        break;
+                }
+            }
+            if (component.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var stateC))
+            {
+                switch (stateC)
                 {
                     case ApcChargeState.Lack:
                         sprite.LayerSetState(Layers.ChargeState, "apco3-0");
@@ -65,7 +82,7 @@ namespace Content.Client.Power.APC
 
                 if (ent.TryGetComponent(component.Owner, out SharedPointLightComponent? light))
                 {
-                    light.Color = state switch
+                    light.Color = stateC switch
                     {
                         ApcChargeState.Lack => LackColor,
                         ApcChargeState.Charging => ChargingColor,
@@ -83,6 +100,7 @@ namespace Content.Client.Power.APC
 
         enum Layers : byte
         {
+            Panel,
             ChargeState,
             Lock,
             Equipment,
