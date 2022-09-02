@@ -23,10 +23,13 @@ using Robust.Shared.Utility;
 using Content.Server.Traitor;
 using Content.Shared.MobState.Components;
 using System.Data;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Content.Shared.Chat;
 using Content.Shared.Nuke;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
@@ -84,6 +87,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         NukeActiveAtCentCom,
         NukeDiskOnCentCom,
         NukeDiskNotOnCentCom,
+        NukiesAbandoned,
         AllNukiesDead,
         SomeNukiesAlive,
         AllNukiesAlive
@@ -161,7 +165,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (ev.OwningStation != null)
         {
-            if (ev.OwningStation == _outpostGrid)
+            if (ev.OwningStation == _nukieOutpost)
             {
                 _winType = WinType.CrewMajor;
                 _winConditions.Add(WinCondition.NukeExplodedOnNukieOutpost);
@@ -220,14 +224,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        foreach (var (mind, _) in _aliveNukeops)
+        foreach (var nukie in EntityQuery<NukeOperativeComponent>())
         {
-            if (mind.Session == null)
+            if (!TryComp<ActorComponent>(nukie.Owner, out var actor))
             {
                 continue;
             }
 
-            _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
+            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
         }
     }
 
@@ -277,6 +281,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
         }
 
+        /*
         // If all nuke ops were alive at the end of the round,
         // the nuke ops win. This is to prevent people from
         // running away the moment nuke ops appear.
@@ -286,6 +291,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _winConditions.Add(WinCondition.AllNukiesAlive);
             return;
         }
+        */
 
         _winConditions.Add(WinCondition.SomeNukiesAlive);
 
@@ -342,6 +348,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 WinCondition.NukeActiveAtCentCom => Loc.GetString("nukeops-cond-active-on-centcom"),
                 WinCondition.NukeDiskOnCentCom => Loc.GetString("nukeops-cond-disk-on-centcom"),
                 WinCondition.NukeDiskNotOnCentCom => Loc.GetString("nukeops-cond-disk-not-on-centcom"),
+                WinCondition.NukiesAbandoned => Loc.GetString("nukeops-cond-nukies-abandoned"),
                 WinCondition.AllNukiesDead => Loc.GetString("nukeops-cond-all-nukies-dead"),
                 WinCondition.SomeNukiesAlive => Loc.GetString("nukeops-cond-some-nukies-dead"),
                 WinCondition.AllNukiesAlive => Loc.GetString("nukeops-cond-no-nukies-dead"),
@@ -377,6 +384,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (operativesAlive)
             return; // There are living operatives than can access the shuttle.
 
+        _winType = WinType.CrewMajor;
+
         // Check that there are spawns available and that they can access the shuttle.
         var spawnsAvailable = EntityQuery<NukeOperativeSpawnerComponent>(true).Any();
         if (spawnsAvailable && shuttleMapId == _nukiePlanet)
@@ -384,6 +393,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         // TODO: Win type goes here, major, nukies dead/abandoned
         // The shuttle is inaccessible to both living nuke operatives and yet to spawn nuke operatives.
+        if (spawnsAvailable)
+        {
+            _winConditions.Add(WinCondition.NukiesAbandoned);
+        }
+        else
+        {
+            _winConditions.Add(WinCondition.AllNukiesDead);
+        }
+
         _roundEndSystem.EndRound();
     }
 
