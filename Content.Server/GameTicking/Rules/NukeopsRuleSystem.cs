@@ -393,8 +393,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             ? Transform(_nukieShuttle!.Value).MapID
             : null;
 
-        // sussy? This will break in the future if stations begin to span multiple maps.
-        // For now, it's not a problem.
         MapId? targetStationMap = null;
         if (_targetStation != null && TryComp(_targetStation, out StationDataComponent? data))
         {
