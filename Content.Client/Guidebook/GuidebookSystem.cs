@@ -76,7 +76,7 @@ public sealed class GuidebookSystem : EntitySystem
                 _rgbLightControllerSystem.SetLayers(uid, layers, rgb);
             },
             Text = "Disco Monkey",
-            Priority = -1,
+            Priority = 0,
         });
     }
 
