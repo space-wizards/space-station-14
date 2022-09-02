@@ -49,9 +49,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
-    private EntityUid? _targetStation;
-
-
 
     private enum WinType
     {
@@ -102,6 +99,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private MapId? _nukiePlanet;
     private EntityUid? _nukieOutpost;
     private EntityUid? _nukieShuttle;
+    private EntityUid? _targetStation;
 
     public override string Prototype => "Nukeops";
 
@@ -574,7 +572,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (_nukeopsRuleConfig.GreetSound != null)
             _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession), AudioParams.Default);
 
-        if (_targetStation != null)
+        if (_targetStation != null && !string.IsNullOrEmpty(MetaData(_targetStation.Value).EntityName))
             _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
     }
 
