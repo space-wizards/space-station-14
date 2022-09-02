@@ -383,11 +383,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             ? Transform(_nukieShuttle!.Value).MapID
             : null;
 
+        var stationGrids = new HashSet<EntityUid>();
+        if (_targetStation != null && TryComp(_targetStation.Value, out StationDataComponent? data))
+        {
+            stationGrids.UnionWith(data.Grids);
+        }
+
         // Check if there are nuke operatives still alive on the same map as the shuttle.
         // If there are, the round can continue.
         var operatives = EntityQuery<NukeOperativeComponent, MobStateComponent, TransformComponent>(true);
         var operativesAlive = operatives
-            .Where(ent => ent.Item3.MapID == shuttleMapId)
+            .Where(ent => ent.Item3.MapID == shuttleMapId
+                    || ent.Item3.GridUid != null && stationGrids.Contains(ent.Item3.GridUid.Value))
             .Any(ent => ent.Item2.CurrentState == DamageState.Alive && ent.Item1.Running);
 
         if (operativesAlive)
