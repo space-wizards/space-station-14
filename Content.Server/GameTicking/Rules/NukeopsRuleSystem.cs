@@ -94,7 +94,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private WinType _winType = WinType.Neutral;
     private List<WinCondition> _winConditions = new ();
-    private bool _opsWon;
 
     private MapId? _nukiePlanet;
     private EntityUid? _nukieOutpost;
@@ -784,7 +783,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public override void Started()
     {
-        _opsWon = false;
         _winType = WinType.Neutral;
         _winConditions.Clear();
         _nukieOutpost = null;
