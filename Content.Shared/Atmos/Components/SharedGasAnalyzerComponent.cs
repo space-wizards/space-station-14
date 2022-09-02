@@ -80,12 +80,6 @@ namespace Content.Shared.Atmos.Components
         }
 
         [Serializable, NetSerializable]
-        public sealed class GasAnalyzerRefreshMessage : BoundUserInterfaceMessage
-        {
-            public GasAnalyzerRefreshMessage() {}
-        }
-
-        [Serializable, NetSerializable]
         public sealed class GasAnalyzerDisableMessage : BoundUserInterfaceMessage
         {
             public GasAnalyzerDisableMessage() {}

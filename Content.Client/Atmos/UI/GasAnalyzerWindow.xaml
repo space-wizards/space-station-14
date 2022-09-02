@@ -2,12 +2,8 @@
                MinSize="300 420"
                SetSize="300 420" Title="{Loc 'gas-analyzer-window-name'}">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
-        <BoxContainer Name="CTopBox" Orientation="Horizontal">
-            <Control HorizontalExpand="True"/>
-            <Button HorizontalAlignment="Right" Name="RefreshButton" Text="{Loc 'gas-analyzer-window-refresh-button'}"/>
-        </BoxContainer>
+        <BoxContainer Name="CTopBox" Orientation="Horizontal"/>
         <!-- Gas Mix Data, Populated by function -->
-        <TabContainer Name="CTabContainer" VerticalExpand="True" Margin="0 0 0 2">
-        </TabContainer>
+        <TabContainer Name="CTabContainer" VerticalExpand="True" Margin="1 1 1 2"/>
     </BoxContainer>
 </DefaultWindow>

@@ -17,7 +17,6 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasAnalyzerWindow(this);
             _window.OnClose += OnClose;
-            _window.RefreshData += Refresh;
             _window.OpenCentered();
         }
 
@@ -37,14 +36,6 @@ namespace Content.Client.Atmos.UI
         {
             SendMessage(new GasAnalyzerDisableMessage());
             Close();
-        }
-
-        /// <summary>
-        /// Request new data from the server
-        /// </summary>
-        private void Refresh()
-        {
-            SendMessage(new GasAnalyzerRefreshMessage());
         }
 
         protected override void Dispose(bool disposing)

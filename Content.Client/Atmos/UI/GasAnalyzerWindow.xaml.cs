@@ -14,10 +14,7 @@ namespace Content.Client.Atmos.UI
     public sealed partial class GasAnalyzerWindow : DefaultWindow
     {
         public GasAnalyzerBoundUserInterface Owner { get; }
-        private TabContainer _tabContainer => CTabContainer;
-        private Button _refreshButton => RefreshButton;
-        private BoxContainer _topBox => CTopBox;
-        public event Action? RefreshData;
+
         private int _activeTab;
 
         public GasAnalyzerWindow(GasAnalyzerBoundUserInterface owner)
@@ -25,8 +22,7 @@ namespace Content.Client.Atmos.UI
             RobustXamlLoader.Load(this);
 
             Owner = owner;
-            _refreshButton.OnPressed += _ => RefreshData?.Invoke();
-            _tabContainer.OnTabChanged += (i => _activeTab = i);
+            CTabContainer.OnTabChanged += (i => _activeTab = i);
         }
 
         public void Populate(GasAnalyzerUserMessage msg)
@@ -35,13 +31,13 @@ namespace Content.Client.Atmos.UI
             if (_activeTab > msg.NodeGasMixes.Length - 1)
             {
                 _activeTab = 0;
-                _tabContainer.CurrentTab = _activeTab;
+                CTabContainer.CurrentTab = _activeTab;
             }
-            _tabContainer.RemoveAllChildren();
+            CTabContainer.RemoveAllChildren();
 
             if (msg.Error != null)
             {
-                _topBox.AddChild(new Label
+                CTopBox.AddChild(new Label
                 {
                     Text = Loc.GetString("gas-analyzer-window-error-text", ("errorText", msg.Error)),
                     FontColorOverride = Color.Red
@@ -51,7 +47,7 @@ namespace Content.Client.Atmos.UI
 
             if (msg.NodeGasMixes.Length == 0)
             {
-                _topBox.AddChild(new Label
+                CTopBox.AddChild(new Label
                 {
                     Text = Loc.GetString("gas-analyzer-window-no-data")
                 });
@@ -63,8 +59,8 @@ namespace Content.Client.Atmos.UI
             {
                 var gasMix = msg.NodeGasMixes[i];
                 var tabScrollContainer = new ScrollContainer() {VerticalExpand = true};
-                _tabContainer.AddChild(tabScrollContainer);
-                _tabContainer.SetTabTitle(i, Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", gasMix.Name)));
+                CTabContainer.AddChild(tabScrollContainer);
+                CTabContainer.SetTabTitle(i, Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", gasMix.Name)));
 
                 var dataContainer = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Vertical, VerticalExpand = true };
                 tabScrollContainer.AddChild(dataContainer);
@@ -145,7 +141,8 @@ namespace Content.Client.Atmos.UI
                 // Separator
                 dataContainer.AddChild(new Control
                 {
-                    MinSize = new Vector2(0, 10)
+                    MinSize = new Vector2(0, 10),
+                    VerticalExpand = true
                 });
 
                 var totalGasAmount = 0f;
@@ -179,7 +176,7 @@ namespace Content.Client.Atmos.UI
                             ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
                         HorizontalExpand = true,
                         SizeFlagsStretchRatio = gas.Amount,
-                        MouseFilter = MouseFilterMode.Pass,
+                        MouseFilter = MouseFilterMode.Stop,
                         PanelOverride = new StyleBoxFlat
                         {
                             BackgroundColor = color,

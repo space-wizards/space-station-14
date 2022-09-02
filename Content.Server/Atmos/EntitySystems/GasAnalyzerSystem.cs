@@ -32,7 +32,6 @@ namespace Content.Server.Atmos.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<GasAnalyzerComponent, GasAnalyzerRefreshMessage>(OnRefreshMessage);
             SubscribeLocalEvent<GasAnalyzerComponent, GasAnalyzerDisableMessage>(OnDisabledMessage);
             SubscribeLocalEvent<GasAnalyzerComponent, ComponentShutdown>(OnComponentShutdown);
             SubscribeLocalEvent<GasAnalyzerComponent, DroppedEvent>(OnDropped);
@@ -103,17 +102,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             // Make sure to remove this analyzer from the update list
             _activeAnalyzers.Remove(uid);
-        }
-
-        /// <summary>
-        /// Fetches new data when a user clicks on the refresh button
-        /// </summary>
-        private void OnRefreshMessage(EntityUid uid, GasAnalyzerComponent component, GasAnalyzerRefreshMessage message)
-        {
-            if (message.Session.AttachedEntity is not {Valid: true})
-                return;
-
-            UpdateAnalyzer(uid, component);
         }
 
         /// <summary>
@@ -188,7 +176,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 // gas analyzed was used on an entity, try to request gas data
                 var ev = new GasAnalyzerScanEvent();
-                RaiseLocalEvent((EntityUid)component.Target, ev, false);
+                //RaiseLocalEvent((EntityUid)component.Target, ev, false);
 
                 if (ev.GasMixtures != null)
                 {
