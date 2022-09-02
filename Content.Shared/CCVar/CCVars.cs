@@ -1092,7 +1092,7 @@ namespace Content.Shared.CCVar
             AutosaveInterval = CVarDef.Create("mapping.autosave_interval", 600f, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Directory in server user data to save to.
+        ///     Directory in server user data to save to. Saves will be inside folders in this directory.
         /// </summary>
         public static readonly CVarDef<string>
             AutosaveDirectory = CVarDef.Create("mapping.autosave_dir", "Autosaves", CVar.SERVERONLY);

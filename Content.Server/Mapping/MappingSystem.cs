@@ -1,9 +1,7 @@
-﻿using System.Globalization;
-using System.IO;
+﻿using System.IO;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Microsoft.Extensions.Configuration;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -28,10 +26,10 @@ public sealed class MappingSystem : EntitySystem
 
     // Not a comp because I don't want to deal with this getting saved onto maps ever
     /// <summary>
-    ///     map id -> next autosave timespan.
+    ///     map id -> next autosave timespan & original filename.
     /// </summary>
     /// <returns></returns>
-    private Dictionary<MapId, TimeSpan> _currentlyAutosaving = new();
+    private Dictionary<MapId, (TimeSpan next, string fileName)> _currentlyAutosaving = new();
 
     private ISawmill _sawmill = default!;
     private bool _autosaveEnabled;
@@ -42,7 +40,7 @@ public sealed class MappingSystem : EntitySystem
 
         _conHost.RegisterCommand("toggleautosave",
             "Toggles autosaving for a map.",
-            "autosave <map>",
+            "autosave <map> <path if enabling>",
             ToggleAutosaveCommand);
 
         _sawmill = Logger.GetSawmill("autosave");
@@ -70,7 +68,7 @@ public sealed class MappingSystem : EntitySystem
         if (!_autosaveEnabled)
             return;
 
-        foreach (var (map, time) in _currentlyAutosaving.ToArray())
+        foreach (var (map, (time, name))in _currentlyAutosaving.ToArray())
         {
             if (_timing.RealTime <= time)
                 continue;
@@ -82,13 +80,12 @@ public sealed class MappingSystem : EntitySystem
                 return;
             }
 
-            var autosavesDir = _cfg.GetCVar(CCVars.AutosaveDirectory);
-            var dir = new ResourcePath(autosavesDir).ToRootedPath();
-            _resMan.UserData.CreateDir(dir);
+            var saveDir = Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name);
+            _resMan.UserData.CreateDir(new ResourcePath(saveDir).ToRootedPath());
 
-            var path = Path.Combine(autosavesDir, $"{DateTime.Now.ToString("yyyy-M-dd_HH.mm.ss")}-AUTO.yml");
-            _currentlyAutosaving[map] = CalculateNextTime();
-            _sawmill.Info($"Autosaving map {map} to {path}. Next save in {ReadableTimeLeft(map)} seconds.");
+            var path = Path.Combine(saveDir, $"{DateTime.Now.ToString("yyyy-M-dd_HH.mm.ss")}-AUTO.yml");
+            _currentlyAutosaving[map] = (CalculateNextTime(), name);
+            _sawmill.Info($"Autosaving map {name} ({map}) to {path}. Next save in {ReadableTimeLeft(map)} seconds.");
             _mapLoader.SaveMap(map, path);
         }
     }
@@ -100,17 +97,17 @@ public sealed class MappingSystem : EntitySystem
 
     private double ReadableTimeLeft(MapId map)
     {
-        return Math.Round(_currentlyAutosaving[map].TotalSeconds - _timing.RealTime.TotalSeconds);
+        return Math.Round(_currentlyAutosaving[map].next.TotalSeconds - _timing.RealTime.TotalSeconds);
     }
 
     #region Public API
 
-    public void ToggleAutosave(MapId map)
+    public void ToggleAutosave(MapId map, string? path=null)
     {
         if (!_autosaveEnabled)
             return;
 
-        if (_currentlyAutosaving.TryAdd(map, CalculateNextTime()))
+        if (path != null && _currentlyAutosaving.TryAdd(map, (CalculateNextTime(), Path.GetFileName(path))))
         {
             if (!_mapManager.MapExists(map) || _mapManager.IsMapInitialized(map))
             {
@@ -119,7 +116,7 @@ public sealed class MappingSystem : EntitySystem
                 return;
             }
 
-            _sawmill.Info($"Started autosaving map {map}. Next save in {ReadableTimeLeft(map)} seconds.");
+            _sawmill.Info($"Started autosaving map {path} ({map}). Next save in {ReadableTimeLeft(map)} seconds.");
         }
         else
         {
@@ -135,7 +132,7 @@ public sealed class MappingSystem : EntitySystem
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
     private void ToggleAutosaveCommand(IConsoleShell shell, string argstr, string[] args)
     {
-        if (args.Length != 1)
+        if (args.Length != 1 && args.Length != 2)
         {
             shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
@@ -147,8 +144,14 @@ public sealed class MappingSystem : EntitySystem
             return;
         }
 
+        string? path = null;
+        if (args.Length == 2)
+        {
+            path = args[1];
+        }
+
         var mapId = new MapId(intMapId);
-        ToggleAutosave(mapId);
+        ToggleAutosave(mapId, path);
     }
 
     #endregion

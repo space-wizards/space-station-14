@@ -90,11 +90,17 @@ namespace Content.Server.Mapping
                 mapId = mapManager.NextMapId();
             }
 
+            string? toLoad = null;
             // either load a map or create a new one.
             if (args.Length <= 1)
+            {
                 shell.ExecuteCommand($"addmap {mapId} false");
+            }
             else
-                shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(args[1])}\" 0 0 0 true");
+            {
+                toLoad = CommandParsing.Escape(args[1]);
+                shell.ExecuteCommand($"loadmap {mapId} \"{toLoad}\" 0 0 0 true");
+            }
 
             // was the map actually created?
             if (!mapManager.MapExists(mapId))
@@ -114,7 +120,7 @@ namespace Content.Server.Mapping
 
             shell.ExecuteCommand("sudo cvar events.enabled false");
             if (cfg.GetCVar(CCVars.AutosaveEnabled))
-                shell.ExecuteCommand($"toggleautosave {mapId}");
+                shell.ExecuteCommand($"toggleautosave {mapId} {toLoad ?? "NEWMAP"}");
             shell.ExecuteCommand($"tp 0 0 {mapId}");
             shell.RemoteExecuteCommand("mappingclientsidesetup");
             mapManager.SetMapPaused(mapId, true);
