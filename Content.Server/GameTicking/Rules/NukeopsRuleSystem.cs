@@ -50,6 +50,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private EntityUid? _targetStation;
+    private MapId? _targetStationMap;
 
     private enum WinType
     {
@@ -219,10 +220,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _targetStation = _stationSystem.Stations.FirstOrNull();
 
-        if (_targetStation == null)
+        if (_targetStation == null || !TryComp(_targetStation.Value, out StationDataComponent? data))
         {
             return;
         }
+
+        var grid = data.Grids.FirstOrNull();
+        if (grid == null)
+        {
+            return;
+        }
+
+        // sussy? This will break in the future if stations begin to span multiple maps.
+        // For now, it's not a problem.
+        _targetStationMap = Transform(grid.Value).MapID;
 
         foreach (var nukie in EntityQuery<NukeOperativeComponent>())
         {
@@ -383,18 +394,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             ? Transform(_nukieShuttle!.Value).MapID
             : null;
 
-        var stationGrids = new HashSet<EntityUid>();
-        if (_targetStation != null && TryComp(_targetStation.Value, out StationDataComponent? data))
-        {
-            stationGrids.UnionWith(data.Grids);
-        }
-
         // Check if there are nuke operatives still alive on the same map as the shuttle.
         // If there are, the round can continue.
         var operatives = EntityQuery<NukeOperativeComponent, MobStateComponent, TransformComponent>(true);
         var operativesAlive = operatives
-            .Where(ent => ent.Item3.MapID == shuttleMapId
-                    || ent.Item3.GridUid != null && stationGrids.Contains(ent.Item3.GridUid.Value))
+            .Where(ent =>
+                ent.Item3.MapID == shuttleMapId
+                || ent.Item3.MapID == _targetStationMap)
             .Any(ent => ent.Item2.CurrentState == DamageState.Alive && ent.Item1.Running);
 
         if (operativesAlive)
