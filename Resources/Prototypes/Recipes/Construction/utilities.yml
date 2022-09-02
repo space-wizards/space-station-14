@@ -5,21 +5,21 @@
   graph: SurveillanceCamera
   startNode: start
   targetNode: camera
-  category: Utilities
+  category: construction-category-utilities
   description: "Surveillance camera. It's watching. Soon."
   icon:
     sprite: Structures/Wallmounts/camera.rsi
     state: camera
   objectType: Structure
   placementMode: SnapgridCenter
-  
+
 - type: construction
   name: telescreen
   id: WallmountTelescreen
   graph: WallmountTelescreen
   startNode: start
   targetNode: Telescreen
-  category: Utilities
+  category: construction-category-utilities
   description: "A surveillance camera monitor for the wall."
   icon:
     sprite: Structures/Machines/computers.rsi
@@ -34,7 +34,7 @@
   graph: APC
   startNode: start
   targetNode: apc
-  category: Utilities
+  category: construction-category-utilities
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:
     sprite: Structures/Power/apc.rsi
@@ -49,7 +49,7 @@
   graph: SolarPanel
   startNode: start
   targetNode: solarpanel
-  category: Utilities
+  category: construction-category-utilities
   description: "Can be turned into a solar panel or solar tracker."
   icon:
     sprite: Structures/Power/Generation/solar_panel.rsi
@@ -66,7 +66,7 @@
   graph: CableTerminal
   startNode: start
   targetNode: cable_terminal
-  category: Utilities
+  category: construction-category-utilities
   description: "Input of devices such as the SMES. The red cables needs to face the device."
   icon:
     sprite: Structures/Power/cable_terminal.rsi
@@ -81,8 +81,8 @@
   graph: WallmountSubstation
   startNode: start
   targetNode: substation
-  category: Utilities
-  description: "A wallmount substation for compact spaces. Make sure to place cable under before building the wall."
+  category: construction-category-utilities
+  description: "A wallmount substation for compact spaces. Make sure to place cable underneath before building the wall."
   icon:
     sprite: Structures/Power/substation.rsi
     state: substation_wall
@@ -96,8 +96,8 @@
   graph: WallmountGenerator
   startNode: start
   targetNode: generator
-  category: Utilities
-  description: "A wallmount generator for compact spaces. Make sure to place cable under before building the wall."
+  category: construction-category-utilities
+  description: "A wallmount generator for compact spaces. Make sure to place cable underneath before building the wall."
   icon:
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     state: panel
@@ -111,8 +111,8 @@
   graph: WallmountGenerator
   startNode: start
   targetNode: APU
-  category: Utilities
-  description: "A wallmount APU for compact shuttles. Make sure to place cable under before building the wall."
+  category: construction-category-utilities
+  description: "A wallmount APU for compact shuttles. Make sure to place cable underneath before building the wall."
   icon:
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     state: panel
@@ -123,11 +123,12 @@
 # DISPOSALS
 - type: construction
   name: disposal unit
+  description: A pneumatic waste disposal unit.
   id: DisposalUnit
   graph: DisposalMachine
   startNode: start
   targetNode: disposal_unit
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -135,12 +136,27 @@
     state: "disposal"
 
 - type: construction
+  name: mailing unit
+  description: A pneumatic mail delivery unit.
+  id: MailingUnit
+  graph: DisposalMachine
+  startNode: start
+  targetNode: mailing_unit
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: "mailing"
+
+- type: construction
   name: disposal pipe
   id: DisposalPipe
+  description: A huge pipe segment used for constructing disposal systems.
   graph: DisposalPipe
   startNode: start
   targetNode: pipe
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   icon:
@@ -149,11 +165,12 @@
 
 - type: construction
   name: disposal tagger
+  description: A pipe that tags entities for routing.
   id: DisposalTagger
   graph: DisposalPipe
   startNode: start
   targetNode: tagger
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -162,11 +179,12 @@
 
 - type: construction
   name: disposal trunk
+  description: A pipe trunk used as an entry point for disposal systems.
   id: DisposalTrunk
   graph: DisposalPipe
   startNode: start
   targetNode: trunk
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -175,11 +193,12 @@
 
 - type: construction
   name: disposal router
+  description: A three-way router. Entities with matching tags get routed to the side.
   id: DisposalRouter
   graph: DisposalPipe
   startNode: start
   targetNode: router
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -188,11 +207,12 @@
 
 - type: construction
   name: disposal junction
+  description: A three-way junction. The arrow indicates where items exit.
   id: DisposalJunction
   graph: DisposalPipe
   startNode: start
   targetNode: junction
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -201,11 +221,12 @@
 
 - type: construction
   name: disposal Y junction
+  description: A three-way junction with another exit point.
   id: DisposalYJunction
   graph: DisposalPipe
   startNode: start
   targetNode: yJunction
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -214,11 +235,12 @@
 
 - type: construction
   name: disposal bend
+  description: A tube bent at a 90 degree angle.
   id: DisposalBend
   graph: DisposalPipe
   startNode: start
   targetNode: bend
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -232,7 +254,7 @@
   graph: AirAlarm
   startNode: start
   targetNode: air_alarm
-  category: Structures
+  category: construction-category-structures
   description: An air alarm. Alarms... air?
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
@@ -250,7 +272,7 @@
   graph: FireAlarm
   startNode: start
   targetNode: fire_alarm
-  category: Structures
+  category: construction-category-structures
   description: A fire alarm. Spicy!
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
@@ -266,10 +288,11 @@
 - type: construction
   name: gas pipe half
   id: GasPipeHalf
+  description: Half of a gas pipe. No skateboards.
   graph: GasPipe
   startNode: start
   targetNode: half
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -279,10 +302,11 @@
 - type: construction
   name: gas pipe straight
   id: GasPipeStraight
+  description: A straight pipe segment.
   graph: GasPipe
   startNode: start
   targetNode: straight
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -292,10 +316,11 @@
 - type: construction
   name: gas pipe bend
   id: GasPipeBend
+  description: A pipe segment bent at a 90 degree angle.
   graph: GasPipe
   startNode: start
   targetNode: bend
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -305,10 +330,11 @@
 - type: construction
   name: gas pipe T junction
   id: GasPipeTJunction
+  description: A pipe segment with a T junction.
   graph: GasPipe
   startNode: start
   targetNode: tjunction
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -318,10 +344,11 @@
 - type: construction
   name: gas pipe fourway
   id: GasPipeFourway
+  description: A pipe segment with a fourway junction.
   graph: GasPipe
   startNode: start
   targetNode: fourway
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -331,11 +358,12 @@
 # ATMOS UNARY
 - type: construction
   name: air vent
+  description: Pumps gas into the room.
   id: GasVentPump
   graph: GasUnary
   startNode: start
   targetNode: ventpump
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -346,11 +374,12 @@
 
 - type: construction
   name: passive vent
+  description: Unpowered vent that equalises gases on both sides.
   id: GasPassiveVent
   graph: GasUnary
   startNode: start
   targetNode: passivevent
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -361,11 +390,12 @@
 
 - type: construction
   name: air scrubber
+  description: Sucks gas into connected pipes.
   id: GasVentScrubber
   graph: GasUnary
   startNode: start
   targetNode: ventscrubber
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -376,11 +406,12 @@
 
 - type: construction
   name: air injector
+  description: Injects air into the atmosphere.
   id: GasOutletInjector
   graph: GasUnary
   startNode: start
   targetNode: outletinjector
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -393,10 +424,11 @@
 - type: construction
   name: gas pump
   id: GasPressurePump
+  description: A pump that moves gas by pressure.
   graph: GasBinary
   startNode: start
   targetNode: pressurepump
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -407,11 +439,12 @@
 
 - type: construction
   name: volumetric gas pump
+  description: A pump that moves gas by volume.
   id: GasVolumePump
   graph: GasBinary
   startNode: start
   targetNode: volumepump
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -423,10 +456,11 @@
 - type: construction
   id: GasPassiveGate
   name: passive gate
+  description: A one-way air valve that does not require power.
   graph: GasBinary
   startNode: start
   targetNode: passivegate
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -438,10 +472,11 @@
 - type: construction
   id: GasValve
   name: manual valve
+  description: A pipe with a valve that can be used to disable the flow of gas through it.
   graph: GasBinary
   startNode: start
   targetNode: valve
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -453,10 +488,11 @@
 - type: construction
   id: GasPort
   name: connector port
+  description: For connecting portable devices related to atmospherics control.
   graph: GasBinary
   startNode: start
   targetNode: port
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -468,10 +504,11 @@
 - type: construction
   id: GasDualPortVentPump
   name: dual-port air vent
+  description: Has a valve and a pump attached to it. There are two ports, one is an input for releasing air, the other is an output when siphoning.
   graph: GasBinary
   startNode: start
   targetNode: dualportventpump
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -484,10 +521,11 @@
 - type: construction
   id: GasFilter
   name: gas filter
+  description: Very useful for filtering gases.
   graph: GasTrinary
   startNode: start
   targetNode: filter
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -499,10 +537,11 @@
 - type: construction
   id: GasMixer
   name: gas mixer
+  description: Very useful for mixing gases.
   graph: GasTrinary
   startNode: start
   targetNode: mixer
-  category: Utilities
+  category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -511,3 +550,18 @@
   conditions:
     - !type:TileNotBlocked {}
 
+- type: construction
+  id: PressureControlledValve
+  name: pneumatic valve
+  description: Valve controlled by pressure.
+  graph: GasTrinary
+  startNode: start
+  targetNode: pneumaticvalve
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
+    state: off
+  conditions:
+    - !type:TileNotBlocked {}

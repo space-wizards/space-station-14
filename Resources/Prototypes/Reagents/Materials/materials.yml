@@ -1,3 +1,10 @@
+- type: material
+  id: Biomass
+  stack: Biomass
+  name: biomass
+  icon: /Textures/Objects/Misc/monkeycube.rsi/cube.png
+  color: "#8A9A5B"
+  price: 0.05
 
 - type: material
   id: Cloth

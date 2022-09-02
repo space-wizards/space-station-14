@@ -10,7 +10,6 @@ namespace Content.Shared.Decals
     public abstract class SharedDecalSystem : EntitySystem
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
         protected readonly Dictionary<EntityUid, Dictionary<uint, Vector2i>> ChunkIndex = new();

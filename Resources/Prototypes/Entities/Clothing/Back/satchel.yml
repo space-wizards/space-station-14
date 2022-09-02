@@ -15,6 +15,10 @@
     - back
   - type: Storage
     capacity: 100
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -97,4 +101,4 @@
     - state: icon-unlit
       shader: unshaded
   - type: Storage
-    capacity: 10000
+    capacity: 9999

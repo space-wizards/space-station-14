@@ -13,6 +13,7 @@ namespace Content.Client.Pointing
     [UsedImplicitly]
     public sealed class RoguePointingArrowVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

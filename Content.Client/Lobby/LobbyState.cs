@@ -109,7 +109,6 @@ namespace Content.Client.Lobby
             _lobby.OptionsButton.OnPressed += _ => new OptionsMenu().Open();
 
 
-            _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
@@ -117,7 +116,6 @@ namespace Content.Client.Lobby
 
         public override void Shutdown()
         {
-            _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
@@ -162,23 +160,6 @@ namespace Content.Client.Lobby
 
             _lobby.StationTime.Text =  Loc.GetString("lobby-state-player-status-station-time", ("stationTime", TimeSpan.Zero.ToString("hh\\:mm")));
             _lobby.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
-        }
-
-        private void PlayerManagerOnPlayerListUpdated(object? sender, EventArgs e)
-        {
-            var gameTicker = EntitySystem.Get<ClientGameTicker>();
-            // Remove disconnected sessions from the Ready Dict
-            foreach (var p in gameTicker.Status)
-            {
-                if (!_playerManager.SessionsDict.TryGetValue(p.Key, out _))
-                {
-                    // This is a shitty fix. Observers can rejoin because they are already in the game.
-                    // So we don't delete them, but keep them if they decide to rejoin
-                    if (p.Value != LobbyPlayerStatus.Observer)
-                        gameTicker.Status.Remove(p.Key);
-                }
-            }
-
         }
 
         private void LobbyStatusUpdated()

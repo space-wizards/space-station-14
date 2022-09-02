@@ -18,7 +18,7 @@ namespace Content.Client.Atmos.UI
         private float _minTemp = 0.0f;
         private float _maxTemp = 0.0f;
 
-        public GasThermomachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public GasThermomachineBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

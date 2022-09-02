@@ -404,7 +404,7 @@ public sealed partial class ShuttleSystem
 
        if (!string.IsNullOrEmpty(centComPath))
        {
-           var (_, centcomm) = _loader.LoadBlueprint(CentComMap.Value, "/Maps/centcomm.yml");
+           var (_, centcomm) = _loader.LoadGrid(CentComMap.Value, "/Maps/centcomm.yml");
            CentCom = centcomm;
 
            if (CentCom != null)
@@ -426,7 +426,7 @@ public sealed partial class ShuttleSystem
        if (!_emergencyShuttleEnabled || CentComMap == null || component.EmergencyShuttle != null) return;
 
        // Load escape shuttle
-       var (_, shuttle) = _loader.LoadBlueprint(CentComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
+       var (_, shuttle) = _loader.LoadGrid(CentComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
            Offset = new Vector2(500f + _shuttleIndex, 0f)

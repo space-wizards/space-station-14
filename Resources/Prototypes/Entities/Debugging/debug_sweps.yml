@@ -10,16 +10,34 @@
       - Debug
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
-  - type: Item
-    size: 1
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
   - type: Gun
     fireRate: 100
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - Debug
-    proto: MagazinePistolDebug
+    selectedMode: FullAuto
+    availableModes:
+      - SemiAuto
+      - FullAuto
+  - type: AmmoCounter
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolDebug
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - Debug
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeDebug
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
 
 - type: entity
   id: MagazinePistolDebug

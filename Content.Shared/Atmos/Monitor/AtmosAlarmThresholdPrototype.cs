@@ -250,6 +250,7 @@ namespace Content.Shared.Atmos.Monitor
         Gas
     }
 
+    [Serializable, NetSerializable]
     public enum AtmosMonitorVisuals : byte
     {
         Offset,

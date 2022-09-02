@@ -9,6 +9,12 @@
     netsync: false
   - type: Item
     size: 50
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: AmmoCounter
   - type: Gun
     fireRate: 5
@@ -54,8 +60,6 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
   - type: Gun
     fireRate: 5
     soundGunshot:
@@ -102,7 +106,7 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: ItemSlots
     slots:
@@ -145,7 +149,7 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
     soundGunshot:

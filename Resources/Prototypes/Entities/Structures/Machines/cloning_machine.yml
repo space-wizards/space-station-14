@@ -11,6 +11,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/cloning.rsi
+    snapCardinals: true
     layers:
       - state: pod_0
   - type: Physics
@@ -28,6 +29,9 @@
   - type: Construction
     graph: Machine
     node: machine
+  - type: EmptyOnMachineDeconstruct
+    containers:
+      - clonepod-bodyContainer
   - type: Destructible
     thresholds:
     - trigger:
@@ -41,6 +45,8 @@
   - type: Machine
     board: CloningPodMachineCircuitboard
   - type: MaterialStorage
+    materialWhiteList:
+    - Biomass
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod
