@@ -1,4 +1,5 @@
 ﻿- type: guideEntry
   id: Atmospherics
   name: Atmospherics
+  parent: Jobs
   text: "/Server Info/Guidebook/Atmospherics.txt"

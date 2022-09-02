@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Content.Client.EscapeMenu.UI;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
@@ -167,6 +168,16 @@ public sealed partial class GuidebookWindow
                     Scale = new Vector2(scale, scale),
                     HorizontalExpand = args.Length >= 4 ? bool.Parse(args[3]) : false,
                 };
+                return;
+            }
+            case "controlsButton":
+            {
+                var button = new Button()
+                {
+                    Text = Loc.GetString("ui-info-button-controls"),
+                };
+                button.OnPressed += _ => new OptionsMenu().Open();
+                control = button;
                 return;
             }
             default:

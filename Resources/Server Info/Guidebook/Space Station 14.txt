@@ -1,18 +1,9 @@
-﻿    Welcome to Space Station 14! We hope you enjoy the game, and this entry will serve to brief you on the basics of play.
+﻿    Welcome to the pre-alpha of Space Station 14! We hope you enjoy the game, and this entry will serve to guide you on how to learn to play. There's quite a bit to read, but SS14 is in itself a very large and in-depth game, and hopefully these guides help you enjoy it to it's fullest.
 
-#Basic controls
-    There's a handful primary interactions in SS14, ordered by importance:
+#What this is
+    Space Station 14 is a free (forever) open source remake of the infamous Space Station 13, hoping to provide a improved experience for both newcomers and old players alike. Space Station 14 is designed as a fully moddable experience that you can modify to your liking with custom servers, adding entire swaths of new content for people to explore.
 
-    ›  [color=#a4885c]Left click[/color] to pick up items and activate objects like buttons or computers. You can also press [color=#a4885c]alt[/color] while doing this to trigger alternate interactions for some objects.
-    ›  You can also quickly activate items you're holding by pressing [color=#a4885c]Z[/color] and [color=#a4885c]alt-Z[/color] respectively.
-    ›  [color=#a4885c]Right click[/color] to open the context menu. You can then either left click an entry just like you would in the world, or right click it again to open the verb menu, which gives you more complex ways to interact with an object.
-    ›  You can [color=#a4885c]shift-left click[/color] objects to examine them, and get their name and a detailed (though often humorous) description.
+    If you're just here to play, that's great! The [color=#a4885c]Where to start[/color] section of this entry will help you out, if you're looking to do a bit more with the game, you can join our discord and find our github page in the lobby.
 
-    You can quickly try out these controls with the monkey below, and at any point in this guidebook if you're shown an entity, [color=#a4885c]shift-left click to examine will always work[/color]:
-
-?{|:Horizontal:Center
-?embedEntityInteractive:MobGuidebookMonkey:2
-?|}
-
-#Inventory
-    In order to move items around in your inventory and between containers, you can click the item (or item name) to move it to your active hand, and then click the spot you want it to go (either a slot in your HUD, or the container).
+#Where to start
+    It's recommended to start with the [color=#a4885c]Controls[/color] guide, and then read the [color=#a4885c]Character Creation[/color] and [color=#a4885c]Jobs[/color] guides. Not all jobs or concepts will have guides yet, and it's strongly encouraged to help us write them if you're an experienced player!

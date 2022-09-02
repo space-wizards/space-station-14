@@ -3,3 +3,8 @@
   name: Space Station 14
   text: "/Server Info/Guidebook/Space Station 14.txt"
   priority: -1
+
+- type: guideEntry
+  id: Controls
+  name: Controls
+  text: "/Server Info/Guidebook/Controls.txt"

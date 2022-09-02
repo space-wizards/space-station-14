@@ -2,10 +2,12 @@
 using Content.Client.Verbs;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Speech;
 using Content.Shared.Verbs;
 using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Guidebook;
@@ -17,6 +19,7 @@ public sealed class GuidebookSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly VerbSystem _verbSystem = default!;
     private GuidebookWindow _guideWindow = default!;
 
@@ -30,7 +33,39 @@ public sealed class GuidebookSystem : EntitySystem
         _guideWindow = new GuidebookWindow();
 
         SubscribeLocalEvent<GetGuidesEvent>(OnGetGuidesEvent);
+        SubscribeLocalEvent<GuidebookControlsTestComponent, InteractHandEvent>(OnGuidebookControlsTestInteractHand);
+        SubscribeLocalEvent<GuidebookControlsTestComponent, ActivateInWorldEvent>(OnGuidebookControlsTestActivateInWorld);
+        SubscribeLocalEvent<GuidebookControlsTestComponent, GetVerbsEvent<AlternativeVerb>>(
+            OnGuidebookControlsTestGetAlternateVerbs);
     }
+
+
+    private void OnGuidebookControlsTestGetAlternateVerbs(EntityUid uid, GuidebookControlsTestComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Act = () =>
+            {
+                if (Transform(uid).LocalRotation != Angle.Zero)
+                    Transform(uid).LocalRotation -= Angle.FromDegrees(90);
+            },
+            Text = "Unspin Monkey"
+        });
+    }
+
+    private void OnGuidebookControlsTestActivateInWorld(EntityUid uid, GuidebookControlsTestComponent component, ActivateInWorldEvent args)
+    {
+        Transform(uid).LocalRotation += Angle.FromDegrees(90);
+    }
+
+    private void OnGuidebookControlsTestInteractHand(EntityUid uid, GuidebookControlsTestComponent component, InteractHandEvent args)
+    {
+        if (!TryComp<SharedSpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)
+            return;
+
+        _audioSystem.PlayGlobal(speech.SpeechSounds, Filter.Local(), speech.AudioParams);
+    }
+
 
     public void FakeClientActivateInWorld(EntityUid activated)
     {
@@ -57,10 +92,8 @@ public sealed class GuidebookSystem : EntitySystem
 
     public void FakeClientUse(EntityUid activated)
     {
-        var user = _playerManager.LocalPlayer!.ControlledEntity;
-        if (user is null)
-            return;
-        var activateMsg = new InteractHandEvent(user.Value, activated);
+        var user = _playerManager.LocalPlayer!.ControlledEntity ?? EntityUid.Invalid;
+        var activateMsg = new InteractHandEvent(user, activated);
         RaiseLocalEvent(activated, activateMsg, true);
     }
 
