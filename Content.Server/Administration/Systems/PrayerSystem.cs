@@ -6,13 +6,13 @@ using Content.Shared.Chat;
 using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.Administration.Systems
 {
     public sealed class PrayerSystem : SharedPrayerSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly BwoinkSystem _bwoinkSystem = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
 
         /// <summary>
@@ -29,9 +29,10 @@ namespace Content.Server.Administration.Systems
             _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, popupMessage + " \"{0}\"", EntityUid.Invalid, false, target.ConnectedClient);
         }
 
-        public void Pray(string prayed)
+        public void Pray(ICommonSession player, string prayed)
         {
-            // todo add praying wtf
+            var msg = new PrayTextMessage(prayed);
+            RaiseNetworkEvent(msg, Filter.Empty().AddPlayer(player));
         }
     }
 }
