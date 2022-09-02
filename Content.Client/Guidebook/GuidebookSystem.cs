@@ -1,9 +1,12 @@
 ﻿using System.Linq;
+using Content.Client.Light;
 using Content.Client.Verbs;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Light.Component;
 using Content.Shared.Speech;
 using Content.Shared.Verbs;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -21,6 +24,7 @@ public sealed class GuidebookSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly VerbSystem _verbSystem = default!;
+    [Dependency] private readonly RgbLightControllerSystem _rgbLightControllerSystem = default!;
     private GuidebookWindow _guideWindow = default!;
 
     /// <inheritdoc/>
@@ -49,7 +53,30 @@ public sealed class GuidebookSystem : EntitySystem
                 if (Transform(uid).LocalRotation != Angle.Zero)
                     Transform(uid).LocalRotation -= Angle.FromDegrees(90);
             },
-            Text = "Unspin Monkey"
+            Text = "Unspin Monkey",
+            Priority = -1,
+        });
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Act = () =>
+            {
+                var light = EnsureComp<PointLightComponent>(uid); // RGB demands this.
+                light.Enabled = false;
+                var rgb = EnsureComp<RgbLightControllerComponent>(uid);
+
+                var sprite = EnsureComp<SpriteComponent>(uid);
+                var layers = new List<int>();
+
+                for (var i = 0; i < sprite.AllLayers.Count(); i++)
+                {
+                    layers.Add(i);
+                }
+
+                _rgbLightControllerSystem.SetLayers(uid, layers, rgb);
+            },
+            Text = "Disco Monkey",
+            Priority = -1,
         });
     }
 
