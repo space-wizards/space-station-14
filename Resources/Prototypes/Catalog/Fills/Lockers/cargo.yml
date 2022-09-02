@@ -7,8 +7,6 @@
     contents:
 # Should be moved to a suit storage unit when/if they are added.
       - id: ClothingOuterHardsuitSpatio
-      - id: YellowOxygenTankFilled
-      - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
@@ -17,3 +15,4 @@
         prob: 0.8
       - id: SurvivalKnife
       - id: WeaponProtoKineticAccelerator
+      - id: JetpackBlueFilled
