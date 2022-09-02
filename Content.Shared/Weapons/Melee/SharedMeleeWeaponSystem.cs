@@ -23,6 +23,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected ISawmill Sawmill = default!;
 
+    /// <summary>
+    /// Amount of time a click has to be held before it's considered a heavy attack instead of a light attack.
+    /// </summary>
+    public const float HeavyBuffer = 0.25f;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -44,9 +49,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Anything that's active is assumed to be winding up so.
         foreach (var comp in EntityQuery<MeleeWeaponComponent>())
         {
+            comp.CooldownAccumulator = MathF.Max(0f, comp.CooldownAccumulator - frameTime);
+
+            // If we're not holding a charged attack might be releasing.
             if (!comp.Active)
             {
-                DebugTools.Assert(comp.WindupAccumulator.Equals(0f));
+                comp.WindupAccumulator = MathF.Max(0f, comp.WindupAccumulator - frameTime);
+                Dirty(comp);
                 continue;
             }
 
@@ -105,6 +114,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         public bool Active;
         public float WindupAccumulator;
+        public float CooldownAccumulator;
     }
 
     protected virtual void OnAttackStart(StartAttackEvent msg, EntitySessionEventArgs args)
@@ -124,11 +134,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         weapon.Active = true;
         Dirty(weapon);
-        Sawmill.Debug($"Started weapon attack");
+        // Sawmill.Debug($"Started weapon attack");
     }
 
-    private bool TryRelease(ReleaseAttackEvent ev, EntitySessionEventArgs args, [NotNullWhen(true)] out MeleeWeaponComponent? component)
+    private bool TryRelease(ReleaseAttackEvent ev, EntitySessionEventArgs args, [NotNullWhen(true)] out MeleeWeaponComponent? component, out bool heavy)
     {
+        heavy = false;
         component = null;
 
         if (args.SenderSession.AttachedEntity == null ||
@@ -145,28 +156,32 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!component.Active)
             return false;
 
+        if (component.WindupAccumulator < HeavyBuffer)
+            return true;
+
         if (component.WindupAccumulator < component.WindupTime)
             return false;
 
+        heavy = true;
         return true;
     }
 
     protected virtual void OnReleasePrecise(ReleasePreciseAttackEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryRelease(msg, args, out var component))
+        if (!TryRelease(msg, args, out var component, out var heavy))
             return;
 
-        Sawmill.Debug($"Released precise weapon attack on {ToPrettyString(msg.Target)}");
-        AttemptAttack(args.SenderSession.AttachedEntity!.Value, component, msg);
+        // Sawmill.Debug($"Released precise weapon attack on {ToPrettyString(msg.Target)}");
+        AttemptAttack(args.SenderSession.AttachedEntity!.Value, component, msg, heavy);
     }
 
     protected virtual void OnReleaseWide(ReleaseWideAttackEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryRelease(msg, args, out var component))
+        if (!TryRelease(msg, args, out var component, out var heavy))
             return;
 
-        Sawmill.Debug("Released wide weapon attack");
-        AttemptAttack(args.SenderSession.AttachedEntity!.Value, component, msg);
+        // Sawmill.Debug("Released wide weapon attack");
+        AttemptAttack(args.SenderSession.AttachedEntity!.Value, component, msg, heavy);
     }
 
     protected virtual void StopAttack(StopAttackEvent ev, EntitySessionEventArgs args)
@@ -189,8 +204,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!userWeapon.Active)
             return;
 
-        Sawmill.Debug("Stopped weapon attack");
-        weapon.WindupAccumulator = 0f;
+        // Sawmill.Debug("Stopped weapon attack");
         userWeapon.Active = false;
         Dirty(weapon);
     }
@@ -201,6 +215,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             Active = component.Active,
             WindupAccumulator = component.WindupAccumulator,
+            CooldownAccumulator = component.CooldownAccumulator,
         };
     }
 
@@ -211,36 +226,39 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         component.Active = state.Active;
         component.WindupAccumulator = state.WindupAccumulator;
+        component.CooldownAccumulator = state.CooldownAccumulator;
     }
 
     public MeleeWeaponComponent? GetWeapon(EntityUid entity)
     {
-        if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) ||
-            hands.ActiveHandEntity is not { } held)
-        {
-            return null;
-        }
-
-        if (!EntityManager.TryGetComponent(held, out MeleeWeaponComponent? gun))
-            return null;
-
         if (!CombatMode.IsInCombatMode(entity))
             return null;
 
-        return gun;
+        // Use inhands entity if we got one.
+        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+            hands.ActiveHandEntity is { } held &&
+            EntityManager.TryGetComponent(held, out MeleeWeaponComponent? melee))
+        {
+            return melee;
+        }
+
+        if (TryComp(entity, out melee))
+        {
+            return melee;
+        }
+
+        return null;
     }
 
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
-    private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, ReleaseAttackEvent attack)
+    private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, ReleaseAttackEvent attack, bool heavy)
     {
         if (!_blocker.CanAttack(user))
             return;
 
-        // Don't check for active because some other caller may be doing this?
-        if (weapon.WindupAccumulator < weapon.WindupTime)
-            return;
+        // Windup time checked elsewhere.
 
         if (!TryComp<SharedCombatModeComponent>(user, out var combatMode))
             return;
@@ -268,10 +286,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         switch (attack)
         {
             case ReleasePreciseAttackEvent precise:
-                DoPreciseAttack(user, precise, weapon);
+                DoPreciseAttack(user, precise, weapon, heavy);
                 break;
             case ReleaseWideAttackEvent wide:
-                DoWideAttack(user, wide, weapon);
+                DoWideAttack(user, wide, weapon, heavy);
                 break;
             default:
                 throw new NotImplementedException();
@@ -280,16 +298,18 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         DoLungeAnimation(user, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
 
         weapon.Active = false;
+
+        weapon.CooldownAccumulator = weapon.CooldownTime;
         weapon.WindupAccumulator = 0f;
         Dirty(weapon);
     }
 
-    protected virtual void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component, bool heavy)
     {
 
     }
 
-    protected virtual void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component, bool heavy)
     {
 
     }

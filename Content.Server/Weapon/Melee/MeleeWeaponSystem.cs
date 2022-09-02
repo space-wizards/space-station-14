@@ -61,9 +61,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         PopupSystem.PopupEntity(message, uid.Value, Filter.Pvs(uid.Value, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
 
-    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component)
+    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component, bool heavy)
     {
-        base.DoPreciseAttack(user, ev, component);
+        base.DoPreciseAttack(user, ev, component, heavy);
 
         // Can't attack yourself
         // Not in LOS.
@@ -77,8 +77,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
+        var damage = component.Damage * (heavy ? FixedPoint2.New(1) : component.HeavyModifier);
+
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(new List<EntityUid>() { ev.Target }, user, component.Damage);
+        var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target }, user, damage);
         RaiseLocalEvent(component.Owner, hitEvent);
 
         if (hitEvent.Handled)
@@ -92,7 +94,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // For stuff that cares about it being attacked.
         RaiseLocalEvent(ev.Target, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(component.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
         var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage);
 
         if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
@@ -130,9 +132,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component)
+    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component, bool heavy)
     {
-        base.DoWideAttack(user, ev, component);
+        base.DoWideAttack(user, ev, component, heavy);
 
         // TODO: This is copy-paste as fuck with DoPreciseAttack
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -169,8 +171,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             targets.Add(entity);
         }
 
+        var damage = component.Damage * (heavy ? FixedPoint2.New(1) : component.HeavyModifier);
+
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(targets, user, component.Damage);
+        var hitEvent = new MeleeHitEvent(targets, user, damage);
         RaiseLocalEvent(component.Owner, hitEvent);
 
         if (hitEvent.Handled)
@@ -182,7 +186,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             RaiseLocalEvent(target, new AttackedEvent(component.Owner, user, Transform(target).Coordinates));
         }
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(component.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
         var appliedDamage = new DamageSpecifier();
 
         foreach (var entity in targets)

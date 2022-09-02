@@ -50,9 +50,17 @@
       state: claw
 
 - type: entity
-  id: WeaponArcClaw
+  id: WeaponArcDisarm
   parent: WeaponArcStatic
   noSpawn: true
   components:
     - type: Sprite
       state: disarm
+
+- type: entity
+  id: WeaponArcFist
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: fist

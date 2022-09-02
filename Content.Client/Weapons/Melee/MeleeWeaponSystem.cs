@@ -104,7 +104,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             {
                 // Active + windupaccumulator handled in the event handlers.
 
-                if (weapon.WindupAccumulator < weapon.WindupTime)
+                if ((weapon.WindupAccumulator > HeavyBuffer && weapon.WindupAccumulator < weapon.WindupTime) ||
+                    weapon.CooldownAccumulator > 0f)
                 {
                     EntityManager.RaisePredictiveEvent(new StopAttackEvent()
                     {
@@ -159,7 +160,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         // Started a windup
-        if (weapon.WindupAccumulator.Equals(0f))
+        if (!weapon.Active)
         {
             EntityManager.RaisePredictiveEvent(new StartAttackEvent()
             {

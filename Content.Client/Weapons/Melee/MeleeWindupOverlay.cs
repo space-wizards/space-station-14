@@ -28,7 +28,7 @@ public sealed class MeleeWindupOverlay : Overlay
 
         foreach (var comp in _entManager.EntityQuery<MeleeWeaponComponent>())
         {
-            if (!comp.Active)
+            if (comp.WindupAccumulator < SharedMeleeWeaponSystem.HeavyBuffer)
                 continue;
 
             if (!xformQuery.TryGetComponent(comp.Owner, out var xform) ||
@@ -44,7 +44,7 @@ public sealed class MeleeWindupOverlay : Overlay
                 continue;
             }
 
-            var fraction = comp.WindupAccumulator / comp.WindupTime;
+            var fraction = (comp.WindupAccumulator - SharedMeleeWeaponSystem.HeavyBuffer) / (comp.WindupTime - SharedMeleeWeaponSystem.HeavyBuffer);
             Color color;
 
             if (fraction >= 1f)

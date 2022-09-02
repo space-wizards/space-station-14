@@ -17,16 +17,32 @@ public sealed class MeleeWeaponComponent : Component
 
     // TODO: Can't use accumulator because we'd need an active component and client can't predict changing it.
     /// <summary>
-    /// How much windup time have we accumulated.
+    /// How much windup time have we accumulated for a heavy attack.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("windupAccumulator")]
-    public float WindupAccumulator = 0f;
+    public float WindupAccumulator;
 
     /// <summary>
-    /// How long it takes an attack to windup.
+    /// How long it takes a heavy attack to windup.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("windupTime")]
-    public float WindupTime = 1f;
+    public float WindupTime = 1.5f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("cooldownAccumulator")]
+    public float CooldownAccumulator;
+
+    /// <summary>
+    /// Cooldown for light attacks.
+    /// Heavy attacks ignore this for windup but will reset this whenever a light or heavy attack is released.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("cooldownTime")]
+    public float CooldownTime = 1f;
+
+    /// <summary>
+    /// Damage modifier for heavy attacks.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("heavyModifier")]
+    public FixedPoint2 HeavyModifier = FixedPoint2.New(2f);
 
     [DataField("damage", required:true)]
     [ViewVariables(VVAccess.ReadWrite)]
