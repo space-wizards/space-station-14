@@ -88,6 +88,15 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         var address = device.Address;
         if (string.IsNullOrEmpty(address))
         {
+            // This primarily checks if the entity in question is pre-map init or not.
+            // This is because otherwise, anything that uses DeviceNetwork will not
+            // have an address populated, as all devices that use DeviceNetwork
+            // obtain their address on map init. If the entity is post-map init,
+            // and it still doesn't have an address, it will fail. Otherwise,
+            // it stores the entity's UID as a string for visual effect, that way
+            // a mapper can reference the devices they've gathered by UID, instead of
+            // by device network address. These entries, if the multitool is still in
+            // the map after it being saved, are cleared upon mapinit.
             if (MetaData(targetUid.Value).EntityLifeStage == EntityLifeStage.MapInitialized)
             {
                 _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", targetUid)),
