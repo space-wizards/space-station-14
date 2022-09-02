@@ -281,17 +281,26 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
         }
 
-        /*
+        var allAlive = true;
+        foreach (var (_, state) in EntityQuery<NukeOperativeComponent, MobStateComponent>())
+        {
+            if (state.CurrentState is DamageState.Dead)
+            {
+                continue;
+            }
+
+            allAlive = false;
+            break;
+        }
         // If all nuke ops were alive at the end of the round,
         // the nuke ops win. This is to prevent people from
         // running away the moment nuke ops appear.
-        if (_aliveNukeops.Values.All(x => x))
+        if (allAlive)
         {
             _winType = WinType.OpsMinor;
             _winConditions.Add(WinCondition.AllNukiesAlive);
             return;
         }
-        */
 
         _winConditions.Add(WinCondition.SomeNukiesAlive);
 
