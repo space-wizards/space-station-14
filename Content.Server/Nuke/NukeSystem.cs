@@ -549,6 +549,7 @@ namespace Content.Server.Nuke
             {
                 TargetCancelledEvent = new NukeDisarmCancelledEvent(),
                 TargetFinishedEvent = new NukeDisarmSuccessEvent(),
+                BroadcastFinishedEvent = new NukeDisarmSuccessEvent(),
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = true,

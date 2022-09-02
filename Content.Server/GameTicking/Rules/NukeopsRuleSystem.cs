@@ -135,6 +135,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+        SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarm);
         SubscribeLocalEvent<NukeOperativeComponent, GhostRoleSpawnerUsedEvent>(OnPlayersGhostSpawning);
         SubscribeLocalEvent<NukeOperativeComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentInit>(OnComponentInit);
@@ -379,6 +380,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
+        // If there are any nuclear bombs that are active, immediately return. We're not over yet.
+        foreach (var nuke in EntityQuery<NukeComponent>())
+        {
+            if (nuke.Status == NukeStatus.ARMED)
+            {
+                return;
+            }
+        }
+
         MapId? shuttleMapId = EntityManager.EntityExists(_nukieShuttle)
             ? Transform(_nukieShuttle!.Value).MapID
             : null;
@@ -426,6 +436,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         _roundEndSystem.EndRound();
+    }
+
+    private void OnNukeDisarm(NukeDisarmSuccessEvent ev)
+    {
+        CheckRoundShouldEnd();
     }
 
     private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
