@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The bag for the China Lake Bundle now has 120 capacity to keep it in
-      line with the other duffel bags., type: Tweak}
-  id: 1725
-  time: '2022-06-19T12:06:44.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: Spell sound effects are no longer global, type: Tweak}
@@ -2912,3 +2906,10 @@ Entries:
     type: Fix}
   id: 2224
   time: '2022-09-02T02:13:44.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen''s engineers have finally laid out a design for air alarms
+      that should make them easier for our station planners and station construction
+      team to plan out! You should see these more often, now.', type: Tweak}
+  id: 2225
+  time: '2022-09-02T20:00:34.0000000+00:00'
