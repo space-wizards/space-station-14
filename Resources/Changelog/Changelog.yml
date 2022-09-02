@@ -1,9 +1,4 @@
 Entries:
-- author: jessicamaybe
-  changes:
-  - {message: Spell sound effects are no longer global, type: Tweak}
-  id: 1726
-  time: '2022-06-19T21:07:01.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: SMG crates now come with the correct magazines and amount., type: Fix}
@@ -2913,3 +2908,8 @@ Entries:
       team to plan out! You should see these more often, now.', type: Tweak}
   id: 2225
   time: '2022-09-02T20:00:34.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Dead players can no longer smart equip/unequip items., type: Fix}
+  id: 2226
+  time: '2022-09-02T23:38:47.0000000+00:00'
