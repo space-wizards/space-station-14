@@ -33,7 +33,7 @@ namespace Content.Server.AI.Pathfinding
             _indices = indices;
         }
 
-        public void Initialize(IMapGrid mapGrid)
+        public void Initialize(MapGridComponent mapGrid)
         {
             for (var x = 0; x < ChunkSize; x++)
             {

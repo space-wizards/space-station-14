@@ -79,10 +79,10 @@ namespace Content.Server.AI.Utility.Actions.Idle
 
             var targetNode = robustRandom.Pick(reachableNodes);
 
-            if (!entMan.TryGetComponent(entMan.GetComponent<TransformComponent>(Owner).GridUid, out IMapGridComponent? grid))
+            if (!entMan.TryGetComponent(entMan.GetComponent<TransformComponent>(Owner).GridUid, out MapGridComponent? grid))
                 return default;
 
-            var targetGrid = grid.Grid.GridTileToLocal(targetNode.TileRef.GridIndices);
+            var targetGrid = ((MapGridComponent) grid).GridTileToLocal(targetNode.TileRef.GridIndices);
 
             return targetGrid;
         }

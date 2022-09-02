@@ -92,7 +92,8 @@ namespace Content.Server.Tiles
             return false;
         }
 
-        private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)
+        private void PlaceAt(MapGridComponent mapGrid, EntityCoordinates location, ushort tileId,
+            SoundSpecifier placeSound, float offset = 0)
         {
             var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));

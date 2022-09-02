@@ -18,7 +18,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class AddGasWindow : DefaultWindow
     {
-        private IEnumerable<IMapGrid>? _gridData;
+        private IEnumerable<MapGridComponent>? _gridData;
         private IEnumerable<GasPrototype>? _gasData;
 
         protected override void EnteredTree()

@@ -98,7 +98,7 @@ namespace Content.Server.NodeContainer.Nodes
         public abstract IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            IMapGrid? grid,
+            MapGridComponent? grid,
             IEntityManager entMan);
     }
 }

@@ -57,7 +57,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     something like a normal and a reinforced windoor on the same tile. But given that this is a pretty rare
     ///     occurrence, I am fine with this.
     /// </remarks>
-    public void UpdateAirtightMap(IMapGrid grid, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
+    public void UpdateAirtightMap(MapGridComponent grid, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
     {
         var tolerance = new float[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;

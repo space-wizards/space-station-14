@@ -395,9 +395,9 @@ public sealed partial class CargoSystem
         }
 
         var offset = 0f;
-        if (TryComp<IMapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
+        if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
         {
-            var bounds = shuttleGrid.Grid.LocalAABB;
+            var bounds = ((MapGridComponent) shuttleGrid).LocalAABB;
             offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
         }
 

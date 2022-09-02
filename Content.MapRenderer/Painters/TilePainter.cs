@@ -27,7 +27,7 @@ namespace Content.MapRenderer.Painters
             _cResourceCache = client.ResolveDependency<IResourceCache>();
         }
 
-        public void Run(Image gridCanvas, IMapGrid grid)
+        public void Run(Image gridCanvas, MapGridComponent grid)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();

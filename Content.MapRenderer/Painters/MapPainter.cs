@@ -53,7 +53,7 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            IMapGrid[] grids = null!;
+            MapGridComponent[] grids = null!;
 
             await server.WaitPost(() =>
             {

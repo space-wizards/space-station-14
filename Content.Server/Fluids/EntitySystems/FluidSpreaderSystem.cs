@@ -85,7 +85,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
     private void SpreadFluid(EntityUid suid)
     {
-        EntityUid GetOrCreate(EntityUid uid, string prototype, IMapGrid grid, Vector2i pos)
+        EntityUid GetOrCreate(EntityUid uid, string prototype, MapGridComponent grid, Vector2i pos)
         {
             return uid == EntityUid.Invalid
                 ? EntityManager.SpawnEntity(prototype, grid.GridTileToWorld(pos))
@@ -148,7 +148,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
     private List<PuddlePlacer> ExpandPuddles(List<PuddlePlacer> toExpand,
         HashSet<Vector2i> visitedTiles,
-        IMapGrid mapGrid)
+        MapGridComponent mapGrid)
     {
         var nextToExpand = new List<PuddlePlacer>(9);
         foreach (var puddlePlacer in toExpand)
@@ -161,7 +161,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
     private void ExpandPuddle(EntityUid puddle,
         HashSet<Vector2i> visitedTiles,
-        IMapGrid mapGrid,
+        MapGridComponent mapGrid,
         List<PuddlePlacer> nextToExpand,
         Vector2i? pos = null)
     {
@@ -188,7 +188,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         }
     }
 
-    private bool CanExpand(Vector2i newPos, IMapGrid mapGrid,
+    private bool CanExpand(Vector2i newPos, MapGridComponent mapGrid,
         [NotNullWhen(true)] out EntityUid? uid)
     {
         if (!mapGrid.TryGetTileRef(newPos, out var tileRef)

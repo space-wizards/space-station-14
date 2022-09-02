@@ -147,7 +147,10 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         var map = "/Maps/pirate.yml";
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
-            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldAABB)).ToArray();
+            Comp<StationDataComponent>(x).Grids.Select(x =>
+            {
+                return _mapManager.GetGridComp(x).WorldAABB;
+            })).ToArray();
         var aabb = aabbs[0];
 
         for (var i = 1; i < aabbs.Length; i++)

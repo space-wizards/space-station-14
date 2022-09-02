@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
@@ -85,7 +85,7 @@ public sealed partial class AdminVerbSystem
             return;
 
         // 1984.
-        if (HasComp<IMapComponent>(args.Target) || HasComp<IMapGridComponent>(args.Target))
+        if (HasComp<IMapComponent>(args.Target) || HasComp<MapGridComponent>(args.Target))
             return;
 
         Verb explode = new()

@@ -56,13 +56,13 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var xform = Transform(uid);
 
-            if (!TryComp(xform.GridUid, out IMapGridComponent? grid))
+            if (!TryComp(xform.GridUid, out MapGridComponent? grid))
                 return;
 
             var gridId = xform.GridUid;
             var coords = xform.Coordinates;
 
-            var tilePos = grid.Grid.TileIndicesFor(coords);
+            var tilePos = grid.TileIndicesFor(coords);
 
             // Update and invalidate new position.
             airtight.LastPosition = (gridId.Value, tilePos);

@@ -38,8 +38,8 @@ namespace Content.IntegrationTests.Tests
             EntityUid generator = default;
             var entityMan = server.ResolveDependency<IEntityManager>();
 
-            IMapGrid grid1 = null;
-            IMapGrid grid2 = null;
+            MapGridComponent grid1 = null;
+            MapGridComponent grid2 = null;
 
             // Create grids
             await server.WaitAssertion(() =>
@@ -50,7 +50,7 @@ namespace Content.IntegrationTests.Tests
                 grid1 = mapMan.CreateGrid(mapId);
                 grid2 = mapMan.CreateGrid(mapId);
 
-                generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
+                generator = entityMan.SpawnEntity("GravityGeneratorDummy", EntityCoordinatesExtensions.ToCoordinates(grid2));
                 Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));
                 Assert.That(entityMan.HasComponent<ApcPowerReceiverComponent>(generator));
 

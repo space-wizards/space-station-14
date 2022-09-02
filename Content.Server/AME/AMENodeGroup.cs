@@ -37,7 +37,7 @@ namespace Content.Server.AME
             base.LoadNodes(groupNodes);
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            IMapGrid? grid = null;
+            MapGridComponent? grid = null;
 
             foreach (var node in groupNodes)
             {

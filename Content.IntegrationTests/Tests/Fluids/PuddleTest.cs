@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
-            IMapGrid grid = null;
+            MapGridComponent grid = null;
 
             // Remove all tiles
             await server.WaitPost(() =>
@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             await server.WaitAssertion(() =>
             {
-                var coordinates = grid.ToCoordinates();
+                var coordinates = EntityCoordinatesExtensions.ToCoordinates(grid);
                 var solution = new Solution("Water", FixedPoint2.New(20));
                 var puddle = spillSystem.SpillAt(solution, coordinates, "PuddleSmear");
                 Assert.Null(puddle);
@@ -93,7 +93,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             var metaSystem = entityManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
 
             MapId sMapId = default;
-            IMapGrid sGrid;
+            MapGridComponent sGrid;
             EntityUid sGridId = default;
             EntityCoordinates sCoordinates = default;
 
@@ -108,7 +108,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
                 var tileDefinition = sTileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
-                sCoordinates = sGrid.ToCoordinates();
+                sCoordinates = EntityCoordinatesExtensions.ToCoordinates(sGrid);
 
                 sGrid.SetTile(sCoordinates, tile);
             });

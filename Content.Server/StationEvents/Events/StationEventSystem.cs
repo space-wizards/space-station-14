@@ -144,14 +144,13 @@ namespace Content.Server.StationEvents.Events
 
             targetGrid = RobustRandom.Pick(possibleTargets);
 
-            if (!TryComp<IMapGridComponent>(targetGrid, out var gridComp))
+            if (!TryComp<MapGridComponent>(targetGrid, out var gridComp))
                 return false;
-            var grid = gridComp.Grid;
 
             var atmosphereSystem = Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = grid.WorldAABB;
-            var gridPos = grid.WorldPosition;
+            var gridBounds = gridComp.WorldAABB;
+            var gridPos = gridComp.WorldPosition;
 
             for (var i = 0; i < 10; i++)
             {
@@ -159,10 +158,10 @@ namespace Content.Server.StationEvents.Events
                 var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid.GridEntityId, Transform(targetGrid).MapUid, tile, mapGridComp:gridComp)
-                    || atmosphereSystem.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp:gridComp)) continue;
+                if (atmosphereSystem.IsTileSpace(gridComp.GridEntityId, Transform(targetGrid).MapUid, tile, mapGridComp:gridComp)
+                    || atmosphereSystem.IsTileAirBlocked(gridComp.GridEntityId, tile, mapGridComp:gridComp)) continue;
                 found = true;
-                targetCoords = grid.GridTileToLocal(tile);
+                targetCoords = gridComp.GridTileToLocal(tile);
                 break;
             }
 

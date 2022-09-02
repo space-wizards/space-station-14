@@ -43,7 +43,7 @@ namespace Content.MapRenderer.Painters
             _decals = GetDecals();
         }
 
-        public void Run(Image gridCanvas, IMapGrid grid)
+        public void Run(Image gridCanvas, MapGridComponent grid)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -136,7 +136,7 @@ namespace Content.MapRenderer.Painters
             return decals;
         }
 
-        private (float x, float y) TransformLocalPosition(Vector2 position, IMapGrid grid)
+        private (float x, float y) TransformLocalPosition(Vector2 position, MapGridComponent grid)
         {
             var xOffset = (int) -grid.LocalAABB.Left;
             var yOffset = (int) -grid.LocalAABB.Bottom;

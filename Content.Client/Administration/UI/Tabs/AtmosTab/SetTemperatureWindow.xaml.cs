@@ -16,7 +16,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class SetTemperatureWindow : DefaultWindow
     {
-        private IEnumerable<IMapGrid>? _data;
+        private IEnumerable<MapGridComponent>? _data;
 
         protected override void EnteredTree()
         {

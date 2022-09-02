@@ -1,4 +1,4 @@
-﻿
+
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Commands;
@@ -800,7 +800,7 @@ public sealed partial class AdminVerbSystem
 
     private bool TryGetGridChildren(EntityUid target, [NotNullWhen(true)] out IEnumerable<EntityUid>? enumerator)
     {
-        if (!HasComp<IMapComponent>(target) && !HasComp<IMapGridComponent>(target) &&
+        if (!HasComp<IMapComponent>(target) && !HasComp<MapGridComponent>(target) &&
             !HasComp<StationDataComponent>(target))
         {
             enumerator = null;

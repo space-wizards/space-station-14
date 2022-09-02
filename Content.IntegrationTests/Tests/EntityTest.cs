@@ -129,7 +129,7 @@ namespace Content.IntegrationTests.Tests
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
-            IMapGrid grid = default;
+            MapGridComponent grid = default;
 
             await server.WaitPost(() =>
             {
@@ -142,7 +142,7 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = grid.ToCoordinates();
+                var coordinates = EntityCoordinatesExtensions.ToCoordinates(grid);
 
                 grid.SetTile(coordinates, tile);
 
@@ -155,7 +155,7 @@ namespace Content.IntegrationTests.Tests
             {
                 Assert.Multiple(() =>
                 {
-                    var testLocation = grid.ToCoordinates();
+                    var testLocation = EntityCoordinatesExtensions.ToCoordinates(grid);
 
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {
@@ -224,7 +224,7 @@ namespace Content.IntegrationTests.Tests
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
-            IMapGrid grid = default;
+            MapGridComponent grid = default;
 
             await server.WaitPost(() =>
             {
@@ -283,7 +283,7 @@ namespace Content.IntegrationTests.Tests
                 {
                     foreach (var distinct in distinctComponents)
                     {
-                        var testLocation = grid.ToCoordinates();
+                        var testLocation = EntityCoordinatesExtensions.ToCoordinates(grid);
                         var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
                         Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);

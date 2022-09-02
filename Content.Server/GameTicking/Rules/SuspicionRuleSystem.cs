@@ -212,10 +212,10 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         var susLoot = _prototypeManager.Index<EntityLootTablePrototype>(SuspicionLootTable);
 
-        foreach (var (_, mapGrid) in EntityManager.EntityQuery<StationMemberComponent, IMapGridComponent>(true))
+        foreach (var (_, mapGrid) in EntityManager.EntityQuery<StationMemberComponent, MapGridComponent>(true))
         {
             // I'm so sorry.
-            var tiles = mapGrid.Grid.GetAllTiles().ToArray();
+            var tiles = mapGrid.GetAllTiles().ToArray();
             Logger.Info($"TILES: {tiles.Length}");
 
             var spawn = susLoot.GetSpawns();

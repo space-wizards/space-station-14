@@ -178,7 +178,7 @@ public sealed class PrototypeSaveTest
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         var prototypes = new List<EntityPrototype>();
-        IMapGrid grid = default!;
+        MapGridComponent grid = default!;
         EntityUid uid;
         MapId mapId = default;
 
@@ -194,7 +194,7 @@ public sealed class PrototypeSaveTest
 
             var tileDefinition = tileDefinitionManager["UnderPlating"];
             var tile = new Tile(tileDefinition.TileId);
-            var coordinates = grid.ToCoordinates();
+            var coordinates = EntityCoordinatesExtensions.ToCoordinates(grid);
 
             grid.SetTile(coordinates, tile);
         });
@@ -225,7 +225,7 @@ public sealed class PrototypeSaveTest
         await server.WaitAssertion(() =>
         {
             Assert.That(!mapManager.IsMapInitialized(mapId));
-            var testLocation = grid.ToCoordinates();
+            var testLocation = EntityCoordinatesExtensions.ToCoordinates(grid);
 
             Assert.Multiple(() =>
             {

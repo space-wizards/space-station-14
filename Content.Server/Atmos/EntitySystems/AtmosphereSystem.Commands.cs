@@ -72,7 +72,7 @@ public sealed partial class AtmosphereSystem
                return;
            }
 
-           if (!TryComp(euid, out IMapGridComponent? gridComp))
+           if (!TryComp(euid, out MapGridComponent? gridComp))
            {
                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                return;
@@ -100,7 +100,7 @@ public sealed partial class AtmosphereSystem
 
                tile.Clear();
                var mixtureId = 0;
-               foreach (var entUid in gridComp.Grid.GetAnchoredEntities(indices))
+               foreach (var entUid in ((MapGridComponent) gridComp).GetAnchoredEntities(indices))
                {
                    if (!TryComp(entUid, out AtmosFixMarkerComponent? afm))
                        continue;

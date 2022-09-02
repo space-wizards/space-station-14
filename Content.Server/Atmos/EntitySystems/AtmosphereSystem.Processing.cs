@@ -45,11 +45,11 @@ namespace Content.Server.Atmos.EntitySystems
 
             var uid = atmosphere.Owner;
 
-            if (!TryComp(uid, out IMapGridComponent? mapGridComp))
+            if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 return true;
 
-            var mapGrid = mapGridComp.Grid;
-            var mapUid = _mapManager.GetMapEntityIdOrThrow(mapGridComp.Grid.ParentMapId);
+            var mapGrid = (MapGridComponent) mapGridComp;
+            var mapUid = _mapManager.GetMapEntityIdOrThrow(((MapGridComponent) mapGridComp).ParentMapId);
 
             var volume = GetVolumeForTiles(mapGrid, 1);
 
@@ -160,15 +160,13 @@ namespace Content.Server.Atmos.EntitySystems
 
             var uid = atmosphere.Owner;
 
-            if (!TryComp(uid, out IMapGridComponent? mapGridComp))
+            if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 throw new Exception("Tried to process a grid atmosphere on an entity that isn't a grid!");
-
-            var mapGrid = mapGridComp.Grid;
 
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                EqualizePressureInZone(mapGrid, atmosphere, tile, atmosphere.UpdateCounter);
+                EqualizePressureInZone(mapGridComp, atmosphere, tile, atmosphere.UpdateCounter);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
