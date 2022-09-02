@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests
                         }
                         catch (UnknownPrototypeException)
                         {
-                            throw new UnknownPrototypeException($"Unknown prototype {item} on vending inventory {vendorProto.Name}");
+                            throw new UnknownPrototypeException($"Unknown prototype {item} on vending inventory {vendorProto.ID}");
                         }
                     }
                 }

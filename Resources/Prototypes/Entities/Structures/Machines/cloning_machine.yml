@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: CloningPod
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: BaseMachinePowered
   name: cloning pod
   description: A Cloning Pod. 50% reliable.
   components:
@@ -26,6 +26,12 @@
       - MachineMask
       layer:
       - MachineLayer
+  - type: Construction
+    graph: Machine
+    node: machine
+  - type: EmptyOnMachineDeconstruct
+    containers:
+      - clonepod-bodyContainer
   - type: Destructible
     thresholds:
     - trigger:
@@ -39,6 +45,8 @@
   - type: Machine
     board: CloningPodMachineCircuitboard
   - type: MaterialStorage
+    materialWhiteList:
+    - Biomass
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod

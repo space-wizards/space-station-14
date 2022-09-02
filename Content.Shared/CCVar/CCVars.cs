@@ -305,19 +305,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitordm.starting_balance", 20);
 
         /*
-         * Nukeops
-         */
-
-        public static readonly CVarDef<int> NukeopsMinPlayers =
-            CVarDef.Create("nukeops.min_players", 15);
-
-        public static readonly CVarDef<int> NukeopsMaxOps =
-            CVarDef.Create("nukeops.max_ops", 5);
-
-        public static readonly CVarDef<int> NukeopsPlayersPerOp =
-            CVarDef.Create("nukeops.players_per_op", 5);
-
-        /*
          * Zombie
          */
 
@@ -1003,6 +990,17 @@ namespace Content.Shared.CCVar
                 CVar.REPLICATED);
 
         /*
+         * Biomass
+         */
+
+        /// <summary>
+        ///     Enabled: Cloning has 70% cost and reclaimer will refuse to reclaim corpses with souls. (For LRP).
+        ///     Disabled: Cloning has full biomass cost and reclaimer can reclaim corpses with souls. (Playtested and balanced for MRP+).
+        /// </summary>
+        public static readonly CVarDef<bool> BiomassEasyMode =
+            CVarDef.Create("biomass.easy_mode", true, CVar.SERVERONLY);
+
+        /*
          * VIEWPORT
          */
 
@@ -1060,6 +1058,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> FlavorText =
             CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Adds a period at the end of a sentence if the sentence ends in a letter.
+        /// </summary>
+        public static readonly CVarDef<bool> ChatPunctuation =
+            CVarDef.Create("ic.punctuation", false, CVar.SERVER);
 
         /*
          * Salvage
