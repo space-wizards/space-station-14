@@ -219,7 +219,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _targetStation = _stationSystem.Stations.FirstOrNull();
 
-        if (_targetStation == null || !TryComp(_targetStation.Value, out StationDataComponent? data))
+        if (_targetStation == null)
         {
             return;
         }
