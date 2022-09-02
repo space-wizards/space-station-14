@@ -404,7 +404,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             .Any(ent => ent.Item2.CurrentState == DamageState.Alive && ent.Item1.Running);
 
         if (operativesAlive)
-            return; // There are living operatives than can access the shuttle.
+            return; // There are living operatives than can access the shuttle, or are still on the station's map.
 
         _winType = WinType.CrewMajor;
 
@@ -757,10 +757,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!RuleAdded)
+        if (!RuleAdded || Configuration is not NukeopsRuleConfiguration nukeOpsConfig)
             return;
 
-        var minPlayers = _nukeopsRuleConfig.MinPlayers;
+        _nukeopsRuleConfig = nukeOpsConfig;
+
+        var minPlayers = nukeOpsConfig.MinPlayers;
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-not-enough-ready-players", ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
@@ -787,9 +789,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _operativeNames.Clear();
         _operativeMindPendingData.Clear();
         _operativePlayers.Clear();
-
-        if (Configuration is not NukeopsRuleConfiguration)
-            return;
 
         // TODO: Loot table or something
         foreach (var proto in new[]
@@ -826,5 +825,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             SpawnOperativesForGhostRoles();
     }
 
-    public override void Ended() { }
+    public override void Ended()
+    {
+        _winType = WinType.Neutral;
+        _winConditions.Clear();
+    }
 }
