@@ -54,7 +54,7 @@ public sealed class GuidebookSystem : EntitySystem
                     Transform(uid).LocalRotation -= Angle.FromDegrees(90);
             },
             Text = "Unspin Monkey",
-            Priority = -1,
+            Priority = -9999,
         });
 
         args.Verbs.Add(new AlternativeVerb()
@@ -76,7 +76,7 @@ public sealed class GuidebookSystem : EntitySystem
                 _rgbLightControllerSystem.SetLayers(uid, layers, rgb);
             },
             Text = "Disco Monkey",
-            Priority = 0,
+            Priority = -9998,
         });
     }
 
