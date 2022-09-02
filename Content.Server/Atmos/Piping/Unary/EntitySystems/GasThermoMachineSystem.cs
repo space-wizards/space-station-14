@@ -25,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceDisabledEvent>(OnThermoMachineLeaveAtmosphere);
             SubscribeLocalEvent<GasThermoMachineComponent, RefreshPartsEvent>(OnGasThermoRefreshParts);
+            SubscribeLocalEvent<GasThermoMachineComponent, GasAnalyzerScanEvent>(OnAnalyzed);
 
             // UI events
             SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineToggleMessage>(OnToggleMessage);
@@ -69,7 +70,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent component, RefreshPartsEvent args)
         {
-            // Here we evaluate the average quality of relevant machine parts. 
+            // Here we evaluate the average quality of relevant machine parts.
             var nLasers = 0;
             var nBins= 0;
             var matterBinRating = 0;
@@ -134,6 +135,22 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             _userInterfaceSystem.TrySetUiState(uid, ThermomachineUiKey.Key,
                 new GasThermomachineBoundUserInterfaceState(thermo.MinTemperature, thermo.MaxTemperature, thermo.TargetTemperature, thermo.Enabled, thermo.Mode), null, ui);
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnAnalyzed(EntityUid uid, GasThermoMachineComponent component, GasAnalyzerScanEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            var gasMixDict = new Dictionary<string, GasMixture?>();
+
+            if(nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet))
+                gasMixDict.Add(component.InletName, inlet.Air);
+
+            args.GasMixtures = gasMixDict;
         }
     }
 }

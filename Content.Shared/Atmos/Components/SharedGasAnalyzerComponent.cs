@@ -6,29 +6,55 @@ namespace Content.Shared.Atmos.Components
     [NetworkedComponent()]
     public abstract class SharedGasAnalyzerComponent : Component
     {
+
         [Serializable, NetSerializable]
         public enum GasAnalyzerUiKey
         {
             Key,
         }
 
+        /// <summary>
+        /// Atmospheric data is gathered in the system and sent to the user
+        /// </summary>
         [Serializable, NetSerializable]
-        public sealed class GasAnalyzerBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class GasAnalyzerUserMessage : BoundUserInterfaceMessage
         {
-            public float Pressure;
-            public float Temperature;
-            public GasEntry[]? Gases;
             public string? Error;
+            public GasMixEntry[] NodeGasMixes;
 
-            public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, GasEntry[]? gases, string? error = null)
+            public GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string? error = null)
             {
-                Pressure = pressure;
-                Temperature = temperature;
-                Gases = gases;
+                NodeGasMixes = nodeGasMixes;
                 Error = error;
             }
         }
 
+        /// <summary>
+        /// Contains information on a gas mix entry, turns into a tab in the UI
+        /// </summary>
+        [Serializable, NetSerializable]
+        public struct GasMixEntry
+        {
+            /// <summary>
+            /// Name of the tab in the UI
+            /// </summary>
+            public readonly string Name;
+            public readonly float Pressure;
+            public readonly float Temperature;
+            public readonly GasEntry[]? Gases;
+
+            public GasMixEntry(string name, float pressure, float temperature, GasEntry[]? gases = null)
+            {
+                Name = name;
+                Pressure = pressure;
+                Temperature = temperature;
+                Gases = gases;
+            }
+        }
+
+        /// <summary>
+        /// Individual gas entry data for populating the UI
+        /// </summary>
         [Serializable, NetSerializable]
         public struct GasEntry
         {
@@ -60,22 +86,9 @@ namespace Content.Shared.Atmos.Components
         }
 
         [Serializable, NetSerializable]
-        public enum GasAnalyzerDanger
+        public sealed class GasAnalyzerDisableMessage : BoundUserInterfaceMessage
         {
-            Nominal,
-            Warning,
-            Hazard
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class GasAnalyzerComponentState : ComponentState
-        {
-            public GasAnalyzerDanger Danger;
-
-            public GasAnalyzerComponentState(GasAnalyzerDanger danger)
-            {
-                Danger = danger;
-            }
+            public GasAnalyzerDisableMessage() {}
         }
     }
 

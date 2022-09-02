@@ -31,6 +31,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasMixerComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceUpdateEvent>(OnMixerUpdated);
             SubscribeLocalEvent<GasMixerComponent, InteractHandEvent>(OnMixerInteractHand);
+            SubscribeLocalEvent<GasMixerComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeNodePercentageMessage>(OnChangeNodePercentageMessage);
@@ -202,6 +203,26 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
                 $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the ratio on {EntityManager.ToPrettyString(uid):device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
             DirtyUI(uid, mixer);
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnAnalyzed(EntityUid uid, GasMixerComponent component, GasAnalyzerScanEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            var gasMixDict = new Dictionary<string, GasMixture?>();
+
+            if(nodeContainer.TryGetNode(component.InletOneName, out PipeNode? inletOne))
+                gasMixDict.Add(component.InletOneName, inletOne.Air);
+            if(nodeContainer.TryGetNode(component.InletTwoName, out PipeNode? inletTwo))
+                gasMixDict.Add(component.InletTwoName, inletTwo.Air);
+            if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
+                gasMixDict.Add(component.OutletName, outlet.Air);
+
+            args.GasMixtures = gasMixDict;
         }
     }
 }

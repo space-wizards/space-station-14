@@ -23,6 +23,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<PressureControlledValveComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<PressureControlledValveComponent, AtmosDeviceUpdateEvent>(OnUpdate);
             SubscribeLocalEvent<PressureControlledValveComponent, AtmosDeviceDisabledEvent>(OnFilterLeaveAtmosphere);
+            SubscribeLocalEvent<PressureControlledValveComponent, GasAnalyzerScanEvent>(OnAnalyzed);
         }
 
         private void OnInit(EntityUid uid, PressureControlledValveComponent comp, ComponentInit args)
@@ -91,6 +92,26 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             appearance.SetData(FilterVisuals.Enabled, comp.Enabled);
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnAnalyzed(EntityUid uid, PressureControlledValveComponent component, GasAnalyzerScanEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            var gasMixDict = new Dictionary<string, GasMixture?>();
+
+            if(nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet))
+                gasMixDict.Add(component.InletName, inlet.Air);
+            if(nodeContainer.TryGetNode(component.ControlName, out PipeNode? controlNode))
+                gasMixDict.Add(component.ControlName, controlNode.Air);
+            if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
+                gasMixDict.Add(component.OutletName, outlet.Air);
+
+            args.GasMixtures = gasMixDict;
         }
     }
 }

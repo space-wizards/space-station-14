@@ -23,6 +23,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasOutletInjectorComponent, AtmosDeviceUpdateEvent>(OnOutletInjectorUpdated);
             SubscribeLocalEvent<GasOutletInjectorComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<GasOutletInjectorComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<GasOutletInjectorComponent, GasAnalyzerScanEvent>(OnAnalyzed);
         }
 
         private void OnMapInit(EntityUid uid, GasOutletInjectorComponent component, MapInitEvent args)
@@ -76,6 +77,22 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var removed = inlet.Air.RemoveRatio(ratio);
 
             _atmosphereSystem.Merge(environment, removed);
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnAnalyzed(EntityUid uid, GasOutletInjectorComponent component, GasAnalyzerScanEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            var gasMixDict = new Dictionary<string, GasMixture?>();
+
+            if(nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet))
+                gasMixDict.Add(component.InletName, inlet.Air);
+
+            args.GasMixtures = gasMixDict;
         }
     }
 }

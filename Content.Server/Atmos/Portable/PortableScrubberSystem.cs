@@ -38,6 +38,7 @@ namespace Content.Server.Atmos.Portable
             SubscribeLocalEvent<PortableScrubberComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<PortableScrubberComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PortableScrubberComponent, DestructionEventArgs>(OnDestroyed);
+            SubscribeLocalEvent<PortableScrubberComponent, GasAnalyzerScanEvent>(OnScrubberAnalyzed);
         }
 
         private void OnDeviceUpdated(EntityUid uid, PortableScrubberComponent component, AtmosDeviceUpdateEvent args)
@@ -157,6 +158,22 @@ namespace Content.Server.Atmos.Portable
                 return;
 
             appearance.SetData(PortableScrubberVisuals.IsDraining, isDraining);
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnScrubberAnalyzed(EntityUid uid, PortableScrubberComponent component, GasAnalyzerScanEvent args)
+        {
+            var gasMixDict = new Dictionary<string, GasMixture?>();
+            // If it's connected to a port, include the port side
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            {
+                if(nodeContainer != null && nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
+                    gasMixDict.Add(component.PortName, port.Air);
+            }
+            gasMixDict.Add(Name(uid), component.Air);
+            args.GasMixtures = gasMixDict;
         }
     }
 }

@@ -34,6 +34,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceUpdateEvent>(OnFilterUpdated);
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceDisabledEvent>(OnFilterLeaveAtmosphere);
             SubscribeLocalEvent<GasFilterComponent, InteractHandEvent>(OnFilterInteractHand);
+            SubscribeLocalEvent<GasFilterComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
@@ -158,6 +159,26 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 DirtyUI(uid, filter);
             }
 
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnAnalyzed(EntityUid uid, GasFilterComponent component, GasAnalyzerScanEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            var gasMixDict = new Dictionary<string, GasMixture?>();
+
+            if(nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet))
+                gasMixDict.Add(component.InletName, inlet.Air);
+            if(nodeContainer.TryGetNode(component.FilterName, out PipeNode? filterNode))
+                gasMixDict.Add(component.FilterName, filterNode.Air);
+            if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
+                gasMixDict.Add(component.OutletName, outlet.Air);
+
+            args.GasMixtures = gasMixDict;
         }
     }
 }

@@ -12,6 +12,9 @@
     netsync: false
   - type: GasAnalyzer
   - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    closeOnHandDeselect: false
     key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
