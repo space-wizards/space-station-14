@@ -12,7 +12,7 @@
 ?embedEntityCaption:CableApcExtension:2
 ?|}
 #Power storage
-    Each power storage device presented functions as the transformer for it's respective power level (HV, MV, and LV) and also provides a fairly sizable backup battery to help flatten out spikes and dips in power usage.
+    Each power storage device presented functions as the transformer for its respective power level (HV, MV, and LV) and also provides a fairly sizable backup battery to help flatten out spikes and dips in power usage.
 ?{|:Horizontal:Center
 ?embedEntityCaption:SMESBasic:2
 ?embedEntityCaption:SubstationBasic:2
