@@ -3,6 +3,7 @@
                SetSize="300 420" Title="{Loc 'gas-analyzer-window-name'}">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
         <BoxContainer Name="CTopBox" Orientation="Horizontal">
+            <Control HorizontalExpand="True"/>
             <Button HorizontalAlignment="Right" Name="RefreshButton" Text="{Loc 'gas-analyzer-window-refresh-button'}"/>
         </BoxContainer>
         <!-- Gas Mix Data, Populated by function -->

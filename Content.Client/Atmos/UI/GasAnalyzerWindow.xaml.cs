@@ -18,6 +18,7 @@ namespace Content.Client.Atmos.UI
         private Button _refreshButton => RefreshButton;
         private BoxContainer _topBox => CTopBox;
         public event Action? RefreshData;
+        private int _activeTab;
 
         public GasAnalyzerWindow(GasAnalyzerBoundUserInterface owner)
         {
@@ -25,11 +26,19 @@ namespace Content.Client.Atmos.UI
 
             Owner = owner;
             _refreshButton.OnPressed += _ => RefreshData?.Invoke();
+            _tabContainer.OnTabChanged += (i => _activeTab = i);
         }
 
         public void Populate(GasAnalyzerUserMessage msg)
         {
+            // Fixes a nasty crash when changing devices with the window open if the tabs differ
+            if (_activeTab > msg.NodeGasMixes.Length - 1)
+            {
+                _activeTab = 0;
+                _tabContainer.CurrentTab = _activeTab;
+            }
             _tabContainer.RemoveAllChildren();
+
             if (msg.Error != null)
             {
                 _topBox.AddChild(new Label
