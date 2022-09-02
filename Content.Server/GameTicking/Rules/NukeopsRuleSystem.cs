@@ -831,9 +831,5 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             SpawnOperativesForGhostRoles();
     }
 
-    public override void Ended()
-    {
-        _winType = WinType.Neutral;
-        _winConditions.Clear();
-    }
+    public override void Ended() { }
 }
