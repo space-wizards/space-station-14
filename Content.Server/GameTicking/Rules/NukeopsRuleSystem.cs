@@ -284,7 +284,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var allAlive = true;
         foreach (var (_, state) in EntityQuery<NukeOperativeComponent, MobStateComponent>())
         {
-            if (state.CurrentState is DamageState.Dead)
+            if (state.CurrentState is DamageState.Alive)
             {
                 continue;
             }
@@ -311,6 +311,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             diskAtCentCom = _shuttleSystem.CentComMap == diskMapId;
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
+            // This is fine for now, because we can assume a single station in base SS14.
             break;
         }
 
@@ -414,8 +415,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (spawnsAvailable && shuttleMapId == _nukiePlanet)
             return; // Ghost spawns can still access the shuttle. Continue the round.
 
-        // TODO: Win type goes here, major, nukies dead/abandoned
-        // The shuttle is inaccessible to both living nuke operatives and yet to spawn nuke operatives.
+        // The shuttle is inaccessible to both living nuke operatives and yet to spawn nuke operatives,
+        // and there are no nuclear operatives on the target station's map.
         if (spawnsAvailable)
         {
             _winConditions.Add(WinCondition.NukiesAbandoned);
