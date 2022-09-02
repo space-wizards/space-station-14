@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
@@ -297,9 +298,15 @@ namespace Content.Shared.Preferences
 
             name = name.Trim();
 
-            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.RestrictedNames))
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            if (configManager.GetCVar(CCVars.RestrictedNames))
             {
                 name = Regex.Replace(name, @"[^A-Z,a-z,0-9, -]", string.Empty);
+            }
+
+            if (configManager.GetCVar(CCVars.TitleCaseNames))
+            {
+                name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name);
             }
 
             if (string.IsNullOrEmpty(name))

@@ -1065,6 +1065,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ChatPunctuation =
             CVarDef.Create("ic.punctuation", false, CVar.SERVER);
 
+        /// <summary>
+        /// Makes IC character names TitleCase.
+        /// </summary>
+        public static readonly CVarDef<bool> TitleCaseNames =
+            CVarDef.Create("ic.title_case_names", true, CVar.SERVER | CVar.REPLICATED);
+
         /*
          * Salvage
          */
