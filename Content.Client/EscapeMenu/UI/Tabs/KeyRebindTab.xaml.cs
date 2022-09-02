@@ -143,6 +143,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(ContentKeyFunctions.OpenCharacterMenu);
             AddButton(ContentKeyFunctions.OpenContextMenu);
             AddButton(ContentKeyFunctions.OpenCraftingMenu);
+            AddButton(ContentKeyFunctions.OpenGuidebook);
             AddButton(ContentKeyFunctions.OpenInventoryMenu);
             AddButton(ContentKeyFunctions.OpenInfo);
             AddButton(ContentKeyFunctions.OpenActionsMenu);

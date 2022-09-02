@@ -1,0 +1,17 @@
+﻿- type: guideEntry
+  id: Power
+  name: Power
+  text: "/Server Info/Guidebook/Power.txt"
+
+- type: guideEntry
+  id: PlasmaAndUranium
+  name: Plasma & Uranium
+  parent: Power
+  text: "/Server Info/Guidebook/PlasmaAndUranium.txt"
+
+- type: guideEntry
+  id: Biofuel
+  name: Biofuel
+  parent: Power
+  text: "/Server Info/Guidebook/Biofuel.txt"
+
