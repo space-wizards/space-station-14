@@ -19,11 +19,10 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class GasAnalyzerSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly AtmosphereSystem _atmoSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly AtmosphereSystem _atmo = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
         private HashSet<EntityUid> _activeAnalyzers = new();
         private RemQueue<EntityUid> _invalidAnalyzers = new();
@@ -69,7 +68,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!args.CanReach)
             {
-                _popupSystem.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, Filter.Entities(args.User));
                 return;
             }
             ActivateAnalyzer(uid, component, args.User, args.Target);
@@ -93,7 +92,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             component.Target = target;
             component.User = user;
-            component.LastPosition = _entityManager.GetComponent<TransformComponent>(target ?? user).Coordinates;
+            component.LastPosition = EntityManager.GetComponent<TransformComponent>(target ?? user).Coordinates;
             component.Enabled = true;
             Dirty(component);
             SetAppearance(component);
@@ -134,10 +133,10 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             if (user != null && TryComp<ActorComponent>(user, out var actor))
-                _userInterfaceSystem.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
+                _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
 
             if(user is { } userId && component.Enabled)
-                _popupSystem.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
+                _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
             component.Enabled = false;
             SetAppearance(component);
             Dirty(component);
@@ -160,7 +159,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
-            _userInterfaceSystem.TryOpen(component.Owner, GasAnalyzerUiKey.Key, actor.PlayerSession);
+            _userInterface.TryOpen(component.Owner, GasAnalyzerUiKey.Key, actor.PlayerSession);
         }
 
         /// <summary>
@@ -172,11 +171,11 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
 
             // check if the user has walked away from what they scanned
-            var userPos = _entityManager.GetComponent<TransformComponent>(component.User).Coordinates;
+            var userPos = EntityManager.GetComponent<TransformComponent>(component.User).Coordinates;
             if (component.LastPosition.HasValue)
             {
                 // Check if position is out of range => don't update and disable
-                if (!component.LastPosition.Value.InRange(_entityManager, userPos, SharedInteractionSystem.InteractionRange))
+                if (!component.LastPosition.Value.InRange(EntityManager, userPos, SharedInteractionSystem.InteractionRange))
                 {
                     DisableAnalyzer(uid, component, component.User);
                     return false;
@@ -204,7 +203,7 @@ namespace Content.Server.Atmos.EntitySystems
                     // TODO: HACKY SOLUTION UNTIL I FIGURE OUT HOW TO HANDLE PIPES VIA EVENT
                     // note though this will pick up any atmospherics devices that don't add a handler for the scan event
                     // But they really should add that in themselves
-                    _entityManager.TryGetComponent(component.Target, out NodeContainerComponent? node);
+                    EntityManager.TryGetComponent(component.Target, out NodeContainerComponent? node);
                     if (node != null)
                     {
                         foreach (var pair in node.Nodes)
@@ -217,7 +216,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             // Fetch the environmental atmosphere around the scanner. This is after so the scanned item is the first/open tab for UI usability
-            var tileMixture = _atmoSystem.GetContainingMixture(component.Owner, true);
+            var tileMixture = _atmo.GetContainingMixture(component.Owner, true);
             if (tileMixture != null)
             {
                 gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileMixture.Pressure, tileMixture.Temperature,
@@ -228,7 +227,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (gasMixList.Count == 0)
                 return false;
 
-            _userInterfaceSystem.TrySendUiMessage(component.Owner, GasAnalyzerUiKey.Key, new GasAnalyzerUserMessage(gasMixList.ToArray()));
+            _userInterface.TrySendUiMessage(component.Owner, GasAnalyzerUiKey.Key, new GasAnalyzerUserMessage(gasMixList.ToArray()));
             return true;
         }
 
@@ -237,7 +236,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void SetAppearance(GasAnalyzerComponent analyzer)
         {
-            _appearanceSystem.SetData(analyzer.Owner, GasAnalyzerVisuals.VisualState,
+            _appearance.SetData(analyzer.Owner, GasAnalyzerVisuals.VisualState,
                 analyzer.Enabled ? GasAnalyzerVisualState.Working : GasAnalyzerVisualState.Off);
         }
 
@@ -250,7 +249,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = _atmoSystem.GetGas(i);
+                var gas = _atmo.GetGas(i);
 
                 if (mixture?.Moles[i] <= Atmospherics.GasMinMoles)
                     continue;
