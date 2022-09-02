@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Radiation.Components;
 using Content.Shared.Administration;
 using Content.Shared.Radiation.Events;
 using Robust.Shared.Console;
@@ -15,7 +16,7 @@ public partial class RadiationSystem
     private readonly HashSet<ICommonSession> _debugSessions = new();
 
     /// <summary>
-    ///     Toggle radiation debug view for selected player.
+    ///     Toggle radiation debug overlay for selected player.
     /// </summary>
     public void ToggleDebugView(ICommonSession session)
     {
@@ -36,9 +37,9 @@ public partial class RadiationSystem
     }
 
     /// <summary>
-    ///     Send new information for radiation view.
+    ///     Send new information for radiation overlay.
     /// </summary>
-    private void UpdateDebugView(OnRadiationOverlayUpdateEvent ev)
+    private void UpdateDebugOverlay(EntityEventArgs ev)
     {
         var sessions = _debugSessions.ToArray();
         foreach (var session in sessions)
@@ -47,6 +48,28 @@ public partial class RadiationSystem
                 _debugSessions.Remove(session);
             RaiseNetworkEvent(ev, session.ConnectedClient);
         }
+    }
+
+    private void UpdateResistanceDebugOverlay()
+    {
+        if (_debugSessions.Count == 0)
+            return;
+
+        var query = GetEntityQuery<RadiationGridResistanceComponent>();
+        var dict = new Dictionary<EntityUid, Dictionary<Vector2i, float>>();
+
+        foreach (var grid in _mapManager.GetAllGrids())
+        {
+            var gridUid = grid.GridEntityId;
+            if (!query.TryGetComponent(gridUid, out var resistance))
+                continue;
+
+            var resMap = resistance.ResistancePerTile;
+            dict.Add(gridUid, resMap);
+        }
+
+        var ev = new OnRadiationOverlayResistanceUpdateEvent(dict);
+        UpdateDebugOverlay(ev);
     }
 }
 

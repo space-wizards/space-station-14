@@ -16,6 +16,7 @@ public sealed class RadiationDebugOverlay : Overlay
     private readonly Font _font;
 
     public List<RadiationRay>? Rays;
+    public Dictionary<EntityUid, Dictionary<Vector2i, float>>? ResistanceGrids;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
 
@@ -32,7 +33,8 @@ public sealed class RadiationDebugOverlay : Overlay
         switch (args.Space)
         {
             case OverlaySpace.ScreenSpace:
-                DrawScreen(args);
+                DrawScreenRays(args);
+                DrawScreenResistance(args);
                 break;
             case OverlaySpace.WorldSpace:
                 DrawWorld(args);
@@ -40,7 +42,7 @@ public sealed class RadiationDebugOverlay : Overlay
         }
     }
 
-    private void DrawScreen(OverlayDrawArgs args)
+    private void DrawScreenRays(OverlayDrawArgs args)
     {
         if (Rays == null)
             return;
@@ -78,6 +80,30 @@ public sealed class RadiationDebugOverlay : Overlay
         }
     }
 
+    private void DrawScreenResistance(OverlayDrawArgs args)
+    {
+        if (ResistanceGrids == null)
+            return;
+
+        var handle = args.ScreenHandle;
+        foreach (var (gridUid, resMap) in ResistanceGrids)
+        {
+            if (!_mapManager.TryGetGrid(gridUid, out var grid))
+                continue;
+            if (grid.ParentMapId != args.MapId)
+                continue;
+
+            var offset = new Vector2(grid.TileSize, -grid.TileSize) * 0.25f;
+            foreach (var (tile, value) in resMap)
+            {
+                var localPos = grid.GridTileToLocal(tile).Position + offset;
+                var worldPos = grid.LocalToWorld(localPos);
+                var screenCenter = _eyeManager.WorldToScreen(worldPos);
+                handle.DrawString(_font, screenCenter, value.ToString("F2"), color: Color.White);
+            }
+        }
+    }
+
     private void DrawWorld(in OverlayDrawArgs args)
     {
         var handle = args.WorldHandle;
@@ -90,18 +116,17 @@ public sealed class RadiationDebugOverlay : Overlay
         {
             if (ray.MapId != args.MapId)
                 continue;
+            if (ray.IsGridcast)
+                continue;
 
-            if (!ray.IsGridcast)
+            var lastPos = ray.Destination;
+            if (!ray.ReachedDestination)
             {
-                var lastPos = ray.Destination;
-                if (!ray.ReachedDestination)
-                {
-                    var (lastBlocker, _) = ray.Blockers.LastOrDefault();
-                    lastPos = lastBlocker;
-                }
-
-                handle.DrawLine(ray.Source, lastPos, Color.Red);
+                var (lastBlocker, _) = ray.Blockers.LastOrDefault();
+                lastPos = lastBlocker;
             }
+
+            handle.DrawLine(ray.Source, lastPos, Color.Red);
 
         }
 

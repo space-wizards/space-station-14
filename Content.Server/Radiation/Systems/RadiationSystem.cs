@@ -35,6 +35,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
             return;
 
         UpdateGridcast();
+        UpdateResistanceDebugOverlay();
         _accumulator = 0f;
     }
 

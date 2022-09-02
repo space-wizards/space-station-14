@@ -13,6 +13,7 @@ public sealed class RadiationSystem : SharedRadiationSystem
     {
         SubscribeNetworkEvent<OnRadiationOverlayToggledEvent>(OnOverlayToggled);
         SubscribeNetworkEvent<OnRadiationOverlayUpdateEvent>(OnOverlayUpdate);
+        SubscribeNetworkEvent<OnRadiationOverlayResistanceUpdateEvent>(OnResistanceUpdate);
     }
 
     private void OnOverlayToggled(OnRadiationOverlayToggledEvent ev)
@@ -32,5 +33,12 @@ public sealed class RadiationSystem : SharedRadiationSystem
                   $"Sources: {ev.SourcesCount}, Rays: {ev.Rays.Count}";
         Logger.Info(str);
         overlay.Rays = ev.Rays;
+    }
+
+    private void OnResistanceUpdate(OnRadiationOverlayResistanceUpdateEvent ev)
+    {
+        if (!_overlayMan.TryGetOverlay(out RadiationDebugOverlay? overlay))
+            return;
+        overlay.ResistanceGrids = ev.Grids;
     }
 }

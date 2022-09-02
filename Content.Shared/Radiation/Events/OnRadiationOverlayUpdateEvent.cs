@@ -62,3 +62,20 @@ public sealed class OnRadiationOverlayToggledEvent : EntityEventArgs
         IsEnabled = isEnabled;
     }
 }
+
+/// <summary>
+///     Raised when grid resistance was update for radiation overlay visualization.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class OnRadiationOverlayResistanceUpdateEvent : EntityEventArgs
+{
+    /// <summary>
+    ///     Key is grids uid. Values are tiles with their rad resistance.
+    /// </summary>
+    public readonly Dictionary<EntityUid, Dictionary<Vector2i, float>> Grids;
+
+    public OnRadiationOverlayResistanceUpdateEvent(Dictionary<EntityUid, Dictionary<Vector2i, float>> grids)
+    {
+        Grids = grids;
+    }
+}

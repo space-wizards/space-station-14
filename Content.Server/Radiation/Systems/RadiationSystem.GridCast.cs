@@ -41,7 +41,7 @@ public partial class RadiationSystem
         var totalSources = sources.Length;
         var totalReceivers = destinations.Length;
         var ev = new OnRadiationOverlayUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
-        UpdateDebugView(ev);
+        UpdateDebugOverlay(ev);
 
         // send rads for each entity
         foreach (var ray in rays)
