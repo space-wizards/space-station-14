@@ -110,17 +110,35 @@ flavor-complex-water = like water
 flavor-complex-beer = like piss
 flavor-complex-ale = like bread
 flavor-complex-cola = like cola
-flavor-complex-vodka = like fermented pain
+flavor-complex-vodka = like fermented grain
+flavor-complex-tequila = like fermented death
+flavor-complex-sake = like sweet, alcoholic rice
+flavor-complex-rum = like fermented sugar
+flavor-complex-coffee-liquor = like strong, bitter coffee
 flavor-complex-whiskey = like molasses
 flavor-complex-shitty-wine = like grape rinds
 flavor-complex-iced-tea = like iced tea
 flavor-complex-coffee = like coffee
 flavor-complex-milk = like milk
+flavor-complex-tea = like tea
+flavor-complex-ice = like ice
 
 ## Cocktails
 flavor-complex-long-island = suspiciously like iced tea
 flavor-complex-three-mile-island = like tea brewed in nuclear runoff
 flavor-complex-whiskey-cola = like carbonated molasses
+flavor-complex-singulo = like a bottomless hole
+flavor-complex-syndie-bomb = like bitter whiskey
+flavor-complex-tequila-sunrise = like a mexican morning
+flavor-complex-irish-coffee = like an alcoholic wakeup call
+flavor-complex-iced-beer = like ice cold piss
+flavor-complex-gargle-blaster = like somebody smashed your head with a lemon-covered brick of gold
+flavor-complex-bloody-mary = like a bad hangover
+flavor-complex-beepsky = like oil and whiskey
+flavor-complex-banana-honk = like a banana milkshake
+
+### This is exactly what pilk tastes like. I'm not even joking
+flavor-complex-pilk = like sweet milk
 
 # Medicine/chemical-specific flavors.
 
