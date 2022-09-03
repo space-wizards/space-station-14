@@ -5,6 +5,9 @@
   id: FoodSkewerBase
   abstract: true
   components:
+  - type: FlavorProfile
+    flavors:
+      - food
   - type: Food
     trash: FoodKebabSkewer
   - type: Sprite

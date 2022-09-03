@@ -6,6 +6,9 @@
   abstract: true
   description: Now that's a nice pasta!
   components:
+  - type: FlavorProfile
+    flavors:
+      - food
   - type: Food
     trash: FoodPlate
   - type: Sprite

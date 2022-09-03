@@ -6,7 +6,8 @@ public sealed class FlavorProfileComponent : Component
     /// <summary>
     ///     Localized string containing the base flavor of this entity.
     /// </summary>
-    [DataField("flavor")] public List<string> Flavors { get; } = new();
+    [DataField("flavors")]
+    public List<string> Flavors { get; } = new();
 
     /// <summary>
     ///     Reagent IDs to ignore when processing this flavor profile. Defaults to nutriment.
@@ -14,6 +15,8 @@ public sealed class FlavorProfileComponent : Component
     [DataField("ignoreReagents")]
     public HashSet<string> IgnoreReagents { get; } = new()
     {
-        "Nutriment"
+        "Nutriment",
+        "Vitamin",
+        "Protein"
     };
 }

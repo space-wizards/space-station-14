@@ -5,6 +5,9 @@
   id: ProduceBase
   abstract: true
   components:
+  - type: FlavorProfile
+    flavors:
+      - food
   - type: SolutionContainerManager
   - type: Sprite
     netsync: false

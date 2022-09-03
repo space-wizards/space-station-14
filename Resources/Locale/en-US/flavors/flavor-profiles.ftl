@@ -19,6 +19,9 @@ flavor-base-spicy = spicy
 flavor-base-metallic = metallic
 flavor-base-meaty = meaty
 flavor-base-cheesy = cheesy
+flavor-base-funny = funny
+flavor-base-tingly = tingly
+flavor-base-acid = acidic
 
 # lmao
 flavor-base-terrible = terrible
@@ -36,6 +39,11 @@ flavor-food = like food
 flavor-potatoes = like potatoes
 flavor-mushroom = like mushrooms
 flavor-tomato = like tomatoes
+flavor-corn = like corn
+flavor-bread = like bread
+flavor-banana = like bananas
+flavor-apple = like apples
+flavor-donk-warm = like hot lava
 
 ## Complex foodstuffs (cooked foods)
 # Drink-specific flavors.
@@ -43,6 +51,7 @@ flavor-tomato = like tomatoes
 ## Generic alcohol/soda taste. This should be replaced with an actual flavor profile.
 flavor-alcohol = like alcohol
 flavor-soda = like soda
+flavor-juice = like juice
 
 ## Basic drinks
 flavor-water = like water

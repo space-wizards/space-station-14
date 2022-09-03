@@ -37,6 +37,18 @@
   description: flavor-base-cheesy
 
 - type: flavor
+  id: funny
+  description: flavor-base-funny
+
+- type: flavor
+  id: tingly
+  description: flavor-base-tingly
+
+- type: flavor
+  id: acidic
+  description: flavor-base-acidic
+
+- type: flavor
   id: terrible
   description: flavor-base-terrible
 
@@ -58,6 +70,11 @@
   id: soda
   flavorType: Complex
   description: flavor-soda
+
+- type: flavor
+  id: juice
+  flavorType: Complex
+  description: flavor-juice
 
 ## Basic drinks
 - type: flavor
