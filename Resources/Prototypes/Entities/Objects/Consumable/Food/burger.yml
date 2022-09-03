@@ -6,9 +6,6 @@
   id: FoodBreadBun
   description: A hamburger bun. Round and convenient to hold.
   components:
-  - type: FlavorProfile
-    flavors:
-      - food
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi

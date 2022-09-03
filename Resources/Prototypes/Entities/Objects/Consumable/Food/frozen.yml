@@ -5,9 +5,6 @@
   id: FoodFrozenBase
   abstract: true
   components:
-  - type: FlavorProfile
-    flavors:
-      - food
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi

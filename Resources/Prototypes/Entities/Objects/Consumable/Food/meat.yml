@@ -5,9 +5,6 @@
   id: FoodMeatBase
   abstract: true
   components:
-  - type: FlavorProfile
-    flavors:
-      - food
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi

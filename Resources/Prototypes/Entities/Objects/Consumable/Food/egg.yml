@@ -6,9 +6,6 @@
   description: An egg!
   abstract: true
   components:
-  - type: FlavorProfile
-    flavors:
-      - food
   - type: Tag
     tags:
       - Egg

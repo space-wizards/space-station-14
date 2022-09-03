@@ -3,9 +3,6 @@
   id: FoodBowlBase
   abstract: true
   components:
-  - type: FlavorProfile
-    flavors:
-      - food
   - type: Food
     trash: FoodBowlBig
     utensil: Spoon

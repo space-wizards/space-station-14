@@ -9,9 +9,6 @@
   abstract: true
   description: A delicious meal, cooked with love.
   components:
-  - type: FlavorProfile
-    flavors:
-      - food
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
