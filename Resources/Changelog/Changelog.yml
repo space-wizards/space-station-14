@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: SMG crates now come with the correct magazines and amount., type: Fix}
-  id: 1727
-  time: '2022-06-19T21:07:53.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'When stripping other players, the delay now depends on the targeted
@@ -2913,3 +2908,9 @@ Entries:
   - {message: Dead players can no longer smart equip/unequip items., type: Fix}
   id: 2226
   time: '2022-09-02T23:38:47.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed shuttle airlock deconstruction returning plasteel instead of silver.,
+    type: Fix}
+  id: 2227
+  time: '2022-09-03T01:32:19.0000000+00:00'
