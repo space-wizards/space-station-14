@@ -33,22 +33,29 @@ public sealed class FlavorProfileSystem : EntitySystem
 
         flavors.AddRange(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
 
-        var allFlavors = string.Join(", ", flavors.GetRange(0, flavors.Count - 1));
-        var lastFlavor = flavors[^1];
-
-        return !string.IsNullOrEmpty(allFlavors)
-            ? Loc.GetString("flavor-profile", ("flavors", allFlavors), ("lastFlavor", lastFlavor))
-            : Loc.GetString("flavor-profile-nothing");
+        return FlavorsToFlavorMessage(flavors);
     }
 
     public string GetLocalizedFlavorsMessage(Solution solution)
     {
-        var flavors = GetFlavorsFromReagents(solution).ToList();
-        var lastFlavor = flavors[^1];
-        flavors = flavors.GetRange(0, flavors.Count - 1);
-        var allFlavors = string.Join(", ", flavors);
+        return FlavorsToFlavorMessage(GetFlavorsFromReagents(solution).ToList());
+    }
 
-        return Loc.GetString("flavor-profile", ("flavors", allFlavors), ("lastFlavor", lastFlavor));
+    private string FlavorsToFlavorMessage(List<string> flavors)
+    {
+        if (flavors.Count == 1 && !string.IsNullOrEmpty(flavors[0]))
+        {
+            return Loc.GetString("flavor-profile", ("flavor", flavors[0]));
+        }
+
+        if (flavors.Count > 1)
+        {
+            var lastFlavor = flavors[^1];
+            var allFlavors = string.Join(", ", flavors.GetRange(0, flavors.Count - 1));
+            return Loc.GetString("flavor-profile", ("flavors", allFlavors), ("lastFlavor", lastFlavor))
+        }
+
+        return Loc.GetString("flavor-profile-nothing");
     }
 
     private IEnumerable<string> GetFlavorsFromReagents(Solution solution, HashSet<string>? toIgnore = null)
