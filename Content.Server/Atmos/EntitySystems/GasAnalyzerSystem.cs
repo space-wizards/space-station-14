@@ -24,40 +24,32 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
-        private HashSet<EntityUid> _activeAnalyzers = new();
-        private RemQueue<EntityUid> _invalidAnalyzers = new();
-
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GasAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<GasAnalyzerComponent, GasAnalyzerDisableMessage>(OnDisabledMessage);
-            SubscribeLocalEvent<GasAnalyzerComponent, ComponentShutdown>(OnComponentShutdown);
             SubscribeLocalEvent<GasAnalyzerComponent, DroppedEvent>(OnDropped);
             SubscribeLocalEvent<GasAnalyzerComponent, UseInHandEvent>(OnUseInHand);
         }
 
         public override void Update(float frameTime)
         {
-            if (!_activeAnalyzers.Any())
-                return;
 
-            foreach (var analyzer in _activeAnalyzers)
+            foreach (var analyzer in EntityQuery<ActiveGasAnalyzerComponent>())
             {
-                if (_invalidAnalyzers.List != null && _invalidAnalyzers.List.Contains(analyzer))
+                // Don't update every tick
+                analyzer.AccumulatedFrametime += frameTime;
+
+                if (analyzer.AccumulatedFrametime < analyzer.UpdateInterval)
                     continue;
 
-                if(!UpdateAnalyzer(analyzer))
-                    _invalidAnalyzers.Add(analyzer);
-            }
+                analyzer.AccumulatedFrametime -= analyzer.UpdateInterval;
 
-            foreach (var invalidAnalyzer in _invalidAnalyzers)
-            {
-                _activeAnalyzers.Remove(invalidAnalyzer);
+                if (!UpdateAnalyzer(analyzer.Owner))
+                    RemCompDeferred<ActiveGasAnalyzerComponent>(analyzer.Owner);
             }
-
-            _invalidAnalyzers.List?.Clear();
         }
 
         /// <summary>
@@ -91,17 +83,13 @@ namespace Content.Server.Atmos.EntitySystems
         {
             component.Target = target;
             component.User = user;
-            component.LastPosition = EntityManager.GetComponent<TransformComponent>(target ?? user).Coordinates;
+            component.LastPosition = Transform(target ?? user).Coordinates;
             component.Enabled = true;
             Dirty(component);
             SetAppearance(component);
-            _activeAnalyzers.Add(uid);
-        }
-
-        private void OnComponentShutdown(EntityUid uid, GasAnalyzerComponent component, ComponentShutdown args)
-        {
-            // Make sure to remove this analyzer from the update list
-            _activeAnalyzers.Remove(uid);
+            if(!HasComp<ActiveGasAnalyzerComponent>(uid))
+                AddComp<ActiveGasAnalyzerComponent>(uid);
+            UpdateAnalyzer(uid);
         }
 
         /// <summary>
@@ -109,6 +97,8 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnDropped(EntityUid uid, GasAnalyzerComponent component, DroppedEvent args)
         {
+            if(args.User is { } userId && component.Enabled)
+                _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
             DisableAnalyzer(uid, component, args.User);
         }
 
@@ -123,12 +113,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (user != null && TryComp<ActorComponent>(user, out var actor))
                 _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
 
-            if(user is { } userId && component.Enabled)
-                _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
             component.Enabled = false;
             SetAppearance(component);
             Dirty(component);
-            _activeAnalyzers.Remove(uid);
+            RemCompDeferred<ActiveGasAnalyzerComponent>(uid);
         }
 
         /// <summary>
@@ -136,10 +124,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnDisabledMessage(EntityUid uid, GasAnalyzerComponent component, GasAnalyzerDisableMessage message)
         {
-            if (message.Session.AttachedEntity is not {Valid: true} user)
+            if (message.Session.AttachedEntity is not {Valid: true})
                 return;
-            // The UI should've already been closed but no harm in making sure?
-            DisableAnalyzer(uid, component, user);
+            DisableAnalyzer(uid, component);
         }
 
         private void OpenUserInterface(EntityUid user, GasAnalyzerComponent component)
@@ -159,12 +146,14 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
 
             // check if the user has walked away from what they scanned
-            var userPos = EntityManager.GetComponent<TransformComponent>(component.User).Coordinates;
+            var userPos = Transform(component.User).Coordinates;
             if (component.LastPosition.HasValue)
             {
                 // Check if position is out of range => don't update and disable
                 if (!component.LastPosition.Value.InRange(EntityManager, userPos, SharedInteractionSystem.InteractionRange))
                 {
+                    if(component.User is { } userId && component.Enabled)
+                        _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
                     DisableAnalyzer(uid, component, component.User);
                     return false;
                 }
@@ -191,7 +180,7 @@ namespace Content.Server.Atmos.EntitySystems
                     // TODO: HACKY SOLUTION UNTIL I FIGURE OUT HOW TO HANDLE PIPES VIA EVENT
                     // note though this will pick up any atmospherics devices that don't add a handler for the scan event
                     // But they really should add that in themselves
-                    EntityManager.TryGetComponent(component.Target, out NodeContainerComponent? node);
+                    TryComp(component.Target, out NodeContainerComponent? node);
                     if (node != null)
                     {
                         foreach (var pair in node.Nodes)

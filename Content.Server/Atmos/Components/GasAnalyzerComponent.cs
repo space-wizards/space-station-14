@@ -12,4 +12,18 @@ namespace Content.Server.Atmos.Components
         [ViewVariables] public EntityCoordinates? LastPosition;
         [ViewVariables] public bool Enabled;
     }
+
+    /// <summary>
+    /// Used to keep track of which analyzers are active for update purposes
+    /// </summary>
+    [RegisterComponent]
+    public sealed class ActiveGasAnalyzerComponent : Component
+    {
+        public float AccumulatedFrametime;
+
+        /// <summary>
+        /// How often to update the analyzer
+        /// </summary>
+        public float UpdateInterval = 1f;
+    }
 }
