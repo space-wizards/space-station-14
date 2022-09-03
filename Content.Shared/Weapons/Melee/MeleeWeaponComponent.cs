@@ -8,41 +8,35 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Weapons.Melee;
 
+/// <summary>
+/// When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed class MeleeWeaponComponent : Component
 {
+    // TODO: Make it timing based.
+
     // TODO: When predicted comp change.
     [ViewVariables]
     public bool Active;
 
-    // TODO: Can't use accumulator because we'd need an active component and client can't predict changing it.
+    // TODO: Can't use accumulator comp because we'd need an active component and client can't predict changing it.
     /// <summary>
     /// How much windup time have we accumulated for a heavy attack.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("windupAccumulator")]
     public float WindupAccumulator;
 
+    /*
+     * Melee combat works based around releasing the attack as closer to the peak of windup as possible.
+     * There's also a buffer time before displaying the overlay so we don't show it constantly when clicking in combat mode.
+     */
+
     /// <summary>
-    /// How long it takes a heavy attack to windup.
+    /// How long it takes an attack to windup.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("windupTime")]
-    public float WindupTime = 1.5f;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("cooldownAccumulator")]
-    public float CooldownAccumulator;
-
-    /// <summary>
-    /// Cooldown for light attacks.
-    /// Heavy attacks ignore this for windup but will reset this whenever a light or heavy attack is released.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("cooldownTime")]
-    public float CooldownTime = 1f;
-
-    /// <summary>
-    /// Damage modifier for heavy attacks.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("heavyModifier")]
-    public FixedPoint2 HeavyModifier = FixedPoint2.New(2f);
+    public float WindupTime = 1f;
 
     [DataField("damage", required:true)]
     [ViewVariables(VVAccess.ReadWrite)]
