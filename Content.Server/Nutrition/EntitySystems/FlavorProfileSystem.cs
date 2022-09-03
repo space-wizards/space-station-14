@@ -54,7 +54,7 @@ public sealed class FlavorProfileSystem : EntitySystem
         var flavors = new List<FlavorPrototype>();
         foreach (var flavor in flavorSet)
         {
-            if (!_prototypeManager.TryIndex<FlavorPrototype>(flavor, out var flavorPrototype))
+            if (string.IsNullOrEmpty(flavor) || !_prototypeManager.TryIndex<FlavorPrototype>(flavor, out var flavorPrototype))
             {
                 continue;
             }
