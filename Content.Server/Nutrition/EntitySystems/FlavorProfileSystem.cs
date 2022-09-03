@@ -63,7 +63,7 @@ public sealed class FlavorProfileSystem : EntitySystem
 
         if (flavors.Count == 1 && !string.IsNullOrEmpty(flavors[0].FlavorDescription))
         {
-            return Loc.GetString("flavor-profile", ("flavor", flavors[0].FlavorDescription));
+            return Loc.GetString("flavor-profile", ("flavor", Loc.GetString(flavors[0].FlavorDescription)));
         }
 
         if (flavors.Count > 1)
