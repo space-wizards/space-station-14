@@ -104,7 +104,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (TryComp(uid, out AppearanceComponent? appearance))
             {
-                UpdateAppearance(uid, appearance);
+                UpdatePanelAppearance(uid, appearance);
             }
 
             var newState = CalcChargeState(uid, apc, battery);
@@ -213,7 +213,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (TryComp(args.Target, out AppearanceComponent? appearance))
             {
-                UpdateAppearance(args.Target);
+                UpdatePanelAppearance(args.Target);
             }
 
             if (component.IsApcOpen)
@@ -226,7 +226,7 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private void UpdateAppearance(EntityUid uid, AppearanceComponent? appearance = null, ApcComponent? apc = null)
+        private void UpdatePanelAppearance(EntityUid uid, AppearanceComponent? appearance = null, ApcComponent? apc = null)
         {
             if (!Resolve(uid, ref appearance, ref apc, false))
                 return;
