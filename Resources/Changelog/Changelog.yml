@@ -1,10 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Adds obfuscation to pocket items so players can't check the strip menu
-      to see what they have., type: Add}
-  id: 1729
-  time: '2022-06-20T00:57:33.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed chair layering, type: Fix}
@@ -2913,3 +2907,8 @@ Entries:
   - {message: E-swords finally hot enough to light a cigarette, type: Add}
   id: 2228
   time: '2022-09-03T10:50:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Made snow and grass unable to be pried with a crowbar., type: Fix}
+  id: 2229
+  time: '2022-09-03T13:40:20.0000000+00:00'
