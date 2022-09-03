@@ -7,6 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid
 {
+    [DataDefinition]
     [Serializable, NetSerializable]
     public sealed class HumanoidCharacterAppearance : ICharacterAppearance
     {
@@ -27,12 +28,25 @@ namespace Content.Shared.Humanoid
             Markings = markings;
         }
 
+        [DataField("hair")]
         public string HairStyleId { get; }
+
+        [DataField("hairColor")]
         public Color HairColor { get; }
+
+        [DataField("facialHair")]
         public string FacialHairStyleId { get; }
+
+        [DataField("facialHairColor")]
         public Color FacialHairColor { get; }
+
+        [DataField("eyeColor")]
         public Color EyeColor { get; }
+
+        [DataField("skinColor")]
         public Color SkinColor { get; }
+
+        [DataField("markings")]
         public List<Marking> Markings { get; }
 
         public HumanoidCharacterAppearance WithHairStyleName(string newName)

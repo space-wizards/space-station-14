@@ -89,16 +89,3 @@ public sealed class HumanoidSpeciesSpriteLayer : IPrototype
     [DataField("markingsMatchSkin")]
     public bool MarkingsMatchSkin { get; }
 }
-
-[Prototype("humanoidMarkingStartingSet")]
-public sealed class HumanoidMarkingStartingSet : IPrototype
-{
-    [IdDataField]
-    public string ID { get; } = default!;
-
-    [DataField("customBaseLayers")]
-    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
-
-    [DataField("markings")]
-    public List<Marking> Markings = new();
-}

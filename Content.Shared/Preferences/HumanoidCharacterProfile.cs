@@ -18,6 +18,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     /// Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.
     /// </summary>
+    [DataDefinition]
     [Serializable, NetSerializable]
     public sealed class HumanoidCharacterProfile : ICharacterProfile
     {
@@ -134,10 +135,19 @@ namespace Content.Shared.Preferences
         public string Name { get; private set; }
         public string FlavorText { get; private set; }
         public string Species { get; private set; }
+
+        [DataField("age")]
         public int Age { get; private set; }
+
+        [DataField("sex")]
         public Sex Sex { get; private set; }
+
+        [DataField("gender")]
         public Gender Gender { get; private set; }
+
         public ICharacterAppearance CharacterAppearance => Appearance;
+
+        [DataField("appearance")]
         public HumanoidCharacterAppearance Appearance { get; private set; }
         public ClothingPreference Clothing { get; private set; }
         public BackpackPreference Backpack { get; private set; }

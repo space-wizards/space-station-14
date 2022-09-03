@@ -50,22 +50,16 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         SetSpecies(uid, humanoid.Species, false, humanoid);
 
         if (!string.IsNullOrEmpty(humanoid.Initial)
-            && _prototypeManager.TryIndex(humanoid.Initial, out HumanoidMarkingStartingSet? startingSet))
+            && _prototypeManager.TryIndex(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
         {
-            foreach (var marking in startingSet.Markings)
-            {
-                AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
-            }
-
+            // Do this first, because profiles currently do not support custom base layers
             foreach (var (layer, info) in startingSet.CustomBaseLayers)
             {
                 humanoid.CustomBaseLayers.Add(layer, info);
             }
+
+            LoadProfile(uid, startingSet.Profile, humanoid);
         }
-
-        EnsureDefaultMarkings(uid, humanoid);
-
-        Synchronize(uid, humanoid);
     }
 
     public void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidComponent? humanoid = null)
