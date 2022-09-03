@@ -32,7 +32,8 @@ public sealed class FlavorProfileSystem : EntitySystem
         flavors.UnionWith(flavorProfile.Flavors);
         flavors.UnionWith(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
 
-        var ev = new FlavorProfileModificationEvent(flavors);
+        var ev = new FlavorProfileModificationEvent(user, flavors);
+        RaiseLocalEvent(ev);
         RaiseLocalEvent(uid, ev);
         RaiseLocalEvent(user, ev);
 
@@ -42,8 +43,8 @@ public sealed class FlavorProfileSystem : EntitySystem
     public string GetLocalizedFlavorsMessage(EntityUid user, Solution solution)
     {
         var flavors = GetFlavorsFromReagents(solution);
-        var ev = new FlavorProfileModificationEvent(flavors);
-        RaiseLocalEvent(user, ev);
+        var ev = new FlavorProfileModificationEvent(user, flavors);
+        RaiseLocalEvent(user, ev, true);
 
         return FlavorsToFlavorMessage(flavors);
     }
@@ -99,10 +100,12 @@ public sealed class FlavorProfileSystem : EntitySystem
 
 public sealed class FlavorProfileModificationEvent : EntityEventArgs
 {
-    public FlavorProfileModificationEvent(HashSet<string> flavors)
+    public FlavorProfileModificationEvent(EntityUid user, HashSet<string> flavors)
     {
+        User = user;
         Flavors = flavors;
     }
 
+    public EntityUid User { get; }
     public HashSet<string> Flavors { get; }
 }
