@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using Content.Server.Nutrition.Components;
 using Content.Shared.CCVar;
@@ -32,17 +33,22 @@ public sealed class FlavorProfileSystem : EntitySystem
 
         flavors.AddRange(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
 
-        var allFlavors = string.Join(", ", flavors);
+        var allFlavors = string.Join(", ", flavors.GetRange(0, flavors.Count - 1));
+        var lastFlavor = flavors[^1];
 
         return !string.IsNullOrEmpty(allFlavors)
-            ? Loc.GetString("flavor-profile", ("flavors", allFlavors))
+            ? Loc.GetString("flavor-profile", ("flavors", allFlavors), ("lastFlavor", lastFlavor))
             : Loc.GetString("flavor-profile-nothing");
     }
 
     public string GetLocalizedFlavorsMessage(Solution solution)
     {
-        var allFlavors = string.Join(", ", GetFlavorsFromReagents(solution));
-        return Loc.GetString("flavor-profile", ("flavors", allFlavors));
+        var flavors = GetFlavorsFromReagents(solution).ToList();
+        var lastFlavor = flavors[^1];
+        flavors = flavors.GetRange(0, flavors.Count - 1);
+        var allFlavors = string.Join(", ", flavors);
+
+        return Loc.GetString("flavor-profile", ("flavors", allFlavors), ("lastFlavor", lastFlavor));
     }
 
     private IEnumerable<string> GetFlavorsFromReagents(Solution solution, HashSet<string>? toIgnore = null)
