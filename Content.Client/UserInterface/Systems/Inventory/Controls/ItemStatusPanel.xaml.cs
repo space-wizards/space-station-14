@@ -76,7 +76,6 @@ public sealed partial class ItemStatusPanel : Popup
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-
         UpdateItemName();
     }
 
@@ -105,6 +104,12 @@ public sealed partial class ItemStatusPanel : Popup
     {
         if (_entity == null)
             return;
+
+        if (!_entityManager.TryGetComponent<MetaDataComponent>(_entity, out var meta) || meta.Deleted)
+        {
+            Update(null);
+            return;
+        }
 
         if (_entityManager.TryGetComponent(_entity, out HandVirtualItemComponent? virtualItem)
             && _entityManager.EntityExists(virtualItem.BlockingEntity))

@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.DecalPlacer;
 
-public sealed class DecalPlacerUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<SandboxSystem>
+public sealed class DecalPlacerUIController : UIController, IOnStateExited<GameplayState>, IOnSystemChanged<SandboxSystem>
 {
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [UISystemDependency] private readonly SandboxSystem _sandbox = default!;
@@ -19,12 +19,9 @@ public sealed class DecalPlacerUIController : UIController, IOnStateChanged<Game
 
     public void ToggleWindow()
     {
-        if (_window == null)
-        {
-            return;
-        }
+        EnsureWindow();
 
-        if (_window.IsOpen)
+        if (_window!.IsOpen)
         {
             _window.Close();
         }
@@ -34,17 +31,12 @@ public sealed class DecalPlacerUIController : UIController, IOnStateChanged<Game
         }
     }
 
-    public void OnStateEntered(GameplayState state)
-    {
-        DebugTools.Assert(_window == null);
-        _window = UIManager.CreateWindow<DecalPlacerWindow>();
-        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterLeft);
-        ReloadPrototypes();
-    }
-
     public void OnStateExited(GameplayState state)
     {
-        _window!.DisposeAllChildren();
+        if (_window == null || _window.Disposed)
+            return;
+        _window.DisposeAllChildren();
+        _window = null;
     }
 
     public void OnSystemLoaded(SandboxSystem system)
@@ -66,16 +58,27 @@ public sealed class DecalPlacerUIController : UIController, IOnStateChanged<Game
 
     private void ReloadPrototypes()
     {
-        if (_window == null)
-        {
+        if (_window == null || _window.Disposed)
             return;
-        }
+
         var prototypes = _prototypes.EnumeratePrototypes<DecalPrototype>();
         _window.Populate(prototypes);
     }
 
+    private void EnsureWindow()
+    {
+        if (_window is { Disposed: false })
+            return;
+        _window = UIManager.CreateWindow<DecalPlacerWindow>();
+        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterLeft);
+        ReloadPrototypes();
+    }
+
     private void CloseWindow()
     {
-        _window?.Close();
+        if (_window == null || _window.Disposed)
+            return;
+
+        _window.Close();
     }
 }
