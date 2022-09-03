@@ -44,7 +44,7 @@ namespace Content.Client.Viewport
 
         public MainViewport Viewport { get; private set; } = default!;
 
-        public override void Startup()
+        protected override void Startup()
         {
             base.Startup();
 
@@ -88,7 +88,7 @@ namespace Content.Client.Viewport
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
         }
 
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
             DisposePresenters();
