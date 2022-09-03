@@ -163,9 +163,9 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (component.Target != null)
             {
-                // gas analyzed was used on an entity, try to request gas data
+                // gas analyzed was used on an entity, try to request gas data via event for override
                 var ev = new GasAnalyzerScanEvent();
-                //RaiseLocalEvent((EntityUid)component.Target, ev, false);
+                RaiseLocalEvent(component.Target.Value, ev, false);
 
                 if (ev.GasMixtures != null)
                 {
@@ -177,11 +177,8 @@ namespace Content.Server.Atmos.EntitySystems
                 }
                 else
                 {
-                    // TODO: HACKY SOLUTION UNTIL I FIGURE OUT HOW TO HANDLE PIPES VIA EVENT
-                    // note though this will pick up any atmospherics devices that don't add a handler for the scan event
-                    // But they really should add that in themselves
-                    TryComp(component.Target, out NodeContainerComponent? node);
-                    if (node != null)
+                    // No override, fetch manually
+                    if (TryComp(component.Target, out NodeContainerComponent? node))
                     {
                         foreach (var pair in node.Nodes)
                         {
@@ -241,8 +238,9 @@ namespace Content.Server.Atmos.EntitySystems
 }
 
 /// <summary>
-/// Raised when the analyzer is used. An atmospherics device that contains any GasMixtures should subscribe
-/// and add their mixes to GasMixtures to properly handle being analyzed
+/// Raised when the analyzer is used. An atmospherics device that does not rely on a NodeContainer or
+/// wishes to override the default analyzer behaviour of fetching all nodes in the attached NodeContainer
+/// should subscribe to this and return the GasMixtures as desired
 /// </summary>
 public sealed class GasAnalyzerScanEvent : EntityEventArgs
 {

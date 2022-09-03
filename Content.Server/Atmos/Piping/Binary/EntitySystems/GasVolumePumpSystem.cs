@@ -36,7 +36,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceDisabledEvent>(OnVolumePumpLeaveAtmosphere);
             SubscribeLocalEvent<GasVolumePumpComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<GasVolumePumpComponent, InteractHandEvent>(OnPumpInteractHand);
-            SubscribeLocalEvent<GasVolumePumpComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpChangeTransferRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpToggleStatusMessage>(OnToggleStatusMessage);
@@ -164,24 +163,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             appearance.SetData(PumpVisuals.Enabled, pump.Enabled);
-        }
-
-        /// <summary>
-        /// Returns the gas mixture for the gas analyzer
-        /// </summary>
-        private void OnAnalyzed(EntityUid uid, GasVolumePumpComponent component, GasAnalyzerScanEvent args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            var gasMixDict = new Dictionary<string, GasMixture?>();
-
-            if(nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet))
-                gasMixDict.Add(component.InletName, inlet.Air);
-            if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
-                gasMixDict.Add(component.OutletName, outlet.Air);
-
-            args.GasMixtures = gasMixDict;
         }
     }
 }

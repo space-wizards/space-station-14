@@ -23,7 +23,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasValveComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<GasValveComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<GasValveComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<GasValveComponent, GasAnalyzerScanEvent>(OnAnalyzed);
         }
 
         private void OnExamined(EntityUid uid, GasValveComponent valve, ExaminedEvent args)
@@ -79,24 +78,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         public void Toggle(EntityUid uid, GasValveComponent component)
         {
             Set(uid, component, !component.Open);
-        }
-
-        /// <summary>
-        /// Returns the gas mixture for the gas analyzer
-        /// </summary>
-        private void OnAnalyzed(EntityUid uid, GasValveComponent component, GasAnalyzerScanEvent args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            var gasMixDict = new Dictionary<string, GasMixture?>();
-
-            if(nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet))
-                gasMixDict.Add(component.InletName, inlet.Air);
-            if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
-                gasMixDict.Add(component.OutletName, outlet.Air);
-
-            args.GasMixtures = gasMixDict;
         }
     }
 }

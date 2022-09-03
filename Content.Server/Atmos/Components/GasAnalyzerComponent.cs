@@ -19,7 +19,8 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed class ActiveGasAnalyzerComponent : Component
     {
-        public float AccumulatedFrametime;
+        // Set to a tiny bit after the default because otherwise the user often gets a blank window when first using
+        public float AccumulatedFrametime = 2.01f;
 
         /// <summary>
         /// How often to update the analyzer

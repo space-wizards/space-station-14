@@ -18,7 +18,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasPassiveVentComponent, AtmosDeviceUpdateEvent>(OnPassiveVentUpdated);
-            SubscribeLocalEvent<GasPassiveVentComponent, GasAnalyzerScanEvent>(OnAnalyzed);
         }
 
         private void OnPassiveVentUpdated(EntityUid uid, GasPassiveVentComponent vent, AtmosDeviceUpdateEvent args)
@@ -57,22 +56,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
             }
 
-        }
-
-        /// <summary>
-        /// Returns the gas mixture for the gas analyzer
-        /// </summary>
-        private void OnAnalyzed(EntityUid uid, GasPassiveVentComponent component, GasAnalyzerScanEvent args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            var gasMixDict = new Dictionary<string, GasMixture?>();
-
-            if(nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet))
-                gasMixDict.Add(component.InletName, inlet.Air);
-
-            args.GasMixtures = gasMixDict;
         }
     }
 }

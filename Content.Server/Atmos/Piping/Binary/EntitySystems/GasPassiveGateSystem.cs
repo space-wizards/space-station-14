@@ -20,7 +20,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             SubscribeLocalEvent<GasPassiveGateComponent, AtmosDeviceUpdateEvent>(OnPassiveGateUpdated);
             SubscribeLocalEvent<GasPassiveGateComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<GasPassiveGateComponent, GasAnalyzerScanEvent>(OnAnalyzed);
         }
 
         private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, AtmosDeviceUpdateEvent args)
@@ -85,24 +84,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.FlowRate:0.#}"));
             args.PushMarkup(str);
-        }
-
-        /// <summary>
-        /// Returns the gas mixture for the gas analyzer
-        /// </summary>
-        private void OnAnalyzed(EntityUid uid, GasPassiveGateComponent component, GasAnalyzerScanEvent args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            var gasMixDict = new Dictionary<string, GasMixture?>();
-
-            if(nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet))
-                gasMixDict.Add(component.InletName, inlet.Air);
-            if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
-                gasMixDict.Add(component.OutletName, outlet.Air);
-
-            args.GasMixtures = gasMixDict;
         }
     }
 }
