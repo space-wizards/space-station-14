@@ -336,7 +336,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(drained);
+            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(args.User, drained);
 
             if (forceDrink)
             {

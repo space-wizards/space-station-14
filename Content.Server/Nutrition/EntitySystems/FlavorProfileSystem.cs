@@ -20,7 +20,7 @@ public sealed class FlavorProfileSystem : EntitySystem
 
     private const string BackupFlavorMessage = "flavor-profile-nothing";
 
-    public string GetLocalizedFlavorsMessage(EntityUid uid, Solution solution,
+    public string GetLocalizedFlavorsMessage(EntityUid uid, EntityUid user, Solution solution,
         FlavorProfileComponent? flavorProfile = null)
     {
         var flavors = new List<FlavorPrototype>();
@@ -39,14 +39,21 @@ public sealed class FlavorProfileSystem : EntitySystem
             flavors.Add(flavorProto);
         }
 
+        var ev = new FlavorProfileModificationEvent(flavors);
+        RaiseLocalEvent(user, ev);
+
         flavors.AddRange(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
 
         return FlavorsToFlavorMessage(flavors);
     }
 
-    public string GetLocalizedFlavorsMessage(Solution solution)
+    public string GetLocalizedFlavorsMessage(EntityUid user, Solution solution)
     {
-        return FlavorsToFlavorMessage(GetFlavorsFromReagents(solution).ToList());
+        var flavors = GetFlavorsFromReagents(solution).ToList();
+        var ev = new FlavorProfileModificationEvent(flavors);
+        RaiseLocalEvent(user, ev);
+
+        return FlavorsToFlavorMessage(flavors);
     }
 
     private string FlavorsToFlavorMessage(List<FlavorPrototype> flavors)
@@ -86,4 +93,15 @@ public sealed class FlavorProfileSystem : EntitySystem
             yield return flavorProto;
         }
     }
+}
+
+public sealed class FlavorProfileModificationEvent : EntityEventArgs
+{
+    public FlavorProfileModificationEvent(List<FlavorPrototype> flavors)
+    {
+        Flavors = flavors;
+    }
+
+    // flavorprototype has readonly semantics, so just don't store it
+    public List<FlavorPrototype> Flavors { get; }
 }
