@@ -4,6 +4,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
+using Content.Server.Rotatable;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Interaction;
@@ -161,6 +162,19 @@ namespace Content.Server.Atmos.EntitySystems
 
             var gasMixList = new List<GasMixEntry>();
 
+            // Fetch the environmental atmosphere around the scanner. This must be the first entry
+            var tileMixture = _atmo.GetContainingMixture(component.Owner, true);
+            if (tileMixture != null)
+            {
+                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileMixture.Pressure, tileMixture.Temperature,
+                    GenerateGasEntryArray(tileMixture)));
+            }
+            else
+            {
+                // No gases were found
+                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), 0f, 0f));
+            }
+
             if (component.Target != null)
             {
                 // gas analyzed was used on an entity, try to request gas data via event for override
@@ -189,19 +203,14 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
-            // Fetch the environmental atmosphere around the scanner. This is after so the scanned item is the first/open tab for UI usability
-            var tileMixture = _atmo.GetContainingMixture(component.Owner, true);
-            if (tileMixture != null)
-            {
-                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileMixture.Pressure, tileMixture.Temperature,
-                    GenerateGasEntryArray(tileMixture)));
-            }
-
             // Don't bother sending a UI message with no content, and stop updating I guess?
             if (gasMixList.Count == 0)
                 return false;
 
-            _userInterface.TrySendUiMessage(component.Owner, GasAnalyzerUiKey.Key, new GasAnalyzerUserMessage(gasMixList.ToArray()));
+            _userInterface.TrySendUiMessage(component.Owner, GasAnalyzerUiKey.Key,
+                new GasAnalyzerUserMessage(gasMixList.ToArray(),
+                    component.Target != null ? Name(component.Target.Value) : string.Empty,
+                    component.Target ?? EntityUid.Invalid));
             return true;
         }
 

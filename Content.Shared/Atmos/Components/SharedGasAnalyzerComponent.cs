@@ -19,12 +19,15 @@ namespace Content.Shared.Atmos.Components
         [Serializable, NetSerializable]
         public sealed class GasAnalyzerUserMessage : BoundUserInterfaceMessage
         {
+            public string DeviceName;
+            public EntityUid DeviceUid;
             public string? Error;
             public GasMixEntry[] NodeGasMixes;
-
-            public GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string? error = null)
+            public GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string deviceName, EntityUid deviceUid, string? error = null)
             {
                 NodeGasMixes = nodeGasMixes;
+                DeviceName = deviceName;
+                DeviceUid = deviceUid;
                 Error = error;
             }
         }
