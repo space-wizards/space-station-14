@@ -250,6 +250,10 @@
       entity: WallReinforced
       edges:
         - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 4
           steps:
             - tool: Cutting
               doAfter: 1
@@ -293,7 +297,7 @@
                   data: 0
             - tool: Cutting
               doAfter: 1
-              
+
     - node: wallrust
       entity: WallSolidRust
       edges:
