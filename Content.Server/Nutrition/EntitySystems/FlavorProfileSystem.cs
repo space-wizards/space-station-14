@@ -39,11 +39,11 @@ public sealed class FlavorProfileSystem : EntitySystem
             flavors.Add(flavorProto);
         }
 
+        flavors.AddRange(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
+
         var ev = new FlavorProfileModificationEvent(flavors);
         RaiseLocalEvent(uid, ev);
         RaiseLocalEvent(user, ev);
-
-        flavors.AddRange(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
 
         return FlavorsToFlavorMessage(flavors);
     }
