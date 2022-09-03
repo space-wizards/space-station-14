@@ -29,7 +29,10 @@ public sealed class FlavorProfileSystem : EntitySystem
             return Loc.GetString(BackupFlavorMessage);
         }
 
-        flavors.Add(Loc.GetString(flavorProfile.Flavor));
+        foreach (var flavor in flavorProfile.Flavors)
+        {
+            flavors.Add(Loc.GetString(flavor));
+        }
 
         flavors.AddRange(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
 
