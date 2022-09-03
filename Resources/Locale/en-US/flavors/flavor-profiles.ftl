@@ -29,6 +29,10 @@ flavor-base-nutty = nutty
 flavor-base-chalky = chalky
 flavor-base-oily = oily
 flavor-base-peppery = peppery
+flavor-base-slimy = slimy
+flavor-base-magical = magical
+flavor-base-fiber = fibrous
+flavor-base-cold = cold
 
 # lmao
 flavor-base-terrible = terrible
@@ -39,85 +43,90 @@ flavor-base-terrible = terrible
 # Food-specific flavors.
 
 ## Food chemicals. In case you get something that has this inside.
-flavor-nutriment = like nutrition
-flavor-vitamin = like vitamins
-flavor-protein = like protein
+flavor-complex-nutriment = like nutrition
+flavor-complex-vitamin = like vitamins
+flavor-complex-protein = like protein
 
 ## Generic food taste. This should be replaced with an actual flavor profile,
 ## if you have food that looks like this.
-flavor-food = like food
+flavor-complex-food = like food
 
 ## Basic foodstuffs (ingredients, generic flavors)
-flavor-bun = like bun
-flavor-bread = like bread
-flavor-batter = like batter
-flavor-butter = like butter
-flavor-egg = like egg
-flavor-bacon = like bacon
-flavor-chocolate = like chocolate
-flavor-pasta = like pasta
-flavor-rice = like rice
-flavor-oats = like oats
-flavor-jelly = like jelly
-flavor-soy = like soy
-flavor-ice-cream = like ice cream
+flavor-complex-bun = like bun
+flavor-complex-bread = like bread
+flavor-complex-batter = like batter
+flavor-complex-butter = like butter
+flavor-complex-egg = like egg
+flavor-complex-bacon = like bacon
+flavor-complex-chocolate = like chocolate
+flavor-complex-pasta = like pasta
+flavor-complex-rice = like rice
+flavor-complex-oats = like oats
+flavor-complex-jelly = like jelly
+flavor-complex-soy = like soy
+flavor-complex-ice-cream = like ice cream
 
-flavor-peas = like peas
-flavor-pineapple = like pineapple
-flavor-onion = like onion
-flavor-eggplant = like eggplant
-flavor-carrot = like carrots
-flavor-potatoes = like potatoes
-flavor-mushroom = like mushrooms
-flavor-tomato = like tomatoes
-flavor-corn = like corn
-flavor-banana = like bananas
-flavor-apple = like apples
-flavor-bungo = like bungo
-flavor-raisins = like dried grapes
+flavor-complex-peas = like peas
+flavor-complex-pineapple = like pineapple
+flavor-complex-onion = like onion
+flavor-complex-eggplant = like eggplant
+flavor-complex-carrot = like carrots
+flavor-complex-potatoes = like potatoes
+flavor-complex-mushroom = like mushrooms
+flavor-complex-tomato = like tomatoes
+flavor-complex-corn = like corn
+flavor-complex-banana = like bananas
+flavor-complex-apple = like apples
+flavor-complex-bungo = like bungo
+flavor-complex-raisins = like dried grapes
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
-flavor-borsch-1 = borsch
-flavor-borsch-2 = bortsch
-flavor-borsch-3 = borstch
-flavor-borsch-4 = borsh
-flavor-borsch-5 = borscht
-flavor-mre-brownie = like a cheap brownie
-flavor-fortune-cookie = like random chance
-flavor-nutribrick = like you're operating in a jungle
-flavor-cheap-noodles = like cheap noodles
-flavor-syndi-cakes = like a hearty fruit cake
-flavor-sus-jerky = like sus
-flavor-boritos = like gaming
-flavor-nachos = like nachos
-flavor-donk-warm = like hot lava
-flavor-copypasta = like a reptitive joke
+flavor-complex-curry = like curry
+flavor-complex-borsch-1 = like borsch
+flavor-complex-borsch-2 = like bortsch
+flavor-complex-borsch-3 = like borstch
+flavor-complex-borsch-4 = like borsh
+flavor-complex-borsch-5 = like borscht
+flavor-complex-mre-brownie = like a cheap brownie
+flavor-complex-fortune-cookie = like random chance
+flavor-complex-nutribrick = like you're operating in a jungle
+flavor-complex-cheap-noodles = like cheap noodles
+flavor-complex-syndi-cakes = like a hearty fruit cake
+flavor-complex-sus-jerky = like sus
+flavor-complex-boritos = like gaming
+flavor-complex-nachos = like nachos
+flavor-complex-donk-warm = like hot lava
+flavor-complex-copypasta = like a reptitive joke
 
 # Drink-specific flavors.
 
 ## Generic alcohol/soda taste. This should be replaced with an actual flavor profile.
-flavor-alcohol = like alcohol
-flavor-soda = like soda
-flavor-juice = like juice
+flavor-complex-alcohol = like alcohol
+flavor-complex-soda = like soda
+flavor-complex-juice = like juice
 
 ## Basic drinks
-flavor-water = like water
-flavor-beer = like piss
-flavor-ale = like bread
-flavor-cola = like cola
-flavor-vodka = like fermented pain
-flavor-whiskey = like molasses
-flavor-shitty-wine = like grape rinds
-flavor-iced-tea = like iced tea
-flavor-coffee = like coffee
-flavor-milk = like milk
+flavor-complex-water = like water
+flavor-complex-beer = like piss
+flavor-complex-ale = like bread
+flavor-complex-cola = like cola
+flavor-complex-vodka = like fermented pain
+flavor-complex-whiskey = like molasses
+flavor-complex-shitty-wine = like grape rinds
+flavor-complex-iced-tea = like iced tea
+flavor-complex-coffee = like coffee
+flavor-complex-milk = like milk
 
 ## Cocktails
-flavor-long-island = suspiciously like iced tea
-flavor-three-mile-island = like tea brewed in nuclear runoff
-flavor-whiskey-cola = like carbonated molasses
+flavor-complex-long-island = suspiciously like iced tea
+flavor-complex-three-mile-island = like tea brewed in nuclear runoff
+flavor-complex-whiskey-cola = like carbonated molasses
 
 # Medicine/chemical-specific flavors.
 
 ## Generic flavors.
-flavor-medicine = like medicine
+flavor-complex-medicine = like medicine
+
+flavor-complex-carpet = like a handful of fur
+flavor-complex-bee = unbeelievable
+flavor-complex-sax = like jazz
