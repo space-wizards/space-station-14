@@ -59,7 +59,7 @@ public sealed class FlavorProfileSystem : EntitySystem
 
     private string FlavorsToFlavorMessage(HashSet<FlavorPrototype> flavorSet)
     {
-        var flavors = flavorSet.DistinctBy(v => v.ID).ToList();
+        var flavors = flavorSet.ToList();
         flavors.Sort((a, b) => a.FlavorType.CompareTo(b.FlavorType));
 
         if (flavors.Count == 1 && !string.IsNullOrEmpty(flavors[0].FlavorDescription))
