@@ -23,7 +23,7 @@ public sealed class FlavorProfileSystem : EntitySystem
     public string GetLocalizedFlavorsMessage(EntityUid uid, EntityUid user, Solution solution,
         FlavorProfileComponent? flavorProfile = null)
     {
-        var flavors = new List<FlavorPrototype>();
+        var flavors = new HashSet<FlavorPrototype>();
         if (!Resolve(uid, ref flavorProfile))
         {
             return Loc.GetString(BackupFlavorMessage);
@@ -39,7 +39,7 @@ public sealed class FlavorProfileSystem : EntitySystem
             flavors.Add(flavorProto);
         }
 
-        flavors.AddRange(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
+        flavors.UnionWith(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
 
         var ev = new FlavorProfileModificationEvent(flavors);
         RaiseLocalEvent(uid, ev);
@@ -50,16 +50,16 @@ public sealed class FlavorProfileSystem : EntitySystem
 
     public string GetLocalizedFlavorsMessage(EntityUid user, Solution solution)
     {
-        var flavors = GetFlavorsFromReagents(solution).ToList();
+        var flavors = GetFlavorsFromReagents(solution);
         var ev = new FlavorProfileModificationEvent(flavors);
         RaiseLocalEvent(user, ev);
 
         return FlavorsToFlavorMessage(flavors);
     }
 
-    private string FlavorsToFlavorMessage(List<FlavorPrototype> flavors)
+    private string FlavorsToFlavorMessage(HashSet<FlavorPrototype> flavorSet)
     {
-        flavors = flavors.DistinctBy(v => v.ID).ToList();
+        var flavors = flavorSet.DistinctBy(v => v.ID).ToList();
         flavors.Sort((a, b) => a.FlavorType.CompareTo(b.FlavorType));
 
         if (flavors.Count == 1 && !string.IsNullOrEmpty(flavors[0].FlavorDescription))
@@ -77,8 +77,9 @@ public sealed class FlavorProfileSystem : EntitySystem
         return Loc.GetString("flavor-profile-nothing");
     }
 
-    private IEnumerable<FlavorPrototype> GetFlavorsFromReagents(Solution solution, HashSet<string>? toIgnore = null)
+    private HashSet<FlavorPrototype> GetFlavorsFromReagents(Solution solution, HashSet<string>? toIgnore = null)
     {
+        var flavors = new HashSet<FlavorPrototype>();
         foreach (var reagent in solution.Contents)
         {
             if (toIgnore != null && toIgnore.Contains(reagent.ReagentId))
@@ -92,18 +93,20 @@ public sealed class FlavorProfileSystem : EntitySystem
                 continue;
             }
 
-            yield return flavorProto;
+            flavors.Add(flavorProto);
         }
+
+        return flavors;
     }
 }
 
 public sealed class FlavorProfileModificationEvent : EntityEventArgs
 {
-    public FlavorProfileModificationEvent(List<FlavorPrototype> flavors)
+    public FlavorProfileModificationEvent(HashSet<FlavorPrototype> flavors)
     {
         Flavors = flavors;
     }
 
     // flavorprototype has readonly semantics, so just don't store it
-    public List<FlavorPrototype> Flavors { get; }
+    public HashSet<FlavorPrototype> Flavors { get; }
 }
