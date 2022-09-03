@@ -74,7 +74,7 @@ public sealed class DoAfterOverlay : Overlay
                 float yOffset;
                 if (spriteQuery.TryGetComponent(comp.Owner, out var sprite))
                 {
-                    yOffset = sprite.Bounds.Height / 2f + 0.05f;
+                    yOffset = MathF.Pow(sprite.Bounds.Height,2) / 4f + 0.05f;
                 }
                 else
                 {
