@@ -12,7 +12,7 @@
     - node: apcEmpty
       entity: EmptyAPC
       edges:
-        - to: apc
+        - to: apcWithElectronics
           steps:
             - component: ApcElectronics
               name: "APC electronics"
@@ -31,6 +31,14 @@
           steps:
             - tool: Screwing
               doAfter: 2
+
+    # This node is just used for construction step-by-step guide menu
+    - node: apcWithElectronics
+      edges:
+        - to: apc
+          steps:
+            - tool: Screwing
+            
 
     - node: apc
       entity: BaseAPC
