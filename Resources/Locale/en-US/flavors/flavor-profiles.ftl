@@ -26,6 +26,9 @@ flavor-base-acid = acidic
 flavor-base-leafy = leafy
 flavor-base-minty = minty
 flavor-base-nutty = nutty
+flavor-base-chalky = chalky
+flavor-base-oily = oily
+flavor-base-peppery = peppery
 
 # lmao
 flavor-base-terrible = terrible
@@ -34,6 +37,11 @@ flavor-base-terrible = terrible
 # specific.
 
 # Food-specific flavors.
+
+## Food chemicals. In case you get something that has this inside.
+flavor-nutriment = like nutrition
+flavor-vitamin = like vitamins
+flavor-protein = like protein
 
 ## Generic food taste. This should be replaced with an actual flavor profile,
 ## if you have food that looks like this.
@@ -109,4 +117,7 @@ flavor-long-island = suspiciously like iced tea
 flavor-three-mile-island = like tea brewed in nuclear runoff
 flavor-whiskey-cola = like carbonated molasses
 
-# Medicine-specific flavors.
+# Medicine/chemical-specific flavors.
+
+## Generic flavors.
+flavor-medicine = like medicine
