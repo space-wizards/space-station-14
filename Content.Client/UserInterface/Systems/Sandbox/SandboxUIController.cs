@@ -121,7 +121,6 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         _window?.Close();
         EntitySpawningController.CloseWindow();
         TileSpawningController.CloseWindow();
-        DecalPlacerController.CloseWindow();
     }
 
     private bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
