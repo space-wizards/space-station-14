@@ -347,13 +347,16 @@ namespace Content.Server.Nutrition.EntitySystems
                     Loc.GetString("drink-component-force-feed-success", ("user", userName)), uid, Filter.Entities(uid));
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
+                    Loc.GetString("drink-component-force-feed-success-user", ("target", targetName), ("flavors", flavors)),
                     args.User, Filter.Entities(args.User));
             }
             else
             {
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-try-use-drink-success-slurp", ("flavors", flavors)), args.User, Filter.Pvs(args.User));
+                    Loc.GetString("drink-component-try-use-drink-success-slurp-taste", ("flavors", flavors)), args.User,
+                    Filter.Entities(args.User));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User));
             }
 
             SoundSystem.Play(args.Drink.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));

@@ -189,7 +189,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName)),
                     uid, Filter.Entities(uid));
 
-                _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success-user", ("target", targetName)),
+                _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success-user", ("target", targetName), ("flavors", flavors)),
                     args.User, Filter.Entities(args.User));
             }
             else
