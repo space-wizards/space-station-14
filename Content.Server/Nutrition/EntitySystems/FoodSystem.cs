@@ -180,7 +180,7 @@ namespace Content.Server.Nutrition.EntitySystems
             split.DoEntityReaction(uid, ReactionMethod.Ingestion);
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, split, firstStomach.Value.Comp);
 
-            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(uid, args.User, split);
+            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(args.Food.Owner, args.User, split);
 
             if (forceFeed)
             {
