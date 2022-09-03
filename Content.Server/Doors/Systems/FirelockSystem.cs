@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Doors.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
@@ -12,6 +13,7 @@ namespace Content.Server.Doors.Systems
     public sealed class FirelockSystem : EntitySystem
     {
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+        [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
 
         public override void Initialize()
         {
@@ -21,9 +23,10 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<FirelockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
             SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, BeforeDoorPryEvent>(OnBeforeDoorPry);
+            SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
-            SubscribeLocalEvent<FirelockComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<FirelockComponent, AtmosAlarmEvent>(OnAtmosAlarm);
         }
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
@@ -60,30 +63,40 @@ namespace Content.Server.Doors.Systems
             }
         }
 
+        private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
+        {
+            var ev = new BeforeDoorAutoCloseEvent();
+            RaiseLocalEvent(uid, ev);
+            if (ev.Cancelled)
+            {
+                return;
+            }
+
+            _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
+        }
+
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
         {
+            if (!this.IsPowered(uid, EntityManager))
+                args.Cancel();
+
             // Make firelocks autoclose, but only if the last alarm type it
             // remembers was a danger. This is to prevent people from
             // flooding hallways with endless bad air/fire.
-            if (!EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable))
-            {
-                args.Cancel();
-                return;
-            }
-            if (alarmable.HighestNetworkState != AtmosMonitorAlarmType.Danger)
+            if (_atmosAlarmable.TryGetHighestAlert(uid, out var alarm) && alarm != AtmosAlarmType.Danger || alarm == null)
                 args.Cancel();
         }
 
-        private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosMonitorAlarmEvent args)
+        private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosAlarmEvent args)
         {
             if (!TryComp<DoorComponent>(uid, out var doorComponent)) return;
 
-            if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+            if (args.AlarmType == AtmosAlarmType.Normal)
             {
                 if (doorComponent.State == DoorState.Closed)
                     _doorSystem.TryOpen(uid);
             }
-            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+            else if (args.AlarmType == AtmosAlarmType.Danger)
             {
                 component.EmergencyPressureStop();
             }
