@@ -6,7 +6,6 @@ using Robust.Shared.Audio;
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-[Access(typeof(ApcSystem))]
 public sealed class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]

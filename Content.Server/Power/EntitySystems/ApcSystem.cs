@@ -41,15 +41,10 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
             SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
 
-            // APC Screwdriving-related event
             SubscribeLocalEvent<ApcToolFinishedEvent>(OnToolFinished);
             SubscribeLocalEvent<ApcComponent, InteractUsingEvent>(OnInteractUsing);
-            /*
             SubscribeLocalEvent<ApcComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<ApcComponent, OnScrewingDoAfterEvent>(OnScrewingDoAfter);
-            SubscribeLocalEvent<ApcComponent, OnScrewingDoAfterCancelEvent>(OnScrewingDoAfterCancel);
-            SubscribeLocalEvent<ApcComponent, ApcActionMessage>(OnApcActionMessage);
-            */
+            
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
@@ -109,7 +104,10 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref apc, ref battery))
                 return;
 
-            UpdateAppearance(uid);
+            if (TryComp(uid, out AppearanceComponent? appearance))
+            {
+                UpdateAppearance(uid, appearance);
+            }
 
             var newState = CalcChargeState(uid, apc, battery);
             if (newState != apc.LastChargeState && apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
@@ -117,7 +115,7 @@ namespace Content.Server.Power.EntitySystems
                 apc.LastChargeState = newState;
                 apc.LastChargeStateTime = _gameTiming.CurTime;
 
-                if (TryComp(uid, out AppearanceComponent? appearance))
+                if (appearance != null)
                 {
                     appearance.SetData(ApcVisuals.ChargeState, newState);
                 }
@@ -192,8 +190,6 @@ namespace Content.Server.Power.EntitySystems
             return ApcExternalPowerState.Good;
         }
 
-        //Screwdriving related functions
-
         public static ApcPanelState GetPanelState(ApcComponent apc)
         {
             if (apc.IsApcOpen)
@@ -216,7 +212,11 @@ namespace Content.Server.Power.EntitySystems
             if (!EntityManager.TryGetComponent(args.Target, out ApcComponent? component))
                 return;
             component.IsApcOpen = !component.IsApcOpen;
-            UpdateAppearance(args.Target);
+
+            if (TryComp(args.Target, out AppearanceComponent? appearance))
+            {
+                UpdateAppearance(args.Target);
+            }
 
             if (component.IsApcOpen)
             {
@@ -244,6 +244,13 @@ namespace Content.Server.Power.EntitySystems
             {
                 Target = target;
             }
+        }
+
+        private void OnExamine(EntityUid uid, ApcComponent component, ExaminedEvent args)
+        {
+            args.PushMarkup(Loc.GetString(component.IsApcOpen
+                ? "apc-component-on-examine-panel-open"
+                : "apc-component-on-examine-panel-closed"));
         }
     }
 }

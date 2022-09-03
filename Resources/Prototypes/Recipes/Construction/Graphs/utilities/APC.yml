@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: APC
   start: start
   graph:
@@ -17,6 +17,11 @@
             - component: ApcElectronics
               name: "APC electronics"
               doAfter: 2
+          completed:
+            - !type:SpawnPanel
+              open: true
+            - !type:DeleteEntity {}
+
         - to: start
           completed:
             - !type:GivePrototype
@@ -35,7 +40,9 @@
             - !type:GivePrototype
               prototype: APCElectronics
               amount: 1
-            - !type:DeleteEntity {}
+          conditions:
+            - !type:ApcPanel
+              open: true
           steps:
             - tool: Prying
               doAfter: 4

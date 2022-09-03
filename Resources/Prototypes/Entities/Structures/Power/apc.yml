@@ -93,22 +93,6 @@
         acts: [ "Destruction" ]
   - type: StationInfiniteBatteryTarget
 
-# APC opened TODO: Remove this, 
-- type: entity
-  id: OpenAPC
-  name: Opened APC
-  parent: BaseAPC
-  suffix: With electronics
-  components:
-    - type: Sprite
-      drawdepth: WallMountedItems
-      netsync: false
-      sprite: Structures/Power/apc.rsi
-      state: apcframe
-    - type: Construction
-      graph: APC
-      node: apcOpen
-
 # APC under construction
 - type: entity
   noSpawn: true

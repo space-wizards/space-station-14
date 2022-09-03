@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ApcOpenCondition : IGraphCondition
+    public sealed class ApcPanel : IGraphCondition
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 

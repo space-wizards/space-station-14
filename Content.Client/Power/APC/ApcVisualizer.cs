@@ -23,6 +23,9 @@ namespace Content.Client.Power.APC
 
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
+            sprite.LayerMapSet(Layers.Panel, sprite.AddLayerState("apc0"));
+            sprite.LayerSetShader(Layers.Panel, "unshaded");
+
             sprite.LayerMapSet(Layers.ChargeState, sprite.AddLayerState("apco3-0"));
             sprite.LayerSetShader(Layers.ChargeState, "unshaded");
 
@@ -34,9 +37,6 @@ namespace Content.Client.Power.APC
 
             sprite.LayerMapSet(Layers.Lighting, sprite.AddLayerState("apco1-3"));
             sprite.LayerSetShader(Layers.Lighting, "unshaded");
-
-            sprite.LayerMapSet(Layers.Panel, sprite.AddLayerState("apc0"));
-            sprite.LayerSetShader(Layers.Panel, "unshaded");
 
             sprite.LayerMapSet(Layers.Environment, sprite.AddLayerState("apco2-3"));
             sprite.LayerSetShader(Layers.Environment, "unshaded");
@@ -100,12 +100,12 @@ namespace Content.Client.Power.APC
 
         enum Layers : byte
         {
-            Panel,
             ChargeState,
             Lock,
             Equipment,
             Lighting,
             Environment,
+            Panel,
         }
     }
 }
