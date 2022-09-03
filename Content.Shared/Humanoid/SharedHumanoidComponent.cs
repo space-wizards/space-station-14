@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -16,43 +17,20 @@ public abstract class SharedHumanoidComponent : Component
     public string Species { get; set; } = default!;
 
     /// <summary>
-    ///     The initial sprites that this humanoid should
-    ///     start with. Processed after the humanoid's
-    ///     base sprites are processed, and includes things
-    ///     like hair or markings.
-    ///
-    ///     This should be for humanoid variants that need
-    ///     special sprites on spawn.
+    ///     The initial profile and base layers to apply to this humanoid.
     /// </summary>
     [DataField("initial")]
     public string Initial { get; } = default!;
 
     /// <summary>
-    ///     Skin color of this humanoid. This should probably
-    ///     be enforced against the species if manually set...
-    ///
-    ///     - This is updated on the client by OnChangeData
+    ///     Skin color of this humanoid.
     /// </summary>
     [DataField("skinColor")]
     public Color SkinColor { get; set;  } = Color.FromHex("#C0967F");
 
-    // Eye color is updated by OnChangeData by just setting the
-    // color of the eye layer. It isn't stored in here, because
-    // anything relevant should just target that layer server-side.
-
-    // TODO: Accessories and Markings should probably be merged into SpriteAccessory 2.0?
-    // The distinction is really vague, and markings allows for things like species restriction
-    // and multi-layered sprites in its prototype. It was already discussed that sprite accessory
-    // (which is literally just hairs) would be eclipsed by markings, so merging the two together
-    // wouldn't be a bad idea.
-
-    // ^^^ Attempting this, let's see how well this goes
-
     /// <summary>
     ///     Visual layers currently hidden. This will affect the base sprite
     ///     on this humanoid layer, and any markings that sit above it.
-    ///
-    ///     - This is updated on the client by OnChangeData
     /// </summary>
     [ViewVariables]
     public readonly HashSet<HumanoidVisualLayers> HiddenLayers = new();
@@ -71,8 +49,15 @@ public sealed class CustomBaseLayerInfo
         Color = color;
     }
 
+    /// <summary>
+    ///     ID of this custom base layer. Must be a <see cref="HumanoidSpeciesSpriteLayer"/>.
+    /// </summary>
     [DataField("id")]
     public string ID { get; }
+
+    /// <summary>
+    ///     Color of this custom base layer.
+    /// </summary>
     [DataField("color")]
     public Color Color { get; }
 }

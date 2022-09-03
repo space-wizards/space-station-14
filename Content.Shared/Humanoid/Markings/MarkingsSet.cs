@@ -22,7 +22,7 @@ namespace Content.Shared.Humanoid.Markings;
 /// </summary>
 /// <remarks>
 ///     This is serializable for the admin panel that sets markings on demand for a player.
-///     Most APIs that accept a set of markings usually use a List<Marking> instead.
+///     Most APIs that accept a set of markings usually use a List of type Marking instead.
 /// </remarks>
 [Serializable, NetSerializable]
 public sealed class MarkingSet
@@ -60,7 +60,7 @@ public sealed class MarkingSet
     ///     process the list, truncating if necessary. Markings that
     ///     do not exist as a prototype will be removed.
     /// </summary>
-    /// <param name="markings"></param>
+    /// <param name="markings">The lists of markings to use.</param>
     /// <param name="pointsPrototype">The ID of the points dictionary prototype.</param>
     public MarkingSet(List<Marking> markings, string pointsPrototype, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
     {
@@ -89,7 +89,7 @@ public sealed class MarkingSet
     ///     without point validation. This will still validate every
     ///     marking, to ensure that it can be placed into the set.
     /// </summary>
-    /// <param name="markings"></param>
+    /// <param name="markings">The list of markings to use.</param>
     public MarkingSet(List<Marking> markings, MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
@@ -106,9 +106,9 @@ public sealed class MarkingSet
     }
 
     /// <summary>
-    ///     Construct a MarkingSet by cloning another set.
+    ///     Construct a MarkingSet by deep cloning another set.
     /// </summary>
-    /// <param name="other"></param>
+    /// <param name="other">The other marking set.</param>
     public MarkingSet(MarkingSet other)
     {
         foreach (var (key, list) in other._markings)
@@ -122,6 +122,12 @@ public sealed class MarkingSet
         _points = MarkingPoints.CloneMarkingPointDictionary(other._points);
     }
 
+    /// <summary>
+    ///     Filters markings based on species restrictions in the marking's prototype from this marking set.
+    /// </summary>
+    /// <param name="species">The species to filter.</param>
+    /// <param name="markingManager">Marking manager.</param>
+    /// <param name="prototypeManager">Prototype manager.</param>
     public void FilterSpecies(string species, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
     {
         IoCManager.Resolve(ref markingManager);
@@ -160,6 +166,10 @@ public sealed class MarkingSet
         }
     }
 
+    /// <summary>
+    ///     Ensures that all markings in this set are valid.
+    /// </summary>
+    /// <param name="markingManager">Marking manager.</param>
     public void EnsureValid(MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
@@ -188,6 +198,11 @@ public sealed class MarkingSet
         }
     }
 
+    /// <summary>
+    ///     Ensures that the default markings as defined by the marking point set in this marking set are applied.
+    /// </summary>
+    /// <param name="skinColor">Color to apply.</param>
+    /// <param name="markingManager">Marking manager.</param>
     public void EnsureDefault(Color? skinColor = null, MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
@@ -229,6 +244,11 @@ public sealed class MarkingSet
         }
     }
 
+    /// <summary>
+    ///     How many points are left in this marking set's category
+    /// </summary>
+    /// <param name="category">The category to check</param>
+    /// <returns>A number equal or greater than zero if the category exists, -1 otherwise.</returns>
     public int PointsLeft(MarkingCategories category)
     {
         if (!_points.TryGetValue(category, out var points))
@@ -242,8 +262,8 @@ public sealed class MarkingSet
     /// <summary>
     ///     Add a marking to the front of the category's list of markings.
     /// </summary>
-    /// <param name="category"></param>
-    /// <param name="marking"></param>
+    /// <param name="category">Category to add the marking to.</param>
+    /// <param name="marking">The marking instance in question.</param>
     public void AddFront(MarkingCategories category, Marking marking)
     {
         if (!marking.Forced && _points.TryGetValue(category, out var points))
@@ -292,6 +312,11 @@ public sealed class MarkingSet
         markings.Add(marking);
     }
 
+    /// <summary>
+    ///     Adds a category to this marking set.
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
     public List<Marking> AddCategory(MarkingCategories category)
     {
         var markings = new List<Marking>();
@@ -299,6 +324,12 @@ public sealed class MarkingSet
         return markings;
     }
 
+    /// <summary>
+    ///     Replace a marking at a given index in a marking category with another marking.
+    /// </summary>
+    /// <param name="category">The category to replace the marking in.</param>
+    /// <param name="index">The index of the marking.</param>
+    /// <param name="marking">The marking to insert.</param>
     public void Replace(MarkingCategories category, int index, Marking marking)
     {
         if (index < 0 || !_markings.TryGetValue(category, out var markings)
@@ -310,6 +341,12 @@ public sealed class MarkingSet
         markings[index] = marking;
     }
 
+    /// <summary>
+    ///     Remove a marking by category and ID.
+    /// </summary>
+    /// <param name="category">The category that contains the marking.</param>
+    /// <param name="id">The marking's ID.</param>
+    /// <returns>True if removed, false otherwise.</returns>
     public bool Remove(MarkingCategories category, string id)
     {
         if (!_markings.TryGetValue(category, out var markings))
@@ -336,6 +373,12 @@ public sealed class MarkingSet
         return false;
     }
 
+    /// <summary>
+    ///     Remove a marking by category and index.
+    /// </summary>
+    /// <param name="category">The category that contains the marking.</param>
+    /// <param name="idx">The marking's index.</param>
+    /// <returns>True if removed, false otherwise.</returns>
     public void Remove(MarkingCategories category, int idx)
     {
         if (!_markings.TryGetValue(category, out var markings))
@@ -356,6 +399,11 @@ public sealed class MarkingSet
         markings.RemoveAt(idx);
     }
 
+    /// <summary>
+    ///     Remove an entire category from this marking set.
+    /// </summary>
+    /// <param name="category">The category to remove.</param>
+    /// <returns>True if removed, false otherwise.</returns>
     public bool RemoveCategory(MarkingCategories category)
     {
         if (!_markings.TryGetValue(category, out var markings))
@@ -380,6 +428,9 @@ public sealed class MarkingSet
         return true;
     }
 
+    /// <summary>
+    ///     Clears all markings from this marking set.
+    /// </summary>
     public void Clear()
     {
         foreach (var category in Enum.GetValues<MarkingCategories>())
@@ -388,6 +439,12 @@ public sealed class MarkingSet
         }
     }
 
+    /// <summary>
+    ///     Attempt to find the index of a marking in a category by ID.
+    /// </summary>
+    /// <param name="category">The category to search in.</param>
+    /// <param name="id">The ID to search for.</param>
+    /// <returns>The index of the marking, otherwise a negative number.</returns>
     public int FindIndexOf(MarkingCategories category, string id)
     {
         if (!_markings.TryGetValue(category, out var markings))
@@ -398,6 +455,12 @@ public sealed class MarkingSet
         return markings.FindIndex(m => m.MarkingId == id);
     }
 
+    /// <summary>
+    ///     Tries to get an entire category from this marking set.
+    /// </summary>
+    /// <param name="category">The category to fetch.</param>
+    /// <param name="markings">A read only list of the all markings in that category.</param>
+    /// <returns>True if successful, false otherwise.</returns>
     public bool TryGetCategory(MarkingCategories category, [NotNullWhen(true)] out IReadOnlyList<Marking>? markings)
     {
         markings = null;
@@ -411,6 +474,13 @@ public sealed class MarkingSet
         return false;
     }
 
+    /// <summary>
+    ///     Tries to get a marking from this marking set, by category.
+    /// </summary>
+    /// <param name="category">The category to search in.</param>
+    /// <param name="id">The ID to search for.</param>
+    /// <param name="marking">The marking, if it was retrieved.</param>
+    /// <returns>True if successful, false otherwise.</returns>
     public bool TryGetMarking(MarkingCategories category, string id, [NotNullWhen(true)] out Marking? marking)
     {
         marking = null;
@@ -432,6 +502,11 @@ public sealed class MarkingSet
         return false;
     }
 
+    /// <summary>
+    ///     Shifts a marking's rank towards the front of the list
+    /// </summary>
+    /// <param name="category">The category to shift in.</param>
+    /// <param name="idx">Index of the marking.</param>
     public void ShiftRankUp(MarkingCategories category, int idx)
     {
         if (!_markings.TryGetValue(category, out var markings))
@@ -447,7 +522,11 @@ public sealed class MarkingSet
         (markings[idx - 1], markings[idx]) = (markings[idx], markings[idx - 1]);
     }
 
-    // Shifts up from the back (i.e., 2nd position from end)
+    /// <summary>
+    ///     Shifts a marking's rank upwards from the end of the list
+    /// </summary>
+    /// <param name="category">The category to shift in.</param>
+    /// <param name="idx">Index of the marking from the end</param>
     public void ShiftRankUpFromEnd(MarkingCategories category, int idx)
     {
         if (!_markings.TryGetValue(category, out var markings))
@@ -458,7 +537,11 @@ public sealed class MarkingSet
         ShiftRankUp(category, markings.Count - idx - 1);
     }
 
-    // Ditto, but the opposite direction.
+    /// <summary>
+    ///     Shifts a marking's rank towards the end of the list
+    /// </summary>
+    /// <param name="category">The category to shift in.</param>
+    /// <param name="idx">Index of the marking.</param>
     public void ShiftRankDown(MarkingCategories category, int idx)
     {
         if (!_markings.TryGetValue(category, out var markings))
@@ -474,7 +557,11 @@ public sealed class MarkingSet
         (markings[idx + 1], markings[idx]) = (markings[idx], markings[idx + 1]);
     }
 
-    // Ditto as above.
+    /// <summary>
+    ///     Shifts a marking's rank downwards from the end of the list
+    /// </summary>
+    /// <param name="category">The category to shift in.</param>
+    /// <param name="idx">Index of the marking from the end</param>
     public void ShiftRankDownFromEnd(MarkingCategories category, int idx)
     {
         if (!_markings.TryGetValue(category, out var markings))
@@ -485,6 +572,10 @@ public sealed class MarkingSet
         ShiftRankDown(category, markings.Count - idx - 1);
     }
 
+    /// <summary>
+    ///     Gets all markings in this set as an enumerator. Lists will be organized, but categories may be in any order.
+    /// </summary>
+    /// <returns>An enumerator of <see cref="Marking"/>s.</returns>
     public ForwardMarkingEnumerator GetForwardEnumerator()
     {
         var markings = new List<Marking>();
@@ -496,6 +587,11 @@ public sealed class MarkingSet
         return new ForwardMarkingEnumerator(markings);
     }
 
+    /// <summary>
+    ///     Gets an enumerator of markings in this set, but only for one category.
+    /// </summary>
+    /// <param name="category">The category to fetch.</param>
+    /// <returns>An enumerator of <see cref="Marking"/>s in that category.</returns>
     public ForwardMarkingEnumerator GetForwardEnumerator(MarkingCategories category)
     {
         var markings = new List<Marking>();
@@ -507,6 +603,10 @@ public sealed class MarkingSet
         return new ForwardMarkingEnumerator(markings);
     }
 
+    /// <summary>
+    ///     Gets all markings in this set as an enumerator, but in reverse order. Lists will be in reverse order, but categories may be in any order.
+    /// </summary>
+    /// <returns>An enumerator of <see cref="Marking"/>s in reverse.</returns>
     public ReverseMarkingEnumerator GetReverseEnumerator()
     {
         var markings = new List<Marking>();
@@ -518,6 +618,11 @@ public sealed class MarkingSet
         return new ReverseMarkingEnumerator(markings);
     }
 
+    /// <summary>
+    ///     Gets an enumerator of markings in this set in reverse order, but only for one category.
+    /// </summary>
+    /// <param name="category">The category to fetch.</param>
+    /// <returns>An enumerator of <see cref="Marking"/>s in that category, in reverse order.</returns>
     public ReverseMarkingEnumerator GetReverseEnumerator(MarkingCategories category)
     {
         var markings = new List<Marking>();
@@ -553,6 +658,11 @@ public sealed class MarkingSet
         return true;
     }
 
+    /// <summary>
+    ///     Gets a difference of marking categories between two marking sets
+    /// </summary>
+    /// <param name="other">The other marking set.</param>
+    /// <returns>Enumerator of marking categories that were different between the two.</returns>
     public IEnumerable<MarkingCategories> CategoryDifference(MarkingSet other)
     {
         foreach (var (category, _) in _markings)

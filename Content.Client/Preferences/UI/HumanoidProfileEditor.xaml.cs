@@ -217,14 +217,7 @@ namespace Content.Client.Preferences.UI
 
             #region Skin
 
-            // 0 - 100, 0 being gold/yellowish and 100 being dark
-            // HSV based
-            //
-            // 0 - 20 changes the hue
-            // 20 - 100 changes the value
-            // 0 is 45 - 20 - 100
-            // 20 is 25 - 20 - 100
-            // 100 is 25 - 100 - 20
+
             _skinColor.OnValueChanged += _ =>
             {
                 OnSkinColorOnValueChanged();

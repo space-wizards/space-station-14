@@ -24,6 +24,11 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
      public Dictionary<HumanoidVisualLayers, string> Sprites = new();
 }
 
+/// <summary>
+///     Humanoid species sprite layer. This is what defines the base layer of
+///     a humanoid species sprite, and also defines how markings can appear over
+///     that sprite (or at least, the layer this sprite is on).
+/// </summary>
 [Prototype("humanoidBaseSprite")]
 public sealed class HumanoidSpeciesSpriteLayer : IPrototype
 {
@@ -41,29 +46,9 @@ public sealed class HumanoidSpeciesSpriteLayer : IPrototype
     public SpriteSpecifier? BaseSprite { get; }
 
     /// <summary>
-    ///     If this layer is only replaceable or not. If it is not
-    ///     replaceable, sprite accessories will instead
-    ///     replace this. Otherwise, they can be added on
-    ///     top of this layer, and this layer can be
-    ///     replaced
-    ///
-    ///     This should auto-set the attached HumanoidVisualLayer
-    ///     marking point limit to 1
-    /// </summary>
-    [DataField("replaceOnly")]
-    public bool ReplaceOnly { get; }
-
-    /// <summary>
     ///     The alpha of this layer. Ensures that
     ///     this layer will start with this percentage
     ///     of alpha.
-    ///
-    ///     Future sprite accessories can potentially
-    ///     replace layers and will probably do a
-    ///     change to a layer's alpha, so this only
-    ///     ensures that when the entity is created,
-    ///     the entity will start with this layer alpha
-    ///     set.
     /// </summary>
     [DataField("layerAlpha")]
     public float LayerAlpha { get; } = 1.0f;

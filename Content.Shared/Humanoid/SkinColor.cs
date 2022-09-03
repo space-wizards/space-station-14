@@ -4,16 +4,33 @@ public static class SkinColor
 {
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.25f, 0.2f, 1f, 1f));
 
+    /// <summary>
+    ///     Turn a color into a valid tinted hue skin tone.
+    /// </summary>
+    /// <param name="color">The color to validate</param>
+    /// <returns>Validated tinted hue skin tone</returns>
     public static Color ValidTintedHuesSkinTone(Color color)
     {
-        var hsv = Color.ToHsv(color);
-        hsv.Y = .1f;
-
-        return Color.FromHsv(hsv);
+        return TintedHues(color);
     }
 
+    /// <summary>
+    ///     Get a human skin tone based on a scale of 0 to 100.
+    /// </summary>
+    /// <param name="tone">Skin tone. Valid range is 0 to 100, inclusive. 0 is gold/yellowish, 100 is dark brown.</param>
+    /// <returns>A human skin tone.</returns>
+    /// <exception cref="ArgumentException">Exception if the value is under 0 or over 100.</exception>
     public static Color HumanSkinTone(int tone)
     {
+        // 0 - 100, 0 being gold/yellowish and 100 being dark
+        // HSV based
+        //
+        // 0 - 20 changes the hue
+        // 20 - 100 changes the value
+        // 0 is 45 - 20 - 100
+        // 20 is 25 - 20 - 100
+        // 100 is 25 - 100 - 20
+
         if (tone < 0 || tone > 100)
         {
             throw new ArgumentException("Skin tone value was under 0 or over 100.");
@@ -40,6 +57,15 @@ public static class SkinColor
         return color;
     }
 
+    /// <summary>
+    ///     Gets a human skin tone from a given color.
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns></returns>
+    /// <remarks>
+    ///     Does not cause an exception if the color is not originally from the human color range.
+    ///     Instead, it will return the approximation of the skin tone value.
+    /// </remarks>
     public static float HumanSkinToneFromColor(Color color)
     {
         var hsv = Color.ToHsv(color);
@@ -58,6 +84,11 @@ public static class SkinColor
         }
     }
 
+    /// <summary>
+    ///     Verify if a color is in the human skin tone range.
+    /// </summary>
+    /// <param name="color">The color to verify</param>
+    /// <returns>True if valid, false otherwise.</returns>
     public static bool VerifyHumanSkinTone(Color color)
     {
         var colorValues = Color.ToHsv(color);
@@ -83,6 +114,11 @@ public static class SkinColor
         return true;
     }
 
+    /// <summary>
+    ///     Convert a color to the 'tinted hues' skin tone type.
+    /// </summary>
+    /// <param name="color">Color to convert</param>
+    /// <returns>Tinted hue color</returns>
     public static Color TintedHues(Color color)
     {
         var newColor = Color.ToHsv(color);
@@ -91,6 +127,11 @@ public static class SkinColor
         return Color.FromHsv(newColor);
     }
 
+    /// <summary>
+    ///     Verify if this color is a valid tinted hue color type, or not.
+    /// </summary>
+    /// <param name="color">The color to verify</param>
+    /// <returns>True if valid, false otherwise</returns>
     public static bool VerifyTintedHues(Color color)
     {
         // tinted hues just ensures saturation is always .1, or 10% saturation at all times
