@@ -58,7 +58,12 @@ public sealed partial class GuidebookWindow
                         {
                             HorizontalExpand = false
                         };
-                        rt.SetMessage(FormattedMessage.FromMarkup(buffer.ToString()));
+                        var msg = new FormattedMessage();
+                        // THANK YOU RICHTEXT VERY COOL
+                        msg.PushColor(Color.White);
+                        msg.AddMarkup(buffer.ToString());
+                        msg.Pop();
+                        rt.SetMessage(msg);
                         parentStack[^1].AddChild(rt);
                         break;
                     }
@@ -99,7 +104,7 @@ public sealed partial class GuidebookWindow
             {
                 if (args.Length > 3 || args.Length < 2)
                 {
-                    Logger.Warning($"`{{|` directive didn't get expected arguments, see {directive}");
+                    Logger.Warning($"`{{#` directive didn't get expected arguments, see {directive}");
                     break;
                 }
 

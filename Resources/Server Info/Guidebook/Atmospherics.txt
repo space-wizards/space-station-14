@@ -12,7 +12,7 @@ Variations on this mix may be necessary for the long-term comfort of atypical cr
 ?embedEntityCaption:PlasmaCanister:2
 ?embedEntityCaption:StorageCanister:2
 ?|}
-# Vents and Scrubbers
+#Vents and Scrubbers
 Vents and scrubbers are core atmospherics devices that fill and cleanse rooms, respectively. They can be reconfigured by installing an air alarm, allowing you to change them from their default settings. By default, they are configured for filling rooms to standard pressure (101.24kPa) and to remove all non-O2/N2 gasses from a room.
 ?{|:Horizontal:Center
 ?embedEntityCaption:GasVentPump:2
