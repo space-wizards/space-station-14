@@ -31,14 +31,6 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
     private AdminMenuWindow? _window;
     private MenuButton? _adminButton;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
-            InputCmdHandler.FromDelegate(_ => Toggle()));
-    }
-
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
@@ -52,22 +44,31 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         _admin.AdminStatusUpdated += AdminStatusUpdated;
 
         _adminButton.OnPressed += AdminButtonPressed;
+
+        _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
+            InputCmdHandler.FromDelegate(_ => Toggle()));
+
         AdminStatusUpdated();
     }
 
     public void OnStateExited(GameplayState state)
     {
-        _window?.DisposeAllChildren();
-        _window = null;
-        CommandBinds.Unregister<AdminUIController>();
+        if (_window != null)
+        {
+            _window.Dispose();
+            _window = null;
+        }
 
         _admin.AdminStatusUpdated -= AdminStatusUpdated;
 
-        if (_adminButton == null)
-            return;
-        _adminButton.Pressed = false;
-        _adminButton.OnPressed -= AdminButtonPressed;
-        _adminButton = null;
+        if (_adminButton != null)
+        {
+            _adminButton.Pressed = false;
+            _adminButton.OnPressed -= AdminButtonPressed;
+            _adminButton = null;
+        }
+
+        CommandBinds.Unregister<AdminUIController>();
     }
 
     private void AdminStatusUpdated()

@@ -93,12 +93,20 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
 
     public void OnStateExited(GameplayState state)
     {
-        _window!.DisposeAllChildren();
-        _window = null;
-        CommandBinds.Unregister<SandboxSystem>();
+        if (_window != null)
+        {
+            _window.Dispose();
+            _window = null;
+        }
 
-        _sandboxButton!.Pressed = false;
-        _sandboxButton!.OnPressed -= SandboxButtonPressed;
+        if (_sandboxButton != null)
+        {
+            _sandboxButton.Pressed = false;
+            _sandboxButton.OnPressed -= SandboxButtonPressed;
+            _sandboxButton = null;
+        }
+
+        CommandBinds.Unregister<SandboxSystem>();
     }
 
     public void OnSystemLoaded(SandboxSystem system)

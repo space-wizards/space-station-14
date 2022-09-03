@@ -56,14 +56,20 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
 
     public void OnStateExited(GameplayState state)
     {
-        _infoWindow?.DisposeAllChildren();
-        _infoWindow = null;
+        if (_infoWindow != null)
+        {
+            _infoWindow.Dispose();
+            _infoWindow = null;
+        }
+
+        if (_infoButton != null)
+        {
+            _infoButton.OnPressed -= InfoButtonPressed;
+            _infoButton.Pressed = false;
+            _infoButton = null;
+        }
+
         CommandBinds.Unregister<InfoUIController>();
-        if (_infoButton == null)
-            return;
-        _infoButton.OnPressed -= InfoButtonPressed;
-        _infoButton.Pressed = false;
-        _infoButton = null;
     }
 
     private void InfoButtonPressed(BaseButton.ButtonEventArgs args)

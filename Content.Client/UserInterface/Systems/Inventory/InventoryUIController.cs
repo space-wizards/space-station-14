@@ -44,15 +44,20 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateExited(GameplayState state)
     {
-        _inventoryWindow?.DisposeAllChildren();
-        _inventoryWindow = null;
-        CommandBinds.Unregister<ClientInventorySystem>();
+        if (_inventoryWindow != null)
+        {
+            _inventoryWindow.Dispose();
+            _inventoryWindow = null;
+        }
 
-        if (_inventoryButton == null)
-            return;
-        _inventoryButton.OnPressed -= InventoryButtonPressed;
-        _inventoryButton.Pressed = false;
-        _inventoryButton = null;
+        if (_inventoryButton != null)
+        {
+            _inventoryButton.OnPressed -= InventoryButtonPressed;
+            _inventoryButton.Pressed = false;
+            _inventoryButton = null;
+        }
+
+        CommandBinds.Unregister<ClientInventorySystem>();
     }
 
     private void InventoryButtonPressed(ButtonEventArgs args)

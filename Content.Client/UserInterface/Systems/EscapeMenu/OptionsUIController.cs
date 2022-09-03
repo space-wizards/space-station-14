@@ -8,30 +8,28 @@ namespace Content.Client.UserInterface.Systems.EscapeMenu;
 [UsedImplicitly]
 public sealed class OptionsUIController : UIController
 {
-    [Dependency] private readonly IStateManager _stateManager = default!;
-
     private OptionsMenu _optionsWindow = default!;
 
-    public override void Initialize()
+    private void EnsureWindow()
     {
-        _stateManager.OnStateChanged += _ => ReloadWindow();
-        _optionsWindow = UIManager.CreateWindow<OptionsMenu>();
-    }
+        if (_optionsWindow is { Disposed: false })
+            return;
 
-    private void ReloadWindow()
-    {
-        _optionsWindow.DisposeAllChildren();
         _optionsWindow = UIManager.CreateWindow<OptionsMenu>();
     }
 
     public void OpenWindow()
     {
+        EnsureWindow();
+
         _optionsWindow.OpenCentered();
         _optionsWindow.MoveToFront();
     }
 
     public void ToggleWindow()
     {
+        EnsureWindow();
+
         if (_optionsWindow.IsOpen)
         {
             _optionsWindow.Close();

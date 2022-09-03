@@ -115,12 +115,24 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     public void OnStateExited(GameplayState state)
     {
-        _window?.DisposeAllChildren();
-        _window = null;
-        _actionsBar!.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
-        _actionsBar!.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
-        _actionButton!.OnPressed -= ActionButtonPressed;
-        _actionButton!.Pressed = false;
+        if (_window != null)
+        {
+            _window.Dispose();
+            _window = null;
+        }
+
+        if (_actionsBar != null)
+        {
+            _actionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
+            _actionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
+        }
+
+        if (_actionButton != null)
+        {
+            _actionButton.OnPressed -= ActionButtonPressed;
+            _actionButton.Pressed = false;
+        }
+
         CommandBinds.Unregister<ActionUIController>();
     }
 

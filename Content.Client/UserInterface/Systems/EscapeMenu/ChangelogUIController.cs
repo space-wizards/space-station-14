@@ -8,31 +8,29 @@ namespace Content.Client.UserInterface.Systems.EscapeMenu;
 [UsedImplicitly]
 public sealed class ChangelogUIController : UIController
 {
-    [Dependency] private readonly IStateManager _stateManager = default!;
-
-    private ChangelogWindow? _changeLogWindow = default!;
-
-    public override void Initialize()
-    {
-        _stateManager.OnStateChanged += _ => CleanupWindow();
-    }
-
-    private void CleanupWindow()
-    {
-        _changeLogWindow?.DisposeAllChildren();
-        _changeLogWindow = null;
-    }
+    private ChangelogWindow _changeLogWindow = default!;
 
     public void OpenWindow()
     {
-        _changeLogWindow ??= UIManager.CreateWindow<ChangelogWindow>();
+        EnsureWindow();
+
         _changeLogWindow.OpenCentered();
         _changeLogWindow.MoveToFront();
     }
 
+    private void EnsureWindow()
+    {
+        if (_changeLogWindow is { Disposed: false })
+            return;
+
+        _changeLogWindow = UIManager.CreateWindow<ChangelogWindow>();
+    }
+
     public void ToggleWindow()
     {
-        if (_changeLogWindow is { IsOpen: true })
+        EnsureWindow();
+
+        if (_changeLogWindow.IsOpen)
         {
             _changeLogWindow.Close();
         }

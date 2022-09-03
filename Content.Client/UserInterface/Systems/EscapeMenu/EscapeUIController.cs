@@ -78,14 +78,20 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
     public void OnStateExited(GameplayState state)
     {
-        _escapeWindow?.DisposeAllChildren();
-        _escapeWindow = null;
+        if (_escapeWindow != null)
+        {
+            _escapeWindow.Dispose();
+            _escapeWindow = null;
+        }
+
+        if (_escapeButton != null)
+        {
+            _escapeButton.OnPressed -= EscapeButtonOnOnPressed;
+            _escapeButton.Pressed = false;
+            _escapeButton = null;
+        }
+
         CommandBinds.Unregister<EscapeUIController>();
-        if (_escapeButton == null)
-            return;
-        _escapeButton.OnPressed -= EscapeButtonOnOnPressed;
-        _escapeButton.Pressed = false;
-        _escapeButton = null;
     }
 
     private void EscapeButtonOnOnPressed(ButtonEventArgs obj)

@@ -45,14 +45,20 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateExited(GameplayState state)
     {
-        _window?.DisposeAllChildren();
-        _window = null;
+        if (_window != null)
+        {
+            _window.Dispose();
+            _window = null;
+        }
+
+        if (_characterButton != null)
+        {
+            _characterButton.OnPressed -= CharacterButtonPressed;
+            _characterButton.Pressed = false;
+            _characterButton = null;
+        }
+
         CommandBinds.Unregister<CharacterUIController>();
-        if (_characterButton == null)
-            return;
-        _characterButton.OnPressed -= CharacterButtonPressed;
-        _characterButton.Pressed = false;
-        _characterButton = null;
     }
 
     public void OnSystemLoaded(CharacterInfoSystem system)

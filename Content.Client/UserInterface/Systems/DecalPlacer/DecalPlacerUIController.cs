@@ -33,9 +33,9 @@ public sealed class DecalPlacerUIController : UIController, IOnStateExited<Gamep
 
     public void OnStateExited(GameplayState state)
     {
-        if (_window == null || _window.Disposed)
+        if (_window == null)
             return;
-        _window.DisposeAllChildren();
+        _window.Dispose();
         _window = null;
     }
 
