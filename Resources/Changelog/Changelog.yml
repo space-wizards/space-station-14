@@ -1,12 +1,6 @@
 Entries:
 - author: keronshb
   changes:
-  - {message: 'When stripping other players, the delay now depends on the targeted
-      slot.', type: Tweak}
-  id: 1728
-  time: '2022-06-20T00:56:00.0000000+00:00'
-- author: keronshb
-  changes:
   - {message: Adds obfuscation to pocket items so players can't check the strip menu
       to see what they have., type: Add}
   id: 1729
@@ -2914,3 +2908,8 @@ Entries:
     type: Fix}
   id: 2227
   time: '2022-09-03T01:32:19.0000000+00:00'
+- author: Rolfero
+  changes:
+  - {message: E-swords finally hot enough to light a cigarette, type: Add}
+  id: 2228
+  time: '2022-09-03T10:50:38.0000000+00:00'
