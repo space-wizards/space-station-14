@@ -18,10 +18,14 @@ flavor-base-bitter = bitter
 flavor-base-spicy = spicy
 flavor-base-metallic = metallic
 flavor-base-meaty = meaty
+flavor-base-fishy = fishy
 flavor-base-cheesy = cheesy
 flavor-base-funny = funny
 flavor-base-tingly = tingly
 flavor-base-acid = acidic
+flavor-base-leafy = leafy
+flavor-base-minty = minty
+flavor-base-nutty = nutty
 
 # lmao
 flavor-base-terrible = terrible
@@ -36,16 +40,51 @@ flavor-base-terrible = terrible
 flavor-food = like food
 
 ## Basic foodstuffs (ingredients, generic flavors)
+flavor-bun = like bun
+flavor-bread = like bread
+flavor-batter = like batter
+flavor-butter = like butter
+flavor-egg = like egg
+flavor-bacon = like bacon
+flavor-chocolate = like chocolate
+flavor-pasta = like pasta
+flavor-rice = like rice
+flavor-oats = like oats
+flavor-jelly = like jelly
+flavor-soy = like soy
+flavor-ice-cream = like ice cream
+
+flavor-peas = like peas
+flavor-pineapple = like pineapple
+flavor-onion = like onion
+flavor-eggplant = like eggplant
+flavor-carrot = like carrots
 flavor-potatoes = like potatoes
 flavor-mushroom = like mushrooms
 flavor-tomato = like tomatoes
 flavor-corn = like corn
-flavor-bread = like bread
 flavor-banana = like bananas
 flavor-apple = like apples
-flavor-donk-warm = like hot lava
+flavor-bungo = like bungo
+flavor-raisins = like dried grapes
 
-## Complex foodstuffs (cooked foods)
+## Complex foodstuffs (cooked foods, joke flavors, etc)
+flavor-borsch-1 = borsch
+flavor-borsch-2 = bortsch
+flavor-borsch-3 = borstch
+flavor-borsch-4 = borsh
+flavor-borsch-5 = borscht
+flavor-mre-brownie = like a cheap brownie
+flavor-fortune-cookie = like random chance
+flavor-nutribrick = like you're operating in a jungle
+flavor-cheap-noodles = like cheap noodles
+flavor-syndi-cakes = like a hearty fruit cake
+flavor-sus-jerky = like sus
+flavor-boritos = like gaming
+flavor-nachos = like nachos
+flavor-donk-warm = like hot lava
+flavor-copypasta = like a reptitive joke
+
 # Drink-specific flavors.
 
 ## Generic alcohol/soda taste. This should be replaced with an actual flavor profile.
@@ -67,6 +106,7 @@ flavor-milk = like milk
 
 ## Cocktails
 flavor-long-island = suspiciously like iced tea
+flavor-three-mile-island = like tea brewed in nuclear runoff
 flavor-whiskey-cola = like carbonated molasses
 
 # Medicine-specific flavors.
