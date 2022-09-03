@@ -23,7 +23,6 @@
   config:
     !type:NukeopsRuleConfiguration
     id: Nukeops
-    minPlayers: 1 # remove before merge
 
 - type: gameRule
   id: Pirates
