@@ -11,7 +11,7 @@ public sealed class FlavorPrototype : IPrototype
     [DataField("flavorType")]
     public FlavorType FlavorType { get; } = FlavorType.Base;
 
-    [DataField("flavorDescription")]
+    [DataField("description")]
     public string FlavorDescription { get; } = default!;
 }
 

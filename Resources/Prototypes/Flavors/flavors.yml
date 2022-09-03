@@ -1,0 +1,66 @@
+# Base flavors
+
+- type: flavor
+  id: savory
+  description: flavor-base-savory
+
+- type: flavor
+  id: sweet
+  description: flavor-base-sweet
+
+- type: flavor
+  id: salty
+  description: flavor-base-salty
+
+- type: flavor
+  id: sour
+  description: flavor-base-sour
+
+- type: flavor
+  id: bitter
+  description: flavor-base-bitter
+
+- type: flavor
+  id: spicy
+  description: flavor-base-spicy
+
+- type: flavor
+  id: metallic
+  description: flavor-base-metallic
+
+- type: flavor
+  id: meaty
+  description: flavor-base-meaty
+
+- type: flavor
+  id: cheesy
+  description: flavor-base-cheesy
+
+- type: flavor
+  id: terrible
+  description: flavor-base-terrible
+
+# Food
+## Generic flavor.
+- type: flavor
+  id: food
+  flavorType: Complex
+  description: flavor-food
+
+# Drinks
+## Generic flavors.
+- type: flavor
+  id: alcohol
+  flavorType: Complex
+  description: flavor-alcohol
+
+- type: flavor
+  id: soda
+  flavorType: Complex
+  description: flavor-soda
+
+## Basic drinks
+- type: flavor
+  id: water
+  flavorType: Complex
+  description: flavor-water

@@ -28,16 +28,24 @@ flavor-base-terrible = terrible
 
 # Food-specific flavors.
 
+## Generic food taste. This should be replaced with an actual flavor profile,
+## if you have food that looks like this.
+flavor-food = like food
+
 ## Basic foodstuffs (ingredients, generic flavors)
 flavor-potatoes = like potatoes
 flavor-mushroom = like mushrooms
 flavor-tomato = like tomatoes
 
 ## Complex foodstuffs (cooked foods)
-
 # Drink-specific flavors.
 
+## Generic alcohol/soda taste. This should be replaced with an actual flavor profile.
+flavor-alcohol = like alcohol
+flavor-soda = like soda
+
 ## Basic drinks
+flavor-water = like water
 flavor-beer = like piss
 flavor-ale = like bread
 flavor-cola = like cola
