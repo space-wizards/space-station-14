@@ -20,7 +20,7 @@ public sealed class FlavorProfileSystem : EntitySystem
 
     private const string BackupFlavorMessage = "flavor-profile-unknown";
 
-    private int FlavorLimit => _configManager.GetCVar<int>("flavor.limit");
+    private int FlavorLimit => _configManager.GetCVar(CCVars.FlavorLimit);
 
     public string GetLocalizedFlavorsMessage(EntityUid uid, EntityUid user, Solution solution,
         FlavorProfileComponent? flavorProfile = null)
