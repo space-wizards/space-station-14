@@ -227,11 +227,6 @@ public sealed class BloodstreamSystem : EntitySystem
         return _solutionContainerSystem.TryAddSolution(uid, component.ChemicalSolution, solution);
     }
 
-    public bool TryRemoveChecmicals(EntityUid uid, Solution solution, BloodstreamComponent? component = null)
-    {
-        return false;
-    }
-
     public bool FlushChemicals(EntityUid uid, string excludedReagentID, FixedPoint2 quantity, BloodstreamComponent? component = null) {
         if (!Resolve(uid, ref component, false))
             return false;
