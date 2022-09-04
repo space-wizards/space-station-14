@@ -1,4 +1,5 @@
-﻿using Content.Server.DeviceNetwork.Components;
+﻿using System.Linq;
+using Content.Server.DeviceNetwork.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 
@@ -25,7 +26,10 @@ public sealed class DeviceListSystem : EntitySystem
         if (!merge)
             deviceList.Devices.Clear();
 
-        deviceList.Devices.UnionWith(devices);
+        var devicesList = devices.ToList();
+        deviceList.Devices.UnionWith(devicesList);
+
+        RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
     }
 
     /// <summary>
@@ -90,4 +94,14 @@ public sealed class DeviceListSystem : EntitySystem
         if (component.HandleIncomingPackets && component.Devices.Contains(args.Sender) != component.IsAllowList)
             args.Cancel();
     }
+}
+
+public sealed class DeviceListUpdateEvent : EntityEventArgs
+{
+    public DeviceListUpdateEvent(List<EntityUid> devices)
+    {
+        Devices = devices;
+    }
+
+    public List<EntityUid> Devices { get; }
 }

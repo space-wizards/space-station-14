@@ -44,6 +44,17 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             ExternalPressureBound = Atmospherics.OneAtmosphere,
             InternalPressureBound = 0f
         };
+
+        public static GasVentPumpData ReplaceModePreset = new GasVentPumpData
+        {
+            Enabled = false,
+            IgnoreAlarms = true,
+            Dirty = true,
+            PumpDirection = VentPumpDirection.Releasing,
+            PressureChecks = VentPressureBound.ExternalBound,
+            ExternalPressureBound = Atmospherics.OneAtmosphere,
+            InternalPressureBound = 0f
+        };
     }
 
     [Serializable, NetSerializable]
