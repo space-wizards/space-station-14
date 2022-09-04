@@ -1,37 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The bag for the China Lake Bundle now has 120 capacity to keep it in
-      line with the other duffel bags., type: Tweak}
-  id: 1725
-  time: '2022-06-19T12:06:44.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: Spell sound effects are no longer global, type: Tweak}
-  id: 1726
-  time: '2022-06-19T21:07:01.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: SMG crates now come with the correct magazines and amount., type: Fix}
-  id: 1727
-  time: '2022-06-19T21:07:53.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: 'When stripping other players, the delay now depends on the targeted
-      slot.', type: Tweak}
-  id: 1728
-  time: '2022-06-20T00:56:00.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Adds obfuscation to pocket items so players can't check the strip menu
-      to see what they have., type: Add}
-  id: 1729
-  time: '2022-06-20T00:57:33.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed chair layering, type: Fix}
-  id: 1730
-  time: '2022-06-20T01:27:22.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Clearly defined speciesism is AGAINST the rules. Be nice to each other.,
@@ -2912,3 +2879,39 @@ Entries:
     type: Fix}
   id: 2224
   time: '2022-09-02T02:13:44.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen''s engineers have finally laid out a design for air alarms
+      that should make them easier for our station planners and station construction
+      team to plan out! You should see these more often, now.', type: Tweak}
+  id: 2225
+  time: '2022-09-02T20:00:34.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Dead players can no longer smart equip/unequip items., type: Fix}
+  id: 2226
+  time: '2022-09-02T23:38:47.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed shuttle airlock deconstruction returning plasteel instead of silver.,
+    type: Fix}
+  id: 2227
+  time: '2022-09-03T01:32:19.0000000+00:00'
+- author: Rolfero
+  changes:
+  - {message: E-swords finally hot enough to light a cigarette, type: Add}
+  id: 2228
+  time: '2022-09-03T10:50:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Made snow and grass unable to be pried with a crowbar., type: Fix}
+  id: 2229
+  time: '2022-09-03T13:40:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fixes nukeops being broken when run from secret., type: Fix}
+  - {message: 'Fixes random events being broken when run from secret. Are you serious?
+      Not a single one of you reported this until now? It''s been broken for 2 months.',
+    type: Fix}
+  id: 2230
+  time: '2022-09-04T01:40:00.0000000+00:00'
