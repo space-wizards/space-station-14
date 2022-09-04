@@ -335,7 +335,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     public static float GetModifier(float fraction)
     {
-        return MathF.Pow(fraction, 2f);
+        return fraction;
     }
 
     protected virtual void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component)

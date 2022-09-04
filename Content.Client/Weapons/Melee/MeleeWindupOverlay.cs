@@ -85,10 +85,19 @@ public sealed class MeleeWindupOverlay : Overlay
             // Draw the underlying bar texture
             handle.DrawTexture(_texture, position);
 
-            // Draw the bar itself
-            // Hardcoded width of the progress bar because it doesn't match the texture.
+            // Draw the items overlapping the texture
             const float startX = 2f;
             const float endX = 22f;
+
+            // Area marking where to release
+            var ReleaseWidth = 2f * SharedMeleeWeaponSystem.GracePeriod / comp.WindupTime * EyeManager.PixelsPerMeter;
+            var releaseMiddle = (endX - startX) / 2f + startX;
+
+            var releaseBox = new Box2(new Vector2(releaseMiddle - ReleaseWidth / 2f, 3f) / EyeManager.PixelsPerMeter,
+                new Vector2(releaseMiddle + ReleaseWidth / 2f, 4f) / EyeManager.PixelsPerMeter);
+
+            releaseBox = releaseBox.Translated(position);
+            handle.DrawRect(releaseBox, Color.LimeGreen);
 
             var fraction = (comp.WindupAccumulator + SharedMeleeWeaponSystem.GracePeriod - SharedMeleeWeaponSystem.AttackBuffer) / (comp.WindupTime - SharedMeleeWeaponSystem.AttackBuffer);
 
@@ -97,20 +106,10 @@ public sealed class MeleeWindupOverlay : Overlay
             var lerpedFraction = MathF.Min(1f, (fraction + lerp * sign));
             lerpedFraction = SharedMeleeWeaponSystem.GetModifier(lerpedFraction);
 
-            Color color;
-
-            if (lerpedFraction.Equals(1f))
-            {
-                color = Color.Lime;
-            }
-            else
-            {
-                color = Color.White;
-            }
-
             var xPos = (endX - startX) * lerpedFraction + startX;
+
             // In pixels
-            const float Width = 4f;
+            const float Width = 2f;
             // If we hit the end we won't draw half the box so we need to subtract the end pos from it
             var endPos = xPos + Width / 2f;
 
@@ -118,7 +117,7 @@ public sealed class MeleeWindupOverlay : Overlay
                 new Vector2(Math.Min(endX, endPos), 4f) / EyeManager.PixelsPerMeter);
 
             box = box.Translated(position);
-            handle.DrawRect(box, color);
+            handle.DrawRect(box, Color.White);
         }
 
         handle.UseShader(null);
