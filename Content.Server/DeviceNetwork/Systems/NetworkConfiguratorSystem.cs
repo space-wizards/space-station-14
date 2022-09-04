@@ -1,4 +1,5 @@
-﻿using Content.Server.DeviceNetwork.Components;
+﻿using System.Linq;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -218,6 +219,12 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
 
         configurator.ActiveDeviceList = targetUid;
         _uiSystem.GetUiOrNull(configurator.Owner, NetworkConfiguratorUiKey.Configure)?.Open(actor.PlayerSession);
+        _uiSystem.TrySetUiState(
+            configurator.Owner,
+            NetworkConfiguratorUiKey.Configure,
+            new DeviceListUserInterfaceState(
+                _deviceListSystem.GetDeviceList(configurator.ActiveDeviceList.Value)
+                    .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()));
     }
 
     /// <summary>
@@ -312,6 +319,12 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         };
 
         _popupSystem.PopupCursor(Loc.GetString(resultText), Filter.SinglePlayer(args.Session), PopupType.Medium);
+        _uiSystem.TrySetUiState(
+            component.Owner,
+            NetworkConfiguratorUiKey.Configure,
+            new DeviceListUserInterfaceState(
+                _deviceListSystem.GetDeviceList(component.ActiveDeviceList.Value)
+                    .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()));
     }
 
     #endregion
