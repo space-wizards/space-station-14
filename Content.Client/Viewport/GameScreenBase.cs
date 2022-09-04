@@ -34,13 +34,13 @@ namespace Content.Client.Viewport
 
         private ClickableEntityComparer _comparer = default!;
 
-        public override void Startup()
+        protected override void Startup()
         {
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
             _comparer = new ClickableEntityComparer(_entityManager);
         }
 
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
         }
