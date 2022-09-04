@@ -1,0 +1,31 @@
+- type: soundCollection
+  id: GeigerLow
+  files:
+    - /Audio/Items/Geiger/low1.ogg
+    - /Audio/Items/Geiger/low2.ogg
+    - /Audio/Items/Geiger/low3.ogg
+    - /Audio/Items/Geiger/low4.ogg
+
+- type: soundCollection
+  id: GeigerMed
+  files:
+    - /Audio/Items/Geiger/med1.ogg
+    - /Audio/Items/Geiger/med2.ogg
+    - /Audio/Items/Geiger/med3.ogg
+    - /Audio/Items/Geiger/med4.ogg
+
+- type: soundCollection
+  id: GeigerHigh
+  files:
+    - /Audio/Items/Geiger/high1.ogg
+    - /Audio/Items/Geiger/high2.ogg
+    - /Audio/Items/Geiger/high3.ogg
+    - /Audio/Items/Geiger/high4.ogg
+
+- type: soundCollection
+  id: GeigerExt
+  files:
+    - /Audio/Items/Geiger/ext1.ogg
+    - /Audio/Items/Geiger/ext2.ogg
+    - /Audio/Items/Geiger/ext3.ogg
+    - /Audio/Items/Geiger/ext4.ogg
