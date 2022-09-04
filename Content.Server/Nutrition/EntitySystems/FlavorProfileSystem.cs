@@ -73,7 +73,7 @@ public sealed class FlavorProfileSystem : EntitySystem
         {
             var lastFlavor = Loc.GetString(flavors[^1].FlavorDescription);
             var allFlavors = string.Join(", ", flavors.GetRange(0, flavors.Count - 1).Select(i => Loc.GetString(i.FlavorDescription)));
-            return Loc.GetString("flavor-profile", ("flavors", allFlavors), ("lastFlavor", lastFlavor));
+            return Loc.GetString("flavor-profile-multiple", ("flavors", allFlavors), ("lastFlavor", lastFlavor));
         }
 
         return Loc.GetString(BackupFlavorMessage);
