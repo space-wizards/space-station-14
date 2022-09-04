@@ -10,7 +10,6 @@ using Content.Shared.Movement;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
