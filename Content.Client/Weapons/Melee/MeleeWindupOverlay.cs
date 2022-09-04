@@ -63,18 +63,18 @@ public sealed class MeleeWindupOverlay : Overlay
             Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);
 
             handle.SetTransform(matty);
-            var offset = _texture.Height / scale;
+            var offset = -_texture.Height / scale;
 
             // Use the sprite itself if we know its bounds. This means short or tall sprites don't get overlapped
             // by the bar.
             float yOffset;
             if (spriteQuery.TryGetComponent(comp.Owner, out var sprite))
             {
-                yOffset = sprite.Bounds.Height / 2f + 0.05f;
+                yOffset = -sprite.Bounds.Height / 2f - 0.05f;
             }
             else
             {
-                yOffset = 0.5f;
+                yOffset = -0.5f;
             }
 
             // Position above the entity (we've already applied the matrix transform to the entity itself)
@@ -95,17 +95,30 @@ public sealed class MeleeWindupOverlay : Overlay
             var lerp = fraction.Equals(0f) ? 0f : tickFraction;
             var sign = comp.Accumulating ? 1 : -1;
             var lerpedFraction = MathF.Min(1f, (fraction + lerp * sign));
+            lerpedFraction = SharedMeleeWeaponSystem.GetModifier(lerpedFraction);
 
             Color color;
 
             if (lerpedFraction.Equals(1f))
             {
-                color = Color.Orange;
+                color = Color.Lime;
             }
             else
             {
                 color = Color.White;
             }
+
+            var xPos = (endX - startX) * lerpedFraction + startX;
+            // In pixels
+            const float Width = 4f;
+            // If we hit the end we won't draw half the box so we need to subtract the end pos from it
+            var endPos = xPos + Width / 2f;
+
+            var box = new Box2(new Vector2(Math.Max(startX, endPos - Width), 3f) / EyeManager.PixelsPerMeter,
+                new Vector2(Math.Min(endX, endPos), 4f) / EyeManager.PixelsPerMeter);
+
+            box = box.Translated(position);
+            handle.DrawRect(box, color);
         }
 
         handle.UseShader(null);

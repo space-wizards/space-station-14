@@ -325,14 +325,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// <summary>
     /// When an attack is released get the actual modifier for damage done.
     /// </summary>
-    protected float GetModifier(MeleeWeaponComponent component)
+    public static float GetModifier(MeleeWeaponComponent component)
     {
         var total = component.WindupTime - AttackBuffer;
         var amount = component.WindupAccumulator + GracePeriod - AttackBuffer;
         var fraction = Math.Clamp(amount / total, 0f, 1f);
-        var modifier = MathF.Pow(fraction, 2f);
-        Sawmill.Debug($"Got melee modifier of {modifier}");
-        return modifier;
+        return GetModifier(fraction);
+    }
+
+    public static float GetModifier(float fraction)
+    {
+        return MathF.Pow(fraction, 2f);
     }
 
     protected virtual void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component)
