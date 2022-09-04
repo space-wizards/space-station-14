@@ -5,6 +5,9 @@
   id: FoodBreadBase
   abstract: true
   components:
+  - type: FlavorProfile
+    flavors:
+      - bread
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
@@ -22,6 +25,9 @@
   id: FoodBreadSliceBase
   abstract: true
   components:
+  - type: FlavorProfile
+    flavors:
+      - bread
   - type: SolutionContainerManager
     solutions:
       food:
@@ -94,6 +100,10 @@
   id: FoodBreadMeat
   description: The culinary base of every self-respecting eloquen/tg/entleman.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
   - type: Food
   - type: Sprite
     layers:
@@ -117,6 +127,10 @@
   id: FoodBreadMeatSlice
   description: A slice of delicious meatbread.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
   - type: Food
   - type: Sprite
     layers:
@@ -137,6 +151,10 @@
   id: FoodBreadMeatXeno
   description: Reassuringly green meatloaf made from xeno meat. Extra heretical.
   components:
+  - type: FlavorProfile
+    flavors:
+      - acidic
+      - bread
   - type: Food
   - type: Sprite
     layers:
@@ -160,6 +178,10 @@
   id: FoodBreadMeatXenoSlice
   description: A slice of delicious meatbread. Extra heretical.
   components:
+  - type: FlavorProfile
+    flavors:
+      - acidic
+      - bread
   - type: Food
   - type: Sprite
     layers:
@@ -227,6 +249,11 @@
   id: FoodBreadBanana
   description: A heavenly and filling treat.
   components:
+  - type: FlavorProfile
+    flavors:
+      - banana
+      - nutty
+      - bread
   - type: Food
   - type: Sprite
     layers:
@@ -241,6 +268,11 @@
   id: FoodBreadBananaSlice
   description: A slice of delicious banana bread.
   components:
+  - type: FlavorProfile
+    flavors:
+      - banana
+      - nutty
+      - bread
   - type: Food
   - type: Sprite
     layers:
@@ -295,6 +327,11 @@
   id: FoodBreadCreamcheese
   description: Yum yum yum!
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - creamy
+      - bread
   - type: Food
   - type: Sprite
     layers:
@@ -318,6 +355,11 @@
   id: FoodBreadCreamcheeseSlice
   description: A slice of yum!
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - creamy
+      - bread
   - type: Food
   - type: Sprite
     layers:

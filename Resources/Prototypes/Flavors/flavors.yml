@@ -1,635 +1,387 @@
-
-- type: flavor
-  id: savory
+- id: savory
   flavorType: Base
   description: flavor-base-savory
-
-- type: flavor
-  id: sweet
+- id: sweet
   flavorType: Base
   description: flavor-base-sweet
-
-- type: flavor
-  id: salty
+- id: salty
   flavorType: Base
   description: flavor-base-salty
-
-- type: flavor
-  id: sour
+- id: sour
   flavorType: Base
   description: flavor-base-sour
-
-- type: flavor
-  id: bitter
+- id: bitter
   flavorType: Base
   description: flavor-base-bitter
-
-- type: flavor
-  id: spicy
+- id: spicy
   flavorType: Base
   description: flavor-base-spicy
-
-- type: flavor
-  id: metallic
+- id: metallic
   flavorType: Base
   description: flavor-base-metallic
-
-- type: flavor
-  id: meaty
+- id: meaty
   flavorType: Base
   description: flavor-base-meaty
-
-- type: flavor
-  id: fishy
+- id: fishy
   flavorType: Base
   description: flavor-base-fishy
-
-- type: flavor
-  id: cheesy
+- id: cheesy
   flavorType: Base
   description: flavor-base-cheesy
-
-- type: flavor
-  id: funny
+- id: funny
   flavorType: Base
   description: flavor-base-funny
-
-- type: flavor
-  id: tingly
+- id: tingly
   flavorType: Base
   description: flavor-base-tingly
-
-- type: flavor
-  id: acid
+- id: acid
   flavorType: Base
   description: flavor-base-acid
-
-- type: flavor
-  id: leafy
+- id: leafy
   flavorType: Base
   description: flavor-base-leafy
-
-- type: flavor
-  id: minty
+- id: minty
   flavorType: Base
   description: flavor-base-minty
-
-- type: flavor
-  id: nutty
+- id: nutty
   flavorType: Base
   description: flavor-base-nutty
-
-- type: flavor
-  id: chalky
+- id: chalky
   flavorType: Base
   description: flavor-base-chalky
-
-- type: flavor
-  id: oily
+- id: oily
   flavorType: Base
   description: flavor-base-oily
-
-- type: flavor
-  id: peppery
+- id: peppery
   flavorType: Base
   description: flavor-base-peppery
-
-- type: flavor
-  id: slimy
+- id: slimy
   flavorType: Base
   description: flavor-base-slimy
-
-- type: flavor
-  id: magical
+- id: magical
   flavorType: Base
   description: flavor-base-magical
-
-- type: flavor
-  id: fiber
+- id: fiber
   flavorType: Base
   description: flavor-base-fiber
-
-- type: flavor
-  id: cold
+- id: cold
   flavorType: Base
   description: flavor-base-cold
-
-- type: flavor
-  id: spooky
+- id: spooky
   flavorType: Base
   description: flavor-base-spooky
-
-- type: flavor
-  id: smokey
+- id: smokey
   flavorType: Base
   description: flavor-base-smokey
-
-- type: flavor
-  id: fruity
+- id: fruity
   flavorType: Base
   description: flavor-base-fruity
-
-- type: flavor
-  id: creamy
+- id: creamy
   flavorType: Base
   description: flavor-base-creamy
-
-- type: flavor
-  id: fizzy
+- id: fizzy
   flavorType: Base
   description: flavor-base-fizzy
-
-- type: flavor
-  id: shocking
+- id: shocking
   flavorType: Base
   description: flavor-base-shocking
-
-- type: flavor
-  id: terrible
+- id: cheap
+  flavorType: Base
+  description: flavor-base-cheap
+- id: terrible
   flavorType: Base
   description: flavor-base-terrible
-
-- type: flavor
-  id: nothing
+- id: nothing
   flavorType: Complex
   description: flavor-complex-nothing
-
-- type: flavor
-  id: honey
+- id: honey
   flavorType: Complex
   description: flavor-complex-honey
-
-- type: flavor
-  id: nutriment
+- id: nutriment
   flavorType: Complex
   description: flavor-complex-nutriment
-
-- type: flavor
-  id: vitamin
+- id: vitamin
   flavorType: Complex
   description: flavor-complex-vitamin
-
-- type: flavor
-  id: protein
+- id: protein
   flavorType: Complex
   description: flavor-complex-protein
-
-- type: flavor
-  id: food
+- id: food
   flavorType: Complex
   description: flavor-complex-food
-
-- type: flavor
-  id: bun
+- id: bun
   flavorType: Complex
   description: flavor-complex-bun
-
-- type: flavor
-  id: bread
+- id: bread
   flavorType: Complex
   description: flavor-complex-bread
-
-- type: flavor
-  id: batter
+- id: batter
   flavorType: Complex
   description: flavor-complex-batter
-
-- type: flavor
-  id: butter
+- id: butter
   flavorType: Complex
   description: flavor-complex-butter
-
-- type: flavor
-  id: egg
+- id: egg
   flavorType: Complex
   description: flavor-complex-egg
-
-- type: flavor
-  id: bacon
+- id: bacon
   flavorType: Complex
   description: flavor-complex-bacon
-
-- type: flavor
-  id: chocolate
+- id: chocolate
   flavorType: Complex
   description: flavor-complex-chocolate
-
-- type: flavor
-  id: pasta
+- id: pasta
   flavorType: Complex
   description: flavor-complex-pasta
-
-- type: flavor
-  id: rice
+- id: rice
   flavorType: Complex
   description: flavor-complex-rice
-
-- type: flavor
-  id: oats
+- id: oats
   flavorType: Complex
   description: flavor-complex-oats
-
-- type: flavor
-  id: jelly
+- id: jelly
   flavorType: Complex
   description: flavor-complex-jelly
-
-- type: flavor
-  id: soy
+- id: soy
   flavorType: Complex
   description: flavor-complex-soy
-
-- type: flavor
-  id: icecream
+- id: icecream
   flavorType: Complex
   description: flavor-complex-ice-cream
-
-- type: flavor
-  id: dough
+- id: dough
   flavorType: Complex
   description: flavor-complex-dough
-
-- type: flavor
-  id: sweetdough
+- id: sweetdough
   flavorType: Complex
   description: flavor-complex-sweet-dough
-
-- type: flavor
-  id: tofu
+- id: tofu
   flavorType: Complex
   description: flavor-complex-tofu
-
-- type: flavor
-  id: muffin
+- id: muffin
   flavorType: Complex
   description: flavor-complex-muffin
-
-- type: flavor
-  id: peas
+- id: peas
   flavorType: Complex
   description: flavor-complex-peas
-
-- type: flavor
-  id: pineapple
+- id: pineapple
   flavorType: Complex
   description: flavor-complex-pineapple
-
-- type: flavor
-  id: onion
+- id: onion
   flavorType: Complex
   description: flavor-complex-onion
-
-- type: flavor
-  id: eggplant
+- id: eggplant
   flavorType: Complex
   description: flavor-complex-eggplant
-
-- type: flavor
-  id: carrot
+- id: carrot
   flavorType: Complex
   description: flavor-complex-carrot
-
-- type: flavor
-  id: potatoes
+- id: potatoes
   flavorType: Complex
   description: flavor-complex-potatoes
-
-- type: flavor
-  id: mushroom
+- id: mushroom
   flavorType: Complex
   description: flavor-complex-mushroom
-
-- type: flavor
-  id: tomato
+- id: tomato
   flavorType: Complex
   description: flavor-complex-tomato
-
-- type: flavor
-  id: corn
+- id: corn
   flavorType: Complex
   description: flavor-complex-corn
-
-- type: flavor
-  id: banana
+- id: banana
   flavorType: Complex
   description: flavor-complex-banana
-
-- type: flavor
-  id: apple
+- id: apple
   flavorType: Complex
   description: flavor-complex-apple
-
-- type: flavor
-  id: bungo
+- id: bungo
   flavorType: Complex
   description: flavor-complex-bungo
-
-- type: flavor
-  id: raisins
+- id: raisins
   flavorType: Complex
   description: flavor-complex-raisins
-
-- type: flavor
-  id: orange
+- id: orange
   flavorType: Complex
   description: flavor-complex-orange
-
-- type: flavor
-  id: curry
+- id: pink
+  flavorType: Complex
+  description: flavor-complex-pink
+- id: curry
   flavorType: Complex
   description: flavor-complex-curry
-
-- type: flavor
-  id: borsch1
+- id: borsch1
   flavorType: Complex
   description: flavor-complex-borsch-1
-
-- type: flavor
-  id: borsch2
+- id: borsch2
   flavorType: Complex
   description: flavor-complex-borsch-2
-
-- type: flavor
-  id: borsch3
+- id: borsch3
   flavorType: Complex
   description: flavor-complex-borsch-3
-
-- type: flavor
-  id: borsch4
+- id: borsch4
   flavorType: Complex
   description: flavor-complex-borsch-4
-
-- type: flavor
-  id: borsch5
+- id: borsch5
   flavorType: Complex
   description: flavor-complex-borsch-5
-
-- type: flavor
-  id: mrebrownie
+- id: mrebrownie
   flavorType: Complex
   description: flavor-complex-mre-brownie
-
-- type: flavor
-  id: fortunecookie
+- id: fortunecookie
   flavorType: Complex
   description: flavor-complex-fortune-cookie
-
-- type: flavor
-  id: nutribrick
+- id: nutribrick
   flavorType: Complex
   description: flavor-complex-nutribrick
-
-- type: flavor
-  id: cheapnoodles
+- id: cheapnoodles
   flavorType: Complex
   description: flavor-complex-cheap-noodles
-
-- type: flavor
-  id: syndicakes
+- id: syndicakes
   flavorType: Complex
   description: flavor-complex-syndi-cakes
-
-- type: flavor
-  id: susjerky
+- id: susjerky
   flavorType: Complex
   description: flavor-complex-sus-jerky
-
-- type: flavor
-  id: boritos
+- id: boritos
   flavorType: Complex
   description: flavor-complex-boritos
-
-- type: flavor
-  id: nachos
+- id: nachos
   flavorType: Complex
   description: flavor-complex-nachos
-
-- type: flavor
-  id: donkwarm
+- id: donk
   flavorType: Complex
-  description: flavor-complex-donk-warm
-
-- type: flavor
-  id: copypasta
+  description: flavor-complex-donk
+- id: copypasta
   flavorType: Complex
   description: flavor-complex-copypasta
-
-- type: flavor
-  id: memoryleek
+- id: memoryleek
   flavorType: Complex
   description: flavor-complex-memory-leek
-
-- type: flavor
-  id: gunpowder
+- id: gunpowder
   flavorType: Complex
   description: flavor-complex-gunpowder
-
-- type: flavor
-  id: validhunting
+- id: validhunting
   flavorType: Complex
   description: flavor-complex-validhunting
-
-- type: flavor
-  id: alcohol
+- id: alcohol
   flavorType: Complex
   description: flavor-complex-alcohol
-
-- type: flavor
-  id: soda
+- id: soda
   flavorType: Complex
   description: flavor-complex-soda
-
-- type: flavor
-  id: juice
+- id: juice
   flavorType: Complex
   description: flavor-complex-juice
-
-- type: flavor
-  id: water
+- id: water
   flavorType: Complex
   description: flavor-complex-water
-
-- type: flavor
-  id: beer
+- id: beer
   flavorType: Complex
   description: flavor-complex-beer
-
-- type: flavor
-  id: ale
+- id: ale
   flavorType: Complex
   description: flavor-complex-ale
-
-- type: flavor
-  id: cola
+- id: cola
   flavorType: Complex
   description: flavor-complex-cola
-
-- type: flavor
-  id: vodka
+- id: vodka
   flavorType: Complex
   description: flavor-complex-vodka
-
-- type: flavor
-  id: tequila
+- id: tequila
   flavorType: Complex
   description: flavor-complex-tequila
-
-- type: flavor
-  id: sake
+- id: sake
   flavorType: Complex
   description: flavor-complex-sake
-
-- type: flavor
-  id: rum
+- id: rum
   flavorType: Complex
   description: flavor-complex-rum
-
-- type: flavor
-  id: coffeeliquor
+- id: coffeeliquor
   flavorType: Complex
   description: flavor-complex-coffee-liquor
-
-- type: flavor
-  id: whiskey
+- id: whiskey
   flavorType: Complex
   description: flavor-complex-whiskey
-
-- type: flavor
-  id: shittywine
+- id: shittywine
   flavorType: Complex
   description: flavor-complex-shitty-wine
-
-- type: flavor
-  id: icedtea
+- id: icedtea
   flavorType: Complex
   description: flavor-complex-iced-tea
-
-- type: flavor
-  id: coffee
+- id: coffee
   flavorType: Complex
   description: flavor-complex-coffee
-
-- type: flavor
-  id: milk
+- id: milk
   flavorType: Complex
   description: flavor-complex-milk
-
-- type: flavor
-  id: tea
+- id: tea
   flavorType: Complex
   description: flavor-complex-tea
-
-- type: flavor
-  id: ice
+- id: ice
   flavorType: Complex
   description: flavor-complex-ice
-
-- type: flavor
-  id: longisland
+- id: longisland
   flavorType: Complex
   description: flavor-complex-long-island
-
-- type: flavor
-  id: threemileisland
+- id: threemileisland
   flavorType: Complex
   description: flavor-complex-three-mile-island
-
-- type: flavor
-  id: whiskeycola
+- id: whiskeycola
   flavorType: Complex
   description: flavor-complex-whiskey-cola
-
-- type: flavor
-  id: singulo
+- id: singulo
   flavorType: Complex
   description: flavor-complex-singulo
-
-- type: flavor
-  id: syndiebomb
+- id: syndiebomb
   flavorType: Complex
   description: flavor-complex-syndie-bomb
-
-- type: flavor
-  id: tequilasunrise
+- id: tequilasunrise
   flavorType: Complex
   description: flavor-complex-tequila-sunrise
-
-- type: flavor
-  id: irishcoffee
+- id: irishcoffee
   flavorType: Complex
   description: flavor-complex-irish-coffee
-
-- type: flavor
-  id: icedbeer
+- id: icedbeer
   flavorType: Complex
   description: flavor-complex-iced-beer
-
-- type: flavor
-  id: gargleblaster
+- id: gargleblaster
   flavorType: Complex
   description: flavor-complex-gargle-blaster
-
-- type: flavor
-  id: bloodymary
+- id: bloodymary
   flavorType: Complex
   description: flavor-complex-bloody-mary
-
-- type: flavor
-  id: beepsky
+- id: beepsky
   flavorType: Complex
   description: flavor-complex-beepsky
-
-- type: flavor
-  id: bananahonk
+- id: bananahonk
   flavorType: Complex
   description: flavor-complex-banana-honk
-
-- type: flavor
-  id: atomicbomb
+- id: atomicbomb
   flavorType: Complex
   description: flavor-complex-atomic-bomb
-
-- type: flavor
-  id: atomiccola
+- id: atomiccola
   flavorType: Complex
   description: flavor-complex-atomic-cola
-
-- type: flavor
-  id: cubalibre
+- id: cubalibre
   flavorType: Complex
   description: flavor-complex-cuba-libre
-
-- type: flavor
-  id: gintonic
+- id: gintonic
   flavorType: Complex
   description: flavor-complex-gin-tonic
-
-- type: flavor
-  id: screwdriver
+- id: screwdriver
   flavorType: Complex
   description: flavor-complex-screwdriver
-
-- type: flavor
-  id: pilk
+- id: pilk
   flavorType: Complex
   description: flavor-complex-pilk
-
-- type: flavor
-  id: medicine
+- id: medicine
   flavorType: Complex
   description: flavor-complex-medicine
-
-- type: flavor
-  id: carpet
+- id: carpet
   flavorType: Complex
   description: flavor-complex-carpet
-
-- type: flavor
-  id: bee
+- id: bee
   flavorType: Complex
   description: flavor-complex-bee
-
-- type: flavor
-  id: sax
+- id: sax
   flavorType: Complex
   description: flavor-complex-sax

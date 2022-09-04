@@ -37,6 +37,7 @@ flavor-base-fruity = fruity
 flavor-base-creamy = creamy
 flavor-base-fizzy = fizzy
 flavor-base-shocking = shocking
+flavor-base-cheap = cheap
 
 # lmao
 flavor-base-terrible = terrible
@@ -94,6 +95,7 @@ flavor-complex-orange = like oranges
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
+flavor-complex-pink = like pink
 flavor-complex-curry = like curry
 flavor-complex-borsch-1 = like borsch
 flavor-complex-borsch-2 = like bortsch
@@ -108,7 +110,7 @@ flavor-complex-syndi-cakes = like a hearty fruit cake
 flavor-complex-sus-jerky = like sus
 flavor-complex-boritos = like gaming
 flavor-complex-nachos = like nachos
-flavor-complex-donk-warm = like hot lava
+flavor-complex-donk = like cheap pizza
 flavor-complex-copypasta = like a reptitive joke
 flavor-complex-memory-leek = like a fork bomb
 flavor-complex-gunpowder = like gunpowder
