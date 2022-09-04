@@ -293,7 +293,7 @@
   - type: MeleeWeapon
     soundHit:
       collection: Punch
-    range: 0.8
+    range: 1.5
     angle: 30
     animation: WeaponArcFist
     damage:
