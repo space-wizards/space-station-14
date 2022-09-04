@@ -137,7 +137,7 @@ flavor-complex-bloody-mary = like a bad hangover
 flavor-complex-beepsky = like oil and whiskey
 flavor-complex-banana-honk = like a banana milkshake
 
-### This is exactly what pilk tastes like. I'm not even joking
+### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk
 
 # Medicine/chemical-specific flavors.
