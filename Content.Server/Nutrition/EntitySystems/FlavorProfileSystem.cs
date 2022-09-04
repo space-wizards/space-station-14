@@ -18,7 +18,7 @@ public sealed class FlavorProfileSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     // [Dependency] private readonly IConfigurationManager _configManager = default!; TODO: Flavor limit.
 
-    private const string BackupFlavorMessage = "flavor-profile-nothing";
+    private const string BackupFlavorMessage = "flavor-profile-unknown";
 
     public string GetLocalizedFlavorsMessage(EntityUid uid, EntityUid user, Solution solution,
         FlavorProfileComponent? flavorProfile = null)
@@ -76,7 +76,7 @@ public sealed class FlavorProfileSystem : EntitySystem
             return Loc.GetString("flavor-profile", ("flavors", allFlavors), ("lastFlavor", lastFlavor));
         }
 
-        return Loc.GetString("flavor-profile-nothing");
+        return Loc.GetString(BackupFlavorMessage);
     }
 
     private HashSet<string> GetFlavorsFromReagents(Solution solution, HashSet<string>? toIgnore = null)
