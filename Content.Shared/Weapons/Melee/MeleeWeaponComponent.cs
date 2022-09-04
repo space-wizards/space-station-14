@@ -20,6 +20,12 @@ public sealed class MeleeWeaponComponent : Component
     [ViewVariables]
     public bool Active;
 
+    /// <summary>
+    /// If holding down an attack is the accumulator going up or down (i.e. have we passed the peak).
+    /// </summary>
+    [ViewVariables]
+    public bool Accumulating = true;
+
     // TODO: Can't use accumulator comp because we'd need an active component and client can't predict changing it.
     /// <summary>
     /// How much windup time have we accumulated for a heavy attack.
@@ -32,11 +38,12 @@ public sealed class MeleeWeaponComponent : Component
      * There's also a buffer time before displaying the overlay so we don't show it constantly when clicking in combat mode.
      */
 
+    // I wouldn't recommend anything under 1 because of the attack buffer.
     /// <summary>
     /// How long it takes an attack to windup.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("windupTime")]
-    public float WindupTime = 1f;
+    public float WindupTime = 1.5f;
 
     [DataField("damage", required:true)]
     [ViewVariables(VVAccess.ReadWrite)]

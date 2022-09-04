@@ -28,7 +28,7 @@ public sealed class MeleeWindupOverlay : Overlay
 
         foreach (var comp in _entManager.EntityQuery<MeleeWeaponComponent>())
         {
-            if (comp.WindupAccumulator < SharedMeleeWeaponSystem.HeavyBuffer)
+            if (comp.WindupAccumulator < SharedMeleeWeaponSystem.AttackBuffer)
                 continue;
 
             if (!xformQuery.TryGetComponent(comp.Owner, out var xform) ||
@@ -44,21 +44,15 @@ public sealed class MeleeWindupOverlay : Overlay
                 continue;
             }
 
-            var fraction = (comp.WindupAccumulator - SharedMeleeWeaponSystem.HeavyBuffer) / (comp.WindupTime - SharedMeleeWeaponSystem.HeavyBuffer);
-            Color color;
+            var fraction = (comp.WindupAccumulator + SharedMeleeWeaponSystem.GracePeriod - SharedMeleeWeaponSystem.AttackBuffer) / (comp.WindupTime - SharedMeleeWeaponSystem.AttackBuffer);
 
-            if (fraction >= 1f)
-            {
-                color = Color.Gold;
-            }
-            else
-            {
-                color = Color.White;
-            }
+            Logger.Debug($"Fraction is {fraction} / windup is {comp.WindupAccumulator}");
 
             var lerp = fraction.Equals(0f) ? 0f : tickFraction;
+            lerp = 0f;
+            var sign = comp.Accumulating ? 1 : -1;
 
-            handle.DrawCircle(worldPos, 0.25f * MathF.Min(1f, (fraction + lerp)), color.WithAlpha(0.25f));
+            handle.DrawCircle(worldPos, 0.25f * MathF.Min(1f, (fraction + lerp * sign)), Color.Wheat.WithAlpha(0.25f));
         }
     }
 }

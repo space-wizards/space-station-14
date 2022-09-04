@@ -61,9 +61,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         PopupSystem.PopupEntity(message, uid.Value, Filter.Pvs(uid.Value, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
 
-    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component, bool heavy)
+    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component)
     {
-        base.DoPreciseAttack(user, ev, component, heavy);
+        base.DoPreciseAttack(user, ev, component);
 
         // Can't attack yourself
         // Not in LOS.
@@ -72,12 +72,12 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // For consistency with wide attacks stuff needs damageable.
             !HasComp<DamageableComponent>(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
-            !_interaction.InRangeUnobstructed(user, ev.Target, component.Range))
+            !_interaction.InRangeUnobstructed(user, ev.Target, component.Range + 0.1f))
         {
             return;
         }
 
-        var damage = component.Damage * (heavy ? FixedPoint2.New(1) : component.HeavyModifier);
+        var damage = component.Damage * GetModifier(component);
 
         // Raise event before doing damage so we can cancel damage if the event is handled
         var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target }, user, damage);
@@ -132,9 +132,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component, bool heavy)
+    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component)
     {
-        base.DoWideAttack(user, ev, component, heavy);
+        base.DoWideAttack(user, ev, component);
 
         // TODO: This is copy-paste as fuck with DoPreciseAttack
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -171,7 +171,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             targets.Add(entity);
         }
 
-        var damage = component.Damage * (heavy ? FixedPoint2.New(1) : component.HeavyModifier);
+        var damage = component.Damage * GetModifier(component);
 
         // Raise event before doing damage so we can cancel damage if the event is handled
         var hitEvent = new MeleeHitEvent(targets, user, damage);
