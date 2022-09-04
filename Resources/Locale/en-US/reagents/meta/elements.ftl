@@ -4,6 +4,9 @@ reagent-desc-aluminium = A silver, soft, non-magnetic, and ductile metal.
 reagent-name-carbon = carbon
 reagent-desc-carbon = A black, crystalline solid.
 
+reagent-name-charcoal = charcoal
+reagent-desc-charcoal = A black, porous solid
+
 reagent-name-chlorine = chlorine
 reagent-desc-chlorine = A yellow-green gas which is toxic to humans.
 

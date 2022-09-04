@@ -20,7 +20,7 @@
   id: Charcoal
   name: reagent-name-charcoal
   desc: reagent-desc-charcoal
-  physicalDesc: reagent-physical-desc-crystalline
+  physicalDesc: reagent-physical-desc-porous
   color: "#22282b"
   boilingPoint: 4200.0
   meltingPoint: 3550.0
@@ -32,3 +32,4 @@
           types:
             Poison: -1
       - !type:ChemCleanBoodstream
+        cleanseRate: 3
