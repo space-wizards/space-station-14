@@ -9,21 +9,21 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
-
 [TestFixture]
-public sealed class StartEndGameRulesTest
+public sealed class SecretStartsTest
 {
     /// <summary>
-    ///     Tests that all game rules can be added/started/ended at the same time without exceptions.
+    ///     Tests that when secret is started, all of the game rules it successfully adds are also started.
     /// </summary>
     [Test]
-    public async Task TestAllConcurrent()
+    public async Task TestSecretStarts()
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
         {
             NoClient = true,
             Dirty = true,
         });
+
         var server = pairTracker.Pair.Server;
         await server.WaitIdleAsync();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -31,17 +31,7 @@ public sealed class StartEndGameRulesTest
 
         await server.WaitAssertion(() =>
         {
-            var rules = protoMan.EnumeratePrototypes<GameRulePrototype>().ToList();
-            rules.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
-
-            // Start all rules
-            foreach (var rule in rules)
-            {
-                gameTicker.StartGameRule(rule);
-            }
-
-            Assert.That(gameTicker.AddedGameRules, Has.Count.EqualTo(rules.Count));
-            Assert.That(gameTicker.AddedGameRules, Has.Count.EqualTo(gameTicker.StartedGameRules.Count));
+            gameTicker.StartGameRule(protoMan.Index<GameRulePrototype>("Secret"));
         });
 
         // Wait three ticks for any random update loops that might happen
@@ -49,9 +39,13 @@ public sealed class StartEndGameRulesTest
 
         await server.WaitAssertion(() =>
         {
+            foreach (var rule in gameTicker.AddedGameRules)
+            {
+                Assert.That(gameTicker.StartedGameRules.Contains(rule));
+            }
+
             // End all rules
             gameTicker.ClearGameRules();
-            Assert.That(!gameTicker.AddedGameRules.Any());
         });
 
         await pairTracker.CleanReturnAsync();
