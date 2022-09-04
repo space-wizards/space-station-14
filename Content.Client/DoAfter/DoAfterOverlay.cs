@@ -50,10 +50,6 @@ public sealed class DoAfterOverlay : Overlay
             }
 
             var worldPosition = _transform.GetWorldPosition(xform);
-
-            if (!args.WorldAABB.Contains(worldPosition))
-                continue;
-
             var index = 0;
             var worldMatrix = Matrix3.CreateTranslation(worldPosition);
 

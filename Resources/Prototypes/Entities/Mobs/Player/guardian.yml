@@ -83,7 +83,7 @@
       windupTime: 1
       damage:
         types:
-          Blunt: 22
+          Blunt: 30
     - type: Actions
     - type: Guardian
     - type: InteractionPopup
