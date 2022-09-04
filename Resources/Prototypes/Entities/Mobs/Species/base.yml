@@ -280,9 +280,13 @@
     normalState: Generic_mob_burning
     alternateState: Standing
     fireStackAlternateState: 3
+  - type: EnsnareableVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
+  - type: Ensnareable
+    sprite: Objects/Misc/ensnare.rsi
+    state: icon
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle

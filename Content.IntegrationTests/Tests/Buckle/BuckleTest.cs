@@ -56,6 +56,10 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var actionBlocker = entityManager.EntitySysManager.GetEntitySystem<ActionBlockerSystem>();
+            var standingState = entityManager.EntitySysManager.GetEntitySystem<StandingStateSystem>();
+
 
             EntityUid human = default;
             EntityUid chair = default;
@@ -64,12 +68,6 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await server.WaitAssertion(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-
-                var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-                var standingState = EntitySystem.Get<StandingStateSystem>();
-
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
                 chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
@@ -119,9 +117,6 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await server.WaitAssertion(() =>
             {
-                var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-                var standingState = EntitySystem.Get<StandingStateSystem>();
-
                 // Still buckled
                 Assert.True(buckle.Buckled);
 
@@ -155,10 +150,6 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await server.WaitAssertion(() =>
             {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-                var standingState = EntitySystem.Get<StandingStateSystem>();
-
                 // Still buckled
                 Assert.True(buckle.Buckled);
 
@@ -228,10 +219,11 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await server.WaitIdleAsync();
 
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var handsSys = entityManager.EntitySysManager.GetEntitySystem<SharedHandsSystem>();
+
             await server.WaitAssertion(() =>
             {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
                 var chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
@@ -251,7 +243,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 {
                     var akms = entityManager.SpawnEntity(ItemDummyId, coordinates);
 
-                    Assert.True(EntitySystem.Get<SharedHandsSystem>().TryPickupAnyHand(human, akms));
+                    Assert.True(handsSys.TryPickupAnyHand(human, akms));
                 }
             });
 
@@ -265,7 +257,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // With items in all hands
                 foreach (var hand in hands.Hands.Values)
                 {
-                    Assert.NotNull(hands.ActiveHandEntity);
+                    Assert.NotNull(hand.HeldEntity);
                 }
 
                 var legs = body.GetPartsOfType(BodyPartType.Leg);
@@ -287,7 +279,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Now with no item in any hand
                 foreach (var hand in hands.Hands.Values)
                 {
-                    Assert.Null(hands.ActiveHandEntity);
+                    Assert.Null(hand.HeldEntity);
                 }
 
                 buckle.TryUnbuckle(human, true);
@@ -304,6 +296,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
+            var entityManager = server.ResolveDependency<IEntityManager>();
 
             EntityUid human = default;
             EntityUid chair = default;
@@ -311,9 +304,6 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await server.WaitAssertion(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
                 chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
@@ -336,8 +326,6 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await server.WaitAssertion(() =>
             {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-
                 // Move the now unbuckled entity back onto the chair
                 entityManager.GetComponent<TransformComponent>(human).WorldPosition -= (100, 0);
 

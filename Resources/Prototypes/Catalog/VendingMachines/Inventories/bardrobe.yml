@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: BarDrobeInventory
-  name: BarDrobe
-  spriteName: bardrobe
   startingInventory:
     ClothingHeadHatTophat: 2
     ClothingEyesGlassesBeer: 2

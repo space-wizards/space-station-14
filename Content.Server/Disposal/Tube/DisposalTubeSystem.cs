@@ -20,17 +20,23 @@ namespace Content.Server.Disposal.Tube
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
+            SubscribeLocalEvent<DisposalTubeComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<DisposalTubeComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<DisposalTubeComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
             SubscribeLocalEvent<DisposalTaggerComponent, ActivatableUIOpenAttemptEvent>(OnOpenTaggerUIAttempt);
+            SubscribeLocalEvent<DisposalTubeComponent, ComponentStartup>(OnStartup);
+        }
 
+        private void OnStartup(EntityUid uid, DisposalTubeComponent component, ComponentStartup args)
+        {
+            UpdateAnchored(uid, component, Transform(uid).Anchored);
         }
 
         private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, ref ContainerRelayMovementEntityEvent args)
@@ -108,12 +114,25 @@ namespace Content.Server.Disposal.Tube
             router.UserInterface?.SetState(new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(taglist.ToString()));
         }
 
-        private static void BodyTypeChanged(
-            EntityUid uid,
-            DisposalTubeComponent component,
-            ref PhysicsBodyTypeChangedEvent args)
+        private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)
         {
-            component.AnchoredChanged();
+            UpdateAnchored(uid, component, args.Anchored);
+        }
+
+        private void UpdateAnchored(EntityUid uid, DisposalTubeComponent component, bool anchored)
+        {
+            if (anchored)
+            {
+                component.Connect();
+
+                // TODO this visual data should just generalized into some anchored-visuals system/comp, this has nothing to do with disposal tubes.
+                _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Anchored);
+            }
+            else
+            {
+                component.Disconnect();
+                _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Free);
+            }
         }
 
         public IDisposalTubeComponent? NextTubeFor(EntityUid target, Direction nextDirection, IDisposalTubeComponent? targetTube = null)
