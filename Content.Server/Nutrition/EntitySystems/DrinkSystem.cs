@@ -344,10 +344,10 @@ namespace Content.Server.Nutrition.EntitySystems
                 var userName = Identity.Entity(args.User, EntityManager);
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-force-feed-success", ("user", userName)), uid, Filter.Entities(uid));
+                    Loc.GetString("drink-component-force-feed-success", ("user", userName), ("flavors", flavors)), uid, Filter.Entities(uid));
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-force-feed-success-user", ("target", targetName), ("flavors", flavors)),
+                    Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
                     args.User, Filter.Entities(args.User));
             }
             else
