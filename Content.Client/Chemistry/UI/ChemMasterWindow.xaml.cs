@@ -156,14 +156,12 @@ namespace Content.Client.Chemistry.UI
                 });
             }
 
-            foreach (var reagent in state.ContainerReagents)
+            foreach (var reagent in state.ContainerReagents.OrderBy(
+                r => {_prototypeManager.TryIndex(r.ReagentId, out ReagentPrototype? p); return p?.LocalizedName;}))
             {
-                var name = Loc.GetString("chem-master-window-unknown-reagent-text");
-                //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
-                {
-                    name = proto.LocalizedName;
-                }
+                //Try to get the prototype for the given reagent. This gives us its name.
+                _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto);
+                var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
                 if (proto != null)
                 {
@@ -216,14 +214,12 @@ namespace Content.Client.Chemistry.UI
             };
             bufferHBox.AddChild(bufferVol);
 
-            foreach (var reagent in state.BufferReagents)
+            foreach (var reagent in state.BufferReagents.OrderBy(
+                r => {_prototypeManager.TryIndex(r.ReagentId, out ReagentPrototype? p); return p?.LocalizedName;}))
             {
-                var name = Loc.GetString("chem-master-window-unknown-reagent-text");
-                //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
-                {
-                    name = proto.LocalizedName;
-                }
+                //Try to get the prototype for the given reagent. This gives us its name.
+                _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto);
+                var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
                 if (proto != null)
                 {
