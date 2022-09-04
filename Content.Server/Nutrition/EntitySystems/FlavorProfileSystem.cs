@@ -16,9 +16,11 @@ namespace Content.Server.Nutrition.EntitySystems;
 public sealed class FlavorProfileSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    // [Dependency] private readonly IConfigurationManager _configManager = default!; TODO: Flavor limit.
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     private const string BackupFlavorMessage = "flavor-profile-unknown";
+
+    private int FlavorLimit => _configManager.GetCVar<int>("flavor.limit");
 
     public string GetLocalizedFlavorsMessage(EntityUid uid, EntityUid user, Solution solution,
         FlavorProfileComponent? flavorProfile = null)
@@ -30,7 +32,7 @@ public sealed class FlavorProfileSystem : EntitySystem
         }
 
         flavors.UnionWith(flavorProfile.Flavors);
-        flavors.UnionWith(GetFlavorsFromReagents(solution, flavorProfile.IgnoreReagents));
+        flavors.UnionWith(GetFlavorsFromReagents(solution, FlavorLimit - flavors.Count, flavorProfile.IgnoreReagents));
 
         var ev = new FlavorProfileModificationEvent(user, flavors);
         RaiseLocalEvent(ev);
@@ -42,7 +44,7 @@ public sealed class FlavorProfileSystem : EntitySystem
 
     public string GetLocalizedFlavorsMessage(EntityUid user, Solution solution)
     {
-        var flavors = GetFlavorsFromReagents(solution);
+        var flavors = GetFlavorsFromReagents(solution, FlavorLimit);
         var ev = new FlavorProfileModificationEvent(user, flavors);
         RaiseLocalEvent(user, ev, true);
 
@@ -79,7 +81,7 @@ public sealed class FlavorProfileSystem : EntitySystem
         return Loc.GetString(BackupFlavorMessage);
     }
 
-    private HashSet<string> GetFlavorsFromReagents(Solution solution, HashSet<string>? toIgnore = null)
+    private HashSet<string> GetFlavorsFromReagents(Solution solution, int desiredAmount, HashSet<string>? toIgnore = null)
     {
         var flavors = new HashSet<string>();
         foreach (var reagent in solution.Contents)
@@ -87,6 +89,11 @@ public sealed class FlavorProfileSystem : EntitySystem
             if (toIgnore != null && toIgnore.Contains(reagent.ReagentId))
             {
                 continue;
+            }
+
+            if (flavors.Count == desiredAmount)
+            {
+                break;
             }
 
             var flavor = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId).Flavor;
