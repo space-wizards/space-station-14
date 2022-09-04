@@ -1,0 +1,16 @@
+- type: entity
+  name: Geiger counter
+  description: A handheld device used for detecting and measuring radiation pulses.
+  parent: BaseItem
+  id: GeigerCounter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Tools/geiger.rsi
+      layers:
+        - state: geiger_base
+        - state: geiger_on_idle
+          shader: unshaded
+          visible: false
+    - type: Item
+      sprite: Objects/Tools/geiger.rsi
