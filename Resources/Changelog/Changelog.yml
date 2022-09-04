@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed chair layering, type: Fix}
-  id: 1730
-  time: '2022-06-20T01:27:22.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Clearly defined speciesism is AGAINST the rules. Be nice to each other.,
@@ -2912,3 +2907,11 @@ Entries:
   - {message: Made snow and grass unable to be pried with a crowbar., type: Fix}
   id: 2229
   time: '2022-09-03T13:40:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fixes nukeops being broken when run from secret., type: Fix}
+  - {message: 'Fixes random events being broken when run from secret. Are you serious?
+      Not a single one of you reported this until now? It''s been broken for 2 months.',
+    type: Fix}
+  id: 2230
+  time: '2022-09-04T01:40:00.0000000+00:00'
