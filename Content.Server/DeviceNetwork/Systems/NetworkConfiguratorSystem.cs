@@ -307,7 +307,6 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
 
         var resultText = result switch
         {
-            DeviceListUpdateResult.NoComponent => Loc.GetString("network-configurator-error"),
             DeviceListUpdateResult.TooManyDevices => Loc.GetString("network-configurator-too-many-devices"),
             DeviceListUpdateResult.UpdateOk => Loc.GetString("network-configurator-update-ok"),
             _ => "error"
