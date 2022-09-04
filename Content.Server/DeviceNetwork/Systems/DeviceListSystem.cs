@@ -18,18 +18,25 @@ public sealed class DeviceListSystem : EntitySystem
     /// <summary>
     /// Replaces or merges the current device list with the given one
     /// </summary>
-    public void UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
+    public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
     {
         if (!Resolve(uid, ref deviceList))
-            return;
+            return DeviceListUpdateResult.NoComponent;
 
-        if (!merge)
-            deviceList.Devices.Clear();
-
+        var newDevices = merge ? new HashSet<EntityUid>(deviceList.Devices) : new();
         var devicesList = devices.ToList();
-        deviceList.Devices.UnionWith(devicesList);
+
+        newDevices.UnionWith(devicesList);
+        if (newDevices.Count > deviceList.DeviceLimit)
+        {
+            return DeviceListUpdateResult.TooManyDevices;
+        }
+
+        deviceList.Devices = newDevices;
 
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
+
+        return DeviceListUpdateResult.UpdateOk;
     }
 
     /// <summary>
@@ -94,6 +101,13 @@ public sealed class DeviceListSystem : EntitySystem
         if (component.HandleIncomingPackets && component.Devices.Contains(args.Sender) != component.IsAllowList)
             args.Cancel();
     }
+}
+
+public enum DeviceListUpdateResult : byte
+{
+    NoComponent,
+    TooManyDevices,
+    UpdateOk
 }
 
 public sealed class DeviceListUpdateEvent : EntityEventArgs
