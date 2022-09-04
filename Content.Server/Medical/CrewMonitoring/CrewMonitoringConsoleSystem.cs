@@ -76,7 +76,7 @@ namespace Content.Server.Medical.CrewMonitoring
             // the players eye rotation. We don't know what that is for sure, but we know their last grid angle, which
             // should work well enough?
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
-                worldRot = grid.WorldRotation;
+                worldRot = EntityManager.GetComponent<TransformComponent>(grid.Owner).WorldRotation;
 
             // update all sensors info
             var allSensors = component.ConnectedSensors.Values.ToList();

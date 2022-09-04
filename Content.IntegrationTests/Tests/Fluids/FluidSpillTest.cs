@@ -60,7 +60,7 @@ public sealed class FluidSpill
         {
             mapId = mapManager.CreateMap();
             var grid = mapManager.CreateGrid(mapId);
-            gridId = grid.GridEntityId;
+            gridId = grid.Owner;
 
             for (var x = 0; x < 3; x++)
             {
@@ -131,7 +131,7 @@ public sealed class FluidSpill
                 }
             }
 
-            gridId = grid.GridEntityId;
+            gridId = grid.Owner;
         });
 
         await server.WaitAssertion(() =>

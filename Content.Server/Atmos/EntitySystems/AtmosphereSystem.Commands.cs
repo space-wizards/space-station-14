@@ -123,10 +123,10 @@ public sealed partial class AtmosphereSystem
             playerMap = Transform(playerEnt).MapID;
 
         var options = _mapManager.GetAllGrids()
-            .OrderByDescending(e => playerMap != null && e.ParentMapId == playerMap)
-            .ThenBy(e => (int) e.ParentMapId)
-            .ThenBy(e => (int) e.GridEntityId)
-            .Select(e => new CompletionOption(e.GridEntityId.ToString(), $"{MetaData(e.GridEntityId).EntityName} - Map {e.ParentMapId}"));
+            .OrderByDescending(e => playerMap != null && Transform(e.Owner).MapID == playerMap)
+            .ThenBy(e => (int) Transform(e.Owner).MapID)
+            .ThenBy(e => (int) e.Owner)
+            .Select(e => new CompletionOption(e.Owner.ToString(), $"{MetaData(e.Owner).EntityName} - Map {Transform(e.Owner).MapID}"));
 
         return CompletionResult.FromOptions(options);
     }

@@ -7,6 +7,7 @@ using Content.IntegrationTests;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -68,7 +69,7 @@ namespace Content.MapRenderer.Painters
 
                 foreach (var grid in grids)
                 {
-                    grid.WorldRotation = Angle.Zero;
+                    sEntityManager.GetComponent<TransformComponent>(grid.Owner).WorldRotation = Angle.Zero;
                 }
             });
 
@@ -80,7 +81,7 @@ namespace Content.MapRenderer.Painters
                 // Skip empty grids
                 if (grid.LocalAABB.IsEmpty())
                 {
-                    Console.WriteLine($"Warning: Grid {grid.GridEntityId} was empty. Skipping image rendering.");
+                    Console.WriteLine($"Warning: Grid {grid.Owner} was empty. Skipping image rendering.");
                     continue;
                 }
 
@@ -108,8 +109,8 @@ namespace Content.MapRenderer.Painters
                 });
 
                 var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas);
-                renderedImage.GridUid = grid.GridEntityId;
-                renderedImage.Offset = grid.WorldPosition;
+                renderedImage.GridUid = grid.Owner;
+                renderedImage.Offset = sEntityManager.GetComponent<TransformComponent>(grid.Owner).WorldPosition;
 
                 yield return renderedImage;
             }

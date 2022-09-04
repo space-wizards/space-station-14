@@ -149,8 +149,8 @@ namespace Content.Server.StationEvents.Events
 
             var atmosphereSystem = Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = gridComp.WorldAABB;
-            var gridPos = gridComp.WorldPosition;
+            var gridBounds = TransformComponent.CalcWorldAabb(Transform(gridComp.Owner), gridComp.LocalAABB);
+            var gridPos = Transform(gridComp.Owner).WorldPosition;
 
             for (var i = 0; i < 10; i++)
             {
@@ -158,8 +158,8 @@ namespace Content.Server.StationEvents.Events
                 var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(gridComp.GridEntityId, Transform(targetGrid).MapUid, tile, mapGridComp:gridComp)
-                    || atmosphereSystem.IsTileAirBlocked(gridComp.GridEntityId, tile, mapGridComp:gridComp)) continue;
+                if (atmosphereSystem.IsTileSpace(gridComp.Owner, Transform(targetGrid).MapUid, tile, mapGridComp:gridComp)
+                    || atmosphereSystem.IsTileAirBlocked(gridComp.Owner, tile, mapGridComp:gridComp)) continue;
                 found = true;
                 targetCoords = gridComp.GridTileToLocal(tile);
                 break;

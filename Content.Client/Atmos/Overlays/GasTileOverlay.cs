@@ -16,6 +16,7 @@ namespace Content.Client.Atmos.Overlays
     {
         private readonly GasTileOverlaySystem _system;
         private readonly IMapManager _mapManager;
+        private readonly IEntityManager _entMan;
         
         public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
         private readonly ShaderInstance _shader;
@@ -47,6 +48,7 @@ namespace Content.Client.Atmos.Overlays
         {
             _system = system;
             _mapManager = IoCManager.Resolve<IMapManager>();
+            _entMan = IoCManager.Resolve<IEntityManager>();
             _shader = protoMan.Index<ShaderPrototype>("unshaded").Instance();
             ZIndex = GasOverlayZIndex;
 
@@ -141,11 +143,11 @@ namespace Content.Client.Atmos.Overlays
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
             {
-                if (!TileData.TryGetValue(mapGrid.GridEntityId, out var gridData))
+                if (!TileData.TryGetValue(mapGrid.Owner, out var gridData))
                     continue;
 
-                drawHandle.SetTransform(mapGrid.WorldMatrix);
-                var floatBounds = mapGrid.InvWorldMatrix.TransformBox(in args.WorldBounds);
+                drawHandle.SetTransform(_entMan.GetComponent<TransformComponent>(mapGrid.Owner).WorldMatrix);
+                var floatBounds = _entMan.GetComponent<TransformComponent>(mapGrid.Owner).InvWorldMatrix.TransformBox(in args.WorldBounds);
                 var localBounds = new Box2i(
                     (int) MathF.Floor(floatBounds.Left),
                     (int) MathF.Floor(floatBounds.Bottom),

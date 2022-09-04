@@ -66,7 +66,7 @@ namespace Content.Server.Shuttles.Systems
             // Assume the docking port itself (and its body) is valid
 
             if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
-                !HasComp<ShuttleComponent>(grid.GridEntityId)) return null;
+                !HasComp<ShuttleComponent>(grid.Owner)) return null;
 
             var transform = body.GetTransform();
             var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
@@ -90,7 +90,7 @@ namespace Content.Server.Shuttles.Systems
 
             while (enumerator.MoveNext(out var otherGrid))
             {
-                if (otherGrid.GridEntityId == dockingXform.GridUid) continue;
+                if (otherGrid.Owner == dockingXform.GridUid) continue;
 
                 foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
                 {

@@ -215,6 +215,7 @@ namespace Content.Shared.Maps
         private static bool GetWorldTileBox(TileRef turf, out Box2Rotated res)
         {
             var map = IoCManager.Resolve<IMapManager>();
+            var ents = IoCManager.Resolve<IEntityManager>();
 
             if (map.TryGetGrid(turf.GridUid, out var tileGrid))
             {
@@ -224,7 +225,7 @@ namespace Content.Shared.Maps
                 var worldPos = tileGrid.GridTileToWorldPos(turf.GridIndices);
                 tileBox = tileBox.Translated(worldPos);
                 // Now tileBox needs to be rotated to match grid rotation
-                res = new Box2Rotated(tileBox, tileGrid.WorldRotation, worldPos);
+                res = new Box2Rotated(tileBox, ents.GetComponent<TransformComponent>(tileGrid.Owner).WorldRotation, worldPos);
                 return true;
             }
 

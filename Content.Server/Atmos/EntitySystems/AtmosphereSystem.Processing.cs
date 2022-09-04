@@ -48,17 +48,16 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 return true;
 
-            var mapGrid = (MapGridComponent) mapGridComp;
-            var mapUid = _mapManager.GetMapEntityIdOrThrow(((MapGridComponent) mapGridComp).ParentMapId);
+            var mapUid = _mapManager.GetMapEntityIdOrThrow(Transform(mapGridComp.Owner).MapID);
 
-            var volume = GetVolumeForTiles(mapGrid, 1);
+            var volume = GetVolumeForTiles(mapGridComp, 1);
 
             var number = 0;
             while (atmosphere.CurrentRunInvalidatedCoordinates.TryDequeue(out var indices))
             {
                 if (!atmosphere.Tiles.TryGetValue(indices, out var tile))
                 {
-                    tile = new TileAtmosphere(mapGrid.GridEntityId, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
+                    tile = new TileAtmosphere(mapGridComp.Owner, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
                     atmosphere.Tiles[indices] = tile;
                 }
 
@@ -70,7 +69,7 @@ namespace Content.Server.Atmos.EntitySystems
                 GridUpdateAdjacent(uid, atmosphere, ref updateAdjacentEv);
 
                 // Call this instead of the grid method as the map has a say on whether the tile is space or not.
-                if ((!mapGrid.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager)) && !isAirBlocked)
+                if ((!mapGridComp.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager)) && !isAirBlocked)
                 {
                     tile.Air = GetTileMixture(null, mapUid, indices);
                     tile.MolesArchived = tile.Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
@@ -79,7 +78,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var nullAir = false;
 
-                    var enumerator = GetObstructingComponentsEnumerator(mapGrid, indices);
+                    var enumerator = GetObstructingComponentsEnumerator(mapGridComp, indices);
 
                     while (enumerator.MoveNext(out var airtight))
                     {
@@ -101,7 +100,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
                 else
                 {
-                    if (tile.Air == null && NeedsVacuumFixing(mapGrid, indices))
+                    if (tile.Air == null && NeedsVacuumFixing(mapGridComp, indices))
                     {
                         var vacuumEv = new FixTileVacuumMethodEvent(uid, indices);
                         GridFixTileVacuum(uid, atmosphere, ref vacuumEv);
@@ -125,12 +124,12 @@ namespace Content.Server.Atmos.EntitySystems
                 AddActiveTile(atmosphere, tile);
 
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity and heat capacity
-                var tileDef = mapGrid.TryGetTileRef(indices, out var tileRef)
+                var tileDef = mapGridComp.TryGetTileRef(indices, out var tileRef)
                     ? tileRef.GetContentTileDefinition(_tileDefinitionManager) : null;
 
                 tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
                 tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
-                InvalidateVisuals(mapGrid.GridEntityId, indices);
+                InvalidateVisuals(mapGridComp.Owner, indices);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {

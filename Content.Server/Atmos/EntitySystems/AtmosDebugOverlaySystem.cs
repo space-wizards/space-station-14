@@ -138,7 +138,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
                 {
-                    var uid = grid.GridEntityId;
+                    var uid = grid.Owner;
 
                     if (!Exists(uid))
                         continue;
@@ -160,7 +160,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
                     }
 
-                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(grid.GridEntityId, baseTile, debugOverlayContent), session.ConnectedClient);
+                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(grid.Owner, baseTile, debugOverlayContent), session.ConnectedClient);
                 }
             }
         }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -27,7 +28,7 @@ namespace Content.IntegrationTests.Tests
             {
                 // TODO: Properly find the "main" station grid.
                 var grid0 = mapManager.GetAllGrids().First();
-                mapLoader.SaveGrid(grid0.GridEntityId, "save load save 1.yml");
+                mapLoader.SaveGrid(grid0.Owner, "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
                 var grid = mapLoader.LoadGrid(mapId, "save load save 1.yml").gridId;
                 mapLoader.SaveGrid(grid!.Value, "save load save 2.yml");

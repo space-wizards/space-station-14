@@ -65,7 +65,7 @@ namespace Content.Server.StationEvents.Events
 
             foreach (var grid in MapManager.GetAllGrids())
             {
-                if (grid.ParentMapId != mapId || !EntityManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
+                if (Transform(grid.Owner).MapID != mapId || !EntityManager.TryGetComponent(grid.Owner, out PhysicsComponent? gridBody)) continue;
                 var aabb = gridBody.GetWorldAABB();
                 playableArea = playableArea?.Union(aabb) ?? aabb;
             }

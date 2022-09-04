@@ -385,7 +385,8 @@ public sealed partial class CargoSystem
 
         foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
         {
-            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+            var worldAabb = TransformComponent.CalcWorldAabb(Transform(grid.Owner), grid.LocalAABB);
+            aabb = aabb?.Union(worldAabb) ?? worldAabb;
         }
 
         if (aabb != null)
@@ -397,7 +398,7 @@ public sealed partial class CargoSystem
         var offset = 0f;
         if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
         {
-            var bounds = ((MapGridComponent) shuttleGrid).LocalAABB;
+            var bounds = shuttleGrid.LocalAABB;
             offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
         }
 

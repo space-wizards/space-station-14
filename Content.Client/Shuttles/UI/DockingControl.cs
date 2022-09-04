@@ -140,12 +140,12 @@ public class DockingControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
                      new Box2(worldPos - _range, worldPos + _range)))
         {
-            if (grid.GridEntityId == GridEntity) continue;
+            if (grid.Owner == GridEntity) continue;
 
             // Draw the fixtures before drawing any docks in range.
-            if (!_entManager.TryGetComponent<FixturesComponent>(grid.GridEntityId, out var gridFixtures)) continue;
+            if (!_entManager.TryGetComponent<FixturesComponent>(grid.Owner, out var gridFixtures)) continue;
 
-            var gridMatrix = grid.WorldMatrix;
+            var gridMatrix = _entManager.GetComponent<TransformComponent>(grid.Owner).WorldMatrix;
 
             Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
 
@@ -192,7 +192,7 @@ public class DockingControl : Control
             }
 
             // Draw any docks on that grid
-            if (Docks.TryGetValue(grid.GridEntityId, out var gridDocks))
+            if (Docks.TryGetValue(grid.Owner, out var gridDocks))
             {
                 foreach (var dock in gridDocks)
                 {

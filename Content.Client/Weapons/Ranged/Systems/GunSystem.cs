@@ -151,7 +151,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
         if (MapManager.TryFindGridAt(mousePos, out var grid))
         {
-            coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+            coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
         }
         else
         {

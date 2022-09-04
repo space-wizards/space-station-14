@@ -294,13 +294,13 @@ namespace Content.Server.GameTicking
             {
                 foreach (var grid in _mapManager.GetAllGrids())
                 {
-                    if (!metaQuery.TryGetComponent(grid.GridEntityId, out var meta) ||
+                    if (!metaQuery.TryGetComponent(grid.Owner, out var meta) ||
                         meta.EntityPaused)
                     {
                         continue;
                     }
 
-                    _possiblePositions.Add(new EntityCoordinates(grid.GridEntityId, Vector2.Zero));
+                    _possiblePositions.Add(new EntityCoordinates(grid.Owner, Vector2.Zero));
                 }
             }
 
@@ -314,8 +314,8 @@ namespace Content.Server.GameTicking
 
                 if (_mapManager.TryFindGridAt(toMap, out var foundGrid))
                 {
-                    return new EntityCoordinates(foundGrid.GridEntityId,
-                        foundGrid.InvWorldMatrix.Transform(toMap.Position));
+                    return new EntityCoordinates(foundGrid.Owner,
+                        EntityManager.GetComponent<TransformComponent>(foundGrid.Owner).InvWorldMatrix.Transform(toMap.Position));
                 }
 
                 return spawn;

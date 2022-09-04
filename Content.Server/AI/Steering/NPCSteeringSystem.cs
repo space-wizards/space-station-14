@@ -296,7 +296,7 @@ namespace Content.Server.AI.Steering
             // TODO: This isn't going to work for space.
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
-                input = (-grid.WorldRotation).RotateVec(input);
+                input = (-EntityManager.GetComponent<TransformComponent>(grid.Owner).WorldRotation).RotateVec(input);
             }
 
             SetDirection(mover, input);

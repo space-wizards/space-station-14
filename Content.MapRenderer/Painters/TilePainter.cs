@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Maps;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
@@ -57,7 +58,7 @@ namespace Content.MapRenderer.Painters
                 i++;
             });
 
-            Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {grid.GridEntityId} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {grid.Owner} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
         private Dictionary<string, List<Image>> GetTileImages(

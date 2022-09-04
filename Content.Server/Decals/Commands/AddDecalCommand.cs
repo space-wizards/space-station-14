@@ -46,7 +46,7 @@ namespace Content.Server.Decals.Commands
                 return;
             }
 
-            var coordinates = new EntityCoordinates(grid.GridEntityId, new Vector2(x, y));
+            var coordinates = new EntityCoordinates(grid.Owner, new Vector2(x, y));
             if (grid.GetTileRef(coordinates).IsSpace())
             {
                 shell.WriteError($"Cannot create decal on space tile at {coordinates}.");

@@ -228,7 +228,7 @@ namespace Content.Server.Salvage
             var grid = tsc.GridEuid;
             if (_mapManager.TryGetGrid(grid, out var magnetGrid))
             {
-                angle = magnetGrid.WorldRotation;
+                angle = Transform(magnetGrid.Owner).WorldRotation;
             }
         }
 

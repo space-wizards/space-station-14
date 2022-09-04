@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
@@ -34,13 +34,13 @@ namespace Content.IntegrationTests.Tests
 
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
-                    var mapGridEnt = mapGrid.GridEntityId;
+                    var mapGridEnt = mapGrid.Owner;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
                     mapGrid.SetTile(new Vector2i(0,0), new Tile(1, (TileRenderFlag)1, 255));
                 }
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
-                    var mapGridEnt = mapGrid.GridEntityId;
+                    var mapGridEnt = mapGrid.Owner;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag)1, 254));
                 }
@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests
                     if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid))
                         Assert.Fail();
 
-                    Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
+                    Assert.That(sEntities.GetComponent<TransformComponent>(mapGrid.Owner).WorldPosition, Is.EqualTo(new Vector2(10, 10)));
 
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, (TileRenderFlag)1, 255)));
                 }
@@ -70,7 +70,7 @@ namespace Content.IntegrationTests.Tests
                     if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid))
                         Assert.Fail();
 
-                    Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
+                    Assert.That(sEntities.GetComponent<TransformComponent>(mapGrid.Owner).WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, (TileRenderFlag)1, 254)));
                 }
             });

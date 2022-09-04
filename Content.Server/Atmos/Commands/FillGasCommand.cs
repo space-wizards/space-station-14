@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Commands
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            foreach (var tile in atmosphereSystem.GetAllMixtures(grid.GridEntityId, true))
+            foreach (var tile in atmosphereSystem.GetAllMixtures(grid.Owner, true))
             {
                 tile.AdjustMoles(gasId, moles);
             }

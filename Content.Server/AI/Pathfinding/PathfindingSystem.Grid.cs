@@ -97,7 +97,7 @@ public sealed partial class PathfindingSystem
     private PathfindingChunk CreateChunk(GridPathfindingComponent comp, Vector2i indices)
     {
         var grid = _mapManager.GetGrid(comp.Owner);
-        var newChunk = new PathfindingChunk(grid.GridEntityId, indices);
+        var newChunk = new PathfindingChunk(grid.Owner, indices);
         comp.Graph.Add(indices, newChunk);
         newChunk.Initialize(grid);
 
