@@ -31,7 +31,7 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
-            if (component.IsHoldingFire() || component.IsHoldingPressure())
+            if (!this.IsPowered(uid, EntityManager) || component.IsHoldingFire() || component.IsHoldingPressure())
                 args.Cancel();
         }
 
