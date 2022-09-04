@@ -1,12 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Clearly defined speciesism is AGAINST the rules. Be nice to each other.,
-    type: Tweak}
-  - {message: Rule 8 clearly states no names of fictional or real famous people.,
-    type: Tweak}
-  id: 1731
-  time: '2022-06-20T04:52:45.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Items rotate when thrown again., type: Fix}
@@ -2915,3 +2907,10 @@ Entries:
     type: Fix}
   id: 2230
   time: '2022-09-04T01:40:00.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some prediction issues surrounding status effects. Slipping should
+      feel less shit now. No more double slipping and teleporting when you get back
+      up., type: Fix}
+  id: 2231
+  time: '2022-09-04T17:21:22.0000000+00:00'
