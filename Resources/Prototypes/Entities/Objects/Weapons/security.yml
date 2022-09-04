@@ -15,7 +15,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 5
+        Blunt: 7
     bluntStaminaDamageFactor: 2.0
     range: 1.5
     angle: 60

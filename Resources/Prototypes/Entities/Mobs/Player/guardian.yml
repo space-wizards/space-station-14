@@ -80,7 +80,7 @@
       range: 2
       angle: 30
       animation: WeaponArcFist
-      windupTime: 0.7
+      windupTime: 1
       damage:
         types:
           Blunt: 22

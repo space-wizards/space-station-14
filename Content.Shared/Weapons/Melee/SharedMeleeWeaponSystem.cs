@@ -16,7 +16,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
@@ -58,6 +58,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             {
                 continue;
             }
+
+            // TODO: Server needs to cancel CanAttacks + IsInCombatMode
 
             if (comp.Accumulating)
             {
@@ -232,6 +234,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         args.State = new MeleeWeaponComponentState
         {
             Active = component.Active,
+            Accumulating = component.Accumulating,
             WindupAccumulator = component.WindupAccumulator,
         };
     }
@@ -272,7 +275,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// </summary>
     private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, ReleaseAttackEvent attack)
     {
-        if (!_blocker.CanAttack(user))
+        if (!Blocker.CanAttack(user))
             return;
 
         // Windup time checked elsewhere.
@@ -327,7 +330,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var total = component.WindupTime - AttackBuffer;
         var amount = component.WindupAccumulator + GracePeriod - AttackBuffer;
         var fraction = Math.Clamp(amount / total, 0f, 1f);
-        var modifier = MathF.Pow(fraction, 2);
+        var modifier = MathF.Pow(fraction, 2f);
         Sawmill.Debug($"Got melee modifier of {modifier}");
         return modifier;
     }

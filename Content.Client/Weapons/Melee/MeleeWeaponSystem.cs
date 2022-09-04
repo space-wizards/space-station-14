@@ -98,6 +98,20 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
+        if (!combatMode.IsInCombatMode ||
+            !Blocker.CanAttack(entityNull.Value))
+        {
+            if (weapon.WindupAccumulator > 0f)
+            {
+                EntityManager.RaisePredictiveEvent(new StopAttackEvent
+                {
+                    Weapon = weapon.Owner,
+                });
+            }
+
+            return;
+        }
+
         if (_inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down)
         {
             if (weapon.WindupAccumulator > 0f)

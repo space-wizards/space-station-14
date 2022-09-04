@@ -46,13 +46,22 @@ public sealed class MeleeWindupOverlay : Overlay
 
             var fraction = (comp.WindupAccumulator + SharedMeleeWeaponSystem.GracePeriod - SharedMeleeWeaponSystem.AttackBuffer) / (comp.WindupTime - SharedMeleeWeaponSystem.AttackBuffer);
 
-            Logger.Debug($"Fraction is {fraction} / windup is {comp.WindupAccumulator}");
-
             var lerp = fraction.Equals(0f) ? 0f : tickFraction;
-            lerp = 0f;
             var sign = comp.Accumulating ? 1 : -1;
+            var lerpedFraction = MathF.Min(1f, (fraction + lerp * sign));
 
-            handle.DrawCircle(worldPos, 0.25f * MathF.Min(1f, (fraction + lerp * sign)), Color.Wheat.WithAlpha(0.25f));
+            Color color;
+
+            if (lerpedFraction.Equals(1f))
+            {
+                color = Color.Orange;
+            }
+            else
+            {
+                color = Color.White;
+            }
+
+            handle.DrawCircle(worldPos, 0.25f * lerpedFraction, color.WithAlpha(0.25f));
         }
     }
 }

@@ -78,6 +78,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         var damage = component.Damage * GetModifier(component);
+        Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
         var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target }, user, damage);
@@ -126,7 +127,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
         }
 
-        if (damageResult != null)
+        if (damageResult?.Total > FixedPoint2.Zero)
         {
             RaiseNetworkEvent(new MeleeEffectEvent(targets), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
         }
@@ -172,6 +173,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         var damage = component.Damage * GetModifier(component);
+        Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
         var hitEvent = new MeleeHitEvent(targets, user, damage);
