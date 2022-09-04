@@ -1,3 +1,4 @@
+using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -12,7 +13,7 @@ namespace Content.Shared.Lathe
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
-            if (!_entMan.TryGetComponent(Owner, out SharedMaterialStorageComponent? storage)
+            if (!_entMan.TryGetComponent(Owner, out MaterialStorageComponent? storage)
             ||  !_entMan.TryGetComponent(Owner, out SharedLatheDatabaseComponent? database)) return false;
 
             if (!database.Contains(recipe)) return false;

@@ -1,25 +1,22 @@
-using Content.Shared.Lathe;
 using Content.Shared.Whitelist;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Content.Shared.Materials;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Server.Lathe.Components
+namespace Content.Shared.Materials
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedMaterialStorageComponent))]
-    public sealed class MaterialStorageComponent : SharedMaterialStorageComponent
+    [RegisterComponent, NetworkedComponent]
+    public sealed class MaterialStorageComponent : Component
     {
         [ViewVariables]
-        protected override Dictionary<string, int> Storage { get; set; } = new();
+        public Dictionary<string, int> Storage { get; set; } = new();
 
         /// <summary>
         ///     How much material the storage can store in total.
         /// </summary>
-        [ViewVariables]
-        public int StorageLimit => _storageLimit;
-        [DataField("StorageLimit")]
-        private int _storageLimit = -1;
+        [ViewVariables(VVAccess.ReadWrite), DataField("storageLimit")]
+        public int? StorageLimit;
 
         /// <summary>
         /// Whitelist for specifying the kind of items that can be insert into this entity.
@@ -33,7 +30,7 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         [ViewVariables]
         [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
-        public List<string> MaterialWhiteList = new();
+        public List<string>? MaterialWhiteList;
 
         /// <summary>
         /// The sound that plays when inserting an item into the storage
@@ -41,9 +38,43 @@ namespace Content.Server.Lathe.Components
         [DataField("insertingSound")]
         public SoundSpecifier? InsertingSound;
 
-        public override ComponentState GetComponentState()
+        public int this[string id]
         {
-            return new MaterialStorageState(Storage);
+            get
+            {
+                if (!Storage.ContainsKey(id))
+                    return 0;
+                return Storage[id];
+            }
+        }
+
+        public int this[MaterialPrototype material]
+        {
+            get
+            {
+                var id = material.ID;
+                if (!Storage.ContainsKey(id))
+                    return 0;
+                return Storage[id];
+            }
+        }
+
+        /// <summary>
+        ///     The total volume of material stored currently.
+        /// </summary>
+        [ViewVariables] public int CurrentAmount
+        {
+            get
+            {
+                var value = 0;
+
+                foreach (var amount in Storage.Values)
+                {
+                    value += amount;
+                }
+
+                return value;
+            }
         }
 
         /// <summary>

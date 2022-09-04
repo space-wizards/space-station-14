@@ -4,7 +4,7 @@ using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Components;
 using Content.Shared.Interaction;
-using Content.Server.Materials;
+using Content.Shared.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research;
@@ -88,6 +88,8 @@ namespace Content.Server.Lathe
             if (!TryComp<MaterialStorageComponent>(uid, out var storage))
                 return;
 
+            //TODO: fuck
+            storage.MaterialWhiteList = new();
             foreach (var recipe in recipes)
             {
                 foreach (var mat in recipe.RequiredMaterials)
@@ -110,15 +112,18 @@ namespace Content.Server.Lathe
 
             args.Handled = true;
 
-            var matUsed = false;
-            foreach (var mat in material.Materials)
-                if (storage.MaterialWhiteList.Contains(mat.ID))
-                    matUsed = true;
-
-            if (!matUsed)
+            if (storage.MaterialWhiteList != null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("lathe-popup-material-not-used"), uid, Filter.Pvs(uid));
-                return;
+                var matUsed = false;
+                foreach (var mat in material.Materials)
+                    if (storage.MaterialWhiteList.Contains(mat.ID))
+                        matUsed = true;
+
+                if (!matUsed)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("lathe-popup-material-not-used"), uid, Filter.Pvs(uid));
+                    return;
+                }
             }
 
             var multiplier = 1;

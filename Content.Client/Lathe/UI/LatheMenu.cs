@@ -177,7 +177,7 @@ namespace Content.Client.Lathe.UI
 
             if (Owner.Storage == null) return;
 
-            foreach (var (id, amount) in Owner.Storage)
+            foreach (var (id, amount) in Owner.Storage.Storage)
             {
                 if (!_prototypeManager.TryIndex(id, out MaterialPrototype? materialPrototype)) continue;
                 var material = materialPrototype;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Client.Lathe.Components;
 using Content.Shared.Lathe;
+using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -65,9 +66,6 @@ namespace Content.Client.Lathe.UI
             {
                 SendMessage(new LatheServerSyncMessage());
             };
-
-            storage.OnMaterialStorageChanged += _menu.PopulateDisabled;
-            storage.OnMaterialStorageChanged += _menu.PopulateMaterials;
 
             _menu.OpenCentered();
         }
