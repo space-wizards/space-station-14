@@ -29,7 +29,8 @@ namespace Content.Shared.Stunnable
         public override void Initialize()
         {
             SubscribeLocalEvent<KnockedDownComponent, ComponentInit>(OnKnockInit);
-            SubscribeLocalEvent<KnockedDownComponent, ComponentRemove>(OnKnockRemove);
+            SubscribeLocalEvent<KnockedDownComponent, ComponentShutdown>(OnKnockShutdown);
+            SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
             SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
@@ -96,9 +97,15 @@ namespace Content.Shared.Stunnable
             _standingStateSystem.Down(uid);
         }
 
-        private void OnKnockRemove(EntityUid uid, KnockedDownComponent component, ComponentRemove args)
+        private void OnKnockShutdown(EntityUid uid, KnockedDownComponent component, ComponentShutdown args)
         {
             _standingStateSystem.Stand(uid);
+        }
+
+        private void OnStandAttempt(EntityUid uid, KnockedDownComponent component, StandAttemptEvent args)
+        {
+            if (component.LifeStage <= ComponentLifeStage.Running)
+                args.Cancel();
         }
 
         private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
