@@ -4,6 +4,7 @@
   group: Elements
   desc: reagent-desc-aluminium # -we use real words here.
   physicalDesc: reagent-physical-desc-metallic
+  flavor: metallic
   color: "#848789"
   boilingPoint: 2327.0
   meltingPoint: 660.0
@@ -14,6 +15,7 @@
   group: Elements
   desc: reagent-desc-carbon
   physicalDesc: reagent-physical-desc-crystalline
+  flavor: bitter
   color: "#22282b"
   boilingPoint: 4200.0
   meltingPoint: 3550.0
@@ -24,6 +26,7 @@
   group: Elements
   desc: reagent-desc-chlorine
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#a2ff00"
   meltingPoint: -101.5
   boilingPoint: -34.04
@@ -43,6 +46,7 @@
   group: Elements
   desc: reagent-desc-copper
   physicalDesc: reagent-physical-desc-metallic
+  flavor: metallic
   color: "#b05b3c"
   boilingPoint: 2595.0
   meltingPoint: 1083.0
@@ -53,6 +57,7 @@
   group: Elements
   desc: reagent-desc-fluorine
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#808080"
   boilingPoint: -188.11
   meltingPoint: -219.67
@@ -72,6 +77,7 @@
   group: Elements
   desc: reagent-desc-gold
   physicalDesc: reagent-physical-desc-metallic
+  flavor: metallic
   color: "#F7C430"
   boilingPoint: 2700.0
   meltingPoint: 1064.76
@@ -82,6 +88,7 @@
   group: Elements
   desc: reagent-desc-hydrogen
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#808080"
   boilingPoint: -253.0
   meltingPoint: -259.2
@@ -92,6 +99,7 @@
   group: Elements
   desc: reagent-desc-iodine
   physicalDesc: reagent-physical-desc-dark-brown
+  flavor: bitter
   color: "#BC8A00"
   boilingPoint: 184.3
   meltingPoint: 113.7
@@ -102,6 +110,7 @@
   group: Elements
   desc: reagent-desc-iron
   physicalDesc: reagent-physical-desc-metallic
+  flavor: metallic
   color: "#434b4d"
   boilingPoint: 2862.0
   meltingPoint: 1538.0
@@ -117,6 +126,7 @@
   group: Elements
   desc: reagent-desc-lithium
   physicalDesc: reagent-physical-desc-shiny
+  flavor: metallic
   color: "#c6c8cc"
   meltingPoint: 180.5
   boilingPoint: 1330.0
@@ -128,6 +138,7 @@
   group: Elements
   desc: reagent-desc-mercury
   physicalDesc: reagent-physical-desc-shiny
+  flavor: metallic
   color: "#929296"
   meltingPoint: -38.83
   boilingPoint: 356.73
@@ -145,6 +156,7 @@
   group: Elements
   desc: reagent-desc-potassium
   physicalDesc: reagent-physical-desc-shiny
+  flavor: metallic
   color: "#c6c8cc"
   meltingPoint: 65.5
   boilingPoint: 759.0
@@ -155,6 +167,7 @@
   group: Elements
   desc: reagent-desc-phosphorus
   physicalDesc: reagent-physical-desc-powdery
+  flavor: metallic
   color: "#ede4e4"
   meltingPoint: 44.2
   boilingPoint: 280.5
@@ -173,6 +186,7 @@
   parent: Uranium
   desc: reagent-desc-radium
   physicalDesc: reagent-physical-desc-glowing
+  flavor: metallic
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
@@ -183,6 +197,7 @@
   group: Elements
   desc: reagent-desc-silicon
   physicalDesc: reagent-physical-desc-crystalline
+  flavor: metallic
   color: "#364266"
   boilingPoint: 3265.0
   meltingPoint: 1414.0
@@ -193,6 +208,7 @@
   group: Elements
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
+  flavor: metallic
   color: "#d0d0d0"
   boilingPoint: 2212.0
   meltingPoint: 960.5
@@ -203,6 +219,7 @@
   group: Elements
   desc: reagent-desc-sulfur
   physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
   color: "#fff385"
   boilingPoint: 445.0
   meltingPoint: 120.0
@@ -213,6 +230,7 @@
   group: Elements
   desc: reagent-desc-sodium
   physicalDesc: reagent-physical-desc-metallic
+  flavor: bitter
   color: "#c6c8cc"
   meltingPoint: 97.8
   boilingPoint: 883.0
@@ -223,6 +241,7 @@
   group: Elements
   desc: reagent-desc-uranium
   physicalDesc: reagent-physical-desc-metallic
+  flavor: metallic
   color: "#8fa191"
   meltingPoint: 1133.0
   boilingPoint: 4131.0

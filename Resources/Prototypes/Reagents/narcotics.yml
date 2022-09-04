@@ -4,6 +4,7 @@
   group: Narcotics
   desc: reagent-desc-desoxyephedrine
   physicalDesc: reagent-physical-desc-translucent
+  flavor: bitter
   color: "#FAFAFA"
   boilingPoint: 212.0  # Dexosyephedrine vape when?
   meltingPoint: 170.0
@@ -46,6 +47,7 @@
   group: Narcotics
   desc: reagent-desc-ephedrine
   physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
@@ -83,6 +85,7 @@
   name: reagent-name-thc
   group: Narcotics
   desc: reagent-desc-thc
+  flavor: bitter
   color: "#808080"
   physicalDesc: reagent-physical-desc-crystalline
   plantMetabolism:
@@ -106,6 +109,7 @@
   group: Narcotics
   desc: reagent-desc-thc-oil
   physicalDesc: reagent-physical-desc-skunky
+  flavor: bitter
   color: "#DAA520"
   metabolisms:
     Narcotic:
@@ -122,6 +126,7 @@
   name: reagent-name-nicotine
   group: Narcotics
   desc: reagent-desc-nicotine
+  flavor: bitter
   color: "#C0C0C0"
   physicalDesc: reagent-physical-desc-strong-smelling
   plantMetabolism:
@@ -134,6 +139,7 @@
   group: Narcotics
   desc: reagent-desc-impedrezene
   physicalDesc: reagent-physical-desc-acrid
+  flavor: bitter
   color: "#215263"
 
 - type: reagent
@@ -142,6 +148,7 @@
   group: Narcotics
   desc: reagent-desc-space-drugs
   physicalDesc: reagent-physical-desc-syrupy
+  flavor: bitter
   color: "#63806e"
   metabolisms:
     Narcotic:

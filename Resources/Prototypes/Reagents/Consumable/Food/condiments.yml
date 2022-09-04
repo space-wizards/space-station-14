@@ -4,6 +4,7 @@
   group: Foods
   desc: reagent-desc-astrotame
   physicalDesc: reagent-physical-desc-sugary
+  flavor: sweet
   color: aquamarine
 
 - type: reagent
@@ -12,6 +13,7 @@
   group: Foods
   desc: reagent-desc-bbq-sauce
   physicalDesc: reagent-physical-desc-gloopy
+  flavor: sweet
   color: darkred
 
 - type: reagent
@@ -20,6 +22,7 @@
   group: Foods
   desc: reagent-desc-cornoil
   physicalDesc: reagent-physical-desc-oily
+  flavor: oily
   color: yellow
 
 - type: reagent
@@ -28,6 +31,7 @@
   group: Foods
   desc: reagent-desc-frostoil
   physicalDesc: reagent-physical-desc-cold
+  flavor: cold
   color: skyblue
 
 - type: reagent
@@ -36,6 +40,7 @@
   group: Foods
   desc: reagent-desc-horseradish-sauce
   physicalDesc: reagent-physical-desc-overpowering
+  flavor: spicy
   color: gray
 
 - type: reagent
@@ -44,6 +49,7 @@
   group: Foods
   desc: reagent-desc-hotsauce
   physicalDesc: reagent-physical-desc-spicy
+  flavor: spicy
   color: red
 
 - type: reagent
@@ -52,6 +58,7 @@
   group: Foods
   desc: reagent-desc-ketchup
   physicalDesc: reagent-physical-desc-tangy
+  flavor: tomato
   color: red
 
 - type: reagent
@@ -60,6 +67,7 @@
   group: Foods
   desc: reagent-desc-soysauce
   physicalDesc: reagent-physical-desc-salty
+  flavor: salty
   color: saddlebrown
   metabolisms:
     Food:
@@ -75,6 +83,7 @@
   group: Foods
   desc: reagent-desc-table-salt
   physicalDesc: reagent-physical-desc-grainy
+  flavor: salty
   color: "#a1000b"
   boilingPoint: 1465.0
   meltingPoint: 800.7

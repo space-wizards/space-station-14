@@ -3,6 +3,7 @@
   name: reagent-name-acetone
   desc: reagent-desc-acetone
   physicalDesc: reagent-physical-desc-acidic
+  flavor: bitter
   color: "#AF14B7"
   boilingPoint: 55.5
   meltingPoint: -50.0
@@ -12,6 +13,7 @@
   name: reagent-name-phenol
   desc: reagent-desc-phenol
   physicalDesc: reagent-physical-desc-acidic
+  flavor: bitter
   color: "#E7EA91"
   boilingPoint: 55.5
   meltingPoint: -50.0

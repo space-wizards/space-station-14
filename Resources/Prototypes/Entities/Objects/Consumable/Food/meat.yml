@@ -5,6 +5,9 @@
   id: FoodMeatBase
   abstract: true
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
@@ -60,6 +63,9 @@
   id: FoodMeatFish
   description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
   components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
   - type: Tag
     tags:
     - Raw
@@ -379,6 +385,10 @@
   id: FoodMeatXeno
   description: A slab of xeno meat, dripping with acid.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - acidic
   - type: Tag
     tags:
     - Raw
@@ -426,6 +436,10 @@
   id: FoodMeatClown
   description: A delicious, round piece of meat clown. How horrifying.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - funny
   - type: Tag
     tags:
     - Raw
@@ -452,6 +466,9 @@
   id: FoodMeatSlime
   description: A gelatinous shaping of slime jelly.
   components:
+  - type: FlavorProfile
+    flavors:
+      - slimy
   - type: Tag
     tags:
     - Raw
@@ -934,6 +951,10 @@
   id: FoodMeatXenoCutlet
   description: A slab of raw xeno meat, dripping with acid.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - acidic
   - type: Tag
     tags:
     - Raw

@@ -29,6 +29,10 @@
   id: FoodMealPotatoLoaded
   description: Totally baked.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - potatoes
   - type: Sprite
     state: loadedbakedpotato
 # Tastes like potato.
@@ -39,6 +43,10 @@
   id: FoodMealFries
   description: AKA, French Fries, Freedom Fries, etc.
   components:
+  - type: FlavorProfile
+    flavors:
+      - potatoes
+      - salty
   - type: Sprite
     state: fries
 # Tastes like fries, salt.
@@ -49,6 +57,11 @@
   id: FoodMealFriesCheesy
   description: Fries. Covered in cheese. Duh.
   components:
+  - type: FlavorProfile
+    flavors:
+      - potatoes
+      - salty
+      - cheesy
   - type: Sprite
     state: fries-cheesy
 # Tastes like fries, cheese.
@@ -59,6 +72,10 @@
   id: FoodMealFriesCarrot
   description: Tasty fries from fresh carrots.
   components:
+  - type: FlavorProfile
+    flavors:
+      - carrots
+      - salty
   - type: Sprite
     state: fries-carrot
     netsync: false
@@ -77,6 +94,9 @@
   id: FoodMealNachos
   description: Chips from Space Mexico.
   components:
+  - type: FlavorProfile
+    flavors:
+      - nachos
   - type: Sprite
     state: nachos
 # Tastes like nachos.
@@ -87,6 +107,10 @@
   id: FoodMealNachosCheesy
   description: The delicious combination of nachos and melting cheese.
   components:
+  - type: FlavorProfile
+    flavors:
+      - nachos
+      - cheesy
   - type: Sprite
     state: nachos-cheesy
   - type: SolutionContainerManager
@@ -108,6 +132,11 @@
   id: FoodMealNachosCuban
   description: That's some dangerously spicy nachos.
   components:
+  - type: FlavorProfile
+    flavors:
+      - nachos
+      - cheesy
+      - spicy
   - type: Sprite
     state: nachos-cuban
   - type: SolutionContainerManager
@@ -129,6 +158,9 @@
   id: FoodMealMint
   description: It's wafer thin.
   components:
+  - type: FlavorProfile
+    flavors:
+      - minty
   - type: Sprite
     state: mint
   - type: SolutionContainerManager
@@ -147,6 +179,10 @@
   id: FoodMealEggplantParm
   description: The only good recipe for eggplant.
   components:
+  - type: FlavorProfile
+    flavors:
+      - eggplant
+      - cheesy
   - type: Sprite
     state: eggplantparm
   - type: SolutionContainerManager
@@ -166,6 +202,10 @@
   id: FoodMealPotatoYaki
   description: Made with roasted sweet potatoes!
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - potatoes
   - type: Sprite
     state: yakiimo
 # Tastes like sweet potato.
@@ -176,6 +216,11 @@
   id: FoodMealCubancarp
   description: A grifftastic sandwich that burns your tongue and then leaves it numb!
   components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+      - batter
+      - spicy
   - type: Sprite
     state: cubancarp
   - type: SolutionContainerManager
@@ -195,6 +240,9 @@
   id: FoodMealCornedbeef
   description: Now you can feel like a real tourist vacationing in Ireland.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
   - type: Sprite
     state: cornedbeef
   - type: SolutionContainerManager
@@ -214,6 +262,10 @@
   id: FoodMealBearsteak
   description: Because eating bear wasn't manly enough.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - fishy
   - type: Sprite
     state: bearsteak
   - type: SolutionContainerManager
@@ -233,6 +285,10 @@
   id: FoodMealPigblanket
   description: A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - butter
   - type: Sprite
     state: pigblanket
   - type: SolutionContainerManager
@@ -252,6 +308,10 @@
   id: FoodMealRibs
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - smokey
   - type: Sprite
     state: ribs
   - type: SolutionContainerManager
@@ -273,6 +333,11 @@
   id: FoodMealEggsbenedict
   description: There is only one egg on this, how rude.
   components:
+  - type: FlavorProfile
+    flavors:
+      - egg
+      - bacon
+      - bun
   - type: Sprite
     state: benedict
   - type: SolutionContainerManager
@@ -292,6 +357,10 @@
   id: FoodMealOmelette
   description: Cheesy.
   components:
+  - type: FlavorProfile
+    flavors:
+      - egg
+      - cheesy
   - type: Sprite
     state: omelette
   - type: SolutionContainerManager
@@ -309,6 +378,11 @@
   id: FoodMealFriedegg
   description: A fried egg, with a touch of salt and pepper.
   components:
+  - type: FlavorProfile
+    flavors:
+      - egg
+      - salty
+      - peppery
   - type: Sprite
     state: friedegg
   - type: SolutionContainerManager
@@ -330,6 +404,10 @@
   id: FoodMealMilkape
   description: The king of Jungle Thick.
   components:
+  - type: FlavorProfile
+    flavors:
+      - milk
+      - chocolate
   - type: Sprite
     state: milkape
 # Tastes like milk, chocolate, the jungle.
@@ -340,6 +418,9 @@
   id: FoodMealMemoryleek
   description: This should refresh your memory.
   components:
+  - type: FlavorProfile
+    flavors:
+      - memoryleek
   - type: Sprite
     state: memoryLeek
   - type: SolutionContainerManager
@@ -380,6 +461,9 @@
   id: FoodMealQueso
   description: A classic dipping sauce that you can't go wrong with.
   components:
+    - type: FlavorProfile
+      flavors:
+        - cheesy
     - type: Sprite
       state: queso
 # Its queso! Everyone loves queso... Right?.
@@ -390,6 +474,9 @@
   id: FoodMealSashimi
   description: Its taste can only be described as "Exotic". The poisoning though? That's pretty common.
   components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
   - type: Sprite
     state: sashimi
   - type: SolutionContainerManager
@@ -409,6 +496,9 @@
   id: FoodMealEnchiladas
   description: Viva La Mexico!
   components:
+    - type: FlavorProfile
+      flavors:
+        - meaty
     - type: Sprite
       state: enchiladas
     - type: SolutionContainerManager

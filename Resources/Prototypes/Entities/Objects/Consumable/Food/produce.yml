@@ -143,6 +143,9 @@
   id: FoodBanana
   description: Rich in potassium.
   components:
+  - type: FlavorProfile
+    flavors:
+      - banana
   - type: Food
     trash: TrashBananaPeel
   - type: SolutionContainerManager
@@ -220,6 +223,9 @@
   id: FoodCarrot
   description: It's good for the eyes!
   components:
+  - type: FlavorProfile
+    flavors:
+      - carrot
   - type: Tag
     tags:
     - Carrot
@@ -248,6 +254,9 @@
   id: FoodLemon
   description: When life gives you lemons, be grateful they aren't limes.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sour
   - type: SolutionContainerManager
     solutions:
       food:
@@ -273,6 +282,9 @@
   id: FoodPineapple
   description: Mmm, tropical.
   components:
+  - type: FlavorProfile
+    flavors:
+      - pineapple
   - type: SolutionContainerManager
     solutions:
       food:
@@ -303,6 +315,9 @@
   id: FoodPotato
   description: The space Irish starved to death after their potato crops died. Sadly they were unable to fish for space carp due to it being the queen's space. Bringing this up to any space IRA member will drive them insane with anger.
   components:
+  - type: FlavorProfile
+    flavors:
+      - potatoes
   - type: SolutionContainerManager
     solutions:
       food:
@@ -328,6 +343,9 @@
   id: FoodTomato
   description: I say to-mah-to, you say tom-mae-to.
   components:
+  - type: FlavorProfile
+    flavors:
+      - tomato
   - type: SolutionContainerManager
     solutions:
       food:
@@ -409,6 +427,9 @@
   id: FoodEggplant
   description: Maybe there's a chicken inside?
   components:
+  - type: FlavorProfile
+    flavors:
+      - eggplant
   - type: SolutionContainerManager
     solutions:
       food:
@@ -429,6 +450,9 @@
   id: FoodApple
   description: It's a little piece of Eden.
   components:
+  - type: FlavorProfile
+    flavors:
+      - apple
   - type: SolutionContainerManager
     solutions:
       food:
@@ -454,6 +478,9 @@
   id: FoodCorn
   description: Needs some butter! And some cooking...
   components:
+  - type: FlavorProfile
+    flavors:
+      - corn
   - type: Food
     trash: FoodCornTrash
   - type: SolutionContainerManager
@@ -499,6 +526,9 @@
   id: FoodOnion
   description: Nothing to cry over.
   components:
+  - type: FlavorProfile
+    flavors:
+      - onion
   - type: SolutionContainerManager
     solutions:
       food:
@@ -524,6 +554,9 @@
   id: FoodOnionRed
   description: Purple despite the name.
   components:
+  - type: FlavorProfile
+    flavors:
+      - onion
   - type: SolutionContainerManager
     solutions:
       food:
@@ -586,6 +619,9 @@
   id: FoodPineappleSlice
   description: Mmm, tropical.
   components:
+  - type: FlavorProfile
+    flavors:
+      - pineapple
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Extractable
@@ -600,6 +636,9 @@
   id: FoodOnionSlice
   description: Nothing to cry over.
   components:
+  - type: FlavorProfile
+    flavors:
+      - onion
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: SolutionContainerManager
@@ -620,6 +659,9 @@
   id: FoodOnionRedSlice
   description: Purple despite the name.
   components:
+  - type: FlavorProfile
+    flavors:
+      - onion
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: SolutionContainerManager
@@ -640,6 +682,9 @@
   id: FoodChili
   description: Spicy, best not touch your eyes.
   components:
+    - type: FlavorProfile
+      flavors:
+        - spicy
     - type: SolutionContainerManager
       solutions:
         food:
@@ -662,6 +707,9 @@
   id: FoodAloe
   description: A fragrant plant with soothing properties.
   components:
+  - type: FlavorProfile
+    flavors:
+      - medicine
   - type: SolutionContainerManager
     solutions:
       food:
@@ -684,6 +732,9 @@
   id: FoodPoppy
   description: A flower with extracts often used in the production of medicine
   components:
+  - type: FlavorProfile
+    flavors:
+      - medicine
   - type: SolutionContainerManager
     solutions:
       food:
@@ -709,6 +760,10 @@
   id: FoodLingzhi
   description: A potent medicinal mushroom. Don't go overboard.
   components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+      - medicine
   - type: SolutionContainerManager
     solutions:
       food:
@@ -731,6 +786,10 @@
   id: FoodAmbrosiaVulgaris
   description: A medicinal plant. May make you feel a little funny.
   components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - medicine
   - type: SolutionContainerManager
     solutions:
       food:
@@ -763,6 +822,9 @@
   id: FoodGalaxythistle
   description: A medicinal plant used for its antitoxin.
   components:
+  - type: FlavorProfile
+    flavors:
+      - medicine
   - type: SolutionContainerManager
     solutions:
       food:
@@ -783,6 +845,9 @@
   id: FoodFlyAmanita
   description: A delicious-looking mushroom like you see in those cartoons.
   components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
   - type: SolutionContainerManager
     solutions:
       food:
@@ -805,6 +870,9 @@
   id: FoodGatfruit
   description: A delicious, gun-shaped fruit with a thick wooden stem.
   components:
+  - type: FlavorProfile
+    flavors:
+      - gunpowder
   - type: SolutionContainerManager
     solutions:
       food:

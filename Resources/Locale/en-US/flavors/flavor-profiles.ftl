@@ -1,8 +1,6 @@
 flavor-profile = Tastes {$flavor}.
 flavor-profile-multiple = Tastes {$flavors} and {$lastFlavor}.
-flavor-profile-nothing = Tastes like nothing.
-
-# Flavors. Dear fuck, this'll take a while.
+flavor-profile-unknown = Tastes indescribable.
 
 # Base flavors. Use these when you can't think of anything.
 # These are specifically flavors that are placed in front
@@ -33,12 +31,21 @@ flavor-base-slimy = slimy
 flavor-base-magical = magical
 flavor-base-fiber = fibrous
 flavor-base-cold = cold
+flavor-base-spooky = spooky
+flavor-base-smokey = smokey
+flavor-base-fruity = fruity
+flavor-base-creamy = creamy
+flavor-base-fizzy = fizzy
+flavor-base-shocking = shocking
 
 # lmao
 flavor-base-terrible = terrible
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
+
+flavor-complex-nothing = like nothing
+flavor-complex-honey = like honey
 
 # Food-specific flavors.
 
@@ -65,6 +72,10 @@ flavor-complex-oats = like oats
 flavor-complex-jelly = like jelly
 flavor-complex-soy = like soy
 flavor-complex-ice-cream = like ice cream
+flavor-complex-dough = like dough
+flavor-complex-sweet-dough = like sweet dough
+flavor-complex-tofu = like tofu
+flavor-complex-muffin = like a muffin
 
 flavor-complex-peas = like peas
 flavor-complex-pineapple = like pineapple
@@ -79,8 +90,10 @@ flavor-complex-banana = like bananas
 flavor-complex-apple = like apples
 flavor-complex-bungo = like bungo
 flavor-complex-raisins = like dried grapes
+flavor-complex-orange = like oranges
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
+
 flavor-complex-curry = like curry
 flavor-complex-borsch-1 = like borsch
 flavor-complex-borsch-2 = like bortsch
@@ -97,6 +110,9 @@ flavor-complex-boritos = like gaming
 flavor-complex-nachos = like nachos
 flavor-complex-donk-warm = like hot lava
 flavor-complex-copypasta = like a reptitive joke
+flavor-complex-memory-leek = like a fork bomb
+flavor-complex-gunpowder = like gunpowder
+flavor-complx-validhunting = like validhunting
 
 # Drink-specific flavors.
 
@@ -136,6 +152,11 @@ flavor-complex-gargle-blaster = like somebody smashed your head with a lemon-cov
 flavor-complex-bloody-mary = like a bad hangover
 flavor-complex-beepsky = like oil and whiskey
 flavor-complex-banana-honk = like a banana milkshake
+flavor-complex-atomic-bomb = like a nuclear wasteland
+flavor-complex-atomic-cola = like hoarding bottle caps
+flavor-complex-cuba-libre = like spiked cola
+flavor-complex-gin-tonic = like spiked lemon-lime soda
+flavor-complex-screwdriver = like spiked orange juice
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk

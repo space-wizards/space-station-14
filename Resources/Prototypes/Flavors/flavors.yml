@@ -115,9 +115,49 @@
   description: flavor-base-cold
 
 - type: flavor
+  id: spooky
+  flavorType: Base
+  description: flavor-base-spooky
+
+- type: flavor
+  id: smokey
+  flavorType: Base
+  description: flavor-base-smokey
+
+- type: flavor
+  id: fruity
+  flavorType: Base
+  description: flavor-base-fruity
+
+- type: flavor
+  id: creamy
+  flavorType: Base
+  description: flavor-base-creamy
+
+- type: flavor
+  id: fizzy
+  flavorType: Base
+  description: flavor-base-fizzy
+
+- type: flavor
+  id: shocking
+  flavorType: Base
+  description: flavor-base-shocking
+
+- type: flavor
   id: terrible
   flavorType: Base
   description: flavor-base-terrible
+
+- type: flavor
+  id: nothing
+  flavorType: Complex
+  description: flavor-complex-nothing
+
+- type: flavor
+  id: honey
+  flavorType: Complex
+  description: flavor-complex-honey
 
 - type: flavor
   id: nutriment
@@ -205,6 +245,26 @@
   description: flavor-complex-ice-cream
 
 - type: flavor
+  id: dough
+  flavorType: Complex
+  description: flavor-complex-dough
+
+- type: flavor
+  id: sweetdough
+  flavorType: Complex
+  description: flavor-complex-sweet-dough
+
+- type: flavor
+  id: tofu
+  flavorType: Complex
+  description: flavor-complex-tofu
+
+- type: flavor
+  id: muffin
+  flavorType: Complex
+  description: flavor-complex-muffin
+
+- type: flavor
   id: peas
   flavorType: Complex
   description: flavor-complex-peas
@@ -268,6 +328,11 @@
   id: raisins
   flavorType: Complex
   description: flavor-complex-raisins
+
+- type: flavor
+  id: orange
+  flavorType: Complex
+  description: flavor-complex-orange
 
 - type: flavor
   id: curry
@@ -348,6 +413,21 @@
   id: copypasta
   flavorType: Complex
   description: flavor-complex-copypasta
+
+- type: flavor
+  id: memoryleek
+  flavorType: Complex
+  description: flavor-complex-memory-leek
+
+- type: flavor
+  id: gunpowder
+  flavorType: Complex
+  description: flavor-complex-gunpowder
+
+- type: flavor
+  id: validhunting
+  flavorType: ""
+  description: flavor-complx-validhunting
 
 - type: flavor
   id: alcohol
@@ -503,6 +583,31 @@
   id: bananahonk
   flavorType: Complex
   description: flavor-complex-banana-honk
+
+- type: flavor
+  id: atomicbomb
+  flavorType: Complex
+  description: flavor-complex-atomic-bomb
+
+- type: flavor
+  id: atomiccola
+  flavorType: Complex
+  description: flavor-complex-atomic-cola
+
+- type: flavor
+  id: cubalibre
+  flavorType: Complex
+  description: flavor-complex-cuba-libre
+
+- type: flavor
+  id: gintonic
+  flavorType: Complex
+  description: flavor-complex-gin-tonic
+
+- type: flavor
+  id: screwdriver
+  flavorType: Complex
+  description: flavor-complex-screwdriver
 
 - type: flavor
   id: pilk
