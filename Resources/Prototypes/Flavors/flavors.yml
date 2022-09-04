@@ -426,8 +426,8 @@
 
 - type: flavor
   id: validhunting
-  flavorType: ""
-  description: flavor-complx-validhunting
+  flavorType: Complex
+  description: flavor-complex-validhunting
 
 - type: flavor
   id: alcohol

@@ -112,7 +112,7 @@ flavor-complex-donk-warm = like hot lava
 flavor-complex-copypasta = like a reptitive joke
 flavor-complex-memory-leek = like a fork bomb
 flavor-complex-gunpowder = like gunpowder
-flavor-complx-validhunting = like validhunting
+flavor-complex-validhunting = like validhunting
 
 # Drink-specific flavors.
 
