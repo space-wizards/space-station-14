@@ -81,6 +81,8 @@
   - type: Construction
     graph: AirAlarm
     node: assembly
+  - type: Transform
+    anchored: true
   placement:
     mode: SnapgridCenter
     snap:
