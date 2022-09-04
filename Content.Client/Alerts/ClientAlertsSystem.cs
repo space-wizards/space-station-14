@@ -71,7 +71,7 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
         component.Alerts = new(componentAlerts);
 
-        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
             SyncAlerts?.Invoke(this, componentAlerts);
     }
 
