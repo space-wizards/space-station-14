@@ -91,6 +91,8 @@
   - type: Construction
     graph: FireAlarm
     node: assembly
+  - type: Transform
+    anchored: true
   placement:
     mode: SnapgridCenter
     snap:
