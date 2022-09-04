@@ -1636,82 +1636,82 @@ entities:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale270
           coordinates: 45,-1
-        1529:
+        1528:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 49,-1
-        1535:
+        1534:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 51,-1
-        1536:
+        1535:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 51,-2
-        1576:
+        1575:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 49,-1
-        1583:
+        1582:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 48,-1
-        1584:
+        1583:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 47,-1
-        1585:
+        1584:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 48,-2
-        1586:
+        1585:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 49,-2
-        1602:
+        1601:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 41,-1
-        1603:
+        1602:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 42,-2
-        1604:
+        1603:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 41,-2
-        1605:
+        1604:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 40,-1
-        1606:
+        1605:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 39,-2
-        1607:
+        1606:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 37,-1
-        1608:
+        1607:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 39,-1
-        1609:
+        1608:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
@@ -2420,87 +2420,87 @@ entities:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 3,15
-        1543:
+        1542:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 22,18
-        1544:
+        1543:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 22,19
-        1545:
+        1544:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 20,18
-        1546:
+        1545:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 20,19
-        1547:
+        1546:
           color: '#FFFFFFFF'
           id: ArrowsGreyscale
           coordinates: 23,17
-        1548:
+        1547:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 24,15
-        1549:
+        1548:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 23,15
-        1550:
+        1549:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 22,15
-        1654:
+        1653:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 31,9
-        1655:
+        1654:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 30,9
-        1656:
+        1655:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 29,9
-        1657:
+        1656:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: 27,9
-        1658:
+        1657:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: 25,9
-        1659:
+        1658:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: 26,9
-        1660:
+        1659:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: 21,9
-        1661:
+        1660:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: 20,9
-        1662:
+        1661:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: 19,9
-        1666:
+        1665:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 31,7
-        1667:
+        1666:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 30,7
-        1668:
+        1667:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 29,7
-        1669:
+        1668:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 28,7
@@ -3290,165 +3290,165 @@ entities:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -15,-10
-        1682:
+        1681:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -22,-23
-        1683:
+        1682:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -24,-23
-        1684:
+        1683:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -23,-23
-        1685:
+        1684:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -25,-23
-        1686:
+        1685:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -26,-23
-        1687:
+        1686:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -32,-23
-        1688:
+        1687:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -31,-23
-        1689:
+        1688:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -30,-23
-        1690:
+        1689:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -29,-23
-        1691:
+        1690:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -28,-23
-        1702:
+        1701:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-18
-        1703:
+        1702:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-17
-        1704:
+        1703:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-16
-        1705:
+        1704:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-15
-        1706:
+        1705:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-14
-        1707:
+        1706:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-13
-        1708:
+        1707:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-12
-        1709:
+        1708:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-11
-        1710:
+        1709:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-10
-        1711:
+        1710:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-9
-        1712:
+        1711:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-8
-        1713:
+        1712:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-7
-        1714:
+        1713:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -17,-6
-        1736:
+        1735:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -21,-19
-        1737:
+        1736:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -20,-21
-        1738:
+        1737:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -19,-20
-        1739:
+        1738:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -17,-14
-        1740:
+        1739:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -17,-7
-        1741:
+        1740:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -16,-5
-        1754:
+        1753:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -18,-1
-        1758:
+        1757:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -26,-25
-        1759:
+        1758:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -25,-25
-        1760:
+        1759:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -24,-25
-        1761:
+        1760:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -23,-25
-        1778:
+        1777:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -25,-1
-        1779:
+        1778:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -26,-1
-        1780:
+        1779:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -27,-1
-        1781:
+        1780:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -28,-1
-        1782:
+        1781:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -29,-1
@@ -3723,7 +3723,7 @@ entities:
           color: '#FFFFFFFF'
           id: WarnBox
           coordinates: -18,-58
-        1766:
+        1765:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -9,-38
@@ -4484,155 +4484,155 @@ entities:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale
           coordinates: -30,9
-        1692:
+        1691:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -22,26
-        1693:
+        1692:
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: -21,26
-        1694:
+        1693:
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: -23,26
-        1695:
+        1694:
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: -22,28
-        1696:
+        1695:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: -15,25
-        1697:
+        1696:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: -16,25
-        1698:
+        1697:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: -17,25
-        1699:
+        1698:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: -18,25
-        1700:
+        1699:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: -19,25
-        1701:
+        1700:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: -20,25
+        1727:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -15,25
         1728:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -15,25
+          coordinates: -22,25
         1729:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -22,25
-        1730:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: -17,18
-        1742:
+        1741:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: -15,3
-        1743:
+        1742:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale180
           coordinates: -15,4
-        1744:
+        1743:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -15,3
-        1745:
+        1744:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLineCornerFlipped
           coordinates: -15,4
-        1746:
+        1745:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: -15,2
-        1747:
+        1746:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLineCorner
           coordinates: -15,2
-        1748:
+        1747:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -16,6
-        1749:
+        1748:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -16,7
-        1750:
+        1749:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -14,7
-        1751:
+        1750:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -16,4
-        1752:
+        1751:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -15,9
-        1753:
+        1752:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -16,0
-        1755:
+        1754:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -18,0
-        1756:
+        1755:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -18,1
-        1757:
+        1756:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -18,2
-        1764:
+        1763:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -17,30
-        1765:
+        1764:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -16,30
-        1774:
+        1773:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -9,2
-        1775:
+        1774:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -10,2
-        1776:
+        1775:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -11,2
-        1777:
+        1776:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -13,3
-        1783:
+        1782:
           color: '#D4D4D428'
           id: HalfTileOverlayGreyscale180
           coordinates: -3,9
@@ -4981,19 +4981,19 @@ entities:
           color: '#FFFFFFFF'
           id: Flowersy4
           coordinates: 8.829894,-54.596554
-        1767:
+        1766:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 3,-40
-        1768:
+        1767:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 3,-39
-        1769:
+        1768:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 3,-38
-        1770:
+        1769:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 3,-37
@@ -5598,20 +5598,20 @@ entities:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 2,-1
-        1633:
+        1632:
           cleanable: True
           color: '#DE3A3A18'
           id: splatter
           coordinates: 19,-8
-        1771:
+        1770:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 3,-8
-        1772:
+        1771:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 3,-7
-        1773:
+        1772:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 3,-6
@@ -6001,98 +6001,98 @@ entities:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -44,-4
-        1676:
+        1675:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -35,-19
-        1677:
+        1676:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -36,-19
-        1678:
+        1677:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: -33,-19
-        1679:
+        1678:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -33,-20
-        1680:
+        1679:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -33,-21
-        1681:
+        1680:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -33,-22
-        1715:
+        1714:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-18
-        1716:
+        1715:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-17
-        1717:
+        1716:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-16
-        1718:
+        1717:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-15
-        1719:
+        1718:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-14
-        1720:
+        1719:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-13
-        1721:
+        1720:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-12
-        1722:
+        1721:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-11
-        1723:
+        1722:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-10
-        1724:
+        1723:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-9
-        1725:
+        1724:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-8
-        1726:
+        1725:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-7
-        1727:
+        1726:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -37,-6
+        1731:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -37,-11
         1732:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -37,-11
+          coordinates: -37,-15
         1733:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -37,-15
-        1734:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: -35,-19
-        1735:
+        1734:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
@@ -6878,19 +6878,19 @@ entities:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -39,12
-        1639:
+        1638:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -63,17
-        1640:
+        1639:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -64,17
-        1646:
+        1645:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -62,17
-        1731:
+        1730:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
@@ -7732,514 +7732,514 @@ entities:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale270
           coordinates: 45,1
-        1784:
-          color: '#A4610696'
-          id: CheckerNWSE
-          coordinates: 50,16
-        1527:
+        1526:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: LoadingArea
           coordinates: 54,11
-        1528:
+        1527:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 49,3
+        1529:
+          angle: 1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: 51,0
         1530:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 51,0
+          coordinates: 51,1
         1531:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 51,1
+          coordinates: 51,2
         1532:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 51,2
+          coordinates: 51,3
         1533:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 51,3
-        1534:
-          angle: 1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: WarningLine
           coordinates: 51,4
-        1537:
+        1536:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 56,11
+        1537:
+          angle: 1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: 56,12
         1538:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 56,12
+          coordinates: 56,13
         1539:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 56,13
+          coordinates: 56,14
         1540:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 56,14
-        1541:
-          angle: 1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: WarningLine
           coordinates: 56,15
-        1542:
+        1541:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLineCorner
           coordinates: 56,10
-        1551:
+        1550:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: 47.795124,23.014727
-        1552:
+        1551:
           color: '#FFFFFFFF'
           id: Grasse2
           coordinates: 48.6545,23.045977
-        1553:
+        1552:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: 49.545124,22.999102
-        1554:
+        1553:
           color: '#FFFFFFFF'
           id: Grassd2
           coordinates: 50.107624,22.983477
-        1555:
+        1554:
           color: '#FFFFFFFF'
           id: Bushb2
           coordinates: 48.93575,22.999102
-        1556:
+        1555:
           color: '#FFFFFFFF'
           id: Grassb1
           coordinates: 49.920124,22.983477
-        1557:
+        1556:
           color: '#FFFFFFFF'
           id: Flowerspv3
           coordinates: 47.93575,23.014727
-        1558:
+        1557:
           color: '#FFFFFFFF'
           id: Bushe4
           coordinates: 48.138874,22.999102
-        1559:
+        1558:
           color: '#FFFFFFFF'
           id: Bushd4
           coordinates: 50.013874,22.999102
-        1560:
+        1559:
           color: '#FFFFFFFF'
           id: Bushe3
           coordinates: 49.68575,22.983477
-        1561:
+        1560:
           color: '#FFFFFFFF'
           id: Bushk2
           coordinates: 48.87325,22.952227
-        1562:
+        1561:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: 48.02087,29.082806
-        1563:
+        1562:
           color: '#FFFFFFFF'
           id: Grasse2
           coordinates: 48.83337,29.020306
-        1564:
+        1563:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: 49.692745,28.957806
-        1565:
+        1564:
           color: '#FFFFFFFF'
           id: Rock01
           coordinates: 48.39587,29.00468
-        1566:
+        1565:
           color: '#FFFFFFFF'
           id: Rock04
           coordinates: 50.005245,28.989056
-        1567:
+        1566:
           color: '#FFFFFFFF'
           id: Bushh1
           coordinates: 47.86462,29.020306
-        1568:
+        1567:
           color: '#FFFFFFFF'
           id: Bushh2
           coordinates: 49.755245,29.00468
-        1569:
+        1568:
           color: '#FFFFFFFF'
           id: Bushn1
           coordinates: 48.942745,29.00468
-        1570:
+        1569:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: 47,14
-        1571:
+        1570:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: 48,14
-        1572:
+        1571:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: 49,14
-        1573:
+        1572:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: 50,14
-        1574:
+        1573:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 51,0
-        1575:
+        1574:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 50,0
-        1577:
+        1576:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 49,3
-        1578:
+        1577:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 47,2
-        1579:
+        1578:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 44,3
-        1580:
+        1579:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 50,2
-        1581:
+        1580:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 50,4
-        1582:
+        1581:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 49,0
-        1587:
+        1586:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 51,1
-        1588:
+        1587:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 50,1
-        1589:
+        1588:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 51,2
-        1590:
+        1589:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 51,4
-        1591:
+        1590:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 48,3
-        1592:
+        1591:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 48,2
-        1593:
+        1592:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 46,2
-        1594:
+        1593:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 46,1
-        1595:
+        1594:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 47,0
-        1596:
+        1595:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 44,2
-        1597:
+        1596:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 43,3
-        1598:
+        1597:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 45,3
-        1599:
+        1598:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 44,4
+        1599:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 41,0
         1600:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 41,0
-        1601:
+          coordinates: 40,0
+        1609:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 40,0
+          coordinates: 41,0
         1610:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 41,0
+          coordinates: 41,2
         1611:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 41,2
+          coordinates: 42,2
         1612:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 42,2
+          coordinates: 49,4
         1613:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 49,4
+          coordinates: 49,6
         1614:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 49,6
+          coordinates: 43,5
         1615:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 43,5
-        1616:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: 43,6
-        1617:
+        1616:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 56,12
-        1618:
+        1617:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 55,12
-        1619:
+        1618:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 54,11
-        1620:
+        1619:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 53,11
-        1621:
+        1620:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 55,13
-        1622:
+        1621:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 55,9
-        1623:
+        1622:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 49,14
-        1624:
+        1623:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 50,13
-        1625:
+        1624:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 44,10
-        1626:
+        1625:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 45,9
+        1626:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 41,6
         1627:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 41,6
+          coordinates: 41,5
         1628:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 41,5
+          coordinates: 40,5
         1629:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 40,5
+          coordinates: 37,4
         1630:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 37,4
+          coordinates: 36,5
         1631:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 36,5
-        1632:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: 37,2
-        1650:
+        1649:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 41,11
-        1651:
+        1650:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 34,9
-        1652:
+        1651:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 33,9
-        1653:
+        1652:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 32,9
-        1663:
+        1662:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 34,7
-        1664:
+        1663:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 33,7
-        1665:
+        1664:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 32,7
-        1670:
+        1669:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale270
           coordinates: 36,4
-        1671:
+        1670:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 38,4
-        1672:
+        1671:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 41,13
-        1673:
+        1672:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 41,14
-        1674:
+        1673:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 41,15
-        1675:
+        1674:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 41,16
-        1762:
+        1761:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: LoadingArea
           coordinates: 43,6
-        1763:
+        1762:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 41,6
-        1785:
+        1783:
+          color: '#A4610696'
+          id: CheckerNWSE
+          coordinates: 50,16
+        1784:
           color: '#A4610696'
           id: CheckerNWSE
           coordinates: 51,16
       -3,0:
-        1634:
+        1633:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale270
           coordinates: -74,16
-        1635:
+        1634:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale270
           coordinates: -73,16
-        1636:
+        1635:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale270
           coordinates: -72,16
-        1637:
+        1636:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: -74,18
-        1638:
+        1637:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: -73,18
-        1641:
+        1640:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -65,17
-        1642:
+        1641:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -66,17
-        1643:
+        1642:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -67,17
-        1644:
+        1643:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -68,17
-        1645:
+        1644:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -69,17
-        1647:
+        1646:
           color: '#334E6DC8'
           id: CheckerNWSE
           coordinates: -70,17
-        1648:
+        1647:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -72,20
-        1649:
+        1648:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLineCornerFlipped
@@ -50491,7 +50491,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -16628.389
+  - SecondsUntilStateChange: -19702.969
     state: Opening
     type: Door
 - uid: 3729
@@ -77581,10 +77581,10 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 7548
-        - 8958
-        - 7549
         - 8957
+        - 7549
+        - 8958
+        - 7548
     type: ContainerContainer
 - uid: 7467
   type: AirlockSecurity
@@ -80193,6 +80193,7 @@ entities:
     - Plastic
     - Wood
     - Glass
+    - Cloth
     type: MaterialStorage
 - uid: 7836
   type: PersonalAI
@@ -89783,6 +89784,7 @@ entities:
     - Plastic
     - Wood
     - Glass
+    - Cloth
     type: MaterialStorage
 - uid: 9282
   type: FirelockGlass
@@ -124030,7 +124032,7 @@ entities:
   - pos: 31.5,-19.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -10141.288
+  - SecondsUntilStateChange: -13215.868
     state: Closing
     type: Door
   - canCollide: False
@@ -126157,12 +126159,23 @@ entities:
     inletOneConcentration: 1
     type: GasMixer
 - uid: 14827
-  type: ReinforcedWindow
+  type: FireAlarm
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -33.5,42.5
+  - pos: -3.5,-21.5
     parent: 60
     type: Transform
+  - devices:
+    - 671
+    - 672
+    - 670
+    - 675
+    - 674
+    - 673
+    - 3996
+    - 4001
+    - 585
+    - 21505
+    type: DeviceList
 - uid: 14828
   type: WallReinforced
   components:
@@ -126877,11 +126890,14 @@ entities:
     parent: 60
     type: Transform
 - uid: 14924
-  type: Grille
+  type: AirAlarm
   components:
   - pos: -33.5,42.5
     parent: 60
     type: Transform
+  - devices:
+    - 21584
+    type: DeviceList
 - uid: 14925
   type: Grille
   components:
@@ -171519,4 +171535,1632 @@ entities:
   - pos: 3.5,-77.5
     parent: 60
     type: Transform
+- uid: 21482
+  type: ComputerRadar
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 51.5,1.5
+    parent: 60
+    type: Transform
+- uid: 21483
+  type: WallReinforced
+  components:
+  - pos: -33.5,42.5
+    parent: 60
+    type: Transform
+- uid: 21484
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-36.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 3990
+    - 3991
+    - 3992
+    - 9095
+    - 9096
+    - 9097
+    type: DeviceList
+- uid: 21485
+  type: FireAlarm
+  components:
+  - pos: 11.5,-21.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 675
+    - 674
+    - 673
+    - 6125
+    - 6126
+    - 6127
+    - 6490
+    - 6561
+    - 6489
+    - 7630
+    - 2770
+    - 2771
+    - 2456
+    - 2455
+    - 2454
+    - 21515
+    type: DeviceList
+- uid: 21486
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 42.5,-18.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 94
+    - 8968
+    - 8959
+    - 74
+    - 2686
+    - 2459
+    - 2687
+    - 2680
+    - 8962
+    - 21537
+    - 61
+    - 5450
+    - 5833
+    - 5831
+    - 21517
+    - 5439
+    - 3123
+    - 2878
+    - 12623
+    - 5404
+    type: DeviceList
+- uid: 21487
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 20.5,-38.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 8192
+    - 8193
+    - 8194
+    - 8195
+    - 8196
+    - 2232
+    - 2233
+    - 2880
+    - 2771
+    - 2770
+    - 2213
+    - 3505
+    - 2227
+    - 2898
+    - 2891
+    - 2908
+    - 2909
+    type: DeviceList
+- uid: 21488
+  type: FireAlarm
+  components:
+  - pos: -24.5,-21.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 3996
+    - 4001
+    - 585
+    - 11340
+    - 11339
+    - 11338
+    - 158
+    - 836
+    - 121
+    - 63
+    - 81
+    - 112
+    - 8255
+    - 7048
+    - 152
+    - 79
+    - 835
+    - 856
+    - 5940
+    - 6097
+    - 6098
+    - 21506
+    - 21507
+    type: DeviceList
+- uid: 21489
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -28.5,-6.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 8947
+    - 1640
+    - 1637
+    - 1559
+    - 1636
+    - 1633
+    - 5562
+    - 5565
+    - 8521
+    - 8502
+    - 5563
+    - 8466
+    - 21545
+    - 21544
+    type: DeviceList
+- uid: 21490
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -17.5,3.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 10686
+    - 13967
+    - 13966
+    - 18857
+    - 18858
+    - 18859
+    type: DeviceList
+- uid: 21491
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,-18.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 458
+    - 459
+    - 460
+    - 18464
+    - 18463
+    - 18462
+    - 18609
+    - 21501
+    type: DeviceList
+- uid: 21492
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -29.5,6.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 780
+    - 7721
+    - 1017
+    - 5988
+    - 6367
+    - 6626
+    - 21511
+    type: DeviceList
+- uid: 21493
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -39.5,1.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 5940
+    - 6097
+    - 6098
+    - 7051
+    - 8168
+    - 5623
+    - 9468
+    - 780
+    - 7721
+    - 1017
+    - 21510
+    type: DeviceList
+- uid: 21494
+  type: FireAlarm
+  components:
+  - pos: -46.5,1.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 9526
+    - 9527
+    - 9528
+    - 9411
+    - 9410
+    - 9409
+    - 21552
+    - 21553
+    - 21554
+    type: DeviceList
+- uid: 21495
+  type: FireAlarm
+  components:
+  - pos: 5.5,11.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 9526
+    - 9527
+    - 9528
+    - 9411
+    - 9410
+    - 9409
+    - 5742
+    - 5743
+    - 5744
+    - 6625
+    - 6542
+    - 6103
+    - 21512
+    type: DeviceList
+- uid: 21496
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -9.5,26.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 9526
+    - 9527
+    - 9528
+    - 9411
+    - 9410
+    - 9409
+    - 5742
+    - 5743
+    - 5744
+    - 6625
+    - 6542
+    - 6103
+    - 16007
+    - 16008
+    - 16558
+    - 16557
+    - 16556
+    type: DeviceList
+- uid: 21497
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,-57.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 5039
+    - 5040
+    - 5041
+    - 5042
+    - 5043
+    - 5044
+    - 5036
+    - 5037
+    - 5038
+    type: DeviceList
+- uid: 21498
+  type: AirSensor
+  components:
+  - pos: 0.5,-35.5
+    parent: 60
+    type: Transform
+- uid: 21499
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 11.5,-57.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 8180
+    - 8181
+    - 8182
+    - 8077
+    - 8090
+    - 8179
+    type: DeviceList
+- uid: 21500
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -2.5,-67.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 8180
+    - 8181
+    - 8182
+    - 8077
+    - 8090
+    - 8179
+    - 5337
+    - 5338
+    - 5339
+    - 5033
+    - 5034
+    - 5035
+    type: DeviceList
+- uid: 21501
+  type: AirSensor
+  components:
+  - pos: 0.5,-15.5
+    parent: 60
+    type: Transform
+- uid: 21502
+  type: AirSensor
+  components:
+  - pos: 0.5,-4.5
+    parent: 60
+    type: Transform
+- uid: 21503
+  type: AirSensor
+  components:
+  - pos: -0.5,0.5
+    parent: 60
+    type: Transform
+- uid: 21504
+  type: AirSensor
+  components:
+  - pos: -4.5,-3.5
+    parent: 60
+    type: Transform
+- uid: 21505
+  type: AirSensor
+  components:
+  - pos: -6.5,-23.5
+    parent: 60
+    type: Transform
+- uid: 21506
+  type: AirSensor
+  components:
+  - pos: -18.5,-23.5
+    parent: 60
+    type: Transform
+- uid: 21507
+  type: AirSensor
+  components:
+  - pos: -31.5,-23.5
+    parent: 60
+    type: Transform
+- uid: 21508
+  type: AirSensor
+  components:
+  - pos: -32.5,-20.5
+    parent: 60
+    type: Transform
+- uid: 21509
+  type: AirSensor
+  components:
+  - pos: -20.5,-20.5
+    parent: 60
+    type: Transform
+- uid: 21510
+  type: AirSensor
+  components:
+  - pos: -38.5,-5.5
+    parent: 60
+    type: Transform
+- uid: 21511
+  type: AirSensor
+  components:
+  - pos: -26.5,8.5
+    parent: 60
+    type: Transform
+- uid: 21512
+  type: AirSensor
+  components:
+  - pos: -4.5,10.5
+    parent: 60
+    type: Transform
+- uid: 21513
+  type: AirSensor
+  components:
+  - pos: 12.5,12.5
+    parent: 60
+    type: Transform
+- uid: 21514
+  type: AirSensor
+  components:
+  - pos: 16.5,0.5
+    parent: 60
+    type: Transform
+- uid: 21515
+  type: AirSensor
+  components:
+  - pos: 13.5,-23.5
+    parent: 60
+    type: Transform
+- uid: 21516
+  type: AirSensor
+  components:
+  - pos: 18.5,-33.5
+    parent: 60
+    type: Transform
+- uid: 21517
+  type: AirSensor
+  components:
+  - pos: 43.5,-21.5
+    parent: 60
+    type: Transform
+- uid: 21518
+  type: AirSensor
+  components:
+  - pos: 16.5,-12.5
+    parent: 60
+    type: Transform
+- uid: 21519
+  type: AirSensor
+  components:
+  - pos: 24.5,8.5
+    parent: 60
+    type: Transform
+- uid: 21520
+  type: AirSensor
+  components:
+  - pos: 38.5,8.5
+    parent: 60
+    type: Transform
+- uid: 21521
+  type: AirSensor
+  components:
+  - pos: 51.5,11.5
+    parent: 60
+    type: Transform
+- uid: 21522
+  type: AirSensor
+  components:
+  - pos: 47.5,1.5
+    parent: 60
+    type: Transform
+- uid: 21523
+  type: AirSensor
+  components:
+  - pos: 44.5,21.5
+    parent: 60
+    type: Transform
+- uid: 21524
+  type: AirSensor
+  components:
+  - pos: 29.5,24.5
+    parent: 60
+    type: Transform
+- uid: 21525
+  type: AirSensor
+  components:
+  - pos: 16.5,19.5
+    parent: 60
+    type: Transform
+- uid: 21526
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,-15.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 428
+    - 426
+    - 21501
+    - 18429
+    - 18430
+    type: DeviceList
+- uid: 21527
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-6.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 18261
+    - 21504
+    - 18272
+    - 18262
+    - 18270
+    - 18368
+    - 18434
+    type: DeviceList
+- uid: 21528
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-3.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 18426
+    - 21502
+    - 18425
+    type: DeviceList
+- uid: 21529
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -4.5,-0.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 18260
+    - 21503
+    - 18539
+    type: DeviceList
+- uid: 21530
+  type: AirAlarm
+  components:
+  - pos: -6.5,-21.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 18260
+    - 21503
+    - 18539
+    - 482
+    - 21505
+    - 928
+    - 904
+    type: DeviceList
+- uid: 21531
+  type: AirAlarm
+  components:
+  - pos: 5.5,-21.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 479
+    - 1455
+    - 1456
+    - 21515
+    - 275
+    - 9160
+    - 2563
+    - 2560
+    type: DeviceList
+- uid: 21532
+  type: AirAlarm
+  components:
+  - pos: 18.5,-25.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 629
+    - 21516
+    - 2706
+    type: DeviceList
+- uid: 21533
+  type: AirAlarm
+  components:
+  - pos: 25.5,-29.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21534
+    - 2360
+    - 2370
+    - 2380
+    - 2375
+    type: DeviceList
+- uid: 21534
+  type: AirSensor
+  components:
+  - pos: 24.5,-35.5
+    parent: 60
+    type: Transform
+- uid: 21535
+  type: AirSensor
+  components:
+  - pos: 33.5,-32.5
+    parent: 60
+    type: Transform
+- uid: 21536
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 30.5,-34.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 5824
+    - 21535
+    - 5823
+    - 2205
+    - 2215
+    - 2217
+    - 2208
+    type: DeviceList
+- uid: 21537
+  type: AirSensor
+  components:
+  - pos: 34.5,-19.5
+    parent: 60
+    type: Transform
+- uid: 21538
+  type: AirSensor
+  components:
+  - pos: 37.5,-23.5
+    parent: 60
+    type: Transform
+- uid: 21539
+  type: AirSensor
+  components:
+  - pos: 44.5,-33.5
+    parent: 60
+    type: Transform
+- uid: 21540
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 36.5,-30.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 12631
+    - 12632
+    - 12633
+    - 9046
+    - 21541
+    type: DeviceList
+- uid: 21541
+  type: AirSensor
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 39.5,-31.5
+    parent: 60
+    type: Transform
+- uid: 21542
+  type: AirAlarm
+  components:
+  - pos: 41.5,-21.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21538
+    - 2704
+    - 12624
+    type: DeviceList
+- uid: 21543
+  type: AirAlarm
+  components:
+  - pos: 41.5,-15.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 8962
+    - 21537
+    - 61
+    - 5450
+    - 5833
+    - 5831
+    - 21517
+    - 5439
+    - 3123
+    - 2878
+    - 12623
+    - 5404
+    type: DeviceList
+- uid: 21544
+  type: AirSensor
+  components:
+  - pos: -29.5,-4.5
+    parent: 60
+    type: Transform
+- uid: 21545
+  type: AirSensor
+  components:
+  - pos: -29.5,-14.5
+    parent: 60
+    type: Transform
+- uid: 21546
+  type: AirAlarm
+  components:
+  - pos: -25.5,-21.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 516
+    - 1511
+    - 21506
+    - 21509
+    - 6087
+    - 6065
+    type: DeviceList
+- uid: 21547
+  type: AirAlarm
+  components:
+  - pos: -31.5,-21.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 6002
+    - 5962
+    - 21507
+    - 6093
+    - 5961
+    - 6086
+    - 6066
+    - 21508
+    type: DeviceList
+- uid: 21548
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -17.5,-5.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 1136
+    - 1133
+    - 21549
+    - 788
+    - 792
+    type: DeviceList
+- uid: 21549
+  type: AirSensor
+  components:
+  - pos: -15.5,-11.5
+    parent: 60
+    type: Transform
+- uid: 21550
+  type: AirAlarm
+  components:
+  - pos: -21.5,10.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 1780
+    - 719
+    - 21511
+    - 7686
+    - 1996
+    type: DeviceList
+- uid: 21551
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -35.5,-1.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 6018
+    - 8774
+    - 2772
+    - 5952
+    - 21510
+    - 1787
+    - 1771
+    type: DeviceList
+- uid: 21552
+  type: AirSensor
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -43.5,-7.5
+    parent: 60
+    type: Transform
+- uid: 21553
+  type: AirSensor
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -48.5,-3.5
+    parent: 60
+    type: Transform
+- uid: 21554
+  type: AirSensor
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -52.5,3.5
+    parent: 60
+    type: Transform
+- uid: 21555
+  type: AirAlarm
+  components:
+  - pos: -45.5,1.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 6134
+    - 6109
+    - 21553
+    type: DeviceList
+- uid: 21556
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -46.5,-9.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 5987
+    - 21552
+    - 6058
+    type: DeviceList
+- uid: 21557
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -50.5,-3.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 12595
+    - 5938
+    - 12594
+    - 21558
+    type: DeviceList
+- uid: 21558
+  type: AirSensor
+  components:
+  - pos: -53.5,-3.5
+    parent: 60
+    type: Transform
+- uid: 21559
+  type: AirAlarm
+  components:
+  - pos: -51.5,6.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21554
+    - 6032
+    - 9672
+    type: DeviceList
+- uid: 21560
+  type: AirSensor
+  components:
+  - pos: -36.5,12.5
+    parent: 60
+    type: Transform
+- uid: 21561
+  type: AirSensor
+  components:
+  - pos: -30.5,12.5
+    parent: 60
+    type: Transform
+- uid: 21562
+  type: AirAlarm
+  components:
+  - pos: -36.5,15.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21560
+    - 9677
+    - 9678
+    - 21561
+    - 6015
+    - 5990
+    type: DeviceList
+- uid: 21563
+  type: AirSensor
+  components:
+  - pos: -49.5,12.5
+    parent: 60
+    type: Transform
+- uid: 21564
+  type: AirSensor
+  components:
+  - pos: -54.5,8.5
+    parent: 60
+    type: Transform
+- uid: 21565
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -57.5,10.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21564
+    - 9674
+    - 9673
+    - 21563
+    - 9676
+    - 9675
+    type: DeviceList
+- uid: 21566
+  type: AirAlarm
+  components:
+  - pos: -4.5,11.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21512
+    - 5745
+    - 14325
+    - 5738
+    - 5739
+    - 5411
+    - 5412
+    type: DeviceList
+- uid: 21567
+  type: AirSensor
+  components:
+  - pos: 6.5,14.5
+    parent: 60
+    type: Transform
+- uid: 21568
+  type: AirSensor
+  components:
+  - pos: -0.5,13.5
+    parent: 60
+    type: Transform
+- uid: 21569
+  type: AirSensor
+  components:
+  - pos: -3.5,16.5
+    parent: 60
+    type: Transform
+- uid: 21570
+  type: AirAlarm
+  components:
+  - pos: -0.5,16.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 16643
+    - 16642
+    - 21569
+    - 21568
+    - 16675
+    - 16674
+    - 16681
+    - 16682
+    - 21567
+    type: DeviceList
+- uid: 21571
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,18.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 16683
+    - 16672
+    - 21572
+    - 16670
+    - 16673
+    type: DeviceList
+- uid: 21572
+  type: AirSensor
+  components:
+  - pos: -3.5,18.5
+    parent: 60
+    type: Transform
+- uid: 21573
+  type: AirAlarm
+  components:
+  - pos: -1.5,26.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21576
+    - 16635
+    - 16634
+    - 16636
+    - 21575
+    - 16633
+    - 16621
+    - 21574
+    - 16620
+    - 16605
+    - 16604
+    type: DeviceList
+- uid: 21574
+  type: AirSensor
+  components:
+  - pos: -0.5,28.5
+    parent: 60
+    type: Transform
+- uid: 21575
+  type: AirSensor
+  components:
+  - pos: -0.5,23.5
+    parent: 60
+    type: Transform
+- uid: 21576
+  type: AirSensor
+  components:
+  - pos: 7.5,25.5
+    parent: 60
+    type: Transform
+- uid: 21577
+  type: AirAlarm
+  components:
+  - pos: -17.5,38.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 15343
+    - 15344
+    - 15345
+    - 15346
+    - 15347
+    - 15348
+    - 21578
+    type: DeviceList
+- uid: 21578
+  type: AirSensor
+  components:
+  - pos: -16.5,41.5
+    parent: 60
+    type: Transform
+- uid: 21579
+  type: AirSensor
+  components:
+  - pos: -16.5,34.5
+    parent: 60
+    type: Transform
+- uid: 21580
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -9.5,37.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 15650
+    - 15652
+    - 15649
+    - 15651
+    - 15648
+    - 21579
+    type: DeviceList
+- uid: 21581
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -24.5,29.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21582
+    - 16561
+    - 16560
+    - 21583
+    - 16559
+    type: DeviceList
+- uid: 21582
+  type: AirSensor
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -17.5,29.5
+    parent: 60
+    type: Transform
+- uid: 21583
+  type: AirSensor
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -27.5,31.5
+    parent: 60
+    type: Transform
+- uid: 21584
+  type: AirSensor
+  components:
+  - pos: -30.5,45.5
+    parent: 60
+    type: Transform
+- uid: 21585
+  type: AirAlarm
+  components:
+  - pos: -39.5,26.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 17627
+    - 17632
+    - 17626
+    - 17633
+    - 17628
+    - 17631
+    - 21586
+    - 17630
+    - 17629
+    type: DeviceList
+- uid: 21586
+  type: AirSensor
+  components:
+  - pos: -32.5,24.5
+    parent: 60
+    type: Transform
+- uid: 21587
+  type: FireAlarm
+  components:
+  - pos: -23.5,26.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21586
+    - 13979
+    - 13980
+    - 13981
+    - 13968
+    - 13969
+    - 13970
+    type: DeviceList
+- uid: 21588
+  type: AirSensor
+  components:
+  - pos: -9.5,19.5
+    parent: 60
+    type: Transform
+- uid: 21589
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -5.5,13.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 14318
+    - 14312
+    - 14303
+    - 21588
+    - 14302
+    type: DeviceList
+- uid: 21590
+  type: AirAlarm
+  components:
+  - pos: -17.5,10.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 13971
+    - 21591
+    - 5472
+    type: DeviceList
+- uid: 21591
+  type: AirSensor
+  components:
+  - pos: -15.5,8.5
+    parent: 60
+    type: Transform
+- uid: 21592
+  type: FireAlarm
+  components:
+  - pos: -13.5,10.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 13971
+    - 21591
+    - 5472
+    - 6625
+    - 6542
+    - 6103
+    - 13968
+    - 13969
+    - 13970
+    - 6626
+    - 6367
+    - 5988
+    - 10686
+    - 13967
+    - 13966
+    type: DeviceList
+- uid: 21593
+  type: AirAlarm
+  components:
+  - pos: -10.5,-25.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 910
+    - 21594
+    - 912
+    type: DeviceList
+- uid: 21594
+  type: AirSensor
+  components:
+  - pos: -7.5,-27.5
+    parent: 60
+    type: Transform
+- uid: 21595
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 6.5,-32.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 1385
+    - 1405
+    - 21596
+    - 1398
+    - 1410
+    - 1397
+    type: DeviceList
+- uid: 21596
+  type: AirSensor
+  components:
+  - pos: 5.5,-30.5
+    parent: 60
+    type: Transform
+- uid: 21597
+  type: AirAlarm
+  components:
+  - pos: 25.5,10.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 13548
+    - 13563
+    - 21519
+    - 19055
+    - 19054
+    type: DeviceList
+- uid: 21598
+  type: FireAlarm
+  components:
+  - pos: 21.5,10.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 11969
+    - 11698
+    - 12329
+    - 13151
+    - 13152
+    - 13153
+    - 21519
+    type: DeviceList
+- uid: 21599
+  type: AirAlarm
+  components:
+  - pos: 9.5,16.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21513
+    - 6300
+    - 6299
+    type: DeviceList
+- uid: 21600
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 18.5,16.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 13242
+    - 6290
+    - 21525
+    type: DeviceList
+- uid: 21601
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 18.5,17.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 5889
+    - 5651
+    - 5649
+    - 8613
+    - 8612
+    - 8611
+    - 19088
+    - 19089
+    - 19090
+    - 21525
+    type: DeviceList
+- uid: 21602
+  type: FireAlarm
+  components:
+  - pos: 39.5,26.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 19060
+    - 19061
+    - 19062
+    - 13150
+    - 13149
+    - 13148
+    - 21523
+    type: DeviceList
+- uid: 21603
+  type: AirAlarm
+  components:
+  - pos: 45.5,27.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21523
+    - 19439
+    - 19437
+    - 19441
+    - 19440
+    - 19438
+    - 19443
+    type: DeviceList
+- uid: 21604
+  type: AirAlarm
+  components:
+  - pos: 36.5,12.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 13075
+    - 21520
+    - 13074
+    type: DeviceList
+- uid: 21605
+  type: AirAlarm
+  components:
+  - pos: 52.5,15.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 18652
+    - 18657
+    - 18668
+    - 18685
+    - 21521
+    - 18663
+    - 18686
+    - 18664
+    - 18687
+    type: DeviceList
+- uid: 21606
+  type: AirAlarm
+  components:
+  - pos: 47.5,4.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 18905
+    - 18904
+    - 18915
+    - 18906
+    - 18910
+    - 21522
+    - 18909
+    type: DeviceList
+- uid: 21607
+  type: AirAlarm
+  components:
+  - pos: 39.5,1.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 18893
+    - 21608
+    - 18892
+    type: DeviceList
+- uid: 21608
+  type: AirSensor
+  components:
+  - pos: 38.5,-1.5
+    parent: 60
+    type: Transform
+- uid: 21609
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 18.5,-14.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 6127
+    - 6126
+    - 6125
+    - 6128
+    - 6129
+    - 6130
+    - 21518
+    type: DeviceList
+- uid: 21610
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 14.5,-9.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 12592
+    - 12591
+    - 21518
+    - 3693
+    - 3692
+    type: DeviceList
+- uid: 21611
+  type: AirSensor
+  components:
+  - pos: 21.5,-20.5
+    parent: 60
+    type: Transform
+- uid: 21612
+  type: AirAlarm
+  components:
+  - pos: 21.5,-14.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 263
+    - 179
+    - 21611
+    - 127
+    - 223
+    type: DeviceList
+- uid: 21613
+  type: AirSensor
+  components:
+  - pos: 35.5,-14.5
+    parent: 60
+    type: Transform
+- uid: 21614
+  type: AirAlarm
+  components:
+  - pos: 34.5,-11.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21613
+    - 5440
+    - 5446
+    type: DeviceList
+- uid: 21615
+  type: AirSensor
+  components:
+  - pos: -26.5,-19.5
+    parent: 60
+    type: Transform
+- uid: 21616
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -27.5,-21.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21613
+    - 5440
+    - 5446
+    - 8230
+    - 21615
+    - 6648
+    type: DeviceList
+- uid: 21617
+  type: AirSensor
+  components:
+  - pos: 38.5,-9.5
+    parent: 60
+    type: Transform
+- uid: 21618
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 35.5,-8.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21613
+    - 5440
+    - 5446
+    - 8230
+    - 21615
+    - 6648
+    - 1246
+    - 21617
+    - 12868
+    type: DeviceList
+- uid: 21619
+  type: AirSensor
+  components:
+  - pos: 50.5,-30.5
+    parent: 60
+    type: Transform
+- uid: 21620
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 49.5,-30.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 3027
+    - 3019
+    - 2983
+    - 3002
+    - 21619
+    - 2996
+    - 2984
+    type: DeviceList
+- uid: 21621
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,-35.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 3986
+    - 3985
+    - 21498
+    - 1429
+    - 1430
+    type: DeviceList
+- uid: 21622
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -2.5,-61.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21623
+    - 4952
+    - 4945
+    - 4953
+    - 4944
+    - 8062
+    - 8061
+    type: DeviceList
+- uid: 21623
+  type: AirSensor
+  components:
+  - pos: 0.5,-59.5
+    parent: 60
+    type: Transform
+- uid: 21624
+  type: AirAlarm
+  components:
+  - pos: -15.5,-52.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21625
+    - 4949
+    - 4948
+    type: DeviceList
+- uid: 21625
+  type: AirSensor
+  components:
+  - pos: -11.5,-55.5
+    parent: 60
+    type: Transform
+- uid: 21626
+  type: AirSensor
+  components:
+  - pos: -11.5,-70.5
+    parent: 60
+    type: Transform
+- uid: 21627
+  type: AirAlarm
+  components:
+  - pos: -9.5,-68.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21626
+    - 4950
+    - 4947
+    type: DeviceList
+- uid: 21628
+  type: AirSensor
+  components:
+  - pos: -1.5,-70.5
+    parent: 60
+    type: Transform
+- uid: 21629
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -2.5,-63.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 4951
+    - 4946
+    - 21628
+    type: DeviceList
 ...
