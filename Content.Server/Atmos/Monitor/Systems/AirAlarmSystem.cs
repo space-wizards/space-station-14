@@ -178,19 +178,17 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnPowerChanged(EntityUid uid, AirAlarmComponent component, PowerChangedEvent args)
     {
-        if (!args.Powered)
+        if (args.Powered)
         {
-            ForceCloseAllInterfaces(uid);
-            component.CurrentModeUpdater = null;
-            component.KnownDevices.Clear();
-            component.ScrubberData.Clear();
-            component.SensorData.Clear();
-            component.VentData.Clear();
+            return;
         }
-        else
-        {
-            SyncAllDevices(uid);
-        }
+
+        ForceCloseAllInterfaces(uid);
+        component.CurrentModeUpdater = null;
+        component.KnownDevices.Clear();
+        component.ScrubberData.Clear();
+        component.SensorData.Clear();
+        component.VentData.Clear();
     }
 
     private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)

@@ -31,7 +31,7 @@ public sealed class AtmosAlarmableComponent : Component
     [ViewVariables]
     public readonly Dictionary<string, AtmosAlarmType> NetworkAlarmStates = new();
 
-    [ViewVariables] public AtmosAlarmType LastAlarmState = AtmosAlarmType.Normal;
+    [ViewVariables] public AtmosAlarmType LastAlarmState = AtmosAlarmType.Invalid;
 
     [ViewVariables] public bool IgnoreAlarms { get; set; } = false;
 

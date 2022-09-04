@@ -1,29 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'When stripping other players, the delay now depends on the targeted
-      slot.', type: Tweak}
-  id: 1728
-  time: '2022-06-20T00:56:00.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Adds obfuscation to pocket items so players can't check the strip menu
-      to see what they have., type: Add}
-  id: 1729
-  time: '2022-06-20T00:57:33.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed chair layering, type: Fix}
-  id: 1730
-  time: '2022-06-20T01:27:22.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Clearly defined speciesism is AGAINST the rules. Be nice to each other.,
-    type: Tweak}
-  - {message: Rule 8 clearly states no names of fictional or real famous people.,
-    type: Tweak}
-  id: 1731
-  time: '2022-06-20T04:52:45.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Items rotate when thrown again., type: Fix}
@@ -2914,3 +2889,28 @@ Entries:
     type: Fix}
   id: 2227
   time: '2022-09-03T01:32:19.0000000+00:00'
+- author: Rolfero
+  changes:
+  - {message: E-swords finally hot enough to light a cigarette, type: Add}
+  id: 2228
+  time: '2022-09-03T10:50:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Made snow and grass unable to be pried with a crowbar., type: Fix}
+  id: 2229
+  time: '2022-09-03T13:40:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fixes nukeops being broken when run from secret., type: Fix}
+  - {message: 'Fixes random events being broken when run from secret. Are you serious?
+      Not a single one of you reported this until now? It''s been broken for 2 months.',
+    type: Fix}
+  id: 2230
+  time: '2022-09-04T01:40:00.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some prediction issues surrounding status effects. Slipping should
+      feel less shit now. No more double slipping and teleporting when you get back
+      up., type: Fix}
+  id: 2231
+  time: '2022-09-04T17:21:22.0000000+00:00'

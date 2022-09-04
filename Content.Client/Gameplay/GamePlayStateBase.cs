@@ -30,7 +30,7 @@ namespace Content.Client.Gameplay
         private ClickableEntityComparer _comparer = default!;
 
         //-- possibly move this to the base state, this is a useful thing to be able to check.
-        private bool _initialized = false;
+        private bool _initialized;
         public bool Initialized => _initialized;
 
         protected override void Startup()

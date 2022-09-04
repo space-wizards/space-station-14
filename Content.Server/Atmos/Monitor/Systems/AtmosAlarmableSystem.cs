@@ -18,6 +18,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
+    [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
 
     /// <summary>
     ///     An alarm. Has three valid states: Normal, Warning, Danger.
@@ -41,12 +42,12 @@ public sealed class AtmosAlarmableSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AtmosAlarmableComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<AtmosAlarmableComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AtmosAlarmableComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         SubscribeLocalEvent<AtmosAlarmableComponent, PowerChangedEvent>(OnPowerChange);
     }
 
-    private void OnInit(EntityUid uid, AtmosAlarmableComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, AtmosAlarmableComponent component, MapInitEvent args)
     {
         TryUpdateAlert(
             uid,
@@ -63,6 +64,10 @@ public sealed class AtmosAlarmableSystem : EntitySystem
         }
         else
         {
+            // sussy
+            _atmosDevNetSystem.Register(uid, null);
+            _atmosDevNetSystem.Sync(uid, null);
+
             TryUpdateAlert(
                 uid,
                 TryGetHighestAlert(uid, out var alarm) ? alarm.Value : AtmosAlarmType.Normal,
