@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Body.Components;
 using Content.Server.Cargo.Components;
@@ -50,7 +50,7 @@ public sealed class PricingSystem : EntitySystem
                 continue;
             }
 
-            var gridId = new GridId(i);
+            var gridId = new EntityUid(i);
 
             if (!_mapManager.TryGetGrid(gridId, out var mapGrid))
             {

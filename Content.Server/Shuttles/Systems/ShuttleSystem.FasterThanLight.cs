@@ -95,7 +95,7 @@ public sealed partial class ShuttleSystem
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
-            if (grid.GridIndex == other.Index ||
+            if (grid.Owner == other.Owner ||
                 !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
                 body.Mass < ShuttleFTLMassThreshold) continue;
 

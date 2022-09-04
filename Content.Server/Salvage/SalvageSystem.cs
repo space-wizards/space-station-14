@@ -39,7 +39,7 @@ namespace Content.Server.Salvage
         private static readonly TimeSpan CooldownTime = TimeSpan.FromMinutes(1);
 
         // TODO: This is probably not compatible with multi-station
-        private readonly Dictionary<GridId, SalvageGridState> _salvageGridStates = new();
+        private readonly Dictionary<EntityUid, SalvageGridState> _salvageGridStates = new();
 
         public override void Initialize()
         {
@@ -65,10 +65,9 @@ namespace Content.Server.Salvage
         private void OnGridRemoval(GridRemovalEvent ev)
         {
             // If we ever want to give magnets names, and announce them individually, we would need to loop this, before removing it.
-            if (_salvageGridStates.Remove(ev.GridId))
+            if (_salvageGridStates.Remove(ev.EntityUid))
             {
-                var gridUid = _mapManager.GetGridEuid(ev.GridId);
-                if (EntityManager.TryGetComponent<SalvageGridComponent>(gridUid, out var salvComp) && salvComp.SpawnerMagnet != null)
+                if (EntityManager.TryGetComponent<SalvageGridComponent>(ev.EntityUid, out var salvComp) && salvComp.SpawnerMagnet != null)
                     Report(salvComp.SpawnerMagnet.Owner, salvComp.SpawnerMagnet.SalvageChannel, "salvage-system-announcement-spawn-magnet-lost");
                 // For the very unlikely possibility that the salvage magnet was on a salvage, we will not return here
             }
@@ -91,7 +90,7 @@ namespace Content.Server.Salvage
             if (component.MagnetState.StateType == MagnetStateType.Inactive) return;
 
             var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-            if (!_salvageGridStates.TryGetValue(magnetTranform.GridID, out var salvageGridState))
+            if (!_salvageGridStates.TryGetValue(magnetTranform.GridUid.GetValueOrDefault(), out var salvageGridState))
             {
                 return;
             }
@@ -130,7 +129,7 @@ namespace Content.Server.Salvage
                     break;
                 case MagnetStateType.Holding:
                     var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-                    if (_salvageGridStates.TryGetValue(magnetTranform.GridID, out var salvageGridState))
+                    if (_salvageGridStates.TryGetValue(magnetTranform.GridUid.GetValueOrDefault(), out var salvageGridState))
                     {
                         var remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
                         args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
@@ -161,10 +160,10 @@ namespace Content.Server.Salvage
                     ShowPopup("salvage-system-report-activate-success", component, user);
                     var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
                     SalvageGridState? gridState;
-                    if (!_salvageGridStates.TryGetValue(magnetTranform.GridID, out gridState))
+                    if (!_salvageGridStates.TryGetValue(magnetTranform.GridUid.GetValueOrDefault(), out gridState))
                     {
                         gridState = new SalvageGridState();
-                        _salvageGridStates[magnetTranform.GridID] = gridState;
+                        _salvageGridStates[magnetTranform.GridUid.GetValueOrDefault()] = gridState;
                     }
                     gridState.ActiveMagnets.Add(component);
                     component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + AttachingTime);
@@ -226,7 +225,7 @@ namespace Content.Server.Salvage
             angle = Angle.Zero;
             var tsc = Transform(component.Owner);
             coords = new EntityCoordinates(component.Owner, component.Offset).ToMap(EntityManager);
-            var grid = tsc.GridID;
+            var grid = tsc.GridEuid;
             if (_mapManager.TryGetGrid(grid, out var magnetGrid))
             {
                 angle = magnetGrid.WorldRotation;

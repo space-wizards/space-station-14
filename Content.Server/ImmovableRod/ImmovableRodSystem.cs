@@ -25,7 +25,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             if (!rod.DestroyTiles)
                 continue;
-            if (!_map.TryGetGrid(trans.GridID, out var grid))
+            if (!_map.TryGetGrid(trans.GridEuid, out var grid))
                 continue;
 
             grid.SetTile(trans.Coordinates, Tile.Empty);
