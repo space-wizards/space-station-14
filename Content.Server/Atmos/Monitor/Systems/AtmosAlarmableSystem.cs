@@ -49,11 +49,6 @@ public sealed class AtmosAlarmableSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, AtmosAlarmableComponent component, MapInitEvent args)
     {
-        // Attempt to register and sync against any sensors already linked to this device.
-        // We do it here, because it avoids any boilerplate in any other systems that use alarmable.
-        _atmosDevNetSystem.Register(uid, null);
-        _atmosDevNetSystem.Sync(uid, null);
-
         TryUpdateAlert(
             uid,
             TryGetHighestAlert(uid, out var alarm) ? alarm.Value : AtmosAlarmType.Normal,
@@ -69,6 +64,10 @@ public sealed class AtmosAlarmableSystem : EntitySystem
         }
         else
         {
+            // sussy
+            _atmosDevNetSystem.Register(uid, null);
+            _atmosDevNetSystem.Sync(uid, null);
+
             TryUpdateAlert(
                 uid,
                 TryGetHighestAlert(uid, out var alarm) ? alarm.Value : AtmosAlarmType.Normal,
