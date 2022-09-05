@@ -5,6 +5,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.DeviceNetwork;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -36,7 +37,11 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         if (!toggle)
         {
-            _overlay.GetOverlay<NetworkConfiguratorLinkOverlay>().ClearEntity(component.ActiveDeviceList.Value);
+            if (_overlay.HasOverlay<NetworkConfiguratorLinkOverlay>())
+            {
+                _overlay.GetOverlay<NetworkConfiguratorLinkOverlay>().ClearEntity(component.ActiveDeviceList.Value);
+            }
+
             RemComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
             if (!EntityQuery<NetworkConfiguratorActiveLinkOverlayComponent>().Any())
             {
@@ -70,5 +75,21 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         }
 
         _overlay.RemoveOverlay<NetworkConfiguratorLinkOverlay>();
+
+        if (_playerManager.LocalPlayer?.ControlledEntity != null)
+        {
+            _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, _prototypeManager.Index<InstantActionPrototype>(Action));
+        }
+    }
+}
+
+public sealed class ClearAllNetworkLinkOverlays : IConsoleCommand
+{
+    public string Command => "clearnetworklinkoverlays";
+    public string Description => "Clear all network link overlays.";
+    public string Help => Command;
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        IoCManager.Resolve<IEntityManager>().System<NetworkConfiguratorSystem>().ClearAllOverlays();
     }
 }

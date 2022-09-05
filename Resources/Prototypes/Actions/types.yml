@@ -73,8 +73,8 @@
 
 - type: instantAction
   id: ClearNetworkLinkOverlays
-  name: clear-network-link-overlays
-  description: clear-network-link-overlays-desc
+  name: network-configurator-clear-network-link-overlays
+  description: network-configurator-clear-network-link-overlays-desc
   icon: Objects/Tools/multitool.rsi/icon.png
   event: !type:ClearAllOverlaysEvent
 
