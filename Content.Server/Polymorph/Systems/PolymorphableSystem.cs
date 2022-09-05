@@ -188,7 +188,7 @@ namespace Content.Server.Polymorph.Systems
                 {
                     Prototype = polyproto,
                 },
-                Name = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
+                DisplayName = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
                 Description = Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)),
                 Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity),
                 ItemIconStyle = ItemActionIconStyle.NoItem,
