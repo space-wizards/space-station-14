@@ -217,6 +217,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             return;
 
         configurator.ActiveDeviceList = targetUid;
+        Dirty(configurator);
         _uiSystem.GetUiOrNull(configurator.Owner, NetworkConfiguratorUiKey.Configure)?.Open(actor.PlayerSession);
     }
 

@@ -16,6 +16,8 @@ public abstract class SharedDeviceListSystem : EntitySystem
         deviceList.Devices.UnionWith(devicesList);
 
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
+
+        Dirty(deviceList);
     }
 }
 

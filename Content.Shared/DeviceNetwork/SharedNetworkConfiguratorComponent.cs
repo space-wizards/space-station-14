@@ -1,5 +1,8 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.DeviceNetwork;
 
+[NetworkedComponent]
 public abstract class SharedNetworkConfiguratorComponent : Component
 {
     /// <summary>
