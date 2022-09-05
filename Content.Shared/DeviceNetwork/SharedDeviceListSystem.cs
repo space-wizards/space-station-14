@@ -29,12 +29,12 @@ public abstract class SharedDeviceListSystem : EntitySystem
         Dirty(deviceList);
     }
 
-    private void GetDeviceListState(EntityUid uid, DeviceListComponent comp, ComponentGetState args)
+    private void GetDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentGetState args)
     {
         args.State = new DeviceListComponentState(comp.Devices, comp.IsAllowList, comp.HandleIncomingPackets);
     }
 
-    private void HandleDeviceListState(EntityUid uid, DeviceListComponent comp, ComponentHandleState args)
+    private void HandleDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentHandleState args)
     {
         if (args.Current is not DeviceListComponentState state)
         {
@@ -47,13 +47,13 @@ public abstract class SharedDeviceListSystem : EntitySystem
     }
 
     private void GetNetworkConfiguratorState(EntityUid uid, SharedNetworkConfiguratorComponent comp,
-        ComponentGetState args)
+        ref ComponentGetState args)
     {
         args.State = new NetworkConfiguratorComponentState(comp.ActiveDeviceList);
     }
 
     private void HandleNetworkConfiguratorState(EntityUid uid, SharedNetworkConfiguratorComponent comp,
-        ComponentHandleState args)
+        ref ComponentHandleState args)
     {
         if (args.Current is not NetworkConfiguratorComponentState state)
         {
