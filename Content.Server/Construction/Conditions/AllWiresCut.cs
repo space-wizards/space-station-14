@@ -15,6 +15,8 @@ namespace Content.Server.Construction.Conditions
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 
+        [DataField("ignoreTypes")] public HashSet<Type> IgnoreTypes { get; } = new();
+
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out WiresComponent? wires))
@@ -22,6 +24,11 @@ namespace Content.Server.Construction.Conditions
 
             foreach (var wire in wires.WiresList)
             {
+                if (IgnoreTypes.Contains(wire.Action.GetType()))
+                {
+                    continue;
+                }
+
                 switch (Value)
                 {
                     case true when !wire.IsCut:
