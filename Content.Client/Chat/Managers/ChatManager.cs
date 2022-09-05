@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat.UI;
+using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.Viewport;
 using Content.Shared.Administration;
@@ -200,7 +201,7 @@ namespace Content.Client.Chat.Managers
             // can always hear server (nobody can actually send server messages).
             FilterableChannels |= ChatChannel.Server;
 
-            if (_stateManager.CurrentState is GameScreenBase)
+            if (_stateManager.CurrentState is GameplayStateBase)
             {
                 // can always hear local / radio / emote when in the game
                 FilterableChannels |= ChatChannel.Local;

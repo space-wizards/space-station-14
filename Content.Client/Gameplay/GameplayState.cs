@@ -6,6 +6,7 @@ using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.HUD;
 using Content.Client.HUD.UI;
+using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Chat;
 using Content.Shared.CCVar;
@@ -15,14 +16,11 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Viewport
+namespace Content.Client.Gameplay
 {
-    public sealed class GameScreen : GameScreenBase, IMainViewportState
+    public sealed class GameplayState : GameplayStateBase, IMainViewportState
     {
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
 
