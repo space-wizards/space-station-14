@@ -90,12 +90,13 @@
       - !type:AirlockBolted
         value: false
       - !type:WirePanel {}
+      - !type:AllWiresCut {}
       completed:
       - !type:EmptyAllContainers {}
       steps:
       - tool: Prying
         doAfter: 5
-        
+
   - node: glassElectronics
     entity: AirlockAssembly
     edges:
