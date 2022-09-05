@@ -12,8 +12,13 @@
   - type: Rotatable
   - type: Transform
     noRot: false
+  - type: IntrinsicRadio
+    channels:
+    - Supply
   - type: SalvageMagnet
-    offset: 0, -32
+    offset: 0, 0
+    offsetRadiusMin: 24
+    offsetRadiusMax: 48
   - type: ApcPowerReceiver
     powerLoad: 2500 # TODO change this to a HV power draw that really hits the grid hard WHEN active
 
@@ -25,7 +30,9 @@
   description: "Locates salvage."
   components:
   - type: SalvageMagnet
-    offset: 0, -12
+    offset: 0, 0
+    offsetRadiusMin: 12
+    offsetRadiusMax: 48
   - type: ApcPowerReceiver
     powerLoad: 1000
 

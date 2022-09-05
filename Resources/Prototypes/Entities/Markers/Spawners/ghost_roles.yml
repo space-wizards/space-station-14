@@ -1,0 +1,69 @@
+- type: entity
+  id: SpawnPointGhostRatKing
+  name: ghost role spawn point
+  suffix: rat king
+  parent: MarkerBase
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobRatKing
+    name: Rat King
+    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
+    rules: You are an antagonist, scavenge, attack, and grow your hoard!
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - texture: Mobs/Animals/regalrat.rsi/icon.png
+
+- type: entity
+  id: SpawnPointGhostRemilia
+  name: ghost role spawn point
+  suffix: Remilia
+  parent: MarkerBase
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobBatRemilia
+    name: Remilia, the chaplain's familiar
+    description: Obey your master. Eat fruit.
+    rules: You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - texture: Mobs/Animals/bat.rsi/bat.png
+
+- type: entity
+  id: SpawnPointGhostCerberus
+  name: ghost role spawn point
+  suffix: cerberus
+  parent: MarkerBase
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobCorgiCerberus
+    name: Cerberus, Evil Familiar
+    description: Obey your master. Spread chaos.
+    rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - texture: Mobs/Pets/corgi.rsi/narsian.png
+
+- type: entity
+  noSpawn: true
+  id: SpawnPointGhostNukeOperative
+  name: ghost role spawn point
+  suffix: nukeops
+  parent: MarkerBase
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanNukeOp
+    rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+  - type: NukeOperativeSpawner
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - texture: Structures/Wallmounts/signs.rsi/radiation.png
+
+

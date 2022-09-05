@@ -27,5 +27,6 @@ namespace Content.Shared.PDA
         [ViewVariables] public bool FlashlightOn;
 
         [ViewVariables] public string? OwnerName;
+        [ViewVariables] public string? StationName;
     }
 }

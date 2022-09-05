@@ -8,6 +8,8 @@
   - type: Sprite
     drawdepth: FloorObjects
   - type: SolutionContainerManager
+    solutions:
+      puddle: {}
   - type: Puddle
     spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
@@ -155,6 +157,10 @@
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      customPuddleSprite: true
 
 - type: entity
   name: toxins vomit

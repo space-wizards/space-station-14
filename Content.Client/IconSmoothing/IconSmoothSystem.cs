@@ -232,7 +232,7 @@ namespace Content.Client.IconSmoothing
             sprite.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
         }
 
-        protected bool MatchingEntity(IconSmoothComponent smooth, IEnumerable<EntityUid> candidates, EntityQuery<IconSmoothComponent> smoothQuery)
+        private bool MatchingEntity(IconSmoothComponent smooth, IEnumerable<EntityUid> candidates, EntityQuery<IconSmoothComponent> smoothQuery)
         {
             foreach (var entity in candidates)
             {

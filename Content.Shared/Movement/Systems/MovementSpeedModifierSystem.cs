@@ -21,7 +21,7 @@ namespace Content.Shared.Movement.Systems
                 BaseWalkSpeed = component.BaseWalkSpeed,
                 BaseSprintSpeed = component.BaseSprintSpeed,
                 WalkSpeedModifier = component.WalkSpeedModifier,
-                SprintSpeedModifier = component.SprintSpeedModifier
+                SprintSpeedModifier = component.SprintSpeedModifier,
             };
         }
 
@@ -48,6 +48,17 @@ namespace Content.Shared.Movement.Systems
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
+            Dirty(move);
+        }
+
+        public void ChangeBaseSpeed(EntityUid uid, float baseWalkSpeed, float baseSprintSpeed, float acceleration, MovementSpeedModifierComponent? move = null)
+        {
+            if (!Resolve(uid, ref move, false))
+                return;
+
+            move.BaseWalkSpeed = baseWalkSpeed;
+            move.BaseSprintSpeed = baseSprintSpeed;
+            move.Acceleration = acceleration;
             Dirty(move);
         }
 

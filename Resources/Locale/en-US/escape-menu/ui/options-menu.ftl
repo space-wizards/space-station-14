@@ -16,6 +16,8 @@ ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby & Round-end Music
+ui-options-restart-sounds = Round Restart Sounds
+ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-station-ambience = Station Ambience
 ui-options-space-ambience = Space Ambience
@@ -64,11 +66,13 @@ ui-options-bind-reset = Reset
 ui-options-key-prompt = Press a key...
 
 ui-options-header-movement = Movement
+ui-options-header-camera = Camera
 ui-options-header-interaction-basic = Basic Interaction
 ui-options-header-interaction-adv = Advanced Interaction
 ui-options-header-ui = User Interface
 ui-options-header-misc = Miscellaneous
 ui-options-header-hotbar = Hotbar
+ui-options-header-shuttle = Shuttle
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
 ui-options-header-general = General
@@ -80,6 +84,10 @@ ui-options-function-move-left = Move Left
 ui-options-function-move-down = Move Down
 ui-options-function-move-right = Move Right
 ui-options-function-walk = Walk
+
+ui-options-function-camera-rotate-left = Rotate left
+ui-options-function-camera-rotate-right = Rotate right
+ui-options-function-camera-reset = Reset
 
 ui-options-function-use = Use
 ui-options-function-wide-attack = Wide attack
@@ -156,6 +164,18 @@ ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
 
+ui-options-function-shuttle-strafe-up = Strafe up
+ui-options-function-shuttle-strafe-right = Strafe right
+ui-options-function-shuttle-strafe-left = Strafe left
+ui-options-function-shuttle-strafe-down = Strafe down
+ui-options-function-shuttle-rotate-left = Rotate left
+ui-options-function-shuttle-rotate-right = Rotate right
+ui-options-function-shuttle-brake = Brake
+
 ## Network menu
 
-ui-options-net-interp-ratio = Network Smoothing
+ui-options-net-interp-ratio = State buffer size
+ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game
+                                      more resistant to packet-loss, however in doing
+                                      so it effectively adds slightly more latency and
+                                      requires the client to predict more future ticks.

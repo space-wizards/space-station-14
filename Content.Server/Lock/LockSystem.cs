@@ -3,6 +3,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
@@ -20,6 +21,7 @@ namespace Content.Server.Lock
     public sealed class LockSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -27,6 +29,7 @@ namespace Content.Server.Lock
             base.Initialize();
             SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
+            SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
             SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
@@ -55,6 +58,17 @@ namespace Content.Server.Lock
             {
                 TryLock(uid, args.User, lockComp);
                 args.Handled = true;
+            }
+        }
+
+        private void OnStorageOpenAttempt(EntityUid uid, LockComponent component, StorageOpenAttemptEvent args)
+        {
+            if (component.Locked)
+            {
+                if (!args.Silent)
+                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid, Filter.Pvs(uid));
+
+                args.Cancel();
             }
         }
 
@@ -138,6 +152,9 @@ namespace Content.Server.Lock
         {
             if (!Resolve(uid, ref storage, logMissing: false))
                 return true;
+
+            if (!HasComp<SharedHandsComponent>(user))
+                return false;
 
             // Cannot lock if the entity is currently opened.
             if (storage.Open)

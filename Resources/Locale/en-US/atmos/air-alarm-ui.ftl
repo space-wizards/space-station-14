@@ -18,10 +18,9 @@ air-alarm-ui-window-pressure = {$pressure} kPa
 air-alarm-ui-window-temperature = {$tempC} C ({$temperature} K)
 air-alarm-ui-window-alarm-state = {$state}
 
-air-alarm-ui-window-tab-gas = Gases
 air-alarm-ui-window-tab-vents = Vents
 air-alarm-ui-window-tab-scrubbers = Scrubbers
-air-alarm-ui-window-tab-thresholds = Thresholds
+air-alarm-ui-window-tab-sensors = Sensors
 
 air-alarm-ui-gases = {$gas}: {$amount} mol ({$percentage}%)
 
@@ -48,6 +47,8 @@ air-alarm-ui-scrubber-wide-net-label = WideNet
 
 ### Thresholds
 
+air-alarm-ui-sensor-gases = Gases
+air-alarm-ui-sensor-thresholds = Thresholds
 air-alarm-ui-thresholds-pressure-title = Pressure (kPa)
 air-alarm-ui-thresholds-temperature-title = Temperature (K)
 air-alarm-ui-thresholds-gas-title = {$gas} (%)

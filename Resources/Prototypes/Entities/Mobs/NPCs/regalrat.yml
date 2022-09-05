@@ -8,12 +8,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.75
     baseSprintSpeed : 3.75
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -33,17 +29,17 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.25
-      mass: 120
+        radius: 0.3
+      mass: 65
       mask:
       - MobMask
       layer:
       - MobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      150: !type:CriticalMobState {}
-      200: !type:DeadMobState {}
+      0: Alive
+      150: Critical
+      200: Dead
   - type: MeleeWeapon
     range: 1
     arcwidth: 0
@@ -71,7 +67,7 @@
     makeSentient: true
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoarde!
+    rules: You are an antagonist, scavenge, attack, and grow your hoard!
   - type: Tag
     tags:
       - CannotSuicide
@@ -110,12 +106,52 @@
     - AMIV
     - SpaceCold
     - SpaceFlu
-    - Bird Flew
+    - BirdFlew
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
+
+- type: entity
+  id: MobRatKingBuff
+  parent: MobRatKing
+  suffix: Buff
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/buffrat.rsi
+    scale: 1.2, 1.2
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+  - type: MobState
+    thresholds:
+      0: Alive
+      300: Critical
+      350: Dead
+  - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 0
+    arc: fist
+    damage:
+      types:
+        Blunt: 50 #oof ouch owie my bones
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 150
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      200: 0.7
+      250: 0.5
 
 - type: entity
   name: Rat Servant
@@ -127,12 +163,10 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 3.5
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -160,9 +194,9 @@
       - SmallMobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      30: !type:CriticalMobState {}
-      60: !type:DeadMobState {}
+      0: Alive
+      30: Critical
+      60: Dead
   - type: MeleeWeapon
     range: 1
     arcwidth: 0
@@ -192,10 +226,11 @@
     - AMIV
     - SpaceCold
     - SpaceFlu
-    - Bird Flew
+    - BirdFlew
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: Vocal
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg

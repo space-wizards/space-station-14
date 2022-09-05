@@ -10,7 +10,7 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Furniture/sink.rsi
-    state: sink
+    state: sink_stem
     netsync: false
   - type: SolutionContainerManager
     solutions:
@@ -42,3 +42,28 @@
     sprite: Structures/Furniture/sink.rsi
     state: sink_wide
     netsync: false
+    
+#Stemless Sink
+
+- type: entity
+  name: sink
+  id: SinkStemless
+  parent: SinkEmpty
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/sink.rsi
+    state: sink
+    netsync: false    
+
+- type: entity
+  name: sink
+  id: SinkStemlessWater
+  parent: SinkStemless
+  suffix: Water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500

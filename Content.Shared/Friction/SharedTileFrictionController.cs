@@ -1,7 +1,9 @@
 using Content.Shared.CCVar;
+using Content.Shared.Gravity;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
@@ -18,11 +20,13 @@ namespace Content.Shared.Friction
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
         protected SharedMoverController Mover = default!;
 
         private float _stopSpeed;
         private float _frictionModifier;
+        private const float DefaultFriction = 0.3f;
 
         public override void Initialize()
         {
@@ -67,6 +71,8 @@ namespace Content.Shared.Friction
 
             var frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
+            var pullerQuery = GetEntityQuery<SharedPullerComponent>();
+            var pullableQuery = GetEntityQuery<SharedPullableComponent>();
 
             foreach (var body in mapComponent.AwakeBodies)
             {
@@ -91,6 +97,15 @@ namespace Content.Shared.Friction
                 if (frictionQuery.TryGetComponent(body.Owner, out var frictionComp))
                 {
                     bodyModifier = frictionComp.Modifier;
+                }
+
+                // If we're sandwiched between 2 pullers reduce friction
+                // Might be better to make this dynamic and check how many are in the pull chain?
+                // Either way should be much faster for now.
+                if (pullerQuery.TryGetComponent(body.Owner, out var puller) && puller.Pulling != null &&
+                    pullableQuery.TryGetComponent(body.Owner, out var pullable) && pullable.BeingPulled)
+                {
+                    bodyModifier *= 0.2f;
                 }
 
                 var friction = _frictionModifier * surfaceFriction * bodyModifier;
@@ -165,18 +180,20 @@ namespace Content.Shared.Friction
         [Pure]
         private float GetTileFriction(PhysicsComponent body, TransformComponent xform)
         {
-            var coords = xform.Coordinates;
-
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-            if (body.Owner.IsWeightless(body, coords, _mapManager) ||
-                !_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (_gravity.IsWeightless(body.Owner, body, xform))
                 return 0.0f;
 
-            if (!coords.IsValid(EntityManager)) return 0.0f;
+            if (!xform.Coordinates.IsValid(EntityManager)) return 0.0f;
 
-            var tile = grid.GetTileRef(coords);
-            var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
-            return tileDef.Friction;
+            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            {
+                var tile = grid.GetTileRef(xform.Coordinates);
+                var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
+                return tileDef.Friction;
+            }
+
+            return TryComp<TileFrictionModifierComponent>(xform.MapUid, out var friction) ? friction.Modifier : DefaultFriction;
         }
 
         [NetSerializable, Serializable]

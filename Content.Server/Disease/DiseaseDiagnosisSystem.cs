@@ -17,6 +17,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Content.Shared.Tools.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Disease
 {
@@ -120,7 +121,7 @@ namespace Content.Server.Disease
                 EntityManager.TryGetComponent<IngestionBlockerComponent>(maskUid, out var blocker) &&
                 blocker.Enabled)
             {
-                _popupSystem.PopupEntity(Loc.GetString("swab-mask-blocked", ("target", args.Target), ("mask", maskUid)), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("swab-mask-blocked", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("mask", maskUid)), args.User, Filter.Entities(args.User));
                 return;
             }
 
@@ -320,7 +321,7 @@ namespace Content.Server.Disease
                 return;
 
             args.Swab.Used = true;
-            _popupSystem.PopupEntity(Loc.GetString("swab-swabbed", ("target", args.Target)), args.Target.Value, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("swab-swabbed", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, Filter.Entities(args.User));
 
             if (args.Swab.Disease != null || args.Carrier.Diseases.Count == 0)
                 return;

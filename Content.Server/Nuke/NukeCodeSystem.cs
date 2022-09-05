@@ -15,7 +15,6 @@ namespace Content.Server.Nuke
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         private const int CodeLength = 6;
         public string Code { get; private set; } = default!;
@@ -80,7 +79,7 @@ namespace Content.Server.Nuke
             if (wasSent)
             {
                 var msg = Loc.GetString("nuke-component-announcement-send-codes");
-                _chatSystem.DispatchGlobalStationAnnouncement(msg, colorOverride: Color.Red);
+                _chatSystem.DispatchGlobalAnnouncement(msg, colorOverride: Color.Red);
             }
 
             return wasSent;

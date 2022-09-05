@@ -30,6 +30,9 @@
     },
     {
       "name": "fire"
+    },
+    {
+     "name": "freeze"
     }
   ]
 }

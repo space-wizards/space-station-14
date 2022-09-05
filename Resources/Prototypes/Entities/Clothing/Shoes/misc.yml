@@ -10,7 +10,7 @@
     sprite: Clothing/Shoes/Misc/flippers.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesLeather
   name: leather shoes
   description: Very stylish pair of boots, made from fine leather.
@@ -21,7 +21,7 @@
     sprite: Clothing/Shoes/Misc/leather.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesSlippers
   name: slippers
   description: Fluffy!
@@ -32,7 +32,7 @@
     sprite: Clothing/Shoes/Misc/slippers.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoeSlippersDuck
   name: ducky slippers
   # description: You wish these made quacking sounds as you walked.
@@ -43,12 +43,13 @@
   - type: Clothing
     sprite: Clothing/Shoes/Misc/duck-slippers.rsi
   - type: FootstepModifier
-    variation: 0.07
     footstepSoundCollection:
-      collection: footstep_duck
+      collection: FootstepDuck
+      params:
+        variation: 0.07
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesTourist
   name: tourist shoes
   description: These cheap sandals don't look very comfortable.

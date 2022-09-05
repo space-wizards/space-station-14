@@ -1,4 +1,5 @@
 using Content.Shared.Access;
+using Content.Shared.Players.PlayTimeTracking;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -11,11 +12,12 @@ namespace Content.Shared.Roles
     [Prototype("job")]
     public sealed class JobPrototype : IPrototype
     {
-        private string _name = string.Empty;
-
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
+
+        [ViewVariables, DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
+        public string PlayTimeTracker { get; } = string.Empty;
 
         [DataField("supervisors")]
         public string Supervisors { get; } = "nobody";
@@ -28,6 +30,9 @@ namespace Content.Shared.Roles
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
+
+        [DataField("requirements")]
+        public HashSet<JobRequirement>? Requirements;
 
         [DataField("joinNotifyCrew")]
         public bool JoinNotifyCrew { get; } = false;
@@ -51,13 +56,18 @@ namespace Content.Shared.Roles
         [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }
 
+        /// <summary>
+        /// Use this to spawn in as a non-humanoid (borg, test subject, etc.)
+        /// Starting gear will be ignored.
+        /// If you want to just add special attributes to a humanoid, use AddComponentSpecial instead.
+        /// </summary>
+        [DataField("jobEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? JobEntity = null;
+
         [DataField("icon")] public string Icon { get; } = string.Empty;
 
         [DataField("special", serverOnly:true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
-
-        [DataField("departments")]
-        public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
         [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();

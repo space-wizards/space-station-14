@@ -5,7 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
@@ -29,7 +29,8 @@ namespace Content.Shared.Stunnable
         public override void Initialize()
         {
             SubscribeLocalEvent<KnockedDownComponent, ComponentInit>(OnKnockInit);
-            SubscribeLocalEvent<KnockedDownComponent, ComponentRemove>(OnKnockRemove);
+            SubscribeLocalEvent<KnockedDownComponent, ComponentShutdown>(OnKnockShutdown);
+            SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
             SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
@@ -96,9 +97,15 @@ namespace Content.Shared.Stunnable
             _standingStateSystem.Down(uid);
         }
 
-        private void OnKnockRemove(EntityUid uid, KnockedDownComponent component, ComponentRemove args)
+        private void OnKnockShutdown(EntityUid uid, KnockedDownComponent component, ComponentShutdown args)
         {
             _standingStateSystem.Stand(uid);
+        }
+
+        private void OnStandAttempt(EntityUid uid, KnockedDownComponent component, StandAttemptEvent args)
+        {
+            if (component.LifeStage <= ComponentLifeStage.Running)
+                args.Cancel();
         }
 
         private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
@@ -196,6 +203,9 @@ namespace Content.Shared.Stunnable
         private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)
         {
             if (args.Handled || knocked.HelpTimer > 0f)
+                return;
+
+            if (HasComp<SleepingComponent>(uid))
                 return;
 
             // Set it to half the help interval so helping is actually useful...

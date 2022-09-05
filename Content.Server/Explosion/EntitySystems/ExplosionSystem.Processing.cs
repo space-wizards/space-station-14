@@ -117,12 +117,27 @@ public sealed partial class ExplosionSystem : EntitySystem
             // TODO EXPLOSION  check if active explosion is on a paused map. If it is... I guess support swapping out &
             // storing the "currently active" explosion?
 
-            var processed = _activeExplosion.Process(tilesRemaining);
-            tilesRemaining -= processed;
+#if EXCEPTION_TOLERANCE
+            try
+            {
+#endif
+                var processed = _activeExplosion.Process(tilesRemaining);
+                tilesRemaining -= processed;
 
-            // has the explosion finished processing?
-            if (_activeExplosion.FinishedProcessing)
+                // has the explosion finished processing?
+                if (_activeExplosion.FinishedProcessing)
+                    _activeExplosion = null;
+#if EXCEPTION_TOLERANCE
+            }
+            catch (Exception e)
+            {
+                // Ensure the system does not get stuck in an error-loop.
                 _activeExplosion = null;
+                RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, int.MaxValue));
+                _nodeGroupSystem.Snoozing = false;
+                throw;
+            }
+#endif
         }
 
         Logger.InfoS("Explosion", $"Processed {TilesPerTick - tilesRemaining} tiles in {Stopwatch.Elapsed.TotalMilliseconds}ms");
@@ -189,30 +204,16 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
-        List<(EntityUid, TransformComponent?) > list = new();
+        List<TransformComponent> list = new();
+        var state = (list, processed, xformQuery);
 
-        void AddIntersecting(List<(EntityUid, TransformComponent?)> listy)
-        {
-            // TODO directly query lookup.Tree
-            foreach (var uid in _entityLookup.GetLocalEntitiesIntersecting(lookup, ref gridBox, flags))
-            {
-                if (processed.Contains(uid))
-                    continue;
-
-                if (!xformQuery.TryGetComponent(uid, out var xform))
-                    continue;
-
-                listy.Add((uid, xform));
-            }
-        }
-
-        AddIntersecting(list);
+        // get entities:
+        lookup.Tree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
         // process those entities
-        foreach (var (entity, xform) in list)
+        foreach (var xform in list)
         {
-            processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, damageQuery, physicsQuery, xform);
+            ProcessEntity(xform.Owner, epicenter, damage, throwForce, id, damageQuery, physicsQuery, xform);
         }
 
         // process anchored entities
@@ -248,16 +249,26 @@ public sealed partial class ExplosionSystem : EntitySystem
             return !tileBlocked;
 
         list.Clear();
-        AddIntersecting(list);
+        lookup.Tree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
-        foreach (var (entity, xform) in list)
+        foreach (var xform in list)
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
             // they should handle their own damage pass-through, with their own damage reduction calculation.
-            ProcessEntity(entity, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
+            ProcessEntity(xform.Owner, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
         }
 
         return !tileBlocked;
+    }
+
+    private bool GridQueryCallback(
+        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
+        in EntityUid uid)
+    {
+        if (state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
+            state.List.Add(xform);
+
+        return true;
     }
 
     /// <summary>
@@ -277,44 +288,18 @@ public sealed partial class ExplosionSystem : EntitySystem
         EntityQuery<PhysicsComponent> physicsQuery,
         LookupFlags flags)
     {
-        var gridBox = new Box2(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
+        var gridBox = Box2.FromDimensions(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
-        List<(EntityUid, TransformComponent)> list = new();
+        var list = new List<TransformComponent>();
+        var state = (list, processed, invSpaceMatrix, lookup.Owner, xformQuery, gridBox);
 
-        void AddIntersecting(List<(EntityUid, TransformComponent)> listy)
+        // get entities:
+        lookup.Tree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+
+        foreach (var xform in state.Item1)
         {
-            // TODO directly query lookup.Tree
-            foreach (var uid in _entityLookup.GetEntitiesIntersecting(lookup, ref worldBox, flags))
-            {
-                if (processed.Contains(uid))
-                    return;
-
-                var xform = xformQuery.GetComponent(uid);
-
-                if (xform.ParentUid == lookup.Owner)
-                {
-                    // parented directly to the map, use local position
-                    if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
-                        listy.Add((uid, xform));
-
-                    return;
-                }
-
-                // "worldPos" should be the space/map local position.
-                var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
-
-                // finally check if it intersects our tile
-                if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
-                    listy.Add((uid, xform));
-            }
-        }
-
-        AddIntersecting(list);
-
-        foreach (var (entity, xform) in list)
-        {
-            processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, damageQuery, physicsQuery, xform);
+            processed.Add(xform.Owner);
+            ProcessEntity(xform.Owner, epicenter, damage, throwForce, id, damageQuery, physicsQuery, xform);
         }
 
         if (throwForce <= 0)
@@ -323,11 +308,37 @@ public sealed partial class ExplosionSystem : EntitySystem
         // Also, throw any entities that were spawned as shrapnel. Compared to entity spawning & destruction, this extra
         // lookup is relatively minor computational cost, and throwing is disabled for nukes anyways.
         list.Clear();
-        AddIntersecting(list);
-        foreach (var (entity, xform) in list)
+        lookup.Tree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+
+        foreach (var xform in list)
         {
-            ProcessEntity(entity, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
+            ProcessEntity(xform.Owner, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
         }
+    }
+
+    private bool SpaceQueryCallback(
+        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
+        in EntityUid uid)
+    {
+        if (state.Processed.Contains(uid))
+            return true;
+
+        var xform = state.XformQuery.GetComponent(uid);
+
+        if (xform.ParentUid == state.LookupOwner)
+        {
+            // parented directly to the map, use local position
+            if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(xform.LocalPosition)))
+                state.List.Add(xform);
+
+            return true;
+        }
+
+        // finally check if it intersects our tile
+        if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(_transformSystem.GetWorldPosition(xform, state.XformQuery))))
+            state.List.Add(xform);
+
+        return true;
     }
 
     /// <summary>
@@ -349,14 +360,16 @@ public sealed partial class ExplosionSystem : EntitySystem
             var ev = new GetExplosionResistanceEvent(id);
             RaiseLocalEvent(uid, ev, false);
 
-            if (ev.Resistance == 0)
+            ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
+
+            if (ev.DamageCoefficient == 1)
             {
                 // no damage-dict multiplication required.
                 _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
             }
-            else if (ev.Resistance < 1)
+            else
             {
-                _damageableSystem.TryChangeDamage(uid, damage * (1 - ev.Resistance), ignoreResistances: true, damageable: damageable);
+                _damageableSystem.TryChangeDamage(uid, damage * ev.DamageCoefficient, ignoreResistances: true, damageable: damageable);
             }
         }
 
@@ -482,7 +495,7 @@ sealed class Explosion
     public readonly MapCoordinates Epicenter;
 
     /// <summary>
-    ///     The matrix that defines the referance frame for the explosion in space.
+    ///     The matrix that defines the reference frame for the explosion in space.
     /// </summary>
     private readonly Matrix3 _spaceMatrix;
 
@@ -760,7 +773,7 @@ sealed class Explosion
 
         foreach (var (grid, list) in _tileUpdateDict)
         {
-            if (list.Count > 0)
+            if (list.Count > 0 && _entMan.EntityExists(grid.GridEntityId))
             {
                 grid.SetTiles(list);
             }

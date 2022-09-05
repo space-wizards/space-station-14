@@ -1,10 +1,13 @@
 ﻿- type: job
   id: MedicalIntern
   name: job-name-intern
+  playTimeTracker: JobMedicalIntern
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 1800
+      inverted: true # stop playing intern if you're good at med!
   startingGear: MedicalInternGear
-  departments:
-  - Civilian
-  - Medical
   icon: "MedicalIntern"
   supervisors: job-supervisors-medicine
   canBeAntag: false

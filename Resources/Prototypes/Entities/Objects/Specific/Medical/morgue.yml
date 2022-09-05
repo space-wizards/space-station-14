@@ -37,13 +37,14 @@
       mass: 5
       mask:
       - Impassable
-  - type: BodyBagEntityStorage
-    Capacity: 1
-    IsCollidableWhenOpen: true
+  - type: EntityStorage
+    capacity: 1
+    isCollidableWhenOpen: true
     closeSound:
       path: /Audio/Misc/zip.ogg
     openSound:
       path: /Audio/Misc/zip.ogg
+  - type: EntityStorageLayingDownOverride
   - type: Foldable
   - type: PaperLabel
     labelSlot:
@@ -58,9 +59,19 @@
       state_open: open_overlay
     - type: FoldableVisualizer
       key: bag
-    - type: BodyBagVisualizer
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.BodyBagVisualLayers.Label:
+          True: {visible: true}
+          False: {visible: false}
   - type: Pullable
   - type: AntiRottingContainer
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
 
 - type: entity
   id: BodyBag_Folded
@@ -86,3 +97,6 @@
     netsync: false
     sprite: Objects/Materials/materials.rsi
     state: ash
+  - type: Tag
+    tags:
+    - Trash

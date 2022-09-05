@@ -22,6 +22,8 @@
     solution: drink
   - type: RefillableSolution
     solution: drink
+  - type: DrainableSolution
+    solution: drink
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
@@ -2084,7 +2086,7 @@
   parent: DrinkGlassBase
   id: DrinkRamen
   name: cup ramen
-  description: Just add 10ml water, self heats! A taste that reminds you of your school years.
+  description: Just add 10ml boiling water. A taste that reminds you of your school years.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -2105,7 +2107,7 @@
   parent: DrinkRamen
   id: DrinkHellRamen
   name: hell ramen
-  description: Just add 10ml water, self heats! Super spicy flavor.
+  description: Just add 10ml boiling water. Super spicy flavor.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -2117,3 +2119,18 @@
         - ReagentId: CapsaicinOil
           Quantity: 5
 
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkKvassGlass
+  name: kvass glass
+  description: A cool refreshing drink with a taste of socialism.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 50
+          reagents:
+            - ReagentId: Kvass
+              Quantity: 50
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/kvass.rsi

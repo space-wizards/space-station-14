@@ -47,10 +47,10 @@ reagent-name-leporazine = leporazine
 reagent-desc-leporazine = This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
 
 reagent-name-barozine = barozine
-reagent-desc-barozine = A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
+reagent-desc-barozine = A potent drug that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
 
 reagent-name-phalanximine = phalanximine
-reagent-desc-phalanximine = Used in the treatment of cancer, is as effective as Anti-Toxin. Causes moderate radiation and hair loss.
+reagent-desc-phalanximine = Used in the treatment of cancer. Causes moderate radiation poisoning.
 
 reagent-name-romerol = romerol
 reagent-desc-romerol = A difficult to procure chemical used in the reversal of the zombification process. Tastes like death.
@@ -84,6 +84,9 @@ reagent-desc-omnizine = A soothing milky liquid with an iridescent gleam. A well
 
 reagent-name-ultravasculine = ultravasculine
 reagent-desc-ultravasculine = Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
+
+reagent-name-oculine = oculine
+reagent-desc-oculine = Heals eye damage.
 
 reagent-name-ethylredoxrazine = ethylredoxrazine
 reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.

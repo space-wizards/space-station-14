@@ -2,7 +2,6 @@ using System.Threading;
 using Content.Server.Power.Components;
 // using Content.Server.WireHacking;
 using Content.Shared.Doors.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 // using static Content.Shared.Wires.SharedWiresComponent;
@@ -36,6 +35,14 @@ namespace Content.Server.Doors.Components
         /// </summary>
         [DataField("powerWiresTimeout")]
         public float PowerWiresTimeout = 5.0f;
+
+        /// <summary>
+        /// Pry modifier for a powered airlock.
+        /// Most anything that can pry powered has a pry speed bonus,
+        /// so this default is closer to 6 effectively on e.g. jaws (9 seconds when applied to other default.)
+        /// </summary>
+        [DataField("poweredPryModifier")]
+        public readonly float PoweredPryModifier = 9f;
 
         /// <summary>
         /// Whether the maintenance panel should be visible even if the airlock is opened.

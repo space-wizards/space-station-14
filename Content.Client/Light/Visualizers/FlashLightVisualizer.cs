@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
@@ -56,6 +57,7 @@ namespace Content.Client.Light.Visualizers
         private Action<string>? _radiatingCallback;
         private Action<string>? _blinkingCallback;
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

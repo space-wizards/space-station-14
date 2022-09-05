@@ -80,13 +80,13 @@ public sealed partial class MappingSystem : EntitySystem
 
             var tileIcon = contentTileDef.IsSpace
                 ? _spaceIcon
-                : new SpriteSpecifier.Texture(new ResourcePath(tileDef.Path) / $"{tileDef.SpriteName}.png");
+                : new SpriteSpecifier.Texture(contentTileDef.Sprite!);
 
             ev.Action = new InstantAction()
             {
                 CheckCanInteract = false,
                 Event = actionEvent,
-                Name = tileDef.Name,
+                DisplayName = tileDef.Name,
                 Icon = tileIcon
             };
 
@@ -99,7 +99,7 @@ public sealed partial class MappingSystem : EntitySystem
             {
                 CheckCanInteract = false,
                 Event = actionEvent,
-                Name = "action-name-mapping-erase",
+                DisplayName = "action-name-mapping-erase",
                 Icon = _deleteIcon,
             };
 
@@ -113,7 +113,7 @@ public sealed partial class MappingSystem : EntitySystem
         {
             CheckCanInteract = false,
             Event = actionEvent,
-            Name = actionEvent.EntityType,
+            DisplayName = actionEvent.EntityType,
             Icon = new SpriteSpecifier.EntityPrototype(actionEvent.EntityType),
         };
     }

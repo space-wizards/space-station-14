@@ -44,7 +44,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
 
-            SubscribeLocalEvent<GhostOnMoveComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<GhostOnMoveComponent, MoveInputEvent>(OnRelayMoveInput);
 
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
@@ -64,10 +64,9 @@ namespace Content.Server.Ghost
             var booCounter = 0;
             foreach (var ent in ents)
             {
-                var ghostBoo = new GhostBooEvent();
-                RaiseLocalEvent(ent, ghostBoo, true);
+                var handled = DoGhostBooEvent(ent);
 
-                if (ghostBoo.Handled)
+                if (handled)
                     booCounter++;
 
                 if (booCounter >= component.BooMaxTargets)
@@ -77,7 +76,7 @@ namespace Content.Server.Ghost
             args.Handled = true;
         }
 
-        private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, RelayMoveInputEvent args)
+        private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
             // Let's not ghost if our mind is visiting...
             if (EntityManager.HasComponent<VisitingMindComponent>(uid)) return;
@@ -271,6 +270,14 @@ namespace Content.Server.Ghost
         public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
         {
             args.Cancel();
+        }
+
+        public bool DoGhostBooEvent(EntityUid target)
+        {
+            var ghostBoo = new GhostBooEvent();
+            RaiseLocalEvent(target, ghostBoo, true);
+
+            return ghostBoo.Handled;
         }
     }
 }

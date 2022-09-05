@@ -5,9 +5,10 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
+using Content.Server.Damage.Components;
+using Content.Server.Damage.Systems;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -29,6 +30,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly StaminaSystem _staminaSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -100,23 +102,35 @@ namespace Content.Server.Weapon.Melee
                     var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
                     var damageResult = _damageableSystem.TryChangeDamage(target, modifiedDamage);
 
-                    if (damageResult != null)
+                    if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
+                        FixedPoint2 bluntDamage;
+                        // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
+                        if (damageResult.DamageDict.TryGetValue("Blunt", out bluntDamage))
+                        {
+                            _staminaSystem.TakeStaminaDamage(target, (bluntDamage * comp.BluntStaminaDamageFactor).Float());
+                        }
+
                         if (args.Used == args.User)
                             _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
                         else
                             _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
-                    }
 
-                    PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, comp.HitSound);
+                        PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, comp.HitSound);
+                    }
+                    else
+                    {
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                    }
                 }
             }
             else
             {
-                SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), args.User);
-                return;
+                SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
             }
 
             comp.LastAttackTime = curTime;
@@ -176,18 +190,7 @@ namespace Content.Server.Weapon.Melee
             if (!hitEvent.Handled)
             {
                 var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
-
-                if (entities.Count != 0)
-                {
-                    var target = entities.First();
-                    TryComp<MeleeWeaponComponent>(target, out var meleeWeapon);
-
-                    PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, meleeWeapon?.HitSound);
-                }
-                else
-                {
-                    SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner), Transform(args.User).Coordinates);
-                }
+                var appliedDamage = new DamageSpecifier();
 
                 foreach (var entity in hitEntities)
                 {
@@ -195,8 +198,10 @@ namespace Content.Server.Weapon.Melee
 
                     var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
 
-                    if (damageResult != null)
+                    if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
+                        appliedDamage += damageResult;
+
                         if (args.Used == args.User)
                             _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using their hands and dealt {damageResult.Total:damage} damage");
@@ -205,12 +210,30 @@ namespace Content.Server.Weapon.Melee
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
                 }
+
+                if (entities.Count != 0)
+                {
+                    if (appliedDamage.Total > FixedPoint2.Zero)
+                    {
+                        var target = entities.First();
+                        PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, comp.HitSound);
+                    }
+                    else
+                    {
+                        SoundSystem.Play((hitEvent.HitSoundOverride != null)
+                            ? hitEvent.HitSoundOverride.GetSound()
+                            : comp.NoDamageSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                    }
+                }
+                else
+                {
+                    SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), owner);
+                }
             }
 
             comp.LastAttackTime = curTime;
             comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.ArcCooldownTime);
-
-            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
+            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
         }
 
         public static string? GetHighestDamageSound(DamageSpecifier modifiedDamage, IPrototypeManager protoManager)
@@ -249,12 +272,12 @@ namespace Content.Server.Weapon.Melee
                 }
                 else if (type != null && damageSoundComp.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
                 {
-                    SoundSystem.Play(damageSoundType!.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundType.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (type != null && damageSoundComp.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
                 {
-                    SoundSystem.Play(damageSoundGroup!.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundGroup.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
             }

@@ -15,6 +15,7 @@
     damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: SubFloorHide
+  - type: CollideOnAnchor
   - type: PipeAppearance
   - type: Anchorable
   - type: Rotatable
@@ -32,8 +33,7 @@
     netsync: false
     visible: false
   - type: Appearance
-    visuals:
-    - type: PipeColorVisualizer
+  - type: PipeColorVisuals
   - type: NodeContainer
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
@@ -66,7 +66,7 @@
   - type: Sprite
     layers:
       - state: pipeHalf
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: half
@@ -85,7 +85,7 @@
   - type: Sprite
     layers:
       - state: pipeStraight
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: straight
@@ -104,7 +104,7 @@
   - type: Sprite
     layers:
       - state: pipeBend
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: bend
@@ -123,7 +123,7 @@
   - type: Sprite
     layers:
       - state: pipeTJunction
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -144,7 +144,7 @@
   - type: Sprite
     layers:
       - state: pipeFourway
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: Construction
     graph: GasPipe
     node: fourway

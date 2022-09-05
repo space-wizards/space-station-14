@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.Body
     centerSlot: torso
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
+      0: Alive
   - type: ThermalRegulator
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -72,7 +72,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                grid = mapLoader.LoadBlueprint(mapId, testMapName).gridId;
+                grid = mapLoader.LoadGrid(mapId, testMapName).gridId;
             });
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
@@ -144,7 +144,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                grid = mapLoader.LoadBlueprint(mapId, testMapName).gridId;
+                grid = mapLoader.LoadGrid(mapId, testMapName).gridId;
             });
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");

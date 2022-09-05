@@ -1,11 +1,13 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: MobHumanBase
-  id: MobReptilianBase
+  parent: BaseMobOrganic
+  id: BaseMobReptilian
   abstract: true
   description: A miserable pile of scales.
   components:
+  - type: Hunger
+  - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
@@ -123,11 +125,22 @@
     template: HumanoidTemplate
     preset: ReptilianPreset
   - type: LizardAccent
+  - type: Speech
+    speechSounds: Lizard
   - type: DiseaseCarrier
     diseaseResist: 0.1
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Weapons/pierce.ogg
+    range: 0.8
+    arcwidth: 30
+    arc: fist
+    damage:
+      types:
+        Piercing: 5
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
