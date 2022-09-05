@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Items rotate when thrown again., type: Fix}
-  id: 1732
-  time: '2022-06-20T16:58:37.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: OOC chat is now disabled during rounds. Death to the Ick Ock., type: Tweak}
@@ -2914,3 +2909,8 @@ Entries:
       up., type: Fix}
   id: 2231
   time: '2022-09-04T17:21:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix some sprite animations not animating properly., type: Fix}
+  id: 2232
+  time: '2022-09-05T00:06:35.0000000+00:00'
