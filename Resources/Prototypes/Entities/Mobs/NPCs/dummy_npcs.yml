@@ -9,6 +9,7 @@
   - type: InputMover
   - type: MobMover
   - type: UtilityNPC
-    startingGear: PassengerGear
     behaviorSets:
     - PathingDummy
+  - type: Loadout
+    prototypes: [PassengerGear]

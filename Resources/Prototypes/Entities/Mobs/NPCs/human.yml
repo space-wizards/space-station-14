@@ -13,7 +13,7 @@
     - Thirst
     - Idle
   - type: Loadout
-    prototype: PassengerGear
+    prototypes: [PassengerGear]
   - type: AiFactionTag
     factions:
     - NanoTrasen
@@ -42,7 +42,7 @@
   components:
   - type: RandomHumanoidAppearance
   - type: Loadout
-    prototype: CBURNGear
+    prototypes: [CBURNGear]
   - type: GhostTakeoverAvailable
     makeSentient: false
     name: CBURN Agent
