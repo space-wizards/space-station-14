@@ -4,17 +4,15 @@ using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research;
-using Content.Server.Stack;
 using Content.Shared.Research.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Player;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Robust.Server.Player;
 
@@ -28,11 +26,12 @@ namespace Content.Server.Lathe
         [Dependency] private readonly SharedAudioSystem _audioSys = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly ResearchSystem _researchSys = default!;
+        [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<LatheComponent, MaterialEntityInsertedEvent>(OnMaterialEntityInserted);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
@@ -100,88 +99,14 @@ namespace Content.Server.Lathe
             }
         }
 
-        private void OnInteractUsing(EntityUid uid, MaterialStorageComponent component, InteractUsingEvent args)
+        private void OnMaterialEntityInserted(EntityUid uid, LatheComponent component, MaterialEntityInsertedEvent args)
         {
-            if (args.Handled)
-                return;
-
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage)
-                || !TryComp<MaterialComponent>(args.Used, out var material)
-                || storage.EntityWhitelist?.IsValid(args.Used) == false)
-                return;
-
-            args.Handled = true;
-
-            if (storage.MaterialWhiteList != null)
-            {
-                var matUsed = false;
-                foreach (var mat in material.Materials)
-                    if (storage.MaterialWhiteList.Contains(mat.ID))
-                        matUsed = true;
-
-                if (!matUsed)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("lathe-popup-material-not-used"), uid, Filter.Pvs(uid));
-                    return;
-                }
-            }
-
-            var multiplier = 1;
-
-            if (TryComp<StackComponent>(args.Used, out var stack))
-                multiplier = stack.Count;
-
-            var totalAmount = 0;
-
-            // Check if it can insert all materials.
-            foreach (var (mat, vol) in material._materials)
-            {
-                if (!storage.CanInsertMaterial(mat,
-                        vol * multiplier)) return;
-                totalAmount += vol * multiplier;
-            }
-
-            // Check if it can take ALL of the material's volume.
-            if (storage.StorageLimit > 0 && !storage.CanTakeAmount(totalAmount))
-                return;
-
-            var lastMat = string.Empty;
-            foreach (var (mat, vol) in material._materials)
-            {
-                storage.InsertMaterial(mat, vol * multiplier);
-                lastMat = mat;
-            }
-
-            EntityManager.QueueDeleteEntity(args.Used);
-
-            // Play a sound when inserting, if any
-            if (component.InsertingSound != null)
-                _audioSys.PlayPvs(component.InsertingSound, uid);
-
-            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
-                ("item", args.Used)), uid, Filter.Entities(args.User));
-
-            // TODO: You can probably split this part off of lathe component too
-            if (!TryComp<LatheComponent>(uid, out var lathe))
-                return;
-
+            var lastMat = args.Materials.Keys.Last();
             // We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
-
-            EntityManager.QueueDeleteEntity(args.Used);
-
-            EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = lathe.InsertionTime;
-
-            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
-                ("item", args.Used)), uid, Filter.Entities(args.User));
-
-            if (matProto != null)
-            {
-                UpdateInsertingAppearance(uid, true, matProto.Color);
-            }
-            UpdateInsertingAppearance(uid, true);
+            EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = component.InsertionTime;
+            UpdateInsertingAppearance(uid, true, matProto?.Color);
         }
-
 
         private void OnPowerChanged(EntityUid uid, LatheComponent component, PowerChangedEvent args)
         {
@@ -231,7 +156,7 @@ namespace Content.Server.Lathe
             {
                 // This should always return true, otherwise CanProduce fucked up.
                 // TODO just remove materials when first queuing, to avoid queuing more items than can actually be produced.
-                storage.RemoveMaterial(material, amount);
+                _materialStorage.CanChangeMaterialAmount(storage, material, -amount);
             }
 
             // Again, this should really just be a bui state instead of two separate messages.

@@ -13,6 +13,7 @@ namespace Content.Shared.Lathe
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
+            /*
             if (!_entMan.TryGetComponent(Owner, out MaterialStorageComponent? storage)
             ||  !_entMan.TryGetComponent(Owner, out SharedLatheDatabaseComponent? database)) return false;
 
@@ -22,7 +23,7 @@ namespace Content.Shared.Lathe
             {
                 if (storage[material] < (amount * quantity)) return false;
             }
-
+            */
             return true;
         }
 

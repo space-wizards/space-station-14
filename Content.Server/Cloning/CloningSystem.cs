@@ -20,6 +20,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction.Components;
+using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Shared.Materials;
 using Robust.Server.GameObjects;
@@ -52,6 +53,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly MaterialStorageSystem _material = default!;
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
         public const float EasyModeCloningCost = 0.7f;
@@ -80,7 +82,7 @@ namespace Content.Server.Cloning.Systems
             if (!TryComp<MaterialStorageComponent>(uid, out var storage))
                 return;
 
-            _serverStackSystem.SpawnMultiple(storage.GetMaterialAmount("Biomass"), 100, "Biomass", Transform(uid).Coordinates);
+            _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(storage, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
         }
 
         private void UpdateAppearance(CloningPodComponent clonePod)
@@ -139,7 +141,7 @@ namespace Content.Server.Cloning.Systems
                 return;
 
             if (TryComp<MaterialStorageComponent>(uid, out var storage))
-                args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", storage.GetMaterialAmount("Biomass"))));
+                args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(storage, "Biomass"))));
         }
 
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
@@ -186,7 +188,7 @@ namespace Content.Server.Cloning.Systems
                 cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
 
             // biomass checks
-            var biomassAmount = podStorage.GetMaterialAmount("Biomass");
+            var biomassAmount = _material.GetMaterialAmount(podStorage, "Biomass");
 
             if (biomassAmount < cloningCost)
             {
@@ -195,7 +197,7 @@ namespace Content.Server.Cloning.Systems
                 return false;
             }
 
-            podStorage.RemoveMaterial("Biomass", cloningCost);
+            _material.TryChangeMaterialAmount(podStorage, "Biomass", -cloningCost);
             clonePod.UsedBiomass = cloningCost;
             // end of biomass checks
 
