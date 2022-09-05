@@ -36,6 +36,7 @@ namespace Content.Server.Chemistry.TileReactions
                 var slippery = entityManager.EnsureComponent<SlipperyComponent>(puddle.Owner);
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;
                 slippery.ParalyzeTime = _paralyzeTime;
+                entityManager.Dirty(slippery);
 
                 var step = entityManager.EnsureComponent<StepTriggerComponent>(puddle.Owner);
                 entityManager.EntitySysManager.GetEntitySystem<StepTriggerSystem>().SetRequiredTriggerSpeed(puddle.Owner, _requiredSlipSpeed, step);

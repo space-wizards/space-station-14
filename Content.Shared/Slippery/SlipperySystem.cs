@@ -5,14 +5,17 @@ using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Slippery
 {
     [UsedImplicitly]
-    public abstract class SharedSlipperySystem : EntitySystem
+    public sealed class SlipperySystem : EntitySystem
     {
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -24,6 +27,22 @@ namespace Content.Shared.Slippery
             SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
             SubscribeLocalEvent<SlipperyComponent, StepTriggeredEvent>(HandleStepTrigger);
             SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
+            SubscribeLocalEvent<SlipperyComponent, ComponentGetState>(OnSlipperyGetState);
+            SubscribeLocalEvent<SlipperyComponent, ComponentHandleState>(OnSlipperyHandleState);
+        }
+
+        private void OnSlipperyHandleState(EntityUid uid, SlipperyComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not SlipperyComponentState state) return;
+
+            component.ParalyzeTime = state.ParalyzeTime;
+            component.LaunchForwardsMultiplier = state.LaunchForwardsMultiplier;
+            component.SlipSound = new SoundPathSpecifier(state.SlipSound);
+        }
+
+        private void OnSlipperyGetState(EntityUid uid, SlipperyComponent component, ref ComponentGetState args)
+        {
+            args.State = new SlipperyComponentState(component.ParalyzeTime, component.LaunchForwardsMultiplier, component.SlipSound.GetSound());
         }
 
         private void HandleStepTrigger(EntityUid uid, SlipperyComponent component, ref StepTriggeredEvent args)
@@ -69,14 +88,13 @@ namespace Content.Shared.Slippery
 
             // Preventing from playing the slip sound when you are already knocked down.
             if (playSound)
-                PlaySound(component);
+            {
+                _audio.PlayPredicted(component.SlipSound, other, other);
+            }
 
             _adminLogger.Add(LogType.Slip, LogImpact.Low,
                 $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
         }
-
-        // Until we get predicted slip sounds TM?
-        protected abstract void PlaySound(SlipperyComponent component);
     }
 
     /// <summary>

@@ -69,7 +69,7 @@ namespace Content.Shared.Movement.Systems
             InitializeRelay();
             _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
-            UpdatesBefore.Add(typeof(SharedTileFrictionController));
+            UpdatesBefore.Add(typeof(TileFrictionController));
         }
 
         private void SetRelativeMovement(bool value) => _relativeMovement = value;
