@@ -1,14 +1,14 @@
 - type: material
   id: Steel
   stack: Steel
-  name: steel
+  name: materials-steel
   icon: Objects/Materials/Sheets/metal.rsi/steel.png
   price: 0.0025
 
 - type: material
   id: Gold
   stack: Gold
-  name: gold
+  name: materials-gold
   icon: Objects/Materials/ingots.rsi/gold.png
   color: "#FFD700"
   price: 0.0625
@@ -16,7 +16,7 @@
 - type: material
   id: Silver
   stack: Silver
-  name: silver
+  name: materials-silver
   icon: Objects/Materials/ingots.rsi/silver.png
   color: "#C0C0C0"
   price: 0.025
@@ -24,7 +24,7 @@
 - type: material
   id: Plasteel
   stack: Plasteel
-  name: plasteel
+  name: materials-plasteel
   icon: Objects/Materials/Sheets/metal.rsi/plasteel.png
   color: "#696969" #Okay, this is epic
   price: 0.1025 # 1-1 mix of plasma and steel.

@@ -1,7 +1,7 @@
 - type: material
   id: Glass
   stack: Glass
-  name: glass
+  name: materials-glass
   icon: Objects/Materials/Sheets/glass.rsi/glass.png
   color: "#a8ccd7"
   price: 0.0025
@@ -9,7 +9,7 @@
 - type: material
   id: ReinforcedGlass
   stack: ReinforcedGlass
-  name: reinforced glass
+  name: materials-reinforced-glass
   icon: Objects/Materials/Sheets/glass.rsi/rglass.png
   color: "#549bb0"
   price: 0.00375 # 2-1 mix of glass and metal.
@@ -17,7 +17,7 @@
 - type: material
   id: PlasmaGlass
   stack: PlasmaGlass
-  name: plasma glass
+  name: materials-plasma-glass
   icon: Objects/Materials/Sheets/glass.rsi/pglass.png
   color: "#b35989"
   price: 0.1025 # 1-1 mix of plasma and glass.
@@ -25,7 +25,7 @@
 - type: material
   id: ReinforcedPlasmaGlass
   stack: ReinforcedPlasmaGlass
-  name: reinforced plasma glass
+  name: materials-reinforced-plasma-glass
   icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
   color: "#8c4069"
   price: 0.10375 # 2-2-1 mix of plasma, glass, and metal.
