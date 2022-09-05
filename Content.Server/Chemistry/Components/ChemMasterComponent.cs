@@ -1,8 +1,10 @@
+using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Labels.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
@@ -10,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -24,6 +27,7 @@ namespace Content.Server.Chemistry.Components
     public sealed class ChemMasterComponent : SharedChemMasterComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IPrototypeManager _prototypes = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         [ViewVariables]
@@ -267,7 +271,11 @@ namespace Content.Server.Chemistry.Components
                 return "";
 
             _bufferSolution.Contents.Sort();
-            return _bufferSolution.Contents[_bufferSolution.Contents.Count - 1].ReagentId;
+            var reagentId = _bufferSolution.Contents.Last().ReagentId;
+            if (!_prototypes.TryIndex<ReagentPrototype>(reagentId, out var reagent))
+                return "";
+
+            return reagent.LocalizedName;
         }
 
         private void TryCreatePackage(EntityUid user, UiAction action, string label, int pillAmount, int bottleAmount)
