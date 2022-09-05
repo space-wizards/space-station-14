@@ -58,7 +58,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
 
                 var linkTransform = _entityManager.GetComponent<TransformComponent>(device);
 
-                args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, color);
+                args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, _colors[tracker.Owner]);
             }
         }
     }
