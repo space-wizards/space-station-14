@@ -1,6 +1,7 @@
 using Content.Shared.DeviceNetwork;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Client.NetworkConfigurator;
@@ -8,7 +9,10 @@ namespace Content.Client.NetworkConfigurator;
 public sealed class NetworkConfiguratorLinkOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     private readonly DeviceListSystem _deviceListSystem;
+
+    private Dictionary<EntityUid, Color> _colors = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -19,6 +23,11 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
         _deviceListSystem = _entityManager.System<DeviceListSystem>();
     }
 
+    public void ClearEntity(EntityUid uid)
+    {
+        _colors.Remove(uid);
+    }
+
     protected override void Draw(in OverlayDrawArgs args)
     {
         foreach (var tracker in _entityManager.EntityQuery<NetworkConfiguratorActiveLinkOverlayComponent>())
@@ -27,6 +36,15 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
             {
                 _entityManager.RemoveComponentDeferred<NetworkConfiguratorActiveLinkOverlayComponent>(tracker.Owner);
                 continue;
+            }
+
+            if (!_colors.TryGetValue(tracker.Owner, out var color))
+            {
+                color = new Color(
+                    _random.Next(0, 255),
+                    _random.Next(0, 255),
+                    _random.Next(0, 255));
+                _colors.Add(tracker.Owner, color);
             }
 
             var sourceTransform = _entityManager.GetComponent<TransformComponent>(tracker.Owner);
@@ -40,7 +58,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
 
                 var linkTransform = _entityManager.GetComponent<TransformComponent>(device);
 
-                args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, Color.Blue);
+                args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, color);
             }
         }
     }
