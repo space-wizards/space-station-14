@@ -281,6 +281,9 @@ namespace Content.Server.Chemistry.Components
             var handSys = _sysMan.GetEntitySystem<SharedHandsSystem>();
             var solSys = _sysMan.GetEntitySystem<SolutionContainerSystem>();
 
+            pillAmount = Math.Clamp(pillAmount, 0, 10);
+            bottleAmount = Math.Clamp(bottleAmount, 0, 10);
+
             if (action == UiAction.CreateBottles)
             {
                 var individualVolume = BufferSolution.TotalVolume / FixedPoint2.New(bottleAmount);
