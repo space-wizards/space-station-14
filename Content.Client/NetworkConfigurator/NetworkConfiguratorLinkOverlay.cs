@@ -1,5 +1,6 @@
 using Content.Shared.DeviceNetwork;
 using Robust.Client.Graphics;
+using Robust.Shared.Enums;
 using Robust.Shared.Utility;
 
 namespace Content.Client.NetworkConfigurator;
@@ -7,6 +8,8 @@ namespace Content.Client.NetworkConfigurator;
 public sealed class NetworkConfiguratorLinkOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     public NetworkConfiguratorLinkOverlay()
     {
