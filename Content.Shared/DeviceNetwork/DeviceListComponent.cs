@@ -1,6 +1,9 @@
-﻿namespace Content.Shared.DeviceNetwork;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.DeviceNetwork;
 
 [RegisterComponent]
+[NetworkedComponent]
 [Access(typeof(SharedDeviceListSystem))]
 public sealed class DeviceListComponent : Component
 {

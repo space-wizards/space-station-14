@@ -20,7 +20,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
     {
         foreach (var tracker in _entityManager.EntityQuery<NetworkConfiguratorActiveLinkOverlayComponent>())
         {
-            if (!_entityManager.TryGetComponent(tracker.Owner, out DeviceListComponent? deviceList))
+            if (_entityManager.Deleted(tracker.Owner) || !_entityManager.TryGetComponent(tracker.Owner, out DeviceListComponent? deviceList))
             {
                 _entityManager.RemoveComponentDeferred<NetworkConfiguratorActiveLinkOverlayComponent>(tracker.Owner);
                 continue;
@@ -30,6 +30,11 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
 
             foreach (var device in deviceList.Devices)
             {
+                if (_entityManager.Deleted(device))
+                {
+                    continue;
+                }
+
                 var linkTransform = _entityManager.GetComponent<TransformComponent>(device);
 
                 args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, Color.Blue);

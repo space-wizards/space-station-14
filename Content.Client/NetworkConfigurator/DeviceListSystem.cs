@@ -12,14 +12,14 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
     /// Toggles the given device lists connection visualisation on and off.
     /// TODO: Implement an overlay that draws a line between the given entity and the entities in the device list
     /// </summary>
-    public void ToggleVisualization(EntityUid uid, bool toggle)
+    public void ToggleVisualization(EntityUid uid, bool toggle, NetworkConfiguratorComponent? component = null)
     {
-        if (!HasComp<DeviceListComponent>(uid))
+        if (!Resolve(uid, ref component) || component.ActiveDeviceList == null)
             return;
 
         if (!toggle)
         {
-            RemComp<NetworkConfiguratorActiveLinkOverlayComponent>(uid);
+            RemComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
             if (!EntityQuery<NetworkConfiguratorActiveLinkOverlayComponent>().Any())
             {
                 _overlay.RemoveOverlay<NetworkConfiguratorLinkOverlay>();
@@ -33,7 +33,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
             _overlay.AddOverlay(new NetworkConfiguratorLinkOverlay());
         }
 
-        EnsureComp<NetworkConfiguratorActiveLinkOverlayComponent>(uid);
+        EnsureComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
     }
 
     public void ClearAllOverlays()
