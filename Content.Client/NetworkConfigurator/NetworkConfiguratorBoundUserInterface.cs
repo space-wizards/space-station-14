@@ -6,13 +6,16 @@ namespace Content.Client.NetworkConfigurator;
 
 public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
+    private readonly IEntityManager _entityManager = default!;
     private NetworkConfiguratorListMenu? _listMenu;
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
 
-    private NetworkConfiguratorSystem? _netConfig;
+    private NetworkConfiguratorSystem _netConfig;
 
     public NetworkConfiguratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
+        IoCManager.InjectDependencies(this);
+        _netConfig = _entityManager.System<NetworkConfiguratorSystem>();
     }
 
     public void OnRemoveButtonPressed(string address)
@@ -23,8 +26,6 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-
-        _netConfig = IoCManager.Resolve<IEntityManager>().System<NetworkConfiguratorSystem>();
 
         switch (UiKey)
         {
