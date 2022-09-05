@@ -1,9 +1,4 @@
 Entries:
-- author: Solbusaur
-  changes:
-  - {message: New lobby art "Warden" drawn by Solbusaur, type: Add}
-  id: 1734
-  time: '2022-06-21T01:58:40.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Salvage workers should once again stay behind when the salvage grid
@@ -2914,3 +2909,10 @@ Entries:
   - {message: Camera eye rotations should now be correct., type: Fix}
   id: 2233
   time: '2022-09-05T06:19:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pets will no longer try to run away when buckled or pulled., type: Tweak}
+  - {message: Space carps will now try to follow their dragon., type: Tweak}
+  - {message: Turrets now exist., type: Add}
+  id: 2234
+  time: '2022-09-05T14:28:23.0000000+00:00'
