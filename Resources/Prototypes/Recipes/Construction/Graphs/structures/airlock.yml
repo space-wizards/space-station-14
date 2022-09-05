@@ -81,7 +81,7 @@
         doAfter: 2
 
   - node: airlock
-    entity: Airlock
+    entity: AirlockConstructed
     edges:
     - to: wired #TODO DOOR ELECTRONICS. If door electronics ever govern access permissions, this step should probably be further down? It makes it too easy to swap permissions around. See also windoor.
       conditions:
@@ -95,7 +95,7 @@
       steps:
       - tool: Prying
         doAfter: 5
-        
+
   - node: glassElectronics
     entity: AirlockAssembly
     edges:
@@ -113,12 +113,15 @@
       - !type:EntityAnchored {}
       completed:
       - !type:EmptyAllContainers {}
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 1
       steps:
       - tool: Prying
         doAfter: 5
 
   - node: glassAirlock
-    entity: AirlockGlass
+    entity: AirlockGlassConstructed
     edges:
     - to: glassElectronics
       conditions:

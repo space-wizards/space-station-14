@@ -23,7 +23,6 @@
       layer:
       - AirlockLayer
   - type: Door
-    board: DoorElectronics
     bumpOpen: false
     clickOpen: false
     closeTimeOne: 0.2
@@ -37,6 +36,11 @@
       path: /Audio/Machines/blastdoor.ogg
     closeSound:
       path: /Audio/Machines/blastdoor.ogg
+  - type: ContainerFill
+    construction: true
+    containers:
+      board:
+      - DoorElectronics
   - type: Weldable
     fuel: 3
     time: 3

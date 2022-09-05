@@ -89,8 +89,9 @@
 # Glass
 
 - type: entity
-  id: AirlockGlass
-  parent: Airlock
+  noSpawn: true
+  id: AirlockGlassConstructed
+  parent: AirlockConstructed
   name: glass airlock
   components:
   - type: MeleeSound
@@ -119,6 +120,11 @@
     node: glassAirlock
   - type: PaintableAirlock
     group: Windoor
+
+- type: entity
+  parent: [ AirlockGlassConstructed, Airlock ]
+  id: AirlockGlass
+  name: glass airlock
 
 - type: entity
   parent: AirlockGlass

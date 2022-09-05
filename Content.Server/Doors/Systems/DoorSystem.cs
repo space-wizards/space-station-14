@@ -36,7 +36,6 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
 
         // Mob prying doors
@@ -270,30 +269,6 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
-    }
-
-    private void OnMapInit(EntityUid uid, DoorComponent door, MapInitEvent args)
-    {
-        // Ensure that the construction component is aware of the board container.
-        if (TryComp(uid, out ConstructionComponent? construction))
-            _constructionSystem.AddContainer(uid, "board", construction);
-
-        // We don't do anything if this is null or empty.
-        if (string.IsNullOrEmpty(door.BoardPrototype))
-            return;
-
-        var container = _containerSystem.EnsureContainer<Container>(uid, "board", out var existed);
-
-        if (existed && container.ContainedEntities.Count != 0)
-        {
-            // We already contain a board. Note: We don't check if it's the right one!
-            return;
-        }
-
-        var board = EntityManager.SpawnEntity(door.BoardPrototype, Transform(uid).Coordinates);
-
-        if(!container.Insert(board))
-            Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
     }
 
     private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)

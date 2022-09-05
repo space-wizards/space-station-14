@@ -36,7 +36,6 @@
       layer:
       - WallLayer
   - type: Door
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 50
@@ -46,6 +45,11 @@
       path: /Audio/Machines/airlock_close.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: ContainerFill
+    # construction: true TODO add high sec airlock construction recipe
+    containers:
+      board:
+      - DoorElectronics
   - type: Weldable
     fuel: 10
     time: 10
