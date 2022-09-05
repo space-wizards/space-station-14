@@ -7,8 +7,14 @@ public abstract class SharedDeviceListSystem : EntitySystem
 {
     public override void Initialize()
     {
+        SubscribeLocalEvent<DeviceListComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DeviceListComponent, ComponentGetState>(GetDeviceListState);
         SubscribeLocalEvent<DeviceListComponent, ComponentHandleState>(HandleDeviceListState);
+    }
+
+    private void OnInit(EntityUid uid, DeviceListComponent component, ComponentInit args)
+    {
+        Dirty(uid);
     }
 
     /// <summary>
