@@ -32,7 +32,6 @@ public sealed class HTNSystem : EntitySystem
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill("npc.htn");
-        SubscribeLocalEvent<HTNComponent, ComponentStartup>(OnHTNStartup);
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
         SubscribeNetworkEvent<RequestHTNMessage>(OnHTNMessage);
 
@@ -121,15 +120,8 @@ public sealed class HTNSystem : EntitySystem
         }
     }
 
-    private void OnHTNStartup(EntityUid uid, HTNComponent component, ComponentStartup args)
-    {
-        EnsureComp<ActiveNPCComponent>(uid);
-        component.Blackboard.SetValue(NPCBlackboard.Owner, uid);
-    }
-
     private void OnHTNShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
     {
-        RemComp<ActiveNPCComponent>(uid);
         component.PlanningToken?.Cancel();
         component.PlanningJob = null;
     }
@@ -149,6 +141,7 @@ public sealed class HTNSystem : EntitySystem
 
         foreach (var (_, comp) in EntityQuery<ActiveNPCComponent, HTNComponent>())
         {
+            // If we're over our max count or it's not MapInit then ignore the NPC.
             if (count >= maxUpdates)
                 break;
 

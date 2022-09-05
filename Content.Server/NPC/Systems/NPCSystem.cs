@@ -16,9 +16,6 @@ namespace Content.Server.NPC.Systems
     public sealed partial class NPCSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
         [Dependency] private readonly HTNSystem _htn = default!;
 
         private ISawmill _sawmill = default!;
@@ -44,7 +41,7 @@ namespace Content.Server.NPC.Systems
             _sawmill = Logger.GetSawmill("npc");
             _sawmill.Level = LogLevel.Info;
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
-            SubscribeLocalEvent<NPCComponent, ComponentInit>(OnNPCInit);
+            SubscribeLocalEvent<NPCComponent, MapInitEvent>(OnNPCMapInit);
             SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);
             _configurationManager.OnValueChanged(CCVars.NPCEnabled, SetEnabled, true);
             _configurationManager.OnValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates, true);
@@ -60,8 +57,9 @@ namespace Content.Server.NPC.Systems
             _configurationManager.UnsubValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates);
         }
 
-        private void OnNPCInit(EntityUid uid, NPCComponent component, ComponentInit args)
+        private void OnNPCMapInit(EntityUid uid, NPCComponent component, MapInitEvent args)
         {
+            component.Blackboard.SetValue(NPCBlackboard.Owner, uid);
             WakeNPC(uid, component);
         }
 
