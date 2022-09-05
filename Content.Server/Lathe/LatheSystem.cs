@@ -32,7 +32,7 @@ namespace Content.Server.Lathe
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
@@ -85,35 +85,34 @@ namespace Content.Server.Lathe
             if (recipes == null)
                 return;
 
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage))
+                return;
+
             foreach (var recipe in recipes)
             {
                 foreach (var mat in recipe.RequiredMaterials)
                 {
-                    if (!component.MaterialWhiteList.Contains(mat.Key))
-                        component.MaterialWhiteList.Add(mat.Key);
+                    if (!storage.MaterialWhiteList.Contains(mat.Key))
+                        storage.MaterialWhiteList.Add(mat.Key);
                 }
             }
         }
 
-        /// <summary>
-        /// When someone tries to use an item on the lathe,
-        /// insert it if it's a stack and fits inside
-        /// </summary>
-        private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, MaterialStorageComponent component, InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
             if (!TryComp<MaterialStorageComponent>(uid, out var storage)
                 || !TryComp<MaterialComponent>(args.Used, out var material)
-                || component.LatheWhitelist?.IsValid(args.Used) == false)
+                || storage.EntityWhitelist?.IsValid(args.Used) == false)
                 return;
 
             args.Handled = true;
 
             var matUsed = false;
             foreach (var mat in material.Materials)
-                if (component.MaterialWhiteList.Contains(mat.ID))
+                if (storage.MaterialWhiteList.Contains(mat.ID))
                     matUsed = true;
 
             if (!matUsed)
@@ -148,16 +147,25 @@ namespace Content.Server.Lathe
                 lastMat = mat;
             }
 
+            EntityManager.QueueDeleteEntity(args.Used);
+
             // Play a sound when inserting, if any
             if (component.InsertingSound != null)
                 _audioSys.PlayPvs(component.InsertingSound, uid);
+
+            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
+                ("item", args.Used)), uid, Filter.Entities(args.User));
+
+            // TODO: You can probably split this part off of lathe component too
+            if (!TryComp<LatheComponent>(uid, out var lathe))
+                return;
 
             // We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
             EntityManager.QueueDeleteEntity(args.Used);
 
-            EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = component.InsertionTime;
+            EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = lathe.InsertionTime;
 
             _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
                 ("item", args.Used)), uid, Filter.Entities(args.User));

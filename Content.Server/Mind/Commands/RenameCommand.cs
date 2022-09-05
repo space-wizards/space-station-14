@@ -58,15 +58,6 @@ public sealed class RenameCommand : IConsoleCommand
         {
             if (idCardSystem.TryFindIdCard(entityUid, out var idCard))
                 idCardSystem.TryChangeFullName(idCard.Owner, name, idCard);
-            else
-            {
-                foreach (var idCardComponent in entMan.EntityQuery<IdCardComponent>())
-                {
-                    if (idCardComponent.OriginalEntityName != oldName)
-                        continue;
-                    idCardSystem.TryChangeFullName(idCardComponent.Owner, name, idCardComponent);
-                }
-            }
         }
 
         // PDAs

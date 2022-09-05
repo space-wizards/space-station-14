@@ -32,3 +32,4 @@
     drawdepth: WallTops
     sprite: Structures/Wallmounts/signs.rsi
     netsync: false
+    snapCardinals: true

@@ -29,8 +29,8 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.25
-      mass: 120
+        radius: 0.3
+      mass: 65
       mask:
       - MobMask
       layer:
@@ -125,7 +125,7 @@
     scale: 1.2, 1.2
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: regalrat  
+      state: regalrat
   - type: MobState
     thresholds:
       0: Alive
@@ -138,6 +138,16 @@
     damage:
       types:
         Blunt: 50 #oof ouch owie my bones
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 150
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7

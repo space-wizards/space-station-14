@@ -11,13 +11,25 @@ namespace Content.Server.Salvage
     public sealed class SalvageMagnetComponent : Component
     {
         /// <summary>
-        ///     Offset relative to magnet that salvage should spawn.
-        ///     Keep in sync with marker sprite (if any???)
+        ///     Offset relative to magnet used as centre of the placement circle.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offset")]
         public Vector2 Offset = Vector2.Zero; // TODO: Maybe specify a direction, and find the nearest edge of the magnets grid the salvage can fit at
 
+        /// <summary>
+        ///     Minimum distance from the offset position that will be used as a salvage's spawnpoint.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("offsetRadiusMin")]
+        public float OffsetRadiusMin = 0f;
+
+        /// <summary>
+        ///     Maximum distance from the offset position that will be used as a salvage's spawnpoint.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("offsetRadiusMax")]
+        public float OffsetRadiusMax = 0f;
 
         /// <summary>
         ///     The entity attached to the magnet

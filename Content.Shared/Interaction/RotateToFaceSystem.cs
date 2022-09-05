@@ -94,15 +94,16 @@ namespace Content.Shared.Interaction
                     // We're buckled to another object. Is that object rotatable?
                     if (TryComp<RotatableComponent>(suid.Value!, out var rotatable) && rotatable.RotateWhileAnchored)
                     {
-                        // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
-                        // (Since the user being buckled to it holds it down with their weight.)
-                        // This is logically equivalent to RotateWhileAnchored.
-                        // Barstools and office chairs have independent wheels, while regular chairs don't.
-                        if (!Resolve(rotatable.Owner, ref xform))
-                            return false;
-
-                        xform.WorldRotation = diffAngle;
-                        return true;
+                        // We're buckled to another object. Is that object rotatable?
+                        if (EntityManager.TryGetComponent<RotatableComponent>(suid.Value, out var rotatable) && rotatable.RotateWhileAnchored)
+                        {
+                            // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
+                            // (Since the user being buckled to it holds it down with their weight.)
+                            // This is logically equivalent to RotateWhileAnchored.
+                            // Barstools and office chairs have independent wheels, while regular chairs don't.
+                            Transform(rotatable.Owner).WorldRotation = diffAngle;
+                            return true;
+                        }
                     }
                 }
             }
