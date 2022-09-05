@@ -89,7 +89,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     public EntityUid? Provider;
 
     /// <summary>
-    ///     Entity to use for the action icon. Defaults to using <see cref="Provider"/>. 
+    ///     Entity to use for the action icon. Defaults to using <see cref="Provider"/>.
     /// </summary>
     public EntityUid? EntityIcon
     {

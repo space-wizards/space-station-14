@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Gameplay
 {
-    public sealed class GameplayState : GamePlayStateBase, IMainViewportState
+    public sealed class GameplayState : GameplayStateBase, IMainViewportState
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;

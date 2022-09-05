@@ -387,7 +387,7 @@ public sealed class ChatUIController : UIController
         // can always hear server (nobody can actually send server messages).
         FilterableChannels |= ChatChannel.Server;
 
-        if (_state.CurrentState is GamePlayStateBase)
+        if (_state.CurrentState is GameplayStateBase)
         {
             // can always hear local / radio / emote when in the game
             FilterableChannels |= ChatChannel.Local;

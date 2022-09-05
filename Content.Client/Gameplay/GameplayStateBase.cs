@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Clickable;
 using Robust.Client.GameObjects;
@@ -17,7 +19,7 @@ namespace Content.Client.Gameplay
     // Ok actually it's fine.
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
     [Virtual]
-    public class GamePlayStateBase : State, IEntityEventSubscriber
+    public class GameplayStateBase : State, IEntityEventSubscriber
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -29,21 +31,15 @@ namespace Content.Client.Gameplay
 
         private ClickableEntityComparer _comparer = default!;
 
-        //-- possibly move this to the base state, this is a useful thing to be able to check.
-        private bool _initialized;
-        public bool Initialized => _initialized;
-
         protected override void Startup()
         {
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
             _comparer = new ClickableEntityComparer(_entityManager);
-            _initialized = true;
         }
 
         protected override void Shutdown()
         {
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
-            _initialized = false;
         }
 
         public EntityUid? GetEntityUnderPosition(MapCoordinates coordinates)

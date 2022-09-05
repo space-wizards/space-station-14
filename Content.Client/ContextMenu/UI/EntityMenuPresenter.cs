@@ -157,7 +157,7 @@ namespace Content.Client.ContextMenu.UI
             if (args.State != BoundKeyState.Down)
                 return false;
 
-            if (_stateManager.CurrentState is not GamePlayStateBase)
+            if (_stateManager.CurrentState is not GameplayStateBase)
                 return false;
 
             var coords = args.Coordinates.ToMap(_entityManager);
