@@ -1,4 +1,5 @@
-﻿using Content.Server.DeviceNetwork.Components;
+﻿using System.Linq;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -44,6 +45,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorRemoveDeviceMessage>(OnRemoveDevice);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorClearDevicesMessage>(OnClearDevice);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorButtonPressedMessage>(OnConfigButtonPressed);
+        SubscribeLocalEvent<NetworkConfiguratorComponent, ManualDeviceListSyncMessage>(ManualDeviceListSync);
 
         SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
     }
@@ -304,6 +306,20 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
                 // _deviceListSystem.ToggleVisualization(component.ActiveDeviceList.Value);
                 break;
         }
+    }
+
+    // hacky solution related to mapping
+    private void ManualDeviceListSync(EntityUid uid, NetworkConfiguratorComponent comp,
+        ManualDeviceListSyncMessage args)
+    {
+        if (comp.ActiveDeviceList == null)
+        {
+            return;
+        }
+
+        var devices = _deviceListSystem.GetDeviceList(comp.ActiveDeviceList.Value).Values.ToHashSet();
+
+        _uiSystem.TrySendUiMessage(uid, NetworkConfiguratorUiKey.Configure, new ManualDeviceListSyncMessage(comp.ActiveDeviceList.Value, devices));
     }
 
     #endregion

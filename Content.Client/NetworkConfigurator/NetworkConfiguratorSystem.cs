@@ -84,6 +84,17 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, _prototypeManager.Index<InstantActionPrototype>(Action));
         }
     }
+
+    // hacky solution related to mapping
+    public void SetActiveDeviceList(EntityUid tool, EntityUid list, NetworkConfiguratorComponent? component = null)
+    {
+        if (!Resolve(tool, ref component))
+        {
+            return;
+        }
+
+        component.ActiveDeviceList = list;
+    }
 }
 
 public sealed class ClearAllNetworkLinkOverlays : IConsoleCommand

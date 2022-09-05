@@ -1,6 +1,7 @@
 ﻿using Content.Shared.DeviceNetwork;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.NetworkConfigurator;
 
@@ -11,11 +12,13 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
 
     private NetworkConfiguratorSystem _netConfig;
+    private DeviceListSystem _deviceList;
 
     public NetworkConfiguratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
         _netConfig = _entityManager.System<NetworkConfiguratorSystem>();
+        _deviceList = _entityManager.System<DeviceListSystem>();
     }
 
     public void OnRemoveButtonPressed(string address)
@@ -43,10 +46,28 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 //_configurationMenu.Edit.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Edit);
                 _configurationMenu.Clear.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Clear);
                 _configurationMenu.Copy.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Copy);
-                _configurationMenu.Show.OnPressed += args => _netConfig.ToggleVisualization(Owner.Owner, args.Button.Pressed);
+                _configurationMenu.Show.OnPressed += OnShowPressed;
                 _configurationMenu.OpenCentered();
                 break;
         }
+    }
+
+    private void OnShowPressed(BaseButton.ButtonEventArgs args)
+    {
+        if (!args.Button.Pressed)
+        {
+            _netConfig.ToggleVisualization(Owner.Owner, false);
+            return;
+        }
+
+        if (!_entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityInitialized)
+        {
+            // We're in mapping mode. Do something hacky.
+            SendMessage(new ManualDeviceListSyncMessage(null, null));
+            return;
+        }
+
+        _netConfig.ToggleVisualization(Owner.Owner, true);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -55,6 +76,20 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 
         var castState = (NetworkConfiguratorUserInterfaceState) state;
         _listMenu?.UpdateState(castState);
+    }
+
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+
+        if (message is not ManualDeviceListSyncMessage cast || cast.Device == null || cast.Devices == null)
+        {
+            return;
+        }
+
+        _netConfig.SetActiveDeviceList(Owner.Owner, cast.Device.Value);
+        _deviceList.UpdateDeviceList(cast.Device.Value, cast.Devices);
+        _netConfig.ToggleVisualization(Owner.Owner, true);
     }
 
     protected override void Dispose(bool disposing)

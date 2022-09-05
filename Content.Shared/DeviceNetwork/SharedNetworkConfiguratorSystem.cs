@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
 
@@ -12,6 +13,8 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
         SubscribeLocalEvent<NetworkConfiguratorComponent, ComponentGetState>(GetNetworkConfiguratorState);
         SubscribeLocalEvent<NetworkConfiguratorComponent, ComponentHandleState>(HandleNetworkConfiguratorState);
     }
+
+
 
     private void GetNetworkConfiguratorState(EntityUid uid, NetworkConfiguratorComponent comp,
         ref ComponentGetState args)
@@ -29,6 +32,19 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
 
         comp.ActiveDeviceList = state.ActiveDeviceList;
     }
+}
+
+[Serializable, NetSerializable]
+public sealed class ManualDeviceListSyncMessage : BoundUserInterfaceMessage
+{
+    public ManualDeviceListSyncMessage(EntityUid? device, HashSet<EntityUid>? devices)
+    {
+        Device = device;
+        Devices = devices;
+    }
+
+    public EntityUid? Device { get; }
+    public HashSet<EntityUid>? Devices { get; }
 }
 
 public sealed class ClearAllOverlaysEvent : InstantActionEvent
