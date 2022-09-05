@@ -1,4 +1,3 @@
-using System.Linq;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceNetwork;
@@ -32,6 +31,15 @@ public abstract class SharedDeviceListSystem : EntitySystem
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
 
         Dirty(deviceList);
+    }
+
+    public IEnumerable<EntityUid> GetAllDevices(EntityUid uid, DeviceListComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+        {
+            return new EntityUid[] { };
+        }
+        return component.Devices;
     }
 
     private void GetDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentGetState args)

@@ -318,7 +318,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
         }
 
-        var devices = _deviceListSystem.GetDeviceList(comp.ActiveDeviceList.Value).Values.ToHashSet();
+        var devices = _deviceListSystem.GetAllDevices(comp.ActiveDeviceList.Value).ToHashSet();
 
         _uiSystem.TrySendUiMessage(uid, NetworkConfiguratorUiKey.Configure, new ManualDeviceListSyncMessage(comp.ActiveDeviceList.Value, devices), player);
     }

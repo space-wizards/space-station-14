@@ -6,12 +6,4 @@ namespace Content.Client.NetworkConfigurator;
 
 public sealed class DeviceListSystem : SharedDeviceListSystem
 {
-    public IEnumerable<EntityUid> GetAllDevices(EntityUid uid, DeviceListComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-        {
-            return new EntityUid[] { };
-        }
-        return component.Devices;
-    }
 }
