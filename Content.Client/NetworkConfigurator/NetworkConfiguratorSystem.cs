@@ -1,16 +1,37 @@
 using System.Linq;
+using Content.Client.Actions;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.DeviceNetwork;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.NetworkConfigurator;
 
 public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ActionsSystem _actions = default!;
+
+    private const string Action = "ClearNetworkLinkOverlays";
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ClearAllOverlaysEvent>(_ => ClearAllOverlays());
+    }
 
     public void ToggleVisualization(EntityUid uid, bool toggle, NetworkConfiguratorComponent? component = null)
     {
-        if (!Resolve(uid, ref component) || component.ActiveDeviceList == null)
+        if (_playerManager.LocalPlayer == null
+            || _playerManager.LocalPlayer.ControlledEntity == null
+            || !Resolve(uid, ref component)
+            || component.ActiveDeviceList == null)
             return;
 
         if (!toggle)
@@ -20,7 +41,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             if (!EntityQuery<NetworkConfiguratorActiveLinkOverlayComponent>().Any())
             {
                 _overlay.RemoveOverlay<NetworkConfiguratorLinkOverlay>();
+                _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, _prototypeManager.Index<InstantActionPrototype>(Action));
             }
+
 
             return;
         }
@@ -28,6 +51,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!_overlay.HasOverlay<NetworkConfiguratorLinkOverlay>())
         {
             _overlay.AddOverlay(new NetworkConfiguratorLinkOverlay());
+            _actions.AddAction(_playerManager.LocalPlayer.ControlledEntity.Value, _prototypeManager.Index<InstantActionPrototype>(Action), null);
         }
 
         EnsureComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);

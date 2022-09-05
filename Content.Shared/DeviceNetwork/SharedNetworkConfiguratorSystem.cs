@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceNetwork;
@@ -28,4 +29,8 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
 
         comp.ActiveDeviceList = state.ActiveDeviceList;
     }
+}
+
+public sealed class ClearAllOverlaysEvent : InstantActionEvent
+{
 }
