@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Labels.Components;
 using Content.Server.Power.Components;
@@ -271,7 +270,7 @@ namespace Content.Server.Chemistry.Components
                 return "";
 
             _bufferSolution.Contents.Sort();
-            var reagentId = _bufferSolution.Contents.Last().ReagentId;
+            var reagentId = _bufferSolution.Contents[_bufferSolution.Contents.Count - 1].ReagentId;
             if (!_prototypes.TryIndex<ReagentPrototype>(reagentId, out var reagent))
                 return "";
 
