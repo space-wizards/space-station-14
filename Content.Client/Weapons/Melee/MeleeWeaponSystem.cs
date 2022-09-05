@@ -98,88 +98,68 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        if (!combatMode.IsInCombatMode ||
-            !Blocker.CanAttack(entityNull.Value))
+        var currentTime = Timing.CurTime;
+
+        if (weapon.NextAttack > currentTime)
+            return;
+
+        if (!CombatMode.IsInCombatMode(entity))
         {
-            if (weapon.WindupAccumulator > 0f)
+            return;
+        }
+
+        var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
+        var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.AltUse);
+
+        // Heavy attack.
+        if (altDown == BoundKeyState.Down)
+        {
+            // We did the left-click to end the attack but haven't pulled the key up.
+            if (weapon.Attacking)
             {
-                EntityManager.RaisePredictiveEvent(new StopAttackEvent
-                {
-                    Weapon = weapon.Owner,
-                });
+                return;
+            }
+
+            // Start a windup
+            if (weapon.WindUpStart == null)
+            {
+                EntityManager.RaisePredictiveEvent(new StartHeavyAttackEvent(weapon.Owner));
+                weapon.WindUpStart = currentTime;
+            }
+
+            // Try to do a heavy attack.
+            if (useDown == BoundKeyState.Down)
+            {
+                EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weapon.Owner));
+                weapon.Attacking = true;
             }
 
             return;
         }
-
-        if (_inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down)
+        else if (weapon.WindUpStart != null)
         {
-            if (weapon.WindupAccumulator > 0f)
-            {
-                // Active + windupaccumulator handled in the event handlers.
-
-                if (weapon.WindupAccumulator < AttackBuffer)
-                {
-                    EntityManager.RaisePredictiveEvent(new StopAttackEvent()
-                    {
-                        Weapon = weapon.Owner,
-                    });
-                }
-                else
-                {
-                    var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-                    EntityCoordinates coordinates;
-
-                    // Bro why would I want a ternary here
-                    // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-                    if (MapManager.TryFindGridAt(mousePos, out var grid))
-                    {
-                        coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
-                    }
-                    else
-                    {
-                        coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
-                    }
-
-                    if (combatMode.PrecisionMode)
-                    {
-                        EntityUid? target = null;
-
-                        // TODO: UI Refactor update I assume
-                        if (_stateManager.CurrentState is GameScreen screen)
-                        {
-                            target = screen.GetEntityUnderPosition(mousePos);
-                        }
-
-                        EntityManager.RaisePredictiveEvent(new ReleasePreciseAttackEvent()
-                        {
-                            Weapon = weapon.Owner,
-                            Target = target ?? EntityUid.Invalid,
-                            Coordinates = coordinates,
-                        });
-                    }
-                    else
-                    {
-                        EntityManager.RaisePredictiveEvent(new ReleaseWideAttackEvent()
-                        {
-                            Weapon = weapon.Owner,
-                            Coordinates = coordinates,
-                        });
-                    }
-                }
-            }
-
-            return;
+            EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
         }
 
-        // Started a windup
-        if (!weapon.Active)
+        // Light attack
+        if (useDown == BoundKeyState.Down)
         {
-            EntityManager.RaisePredictiveEvent(new StartAttackEvent()
+            if (weapon.Attacking || weapon.NextAttack > Timing.CurTime)
+            {
+                return;
+            }
+
+            // TODO: Target
+            EntityManager.RaisePredictiveEvent(new LightAttackEvent(weapon.Owner)
             {
                 Weapon = weapon.Owner,
             });
+
+            weapon.Attacking = true;
+            return;
         }
+
+        weapon.Attacking = false;
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

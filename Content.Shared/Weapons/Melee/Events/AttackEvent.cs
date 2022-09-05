@@ -2,6 +2,11 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Weapons.Melee.Events
 {
+    public abstract class AttackEvent : EntityEventArgs
+    {
+
+    }
+
     /// <summary>
     ///     Raised directed on the used entity when a target entity is click attacked by a user.
     /// </summary>

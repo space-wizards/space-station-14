@@ -3,6 +3,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -41,104 +42,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
 
-        SubscribeAllEvent<StartAttackEvent>(OnAttackStart);
-        SubscribeAllEvent<ReleaseWideAttackEvent>(OnReleaseWide);
-        SubscribeAllEvent<ReleasePreciseAttackEvent>(OnReleasePrecise);
-        SubscribeAllEvent<StopAttackEvent>(StopAttack);
+        SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
+        SubscribeAllEvent<StartHeavyAttackEvent>(OnStartHeavyAttack);
+        SubscribeAllEvent<StopHeavyAttackEvent>(OnStopHeavyAttack);
+        SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // Anything that's active is assumed to be winding up so.
-        foreach (var comp in EntityQuery<MeleeWeaponComponent>())
-        {
-            if (!comp.Active)
-            {
-                continue;
-            }
-
-            // TODO: Server needs to cancel CanAttacks + IsInCombatMode
-
-            if (comp.Accumulating)
-            {
-                comp.WindupAccumulator += frameTime;
-
-                if (comp.WindupAccumulator > comp.WindupTime)
-                {
-                    comp.Accumulating = false;
-                    var diff = comp.WindupAccumulator - comp.WindupTime;
-                    comp.WindupAccumulator -= diff;
-                }
-            }
-            else
-            {
-                comp.WindupAccumulator -= frameTime;
-
-                if (comp.WindupAccumulator <= 0f)
-                {
-                    comp.Active = false;
-                    comp.Accumulating = true;
-                    comp.WindupAccumulator = 0f;
-                }
-            }
-
-            Dirty(comp);
-        }
-    }
-
-    protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
-
-    /// <summary>
-    /// Raised when an attack hold is started.
-    /// </summary>
-    [Serializable, NetSerializable]
-    protected sealed class StartAttackEvent : EntityEventArgs
-    {
-        public EntityUid Weapon;
-    }
-
-    // TODO: Did I always have to mark abstracts as serializable???
-    /// <summary>
-    /// Raised when an attack hold is ended after windup.
-    /// </summary>
-    [Serializable, NetSerializable]
-    protected abstract class ReleaseAttackEvent : EntityEventArgs
-    {
-        public EntityUid Weapon;
-        public EntityCoordinates Coordinates;
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class ReleaseWideAttackEvent : ReleaseAttackEvent
-    {
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class ReleasePreciseAttackEvent : ReleaseAttackEvent
-    {
-        public EntityUid Target;
-    }
-
-    /// <summary>
-    /// Raised when an attack is stopped and no attack should occur.
-    /// </summary>
-    [Serializable, NetSerializable]
-    protected sealed class StopAttackEvent : EntityEventArgs
-    {
-        public EntityUid Weapon;
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class MeleeWeaponComponentState : ComponentState
-    {
-        public bool Active;
-        public bool Accumulating;
-        public float WindupAccumulator;
-    }
-
-    protected virtual void OnAttackStart(StartAttackEvent msg, EntitySessionEventArgs args)
+    private void OnStartHeavyAttack(StartHeavyAttackEvent msg, EntitySessionEventArgs args)
     {
         var user = args.SenderSession.AttachedEntity;
 
@@ -150,64 +60,43 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (weapon?.Owner != msg.Weapon)
             return;
 
-        if (weapon.Active)
-            return;
-
-        weapon.Active = true;
-        weapon.Accumulating = true;
+        DebugTools.Assert(weapon.WindUpStart == null);
+        weapon.WindUpStart = Timing.CurTime;
         Dirty(weapon);
-        // Sawmill.Debug($"Started weapon attack");
     }
 
-    private bool TryRelease(ReleaseAttackEvent ev, EntitySessionEventArgs args, [NotNullWhen(true)] out MeleeWeaponComponent? component)
+    protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
+
+    [Serializable, NetSerializable]
+    protected sealed class MeleeWeaponComponentState : ComponentState
     {
-        component = null;
-
-        if (args.SenderSession.AttachedEntity == null ||
-            !TryComp(ev.Weapon, out component))
-        {
-            return false;
-        }
-
-        var userWeapon = GetWeapon(args.SenderSession.AttachedEntity.Value);
-
-        if (userWeapon != component)
-            return false;
-
-        if (!component.Active)
-            return false;
-
-        if (component.WindupAccumulator < AttackBuffer)
-            return false;
-
-        Sawmill.Debug($"Released at {component.WindupAccumulator}");
-
-        return true;
+        public bool Active;
+        public bool Accumulating;
+        public float WindupAccumulator;
     }
 
-    protected virtual void OnReleasePrecise(ReleasePreciseAttackEvent msg, EntitySessionEventArgs args)
+    private void OnLightAttack(LightAttackEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryRelease(msg, args, out var component))
+        var user = args.SenderSession.AttachedEntity;
+
+        if (user == null)
             return;
 
-        // Sawmill.Debug($"Released precise weapon attack on {ToPrettyString(msg.Target)}");
-        AttemptAttack(args.SenderSession.AttachedEntity!.Value, component, msg);
-    }
+        var weapon = GetWeapon(user.Value);
 
-    protected virtual void OnReleaseWide(ReleaseWideAttackEvent msg, EntitySessionEventArgs args)
-    {
-        if (!TryRelease(msg, args, out var component))
+        if (weapon?.Owner != msg.Weapon)
             return;
 
-        // Sawmill.Debug("Released wide weapon attack");
-        AttemptAttack(args.SenderSession.AttachedEntity!.Value, component, msg);
+        if (weapon.NextAttack < Timing.CurTime)
+            return;
+
+        AttemptAttack(args.SenderSession.AttachedEntity!.Value, weapon, msg);
     }
 
-    protected virtual void StopAttack(StopAttackEvent ev, EntitySessionEventArgs args)
+    private void OnStopHeavyAttack(StopHeavyAttackEvent msg, EntitySessionEventArgs args)
     {
-        // TODO: This is janky as fuck. Might need the status effect prediction PR.
         if (args.SenderSession.AttachedEntity == null ||
-            !TryComp<MeleeWeaponComponent>(ev.Weapon, out var weapon))
+            !TryComp<MeleeWeaponComponent>(msg.Weapon, out var weapon))
         {
             return;
         }
@@ -217,16 +106,29 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (userWeapon != weapon)
             return;
 
-        if (weapon.WindupAccumulator <= 0f)
+        if (weapon.WindUpStart.Equals(null))
+        {
             return;
+        }
 
-        if (!userWeapon.Active)
-            return;
-
-        // Sawmill.Debug("Stopped weapon attack");
-        userWeapon.Active = false;
-        userWeapon.WindupAccumulator = 0f;
+        weapon.WindUpStart = null;
         Dirty(weapon);
+    }
+
+    private void OnHeavyAttack(HeavyAttackEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity == null ||
+            !TryComp<MeleeWeaponComponent>(msg.Weapon, out var weapon))
+        {
+            return;
+        }
+
+        var userWeapon = GetWeapon(args.SenderSession.AttachedEntity.Value);
+
+        if (userWeapon != weapon)
+            return;
+
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, msg);
     }
 
     private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
@@ -235,7 +137,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             Active = component.Active,
             Accumulating = component.Accumulating,
-            WindupAccumulator = component.WindupAccumulator,
+            WindupAccumulator = component.NextAttack,
         };
     }
 
@@ -246,7 +148,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         component.Active = state.Active;
         component.Accumulating = state.Accumulating;
-        component.WindupAccumulator = state.WindupAccumulator;
+        component.NextAttack = state.WindupAccumulator;
     }
 
     public MeleeWeaponComponent? GetWeapon(EntityUid entity)
@@ -273,31 +175,33 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
-    private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, ReleaseAttackEvent attack)
+    private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, AttackEvent attack)
     {
         if (!Blocker.CanAttack(user))
             return;
 
         // Windup time checked elsewhere.
 
-        if (!TryComp<SharedCombatModeComponent>(user, out var combatMode))
+        if (!CombatMode.IsInCombatMode(user))
             return;
 
-        // Try to do a disarm
-        if (combatMode.Disarm == true)
+        var curTime = Timing.CurTime;
+
+        if (weapon.NextAttack < curTime)
+            weapon.NextAttack = curTime;
+
+        // TODO: Disarms
+
+        var attacks = 0;
+        var fireRate = TimeSpan.FromSeconds(1f / weapon.AttackRate);
+
+        while (weapon.NextAttack <= curTime)
         {
-            if (TryComp<SharedHandsComponent>(user, out var hands)
-                && hands.ActiveHand is { IsEmpty: false })
-            {
-                if (Timing.IsFirstTimePredicted)
-                    PopupSystem.PopupEntity(Loc.GetString("disarm-action-free-hand"), user, Filter.Local());
-
-                return;
-            }
-
-
-            return;
+            weapon.NextAttack += fireRate;
+            attacks++;
         }
+
+        DebugTools.Assert(attacks > 0);
 
         // Attack confirmed
         // Play a sound to give instant feedback; same with playing the animations
@@ -305,10 +209,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         switch (attack)
         {
-            case ReleasePreciseAttackEvent precise:
+            case LightAttackEvent precise:
                 DoPreciseAttack(user, precise, weapon);
                 break;
-            case ReleaseWideAttackEvent wide:
+            case HeavyAttackEvent wide:
                 DoWideAttack(user, wide, weapon);
                 break;
             default:
@@ -316,9 +220,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         DoLungeAnimation(user, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
-
-        weapon.Active = false;
-        weapon.WindupAccumulator = 0f;
         Dirty(weapon);
     }
 
@@ -328,7 +229,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     public static float GetModifier(MeleeWeaponComponent component)
     {
         var total = component.WindupTime - AttackBuffer;
-        var amount = component.WindupAccumulator + GracePeriod - AttackBuffer;
+        var amount = component.NextAttack + GracePeriod - AttackBuffer;
         var fraction = Math.Clamp(amount / total, 0f, 1f);
         return GetModifier(fraction);
     }

@@ -48,7 +48,7 @@ public sealed class MeleeWindupOverlay : Overlay
         // TODO: Need active DoAfter component (or alternatively just make DoAfter itself active)
         foreach (var comp in _entManager.EntityQuery<MeleeWeaponComponent>(true))
         {
-            if (comp.WindupAccumulator < SharedMeleeWeaponSystem.AttackBuffer)
+            if (comp.NextAttack < SharedMeleeWeaponSystem.AttackBuffer)
                 continue;
 
             if (!xformQuery.TryGetComponent(comp.Owner, out var xform) ||
@@ -99,7 +99,7 @@ public sealed class MeleeWindupOverlay : Overlay
             releaseBox = releaseBox.Translated(position);
             handle.DrawRect(releaseBox, Color.LimeGreen);
 
-            var fraction = (comp.WindupAccumulator + SharedMeleeWeaponSystem.GracePeriod - SharedMeleeWeaponSystem.AttackBuffer) / (comp.WindupTime - SharedMeleeWeaponSystem.AttackBuffer);
+            var fraction = (comp.NextAttack + SharedMeleeWeaponSystem.GracePeriod - SharedMeleeWeaponSystem.AttackBuffer) / (comp.WindupTime - SharedMeleeWeaponSystem.AttackBuffer);
 
             var lerp = fraction.Equals(0f) ? 0f : tickFraction;
             var sign = comp.Accumulating ? 1 : -1;

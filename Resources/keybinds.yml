@@ -17,6 +17,10 @@ binds:
   type: State
   key: MouseLeft
   canFocus: true
+- function: AltUse
+  type: State
+  key: MouseRight
+  canFocus: true
 - function: ShowDebugMonitors
   type: Toggle
   key: F3

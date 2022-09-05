@@ -14,36 +14,49 @@ namespace Content.Shared.Weapons.Melee;
 [RegisterComponent, NetworkedComponent]
 public sealed class MeleeWeaponComponent : Component
 {
-    // TODO: Make it timing based.
-
-    // TODO: When predicted comp change.
-    [ViewVariables]
-    public bool Active;
-
     /// <summary>
-    /// If holding down an attack is the accumulator going up or down (i.e. have we passed the peak).
+    /// Next time this component is allowed to light attack. Heavy attacks are wound up and never have a cooldown.
     /// </summary>
-    [ViewVariables]
-    public bool Accumulating = true;
-
-    // TODO: Can't use accumulator comp because we'd need an active component and client can't predict changing it.
-    /// <summary>
-    /// How much windup time have we accumulated for a heavy attack.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("windupAccumulator")]
-    public float WindupAccumulator;
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack")]
+    public TimeSpan NextAttack;
 
     /*
-     * Melee combat works based around releasing the attack as closer to the peak of windup as possible.
-     * There's also a buffer time before displaying the overlay so we don't show it constantly when clicking in combat mode.
+     * Melee combat works based around 2 types of attacks:
+     * 1. Click attacks with left-click. This attacks whatever is under your mnouse
+     * 2. Wide attacks with right-click + left-click. This attacks whatever is in the direction of your mouse.
      */
 
-    // I wouldn't recommend anything under 1 because of the attack buffer.
     /// <summary>
-    /// How long it takes an attack to windup.
+    /// How many times we can attack per second.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("attackRate")]
+    public float AttackRate = 1.5f;
+
+    /// <summary>
+    /// Are we currently holding down the mouse for an attack.
+    /// Used so we can't just hold the mouse button and attack constantly.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("windingUp")]
+    public bool Attacking = false;
+
+    /// <summary>
+    /// When did we start a heavy attack.
+    /// </summary>
+    /// <returns></returns>
+    [ViewVariables(VVAccess.ReadWrite), DataField("windUpStart")]
+    public TimeSpan? WindUpStart;
+
+    /// <summary>
+    /// How long it takes a heavy attack to windup.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("windupTime")]
-    public float WindupTime = 1.5f;
+    public TimeSpan WindupTime = TimeSpan.FromSeconds(1.5);
+
+    /// <summary>
+    /// Heavy attacks get multiplied by this over the base <see cref="Damage"/> value.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("heavyDamageModifier")]
+    public FixedPoint2 HeavyDamageModifier = FixedPoint2.New(1.5);
 
     [DataField("damage", required:true)]
     [ViewVariables(VVAccess.ReadWrite)]
