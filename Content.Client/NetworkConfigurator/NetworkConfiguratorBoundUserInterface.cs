@@ -60,7 +60,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
             return;
         }
 
-        if (!_entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityInitialized)
+        if (_entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityLifeStage == EntityLifeStage.Initialized)
         {
             // We're in mapping mode. Do something hacky.
             SendMessage(new ManualDeviceListSyncMessage(null, null));
