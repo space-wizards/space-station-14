@@ -1,4 +1,5 @@
 ﻿using Content.Server.CharacterAppearance.Components;
+using Content.Server.IdentityManagement;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Preferences;
@@ -8,15 +9,16 @@ namespace Content.Server.CharacterAppearance.Systems;
 public sealed class RandomHumanoidAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RandomHumanoidAppearanceComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RandomHumanoidAppearanceComponent, ComponentStartup>(OnStartup);
     }
 
-    private void OnMapInit(EntityUid uid, RandomHumanoidAppearanceComponent component, MapInitEvent args)
+    private void OnStartup(EntityUid uid, RandomHumanoidAppearanceComponent component, ComponentStartup args)
     {
         if (TryComp<HumanoidAppearanceComponent>(uid, out var appearance))
         {
@@ -29,5 +31,6 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
                 meta.EntityName = profile.Name;
             }
         }
+        _identity.QueueIdentityUpdate(uid);
     }
 }
