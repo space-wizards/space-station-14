@@ -125,7 +125,7 @@ public sealed class EyeLerpingSystem : EntitySystem
 
             if (xformQuery.TryGetComponent(relative, out var relativeXform))
             {
-                return relativeXform.WorldRotation;
+                return -relativeXform.WorldRotation;
             }
         }
 

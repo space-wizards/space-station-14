@@ -8,8 +8,3 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - PathingDummy
-  - type: Loadout
-    prototypes: [PassengerGear]

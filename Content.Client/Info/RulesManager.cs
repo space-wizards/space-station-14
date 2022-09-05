@@ -1,3 +1,4 @@
+using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
@@ -42,7 +43,7 @@ public sealed class RulesManager : SharedRulesManager
 
     private void OnStateChanged(StateChangedEventArgs args)
     {
-        if (args.NewState is not (GameScreen or LobbyState))
+        if (args.NewState is not (GameplayState or LobbyState))
             return;
 
         if (!_shouldShowRules)

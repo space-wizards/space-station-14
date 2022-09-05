@@ -1,27 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Clearly defined speciesism is AGAINST the rules. Be nice to each other.,
-    type: Tweak}
-  - {message: Rule 8 clearly states no names of fictional or real famous people.,
-    type: Tweak}
-  id: 1731
-  time: '2022-06-20T04:52:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Items rotate when thrown again., type: Fix}
-  id: 1732
-  time: '2022-06-20T16:58:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: OOC chat is now disabled during rounds. Death to the Ick Ock., type: Tweak}
-  id: 1733
-  time: '2022-06-20T20:59:05.0000000+00:00'
-- author: Solbusaur
-  changes:
-  - {message: New lobby art "Warden" drawn by Solbusaur, type: Add}
-  id: 1734
-  time: '2022-06-21T01:58:40.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Salvage workers should once again stay behind when the salvage grid
@@ -2915,3 +2892,27 @@ Entries:
     type: Fix}
   id: 2230
   time: '2022-09-04T01:40:00.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some prediction issues surrounding status effects. Slipping should
+      feel less shit now. No more double slipping and teleporting when you get back
+      up., type: Fix}
+  id: 2231
+  time: '2022-09-04T17:21:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix some sprite animations not animating properly., type: Fix}
+  id: 2232
+  time: '2022-09-05T00:06:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Camera eye rotations should now be correct., type: Fix}
+  id: 2233
+  time: '2022-09-05T06:19:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pets will no longer try to run away when buckled or pulled., type: Tweak}
+  - {message: Space carps will now try to follow their dragon., type: Tweak}
+  - {message: Turrets now exist., type: Add}
+  id: 2234
+  time: '2022-09-05T14:28:23.0000000+00:00'
