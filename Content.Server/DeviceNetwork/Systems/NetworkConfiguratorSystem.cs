@@ -299,7 +299,8 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
                 UpdateUiState(uid, component);
                 break;
             case NetworkConfiguratorButtonKey.Show:
-                _deviceListSystem.ToggleVisualization(component.ActiveDeviceList.Value);
+                // This should be done client-side.
+                // _deviceListSystem.ToggleVisualization(component.ActiveDeviceList.Value);
                 break;
         }
     }

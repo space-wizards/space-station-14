@@ -9,6 +9,8 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     private NetworkConfiguratorListMenu? _listMenu;
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
 
+    private DeviceListSystem? _deviceList;
+
     public NetworkConfiguratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
     }
@@ -21,6 +23,8 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
+
+        _deviceList = IoCManager.Resolve<IEntityManager>().System<DeviceListSystem>();
 
         switch (UiKey)
         {
@@ -38,7 +42,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 //_configurationMenu.Edit.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Edit);
                 _configurationMenu.Clear.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Clear);
                 _configurationMenu.Copy.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Copy);
-                _configurationMenu.Show.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Show);
+                _configurationMenu.Show.OnPressed += args => _deviceList.ToggleVisualization(Owner.Owner, args.Button.Pressed);
                 _configurationMenu.OpenCentered();
                 break;
         }

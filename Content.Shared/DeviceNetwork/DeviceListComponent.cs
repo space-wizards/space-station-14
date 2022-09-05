@@ -1,9 +1,7 @@
-﻿using Content.Server.DeviceNetwork.Systems;
-
-namespace Content.Server.DeviceNetwork.Components;
+﻿namespace Content.Shared.DeviceNetwork;
 
 [RegisterComponent]
-[Access(typeof(DeviceListSystem))]
+[Access(typeof(SharedDeviceListSystem))]
 public sealed class DeviceListComponent : Component
 {
     /// <summary>

@@ -14,6 +14,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;

@@ -1,4 +1,5 @@
 ﻿using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Audio;
 
 namespace Content.Server.DeviceNetwork.Components;
