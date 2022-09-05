@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: OOC chat is now disabled during rounds. Death to the Ick Ock., type: Tweak}
-  id: 1733
-  time: '2022-06-20T20:59:05.0000000+00:00'
 - author: Solbusaur
   changes:
   - {message: New lobby art "Warden" drawn by Solbusaur, type: Add}
@@ -2914,3 +2909,8 @@ Entries:
   - {message: Fix some sprite animations not animating properly., type: Fix}
   id: 2232
   time: '2022-09-05T00:06:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Camera eye rotations should now be correct., type: Fix}
+  id: 2233
+  time: '2022-09-05T06:19:15.0000000+00:00'
