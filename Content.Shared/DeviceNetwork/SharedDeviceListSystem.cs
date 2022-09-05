@@ -9,8 +9,6 @@ public abstract class SharedDeviceListSystem : EntitySystem
     {
         SubscribeLocalEvent<DeviceListComponent, ComponentGetState>(GetDeviceListState);
         SubscribeLocalEvent<DeviceListComponent, ComponentHandleState>(HandleDeviceListState);
-        SubscribeLocalEvent<SharedNetworkConfiguratorComponent, ComponentGetState>(GetNetworkConfiguratorState);
-        SubscribeLocalEvent<SharedNetworkConfiguratorComponent, ComponentHandleState>(HandleNetworkConfiguratorState);
     }
 
     public void UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
@@ -45,26 +43,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
         comp.HandleIncomingPackets = state.HandleIncomingPackets;
         comp.IsAllowList = state.IsAllowList;
     }
-
-    private void GetNetworkConfiguratorState(EntityUid uid, SharedNetworkConfiguratorComponent comp,
-        ref ComponentGetState args)
-    {
-        args.State = new NetworkConfiguratorComponentState(comp.ActiveDeviceList);
-    }
-
-    private void HandleNetworkConfiguratorState(EntityUid uid, SharedNetworkConfiguratorComponent comp,
-        ref ComponentHandleState args)
-    {
-        if (args.Current is not NetworkConfiguratorComponentState state)
-        {
-            return;
-        }
-
-        comp.ActiveDeviceList = state.ActiveDeviceList;
-    }
 }
-
-
 
 public sealed class DeviceListUpdateEvent : EntityEventArgs
 {

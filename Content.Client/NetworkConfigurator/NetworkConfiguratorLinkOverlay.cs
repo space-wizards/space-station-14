@@ -8,12 +8,15 @@ namespace Content.Client.NetworkConfigurator;
 public sealed class NetworkConfiguratorLinkOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    private readonly DeviceListSystem _deviceListSystem;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     public NetworkConfiguratorLinkOverlay()
     {
         IoCManager.InjectDependencies(this);
+
+        _deviceListSystem = _entityManager.System<DeviceListSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -28,7 +31,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
 
             var sourceTransform = _entityManager.GetComponent<TransformComponent>(tracker.Owner);
 
-            foreach (var device in deviceList.Devices)
+            foreach (var device in _deviceListSystem.GetAllDevices(tracker.Owner, deviceList))
             {
                 if (_entityManager.Deleted(device))
                 {

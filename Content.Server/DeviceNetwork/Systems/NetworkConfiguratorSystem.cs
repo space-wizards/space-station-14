@@ -17,7 +17,7 @@ using Robust.Shared.Player;
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
-public sealed class NetworkConfiguratorSystem : EntitySystem
+public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
     [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
