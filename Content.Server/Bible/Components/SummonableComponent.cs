@@ -31,7 +31,7 @@ namespace Content.Server.Bible.Components
         public InstantAction SummonAction = new()
         {
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Clothing/Head/Hats/witch.rsi/icon.png")),
-            Name = "bible-summon-verb",
+            DisplayName = "bible-summon-verb",
             Description = "bible-summon-verb-desc",
             Event = new SummonActionEvent(),
         };

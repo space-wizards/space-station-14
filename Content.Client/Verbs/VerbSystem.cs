@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
+using Content.Client.Gameplay;
 using Content.Client.Popups;
 using Content.Client.Verbs.UI;
 using Content.Client.Viewport;
@@ -92,7 +93,7 @@ namespace Content.Client.Verbs
         {
             result = null;
 
-            if (_stateManager.CurrentState is not GameScreenBase gameScreenBase)
+            if (_stateManager.CurrentState is not GameplayStateBase gameScreenBase)
                 return false;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;

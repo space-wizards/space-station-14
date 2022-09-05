@@ -25,6 +25,8 @@ namespace Content.Server.Doors.Components
         [DataField("lockedPryTimeModifier")]
         public float LockedPryTimeModifier = 1.5f;
 
+        [DataField("autocloseDelay")] public TimeSpan AutocloseDelay = TimeSpan.FromSeconds(3f);
+
         public bool EmergencyPressureStop()
         {
             var doorSys = EntitySystem.Get<DoorSystem>();
