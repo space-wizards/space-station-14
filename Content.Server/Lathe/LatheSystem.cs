@@ -3,8 +3,6 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Components;
-using Content.Shared.Interaction;
-using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research;
 using Content.Shared.Research.Components;
@@ -22,7 +20,7 @@ namespace Content.Server.Lathe
     public sealed class LatheSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audioSys = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly ResearchSystem _researchSys = default!;
@@ -68,11 +66,8 @@ namespace Content.Server.Lathe
         /// </summary>
         private void OnComponentInit(EntityUid uid, LatheComponent component, ComponentInit args)
         {
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
-            {
-                appearance.SetData(LatheVisuals.IsInserting, false);
-                appearance.SetData(LatheVisuals.IsRunning, false);
-            }
+            _appearance.SetData(uid, LatheVisuals.IsInserting, false);
+            _appearance.SetData(uid, LatheVisuals.IsRunning, false);
 
             //Fix this awful shit once Lathes get ECS'd.
             List<LatheRecipePrototype>? recipes = null;
@@ -203,10 +198,7 @@ namespace Content.Server.Lathe
         /// </summary>
         private void UpdateRunningAppearance(EntityUid uid, bool isRunning)
         {
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
-                return;
-
-            appearance.SetData(LatheVisuals.IsRunning, isRunning);
+            _appearance.SetData(uid, LatheVisuals.IsRunning, isRunning);
         }
 
         /// <summary>
@@ -215,12 +207,9 @@ namespace Content.Server.Lathe
         /// </summary>
         private void UpdateInsertingAppearance(EntityUid uid, bool isInserting, Color? color = null)
         {
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
-                return;
-
-            appearance.SetData(LatheVisuals.IsInserting, isInserting);
+            _appearance.SetData(uid, LatheVisuals.IsInserting, isInserting);
             if (color != null)
-                appearance.SetData(LatheVisuals.InsertingColor, color);
+                _appearance.SetData(uid, LatheVisuals.InsertingColor, color);
         }
 
         #region UI Messages
@@ -244,8 +233,6 @@ namespace Content.Server.Lathe
 
         private void OnLatheSyncRequestMessage(EntityUid uid, LatheComponent component, LatheSyncRequestMessage args)
         {
-            if (!HasComp<MaterialStorageComponent>(uid)) return;
-
             // Again: TODO BUI states. Why TF was this was this ever two separate messages!?!?
             _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue));
             if (TryComp(uid, out LatheProducingComponent? prodComp) && prodComp.Recipe != null)

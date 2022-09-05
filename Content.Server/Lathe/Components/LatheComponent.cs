@@ -21,6 +21,7 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         [ViewVariables]
         public float InsertionTime = 0.79f; // 0.01 off for animation timing
+
         /// <summary>
         /// Update accumulator for the insertion time
         /// </suummary>
@@ -32,10 +33,5 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         [DataField("producingSound")]
         public SoundSpecifier? ProducingSound;
-
-        /// <summmary>
-        /// The lathe's UI.
-        /// </summary>
-        [ViewVariables] public BoundUserInterface? UserInterface;
     }
 }
