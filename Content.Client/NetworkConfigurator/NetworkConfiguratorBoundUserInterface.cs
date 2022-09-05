@@ -82,7 +82,10 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     {
         base.ReceiveMessage(message);
 
-        if (message is not ManualDeviceListSyncMessage cast || cast.Device == null || cast.Devices == null)
+        if (_entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityLifeStage > EntityLifeStage.Initialized
+            || message is not ManualDeviceListSyncMessage cast
+            || cast.Device == null
+            || cast.Devices == null)
         {
             return;
         }

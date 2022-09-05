@@ -12,6 +12,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -312,14 +313,14 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     private void ManualDeviceListSync(EntityUid uid, NetworkConfiguratorComponent comp,
         ManualDeviceListSyncMessage args)
     {
-        if (comp.ActiveDeviceList == null)
+        if (comp.ActiveDeviceList == null || args.Session is not IPlayerSession player)
         {
             return;
         }
 
         var devices = _deviceListSystem.GetDeviceList(comp.ActiveDeviceList.Value).Values.ToHashSet();
 
-        _uiSystem.TrySendUiMessage(uid, NetworkConfiguratorUiKey.Configure, new ManualDeviceListSyncMessage(comp.ActiveDeviceList.Value, devices));
+        _uiSystem.TrySendUiMessage(uid, NetworkConfiguratorUiKey.Configure, new ManualDeviceListSyncMessage(comp.ActiveDeviceList.Value, devices), player);
     }
 
     #endregion
