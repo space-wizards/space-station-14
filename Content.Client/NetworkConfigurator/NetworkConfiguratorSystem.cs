@@ -27,6 +27,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         SubscribeLocalEvent<ClearAllOverlaysEvent>(_ => ClearAllOverlays());
     }
 
+    /// <summary>
+    /// Toggles a device list's (tied to this network configurator) connection visualisation on and off.
+    /// </summary>
     public void ToggleVisualization(EntityUid uid, bool toggle, NetworkConfiguratorComponent? component = null)
     {
         if (_playerManager.LocalPlayer == null
