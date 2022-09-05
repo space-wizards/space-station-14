@@ -6,7 +6,7 @@ namespace Content.Client.NetworkConfigurator;
 
 public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
-    private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     private NetworkConfiguratorListMenu? _listMenu;
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
 
