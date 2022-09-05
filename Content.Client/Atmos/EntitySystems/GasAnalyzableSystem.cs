@@ -12,7 +12,7 @@ public sealed class GasAnalyzableSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GasAnalyzerComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<GasAnalyzerComponent, ItemStatusCollectMessage>(OnItemCollect);
+        SubscribeLocalEvent<GasAnalyzerComponent, ItemStatusCollectMessage>(OnItemStatus);
     }
 
     private void OnHandleState(EntityUid uid, GasAnalyzerComponent component, ref ComponentHandleState args)
@@ -24,7 +24,7 @@ public sealed class GasAnalyzableSystem : EntitySystem
         component.UiUpdateNeeded = true;
     }
 
-    private void OnItemCollect(EntityUid uid, GasAnalyzerComponent component, ItemStatusCollectMessage args)
+    private void OnItemStatus(EntityUid uid, GasAnalyzerComponent component, ItemStatusCollectMessage args)
     {
         args.Controls.Add(new GasAnalyzerStatusControl(component));
     }
