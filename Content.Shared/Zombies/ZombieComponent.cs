@@ -2,7 +2,7 @@ using Content.Shared.Roles;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Zombies
+namespace Content.Shared.Zombies
 {
     [RegisterComponent]
     public sealed class ZombieComponent : Component
