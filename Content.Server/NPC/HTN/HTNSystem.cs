@@ -25,7 +25,7 @@ public sealed class HTNSystem : EntitySystem
     private ISawmill _sawmill = default!;
     private readonly JobQueue _planQueue = new();
 
-    private HashSet<ICommonSession> _subscribers = new();
+    private readonly HashSet<ICommonSession> _subscribers = new();
 
     // Hierarchical Task Network
     public override void Initialize()
@@ -130,8 +130,8 @@ public sealed class HTNSystem : EntitySystem
     private void OnHTNShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
     {
         RemComp<ActiveNPCComponent>(uid);
-
         component.PlanningToken?.Cancel();
+        component.PlanningJob = null;
     }
 
     /// <summary>
