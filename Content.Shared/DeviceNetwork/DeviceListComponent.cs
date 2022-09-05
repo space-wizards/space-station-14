@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
 
@@ -26,4 +27,19 @@ public sealed class DeviceListComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("handleIncoming")]
     public bool HandleIncomingPackets = false;
+}
+
+[Serializable, NetSerializable]
+public sealed class DeviceListComponentState : ComponentState
+{
+    public readonly HashSet<EntityUid> Devices;
+    public readonly bool IsAllowList;
+    public readonly bool HandleIncomingPackets;
+
+    public DeviceListComponentState(HashSet<EntityUid> devices, bool isAllowList, bool handleIncomingPackets)
+    {
+        Devices = devices;
+        IsAllowList = isAllowList;
+        HandleIncomingPackets = handleIncomingPackets;
+    }
 }
