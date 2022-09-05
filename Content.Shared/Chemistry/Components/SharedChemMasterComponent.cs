@@ -12,6 +12,7 @@ namespace Content.Shared.Chemistry.Components
     [Virtual]
     public class SharedChemMasterComponent : Component
     {
+        public const int MaxEntitySpawns = 10;
         public static string BeakerSlotId = "ChemMaster-beaker";
 
         [DataField("beakerSlot")]
