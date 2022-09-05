@@ -49,8 +49,8 @@ public sealed partial class StoreMenu : DefaultWindow
         var balanceStr = string.Empty;
         foreach (var ((type, amount),proto) in currency)
         {
-            //this display is fixed to 1 for aesthetic purposes
-            balanceStr += $"{Loc.GetString(proto.DisplayName, ("amount", 1))}: {amount}\n";
+            balanceStr += Loc.GetString("store-ui-balance-display", ("amount", amount),
+                ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
         }
 
         BalanceInfo.SetMarkup(balanceStr.TrimEnd());
@@ -160,7 +160,8 @@ public sealed partial class StoreMenu : DefaultWindow
             foreach (var (type, amount) in listing.Cost)
             {
                 var currency = _prototypeManager.Index<CurrencyPrototype>(type);
-                text += $"{amount} {Loc.GetString(currency.DisplayName, ("amount", amount))}\n";
+                text += Loc.GetString("store-ui-price-display", ("amount", amount),
+                    ("currency", Loc.GetString(currency.DisplayName, ("amount", amount))));
             }
         }
 
