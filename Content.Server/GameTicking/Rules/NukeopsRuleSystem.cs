@@ -391,12 +391,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     /// </summary>
     private void SetupOperativeEntity(EntityUid mob, string name, string gear)
     {
-        EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
+        MetaData(mob).EntityName = name;
         EntityManager.EnsureComponent<RandomHumanoidAppearanceComponent>(mob);
         EntityManager.EnsureComponent<NukeOperativeComponent>(mob);
 
         if(_startingGearPrototypes.TryGetValue(gear, out var gearPrototype))
             _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, null);
+
+        var faction = EnsureComp<AiFactionTagComponent>(mob);
+        faction.Factions |= Faction.Syndicate;
+        faction.Factions &= ~Faction.NanoTrasen;
     }
 
     private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints)
