@@ -22,7 +22,12 @@ namespace Content.Shared.Interaction
         /// <summary>
         /// Tries to rotate the entity towards the target rotation. Returns false if it needs to keep rotating.
         /// </summary>
-        public bool TryRotateTo(EntityUid uid, Angle goalRotation, float frameTime, Angle tolerance, double rotationSpeed = float.MaxValue, TransformComponent? xform = null)
+        public bool TryRotateTo(EntityUid uid,
+            Angle goalRotation,
+            float frameTime,
+            Angle tolerance,
+            double rotationSpeed = float.MaxValue,
+            TransformComponent? xform = null)
         {
             if (!Resolve(uid, ref xform))
                 return true;
