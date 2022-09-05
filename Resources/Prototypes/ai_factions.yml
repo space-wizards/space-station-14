@@ -1,4 +1,11 @@
 - type: aiFaction
+  id: Dragon
+  hostile:
+    - NanoTrasen
+    - Syndicate
+    - Xeno
+
+- type: aiFaction
   id: NanoTrasen
   hostile:
   - SimpleHostile

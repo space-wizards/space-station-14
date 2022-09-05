@@ -1,5 +1,6 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Decals.UI;
+using Content.Client.Eui;
 using Content.Client.HUD;
 using Content.Client.Markers;
 using Content.Client.SubFloor;
