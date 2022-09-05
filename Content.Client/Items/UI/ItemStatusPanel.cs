@@ -1,4 +1,3 @@
-using Content.Client.Items.Components;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Hands.Components;
@@ -16,9 +15,6 @@ namespace Content.Client.Items.UI
     public sealed class ItemStatusPanel : Control
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
-        [ViewVariables]
-        private readonly List<(IItemStatus, Control)> _activeStatusComponents = new();
 
         [ViewVariables]
         private readonly Label _itemNameLabel;
@@ -166,13 +162,6 @@ namespace Content.Client.Items.UI
         private void ClearOldStatus()
         {
             _statusContents.RemoveAllChildren();
-
-            foreach (var (itemStatus, control) in _activeStatusComponents)
-            {
-                itemStatus.DestroyControl(control);
-            }
-
-            _activeStatusComponents.Clear();
         }
 
         private void BuildNewEntityStatus()
@@ -180,14 +169,6 @@ namespace Content.Client.Items.UI
             DebugTools.AssertNotNull(_entity);
 
             ClearOldStatus();
-
-            foreach (var statusComponent in _entityManager.GetComponents<IItemStatus>(_entity!.Value))
-            {
-                var control = statusComponent.MakeControl();
-                _statusContents.AddChild(control);
-
-                _activeStatusComponents.Add((statusComponent, control));
-            }
 
             var collectMsg = new ItemStatusCollectMessage();
             _entityManager.EventBus.RaiseLocalEvent(_entity!.Value, collectMsg, true);
