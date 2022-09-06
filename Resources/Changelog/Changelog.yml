@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Added visuals & toggle-interactions to the gas injector., type: Add}
-  - {message: The injector outlet pressure is now limited to 9000 kPa., type: Tweak}
-  id: 1739
-  time: '2022-06-21T02:04:55.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: You can now destroy trees!, type: Tweak}
@@ -2920,3 +2914,8 @@ Entries:
     type: Tweak}
   id: 2238
   time: '2022-09-06T01:41:39.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Pills and bottles no longer sell for any spacebucks, type: Fix}
+  id: 2239
+  time: '2022-09-06T01:43:04.0000000+00:00'
