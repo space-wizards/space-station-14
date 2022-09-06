@@ -145,7 +145,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
         ev.Action = new WorldTargetAction()
         {
-            Name = $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})", // non-unique actions may be considered duplicates when saving/loading.
+            DisplayName = $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})", // non-unique actions may be considered duplicates when saving/loading.
             Icon = decalProto.Sprite,
             Repeat = true,
             CheckCanAccess = false,

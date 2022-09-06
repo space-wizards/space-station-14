@@ -2,14 +2,20 @@ using Content.Server.Damage.Components;
 using Content.Server.Damage.Events;
 using Content.Server.Popups;
 using Content.Server.Weapon.Melee;
+using Content.Server.Administration.Logs;
+using Content.Server.CombatMode;
 using Content.Shared.Alert;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
+using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Popups;
 using Robust.Shared.Collections;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;
+using Robust.Shared.Random;
 
 
 namespace Content.Server.Damage.Systems;
@@ -20,6 +26,8 @@ public sealed class StaminaSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     private const float UpdateCooldown = 2f;
     private float _accumulator;
@@ -36,10 +44,11 @@ public sealed class StaminaSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
         SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
     }
 
     private void OnShutdown(EntityUid uid, StaminaComponent component, ComponentShutdown args)
@@ -50,6 +59,32 @@ public sealed class StaminaSystem : EntitySystem
     private void OnStartup(EntityUid uid, StaminaComponent component, ComponentStartup args)
     {
         SetStaminaAlert(uid, component);
+    }
+
+    private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
+    {
+        if (args.Handled || !_random.Prob(args.PushProbability))
+            return;
+
+        if (component.Critical)
+            return;
+
+        var damage = args.PushProbability * component.CritThreshold;
+        TakeStaminaDamage(uid, damage, component);
+
+        // We need a better method of getting if the entity is going to resist stam damage, both this and the lines in the foreach at the end of OnHit() are awful
+        if (!component.Critical)
+            return;
+
+        var targetEnt = Identity.Entity(args.Target, EntityManager);
+        var sourceEnt = Identity.Entity(args.Source, EntityManager);
+
+        _popup.PopupEntity(Loc.GetString("stunned-component-disarm-success-others", ("source", sourceEnt), ("target", targetEnt)), targetEnt, Filter.PvsExcept(args.Source), PopupType.LargeCaution);
+        _popup.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), Filter.Entities(args.Source), PopupType.Large);
+
+        _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
+
+        args.Handled = true;
     }
 
     private void OnHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)

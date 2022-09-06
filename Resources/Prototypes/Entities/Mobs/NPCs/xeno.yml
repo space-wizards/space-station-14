@@ -12,10 +12,8 @@
     canDisarm: true
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: XenoCompound
   - type: Tool
     speed: 0.3
     qualities:
@@ -351,10 +349,8 @@
       gender: male
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - Xeno

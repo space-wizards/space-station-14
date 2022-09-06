@@ -66,7 +66,6 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
-            factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
             // Do not add to the above, they are legacy
@@ -80,6 +79,8 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("objective");
             prototypes.RegisterIgnore("holiday");
             prototypes.RegisterIgnore("aiFaction");
+            prototypes.RegisterIgnore("htnCompound");
+            prototypes.RegisterIgnore("htnPrimitive");
             prototypes.RegisterIgnore("gameMap");
             prototypes.RegisterIgnore("behaviorSet");
             prototypes.RegisterIgnore("lobbyBackground");

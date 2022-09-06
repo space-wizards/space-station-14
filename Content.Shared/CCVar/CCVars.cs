@@ -311,19 +311,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitordm.starting_balance", 20);
 
         /*
-         * Nukeops
-         */
-
-        public static readonly CVarDef<int> NukeopsMinPlayers =
-            CVarDef.Create("nukeops.min_players", 15);
-
-        public static readonly CVarDef<int> NukeopsMaxOps =
-            CVarDef.Create("nukeops.max_ops", 5);
-
-        public static readonly CVarDef<int> NukeopsPlayersPerOp =
-            CVarDef.Create("nukeops.players_per_op", 5);
-
-        /*
          * Zombie
          */
 
@@ -500,6 +487,8 @@ namespace Content.Shared.CCVar
             CVarDef.Create("npc.max_updates", 64);
 
         public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
+
+        public static readonly CVarDef<bool> NPCCollisionAvoidance = CVarDef.Create("npc.collision_avoidance", true);
 
         /*
          * Net
@@ -1095,6 +1084,28 @@ namespace Content.Shared.CCVar
             SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
         /*
+         * Mapping
+         */
+
+        /// <summary>
+        ///     Will mapping mode enable autosaves when it's activated?
+        /// </summary>
+        public static readonly CVarDef<bool>
+            AutosaveEnabled = CVarDef.Create("mapping.autosave", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Autosave interval in seconds.
+        /// </summary>
+        public static readonly CVarDef<float>
+            AutosaveInterval = CVarDef.Create("mapping.autosave_interval", 600f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Directory in server user data to save to. Saves will be inside folders in this directory.
+        /// </summary>
+        public static readonly CVarDef<string>
+            AutosaveDirectory = CVarDef.Create("mapping.autosave_dir", "Autosaves", CVar.SERVERONLY);
+
+        /*
          * Rules
          */
 
@@ -1179,6 +1190,18 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+
+        /*
+         * Fire alarm
+         */
+
+        /// <summary>
+        ///     If fire alarms should have all access, or if activating/resetting these
+        ///     should be restricted to what is dictated on a player's access card.
+        ///     Defaults to true.
+        /// </summary>
+        public static readonly CVarDef<bool> FireAlarmAllAccess =
+            CVarDef.Create("firealarm.allaccess", true, CVar.SERVERONLY);
 
         /*
          * PLAYTIME

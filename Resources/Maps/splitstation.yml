@@ -74805,21 +74805,6 @@ entities:
   - pos: -46.5,-33.5
     parent: 69
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 6865
   type: TableReinforcedGlass
   components:
@@ -77027,21 +77012,6 @@ entities:
   - pos: -48.5,-30.5
     parent: 69
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 7180
   type: DisposalPipe
   components:
@@ -100515,21 +100485,6 @@ entities:
   - pos: -56.5,4.5
     parent: 69
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 10453
   type: AsteroidRock
   components:

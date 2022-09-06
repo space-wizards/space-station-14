@@ -49,7 +49,7 @@ namespace Content.Client.Launcher
         public event Action<string?>? ConnectFailReasonChanged;
         public event Action<ClientConnectionState>? ConnectionStateChanged;
 
-        public override void Startup()
+        protected override void Startup()
         {
             _control = new LauncherConnectingGui(this);
 
@@ -61,7 +61,7 @@ namespace Content.Client.Launcher
             CurrentPage = Page.Connecting;
         }
 
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _control?.Dispose();
 

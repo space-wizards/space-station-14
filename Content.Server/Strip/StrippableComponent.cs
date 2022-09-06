@@ -10,20 +10,11 @@ namespace Content.Server.Strip
     public sealed class StrippableComponent : SharedStrippableComponent
     {
         /// <summary>
-        /// How long it takes to open the strip menu.
-        /// This should be relatively short so it's not a hassle
-        /// but so it also doesn't open immediately during melee combat
-        /// </summary>
-        [ViewVariables]
-        [DataField("openDelay")]
-        public float OpenDelay = 1f;
-
-        /// <summary>
         /// The strip delay for hands.
         /// </summary>
         [ViewVariables]
         [DataField("handDelay")]
-        public float HandStripDelay = 3f;
+        public float HandStripDelay = 4f;
 
         public override bool Drop(DragDropEvent args)
         {
