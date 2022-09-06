@@ -216,7 +216,7 @@ namespace Content.Server.Decals
             if (grid.GetTileRef(coordinates).IsSpace(_tileDefMan))
                 return false;
 
-            var chunkCollection = DecalGridChunkCollection(gridId.Value);
+            var chunkCollection = DecalGridChunkCollection(grid.Owner);
             if (chunkCollection == null)
                 return false;
 
@@ -225,8 +225,8 @@ namespace Content.Server.Decals
             if(!chunkCollection.ChunkCollection.ContainsKey(chunkIndices))
                 chunkCollection.ChunkCollection[chunkIndices] = new();
             chunkCollection.ChunkCollection[chunkIndices][uid.Value] = decal;
-            ChunkIndex[gridId.Value][uid.Value] = chunkIndices;
-            DirtyChunk(gridId.Value, chunkIndices);
+            ChunkIndex[grid.Owner][uid.Value] = chunkIndices;
+            DirtyChunk(grid.Owner, chunkIndices);
 
             return true;
         }

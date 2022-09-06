@@ -55,7 +55,7 @@ namespace Content.Server.Shuttles.Systems
 
             SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
 
-            _mapManager.TileChanged += OnTileChange;
+            SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
         }
 
         private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
@@ -86,18 +86,12 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _mapManager.TileChanged -= OnTileChange;
-        }
-
         private void OnIsHotEvent(EntityUid uid, ThrusterComponent component, IsHotEvent args)
         {
             args.IsHot = component.Type != ThrusterType.Angular && component.IsOn;
         }
 
-        private void OnTileChange(object? sender, TileChangedEventArgs e)
+        private void OnTileChanged(TileChangedEvent e)
         {
             // If the old tile was space but the new one isn't then disable all adjacent thrusters
             if (e.NewTile.IsSpace(_tileDefManager) || !e.OldTile.IsSpace(_tileDefManager)) return;

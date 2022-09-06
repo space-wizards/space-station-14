@@ -201,7 +201,7 @@ namespace Content.Server.Gravity.EntitySystems
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 return;
 
-            var gravity = EntityManager.GetComponent<GravityComponent>(gridId.Value);
+            var gravity = EntityManager.GetComponent<GravityComponent>(grid.Owner);
 
             if (grav.GravityActive)
                 _gravitySystem.EnableGravity(gravity);
@@ -209,7 +209,7 @@ namespace Content.Server.Gravity.EntitySystems
                 _gravitySystem.DisableGravity(gravity);
 
             if (shake)
-                _gravityShakeSystem.ShakeGrid(gridId.Value, gravity);
+                _gravityShakeSystem.ShakeGrid(grid.Owner, gravity);
         }
 
         private void OnInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)

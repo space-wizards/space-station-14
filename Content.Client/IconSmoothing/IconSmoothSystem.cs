@@ -34,7 +34,7 @@ namespace Content.Client.IconSmoothing
             if (xform.Anchored)
             {
                 component.LastPosition = _mapManager.TryGetGrid(xform.GridUid, out var grid)
-                    ? (xform.GridUid.Value, grid.TileIndicesFor(xform.Coordinates))
+                    ? (grid.Owner, grid.TileIndicesFor(xform.Coordinates))
                     : (null, new Vector2i(0, 0));
 
                 DirtyNeighbours(uid, component);

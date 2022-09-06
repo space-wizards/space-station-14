@@ -105,7 +105,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!xform.Anchored || !_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return;
 
-            airtight.LastPosition = (xform.GridUid.Value, grid.TileIndicesFor(xform.Coordinates));
+            airtight.LastPosition = (grid.Owner, grid.TileIndicesFor(xform.Coordinates));
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum && !airtight.AirBlocked);
         }
 
