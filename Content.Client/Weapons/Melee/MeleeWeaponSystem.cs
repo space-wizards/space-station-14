@@ -130,8 +130,21 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // Try to do a heavy attack.
             if (useDown == BoundKeyState.Down)
             {
-                EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weapon.Owner));
-                weapon.Attacking = true;
+                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                EntityCoordinates coordinates;
+
+                // Bro why would I want a ternary here
+                // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+                if (MapManager.TryFindGridAt(mousePos, out var grid))
+                {
+                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                }
+                else
+                {
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                }
+
+                EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weapon.Owner, coordinates));
             }
 
             return;
@@ -149,17 +162,37 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return;
             }
 
-            // TODO: Target
-            EntityManager.RaisePredictiveEvent(new LightAttackEvent(weapon.Owner)
-            {
-                Weapon = weapon.Owner,
-            });
+            var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            EntityCoordinates coordinates;
 
-            weapon.Attacking = true;
+            // Bro why would I want a ternary here
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (MapManager.TryFindGridAt(mousePos, out var grid))
+            {
+                coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+            }
+            else
+            {
+                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+            }
+
+            EntityUid? target = null;
+
+            // TODO: UI Refactor update I assume
+            if (_stateManager.CurrentState is GameScreen screen)
+            {
+                target = screen.GetEntityUnderPosition(mousePos);
+            }
+
+            EntityManager.RaisePredictiveEvent(new LightAttackEvent(target, weapon.Owner, coordinates));
+
             return;
         }
 
-        weapon.Attacking = false;
+        if (weapon.Attacking)
+        {
+            EntityManager.RaisePredictiveEvent(new StopAttackEvent(weapon.Owner));
+        }
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

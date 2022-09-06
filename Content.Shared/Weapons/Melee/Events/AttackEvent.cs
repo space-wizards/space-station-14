@@ -4,7 +4,15 @@ namespace Content.Shared.Weapons.Melee.Events
 {
     public abstract class AttackEvent : EntityEventArgs
     {
+        /// <summary>
+        /// Coordinates being attacked.
+        /// </summary>
+        public readonly EntityCoordinates Coordinates;
 
+        public AttackEvent(EntityCoordinates coordinates)
+        {
+            Coordinates = coordinates;
+        }
     }
 
     /// <summary>

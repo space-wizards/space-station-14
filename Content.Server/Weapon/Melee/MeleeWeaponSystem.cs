@@ -61,18 +61,19 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         PopupSystem.PopupEntity(message, uid.Value, Filter.Pvs(uid.Value, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
 
-    protected override void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component)
+    protected override void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component)
     {
-        base.DoPreciseAttack(user, ev, component);
+        base.DoLightAttack(user, ev, component);
 
         // Can't attack yourself
         // Not in LOS.
         if (user == ev.Target ||
+            ev.Target == null ||
             Deleted(ev.Target) ||
             // For consistency with wide attacks stuff needs damageable.
             !HasComp<DamageableComponent>(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
-            !_interaction.InRangeUnobstructed(user, ev.Target, component.Range + 0.1f))
+            !_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range + 0.1f))
         {
             return;
         }
@@ -81,7 +82,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target }, user, damage);
+        var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target.Value }, user, damage);
         RaiseLocalEvent(component.Owner, hitEvent);
 
         if (hitEvent.Handled)
@@ -89,11 +90,11 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var targets = new List<EntityUid>(1)
         {
-            ev.Target
+            ev.Target.Value
         };
 
         // For stuff that cares about it being attacked.
-        RaiseLocalEvent(ev.Target, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
+        RaiseLocalEvent(ev.Target.Value, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
         var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage);
@@ -103,17 +104,17 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
             {
-                _stamina.TakeStaminaDamage(ev.Target, (bluntDamage * component.BluntStaminaDamageFactor).Float());
+                _stamina.TakeStaminaDamage(ev.Target.Value, (bluntDamage * component.BluntStaminaDamageFactor).Float());
             }
 
             if (component.Owner == user)
                 _adminLogger.Add(LogType.MeleeHit,
-                    $"{ToPrettyString(user):user} melee attacked {ToPrettyString(ev.Target):target} using their hands and dealt {damageResult.Total:damage} damage");
+                    $"{ToPrettyString(user):user} melee attacked {ToPrettyString(ev.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
             else
                 _adminLogger.Add(LogType.MeleeHit,
-                    $"{ToPrettyString(user):user} melee attacked {ToPrettyString(ev.Target):target} using {ToPrettyString(component.Owner):used} and dealt {damageResult.Total:damage} damage");
+                    $"{ToPrettyString(user):user} melee attacked {ToPrettyString(ev.Target.Value):target} using {ToPrettyString(component.Owner):used} and dealt {damageResult.Total:damage} damage");
 
-            PlayHitSound(ev.Target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
+            PlayHitSound(ev.Target.Value, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
         }
         else
         {
@@ -133,9 +134,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    protected override void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component)
+    protected override void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component)
     {
-        base.DoWideAttack(user, ev, component);
+        base.DoHeavyAttack(user, ev, component);
 
         // TODO: This is copy-paste as fuck with DoPreciseAttack
         if (!TryComp<TransformComponent>(user, out var userXform))

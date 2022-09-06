@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Melee;
@@ -108,4 +109,12 @@ public sealed class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundNoDamage")]
     public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
+}
+
+[Serializable, NetSerializable]
+public sealed class MeleeWeaponComponentState : ComponentState
+{
+    public bool Attacking;
+    public TimeSpan NextAttack;
+    public TimeSpan? WindUpStart;
 }

@@ -1,3 +1,4 @@
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Melee.Events;
@@ -8,10 +9,10 @@ namespace Content.Shared.Weapons.Melee.Events;
 [Serializable, NetSerializable]
 public sealed class LightAttackEvent : AttackEvent
 {
-    public EntityUid Target;
-    public EntityUid Weapon;
+    public readonly EntityUid? Target;
+    public readonly EntityUid Weapon;
 
-    public LightAttackEvent(EntityUid target, EntityUid weapon)
+    public LightAttackEvent(EntityUid? target, EntityUid weapon, EntityCoordinates coordinates) : base(coordinates)
     {
         Target = target;
         Weapon = weapon;

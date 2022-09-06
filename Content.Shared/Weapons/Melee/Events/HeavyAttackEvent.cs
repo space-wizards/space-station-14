@@ -1,3 +1,5 @@
+using Robust.Shared.Map;
+
 namespace Content.Shared.Weapons.Melee.Events;
 
 /// <summary>
@@ -7,7 +9,7 @@ public sealed class HeavyAttackEvent : AttackEvent
 {
     public readonly EntityUid Weapon;
 
-    public HeavyAttackEvent(EntityUid weapon)
+    public HeavyAttackEvent(EntityUid weapon, EntityCoordinates coordinates) : base(coordinates)
     {
         Weapon = weapon;
     }

@@ -46,6 +46,26 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeAllEvent<StartHeavyAttackEvent>(OnStartHeavyAttack);
         SubscribeAllEvent<StopHeavyAttackEvent>(OnStopHeavyAttack);
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
+        SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
+    }
+
+    private void OnStopAttack(StopAttackEvent msg, EntitySessionEventArgs args)
+    {
+        var user = args.SenderSession.AttachedEntity;
+
+        if (user == null)
+            return;
+
+        var weapon = GetWeapon(user.Value);
+
+        if (weapon?.Owner != msg.Weapon)
+            return;
+
+        if (!weapon.Attacking)
+            return;
+
+        weapon.Attacking = false;
+        Dirty(weapon);
     }
 
     private void OnStartHeavyAttack(StartHeavyAttackEvent msg, EntitySessionEventArgs args)
@@ -67,14 +87,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
-    [Serializable, NetSerializable]
-    protected sealed class MeleeWeaponComponentState : ComponentState
-    {
-        public bool Active;
-        public bool Accumulating;
-        public float WindupAccumulator;
-    }
-
     private void OnLightAttack(LightAttackEvent msg, EntitySessionEventArgs args)
     {
         var user = args.SenderSession.AttachedEntity;
@@ -85,9 +97,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var weapon = GetWeapon(user.Value);
 
         if (weapon?.Owner != msg.Weapon)
-            return;
-
-        if (weapon.NextAttack < Timing.CurTime)
             return;
 
         AttemptAttack(args.SenderSession.AttachedEntity!.Value, weapon, msg);
@@ -135,9 +144,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         args.State = new MeleeWeaponComponentState
         {
-            Active = component.Active,
-            Accumulating = component.Accumulating,
-            WindupAccumulator = component.NextAttack,
+            Attacking = component.Attacking,
+            NextAttack = component.NextAttack,
+            WindUpStart = component.WindUpStart,
         };
     }
 
@@ -146,9 +155,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (args.Current is not MeleeWeaponComponentState state)
             return;
 
-        component.Active = state.Active;
-        component.Accumulating = state.Accumulating;
-        component.NextAttack = state.WindupAccumulator;
+        component.Attacking = state.Attacking;
+        component.NextAttack = state.NextAttack;
+        component.WindUpStart = state.WindUpStart;
     }
 
     public MeleeWeaponComponent? GetWeapon(EntityUid entity)
@@ -177,6 +186,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// </summary>
     private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, AttackEvent attack)
     {
+        var curTime = Timing.CurTime;
+
+        if (weapon.NextAttack > curTime)
+            return;
+
         if (!Blocker.CanAttack(user))
             return;
 
@@ -185,23 +199,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!CombatMode.IsInCombatMode(user))
             return;
 
-        var curTime = Timing.CurTime;
-
         if (weapon.NextAttack < curTime)
             weapon.NextAttack = curTime;
 
         // TODO: Disarms
 
-        var attacks = 0;
-        var fireRate = TimeSpan.FromSeconds(1f / weapon.AttackRate);
-
-        while (weapon.NextAttack <= curTime)
-        {
-            weapon.NextAttack += fireRate;
-            attacks++;
-        }
-
-        DebugTools.Assert(attacks > 0);
+        weapon.NextAttack += TimeSpan.FromSeconds(1f / weapon.AttackRate);
 
         // Attack confirmed
         // Play a sound to give instant feedback; same with playing the animations
@@ -209,17 +212,18 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         switch (attack)
         {
-            case LightAttackEvent precise:
-                DoPreciseAttack(user, precise, weapon);
+            case LightAttackEvent light:
+                DoLightAttack(user, light, weapon);
                 break;
-            case HeavyAttackEvent wide:
-                DoWideAttack(user, wide, weapon);
+            case HeavyAttackEvent heavy:
+                DoHeavyAttack(user, heavy, weapon);
                 break;
             default:
                 throw new NotImplementedException();
         }
 
         DoLungeAnimation(user, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
+        weapon.Attacking = true;
         Dirty(weapon);
     }
 
@@ -228,10 +232,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// </summary>
     public static float GetModifier(MeleeWeaponComponent component)
     {
-        var total = component.WindupTime - AttackBuffer;
-        var amount = component.NextAttack + GracePeriod - AttackBuffer;
-        var fraction = Math.Clamp(amount / total, 0f, 1f);
-        return GetModifier(fraction);
+        // TODO
+        return 1f;
     }
 
     public static float GetModifier(float fraction)
@@ -239,12 +241,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return fraction;
     }
 
-    protected virtual void DoPreciseAttack(EntityUid user, ReleasePreciseAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component)
     {
 
     }
 
-    protected virtual void DoWideAttack(EntityUid user, ReleaseWideAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component)
     {
 
     }
