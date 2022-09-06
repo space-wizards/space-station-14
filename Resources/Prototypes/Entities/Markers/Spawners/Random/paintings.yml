@@ -17,4 +17,14 @@
       - PaintingTheGreatWave
       - PaintingCafeTerraceAtNight
       - PaintingNightHawks
+      - PaintingSkeletonCigarette
+      - PaintingPrayerHands
+      - PaintingOldGuitarist
+      - PaintingOlympia
+      - PaintingSaturn
     chance: 1
+    rarePrototypes:
+      - PaintingSkeletonBoof
+      - PaintingEmpty
+      - PaintingMoony 
+    rareChance: 0.01
