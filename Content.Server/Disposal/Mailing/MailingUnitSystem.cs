@@ -32,10 +32,10 @@ public sealed class MailingUnitSystem : EntitySystem
 
         SubscribeLocalEvent<MailingUnitComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MailingUnitComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-        SubscribeLocalEvent<MailingUnitComponent, DisposalUnitSystem.BeforeDisposalFlushEvent>(OnBeforeFlush);
+        SubscribeLocalEvent<MailingUnitComponent, BeforeDisposalFlushEvent>(OnBeforeFlush);
         SubscribeLocalEvent<MailingUnitComponent, ConfigurationSystem.ConfigurationUpdatedEvent>(OnConfigurationUpdated);
         SubscribeLocalEvent<MailingUnitComponent, ActivateInWorldEvent>(HandleActivate);
-        SubscribeLocalEvent<MailingUnitComponent, DisposalUnitSystem.DisposalUnitUIStateUpdatedEvent>(OnDisposalUnitUIStateChange);
+        SubscribeLocalEvent<MailingUnitComponent, DisposalUnitUIStateUpdatedEvent>(OnDisposalUnitUIStateChange);
         SubscribeLocalEvent<MailingUnitComponent, TargetSelectedMessage>(OnTargetSelected);
     }
 
@@ -83,7 +83,7 @@ public sealed class MailingUnitSystem : EntitySystem
     /// <summary>
     /// Prevents the unit from flushing if no target is selected
     /// </summary>
-    private void OnBeforeFlush(EntityUid uid, MailingUnitComponent component, DisposalUnitSystem.BeforeDisposalFlushEvent args)
+    private void OnBeforeFlush(EntityUid uid, MailingUnitComponent component, BeforeDisposalFlushEvent args)
     {
         if (string.IsNullOrEmpty(component.Target))
         {
@@ -164,7 +164,7 @@ public sealed class MailingUnitSystem : EntitySystem
     /// <summary>
     /// Gets called when the disposal unit components ui state changes. This is required because the mailing unit requires a disposal unit component and overrides its ui
     /// </summary>
-    private void OnDisposalUnitUIStateChange(EntityUid uid, MailingUnitComponent component, DisposalUnitSystem.DisposalUnitUIStateUpdatedEvent args)
+    private void OnDisposalUnitUIStateChange(EntityUid uid, MailingUnitComponent component, DisposalUnitUIStateUpdatedEvent args)
     {
         component.DisposalUnitInterfaceState = args.State;
         UpdateUserInterface(component);
