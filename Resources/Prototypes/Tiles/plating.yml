@@ -18,10 +18,12 @@
   baseTurfs:
   - Space
   isSubfloor: true
+  canWirecutter: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.5
   isSpace: true
+  itemDrop: PartRodMetal1
   thermalConductivity: 0.04
   heatCapacity: 10000
 

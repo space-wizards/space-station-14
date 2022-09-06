@@ -35,7 +35,7 @@ namespace Content.Client.MainMenu
         private static readonly Regex IPv6Regex = new(@"\[(.*:.*:.*)](?::(\d+))?");
 
         /// <inheritdoc />
-        public override void Startup()
+        protected override void Startup()
         {
             _mainMenuControl = new MainMenuControl(_resourceCache, _configurationManager);
             _userInterfaceManager.StateRoot.AddChild(_mainMenuControl);
@@ -51,7 +51,7 @@ namespace Content.Client.MainMenu
         }
 
         /// <inheritdoc />
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _client.RunLevelChanged -= RunLevelChanged;
             _netManager.ConnectFailed -= _onConnectFailed;

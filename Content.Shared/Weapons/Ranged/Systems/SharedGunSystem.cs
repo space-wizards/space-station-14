@@ -39,6 +39,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
@@ -153,6 +154,14 @@ public abstract partial class SharedGunSystem : EntitySystem
         component.AvailableModes = state.AvailableSelectiveFire;
     }
 
+    public bool CanShoot(GunComponent component)
+    {
+        if (component.NextFire > Timing.CurTime)
+            return false;
+
+        return true;
+    }
+
     public GunComponent? GetGun(EntityUid entity)
     {
         if (!_combatMode.IsInCombatMode(entity))
@@ -177,6 +186,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
         Dirty(gun);
+    }
+
+    /// <summary>
+    /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
+    /// </summary>
+    public void AttemptShoot(EntityUid user, GunComponent gun, EntityCoordinates toCoordinates)
+    {
+        gun.ShootCoordinates = toCoordinates;
+        AttemptShoot(user, gun);
+        gun.ShotCounter = 0;
     }
 
     private void AttemptShoot(EntityUid user, GunComponent gun)
@@ -310,8 +329,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             Dirty(cartridge);
 
         cartridge.Spent = spent;
-        if (!TryComp<AppearanceComponent>(cartridge.Owner, out var appearance)) return;
-        appearance.SetData(AmmoVisuals.Spent, spent);
+        Appearance.SetData(cartridge.Owner, AmmoVisuals.Spent, spent);
     }
 
     /// <summary>
@@ -349,8 +367,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(gun, sprite);
-
+        var ev = new MuzzleFlashEvent(gun, sprite, user == gun);
         CreateEffect(gun, ev, user);
     }
 

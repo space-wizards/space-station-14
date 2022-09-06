@@ -157,4 +157,4 @@
     - state: icon-unlit
       shader: unshaded
   - type: Storage
-    capacity: 10000
+    capacity: 9999

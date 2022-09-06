@@ -23,7 +23,7 @@
     jumpsuit: ClothingUniformJumpsuitAtmos
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorWhite
-    outerClothing:
+    eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
     belt: ClothingBeltUtilityFilled
     ears: ClothingHeadsetEngineering

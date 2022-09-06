@@ -235,8 +235,19 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        if (!Timing.IsFirstTimePredicted || !TryComp<TransformComponent>(uid, out var xform)) return;
-        var ent = Spawn(message.Prototype, xform.Coordinates);
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
+        EntityCoordinates coordinates;
+
+        if (message.MatchRotation)
+            coordinates = new EntityCoordinates(uid, Vector2.Zero);
+        else if (TryComp<TransformComponent>(uid, out var xform))
+            coordinates = xform.Coordinates;
+        else
+            return;
+
+        var ent = Spawn(message.Prototype, coordinates);
 
         var effectXform = Transform(ent);
         effectXform.LocalRotation -= MathF.PI / 2;
@@ -271,6 +282,7 @@ public sealed partial class GunSystem : SharedGunSystem
         _animPlayer.Play(ent, anim, "muzzle-flash");
         var light = EnsureComp<PointLightComponent>(uid);
 
+        light.NetSyncEnabled = false;
         light.Enabled = true;
         light.Color = Color.FromHex("#cc8e2b");
         light.Radius = 2f;

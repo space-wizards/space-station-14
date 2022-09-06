@@ -10,6 +10,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -797,7 +798,16 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(item, dropMsg, true);
             if (dropMsg.Handled)
                 _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
-            Transform(item).LocalRotation = Angle.Zero;
+
+            // If the dropper is rotated then use their targetrelativerotation as the drop rotation
+            var rotation = Angle.Zero;
+
+            if (TryComp<InputMoverComponent>(user, out var mover))
+            {
+                rotation = mover.TargetRelativeRotation;
+            }
+
+            Transform(item).LocalRotation = rotation;
         }
         #endregion
 

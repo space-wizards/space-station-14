@@ -1,0 +1,85 @@
+# AutoLink variants of BlastDoor (from Outer Rim)
+
+- type: entity
+  id: BlastDoorExterior1
+  parent: BlastDoor
+  suffix: Autolink, Ext1
+  components:
+    - type: AutoLinkReceiver
+      channel: Ext1
+
+
+- type: entity
+  id: BlastDoorExterior1Open
+  parent: BlastDoorOpen
+  suffix: Open, Autolink, Ext1
+  components:
+    - type: AutoLinkReceiver
+      channel: Ext1
+
+- type: entity
+  id: BlastDoorExterior2
+  parent: BlastDoor
+  suffix: Autolink, Ext2
+  components:
+    - type: AutoLinkReceiver
+      channel: Ext2
+
+
+- type: entity
+  id: BlastDoorExterior2Open
+  parent: BlastDoorOpen
+  suffix: Open, Autolink, Ext2
+  components:
+    - type: AutoLinkReceiver
+      channel: Ext2
+
+- type: entity
+  id: BlastDoorExterior3
+  parent: BlastDoor
+  suffix: Autolink, Ext3
+  components:
+    - type: AutoLinkReceiver
+      channel: Ext3
+
+
+- type: entity
+  id: BlastDoorExterior3Open
+  parent: BlastDoorOpen
+  suffix: Open, Autolink, Ext3
+  components:
+    - type: AutoLinkReceiver
+      channel: Ext3
+
+- type: entity
+  id: BlastDoorBridge
+  parent: BlastDoor
+  suffix: Autolink, Bridge
+  components:
+    - type: AutoLinkReceiver
+      channel: Bridge
+
+- type: entity
+  id: BlastDoorBridgeOpen
+  parent: BlastDoorOpen
+  suffix: Open, Autolink, Bridge
+  components:
+    - type: AutoLinkReceiver
+      channel: Bridge
+
+- type: entity
+  id: BlastDoorWindows
+  parent: BlastDoor
+  suffix: Autolink, Windows
+  components:
+    - type: AutoLinkReceiver
+      channel: Windows
+
+- type: entity
+  id: BlastDoorWindowsOpen
+  parent: BlastDoorOpen
+  suffix: Open, Autolink, Windows
+  components:
+    - type: AutoLinkReceiver
+      channel: Windows
+

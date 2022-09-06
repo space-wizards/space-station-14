@@ -90,12 +90,15 @@
       - !type:AirlockBolted
         value: false
       - !type:WirePanel {}
+      - !type:AllWiresCut
+        ignoreTypes:
+          - !type:DoorBoltWireAction
       completed:
       - !type:EmptyAllContainers {}
       steps:
       - tool: Prying
         doAfter: 5
-        
+
   - node: glassElectronics
     entity: AirlockAssembly
     edges:
@@ -127,6 +130,9 @@
       - !type:AirlockBolted
         value: false
       - !type:WirePanel {}
+      - !type:AllWiresCut
+        ignoreTypes:
+          - !type:DoorBoltWireAction
       completed:
       - !type:SpawnPrototype
         prototype: SheetRGlass1

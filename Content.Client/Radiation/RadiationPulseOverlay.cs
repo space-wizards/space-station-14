@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Radiation.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -17,8 +18,6 @@ namespace Content.Client.Radiation
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         public override bool RequestScreenTexture => true;
-
-        private TimeSpan _lastTick = default;
 
         private readonly ShaderInstance _baseShader;
         private readonly Dictionary<EntityUid, (ShaderInstance shd, RadiationShaderInstance instance)> _pulses = new();
@@ -52,7 +51,7 @@ namespace Content.Client.Radiation
                 shd?.SetParameter("renderScale", viewport.RenderScale);
                 shd?.SetParameter("positionInput", tempCoords);
                 shd?.SetParameter("range", instance.Range);
-                var life = (_lastTick - instance.Start) / (instance.End - instance.Start);
+                var life = (_gameTiming.RealTime - instance.Start).TotalSeconds / instance.Duration;
                 shd?.SetParameter("life", (float) life);
 
                 // There's probably a very good reason not to do this.
@@ -75,8 +74,6 @@ namespace Content.Client.Radiation
                 return;
             }
 
-            _lastTick = _gameTiming.CurTime;
-
             var currentEyeLoc = currentEye.Position;
 
             var pulses = _entityManager.EntityQuery<RadiationPulseComponent>();
@@ -92,9 +89,9 @@ namespace Content.Client.Radiation
                                 _baseShader.Duplicate(),
                                 new RadiationShaderInstance(
                                     _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition.Position,
-                                    pulse.Range,
+                                    pulse.VisualRange,
                                     pulse.StartTime,
-                                    pulse.EndTime
+                                    pulse.VisualDuration
                                 )
                             )
                     );
@@ -110,7 +107,7 @@ namespace Content.Client.Radiation
                 {
                     var shaderInstance = _pulses[pulseEntity];
                     shaderInstance.instance.CurrentMapCoords = _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition.Position;
-                    shaderInstance.instance.Range = pulse.Range;
+                    shaderInstance.instance.Range = pulse.VisualRange;
                 } else {
                     _pulses[pulseEntity].shd.Dispose();
                     _pulses.Remove(pulseEntity);
@@ -124,12 +121,12 @@ namespace Content.Client.Radiation
             return _entityManager.GetComponent<TransformComponent>(pulseEntity).MapID == currentEyeLoc.MapId && _entityManager.GetComponent<TransformComponent>(pulseEntity).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, _entityManager.GetComponent<TransformComponent>(pulseEntity).ParentUid, currentEyeLoc), MaxDist);
         }
 
-        private sealed record RadiationShaderInstance(Vector2 CurrentMapCoords, float Range, TimeSpan Start, TimeSpan End)
+        private sealed record RadiationShaderInstance(Vector2 CurrentMapCoords, float Range, TimeSpan Start, float Duration)
         {
             public Vector2 CurrentMapCoords = CurrentMapCoords;
             public float Range = Range;
             public TimeSpan Start = Start;
-            public TimeSpan End = End;
+            public float Duration = Duration;
         };
     }
 }
