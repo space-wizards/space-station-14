@@ -29,8 +29,8 @@ namespace Content.IntegrationTests.Tests
                 var grid = mapMan.CreateGrid(mapId);
                 gridEnt = grid.GridEntityId;
 
-                Assert.That(sEntities.TryGetComponent(gridEnt, out ShuttleComponent? shuttleComponent));
-                Assert.That(sEntities.TryGetComponent(gridEnt, out PhysicsComponent? physicsComponent));
+                Assert.That(sEntities.HasComponent<ShuttleComponent>(gridEnt));
+                Assert.That(sEntities.TryGetComponent<PhysicsComponent>(gridEnt, out var physicsComponent));
                 Assert.That(physicsComponent!.BodyType, Is.EqualTo(BodyType.Dynamic));
                 Assert.That(sEntities.GetComponent<TransformComponent>(gridEnt).LocalPosition, Is.EqualTo(Vector2.Zero));
                 physicsComponent.ApplyLinearImpulse(Vector2.One);
