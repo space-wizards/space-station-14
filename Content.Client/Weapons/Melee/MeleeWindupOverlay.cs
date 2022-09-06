@@ -102,7 +102,18 @@ public sealed class MeleeWindupOverlay : Overlay
             releaseBox = releaseBox.Translated(position);
             handle.DrawRect(releaseBox, Color.LimeGreen);
 
-            var fraction = (float) ((currentTime - comp.WindUpStart.Value).TotalSeconds % comp.WindupTime.TotalSeconds);
+            // Wraps around back to 0
+            var totalDuration = comp.WindupTime.TotalSeconds * 2;
+
+            var elapsed = (currentTime - comp.WindUpStart.Value).TotalSeconds % (2 * totalDuration);
+            var value = elapsed / totalDuration;
+
+            if (value > 1)
+            {
+                value = 2 - value;
+            }
+
+            var fraction = (float) value;
 
             var xPos = (endX - startX) * fraction + startX;
 
