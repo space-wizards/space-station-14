@@ -1,9 +1,4 @@
 Entries:
-- author: jessicamaybe
-  changes:
-  - {message: You can now destroy trees!, type: Tweak}
-  id: 1740
-  time: '2022-06-21T02:06:07.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Vector, C-20R, Flaregun, Mateba, MK58, and the Atreides now have different
@@ -2919,3 +2914,9 @@ Entries:
   - {message: Pills and bottles no longer sell for any spacebucks, type: Fix}
   id: 2239
   time: '2022-09-06T01:43:04.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: Opening the strip UI no longer has a doafter. All item stripping times
+      have been increased by 1 second to account for this., type: Tweak}
+  id: 2240
+  time: '2022-09-06T02:15:49.0000000+00:00'
