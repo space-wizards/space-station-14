@@ -1,12 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Lizards now have an animal metabolism. Have fun and be careful with
-      chocolate and caffeine!, type: Add}
-  id: 1751
-  time: '2022-06-22T23:23:02.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Slimes have a natural immunity to ultragigacancer and bleeder's bite.,
     type: Add}
   - {message: Slimes now take 80% less cellular damage., type: Add}
@@ -2926,3 +2920,9 @@ Entries:
       player after cutting., type: Fix}
   id: 2250
   time: '2022-09-06T05:08:19.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Firelocks will now properly warn users that try to open them if they
+      are holding back an inferno or the cold vacuum of space., type: Fix}
+  id: 2251
+  time: '2022-09-06T05:55:34.0000000+00:00'
