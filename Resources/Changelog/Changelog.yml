@@ -1,13 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Slimes have a natural immunity to ultragigacancer and bleeder's bite.,
-    type: Add}
-  - {message: Slimes now take 80% less cellular damage., type: Add}
-  id: 1752
-  time: '2022-06-22T23:25:49.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Removed sulfuric acid and uranium from the chemical dispenser., type: Remove}
   - {message: Added recipe for sulfuric acid., type: Add}
   - {message: Uranium sheets can be ground up like plasma sheets are., type: Add}
@@ -2926,3 +2919,8 @@ Entries:
       are holding back an inferno or the cold vacuum of space., type: Fix}
   id: 2251
   time: '2022-09-06T05:55:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Entities that are shot will now show a red effect., type: Add}
+  id: 2252
+  time: '2022-09-06T08:01:35.0000000+00:00'
