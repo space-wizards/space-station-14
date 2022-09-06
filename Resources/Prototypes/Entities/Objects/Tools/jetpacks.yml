@@ -6,7 +6,7 @@
     lifetime: 2
   - type: Sprite
     netsync: false
-    drawdepth: Effects
+    drawdepth: SmallMobs
     noRot: true
     layers:
     - shader: unshaded
@@ -14,6 +14,9 @@
       sprite: Effects/atmospherics.rsi
       state: frezon_old
   - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
   - type: AnimationPlayer
 
 - type: entity

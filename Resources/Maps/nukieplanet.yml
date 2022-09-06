@@ -17106,21 +17106,6 @@ entities:
   - pos: 5.5,-10.5
     parent: 104
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 2036
   type: AsteroidRock
   components:

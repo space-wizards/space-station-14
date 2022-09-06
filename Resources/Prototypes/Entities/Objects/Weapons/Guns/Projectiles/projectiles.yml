@@ -13,6 +13,9 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
       state: muzzle_bullet
   - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
   - type: AnimationPlayer
 
 # One bullet to bring them all into the darkness and bind them

@@ -18,11 +18,8 @@
     sprite: Structures/Machines/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
-    beakerSlot:
-      whitelistFailPopup: chem-master-component-cannot-put-entity-message
-      whitelist:
-        components:
-        - FitsInDispenser
+    pillProductionLimit: 10
+    bottleProductionLimit: 10
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -63,10 +60,16 @@
   - type: MaterialStorage
   - type: ContainerContainer
     containers:
+      beakerSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
-      ChemMaster-beaker: !type:ContainerSlot
   - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelistFailPopup: chem-master-component-cannot-put-entity-message
+        whitelist:
+          components:
+          - FitsInDispenser
   - type: SolutionContainerManager
     solutions:
       buffer: {}
