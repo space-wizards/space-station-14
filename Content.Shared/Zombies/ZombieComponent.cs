@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Zombies
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class ZombieComponent : Component
     {
         /// <summary>
