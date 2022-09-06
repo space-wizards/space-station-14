@@ -47,6 +47,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _configurationMenu.Clear.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Clear);
                 _configurationMenu.Copy.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Copy);
                 _configurationMenu.Show.OnPressed += OnShowPressed;
+                _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner.Owner);
                 _configurationMenu.OpenCentered();
                 break;
         }
@@ -82,7 +83,8 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     {
         base.ReceiveMessage(message);
 
-        if (_entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityLifeStage > EntityLifeStage.Initialized
+        if (_configurationMenu == null
+            || _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityLifeStage > EntityLifeStage.Initialized
             || message is not ManualDeviceListSyncMessage cast
             || cast.Device == null
             || cast.Devices == null)
@@ -93,6 +95,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
         _netConfig.SetActiveDeviceList(Owner.Owner, cast.Device.Value);
         _deviceList.UpdateDeviceList(cast.Device.Value, cast.Devices);
         _netConfig.ToggleVisualization(Owner.Owner, true);
+        _configurationMenu.Show.Pressed = true;
     }
 
     protected override void Dispose(bool disposing)

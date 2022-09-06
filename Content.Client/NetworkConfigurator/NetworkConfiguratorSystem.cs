@@ -27,6 +27,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         SubscribeLocalEvent<ClearAllOverlaysEvent>(_ => ClearAllOverlays());
     }
 
+    public bool ConfiguredListIsTracked(EntityUid uid, NetworkConfiguratorComponent? component = null)
+    {
+        return Resolve(uid, ref component)
+               && component.ActiveDeviceList != null
+               && HasComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
+    }
+
     /// <summary>
     /// Toggles a device list's (tied to this network configurator) connection visualisation on and off.
     /// </summary>
