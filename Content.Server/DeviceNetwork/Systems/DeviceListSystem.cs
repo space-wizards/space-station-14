@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using Content.Server.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
-public sealed class DeviceListSystem : EntitySystem
+public sealed class DeviceListSystem : SharedDeviceListSystem
 {
     public override void Initialize()
     {
@@ -62,16 +63,6 @@ public sealed class DeviceListSystem : EntitySystem
     }
 
     /// <summary>
-    /// Toggles the given device lists connection visualisation on and off.
-    /// TODO: Implement an overlay that draws a line between the given entity and the entities in the device list
-    /// </summary>
-    public void ToggleVisualization(EntityUid uid, bool ensureOff = false, DeviceListComponent? deviceList = null)
-    {
-        if (!Resolve(uid, ref deviceList))
-            return;
-    }
-
-    /// <summary>
     /// Filters the broadcasts recipient list against the device list as either an allow or deny list depending on the components IsAllowList field
     /// </summary>
     private void OnBeforeBroadcast(EntityUid uid, DeviceListComponent component, BeforeBroadcastAttemptEvent args)
@@ -108,14 +99,4 @@ public enum DeviceListUpdateResult : byte
     NoComponent,
     TooManyDevices,
     UpdateOk
-}
-
-public sealed class DeviceListUpdateEvent : EntityEventArgs
-{
-    public DeviceListUpdateEvent(List<EntityUid> devices)
-    {
-        Devices = devices;
-    }
-
-    public List<EntityUid> Devices { get; }
 }

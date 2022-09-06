@@ -23,7 +23,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// The amount of ichor injected per devour
         /// </summary>
-        [DataField("devourHealRate")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("devourHealRate")]
         public float DevourHealRate = 15f;
 
         [DataField("devourActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]

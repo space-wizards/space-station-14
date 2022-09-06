@@ -1,0 +1,31 @@
+- type: htnCompound
+  id: CleanbotCompound
+  branches:
+    - tasks:
+        - id: BufferNearbyPuddlesCompound
+    - tasks:
+        - id: IdleCompound
+
+# Picks a random puddle in range to move to and idle
+- type: htnCompound
+  id: BufferNearbyPuddlesCompound
+  branches:
+    - tasks:
+        - id: PickPuddlePrimitive
+        - id: MoveToAccessiblePrimitive
+        - id: SetIdleTimePrimitive
+        - id: WaitIdleTimePrimitive
+
+
+- type: htnPrimitive
+  id: PickPuddlePrimitive
+  operator: !type:PickAccessibleComponentOperator
+    rangeKey: BufferRange
+    targetKey: MovementTarget
+    component: Puddle
+
+- type: htnPrimitive
+  id: SetIdleTimePrimitive
+  operator: !type:SetFloatOperator
+    targetKey: IdleTime
+    amount: 3

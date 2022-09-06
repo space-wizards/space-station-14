@@ -12,13 +12,14 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
-public sealed class NetworkConfiguratorSystem : EntitySystem
+public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
     [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -45,6 +46,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorRemoveDeviceMessage>(OnRemoveDevice);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorClearDevicesMessage>(OnClearDevice);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorButtonPressedMessage>(OnConfigButtonPressed);
+        SubscribeLocalEvent<NetworkConfiguratorComponent, ManualDeviceListSyncMessage>(ManualDeviceListSync);
 
         SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
     }
@@ -218,6 +220,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             return;
 
         configurator.ActiveDeviceList = targetUid;
+        Dirty(configurator);
         _uiSystem.GetUiOrNull(configurator.Owner, NetworkConfiguratorUiKey.Configure)?.Open(actor.PlayerSession);
         _uiSystem.TrySetUiState(
             configurator.Owner,
@@ -307,8 +310,9 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
                 UpdateUiState(uid, component);
                 return;
             case NetworkConfiguratorButtonKey.Show:
-                _deviceListSystem.ToggleVisualization(component.ActiveDeviceList.Value);
-                return;
+                // This should be done client-side.
+                // _deviceListSystem.ToggleVisualization(component.ActiveDeviceList.Value);
+                break;
         }
 
         var resultText = result switch
@@ -325,6 +329,20 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(component.ActiveDeviceList.Value)
                     .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()));
+    }
+
+    // hacky solution related to mapping
+    private void ManualDeviceListSync(EntityUid uid, NetworkConfiguratorComponent comp,
+        ManualDeviceListSyncMessage args)
+    {
+        if (comp.ActiveDeviceList == null || args.Session is not IPlayerSession player)
+        {
+            return;
+        }
+
+        var devices = _deviceListSystem.GetAllDevices(comp.ActiveDeviceList.Value).ToHashSet();
+
+        _uiSystem.TrySendUiMessage(uid, NetworkConfiguratorUiKey.Configure, new ManualDeviceListSyncMessage(comp.ActiveDeviceList.Value, devices), player);
     }
 
     #endregion
