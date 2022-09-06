@@ -10,7 +10,7 @@ public sealed partial class MeleeWeaponSystem
 {
     private static readonly Animation DefaultDamageAnimation = new()
     {
-        Length = TimeSpan.FromSeconds(0.3),
+        Length = TimeSpan.FromSeconds(DamageAnimationLength),
         AnimationTracks =
         {
             new AnimationTrackComponentProperty()
@@ -20,12 +20,13 @@ public sealed partial class MeleeWeaponSystem
                 KeyFrames =
                 {
                     new AnimationTrackProperty.KeyFrame(Color.Red, 0f),
-                    new AnimationTrackProperty.KeyFrame(Color.White, 0.3f)
+                    new AnimationTrackProperty.KeyFrame(Color.White, DamageAnimationLength)
                 }
             }
         }
     };
 
+    private const float DamageAnimationLength = 0.15f;
     private const string DamageAnimationKey = "damage-effect";
 
     private void InitializeEffect()
@@ -57,7 +58,7 @@ public sealed partial class MeleeWeaponSystem
 
         return new Animation
         {
-            Length = TimeSpan.FromSeconds(0.3),
+            Length = TimeSpan.FromSeconds(DamageAnimationLength),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty()
@@ -67,7 +68,7 @@ public sealed partial class MeleeWeaponSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Color.Red * sprite.Color, 0f),
-                        new AnimationTrackProperty.KeyFrame(sprite.Color, 0.3f)
+                        new AnimationTrackProperty.KeyFrame(sprite.Color, DamageAnimationLength)
                     }
                 }
             }
