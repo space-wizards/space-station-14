@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests
                         new PoolSettings
                         {
                             Disconnected = true,
-                            TestName = $"{nameof(PostMapInitTest)}.{nameof(GetMapNames)}"
+                            TestName = $"{nameof(PostMapInitTest)}.{nameof(GetGameMapNames)}"
                         }
                     );
                     var server = pairTracker.Pair.Server;
