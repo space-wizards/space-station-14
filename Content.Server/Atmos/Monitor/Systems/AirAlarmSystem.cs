@@ -298,9 +298,9 @@ public sealed class AirAlarmSystem : EntitySystem
 
         if (args.AlarmType == AtmosAlarmType.Danger)
         {
-            SetMode(uid, addr, AirAlarmMode.None, true, false);
+            SetMode(uid, addr, AirAlarmMode.Panic, true, false);
         }
-        else if (args.AlarmType == AtmosAlarmType.Normal)
+        else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
         {
             SetMode(uid, addr, AirAlarmMode.Filtering, true, false);
         }
