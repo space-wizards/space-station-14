@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Damage Slowdown has been modified to feel less awful. No more slowly
-      crawling places when you're crit., type: Tweak}
-  id: 1736
-  time: '2022-06-21T02:00:14.0000000+00:00'
 - author: themias
   changes:
   - {message: Mimes no longer warned about their vow when just typing, type: Fix}
@@ -2916,3 +2910,11 @@ Entries:
       linking., type: Add}
   id: 2235
   time: '2022-09-06T00:55:44.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Game objects that store device network links now have a set limit as
+      to how many devices that they can store., type: Tweak}
+  - {message: The device network link list now has a UI on devices that use device
+      network linking., type: Tweak}
+  id: 2236
+  time: '2022-09-06T01:22:39.0000000+00:00'
