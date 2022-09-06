@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Examining a drink shows how much is left, type: Tweak}
-  id: 1747
-  time: '2022-06-22T02:02:25.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Reduced the amount of alcohol contained in a booze-o-mat., type: Tweak}
@@ -2925,3 +2920,8 @@ Entries:
   - {message: The security belt can now hold seclites., type: Tweak}
   id: 2246
   time: '2022-09-06T02:46:30.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Insulated glove users are no longer safe from licoxide., type: Fix}
+  id: 2247
+  time: '2022-09-06T02:48:36.0000000+00:00'
