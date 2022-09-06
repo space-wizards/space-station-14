@@ -17,30 +17,6 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
     }
 
     /// <summary>
-    /// Replaces or merges the current device list with the given one
-    /// </summary>
-    public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
-    {
-        if (!Resolve(uid, ref deviceList))
-            return DeviceListUpdateResult.NoComponent;
-
-        var newDevices = merge ? new HashSet<EntityUid>(deviceList.Devices) : new();
-        var devicesList = devices.ToList();
-
-        newDevices.UnionWith(devicesList);
-        if (newDevices.Count > deviceList.DeviceLimit)
-        {
-            return DeviceListUpdateResult.TooManyDevices;
-        }
-
-        deviceList.Devices = newDevices;
-
-        RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
-
-        return DeviceListUpdateResult.UpdateOk;
-    }
-
-    /// <summary>
     /// Gets the given device list as a dictionary
     /// </summary>
     public Dictionary<string, EntityUid> GetDeviceList(EntityUid uid, DeviceListComponent? deviceList = null)
@@ -92,11 +68,4 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         if (component.HandleIncomingPackets && component.Devices.Contains(args.Sender) != component.IsAllowList)
             args.Cancel();
     }
-}
-
-public enum DeviceListUpdateResult : byte
-{
-    NoComponent,
-    TooManyDevices,
-    UpdateOk
 }
