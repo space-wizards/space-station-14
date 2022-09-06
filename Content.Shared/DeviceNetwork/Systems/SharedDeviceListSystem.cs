@@ -18,20 +18,27 @@ public abstract class SharedDeviceListSystem : EntitySystem
     /// <param name="devices">The devices to store.</param>
     /// <param name="merge">Whether to merge or replace the devices stored.</param>
     /// <param name="deviceList">Device list component</param>
-    public void UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
+    public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
     {
         if (!Resolve(uid, ref deviceList))
-            return;
+            return DeviceListUpdateResult.NoComponent;
 
-        if (!merge)
-            deviceList.Devices.Clear();
-
+        var newDevices = merge ? new HashSet<EntityUid>(deviceList.Devices) : new();
         var devicesList = devices.ToList();
-        deviceList.Devices.UnionWith(devicesList);
+
+        newDevices.UnionWith(devicesList);
+        if (newDevices.Count > deviceList.DeviceLimit)
+        {
+            return DeviceListUpdateResult.TooManyDevices;
+        }
+
+        deviceList.Devices = newDevices;
 
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
 
         Dirty(deviceList);
+
+        return DeviceListUpdateResult.UpdateOk;
     }
 
     public IEnumerable<EntityUid> GetAllDevices(EntityUid uid, DeviceListComponent? component = null)
@@ -69,4 +76,11 @@ public sealed class DeviceListUpdateEvent : EntityEventArgs
     }
 
     public List<EntityUid> Devices { get; }
+}
+
+public enum DeviceListUpdateResult : byte
+{
+    NoComponent,
+    TooManyDevices,
+    UpdateOk
 }

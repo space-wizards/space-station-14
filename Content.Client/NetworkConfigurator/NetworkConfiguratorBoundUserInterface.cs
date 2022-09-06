@@ -75,8 +75,15 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        var castState = (NetworkConfiguratorUserInterfaceState) state;
-        _listMenu?.UpdateState(castState);
+        switch (state)
+        {
+            case NetworkConfiguratorUserInterfaceState configState:
+                _listMenu?.UpdateState(configState);
+                break;
+            case DeviceListUserInterfaceState listState:
+                _configurationMenu?.UpdateState(listState);
+                break;
+        }
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)

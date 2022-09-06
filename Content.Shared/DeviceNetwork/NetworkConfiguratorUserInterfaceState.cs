@@ -12,3 +12,14 @@ public sealed class NetworkConfiguratorUserInterfaceState : BoundUserInterfaceSt
         DeviceList = deviceList;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class DeviceListUserInterfaceState : BoundUserInterfaceState
+{
+    public readonly HashSet<(string address, string name)> DeviceList;
+
+    public DeviceListUserInterfaceState(HashSet<(string address, string name)> deviceList)
+    {
+        DeviceList = deviceList;
+    }
+}
