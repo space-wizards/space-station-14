@@ -542,7 +542,7 @@ entities:
 - uid: 73
   components:
   - pos: 0.64252126,4.1776605
-    parent: 640
+    parent: null
     type: Transform
   - index: 0
     type: MapGrid
@@ -5107,10 +5107,6 @@ entities:
   - pos: -4.5,-29.5
     parent: 73
     type: Transform
-- uid: 640
-  components:
-  - index: 5
-    type: Map
 - uid: 641
   type: WallPlastitanium
   components:
