@@ -4,6 +4,18 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
 {
+    /// <summary>
+    /// This class holds constants that are shared between client and server.
+    /// </summary>
+    public sealed class SharedChemMaster
+    {
+        public const uint PillTypes = 20;
+        public const string BufferSolutionName = "buffer";
+        public const string ContainerSlotName = "beakerSlot";
+        public const string PillSolutionName = "food";
+        public const string BottleSolutionName = "drink";
+    }
+
     [Serializable, NetSerializable]
     public sealed class ChemMasterSetModeMessage : BoundUserInterfaceMessage
     {

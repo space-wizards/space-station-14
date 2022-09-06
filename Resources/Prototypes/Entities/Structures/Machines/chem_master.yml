@@ -60,12 +60,12 @@
   - type: MaterialStorage
   - type: ContainerContainer
     containers:
-      container_slot: !type:ContainerSlot
+      beakerSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: ItemSlots
     slots:
-      container_slot:
+      beakerSlot:
         whitelistFailPopup: chem-master-component-cannot-put-entity-message
         whitelist:
           components:

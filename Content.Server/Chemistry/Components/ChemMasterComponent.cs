@@ -18,15 +18,13 @@ namespace Content.Server.Chemistry.Components
         [DataField("mode"), ViewVariables(VVAccess.ReadWrite)]
         public ChemMasterMode Mode = ChemMasterMode.Transfer;
 
-        [DataField("pillProductionLimit"), ViewVariables(VVAccess.ReadWrite)]
-        public uint PillProductionLimit = default!;
+        [DataField("pillProductionLimit", required: true), ViewVariables(VVAccess.ReadWrite)]
+        public uint PillProductionLimit;
 
-        [DataField("bottleProductionLimit"), ViewVariables(VVAccess.ReadWrite)]
-        public uint BottleProductionLimit = default!;
+        [DataField("bottleProductionLimit", required: true), ViewVariables(VVAccess.ReadWrite)]
+        public uint BottleProductionLimit;
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
-
-        public const string SolutionName = "buffer";
     }
 }
