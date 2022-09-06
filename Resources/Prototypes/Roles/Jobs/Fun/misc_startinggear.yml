@@ -162,11 +162,11 @@
     back: ClothingBackpackDuffelCBURN
     mask: ClothingMaskGas
     eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetService
+    ears: ClothingHeadsetAltCommand
     gloves: ClothingHandsGlovesFingerless
     outerClothing: ClothingOuterHardsuitCBURN
     shoes: ClothingShoesBootsJack
-    id: CentcomPDA
+    id: CBURNPDA
     pocket1: CombatKnife
     pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled

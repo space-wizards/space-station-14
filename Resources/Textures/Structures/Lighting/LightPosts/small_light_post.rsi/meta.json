@@ -15,6 +15,9 @@
     },
     {
       "name": "empty"
-    }
+    },
+	{
+	  "name": "broken"
+	}
   ]
 }
