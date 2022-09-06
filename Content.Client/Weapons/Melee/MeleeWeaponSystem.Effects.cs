@@ -104,6 +104,7 @@ public sealed partial class MeleeWeaponSystem
             return;
 
         var comp = EnsureComp<DamageEffectComponent>(ev.Entity);
+        comp.NetSyncEnabled = false;
         comp.Color = sprite.Color;
         _animation.Play(player, DefaultDamageAnimation, DamageAnimationKey);
     }
