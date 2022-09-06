@@ -133,8 +133,6 @@ public sealed class ListContainer : Control
 
     protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
-        var separation = (int) (ActualSeparation * UIScale);
-
         #region Scroll
         var cHeight = _totalHeight;
         var vBarSize = _vScrollBar.DesiredSize.X;
@@ -208,12 +206,12 @@ public sealed class ListContainer : Control
          */
         var scroll = GetScrollValue();
         var oldTopIndex = _topIndex;
-        _topIndex = (int) ((scroll.Y + separation) / (_itemHeight + separation));
+        _topIndex = (int) ((scroll.Y + ActualSeparation) / (_itemHeight + ActualSeparation));
         if (_topIndex != oldTopIndex)
             _updateChildren = true;
 
         var oldBottomIndex = _bottomIndex;
-        _bottomIndex = (int) Math.Ceiling((scroll.Y + finalHeight) / (_itemHeight + separation));
+        _bottomIndex = (int) Math.Ceiling((scroll.Y + finalHeight) / (_itemHeight + ActualSeparation));
         _bottomIndex = Math.Min(_bottomIndex, _data.Count);
         if (_bottomIndex != oldBottomIndex)
             _updateChildren = true;
@@ -270,22 +268,23 @@ public sealed class ListContainer : Control
         #region Layout Children
         // Use pixel position
         var pixelWidth = (int)(finalWidth * UIScale);
+        var pixelSeparation = (int) (ActualSeparation * UIScale);
 
-        var offset = (int) -((scroll.Y - _topIndex * (_itemHeight + separation)) * UIScale);
+        var pixelOffset = (int) -((scroll.Y - _topIndex * (_itemHeight + ActualSeparation)) * UIScale);
         var first = true;
         foreach (var child in Children)
         {
             if (child == _vScrollBar)
                 continue;
             if (!first)
-                offset += separation;
+                pixelOffset += pixelSeparation;
             first = false;
 
-            var size = child.DesiredPixelSize.Y;
-            var targetBox = new UIBox2i(0, offset, pixelWidth, offset + size);
+            var pixelSize = child.DesiredPixelSize.Y;
+            var targetBox = new UIBox2i(0, pixelOffset, pixelWidth, pixelOffset + pixelSize);
             child.ArrangePixel(targetBox);
 
-            offset += size;
+            pixelOffset += pixelSize;
         }
         #endregion
 
