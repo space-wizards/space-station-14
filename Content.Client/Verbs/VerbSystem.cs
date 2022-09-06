@@ -131,7 +131,7 @@ namespace Content.Client.Verbs
             // remove any entities in containers
             if ((visibility & MenuVisibility.InContainer) == 0)
             {
-                for (var i = 0; i < entities.Count; i++)
+                for (var i = entities.Count - 1; i >= 0; i--)
                 {
                     var entity = entities[i];
 
@@ -139,7 +139,6 @@ namespace Content.Client.Verbs
                         continue;
 
                     entities.RemoveSwap(i);
-                    i--;
                 }
             }
 
@@ -149,22 +148,15 @@ namespace Content.Client.Verbs
                 var spriteQuery = GetEntityQuery<SpriteComponent>();
                 var tagQuery = GetEntityQuery<TagComponent>();
 
-                for (var i = 0; i < entities.Count; i++)
+                for (var i = entities.Count - 1; i >= 0; i--)
                 {
                     var entity = entities[i];
 
                     if (!spriteQuery.TryGetComponent(entity, out var spriteComponent) ||
-                        !spriteComponent.Visible)
+                        !spriteComponent.Visible ||
+                        _tagSystem.HasTag(entity, "HideContextMenu", tagQuery))
                     {
                         entities.RemoveSwap(i);
-                        i--;
-                        continue;
-                    }
-
-                    if (_tagSystem.HasTag(entity, "HideContextMenu", tagQuery))
-                    {
-                        entities.RemoveSwap(i);
-                        i--;
                     }
                 }
             }
@@ -175,7 +167,7 @@ namespace Content.Client.Verbs
                 var xformQuery = GetEntityQuery<TransformComponent>();
                 var playerPos = xformQuery.GetComponent(player.Value).MapPosition;
 
-                for (var i = 0; i < entities.Count; i++)
+                for (var i = entities.Count - 1; i >= 0; i--)
                 {
                     var entity = entities[i];
 
@@ -186,7 +178,6 @@ namespace Content.Client.Verbs
                         null))
                     {
                         entities.RemoveSwap(i);
-                        i--;
                     }
                 }
             }
