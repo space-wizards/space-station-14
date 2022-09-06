@@ -184,13 +184,26 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (FindLocation(msg.Name) is { } warp)
+            // TODO: why the fuck is this using the name instead of an entity id or something?
+            // at least it makes sense for the warp command to need to use names, but not this.
+
+            if (FindLocation(msg.Name) is not { } warp)
             {
-                EntityManager.GetComponent<TransformComponent>(ghost.Owner).Coordinates = EntityManager.GetComponent<TransformComponent>(warp.Owner).Coordinates;
+                Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid warp: {msg.Name}");
+                return;
+            }
+            
+            if (warp.Follow)
+            {
+                _followerSystem.StartFollowingEntity(attached, warp.Owner);
                 return;
             }
 
-            Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid warp: {msg.Name}");
+            var xform = Transform(attached);
+            xform.Coordinates = Transform(warp.Owner).Coordinates;
+            xform.AttachToGridOrMap();
+            if (TryComp(attached, out PhysicsComponent? physics))
+                physics.LinearVelocity = Vector2.Zero;
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
