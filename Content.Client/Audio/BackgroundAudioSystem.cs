@@ -14,6 +14,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Threading;
+using Content.Client.Gameplay;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Timer = Robust.Shared.Timing.Timer;
@@ -165,7 +166,7 @@ namespace Content.Client.Audio
                 StartLobbyMusic();
                 return;
             }
-            else if (args.NewState is GameScreen)
+            else if (args.NewState is GameplayState)
             {
                 StartAmbience();
             }
@@ -195,7 +196,7 @@ namespace Content.Client.Audio
 
         private void AmbienceCVarChanged(float volume)
         {
-            if (_stateManager.CurrentState is GameScreen)
+            if (_stateManager.CurrentState is GameplayState)
             {
                 StartAmbience();
             }
@@ -237,7 +238,7 @@ namespace Content.Client.Audio
             if (_currentCollection == null)
                 return;
 
-            if (enabled && _stateManager.CurrentState is GameScreen && _currentCollection.ID == _stationAmbience.ID)
+            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.ID == _stationAmbience.ID)
             {
                 StartAmbience();
             }
@@ -252,7 +253,7 @@ namespace Content.Client.Audio
             if (_currentCollection == null)
                 return;
 
-            if (enabled && _stateManager.CurrentState is GameScreen && _currentCollection.ID == _spaceAmbience.ID)
+            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.ID == _spaceAmbience.ID)
             {
                 StartAmbience();
             }

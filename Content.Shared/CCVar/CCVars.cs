@@ -482,6 +482,8 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
 
+        public static readonly CVarDef<bool> NPCCollisionAvoidance = CVarDef.Create("npc.collision_avoidance", true);
+
         /*
          * Net
          */
@@ -1182,6 +1184,18 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+
+        /*
+         * Fire alarm
+         */
+
+        /// <summary>
+        ///     If fire alarms should have all access, or if activating/resetting these
+        ///     should be restricted to what is dictated on a player's access card.
+        ///     Defaults to true.
+        /// </summary>
+        public static readonly CVarDef<bool> FireAlarmAllAccess =
+            CVarDef.Create("firealarm.allaccess", true, CVar.SERVERONLY);
 
         /*
          * PLAYTIME

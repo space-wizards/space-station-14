@@ -24,6 +24,8 @@ namespace Content.Shared.CombatMode
             Event = new TogglePrecisionModeEvent(),
         };
 
+        [DataField("disarmFailChance")]
+        public readonly float BaseDisarmFailChance = 0.75f;
         /// <summary>
         /// Precision targeting. When precision is enabled we attack what our mouse is over rather than as an arc attack.
         /// </summary>

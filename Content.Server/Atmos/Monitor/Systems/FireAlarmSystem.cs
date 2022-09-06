@@ -3,11 +3,15 @@ using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Access.Systems;
 using Content.Shared.AlertLevel;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.CCVar;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -16,6 +20,8 @@ public sealed class FireAlarmSystem : EntitySystem
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
     [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     public override void Initialize()
     {
@@ -33,6 +39,9 @@ public sealed class FireAlarmSystem : EntitySystem
     private void OnInteractHand(EntityUid uid, FireAlarmComponent component, InteractHandEvent args)
     {
         if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
+            return;
+
+        if (!_configManager.GetCVar(CCVars.FireAlarmAllAccess) && !_access.IsAllowed(args.User, args.Target))
             return;
 
         if (this.IsPowered(uid, EntityManager))
