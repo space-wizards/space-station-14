@@ -1,19 +1,15 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Doors.Components;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Shuttles.Components;
-using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Popups;
+using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems
@@ -42,8 +38,6 @@ namespace Content.Server.Doors.Systems
 
             // Visuals
             SubscribeLocalEvent<FirelockComponent, MapInitEvent>(UpdateVisuals);
-            SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(UpdateVisuals);
-            SubscribeLocalEvent<FirelockComponent, PowerChangedEvent>(UpdateVisuals);
         }
 
         #region Visuals
@@ -58,22 +52,17 @@ namespace Content.Server.Doors.Systems
             _accumulatedFrameTime -= _visualUpdateInterval;
 
             var powerQuery = GetEntityQuery<ApcPowerReceiverComponent>();
-            var airtightQuery = GetEntityQuery<AirtightComponent>();
 
-            foreach (var (firelock, door, appearance, xform) in EntityQuery<FirelockComponent, DoorComponent, AppearanceComponent, TransformComponent>())
+            foreach (var (_, door, appearance, xform) in EntityQuery<FirelockComponent, DoorComponent, AppearanceComponent, TransformComponent>())
             {
-                UpdateVisuals(door.Owner, firelock, door, null, appearance, xform, powerQuery, airtightQuery);
+                UpdateVisuals(door.Owner, door, appearance, powerQuery);
             }
         }
 
         private void UpdateVisuals(EntityUid uid,
-            FirelockComponent? firelock = null,
             DoorComponent? door = null,
-            AirtightComponent? airtight = null,
             AppearanceComponent? appearance = null,
-            TransformComponent? xform = null,
-            EntityQuery<ApcPowerReceiverComponent>? powerQuery = null,
-            EntityQuery<AirtightComponent>? airtightQuery = null)
+            EntityQuery<ApcPowerReceiverComponent>? powerQuery = null)
         {
             if (!Resolve(uid, ref door, ref appearance, false))
                 return;
@@ -95,7 +84,7 @@ namespace Content.Server.Doors.Systems
             }
 
             appearance.SetData(DoorVisuals.ClosedLights,
-                IsHoldingPressureOrFire(uid, firelock, xform, airtight, airtightQuery));
+                IsHoldingPressureOrFire(uid));
         }
         #endregion
 
@@ -104,30 +93,25 @@ namespace Content.Server.Doors.Systems
             if (!Resolve(uid, ref firelock, ref door))
                 return false;
 
-            if (door.State == DoorState.Open &&
-                _doorSystem.CanClose(uid, door))
+            if (door.State == DoorState.Open)
             {
-                _doorSystem.StartClosing(uid, door);
-
-                // Door system also sets airtight, but only after a delay. We want it to be immediate.
-                if (TryComp(uid, out AirtightComponent? airtight))
+                if (_doorSystem.TryClose(door.Owner, door))
                 {
-                    _airtightSystem.SetAirblocked(airtight, true);
+                    return _doorSystem.OnPartialClose(door.Owner, door);
                 }
-                return true;
             }
             return false;
         }
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
-            if (!this.IsPowered(uid, EntityManager) || IsHoldingPressureOrFire(uid, component))
+            if (!this.IsPowered(uid, EntityManager) || IsHoldingPressureOrFire(uid))
                 args.Cancel();
         }
 
         private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, DoorGetPryTimeModifierEvent args)
         {
-            var state = CheckPressureAndFire(uid, component);
+            var state = CheckPressureAndFire(uid);
 
             if (state.Fire)
             {
@@ -154,6 +138,7 @@ namespace Content.Server.Doors.Systems
             }
 
             _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
+            UpdateVisuals(uid, component, args);
         }
 
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
@@ -184,133 +169,55 @@ namespace Content.Server.Doors.Systems
             }
         }
 
-        public bool IsHoldingPressureOrFire(
-            EntityUid uid,
-            FirelockComponent? firelock = null,
-            TransformComponent? xform = null,
-            AirtightComponent? airtight = null,
-            EntityQuery<AirtightComponent>? airtightQuery = null)
+        public bool IsHoldingPressureOrFire(EntityUid uid)
         {
-            var result = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
+            var result = CheckPressureAndFire(uid);
             return result.Pressure || result.Fire;
         }
 
-        public (bool Pressure, bool Fire) CheckPressureAndFire(
-            EntityUid uid,
-            FirelockComponent? firelock = null,
-            TransformComponent? xform = null,
-            AirtightComponent? airtight = null,
-            EntityQuery<AirtightComponent>? airtightQuery = null)
+        public (bool Pressure, bool Fire) CheckPressureAndFire(EntityUid owner)
         {
-            airtightQuery ??= GetEntityQuery<AirtightComponent>();
-            if (!airtightQuery.Value.Resolve(uid, ref airtight, false))
+            float threshold = 20;
+            var atmosphereSystem = EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            var transformSystem = EntityManager.EntitySysManager.GetEntitySystem<TransformSystem>();
+            var transform = EntityManager.GetComponent<TransformComponent>(owner);
+            var position = transformSystem.GetGridOrMapTilePosition(owner, transform);
+            if (transform.GridUid is not {} gridUid)
                 return (false, false);
+            var minMoles = float.MaxValue;
+            var maxMoles = 0f;
 
-            if (!airtight.AirBlocked)
-                return (false, false);
+            return (IsHoldingPressure(), IsHoldingFire());
 
-            if (!Resolve(uid, ref firelock, ref xform))
-                return (false, false);
-
-            if (TryComp(uid, out DockingComponent? dock) && dock.Docked)
+            bool IsHoldingPressure()
             {
-                // Currently docking automatically opens the doors. But maybe in future, check the pressure difference before opening doors?
-                return (false, false);
-            }
-
-            if (!xform.Anchored)
-                return (false, false);
-
-            if (!TryComp(xform.ParentUid, out GridAtmosphereComponent? gridAtmosphere))
-                return (false, false);
-
-            var grid = Comp<IMapGridComponent>(xform.ParentUid).Grid;
-            var pos = grid.CoordinatesToTile(xform.Coordinates);
-            var minPressure = float.MaxValue;
-            var maxPressure = float.MinValue;
-            bool holdingFire = false;
-            bool holdingPressure = false;
-
-            // We cannot simply use `_atmosSystem.GetAdjacentTileMixtures` because of how the `includeBlocked` option
-            // works, we want to ignore the firelock's blocking, while including blockers on other tiles.
-            // GetAdjacentTileMixtures also ignores empty/non-existent tiles, which we don't want. Additionally, for
-            // edge-fire locks, we only want to enumerate over a single directions. So AFAIK there is no nice way of
-            // achieving all this using existing atmos functions, and the functionality is too specialized to bother
-            // adding new public atmos system functions.
-
-            float pressure;
-            TileAtmosphere? atmos;
-            // >> TileAtmosphere
-            // >> You shouldn't use this directly, use <see cref="AtmosphereSystem"/> instead.
-            // umm... uhh.... I'll pretend I didn't read that.
-            // I just need to query both pressure and IsHotspotActive at the same time.
-
-            // TODO redo this with planet/map atmospheres
-
-            for (var i = 0; i < Atmospherics.Directions; i++)
-            {
-                var dir = (AtmosDirection) (1 << i);
-
-                if (!airtight.AirBlockedDirection.HasFlag(dir))
-                    continue;
-
-                var adjacentPos = pos.Offset(dir);
-                atmos = _atmosSystem.GetTileAtmosphere(gridAtmosphere, adjacentPos);
-
-                if (atmos != null)
+                foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(gridUid, position))
                 {
-                    // Is there some airtight entity blocking this direction? If yes, don't include this direction in the
-                    // pressure differential
-                    if (HasAirtightBlocker(grid.GetAnchoredEntities(adjacentPos), dir.GetOpposite(), airtightQuery.Value))
-                        continue;
-
-                    holdingFire |= atmos.Hotspot.Valid;
-                    pressure = atmos.Air?.Pressure ?? 0;
+                    var moles = adjacent.TotalMoles;
+                    if (moles < minMoles)
+                        minMoles = moles;
+                    if (moles > maxMoles)
+                        maxMoles = moles;
                 }
-                else
-                    pressure = 0;
 
-                minPressure = Math.Min(minPressure, pressure);
-                maxPressure = Math.Max(maxPressure, pressure);
-
-                holdingPressure |= maxPressure - minPressure > firelock.PressureThreshold;
-
-                if (holdingPressure && holdingFire)
-                    return (holdingPressure, holdingFire);
+                return (maxMoles - minMoles) > threshold;
             }
 
-            // May also have to consider pressure on the same tile as the firelock.
-            if (airtight.AirBlockedDirection == AtmosDirection.All)
-                return (holdingPressure, holdingFire);
-
-            atmos = _atmosSystem.GetTileAtmosphere(gridAtmosphere, pos);
-            if (atmos != null)
+            bool IsHoldingFire()
             {
-                holdingFire |= atmos.Hotspot.Valid;
-                pressure = atmos.Air?.Pressure ?? 0;
-            }
-            else
-                pressure = 0;
+                if (atmosphereSystem.GetTileMixture(gridUid, null, position) == null)
+                    return false;
 
-            minPressure = Math.Min(minPressure, pressure);
-            maxPressure = Math.Max(maxPressure, pressure);
-            holdingPressure |= maxPressure - minPressure > firelock.PressureThreshold;
-
-            return (holdingPressure, holdingFire);
-        }
-
-        private bool HasAirtightBlocker(IEnumerable<EntityUid> enumerable, AtmosDirection dir, EntityQuery<AirtightComponent> airtightQuery)
-        {
-            foreach (var ent in enumerable)
-            {
-                if (!airtightQuery.TryGetComponent(ent, out var airtight) || !airtight.AirBlocked)
-                    continue;
-
-                if ((airtight.AirBlockedDirection & dir) == dir)
+                if (atmosphereSystem.IsHotspotActive(gridUid, position))
                     return true;
-            }
 
-            return false;
+                foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(gridUid, position))
+                {
+                    if (atmosphereSystem.IsHotspotActive(gridUid, adjacent))
+                        return true;
+                }
+                return false;
+            }
         }
     }
 }

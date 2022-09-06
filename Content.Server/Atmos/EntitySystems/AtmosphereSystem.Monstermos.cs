@@ -12,7 +12,6 @@ namespace Content.Server.Atmos.EntitySystems
     public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly FirelockSystem _firelockSystem = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
@@ -506,7 +505,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!TryComp(entity, out FirelockComponent? firelock))
                     continue;
 
-                reconsiderAdjacent |= firelock.EmergencyPressureStop(entity, firelock);
+                reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
 
             foreach (var entity in mapGrid.GetAnchoredEntities(other.GridIndices))
@@ -514,7 +513,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!TryComp(entity, out FirelockComponent? firelock))
                     continue;
 
-                reconsiderAdjacent |= firelock.EmergencyPressureStop(entity, firelock);
+                reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
 
             if (!reconsiderAdjacent)
