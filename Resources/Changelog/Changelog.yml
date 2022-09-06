@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Reduced the amount of alcohol contained in a booze-o-mat., type: Tweak}
-  id: 1748
-  time: '2022-06-22T02:41:42.0000000+00:00'
 - author: Ranger6012
   changes:
   - {message: HoP's cloak description now correctly drapes over your shoulders instead
@@ -2925,3 +2920,9 @@ Entries:
   - {message: Insulated glove users are no longer safe from licoxide., type: Fix}
   id: 2247
   time: '2022-09-06T02:48:36.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: CBURN equipment has been improved, type: Tweak}
+  - {message: new ERT\CBURN pda sprite added, type: Add}
+  id: 2248
+  time: '2022-09-06T02:49:56.0000000+00:00'
