@@ -1066,10 +1066,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ic.punctuation", false, CVar.SERVER);
 
         /// <summary>
-        /// Makes IC character names TitleCase.
+        /// Enables automatically forcing IC name rules. Uppercases the first letter of the first and last words of the name
         /// </summary>
-        public static readonly CVarDef<bool> TitleCaseNames =
-            CVarDef.Create("ic.title_case_names", true, CVar.SERVER | CVar.REPLICATED);
+        public static readonly CVarDef<bool> ICNameCase =
+            CVarDef.Create("ic.name_case", true, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Salvage
