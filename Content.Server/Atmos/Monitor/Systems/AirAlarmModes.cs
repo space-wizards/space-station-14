@@ -142,6 +142,11 @@ public sealed class AirAlarmWideFilterMode : AirAlarmModeExecutor
         if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
             return;
 
+        foreach (var (addr, device) in alarm.VentData)
+        {
+            AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FilterModePreset);
+        }
+
         foreach (var (addr, device) in alarm.ScrubberData)
         {
             AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.WideFilterModePreset);
