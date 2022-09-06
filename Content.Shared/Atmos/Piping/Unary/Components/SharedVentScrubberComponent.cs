@@ -36,6 +36,15 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             WideNet = false
         };
 
+        public static GasVentScrubberData WideFilterModePreset = new GasVentScrubberData
+        {
+            Enabled = true,
+            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            PumpDirection = ScrubberPumpDirection.Scrubbing,
+            VolumeRate = 200f,
+            WideNet = true
+        };
+
         public static GasVentScrubberData FillModePreset = new GasVentScrubberData
         {
             Enabled = false,

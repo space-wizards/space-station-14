@@ -13,6 +13,7 @@ public enum AirAlarmMode
 {
     None,
     Filtering,
+    WideFiltering,
     Fill,
     Panic,
 }
