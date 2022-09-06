@@ -554,15 +554,15 @@
 #  categories:
 #  - UplinkMisc
 
-- type: listing
-  id: UplinkGigacancerScanner
-  name: Ultragigacancer Health Analyzer
-  description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
-  productEntity: HandheldHealthAnalyzerGigacancer
-  cost:
-    Telecrystal: 5
-  categories:
-  - UplinkMisc
+# - type: listing
+#   id: UplinkGigacancerScanner
+#   name: Ultragigacancer Health Analyzer
+#   description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+#   productEntity: HandheldHealthAnalyzerGigacancer
+#   cost:
+#     Telecrystal: 5
+#   categories:
+#   - UplinkMisc
 
 - type: listing
   id: UplinkNocturineChemistryBottle
@@ -629,6 +629,24 @@
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
   cost:
     Telecrystal: 4
+  categories:
+  - UplinkPointless
+  
+- type: listing
+  id: UplinkOperativeSuit
+  description: A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  productEntity: ClothingUniformJumpsuitOperative
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+  
+- type: listing
+  id: UplinkOperativeSkirt
+  description: A skirt given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  productEntity: ClothingUniformJumpskirtOperative
+  cost:
+    Telecrystal: 1
   categories:
   - UplinkPointless
 

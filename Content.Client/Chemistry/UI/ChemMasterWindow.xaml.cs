@@ -37,7 +37,7 @@ namespace Content.Client.Chemistry.UI
 
         private static bool IsSpinValid(int n)
         {
-            return n is > 0 and <= 25;
+            return n is > 0 and <= MaxEntitySpawns;
         }
 
         /// <summary>

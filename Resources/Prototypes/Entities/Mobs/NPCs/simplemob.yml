@@ -14,11 +14,8 @@
       Acidic: [Touch, Ingestion]
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    # - Clothing
-    - Idle
-    # No hunger and thirst for space mobs (need a way to eat station tiles for space carps)
+  - type: HTN
+    rootTask: IdleCompound
   - type: Input
     context: "human"
   - type: AiFactionTag
@@ -113,6 +110,7 @@
     - Electrocution
     - ForcedSleep
     - TemporaryBlindness
+    - Pacified
   - type: Body
     template: AnimalTemplate
     preset: AnimalPreset
@@ -161,11 +159,6 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    # - Hunger TODO: eating on the floor and fix weird AI endless stomach
-    # - Thirst
   - type: Hunger
   - type: Thirst
   - type: Barotrauma
@@ -181,6 +174,7 @@
       - Electrocution
       - ForcedSleep
       - TemporaryBlindness
+      - Pacified
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

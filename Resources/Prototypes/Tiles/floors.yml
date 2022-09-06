@@ -638,9 +638,9 @@
   name: snow
   sprite: /Textures/Tiles/snow.png
   baseTurfs:
-  - Plating
-  isSubfloor: false
-  canCrowbar: true
+  - FloorDirt
+  isSubfloor: true
+  canCrowbar: false
   footstepSounds:
     collection: FootstepSnow
   friction: 0.20
@@ -653,9 +653,9 @@
   name: grass floor
   sprite: /Textures/Tiles/grass.png
   baseTurfs:
-  - Plating
-  isSubfloor: false
-  canCrowbar: true
+  - FloorDirt
+  isSubfloor: true
+  canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
   friction: 0.30
@@ -668,9 +668,9 @@
   name: jungle grass floor
   sprite: /Textures/Tiles/grassjungle.png
   baseTurfs:
-  - Plating
-  isSubfloor: false
-  canCrowbar: true
+  - FloorDirt
+  isSubfloor: true
+  canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
   friction: 0.30

@@ -248,7 +248,7 @@ public sealed partial class AdminVerbSystem
                     }
 
                     _electrocutionSystem.TryDoElectrocution(args.Target, null, damageToDeal,
-                        TimeSpan.FromSeconds(30), true);
+                        TimeSpan.FromSeconds(30), refresh: true, ignoreInsulation: true);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-electrocute-description")

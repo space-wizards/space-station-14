@@ -109,7 +109,7 @@
         - to: start
           steps:
             - tool: Welding
-              doAfter: 5            
+              doAfter: 5
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1

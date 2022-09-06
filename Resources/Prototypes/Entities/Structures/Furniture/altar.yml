@@ -24,6 +24,7 @@
       - TableLayer
   - type: Sprite
     netsync: false
+    snapCardinals: true
   - type: Climbable
   - type: Clickable
 

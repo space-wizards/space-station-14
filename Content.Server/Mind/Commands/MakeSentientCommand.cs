@@ -1,6 +1,6 @@
 using Content.Server.Administration;
-using Content.Server.AI.Components;
 using Content.Server.Mind.Components;
+using Content.Server.NPC.Components;
 using Content.Shared.Administration;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
