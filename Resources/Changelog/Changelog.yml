@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Give Nuke Ops their access to console, type: Fix}
-  id: 1750
-  time: '2022-06-22T19:27:24.0000000+00:00'
 - author: Rane
   changes:
   - {message: Lizards now have an animal metabolism. Have fun and be careful with
@@ -2925,3 +2920,9 @@ Entries:
   - {message: 'Added Pax, a drug that disables people''s combat mode.', type: Add}
   id: 2249
   time: '2022-09-06T02:52:58.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed wood planks and sliceable food sometimes getting "stuck" to a
+      player after cutting., type: Fix}
+  id: 2250
+  time: '2022-09-06T05:08:19.0000000+00:00'
