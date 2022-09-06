@@ -1,16 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Vector, C-20R, Flaregun, Mateba, MK58, and the Atreides now have different
-      gunshot sounds.', type: Add}
-  id: 1741
-  time: '2022-06-21T05:16:36.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Rat king and his servants can now pull objects., type: Tweak}
-  - {message: Rat king 'domain' effect now generates slightly more miasma., type: Tweak}
-  id: 1742
-  time: '2022-06-21T14:00:12.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Slimes now have to breathe nitrogen. They still suffocate much, much
@@ -2920,3 +2908,16 @@ Entries:
       have been increased by 1 second to account for this., type: Tweak}
   id: 2240
   time: '2022-09-06T02:15:49.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Base disarm fail chance raised to 75% from 40%., type: Tweak}
+  - {message: 'Instead of directly shoving over, pushover procs now deal stamina damage.',
+    type: Tweak}
+  id: 2241
+  time: '2022-09-06T02:19:33.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'When a privileged ID card is the only card inserted in an ID card computer,
+      its details will now show.', type: Fix}
+  id: 2242
+  time: '2022-09-06T02:20:01.0000000+00:00'
