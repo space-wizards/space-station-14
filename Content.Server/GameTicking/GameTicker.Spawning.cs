@@ -292,7 +292,7 @@ namespace Content.Server.GameTicking
             // Fallback to a random grid.
             if (_possiblePositions.Count == 0)
             {
-                foreach (var grid in _mapManager.GetAllGrids())
+                foreach (var grid in _mapManager.EntityManager.EntityQuery<MapGridComponent>())
                 {
                     if (!metaQuery.TryGetComponent(grid.Owner, out var meta) ||
                         meta.EntityPaused)

@@ -52,7 +52,7 @@ public sealed class PricingSystem : EntitySystem
 
             var gridId = new EntityUid(i);
 
-            if (!_mapManager.TryGetGrid(gridId, out var mapGrid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridId, out var mapGrid))
             {
                 shell.WriteError($"Grid \"{i}\" doesn't exist.");
                 continue;

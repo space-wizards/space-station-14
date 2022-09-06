@@ -47,8 +47,10 @@ namespace Content.IntegrationTests.Tests
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
                 var mapId = testMap.MapId;
-                grid1 = mapMan.CreateGrid(mapId);
-                grid2 = mapMan.CreateGrid(mapId);
+                var gridEnt = mapMan.EntityManager.SpawnEntity(null, mapId);
+                grid1 = mapMan.EntityManager.AddComponent<MapGridComponent>(gridEnt);
+                var gridEnt1 = mapMan.EntityManager.SpawnEntity(null, mapId);
+                grid2 = mapMan.EntityManager.AddComponent<MapGridComponent>(gridEnt1);
 
                 generator = entityMan.SpawnEntity("GravityGeneratorDummy", EntityCoordinatesExtensions.ToCoordinates(grid2));
                 Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));

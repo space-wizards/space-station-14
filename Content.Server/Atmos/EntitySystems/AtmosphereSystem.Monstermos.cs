@@ -494,7 +494,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void ConsiderFirelocks(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other)
         {
-            if (!_mapManager.TryGetGrid(tile.GridIndex, out var mapGrid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) tile.GridIndex, out var mapGrid))
                 return;
 
             var reconsiderAdjacent = false;

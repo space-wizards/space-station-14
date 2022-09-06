@@ -186,7 +186,7 @@ namespace Content.Shared.Friction
 
             if (!xform.Coordinates.IsValid(EntityManager)) return 0.0f;
 
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
             {
                 var tile = grid.GetTileRef(xform.Coordinates);
                 var tileDef = _tileDefinitionManager[tile.Tile.TypeId];

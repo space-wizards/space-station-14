@@ -26,7 +26,8 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 var mapId = mapMan.CreateMap();
-                var grid = mapMan.CreateGrid(mapId);
+                var gridEnt1 = mapMan.EntityManager.SpawnEntity(null, mapId);
+                var grid = mapMan.EntityManager.AddComponent<MapGridComponent>(gridEnt1);
                 gridEnt = grid.Owner;
 
                 Assert.That(sEntities.TryGetComponent(gridEnt, out ShuttleComponent? shuttleComponent));

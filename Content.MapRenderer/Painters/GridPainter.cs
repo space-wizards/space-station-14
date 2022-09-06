@@ -90,14 +90,14 @@ namespace Content.MapRenderer.Painters
                 }
 
                 var transform = _sEntityManager.GetComponent<TransformComponent>(entity);
-                if (_cMapManager.TryGetGrid(transform.GridUid, out var grid))
+                if (_cMapManager.EntityManager.TryGetComponent<MapGridComponent>(transform.GridUid, out var grid))
                 {
                     var position = transform.LocalPosition;
 
                     var (x, y) = TransformLocalPosition(position, grid);
                     var data = new EntityData(sprite, x, y);
 
-                    components.GetOrAdd(transform.GridUid.Value, _ => new List<EntityData>()).Add(data);
+                    components.GetOrAdd(grid.Owner, _ => new List<EntityData>()).Add(data);
                 }
             }
 
@@ -113,7 +113,7 @@ namespace Content.MapRenderer.Painters
 
             var decals = new Dictionary<EntityUid, List<DecalData>>();
 
-            foreach (var grid in _sMapManager.GetAllGrids())
+            foreach (var grid in _sMapManager.EntityManager.EntityQuery<MapGridComponent>())
             {
                 // TODO this needs to use the client entity manager because the client
                 // actually has the correct z-indices for decals for some reason when the server doesn't,

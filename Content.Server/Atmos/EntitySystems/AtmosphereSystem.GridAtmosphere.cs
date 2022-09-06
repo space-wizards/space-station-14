@@ -77,7 +77,7 @@ public sealed partial class AtmosphereSystem
         foreach (var newGrid in args.NewGrids)
         {
             // Make extra sure this is a valid grid.
-            if (!_mapManager.TryGetGrid(newGrid, out var mapGrid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) newGrid, out var mapGrid))
                 continue;
 
             var entity = mapGrid.Owner;

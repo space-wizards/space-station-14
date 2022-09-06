@@ -26,7 +26,7 @@ namespace Content.Server.Decals.Commands
             }
 
             if (!EntityUid.TryParse(args[1], out var rawGridId) ||
-                !IoCManager.Resolve<IMapManager>().GridExists(rawGridId))
+                !IoCManager.Resolve<IMapManager>().EntityManager.HasComponent<MapGridComponent>((EntityUid?) rawGridId))
             {
                 shell.WriteError("Failed parsing gridId.");
             }

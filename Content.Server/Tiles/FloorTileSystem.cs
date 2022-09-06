@@ -52,7 +52,7 @@ namespace Content.Server.Tiles
             var locationMap = location.ToMap(EntityManager);
             if (locationMap.MapId == MapId.Nullspace)
                 return;
-            _mapManager.TryGetGrid(location.EntityId, out var mapGrid);
+            _mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) location.EntityId, out var mapGrid);
 
             foreach (var currentTile in component.OutputTiles)
             {
@@ -73,7 +73,8 @@ namespace Content.Server.Tiles
                 }
                 else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
                 {
-                    mapGrid = _mapManager.CreateGrid(locationMap.MapId);
+                    var gridEnt = _mapManager.EntityManager.SpawnEntity(null, locationMap.MapId);
+                    mapGrid = _mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
                     Transform(mapGrid.Owner).WorldPosition = locationMap.Position;
                     location = new EntityCoordinates(mapGrid.Owner, Vector2.Zero);
                     PlaceAt(mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);

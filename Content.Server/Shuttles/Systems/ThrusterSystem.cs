@@ -97,7 +97,7 @@ namespace Content.Server.Shuttles.Systems
             if (e.NewTile.IsSpace(_tileDefManager) || !e.OldTile.IsSpace(_tileDefManager)) return;
 
             var tilePos = e.NewTile.GridIndices;
-            var grid = _mapManager.GetGrid(e.NewTile.GridUid);
+            var grid = _mapManager.EntityManager.GetComponent<MapGridComponent>(e.NewTile.GridUid);
             var xformQuery = GetEntityQuery<TransformComponent>();
             var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 
@@ -141,7 +141,7 @@ namespace Content.Server.Shuttles.Systems
             if (!component.Enabled ||
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
-                !_mapManager.TryGetGrid(xform.GridUid, out var grid) ||
+                !_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid) ||
                 !EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent))
             {
                 return;
@@ -237,7 +237,7 @@ namespace Content.Server.Shuttles.Systems
         {
             if (component.IsOn ||
                 !Resolve(uid, ref xform) ||
-                !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
+                !_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid)) return;
 
             component.IsOn = true;
 
@@ -308,7 +308,7 @@ namespace Content.Server.Shuttles.Systems
         {
             if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||
-                !_mapManager.TryGetGrid(gridId, out var grid)) return;
+                !_mapManager.EntityManager.TryGetComponent<MapGridComponent>(gridId, out var grid)) return;
 
             component.IsOn = false;
 
@@ -380,7 +380,7 @@ namespace Content.Server.Shuttles.Systems
                 return true;
 
             var (x, y) = xform.LocalPosition + xform.LocalRotation.Opposite().ToWorldVec();
-            var tile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
+            var tile = _mapManager.EntityManager.GetComponent<MapGridComponent>(xform.GridUid.Value).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
 
             return tile.Tile.IsSpace();
         }

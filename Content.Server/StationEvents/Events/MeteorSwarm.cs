@@ -63,7 +63,7 @@ namespace Content.Server.StationEvents.Events
             Box2? playableArea = null;
             var mapId = GameTicker.DefaultMap;
 
-            foreach (var grid in MapManager.GetAllGrids())
+            foreach (var grid in MapManager.EntityManager.EntityQuery<MapGridComponent>())
             {
                 if (Transform(grid.Owner).MapID != mapId || !EntityManager.TryGetComponent(grid.Owner, out PhysicsComponent? gridBody)) continue;
                 var aabb = gridBody.GetWorldAABB();

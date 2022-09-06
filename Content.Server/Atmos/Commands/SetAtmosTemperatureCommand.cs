@@ -28,7 +28,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
+            if (!gridId.IsValid() || !mapMan.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridId, out var gridComp))
             {
                 shell.WriteLine("Invalid grid ID.");
                 return;

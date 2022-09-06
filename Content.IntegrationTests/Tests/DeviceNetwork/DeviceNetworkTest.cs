@@ -206,7 +206,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() => {
                 var map = mapManager.CreateNewMapEntity(MapId.Nullspace);
-                grid = mapManager.CreateGrid(MapId.Nullspace);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, MapId.Nullspace);
+                grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 device1 = entityManager.SpawnEntity("DummyWiredNetworkDevice", MapCoordinates.Nullspace);
 

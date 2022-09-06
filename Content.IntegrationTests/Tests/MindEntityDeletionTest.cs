@@ -135,7 +135,8 @@ namespace Content.IntegrationTests.Tests
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
                 map = mapMan.CreateMap();
-                var grid = mapMan.CreateGrid(map);
+                var gridEnt = mapMan.EntityManager.SpawnEntity(null, map);
+                var grid = (MapGridComponent) mapMan.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
 

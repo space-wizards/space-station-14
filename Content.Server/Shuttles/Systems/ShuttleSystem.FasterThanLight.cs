@@ -345,7 +345,7 @@ public sealed partial class ShuttleSystem
 
     private float GetSoundRange(EntityUid uid)
     {
-        if (!_mapManager.TryGetGrid(uid, out var grid)) return 4f;
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) uid, out var grid)) return 4f;
 
         return MathF.Max(grid.LocalAABB.Width, grid.LocalAABB.Height) + 12.5f;
     }
@@ -490,7 +490,7 @@ public sealed partial class ShuttleSystem
             if (iteration != FTLProximityIterations)
                 continue;
 
-            foreach (var grid in _mapManager.GetAllGrids())
+            foreach (var grid in _mapManager.EntityManager.EntityQuery<MapGridComponent>())
             {
                 // Don't add anymore as it is irrelevant, but that doesn't mean we need to re-do existing work.
                 if (nearbyGrids.Contains(grid.Owner)) continue;

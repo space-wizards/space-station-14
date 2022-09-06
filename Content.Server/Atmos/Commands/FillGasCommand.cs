@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Commands
 
             var mapMan = IoCManager.Resolve<IMapManager>();
 
-            if (!mapMan.TryGetGrid(gridId, out var grid))
+            if (!mapMan.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridId, out var grid))
             {
                 shell.WriteLine("Invalid grid ID.");
                 return;

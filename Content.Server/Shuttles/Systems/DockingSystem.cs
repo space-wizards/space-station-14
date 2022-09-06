@@ -65,7 +65,7 @@ namespace Content.Server.Shuttles.Systems
 
             // Assume the docking port itself (and its body) is valid
 
-            if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(dockingXform.GridUid, out var grid) ||
                 !HasComp<ShuttleComponent>(grid.Owner)) return null;
 
             var transform = body.GetTransform();

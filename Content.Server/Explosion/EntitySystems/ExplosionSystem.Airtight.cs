@@ -43,7 +43,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
     {
-        if (_mapManager.TryGetGrid(gridId, out var grid))
+        if (_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridId, out var grid))
             UpdateAirtightMap(grid, tile, query);
     }
 
@@ -100,7 +100,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform) || !transform.Anchored)
             return;
 
-        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(transform.GridUid, out var grid))
             return;
 
         UpdateAirtightMap(grid, grid.CoordinatesToTile(transform.Coordinates));

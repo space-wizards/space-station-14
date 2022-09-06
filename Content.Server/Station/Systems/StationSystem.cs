@@ -287,7 +287,7 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!_mapManager.TryGetGrid(gridUid, out var grid) ||
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridUid, out var grid) ||
                 !xformQuery.TryGetComponent(gridUid, out var xform))
                 continue;
 

@@ -75,7 +75,7 @@ namespace Content.Server.Medical.CrewMonitoring
             // the monitor. But in the special case where the monitor IS a player (i.e., admin ghost), we base it off
             // the players eye rotation. We don't know what that is for sure, but we know their last grid angle, which
             // should work well enough?
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
                 worldRot = EntityManager.GetComponent<TransformComponent>(grid.Owner).WorldRotation;
 
             // update all sensors info

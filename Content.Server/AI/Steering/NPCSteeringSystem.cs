@@ -294,7 +294,7 @@ namespace Content.Server.AI.Steering
             }
 
             // TODO: This isn't going to work for space.
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
             {
                 input = (-EntityManager.GetComponent<TransformComponent>(grid.Owner).WorldRotation).RotateVec(input);
             }
@@ -360,7 +360,7 @@ namespace Content.Server.AI.Steering
             if (steering.Pathfind != null)
                 return;
 
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
                 return;
 
             steering.PathfindToken = new CancellationTokenSource();

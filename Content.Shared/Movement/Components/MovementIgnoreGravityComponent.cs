@@ -60,7 +60,7 @@ namespace Content.Shared.Movement.Components
             }
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
-            var grid = mapManager.GetGrid(gridId.Value);
+            var grid = mapManager.EntityManager.GetComponent<MapGridComponent>(gridId.Value);
             var invSys = EntitySystem.Get<InventorySystem>();
 
             if (invSys.TryGetSlotEntity(entity, "shoes", out var ent))

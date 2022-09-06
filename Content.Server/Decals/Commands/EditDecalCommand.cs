@@ -39,7 +39,7 @@ Possible modes are:\n
             return;
         }
 
-        if (!IoCManager.Resolve<IMapManager>().GridExists(gridId))
+        if (!IoCManager.Resolve<IMapManager>().EntityManager.HasComponent<MapGridComponent>((EntityUid?) gridId))
         {
             shell.WriteError($"No grid with gridId {gridId} exists.");
             return;

@@ -383,7 +383,9 @@ public sealed partial class CargoSystem
         var minRadius = 0f;
         Box2? aabb = null;
 
-        foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
+        foreach (var grid in _mapManager.EntityManager.EntityQuery<MapGridComponent, TransformComponent>(true)
+                     .Where(tuple => tuple.Item2.MapID == xform.MapID)
+                     .Select(tuple => tuple.Item1))
         {
             var worldAabb = TransformComponent.CalcWorldAabb(Transform(grid.Owner), grid.LocalAABB);
             aabb = aabb?.Union(worldAabb) ?? worldAabb;

@@ -438,7 +438,7 @@ public sealed partial class ShuttleSystem
            return;
        }
 
-       _shuttleIndex += _mapManager.GetGrid(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
+       _shuttleIndex += _mapManager.EntityManager.GetComponent<MapGridComponent>(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
        component.EmergencyShuttle = shuttle;
    }
 

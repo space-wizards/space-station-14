@@ -142,7 +142,7 @@ namespace Content.Server.Disposal.Tube
             var oppositeDirection = nextDirection.GetOpposite();
 
             var xform = Transform(targetTube.Owner);
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
                 return null;
 
             var position = xform.Coordinates;

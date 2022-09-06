@@ -220,7 +220,7 @@ public sealed partial class RevenantSystem : EntitySystem
         //var coords = Transform(uid).Coordinates;
         //var gridId = coords.GetGridUid(EntityManager);
         var xform = Transform(uid);
-        if (!_mapManager.TryGetGrid(xform.GridUid, out var map))
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var map))
             return;
         var tiles = map.GetTilesIntersecting(Box2.CenteredAround(xform.WorldPosition,
             (component.DefileRadius*2, component.DefileRadius))).ToArray();

@@ -174,7 +174,7 @@ public sealed class MagicSystem : EntitySystem
                 // This is shit but you get the idea.
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized);
 
-                if (!_mapManager.TryGetGrid(casterXform.GridUid, out var mapGrid))
+                if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
 
                 if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))

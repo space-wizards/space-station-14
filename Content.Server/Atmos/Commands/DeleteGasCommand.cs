@@ -119,15 +119,13 @@ namespace Content.Server.Atmos.Commands
                     return;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-
-            if (!mapManager.TryGetGrid(gridId, out _))
+            if (!entMan.HasComponent<MapGridComponent>(gridId))
             {
                 shell.WriteLine($"No grid exists with id {gridId}");
                 return;
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
             var tiles = 0;
             var moles = 0f;

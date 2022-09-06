@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
@@ -8,8 +7,6 @@ using Robust.Client.Console;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Client.Administration.UI.Tabs.AtmosTab
@@ -24,7 +21,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
         protected override void EnteredTree()
         {
             // Fill out grids
-            _gridData = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Owner != 0);
+            _gridData = IoCManager.Resolve<IEntityManager>().EntityQuery<MapGridComponent>();
             foreach (var grid in _gridData)
             {
                 var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;

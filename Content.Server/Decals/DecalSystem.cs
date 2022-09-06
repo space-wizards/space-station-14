@@ -47,7 +47,7 @@ namespace Content.Server.Decals
         private void OnGridSplit(ref PostGridSplitEvent ev)
         {
             // Transfer decals over to the new grid.
-            var enumerator = MapManager.GetGrid(ev.Grid).GetAllTilesEnumerator();
+            var enumerator = MapManager.EntityManager.GetComponent<MapGridComponent>(ev.Grid).GetAllTilesEnumerator();
             var oldChunkCollection = DecalGridChunkCollection(ev.OldGrid);
             var chunkCollection = DecalGridChunkCollection(ev.Grid);
 
@@ -210,7 +210,7 @@ namespace Content.Server.Decals
                 return false;
 
             var gridId = coordinates.GetGridUid(EntityManager);
-            if (!MapManager.TryGetGrid(gridId, out var grid))
+            if (!MapManager.EntityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
                 return false;
 
             if (grid.GetTileRef(coordinates).IsSpace(_tileDefMan))
@@ -418,7 +418,7 @@ namespace Content.Server.Decals
                         previouslySent.Remove(gridId);
 
                         // Was the grid deleted?
-                        if (MapManager.IsGrid(gridId))
+                        if (MapManager.EntityManager.HasComponent<MapGridComponent>(gridId))
                             staleChunks[gridId] = oldIndices;
                         else
                         {

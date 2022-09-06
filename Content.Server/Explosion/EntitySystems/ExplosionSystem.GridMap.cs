@@ -18,7 +18,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     private void OnGridStartup(GridStartupEvent ev)
     {
-        var grid = _mapManager.GetGrid(ev.EntityUid);
+        var grid = _mapManager.EntityManager.GetComponent<MapGridComponent>(ev.EntityUid);
 
         Dictionary<Vector2i, NeighborFlag> edges = new();
         _gridEdges[ev.EntityUid] = edges;
@@ -56,7 +56,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // if the explosion is centered on some grid (and not just space), get the transforms.
         if (referenceGrid != null)
         {
-            var targetGrid = _mapManager.GetGrid(referenceGrid.Value);
+            var targetGrid = _mapManager.EntityManager.GetComponent<MapGridComponent>(referenceGrid.Value);
             var xform = Transform(targetGrid.Owner);
             targetAngle = xform.WorldRotation;
             targetMatrix = xform.InvWorldMatrix;
@@ -81,7 +81,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (!_gridEdges.TryGetValue(gridToTransform, out var edges))
                 continue;
 
-            if (!_mapManager.TryGetGrid(gridToTransform, out var grid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridToTransform, out var grid))
                 continue;
 
             if (grid.TileSize != tileSize)
@@ -225,7 +225,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
             return;
 
-        if (!_mapManager.TryGetGrid(ev.Entity, out var grid))
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) ev.Entity, out var grid))
             return;
 
         var tileRef = ev.NewTile;

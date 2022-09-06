@@ -92,7 +92,7 @@ namespace Content.Server.AME
             if (!_toolSystem.HasQuality(args.Used, component.QualityNeeded))
                 return;
 
-            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var mapGrid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(args.ClickLocation.GetGridUid(EntityManager), out var mapGrid))
                 return; // No AME in space.
 
             var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);

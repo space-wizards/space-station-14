@@ -102,7 +102,8 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 sMapId = sMapManager.CreateMap();
                 sMapManager.SetMapPaused(sMapId, true);
-                sGrid = sMapManager.CreateGrid(sMapId);
+                var gridEnt = sMapManager.EntityManager.SpawnEntity(null, sMapId);
+                sGrid = sMapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
                 sGridId = sGrid.Owner;
                 metaSystem.SetEntityPaused(sGridId, true); // See https://github.com/space-wizards/RobustToolbox/issues/1444
 

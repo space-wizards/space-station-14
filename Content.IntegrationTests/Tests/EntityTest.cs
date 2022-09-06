@@ -39,7 +39,8 @@ namespace Content.IntegrationTests.Tests
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
+                    var grid = (MapGridComponent) mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
                     var coord = new EntityCoordinates(grid.Owner, 0, 0);
                     entityMan.SpawnEntity(protoId, coord);
                 }
@@ -81,7 +82,8 @@ namespace Content.IntegrationTests.Tests
                     .Select(p => p.ID)
                     .ToList();
                 var mapId = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(mapId);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
+                var grid = (MapGridComponent) mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
                 var coord = new EntityCoordinates(grid.Owner, 0, 0);
                 foreach (var protoId in protoIds)
                 {
@@ -138,7 +140,8 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                grid = mapManager.CreateGrid(mapId);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
+                grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -233,7 +236,8 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                grid = mapManager.CreateGrid(mapId);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
+                grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 var tileDefinition = tileDefinitionManager["UnderPlating"];
                 var tile = new Tile(tileDefinition.TileId);

@@ -228,7 +228,7 @@ namespace Content.Server.Physics.Controllers
             EntityQuery<PhysicsComponent> bodyQuery)
         {
             // Check if the thing's centre overlaps the grid tile.
-            var grid = _mapManager.GetGrid(xform.GridUid!.Value);
+            var grid = _mapManager.EntityManager.GetComponent<MapGridComponent>(xform.GridUid!.Value);
             var tile = grid.GetTileRef(xform.Coordinates);
             var conveyorBounds = _lookup.GetLocalBounds(tile, grid.TileSize);
 

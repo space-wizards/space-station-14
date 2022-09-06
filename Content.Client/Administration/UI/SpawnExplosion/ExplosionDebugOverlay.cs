@@ -63,7 +63,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
         foreach (var (gridId, tileSets) in Tiles)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
                 continue;
 
             var gridXform = xformQuery.GetComponent(grid.Owner);
@@ -131,7 +131,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
         foreach (var (gridId, tileSets) in Tiles)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
                 continue;
 
             var gridXform = xformQuery.GetComponent(grid.Owner);

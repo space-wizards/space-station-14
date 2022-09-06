@@ -228,7 +228,7 @@ namespace Content.Server.Dragon
             var xform = Transform(uid);
 
             // Have to be on a grid fam
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("carp-rift-anchor"), uid, Filter.Entities(uid));
                 return;

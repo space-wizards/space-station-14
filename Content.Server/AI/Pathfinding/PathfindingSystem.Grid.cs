@@ -96,7 +96,7 @@ public sealed partial class PathfindingSystem
 
     private PathfindingChunk CreateChunk(GridPathfindingComponent comp, Vector2i indices)
     {
-        var grid = _mapManager.GetGrid(comp.Owner);
+        var grid = _mapManager.EntityManager.GetComponent<MapGridComponent>(comp.Owner);
         var newChunk = new PathfindingChunk(grid.Owner, indices);
         comp.Graph.Add(indices, newChunk);
         newChunk.Initialize(grid);
@@ -121,7 +121,7 @@ public sealed partial class PathfindingSystem
 
     private void OnTileUpdate(TileRef tile)
     {
-        if (!_mapManager.GridExists(tile.GridUid)) return;
+        if (!_mapManager.EntityManager.HasComponent<MapGridComponent>((EntityUid?) tile.GridUid)) return;
 
         var node = GetNode(tile);
         node.UpdateTile(tile);
@@ -143,7 +143,7 @@ public sealed partial class PathfindingSystem
             !Resolve(entity, ref physics, false)) return;
 
         if (!IsRelevant(xform, physics) ||
-            !_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            !_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
         {
             return;
         }
@@ -158,7 +158,7 @@ public sealed partial class PathfindingSystem
     private void OnEntityRemove(EntityUid entity, TransformComponent? xform = null)
     {
         if (!Resolve(entity, ref xform, false) ||
-            !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
+            !_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid)) return;
 
         var node = GetNode(grid.GetTileRef(xform.Coordinates));
         node.RemoveEntity(entity);
@@ -167,7 +167,7 @@ public sealed partial class PathfindingSystem
     private void OnEntityRemove(EntityUid entity, EntityCoordinates coordinates)
     {
         var gridId = coordinates.GetGridUid(EntityManager);
-        if (!_mapManager.TryGetGrid(gridId, out var grid)) return;
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(gridId, out var grid)) return;
 
         var node = GetNode(grid.GetTileRef(coordinates));
         node.RemoveEntity(entity);
@@ -175,13 +175,13 @@ public sealed partial class PathfindingSystem
 
     private PathfindingNode? GetNode(TransformComponent xform)
     {
-        if (!_mapManager.TryGetGrid(xform.GridUid, out var grid)) return null;
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid)) return null;
         return GetNode(grid.GetTileRef(xform.Coordinates));
     }
 
     private PathfindingNode? GetNode(EntityCoordinates coordinates)
     {
-        if (!_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var grid)) return null;
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(coordinates.GetGridUid(EntityManager), out var grid)) return null;
         return GetNode(grid.GetTileRef(coordinates));
     }
 
@@ -218,7 +218,7 @@ public sealed partial class PathfindingSystem
         var gridId = coordinates.GetGridUid(EntityManager);
         if (gridId == null)
                 return false;
-        var tile = _mapManager.GetGrid(gridId.Value).GetTileRef(coordinates);
+        var tile = _mapManager.EntityManager.GetComponent<MapGridComponent>(gridId.Value).GetTileRef(coordinates);
         var node = GetNode(tile);
         return CanTraverse(entity, node);
     }

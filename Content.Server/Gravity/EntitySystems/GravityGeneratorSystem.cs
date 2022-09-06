@@ -198,7 +198,7 @@ namespace Content.Server.Gravity.EntitySystems
         private void UpdateGravityActive(GravityGeneratorComponent grav, bool shake)
         {
             var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridUid;
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
                 return;
 
             var gravity = EntityManager.GetComponent<GravityComponent>(grid.Owner);

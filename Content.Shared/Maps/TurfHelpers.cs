@@ -16,7 +16,7 @@ namespace Content.Shared.Maps
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            if (!mapManager.TryGetGrid(gridId, out var grid))
+            if (!mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridId, out var grid))
                 return default;
 
             if (!grid.TryGetTileRef(vector2i, out var tile))
@@ -38,7 +38,7 @@ namespace Content.Shared.Maps
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            if (!mapManager.TryGetGrid(coordinates.GetGridUid(entityManager), out var grid))
+            if (!mapManager.EntityManager.TryGetComponent<MapGridComponent>(coordinates.GetGridUid(entityManager), out var grid))
                 return null;
 
 
@@ -90,7 +90,7 @@ namespace Content.Shared.Maps
             IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
-            var grid = mapManager.GetGrid(gridId);
+            var grid = mapManager.EntityManager.GetComponent<MapGridComponent>(gridId);
             var tileRef = grid.GetTileRef(indices);
             return tileRef.PryTile(mapManager, tileDefinitionManager, entityManager);
         }
@@ -116,7 +116,7 @@ namespace Content.Shared.Maps
 
             if (!tileDef.CanCrowbar) return false;
 
-            var mapGrid = mapManager.GetGrid(tileRef.GridUid);
+            var mapGrid = mapManager.EntityManager.GetComponent<MapGridComponent>(tileRef.GridUid);
 
             var plating = tileDefinitionManager[tileDef.BaseTurfs[^1]];
 
@@ -217,7 +217,7 @@ namespace Content.Shared.Maps
             var map = IoCManager.Resolve<IMapManager>();
             var ents = IoCManager.Resolve<IEntityManager>();
 
-            if (map.TryGetGrid(turf.GridUid, out var tileGrid))
+            if (map.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) turf.GridUid, out var tileGrid))
             {
                 // This is scaled to 90 % so it doesn't encompass walls on other tiles.
                 var tileBox = Box2.UnitCentered.Scale(0.9f);

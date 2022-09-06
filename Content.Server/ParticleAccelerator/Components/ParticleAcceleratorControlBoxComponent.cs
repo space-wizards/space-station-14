@@ -417,7 +417,7 @@ namespace Content.Server.ParticleAccelerator.Components
             where T : ParticleAcceleratorPartComponent
         {
             var xform = _entMan.GetComponent<TransformComponent>(Owner);
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
             {
                 part = default;
                 return false;

@@ -149,7 +149,7 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             var xform = _entities.GetComponent<TransformComponent>(Owner);
-            if (!MapManager.TryGetGrid(xform.GridUid, out var mapGrid))
+            if (!MapManager.EntityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var mapGrid))
                 return;
 
             var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(_entities, MapManager));

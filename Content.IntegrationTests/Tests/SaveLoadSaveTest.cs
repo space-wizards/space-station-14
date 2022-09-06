@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitPost(() =>
             {
                 // TODO: Properly find the "main" station grid.
-                var grid0 = mapManager.GetAllGrids().First();
+                var grid0 = mapManager.EntityManager.EntityQuery<MapGridComponent>().First();
                 mapLoader.SaveGrid(grid0.Owner, "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
                 var grid = mapLoader.LoadGrid(mapId, "save load save 1.yml").gridId;

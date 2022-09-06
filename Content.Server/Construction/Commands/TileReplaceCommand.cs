@@ -59,7 +59,7 @@ sealed class TileReplaceCommand : IConsoleCommand
         var tileB = tileDefinitionManager[tileIdB];
 
         var mapManager = IoCManager.Resolve<IMapManager>();
-        if (!mapManager.TryGetGrid(gridId, out var grid))
+        if (!mapManager.EntityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
         {
             shell.WriteLine($"No grid exists with id {gridId}");
             return;

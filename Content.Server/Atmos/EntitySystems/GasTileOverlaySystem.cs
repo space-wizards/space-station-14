@@ -232,7 +232,7 @@ namespace Content.Server.Atmos.EntitySystems
                     previouslySent.Remove(grid);
 
                     // If grid was deleted then don't worry about sending it to the client.
-                    if (_mapManager.IsGrid(grid))
+                    if (_mapManager.EntityManager.HasComponent<MapGridComponent>(grid))
                         ev.RemovedChunks[grid] = oldIndices;
                     else
                     {

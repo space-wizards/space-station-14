@@ -83,7 +83,7 @@ namespace Content.Server.RCD.Systems
             if (!gridID.IsValid())
                 return;
 
-            var mapGrid = _mapManager.GetGrid(gridID);
+            var mapGrid = _mapManager.EntityManager.GetComponent<MapGridComponent>(gridID);
             var tile = mapGrid.GetTileRef(clickLocationMod);
             var snapPos = mapGrid.TileIndicesFor(clickLocationMod);
 

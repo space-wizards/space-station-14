@@ -185,7 +185,7 @@ namespace Content.Shared.Movement.Systems
                         }
                         // If we went from grid -> grid OR grid -> map then snap the target to cardinal and lerp there.
                         // OR just rotate to zero (depending on cvar)
-                        else if (relative != null && _mapManager.IsGrid(relative.Value))
+                        else if (relative != null && _mapManager.EntityManager.HasComponent<MapGridComponent>(relative.Value))
                         {
                             if (CameraRotationLocked)
                                 targetRotation = Angle.Zero;
@@ -436,7 +436,7 @@ namespace Content.Shared.Movement.Systems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(gridUid.Value);
+            var grid = _mapManager.EntityManager.GetComponent<MapGridComponent>(gridUid.Value);
             var tile = grid.GetTileRef(coordinates);
 
             if (tile.IsSpace(_tileDefinitionManager)) return false;

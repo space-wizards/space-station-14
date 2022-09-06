@@ -75,7 +75,7 @@ public sealed class MoppingSystem : EntitySystem
 
     private void ReleaseToFloor(EntityCoordinates clickLocation, AbsorbentComponent absorbent, Solution? absorbedSolution)
     {
-        if ((_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid)) // needs valid grid
+        if (_mapManager.EntityManager.TryGetComponent<MapGridComponent>(clickLocation.GetGridUid(EntityManager), out var mapGrid) // needs valid grid
             && absorbedSolution is not null) // needs a solution to place on the tile
         {
             TileRef tile = mapGrid.GetTileRef(clickLocation);

@@ -53,7 +53,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         else if (referenceGrid != null)
         {
             // reference grid defines coordinate system that the explosion in space will use
-            initialTile = _mapManager.GetGrid(referenceGrid.Value).WorldToTile(epicenter.Position);
+            initialTile = _mapManager.EntityManager.GetComponent<MapGridComponent>(referenceGrid.Value).WorldToTile(epicenter.Position);
         }
         else
         {
@@ -84,7 +84,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         var spaceAngle = Angle.Zero;
         if (referenceGrid != null)
         {
-            MapGridComponent tempQualifier = _mapManager.GetGrid(referenceGrid.Value);
+            MapGridComponent tempQualifier = _mapManager.EntityManager.GetComponent<MapGridComponent>(referenceGrid.Value);
             var xform = Transform(tempQualifier.Owner);
             spaceMatrix = xform.WorldMatrix;
             spaceAngle = xform.WorldRotation;
@@ -100,7 +100,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 airtightMap = new();
 
             var initialGridData = new ExplosionGridTileFlood(
-                _mapManager.GetGrid(epicentreGrid.Value),
+                _mapManager.EntityManager.GetComponent<MapGridComponent>(epicentreGrid.Value),
                 airtightMap,
                 maxIntensity,
                 stepSize,
@@ -189,7 +189,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                         airtightMap = new();
 
                     data = new ExplosionGridTileFlood(
-                        _mapManager.GetGrid(grid),
+                        _mapManager.EntityManager.GetComponent<MapGridComponent>(grid),
                         airtightMap,
                         maxIntensity,
                         stepSize,

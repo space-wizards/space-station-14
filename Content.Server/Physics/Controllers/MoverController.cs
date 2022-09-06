@@ -216,7 +216,7 @@ namespace Content.Server.Physics.Controllers
 
                 var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle and if the console should work.
-                if (!_mapManager.TryGetGrid(gridId, out var grid) ||
+                if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(gridId, out var grid) ||
                     !EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent) ||
                     !shuttleComponent.Enabled) continue;
 

@@ -68,7 +68,7 @@ public sealed class ExplosionOverlay : Overlay
         Box2 gridBounds;
         foreach (var (gridId, tiles) in exp.Tiles)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entMan.TryGetComponent<MapGridComponent>(gridId, out var grid))
                 continue;
 
             var xform = xforms.GetComponent(grid.Owner);

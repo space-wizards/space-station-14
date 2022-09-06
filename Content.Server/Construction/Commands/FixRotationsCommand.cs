@@ -50,7 +50,7 @@ namespace Content.Server.Construction.Commands
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!mapManager.TryGetGrid(gridId, out var grid))
+            if (!mapManager.EntityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
             {
                 shell.WriteError($"No grid exists with id {gridId}");
                 return;

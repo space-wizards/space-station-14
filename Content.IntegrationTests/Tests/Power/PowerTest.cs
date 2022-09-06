@@ -174,7 +174,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -232,7 +233,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -285,7 +287,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -360,7 +363,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -442,7 +446,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -494,7 +499,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 4; i++)
@@ -567,7 +573,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 4; i++)
@@ -638,7 +645,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Map layout here is
                 // C - consumer
@@ -729,7 +737,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Map layout here is
                 // C - consumer
@@ -812,7 +821,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitPost(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 4; i++)
@@ -891,7 +901,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 4; i++)
@@ -944,7 +955,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -996,7 +1008,8 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(map);
+                var gridEnt = mapManager.EntityManager.SpawnEntity(null, map);
+                var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)

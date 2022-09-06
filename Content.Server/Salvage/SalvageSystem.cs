@@ -226,7 +226,7 @@ namespace Content.Server.Salvage
             var tsc = Transform(component.Owner);
             coords = new EntityCoordinates(component.Owner, component.Offset).ToMap(EntityManager);
             var grid = tsc.GridEuid;
-            if (_mapManager.TryGetGrid(grid, out var magnetGrid))
+            if (_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) grid, out var magnetGrid))
             {
                 angle = Transform(magnetGrid.Owner).WorldRotation;
             }

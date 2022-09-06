@@ -54,7 +54,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             port = null;
 
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
                 return false;
 
             foreach (var entityUid in grid.GetLocal(coordinates))

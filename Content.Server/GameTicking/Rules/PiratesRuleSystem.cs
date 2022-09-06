@@ -149,7 +149,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         var aabbs = _stationSystem.Stations.SelectMany(x =>
             Comp<StationDataComponent>(x).Grids.Select(x =>
             {
-                MapGridComponent gridComp = _mapManager.GetGridComp(x);
+                MapGridComponent gridComp = _mapManager.EntityManager.GetComponent<MapGridComponent>(x);
                 return TransformComponent.CalcWorldAabb(EntityManager.GetComponent<TransformComponent>(gridComp.Owner), gridComp.LocalAABB);
             })).ToArray();
         var aabb = aabbs[0];

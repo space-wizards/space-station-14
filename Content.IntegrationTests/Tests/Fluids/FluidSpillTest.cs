@@ -59,7 +59,8 @@ public sealed class FluidSpill
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
-            var grid = mapManager.CreateGrid(mapId);
+            var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
+            var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
             gridId = grid.Owner;
 
             for (var x = 0; x < 3; x++)
@@ -73,7 +74,7 @@ public sealed class FluidSpill
 
         await server.WaitAssertion(() =>
         {
-            var grid = mapManager.GetGrid(gridId);
+            var grid = mapManager.EntityManager.GetComponent<MapGridComponent>(gridId);
             var solution = new Solution("Water", FixedPoint2.New(100));
             var tileRef = grid.GetTileRef(_origin);
             var puddle = spillSystem.SpillAt(tileRef, solution, "PuddleSmear");
@@ -86,7 +87,7 @@ public sealed class FluidSpill
 
         await server.WaitAssertion(() =>
         {
-            var grid = mapManager.GetGrid(gridId);
+            var grid = mapManager.EntityManager.GetComponent<MapGridComponent>(gridId);
             var puddle = GetPuddle(entityManager, grid, _origin);
 
             Assert.That(puddle, Is.Not.Null);
@@ -121,7 +122,8 @@ public sealed class FluidSpill
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
-            var grid = mapManager.CreateGrid(mapId);
+            var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
+            var grid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
 
             for (var x = 0; x < 3; x++)
             {
@@ -137,7 +139,7 @@ public sealed class FluidSpill
         await server.WaitAssertion(() =>
         {
             var solution = new Solution("Water", FixedPoint2.New(20.01));
-            var grid = mapManager.GetGrid(gridId);
+            var grid = mapManager.EntityManager.GetComponent<MapGridComponent>(gridId);
             var tileRef = grid.GetTileRef(_origin);
             var puddle = spillSystem.SpillAt(tileRef, solution, "PuddleSmear");
 
@@ -149,7 +151,7 @@ public sealed class FluidSpill
 
         await server.WaitAssertion(() =>
         {
-            var grid = mapManager.GetGrid(gridId);
+            var grid = mapManager.EntityManager.GetComponent<MapGridComponent>(gridId);
             var puddle = GetPuddle(entityManager, grid, _origin);
             Assert.That(puddle, Is.Not.Null);
             Assert.That(puddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(20)));

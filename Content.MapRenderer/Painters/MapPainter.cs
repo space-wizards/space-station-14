@@ -65,7 +65,10 @@ namespace Content.MapRenderer.Painters
                     sEntityManager.DeleteEntity(playerEntity.Value);
                 }
 
-                grids = sMapManager.GetAllMapGrids(new MapId(1)).ToArray();
+                MapId mapId = new MapId(1);
+                grids = sMapManager.EntityManager.EntityQuery<MapGridComponent, TransformComponent>(true)
+                    .Where(tuple => tuple.Item2.MapID == mapId)
+                    .Select(tuple => tuple.Item1).ToArray();
 
                 foreach (var grid in grids)
                 {

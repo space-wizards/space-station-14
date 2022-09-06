@@ -31,7 +31,7 @@ public sealed partial class ToolSystem
     {
         component.CancelToken = null;
         var gridUid = args.Coordinates.GetGridUid(EntityManager);
-        if (!_mapManager.TryGetGrid(gridUid, out var grid))
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(gridUid, out var grid))
         {
             Logger.Error("Attempted to pry from a non-existent grid?");
             return;
@@ -58,7 +58,7 @@ public sealed partial class ToolSystem
         if (!TryComp<ToolComponent?>(component.Owner, out var tool) && component.ToolComponentNeeded)
             return false;
 
-        if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
+        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(clickLocation.GetGridUid(EntityManager), out var mapGrid))
             return false;
 
         var tile = mapGrid.GetTileRef(clickLocation);

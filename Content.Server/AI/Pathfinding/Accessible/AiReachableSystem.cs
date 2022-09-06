@@ -171,7 +171,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
             if (xform.GridUid == null)
                 return false;
 
-            var targetTile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(xform.Coordinates);
+            var targetTile = _mapManager.EntityManager.GetComponent<MapGridComponent>(xform.GridUid.Value).GetTileRef(xform.Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
@@ -209,7 +209,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
             if (xform.GridUid != targetNode.TileRef.GridUid || xform.GridUid == null)
                 return false;
 
-            var entityTile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(xform.Coordinates);
+            var entityTile = _mapManager.EntityManager.GetComponent<MapGridComponent>(xform.GridUid.Value).GetTileRef(xform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             var entityRegion = GetRegion(entityNode);
             var targetRegion = GetRegion(targetNode);
@@ -426,7 +426,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
                 return null;
             }
 
-            var entityTile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(xform.Coordinates);
+            var entityTile = _mapManager.EntityManager.GetComponent<MapGridComponent>(xform.GridUid.Value).GetTileRef(xform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
         }
@@ -647,7 +647,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         private void GenerateRegions(PathfindingChunk chunk)
         {
             // Grid deleted while update queued, or invalid grid.
-            if (!_mapManager.TryGetGrid(chunk.GridId, out _))
+            if (!_mapManager.EntityManager.HasComponent<MapGridComponent>(chunk.GridId))
             {
                 return;
             }
@@ -713,7 +713,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         private void SendRegionsDebugMessage(EntityUid gridId)
         {
             if (_subscribedSessions.Count == 0) return;
-            var grid = _mapManager.GetGrid(gridId);
+            var grid = _mapManager.EntityManager.GetComponent<MapGridComponent>(gridId);
             // Chunk / Regions / Nodes
             var debugResult = new Dictionary<int, Dictionary<int, List<Vector2>>>();
             var chunkIdx = 0;
@@ -762,7 +762,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         {
             if (_subscribedSessions.Count == 0) return;
 
-            var grid = _mapManager.GetGrid(gridId);
+            var grid = _mapManager.EntityManager.GetComponent<MapGridComponent>(gridId);
             var debugResult = new Dictionary<int, List<Vector2>>();
 
             foreach (var region in regions)

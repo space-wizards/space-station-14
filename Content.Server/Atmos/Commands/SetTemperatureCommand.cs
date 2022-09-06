@@ -35,7 +35,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridId, out var grid))
             {
                 shell.WriteError("Invalid grid.");
                 return;

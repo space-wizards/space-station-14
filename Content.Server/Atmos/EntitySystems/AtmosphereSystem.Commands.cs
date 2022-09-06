@@ -122,7 +122,7 @@ public sealed partial class AtmosphereSystem
         if (shell.Player is { AttachedEntity: { } playerEnt })
             playerMap = Transform(playerEnt).MapID;
 
-        var options = _mapManager.GetAllGrids()
+        var options = _mapManager.EntityManager.EntityQuery<MapGridComponent>()
             .OrderByDescending(e => playerMap != null && Transform(e.Owner).MapID == playerMap)
             .ThenBy(e => (int) Transform(e.Owner).MapID)
             .ThenBy(e => (int) e.Owner)

@@ -21,7 +21,7 @@ namespace Content.Server.Coordinates.Helpers
 
             if (gridId.HasValue && gridId.Value.IsValid())
             {
-                var grid = mapManager.GetGrid(gridId.Value);
+                var grid = mapManager.EntityManager.GetComponent<MapGridComponent>(gridId.Value);
                 tileSize = grid.TileSize;
             }
 

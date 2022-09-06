@@ -50,7 +50,7 @@ namespace Content.Server.Interaction
             var xform = _entities.GetComponent<TransformComponent>(attached);
             var playerGrid = xform.GridUid;
 
-            if (!mapManager.TryGetGrid(playerGrid, out var mapGrid))
+            if (!mapManager.EntityManager.TryGetComponent<MapGridComponent>(playerGrid, out var mapGrid))
                 return;
 
             var playerPosition = xform.Coordinates;
