@@ -1,11 +1,6 @@
 Entries:
 - author: themias
   changes:
-  - {message: removing unbroken light bulbs now has a delay, type: Tweak}
-  id: 1746
-  time: '2022-06-22T00:55:06.0000000+00:00'
-- author: themias
-  changes:
   - {message: Examining a drink shows how much is left, type: Tweak}
   id: 1747
   time: '2022-06-22T02:02:25.0000000+00:00'
@@ -2925,3 +2920,8 @@ Entries:
       are no longer lost on cloning., type: Fix}
   id: 2245
   time: '2022-09-06T02:29:40.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: The security belt can now hold seclites., type: Tweak}
+  id: 2246
+  time: '2022-09-06T02:46:30.0000000+00:00'
