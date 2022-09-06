@@ -36,7 +36,7 @@
   - type: Sprite
     state: rods_5
 #  - type: Item
-#    HeldPrefix: rods
+#    heldPrefix: rods
   - type: Construction
     graph: MetalRod
     node: MetalRod
@@ -51,8 +51,8 @@
       - rods_5
   - type: FloorTile
     outputs:
-    - lattice
-    - floor_reinforced
+    - Lattice
+    - FloorReinforced
 
 - type: entity
   parent: PartRodMetal

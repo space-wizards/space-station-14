@@ -1,6 +1,6 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Fluids.Components;
 

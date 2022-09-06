@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -31,7 +32,7 @@ public sealed class SeedExtractorSystem : EntitySystem
             return;
 
         _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message",("name", args.Used)),
-            Filter.Entities(args.User));
+            Filter.Entities(args.User), PopupType.Medium);
 
         QueueDel(args.Used);
 

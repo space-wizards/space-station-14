@@ -57,10 +57,8 @@
         whitelist:
           components:
           - SignalLinker
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -132,10 +130,8 @@
         whitelist:
           tags:
           - Wrench
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -169,10 +165,8 @@
         whitelist:
           components:
           - Stunbaton
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -210,10 +204,8 @@
         whitelist:
           tags:
           - Wrench
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -240,6 +232,7 @@
       components:
         - Hypospray
         - Radio
+        - Injector
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -271,10 +264,8 @@
         whitelist:
           tags:
           - Wrench
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -328,10 +319,8 @@
         whitelist:
           tags:
           - Bottle
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -348,6 +337,7 @@
       tags:
         - CigPack
         - Taser
+        - SecBeltEquip
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -363,10 +353,8 @@
         whitelist:
           components:
           - Stunbaton
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -391,8 +379,6 @@
           tags:
           - CaptainSabre
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
 
 # Belts without visualizers
 
@@ -406,6 +392,8 @@
     sprite: Clothing/Belt/bandolier.rsi
   - type: Clothing
     sprite: Clothing/Belt/bandolier.rsi
+  - type: Item
+    size: 60
   - type: Storage
     capacity: 60
     whitelist:
@@ -439,6 +427,27 @@
 
 - type: entity
   parent: ClothingBeltStorageBase
+  id: ClothingBeltSyndieHolster
+  name: syndicate shoulder holster
+  description: A deep shoulder holster capable of holding many types of ballistics.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Item
+    size: 60
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+        - Gun
+        - MeleeWeapon
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+
+- type: entity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltSecurityWebbing
   name: security webbing
   description: Unique and versatile chest rig, can hold security gear.
@@ -469,6 +478,8 @@
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
+  - type: Item
+    size: 60
   - type: Storage
     capacity: 60
 
@@ -484,3 +495,19 @@
   - type: Clothing
     sprite: Clothing/Belt/suspenders.rsi
     quickEquip: true
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltWand
+  name: wand belt
+  description: A belt designed to hold various rods of power. A veritable fanny pack of exotic magic.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/wand.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/wand.rsi
+  - type: Storage
+    capacity: 120
+    whitelist:
+      tags:
+      - WizardWand

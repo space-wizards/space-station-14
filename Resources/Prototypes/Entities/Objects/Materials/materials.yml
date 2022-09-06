@@ -109,11 +109,37 @@
   - type: Sprite
     state: wood
   - type: Item
-    HeldPrefix: wood
+    heldPrefix: wood
 
 - type: entity
   parent: MaterialWoodPlank
   id: MaterialWoodPlank1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBiomass
+  name: biomass
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Biomass: 1
+  - type: Stack
+    stackType: Biomass
+    count: 100
+    max: 100
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+    color: "#8A9A5B"
+
+- type: entity
+  parent: MaterialBiomass
+  id: MaterialBiomass1
   suffix: Single
   components:
   - type: Stack
@@ -128,10 +154,12 @@
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
     state: bearpelt
+  - type: Item
+    sprite: Clothing/Head/Misc/hides.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/hides.rsi
-    HeldPrefix: bear
-    Slots:
+    heldPrefix: bear
+    slots:
       - HEAD
 
 - type: entity
@@ -145,7 +173,7 @@
   - type: Sprite
     state: diamond
   - type: Item
-    HeldPrefix: diamond
+    heldPrefix: diamond
 
 - type: entity
   parent: MaterialDiamond

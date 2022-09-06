@@ -9,11 +9,16 @@
     netsync: false
   - type: Item
     size: 60
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    quickEquip: false
+    slots:
+    - Back
   - type: Gun
     minAngle: 4
-    maxAngle: 16
-    angleIncrease: 0.5
-    angleDecay: 12
+    maxAngle: 20
+    angleIncrease: 4
+    angleDecay: 16
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
@@ -60,8 +65,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 4

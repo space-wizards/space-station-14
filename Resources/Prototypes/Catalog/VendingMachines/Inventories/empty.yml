@@ -1,4 +1,2 @@
 - type: vendingMachineInventory
   id: EmptyVendingMachineInventory
-  name: Empty vending machine
-  spriteName: empty

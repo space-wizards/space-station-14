@@ -16,7 +16,6 @@ public class DockingControl : Control
     private readonly IEntityManager _entManager;
     private readonly IMapManager _mapManager;
 
-    private const int MinimapRadius = 384;
     private const int MinimapMargin = 4;
 
     private float _range = 8f;
@@ -24,12 +23,15 @@ public class DockingControl : Control
     private const float GridLinesDistance = 32f;
 
     private int MidPoint => SizeFull / 2;
-    private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
-    private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
+    private int SizeFull => (int) ((RadarControl.MinimapRadius + MinimapMargin) * 2 * UIScale);
+    private int ScaledMinimapRadius => (int) (RadarControl.MinimapRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
     public EntityUid? ViewedDock;
     public EntityUid? GridEntity;
+
+    public EntityCoordinates? Coordinates;
+    public Angle? Angle;
 
     /// <summary>
     /// Stored by GridID then by docks
@@ -69,11 +71,12 @@ public class DockingControl : Control
             handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
         }
 
-        if (!_entManager.TryGetComponent<TransformComponent>(ViewedDock, out var xform) ||
+        if (Coordinates == null ||
+            Angle == null ||
             !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
-        var rotation = Matrix3.CreateRotation(xform.LocalRotation);
-        var matrix = Matrix3.CreateTranslation(-xform.LocalPosition);
+        var rotation = Matrix3.CreateRotation(Angle.Value);
+        var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);
 
         // Draw the fixtures around the dock before drawing it
         if (_entManager.TryGetComponent<FixturesComponent>(GridEntity, out var fixtures))
@@ -128,7 +131,7 @@ public class DockingControl : Control
             ScalePosition(rotation.Transform(new Vector2(0.5f, -0.5f)))), Color.Green);
 
         // Draw nearby grids
-        var worldPos = gridXform.WorldMatrix.Transform(xform.LocalPosition);
+        var worldPos = gridXform.WorldMatrix.Transform(Coordinates.Value.Position);
         var gridInvMatrix = gridXform.InvWorldMatrix;
         Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
 

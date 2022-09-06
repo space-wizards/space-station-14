@@ -32,9 +32,19 @@
     life: 0
 
 - type: shader
+  id: Rainbow
+  kind: source
+  path: "/Textures/Shaders/rainbow.swsl"
+
+- type: shader
   id: CameraStatic
   kind: source
   path: "/Textures/Shaders/camera_static.swsl"
+
+- type: shader
+  id: Drunk
+  kind: source
+  path: "/Textures/Shaders/drunk.swsl"
 
 - type: shader
   id: Texture
@@ -45,3 +55,18 @@
     pixelSize: 32, 32
     alphaCutoff: 0
     removeTransparency: false
+
+- type: shader
+  id: BlurryVisionX
+  kind: source
+  path: "/Textures/Shaders/blurryx.swsl"
+
+- type: shader
+  id: BlurryVisionY
+  kind: source
+  path: "/Textures/Shaders/blurryy.swsl"
+
+- type: shader
+  id: Dim
+  kind: source
+  path: "/Textures/Shaders/dim.swsl"

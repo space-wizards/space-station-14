@@ -85,7 +85,7 @@ public abstract class AlertsSystem : EntitySystem
 
             AfterShowAlert(alertsComponent);
 
-            alertsComponent.Dirty();
+            Dirty(alertsComponent);
         }
         else
         {

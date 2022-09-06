@@ -1,0 +1,69 @@
+- type: radioChannel
+  id: Common
+  name: chat-radio-common
+  keycode: ";"
+  frequency: 1459
+  color: "#32cd32"
+
+- type: radioChannel
+  id: CentCom
+  name: chat-radio-centcom
+  keycode: 'y'
+  frequency: 1337
+  color: "#2681a5"
+
+- type: radioChannel
+  id: Command
+  name: chat-radio-command
+  keycode: 'c'
+  frequency: 1353
+  color: "#fcdf03"
+
+- type: radioChannel
+  id: Engineering
+  name: chat-radio-engineering
+  keycode: 'e'
+  frequency: 1357
+  color: "#f37746"
+
+- type: radioChannel
+  id: Medical
+  name: chat-radio-medical
+  keycode: 'm'
+  frequency: 1355
+  color: "#57b8f0"
+
+- type: radioChannel
+  id: Science
+  name: chat-radio-science
+  keycode: 'n'
+  frequency: 1351
+  color: "#c68cfa"
+
+- type: radioChannel
+  id: Security
+  name: chat-radio-security
+  keycode: 's'
+  frequency: 1359
+  color: "#dd3535"
+
+- type: radioChannel
+  id: Service
+  name: chat-radio-service
+  keycode: 'v'
+  frequency: 1349
+  color: "#6ca729"
+
+- type: radioChannel
+  id: Supply
+  name: chat-radio-supply
+  keycode: 'u'
+  frequency: 1347
+  color: "#b88646"
+
+- type: radioChannel
+  id: Syndicate
+  name: chat-radio-syndicate
+  keycode: 't'
+  frequency: 1213
+  color: "#8f4a4b"

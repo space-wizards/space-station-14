@@ -8,6 +8,13 @@
   checkCanInteract: false
 
 - type: instantAction
+  id: TurnUndead
+  name: turn-undead-action-name
+  description: turn-undead-action-description
+  icon: Interface/Actions/zombie-turn.png
+  event: !type:ZombifySelfActionEvent
+
+- type: instantAction
   id: ToggleLight
   name: action-name-toggle-light
   description: action-description-toggle-light
@@ -46,5 +53,51 @@
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
   userPopup: action-popup-combat
-  popupToggleSuffix: -disabling
+  popupToggleSuffix: -enabled
   event: !type:ToggleCombatActionEvent
+
+- type: instantAction
+  id: VendingThrow
+  name: vending-machine-action-name
+  description: vending-machine-action-description
+  useDelay: 30
+  event: !type:VendingMachineSelfDispenseEvent
+
+- type: instantAction
+  id: ToggleBlock
+  name: action-name-blocking
+  description: action-description-blocking
+  icon: Objects/Weapons/Melee/shields.rsi/teleriot-icon.png
+  iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
+  event: !type:ToggleActionEvent
+
+- type: instantAction
+  id: ClearNetworkLinkOverlays
+  name: network-configurator-clear-network-link-overlays
+  description: network-configurator-clear-network-link-overlays-desc
+  icon: Objects/Tools/multitool.rsi/icon.png
+  event: !type:ClearAllOverlaysEvent
+
+- type: instantAction
+  id: AnimalLayEgg
+  name: action-name-lay-egg
+  description: action-description-lay-egg
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  useDelay: 60
+  serverEvent: !type:EggLayInstantActionEvent
+
+- type: instantAction
+  id: Sleep
+  name: action-name-sleep
+  description: action-desc-sleep
+  checkCanInteract: false
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  event: !type:SleepActionEvent
+
+- type: instantAction
+  id: Wake
+  name: action-name-wake
+  description: action-desc-wake
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  checkCanInteract: false
+  event: !type:WakeActionEvent

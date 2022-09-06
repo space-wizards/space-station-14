@@ -20,11 +20,11 @@
 
 - type: reagent
   id: CarpoToxin
-  name: Carpotoxin
+  name: reagent-name-carpotoxin
   group: Toxins
-  desc: Toxic secretions of a space carp. Causes a painful burning sensation.
+  desc: reagent-desc-carpotoxin
   color: "#e2a38c"
-  physicalDesc: exotic-smelling
+  physicalDesc: reagent-physical-desc-exotic-smelling
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -39,8 +39,69 @@
             Poison: 4
       - !type:PopupMessage
         type: Local
+        visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
+
+
+- type: reagent
+  id: ChloralHydrate
+  name: reagent-name-chloral-hydrate
+  group: Toxins
+  desc: reagent-desc-chloral-hydrate
+  color: "#000067"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 15
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 20
+        damage:
+          types:
+            Poison: 1.5
+
+- type: reagent
+  id: Mold
+  name: reagent-name-mold
+  group: Toxins
+  desc: reagent-desc-mold
+  color: "#8a9a5b"
+  physicalDesc: reagent-physical-desc-fuzzy
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:ChemCauseRandomDisease
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mold
+          min: 1
+        diseases:
+          - VentCough
+          - SpaceCold
+          - SpaceFlu
+          - BirdFlew
+          - Plague
+          - TongueTwister
+          - MemeticAmirmir
 
 - type: reagent
   id: PolytrinicAcid
@@ -79,6 +140,7 @@
             Caustic: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
@@ -112,6 +174,7 @@
             Caustic: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
@@ -152,6 +215,7 @@
             Poison: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
@@ -254,6 +318,7 @@
         - !type:ReagentThreshold
           min: 45
         type: Local
+        visualType: Medium
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
 
@@ -279,7 +344,7 @@
           types:
             Poison: 4
       - !type:ChemVomit
-        probability: 0.025
+        probability: 0.04
         conditions:
           - !type:ReagentThreshold
             min: 3
@@ -334,3 +399,60 @@
         - !type:ChemCauseDisease
           causeChance: 1
           disease: ActiveZombieVirus
+
+- type: reagent
+  id: UncookedAnimalProteins
+  name: reagent-name-uncooked-animal-proteins
+  desc: reagent-desc-uncooked-animal-proteins
+  physicalDesc: reagent-physical-desc-clumpy
+  color: "#FFFFE5"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Human
+        damage:
+          types:
+            Poison: 2
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Animal
+        reagent: Protein
+        amount: 0.5
+
+- type: reagent
+  id: Allicin
+  name: reagent-name-allicin
+  desc: reagent-desc-allicin
+  physicalDesc: reagent-physical-desc-pungent
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 6
+
+- type: reagent
+  id: Pax
+  name: reagent-name-pax
+  desc: reagent-desc-pax
+  physicalDesc: reagent-physical-desc-soothing
+  color: "#AAAAAA"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        refresh: false
+        type: Add

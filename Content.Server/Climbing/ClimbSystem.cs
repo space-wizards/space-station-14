@@ -1,31 +1,39 @@
 using Content.Server.Climbing.Components;
 using Content.Server.DoAfter;
+using Content.Server.Interaction.Components;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Climbing;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
+using SharpZstd.Interop;
 
 namespace Content.Server.Climbing;
 
 [UsedImplicitly]
 public sealed class ClimbSystem : SharedClimbSystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -33,6 +41,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -79,6 +88,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
             return;
 
+        if (component.Bonk && _cfg.GetCVar(CCVars.GameTableBonk))
+            return;
+
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
@@ -101,22 +113,52 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(entityToMove, component.ClimbDelay, default, climbable)
+        if (TryBonk(component, user))
+            return;
+
+        _doAfterSystem.DoAfter(new DoAfterEventArgs(entityToMove, component.ClimbDelay, default, climbable, user)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            UserFinishedEvent = new ClimbFinishedEvent(user, climbable)
+            UserFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
         });
+    }
+
+    private bool TryBonk(ClimbableComponent component, EntityUid user)
+    {
+        if (!component.Bonk)
+            return false;
+
+        if (!_cfg.GetCVar(CCVars.GameTableBonk))
+        {
+            // Not set to always bonk, try clumsy roll.
+            if (!TryComp(user, out ClumsyComponent? clumsy))
+                return false;
+
+            if (!clumsy.RollClumsy(component.BonkClumsyChance))
+                return false;
+        }
+
+        // BONK!
+
+        _audioSystem.PlayPvs(component.BonkSound, component.Owner);
+
+        _stunSystem.TryKnockdown(user, TimeSpan.FromSeconds(component.BonkTime), true);
+
+        if (component.BonkDamage is { } bonkDmg)
+            _damageableSystem.TryChangeDamage(user, bonkDmg, true);
+
+        return true;
     }
 
     private void OnClimbFinished(EntityUid uid, ClimbingComponent climbing, ClimbFinishedEvent args)
     {
-        Climb(uid, args.User, args.Climbable, climbing: climbing);
+        Climb(uid, args.User, args.Instigator, args.Climbable, climbing: climbing);
     }
 
-    private void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
+    private void Climb(EntityUid uid, EntityUid user, EntityUid instigator, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
         PhysicsComponent? physics = null, FixturesComponent? fixtures = null)
     {
         if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
@@ -132,13 +174,13 @@ public sealed class ClimbSystem : SharedClimbSystem
         // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
         RaiseLocalEvent(uid, new StartClimbEvent(climbable), false);
-        RaiseLocalEvent(climbable, new ClimbedOnEvent(uid), false);
+        RaiseLocalEvent(climbable, new ClimbedOnEvent(uid, user), false);
 
         if (silent)
             return;
         if (user == uid)
         {
-            var othersMessage = Loc.GetString("comp-climbable-user-climbs-other", ("user", uid),
+            var othersMessage = Loc.GetString("comp-climbable-user-climbs-other", ("user", Identity.Entity(uid, EntityManager)),
                 ("climbable", climbable));
             uid.PopupMessageOtherClients(othersMessage);
 
@@ -147,11 +189,11 @@ public sealed class ClimbSystem : SharedClimbSystem
         }
         else
         {
-            var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other", ("user", user),
-                ("moved-user", uid), ("climbable", climbable));
+            var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other", ("user", Identity.Entity(user, EntityManager)),
+                ("moved-user", Identity.Entity(uid, EntityManager)), ("climbable", climbable));
             user.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", uid),
+            var selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", Identity.Entity(uid, EntityManager)),
                 ("climbable", climbable));
             user.PopupMessage(selfMessage);
         }
@@ -301,7 +343,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     public void ForciblySetClimbing(EntityUid uid, EntityUid climbable, ClimbingComponent? component = null)
     {
-        Climb(uid, uid, climbable, true, component);
+        Climb(uid, uid, uid, climbable, true, component);
     }
 
     private void OnBuckleChange(EntityUid uid, ClimbingComponent component, BuckleChangeEvent args)
@@ -327,7 +369,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(
-            Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", args.Climber)), args.Climber,
+            Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", Identity.Entity(args.Climber, EntityManager))), args.Climber,
             Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
     }
 
@@ -394,14 +436,16 @@ public sealed class ClimbSystem : SharedClimbSystem
 
 internal sealed class ClimbFinishedEvent : EntityEventArgs
 {
-    public ClimbFinishedEvent(EntityUid user, EntityUid climbable)
+    public ClimbFinishedEvent(EntityUid user, EntityUid climbable, EntityUid instigator)
     {
         User = user;
         Climbable = climbable;
+        Instigator = instigator;
     }
 
     public EntityUid User { get; }
     public EntityUid Climbable { get; }
+    public EntityUid Instigator { get; }
 }
 
 /// <summary>
@@ -410,10 +454,12 @@ internal sealed class ClimbFinishedEvent : EntityEventArgs
 public sealed class ClimbedOnEvent : EntityEventArgs
 {
     public EntityUid Climber;
+    public EntityUid Instigator;
 
-    public ClimbedOnEvent(EntityUid climber)
+    public ClimbedOnEvent(EntityUid climber, EntityUid instigator)
     {
         Climber = climber;
+        Instigator = instigator;
     }
 }
 

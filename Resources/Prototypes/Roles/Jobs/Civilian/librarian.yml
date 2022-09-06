@@ -1,11 +1,10 @@
 - type: job
   id: Librarian
-  name: "librarian"
+  name: job-name-librarian
+  playTimeTracker: JobLibrarian
   startingGear: LibrarianGear
-  departments:
-  - Civilian
   icon: "Librarian"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance

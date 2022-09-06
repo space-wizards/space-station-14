@@ -1,7 +1,13 @@
 # Alphabetical order is now apparently required.
 
 - type: Tag
+  id: AirAlarm
+
+- type: Tag
   id: AirAlarmElectronics
+
+- type: Tag
+  id: AirSensor
 
 - type: Tag
   id: ATVKeys
@@ -22,6 +28,9 @@
   id: BodyBag
 
 - type: Tag
+  id: BorgArm
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -32,6 +41,9 @@
 
 - type: Tag
   id: Bottle
+
+- type: Tag
+  id: BulletFoam
 
 - type: Tag
   id: CableCoil
@@ -50,6 +62,9 @@
 
 - type: Tag
   id: CaptainSabre
+
+- type: Tag
+  id: Carp
 
 - type: Tag
   id: Cartridge
@@ -139,6 +154,9 @@
   id: Dice
 
 - type: Tag
+  id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
+
+- type: Tag
   id: Document
 
 - type: Tag
@@ -152,9 +170,6 @@
 
 - type: Tag
   id: Donut
-
-- type: Tag
-  id: Drone
 
 - type: Tag
   id: DroneUsable
@@ -172,6 +187,9 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: FireAlarm
+
+- type: Tag
   id: FireAlarmElectronics
 
 - type: Tag
@@ -187,6 +205,9 @@
   id: Flashlight
 
 - type: Tag
+  id: Flower
+
+- type: Tag
   id: Folder
 
 - type: Tag
@@ -199,6 +220,12 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: GasScrubber
+
+- type: Tag
+  id: GasVent
+
+- type: Tag
   id: Gauze
 
 - type: Tag
@@ -206,6 +233,9 @@
 
 - type: Tag
   id: Grenade
+
+- type: Tag
+  id: GunsDisabled # Allow certain entities to not use guns without complicating the system with an event
 
 - type: Tag
   id: Handcuffs
@@ -218,6 +248,9 @@
 
 - type: Tag
   id: Hoe
+
+- type: Tag #Drop this innate tool instead of deleting it.
+  id: InnateDontDelete
 
 - type: Tag
   id: Ingot
@@ -291,6 +324,12 @@
   id: Matchstick
 
 - type: Tag
+  id: MailingUnitElectronics
+
+- type: Tag
+  id: Medkit
+
+- type: Tag
   id: Metal
 
 - type: Tag
@@ -307,6 +346,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NukeOpsUplink
 
 - type: Tag
   id: Ointment
@@ -354,6 +396,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: ProximitySensor
+
+- type: Tag
   id: PussyWagonKeys
 
 - type: Tag
@@ -376,7 +421,13 @@
   id: Screwdriver
 
 - type: Tag
+  id: SecBeltEquip
+
+- type: Tag
   id: SecwayKeys
+
+- type: Tag
+  id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
   id: Sheet
@@ -398,6 +449,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: Syndicate
 
 - type: Tag
   id: SyndicateSegwayKeys
@@ -422,6 +476,12 @@
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: WizardWand # that evil vvizard vvand
+
+- type: Tag
+  id: WizardStaff
 
 - type: Tag
   id: Wirecutter

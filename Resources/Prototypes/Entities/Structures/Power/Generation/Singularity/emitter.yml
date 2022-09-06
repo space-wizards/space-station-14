@@ -1,6 +1,7 @@
 - type: entity
   id: Emitter
   name: emitter
+  parent: ConstructibleMachine
   description: A heavy duty industrial laser. Shoots non-stop when turned on.
   placement:
     mode: SnapgridCenter
@@ -70,8 +71,5 @@
     locked: false
   - type: AccessReader
     access: [[ "Engineering" ]]
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Machine
     board: EmitterCircuitboard

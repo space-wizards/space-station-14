@@ -5,6 +5,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Maps;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -14,7 +15,7 @@ namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedGasAnalyzerComponent))]
-    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -34,7 +35,6 @@ namespace Content.Server.Atmos.Components
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-                UserInterface.OnClosed += UserInterfaceOnClose;
             }
 
             _entities.TryGetComponent(Owner, out _appearance);
@@ -95,12 +95,7 @@ namespace Content.Server.Atmos.Components
             Resync();
         }
 
-        private void UserInterfaceOnClose(IPlayerSession obj)
-        {
-            UpdateAppearance(false);
-        }
-
-        private void UpdateAppearance(bool open)
+        public void UpdateAppearance(bool open)
         {
             _appearance?.SetData(GasAnalyzerVisuals.VisualState,
                 open ? GasAnalyzerVisualState.Working : GasAnalyzerVisualState.Off);
@@ -120,7 +115,7 @@ namespace Content.Server.Atmos.Components
         {
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
-            var tile = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(_entities.GetComponent<TransformComponent>(Owner).Coordinates);
+            var tile = EntitySystem.Get<AtmosphereSystem>().GetContainingMixture(Owner, true);
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -178,8 +173,12 @@ namespace Content.Server.Atmos.Components
                 pos = _position.Value;
             }
 
+            var gridUid = pos.GetGridUid(_entities);
+            var mapUid = pos.GetMapUid(_entities);
+            var position = pos.ToVector2i(_entities, IoCManager.Resolve<IMapManager>());
+
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            var tile = atmosphereSystem.GetTileMixture(pos);
+            var tile = atmosphereSystem.GetTileMixture(gridUid, mapUid, position);
             if (tile == null)
             {
                 error = "No Atmosphere!";
@@ -239,22 +238,6 @@ namespace Content.Server.Atmos.Components
                     Resync();
                     break;
             }
-        }
-
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            if (!eventArgs.CanReach)
-            {
-                eventArgs.User.PopupMessage(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"));
-                return true;
-            }
-
-            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                OpenInterface(actor.PlayerSession, eventArgs.ClickLocation);
-            }
-
-            return true;
         }
     }
 }

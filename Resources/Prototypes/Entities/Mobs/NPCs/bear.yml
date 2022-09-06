@@ -4,10 +4,8 @@
   parent: SimpleSpaceMobBase
   description: It looks friendly. Why don't you give it a hug?
   components:
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -27,11 +25,11 @@
       - MobMask
       layer:
       - MobLayer
-  - type: MovementIgnoreGravity
+  - type: MovementAlwaysTouching
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      150: !type:DeadMobState {}
+      0: Alive
+      150: Dead
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -67,3 +65,20 @@
         Brute: 15
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+    name: space bear
+    description: |
+      You're a bear! Do bear things.
+
+- type: entity
+  id: MobBearSpaceSalvage
+  parent: MobBearSpace
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+    name: space bear on salvage wreck
+    description: |
+      Defend the loot inside the salvage wreck!
+  - type: SalvageMobRestrictions

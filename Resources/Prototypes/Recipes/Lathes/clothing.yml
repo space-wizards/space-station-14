@@ -401,11 +401,11 @@
     Cloth: 300
 
 - type: latheRecipe
-  id: ClothingUniformJumpsuitLawyerPurple ##Musician
+  id: ClothingUniformJumpsuitMusician
   icon:
-    sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
     state: icon
-  result: ClothingUniformJumpsuitLawyerPurple
+  result: ClothingUniformJumpsuitMusician
   completetime: 4
   materials:
     Cloth: 300
@@ -629,3 +629,35 @@
     Cloth: 300
     Durathread: 300
 
+- type: latheRecipe
+  id: ClothingOuterWinterMusician
+  icon:
+    sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
+    state: icon
+  result: ClothingOuterWinterMusician
+  completetime: 3.2
+  materials:
+    Cloth: 300
+    Durathread: 300
+
+- type: latheRecipe
+  id: ClothingOuterWinterClown
+  icon:
+    sprite: Clothing/OuterClothing/WinterCoats/coatclown.rsi
+    state: icon
+  result: ClothingOuterWinterClown
+  completetime: 3.2
+  materials:
+    Cloth: 300
+    Durathread: 300
+
+- type: latheRecipe
+  id: ClothingOuterWinterMime
+  icon:
+    sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
+    state: icon
+  result: ClothingOuterWinterMime
+  completetime: 3.2
+  materials:
+    Cloth: 300
+    Durathread: 300

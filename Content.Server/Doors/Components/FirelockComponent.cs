@@ -1,3 +1,5 @@
+using Content.Shared.Doors.Components;
+
 namespace Content.Server.Doors.Components
 {
     /// <summary>
@@ -14,6 +16,8 @@ namespace Content.Server.Doors.Components
         /// <returns></returns>
         [DataField("lockedPryTimeModifier"), ViewVariables(VVAccess.ReadWrite)]
         public float LockedPryTimeModifier = 1.5f;
+
+        [DataField("autocloseDelay")] public TimeSpan AutocloseDelay = TimeSpan.FromSeconds(3f);
 
         /// <summary>
         /// Maximum pressure difference before the firelock will refuse to open, in kPa.

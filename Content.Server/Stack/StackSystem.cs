@@ -1,3 +1,4 @@
+using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -82,9 +83,47 @@ namespace Content.Server.Stack
             return entity;
         }
 
+        /// <summary>
+        ///     Say you want to spawn 97 stacks of something that has a max stack count of 30.
+        ///     This would spawn 3 stacks of 30 and 1 stack of 7.
+        /// </summary>
+        public void SpawnMultiple(int amount, int maxCountPerStack, StackPrototype prototype, EntityCoordinates spawnPosition)
+        {
+            while (amount > 0)
+            {
+                if (amount > maxCountPerStack)
+                {
+                    var entity = Spawn("MaterialBiomass", spawnPosition);
+                    var stack = Comp<StackComponent>(entity);
+
+                    SetCount(entity, maxCountPerStack, stack);
+                    amount -= maxCountPerStack;
+                }
+                else
+                {
+                    var entity = Spawn("MaterialBiomass", spawnPosition);
+                    var stack = Comp<StackComponent>(entity);
+
+                    SetCount(entity, amount, stack);
+                    amount = 0;
+                }
+            }
+        }
+
+        public void SpawnMultiple(int amount, int maxCountPerStack, string prototype, EntityCoordinates spawnPosition)
+        {
+            if (!_prototypeManager.TryIndex<StackPrototype>(prototype, out var stackType))
+            {
+                Logger.Error("Failed to index stack prototype " + prototype);
+                return;
+            }
+
+            SpawnMultiple(amount, maxCountPerStack, stackType, spawnPosition);
+        }
+
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
             AlternativeVerb halve = new()
@@ -129,7 +168,7 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid));
+                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid), PopupType.Medium);
                 return;
             }
 

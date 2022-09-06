@@ -10,7 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 5  # Should have the same or less damage than a regular pellet
+        Piercing: 8  # Should have the same or less damage than a regular pellet
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -25,9 +25,8 @@
     damage:
       types:
         Blunt: 10
-  - type: StunOnCollide
-    stunAmount: 5
-    knockdownAmount: 3
+  - type: StaminaDamageOnCollide
+    damage: 55
 
 - type: entity
   id: PelletShotgun
@@ -41,21 +40,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 5
-
-- type: entity
-  id: PelletShotgunFlash
-  name: pellet (.50 flash)
-  noSpawn: true
-  parent: BaseBulletFlash
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 2
+        Piercing: 12
 
 - type: entity
   id: PelletShotgunIncendiary

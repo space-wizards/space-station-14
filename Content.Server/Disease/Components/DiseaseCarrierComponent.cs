@@ -44,5 +44,13 @@ namespace Content.Server.Disease.Components
         /// </summary>
         [ViewVariables, DataField("carrierDiseases", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<DiseasePrototype>))]
         public HashSet<string>? CarrierDiseases;
+
+        /// <summary>
+        /// When this component is initialized,
+        /// these diseases will be added to past diseases,
+        /// rendering them immune.
+        /// </summary>
+        [DataField("naturalImmunities")]
+        public List<string>? NaturalImmunities;
     }
 }

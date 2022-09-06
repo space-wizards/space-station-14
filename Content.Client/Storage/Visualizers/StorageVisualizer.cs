@@ -15,11 +15,14 @@ namespace Content.Client.Storage.Visualizers
         /// </summary>
         [DataField("state")]
         private string? _stateBase;
+        [DataField("state_alt")]
+        private string? _stateBaseAlt;
         [DataField("state_open")]
         private string? _stateOpen;
         [DataField("state_closed")]
         private string? _stateClosed;
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite))
@@ -31,8 +34,14 @@ namespace Content.Client.Storage.Visualizers
             {
                 sprite.LayerSetState(0, _stateBase);
             }
+
+            if (_stateBaseAlt == null)
+            {
+                _stateBaseAlt = _stateBase;
+            }
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -49,13 +58,28 @@ namespace Content.Client.Storage.Visualizers
             {
                 sprite.LayerSetVisible(StorageVisualLayers.Door, true);
 
-                if (open && _stateOpen != null)
+                if (open)
                 {
-                    sprite.LayerSetState(StorageVisualLayers.Door, _stateOpen);
+                    if (_stateOpen != null)
+                    {
+                        sprite.LayerSetState(StorageVisualLayers.Door, _stateOpen);
+                        sprite.LayerSetVisible(StorageVisualLayers.Door, true);
+                    }
+
+                    if (_stateBaseAlt != null)
+                        sprite.LayerSetState(0, _stateBaseAlt);
                 }
-                else if (!open && _stateClosed != null)
+                else if (!open)
                 {
-                    sprite.LayerSetState(StorageVisualLayers.Door, _stateClosed);
+                    if (_stateClosed != null)
+                        sprite.LayerSetState(StorageVisualLayers.Door, _stateClosed);
+                    else
+                    {
+                        sprite.LayerSetVisible(StorageVisualLayers.Door, false);
+                    }
+
+                    if (_stateBase != null)
+                        sprite.LayerSetState(0, _stateBase);
                 }
                 else
                 {

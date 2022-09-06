@@ -1,0 +1,18 @@
+﻿- type: entityTargetAction
+  id: Smite
+  name: action-name-spell-smite
+  description: action-description-spell-smite
+  useDelay: 60
+  speech: action-speech-spell-smite
+  itemIconStyle: BigAction
+  whitelist:
+    components:
+    - Body
+  canTargetSelf: false
+  interactOnMiss: false
+  sound: !type:SoundPathSpecifier
+    path: /Audio/Magic/disintegrate.ogg
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: gib
+  serverEvent: !type:SmiteSpellEvent

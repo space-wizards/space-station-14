@@ -1,34 +1,51 @@
 using System.Threading;
 using Content.Server.Administration.Logs;
+using Content.Server.AlertLevel;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
+using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.RoundEnd
 {
+    /// <summary>
+    /// Handles ending rounds normally and also via requesting it (e.g. via comms console)
+    /// If you request a round end then an escape shuttle will be used.
+    /// </summary>
     public sealed class RoundEndSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
-
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
+        [Dependency] private readonly ShuttleSystem _shuttle = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
+
+        /// <summary>
+        /// Countdown to use where there is no station alert countdown to be found.
+        /// </summary>
         public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(4);
         public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromMinutes(1);
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
+        public TimeSpan? LastCountdownStart { get; set; } = null;
         public TimeSpan? ExpectedCountdownEnd { get; set; } = null;
+        public TimeSpan? ExpectedShuttleLength => ExpectedCountdownEnd - LastCountdownStart;
+        public TimeSpan? ShuttleTimeLeft => ExpectedCountdownEnd - _gameTiming.CurTime;
 
         public override void Initialize()
         {
@@ -50,18 +67,32 @@ namespace Content.Server.RoundEnd
                 _cooldownTokenSource = null;
             }
 
+            LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
         }
 
-        public bool CanCall()
+        public bool CanCallOrRecall()
         {
             return _cooldownTokenSource == null;
         }
 
         public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true)
         {
-            RequestRoundEnd(DefaultCountdownDuration, requester, checkCooldown);
+            var duration = DefaultCountdownDuration;
+
+            if (requester != null)
+            {
+                var stationUid = _stationSystem.GetOwningStation(requester.Value);
+                if (TryComp<AlertLevelComponent>(stationUid, out var alertLevel))
+                {
+                    duration = _protoManager
+                        .Index<AlertLevelPrototype>(AlertLevelSystem.DefaultAlertLevelSet)
+                        .Levels[alertLevel.CurrentLevel].ShuttleTime;
+                }
+            }
+
+            RequestRoundEnd(duration, requester, checkCooldown);
         }
 
         public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true)
@@ -82,12 +113,34 @@ namespace Content.Server.RoundEnd
                 _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called");
             }
 
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"), false, Color.Gold);
+            // I originally had these set up here but somehow time gets passed as 0 to Loc so IDEK.
+            int time;
+            string units;
+
+            if (countdownTime.TotalSeconds < 60)
+            {
+                time = countdownTime.Seconds;
+                units = "eta-units-seconds";
+            }
+            else
+            {
+               time = countdownTime.Minutes;
+               units = "eta-units-minutes";
+            }
+
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",
+                ("time", time),
+                ("units", Loc.GetString(units))),
+                Loc.GetString("Station"),
+                false,
+                null,
+                Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
 
+            LastCountdownStart = _gameTiming.CurTime;
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
-            Timer.Spawn(countdownTime, EndRound, _countdownTokenSource.Token);
+            Timer.Spawn(countdownTime, _shuttle.CallEmergencyShuttle, _countdownTokenSource.Token);
 
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
@@ -111,11 +164,12 @@ namespace Content.Server.RoundEnd
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
             }
 
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
 
+            LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
@@ -124,6 +178,7 @@ namespace Content.Server.RoundEnd
         public void EndRound()
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
+            LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
             _gameTicker.EndRound();

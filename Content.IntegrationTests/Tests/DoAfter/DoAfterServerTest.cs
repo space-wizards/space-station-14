@@ -27,22 +27,28 @@ namespace Content.IntegrationTests.Tests.DoAfter
             Task<DoAfterStatus> task = null;
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
+            await server.WaitIdleAsync();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
 
             // That it finishes successfully
             await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
-                var mapManager = IoCManager.Resolve<IMapManager>();
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
-                var entityManager = IoCManager.Resolve<IEntityManager>();
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var cancelToken = new CancellationTokenSource();
                 var args = new DoAfterEventArgs(mob, tickTime / 2, cancelToken.Token);
-                task = EntitySystem.Get<DoAfterSystem>().WaitDoAfter(args);
+                task = doAfterSystem.WaitDoAfter(args);
             });
 
             await server.WaitRunTicks(1);
+            Assert.That(task.Status, Is.EqualTo(TaskStatus.RanToCompletion));
+#pragma warning disable RA0004
             Assert.That(task.Result == DoAfterStatus.Finished);
+#pragma warning restore RA0004
 
             await pairTracker.CleanReturnAsync();
         }
@@ -54,22 +60,27 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
 
             await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
-                var mapManager = IoCManager.Resolve<IMapManager>();
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
-                var entityManager = IoCManager.Resolve<IEntityManager>();
+
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var cancelToken = new CancellationTokenSource();
                 var args = new DoAfterEventArgs(mob, tickTime * 2, cancelToken.Token);
-                task = EntitySystem.Get<DoAfterSystem>().WaitDoAfter(args);
+                task = doAfterSystem.WaitDoAfter(args);
                 cancelToken.Cancel();
             });
 
             await server.WaitRunTicks(3);
-            Assert.That(task.Result == DoAfterStatus.Cancelled, $"Result was {task.Result}");
+            Assert.That(task.Status, Is.EqualTo(TaskStatus.RanToCompletion));
+#pragma warning disable RA0004
+            Assert.That(task.Result, Is.EqualTo(DoAfterStatus.Cancelled), $"Result was {task.Result}");
+#pragma warning restore RA0004
 
             await pairTracker.CleanReturnAsync();
         }

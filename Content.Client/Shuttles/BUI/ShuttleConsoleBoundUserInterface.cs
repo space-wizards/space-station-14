@@ -12,18 +12,26 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 {
     private ShuttleConsoleWindow? _window;
 
-    public ShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+    public ShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
     protected override void Open()
     {
         base.Open();
         _window = new ShuttleConsoleWindow();
-        _window.ShuttleModePressed += OnShuttleModePressed;
         _window.UndockPressed += OnUndockPressed;
         _window.StartAutodockPressed += OnAutodockPressed;
         _window.StopAutodockPressed += OnStopAutodockPressed;
+        _window.DestinationPressed += OnDestinationPressed;
         _window.OpenCentered();
         _window.OnClose += OnClose;
+    }
+
+    private void OnDestinationPressed(EntityUid obj)
+    {
+        SendMessage(new ShuttleConsoleDestinationMessage()
+        {
+            Destination = obj,
+        });
     }
 
     private void OnClose()
@@ -43,28 +51,25 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
     private void OnStopAutodockPressed(EntityUid obj)
     {
-        SendMessage(new StopAutodockRequestMessage() {Entity = obj});
+        SendMessage(new StopAutodockRequestMessage() {DockEntity = obj});
     }
 
     private void OnAutodockPressed(EntityUid obj)
     {
-        SendMessage(new AutodockRequestMessage() {Entity = obj});
+        SendMessage(new AutodockRequestMessage() {DockEntity = obj});
     }
 
     private void OnUndockPressed(EntityUid obj)
     {
-        SendMessage(new UndockRequestMessage() {Entity = obj});
-    }
-
-    private void OnShuttleModePressed(ShuttleMode obj)
-    {
-        SendMessage(new ShuttleModeRequestMessage() {Mode = obj});
+        SendMessage(new UndockRequestMessage() {DockEntity = obj});
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
         if (state is not ShuttleConsoleBoundInterfaceState cState) return;
+
+        _window?.SetMatrix(cState.Coordinates, cState.Angle);
         _window?.UpdateState(cState);
     }
 }

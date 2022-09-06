@@ -40,7 +40,7 @@ namespace Content.Server.GameTicking.Commands
             var stationSystem = EntitySystem.Get<StationSystem>();
             var stationJobs = EntitySystem.Get<StationJobsSystem>();
 
-            if (!ticker.PlayersInLobby.ContainsKey(player) || ticker.PlayersInLobby[player] == LobbyPlayerStatus.Observer)
+            if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
             {
                 Logger.InfoS("security", $"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
                 shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
@@ -65,7 +65,7 @@ namespace Content.Server.GameTicking.Commands
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
                 if(stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {
-                    shell.WriteLine($"{jobPrototype.Name} has no available slots.");
+                    shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
                     return;
                 }
                 ticker.MakeJoinGame(player, station, id);

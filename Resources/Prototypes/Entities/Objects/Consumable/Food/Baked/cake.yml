@@ -108,6 +108,17 @@
     - state: carrot
   - type: SliceableFood
     slice: FoodCakeCarrotSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: JuiceCarrot
+          Quantity: 15
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
 
 - type: entity
   name: slice of carrot cake
@@ -120,6 +131,18 @@
     - state: plate-small
     - state: plate-slice-shading
     - state: carrot-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: JuiceCarrot
+          Quantity: 3
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
+
 # Tastes like sweetness, cake, carrot.
 
 - type: entity

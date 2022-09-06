@@ -39,6 +39,7 @@ namespace Content.Server.Polymorph.Systems
             SubscribeLocalEvent<PolymorphableComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
 
+            InitializeCollide();
             InitializeMap();
         }
 
@@ -84,6 +85,10 @@ namespace Content.Server.Polymorph.Systems
             /// This is the big papa function. This handles the transformation, moving the old entity
             /// logic and conditions specified in the prototype, and everything else that may be needed.
             /// I am clinically insane - emo
+
+            // if it's already morphed, don't allow it again with this condition active.
+            if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(target))
+                return null;
 
             // mostly just for vehicles
             if (TryComp<BuckleComponent>(target, out var buckle))
@@ -179,8 +184,11 @@ namespace Content.Server.Polymorph.Systems
 
             var act = new InstantAction()
             {
-                Event = new PolymorphActionEvent(polyproto),
-                Name = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
+                Event = new PolymorphActionEvent()
+                {
+                    Prototype = polyproto,
+                },
+                DisplayName = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
                 Description = Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)),
                 Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity),
                 ItemIconStyle = ItemActionIconStyle.NoItem,
@@ -219,11 +227,6 @@ namespace Content.Server.Polymorph.Systems
         /// The polymorph prototype containing all the information about
         /// the specific polymorph.
         /// </summary>
-        public readonly PolymorphPrototype Prototype;
-
-        public PolymorphActionEvent(PolymorphPrototype prototype)
-        {
-            Prototype = prototype;
-        }
+        public PolymorphPrototype Prototype = default!;
     };
 }

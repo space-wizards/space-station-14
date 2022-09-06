@@ -1,13 +1,12 @@
 # Leader
 - type: job
   id: ERTLeader
-  name: "ERT leader"
+  name: job-name-ertleader
+  playTimeTracker: JobERTLeader
   setPreference: false
   startingGear: ERTLeaderGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -48,17 +47,16 @@
 # Engineer
 - type: job
   id: ERTEngineer
-  name: "ERT engineer"
+  name: job-name-ertengineer
+  playTimeTracker: JobERTEngineer
   setPreference: false
   startingGear: ERTEngineerGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTEngineerGear
   equipment:
@@ -90,21 +88,20 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
-    
+
 # Security
 - type: job
   id: ERTSecurity
-  name: "ERT security"
+  name: job-name-ertsecurity
+  playTimeTracker: JobERTSecurity
   setPreference: false
   startingGear: ERTEngineerGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTSecurityGear
   equipment:
@@ -136,21 +133,20 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    
+
 # Medical
 - type: job
   id: ERTMedical
-  name: "ERT medic"
+  name: job-name-ertmedic
+  playTimeTracker: JobERTMedical
   setPreference: false
   startingGear: ERTMedicalGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTMedicalGear
   equipment:
@@ -183,21 +179,20 @@
     belt: ClothingBeltMedicalFilled
     pocket1: HandheldHealthAnalyzer
     pocket2: Flare
-    
+
 # Janitor
 - type: job
   id: ERTJanitor
-  name: "ERT janitor"
+  name: job-name-ertjanitor
+  playTimeTracker: JobERTJanitor
   setPreference: false
   startingGear: ERTJanitorGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTJanitorGear
   equipment:

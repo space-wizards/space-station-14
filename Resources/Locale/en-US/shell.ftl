@@ -8,12 +8,14 @@ shell-invalid-command = Invalid command.
 shell-invalid-command-specific = Invalid {$commandName} command.
 shell-cannot-run-command-from-server = You cannot run this command from the server.
 shell-only-players-can-run-this-command = Only players can run this command.
+shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
 
 ## Arguments
 
 shell-need-exactly-one-argument = Need exactly one argument.
 shell-wrong-arguments-number-need-specific = Need {$properAmount} arguments, there were {$currentAmount}.
 shell-argument-must-be-number = Argument must be a number.
+shell-argument-must-be-boolean = Argument must be a boolean.
 shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
 
@@ -24,6 +26,7 @@ shell-invalid-entity-id = Invalid entity ID.
 shell-invalid-grid-id = Invalid grid ID.
 shell-invalid-map-id = Invalid map ID.
 shell-invalid-entity-uid = {$uid} is not a valid entity uid
+shell-invalid-bool = Invalid boolean.
 shell-entity-uid-must-be-number = EntityUid must be a number.
 shell-could-not-find-entity = Could not find entity {$entity}
 shell-could-not-find-entity-with-uid = Could not find entity with uid {$uid}

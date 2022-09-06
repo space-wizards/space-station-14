@@ -1,9 +1,10 @@
-using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Doors.Components;
+using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
@@ -12,6 +13,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Popups;
 using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems
@@ -20,6 +22,7 @@ namespace Content.Server.Doors.Systems
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+        [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly AirtightSystem _airtightSystem = default!;
 
@@ -32,9 +35,10 @@ namespace Content.Server.Doors.Systems
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
             SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
+            SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
-            SubscribeLocalEvent<FirelockComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<FirelockComponent, AtmosAlarmEvent>(OnAtmosAlarm);
 
             // Visuals
             SubscribeLocalEvent<FirelockComponent, MapInitEvent>(UpdateVisuals);
@@ -117,7 +121,7 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
-            if (IsHoldingPressureOrFire(uid, component))
+            if (!this.IsPowered(uid, EntityManager) || IsHoldingPressureOrFire(uid, component))
                 args.Cancel();
         }
 
@@ -140,29 +144,41 @@ namespace Content.Server.Doors.Systems
                 args.PryTimeModifier *= component.LockedPryTimeModifier;
         }
 
+        private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
+        {
+            var ev = new BeforeDoorAutoCloseEvent();
+            RaiseLocalEvent(uid, ev);
+            if (ev.Cancelled)
+            {
+                return;
+            }
+
+            _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
+        }
+
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
         {
+            if (!this.IsPowered(uid, EntityManager))
+                args.Cancel();
+
             // Make firelocks autoclose, but only if the last alarm type it
             // remembers was a danger. This is to prevent people from
             // flooding hallways with endless bad air/fire.
-            if (component.AlarmAutoClose
-                && TryComp(uid, out AtmosAlarmableComponent? alarmable)
-                && (alarmable.HighestNetworkState != AtmosMonitorAlarmType.Danger))
-            {
+            if (component.AlarmAutoClose &&
+                (_atmosAlarmable.TryGetHighestAlert(uid, out var alarm) && alarm != AtmosAlarmType.Danger || alarm == null))
                 args.Cancel();
-            }
         }
 
-        private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosMonitorAlarmEvent args)
+        private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosAlarmEvent args)
         {
             if (!TryComp<DoorComponent>(uid, out var doorComponent)) return;
 
-            if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+            if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
             {
                 if (doorComponent.State == DoorState.Closed)
                     _doorSystem.TryOpen(uid);
             }
-            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+            else if (args.AlarmType == AtmosAlarmType.Danger)
             {
                 EmergencyPressureStop(uid, component, doorComponent);
             }

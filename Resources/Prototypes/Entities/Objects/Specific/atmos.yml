@@ -6,7 +6,9 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Atmos/gasanalyzer.rsi
-    state: icon
+    layers:
+      - state: icon
+        map: ["analyzer"]
     netsync: false
   - type: GasAnalyzer
   - type: ActivatableUI
@@ -16,10 +18,12 @@
     - key: enum.GasAnalyzerUiKey.Key
       type: GasAnalyzerBoundUserInterface
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: GasAnalyzerVisualizer
-      state_off: icon
-      state_working: working
+      enum.GasAnalyzerVisuals.VisualState:
+        analyzer:
+          Off: { state: icon }
+          Working: { state: working }
   - type: Tag
     tags:
       - DroneUsable

@@ -16,7 +16,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
   - type: Item
     size: 5
@@ -47,8 +47,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 5
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
@@ -87,18 +87,20 @@
     tags:
     - Raw
   - type: Sprite
-    netsync: true
+    netsync: false
     state: bacon
-  - type: RandomSpriteState
-    spriteStates:
-    - bacon
-    - bacon2
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          bacon: ""
+      - enum.DamageStateVisualLayers.Base:
+          bacon2: ""
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 2
 
 - type: entity
   name: raw bear meat
@@ -115,8 +117,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutlet
@@ -136,8 +138,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletSlice
@@ -157,8 +159,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
@@ -178,8 +180,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatDuckCutlet
@@ -219,7 +221,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -237,7 +239,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
 
 - type: entity
@@ -281,8 +283,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutlet
@@ -311,7 +313,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 20
 
 - type: entity
@@ -329,8 +331,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 20
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
@@ -350,7 +352,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 10
 
 - type: entity
@@ -368,7 +370,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -501,11 +503,13 @@
     layers:
     - state: plate-meat
     - state: bacon-cooked
-  - type: RandomSpriteState
-    spriteLayer: 1
-    spriteStates:
-    - bacon-cooked
-    - bacon2-cooked
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          bacon-cooked: ""
+      - enum.DamageStateVisualLayers.Base:
+          bacon2-cooked: ""
   - type: SolutionContainerManager
     solutions:
       food:
@@ -608,12 +612,16 @@
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
-    netsync: true
-    state: chicken-fried
-  - type: RandomSpriteState
-    spriteStates:
-    - chicken-fried
-    - chicken2-fried
+    netsync: false
+    layers:
+    - state: chicken-fried
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          chicken-fried: ""
+      - enum.DamageStateVisualLayers.Base:
+          chicken2-fried: ""
   - type: SolutionContainerManager
     solutions:
       food:
@@ -695,7 +703,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - reagentId: Protein
+        - ReagentId: Protein
           Quantity: 5
 
 - type: entity
@@ -789,8 +797,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw bear cutlet
@@ -811,8 +819,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw penguin cutlet
@@ -831,8 +839,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw chicken cutlet
@@ -851,8 +859,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw duck cutlet
@@ -871,8 +879,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw lizard cutlet
@@ -894,8 +902,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw spider cutlet
@@ -917,8 +925,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
-          Quantity: 20
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw xeno cutlet

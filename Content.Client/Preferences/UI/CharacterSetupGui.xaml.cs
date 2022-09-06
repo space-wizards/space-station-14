@@ -192,7 +192,7 @@ namespace Content.Client.Preferences.UI
                 var highPriorityJob = humanoid?.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
                 if (highPriorityJob != null)
                 {
-                    var jobName = IoCManager.Resolve<IPrototypeManager>().Index<JobPrototype>(highPriorityJob).Name;
+                    var jobName = IoCManager.Resolve<IPrototypeManager>().Index<JobPrototype>(highPriorityJob).LocalizedName;
                     description = $"{description}\n{jobName}";
                 }
 
@@ -235,7 +235,7 @@ namespace Content.Client.Preferences.UI
                 if (!disposing)
                     return;
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy);
                 _previewDummy = default;
             }
         }

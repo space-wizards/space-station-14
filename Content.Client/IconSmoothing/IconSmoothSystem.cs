@@ -155,10 +155,8 @@ namespace Content.Client.IconSmoothing
 
         private void OnAnchorChanged(EntityUid uid, IconSmoothComponent component, ref AnchorStateChangedEvent args)
         {
-            // Defer updating to next frame update. We do this because this unanchoring might be caused by a detach to
-            // null due to leaving PVS, in which case we can be a bit lazy. However, this event is raised before being
-            // sent to null-space, hence deferring.
-            _anchorChangedEntities.Enqueue(uid);
+            if (!args.Detaching)
+                _anchorChangedEntities.Enqueue(uid);
         }
 
         private void CalculateNewSprite(EntityUid uid,
@@ -234,7 +232,7 @@ namespace Content.Client.IconSmoothing
             sprite.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
         }
 
-        protected bool MatchingEntity(IconSmoothComponent smooth, IEnumerable<EntityUid> candidates, EntityQuery<IconSmoothComponent> smoothQuery)
+        private bool MatchingEntity(IconSmoothComponent smooth, IEnumerable<EntityUid> candidates, EntityQuery<IconSmoothComponent> smoothQuery)
         {
             foreach (var entity in candidates)
             {

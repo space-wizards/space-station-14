@@ -17,5 +17,5 @@ public sealed class RadarConsoleComponent : Component
     }
 
     [ViewVariables, DataField("maxRange")]
-    public float MaxRange = 120f;
+    public float MaxRange = 256f;
 }

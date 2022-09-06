@@ -76,6 +76,19 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieLamp
+  name: lamp plushie
+  description: A light emitting friend!
+  components:
+  - type: Sprite
+    state: plushie_lamp
+  - type: PointLight
+    netsync: false
+    radius: 1.5
+    energy: 2
+
+- type: entity
+  parent: BasePlushie
   id: PlushieLizard #Weh!
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
@@ -144,7 +157,7 @@
   - type: Sprite
     state: carpplush
   - type: Item
-    HeldPrefix: carpplush
+    heldPrefix: carpplush
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Effects/bite.ogg
@@ -209,7 +222,7 @@
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/ducky.rsi
-    Slots:
+    slots:
     - HEAD
   - type: EmitSoundOnUse
     sound:
@@ -266,7 +279,7 @@
     state: doll
   - type: Item
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: doll
+    heldPrefix: doll
 
 - type: entity
   parent: BaseItem
@@ -450,7 +463,6 @@
     netsync: false
   - type: Item
     size: 24
-    state: icon
 
 - type: entity
   parent: FoamWeaponBase
@@ -464,7 +476,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: foamcrossbow
+    heldPrefix: foamcrossbow
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto
@@ -475,10 +487,14 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+        - BulletFoam
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/drawbow2.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   parent: BaseItem
@@ -502,9 +518,8 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 24
     sprite: Objects/Fun/toys.rsi
-    state: base
+    heldPrefix: capgun
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -519,6 +534,10 @@
     autoCycle: true
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   parent: BaseItem
@@ -539,7 +558,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: foamblade
+    heldPrefix: foamblade
   - type: ItemCooldown
 
 # MISC
@@ -556,7 +575,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: bask
+    heldPrefix: bask
 
 - type: entity
   parent: BaseItem
@@ -570,7 +589,7 @@
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: footb
+    heldPrefix: footb
 
 - type: entity
   parent: BaseItem
@@ -584,7 +603,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: synb
+    heldPrefix: synb
 
 - type: entity
   parent: BaseItem
@@ -598,7 +617,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: corgib
+    heldPrefix: corgib
 
 - type: entity
   parent: BaseItem
@@ -618,7 +637,7 @@
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: singularitytoy
+    heldPrefix: singularitytoy
 
 - type: entity
   parent: BaseItem
@@ -636,4 +655,50 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: orb
+    heldPrefix: orb
+
+- type: entity
+  id: ToySword
+  name: toy sword
+  description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
+  components:
+    - type: EnergySword
+      isSharp: false
+      colorOptions:
+        - DodgerBlue
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/e_sword.rsi
+      layers:
+        - state: e_sword
+        - state: e_sword_blade
+          color: "#FFFFFF"
+          visible: false
+          shader: unshaded
+          map: [ "blade" ]
+    - type: Item
+      size: 5
+      sprite: Objects/Weapons/Melee/e_sword.rsi
+    - type: UseDelay
+      delay: 1.0
+    - type: PointLight
+      netsync: false
+      enabled: false
+      radius: 2
+      energy: 2
+      color: white
+    - type: Appearance
+    - type: ToggleableLightVisuals
+      spriteLayer: blade
+      inhandVisuals:
+        left:
+          - state: inhand-left-blade
+            shader: unshaded
+        right:
+          - state: inhand-right-blade
+            shader: unshaded
+    - type: DisarmMalus
+      malus: 0
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 0

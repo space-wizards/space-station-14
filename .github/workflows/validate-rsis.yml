@@ -10,9 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Submodule
+        run: git submodule update --init
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
       - name: Parse files
         uses: space-wizards/json-schema-validator@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          json_schema: .github/rsi-schema.json
+          json_schema: RobustToolbox/Schemas/rsi.json
           json_path_pattern: .*meta.json$

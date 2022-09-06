@@ -50,6 +50,8 @@
   - type: SentienceTarget
     flavorKind: corgi
   - type: Puller
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: corrupted corgi
@@ -80,9 +82,10 @@
       types:
         Piercing: 5
         Slash: 5
-  - type: UtilityAI
-    behaviorSets:
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -272,6 +275,8 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: Runtime

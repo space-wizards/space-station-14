@@ -3,7 +3,9 @@ using Content.Server.Labels.Components;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Audio;
+using Robust.Shared.Collections;
 using Robust.Shared.Player;
 
 namespace Content.Server.Cargo.Systems;
@@ -27,7 +29,7 @@ public sealed partial class CargoSystem
             // Don't EntityQuery for it as it's not required.
             TryComp<AppearanceComponent>(comp.Owner, out var appearance);
 
-            if (comp.CurrentState == CargoTelepadState.Unpowered || comp.TeleportQueue.Count <= 0)
+            if (comp.CurrentState == CargoTelepadState.Unpowered)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
                 appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Idle);
@@ -45,14 +47,44 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            var product = comp.TeleportQueue.Pop();
+            var station = _station.GetOwningStation(comp.Owner);
+
+            if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
+                orderDatabase.Orders.Count == 0)
+            {
+                comp.Accumulator += comp.Delay;
+                continue;
+            }
+
+            var orderIndices = new ValueList<int>();
+
+            foreach (var (oIndex, oOrder) in orderDatabase.Orders)
+            {
+                if (!oOrder.Approved) continue;
+                orderIndices.Add(oIndex);
+            }
+
+            if (orderIndices.Count == 0)
+            {
+                comp.Accumulator += comp.Delay;
+                continue;
+            }
+
+            orderIndices.Sort();
+            var index = orderIndices[0];
+            var order = orderDatabase.Orders[index];
+            order.Amount--;
+
+            if (order.Amount <= 0)
+                orderDatabase.Orders.Remove(index);
 
             SoundSystem.Play(comp.TeleportSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default.WithVolume(-8f));
-            SpawnProduct(comp, product);
+            SpawnProduct(comp, order);
+            UpdateOrders(orderDatabase);
 
             comp.CurrentState = CargoTelepadState.Teleporting;
             appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
-            comp.Accumulator = comp.Delay;
+            comp.Accumulator += comp.Delay;
         }
     }
 
@@ -87,14 +119,6 @@ public sealed partial class CargoSystem
         SetEnabled(component);
     }
 
-    public void QueueTeleport(CargoTelepadComponent component, CargoOrderData order)
-    {
-        for (var i = 0; i < order.Amount; i++)
-        {
-            component.TeleportQueue.Push(order);
-        }
-    }
-
     /// <summary>
     ///     Spawn the product and a piece of paper. Attempt to attach the paper to the product.
     /// </summary>
@@ -124,15 +148,16 @@ public sealed partial class CargoSystem
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
             ("orderNumber", data.OrderNumber),
+            ("itemName", prototype.Name),
             ("requester", data.Requester),
             ("reason", data.Reason),
-            ("approver", data.Approver)),
+            ("approver", data.Approver ?? string.Empty)),
             paper);
 
         // attempt to attach the label
         if (TryComp<PaperLabelComponent>(product, out var label))
         {
-            _slots.TryInsert(component.Owner, label.LabelSlot, printed, null);
+            _slots.TryInsert(product, label.LabelSlot, printed, null);
         }
     }
 }

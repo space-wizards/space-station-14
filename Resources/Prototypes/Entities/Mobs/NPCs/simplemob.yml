@@ -12,11 +12,10 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
-  - type: UtilityAI
-    behaviorSets:
-    # - Clothing
-    - Idle
-    # No hunger and thirst for space mobs (need a way to eat station tiles for space carps)
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: IdleCompound
   - type: Input
     context: "human"
   - type: AiFactionTag
@@ -68,8 +67,6 @@
       types:
         Bloodloss:
           -0.25
-  - type: DrawableSolution
-    solution: bloodstream
   - type: Damageable
     damageContainer: Biological
   - type: AtmosExposed
@@ -92,9 +89,9 @@
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
+      0: Alive
+      50: Critical
+      100: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -108,11 +105,12 @@
   - type: Internals
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
     - SlowedDown
     - Stutter
     - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
   - type: Body
     template: AnimalTemplate
     preset: AnimalPreset
@@ -127,9 +125,9 @@
   - type: Appearance
     visuals:
     - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
   - type: Actions
   - type: DoAfter
   - type: Climbing
@@ -159,23 +157,24 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    # - Hunger TODO: eating on the floor and fix weird AI endless stomach
-    # - Thirst
+  - type: InputMover
+  - type: MobMover
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   - type: Barotrauma
     damage:
       types:
         Blunt: 0.15 #per second, scales with pressure and other constants.
+  - type: StatusEffects
+    allowed:
+      - Stun
+      - KnockedDown
+      - SlowedDown
+      - Stutter
+      - Electrocution
+      - ForcedSleep
+      - TemporaryBlindness
+      - Pacified
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -204,4 +203,6 @@
         Heat : 1 #per second, scales with temperature & other constants
   - type: Bloodstream
     bloodMaxVolume: 150
+  - type: MobPrice
+    price: 150
 

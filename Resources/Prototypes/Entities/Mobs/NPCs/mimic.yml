@@ -7,9 +7,8 @@
   - type: Tag
     tags:
     - FootstepSound
-  - type: UtilityAI
-    behaviorSets:
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
   - type: AiFactionTag
     factions:
     - SimpleHostile

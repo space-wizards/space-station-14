@@ -1,62 +1,68 @@
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
+using Content.Shared.Shuttles.Systems;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles.Systems
 {
     [UsedImplicitly]
-    public sealed class ShuttleSystem : EntitySystem
+    public sealed partial class ShuttleSystem : SharedShuttleSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
+        private ISawmill _sawmill = default!;
 
         public const float TileMassMultiplier = 0.5f;
 
-        public float ShuttleMaxLinearSpeed;
-
-        public float ShuttleMaxAngularMomentum;
-        public float ShuttleMaxAngularAcc;
-        public float ShuttleMaxAngularSpeed;
-
-        public float ShuttleIdleLinearDamping;
-        public float ShuttleIdleAngularDamping;
+        public const float ShuttleLinearDamping = 0.05f;
+        public const float ShuttleAngularDamping = 0.05f;
 
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = Logger.GetSawmill("shuttles");
+
+            InitializeEmergencyConsole();
+            InitializeEscape();
+            InitializeFTL();
+            InitializeIFF();
+
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
             SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
-
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed, true);
-            configManager.OnValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed, true);
-            configManager.OnValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping, true);
-            configManager.OnValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping, true);
-            configManager.OnValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc, true);
-            configManager.OnValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum, true);
         }
 
-        private void SetShuttleMaxLinearSpeed(float value) => ShuttleMaxLinearSpeed = value;
-        private void SetShuttleMaxAngularSpeed(float value) => ShuttleMaxAngularSpeed = value;
-        private void SetShuttleMaxAngularAcc(float value) => ShuttleMaxAngularAcc = value;
-        private void SetShuttleMaxAngularMomentum(float value) => ShuttleMaxAngularMomentum = value;
-        private void SetShuttleIdleLinearDamping(float value) => ShuttleIdleLinearDamping = value;
-        private void SetShuttleIdleAngularDamping(float value) => ShuttleIdleAngularDamping = value;
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            UpdateEmergencyConsole(frameTime);
+            UpdateHyperspace(frameTime);
+        }
+
+        private void OnRoundRestart(RoundRestartCleanupEvent ev)
+        {
+            CleanupEmergencyConsole();
+            CleanupEmergencyShuttle();
+            CleanupHyperspace();
+        }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.UnsubValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed);
-            configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed);
-            configManager.UnsubValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping);
-            configManager.UnsubValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping);
-            configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum);
+            ShutdownEscape();
+            ShutdownEmergencyConsole();
         }
 
         private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)
@@ -127,10 +133,9 @@ namespace Content.Server.Shuttles.Systems
         {
             component.BodyType = BodyType.Dynamic;
             component.BodyStatus = BodyStatus.InAir;
-            //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
             component.FixedRotation = false;
-            component.LinearDamping = ShuttleIdleLinearDamping;
-            component.AngularDamping = ShuttleIdleAngularDamping;
+            component.LinearDamping = ShuttleLinearDamping;
+            component.AngularDamping = ShuttleAngularDamping;
         }
 
         private void Disable(PhysicsComponent component)

@@ -11,6 +11,10 @@
     capacity: 6
   - type: Sprite
     netsync: false
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   id: SpeedLoaderMagnum
@@ -28,26 +32,6 @@
         map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
     magState: base
-    steps: 7
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  id: SpeedLoaderMagnumFlash
-  name: "speed loader (.40 magnum flash)"
-  parent: BaseSpeedLoaderMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumFlash
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
-    layers:
-      - state: base
-        map: [ "enum.GunVisualLayers.Base" ]
-      - state: flash-6
-        map: [ "enum.GunVisualLayers.Mag" ]
-  - type: MagazineVisuals
-    magState: flash
     steps: 7
     zeroVisible: false
   - type: Appearance

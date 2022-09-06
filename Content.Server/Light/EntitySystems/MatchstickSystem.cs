@@ -14,8 +14,9 @@ namespace Content.Server.Light.EntitySystems
     public sealed class MatchstickSystem : EntitySystem
     {
         private HashSet<MatchstickComponent> _litMatches = new();
-        [Dependency]
-        private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
 
         public override void Initialize()
         {
@@ -38,7 +39,14 @@ namespace Content.Server.Light.EntitySystems
                 if (match.CurrentState != SmokableState.Lit || Paused(match.Owner) || match.Deleted)
                     continue;
 
-                _atmosphereSystem.HotspotExpose(EntityManager.GetComponent<TransformComponent>(match.Owner).Coordinates, 400, 50, true);
+                var xform = Transform(match.Owner);
+
+                if (xform.GridUid is not {} gridUid)
+                    return;
+
+                var position = _transformSystem.GetGridOrMapTilePosition(match.Owner, xform);
+
+                _atmosphereSystem.HotspotExpose(gridUid, position, 400, 50, true);
             }
         }
 
@@ -87,15 +95,15 @@ namespace Content.Server.Light.EntitySystems
                 pointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out SharedItemComponent? item))
+            if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
             {
                 switch (component.CurrentState)
                 {
                     case SmokableState.Lit:
-                        item.EquippedPrefix = "lit";
+                        _item.SetHeldPrefix(component.Owner, "lit", item);
                         break;
                     default:
-                        item.EquippedPrefix = "unlit";
+                        _item.SetHeldPrefix(component.Owner, "unlit", item);
                         break;
                 }
             }

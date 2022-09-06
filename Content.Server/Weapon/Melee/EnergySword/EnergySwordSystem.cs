@@ -1,14 +1,14 @@
+using Content.Server.CombatMode.Disarm;
+using Content.Server.Kitchen.Components;
+using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light;
 using Content.Shared.Light.Component;
+using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
-using Content.Server.CombatMode.Disarm;
-using Content.Server.Kitchen.Components;
-using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -19,6 +19,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedRgbLightControllerSystem _rgbSystem = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
 
         public override void Initialize()
         {
@@ -28,6 +29,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
             SubscribeLocalEvent<EnergySwordComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<EnergySwordComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<EnergySwordComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<EnergySwordComponent, IsHotEvent>(OnIsHotEvent);
         }
 
         private void OnMapInit(EntityUid uid, EnergySwordComponent comp, MapInitEvent args)
@@ -67,9 +69,9 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if (!comp.Activated)
                 return;
 
-            if (TryComp(comp.Owner, out SharedItemComponent? item))
+            if (TryComp(comp.Owner, out ItemComponent? item))
             {
-                item.Size = 5;
+                _item.SetSize(comp.Owner, 5, item);
             }
 
             if (TryComp<DisarmMalusComponent>(comp.Owner, out var malus))
@@ -80,7 +82,8 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
                 weaponComp.HitSound = comp.OnHitOff;
 
-            RemComp<SharpComponent>(comp.Owner);
+            if (comp.IsSharp)
+                RemComp<SharpComponent>(comp.Owner);
 
             SoundSystem.Play(comp.DeActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
@@ -92,12 +95,13 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if (comp.Activated)
                 return;
 
-            if (TryComp(comp.Owner, out SharedItemComponent? item))
+            if (TryComp(comp.Owner, out ItemComponent? item))
             {
-                item.Size = 9999;
+                _item.SetSize(comp.Owner, 9999, item);
             }
 
-            EnsureComp<SharpComponent>(comp.Owner);
+            if (comp.IsSharp)
+                EnsureComp<SharpComponent>(comp.Owner);
 
             if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
                 weaponComp.HitSound = comp.OnHitOn;
@@ -137,6 +141,10 @@ namespace Content.Server.Weapon.Melee.EnergySword
             }
             else
                 RemComp<RgbLightControllerComponent>(uid);
+        }
+        private void OnIsHotEvent(EntityUid uid, EnergySwordComponent energySword, IsHotEvent args)
+        {
+            args.IsHot = energySword.Activated;
         }
     }
 }

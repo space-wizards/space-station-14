@@ -2,7 +2,7 @@ using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.MachineLinking;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -15,7 +15,7 @@ namespace Content.Server.Cargo.Components
     public sealed class CargoTelepadComponent : SharedCargoTelepadComponent
     {
         [DataField("delay")]
-        public float Delay = 20f;
+        public float Delay = 45f;
 
         /// <summary>
         /// How much time we've accumulated until next teleport.
@@ -23,9 +23,6 @@ namespace Content.Server.Cargo.Components
         [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
-
-        [ViewVariables]
-        public readonly Stack<CargoOrderData> TeleportQueue = new();
 
         [ViewVariables]
         public CargoTelepadState CurrentState = CargoTelepadState.Unpowered;

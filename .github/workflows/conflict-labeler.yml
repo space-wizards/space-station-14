@@ -9,10 +9,9 @@ on:
 jobs:
   Label:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
     steps:
       - name: Check for Merge Conflicts
-        uses: eps1lon/actions-label-merge-conflict@513a24fc7dca40990863be2935e059e650728400
+        uses: ike709/actions-label-merge-conflict@9eefdd17e10566023c46d2dc6dc04fcb8ec76142
         with:
           dirtyLabel: "Merge Conflict"
           repoToken: "${{ secrets.GITHUB_TOKEN }}"

@@ -105,6 +105,11 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(EngineKeyFunctions.MoveRight);
             AddButton(EngineKeyFunctions.Walk);
 
+            AddHeader("ui-options-header-camera");
+            AddButton(EngineKeyFunctions.CameraRotateLeft);
+            AddButton(EngineKeyFunctions.CameraRotateRight);
+            AddButton(EngineKeyFunctions.CameraReset);
+
             AddHeader("ui-options-header-interaction-basic");
             AddButton(EngineKeyFunctions.Use);
             AddButton(ContentKeyFunctions.UseItemInHand);
@@ -171,6 +176,15 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(ContentKeyFunctions.Loadout7);
             AddButton(ContentKeyFunctions.Loadout8);
             AddButton(ContentKeyFunctions.Loadout9);
+
+            AddHeader("ui-options-header-shuttle");
+            AddButton(ContentKeyFunctions.ShuttleStrafeUp);
+            AddButton(ContentKeyFunctions.ShuttleStrafeRight);
+            AddButton(ContentKeyFunctions.ShuttleStrafeLeft);
+            AddButton(ContentKeyFunctions.ShuttleStrafeDown);
+            AddButton(ContentKeyFunctions.ShuttleRotateLeft);
+            AddButton(ContentKeyFunctions.ShuttleRotateRight);
+            AddButton(ContentKeyFunctions.ShuttleBrake);
 
             AddHeader("ui-options-header-map-editor");
             AddButton(EngineKeyFunctions.EditorPlaceObject);

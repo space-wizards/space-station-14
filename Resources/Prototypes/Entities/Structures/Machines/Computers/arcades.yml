@@ -3,7 +3,7 @@
   id: ArcadeBase
   description: An arcade cabinet.
   name: arcade
-  parent: ComputerBase
+  parent: BaseComputer
   components:
   - type: ApcPowerReceiver
     powerLoad: 350

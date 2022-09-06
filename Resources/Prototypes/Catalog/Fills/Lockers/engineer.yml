@@ -83,6 +83,7 @@
       - id: ClothingOuterHardsuitAtmos
       - id: ClothingMaskGasAtmos
       - id: YellowOxygenTankFilled
+      - id: NitrogenTankFilled
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
       - id: GasAnalyzer
@@ -100,6 +101,7 @@
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
       - id: OxygenTankFilled
+      - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
 
 - type: entity
@@ -112,6 +114,4 @@
       - id: ClothingHeadHatHoodRad
         amount: 2
       - id: ClothingOuterSuitRad
-        amount: 2
-      - id: ClothingEyesGlassesMeson
         amount: 2
