@@ -12,9 +12,11 @@ gas-analyzer-window-refresh-button = Refresh
 gas-analyzer-window-no-data = No Data
 gas-analyzer-window-no-gas-text = No Gases
 gas-analyzer-window-error-text = Error: {$errorText}
-gas-analyzer-window-pressure-text = Pressure: {$pressure} kPa
-gas-analyzer-window-temperature-text = Temperature: {$tempK}K ({$tempC}°C)
-gas-analyzer-window-molarity-text = {$mol} mol
+gas-analyzer-window-pressure-text = Pressure:
+gas-analyzer-window-pressure-val-text = {$pressure} kPa
+gas-analyzer-window-temperature-text = Temperature:
+gas-analyzer-window-temperature-val-text = {$tempK}K ({$tempC}°C)
+gas-analyzer-window-molarity-text = {$mol} mol ({$percentage}%)
 gas-analyzer-window-molarity-percentage-text = {$gasName}: {$amount} mol ({$percentage}%)
 
 # Used for GasEntry.ToString()
