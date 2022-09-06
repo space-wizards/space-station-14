@@ -9,7 +9,7 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - SimpleHostile
     - type: Sprite

@@ -39,9 +39,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPlayerManager _playerSystem = default!;
+    [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private bool _opsWon;
@@ -398,9 +399,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if(_startingGearPrototypes.TryGetValue(gear, out var gearPrototype))
             _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, null);
 
-        var faction = EnsureComp<AiFactionTagComponent>(mob);
-        faction.Factions |= Faction.Syndicate;
-        faction.Factions &= ~Faction.NanoTrasen;
+        _faction.RemoveFaction(mob, "NanoTrasen", false);
+        _faction.AddFaction(mob, "Syndicate", true);
     }
 
     private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints)

@@ -26,7 +26,7 @@
     - type: CameraRecoil
     - type: Examiner
     - type: CanHostGuardian
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - NanoTrasen
     - type: Respirator
