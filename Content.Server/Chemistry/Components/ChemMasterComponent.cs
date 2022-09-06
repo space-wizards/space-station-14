@@ -18,9 +18,6 @@ namespace Content.Server.Chemistry.Components
         [DataField("mode"), ViewVariables(VVAccess.ReadWrite)]
         public ChemMasterMode Mode = ChemMasterMode.Transfer;
 
-        [ViewVariables]
-        public string Label = "";
-
         [DataField("pillProductionLimit"), ViewVariables(VVAccess.ReadWrite)]
         public uint PillProductionLimit = default!;
 

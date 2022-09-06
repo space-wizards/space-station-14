@@ -21,7 +21,6 @@ namespace Content.Client.Chemistry.UI
     public sealed partial class ChemMasterWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        public event Action<string>? OnLabelEntered;
         public event Action<BaseButton.ButtonEventArgs, ReagentButton>? OnReagentButtonPressed;
         public readonly Button[] PillTypeButtons;
 
@@ -35,7 +34,6 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            LabelLineEdit.OnTextEntered += e => OnLabelEntered?.Invoke(e.Text);
 
             // Pill type selection buttons, in total there are 20 pills.
             // Pill rsi file should have states named as pill1, pill2, and so on.
@@ -97,7 +95,8 @@ namespace Content.Client.Chemistry.UI
         {
             var castState = (ChemMasterBoundUserInterfaceState) state;
             Title = castState.DispenserName;
-            LabelLine = castState.Label;
+            if (castState.UpdateLabel)
+                LabelLine = GenerateLabel(castState);
             UpdatePanelInfo(castState);
             if (Contents.Children != null)
             {
@@ -107,6 +106,23 @@ namespace Content.Client.Chemistry.UI
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
             PillAmount.IsValid = x => x > 0 && x <= castState.PillProductionLimit;
             BottleAmount.IsValid = x => x > 0 && x <= castState.BottleProductionLimit;
+        }
+
+        /// <summary>
+        /// Generate a product label based on reagents in the buffer.
+        /// </summary>
+        /// <param name="state">State data sent by the server.</param>
+        private string GenerateLabel(ChemMasterBoundUserInterfaceState state)
+        {
+            if (state.BufferCurrentVolume == 0)
+                return "";
+            else
+            {
+                var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First();
+                _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto);
+                return proto?.LocalizedName ?? "";
+            }
+
         }
 
         /// <summary>
@@ -212,7 +228,6 @@ namespace Content.Client.Chemistry.UI
                     BufferInfo.Children.Add(new BoxContainer
                     {
                         Orientation = LayoutOrientation.Horizontal,
-                        // SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Children =
                         {
                             new Label {Text = $"{name}: "},

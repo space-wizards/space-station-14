@@ -45,7 +45,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterCreateBottlesMessage>(OnCreateBottlesMessage);
         }
 
-        private void UpdateUiState(ChemMasterComponent chemMaster)
+        private void UpdateUiState(ChemMasterComponent chemMaster, bool updateLabel = false)
         {
             var bufferSolution = _solutionContainerSystem.EnsureSolution(chemMaster.Owner, ChemMasterComponent.SolutionName);
             var containerSlot = CompOrNull<ItemSlotsComponent>(chemMaster.Owner)?.Slots.GetValueOrDefault("container_slot");
@@ -64,9 +64,9 @@ namespace Content.Server.Chemistry.EntitySystems
             var bufferCurrentVolume = bufferSolution.CurrentVolume;
 
             var state = new ChemMasterBoundUserInterfaceState(
-                containerSolution?.CurrentVolume, containerSolution?.MaxVolume, containerName, chemMaster.Label, dispenserName,
+                containerSolution?.CurrentVolume, containerSolution?.MaxVolume, containerName, dispenserName,
                 containerSolution?.Contents, bufferReagents, chemMaster.Mode, bufferCurrentVolume, chemMaster.PillType,
-                chemMaster.PillProductionLimit, chemMaster.BottleProductionLimit
+                chemMaster.PillProductionLimit, chemMaster.BottleProductionLimit, updateLabel
             );
             _userInterfaceSystem.TrySetUiState(chemMaster.Owner, ChemMasterUiKey.Key, state);
         }
@@ -143,8 +143,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 bufferSolution.AddReagent(reagentId, amount);
             }
 
-            chemMaster.Label = GenerateLabel(chemMaster);
-            UpdateUiState(chemMaster);
+            UpdateUiState(chemMaster, updateLabel: true);
         }
 
         private void DiscardReagents(ChemMasterComponent chemMaster, string reagentId, FixedPoint2 amount, bool fromBuffer)
@@ -162,7 +161,8 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 _solutionContainerSystem.TryRemoveReagent(container, containerSolution, reagentId, amount);
             }
-            UpdateUiState(chemMaster);
+
+            UpdateUiState(chemMaster, updateLabel: fromBuffer);
         }
 
         private void OnCreatePillsMessage(EntityUid uid, ChemMasterComponent chemMaster, ChemMasterCreatePillsMessage message)
@@ -208,11 +208,14 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 var item = Spawn(pills ? "Pill" : "ChemistryEmptyBottle01", Transform(chemMaster.Owner).Coordinates);
 
-                var labelComponent = item.EnsureComponent<LabelComponent>();
-                labelComponent.OriginalName = Name(item);
-                string val = Name(item) + $" ({label})";
-                Comp<MetaDataComponent>(item).EntityName = val;
-                labelComponent.CurrentLabel = label;
+                if (label != "")
+                {
+                    var labelComponent = item.EnsureComponent<LabelComponent>();
+                    labelComponent.OriginalName = Name(item);
+                    string val = Name(item) + $" ({label})";
+                    Comp<MetaDataComponent>(item).EntityName = val;
+                    labelComponent.CurrentLabel = label;
+                }
 
                 var solution = bufferSolution.SplitSolution(individualVolume);
                 var itemSolution = _solutionContainerSystem.EnsureSolution(item, pills ? "food" : "drink");
@@ -226,16 +229,6 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             UpdateUiState(chemMaster);
-        }
-
-        private string GenerateLabel(ChemMasterComponent chemMaster)
-        {
-            var bufferSolution = _solutionContainerSystem.EnsureSolution(chemMaster.Owner, ChemMasterComponent.SolutionName);
-            if (bufferSolution == null || bufferSolution.Contents.Count == 0)
-                return "";
-
-            bufferSolution.Contents.Sort();
-            return bufferSolution.Contents[bufferSolution.Contents.Count - 1].ReagentId;
         }
 
         private void ClickSound(ChemMasterComponent chemMaster)

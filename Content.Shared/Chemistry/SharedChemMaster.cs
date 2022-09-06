@@ -99,7 +99,6 @@ namespace Content.Shared.Chemistry
         public readonly FixedPoint2? ContainerCurrentVolume;
         public readonly FixedPoint2? ContainerMaxVolume;
         public readonly string? ContainerName;
-        public readonly string Label;
 
         /// <summary>
         /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
@@ -119,14 +118,15 @@ namespace Content.Shared.Chemistry
         public readonly uint PillProductionLimit;
         public readonly uint BottleProductionLimit;
 
-        public ChemMasterBoundUserInterfaceState(FixedPoint2? containerCurrentVolume, FixedPoint2? containerMaxVolume, string? containerName, string label,
+        public readonly bool UpdateLabel;
+
+        public ChemMasterBoundUserInterfaceState(FixedPoint2? containerCurrentVolume, FixedPoint2? containerMaxVolume, string? containerName,
             string dispenserName, IReadOnlyList<Solution.ReagentQuantity>? containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, ChemMasterMode mode,
-            FixedPoint2 bufferCurrentVolume, uint selectedPillType, uint pillProdictionLimit, uint bottleProdictionLimit)
+            FixedPoint2 bufferCurrentVolume, uint selectedPillType, uint pillProdictionLimit, uint bottleProdictionLimit, bool updateLabel)
         {
             ContainerCurrentVolume = containerCurrentVolume;
             ContainerMaxVolume = containerMaxVolume;
             ContainerName = containerName;
-            Label = label;
             DispenserName = dispenserName;
             ContainerReagents = containerReagents;
             BufferReagents = bufferReagents;
@@ -135,6 +135,7 @@ namespace Content.Shared.Chemistry
             SelectedPillType = selectedPillType;
             PillProductionLimit = pillProdictionLimit;
             BottleProductionLimit = bottleProdictionLimit;
+            UpdateLabel = updateLabel;
         }
 
         public bool HasContainer()
