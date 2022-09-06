@@ -1,10 +1,4 @@
 Entries:
-- author: Ranger6012
-  changes:
-  - {message: HoP's cloak description now correctly drapes over your shoulders instead
-      of your "shoudlers", type: Fix}
-  id: 1749
-  time: '2022-06-22T15:11:05.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Give Nuke Ops their access to console, type: Fix}
@@ -2926,3 +2920,8 @@ Entries:
   - {message: new ERT\CBURN pda sprite added, type: Add}
   id: 2248
   time: '2022-09-06T02:49:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added Pax, a drug that disables people''s combat mode.', type: Add}
+  id: 2249
+  time: '2022-09-06T02:52:58.0000000+00:00'
