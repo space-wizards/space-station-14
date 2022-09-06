@@ -12,6 +12,8 @@ network-configurator-configure = Configure
 # ui
 network-configurator-ui-clear-button = Clear
 network-configurator-ui-count-label = {$count} Devices
+network-configurator-clear-network-link-overlays = Clear network link overlays
+network-configurator-clear-network-link-overlays-desc = Clear network link overlays.
 
 # tooltips
 network-configurator-tooltip-set = Sets targets device list

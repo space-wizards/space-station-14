@@ -1,8 +1,8 @@
 - type: alarmThreshold
   id: stationTemperature
-  upperBound: 1465.75 # T20C * 5
+  upperBound: 393.15 # T20C + 200
   lowerBound: 193.15 # T20C - 100
-  upperWarnAround: 0.25
+  upperWarnAround: 0.7
   lowerWarnAround: 1.1
 
 - type: alarmThreshold
@@ -14,11 +14,21 @@
 
 - type: alarmThreshold
   id: stationOxygen
-  lowerBound: 0.0010
+  lowerBound: 0.10
   lowerWarnAround: 1.5
 
 - type: alarmThreshold
   id: stationCO2
+  upperBound: 0.0025
+  upperWarnAround: 0.5
+
+- type: alarmThreshold
+  id: stationNO
+  upperBound: 0.0025
+  upperWarnAround: 0.5
+
+- type: alarmThreshold
+  id: stationMiasma
   upperBound: 0.0025
   upperWarnAround: 0.5
 
