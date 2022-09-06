@@ -25,11 +25,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     protected ISawmill Sawmill = default!;
 
     /// <summary>
-    /// Amount of time a click has to be held before it's considered an attack.
-    /// </summary>
-    public const float AttackBuffer = 0.25f;
-
-    /// <summary>
     /// If an attack is released within this buffer it's assumed to be full damage.
     /// </summary>
     public const float GracePeriod = 0.05f;

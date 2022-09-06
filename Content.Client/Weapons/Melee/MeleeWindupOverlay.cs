@@ -18,7 +18,7 @@ public sealed class MeleeWindupOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    private Texture _texture;
+    private readonly Texture _texture;
     private readonly ShaderInstance _shader;
 
     public MeleeWindupOverlay()
@@ -44,12 +44,15 @@ public sealed class MeleeWindupOverlay : Overlay
         var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
         handle.UseShader(_shader);
+        var currentTime = _timing.CurTime;
 
-        // TODO: Need active DoAfter component (or alternatively just make DoAfter itself active)
         foreach (var comp in _entManager.EntityQuery<MeleeWeaponComponent>(true))
         {
-            if (comp.NextAttack < SharedMeleeWeaponSystem.AttackBuffer)
+            if (comp.WindUpStart == null ||
+                comp.Attacking)
+            {
                 continue;
+            }
 
             if (!xformQuery.TryGetComponent(comp.Owner, out var xform) ||
                 xform.MapID != args.MapId)
@@ -90,7 +93,7 @@ public sealed class MeleeWindupOverlay : Overlay
             const float endX = 22f;
 
             // Area marking where to release
-            var ReleaseWidth = 2f * SharedMeleeWeaponSystem.GracePeriod / comp.WindupTime * EyeManager.PixelsPerMeter;
+            var ReleaseWidth = 2f * SharedMeleeWeaponSystem.GracePeriod / (float) comp.WindupTime.TotalSeconds * EyeManager.PixelsPerMeter;
             var releaseMiddle = (endX - startX) / 2f + startX;
 
             var releaseBox = new Box2(new Vector2(releaseMiddle - ReleaseWidth / 2f, 3f) / EyeManager.PixelsPerMeter,
@@ -99,14 +102,9 @@ public sealed class MeleeWindupOverlay : Overlay
             releaseBox = releaseBox.Translated(position);
             handle.DrawRect(releaseBox, Color.LimeGreen);
 
-            var fraction = (comp.NextAttack + SharedMeleeWeaponSystem.GracePeriod - SharedMeleeWeaponSystem.AttackBuffer) / (comp.WindupTime - SharedMeleeWeaponSystem.AttackBuffer);
+            var fraction = (float) ((currentTime - comp.WindUpStart.Value).TotalSeconds % comp.WindupTime.TotalSeconds);
 
-            var lerp = fraction.Equals(0f) ? 0f : tickFraction;
-            var sign = comp.Accumulating ? 1 : -1;
-            var lerpedFraction = MathF.Min(1f, (fraction + lerp * sign));
-            lerpedFraction = SharedMeleeWeaponSystem.GetModifier(lerpedFraction);
-
-            var xPos = (endX - startX) * lerpedFraction + startX;
+            var xPos = (endX - startX) * fraction + startX;
 
             // In pixels
             const float Width = 2f;

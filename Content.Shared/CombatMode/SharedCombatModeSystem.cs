@@ -22,20 +22,6 @@ namespace Content.Shared.CombatMode
             SubscribeLocalEvent<SharedCombatModeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<SharedCombatModeComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<SharedCombatModeComponent, ToggleCombatActionEvent>(OnActionPerform);
-            SubscribeLocalEvent<SharedCombatModeComponent, TogglePrecisionModeEvent>(OnPrecisionToggle);
-        }
-
-        private void OnPrecisionToggle(EntityUid uid, SharedCombatModeComponent component, TogglePrecisionModeEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            component.PrecisionMode ^= true;
-            Dirty(component);
-            args.Handled = true;
-
-            if (component.PrecisionAction != null)
-                _actionsSystem.SetToggled(component.PrecisionAction, component.PrecisionMode);
         }
 
         private void OnStartup(EntityUid uid, SharedCombatModeComponent component, ComponentStartup args)
@@ -58,9 +44,6 @@ namespace Content.Shared.CombatMode
 
             if (component.DisarmAction != null && component.CanDisarm)
                 _actionsSystem.AddAction(uid, component.DisarmAction, null);
-
-            if (component.PrecisionAction != null)
-                _actionsSystem.AddAction(uid, component.PrecisionAction, null);
         }
 
         private void OnShutdown(EntityUid uid, SharedCombatModeComponent component, ComponentShutdown args)
@@ -72,9 +55,9 @@ namespace Content.Shared.CombatMode
                 _actionsSystem.RemoveAction(uid, component.DisarmAction);
         }
 
-        public bool IsInCombatMode(EntityUid entity, SharedCombatModeComponent? component = null)
+        public bool IsInCombatMode(EntityUid? entity, SharedCombatModeComponent? component = null)
         {
-            return Resolve(entity, ref component, false) && component.IsInCombatMode;
+            return entity != null && Resolve(entity.Value, ref component, false) && component.IsInCombatMode;
         }
 
         private void OnActionPerform(EntityUid uid, SharedCombatModeComponent component, ToggleCombatActionEvent args)
@@ -89,13 +72,11 @@ namespace Content.Shared.CombatMode
         [Serializable, NetSerializable]
         protected sealed class CombatModeComponentState : ComponentState
         {
-            public bool PrecisionMode;
             public bool IsInCombatMode { get; }
             public TargetingZone TargetingZone { get; }
 
-            public CombatModeComponentState(bool precisionMode, bool isInCombatMode, TargetingZone targetingZone)
+            public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
             {
-                PrecisionMode = precisionMode;
                 IsInCombatMode = isInCombatMode;
                 TargetingZone = targetingZone;
             }

@@ -1,3 +1,4 @@
+using Content.Client.Gameplay;
 using Content.Client.Viewport;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.CombatMode;
@@ -98,11 +99,6 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        var currentTime = Timing.CurTime;
-
-        if (weapon.NextAttack > currentTime)
-            return;
-
         if (!CombatMode.IsInCombatMode(entity))
         {
             return;
@@ -110,6 +106,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
         var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.AltUse);
+        var currentTime = Timing.CurTime;
 
         // Heavy attack.
         if (altDown == BoundKeyState.Down)
@@ -179,7 +176,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             EntityUid? target = null;
 
             // TODO: UI Refactor update I assume
-            if (_stateManager.CurrentState is GameScreen screen)
+            if (_stateManager.CurrentState is GameplayStateBase screen)
             {
                 target = screen.GetEntityUnderPosition(mousePos);
             }

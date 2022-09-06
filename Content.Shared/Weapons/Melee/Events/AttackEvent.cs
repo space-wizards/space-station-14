@@ -1,7 +1,9 @@
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Melee.Events
 {
+    [Serializable, NetSerializable]
     public abstract class AttackEvent : EntityEventArgs
     {
         /// <summary>
