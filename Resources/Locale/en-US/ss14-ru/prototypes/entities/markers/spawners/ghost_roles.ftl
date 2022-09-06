@@ -7,3 +7,6 @@ ent-SpawnPointGhostRemilia = ghost role spawn point
 ent-SpawnPointGhostCerberus = ghost role spawn point
     .suffix = cerberus
     .desc = { ent-MarkerBase.desc }
+ent-SpawnPointGhostNukeOperative = ghost role spawn point
+    .suffix = nukeops
+    .desc = { ent-MarkerBase.desc }

@@ -237,6 +237,8 @@ namespace Content.Server.Hands.Systems
             HandleSmartEquip(session, "belt");
         }
 
+        // why tf is this even in hands system.
+        // TODO: move to storage or inventory
         private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
         {
             if (session is not IPlayerSession playerSession)
@@ -245,20 +247,20 @@ namespace Content.Server.Hands.Systems
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))
                 return;
 
-            if (!TryComp<SharedHandsComponent>(plyEnt, out var hands))
+            if (!_actionBlockerSystem.CanInteract(plyEnt, null))
                 return;
 
-            if (HasComp<StunnedComponent>(plyEnt))
+            if (!TryComp<SharedHandsComponent>(plyEnt, out var hands) ||  hands.ActiveHand == null)
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
                 !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
             {
-                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)));
+                _popupSystem.PopupEntity(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)), plyEnt, Filter.SinglePlayer(session));
                 return;
             }
 
-            if (hands.ActiveHand?.HeldEntity != null)
+            if (hands.ActiveHand.HeldEntity != null)
             {
                 _storageSystem.PlayerInsertHeldEntity(slotEntity.Value, plyEnt, storageComponent);
             }
@@ -266,11 +268,11 @@ namespace Content.Server.Hands.Systems
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)));
+                    _popupSystem.PopupEntity(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)), plyEnt, Filter.SinglePlayer(session));
                 }
                 else
                 {
-                    var lastStoredEntity = Enumerable.Last(storageComponent.StoredEntities);
+                    var lastStoredEntity = storageComponent.StoredEntities[^1];
                     if (storageComponent.Remove(lastStoredEntity))
                     {
                         PickupOrDrop(plyEnt, lastStoredEntity, animateUser: true, handsComp: hands);

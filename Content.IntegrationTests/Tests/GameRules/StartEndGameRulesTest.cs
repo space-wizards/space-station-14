@@ -41,6 +41,7 @@ public sealed class StartEndGameRulesTest
             }
 
             Assert.That(gameTicker.AddedGameRules, Has.Count.EqualTo(rules.Count));
+            Assert.That(gameTicker.AddedGameRules, Has.Count.EqualTo(gameTicker.StartedGameRules.Count));
         });
 
         // Wait three ticks for any random update loops that might happen

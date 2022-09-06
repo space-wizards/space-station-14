@@ -1,0 +1,68 @@
+# Picks a random location for the NPC to move to and idle.
+- type: htnCompound
+  id: IdleCompound
+  branches:
+    - tasks:
+        - id: WaitIdleTimePrimitive
+    # Pick a new spot and wait there.
+    - tasks:
+        - id: PickAccessiblePrimitive
+        - id: MoveToAccessiblePrimitive
+        - id: RandomIdleTimePrimitive
+        - id: WaitIdleTimePrimitive
+      preconditions:
+        - !type:BuckledPrecondition
+          isBuckled: false
+        - !type:PulledPrecondition
+          isPulled: false
+
+# Spin to a random rotation and idle.
+- type: htnCompound
+  id: IdleSpinCompound
+  branches:
+    - tasks:
+        - id: WaitIdleTimePrimitive
+    # Pick a new angle and spin there
+    - tasks:
+        - id: PickRandomRotationPrimitive
+        - id: RotateToTargetPrimitive
+        - id: RandomIdleTimePrimitive
+        - id: WaitIdleTimePrimitive
+
+
+# Primitives
+- type: htnPrimitive
+  id: PickRandomRotationPrimitive
+  operator: !type:PickRandomRotationOperator
+    targetKey: RotateTarget
+
+- type: htnPrimitive
+  id: RotateToTargetPrimitive
+  operator: !type:RotateToTargetOperator
+    targetKey: RotateTarget
+
+- type: htnPrimitive
+  id: PickAccessiblePrimitive
+  operator: !type:PickAccessibleOperator
+    rangeKey: IdleRange
+    targetKey: MovementTarget
+
+- type: htnPrimitive
+  id: MoveToAccessiblePrimitive
+  operator: !type:MoveToOperator
+    pathfindInPlanning: false
+
+- type: htnPrimitive
+  id: RandomIdleTimePrimitive
+  operator: !type:RandomOperator
+    targetKey: IdleTime
+    minKey: MinimumIdleTime
+    maxKey: MaximumIdleTime
+
+- type: htnPrimitive
+  id: WaitIdleTimePrimitive
+  operator: !type:WaitOperator
+    key: IdleTime
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: IdleTime

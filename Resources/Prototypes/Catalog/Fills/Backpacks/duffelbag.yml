@@ -24,10 +24,10 @@
       - id: WeaponShotgunDoubleBarreled
       - id: BoxShotgunFlare
         amount: 2
+      - id: GrenadeFlashBang
+        amount: 2
       - id: PillRomerol
         amount: 5
-      - id: GrenadeFlash
-        amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedical

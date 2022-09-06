@@ -14,10 +14,14 @@ air-alarm-ui-window-mode-label = Режим
 air-alarm-ui-window-pressure = { $pressure } кПа
 air-alarm-ui-window-temperature = { $tempC } °C ({ $temperature } K)
 air-alarm-ui-window-alarm-state = { $state }
-air-alarm-ui-window-tab-gas = Газы
 air-alarm-ui-window-tab-vents = Вентиляции
+air-alarm-ui-window-tab-sensors = Sensors
 air-alarm-ui-window-tab-scrubbers = Фильтры
-air-alarm-ui-window-tab-thresholds = Значения
+air-alarm-ui-mode-filtering = Filtering
+air-alarm-ui-mode-wide-filtering = Filtering (wide)
+air-alarm-ui-mode-fill = Fill
+air-alarm-ui-mode-panic = Panic
+air-alarm-ui-mode-none = None
 air-alarm-ui-gases = { $gas }: { $amount } моль ({ $percentage }%)
 
 ## Widgets
@@ -40,6 +44,8 @@ air-alarm-ui-vent-internal-bound-label = Внутренняя граница
 
 air-alarm-ui-scrubber-pump-direction-label = Направление
 air-alarm-ui-scrubber-volume-rate-label = Объём (Л)
+air-alarm-ui-sensor-gases = Gases
+air-alarm-ui-sensor-thresholds = Thresholds
 air-alarm-ui-scrubber-wide-net-label = WideNet
 
 ### Thresholds

@@ -37,3 +37,6 @@ ent-MobHumanERTJanitorEVA = ERT janitor
 ent-MobHumanSyndicateAgent = Syndicate Agent
     .desc = { ent-MobHuman.desc }
     .suffix = { "" }
+ent-MobHumanNukeOp = Nuclear Operative
+    .desc = { ent-MobHuman.desc }
+    .suffix = { "" }

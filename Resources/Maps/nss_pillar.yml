@@ -47936,21 +47936,6 @@ entities:
   - pos: 11.5,-3.5
     parent: 130
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 4124
   type: SignChemistry1
   components:
@@ -138124,42 +138109,12 @@ entities:
   - pos: 11.5,-8.5
     parent: 130
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 16059
   type: chem_master
   components:
   - pos: 11.5,-5.5
     parent: 130
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 16060
   type: WallReinforced
   components:

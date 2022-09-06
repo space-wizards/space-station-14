@@ -1,6 +1,8 @@
 using System.Linq;
+using Content.Server.Ghost.Components;
 using Content.Server.Warps;
 using Content.Shared.Administration;
+using Content.Shared.Follower;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -56,8 +58,8 @@ namespace Content.Server.Administration.Commands
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
-                    .Select(p => entMan.GetComponent<TransformComponent>(p.Owner).Coordinates)
-                    .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>
+                    .Select(p => (entMan.GetComponent<TransformComponent>(p.Owner).Coordinates, p.Follow))
+                    .OrderBy(p => p.Item1, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
@@ -102,18 +104,26 @@ namespace Content.Server.Administration.Commands
                     }))
                     .FirstOrDefault();
 
-                var entityUid = found.GetGridUid(entMan);
-                if (entityUid != EntityUid.Invalid)
+                var (coords, follow) = found;
+
+                if (coords.EntityId == EntityUid.Invalid)
                 {
-                    entMan.GetComponent<TransformComponent>(playerEntity).Coordinates = found;
-                    if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))
-                    {
-                        physics.LinearVelocity = Vector2.Zero;
-                    }
+                    shell.WriteError("That location does not exist!");
+                    return;
                 }
-                else
+
+                if (follow && entMan.HasComponent<GhostComponent>(playerEntity))
                 {
-                    shell.WriteLine("That location does not exist!");
+                    entMan.EntitySysManager.GetEntitySystem<FollowerSystem>().StartFollowingEntity(playerEntity, coords.EntityId);
+                    return;
+                }
+
+                var xform = entMan.GetComponent<TransformComponent>(playerEntity);
+                xform.Coordinates = coords;
+                xform.AttachToGridOrMap();
+                if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))
+                {
+                    physics.LinearVelocity = Vector2.Zero;
                 }
             }
         }

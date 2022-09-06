@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Threading;
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
@@ -17,8 +16,8 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
+using Content.Shared.CombatMode;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Server.Strip
@@ -30,6 +29,7 @@ namespace Content.Server.Strip
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly EnsnareableSystem _ensnaring = default!;
+        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
         // TODO: ECS popups. Not all of these have ECS equivalents yet.
 
@@ -49,25 +49,7 @@ namespace Content.Server.Strip
             SubscribeLocalEvent<StrippableComponent, StrippingHandButtonPressed>(OnStripHandMessage);
             SubscribeLocalEvent<StrippableComponent, StrippingHandcuffButtonPressed>(OnStripHandcuffMessage);
             SubscribeLocalEvent<StrippableComponent, StrippingEnsnareButtonPressed>(OnStripEnsnareMessage);
-
-            SubscribeLocalEvent<StrippableComponent, OpenStrippingCompleteEvent>(OnOpenStripComplete);
-            SubscribeLocalEvent<StrippableComponent, OpenStrippingCancelledEvent>(OnOpenStripCancelled);
         }
-
-        private void OnOpenStripCancelled(EntityUid uid, StrippableComponent component, OpenStrippingCancelledEvent args)
-        {
-            component.CancelTokens.Remove(args.User);
-        }
-
-        private void OnOpenStripComplete(EntityUid uid, StrippableComponent component, OpenStrippingCompleteEvent args)
-        {
-            component.CancelTokens.Remove(args.User);
-
-            if (!TryComp<ActorComponent>(args.User, out var actor)) return;
-
-            uid.GetUIOrNull(StrippingUiKey.Key)?.Open(actor.PlayerSession);
-        }
-
         private void OnStripHandcuffMessage(EntityUid uid, StrippableComponent component, StrippingHandcuffButtonPressed args)
         {
             if (args.Session.AttachedEntity is not {Valid: true} user)
@@ -144,31 +126,17 @@ namespace Content.Server.Strip
             }
         }
 
-        public void StartOpeningStripper(EntityUid user, StrippableComponent component)
+        public void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)
         {
-            if (component.CancelTokens.ContainsKey(user)) return;
+            if (TryComp<SharedCombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
+                return;
 
             if (TryComp<ActorComponent>(user, out var actor))
             {
-                if (component.Owner.GetUIOrNull(StrippingUiKey.Key)?.SessionHasOpen(actor.PlayerSession) == true)
+                if (_userInterfaceSystem.SessionHasOpenUi(component.Owner, StrippingUiKey.Key, actor.PlayerSession))
                     return;
+                _userInterfaceSystem.TryOpen(component.Owner, StrippingUiKey.Key, actor.PlayerSession);
             }
-
-            var token = new CancellationTokenSource();
-
-            var doAfterArgs = new DoAfterEventArgs(user, component.OpenDelay, token.Token, component.Owner)
-            {
-                BreakOnStun = true,
-                BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                NeedHand = true,
-                TargetCancelledEvent = new OpenStrippingCancelledEvent(user),
-                TargetFinishedEvent = new OpenStrippingCompleteEvent(user),
-            };
-
-            component.CancelTokens[user] = token;
-            _doAfterSystem.DoAfter(doAfterArgs);
         }
 
         private void OnCompInit(EntityUid uid, StrippableComponent component, ComponentInit args)
@@ -283,7 +251,7 @@ namespace Content.Server.Strip
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
                 IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
-                Act = () => StartOpeningStripper(args.User, component),
+                Act = () => StartOpeningStripper(args.User, component, true),
             };
             args.Verbs.Add(verb);
         }

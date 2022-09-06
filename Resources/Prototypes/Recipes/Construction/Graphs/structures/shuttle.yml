@@ -135,7 +135,7 @@
     - to: skeletonWelded
       completed:
       - !type:SpawnPrototype
-        prototype: SheetPlasteel1
+        prototype: IngotSilver1
         amount: 2
       steps:
       - tool: Prying

@@ -102,46 +102,6 @@ namespace Content.Shared.Movement.Systems
         {
             DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
-            if (!UseMobMovement(mover, physicsComponent))
-            {
-                UsedMobMovement[mover.Owner] = false;
-                return;
-            }
-
-            UsedMobMovement[mover.Owner] = true;
-            // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-            var weightless = _gravity.IsWeightless(physicsComponent.Owner, physicsComponent, xform);
-            var (walkDir, sprintDir) = GetVelocityInput(mover);
-            var touching = false;
-
-            // Handle wall-pushes.
-            if (weightless)
-            {
-                if (xform.GridUid != null)
-                    touching = true;
-
-                if (!touching)
-                {
-                    var ev = new CanWeightlessMoveEvent();
-                    RaiseLocalEvent(xform.Owner, ref ev);
-                    // No gravity: is our entity touching anything?
-                    touching = ev.CanMove;
-
-                    if (!touching && TryComp<MobMoverComponent>(xform.Owner, out var mobMover))
-                        touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsComponent);
-                }
-            }
-
-            // Regular movement.
-            // Target velocity.
-            // This is relative to the map / grid we're on.
-            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(mover.Owner);
-
-            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-
-            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
-
             // Update relative movement
             if (mover.LerpAccumulator > 0f)
             {
@@ -226,6 +186,46 @@ namespace Content.Shared.Movement.Systems
                 mover.RelativeRotation = mover.TargetRelativeRotation;
                 Dirty(mover);
             }
+
+            if (!UseMobMovement(mover, physicsComponent))
+            {
+                UsedMobMovement[mover.Owner] = false;
+                return;
+            }
+
+            UsedMobMovement[mover.Owner] = true;
+            // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
+            var weightless = _gravity.IsWeightless(physicsComponent.Owner, physicsComponent, xform);
+            var (walkDir, sprintDir) = GetVelocityInput(mover);
+            var touching = false;
+
+            // Handle wall-pushes.
+            if (weightless)
+            {
+                if (xform.GridUid != null)
+                    touching = true;
+
+                if (!touching)
+                {
+                    var ev = new CanWeightlessMoveEvent();
+                    RaiseLocalEvent(xform.Owner, ref ev);
+                    // No gravity: is our entity touching anything?
+                    touching = ev.CanMove;
+
+                    if (!touching && TryComp<MobMoverComponent>(xform.Owner, out var mobMover))
+                        touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsComponent);
+                }
+            }
+
+            // Regular movement.
+            // Target velocity.
+            // This is relative to the map / grid we're on.
+            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(mover.Owner);
+
+            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+
+            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 
             var parentRotation = GetParentGridAngle(mover);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
