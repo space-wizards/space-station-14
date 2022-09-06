@@ -300,7 +300,7 @@ public sealed class AirAlarmSystem : EntitySystem
         {
             SetMode(uid, addr, AirAlarmMode.None, true, false);
         }
-        else if (args.AlarmType == AtmosAlarmType.Normal)
+        else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
         {
             SetMode(uid, addr, AirAlarmMode.Filtering, true, false);
         }
