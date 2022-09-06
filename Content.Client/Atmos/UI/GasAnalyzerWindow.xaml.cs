@@ -172,7 +172,7 @@ namespace Content.Client.Atmos.UI
             });
             presBox.AddChild(new Control
             {
-                MinSize = new Vector2(20, 0),
+                MinSize = new Vector2(10, 0),
                 HorizontalExpand = true
             });
             presBox.AddChild(new Label
@@ -195,7 +195,7 @@ namespace Content.Client.Atmos.UI
                 });
                 tempBox.AddChild(new Control
                 {
-                    MinSize = new Vector2(20, 0),
+                    MinSize = new Vector2(10, 0),
                     HorizontalExpand = true
                 });
                 tempBox.AddChild(new Label
@@ -249,7 +249,7 @@ namespace Content.Client.Atmos.UI
                     tableKey,
                     new Control
                     {
-                        MinSize = new Vector2(20, 0),
+                        MinSize = new Vector2(10, 0),
                         HorizontalExpand = true
                     },
                     tableVal
