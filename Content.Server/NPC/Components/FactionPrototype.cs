@@ -16,7 +16,7 @@ namespace Content.Server.NPC.Components
         [ViewVariables(VVAccess.ReadWrite), DataField("friendly", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<FactionPrototype>))]
         public HashSet<string> Friendly = new();
 
-        [DataField("hostile", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<FactionPrototype>))]
+        [ViewVariables(VVAccess.ReadWrite), DataField("hostile", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<FactionPrototype>))]
         public HashSet<string> Hostile = new();
     }
 }
