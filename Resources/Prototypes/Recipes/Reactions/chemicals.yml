@@ -326,3 +326,16 @@
       amount: 1
   products:
     ChloralHydrate: 1
+
+- type: reaction
+  id: Pax
+  impact: Medium
+  reactants:
+    MindbreakerToxin:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Pax: 3

@@ -13,6 +13,9 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
       state: impact_bullet
   - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
 
 - type: entity
   id: BulletImpactEffectDisabler
@@ -29,6 +32,9 @@
           sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
           state: impact_laser_blue
     - type: EffectVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu
 
 - type: entity
   id: BulletImpactEffectKinetic
@@ -45,3 +51,6 @@
       sprite: Effects/arcs.rsi
       state: punch
   - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu

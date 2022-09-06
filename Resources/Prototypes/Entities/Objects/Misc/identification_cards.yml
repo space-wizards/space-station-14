@@ -536,3 +536,16 @@
     - state: default
   - type: PresetIdCard
     job: Detective
+
+- type: entity
+  parent: CentcomIDCard
+  id: CBURNIDcard
+  name: CBURN ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: idcentcom
+  - type: Item
+    heldPrefix: gold
+    
