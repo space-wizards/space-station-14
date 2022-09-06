@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Removed sulfuric acid and uranium from the chemical dispenser., type: Remove}
-  - {message: Added recipe for sulfuric acid., type: Add}
-  - {message: Uranium sheets can be ground up like plasma sheets are., type: Add}
-  id: 1753
-  time: '2022-06-22T23:26:13.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station's security office temporarily has two SMGs., type: Tweak}
@@ -2924,3 +2917,11 @@ Entries:
   - {message: Entities that are shot will now show a red effect., type: Add}
   id: 2252
   time: '2022-09-06T08:01:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The syndicate infiltrator ship now has automatic turrets that shoot
+      intruders., type: Add}
+  - {message: 'The syndicate discovered grinders, now nukies have it at the outpost.',
+    type: Add}
+  id: 2253
+  time: '2022-09-06T08:20:33.0000000+00:00'
