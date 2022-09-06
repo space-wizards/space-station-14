@@ -117,8 +117,8 @@ namespace Content.Server.StationEvents
         /// </summary>
         private void ResetTimer()
         {
-            // 5 - 15 minutes. TG does 3-10 but that's pretty frequent
-            _timeUntilNextEvent = _random.Next(300, 900);
+            // 5 - 25 minutes. TG does 3-10 but that's pretty frequent
+            _timeUntilNextEvent = _random.Next(300, 1500);
         }
 
         /// <summary>

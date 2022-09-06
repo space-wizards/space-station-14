@@ -66,15 +66,13 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
     private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref ComponentHandleState args)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
-            return;
-
         var componentAlerts = (args.Current as AlertsComponentState)?.Alerts;
         if (componentAlerts == null) return;
 
         component.Alerts = new(componentAlerts);
 
-        SyncAlerts?.Invoke(this, componentAlerts);
+        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+            SyncAlerts?.Invoke(this, componentAlerts);
     }
 
     private void OnPlayerAttached(EntityUid uid, AlertsComponent component, PlayerAttachedEvent args)

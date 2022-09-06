@@ -119,6 +119,11 @@ namespace Content.Shared.Pulling
             _alertsSystem.ClearAlert(component.Owner, AlertType.Pulled);
         }
 
+        public bool IsPulled(EntityUid uid, SharedPullableComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) && component.BeingPulled;
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);

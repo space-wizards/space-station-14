@@ -13,180 +13,141 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Atmos.Monitor.UI
+namespace Content.Client.Atmos.Monitor.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class AirAlarmWindow : DefaultWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class AirAlarmWindow : DefaultWindow
+    public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
+    public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
+    public event Action<AirAlarmMode>? AirAlarmModeChanged;
+    public event Action<string>? ResyncDeviceRequested;
+    public event Action? ResyncAllRequested;
+    public event Action<AirAlarmTab>? AirAlarmTabChange;
+
+    private Label _address => CDeviceAddress;
+    private Label _deviceTotal => CDeviceTotal;
+    private RichTextLabel _pressure => CPressureLabel;
+    private RichTextLabel _temperature => CTemperatureLabel;
+    private RichTextLabel _alarmState => CStatusLabel;
+
+    private TabContainer _tabContainer => CTabContainer;
+    private BoxContainer _ventDevices => CVentContainer;
+    private BoxContainer _scrubberDevices => CScrubberContainer;
+
+    private Dictionary<string, PumpControl> _pumps = new();
+    private Dictionary<string, ScrubberControl> _scrubbers = new();
+    private Dictionary<string, SensorInfo> _sensors = new();
+    private Button _resyncDevices => CResyncButton;
+
+
+    private Dictionary<Gas, Label> _gasLabels = new();
+
+    private OptionButton _modes => CModeButton;
+
+    public AirAlarmWindow()
     {
-        public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
-        public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
-        public event Action<AirAlarmMode>? AirAlarmModeChanged;
-        public event Action<string>? ResyncDeviceRequested;
-        public event Action? ResyncAllRequested;
+        RobustXamlLoader.Load(this);
 
-        private Label _address => CDeviceAddress;
-        private Label _deviceTotal => CDeviceTotal;
-        private RichTextLabel _pressure => CPressureLabel;
-        private RichTextLabel _temperature => CTemperatureLabel;
-        private RichTextLabel _alarmState => CStatusLabel;
-
-        private TabContainer _tabContainer => CTabContainer;
-        private BoxContainer _gasReadout => CGasContainer;
-        private BoxContainer _ventDevices => CVentContainer;
-        private BoxContainer _scrubberDevices => CScrubberContainer;
-        private BoxContainer _pressureThreshold => CPressureThreshold;
-        private BoxContainer _temperatureThreshold => CTemperatureThreshold;
-        private BoxContainer _gasThreshold => CGasThresholdContainer;
-
-        private Dictionary<string, PumpControl> _pumps = new();
-        private Dictionary<string, ScrubberControl> _scrubbers = new();
-        private Button _resyncDevices => CResyncButton;
-
-        private ThresholdControl? _pressureThresholdControl;
-        private ThresholdControl? _temperatureThresholdControl;
-        private Dictionary<Gas, ThresholdControl> _gasThresholdControls = new();
-
-        private Dictionary<Gas, Label> _gasLabels = new();
-
-        private OptionButton _modes => CModeButton;
-
-        public AirAlarmWindow()
+        foreach (var mode in Enum.GetValues<AirAlarmMode>())
         {
-            RobustXamlLoader.Load(this);
-
-            foreach (var mode in Enum.GetValues<AirAlarmMode>())
-                _modes.AddItem($"{mode}", (int) mode);
-
-            _modes.OnItemSelected += args =>
-            {
-                _modes.SelectId(args.Id);
-                AirAlarmModeChanged!.Invoke((AirAlarmMode) args.Id);
-            };
-
-            foreach (var gas in Enum.GetValues<Gas>())
-            {
-                var gasLabel = new Label();
-                _gasReadout.AddChild(gasLabel);
-                _gasLabels.Add(gas, gasLabel);
-            }
-
-            _tabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-gas"));
-            _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-vents"));
-            _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
-            _tabContainer.SetTabTitle(3, Loc.GetString("air-alarm-ui-window-tab-thresholds"));
-
-            _resyncDevices.OnPressed += _ =>
-            {
-                _ventDevices.RemoveAllChildren();
-                _pumps.Clear();
-                _scrubberDevices.RemoveAllChildren();
-                _scrubbers.Clear();
-                ResyncAllRequested!.Invoke();
-            };
+            _modes.AddItem($"{mode}", (int) mode);
         }
 
-        public void SetAddress(string address)
+        _modes.OnItemSelected += args =>
         {
-            _address.Text = address;
+            _modes.SelectId(args.Id);
+            AirAlarmModeChanged!.Invoke((AirAlarmMode) args.Id);
+        };
+
+        _tabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-vents"));
+        _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
+        _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-sensors"));
+
+        _tabContainer.OnTabChanged += idx =>
+        {
+            AirAlarmTabChange!((AirAlarmTab) idx);
+        };
+
+        _resyncDevices.OnPressed += _ =>
+        {
+            _ventDevices.RemoveAllChildren();
+            _pumps.Clear();
+            _scrubberDevices.RemoveAllChildren();
+            _scrubbers.Clear();
+            CSensorContainer.RemoveAllChildren();
+            _sensors.Clear();
+            ResyncAllRequested!.Invoke();
+        };
+    }
+
+    public void UpdateState(AirAlarmUIState state)
+    {
+        _address.Text = state.Address;
+        _deviceTotal.Text = $"{state.DeviceCount}";
+        _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.PressureAverage:0.##}")));
+        _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
+        _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state", ("state", $"{state.AlarmType}")));
+        UpdateModeSelector(state.Mode);
+        foreach (var (addr, dev) in state.DeviceData)
+        {
+            UpdateDeviceData(addr, dev);
         }
 
-        public void UpdateGasData(ref AirAlarmAirData state)
+        _tabContainer.CurrentTab = (int) state.Tab;
+    }
+
+    public void UpdateModeSelector(AirAlarmMode mode)
+    {
+        _modes.SelectId((int) mode);
+    }
+
+    public void UpdateDeviceData(string addr, IAtmosDeviceData device)
+    {
+        switch (device)
         {
-            _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.Pressure:0.##}")));
-            _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.Temperature ?? 0):0.#}"), ("temperature", $"{state.Temperature:0.##}")));
-            _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state", ("state", $"{state.AlarmState}")));
+            case GasVentPumpData pump:
+                if (!_pumps.TryGetValue(addr, out var pumpControl))
+                {
+                    var control= new PumpControl(pump, addr);
+                    control.PumpDataChanged += AtmosDeviceDataChanged!.Invoke;
+                    _pumps.Add(addr, control);
+                    CVentContainer.AddChild(control);
+                }
+                else
+                {
+                    pumpControl.ChangeData(pump);
+                }
 
-            if (state.Gases != null)
-                foreach (var (gas, amount) in state.Gases)
-                    _gasLabels[gas].Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"), ("amount", $"{amount:0.####}"), ("percentage", $"{(amount / state.TotalMoles):0.##}"));
-        }
+                break;
+            case GasVentScrubberData scrubber:
+                if (!_scrubbers.TryGetValue(addr, out var scrubberControl))
+                {
+                    var control = new ScrubberControl(scrubber, addr);
+                    control.ScrubberDataChanged += AtmosDeviceDataChanged!.Invoke;
+                    _scrubbers.Add(addr, control);
+                    CScrubberContainer.AddChild(control);
+                }
+                else
+                {
+                    scrubberControl.ChangeData(scrubber);
+                }
 
-        public void UpdateModeSelector(AirAlarmMode mode)
-        {
-            _modes.SelectId((int) mode);
-        }
+                break;
+            case AtmosSensorData sensor:
+                if (!_sensors.TryGetValue(addr, out var sensorControl))
+                {
+                    var control = new SensorInfo(sensor, addr);
+                    control.OnThresholdUpdate += AtmosAlarmThresholdChanged;
+                    _sensors.Add(addr, control);
+                    CSensorContainer.AddChild(control);
+                }
+                else
+                {
+                    sensorControl.ChangeData(sensor);
+                }
 
-        public void UpdateDeviceData(string addr, IAtmosDeviceData device)
-        {
-            switch (device)
-            {
-                case GasVentPumpData pump:
-                    if (!_pumps.TryGetValue(addr, out var pumpControl))
-                    {
-                        var control= new PumpControl(pump, addr);
-                        control.PumpDataChanged += AtmosDeviceDataChanged!.Invoke;
-                        _pumps.Add(addr, control);
-                        CVentContainer.AddChild(control);
-                    }
-                    else
-                    {
-                        pumpControl.ChangeData(pump);
-                    }
-
-                    break;
-                case GasVentScrubberData scrubber:
-                    if (!_scrubbers.TryGetValue(addr, out var scrubberControl))
-                    {
-                        var control = new ScrubberControl(scrubber, addr);
-                        control.ScrubberDataChanged += AtmosDeviceDataChanged!.Invoke;
-                        _scrubbers.Add(addr, control);
-                        CScrubberContainer.AddChild(control);
-                    }
-                    else
-                    {
-                        scrubberControl.ChangeData(scrubber);
-                    }
-
-                    break;
-            }
-
-            _deviceTotal.Text = $"{_pumps.Count + _scrubbers.Count}";
-        }
-
-        public void UpdateThreshold(ref AirAlarmUpdateAlarmThresholdMessage message)
-        {
-            switch (message.Type)
-            {
-                case AtmosMonitorThresholdType.Pressure:
-                    if (_pressureThresholdControl == null)
-                    {
-                        _pressureThresholdControl = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-pressure-title"), message.Threshold, message.Type);
-                        _pressureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                        _pressureThreshold.AddChild(_pressureThresholdControl);
-                    }
-                    else
-                    {
-                        _pressureThresholdControl.UpdateThresholdData(message.Threshold);
-                    }
-
-                    break;
-                case AtmosMonitorThresholdType.Temperature:
-                    if (_temperatureThresholdControl == null)
-                    {
-                        _temperatureThresholdControl = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-temperature-title"), message.Threshold, message.Type);
-                        _temperatureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                        _temperatureThreshold.AddChild(_temperatureThresholdControl);
-                    }
-                    else
-                    {
-                        _temperatureThresholdControl.UpdateThresholdData(message.Threshold);
-                    }
-
-                    break;
-                case AtmosMonitorThresholdType.Gas:
-                    if (_gasThresholdControls.TryGetValue((Gas) message.Gas!, out var control))
-                    {
-                        control.UpdateThresholdData(message.Threshold);
-                        break;
-                    }
-
-                    var gasThreshold = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title", ("gas", $"{(Gas) message.Gas!}")), message.Threshold, AtmosMonitorThresholdType.Gas, (Gas) message.Gas!, 100);
-                    gasThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                    _gasThresholdControls.Add((Gas) message.Gas!, gasThreshold);
-                    _gasThreshold.AddChild(gasThreshold);
-
-                    break;
-            }
+                break;
         }
     }
 }

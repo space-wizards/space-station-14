@@ -6,6 +6,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light;
 using Content.Shared.Light.Component;
+using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
@@ -28,6 +29,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
             SubscribeLocalEvent<EnergySwordComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<EnergySwordComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<EnergySwordComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<EnergySwordComponent, IsHotEvent>(OnIsHotEvent);
         }
 
         private void OnMapInit(EntityUid uid, EnergySwordComponent comp, MapInitEvent args)
@@ -139,6 +141,10 @@ namespace Content.Server.Weapon.Melee.EnergySword
             }
             else
                 RemComp<RgbLightControllerComponent>(uid);
+        }
+        private void OnIsHotEvent(EntityUid uid, EnergySwordComponent energySword, IsHotEvent args)
+        {
+            args.IsHot = energySword.Activated;
         }
     }
 }
