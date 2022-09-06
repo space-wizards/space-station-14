@@ -49,7 +49,7 @@ public sealed class ListContainerTest : RobustUnitTest
     }
 
     [Test]
-    public void TestLayoutOverflow()
+    public void TestOnlyVisibleItemsAreAdded()
     {
         /*
          * 6 items * 10 height + 5 separation * 3 height = 75
@@ -88,7 +88,7 @@ public sealed class ListContainerTest : RobustUnitTest
     }
 
     [Test]
-    public void TestLayoutScroll()
+    public void TestNextItemIsVisibleWhenScrolled()
     {
         /*
          * 6 items * 10 height + 5 separation * 3 height = 75
@@ -135,11 +135,62 @@ public sealed class ListContainerTest : RobustUnitTest
         Assert.That(children[5].Position.Y, Is.EqualTo(59));
     }
 
+    [Test]
+    public void TestPreviousItemIsVisibleWhenScrolled()
+    {
+        /*
+         * 6 items * 10 height + 5 separation * 3 height = 75
+         * One items should be off the render
+         * 0 13 26 39 52 65 | 75 height
+         */
+        var root = new Control { MinSize = (50, 60) };
+        var listContainer = new ListContainer { SeparationOverride = 3 };
+        root.AddChild(listContainer);
+        listContainer.GenerateItem += (_, button) => {
+            button.AddChild(new Control { MinSize = (10, 10) });
+        };
+
+        var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
+        listContainer.PopulateList(list);
+        root.Arrange(new UIBox2(0, 0, 50, 60));
+
+        var scrollbar = (ScrollBar) listContainer.Children.Last(c => c is ScrollBar);
+
+        var scrollValue = 9;
+
+        // Test that 6th button is not visible when scrolled
+        scrollbar.Value = scrollValue;
+        listContainer.Arrange(root.SizeBox);
+        var children = listContainer.Children.ToList();
+        // 6 Buttons, 1 Scrollbar
+        Assert.That(listContainer.ChildCount, Is.EqualTo(7));
+        Assert.That(children[0].Position.Y, Is.EqualTo(-9));
+        Assert.That(children[1].Position.Y, Is.EqualTo(4));
+        Assert.That(children[2].Position.Y, Is.EqualTo(17));
+        Assert.That(children[3].Position.Y, Is.EqualTo(30));
+        Assert.That(children[4].Position.Y, Is.EqualTo(43));
+        Assert.That(children[5].Position.Y, Is.EqualTo(56));
+
+        // Test that 6th button is visible when scrolled
+        scrollValue = 10;
+        scrollbar.Value = scrollValue;
+        listContainer.Arrange(root.SizeBox);
+        children = listContainer.Children.ToList();
+        // 5 Buttons, 1 Scrollbar
+        Assert.That(listContainer.ChildCount, Is.EqualTo(6));
+        Assert.That(Math.Abs(scrollbar.Value - scrollValue), Is.LessThan(0.01f));
+        Assert.That(children[0].Position.Y, Is.EqualTo(3));
+        Assert.That(children[1].Position.Y, Is.EqualTo(16));
+        Assert.That(children[2].Position.Y, Is.EqualTo(29));
+        Assert.That(children[3].Position.Y, Is.EqualTo(42));
+        Assert.That(children[4].Position.Y, Is.EqualTo(55));
+    }
+
     /// <summary>
     /// Test that the ListContainer doesn't push other Controls
     /// </summary>
     [Test]
-    public void TestExpansion()
+    public void TestDoesNotExpandWhenChildrenAreAdded()
     {
         var height = 60;
         var root = new BoxContainer
@@ -175,7 +226,7 @@ public sealed class ListContainerTest : RobustUnitTest
     }
 
     [Test]
-    public void TestSelectionKeptOnScroll()
+    public void TestSelectedItemStillSelectedWhenScrolling()
     {
         var height = 10;
         var root = new Control { MinSize = (50, height) };
