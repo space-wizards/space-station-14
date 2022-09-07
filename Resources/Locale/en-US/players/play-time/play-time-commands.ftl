@@ -1,5 +1,6 @@
 ﻿parse-minutes-fail = Unable to parse '{$minutes}' as minutes
 parse-session-fail = Did not find session for '{$username}'
+parse-username-fail = Could not parse guid for '{$username}'
 
 ## Role Timer Commands
 
@@ -54,3 +55,7 @@ cmd-playtime_flush-help = Usage: {$command} [user name]
 
 cmd-playtime_flush-error-args = Expected zero or one arguments
 cmd-playtime_flush-arg-user = [user name]
+
+## playtime_getoffline
+cmd-playtime_getoffline-desc = Get overall playtime from the username of an offline player.
+cmd-playtime_getoffline-failure = Failed to get overall playtime for {$username}.

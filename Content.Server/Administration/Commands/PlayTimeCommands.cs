@@ -1,6 +1,7 @@
 ﻿using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.Administration;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Server.Database;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -333,5 +334,52 @@ public sealed class PlayTimeFlushCommand : IConsoleCommand
         }
 
         return CompletionResult.Empty;
+    }
+}
+
+
+/// <summary>
+/// A lot of basic admin investigation for whitelists or otherwise requires checking if the person
+/// has even played here much. Connection logs aren't very accurate. This isn't ideal but it fits
+/// this use case.
+/// </summary>
+[AdminCommand(AdminFlags.Admin)]
+public sealed class PlaytimeGetOfflineCommand : IConsoleCommand
+{
+    [Dependency] private readonly IServerDbManager _db = default!;
+    public string Command => "playtime_getoffline";
+    public string Description => Loc.GetString("cmd-playtime_getoffline-desc");
+    // Reusing the getoverall help ones since syntax is the same
+    public string Help => Loc.GetString("cmd-playtime_getoverall-help", ("command", Command));
+
+    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 1)
+        {
+            shell.WriteError(Loc.GetString("cmd-playtime_getoverall-error-args")); // why aren't these locs generic
+            return;
+        }
+
+        var userName = args[0];
+        if (!Guid.TryParse(userName, out var user))
+        {
+            shell.WriteError(Loc.GetString("parse-username-fail", ("username", userName)));
+            return;
+        }
+
+        var playTime = await _db.GetPlayTimes(user);
+
+        foreach (var tracker in playTime)
+        {
+            if (tracker.Tracker == PlayTimeTrackingShared.TrackerOverall)
+            {
+                shell.WriteLine(Loc.GetString(
+                    "cmd-playtime_getoverall-success",
+                    ("username", userName),
+                    ("time", tracker.TimeSpent)));
+                return;
+            }
+        }
+        shell.WriteError(Loc.GetString("cmd-playtime_getoffline-failure", ("username", userName)));
     }
 }
