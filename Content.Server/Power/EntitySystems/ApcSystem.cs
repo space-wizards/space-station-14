@@ -104,7 +104,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (TryComp(uid, out AppearanceComponent? appearance))
             {
-                UpdatePanelAppearance(uid, appearance);
+                UpdatePanelAppearance(uid, appearance, apc);
             }
 
             var newState = CalcChargeState(uid, apc, battery);
@@ -192,7 +192,8 @@ namespace Content.Server.Power.EntitySystems
         {
             if (apc.IsApcOpen)
                 return ApcPanelState.Open;
-            else return ApcPanelState.Closed;
+            else
+                return ApcPanelState.Closed;
         }
 
         private void OnInteractUsing(EntityUid uid, ApcComponent component, InteractUsingEvent args)
@@ -213,7 +214,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (TryComp(args.Target, out AppearanceComponent? appearance))
             {
-                UpdatePanelAppearance(args.Target);
+                UpdatePanelAppearance(args.Target, appearance);
             }
 
             if (component.IsApcOpen)

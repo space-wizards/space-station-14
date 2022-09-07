@@ -50,9 +50,9 @@ namespace Content.Client.Power.APC
 
             var ent = IoCManager.Resolve<IEntityManager>();
             var sprite = ent.GetComponent<ISpriteComponent>(component.Owner);
-            if (component.TryGetData<ApcPanelState>(ApcVisuals.PanelState, out var stateP))
+            if (component.TryGetData<ApcPanelState>(ApcVisuals.PanelState, out var panelState))
             {
-                switch (stateP)
+                switch (panelState)
                 {
                     case ApcPanelState.Closed:
                         sprite.LayerSetState(Layers.Panel, "apc0");
@@ -62,9 +62,9 @@ namespace Content.Client.Power.APC
                         break;
                 }
             }
-            if (component.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var stateC))
+            if (component.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var chargeState))
             {
-                switch (stateC)
+                switch (chargeState)
                 {
                     case ApcChargeState.Lack:
                         sprite.LayerSetState(Layers.ChargeState, "apco3-0");
@@ -82,7 +82,7 @@ namespace Content.Client.Power.APC
 
                 if (ent.TryGetComponent(component.Owner, out SharedPointLightComponent? light))
                 {
-                    light.Color = stateC switch
+                    light.Color = chargeState switch
                     {
                         ApcChargeState.Lack => LackColor,
                         ApcChargeState.Charging => ChargingColor,

@@ -1,5 +1,3 @@
-using Content.Server.Hands.Systems;
-using Content.Server.Holiday;
 using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Hands.EntitySystems;
@@ -14,7 +12,6 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed class GivePrototype : IGraphAction
     {
-        private readonly SharedHandsSystem _handsSystem = default!;
 
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Prototype { get; private set; } = string.Empty;
@@ -43,7 +40,6 @@ namespace Content.Server.Construction.Completions
                     entityManager.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(userUid, item);
                 }
             }
-
         }
     }
 }

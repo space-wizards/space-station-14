@@ -4,24 +4,19 @@
   graph:
     - node: start
       edges:
-        - to: apcEmpty
+        - to: apcFrame
           steps:
             - material: Steel
               amount: 3
 
-    - node: apcEmpty
-      entity: EmptyAPC
+    - node: apcFrame
+      entity: APCFrame
       edges:
-        - to: apcWithElectronics
+        - to: apc
           steps:
             - component: ApcElectronics
               name: "APC electronics"
               doAfter: 2
-          completed:
-            - !type:SpawnPanel
-              open: true
-            - !type:DeleteEntity {}
-
         - to: start
           completed:
             - !type:GivePrototype
@@ -32,18 +27,10 @@
             - tool: Screwing
               doAfter: 2
 
-    # This node is just used for construction step-by-step guide menu
-    - node: apcWithElectronics
-      edges:
-        - to: apc
-          steps:
-            - tool: Screwing
-            
-
     - node: apc
-      entity: BaseAPC
+      entity: APCConstructed
       edges:
-        - to: apcEmpty
+        - to: apcFrame
           completed:
             - !type:GivePrototype
               prototype: APCElectronics
@@ -54,4 +41,3 @@
           steps:
             - tool: Prying
               doAfter: 4
-

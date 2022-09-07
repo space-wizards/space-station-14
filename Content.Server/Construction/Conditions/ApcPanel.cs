@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Conditions
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out ApcComponent? apc))
-                return false;
+                return true;
 
             return apc.IsApcOpen == Open;
         }

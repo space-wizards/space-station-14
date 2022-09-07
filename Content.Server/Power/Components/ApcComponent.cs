@@ -19,6 +19,7 @@ public sealed class ApcComponent : BaseApcNetComponent
     ///     Is the panel open for this entity's APC?
     /// </summary>
     [ViewVariables]
+    [DataField("open")]
     public bool IsApcOpen { get; set; }
 
     [ViewVariables]
