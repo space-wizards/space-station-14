@@ -135,7 +135,6 @@
   - type: Sprite
     state: painting13
 
-
 - type: entity
   parent: PaintingBase
   id: PaintingSaturn
@@ -144,3 +143,39 @@
   components:
   - type: Sprite
     state: painting14
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingSleepingGypsy
+  name: The Sleeping Gypsy
+  description: This painting depicts a gypsy sleeping among their belongings in the desert. A lion stands behind them.
+  components:
+  - type: Sprite
+    state: painting15
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingRedBlueYellow
+  name: Composition with Red Blue and Yellow
+  description: This painting is made up of several boxes. They are filled with flat shades of color.
+  components:
+  - type: Sprite
+    state: painting16
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingAmogusTriptych
+  name: Amogus Triptych (Untitled.)
+  description: This painting is made up of 3 individual sections. Each depicts a religious figure.
+  components:
+  - type: Sprite
+    state: painting17
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingHelloWorld
+  name: Hello World
+  description: This painting is made up of lots of multicolored squares arranged in a peculiar pattern. Perhaps it means something?
+  components:
+  - type: Sprite
+    state: painting18
