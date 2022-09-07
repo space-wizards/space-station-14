@@ -91,18 +91,9 @@ namespace Content.Shared.Atmos.Components
         }
     }
 
-    [NetSerializable]
-    [Serializable]
-    public enum GasAnalyzerVisuals
+    [Serializable, NetSerializable]
+    public enum GasAnalyzerVisuals : byte
     {
-        VisualState,
-    }
-
-    [NetSerializable]
-    [Serializable]
-    public enum GasAnalyzerVisualState
-    {
-        Off,
-        Working,
+        Enabled,
     }
 }

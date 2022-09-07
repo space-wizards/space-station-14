@@ -23,7 +23,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-        enum.FilterVisuals.Enabled:
+        enum.GasAnalyzerVisuals.Enabled:
           enabled:
             True: { state: working }
             False: { state: icon }

@@ -225,15 +225,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
                 gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outlet.Air);
 
-            /*
-            bool flipped;
-            if (inletOne != null && inletTwo != null)
-            {
-                flipped = inletOne.CurrentPipeDirection.ToDirection() == inletTwo.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
-            }
-            else
-                flipped = false;
-            */
             args.GasMixtures = gasMixDict;
             args.DeviceFlipped = inletOne != null && inletTwo != null && inletOne.CurrentPipeDirection.ToDirection() == inletTwo.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
         }

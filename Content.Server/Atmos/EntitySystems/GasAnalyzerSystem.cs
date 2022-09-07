@@ -1,19 +1,15 @@
-﻿using System.Linq;
-using Content.Server.Atmos;
+﻿using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
-using Content.Server.Rotatable;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.Piping;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -211,8 +207,6 @@ namespace Content.Server.Atmos.EntitySystems
             if (gasMixList.Count == 0)
                 return false;
 
-
-
             _userInterface.TrySendUiMessage(component.Owner, GasAnalyzerUiKey.Key,
                 new GasAnalyzerUserMessage(gasMixList.ToArray(),
                     component.Target != null ? Name(component.Target.Value) : string.Empty,
@@ -226,7 +220,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void UpdateAppearance(GasAnalyzerComponent analyzer)
         {
-            _appearance.SetData(analyzer.Owner, FilterVisuals.Enabled, analyzer.Enabled);
+            _appearance.SetData(analyzer.Owner, GasAnalyzerVisuals.Enabled, analyzer.Enabled);
         }
 
         /// <summary>
