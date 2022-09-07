@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Adds a popup above a person being stripped/dressed., type: Add}
-  id: 1756
-  time: '2022-06-22T23:58:53.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Movement now has a slight acceleration to it., type: Tweak}
@@ -2926,3 +2921,9 @@ Entries:
   - {message: Zombie move speed should no longer mispredict., type: Fix}
   id: 2255
   time: '2022-09-07T01:59:27.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Sleeping should behave more as expected with critical and dead mobs.,
+    type: Fix}
+  id: 2256
+  time: '2022-09-07T04:37:33.0000000+00:00'
