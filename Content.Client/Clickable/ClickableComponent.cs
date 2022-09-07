@@ -39,20 +39,10 @@ namespace Content.Client.Clickable
             var transform = _entMan.GetComponent<TransformComponent>(Owner);
             var worldRot = transform.WorldRotation;
 
-            // We need to convert world angle to a positive value. between 0 and 2pi. This is important for
-            // CalcRectWorldAngle to get the right angle. Otherwise can get incorrect results for sprites at angles like
-            // -135 degrees (seems highly specific, but AI actors & other entities can snap to those angles while
-            // moving). As to why we treat world-angle like this, but not eye angle or world+eye, it is just because
-            // thats what sprite-rendering does.
-            worldRot = worldRot.Reduced();
-
-            if (worldRot.Theta < 0)
-                worldRot = new Angle(worldRot.Theta + Math.Tau);
-
             var invSpriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
 
             // This should have been the rotation of the sprite relative to the screen, but this is not the case with no-rot or directional sprites.
-            var relativeRotation = worldRot + _eyeManager.CurrentEye.Rotation;
+            var relativeRotation = (worldRot + _eyeManager.CurrentEye.Rotation).Reduced().FlipPositive();
 
             Angle cardinalSnapping = sprite.SnapCardinals ? relativeRotation.GetCardinalDir().ToAngle() : Angle.Zero;
 
@@ -84,9 +74,7 @@ namespace Content.Client.Clickable
                 if (layer.State == null || layer.ActualRsi is not RSI rsi || !rsi.TryGetState(layer.State, out var rsiState))
                     continue;
 
-                var dir = (rsiState.Directions == RSI.State.DirectionType.Dir1)
-                    ? RSI.State.Direction.South
-                    : relativeRotation.ToRsiDirection(rsiState.Directions);
+                var dir = SpriteComponent.Layer.GetDirection(rsiState.Directions, relativeRotation);
 
                 // convert to layer-local coordinates
                 layer.GetLayerDrawMatrix(dir, out var matrix);
