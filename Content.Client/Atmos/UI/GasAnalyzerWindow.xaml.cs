@@ -110,17 +110,20 @@ namespace Content.Client.Atmos.UI
                 else if (msg.NodeGasMixes.Length == 4)
                 {
                     // Trinary, use all three
-                    LeftPanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.NodeGasMixes[1].Name));
+                    // Trinary can be flippable, which complicates how to display things currently
+                    LeftPanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized",
+                        ("title", msg.DeviceFlipped ? msg.NodeGasMixes[1].Name : msg.NodeGasMixes[3].Name));
                     MiddlePanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.NodeGasMixes[2].Name));
-                    RightPanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.NodeGasMixes[3].Name));
+                    RightPanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized",
+                        ("title", msg.DeviceFlipped ? msg.NodeGasMixes[3].Name : msg.NodeGasMixes[1].Name));
 
                     LeftPanel.Visible = true;
                     MiddlePanel.Visible = true;
                     RightPanel.Visible = true;
 
-                    GenerateGasDisplay(msg.NodeGasMixes[1], LeftPanel);
+                    GenerateGasDisplay(msg.DeviceFlipped ? msg.NodeGasMixes[1] : msg.NodeGasMixes[3], LeftPanel);
                     GenerateGasDisplay(msg.NodeGasMixes[2], MiddlePanel);
-                    GenerateGasDisplay(msg.NodeGasMixes[3], RightPanel);
+                    GenerateGasDisplay(msg.DeviceFlipped ? msg.NodeGasMixes[3] : msg.NodeGasMixes[1], RightPanel);
 
                     minSize = new Vector2(CDeviceGrid.DesiredSize.X + 40, MinSize.Y);
                 }

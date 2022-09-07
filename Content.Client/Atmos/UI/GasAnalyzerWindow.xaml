@@ -13,7 +13,7 @@
                             <Control MinHeight="5"/>
                             <Label Name="LeftPanelLabel" HorizontalExpand="True" Align="Center"/>
                             <Control MinHeight="27"/>
-                            <BoxContainer Name="LeftPanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center"/>
+                            <BoxContainer Name="LeftPanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" Visible="False"/>
                         </BoxContainer>
                         <BoxContainer Orientation="Vertical" VerticalExpand="True">
                             <SpriteView Name="GridIcon"
@@ -21,13 +21,13 @@
                                         OverrideDirection="North"
                                         RectClipContent="True"/>
                             <Label Name="MiddlePanelLabel" HorizontalExpand="True" Align="Center"/>
-                            <BoxContainer Name="MiddlePanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center"/>
+                            <BoxContainer Name="MiddlePanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" Visible="False"/>
                         </BoxContainer>
                         <BoxContainer Orientation="Vertical" VerticalExpand="True">
                             <Control MinHeight="5"/>
                             <Label Name="RightPanelLabel" HorizontalExpand="True" Align="Center"/>
                             <Control MinHeight="27"/>
-                            <BoxContainer Name="RightPanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center"/>
+                            <BoxContainer Name="RightPanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" Visible="False"/>
                         </BoxContainer>
                     </GridContainer>
                     <!-- this is for any leftover mixes for > trinary, but it'll look really ugly -->

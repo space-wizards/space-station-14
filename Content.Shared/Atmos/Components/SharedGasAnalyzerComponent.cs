@@ -21,13 +21,15 @@ namespace Content.Shared.Atmos.Components
         {
             public string DeviceName;
             public EntityUid DeviceUid;
+            public bool DeviceFlipped;
             public string? Error;
             public GasMixEntry[] NodeGasMixes;
-            public GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string deviceName, EntityUid deviceUid, string? error = null)
+            public GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string deviceName, EntityUid deviceUid, bool deviceFlipped, string? error = null)
             {
                 NodeGasMixes = nodeGasMixes;
                 DeviceName = deviceName;
                 DeviceUid = deviceUid;
+                DeviceFlipped = deviceFlipped;
                 Error = error;
             }
         }

@@ -175,6 +175,7 @@ namespace Content.Server.Atmos.EntitySystems
                 gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), 0f, 0f));
             }
 
+            var deviceFlipped = false;
             if (component.Target != null)
             {
                 // gas analyzed was used on an entity, try to request gas data via event for override
@@ -188,10 +189,12 @@ namespace Content.Server.Atmos.EntitySystems
                         if(mixes.Value != null)
                             gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value)));
                     }
+
+                    deviceFlipped = ev.DeviceFlipped;
                 }
                 else
                 {
-                    // No override, fetch manually
+                    // No override, fetch manually, to handle flippable devices you must subscribe to GasAnalyzerScanEvent
                     if (TryComp(component.Target, out NodeContainerComponent? node))
                     {
                         foreach (var pair in node.Nodes)
@@ -207,10 +210,13 @@ namespace Content.Server.Atmos.EntitySystems
             if (gasMixList.Count == 0)
                 return false;
 
+
+
             _userInterface.TrySendUiMessage(component.Owner, GasAnalyzerUiKey.Key,
                 new GasAnalyzerUserMessage(gasMixList.ToArray(),
                     component.Target != null ? Name(component.Target.Value) : string.Empty,
-                    component.Target ?? EntityUid.Invalid));
+                    component.Target ?? EntityUid.Invalid,
+                    deviceFlipped));
             return true;
         }
 
@@ -249,12 +255,18 @@ namespace Content.Server.Atmos.EntitySystems
 /// <summary>
 /// Raised when the analyzer is used. An atmospherics device that does not rely on a NodeContainer or
 /// wishes to override the default analyzer behaviour of fetching all nodes in the attached NodeContainer
-/// should subscribe to this and return the GasMixtures as desired
+/// should subscribe to this and return the GasMixtures as desired. A device that is flippable should subscribe
+/// to this event to report if it is flipped or not. See GasFilterSystem or GasMixerSystem for an example.
 /// </summary>
 public sealed class GasAnalyzerScanEvent : EntityEventArgs
 {
     /// <summary>
-    /// Key is the mix name (ex "pipe", "inlet", "filter"), value is the mix. Add all mixes that should be reported when scanned
+    /// Key is the mix name (ex "pipe", "inlet", "filter"), value is the pipe direction and GasMixture. Add all mixes that should be reported when scanned.
     /// </summary>
     public Dictionary<string, GasMixture?>? GasMixtures;
+
+    /// <summary>
+    /// If the device is flipped. Flipped is defined as when the inline input is 90 degrees CW to the side input
+    /// </summary>
+    public bool DeviceFlipped;
 }
