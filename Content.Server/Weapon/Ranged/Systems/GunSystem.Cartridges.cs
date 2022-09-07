@@ -1,10 +1,10 @@
 using Content.Server.Projectiles.Components;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged.Systems;
 
@@ -22,16 +22,16 @@ public sealed partial class GunSystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var projectile = GetProjectile(component.Prototype);
+        var damageSpec = GetProjectileDamage(component.Prototype);
 
-        if (projectile == null)
+        if (damageSpec == null)
             return;
 
         var verb = new ExamineVerb()
         {
             Act = () =>
             {
-                var markup = GetCartridgeMarkup(component.Prototype);
+                var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-projectile"));
                 _examine.SendExamineTooltip(args.User, uid, markup, false, false);
             },
             Text = Loc.GetString("damage-examinable-verb-text"),
@@ -43,39 +43,23 @@ public sealed partial class GunSystem
         args.Verbs.Add(verb);
     }
 
-    private ProjectileComponent? GetProjectile(string proto)
+    private DamageSpecifier? GetProjectileDamage(string proto)
     {
-        if (ProtoManager.Index<EntityPrototype>(proto).Components
+        if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
+            return null;
+
+        if (entityProto.Components
             .TryGetValue(_factory.GetComponentName(typeof(ProjectileComponent)), out var projectile))
         {
             var p = (ProjectileComponent) projectile.Component;
 
             if (p.Damage.Total > FixedPoint2.Zero)
             {
-                return p;
+                return p.Damage;
             }
         }
 
         return null;
-    }
-
-    private FormattedMessage GetCartridgeMarkup(string proto)
-    {
-        var projectile = GetProjectile(proto);
-
-        if (projectile == null)
-            return new FormattedMessage();
-
-        var msg = new FormattedMessage();
-        msg.AddMarkup(Loc.GetString("damage-examine"));
-
-        foreach (var damage in projectile.Damage.DamageDict)
-        {
-            msg.PushNewline();
-            msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
-        }
-
-        return msg;
     }
 
     private void OnCartridgeExamine(EntityUid uid, CartridgeAmmoComponent component, ExaminedEvent args)

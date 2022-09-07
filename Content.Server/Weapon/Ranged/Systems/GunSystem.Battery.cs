@@ -6,7 +6,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged.Systems;
 
@@ -26,8 +25,6 @@ public sealed partial class GunSystem
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, GetVerbsEvent<ExamineVerb>>(OnBatteryExaminableVerb);
     }
-
-
 
     private void OnBatteryStartup(EntityUid uid, BatteryAmmoProviderComponent component, ComponentStartup args)
     {
@@ -70,11 +67,25 @@ public sealed partial class GunSystem
         if (damageSpec == null)
             return;
 
+        string damageType;
+
+        switch (component)
+        {
+            case HitscanBatteryAmmoProviderComponent:
+                damageType = Loc.GetString("damage-hitscan");
+                break;
+            case ProjectileBatteryAmmoProviderComponent:
+                damageType = Loc.GetString("damage-projectile");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
         var verb = new ExamineVerb()
         {
             Act = () =>
             {
-                var markup = GetBatteryMarkup(component);
+                var markup = Damageable.GetDamageExamine(damageSpec, damageType);
                 Examine.SendExamineTooltip(args.User, uid, markup, false, false);
             },
             Text = Loc.GetString("damage-examinable-verb-text"),
@@ -110,25 +121,6 @@ public sealed partial class GunSystem
         }
 
         return null;
-    }
-
-    private FormattedMessage GetBatteryMarkup(BatteryAmmoProviderComponent component)
-    {
-        var damageSpec = GetDamage(component);
-
-        if (damageSpec == null)
-            return new FormattedMessage();
-
-        var msg = new FormattedMessage();
-        msg.AddMarkup(Loc.GetString("damage-examine"));
-
-        foreach (var damage in damageSpec.DamageDict)
-        {
-            msg.PushNewline();
-            msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
-        }
-
-        return msg;
     }
 
     protected override void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component)

@@ -31,11 +31,3 @@ gun-revolver-full = Revolver full
 gun-revolver-insert = Inserted
 gun-revolver-spin = Spin revolver
 gun-revolver-spun = Spun
-
-
-# Damage examines
-damage-examinable-verb-text = Damage
-damage-examinable-verb-message = Examine the damage values.
-
-damage-examine = It does the following damage:
-damage-value = - [color=red]{$amount}[/color] units of [color=yellow]{$type}[/color].
