@@ -21,6 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Verbs
 {
@@ -130,43 +131,53 @@ namespace Content.Client.Verbs
             // remove any entities in containers
             if ((visibility & MenuVisibility.InContainer) == 0)
             {
-                foreach (var entity in entities.ToList())
+                for (var i = entities.Count - 1; i >= 0; i--)
                 {
-                    if (!ContainerSystem.IsInSameOrTransparentContainer(player.Value, entity))
-                        entities.Remove(entity);
+                    var entity = entities[i];
+
+                    if (ContainerSystem.IsInSameOrTransparentContainer(player.Value, entity))
+                        continue;
+
+                    entities.RemoveSwap(i);
                 }
             }
 
             // remove any invisible entities
             if ((visibility & MenuVisibility.Invisible) == 0)
             {
-                foreach (var entity in entities.ToList())
-                {
-                    if (!EntityManager.TryGetComponent(entity, out ISpriteComponent? spriteComponent) ||
-                    !spriteComponent.Visible)
-                    {
-                        entities.Remove(entity);
-                        continue;
-                    }
+                var spriteQuery = GetEntityQuery<SpriteComponent>();
+                var tagQuery = GetEntityQuery<TagComponent>();
 
-                    if (_tagSystem.HasTag(entity, "HideContextMenu"))
-                        entities.Remove(entity);
+                for (var i = entities.Count - 1; i >= 0; i--)
+                {
+                    var entity = entities[i];
+
+                    if (!spriteQuery.TryGetComponent(entity, out var spriteComponent) ||
+                        !spriteComponent.Visible ||
+                        _tagSystem.HasTag(entity, "HideContextMenu", tagQuery))
+                    {
+                        entities.RemoveSwap(i);
+                    }
                 }
             }
 
             // Remove any entities that do not have LOS
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var playerPos = EntityManager.GetComponent<TransformComponent>(player.Value).MapPosition;
-                foreach (var entity in entities.ToList())
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var playerPos = xformQuery.GetComponent(player.Value).MapPosition;
+
+                for (var i = entities.Count - 1; i >= 0; i--)
                 {
+                    var entity = entities[i];
+
                     if (!ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
-                        EntityManager.GetComponent<TransformComponent>(entity).MapPosition,
+                        xformQuery.GetComponent(entity).MapPosition,
                         ExamineSystemShared.ExamineRange,
                         null))
                     {
-                        entities.Remove(entity);
+                        entities.RemoveSwap(i);
                     }
                 }
             }

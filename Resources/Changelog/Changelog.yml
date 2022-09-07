@@ -1,111 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Salvage workers should once again stay behind when the salvage grid
-      despawns., type: Fix}
-  id: 1735
-  time: '2022-06-21T01:59:36.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Damage Slowdown has been modified to feel less awful. No more slowly
-      crawling places when you're crit., type: Tweak}
-  id: 1736
-  time: '2022-06-21T02:00:14.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Mimes no longer warned about their vow when just typing, type: Fix}
-  id: 1737
-  time: '2022-06-21T02:02:55.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Puddles no longer block prying floor tiles, type: Fix}
-  id: 1738
-  time: '2022-06-21T02:03:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Added visuals & toggle-interactions to the gas injector., type: Add}
-  - {message: The injector outlet pressure is now limited to 9000 kPa., type: Tweak}
-  id: 1739
-  time: '2022-06-21T02:04:55.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: You can now destroy trees!, type: Tweak}
-  id: 1740
-  time: '2022-06-21T02:06:07.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Vector, C-20R, Flaregun, Mateba, MK58, and the Atreides now have different
-      gunshot sounds.', type: Add}
-  id: 1741
-  time: '2022-06-21T05:16:36.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Rat king and his servants can now pull objects., type: Tweak}
-  - {message: Rat king 'domain' effect now generates slightly more miasma., type: Tweak}
-  id: 1742
-  time: '2022-06-21T14:00:12.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Slimes now have to breathe nitrogen. They still suffocate much, much
-      slower than other species.', type: Add}
-  id: 1743
-  time: '2022-06-21T16:32:31.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Bibles can no longer heal dead entities., type: Fix}
-  id: 1744
-  time: '2022-06-21T16:44:02.0000000+00:00'
-- author: Mirino97
-  changes:
-  - {message: Energy Swords are not considered knifes when turned off anymore!, type: Fix}
-  id: 1745
-  time: '2022-06-22T00:54:28.0000000+00:00'
-- author: themias
-  changes:
-  - {message: removing unbroken light bulbs now has a delay, type: Tweak}
-  id: 1746
-  time: '2022-06-22T00:55:06.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Examining a drink shows how much is left, type: Tweak}
-  id: 1747
-  time: '2022-06-22T02:02:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Reduced the amount of alcohol contained in a booze-o-mat., type: Tweak}
-  id: 1748
-  time: '2022-06-22T02:41:42.0000000+00:00'
-- author: Ranger6012
-  changes:
-  - {message: HoP's cloak description now correctly drapes over your shoulders instead
-      of your "shoudlers", type: Fix}
-  id: 1749
-  time: '2022-06-22T15:11:05.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Give Nuke Ops their access to console, type: Fix}
-  id: 1750
-  time: '2022-06-22T19:27:24.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Lizards now have an animal metabolism. Have fun and be careful with
-      chocolate and caffeine!, type: Add}
-  id: 1751
-  time: '2022-06-22T23:23:02.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Slimes have a natural immunity to ultragigacancer and bleeder's bite.,
-    type: Add}
-  - {message: Slimes now take 80% less cellular damage., type: Add}
-  id: 1752
-  time: '2022-06-22T23:25:49.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Removed sulfuric acid and uranium from the chemical dispenser., type: Remove}
-  - {message: Added recipe for sulfuric acid., type: Add}
-  - {message: Uranium sheets can be ground up like plasma sheets are., type: Add}
-  id: 1753
-  time: '2022-06-22T23:26:13.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station's security office temporarily has two SMGs., type: Tweak}
@@ -2916,3 +2809,119 @@ Entries:
   - {message: Turrets now exist., type: Add}
   id: 2234
   time: '2022-09-05T14:28:23.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Adds a way to see device links from entities that use device network
+      linking., type: Add}
+  id: 2235
+  time: '2022-09-06T00:55:44.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Game objects that store device network links now have a set limit as
+      to how many devices that they can store., type: Tweak}
+  - {message: The device network link list now has a UI on devices that use device
+      network linking., type: Tweak}
+  id: 2236
+  time: '2022-09-06T01:22:39.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Made events less frequent, from 5-15min to 5-25min.', type: Tweak}
+  id: 2237
+  time: '2022-09-06T01:40:31.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'The wires in airlocks and windoors are now more secure, and require
+      you to actually cut wires in order to remove the board. Try not to bolt it!',
+    type: Tweak}
+  id: 2238
+  time: '2022-09-06T01:41:39.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Pills and bottles no longer sell for any spacebucks, type: Fix}
+  id: 2239
+  time: '2022-09-06T01:43:04.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: Opening the strip UI no longer has a doafter. All item stripping times
+      have been increased by 1 second to account for this., type: Tweak}
+  id: 2240
+  time: '2022-09-06T02:15:49.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Base disarm fail chance raised to 75% from 40%., type: Tweak}
+  - {message: 'Instead of directly shoving over, pushover procs now deal stamina damage.',
+    type: Tweak}
+  id: 2241
+  time: '2022-09-06T02:19:33.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'When a privileged ID card is the only card inserted in an ID card computer,
+      its details will now show.', type: Fix}
+  id: 2242
+  time: '2022-09-06T02:20:01.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'Deconstructing reinforced walls now leads to the creation of a reinforced
+      girder instead of a normal one, and it drops 2 plasteel sheets.', type: Tweak}
+  - {message: Deconstructing reinforced girders now only requires cutting for 2 seconds
+      and drops 2 plasteel sheets., type: Tweak}
+  id: 2243
+  time: '2022-09-06T02:28:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Eye lerping will now work even if you don't have control of your mob.,
+    type: Fix}
+  id: 2244
+  time: '2022-09-06T02:28:59.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Special job components like mime powers or the ability to use bibles
+      are no longer lost on cloning., type: Fix}
+  id: 2245
+  time: '2022-09-06T02:29:40.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: The security belt can now hold seclites., type: Tweak}
+  id: 2246
+  time: '2022-09-06T02:46:30.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Insulated glove users are no longer safe from licoxide., type: Fix}
+  id: 2247
+  time: '2022-09-06T02:48:36.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: CBURN equipment has been improved, type: Tweak}
+  - {message: new ERT\CBURN pda sprite added, type: Add}
+  id: 2248
+  time: '2022-09-06T02:49:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added Pax, a drug that disables people''s combat mode.', type: Add}
+  id: 2249
+  time: '2022-09-06T02:52:58.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed wood planks and sliceable food sometimes getting "stuck" to a
+      player after cutting., type: Fix}
+  id: 2250
+  time: '2022-09-06T05:08:19.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Firelocks will now properly warn users that try to open them if they
+      are holding back an inferno or the cold vacuum of space., type: Fix}
+  id: 2251
+  time: '2022-09-06T05:55:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Entities that are shot will now show a red effect., type: Add}
+  id: 2252
+  time: '2022-09-06T08:01:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The syndicate infiltrator ship now has automatic turrets that shoot
+      intruders., type: Add}
+  - {message: 'The syndicate discovered grinders, now nukies have it at the outpost.',
+    type: Add}
+  id: 2253
+  time: '2022-09-06T08:20:33.0000000+00:00'

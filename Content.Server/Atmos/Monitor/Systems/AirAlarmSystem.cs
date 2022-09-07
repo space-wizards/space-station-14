@@ -14,6 +14,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -298,9 +299,9 @@ public sealed class AirAlarmSystem : EntitySystem
 
         if (args.AlarmType == AtmosAlarmType.Danger)
         {
-            SetMode(uid, addr, AirAlarmMode.None, true, false);
+            SetMode(uid, addr, AirAlarmMode.WideFiltering, true, false);
         }
-        else if (args.AlarmType == AtmosAlarmType.Normal)
+        else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
         {
             SetMode(uid, addr, AirAlarmMode.Filtering, true, false);
         }

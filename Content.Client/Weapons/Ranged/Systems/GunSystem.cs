@@ -282,6 +282,7 @@ public sealed partial class GunSystem : SharedGunSystem
         _animPlayer.Play(ent, anim, "muzzle-flash");
         var light = EnsureComp<PointLightComponent>(uid);
 
+        light.NetSyncEnabled = false;
         light.Enabled = true;
         light.Color = Color.FromHex("#cc8e2b");
         light.Radius = 2f;

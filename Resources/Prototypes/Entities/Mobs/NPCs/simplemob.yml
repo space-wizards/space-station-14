@@ -110,6 +110,7 @@
     - Electrocution
     - ForcedSleep
     - TemporaryBlindness
+    - Pacified
   - type: Body
     template: AnimalTemplate
     preset: AnimalPreset
@@ -173,6 +174,7 @@
       - Electrocution
       - ForcedSleep
       - TemporaryBlindness
+      - Pacified
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

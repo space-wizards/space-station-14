@@ -241,34 +241,36 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="alarmable"></param>
-    public void Reset(EntityUid uid, AtmosAlarmableComponent? alarmable = null)
+    public void Reset(EntityUid uid, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
     {
-        if (!Resolve(uid, ref alarmable))
+        if (!Resolve(uid, ref alarmable, ref tags) || alarmable.LastAlarmState == AtmosAlarmType.Normal)
         {
             return;
         }
 
-        TryUpdateAlert(uid, AtmosAlarmType.Normal, alarmable, false);
-
         alarmable.NetworkAlarmStates.Clear();
+        TryUpdateAlert(uid, AtmosAlarmType.Normal, alarmable);
+
+        if (!alarmable.ReceiveOnly)
+        {
+            var payload = new NetworkPayload
+            {
+                [DeviceNetworkConstants.Command] = ResetAll,
+                [AlertSource] = tags.Tags
+            };
+
+            _deviceNet.QueuePacket(uid, null, payload);
+        }
     }
 
-    public void ResetAllOnNetwork(EntityUid uid, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
+    public void ResetAllOnNetwork(EntityUid uid, AtmosAlarmableComponent? alarmable = null)
     {
-        if (!Resolve(uid, ref alarmable, ref tags) || alarmable.ReceiveOnly)
+        if (!Resolve(uid, ref alarmable) || alarmable.ReceiveOnly)
         {
             return;
         }
 
         Reset(uid, alarmable);
-
-        var payload = new NetworkPayload
-        {
-            [DeviceNetworkConstants.Command] = ResetAll,
-            [AlertSource] = tags.Tags
-        };
-
-        _deviceNet.QueuePacket(uid, null, payload);
     }
 
     /// <summary>
