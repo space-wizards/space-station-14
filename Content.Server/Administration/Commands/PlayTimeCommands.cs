@@ -347,6 +347,7 @@ public sealed class PlayTimeFlushCommand : IConsoleCommand
 public sealed class PlaytimeGetOfflineCommand : IConsoleCommand
 {
     [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IPlayerLocator _locator = default!;
     public string Command => "playtime_getoffline";
     public string Description => Loc.GetString("cmd-playtime_getoffline-desc");
     // Reusing the getoverall help ones since syntax is the same
@@ -360,11 +361,20 @@ public sealed class PlaytimeGetOfflineCommand : IConsoleCommand
             return;
         }
 
+        Guid user;
+
         var userName = args[0];
-        if (!Guid.TryParse(userName, out var user))
+        if (!Guid.TryParse(userName, out user))
         {
-            shell.WriteError(Loc.GetString("parse-username-fail", ("username", userName)));
-            return;
+            var dbGuid = await _locator.LookupIdByNameAsync(userName);
+
+            if (dbGuid == null)
+            {
+                shell.WriteError(Loc.GetString("playtime-netuserid-not-found", ("username", userName)));
+                return;
+            }
+
+            user = dbGuid.UserId;
         }
 
         var playTime = await _db.GetPlayTimes(user);

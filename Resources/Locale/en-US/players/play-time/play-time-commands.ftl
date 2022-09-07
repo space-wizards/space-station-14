@@ -1,6 +1,7 @@
 ﻿parse-minutes-fail = Unable to parse '{$minutes}' as minutes
 parse-session-fail = Did not find session for '{$username}'
 parse-username-fail = Could not parse guid for '{$username}'
+playtime-netuserid-not-found = Unable to find '{$username}' netuserid
 
 ## Role Timer Commands
 
