@@ -1,6 +1,6 @@
-ent-WeaponTurretSyndicateBroken = ballistic turret (broken)
-    .desc = A ballistic machine gun auto-turret.
-    .suffix = Syndicate
-ent-WeaponTurretSyndicate = ballistic turret
+ent-WeaponTurretSyndicateBroken = баллистическая турель (сломанная)
+    .desc = Автоматическая турель с баллистическим пулеметом.
+    .suffix = Синдикат
+ent-WeaponTurretSyndicate = баллистическая турель
     .desc = { ent-WeaponTurretSyndicateBroken.desc }
     .suffix = { "" }

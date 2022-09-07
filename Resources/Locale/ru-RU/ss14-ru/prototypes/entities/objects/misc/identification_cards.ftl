@@ -124,6 +124,6 @@ ent-BoxerIDCard = ID карта боксёра
 ent-DetectiveIDCard = ID карта детектива
     .desc = { ent-IDCardStandard.desc }
     .suffix = { "" }
-ent-CBURNIDcard = CBURN ID card
+ent-CBURNIDcard = ID карта РХБЗЗ
     .desc = { ent-CentcomIDCard.desc }
     .suffix = { "" }

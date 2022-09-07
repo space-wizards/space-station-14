@@ -16,4 +16,4 @@ device-frequency-prototype-name-surveillance-camera-service = Камеры (Се
 device-frequency-prototype-name-surveillance-camera-medical = Камеры (Мед)
 device-frequency-prototype-name-surveillance-camera-general = Камеры (Общие)
 device-frequency-prototype-name-surveillance-camera-entertainment = Камеры (Развлечения)
-device-address-prefix-sensor = Sns-
+device-address-prefix-sensor = Снс-
