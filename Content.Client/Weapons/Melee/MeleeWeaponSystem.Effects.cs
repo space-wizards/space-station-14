@@ -40,8 +40,26 @@ public sealed partial class MeleeWeaponSystem
         {
             sprite.Color = component.Color;
         }
+    }
 
-        RemCompDeferred<DamageEffectComponent>(uid);
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
+
+        var animQuery = GetEntityQuery<AnimationPlayerComponent>();
+
+        foreach (var comp in EntityQuery<DamageEffectComponent>(true))
+        {
+            if (!animQuery.TryGetComponent(comp.Owner, out var player) ||
+                !_animation.HasRunningAnimation(comp.Owner, player, DamageAnimationKey))
+            {
+                RemComp<DamageEffectComponent>(comp.Owner);
+                continue;
+            }
+        }
     }
 
     /// <summary>
