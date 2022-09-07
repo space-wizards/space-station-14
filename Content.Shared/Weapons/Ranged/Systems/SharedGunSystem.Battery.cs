@@ -1,4 +1,5 @@
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.GameStates;
@@ -49,6 +50,18 @@ public abstract partial class SharedGunSystem
     private void OnBatteryExamine(EntityUid uid, BatteryAmmoProviderComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("gun-battery-examine", ("color", AmmoExamineColor), ("count", component.Shots)));
+
+        if (component is HitscanBatteryAmmoProviderComponent hitscanComp &&
+            ProtoManager.TryIndex<HitscanPrototype>(hitscanComp.Prototype, out var hitscan) &&
+            hitscan.Damage?.Total > FixedPoint2.Zero)
+        {
+            args.PushMarkup(Loc.GetString("damage-examine"));
+
+            foreach (var damage in hitscan.Damage.DamageDict)
+            {
+                args.PushMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
+            }
+        }
     }
 
     private void OnBatteryTakeAmmo(EntityUid uid, BatteryAmmoProviderComponent component, TakeAmmoEvent args)
