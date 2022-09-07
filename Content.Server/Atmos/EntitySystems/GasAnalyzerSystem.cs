@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Server.Rotatable;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
@@ -87,7 +88,7 @@ namespace Content.Server.Atmos.EntitySystems
             component.LastPosition = Transform(target ?? user).Coordinates;
             component.Enabled = true;
             Dirty(component);
-            SetAppearance(component);
+            UpdateAppearance(component);
             if(!HasComp<ActiveGasAnalyzerComponent>(uid))
                 AddComp<ActiveGasAnalyzerComponent>(uid);
             UpdateAnalyzer(uid);
@@ -115,8 +116,8 @@ namespace Content.Server.Atmos.EntitySystems
                 _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
 
             component.Enabled = false;
-            SetAppearance(component);
             Dirty(component);
+            UpdateAppearance(component);
             RemCompDeferred<ActiveGasAnalyzerComponent>(uid);
         }
 
@@ -223,10 +224,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Sets the appearance based on the analyzers Enabled state
         /// </summary>
-        private void SetAppearance(GasAnalyzerComponent analyzer)
+        private void UpdateAppearance(GasAnalyzerComponent analyzer)
         {
-            _appearance.SetData(analyzer.Owner, GasAnalyzerVisuals.VisualState,
-                analyzer.Enabled ? GasAnalyzerVisualState.Working : GasAnalyzerVisualState.Off);
+            _appearance.SetData(analyzer.Owner, FilterVisuals.Enabled, analyzer.Enabled);
         }
 
         /// <summary>
