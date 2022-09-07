@@ -7,7 +7,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
-public sealed class PointingSystem : EntitySystem
+public sealed class PointingSystem : SharedPointingSystem
 {
     [Dependency] private readonly SharedMobStateSystem _mobState = default!;
 
@@ -18,7 +18,6 @@ public sealed class PointingSystem : EntitySystem
         SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddPointingVerb);
         SubscribeLocalEvent<PointingArrowComponent, ComponentStartup>(OnArrowStartup);
         SubscribeLocalEvent<RoguePointingArrowComponent, ComponentStartup>(OnRogueArrowStartup);
-
     }
 
     private void AddPointingVerb(GetVerbsEvent<Verb> args)

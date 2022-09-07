@@ -24,7 +24,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Pointing.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class PointingSystem : EntitySystem
+    internal sealed class PointingSystem : SharedPointingSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -231,10 +231,28 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>(true))
+            var currentTime = _gameTiming.CurTime;
+
+            foreach (var component in EntityQuery<PointingArrowComponent>(true))
             {
-                component.Update(frameTime);
+                Update(component, currentTime);
             }
+        }
+
+        private void Update(PointingArrowComponent component, TimeSpan currentTime)
+        {
+            // TODO: That pause PR
+            if (component.EndTime < currentTime)
+                return;
+
+            if (component.Rogue)
+            {
+                RemComp<PointingArrowComponent>(component.Owner);
+                EnsureComp<RoguePointingArrowComponent>(component.Owner);
+                return;
+            }
+
+            Del(component.Owner);
         }
     }
 }
