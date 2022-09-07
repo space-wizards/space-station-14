@@ -120,8 +120,11 @@ namespace Content.Server.Construction
             while (enumerator.MoveNext(out var ent))
             {
                 if (!bodyQuery.TryGetComponent(ent, out var body) ||
-                    !body.CanCollide)
+                    !body.CanCollide ||
+                    !body.Hard)
+                {
                     continue;
+                }
 
                 if ((body.CollisionMask & anchorBody.CollisionLayer) != 0x0 ||
                     (body.CollisionLayer & anchorBody.CollisionMask) != 0x0)
