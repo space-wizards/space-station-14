@@ -24,6 +24,7 @@ namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly ExamineSystem _examine = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 

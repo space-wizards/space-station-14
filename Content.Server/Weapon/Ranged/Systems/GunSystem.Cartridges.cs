@@ -10,8 +10,6 @@ namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-
-
     protected override void InitializeCartridge()
     {
         base.InitializeCartridge();
@@ -48,7 +46,7 @@ public sealed partial class GunSystem
     private ProjectileComponent? GetProjectile(string proto)
     {
         if (ProtoManager.Index<EntityPrototype>(proto).Components
-            .TryGetValue("Projectile", out var projectile))
+            .TryGetValue(_factory.GetComponentName(typeof(ProjectileComponent)), out var projectile))
         {
             var p = (ProjectileComponent) projectile.Component;
 
