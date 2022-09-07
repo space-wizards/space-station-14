@@ -36,6 +36,9 @@ namespace Content.Server.Sound
             base.Update(frameTime);
             foreach (var soundSpammer in EntityQuery<SpamEmitSoundComponent>())
             {
+                if (!soundSpammer.Enabled)
+                    continue;
+
                 soundSpammer.Accumulator += frameTime;
                 if (soundSpammer.Accumulator < soundSpammer.RollInterval)
                 {

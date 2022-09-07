@@ -57,7 +57,7 @@ namespace Content.Server.Bed.Sleep
 
                 var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
 
-                // TODO WTF is this, these should a data fields and not hard-coded. 
+                // TODO WTF is this, these should a data fields and not hard-coded.
                 emitSound.Sound = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
                 emitSound.PlayChance = 0.33f;
                 emitSound.RollInterval = 5f;
@@ -107,14 +107,14 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, SleepingComponent component, MobStateChangedEvent args)
         {
-            if (_mobStateSystem.IsCritical(uid) && !HasComp<ForcedSleepingComponent>(uid))
+            if (args.CurrentMobState == DamageState.Dead)
             {
+                RemComp<SpamEmitSoundComponent>(uid);
                 RemComp<SleepingComponent>(uid);
                 return;
             }
-
-            if (_mobStateSystem.IsDead(uid))
-                RemComp<SleepingComponent>(uid);
+            if (TryComp<SpamEmitSoundComponent>(uid, out var spam))
+                spam.Enabled = (args.CurrentMobState == DamageState.Alive) ? true : false;
         }
 
         private void AddWakeVerb(EntityUid uid, SleepingComponent component, GetVerbsEvent<AlternativeVerb> args)
