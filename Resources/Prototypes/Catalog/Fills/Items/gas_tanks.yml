@@ -23,11 +23,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 42.6
       air:
         volume: 2
         moles:
           - 0.323460326 # oxygen
+          - 0.323460326 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -36,11 +37,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 42.6
       air:
         volume: 6
         moles:
           - 0.969830813 # oxygen
+          - 0.969830813 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -49,11 +51,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 42.6
       air:
         volume: 10
         moles:
           - 1.61721219 # oxygen
+          - 1.61721219 # nitrogen
         temperature: 293.15
 
 - type: entity

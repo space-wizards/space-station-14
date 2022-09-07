@@ -53,16 +53,6 @@
 - type: entity
   parent: OxygenTank
   id: YellowOxygenTank
-  name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
-  components:
-  - type: Sprite
-    sprite: Objects/Tanks/yellow.rsi
-  - type: Clothing
-    sprite: Objects/Tanks/yellow.rsi
-    slots:
-    - Back
-    - suitStorage
 
 - type: entity
   parent: OxygenTank
@@ -81,8 +71,8 @@
 - type: entity
   parent: OxygenTank
   id: EmergencyOxygenTank
-  name: emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
+  name: emergency air tank
+  description: Used for emergencies. Contains very little air, so try to conserve it until you actually need it.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency.rsi
@@ -103,8 +93,8 @@
 - type: entity
   parent: EmergencyOxygenTank
   id: ExtendedEmergencyOxygenTank
-  name: extended-capacity emergency oxygen tank
-  description: Used for emergencies. Contains little oxygen, so try to conserve it until you actually need it.
+  name: extended-capacity emergency air tank
+  description: Used for emergencies. Contains little air, so try to conserve it until you actually need it.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_yellow.rsi
@@ -126,7 +116,7 @@
 - type: entity
   parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
-  name: double emergency oxygen tank
+  name: double emergency air tank
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double.rsi
