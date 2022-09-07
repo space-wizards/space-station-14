@@ -18,5 +18,8 @@ namespace Content.Server.Sound.Components
         // Always Pvs.
         [DataField("popUp")]
         public string? PopUp;
+
+        [DataField("enabled")]
+        public bool Enabled = true;
     }
 }
