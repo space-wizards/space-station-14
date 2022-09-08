@@ -3,6 +3,7 @@
   name: reagent-name-toxin
   group: Toxins
   desc: reagent-desc-toxin
+  flavor: bitter
   color: "#cf3600"
   physicalDesc: reagent-physical-desc-opaque
   plantMetabolism:
@@ -23,6 +24,7 @@
   name: reagent-name-carpotoxin
   group: Toxins
   desc: reagent-desc-carpotoxin
+  flavor: bitter
   color: "#e2a38c"
   physicalDesc: reagent-physical-desc-exotic-smelling
   plantMetabolism:
@@ -49,6 +51,7 @@
   name: reagent-name-chloral-hydrate
   group: Toxins
   desc: reagent-desc-chloral-hydrate
+  flavor: bitter
   color: "#000067"
   physicalDesc: reagent-physical-desc-nondescript
   metabolisms:
@@ -80,6 +83,7 @@
   name: reagent-name-mold
   group: Toxins
   desc: reagent-desc-mold
+  flavor: bitter
   color: "#8a9a5b"
   physicalDesc: reagent-physical-desc-fuzzy
   metabolisms:
@@ -109,6 +113,7 @@
   group: Toxins
   desc: reagent-desc-polytrinic-acid
   physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: acidic
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
@@ -150,6 +155,7 @@
   group: Toxins
   desc: reagent-desc-fluorosulfuric-acid
   physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: acidic
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
@@ -184,6 +190,7 @@
   group: Toxins
   desc: reagent-desc-sulfuric-acid
   physicalDesc: reagent-physical-desc-oily
+  flavor: acidic
   color: "#BF8C00"
   boilingPoint: 337.0
   meltingPoint: 10.31
@@ -225,6 +232,7 @@
   group: Toxins
   desc: reagent-desc-unstable-mutagen
   physicalDesc: reagent-physical-desc-glowing
+  flavor: bitter
   color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
   meltingPoint: 261.0
@@ -278,6 +286,7 @@
   group: Toxins
   desc: reagent-desc-mindbreaker-toxin
   physicalDesc: reagent-physical-desc-opaque
+  flavor: bitter
   color: "#77b58e"
   plantMetabolism:
   - !type:PlantAdjustToxins
@@ -371,6 +380,7 @@
   name: reagent-name-vent-crud
   desc: reagent-desc-vent-crud
   physicalDesc: reagent-physical-desc-sticky
+  flavor: bitter
   color: "#000000"
   metabolisms:
     Poison:
@@ -388,6 +398,7 @@
   name: reagent-name-corpium
   desc: reagent-desc-corpium
   physicalDesc: reagent-physical-desc-necrotic
+  flavor: bitter
   color: "#7668a1"
   metabolisms:
     Poison:
@@ -405,6 +416,7 @@
   name: reagent-name-uncooked-animal-proteins
   desc: reagent-desc-uncooked-animal-proteins
   physicalDesc: reagent-physical-desc-clumpy
+  flavor: bitter
   color: "#FFFFE5"
   metabolisms:
     Poison:
@@ -428,6 +440,7 @@
   name: reagent-name-allicin
   desc: reagent-desc-allicin
   physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
   color: "#F2E9D2"
   metabolisms:
     Poison:
