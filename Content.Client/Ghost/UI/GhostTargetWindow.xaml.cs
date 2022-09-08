@@ -17,9 +17,7 @@ namespace Content.Client.Ghost.UI
     {
         private readonly IEntityNetworkManager _netManager;
 
-        public List<string> Locations { get; set; } = new();
-
-        public Dictionary<EntityUid, string> Players { get; set; } = new();
+        private List<(string, EntityUid)> _warps = new();
 
         public GhostTargetWindow(IEntityNetworkManager netManager)
         {
@@ -28,58 +26,35 @@ namespace Content.Client.Ghost.UI
             _netManager = netManager;
         }
 
+        public void UpdateWarps(IEnumerable<GhostWarp> warps)
+        {
+            _warps = warps.Select(w =>
+            {
+                var name = w.Localizable
+                    ? Loc.GetString("ghost-target-window-current-button", ("name", w.DisplayName))
+                    : w.DisplayName;
+
+                return (name, w.Entity);
+            }).ToList();
+            
+            // Server COULD send these sorted but how about we just use the client to do it instead
+            _warps.Sort((x, y) =>
+                string.Compare(x.Item1, y.Item1, StringComparison.Ordinal));
+        }
+
         public void Populate()
         {
             ButtonContainer.DisposeAllChildren();
-            AddButtonPlayers();
-            AddButtonLocations();
+            AddButtons();
         }
 
-        private void AddButtonPlayers()
+        private void AddButtons()
         {
-            var sortedPlayers = new List<(string, EntityUid)>(Players.Count);
-
-            foreach (var (key, player) in Players)
-            {
-                sortedPlayers.Add((player, key));
-            }
-
-            sortedPlayers.Sort((x, y) => string.Compare(x.Item1, y.Item1, StringComparison.Ordinal));
-
-            foreach (var (key, player) in sortedPlayers)
+            foreach (var (name, warp) in _warps)
             {
                 var currentButtonRef = new Button
                 {
-                    Text = key,
-                    TextAlign = Label.AlignMode.Right,
-                    HorizontalAlignment = HAlignment.Center,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1,
-                    MinSize = (340, 20),
-                    ClipText = true,
-                };
-
-                currentButtonRef.OnPressed += (_) =>
-                {
-                    var msg = new GhostWarpToTargetRequestEvent(player);
-                    _netManager.SendSystemNetworkMessage(msg);
-                };
-
-                ButtonContainer.AddChild(currentButtonRef);
-            }
-        }
-
-        private void AddButtonLocations()
-        {
-            // Server COULD send these sorted but how about we just use the client to do it instead.
-            var sortedLocations = new List<string>(Locations);
-            sortedLocations.Sort((x, y) => string.Compare(x, y, StringComparison.Ordinal));
-
-            foreach (var name in sortedLocations)
-            {
-                var currentButtonRef = new Button
-                {
-                    Text = Loc.GetString("ghost-target-window-current-button", ("name", name)),
+                    Text = name,
                     TextAlign = Label.AlignMode.Right,
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,
@@ -90,7 +65,7 @@ namespace Content.Client.Ghost.UI
 
                 currentButtonRef.OnPressed += _ =>
                 {
-                    var msg = new GhostWarpToLocationRequestEvent(name);
+                    var msg = new GhostWarpToTargetRequestEvent(warp);
                     _netManager.SendSystemNetworkMessage(msg);
                 };
 
