@@ -31,6 +31,23 @@
       layer:
       - Opaque
       - BulletImpassable
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      id: conveyor
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+  - type: SignalReceiver
+    inputs:
+      Reverse: []
+      Forward: []
+      Off: []
   - type: Transform
     anchored: true
     noRot: false    
