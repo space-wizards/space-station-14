@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
@@ -6,8 +5,6 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -157,15 +154,18 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     public MeleeWeaponComponent? GetWeapon(EntityUid entity)
     {
-        if (!CombatMode.IsInCombatMode(entity))
-            return null;
+        MeleeWeaponComponent? melee;
 
         // Use inhands entity if we got one.
         if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
-            hands.ActiveHandEntity is { } held &&
-            EntityManager.TryGetComponent(held, out MeleeWeaponComponent? melee))
+            hands.ActiveHandEntity is { } held)
         {
-            return melee;
+            if (EntityManager.TryGetComponent(held, out melee))
+            {
+                return melee;
+            }
+
+            return null;
         }
 
         if (TryComp(entity, out melee))
@@ -225,15 +225,29 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// <summary>
     /// When an attack is released get the actual modifier for damage done.
     /// </summary>
-    public static float GetModifier(MeleeWeaponComponent component)
+    public float GetModifier(MeleeWeaponComponent component, bool lightAttack)
     {
-        // TODO
-        return 1f;
-    }
+        if (lightAttack)
+            return 1f;
 
-    public static float GetModifier(float fraction)
-    {
-        return fraction;
+        var windup = component.WindUpStart;
+        if (windup == null)
+            return 0f;
+
+        var releaseTime = (Timing.CurTime - windup.Value).TotalSeconds;
+        var windupTime = component.WindupTime.TotalSeconds;
+
+        // Wraps around back to 0
+        releaseTime %= (2 * windupTime);
+
+        var releaseDiff = Math.Abs((releaseTime - windupTime));
+        var fraction = (windupTime - releaseDiff) / windupTime;
+
+        if (fraction < 0.4)
+            fraction = 0;
+
+        DebugTools.Assert(fraction <= 1);
+        return (float) fraction * component.HeavyDamageModifier.Float();
     }
 
     protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component)

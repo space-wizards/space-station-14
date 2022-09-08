@@ -299,7 +299,7 @@
     animation: WeaponArcFist
     damage:
       types:
-        Blunt: 5
+        Blunt: 2.5
   - type: Pullable
   - type: DoAfter
   - type: CreamPied

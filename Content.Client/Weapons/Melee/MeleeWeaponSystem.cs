@@ -1,5 +1,4 @@
 using Content.Client.Gameplay;
-using Content.Client.Viewport;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Melee;
@@ -9,20 +8,26 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
+using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Melee;
 
-public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
+public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
@@ -54,7 +59,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
-        _overlayManager.AddOverlay(new MeleeWindupOverlay());
+        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _protoManager, _cache));
         SubscribeNetworkEvent<MeleeEffectEvent>(OnMeleeEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
     }
@@ -86,10 +91,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var entityNull = _player.LocalPlayer?.ControlledEntity;
 
-        if (!TryComp<SharedCombatModeComponent>(entityNull, out var combatMode))
-        {
+        if (entityNull == null)
             return;
-        }
 
         var entity = entityNull.Value;
         var weapon = GetWeapon(entity);
@@ -99,8 +102,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        if (!CombatMode.IsInCombatMode(entity))
+        if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity))
         {
+            weapon.Attacking = false;
+            if (weapon.WindUpStart != null)
+            {
+                EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
+            }
+
             return;
         }
 
@@ -146,7 +155,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
             return;
         }
-        else if (weapon.WindUpStart != null)
+
+        if (weapon.WindUpStart != null)
         {
             EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
         }

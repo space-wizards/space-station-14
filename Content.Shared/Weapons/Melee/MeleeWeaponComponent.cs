@@ -31,13 +31,16 @@ public sealed class MeleeWeaponComponent : Component
     /// How many times we can attack per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("attackRate")]
-    public float AttackRate = 1.5f;
+    public float AttackRate = 1f;
 
     /// <summary>
     /// Are we currently holding down the mouse for an attack.
     /// Used so we can't just hold the mouse button and attack constantly.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("windingUp")]
+    /// <remarks>
+    /// Not netsynced.
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadWrite)]
     public bool Attacking = false;
 
     /// <summary>
@@ -50,15 +53,24 @@ public sealed class MeleeWeaponComponent : Component
     /// <summary>
     /// How long it takes a heavy attack to windup.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("windupTime")]
-    public TimeSpan WindupTime = TimeSpan.FromSeconds(1.5);
+    [ViewVariables]
+    public TimeSpan WindupTime => AttackRate > 0 ? TimeSpan.FromSeconds(1 / AttackRate * HeavyWindupModifier) : TimeSpan.Zero;
 
     /// <summary>
-    /// Heavy attacks get multiplied by this over the base <see cref="Damage"/> value.
+    /// Heavy attack windup time gets multiplied by this value and the light attack cooldown.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("heavyWindupModifier")]
+    public float HeavyWindupModifier = 1.5f;
+
+    /// <summary>
+    /// Light attacks get multiplied by this over the base <see cref="Damage"/> value.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("heavyDamageModifier")]
-    public FixedPoint2 HeavyDamageModifier = FixedPoint2.New(1.5);
+    public FixedPoint2 HeavyDamageModifier = FixedPoint2.New(2);
 
+    /// <summary>
+    /// Base damage for this weapon. Can be modified via heavy damage or other means.
+    /// </summary>
     [DataField("damage", required:true)]
     [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = default!;

@@ -12,8 +12,8 @@ namespace Content.Client.Weapons.Melee;
 
 public sealed class MeleeWindupOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    private readonly IEntityManager _entManager;
+    private readonly IGameTiming _timing;
     private readonly SharedTransformSystem _transform;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
@@ -21,13 +21,13 @@ public sealed class MeleeWindupOverlay : Overlay
     private readonly Texture _texture;
     private readonly ShaderInstance _shader;
 
-    public MeleeWindupOverlay()
+    public MeleeWindupOverlay(IEntityManager entManager, IGameTiming timing, IPrototypeManager protoManager, IResourceCache cache)
     {
-        IoCManager.InjectDependencies(this);
+        _entManager = entManager;
+        _timing = timing;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
-        var cache = IoCManager.Resolve<IResourceCache>();
         _texture = cache.GetTexture("/Textures/Interface/Misc/progress_bar.rsi/icon.png");
-        _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
+        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)

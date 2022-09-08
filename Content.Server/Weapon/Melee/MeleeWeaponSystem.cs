@@ -78,7 +78,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        var damage = component.Damage * GetModifier(component);
+        var damage = component.Damage * GetModifier(component, true);
         Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
@@ -173,7 +173,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             targets.Add(entity);
         }
 
-        var damage = component.Damage * GetModifier(component);
+        var damage = component.Damage * GetModifier(component, false);
         Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
