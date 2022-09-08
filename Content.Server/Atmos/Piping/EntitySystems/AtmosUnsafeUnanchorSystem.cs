@@ -33,12 +33,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             foreach (var node in nodes.Nodes.Values)
             {
-                if (node is not PipeNode pipe) continue;
+                if (node is not PipeNode pipe)
+                    continue;
 
-                if ((pipe.Air.Pressure - environment.Pressure) > 2 * Atmospherics.OneAtmosphere)
+                if (pipe.Air.Pressure - environment.Pressure > 2 * Atmospherics.OneAtmosphere)
                 {
-                    args.Delay += 1.5f;
-                    _popupSystem.PopupCursor(Loc.GetString("comp-atmos-unsafe-unanchor-warning"),
+                    args.Delay += 2f;
+                    _popupSystem.PopupEntity(Loc.GetString("comp-atmos-unsafe-unanchor-warning"), pipe.Owner,
                         Filter.Entities(args.User), PopupType.MediumCaution);
                     return; // Show the warning only once.
                 }
@@ -58,7 +59,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             foreach (var node in nodes.Nodes.Values)
             {
-                if (node is not PipeNode pipe) continue;
+                if (node is not PipeNode pipe)
+                    continue;
 
                 var difference = pipe.Air.Pressure - environment.Pressure;
                 lost += difference * environment.Volume / (environment.Temperature * Atmospherics.R);
@@ -70,7 +72,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             foreach (var node in nodes.Nodes.Values)
             {
-                if (node is not PipeNode pipe) continue;
+                if (node is not PipeNode pipe)
+                    continue;
 
                 _atmosphereSystem.Merge(buffer, pipe.Air.Remove(sharedLoss));
             }

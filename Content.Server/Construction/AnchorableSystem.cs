@@ -155,6 +155,8 @@ namespace Content.Server.Construction
             else
                 RaiseLocalEvent(uid, (UnanchorAttemptEvent) attempt, false);
 
+            anchorable.Delay += attempt.Delay;
+
             if (attempt.Cancelled)
                 return false;
 
