@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Movement now has a slight acceleration to it., type: Tweak}
-  - {message: Weightless movement has been changed. You no longer need to be near
-      a wall while on a grid and can float., type: Tweak}
-  id: 1757
-  time: '2022-06-23T02:13:22.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Fixes two bugs with following, one where ghosts would be invisible
@@ -2927,3 +2920,8 @@ Entries:
     type: Fix}
   id: 2256
   time: '2022-09-07T04:37:33.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Armors shows their armor values when examined!, type: Add}
+  id: 2257
+  time: '2022-09-08T04:11:22.0000000+00:00'
