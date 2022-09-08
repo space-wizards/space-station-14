@@ -9,6 +9,7 @@ using Content.Shared.MobState.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
@@ -112,6 +113,24 @@ public sealed class PricingSystem : EntitySystem
     }
 
     /// <summary>
+    /// Get a rough price for an entityprototype for debugging purposes.
+    /// Very limited.
+    /// </summary>
+    public double GetEstimatedPrice(EntityPrototype prototype, IComponentFactory? factory = null)
+    {
+        IoCManager.Resolve(ref factory);
+        if (prototype.Components.TryGetValue(factory.GetComponentName(typeof(StaticPriceComponent)),
+                out var staticPriceProto))
+        {
+            var staticComp = (StaticPriceComponent) staticPriceProto.Component;
+
+            return staticComp.Price;
+        }
+
+        return 0.0;
+    }
+
+    /// <summary>
     /// Appraises an entity, returning it's price.
     /// </summary>
     /// <param name="uid">The entity to appraise.</param>
@@ -123,7 +142,7 @@ public sealed class PricingSystem : EntitySystem
     public double GetPrice(EntityUid uid)
     {
         var ev = new PriceCalculationEvent();
-        RaiseLocalEvent(uid, ref ev, true);
+        RaiseLocalEvent(uid, ref ev);
 
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
 
