@@ -461,13 +461,13 @@ namespace Content.Server.Shuttles.Systems
                 _doorSystem.TryClose(doorB.Owner, doorB);
             }
 
-            if (!Deleted(dock.Owner))
+            if (LifeStage(dock.Owner) < EntityLifeStage.Terminating)
             {
                 var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;
             }
 
-            if (!Deleted(dock.DockedWith.Value))
+            if (TryComp(dock.DockedWith.Value, out MetaDataComponent? meta) && meta.EntityLifeStage < EntityLifeStage.Terminating)
             {
                 var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;

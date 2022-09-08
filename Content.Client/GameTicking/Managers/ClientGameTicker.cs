@@ -1,4 +1,5 @@
 using Content.Client.Audio;
+using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
 using Content.Client.Viewport;
@@ -109,7 +110,7 @@ namespace Content.Client.GameTicking.Managers
 
         private void JoinGame(TickerJoinGameEvent message)
         {
-            _stateManager.RequestStateChange<GameScreen>();
+            _stateManager.RequestStateChange<GameplayState>();
         }
 
         private void LobbyCountdown(TickerLobbyCountdownEvent message)

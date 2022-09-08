@@ -167,7 +167,8 @@ namespace Content.Server.Administration.Systems
             // Confirm that this person is actually allowed to send a message here.
             var personalChannel = senderSession.UserId == message.ChannelId;
             var senderAdmin = _adminManager.GetAdminData(senderSession);
-            var authorized = personalChannel || senderAdmin != null;
+            var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
+            var authorized = personalChannel || senderAHelpAdmin;
             if (!authorized)
             {
                 // Unauthorized bwoink (log?)
@@ -189,8 +190,10 @@ namespace Content.Server.Administration.Systems
 
             LogBwoink(msg);
 
-            // Admins
-            var targets = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient).ToList();
+            // Admins w/ AHelp access
+            var targets = _adminManager.ActiveAdmins
+                .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
+                .Select(p => p.ConnectedClient).ToList();
 
             // And involved player
             if (_playerManager.TryGetSessionById(message.ChannelId, out var session))

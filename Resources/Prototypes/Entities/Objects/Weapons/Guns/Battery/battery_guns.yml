@@ -35,9 +35,10 @@
   parent: BaseWeaponBattery
   abstract: true
   components:
+  - type: Item
+    size: 10
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    size: 10
     quickEquip: false
     slots:
     - Belt

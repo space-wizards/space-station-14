@@ -6,6 +6,8 @@ using Content.Server.Weapon.Ranged.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -124,6 +126,11 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (dmg != null)
                         {
+                            if (dmg.Total > FixedPoint2.Zero)
+                            {
+                                RaiseNetworkEvent(new DamageEffectEvent(result.HitEntity), Filter.Pvs(result.HitEntity, entityManager: EntityManager));
+                            }
+
                             PlayImpactSound(result.HitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
 
                             if (user != null)
@@ -292,7 +299,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         if (sprites.Count > 0)
         {
-            RaiseNetworkEvent(new HitscanEvent()
+            RaiseNetworkEvent(new HitscanEvent
             {
                 Sprites = sprites,
             }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));

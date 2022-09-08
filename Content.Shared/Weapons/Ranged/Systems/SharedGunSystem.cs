@@ -154,6 +154,14 @@ public abstract partial class SharedGunSystem : EntitySystem
         component.AvailableModes = state.AvailableSelectiveFire;
     }
 
+    public bool CanShoot(GunComponent component)
+    {
+        if (component.NextFire > Timing.CurTime)
+            return false;
+
+        return true;
+    }
+
     public GunComponent? GetGun(EntityUid entity)
     {
         if (!_combatMode.IsInCombatMode(entity))
@@ -178,6 +186,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
         Dirty(gun);
+    }
+
+    /// <summary>
+    /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
+    /// </summary>
+    public void AttemptShoot(EntityUid user, GunComponent gun, EntityCoordinates toCoordinates)
+    {
+        gun.ShootCoordinates = toCoordinates;
+        AttemptShoot(user, gun);
+        gun.ShotCounter = 0;
     }
 
     private void AttemptShoot(EntityUid user, GunComponent gun)
@@ -349,8 +367,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(gun, sprite);
-
+        var ev = new MuzzleFlashEvent(gun, sprite, user == gun);
         CreateEffect(gun, ev, user);
     }
 
