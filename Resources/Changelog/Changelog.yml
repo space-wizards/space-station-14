@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Animals can now eat raw meat with no ill effects., type: Tweak}
-  - {message: Humanoids can safely heat uncooked animal proteins to a safe temperature
-      even without a recipe., type: Add}
-  id: 1761
-  time: '2022-06-23T04:13:14.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Extra checks for Field Generators so Singuloose is harder, type: Tweak}
@@ -2925,3 +2918,12 @@ Entries:
   - {message: Default camera rotations have been inverted., type: Tweak}
   id: 2260
   time: '2022-09-08T22:06:39.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: External airlocks now show the correct direction relative to their rotation.,
+    type: Fix}
+  - {message: 'External airlock assemblies can now be rotated. This is particularly
+      useful when building shuttles, for docking: you can now have docks that face
+      in any of the four cardinal directions.', type: Tweak}
+  id: 2261
+  time: '2022-09-08T22:21:26.0000000+00:00'
