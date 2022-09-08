@@ -8,8 +8,8 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Damage.Systems;
-using Content.Server.Weapon.Melee.Components;
-using Content.Server.Weapon.Melee.Events;
+using Content.Server.Weapons.Melee.Components;
+using Content.Server.Weapons.Melee.Events;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -24,7 +24,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Weapon.Melee;
+namespace Content.Server.Weapons.Melee;
 
 public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {

@@ -1,6 +1,5 @@
 using Content.Server.CombatMode;
 using Content.Server.NPC.Components;
-using Content.Server.Weapon.Melee.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Weapons.Melee;

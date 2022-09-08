@@ -7,7 +7,7 @@ using Content.Server.Doors.Components;
 using Content.Server.Magic.Events;
 using Content.Server.Popups;
 using Content.Server.Spawners.Components;
-using Content.Server.Weapon.Ranged.Systems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;

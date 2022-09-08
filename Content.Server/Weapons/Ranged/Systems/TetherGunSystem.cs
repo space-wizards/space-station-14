@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Ghost.Components;
 using Content.Shared.Administration;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -12,7 +11,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Weapon.Ranged.Systems;
+namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed class TetherGunSystem : SharedTetherGunSystem
 {

@@ -1,7 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Shared.Weapons.Ranged.Components;
 
-namespace Content.Server.Weapon.Ranged.Systems;
+namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {

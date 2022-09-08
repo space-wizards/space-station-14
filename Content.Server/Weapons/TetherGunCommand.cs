@@ -1,10 +1,10 @@
 using Content.Server.Administration;
-using Content.Server.Weapon.Ranged.Systems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Console;
 
-namespace Content.Server.Weapons.Ranged.Commands;
+namespace Content.Server.Weapons;
 
 [AdminCommand(AdminFlags.Fun)]
 public sealed class TetherGunCommand : IConsoleCommand

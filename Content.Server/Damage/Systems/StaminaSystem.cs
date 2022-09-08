@@ -1,10 +1,9 @@
 using Content.Server.Damage.Components;
 using Content.Server.Damage.Events;
 using Content.Server.Popups;
-using Content.Server.Weapon.Melee;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
-using Content.Server.Weapon.Melee.Events;
+using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Alert;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;

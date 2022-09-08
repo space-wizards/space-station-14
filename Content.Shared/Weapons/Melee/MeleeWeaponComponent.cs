@@ -37,9 +37,6 @@ public sealed class MeleeWeaponComponent : Component
     /// Are we currently holding down the mouse for an attack.
     /// Used so we can't just hold the mouse button and attack constantly.
     /// </summary>
-    /// <remarks>
-    /// Not netsynced.
-    /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Attacking = false;
 
@@ -109,13 +106,6 @@ public sealed class MeleeWeaponComponent : Component
     public SoundSpecifier? HitSound;
 
     /// <summary>
-    /// This gets played if damage is done.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundDamage")]
-    public SoundSpecifier? DamageSound;
-
-    /// <summary>
     /// Plays if no damage is done to the target entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -126,7 +116,16 @@ public sealed class MeleeWeaponComponent : Component
 [Serializable, NetSerializable]
 public sealed class MeleeWeaponComponentState : ComponentState
 {
+    public float AttackRate;
     public bool Attacking;
     public TimeSpan NextAttack;
     public TimeSpan? WindUpStart;
+
+    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart)
+    {
+        AttackRate = attackRate;
+        Attacking = attacking;
+        NextAttack = nextAttack;
+        WindUpStart = windupStart;
+    }
 }

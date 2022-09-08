@@ -1,9 +1,8 @@
 using System.Linq;
 using Content.Server.Damage.Systems;
 using Content.Server.Projectiles.Components;
-using Content.Server.Weapon.Melee;
-using Content.Server.Weapon.Ranged.Components;
-using Content.Shared.Audio;
+using Content.Server.Weapons.Melee;
+using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Weapons.Ranged;
@@ -17,7 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
-namespace Content.Server.Weapon.Ranged.Systems;
+namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {

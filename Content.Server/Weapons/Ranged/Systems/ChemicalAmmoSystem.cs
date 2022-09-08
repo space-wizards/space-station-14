@@ -1,10 +1,10 @@
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Weapon.Ranged.Components;
+using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Weapons.Ranged.Events;
 
-namespace Content.Server.Weapon.Ranged.Systems
+namespace Content.Server.Weapons.Ranged.Systems
 {
     public sealed class ChemicalAmmoSystem : EntitySystem
     {

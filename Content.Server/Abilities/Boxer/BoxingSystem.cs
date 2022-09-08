@@ -1,5 +1,5 @@
 using Content.Server.Damage.Events;
-using Content.Server.Weapon.Melee.Events;
+using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 

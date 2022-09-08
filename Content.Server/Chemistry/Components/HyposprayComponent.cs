@@ -1,7 +1,6 @@
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Interaction.Components;
-using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -11,6 +10,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Weapons.Melee;
 
 namespace Content.Server.Chemistry.Components
 {

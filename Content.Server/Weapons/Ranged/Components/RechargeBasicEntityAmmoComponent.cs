@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Weapon.Ranged.Components;
+namespace Content.Server.Weapons.Ranged.Components;
 
 /// <summary>
 ///     Responsible for handling recharging a basic entity ammo provider over time.

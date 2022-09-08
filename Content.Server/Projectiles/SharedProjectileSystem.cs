@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
-using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
+using GunSystem = Content.Server.Weapons.Ranged.Systems.GunSystem;
 
 namespace Content.Server.Projectiles
 {

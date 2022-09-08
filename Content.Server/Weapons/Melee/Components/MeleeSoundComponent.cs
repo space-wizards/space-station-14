@@ -2,21 +2,19 @@ using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Weapon.Ranged.Components;
+namespace Content.Server.Weapons.Melee.Components;
 
 /// <summary>
-/// Plays the specified sound upon receiving damage of that type.
+/// Plays the specified sound upon receiving damage of the specified type.
 /// </summary>
 [RegisterComponent]
-public sealed class RangedDamageSoundComponent : Component
+public sealed class MeleeSoundComponent : Component
 {
-    // TODO: Limb damage changing sound type.
-
     /// <summary>
     /// Specified sounds to apply when the entity takes damage with the specified group.
     /// Will fallback to defaults if none specified.
     /// </summary>
-    [ViewVariables, DataField("soundGroups",
+    [DataField("soundGroups",
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageGroupPrototype>))]
     public Dictionary<string, SoundSpecifier>? SoundGroups;
 
@@ -24,7 +22,12 @@ public sealed class RangedDamageSoundComponent : Component
     /// Specified sounds to apply when the entity takes damage with the specified type.
     /// Will fallback to defaults if none specified.
     /// </summary>
-    [ViewVariables, DataField("soundTypes",
-         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageTypePrototype>))]
+    [DataField("soundTypes",
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageTypePrototype>))]
     public Dictionary<string, SoundSpecifier>? SoundTypes;
+
+    /// <summary>
+    /// Sound that plays if no damage is done.
+    /// </summary>
+    [DataField("noDamageSound")] public SoundSpecifier? NoDamageSound;
 }

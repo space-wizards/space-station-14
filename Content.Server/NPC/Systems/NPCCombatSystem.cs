@@ -1,5 +1,5 @@
 using Content.Server.Interaction;
-using Content.Server.Weapon.Ranged.Systems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;

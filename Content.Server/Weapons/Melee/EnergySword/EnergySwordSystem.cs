@@ -1,7 +1,7 @@
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
-using Content.Server.Weapon.Melee.EnergySword.Components;
-using Content.Server.Weapon.Melee.Events;
+using Content.Server.Weapons.Melee.EnergySword.Components;
+using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -15,7 +15,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Weapon.Melee.EnergySword
+namespace Content.Server.Weapons.Melee.EnergySword
 {
     public sealed class EnergySwordSystem : EntitySystem
     {

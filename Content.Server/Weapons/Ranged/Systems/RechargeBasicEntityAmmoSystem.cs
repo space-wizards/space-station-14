@@ -1,13 +1,12 @@
-﻿using Content.Server.Weapon.Ranged.Components;
+﻿using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Examine;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
-namespace Content.Server.Weapon.Ranged.Systems;
+namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
 {

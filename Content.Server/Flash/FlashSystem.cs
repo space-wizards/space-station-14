@@ -1,8 +1,7 @@
 using Content.Server.Flash.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Stunnable;
-using Content.Server.Weapon.Melee;
-using Content.Server.Weapon.Melee.Events;
+using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;

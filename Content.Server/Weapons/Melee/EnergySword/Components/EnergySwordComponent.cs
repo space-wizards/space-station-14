@@ -1,7 +1,7 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Weapon.Melee.EnergySword.Components
+namespace Content.Server.Weapons.Melee.EnergySword.Components
 {
     [RegisterComponent]
     internal sealed class EnergySwordComponent : Component
