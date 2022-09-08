@@ -35,6 +35,8 @@
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
   - type: LatticeCutting
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: screwdriver
@@ -71,6 +73,8 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           screwdriver: Rainbow
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: wrench
@@ -190,6 +194,8 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: StaticPrice
+    price: 60
 
 - type: entity
   name: power drill

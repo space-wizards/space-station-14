@@ -9,6 +9,8 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
+    - type: StaticPrice
+      price: 100
 
 # Wallmount Substation
 - type: entity
@@ -21,7 +23,7 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
-      
+
 # Wallmount Generator
 - type: entity
   id: WallmountGeneratorElectronics
@@ -33,7 +35,7 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
-      
+
 # APU
 - type: entity
   id: WallmountGeneratorAPUElectronics

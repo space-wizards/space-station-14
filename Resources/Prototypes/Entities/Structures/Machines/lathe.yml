@@ -85,6 +85,8 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+  - type: StaticPrice
+    price: 800
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
