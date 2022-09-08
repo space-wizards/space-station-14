@@ -184,6 +184,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
 
+        if (mind.CurrentJob != null)
+            startingBalance -= mind.CurrentJob.Prototype.DifficultyAdjustment;
+
         if (!_uplink.AddUplink(mind.OwnedEntity!.Value, startingBalance))
             return false;
 

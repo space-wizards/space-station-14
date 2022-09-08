@@ -4,6 +4,7 @@
   playTimeTracker: JobLawyer
   startingGear: LawyerGear
   icon: "Lawyer"
+  difficultyAdjustment: 2 #Starting sec access and radio
   supervisors: job-supervisors-hop
   access:
   - Service

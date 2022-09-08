@@ -9,6 +9,7 @@
   startingGear: StationEngineerGear
   icon: "StationEngineer"
   supervisors: job-supervisors-ce
+  difficultyAdjustment: 3 # The classic ideal traitor role
   access:
   - Maintenance
   - Engineering

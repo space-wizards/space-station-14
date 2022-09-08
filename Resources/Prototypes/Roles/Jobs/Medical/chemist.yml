@@ -9,6 +9,7 @@
   startingGear: ChemistGear
   icon: "Chemist"
   supervisors: job-supervisors-cmo
+  difficultyAdjustment: 2 # Chem access
   access:
   - Medical
   - Chemistry
