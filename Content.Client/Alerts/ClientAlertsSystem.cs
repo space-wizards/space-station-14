@@ -95,9 +95,6 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
     private void OnPlayerDetached(EntityUid uid, AlertsComponent component, PlayerDetachedEvent args)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
-            return;
-
         ClearAlerts?.Invoke(this, EventArgs.Empty);
     }
 
