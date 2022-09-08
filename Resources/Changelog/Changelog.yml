@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Fixes two bugs with following, one where ghosts would be invisible
-      if following something inside a container and one where ghosts would rotate
-      with the followed entity.', type: Fix}
-  id: 1758
-  time: '2022-06-23T02:36:30.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Extended is no longer in the game mode voting pool., type: Fix}
@@ -2925,3 +2918,9 @@ Entries:
   - {message: Armors shows their armor values when examined!, type: Add}
   id: 2257
   time: '2022-09-08T04:11:22.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: 'You can examine hardsuits, magboots, etc to find out how much your
+      speed is decreased from them.', type: Add}
+  id: 2258
+  time: '2022-09-08T11:09:34.0000000+00:00'
