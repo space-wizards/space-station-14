@@ -702,3 +702,21 @@
       damage:
         types:
           Blunt: 0
+
+- type: entity
+  parent: BasePlushie
+  id: ToyAmongPequeno
+  name: among pequeno
+  description: sus!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    netsync: false
+    layers:
+    - state: among-base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: among-visor
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          amoug-base: Rainbow
