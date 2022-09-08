@@ -719,4 +719,4 @@
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
-          amoug-base: Rainbow
+          among-base: Sixteen
