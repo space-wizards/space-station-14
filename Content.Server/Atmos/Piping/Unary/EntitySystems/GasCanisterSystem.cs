@@ -38,6 +38,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasCanisterComponent, EntInsertedIntoContainerMessage>(OnCanisterContainerInserted);
             SubscribeLocalEvent<GasCanisterComponent, EntRemovedFromContainerMessage>(OnCanisterContainerRemoved);
             SubscribeLocalEvent<GasCanisterComponent, PriceCalculationEvent>(CalculateCanisterPrice);
+            SubscribeLocalEvent<GasCanisterComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterHoldingTankEjectMessage>(OnHoldingTankEjectMessage);
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleasePressureMessage>(OnCanisterChangeReleasePressure);
@@ -313,6 +314,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 purity = maxComponent / totalMoles;
             }
             args.Price += basePrice * purity;
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnAnalyzed(EntityUid uid, GasCanisterComponent component, GasAnalyzerScanEvent args)
+        {
+            args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
         }
     }
 }
