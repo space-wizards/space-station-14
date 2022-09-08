@@ -30,9 +30,11 @@ public sealed class UploadFile : IConsoleCommand
             return;
         }
 
+        var path = new ResourcePath(args[0]).ToRelativePath();
+
         var dialog = IoCManager.Resolve<IFileDialogManager>();
 
-        var filters = new FileDialogFilters(new FileDialogFilters.Group("*"));
+        var filters = new FileDialogFilters(new FileDialogFilters.Group(path.Extension));
         await using var file = await dialog.OpenFile(filters);
 
         if (file == null)
@@ -54,7 +56,7 @@ public sealed class UploadFile : IConsoleCommand
         var netManager = IoCManager.Resolve<INetManager>();
         var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
 
-        msg.RelativePath = new ResourcePath(args[0]).ToRelativePath();
+        msg.RelativePath = path;
         msg.Data = data;
 
         netManager.ClientSendMessage(msg);
