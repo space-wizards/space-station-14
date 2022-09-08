@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Slow on damage now actually works properly., type: Fix}
-  id: 1760
-  time: '2022-06-23T02:42:55.0000000+00:00'
 - author: Rane
   changes:
   - {message: Animals can now eat raw meat with no ill effects., type: Tweak}
@@ -2925,3 +2920,8 @@ Entries:
       now be used to analyze atmospheric equipment, type: Tweak}
   id: 2259
   time: '2022-09-08T14:22:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Default camera rotations have been inverted., type: Tweak}
+  id: 2260
+  time: '2022-09-08T22:06:39.0000000+00:00'
