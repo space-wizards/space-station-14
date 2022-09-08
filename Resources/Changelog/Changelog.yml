@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Some drugs now cause a visual effect when metabolised., type: Add}
-  id: 1763
-  time: '2022-06-23T04:33:07.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Vending machines now have a chance to drop their contents when notably
@@ -2928,3 +2923,10 @@ Entries:
       for their damage values.', type: Add}
   id: 2262
   time: '2022-09-08T23:08:14.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'We have surgically implanted tiny bio-engineered sensors into your
+      little mouths so that you can get more out of what you eat! In other words,
+      we have given you taste buds! The power of surgery and bioprinting!', type: Add}
+  id: 2263
+  time: '2022-09-08T23:14:49.0000000+00:00'
