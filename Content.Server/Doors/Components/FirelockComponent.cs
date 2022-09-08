@@ -1,103 +1,35 @@
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Doors.Systems;
 using Content.Shared.Doors.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Doors.Components
 {
     /// <summary>
-    /// Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying,
-    /// and not being openable on open-hand click.
+    /// Companion component to <see cref="DoorComponent"/> that handles firelock-specific behavior, including
+    /// auto-closing on depressurization, air/fire alarm interactions, and preventing normal door functions when
+    /// retaining pressure..
     /// </summary>
     [RegisterComponent]
     public sealed class FirelockComponent : Component
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
         /// </summary>
         /// <returns></returns>
-        [DataField("lockedPryTimeModifier")]
+        [DataField("lockedPryTimeModifier"), ViewVariables(VVAccess.ReadWrite)]
         public float LockedPryTimeModifier = 1.5f;
 
         [DataField("autocloseDelay")] public TimeSpan AutocloseDelay = TimeSpan.FromSeconds(3f);
 
-        public bool EmergencyPressureStop()
-        {
-            var doorSys = EntitySystem.Get<DoorSystem>();
-            if (_entMan.TryGetComponent<DoorComponent>(Owner, out var door) &&
-                door.State == DoorState.Open &&
-                doorSys.CanClose(Owner, door))
-            {
-                doorSys.StartClosing(Owner, door);
+        /// <summary>
+        /// Maximum pressure difference before the firelock will refuse to open, in kPa.
+        /// </summary>
+        [DataField("pressureThreshold"), ViewVariables(VVAccess.ReadWrite)]
+        public float PressureThreshold = 20;
 
-                // Door system also sets airtight, but only after a delay. We want it to be immediate.
-                if (_entMan.TryGetComponent(Owner, out AirtightComponent? airtight))
-                {
-                    EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
-                }
-                return true;
-            }
-            return false;
-        }
-
-        public bool IsHoldingPressure(float threshold = 20)
-        {
-            var transform = _entMan.GetComponent<TransformComponent>(Owner);
-
-            if (transform.GridUid is not {} gridUid)
-                return false;
-
-            var atmosphereSystem = _entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-            var transformSystem = _entMan.EntitySysManager.GetEntitySystem<TransformSystem>();
-
-            var position = transformSystem.GetGridOrMapTilePosition(Owner, transform);
-
-            var minMoles = float.MaxValue;
-            var maxMoles = 0f;
-
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(gridUid, position))
-            {
-                var moles = adjacent.TotalMoles;
-                if (moles < minMoles)
-                    minMoles = moles;
-                if (moles > maxMoles)
-                    maxMoles = moles;
-            }
-
-            return (maxMoles - minMoles) > threshold;
-        }
-
-        public bool IsHoldingFire()
-        {
-            var atmosphereSystem = _entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-            var transformSystem = _entMan.EntitySysManager.GetEntitySystem<TransformSystem>();
-
-            var transform = _entMan.GetComponent<TransformComponent>(Owner);
-            var position = transformSystem.GetGridOrMapTilePosition(Owner, transform);
-
-            // No grid, no fun.
-            if (transform.GridUid is not {} gridUid)
-                return false;
-
-            if (atmosphereSystem.GetTileMixture(gridUid, null, position) == null)
-                return false;
-
-            if (atmosphereSystem.IsHotspotActive(gridUid, position))
-                return true;
-
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(gridUid, position))
-            {
-                if (atmosphereSystem.IsHotspotActive(gridUid, adjacent))
-                    return true;
-            }
-
-            return false;
-        }
+        /// <summary>
+        /// If true, and if this door has an <see cref="AtmosAlarmableComponent"/>, then it will only auto-close if the
+        /// alarm is set to danger.
+        /// </summary>
+        [DataField("alarmAutoClose"), ViewVariables(VVAccess.ReadWrite)]
+        public bool AlarmAutoClose = true;
     }
 }

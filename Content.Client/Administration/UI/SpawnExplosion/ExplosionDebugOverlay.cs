@@ -68,7 +68,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
             var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
-            gridBounds = invMatrix.TransformBox(args.WorldBounds);
+            gridBounds = invMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             DrawText(handle, gridBounds, matrix, tileSets, grid.TileSize);
         }
 
@@ -136,7 +136,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
             var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
-            gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
+            gridBounds = invWorldMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             handle.SetTransform(worldMatrix);
             DrawTiles(handle, gridBounds, tileSets, SpaceTileSize);
         }
@@ -144,7 +144,7 @@ public sealed class ExplosionDebugOverlay : Overlay
         if (SpaceTiles == null)
             return;
 
-        gridBounds = Matrix3.Invert(SpaceMatrix).TransformBox(args.WorldBounds);
+        gridBounds = Matrix3.Invert(SpaceMatrix).TransformBox(args.WorldBounds).Enlarged(2);
         handle.SetTransform(SpaceMatrix);
 
         DrawTiles(handle, gridBounds, SpaceTiles, SpaceTileSize);

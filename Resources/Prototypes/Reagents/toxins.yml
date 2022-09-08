@@ -441,3 +441,18 @@
         damage:
           types:
             Poison: 6
+
+- type: reagent
+  id: Pax
+  name: reagent-name-pax
+  desc: reagent-desc-pax
+  physicalDesc: reagent-physical-desc-soothing
+  color: "#AAAAAA"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        refresh: false
+        type: Add

@@ -1186,6 +1186,18 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
 
         /*
+         * Fire alarm
+         */
+
+        /// <summary>
+        ///     If fire alarms should have all access, or if activating/resetting these
+        ///     should be restricted to what is dictated on a player's access card.
+        ///     Defaults to true.
+        /// </summary>
+        public static readonly CVarDef<bool> FireAlarmAllAccess =
+            CVarDef.Create("firealarm.allaccess", true, CVar.SERVERONLY);
+
+        /*
          * PLAYTIME
          */
 

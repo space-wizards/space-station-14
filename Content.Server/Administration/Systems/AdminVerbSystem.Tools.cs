@@ -1,4 +1,3 @@
-﻿
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Commands;
@@ -376,11 +375,11 @@ public sealed partial class AdminVerbSystem
                 Text = "Send to test arena",
                 Category = VerbCategory.Tricks,
                 IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
+
                 Act = () =>
                 {
-                    var (_, arenaGrid) = _adminTestArenaSystem.AssertArenaLoaded(player);
-
-                    Transform(args.Target).Coordinates = new EntityCoordinates(arenaGrid, Vector2.One);
+                    var (mapUid, gridUid) = _adminTestArenaSystem.AssertArenaLoaded(player);
+                    Transform(args.Target).Coordinates = new EntityCoordinates(gridUid ?? mapUid, Vector2.One);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
