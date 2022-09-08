@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Extra checks for Field Generators so Singuloose is harder, type: Tweak}
-  id: 1762
-  time: '2022-06-23T04:27:50.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Some drugs now cause a visual effect when metabolised., type: Add}
@@ -2927,3 +2922,9 @@ Entries:
       in any of the four cardinal directions.', type: Tweak}
   id: 2261
   time: '2022-09-08T22:21:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Hitscan guns, gun cartridges, and melee weapons are now examinable
+      for their damage values.', type: Add}
+  id: 2262
+  time: '2022-09-08T23:08:14.0000000+00:00'
