@@ -1,15 +1,14 @@
 using Content.Client.Eui;
-using Content.Client.UserInterface;
 using Content.Shared.Eui;
-using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.UserInterface;
 
-namespace Content.Client.Weapons.Melee;
+namespace Content.Client.UserInterface;
 
-public sealed class MeleeWeaponEui : BaseEui
+public sealed class StatValuesEui : BaseEui
 {
     private readonly StatsWindow _window;
 
-    public MeleeWeaponEui()
+    public StatValuesEui()
     {
         _window = new StatsWindow();
         _window.Title = "Melee stats";
@@ -17,11 +16,11 @@ public sealed class MeleeWeaponEui : BaseEui
         _window.OnClose += Closed;
     }
 
-    public override void HandleState(EuiStateBase state)
+    public override void HandleMessage(EuiMessageBase msg)
     {
-        base.HandleState(state);
+        base.HandleMessage(msg);
 
-        if (state is not MeleeValuesEuiState eui)
+        if (msg is not StatValuesEuiMessage eui)
             return;
 
         _window.UpdateValues(eui.Headers, eui.Values);
