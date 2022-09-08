@@ -26,6 +26,9 @@ public sealed class MeleeWeaponEui : BaseEui
 
             var comp = (MeleeWeaponComponent) meleeComp.Component;
 
+            // TODO: Wielded damage
+            // TODO: Esword damage
+
             values.Add(new[]
             {
                 proto.ID,
