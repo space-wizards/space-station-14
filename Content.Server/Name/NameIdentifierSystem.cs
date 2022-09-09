@@ -3,7 +3,7 @@ using Content.Shared.NameIdentifier;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.NameIdentifier;
+namespace Content.Server.Name;
 
 /// <summary>
 ///     Handles unique name identifiers for entities e.g. `monkey (MK-912)`

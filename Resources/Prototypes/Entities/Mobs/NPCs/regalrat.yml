@@ -111,6 +111,10 @@
     - BleedersBite
     - Plague
     - TongueTwister
+  - type: RandomName
+    segments:
+    - RegalRatNameKingdom
+    - RegalRatNameTitle
   - type: MobPrice
     price: 2500 # rat wealth
 

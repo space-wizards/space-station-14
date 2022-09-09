@@ -1,7 +1,7 @@
 ﻿using Content.Shared.NameIdentifier;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.NameIdentifier;
+namespace Content.Server.Name;
 
 [RegisterComponent]
 public sealed class NameIdentifierComponent : Component
