@@ -29,6 +29,8 @@
     steps: 5
     zeroVisible: false
   - type: Appearance
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   id: BaseWeaponBatterySmall

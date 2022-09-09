@@ -110,6 +110,8 @@
   - type: Construction
     graph: Windoor
     node: windoor
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: BaseSecureWindoor

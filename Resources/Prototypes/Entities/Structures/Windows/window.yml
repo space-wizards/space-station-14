@@ -85,7 +85,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 0.5
+    price: 100
 
 - type: entity
   id: WindowDirectional
