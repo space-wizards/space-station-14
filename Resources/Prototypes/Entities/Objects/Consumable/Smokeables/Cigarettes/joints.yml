@@ -28,8 +28,8 @@
       smokable:
         maxVol: 20
         reagents:
-        - ReagentId: THC
-          Quantity: 10
+          - ReagentId: THC
+            Quantity: 10
 
 - type: entity
   id: Blunt
@@ -37,8 +37,6 @@
   name: blunt
   description: A roll of dried plant matter wrapped in a dried tobacco leaf.
   components:
-  - type: Smokable
-    inhaleAmount: 0.075 # To account for the extra reagents
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi
     netsync: false
@@ -63,7 +61,5 @@
       smokable:
         maxVol: 20
         reagents:
-        - ReagentId: THC
-          Quantity: 10
-        - ReagentId: Nicotine # Blunts are wrapped in a tobacco leaf
-          Quantity: 5
+          - ReagentId: THC
+            Quantity: 10
