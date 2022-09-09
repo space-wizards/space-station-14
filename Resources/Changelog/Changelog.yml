@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Vending machines now have a chance to drop their contents when notably
-      abused or destroyed., type: Add}
-  - {message: Sentient Vending Machines can now throw their stock., type: Add}
-  id: 1764
-  time: '2022-06-23T04:52:28.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Cargo pallets no longer y-fight., type: Fix}
@@ -2930,3 +2923,9 @@ Entries:
       we have given you taste buds! The power of surgery and bioprinting!', type: Add}
   id: 2263
   time: '2022-09-08T23:14:49.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Only ghosts can see warp point information while examining nuke disk.,
+    type: Fix}
+  id: 2264
+  time: '2022-09-09T03:42:46.0000000+00:00'
