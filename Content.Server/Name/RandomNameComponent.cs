@@ -2,7 +2,7 @@
 
 /// <summary>
 /// This is used for generating a random name for an entity
-/// on Init based on a list of words and dataset prototypes.
+/// on mapInit based on a list of words and dataset prototypes.
 /// </summary>
 [RegisterComponent]
 public sealed class RandomNameComponent : Component

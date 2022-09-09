@@ -16,7 +16,7 @@ public sealed class RandomNameSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<RandomNameComponent, ComponentInit>((u,c,_) => GenerateName(u,c));
+        SubscribeLocalEvent<RandomNameComponent, MapInitEvent>((u,c,_) => GenerateName(u,c));
     }
 
     public void GenerateName(EntityUid uid, RandomNameComponent component)
