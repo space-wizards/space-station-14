@@ -243,7 +243,7 @@ namespace Content.Server.Wieldable
             if (args.Handled)
                 return;
 
-            args.ModifiersList.Add(component.Modifiers);
+            args.BonusDamage += component.BonusDamage;
         }
     }
 

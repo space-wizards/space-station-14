@@ -58,9 +58,17 @@ namespace Content.Server.Weapon.Melee
             if (!args.CanInteract || !args.CanAccess)
                 return;
 
+            var simulatedHitEvent = new MeleeHitEvent(new List<EntityUid>(), args.User, component.Damage);
+            RaiseLocalEvent(uid, simulatedHitEvent, false);
+
             var damageSpec = GetDamage(component);
 
             if (damageSpec == null)
+                damageSpec = new DamageSpecifier();
+
+            damageSpec += simulatedHitEvent.BonusDamage;
+
+            if (damageSpec.Total == FixedPoint2.Zero)
                 return;
 
             var verb = new ExamineVerb()
