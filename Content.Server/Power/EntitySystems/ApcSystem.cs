@@ -44,7 +44,6 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcToolFinishedEvent>(OnToolFinished);
             SubscribeLocalEvent<ApcComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ApcComponent, ExaminedEvent>(OnExamine);
-            
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
