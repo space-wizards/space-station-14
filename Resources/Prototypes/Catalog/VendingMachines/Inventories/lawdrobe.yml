@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: LawDrobeInventory
-  name: LawDrobe
-  spriteName: lawdrobe
   startingInventory:
     ClothingUniformJumpsuitLawyerBlue: 1
     ClothingUniformJumpsuitLawyerPurple: 1

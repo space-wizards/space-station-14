@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
@@ -24,6 +25,41 @@ namespace Content.Shared.Pulling
             base.Initialize();
 
             SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<SharedPullableComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<SharedPullableComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnGetState(EntityUid uid, SharedPullableComponent component, ref ComponentGetState args)
+        {
+            args.State = new PullableComponentState(component.Puller);
+        }
+
+        private void OnHandleState(EntityUid uid, SharedPullableComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not PullableComponentState state)
+                return;
+
+            if (!state.Puller.HasValue)
+            {
+                ForceDisconnectPullable(component);
+                return;
+            }
+
+            if (component.Puller == state.Puller)
+            {
+                // don't disconnect and reconnect a puller for no reason
+                return;
+            }
+
+            if (!TryComp<SharedPullerComponent?>(state.Puller.Value, out var comp))
+            {
+                Logger.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(state.Puller.Value)}");
+                // ensure it disconnects from any different puller, still
+                ForceDisconnectPullable(component);
+                return;
+            }
+
+            ForceRelationship(comp, component);
         }
 
         private void OnShutdown(EntityUid uid, SharedPullableComponent component, ComponentShutdown args)

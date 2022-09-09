@@ -66,7 +66,6 @@ public sealed class IdExaminableSystem : EntitySystem
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
-                ("originalOwnerName", id.OriginalEntityName),
                 ("jobSuffix", jobSuffix))
             : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                 ("fullName", id.FullName),

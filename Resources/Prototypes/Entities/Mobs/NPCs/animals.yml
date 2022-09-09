@@ -139,10 +139,8 @@
         Piercing: 1
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
-    - Idle
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -665,9 +663,8 @@
         Blunt: 10
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -1147,9 +1144,8 @@
     baseSprintSpeed : 7
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - Syndicate
@@ -1232,13 +1228,10 @@
     states:
       Alive:
         Base: snake
-  - type: Appearance
-    visuals:
-    - type: RotationVisualizer
-# It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
-     # looks stupid, Rotation visualizer for now
-     # dead: dead
-     # crit: dead
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1315,10 +1308,8 @@
         - Xeno
     - type: InputMover
     - type: MobMover
-    - type: UtilityNPC
-      behaviorSets:
-        - Idle
-        - UnarmedAttackHostiles
+    - type: HTN
+      rootTask: SimpleHostileCompound
     - type: GhostTakeoverAvailable
       makeSentient: true
       name: ghost-role-information-giant-spider-name

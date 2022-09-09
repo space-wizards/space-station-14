@@ -17,7 +17,6 @@ namespace Content.Server.Atmos.Miasma
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-
         [Dependency] private readonly IRobustRandom _random = default!;
 
         /// System Variables

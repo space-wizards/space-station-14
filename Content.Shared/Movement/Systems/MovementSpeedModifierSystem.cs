@@ -51,6 +51,17 @@ namespace Content.Shared.Movement.Systems
             Dirty(move);
         }
 
+        public void ChangeBaseSpeed(EntityUid uid, float baseWalkSpeed, float baseSprintSpeed, float acceleration, MovementSpeedModifierComponent? move = null)
+        {
+            if (!Resolve(uid, ref move, false))
+                return;
+
+            move.BaseWalkSpeed = baseWalkSpeed;
+            move.BaseSprintSpeed = baseSprintSpeed;
+            move.Acceleration = acceleration;
+            Dirty(move);
+        }
+
         [Serializable, NetSerializable]
         private sealed class MovementSpeedModifierComponentState : ComponentState
         {

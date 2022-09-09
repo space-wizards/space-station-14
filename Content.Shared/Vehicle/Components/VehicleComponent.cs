@@ -50,7 +50,7 @@ namespace Content.Shared.Vehicle.Components
         {
             UseDelay = TimeSpan.FromSeconds(3.4),
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Objects/Fun/bikehorn.rsi/icon.png")),
-            Name = "action-name-honk",
+            DisplayName = "action-name-honk",
             Description = "action-desc-honk",
             Event = new HonkActionEvent(),
         };

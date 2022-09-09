@@ -1,8 +1,5 @@
 - type: vendingMachineInventory
   id: MegaSeedServitorInventory
-  name: MegaSeed Servitor
-  animationDuration: 1.3
-  spriteName: seeds
   startingInventory:
     AloeSeeds: 3
     AmbrosiaVulgarisSeeds: 3

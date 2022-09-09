@@ -10,6 +10,7 @@
   components:
   - type: Sprite # TODO: add sprite for maintenance panel open
     sprite: Structures/Power/substation.rsi
+    snapCardinals: true
     layers:
     - state: substation
     - state: screen

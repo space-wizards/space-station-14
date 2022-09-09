@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Examine;
+using Content.Client.Gameplay;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
@@ -156,7 +157,7 @@ namespace Content.Client.ContextMenu.UI
             if (args.State != BoundKeyState.Down)
                 return false;
 
-            if (_stateManager.CurrentState is not GameScreenBase)
+            if (_stateManager.CurrentState is not GameplayStateBase)
                 return false;
 
             var coords = args.Coordinates.ToMap(_entityManager);

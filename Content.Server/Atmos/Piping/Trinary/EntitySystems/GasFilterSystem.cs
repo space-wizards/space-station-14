@@ -34,6 +34,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceUpdateEvent>(OnFilterUpdated);
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceDisabledEvent>(OnFilterLeaveAtmosphere);
             SubscribeLocalEvent<GasFilterComponent, InteractHandEvent>(OnFilterInteractHand);
+            SubscribeLocalEvent<GasFilterComponent, GasAnalyzerScanEvent>(OnFilterAnalyzed);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
@@ -158,6 +159,30 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 DirtyUI(uid, filter);
             }
 
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnFilterAnalyzed(EntityUid uid, GasFilterComponent component, GasAnalyzerScanEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            var gasMixDict = new Dictionary<string, GasMixture?>();
+
+            nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet);
+            nodeContainer.TryGetNode(component.FilterName, out PipeNode? filterNode);
+
+            if(inlet != null)
+                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-inlet"), inlet.Air);
+            if(filterNode != null)
+                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-filter"), filterNode.Air);
+            if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
+                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outlet.Air);
+
+            args.GasMixtures = gasMixDict;
+            args.DeviceFlipped = inlet != null && filterNode != null && inlet.CurrentPipeDirection.ToDirection() == filterNode.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
         }
     }
 }

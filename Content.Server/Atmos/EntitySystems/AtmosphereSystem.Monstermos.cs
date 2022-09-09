@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Database;
 using Robust.Shared.Map;
@@ -10,6 +11,8 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
+        [Dependency] private readonly FirelockSystem _firelockSystem = default!;
+
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
         private readonly TileAtmosphere?[] _equalizeTiles = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit];
@@ -502,7 +505,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!TryComp(entity, out FirelockComponent? firelock))
                     continue;
 
-                reconsiderAdjacent |= firelock.EmergencyPressureStop();
+                reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
 
             foreach (var entity in mapGrid.GetAnchoredEntities(other.GridIndices))
@@ -510,7 +513,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!TryComp(entity, out FirelockComponent? firelock))
                     continue;
 
-                reconsiderAdjacent |= firelock.EmergencyPressureStop();
+                reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
 
             if (!reconsiderAdjacent)

@@ -9,6 +9,7 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner
     netsync: false
+    noRot: true
   - type: Transform
     noRot: true
   - type: Fixtures

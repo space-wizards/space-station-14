@@ -29,9 +29,6 @@ namespace Content.Server.Access.Systems
 
         private void OnMapInit(EntityUid uid, IdCardComponent id, MapInitEvent args)
         {
-            // On one hand, these prototypes should default to having the correct name. On the other hand, id cards are
-            // rarely ever spawned in on their own without an owner, so this is fine.
-            id.OriginalEntityName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
             UpdateEntityName(uid, id);
         }
 
@@ -80,21 +77,32 @@ namespace Content.Server.Access.Systems
         /// <remarks>
         /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
         /// </remarks>
-        public bool TryChangeJobTitle(EntityUid uid, string jobTitle, IdCardComponent? id = null, EntityUid? player = null)
+        public bool TryChangeJobTitle(EntityUid uid, string? jobTitle, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
                 return false;
 
-            if (jobTitle.Length > SharedIdCardConsoleComponent.MaxJobTitleLength)
-                jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
+            if (!string.IsNullOrWhiteSpace(jobTitle))
+            {
+                jobTitle = jobTitle.Trim();
+
+                if (jobTitle.Length > SharedIdCardConsoleComponent.MaxJobTitleLength)
+                    jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
+            }
+            else
+            {
+                jobTitle = null;
+            }
 
             id.JobTitle = jobTitle;
             Dirty(id);
             UpdateEntityName(uid, id);
 
             if (player != null)
+            {
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(id.Owner):entity} to {jobTitle} ");
+                    $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(id.Owner):entity} to {jobTitle} ");
+            }
             return true;
         }
 
@@ -105,21 +113,31 @@ namespace Content.Server.Access.Systems
         /// <remarks>
         /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
         /// </remarks>
-        public bool TryChangeFullName(EntityUid uid, string fullName, IdCardComponent? id = null, EntityUid? player = null)
+        public bool TryChangeFullName(EntityUid uid, string? fullName, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
                 return false;
 
-            if (fullName.Length > SharedIdCardConsoleComponent.MaxFullNameLength)
-                fullName = fullName[..SharedIdCardConsoleComponent.MaxFullNameLength];
+            if (!string.IsNullOrWhiteSpace(fullName))
+            {
+                fullName = fullName.Trim();
+                if (fullName.Length > SharedIdCardConsoleComponent.MaxFullNameLength)
+                    fullName = fullName[..SharedIdCardConsoleComponent.MaxFullNameLength];
+            }
+            else
+            {
+                fullName = null;
+            }
 
             id.FullName = fullName;
             Dirty(id);
             UpdateEntityName(uid, id);
 
             if (player != null)
+            {
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(id.Owner):entity} to {fullName} ");
+                    $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(id.Owner):entity} to {fullName} ");
+            }
             return true;
         }
 
@@ -135,17 +153,10 @@ namespace Content.Server.Access.Systems
             if (!Resolve(uid, ref id))
                 return;
 
-            if (string.IsNullOrWhiteSpace(id.FullName) && string.IsNullOrWhiteSpace(id.JobTitle))
-            {
-                EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalEntityName;
-                return;
-            }
-
             var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
 
             var val = string.IsNullOrWhiteSpace(id.FullName)
                 ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
-                    ("originalOwnerName", id.OriginalEntityName),
                     ("jobSuffix", jobSuffix))
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                     ("fullName", id.FullName),

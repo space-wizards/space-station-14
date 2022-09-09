@@ -23,6 +23,9 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -167,7 +170,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
-        appearance.SetData(DoorVisuals.State, door.State);
+        _appearance.SetData(uid, DoorVisuals.State, door.State);
     }
     #endregion
 
@@ -199,7 +202,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SetState(uid, DoorState.Denying, door);
 
         if (door.DenySound != null)
-            PlaySound(uid, door.DenySound.GetSound(), AudioParams.Default.WithVolume(-3), user, predicted);
+            PlaySound(uid, door.DenySound, AudioParams.Default.WithVolume(-3), user, predicted);
     }
 
     public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -265,14 +268,14 @@ public abstract class SharedDoorSystem : EntitySystem
         SetState(uid, DoorState.Opening, door);
 
         if (door.OpenSound != null)
-            PlaySound(uid, door.OpenSound.GetSound(), AudioParams.Default.WithVolume(-5), user, predicted);
+            PlaySound(uid, door.OpenSound, AudioParams.Default.WithVolume(-5), user, predicted);
 
         // I'm not sure what the intent here is/was? It plays a sound if the user is opening a door with a hands
         // component, but no actual hands!? What!? Is this the sound of them head-butting the door to get it to open??
         // I'm 99% sure something is wrong here, but I kind of want to keep it this way.
 
         if (user != null && TryComp(user.Value, out SharedHandsComponent? hands) && hands.Hands.Count == 0)
-            PlaySound(uid, door.TryOpenDoorSound.GetSound(), AudioParams.Default.WithVolume(-2), user, predicted);
+            PlaySound(uid, door.TryOpenDoorSound, AudioParams.Default.WithVolume(-2), user, predicted);
     }
 
     /// <summary>
@@ -329,7 +332,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SetState(uid, DoorState.Closing, door);
 
         if (door.CloseSound != null)
-            PlaySound(uid, door.CloseSound.GetSound(), AudioParams.Default.WithVolume(-5), user, predicted);
+            PlaySound(uid, door.CloseSound, AudioParams.Default.WithVolume(-5), user, predicted);
     }
 
     /// <summary>
@@ -422,7 +425,8 @@ public abstract class SharedDoorSystem : EntitySystem
             yield break;
 
         // TODO SLOTH fix electro's code.
-        var doorAABB = physics.GetWorldAABB();
+        // ReSharper disable once InconsistentNaming
+        var doorAABB = _entityLookup.GetWorldAABB(uid);
 
         foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
         {
@@ -436,7 +440,7 @@ public abstract class SharedDoorSystem : EntitySystem
                 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 
-            if (otherPhysics.GetWorldAABB().IntersectPercentage(doorAABB) < IntersectPercentage)
+            if (_entityLookup.GetWorldAABB(otherPhysics.Owner).IntersectPercentage(doorAABB) < IntersectPercentage)
                 continue;
 
             yield return otherPhysics.Owner;
@@ -614,5 +618,5 @@ public abstract class SharedDoorSystem : EntitySystem
     }
     #endregion
 
-    protected abstract void PlaySound(EntityUid uid, string sound, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted);
+    protected abstract void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted);
 }

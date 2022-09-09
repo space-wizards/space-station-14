@@ -127,8 +127,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
+        bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
 
-        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize);
+        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate);
 
         // Was there an emote in the message? If so, send it.
         if (player != null && emoteStr != message && emoteStr != null)
@@ -423,11 +424,13 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false)
     {
         var newMessage = message.Trim();
         if (capitalize)
-            newMessage = SanitizeMessageCapital(source, newMessage);
+            newMessage = SanitizeMessageCapital(newMessage);
+        if (punctuate)
+            newMessage = SanitizeMessagePeriod(newMessage);
         newMessage = FormattedMessage.EscapeText(newMessage);
 
         _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
@@ -460,12 +463,22 @@ public sealed partial class ChatSystem : SharedChatSystem
             .Select(p => p.ConnectedClient);
     }
 
-    private string SanitizeMessageCapital(EntityUid source, string message)
+    private string SanitizeMessageCapital(string message)
     {
         if (string.IsNullOrEmpty(message))
             return message;
         // Capitalize first letter
         message = message[0].ToString().ToUpper() + message.Remove(0, 1);
+        return message;
+    }
+
+    private string SanitizeMessagePeriod(string message)
+    {
+        if (string.IsNullOrEmpty(message))
+            return message;
+        // Adds a period if the last character is a letter.
+        if (char.IsLetter(message[^1]))
+            message += ".";
         return message;
     }
 

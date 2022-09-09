@@ -105,9 +105,9 @@ namespace Content.Shared.Singularity
 
             singularity.Level = value;
 
-            if (EntityManager.TryGetComponent(singularity.Owner, out SharedRadiationPulseComponent? pulse))
+            if (EntityManager.TryGetComponent(singularity.Owner, out RadiationSourceComponent? source))
             {
-                pulse.RadsPerSecond = singularity.RadsPerLevel * value;
+                source.RadsPerSecond = singularity.RadsPerLevel * value;
             }
 
             if (EntityManager.TryGetComponent(singularity.Owner, out AppearanceComponent? appearance))

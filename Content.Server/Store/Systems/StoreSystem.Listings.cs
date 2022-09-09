@@ -26,7 +26,9 @@ public sealed partial class StoreSystem : EntitySystem
         var allData = new HashSet<ListingData>();
 
         foreach (var listing in allListings)
-            allData.Add(listing);
+        {
+            allData.Add((ListingData) listing.Clone());
+        }
 
         return allData;
     }
