@@ -97,7 +97,7 @@
 - type: entity
   noSpawn: true
   id: APCFrame
-  name: APC Frame
+  name: APC frame
   suffix: No electronics
   description: A control terminal for the area's electrical systems, lacking the electronics.
   placement:
