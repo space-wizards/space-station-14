@@ -40,7 +40,6 @@ namespace Content.Client.Power.APC
 
             sprite.LayerMapSet(Layers.Environment, sprite.AddLayerState("apco2-3"));
             sprite.LayerSetShader(Layers.Environment, "unshaded");
-
         }
 
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
