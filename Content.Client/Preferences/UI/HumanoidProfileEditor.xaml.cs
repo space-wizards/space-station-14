@@ -466,28 +466,39 @@ namespace Content.Client.Preferences.UI
 
             #region Traits
 
+            var traits = prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => t.Name).ToList();
+            _traitPreferences = new List<TraitPreferenceSelector>();
             _tabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
-            _traitPreferences = new List<TraitPreferenceSelector>();
-
-            foreach (var trait in prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => t.Name))
+            if (traits.Count > 0)
             {
-                var selector = new TraitPreferenceSelector(trait);
-                _traitsList.AddChild(selector);
-                _traitPreferences.Add(selector);
-
-                selector.PreferenceChanged += preference =>
+                foreach (var trait in traits)
                 {
-                    Profile = Profile?.WithTraitPreference(trait.ID, preference);
-                    IsDirty = true;
-                };
+                    var selector = new TraitPreferenceSelector(trait);
+                    _traitsList.AddChild(selector);
+                    _traitPreferences.Add(selector);
+
+                    selector.PreferenceChanged += preference =>
+                    {
+                        Profile = Profile?.WithTraitPreference(trait.ID, preference);
+                        IsDirty = true;
+                    };
+                }
+            }
+            else
+            {
+                _traitsList.AddChild(new Label
+                {
+                    Text = "No traits available :(",
+                    FontColorOverride = Color.Gray,
+                });
             }
 
             #endregion
 
             #region Save
 
-            _saveButton.OnPressed += args => { Save(); };
+            _saveButton.OnPressed += _ => { Save(); };
 
             #endregion Save
 
@@ -507,7 +518,7 @@ namespace Content.Client.Preferences.UI
             {
                 var flavorText = new FlavorText.FlavorText();
                 _tabContainer.AddChild(flavorText);
-                _tabContainer.SetTabTitle(_tabContainer.ChildCount-1, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
+                _tabContainer.SetTabTitle(_tabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
                 _flavorTextEdit = flavorText.CFlavorTextInput;
 
                 flavorText.OnFlavorTextChanged += OnFlavorTextChange;
