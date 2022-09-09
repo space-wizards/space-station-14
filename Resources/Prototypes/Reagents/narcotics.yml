@@ -127,10 +127,6 @@
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:SatiateNicotineCraving
 
 - type: reagent
   id: Impedrezene
