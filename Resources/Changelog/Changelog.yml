@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Cargo pallets no longer y-fight., type: Fix}
-  id: 1765
-  time: '2022-06-23T06:59:49.0000000+00:00'
 - author: ODJ
   changes:
   - {message: 'Added Lighthouse, a fairly dimly lit station with a lot of offices
@@ -2929,3 +2924,9 @@ Entries:
     type: Fix}
   id: 2264
   time: '2022-09-09T03:42:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Item slots (such as reagent dispensers) won't spam popups anymore.,
+    type: Fix}
+  id: 2265
+  time: '2022-09-09T14:39:22.0000000+00:00'
