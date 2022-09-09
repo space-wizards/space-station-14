@@ -12,7 +12,6 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed class GivePrototype : IGraphAction
     {
-
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Prototype { get; private set; } = string.Empty;
         [DataField("amount")]
