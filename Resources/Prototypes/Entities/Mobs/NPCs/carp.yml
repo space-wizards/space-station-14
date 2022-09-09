@@ -7,10 +7,8 @@
   components:
     - type: InputMover
     - type: MobMover
-    - type: UtilityNPC
-      behaviorSets:
-        - Idle
-        - UnarmedAttackHostiles
+    - type: HTN
+      rootTask: SimpleHostileCompound
     - type: AiFactionTag
       factions:
         - SimpleHostile
@@ -154,3 +152,5 @@
       makeSentient: true
       name: Sentient Carp
       description: Help the dragon flood the station with carps!
+    - type: HTN
+      rootTask: DragonCarpCompound

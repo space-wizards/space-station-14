@@ -15,8 +15,12 @@ gun-ballistic-cycle = Cycle
 gun-ballistic-cycled = Cycled
 gun-ballistic-cycled-empty = Cycled (empty)
 
+# CartridgeAmmo
+gun-cartridge-spent = It is [color=red]spent[/color].
+gun-cartridge-unspent = It is [color=lime]not spent[/color].
+
 # BatteryAmmoProvider
-gun-battery-examine = It has enough charge for [color={$color}]{$count} shots.
+gun-battery-examine = It has enough charge for [color={$color}]{$count}[/color] shots.
 
 # MagazineAmmoProvider
 gun-magazine-examine = It has [color={$color}]{$count}[/color] shots remaining.

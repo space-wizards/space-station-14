@@ -59,6 +59,9 @@
   id: FlashlightSeclite
   description: A robust flashlight used by security.
   components:
+  - type: Tag
+    tags:
+      - SecBeltEquip
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellHigh
