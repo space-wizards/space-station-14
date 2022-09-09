@@ -113,21 +113,30 @@ public sealed class PricingSystem : EntitySystem
     }
 
     /// <summary>
-    /// Get a rough price for an entityprototype for debugging purposes.
-    /// Very limited.
+    /// Get a rough price for an entityprototype. Does not consider contained entities.
     /// </summary>
     public double GetEstimatedPrice(EntityPrototype prototype, IComponentFactory? factory = null)
     {
         IoCManager.Resolve(ref factory);
+        var price = 0.0;
+
         if (prototype.Components.TryGetValue(factory.GetComponentName(typeof(StaticPriceComponent)),
                 out var staticPriceProto))
         {
             var staticComp = (StaticPriceComponent) staticPriceProto.Component;
 
-            return staticComp.Price;
+            price += staticComp.Price;
         }
 
-        return 0.0;
+        if (prototype.Components.TryGetValue(factory.GetComponentName(typeof(StackPriceComponent)), out var stackpriceProto) &&
+            prototype.Components.TryGetValue(factory.GetComponentName(typeof(StackComponent)), out var stackProto))
+        {
+            var stackPrice = (StackPriceComponent) stackpriceProto.Component;
+            var stack = (StackComponent) stackProto.Component;
+            price += stack.Count * stackPrice.Price;
+        }
+
+        return price;
     }
 
     /// <summary>
