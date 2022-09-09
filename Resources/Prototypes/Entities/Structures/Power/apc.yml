@@ -98,7 +98,6 @@
   noSpawn: true
   id: APCFrame
   name: APC frame
-  suffix: No electronics
   description: A control terminal for the area's electrical systems, lacking the electronics.
   placement:
     mode: SnapgridCenter
