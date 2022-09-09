@@ -2,6 +2,7 @@ using Content.Shared.Alert;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Random;
 
 namespace Content.Server.Nutrition.Components

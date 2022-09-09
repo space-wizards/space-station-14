@@ -13,6 +13,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Drunk;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -45,6 +46,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
+        SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
     private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ReactionAttemptEvent args)
@@ -214,6 +216,12 @@ public sealed class BloodstreamSystem : EntitySystem
         // Reset the accumulator properly
         if (component.AccumulatedFrametime >= component.UpdateInterval)
             component.AccumulatedFrametime = component.UpdateInterval;
+    }
+
+    private void OnRejuvenate(EntityUid uid, BloodstreamComponent component, RejuvenateEvent args)
+    {
+        TryModifyBleedAmount(uid, -component.BleedAmount, component);
+        TryModifyBloodLevel(uid, component.BloodSolution.AvailableVolume, component);
     }
 
     /// <summary>

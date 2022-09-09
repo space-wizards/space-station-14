@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
@@ -14,11 +12,9 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -56,6 +52,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollideEvent);
             SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFireEvent);
+            SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenateEvent);
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
         }
@@ -168,6 +165,11 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (tempDelta > maxTemp)
                 _fireEvents[flammable] = tempDelta;
+        }
+
+        private void OnRejuvenateEvent(EntityUid uid, FlammableComponent component, RejuvenateEvent args)
+        {
+            Extinguish(uid, component);
         }
 
         public void UpdateAppearance(EntityUid uid, FlammableComponent? flammable = null, AppearanceComponent? appearance = null)
