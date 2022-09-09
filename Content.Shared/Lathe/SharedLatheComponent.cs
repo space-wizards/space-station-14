@@ -31,5 +31,16 @@ namespace Content.Shared.Lathe
         {
             return PrototypeManager.TryIndex(id, out LatheRecipePrototype? recipe) && CanProduce(recipe, quantity);
         }
+
+
+        [DataField("idleState", required: true)]
+        public string IdleState = default!;
+
+        [DataField("runningState", required: true)]
+        public string RunningState = default!;
+
+        [ViewVariables]
+        [DataField("ignoreColor")]
+        public bool IgnoreColor;
     }
 }

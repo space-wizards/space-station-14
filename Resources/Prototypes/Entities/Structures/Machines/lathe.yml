@@ -19,9 +19,6 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-  - type: LatheVisuals
-    idleState: icon
-    runningState: building
   - type: WiresVisuals
   - type: Physics
     bodyType: Static
@@ -85,6 +82,8 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+    idleState: icon
+    runningState: building
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -107,9 +106,6 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-  - type: LatheVisuals
-    idleState: icon
-    runningState: building
   - type: WiresVisuals
   - type: Physics
     bodyType: Static
@@ -220,6 +216,8 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+    idleState: icon
+    runningState: building
 
 - type: entity
   parent: Protolathe
@@ -282,6 +280,8 @@
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/circuitprinter.ogg
+    idleState: icon
+    runningState: building
   - type: MaterialStorage
     whitelist:
       tags:
@@ -308,9 +308,6 @@
       map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: LatheVisuals
-    idleState: icon
-    runningState: icon
   - type: LatheDatabase
     static: true
     recipes:
@@ -334,6 +331,8 @@
   - type: Machine
     board: SecurityTechFabCircuitboard
   - type: Lathe
+    idleState: icon
+    runningState: icon
   - type: MaterialStorage
     whitelist:
       tags:
@@ -361,9 +360,6 @@
       map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: LatheVisuals
-    idleState: icon
-    runningState: icon
   - type: ProtolatheDatabase
     protolatherecipes:
       - HandheldHealthAnalyzer
@@ -474,6 +470,8 @@
     board: UniformPrinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/uniformprinter.ogg
+    idleState: icon
+    runningState: building
   - type: MaterialStorage
     whitelist:
       tags:
@@ -487,8 +485,6 @@
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
-    - type: LatheVisuals
-      ignoreColor: true
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
       netsync: false
@@ -521,3 +517,4 @@
         tags:
           - Ore
     - type: Lathe
+      ignoreColor: true

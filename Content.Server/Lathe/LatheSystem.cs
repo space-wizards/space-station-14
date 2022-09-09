@@ -17,7 +17,7 @@ using Robust.Server.Player;
 namespace Content.Server.Lathe
 {
     [UsedImplicitly]
-    public sealed class LatheSystem : EntitySystem
+    public sealed class LatheSystem : SharedLatheSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
