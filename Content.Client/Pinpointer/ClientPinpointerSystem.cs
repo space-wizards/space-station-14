@@ -29,6 +29,7 @@ namespace Content.Client.Pinpointer
             // we need to update this arrow in a update loop
             foreach (var uid in ActivePinpointers)
             {
+                UpdateAppearance(uid);
                 UpdateEyeDir(uid);
             }
         }
@@ -39,9 +40,6 @@ namespace Content.Client.Pinpointer
             SetActive(uid, state.IsActive, pinpointer);
             SetDirection(uid, state.DirectionToTarget, pinpointer);
             SetDistance(uid, state.DistanceToTarget, pinpointer);
-
-            UpdateAppearance(uid, pinpointer);
-            UpdateEyeDir(uid, pinpointer);
         }
 
         private void UpdateAppearance(EntityUid uid, PinpointerComponent? pinpointer = null,
