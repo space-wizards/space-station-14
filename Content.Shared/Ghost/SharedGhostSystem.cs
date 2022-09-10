@@ -50,11 +50,11 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public struct GhostWarp
     {
-        public GhostWarp(EntityUid entity, string displayName, bool localizable)
+        public GhostWarp(EntityUid entity, string displayName, bool isWarpPoint)
         {
             Entity = entity;
             DisplayName = displayName;
-            Localizable = localizable;
+            IsWarpPoint = isWarpPoint;
         }
         
         /// <summary>
@@ -69,7 +69,7 @@ namespace Content.Shared.Ghost
         /// <summary>
         /// Whether or not the display name is localizable (player names, for instance, are not)
         /// </summary>
-        public bool Localizable { get;  }
+        public bool IsWarpPoint { get;  }
     }
 
     /// <summary>

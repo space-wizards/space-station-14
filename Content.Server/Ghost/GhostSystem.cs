@@ -193,13 +193,14 @@ namespace Content.Server.Ghost
                 || HasComp<MobStateComponent>(msg.Target))
             {
                  _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
+                 return;
             }
             
             var xform = Transform(ghost.Owner);
-                        xform.Coordinates = Transform(msg.Target).Coordinates;
-                        xform.AttachToGridOrMap();
-                        if (TryComp(attached, out PhysicsComponent? physics))
-                            physics.LinearVelocity = Vector2.Zero;
+            xform.Coordinates = Transform(msg.Target).Coordinates;
+            xform.AttachToGridOrMap();
+            if (TryComp(attached, out PhysicsComponent? physics))
+                physics.LinearVelocity = Vector2.Zero;
         }
 
         private void DeleteEntity(EntityUid uid)
