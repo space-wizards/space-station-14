@@ -51517,7 +51517,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -28818.127
+  - SecondsUntilStateChange: -28836.994
     state: Opening
     type: Door
 - uid: 3729
@@ -123589,7 +123589,7 @@ entities:
   - pos: 31.5,-19.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -22331.027
+  - SecondsUntilStateChange: -22349.895
     state: Closing
     type: Door
   - canCollide: False
@@ -167998,29 +167998,6 @@ entities:
   - pos: 50.5,-45.5
     parent: 60
     type: Transform
-- uid: 21130
-  type: FoodCakeSuppermatterSlice
-  components:
-  - desc: The small yellow crystal.
-    name: supermatter shard
-    type: MetaData
-  - pos: -16.5,42.5
-    parent: 60
-    type: Transform
-  - energy: 6
-    type: PointLight
-  - shockNoises: !type:SoundCollectionSpecifier
-      collection: sparks
-    type: Electrified
-  - possibleGas:
-    - Oxygen
-    - Plasma
-    - Nitrogen
-    - CarbonDioxide
-    - Miasma
-    - NitrousOxide
-    - Frezon
-    type: ArtifactGasTrigger
 - uid: 21131
   type: SurveillanceCameraCommand
   components:
@@ -184951,12 +184928,6 @@ entities:
   type: SignAi
   components:
   - pos: -60.5,16.5
-    parent: 60
-    type: Transform
-- uid: 23380
-  type: RadiateArtifact
-  components:
-  - pos: -22.5,42.5
     parent: 60
     type: Transform
 ...
