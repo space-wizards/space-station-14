@@ -1,26 +1,4 @@
 Entries:
-- author: ODJ
-  changes:
-  - {message: 'Added Lighthouse, a fairly dimly lit station with a lot of offices
-      and dorms.', type: Add}
-  - {message: Removed fun!, type: Remove}
-  id: 1766
-  time: '2022-06-23T07:21:07.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Docking no longer requires power., type: Tweak}
-  id: 1767
-  time: '2022-06-23T07:22:11.0000000+00:00'
-- author: KIBORG04
-  changes:
-  - {message: Displaying of player characters in the round end statistics, type: Tweak}
-  id: 1768
-  time: '2022-06-23T09:32:06.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Headsets can now use department-specific radio channels., type: Add}
-  id: 1769
-  time: '2022-06-23T10:11:03.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Added a basic fireball spell, soon to be used.', type: Add}
@@ -2930,3 +2908,25 @@ Entries:
     type: Fix}
   id: 2265
   time: '2022-09-09T14:39:22.0000000+00:00'
+- author: Rolfero
+  changes:
+  - {message: 'APCs can now be properly constructed using APC electronics, as well
+      as deconstructed', type: Add}
+  id: 2266
+  time: '2022-09-10T03:27:41.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Significantly buffs food items and nerfs hunger decay., type: Tweak}
+  id: 2267
+  time: '2022-09-10T07:36:33.0000000+00:00'
+- author: LordEclipse
+  changes:
+  - {message: Quartermaster is now shown as part of command when viewed in the crew
+      manifest., type: Add}
+  id: 2268
+  time: '2022-09-10T07:58:26.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Nuclear disk pinpointer should be working again., type: Fix}
+  id: 2269
+  time: '2022-09-10T08:49:02.0000000+00:00'
