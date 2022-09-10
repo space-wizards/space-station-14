@@ -39,7 +39,7 @@
     max: 10
     count: 10
   - type: StackPrice
-    price: 50
+    price: 10
 
 - type: entity
   name: bruise pack
@@ -67,7 +67,7 @@
     max: 10
     count: 10
   - type: StackPrice
-    price: 50
+    price: 10
 
 - type: entity
   name: roll of gauze
@@ -99,7 +99,7 @@
     max: 10
     count: 10
   - type: StackPrice
-    price: 50
+    price: 10
 
 - type: entity
   id: Gauze1
