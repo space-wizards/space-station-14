@@ -39,7 +39,7 @@ namespace Content.Server.Mind.Commands
                 return;
             }
 
-            MakeSentient(entId, entityManager);
+            MakeSentient(entId, entityManager, true, true);
         }
 
         public static void MakeSentient(EntityUid uid, IEntityManager entityManager, bool allowMovement = true, bool allowSpeech = true)
