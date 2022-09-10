@@ -112,9 +112,9 @@
         maxvol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 9
         - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 3
 # Tastes like leaves, apples.
 
 - type: entity
