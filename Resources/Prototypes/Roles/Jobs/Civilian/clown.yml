@@ -2,6 +2,10 @@
   id: Clown
   name: job-name-clown
   playTimeTracker: JobClown
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 36000
   startingGear: ClownGear
   icon: "Clown"
   supervisors: job-supervisors-hop

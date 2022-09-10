@@ -2,6 +2,10 @@
   id: Botanist
   name: job-name-botanist
   playTimeTracker: JobBotanist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600
   startingGear: BotanistGear
   icon: "Botanist"
   supervisors: job-supervisors-hop

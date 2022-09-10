@@ -2,6 +2,10 @@
   id: Lawyer
   name: job-name-lawyer
   playTimeTracker: JobLawyer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 18000
   startingGear: LawyerGear
   icon: "Lawyer"
   supervisors: job-supervisors-hop

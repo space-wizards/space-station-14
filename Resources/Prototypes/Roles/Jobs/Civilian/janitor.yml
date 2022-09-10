@@ -2,6 +2,10 @@
   id: Janitor
   name: job-name-janitor
   playTimeTracker: JobJanitor
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600
   startingGear: JanitorGear
   icon: "Janitor"
   supervisors: job-supervisors-hop

@@ -2,6 +2,10 @@
   id: Mime
   name: job-name-mime
   playTimeTracker: JobMime
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 36000
   startingGear: MimeGear
   icon: "Mime"
   supervisors: job-supervisors-hop

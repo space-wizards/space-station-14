@@ -2,6 +2,10 @@
   id: Chaplain
   name: job-name-chaplain
   playTimeTracker: JobChaplain
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600
   startingGear: ChaplainGear
   icon: "Chaplain"
   supervisors: job-supervisors-hop

@@ -3,8 +3,8 @@
   name: job-name-assistant
   playTimeTracker: JobTechnicalAssistant
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
+    - !type:RoleTimeRequirement
+      role: JobPassenger
       time: 1800
       inverted: true # stop playing intern if you're good at engineering!
   startingGear: TechnicalAssistantGear

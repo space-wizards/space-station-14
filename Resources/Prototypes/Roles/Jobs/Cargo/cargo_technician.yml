@@ -2,6 +2,10 @@
   id: CargoTechnician
   name: job-name-cargotech
   playTimeTracker: JobCargoTechnician
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 1800
   startingGear: CargoTechGear
   icon: "CargoTechnician"
   supervisors: job-supervisors-hop-qm
