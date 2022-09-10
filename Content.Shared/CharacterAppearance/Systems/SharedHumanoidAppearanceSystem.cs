@@ -7,6 +7,8 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
+using Content.Shared.Species;
 
 namespace Content.Shared.CharacterAppearance.Systems
 {
@@ -70,6 +72,28 @@ namespace Content.Shared.CharacterAppearance.Systems
 
             component.Dirty();
             RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(component.Appearance, component.Sex, component.Gender, component.Species), true);
+        }
+
+        /// <summary>
+        /// Takes ID of the species prototype, returns UI-friendly name of the species.
+        /// </summary>
+        public string GetSpeciesRepresentation(string speciesId) {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            if (prototypeManager.TryIndex<SpeciesPrototype>(speciesId, out var species)) {
+                return Loc.GetString(species.Name);
+            }
+            else {
+                return Loc.GetString("humanoid-appearance-component-unkown-species");
+            }
+        }
+
+        public string GetAgeRepresentation(int age) {
+            return age switch
+            {
+                <= 30 => Loc.GetString("identity-age-young"),
+                > 30 and <= 60 => Loc.GetString("identity-age-middle-aged"),
+                > 60 => Loc.GetString("identity-age-old")
+            };
         }
 
         private void OnAppearanceGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
@@ -151,15 +175,10 @@ namespace Content.Shared.CharacterAppearance.Systems
         private void OnExamined(EntityUid uid, HumanoidAppearanceComponent component, ExaminedEvent args)
         {
             var identity = Identity.Entity(component.Owner, EntityManager);
+            var species = GetSpeciesRepresentation(component.Species).ToLower();
+            var age = GetAgeRepresentation(component.Age);
 
-            var ageString = component.Age switch
-            {
-                <= 30 => Loc.GetString("identity-age-young"),
-                > 30 and <= 60 => Loc.GetString("identity-age-middle-aged"),
-                > 60 => Loc.GetString("identity-age-old")
-            };
-
-            args.PushText(Loc.GetString("humanoid-appearance-component-examine", ("user", identity), ("age", ageString), ("species", component.Species)));
+            args.PushText(Loc.GetString("humanoid-appearance-component-examine", ("user", identity), ("age", age), ("species", species)));
         }
     }
 }
