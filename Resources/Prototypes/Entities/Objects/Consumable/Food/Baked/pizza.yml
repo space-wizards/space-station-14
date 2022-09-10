@@ -39,10 +39,10 @@
     solutions:
       food:
         # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
-        maxVol: 6
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 14
         - ReagentId: Vitamin
           Quantity: 0.8
   - type: Item
@@ -161,7 +161,7 @@
         maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 12
         - ReagentId: JuiceCarrot
           Quantity: 1
         - ReagentId: Vitamin
@@ -208,7 +208,7 @@
         maxVol: 50
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4.5
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: Omnizine
@@ -253,7 +253,7 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4.2
+          Quantity: 7.2
         - ReagentId: Vitamin
           Quantity: 0.8
         - ReagentId: DoctorsDelight
@@ -347,7 +347,7 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 0.8
         - ReagentId: Iron
@@ -370,10 +370,10 @@
     solutions:
       food:
         # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
-        maxVol: 5
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 12
         - ReagentId: Mold
           Quantity: 2
         - ReagentId: Vitamin
