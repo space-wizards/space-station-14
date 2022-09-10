@@ -61,15 +61,20 @@
   - type: ContainerContainer
     containers:
       beakerSlot: !type:ContainerSlot
+      outputSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: ItemSlots
     slots:
       beakerSlot:
-        whitelistFailPopup: chem-master-component-cannot-put-entity-message
         whitelist:
           components:
           - FitsInDispenser
+      outputSlot:
+        whitelistFailPopup: chem-master-component-cannot-put-entity-message
+        whitelist:
+          components:
+          - FitsInChemMasterOutput
   - type: SolutionContainerManager
     solutions:
       buffer: {}
