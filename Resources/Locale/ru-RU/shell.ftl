@@ -16,12 +16,13 @@ shell-must-be-attached-to-entity = Для выполнения этой кома
 shell-need-exactly-one-argument = Нужен ровно один аргумент.
 shell-wrong-arguments-number-need-specific =
     Нужно { $properAmount } { $properAmount ->
+        [one] аргумент
         [few] аргумента
-        [other] аргументов
+        *[other] аргументов
     }, было { $currentAmount } { $currentAmount ->
         [one] аргумент
         [few] аргумента
-        [other] аргументов
+        *[other] аргументов
     }.
 shell-argument-must-be-number = Аргумент должен быть числом.
 shell-argument-must-be-boolean = Аргумент должен быть boolean.
