@@ -22,3 +22,4 @@
       sprite: Objects/Devices/signaller.rsi
       state: signaller
     - type: ReleaseSignaller
+    - type: SignalTransmitter
