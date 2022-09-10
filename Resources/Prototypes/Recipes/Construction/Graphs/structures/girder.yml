@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: Girder
   start: start
   graph:
@@ -128,6 +128,9 @@
 
     - node: wall
       entity: WallSolid
+      actions:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
       edges:
         - to: girder
           completed:
