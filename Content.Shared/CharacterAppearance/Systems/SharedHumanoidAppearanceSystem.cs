@@ -1,6 +1,8 @@
 using Content.Shared.Body.Part;
+using Content.Shared.Examine;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Preferences;
+using Content.Shared.IdentityManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.GameStates;
@@ -14,6 +16,7 @@ namespace Content.Shared.CharacterAppearance.Systems
         {
             SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentGetState>(OnAppearanceGetState);
             SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentHandleState>(OnAppearanceHandleState);
+            SubscribeLocalEvent<HumanoidAppearanceComponent, ExaminedEvent>(OnExamined);
         }
 
         public void UpdateFromProfile(EntityUid uid, ICharacterProfile profile, HumanoidAppearanceComponent? appearance=null)
@@ -143,6 +146,20 @@ namespace Content.Shared.CharacterAppearance.Systems
                 Gender = gender;
                 Species = species;
             }
+        }
+
+        private void OnExamined(EntityUid uid, HumanoidAppearanceComponent component, ExaminedEvent args)
+        {
+            var identity = Identity.Entity(component.Owner, EntityManager);
+
+            var ageString = component.Age switch
+            {
+                <= 30 => Loc.GetString("identity-age-young"),
+                > 30 and <= 60 => Loc.GetString("identity-age-middle-aged"),
+                > 60 => Loc.GetString("identity-age-old")
+            };
+
+            args.PushText(Loc.GetString("humanoid-appearance-component-examine", ("user", identity), ("age", ageString), ("species", component.Species)));
         }
     }
 }
