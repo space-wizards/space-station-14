@@ -32,6 +32,7 @@ namespace Content.Server.Nutrition.EntitySystems
     public sealed class DrinkSystem : EntitySystem
     {
         [Dependency] private readonly FoodSystem _foodSystem = default!;
+        [Dependency] private readonly FlavorProfileSystem _flavorProfileSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -335,13 +336,15 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
+            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(args.User, drained);
+
             if (forceDrink)
             {
                 var targetName = Identity.Entity(uid, EntityManager);
                 var userName = Identity.Entity(args.User, EntityManager);
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-force-feed-success", ("user", userName)), uid, Filter.Entities(uid));
+                    Loc.GetString("drink-component-force-feed-success", ("user", userName), ("flavors", flavors)), uid, Filter.Entities(uid));
 
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
@@ -350,7 +353,10 @@ namespace Content.Server.Nutrition.EntitySystems
             else
             {
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.Pvs(args.User));
+                    Loc.GetString("drink-component-try-use-drink-success-slurp-taste", ("flavors", flavors)), args.User,
+                    Filter.Entities(args.User));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User));
             }
 
             SoundSystem.Play(args.Drink.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));

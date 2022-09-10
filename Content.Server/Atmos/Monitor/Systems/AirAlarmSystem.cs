@@ -299,7 +299,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
         if (args.AlarmType == AtmosAlarmType.Danger)
         {
-            SetMode(uid, addr, AirAlarmMode.Panic, true, false);
+            SetMode(uid, addr, AirAlarmMode.WideFiltering, true, false);
         }
         else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
         {
@@ -416,7 +416,7 @@ public sealed class AirAlarmSystem : EntitySystem
             case AirAlarmSetMode:
                 if (!args.Data.TryGetValue(AirAlarmSetMode, out AirAlarmMode alarmMode)) break;
 
-                SetMode(uid, args.SenderAddress, alarmMode);
+                SetMode(uid, args.SenderAddress, alarmMode, uiOnly: false);
 
                 return;
         }
