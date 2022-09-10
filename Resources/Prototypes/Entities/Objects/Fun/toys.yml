@@ -710,13 +710,15 @@
   description: sus!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
+    sprite: Objects/Fun/pequeno.rsi
     netsync: false
     layers:
-    - state: among-base
+    - state: base
       map: [ "enum.DamageStateVisualLayers.Base" ]
-    - state: among-visor
+    - state: visor
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
-          among-base: Sixteen
+          base: Sixteen
+  - type: StaticPrice
+    price: 3
