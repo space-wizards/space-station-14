@@ -110,7 +110,6 @@
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
-    popup: spike-solution-ash
   - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food

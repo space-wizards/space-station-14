@@ -1,6 +1,9 @@
 reagent-name-aluminium = aluminium
 reagent-desc-aluminium = A silver, soft, non-magnetic, and ductile metal.
 
+reagent-name-ash = ash
+reagent-desc-ash = A light grey powdery residue
+
 reagent-name-carbon = carbon
 reagent-desc-carbon = A black, crystalline solid.
 
