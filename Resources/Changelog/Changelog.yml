@@ -1,11 +1,4 @@
 Entries:
-- author: ODJ
-  changes:
-  - {message: 'Added Lighthouse, a fairly dimly lit station with a lot of offices
-      and dorms.', type: Add}
-  - {message: Removed fun!, type: Remove}
-  id: 1766
-  time: '2022-06-23T07:21:07.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Docking no longer requires power., type: Tweak}
@@ -2930,3 +2923,9 @@ Entries:
     type: Fix}
   id: 2265
   time: '2022-09-09T14:39:22.0000000+00:00'
+- author: Rolfero
+  changes:
+  - {message: 'APCs can now be properly constructed using APC electronics, as well
+      as deconstructed', type: Add}
+  id: 2266
+  time: '2022-09-10T03:27:41.0000000+00:00'
