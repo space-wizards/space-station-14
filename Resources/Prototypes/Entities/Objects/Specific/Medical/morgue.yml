@@ -100,3 +100,16 @@
   - type: Tag
     tags:
     - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Ash
+          Quantity: 10
+  - type: SolutionSpiker
+    sourceSolution: food
+    ignoreEmpty: true
+  - type: DeleteOnTrigger
+  - type: Extractable
+    grindableSolutionName: food
