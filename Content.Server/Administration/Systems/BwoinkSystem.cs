@@ -43,7 +43,7 @@ namespace Content.Server.Administration.Systems
             _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true, true).Length + Header("").Length;
+            _maxAdditionalChars = GenerateAHelpMessage("", "", true, true).Length;
 
             SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
         }
@@ -70,8 +70,6 @@ namespace Content.Server.Administration.Systems
             _webhookUrl = obj;
         }
 
-        private string Header(string serverName) => $":desktop: **{serverName}**";
-
         private async void ProcessQueue(NetUserId channelId, Queue<string> messages)
         {
             if (!_relayMessages.TryGetValue(channelId, out var oldMessage) || messages.Sum(x => x.Length+2) + oldMessage.content.Length > MessageMax)
@@ -85,7 +83,7 @@ namespace Content.Server.Administration.Systems
                     return;
                 }
 
-                oldMessage = (string.Empty, lookup.Username, Header(_serverName));
+                oldMessage = (string.Empty, lookup.Username, "");
             }
 
             while (messages.TryDequeue(out var message))
@@ -95,7 +93,7 @@ namespace Content.Server.Administration.Systems
 
             var payload = new WebhookPayload()
             {
-                Username = $"{oldMessage.username} (round {_gameTicker.RoundId})",
+                Username = $"{oldMessage.username} on {_serverName} (round {_gameTicker.RoundId})",
                 Content = oldMessage.content
             };
 
@@ -236,8 +234,7 @@ namespace Content.Server.Administration.Systems
             var stringbuilder = new StringBuilder();
             if (noReceiver)
                 stringbuilder.Append(":sos:");
-            else
-                stringbuilder.Append(admin ? ":outbox_tray:" : ":inbox_tray:");
+            stringbuilder.Append(admin ? ":outbox_tray:" : ":inbox_tray:");
             stringbuilder.Append(" **");
             stringbuilder.Append(username);
             stringbuilder.Append(":** ");
