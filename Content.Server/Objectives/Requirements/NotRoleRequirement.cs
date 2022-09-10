@@ -1,5 +1,6 @@
+using Content.Shared.Roles;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.GameTicking.Rules;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Objectives.Requirements
 {
@@ -7,7 +8,7 @@ namespace Content.Server.Objectives.Requirements
     [DataDefinition]
     public sealed class NotRoleRequirement : IObjectiveRequirement
     {
-        [DataField("roleId")]
+        [DataField("roleId", customTypeSerializer:typeof(PrototypeIdSerializer<JobPrototype>))]
         private string roleId = "";
 
         /// <summary>
