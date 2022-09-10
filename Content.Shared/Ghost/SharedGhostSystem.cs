@@ -67,7 +67,7 @@ namespace Content.Shared.Ghost
         /// </summary>
         public string DisplayName { get; }
         /// <summary>
-        /// Whether or not the display name is localizable (player names, for instance, are not)
+        /// Whether this warp represents a warp point or a player
         /// </summary>
         public bool IsWarpPoint { get;  }
     }
