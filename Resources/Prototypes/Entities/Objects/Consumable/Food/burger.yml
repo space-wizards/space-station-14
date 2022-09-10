@@ -37,7 +37,7 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 9
         - ReagentId: Vitamin
           Quantity: 3
   - type: Item
