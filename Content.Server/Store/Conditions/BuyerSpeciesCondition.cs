@@ -38,8 +38,8 @@ public sealed class BuyerSpeciesCondition : ListingCondition
 
         if (Whitelist != null)
         {
-            if (Whitelist.Contains(appearance.Species))
-                return true;
+            if (!Whitelist.Contains(appearance.Species))
+                return false;
         }
 
         return true;
