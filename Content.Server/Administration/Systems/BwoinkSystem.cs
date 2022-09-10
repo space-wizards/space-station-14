@@ -30,7 +30,8 @@ namespace Content.Server.Administration.Systems
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
         private string _webhookUrl = string.Empty;
-        private string _iconUrl = string.Empty;
+        private string _footerIconUrl = string.Empty;
+        private string _avatarUrl = string.Empty;
         private string _serverName = string.Empty;
         private readonly Dictionary<NetUserId, (string id, string username, string messages)> _relayMessages = new();
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
@@ -45,7 +46,8 @@ namespace Content.Server.Administration.Systems
         {
             base.Initialize();
             _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
-            _config.OnValueChanged(CCVars.DiscordAHelpIcon, OnIconChanged, true);
+            _config.OnValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
+            _config.OnValueChanged(CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
             _maxAdditionalChars = GenerateAHelpMessage("", "", true).Length;
@@ -67,7 +69,7 @@ namespace Content.Server.Administration.Systems
         {
             base.Shutdown();
             _config.UnsubValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged);
-            _config.UnsubValueChanged(CCVars.DiscordAHelpIcon, OnIconChanged);
+            _config.UnsubValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged);
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
         }
 
@@ -76,9 +78,14 @@ namespace Content.Server.Administration.Systems
             _webhookUrl = obj;
         }
 
-        private void OnIconChanged(string url)
+        private void OnFooterIconChanged(string url)
         {
-            _iconUrl = url;
+            _footerIconUrl = url;
+        }
+
+        private void OnAvatarChanged(string url)
+        {
+            _avatarUrl = url;
         }
 
         private async void ProcessQueue(NetUserId channelId, Queue<string> messages)
@@ -105,6 +112,7 @@ namespace Content.Server.Administration.Systems
             var payload = new WebhookPayload
             {
                 Username = $"{oldMessage.username}",
+                AvaterUrl = _avatarUrl,
                 Embeds = new List<Embed>
                 {
                     new Embed
@@ -116,7 +124,7 @@ namespace Content.Server.Administration.Systems
                         {
                             // Limit server name to 1500 characters, in case someone tries to be a little funny
                             Text = $"{_serverName[..Math.Min(_serverName.Length, 1500)]} (round {_gameTicker.RoundId})",
-                            IconUrl = _iconUrl,
+                            IconUrl = _footerIconUrl,
                         },
                     },
                 },
@@ -278,6 +286,9 @@ namespace Content.Server.Administration.Systems
         {
             [JsonPropertyName("username")]
             public string Username { get; set; } = "";
+
+            [JsonPropertyName("avatar_url")]
+            public string AvaterUrl { get; set; } = "";
 
             [JsonPropertyName("embeds")]
             public List<Embed>? Embeds { get; set; } = null;
