@@ -42,13 +42,17 @@ public abstract class SharedBeamComponent : Component
     [DataField("createdBeams")]
     public HashSet<EntityUid> CreatedBeams = new();
 
+    /// <summary>
+    /// Sound played upon creation
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sound")]
     public SoundSpecifier? Sound;
 }
 
 /// <summary>
-/// Called where a Beam Controller is first created. Stores the originator beam euid and the controller euid.
+/// Called where a <see cref="BeamControllerEntity"/> is first created. Stores the originator beam euid and the controller euid.
+/// Raised on the <see cref="BeamControllerEntity"/> and broadcast.
 /// </summary>
 public sealed class BeamControllerCreatedEvent : EntityEventArgs
 {

@@ -7,3 +7,6 @@
     - type: Beam
     - type: TimedDespawn
       lifetime: 4
+    - type: Tag
+      tags:
+        - HideContextMenu

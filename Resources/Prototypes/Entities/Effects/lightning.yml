@@ -1,5 +1,5 @@
 ﻿- type: entity
-  name: "Lightning"
+  name: lightning
   id: LightningBase
   abstract: true
   components:
@@ -27,9 +27,12 @@
     sound: /Audio/Effects/Lightning/lightningshock.ogg
   - type: TimedDespawn
     lifetime: 3
+  - type: Tag
+    tags:
+      - HideContextMenu
 
 - type: entity
-  name: "Lightning"
+  name: lightning
   id: Lightning
   parent: LightningBase
   components:
@@ -37,7 +40,7 @@
       canArc: true
 
 - type: entity
-  name: "Charged Lightning"
+  name: charged lightning
   id: ChargedLightning
   parent: LightningBase
   components:
@@ -55,7 +58,7 @@
       lightningPrototype: ChargedLightning
 
 - type: entity
-  name: "Supercharged Lightning"
+  name: supercharged lightning
   id: SuperchargedLightning
   parent: ChargedLightning
   components:
@@ -80,7 +83,7 @@
       castShadows: false
 
 - type: entity
-  name: "Hypercharged Lightning"
+  name: hypercharged lightning
   id: HyperchargedLightning
   parent: ChargedLightning
   components:
