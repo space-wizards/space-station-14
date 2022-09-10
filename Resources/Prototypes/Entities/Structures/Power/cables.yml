@@ -10,11 +10,11 @@
   - type: InteractionOutline
   - type: Transform
     anchored: true
+    noRot: true
   - type: Sprite
     netsync: false
     drawdepth: ThinWire
     visible: false
-    noRot: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -41,6 +41,7 @@
     lowVoltageNode: power
   - type: CableVis
     node: power
+   
 
 - type: entity
   parent: CableBase
