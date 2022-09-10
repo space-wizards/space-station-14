@@ -33,3 +33,10 @@
             Poison: -1
       - !type:ChemCleanBoodstream
         cleanseRate: 3
+
+- type: reagent
+  id: Ash
+  name: reagent-name-ash
+  desc: reagent-desc-ash
+  physicalDesc: reagent-physical-desc-powder
+  color: white
