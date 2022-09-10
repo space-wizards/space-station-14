@@ -160,9 +160,6 @@ namespace Content.Server.Nutrition.Components
         {
             _currentHunger -= frametime * ActualDecayRate;
             UpdateCurrentThreshold();
-
-            if (_currentHungerThreshold != HungerThreshold.Dead)
-                return;
         }
 
         private void UpdateCurrentThreshold()
