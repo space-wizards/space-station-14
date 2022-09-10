@@ -79,7 +79,7 @@
       types:
         Blunt: 5
   - type: StaticPrice
-    price: 100
+    price: 30
 
 - type: entity
   name: beaker
@@ -116,7 +116,7 @@
     maxFillLevels: 6
     fillBaseName: beakerlarge
   - type: StaticPrice
-    price: 200
+    price: 40
 
 - type: entity
   name: cryostasis beaker
@@ -209,6 +209,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: dropper
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: syringe
