@@ -63,6 +63,11 @@ namespace Content.Shared.Buckle
             }
         }
 
+        public bool IsBuckled(EntityUid uid, SharedBuckleComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) && component.Buckled;
+        }
+
         private void OnBuckleChangeDirectionAttempt(EntityUid uid, SharedBuckleComponent component, ChangeDirectionAttemptEvent args)
         {
             if (component.Buckled)

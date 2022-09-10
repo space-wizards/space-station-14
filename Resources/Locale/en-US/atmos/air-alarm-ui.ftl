@@ -24,6 +24,12 @@ air-alarm-ui-window-tab-sensors = Sensors
 
 air-alarm-ui-gases = {$gas}: {$amount} mol ({$percentage}%)
 
+air-alarm-ui-mode-filtering = Filtering
+air-alarm-ui-mode-wide-filtering = Filtering (wide)
+air-alarm-ui-mode-fill = Fill
+air-alarm-ui-mode-panic = Panic
+air-alarm-ui-mode-none = None
+
 ## Widgets
 
 ### General

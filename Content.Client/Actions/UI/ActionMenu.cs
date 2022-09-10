@@ -306,7 +306,7 @@ namespace Content.Client.Actions.UI
                 return true;
             }
 
-            if (Standardize(action.Name.ToString()).Contains(standardizedSearch))
+            if (Standardize(action.DisplayName.ToString()).Contains(standardizedSearch))
             {
                 return true;
             }

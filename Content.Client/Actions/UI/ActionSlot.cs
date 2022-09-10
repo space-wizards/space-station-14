@@ -164,7 +164,7 @@ namespace Content.Client.Actions.UI
                 extra = Loc.GetString("ui-actionslot-charges", ("charges", Action.Charges));
             }
 
-            var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.Name));
+            var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.DisplayName));
             var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.Description));
 
             var tooltip = new ActionAlertTooltip(name, decr, extra);

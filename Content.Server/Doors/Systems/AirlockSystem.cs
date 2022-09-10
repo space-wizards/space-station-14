@@ -71,6 +71,10 @@ namespace Content.Server.Doors.Systems
             component.UpdateBoltLightStatus();
 
             UpdateAutoClose(uid, component);
+
+            // Make sure the airlock auto closes again next time it is opened
+            if (args.State == DoorState.Closed)
+                component.AutoClose = true;
         }
 
         /// <summary>
@@ -82,6 +86,9 @@ namespace Content.Server.Doors.Systems
                 return;
 
             if (door.State != DoorState.Open)
+                return;
+
+            if (!airlock.AutoClose)
                 return;
 
             if (!airlock.CanChangeState())
@@ -133,6 +140,13 @@ namespace Content.Server.Doors.Systems
             {
                 _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
                 args.Handled = true;
+                return;
+            }
+
+            if (component.KeepOpenIfClicked)
+            {
+                // Disable auto close
+                component.AutoClose = false;
             }
         }
 

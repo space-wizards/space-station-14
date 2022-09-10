@@ -36,7 +36,7 @@ public sealed partial class SensorInfo : BoxContainer
             var label = new Label();
             label.Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"),
                 ("amount", $"{amount:0.####}"),
-                ("percentage", $"{(amount / data.TotalMoles):0.##}"));
+                ("percentage", $"{(100 * amount / data.TotalMoles):0.##}"));
             GasContainer.AddChild(label);
             _gasLabels.Add(gas, label);
         }
@@ -87,7 +87,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             label.Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"),
                 ("amount", $"{amount:0.####}"),
-                ("percentage", $"{(amount / data.TotalMoles):0.##}"));
+                ("percentage", $"{(100 * amount / data.TotalMoles):0.##}"));
         }
 
         _pressureThreshold.UpdateThresholdData(data.PressureThreshold);
