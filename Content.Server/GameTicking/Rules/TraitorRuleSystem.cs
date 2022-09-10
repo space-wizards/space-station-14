@@ -185,7 +185,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
 
         if (mind.CurrentJob != null)
-            startingBalance = Math.Max(startingBalance - mind.CurrentJob.Prototype.antagAdvantage, 0);
+            startingBalance = Math.Max(startingBalance - mind.CurrentJob.Prototype.AntagAdvantage, 0);
 
         if (!_uplink.AddUplink(mind.OwnedEntity!.Value, startingBalance))
             return false;
