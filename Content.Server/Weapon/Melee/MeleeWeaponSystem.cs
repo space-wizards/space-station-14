@@ -449,7 +449,7 @@ namespace Content.Server.Weapon.Melee
         public readonly DamageSpecifier BaseDamage = new();
 
         /// <summary>
-        ///     Modifier sets to apply to the hit event when it's all said and done.
+        ///     Modifier sets to apply to the damage when it's all said and done.
         ///     This should be modified by adding a new entry to the list.
         /// </summary>
         public List<DamageModifierSet> ModifiersList = new();
