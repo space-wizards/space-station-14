@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Docking no longer requires power., type: Tweak}
-  id: 1767
-  time: '2022-06-23T07:22:11.0000000+00:00'
 - author: KIBORG04
   changes:
   - {message: Displaying of player characters in the round end statistics, type: Tweak}
@@ -2929,3 +2924,8 @@ Entries:
       as deconstructed', type: Add}
   id: 2266
   time: '2022-09-10T03:27:41.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Significantly buffs food items and nerfs hunger decay., type: Tweak}
+  id: 2267
+  time: '2022-09-10T07:36:33.0000000+00:00'
