@@ -70,7 +70,7 @@ namespace Content.Server.Administration.Systems
             _webhookUrl = obj;
         }
 
-        private string Header(string serverName) => $"Server: {serverName}";
+        private string Header(string serverName) => $":desktop: **{serverName}**";
 
         private async void ProcessQueue(NetUserId channelId, Queue<string> messages)
         {
@@ -95,7 +95,7 @@ namespace Content.Server.Administration.Systems
 
             var payload = new WebhookPayload()
             {
-                Username = $"R:{_gameTicker.RoundId}|N:{oldMessage.username}",
+                Username = $"{oldMessage.username} (round {_gameTicker.RoundId})",
                 Content = oldMessage.content
             };
 
@@ -236,10 +236,11 @@ namespace Content.Server.Administration.Systems
             var stringbuilder = new StringBuilder();
             if (noReceiver)
                 stringbuilder.Append(":sos:");
-            stringbuilder.Append(admin ? ":outbox_tray:" : ":inbox_tray:");
-            stringbuilder.Append(' ');
+            else
+                stringbuilder.Append(admin ? ":outbox_tray:" : ":inbox_tray:");
+            stringbuilder.Append(" **");
             stringbuilder.Append(username);
-            stringbuilder.Append(": ");
+            stringbuilder.Append(":** ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();
         }
