@@ -122,7 +122,7 @@
         maxvol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 8
         - ReagentId: Vitamin
           Quantity: 6
 # Tastes like pasta, tomato.
