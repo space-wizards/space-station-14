@@ -6,6 +6,9 @@
   id: FoodBase
   abstract: true
   components:
+  - type: FlavorProfile
+    flavors:
+      - food
   - type: Food
   - type: Recyclable
   - type: SpaceGarbage

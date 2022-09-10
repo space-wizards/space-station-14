@@ -48,7 +48,6 @@
     range: 2
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
-  - type: GasAnalyzable
   - type: StaticPrice
     price: 100
 

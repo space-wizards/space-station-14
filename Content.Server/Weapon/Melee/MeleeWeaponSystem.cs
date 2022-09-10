@@ -7,13 +7,16 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Damage.Components;
 using Content.Server.Damage.Systems;
+using Content.Server.Examine;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Physics;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -27,12 +30,14 @@ namespace Content.Server.Weapon.Melee
 {
     public sealed class MeleeWeaponSystem : EntitySystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly StaminaSystem _staminaSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
         public const float DamagePitchVariation = 0.15f;
@@ -44,7 +49,39 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnHandSelected);
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
+            SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<ExamineVerb>>(OnMeleeExaminableVerb);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+        }
+
+        private void OnMeleeExaminableVerb(EntityUid uid, MeleeWeaponComponent component, GetVerbsEvent<ExamineVerb> args)
+        {
+            if (!args.CanInteract || !args.CanAccess)
+                return;
+
+            var damageSpec = GetDamage(component);
+
+            if (damageSpec == null)
+                return;
+
+            var verb = new ExamineVerb()
+            {
+                Act = () =>
+                {
+                    var markup = _damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
+                    _examine.SendExamineTooltip(args.User, uid, markup, false, false);
+                },
+                Text = Loc.GetString("damage-examinable-verb-text"),
+                Message = Loc.GetString("damage-examinable-verb-message"),
+                Category = VerbCategory.Examine,
+                IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+        private DamageSpecifier? GetDamage(MeleeWeaponComponent component)
+        {
+            return component.Damage.Total > FixedPoint2.Zero ? component.Damage : null;
         }
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)
@@ -100,7 +137,7 @@ namespace Content.Server.Weapon.Melee
                     RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
-                    var damageResult = _damageableSystem.TryChangeDamage(target, modifiedDamage);
+                    var damageResult = _damageable.TryChangeDamage(target, modifiedDamage);
 
                     if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
@@ -196,7 +233,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
-                    var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
+                    var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage);
 
                     if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {

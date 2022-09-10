@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.Damage.Systems;
+using Content.Server.Examine;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Melee;
 using Content.Server.Weapon.Ranged.Components;
@@ -25,6 +26,8 @@ namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
+    [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] private readonly ExamineSystem _examine = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 
