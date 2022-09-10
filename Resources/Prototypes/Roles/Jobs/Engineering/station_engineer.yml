@@ -3,8 +3,8 @@
   name: job-name-engineer
   playTimeTracker: JobStationEngineer
   requirements:
-    - !type:RoleTimeRequirement
-      role: JobTechnicalAssistant
+    - !type:DepartmentTimeRequirement
+      department: Engineering
       time: 18000
   startingGear: StationEngineerGear
   icon: "StationEngineer"

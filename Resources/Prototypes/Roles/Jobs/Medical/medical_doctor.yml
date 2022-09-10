@@ -3,8 +3,8 @@
   name: job-name-doctor
   playTimeTracker: JobMedicalDoctor
   requirements:
-    - !type:RoleTimeRequirement
-      role: JobMedicalIntern
+    - !type:DepartmentTimeRequirement
+      department: Medical
       time: 18000
   startingGear: DoctorGear
   icon: "MedicalDoctor"
