@@ -23,3 +23,5 @@
       state: signaller
     - type: ReleaseSignaller
     - type: SignalTransmitter
+      outputs:
+        Pressed: [ ]
