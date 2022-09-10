@@ -1,9 +1,4 @@
 Entries:
-- author: KIBORG04
-  changes:
-  - {message: Displaying of player characters in the round end statistics, type: Tweak}
-  id: 1768
-  time: '2022-06-23T09:32:06.0000000+00:00'
 - author: notafet
   changes:
   - {message: Headsets can now use department-specific radio channels., type: Add}
@@ -2929,3 +2924,9 @@ Entries:
   - {message: Significantly buffs food items and nerfs hunger decay., type: Tweak}
   id: 2267
   time: '2022-09-10T07:36:33.0000000+00:00'
+- author: LordEclipse
+  changes:
+  - {message: Quartermaster is now shown as part of command when viewed in the crew
+      manifest., type: Add}
+  id: 2268
+  time: '2022-09-10T07:58:26.0000000+00:00'
