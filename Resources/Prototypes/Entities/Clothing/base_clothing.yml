@@ -5,3 +5,5 @@
   components:
   - type: Sprite
     netsync: false
+  - type: StaticPrice
+    price: 40
