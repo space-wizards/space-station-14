@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: space bear
   id: MobBearSpace
   parent: SimpleSpaceMobBase
@@ -57,6 +57,7 @@
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: claw

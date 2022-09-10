@@ -41,6 +41,7 @@
       150: Critical
       200: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1
     arcwidth: 0
     arc: claw
@@ -132,6 +133,7 @@
       300: Critical
       350: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: fist
@@ -198,6 +200,7 @@
       30: Critical
       60: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1
     arcwidth: 0
     arc: claw
