@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Headsets can now use department-specific radio channels., type: Add}
-  id: 1769
-  time: '2022-06-23T10:11:03.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Added a basic fireball spell, soon to be used.', type: Add}
@@ -2930,3 +2925,8 @@ Entries:
       manifest., type: Add}
   id: 2268
   time: '2022-09-10T07:58:26.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Nuclear disk pinpointer should be working again., type: Fix}
+  id: 2269
+  time: '2022-09-10T08:49:02.0000000+00:00'
