@@ -14,6 +14,7 @@
     netsync: false
     drawdepth: ThinWire
     visible: false
+    noRot: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
