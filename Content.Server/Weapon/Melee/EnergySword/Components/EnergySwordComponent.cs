@@ -16,6 +16,12 @@ namespace Content.Server.Weapon.Melee.EnergySword
         public bool IsSharp = true;
 
         /// <summary>
+        ///     Does this become hidden when deactivated
+        /// </summary>
+        [DataField("secret")]
+        public bool Secret { get; set; } = false;
+
+        /// <summary>
         ///     RGB cycle rate for hacked e-swords.
         /// </summary>
         [DataField("cycleRate")]
