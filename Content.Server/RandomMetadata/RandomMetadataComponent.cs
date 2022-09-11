@@ -4,14 +4,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.RandomMetadata;
 
 /// <summary>
-///     Randomizes the description and/or the name for an entity by pulling from a dataset prototype.
+///     Randomizes the description and/or the name for an entity by creating it from list of dataset prototypes or strings.
 /// </summary>
 [RegisterComponent]
 public sealed class RandomMetadataComponent : Component
 {
-    [DataField("descriptionSet", customTypeSerializer:typeof(PrototypeIdSerializer<DatasetPrototype>))]
-    public string? DescriptionSet;
+    [DataField("descriptionSegments")]
+    public List<string>? DescriptionSegments;
 
-    [DataField("nameSet", customTypeSerializer:typeof(PrototypeIdSerializer<DatasetPrototype>))]
-    public string? NameSet;
+    [DataField("nameSegments")]
+    public List<string>? NameSegments;
 }

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Dataset;
+﻿using System.Linq;
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -21,16 +22,28 @@ public sealed class RandomMetadataSystem : EntitySystem
     {
         var meta = MetaData(uid);
 
-        if (component.NameSet != null)
+        if (component.NameSegments != null)
         {
-            var nameProto = _prototype.Index<DatasetPrototype>(component.NameSet);
-            meta.EntityName = _random.Pick(nameProto.Values);
+            var outputSegments = new List<string>();
+            foreach (var segment in component.NameSegments)
+            {
+                outputSegments.Add(_prototype.TryIndex<DatasetPrototype>(segment, out var proto)
+                    ? _random.Pick(proto.Values)
+                    : segment);
+            }
+            meta.EntityName = string.Join(" ", outputSegments);
         }
 
-        if (component.DescriptionSet != null)
+        if (component.DescriptionSegments != null)
         {
-            var descProto = _prototype.Index<DatasetPrototype>(component.DescriptionSet);
-            meta.EntityDescription = _random.Pick(descProto.Values);
+            var outputSegments = new List<string>();
+            foreach (var segment in component.DescriptionSegments)
+            {
+                outputSegments.Add(_prototype.TryIndex<DatasetPrototype>(segment, out var proto)
+                    ? _random.Pick(proto.Values)
+                    : segment);
+            }
+            meta.EntityDescription = string.Join(" ", outputSegments);
         }
     }
 }
