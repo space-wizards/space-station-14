@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nerf L6 again., type: Tweak}
-  id: 1773
-  time: '2022-06-23T11:24:36.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: 'Filters, mixers, pressure pumps and volume pumps now always appear
@@ -2930,3 +2925,8 @@ Entries:
       from the bloodstream, type: Add}
   id: 2272
   time: '2022-09-10T23:20:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a sussy lil friend to the station., type: Add}
+  id: 2273
+  time: '2022-09-11T00:08:17.0000000+00:00'
