@@ -38,6 +38,8 @@ namespace Content.Client.Chemistry.UI
 
             // Setup static button actions.
             _window.InputEjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
+            _window.OutputEjectButton.OnPressed += _ =>
+                SendMessage(new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
             _window.BufferTransferButton.OnPressed += _ => SendMessage(new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
             _window.BufferDiscardButton.OnPressed += _ => SendMessage(new ChemMasterSetModeMessage(ChemMasterMode.Discard));
             _window.CreatePillButton.OnPressed += _ => SendMessage(new ChemMasterCreatePillsMessage(((uint)_window.PillAmount.Value), _window.LabelLine));

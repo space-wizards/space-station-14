@@ -76,6 +76,7 @@ namespace Content.Client.Chemistry.UI
             }
 
             PillAmount.InitDefaultButtons();
+            PillNumber.InitDefaultButtons();
             BottleAmount.InitDefaultButtons();
         }
 
@@ -98,10 +99,9 @@ namespace Content.Client.Chemistry.UI
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
             UpdatePanelInfo(castState);
-            if (Contents.Children != null)
-            {
-                InputEjectButton.Disabled = castState.InputContainerInfo is null;
-            }
+            
+            InputEjectButton.Disabled = castState.InputContainerInfo is null;
+            OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
 
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
             PillAmount.IsValid = x => x > 0 && x <= castState.PillProductionLimit;
