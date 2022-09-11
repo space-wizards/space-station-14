@@ -240,6 +240,10 @@
       inlet: inlet
       outlet: outlet
       canLink: true
+    - type: SignalReceiver
+      inputs:
+        Pressurize: []
+        Depressurize: []
     - type: Construction
       graph: GasBinary
       node: dualportventpump

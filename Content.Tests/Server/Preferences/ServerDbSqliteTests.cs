@@ -69,7 +69,8 @@ namespace Content.Tests.Server.Preferences
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.StayInLobby,
-                new List<string> ()
+                new List<string> (),
+                new List<string>()
             );
         }
 
