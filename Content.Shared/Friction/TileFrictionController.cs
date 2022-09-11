@@ -1,7 +1,6 @@
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
-using Content.Shared.Movement;
-using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
@@ -16,13 +15,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Friction
 {
-    public abstract class SharedTileFrictionController : VirtualController
+    public sealed class TileFrictionController : VirtualController
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
-
-        protected SharedMoverController Mover = default!;
+        [Dependency] private readonly SharedMoverController _mover = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         private float _stopSpeed;
         private float _frictionModifier;
@@ -79,7 +78,10 @@ namespace Content.Shared.Friction
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 if (prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
-                    Mover.UseMobMovement(body.Owner)) continue;
+                    _mover.UseMobMovement(body.Owner))
+                {
+                    continue;
+                }
 
                 if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f)) continue;
 
@@ -98,6 +100,11 @@ namespace Content.Shared.Friction
                 {
                     bodyModifier = frictionComp.Modifier;
                 }
+
+                var ev = new TileFrictionEvent(bodyModifier);
+
+                RaiseLocalEvent(body.Owner, ref ev);
+                bodyModifier = ev.Modifier;
 
                 // If we're sandwiched between 2 pullers reduce friction
                 // Might be better to make this dynamic and check how many are in the pull chain?
@@ -143,7 +150,7 @@ namespace Content.Shared.Friction
             var newSpeed = MathF.Max(0.0f, speed - drop);
 
             newSpeed /= speed;
-            body.LinearVelocity *= newSpeed;
+            _physics.SetLinearVelocity(body, body.LinearVelocity * newSpeed);
         }
 
         private void ReduceAngularVelocity(bool prediction, PhysicsComponent body, float friction, float frameTime)
@@ -174,7 +181,7 @@ namespace Content.Shared.Friction
             var newSpeed = MathF.Max(0.0f, speed - drop);
 
             newSpeed /= speed;
-            body.AngularVelocity *= newSpeed;
+            _physics.SetAngularVelocity(body, body.AngularVelocity * newSpeed);
         }
 
         [Pure]
