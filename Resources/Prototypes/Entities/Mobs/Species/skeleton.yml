@@ -4,7 +4,6 @@
   parent: BaseMobOrganic
   id: BaseMobSkeletonPerson
   abstract: true
-  description: A miserable pile of bones.
   components:
   - type: Markings
   - type: Icon

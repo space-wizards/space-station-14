@@ -1,25 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Credits & cargo points have been renamed to spacebucks., type: Tweak}
-  id: 1781
-  time: '2022-06-24T14:43:44.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Spacebucks now have an "S" on them rather than a "C" to be in line with
-      the new name., type: Tweak}
-  id: 1782
-  time: '2022-06-24T14:45:32.0000000+00:00'
-- author: Sammy Boy
-  changes:
-  - {message: Crates cannot eat you while buckled anymore!, type: Fix}
-  id: 1783
-  time: '2022-06-24T19:26:57.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Counters can now be vaulted again., type: Fix}
-  id: 1784
-  time: '2022-06-24T19:34:09.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Waystation now has jetpacks!, type: Add}
@@ -2925,3 +2904,24 @@ Entries:
   - {message: Gave Miasma a slightly spookier palette., type: Tweak}
   id: 2280
   time: '2022-09-11T07:00:43.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring will now ignore non-hard physics bodies., type: Fix}
+  id: 2281
+  time: '2022-09-11T09:19:27.0000000+00:00'
+- author: och
+  changes:
+  - {message: Examining people tells you their pronouns and approximate age, type: Add}
+  id: 2282
+  time: '2022-09-11T14:45:40.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Artifacts fits into artifact storage again, type: Fix}
+  id: 2283
+  time: '2022-09-11T22:24:00.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Gas recyclers can now convert waste carbon dioxide and nitrous oxide
+      into breathable gases., type: Add}
+  id: 2284
+  time: '2022-09-11T23:02:01.0000000+00:00'
