@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: 'Added the Fire Axe, a 9 TC Traitor weapon capable of setting opponents
-      on fire with a single strike.', type: Add}
-  id: 1777
-  time: '2022-06-24T01:27:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Barratry has received one last set of small tweaks and additions before
       the big rework. Coming soon:tm:', type: Add}
   id: 1778
@@ -2932,3 +2926,8 @@ Entries:
       blue, to better represent where they stand on the station!', type: Tweak}
   id: 2276
   time: '2022-09-11T06:40:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Slipping should feel nicer., type: Fix}
+  id: 2277
+  time: '2022-09-11T06:49:10.0000000+00:00'
