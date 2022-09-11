@@ -14,6 +14,8 @@ namespace Content.Shared.CharacterAppearance.Systems
 {
     public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentGetState>(OnAppearanceGetState);
@@ -77,17 +79,20 @@ namespace Content.Shared.CharacterAppearance.Systems
         /// <summary>
         /// Takes ID of the species prototype, returns UI-friendly name of the species.
         /// </summary>
-        public string GetSpeciesRepresentation(string speciesId) {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            if (prototypeManager.TryIndex<SpeciesPrototype>(speciesId, out var species)) {
+        public string GetSpeciesRepresentation(string speciesId)
+        {
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(speciesId, out var species))
+            {
                 return Loc.GetString(species.Name);
             }
-            else {
-                return Loc.GetString("humanoid-appearance-component-unkown-species");
+            else
+            {
+                return Loc.GetString("humanoid-appearance-component-unknown-species");
             }
         }
 
-        public string GetAgeRepresentation(int age) {
+        public string GetAgeRepresentation(int age)
+        {
             return age switch
             {
                 <= 30 => Loc.GetString("identity-age-young"),
