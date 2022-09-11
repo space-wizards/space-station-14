@@ -157,6 +157,12 @@
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag
+  id: LatexGloves
+
+- type: Tag
+  id: MaskSterile
+
+- type: Tag
   id: Document
 
 - type: Tag

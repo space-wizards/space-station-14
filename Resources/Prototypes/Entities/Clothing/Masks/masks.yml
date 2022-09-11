@@ -176,6 +176,9 @@
   name: sterile mask
   description: A sterile mask designed to help prevent the spread of diseases.
   components:
+  - type: Tag
+    tags:
+    - MaskSterile 
   - type: Sprite
     sprite: Clothing/Mask/sterile.rsi
   - type: Clothing

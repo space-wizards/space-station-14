@@ -229,6 +229,9 @@
         - CigPack
         - Pill
         - PillCanister
+        - DiscreteHealthAnalyzer
+        - LatexGloves
+        - MaskSterile 
       components:
         - Hypospray
         - Radio

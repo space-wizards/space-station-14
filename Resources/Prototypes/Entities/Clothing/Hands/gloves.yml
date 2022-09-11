@@ -111,6 +111,9 @@
   name: latex gloves
   description: Thin sterile latex gloves. Basic PPE for any doctor.
   components:
+  - type: Tag
+    tags:
+    - LatexGloves
   - type: Sprite
     sprite: Clothing/Hands/Gloves/latex.rsi
   - type: Clothing
