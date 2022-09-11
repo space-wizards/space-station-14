@@ -152,9 +152,11 @@ namespace Content.Shared.Maps
             var mapGrid = mapManager.GetGrid(tileRef.GridUid);
 
             const float margin = 0.1f;
-            var (x, y) = ((mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin,
-                (mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin);
-            var coordinates = mapGrid.GridTileToLocal(indices).Offset(new Vector2(x, y));
+            var bounds = mapGrid.TileSize - margin * 2;
+            var coordinates = mapGrid.GridTileToLocal(indices)
+                .Offset(new Vector2(
+                    (robustRandom.NextFloat() - 0.5f) * bounds,
+                    (robustRandom.NextFloat() - 0.5f) * bounds));
 
             //Actually spawn the relevant tile item at the right position and give it some random offset.
             var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
