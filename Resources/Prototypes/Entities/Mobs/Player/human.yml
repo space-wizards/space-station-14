@@ -3,7 +3,6 @@
   name: Urist McHands
   parent: BaseMobHuman
   id: MobHuman
-  description: A miserable pile of secrets.
   components:
   - type: CombatMode
     canDisarm: true
