@@ -6,10 +6,11 @@
     <BoxContainer Orientation="Vertical"
                   Margin="5 5 5 5"
                   SeparationOverride="10">
+        <!-- Input container info -->
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'chem-master-window-container-label'}" />
+            <Label Text="{Loc 'chem-master-window-input-container-label'}" />
             <Control HorizontalExpand="True" />
-            <Button Name="EjectButton"
+            <Button Name="InputEjectButton"
                     Access="Public"
                     Text="{Loc 'chem-master-window-eject-button'}" />
         </BoxContainer>
@@ -20,12 +21,13 @@
                 <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
             </PanelContainer.PanelOverride>
             <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-            <BoxContainer Name="ContainerInfo"
+            <BoxContainer Name="InputContainerInfo"
                           Orientation="Vertical"
                           HorizontalExpand="True">
                 <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
             </BoxContainer>
         </PanelContainer>
+        <!-- Padding -->
         <Control MinSize="0 10" />
         <!-- Buffer -->
         <BoxContainer Orientation="Horizontal">
@@ -50,6 +52,29 @@
                           Orientation="Vertical"
                           HorizontalExpand="True">
                 <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
+            </BoxContainer>
+        </PanelContainer>
+        <!-- Padding -->
+        <Control MinSize="0 10" />
+        <!-- Output container info -->
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'chem-master-window-output-container-label'}" />
+            <Control HorizontalExpand="True" />
+            <Button Name="OutputEjectButton"
+                    Access="Public"
+                    Text="{Loc 'chem-master-window-eject-button'}" />
+        </BoxContainer>
+        <PanelContainer VerticalExpand="True"
+                        SizeFlagsStretchRatio="6"
+                        MinSize="0 240">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+            </PanelContainer.PanelOverride>
+            <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
+            <BoxContainer Name="OutputContainerInfo"
+                          Orientation="Vertical"
+                          HorizontalExpand="True">
+                <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
             </BoxContainer>
         </PanelContainer>
         <!-- Padding -->

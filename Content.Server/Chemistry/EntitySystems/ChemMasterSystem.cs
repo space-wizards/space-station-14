@@ -1,6 +1,8 @@
+using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Popups;
+using Content.Server.Storage.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
@@ -51,26 +53,19 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
                 return;
-            var container = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.ContainerSlotName);
+            var inputContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.InputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.OutputSlotName);
 
-            Solution? containerSolution = null;
-
-            if (container.HasValue && container.Value.Valid)
-            {
-                TryComp(container, out FitsInDispenserComponent? fits);
-                _solutionContainerSystem.TryGetSolution(container.Value, fits!.Solution, out containerSolution);
-            }
-
-            var containerName = container is null ? null : Name(container.Value);
             var dispenserName = Name(chemMaster.Owner);
             var bufferReagents = bufferSolution.Contents;
             var bufferCurrentVolume = bufferSolution.CurrentVolume;
 
             var state = new ChemMasterBoundUserInterfaceState(
-                containerSolution?.CurrentVolume, containerSolution?.MaxVolume, containerName, dispenserName,
-                containerSolution?.Contents, bufferReagents, chemMaster.Mode, bufferCurrentVolume, chemMaster.PillType,
-                chemMaster.PillProductionLimit, chemMaster.BottleProductionLimit, updateLabel
-            );
+                chemMaster.Mode, dispenserName, 
+                BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
+                bufferReagents, bufferCurrentVolume,
+                chemMaster.PillType, chemMaster.PillProductionLimit, chemMaster.BottleProductionLimit, updateLabel);
+
             _userInterfaceSystem.TrySetUiState(chemMaster.Owner, ChemMasterUiKey.Key, state);
         }
 
@@ -120,7 +115,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void TransferReagents(ChemMasterComponent chemMaster, string reagentId, FixedPoint2 amount, bool fromBuffer)
         {
-            var container = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.ContainerSlotName);
+            var container = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.InputSlotName);
             if (container is null ||
                 !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution) ||
                 !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
@@ -156,7 +151,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
             else
             {
-                var container = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.ContainerSlotName);
+                var container = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.InputSlotName);
                 if (container is not null &&
                     _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
                 {
@@ -244,6 +239,55 @@ namespace Content.Server.Chemistry.EntitySystems
         private void ClickSound(ChemMasterComponent chemMaster)
         {
             _audioSystem.Play(chemMaster.ClickSound, Filter.Pvs(chemMaster.Owner), chemMaster.Owner, AudioParams.Default.WithVolume(-2f));
+        }
+        
+        private ContainerInfo? BuildInputContainerInfo(EntityUid? container)
+        {
+            if (container is not { Valid: true }) return null;
+
+            if (!TryComp(container, out FitsInDispenserComponent? fits)
+                || !_solutionContainerSystem.TryGetSolution(container.Value, fits.Solution, out var solution))
+            {
+                return null;
+            }
+
+            return BuildContainerInfo(Name(container.Value), solution);
+        }
+
+        private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
+        {
+            if (container is not { Valid: true }) return null;
+
+            var name = Name(container.Value);
+
+            {
+                if (_solutionContainerSystem.TryGetSolution(
+                        container.Value, SharedChemMaster.BottleSolutionName, out var solution))
+                {
+                    return BuildContainerInfo(name, solution);
+                }
+            }
+
+            if (!TryComp(container, out ServerStorageComponent? storage)) return null;
+
+            var pills = storage.Storage?.ContainedEntities.Select(pill =>
+            {
+                _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out var solution);
+                var quantity = solution?.CurrentVolume ?? FixedPoint2.Zero;
+                return new LineItemInfo(Name(pill), false, quantity);
+            }).ToList();
+
+            return pills is null
+                ? null
+                : new ContainerInfo(name, storage.StorageUsed, storage.StorageCapacityMax, pills);
+        }
+
+        private static ContainerInfo BuildContainerInfo(string name, Solution solution)
+        {
+            var reagents = solution.Contents.Select(reagent =>
+                new LineItemInfo(reagent.ReagentId, true, reagent.Quantity)).ToList();
+
+            return new ContainerInfo(name, solution.CurrentVolume, solution.MaxVolume, reagents);
         }
     }
 }

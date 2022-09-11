@@ -8,7 +8,8 @@ chem-master-bound-user-interface-title = ChemMaster 4000
 
 ## UI
 
-chem-master-window-container-label = Container
+chem-master-window-input-container-label = Input Container
+chem-master-window-output-container-label = Output Container
 chem-master-window-eject-button = Eject
 chem-master-window-no-container-loaded-text = No container loaded.
 chem-master-window-buffer-text = Buffer
@@ -28,3 +29,4 @@ chem-master-window-create-pill-button = Create
 chem-master-window-create-bottle-button = Create
 chem-master-window-bottles-label = Bottles:
 chem-master-window-unknown-reagent-text = Unknown reagent
+chem-master-window-unknown-pill-text = Unknown pill
