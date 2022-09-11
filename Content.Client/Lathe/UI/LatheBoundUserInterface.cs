@@ -1,14 +1,9 @@
 using System.Collections.Generic;
-using Content.Client.Lathe.Components;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.Lathe.LatheComponent;
 
 namespace Content.Client.Lathe.UI
 {
@@ -24,7 +19,6 @@ namespace Content.Client.Lathe.UI
 
         public MaterialStorageComponent? Storage { get; private set; }
         public LatheComponent? Lathe { get; private set; }
-        public SharedLatheDatabaseComponent? Database { get; private set; }
 
         [ViewVariables]
         public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
@@ -40,12 +34,10 @@ namespace Content.Client.Lathe.UI
             base.Open();
 
             if (!_entMan.TryGetComponent(Owner.Owner, out MaterialStorageComponent? storage)
-            ||  !_entMan.TryGetComponent(Owner.Owner, out LatheComponent? lathe)
-            ||  !_entMan.TryGetComponent(Owner.Owner, out SharedLatheDatabaseComponent? database)) return;
+            ||  !_entMan.TryGetComponent(Owner.Owner, out LatheComponent? lathe)) return;
 
             Storage = storage;
             Lathe = lathe;
-            Database = database;
 
             _menu = new LatheMenu(this);
             _queueMenu = new LatheQueueMenu(this);

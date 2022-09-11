@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text;
-using Content.Client.Lathe.Components;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -140,13 +139,14 @@ namespace Content.Client.Lathe.UI
                 SizeFlagsStretchRatio = 3
             };
 
+            /*
             hBoxButtons.AddChild(spacer);
             if (Owner.Database is ProtolatheDatabaseComponent database)
             {
                 hBoxButtons.AddChild(ServerConnectButton);
                 hBoxButtons.AddChild(ServerSyncButton);
                 database.OnDatabaseUpdated += Populate;
-            }
+            }*/
             hBoxButtons.AddChild(QueueButton);
 
             hBoxFilter.AddChild(_searchBar);
@@ -245,6 +245,7 @@ namespace Content.Client.Lathe.UI
         {
             _shownRecipes.Clear();
 
+            /*
             if (Owner.Database == null) return;
 
             foreach (var prototype in Owner.Database)
@@ -258,7 +259,7 @@ namespace Content.Client.Lathe.UI
 
                 _shownRecipes.Add(prototype);
             }
-
+            */
             PopulateList();
         }
 

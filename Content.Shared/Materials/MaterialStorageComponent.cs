@@ -67,3 +67,15 @@ public readonly struct MaterialAmountChangedEvent
         Amount = amount;
     }
 }
+
+public struct GetMaterialWhitelistEvent
+{
+    public readonly EntityUid Storage;
+
+    public List<string> Whitelist = new();
+
+    public GetMaterialWhitelistEvent(EntityUid storage)
+    {
+        Storage = storage;
+    }
+}

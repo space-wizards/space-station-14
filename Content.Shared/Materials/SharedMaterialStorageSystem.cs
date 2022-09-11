@@ -18,38 +18,47 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
-    public int GetMaterialAmount(MaterialStorageComponent component, MaterialPrototype material)
+    public int GetMaterialAmount(EntityUid uid, MaterialPrototype material, MaterialStorageComponent? component = null)
     {
-        return GetMaterialAmount(component, material.ID);
+        return GetMaterialAmount(uid, material.ID, component);
     }
 
-    public int GetMaterialAmount(MaterialStorageComponent component, string material)
+    public int GetMaterialAmount(EntityUid uid, string material, MaterialStorageComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+            return 0; //you have nothing
         return !component.Storage.TryGetValue(material, out var amount) ? 0 : amount;
     }
 
-    public int GetTotalMaterialAmount(MaterialStorageComponent component)
+    public int GetTotalMaterialAmount(EntityUid uid, MaterialStorageComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+            return 0;
         return component.Storage.Values.Sum();
     }
 
-    public bool CanTakeVolume(MaterialStorageComponent component, int volume)
+    public bool CanTakeVolume(EntityUid uid, int volume, MaterialStorageComponent? component = null)
     {
-        return component.StorageLimit == null || (GetTotalMaterialAmount(component) + volume <= component.StorageLimit);
+        if (!Resolve(uid, ref component))
+            return false;
+        return component.StorageLimit == null || GetTotalMaterialAmount(uid, component) + volume <= component.StorageLimit;
     }
 
-    public bool CanChangeMaterialAmount(MaterialStorageComponent component, string materialId, int volume)
+    public bool CanChangeMaterialAmount(EntityUid uid, string materialId, int volume, MaterialStorageComponent? component = null)
     {
-        return CanTakeVolume(component, volume) &&
+        if (!Resolve(uid, ref component))
+            return false;
+        return CanTakeVolume(uid, volume, component) &&
                (component.MaterialWhiteList == null || component.MaterialWhiteList.Contains(materialId)) &&
                (!component.Storage.TryGetValue(materialId, out var amount) || amount + volume >= 0);
     }
 
-    public bool TryChangeMaterialAmount(MaterialStorageComponent component, string materialId, int volume)
+    public bool TryChangeMaterialAmount(EntityUid uid, string materialId, int volume, MaterialStorageComponent? component = null)
     {
-        if (!CanChangeMaterialAmount(component, materialId, volume))
+        if (!Resolve(uid, ref component))
             return false;
-
+        if (!CanChangeMaterialAmount(uid, materialId, volume, component))
+            return false;
         if (!component.Storage.ContainsKey(materialId))
             component.Storage.Add(materialId, 0);
         component.Storage[materialId] += volume;
@@ -57,8 +66,11 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         return true;
     }
 
-    public bool TryInsertMaterialEntity(EntityUid toInsert, MaterialStorageComponent component)
+    public bool TryInsertMaterialEntity(EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
     {
+        if (!Resolve(receiver, ref component))
+            return false;
+
         if (!TryComp<MaterialComponent>(toInsert, out var material))
             return false;
 
@@ -83,22 +95,31 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         var totalVolume = 0;
         foreach (var (mat, vol) in component.Storage)
         {
-            if (!CanChangeMaterialAmount(component, mat, vol))
+            if (!CanChangeMaterialAmount(receiver, mat, vol, component))
                 return false;
             totalVolume += vol * multiplier;
         }
 
-        if (!CanTakeVolume(component, totalVolume))
+        if (!CanTakeVolume(receiver, totalVolume, component))
             return false;
 
         foreach (var (mat, vol) in material._materials)
         {
-            TryChangeMaterialAmount(component, mat, vol * multiplier);
+            TryChangeMaterialAmount(receiver, mat, vol * multiplier, component);
         }
 
         OnFinishInsertMaterialEntity(toInsert, component);
         RaiseLocalEvent(component.Owner, new MaterialEntityInsertedEvent(material._materials));
         return true;
+    }
+
+    public void UpdateMaterialWhitelist(EntityUid uid, MaterialStorageComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        var ev = new GetMaterialWhitelistEvent(uid);
+        RaiseLocalEvent(uid, ev, true);
+        component.MaterialWhiteList = ev.Whitelist;
     }
 
     /// <remarks>
@@ -112,6 +133,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (args.Handled)
             return;
         args.Handled = true;
-        TryInsertMaterialEntity(args.Used, component);
+        TryInsertMaterialEntity(args.Used, uid, component);
     }
 }

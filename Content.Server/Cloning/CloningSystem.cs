@@ -80,10 +80,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
         {
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage))
-                return;
-
-            _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(storage, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
+            _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
         }
 
         private void UpdateAppearance(CloningPodComponent clonePod)
@@ -141,8 +138,7 @@ namespace Content.Server.Cloning.Systems
             if (!args.IsInDetailsRange || !_powerReceiverSystem.IsPowered(uid))
                 return;
 
-            if (TryComp<MaterialStorageComponent>(uid, out var storage))
-                args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(storage, "Biomass"))));
+            args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, "Biomass"))));
         }
 
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
@@ -171,9 +167,6 @@ namespace Content.Server.Cloning.Systems
             if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
                 return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
-            if (!TryComp<MaterialStorageComponent>(clonePod.Owner, out var podStorage))
-                return false;
-
             if (!TryComp<HumanoidAppearanceComponent>(bodyToClone, out var humanoid))
                 return false; // whatever body was to be cloned, was not a humanoid
 
@@ -189,7 +182,7 @@ namespace Content.Server.Cloning.Systems
                 cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
 
             // biomass checks
-            var biomassAmount = _material.GetMaterialAmount(podStorage, "Biomass");
+            var biomassAmount = _material.GetMaterialAmount(uid, "Biomass");
 
             if (biomassAmount < cloningCost)
             {
@@ -198,7 +191,7 @@ namespace Content.Server.Cloning.Systems
                 return false;
             }
 
-            _material.TryChangeMaterialAmount(podStorage, "Biomass", -cloningCost);
+            _material.TryChangeMaterialAmount(uid, "Biomass", -cloningCost);
             clonePod.UsedBiomass = cloningCost;
             // end of biomass checks
 

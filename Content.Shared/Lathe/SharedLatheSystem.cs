@@ -20,22 +20,20 @@ public abstract class SharedLatheSystem : EntitySystem
     }
 
     [PublicAPI]
-    public bool CanProduce(LatheComponent component, string recipe, int amount = 1)
+    public bool CanProduce(EntityUid uid, string recipe, int amount = 1, LatheComponent? component = null)
     {
-        return _proto.TryIndex<LatheRecipePrototype>(recipe, out var proto) && CanProduce(component, proto, amount);
+        return _proto.TryIndex<LatheRecipePrototype>(recipe, out var proto) && CanProduce(uid, proto, amount, component);
     }
 
-    public bool CanProduce(LatheComponent component, LatheRecipePrototype recipe, int amount = 1)
+    public bool CanProduce(EntityUid uid, LatheRecipePrototype recipe, int amount = 1, LatheComponent? component = null)
     {
-        var lathe = component.Owner;
-        if (!TryComp<MaterialStorageComponent>(lathe, out var materialStorage))
+        if (!Resolve(uid, ref component))
             return false;
-
-        //do check for having recipe here
+        //TODO: check for having recipe here
 
         foreach (var (material, needed) in recipe.RequiredMaterials)
         {
-            if (_materialStorage.GetMaterialAmount(materialStorage, material) < amount * needed)
+            if (_materialStorage.GetMaterialAmount(component.Owner, material) < amount * needed)
                 return false;
         }
 

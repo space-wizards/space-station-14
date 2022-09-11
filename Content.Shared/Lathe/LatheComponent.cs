@@ -12,20 +12,19 @@ namespace Content.Shared.Lathe
         /// All of the recipes that the lathe has by default
         /// </summary>
         [DataField("staticRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public List<string>? StaticRecipes;
+        public readonly List<string> StaticRecipes = new();
 
         /// <summary>
         /// All of the recipes that the lathe is capaable of researching
         /// </summary>
         [DataField("dynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public List<string>? DynamicRecipes;
+        public readonly List<string>? DynamicRecipes;
 
         /// <summary>
         /// The lathe's construction queue
         /// </summary>
         [DataField("queue", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         public List<string> Queue = new();
-        // TODO queue serializer.
 
         /// <summary>
         /// How long the inserting animation will play
@@ -50,5 +49,17 @@ namespace Content.Shared.Lathe
         [DataField("ignoreColor")]
         public bool IgnoreColor;
         #endregion
+    }
+
+    public sealed class LatheGetRecipesEvent : EntityEventArgs
+    {
+        public readonly EntityUid Lathe;
+
+        public List<string> Recipes = new();
+
+        public LatheGetRecipesEvent(EntityUid lathe)
+        {
+            Lathe = lathe;
+        }
     }
 }
