@@ -1,9 +1,4 @@
 Entries:
-- author: OldDanceJacket
-  changes:
-  - {message: Added lighthouse ACTUALLY, type: Add}
-  id: 1772
-  time: '2022-06-23T11:14:58.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nerf L6 again., type: Tweak}
@@ -2929,3 +2924,9 @@ Entries:
   - {message: Fix minimum rotation speed for eye lerping., type: Fix}
   id: 2271
   time: '2022-09-10T21:51:41.0000000+00:00'
+- author: WPRobson
+  changes:
+  - {message: Added charcoal into the game. Heals poison damage and removes chemicals
+      from the bloodstream, type: Add}
+  id: 2272
+  time: '2022-09-10T23:20:44.0000000+00:00'
