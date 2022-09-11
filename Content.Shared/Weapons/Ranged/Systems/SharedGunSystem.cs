@@ -42,6 +42,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
+    [Dependency] protected readonly ExamineSystemShared Examine = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;

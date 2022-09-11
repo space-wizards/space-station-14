@@ -1,12 +1,8 @@
 using Content.Server.Nutrition.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Alert;
-using Content.Server.Administration.Logs;
-using Content.Shared.Database;
-using Content.Shared.Damage;
 using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -43,6 +39,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
+            // TODO: This should really be taken care of somewhere else
             if (_jetpack.IsUserFlying(component.Owner))
                 return;
 

@@ -1078,6 +1078,18 @@ namespace Content.Shared.CCVar
             SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
         /*
+
+         * Flavor
+         */
+
+        /// <summary>
+        ///     Flavor limit. This is to ensure that having a large mass of flavors in
+        ///     some food object won't spam a user with flavors.
+        /// </summary>
+        public static readonly CVarDef<int>
+            FlavorLimit = CVarDef.Create("flavor.limit", 10, CVar.SERVERONLY);
+
+        /*
          * Mapping
          */
 
@@ -1098,6 +1110,7 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string>
             AutosaveDirectory = CVarDef.Create("mapping.autosave_dir", "Autosaves", CVar.SERVERONLY);
+
 
         /*
          * Rules
