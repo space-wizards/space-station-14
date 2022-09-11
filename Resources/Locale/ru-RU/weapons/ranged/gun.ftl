@@ -11,6 +11,9 @@ gun-FullAuto = авто
 gun-ballistic-cycle = Перезарядка
 gun-ballistic-cycled = Перезаряжено
 gun-ballistic-cycled-empty = Разряжено
+# CartridgeAmmo
+gun-cartridge-spent = It is [color=red]spent[/color].
+gun-cartridge-unspent = It is [color=lime]not spent[/color].
 # BatteryAmmoProvider
 gun-battery-examine = Заряда хватит на [color={ $color }]{ $count } выстрелов.
 # MagazineAmmoProvider

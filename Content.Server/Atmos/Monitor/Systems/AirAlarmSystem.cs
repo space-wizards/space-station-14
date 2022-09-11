@@ -416,7 +416,7 @@ public sealed class AirAlarmSystem : EntitySystem
             case AirAlarmSetMode:
                 if (!args.Data.TryGetValue(AirAlarmSetMode, out AirAlarmMode alarmMode)) break;
 
-                SetMode(uid, args.SenderAddress, alarmMode);
+                SetMode(uid, args.SenderAddress, alarmMode, uiOnly: false);
 
                 return;
         }
