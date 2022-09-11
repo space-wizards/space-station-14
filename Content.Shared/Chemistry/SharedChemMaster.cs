@@ -70,12 +70,12 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterCreateBottlesMessage : BoundUserInterfaceMessage
+    public sealed class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
     {
         public readonly uint Amount;
         public readonly string Label;
 
-        public ChemMasterCreateBottlesMessage(uint amount, string label)
+        public ChemMasterOutputToBottleMessage(uint amount, string label)
         {
             Amount = amount;
             Label = label;

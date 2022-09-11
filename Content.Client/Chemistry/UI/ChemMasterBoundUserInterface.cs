@@ -49,7 +49,7 @@ namespace Content.Client.Chemistry.UI
                 new ChemMasterCreatePillsMessage(
                     (uint)_window.PillAmount.Value, (uint)_window.PillNumber.Value, _window.LabelLine));
             _window.CreateBottleButton.OnPressed += _ => SendMessage(
-                new ChemMasterCreateBottlesMessage((uint)_window.BottleAmount.Value, _window.LabelLine));
+                new ChemMasterOutputToBottleMessage((uint)_window.BottleAmount.Value, _window.LabelLine));
 
             for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {

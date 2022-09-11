@@ -1,18 +1,20 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -30,7 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         public override void Initialize()
         {
@@ -46,7 +48,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetPillTypeMessage>(OnSetPillTypeMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterReagentAmountButtonMessage>(OnReagentButtonMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterCreatePillsMessage>(OnCreatePillsMessage);
-            SubscribeLocalEvent<ChemMasterComponent, ChemMasterCreateBottlesMessage>(OnCreateBottlesMessage);
+            SubscribeLocalEvent<ChemMasterComponent, ChemMasterOutputToBottleMessage>(OnOutputToBottleMessage);
         }
 
         private void UpdateUiState(ChemMasterComponent chemMaster, bool updateLabel = false)
@@ -166,74 +168,110 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnCreatePillsMessage(EntityUid uid, ChemMasterComponent chemMaster, ChemMasterCreatePillsMessage message)
         {
+            var user = message.Session.AttachedEntity;
+            var maybeContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+            if (maybeContainer is not { Valid: true } container
+                || !TryComp(container, out ServerStorageComponent? storage)
+                || storage.Storage is null)
+            {
+                return; // output can't fit pills
+            }
+            
+            // Ensure the number is valid.
+            if (message.Number == 0 || message.Number > storage.StorageCapacityMax - storage.StorageUsed) return;
+            
             // Ensure the amount is valid.
-            //if (message.Amount == 0 || message.Amount > chemMaster.PillProductionLimit)
-            //    return;
+            if (message.Amount == 0 || message.Amount > chemMaster.PillDosageLimit) return;
 
-            CreatePillsOrBottles(chemMaster, pills: true, message.Amount, message.Label, message.Session.AttachedEntity);
+            var needed = message.Amount * message.Number;
+            if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal)) return;
+            
+            Label(container, message.Label);
+            
+            for (var i = 0; i < message.Number; i++)
+            {
+                var item = Spawn("Pill", Transform(container).Coordinates);
+                DebugTools.Assert(_storageSystem.Insert(container, item, storage));
+                Label(item, message.Label);
+
+                var itemSolution = _solutionContainerSystem.EnsureSolution(item, SharedChemMaster.PillSolutionName);
+                
+                DebugTools.Assert(_solutionContainerSystem.TryAddSolution(
+                    item, itemSolution, withdrawal.SplitSolution(message.Amount)));
+                
+                if (TryComp<SpriteComponent>(item, out var spriteComp))
+                    spriteComp.LayerSetState(0, "pill" + (chemMaster.PillType + 1));
+            }
+
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
         }
 
-        private void OnCreateBottlesMessage(EntityUid uid, ChemMasterComponent chemMaster, ChemMasterCreateBottlesMessage message)
+        private void OnOutputToBottleMessage(
+            EntityUid uid, ChemMasterComponent chemMaster, ChemMasterOutputToBottleMessage message)
         {
-            // Ensure the amount is valid.
-            //if (message.Amount == 0 || message.Amount > chemMaster.BottleProductionLimit)
-            //    return;
+            var user = message.Session.AttachedEntity;
+            var maybeContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+            if (maybeContainer is not { Valid: true } container
+                || !_solutionContainerSystem.TryGetSolution(
+                    container, SharedChemMaster.BottleSolutionName, out var solution))
+            {
+                return; // output can't fit reagents
+            }
 
-            CreatePillsOrBottles(chemMaster, pills: false, message.Amount, message.Label, message.Session.AttachedEntity);
+            // Ensure the amount is valid.
+            if (message.Amount == 0 || message.Amount > solution.AvailableVolume) return;
+            
+            if (!WithdrawFromBuffer(chemMaster, message.Amount, user, out var withdrawal)) return;
+
+            Label(container, message.Label);
+            DebugTools.Assert(_solutionContainerSystem.TryAddSolution(
+                container, solution, withdrawal));
+
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
         }
 
-        private void CreatePillsOrBottles(ChemMasterComponent chemMaster, bool pills, FixedPoint2 amount, string label, EntityUid? user)
+        private bool WithdrawFromBuffer(
+            IComponent chemMaster,
+            FixedPoint2 neededVolume, EntityUid? user,
+            [NotNullWhen(returnValue: true)] out Solution? outputSolution)
         {
-            if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
-                return;
+            outputSolution = null;
+            
+            if (!_solutionContainerSystem.TryGetSolution(
+                    chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var solution))
+            {
+                return false;
+            }
 
             var filter = user.HasValue ? Filter.Entities(user.Value) : Filter.Empty();
-            if (bufferSolution.TotalVolume == 0)
+            if (solution.TotalVolume == 0)
             {
                 _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), filter);
-                return;
+                return false;
             }
 
-            var individualVolume = FixedPoint2.Min(bufferSolution.TotalVolume / amount, FixedPoint2.New(pills ? 50 : 30));
-            if (individualVolume < FixedPoint2.New(1))
+            // ReSharper disable once InvertIf
+            if (neededVolume > solution.CurrentVolume)
             {
                 _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), filter);
-                return;
+                return false;
             }
 
-            for (int i = 0; i < amount; i++)
-            {
-                var item = Spawn(pills ? "Pill" : "ChemistryEmptyBottle01", Transform(chemMaster.Owner).Coordinates);
+            outputSolution = solution.SplitSolution(neededVolume);
+            return true;
+        }
 
-                if (label != "")
-                {
-                    var labelComponent = EnsureComp<LabelComponent>(item);
-                    labelComponent.OriginalName = Name(item);
-                    string val = Name(item) + $" ({label})";
-                    Comp<MetaDataComponent>(item).EntityName = val;
-                    labelComponent.CurrentLabel = label;
-                }
-
-                var solution = bufferSolution.SplitSolution(individualVolume);
-                var itemSolution = _solutionContainerSystem.EnsureSolution(item,
-                    pills ? SharedChemMaster.PillSolutionName : SharedChemMaster.BottleSolutionName);
-                _solutionContainerSystem.TryAddSolution(item, itemSolution, solution);
-
-                if (pills)
-                {
-                    if (TryComp<SpriteComponent>(item, out var spriteComp))
-                        spriteComp.LayerSetState(0, "pill" + (chemMaster.PillType + 1));
-                }
-
-                if (user.HasValue)
-                    _handsSystem.PickupOrDrop(user, item);
-            }
-
-            UpdateUiState(chemMaster);
+        private void Label(EntityUid ent, string label)
+        {
+            if (label == "") return;
+            var labelComponent = EnsureComp<LabelComponent>(ent);
+            
+            labelComponent.OriginalName = Name(ent);
+            var val = Name(ent) + $" ({label})";
+            Comp<MetaDataComponent>(ent).EntityName = val;
+            labelComponent.CurrentLabel = label;
         }
 
         private void ClickSound(ChemMasterComponent chemMaster)
