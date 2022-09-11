@@ -12,7 +12,6 @@ using Robust.Shared.Prototypes;
 using JetBrains.Annotations;
 using System.Linq;
 using Content.Server.Materials;
-using Content.Server.Power.Components;
 using Robust.Server.Player;
 
 namespace Content.Server.Lathe
@@ -33,12 +32,12 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, MaterialEntityInsertedEvent>(OnMaterialEntityInserted);
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
+
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
-            SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
-            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
         public override void Update(float frameTime)
@@ -54,12 +53,20 @@ namespace Content.Server.Lathe
                 RemCompDeferred(comp.Owner, comp);
             }
 
-            foreach (var comp in EntityQuery<LatheProducingComponent>())
+            foreach (var comp in EntityQuery<LatheComponent>())
+            {
+                if (!comp.Queue.Any() || !this.IsPowered(comp.Owner, EntityManager))
+                    continue;
+
+                TryStartProducing(comp.Owner, comp);
+            }
+
+            foreach (var (comp, lathe) in EntityQuery<LatheProducingComponent, LatheComponent>())
             {
                 comp.TimeRemaining -= frameTime;
 
                 if (comp.TimeRemaining <= 0)
-                    FinishProducing(comp.Owner, comp);
+                    FinishProducing(comp.Owner, lathe);
             }
         }
 
@@ -80,6 +87,7 @@ namespace Content.Server.Lathe
             args.Whitelist = args.Whitelist.Union(materialWhitelist).ToList();
         }
 
+        [PublicAPI]
         public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<string>? recipes, LatheComponent? component = null)
         {
             recipes = null;
@@ -105,6 +113,59 @@ namespace Content.Server.Lathe
                 ? component.StaticRecipes
                 : component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
+
+        public bool TryAddToQueue(EntityUid uid, LatheRecipePrototype recipe, LatheComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return false;
+
+            if (!CanProduce(uid, recipe, 1, component))
+                return false;
+
+            foreach (var (mat, amount) in recipe.RequiredMaterials)
+            {
+                _materialStorage.TryChangeMaterialAmount(uid, mat, amount);
+            }
+            component.Queue.Add(recipe);
+
+            return true;
+        }
+
+        public bool TryStartProducing(EntityUid uid, LatheComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return false;
+            if (HasComp<LatheProducingComponent>(uid) || !component.Queue.Any())
+                return false;
+
+            var recipe = component.Queue.First();
+            component.Queue.RemoveAt(0);
+
+            var prodComp = AddComp<LatheProducingComponent>(uid);
+            prodComp.Recipe = recipe;
+            prodComp.TimeRemaining = (float) recipe.CompleteTime.TotalSeconds;
+
+            // Again, this should really just be a bui state instead of two separate messages.
+            _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheProducingRecipeMessage(recipe.ID));
+            //_uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue));
+            _audio.PlayPvs(component.ProducingSound, component.Owner);
+            UpdateRunningAppearance(uid, true);
+            return true;
+        }
+
+        private void FinishProducing(EntityUid uid, LatheComponent? comp = null, LatheProducingComponent? prodComp = null)
+        {
+            if (!Resolve(uid, ref comp, ref prodComp))
+                return;
+
+            if (prodComp.Recipe != null)
+                Spawn(prodComp.Recipe.Result, Transform(uid).Coordinates);
+            // TODO this should probably just be a BUI state, not a special message.
+            _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheStoppedProducingRecipeMessage());
+            RemComp(prodComp.Owner, prodComp);
+            UpdateRunningAppearance(uid, false);
+        }
+
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
         {
@@ -141,94 +202,6 @@ namespace Content.Server.Lathe
             UpdateInsertingAppearance(uid, true, matProto?.Color);
         }
 
-        private void OnPowerChanged(EntityUid uid, LatheComponent component, PowerChangedEvent args)
-        {
-            //if the power state changes, try to produce.
-            //aka, if you went from unpowered --> powered, resume lathe queue.
-            TryStartProducing(uid, component: component);
-        }
-
-        /// <summary>
-        /// This handles the checks to start producing an item, and
-        /// starts up the sound and visuals
-        /// </summary>
-        private bool TryStartProducing(EntityUid uid, LatheProducingComponent? prodComp = null, LatheComponent? component = null)
-        {
-            if (!Resolve(uid, ref component) || component.Queue.Count == 0)
-                return false;
-
-            if (!this.IsPowered(uid, EntityManager))
-                return false;
-
-            var recipeId = component.Queue[0];
-
-            if (!_proto.TryIndex<LatheRecipePrototype>(recipeId, out var recipe))
-            {
-                // recipie does not exist. Remove and try produce the next item.
-                component.Queue.RemoveAt(0);
-                return TryStartProducing(uid, prodComp, component);
-            }
-
-            if (!CanProduce(uid, recipe, component: component) || !TryComp(uid, out MaterialStorageComponent? storage))
-            {
-                component.Queue.RemoveAt(0);
-                return false;
-            }
-
-            prodComp ??= EnsureComp<LatheProducingComponent>(uid);
-
-            // Do nothing if the lathe is already producing something.
-            if (prodComp.Recipe != null)
-                return false;
-
-            component.Queue.RemoveAt(0);
-            prodComp.Recipe = recipeId;
-            prodComp.TimeRemaining = (float)recipe.CompleteTime.TotalSeconds;
-
-            foreach (var (material, amount) in recipe.RequiredMaterials)
-            {
-                // This should always return true, otherwise CanProduce fucked up.
-                // TODO just remove materials when first queuing, to avoid queuing more items than can actually be produced.
-                _materialStorage.CanChangeMaterialAmount(uid, material, -amount, storage);
-            }
-
-            // Again, this should really just be a bui state instead of two separate messages.
-            _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheProducingRecipeMessage(recipe.ID));
-            _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue));
-
-            _audio.PlayPvs(component.ProducingSound, component.Owner);
-
-            UpdateRunningAppearance(uid, true);
-            return true;
-        }
-
-        /// <summary>
-        /// If we were able to produce the recipe,
-        /// spawn it and cleanup. If we weren't, just do cleanup.
-        /// </summary>
-        private void FinishProducing(EntityUid uid, LatheProducingComponent prodComp)
-        {
-            if (prodComp.Recipe == null || !_proto.TryIndex<LatheRecipePrototype>(prodComp.Recipe, out var recipe))
-            {
-                RemCompDeferred(prodComp.Owner, prodComp);
-                UpdateRunningAppearance(uid, false);
-                return;
-            }
-
-            Spawn(recipe.Result, Transform(uid).Coordinates);
-            prodComp.Recipe = null;
-
-            // TODO this should probably just be a BUI state, not a special message.
-            _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheStoppedProducingRecipeMessage());
-
-            // Continue to next in queue if there are items left
-            if (TryStartProducing(uid, prodComp))
-                return;
-
-            RemComp(prodComp.Owner, prodComp);
-            UpdateRunningAppearance(uid, false);
-        }
-
         /// <summary>
         /// Sets the machine sprite to either play the running animation
         /// or stop.
@@ -249,6 +222,11 @@ namespace Content.Server.Lathe
                 _appearance.SetData(uid, LatheVisuals.InsertingColor, color);
         }
 
+        protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
+        {
+            return GetAvailableRecipes(component).Contains(recipe.ID);
+        }
+
         #region UI Messages
 
         private void OnLatheQueueRecipeMessage(EntityUid uid, LatheComponent component, LatheQueueRecipeMessage args)
@@ -257,23 +235,23 @@ namespace Content.Server.Lathe
             {
                 for (var i = 0; i < args.Quantity; i++)
                 {
-                    // TODO check required materials exist and make materials unavailable.
-                    component.Queue.Add(recipe.ID);
+                    if (!TryAddToQueue(uid, recipe, component))
+                        return;
                 }
 
                 // Again: TODO this should be handled by BUI states
-                _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue));
+                //_uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue));
             }
 
-            TryStartProducing(component.Owner, null, component);
+            TryStartProducing(uid, component);
         }
 
         private void OnLatheSyncRequestMessage(EntityUid uid, LatheComponent component, LatheSyncRequestMessage args)
         {
             // Again: TODO BUI states. Why TF was this was this ever two separate messages!?!?
-            _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue));
+            //_uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue.));
             if (TryComp(uid, out LatheProducingComponent? prodComp) && prodComp.Recipe != null)
-                _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheProducingRecipeMessage(prodComp.Recipe));
+                _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheProducingRecipeMessage(prodComp.Recipe.ID));
         }
 
         private void OnLatheServerSelectionMessage(EntityUid uid, LatheComponent component, LatheServerSelectionMessage args)

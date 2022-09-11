@@ -23,8 +23,8 @@ namespace Content.Shared.Lathe
         /// <summary>
         /// The lathe's construction queue
         /// </summary>
-        [DataField("queue", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public List<string> Queue = new();
+        [DataField("queue")]
+        public List<LatheRecipePrototype> Queue = new();
 
         /// <summary>
         /// How long the inserting animation will play

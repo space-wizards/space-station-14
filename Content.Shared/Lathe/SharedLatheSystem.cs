@@ -29,14 +29,16 @@ public abstract class SharedLatheSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return false;
-        //TODO: check for having recipe here
+        if (!HasRecipe(uid, recipe, component))
+            return false;
 
         foreach (var (material, needed) in recipe.RequiredMaterials)
         {
             if (_materialStorage.GetMaterialAmount(component.Owner, material) < amount * needed)
                 return false;
         }
-
         return true;
     }
+
+    protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
 }

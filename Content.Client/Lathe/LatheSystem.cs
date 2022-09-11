@@ -2,6 +2,7 @@ using Robust.Client.GameObjects;
 using Content.Shared.Lathe;
 using Content.Shared.Power;
 using Content.Client.Power;
+using Content.Shared.Research.Prototypes;
 
 namespace Content.Client.Lathe;
 
@@ -45,6 +46,15 @@ public sealed class LatheSystem : SharedLatheSystem
             args.Sprite.LayerSetAnimationTime(isInsertingLayer, 0f);
             args.Sprite.LayerSetVisible(isInsertingLayer, isInserting);
         }
+    }
+
+    ///<remarks>
+    /// Whether or not a recipe is available is not really visible to the client,
+    /// so it just defaults to true.
+    ///</remarks>
+    protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
+    {
+        return true;
     }
 }
 

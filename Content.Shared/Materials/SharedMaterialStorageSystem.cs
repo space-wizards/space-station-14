@@ -18,11 +18,25 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
+    /// <summary>
+    /// Gets the volume of a specified material contained in this storage.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="material"></param>
+    /// <param name="component"></param>
+    /// <returns>The volume of the material</returns>
     public int GetMaterialAmount(EntityUid uid, MaterialPrototype material, MaterialStorageComponent? component = null)
     {
         return GetMaterialAmount(uid, material.ID, component);
     }
 
+    /// <summary>
+    /// Gets the volume of a specified material contained in this storage.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="material"></param>
+    /// <param name="component"></param>
+    /// <returns>The volume of the material</returns>
     public int GetMaterialAmount(EntityUid uid, string material, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -30,6 +44,12 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         return !component.Storage.TryGetValue(material, out var amount) ? 0 : amount;
     }
 
+    /// <summary>
+    /// Gets the total volume of all materials in the storage.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <returns>The volume of all materials in the storage</returns>
     public int GetTotalMaterialAmount(EntityUid uid, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -37,6 +57,13 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         return component.Storage.Values.Sum();
     }
 
+    /// <summary>
+    /// Tests if a specific amount of volume will fit in the storage.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="volume"></param>
+    /// <param name="component"></param>
+    /// <returns>If the specified volume will fit</returns>
     public bool CanTakeVolume(EntityUid uid, int volume, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -44,6 +71,14 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         return component.StorageLimit == null || GetTotalMaterialAmount(uid, component) + volume <= component.StorageLimit;
     }
 
+    /// <summary>
+    /// Checks if the specified material can be changed by the specified volume.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="materialId"></param>
+    /// <param name="volume"></param>
+    /// <param name="component"></param>
+    /// <returns>If the amount can be changed</returns>
     public bool CanChangeMaterialAmount(EntityUid uid, string materialId, int volume, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -53,6 +88,15 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
                (!component.Storage.TryGetValue(materialId, out var amount) || amount + volume >= 0);
     }
 
+    /// <summary>
+    /// Changes the amount of a specific material in the storage.
+    /// Still respects the filters in place.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="materialId"></param>
+    /// <param name="volume"></param>
+    /// <param name="component"></param>
+    /// <returns>If it was successful</returns>
     public bool TryChangeMaterialAmount(EntityUid uid, string materialId, int volume, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -61,11 +105,18 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             return false;
         if (!component.Storage.ContainsKey(materialId))
             component.Storage.Add(materialId, 0);
-        component.Storage[materialId] += volume;
+        component.Storage[materialId] += volume; //TODO: make this event deffered so it doesn't spam the fuck out of ui
         RaiseLocalEvent(component.Owner, new MaterialAmountChangedEvent(materialId, volume));
         return true;
     }
 
+    /// <summary>
+    /// Tries to insert an entity into the material storage.
+    /// </summary>
+    /// <param name="toInsert"></param>
+    /// <param name="receiver"></param>
+    /// <param name="component"></param>
+    /// <returns>If it was successful</returns>
     public bool TryInsertMaterialEntity(EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
     {
         if (!Resolve(receiver, ref component))
@@ -113,6 +164,12 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Broadcasts an event that will collect a list of which materials
+    /// are allowed to be inserted into the materialStorage.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
     public void UpdateMaterialWhitelist(EntityUid uid, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
