@@ -133,7 +133,7 @@ grids:
   - ind: -3,-2
     tiles: AAAAAAAAAAAEAAACBAAAAgQAAAE6AAAANgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAEAAACBAAAAQQAAAAKAAAAOgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAEAAAABAAAAgQAAAIEAAAACwAAADoAAAA6AAAAOgAAADoAAAA4AAAAOAAAAjoAAAA4AAADOAAAAzgAAAI4AAADOgAAAAQAAAEEAAABCgAAAAoAAAAKAAAAOgAAADoAAAA6AAAAOAAAAjgAAAI4AAACOgAAADgAAAE4AAACOAAAAAQAAAAEAAACBAAAAgoAAAAKAAAACwAAADoAAAA6AAAAOgAAADoAAAA4AAACOAAAADgAAAM4AAACOgAAADoAAAAEAAABBAAAAAQAAAALAAAACwAAAAsAAAA6AAAAOgAAADoAAAA4AAACOAAAAzgAAAM6AAAAOgAAADoAAAA6AAAABAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAAxUAAAAVAAADOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANgAAADYAAAA2AAAAOgAAADYAAAA6AAAAOgAAABUAAAIVAAADFQAAAjoAAAA6AAAAOgAAADoAAAA2AAAANgAAADYAAAA2AAAANgAAADoAAAA2AAAAOgAAADoAAAA6AAAAFQAAABUAAAA6AAAAOgAAADoAAAAlAAAAOgAAADoAAAA6AAAANgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAABUAAAAVAAACOgAAADoAAAA6AAAAJQAAADoAAAA6AAAAOgAAADYAAAA2AAAANgAAADYAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAACUAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANgAAADoAAAA2AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANgAAADYAAAA6AAAAFQAAAToAAAA6AAAANgAAADoAAAA6AAAANAAAAzQAAAE0AAAANAAAADQAAAE6AAAAOgAAADYAAAA2AAAAOgAAABUAAAIEAAABOgAAADYAAAA6AAAAOgAAADQAAAI0AAACOgAAADQAAAI0AAABOgAAADoAAAA2AAAANgAAADoAAAAVAAABBAAAAToAAAA2AAAAOgAAADoAAAA0AAADNAAAAjoAAAA0AAACNAAAAzoAAAA6AAAANgAAADYAAAA6AAAAFQAAAA==
   - ind: -2,-2
-    tiles: OgAAADoAAAA6AAAAOgAAADoAAAAsAAAAOgAAADYAAAA6AAAAOgAAABUAAAM6AAAAOgAAABUAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAVAAABOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAABUAAAAVAAACFQAAAToAAAA6AAAAOgAAADoAAAA6AAAALAAAACwAAAAsAAAAOgAAADcAAAI3AAAAOgAAADoAAAA6AAAAFQAAABUAAAM6AAAAFQAAARUAAAAVAAACOgAAACwAAAAsAAAALAAAADoAAAA3AAACNwAAAjoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADcAAAM3AAACNwAAAToAAAAsAAAALAAAACwAAAA6AAAAOgAAADcAAAI6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA3AAADNwAAADcAAAI6AAAANwAAADcAAAM3AAACNwAAAjcAAAM3AAACNwAAAToAAAA6AAAAOgAAADoAAAA6AAAANwAAAjoAAAA6AAAAOgAAADcAAAE3AAACNwAAADcAAAA3AAABNwAAADcAAAElAAAAJQAAADoAAAA6AAAAOgAAADcAAAA3AAACNwAAAjcAAAE3AAAAOgAAADoAAAA3AAAAOgAAADoAAAA3AAACJQAAACUAAAA6AAAAOgAAADoAAAA3AAABNwAAAzcAAAA3AAABNwAAAToAAAA3AAAANwAAAzcAAAE6AAAANwAAAiUAAAAlAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANwAAATcAAAE3AAACOgAAADcAAAAlAAAAOgAAADoAAAA4AAAAOAAAAjgAAAA4AAACOAAAAjgAAAM4AAABOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAAhUAAAIVAAADOAAAAjgAAAI4AAAAOAAAAjgAAAI4AAACOAAAAjoAAAAVAAADFQAAAxUAAAE6AAAANwAAABUAAAAVAAAAFQAAAjgAAAA4AAACOAAAAjgAAAE4AAADOAAAATgAAAE6AAAAFQAAARUAAAAVAAAAOgAAADcAAAMVAAAAFQAAABUAAAA4AAACOAAAADgAAAE4AAADOAAAAzgAAAM4AAACOgAAABUAAAIVAAAAFQAAAhUAAAA3AAADFQAAAxUAAAMVAAAAFQAAARUAAAMVAAAAOAAAATgAAAI4AAAAOAAAAjoAAAAVAAABFQAAABUAAAI6AAAANwAAAw==
+    tiles: OgAAADoAAAA6AAAAOgAAADoAAAAsAAAAOgAAADYAAAA6AAAAOgAAABUAAAM6AAAAOgAAABUAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAAVAAABOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAABUAAAAVAAACFQAAAToAAAA6AAAAOgAAADoAAAA6AAAALAAAACwAAAAsAAAAOgAAADcAAAI3AAAAOgAAADoAAAA6AAAAFQAAABUAAAM6AAAAFQAAARUAAAAVAAACOgAAACwAAAAsAAAALAAAADoAAAA3AAACNwAAAjoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADcAAAM3AAACNwAAAToAAAA6AAAALAAAADoAAAA6AAAAOgAAADcAAAI6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA3AAADNwAAADcAAAI6AAAANwAAADcAAAM3AAACNwAAAjcAAAM3AAACNwAAAToAAAA6AAAAOgAAADoAAAA6AAAANwAAAjoAAAA6AAAAOgAAADcAAAE3AAACNwAAADcAAAA3AAABNwAAADcAAAElAAAAJQAAADoAAAA6AAAAOgAAADcAAAA3AAACNwAAAjcAAAE3AAAAOgAAADoAAAA3AAAAOgAAADoAAAA3AAACJQAAACUAAAA6AAAAOgAAADoAAAA3AAABNwAAAzcAAAA3AAABNwAAAToAAAA3AAAANwAAAzcAAAE6AAAANwAAAiUAAAAlAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAANwAAATcAAAE3AAACOgAAADcAAAAlAAAAOgAAADoAAAA4AAAAOAAAAjgAAAA4AAACOAAAAjgAAAM4AAABOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAAhUAAAIVAAADOAAAAjgAAAI4AAAAOAAAAjgAAAI4AAACOAAAAjoAAAAVAAADFQAAAxUAAAE6AAAANwAAABUAAAAVAAAAFQAAAjgAAAA4AAACOAAAAjgAAAE4AAADOAAAATgAAAE6AAAAFQAAARUAAAAVAAAAOgAAADcAAAMVAAAAFQAAABUAAAA4AAACOAAAADgAAAE4AAADOAAAAzgAAAM4AAACOgAAABUAAAIVAAAAFQAAAhUAAAA3AAADFQAAAxUAAAMVAAAAFQAAARUAAAMVAAAAOAAAATgAAAI4AAAAOAAAAjoAAAAVAAABFQAAABUAAAI6AAAANwAAAw==
   - ind: -2,-3
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAACBAAAAQQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQQAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAACBAAAAQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAEEAAACBAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAMMAAADDAAAADoAAAAMAAAADAAAAjoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAAAAAAAAAAAAMAAAADAAAAQwAAAEMAAACDAAAAgwAAAI6AAAAJQAAACUAAAAlAAAAFQAAABUAAAMVAAABOgAAAAAAAAAAAAAADAAAAAwAAAAMAAACOgAAADoAAAA6AAAAOgAAACUAAAAlAAAAJQAAADoAAAAVAAAAFQAAAToAAAAAAAAAAAAAADgAAAE4AAADOAAAAjoAAAAVAAACFQAAAjoAAAAlAAAAJQAAACUAAAA6AAAAOgAAABUAAAI6AAAAOgAAADoAAAA4AAACOAAAAjgAAAE6AAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAFQAAAhUAAAEVAAAAFQAAAxUAAAEVAAABOAAAADgAAAE4AAADOgAAADgAAAI4AAADOgAAADgAAAM4AAACOAAAABUAAAA6AAAAJQAAACUAAAAVAAACFQAAAjoAAAA4AAADOgAAADoAAAA6AAAALAAAADoAAAA4AAACOgAAADoAAAAVAAACOgAAACUAAAAlAAAAJQAAACUAAAA6AAAAOgAAADoAAAA6AAAAOgAAACwAAAA6AAAAOgAAADoAAAAVAAADFQAAAzoAAAAlAAAAJQAAABUAAAEVAAAAOgAAADoAAAA6AAAAOgAAADoAAAAsAAAAOgAAADYAAAA6AAAAFQAAARUAAAA6AAAAFQAAARUAAAEVAAABFQAAAg==
   - ind: -3,2
@@ -1016,6 +1016,30 @@ entities:
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: -11,-6
+        1136:
+          color: '#FFFFFFFF'
+          id: SpaceStationSign1
+          coordinates: -6,-13
+        1137:
+          color: '#FFFFFFFF'
+          id: SpaceStationSign2
+          coordinates: -5,-13
+        1138:
+          color: '#FFFFFFFF'
+          id: SpaceStationSign3
+          coordinates: -4,-13
+        1139:
+          color: '#FFFFFFFF'
+          id: SpaceStationSign4
+          coordinates: -3,-13
+        1140:
+          color: '#FFFFFFFF'
+          id: SpaceStationSign5
+          coordinates: -2,-13
+        1141:
+          color: '#FFFFFFFF'
+          id: SpaceStationSign6
+          coordinates: -1,-13
       0,0:
         34:
           angle: 1.5707963267948966 rad
@@ -3661,6 +3685,10 @@ entities:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-19
+        1142:
+          color: '#FFFFFFFF'
+          id: SpaceStationSign7
+          coordinates: 0,-13
       -1,-2:
         364:
           color: '#FFFFFFFF'
@@ -23135,11 +23163,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1516
   type: Poweredlight
   components:
@@ -23148,11 +23171,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1517
   type: Poweredlight
   components:
@@ -23162,11 +23180,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1518
   type: Poweredlight
   components:
@@ -23176,11 +23189,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1519
   type: MopItem
   components:
@@ -23489,10 +23497,6 @@ entities:
   - pos: 5.5,-1.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1562
   type: KitchenReagentGrinder
   components:
@@ -24199,11 +24203,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1666
   type: Poweredlight
   components:
@@ -24213,11 +24212,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1667
   type: Poweredlight
   components:
@@ -24227,11 +24221,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1668
   type: Poweredlight
   components:
@@ -24241,11 +24230,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1669
   type: Poweredlight
   components:
@@ -24255,11 +24239,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1670
   type: Poweredlight
   components:
@@ -24269,11 +24248,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1671
   type: Poweredlight
   components:
@@ -24282,11 +24256,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1672
   type: Poweredlight
   components:
@@ -24296,11 +24265,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1673
   type: Poweredlight
   components:
@@ -24310,11 +24274,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1674
   type: PaintingNightHawks
   components:
@@ -25000,9 +24959,10 @@ entities:
     parent: 0
     type: Transform
 - uid: 1770
-  type: FoodNoodles
+  type: GasVentPump
   components:
-  - pos: -2.5035148,8.6176405
+  - rot: 1.5707963267948966 rad
+    pos: 11.5,19.5
     parent: 0
     type: Transform
 - uid: 1771
@@ -26395,11 +26355,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1976
   type: WallReinforced
   components:
@@ -26451,11 +26406,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1984
   type: GasPipeStraight
   components:
@@ -30051,7 +30001,7 @@ entities:
   - materialWhiteList:
     - Cloth
     - Durathread
-    type: Lathe
+    type: MaterialStorage
 - uid: 2514
   type: filingCabinetDrawer
   components:
@@ -30233,11 +30183,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2542
   type: Poweredlight
   components:
@@ -30247,11 +30192,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2543
   type: Poweredlight
   components:
@@ -30261,11 +30201,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2544
   type: Poweredlight
   components:
@@ -30274,11 +30209,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2545
   type: Poweredlight
   components:
@@ -30287,11 +30217,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2546
   type: CarpetSBlue
   components:
@@ -30815,11 +30740,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2623
   type: Poweredlight
   components:
@@ -30828,11 +30748,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2624
   type: Poweredlight
   components:
@@ -30842,11 +30757,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2625
   type: Poweredlight
   components:
@@ -30856,11 +30766,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2626
   type: Poweredlight
   components:
@@ -30870,11 +30775,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2627
   type: Poweredlight
   components:
@@ -30884,11 +30784,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2628
   type: Poweredlight
   components:
@@ -30897,11 +30792,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2629
   type: Poweredlight
   components:
@@ -30910,11 +30800,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2630
   type: Poweredlight
   components:
@@ -30923,11 +30808,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2631
   type: Poweredlight
   components:
@@ -30936,11 +30816,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2632
   type: CableMV
   components:
@@ -31312,11 +31187,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2688
   type: Poweredlight
   components:
@@ -31326,11 +31196,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2689
   type: Poweredlight
   components:
@@ -31340,11 +31205,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2690
   type: Poweredlight
   components:
@@ -31354,11 +31214,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2691
   type: Poweredlight
   components:
@@ -31368,11 +31223,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2692
   type: Poweredlight
   components:
@@ -31382,11 +31232,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2693
   type: FirelockGlass
   components:
@@ -31401,11 +31246,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2695
   type: FirelockGlass
   components:
@@ -31420,11 +31260,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2697
   type: SpawnPointCaptain
   components:
@@ -31665,11 +31500,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2734
   type: Poweredlight
   components:
@@ -31679,11 +31509,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2735
   type: FoodTartGapple
   components:
@@ -31888,20 +31713,6 @@ entities:
     pos: 22.5,28.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -31961,20 +31772,6 @@ entities:
     pos: 23.5,28.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -32019,11 +31816,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2777
   type: PoweredSmallLight
   components:
@@ -32085,11 +31877,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2785
   type: Poweredlight
   components:
@@ -32098,11 +31885,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 2786
   type: FirelockGlass
   components:
@@ -32621,20 +32403,6 @@ entities:
     pos: 19.5,28.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -32908,7 +32676,7 @@ entities:
     - Uranium
     - Gold
     - Silver
-    type: Lathe
+    type: MaterialStorage
 - uid: 2903
   type: WallReinforced
   components:
@@ -33780,20 +33548,6 @@ entities:
     pos: 23.5,24.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -33812,20 +33566,6 @@ entities:
     pos: 22.5,24.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -33957,20 +33697,6 @@ entities:
     pos: 20.5,24.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -33989,20 +33715,6 @@ entities:
     pos: 19.5,24.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -34040,20 +33752,6 @@ entities:
     pos: 21.5,24.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -34161,20 +33859,6 @@ entities:
     pos: 20.5,28.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -34205,20 +33889,6 @@ entities:
     pos: 21.5,28.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -35365,11 +35035,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3217
   type: Poweredlight
   components:
@@ -35379,11 +35044,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3218
   type: Poweredlight
   components:
@@ -35393,11 +35053,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3219
   type: Poweredlight
   components:
@@ -35406,11 +35061,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3220
   type: Poweredlight
   components:
@@ -35419,11 +35069,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3221
   type: Poweredlight
   components:
@@ -35433,11 +35078,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3222
   type: AtmosFixFreezerMarker
   components:
@@ -35523,7 +35163,8 @@ entities:
     - Plastic
     - Wood
     - Glass
-    type: Lathe
+    - Cloth
+    type: MaterialStorage
 - uid: 3232
   type: TableReinforced
   components:
@@ -38707,6 +38348,10 @@ entities:
     parent: 0
     type: Transform
   - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
+  - containers:
       machine_board: !type:Container
         ents: []
       machine_parts: !type:Container
@@ -38736,6 +38381,7 @@ entities:
       machine_parts: !type:Container
         ents: []
       MedicalScanner-bodyContainer: !type:ContainerSlot {}
+      scanner-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
   - inputs:
       MedicalScannerReceiver:
@@ -39017,6 +38663,61 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 19.5,-16.5
+    parent: 0
+    type: Transform
+- uid: 3776
+  type: RandomFoodMeal
+  components:
+  - pos: -2.5,8.5
+    parent: 0
+    type: Transform
+- uid: 3777
+  type: AirlockExternalGlass
+  components:
+  - pos: 32.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 3778
+  type: AirlockExternalGlass
+  components:
+  - pos: 32.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 3779
+  type: AirlockExternalGlass
+  components:
+  - pos: 32.5,0.5
+    parent: 0
+    type: Transform
+- uid: 3780
+  type: AirlockExternalGlass
+  components:
+  - pos: 32.5,2.5
+    parent: 0
+    type: Transform
+- uid: 3781
+  type: GasVentPump
+  components:
+  - pos: -1.5,-34.5
+    parent: 0
+    type: Transform
+- uid: 3782
+  type: GasVentScrubber
+  components:
+  - pos: 10.5,20.5
+    parent: 0
+    type: Transform
+- uid: 3783
+  type: GasPipeTJunction
+  components:
+  - pos: -3.5,-34.5
+    parent: 0
+    type: Transform
+- uid: 3784
+  type: GasPipeTJunction
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,-35.5
     parent: 0
     type: Transform
 - uid: 3785
@@ -40232,7 +39933,7 @@ entities:
 - uid: 3962
   type: ToyAi
   components:
-  - pos: 10.480801,52.65163
+  - pos: 10.469682,53.04013
     parent: 0
     type: Transform
 - uid: 3963
@@ -40255,11 +39956,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3966
   type: Poweredlight
   components:
@@ -40268,11 +39964,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3967
   type: Poweredlight
   components:
@@ -40282,11 +39973,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3968
   type: Poweredlight
   components:
@@ -40296,11 +39982,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3969
   type: Poweredlight
   components:
@@ -40310,11 +39991,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3970
   type: Poweredlight
   components:
@@ -40324,11 +40000,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3971
   type: Poweredlight
   components:
@@ -40338,11 +40009,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3972
   type: Poweredlight
   components:
@@ -40351,11 +40017,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3973
   type: Poweredlight
   components:
@@ -40364,11 +40025,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3974
   type: PoweredSmallLight
   components:
@@ -40547,10 +40203,88 @@ entities:
   - pos: 27.5,5.5
     parent: 0
     type: Transform
+- uid: 4002
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 23.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 4003
+  type: GasPipeTJunction
+  components:
+  - pos: -3.5,-31.5
+    parent: 0
+    type: Transform
+- uid: 4004
+  type: GasPipeTJunction
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,-32.5
+    parent: 0
+    type: Transform
+- uid: 4005
+  type: Grille
+  components:
+  - pos: -22.5,-26.5
+    parent: 0
+    type: Transform
 - uid: 4006
   type: WallSolid
   components:
   - pos: 19.5,5.5
+    parent: 0
+    type: Transform
+- uid: 4007
+  type: ReinforcedWindow
+  components:
+  - pos: -23.5,-25.5
+    parent: 0
+    type: Transform
+- uid: 4008
+  type: AltarSpawner
+  components:
+  - pos: -18.5,-34.5
+    parent: 0
+    type: Transform
+- uid: 4009
+  type: TintedWindow
+  components:
+  - pos: -20.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 4010
+  type: Grille
+  components:
+  - pos: -20.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 4011
+  type: TintedWindow
+  components:
+  - pos: -22.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 4012
+  type: HospitalCurtainsOpen
+  components:
+  - pos: -13.5,-24.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4013
+  type: HospitalCurtainsOpen
+  components:
+  - pos: -13.5,-25.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4014
+  type: SignalButton
+  components:
+  - pos: -13.5,-23.5
     parent: 0
     type: Transform
 - uid: 4015
@@ -41400,27 +41134,27 @@ entities:
       id: docking
     type: Fixtures
 - uid: 4138
-  type: AirlockExternalGlassLocked
+  type: ReinforcedPlasmaWindow
   components:
-  - pos: 32.5,-7.5
+  - pos: -35.5,18.5
     parent: 0
     type: Transform
 - uid: 4139
-  type: AirlockExternalGlassLocked
+  type: ReinforcedPlasmaWindow
   components:
-  - pos: 32.5,-5.5
+  - pos: -33.5,18.5
     parent: 0
     type: Transform
 - uid: 4140
-  type: AirlockExternalGlassLocked
+  type: ReinforcedPlasmaWindow
   components:
-  - pos: 32.5,0.5
+  - pos: -32.5,19.5
     parent: 0
     type: Transform
 - uid: 4141
-  type: AirlockExternalGlassLocked
+  type: ReinforcedPlasmaWindow
   components:
-  - pos: 32.5,2.5
+  - pos: -32.5,20.5
     parent: 0
     type: Transform
 - uid: 4142
@@ -42213,22 +41947,17 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 4232
-  type: GasVentPump
+  type: RockGuitarInstrument
   components:
-  - pos: 10.5,20.5
+  - pos: -36.752556,25.675106
     parent: 0
     type: Transform
-  - color: '#FF1212FF'
-    type: AtmosPipeColor
 - uid: 4233
-  type: GasVentScrubber
+  type: AMEJar
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 11.5,19.5
+  - pos: -42.336273,-2.370503
     parent: 0
     type: Transform
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 4234
   type: SubstationBasic
   components:
@@ -43063,6 +42792,12 @@ entities:
   - pos: 14.5,3.5
     parent: 0
     type: Transform
+- uid: 4373
+  type: TaikoInstrument
+  components:
+  - pos: -27.5,32.5
+    parent: 0
+    type: Transform
 - uid: 4374
   type: AirlockMaintLocked
   components:
@@ -43513,6 +43248,20 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
+- uid: 4445
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,1.5
+    parent: 0
+    type: Transform
+- uid: 4446
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,3.5
+    parent: 0
+    type: Transform
 - uid: 4447
   type: ToiletEmpty
   components:
@@ -43699,11 +43448,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4469
   type: Poweredlight
   components:
@@ -43713,11 +43457,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4470
   type: Poweredlight
   components:
@@ -43727,11 +43466,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4471
   type: Poweredlight
   components:
@@ -43740,11 +43474,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4472
   type: Poweredlight
   components:
@@ -43754,11 +43483,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4473
   type: Poweredlight
   components:
@@ -43767,11 +43491,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4474
   type: Poweredlight
   components:
@@ -43781,11 +43500,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4475
   type: Poweredlight
   components:
@@ -43795,11 +43509,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4476
   type: Poweredlight
   components:
@@ -43809,11 +43518,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4477
   type: PoweredSmallLight
   components:
@@ -43831,6 +43535,20 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
+- uid: 4478
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,5.5
+    parent: 0
+    type: Transform
+- uid: 4479
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,7.5
+    parent: 0
+    type: Transform
 - uid: 4480
   type: PoweredSmallLight
   components:
@@ -43991,6 +43709,13 @@ entities:
   type: ClothingMaskGas
   components:
   - pos: 19.554443,6.484804
+    parent: 0
+    type: Transform
+- uid: 4497
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,9.5
     parent: 0
     type: Transform
 - uid: 4498
@@ -46053,6 +45778,49 @@ entities:
   - pos: -2.5,-49.5
     parent: 0
     type: Transform
+- uid: 4826
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,11.5
+    parent: 0
+    type: Transform
+- uid: 4827
+  type: ClothingNeckCloakTrans
+  components:
+  - pos: -31.519413,-43.448658
+    parent: 0
+    type: Transform
+- uid: 4828
+  type: WallReinforced
+  components:
+  - pos: -33.5,23.5
+    parent: 0
+    type: Transform
+- uid: 4829
+  type: WallReinforced
+  components:
+  - pos: -34.5,23.5
+    parent: 0
+    type: Transform
+- uid: 4830
+  type: WallReinforced
+  components:
+  - pos: -35.5,23.5
+    parent: 0
+    type: Transform
+- uid: 4831
+  type: WallReinforced
+  components:
+  - pos: -36.5,23.5
+    parent: 0
+    type: Transform
+- uid: 4832
+  type: WallReinforced
+  components:
+  - pos: -37.5,23.5
+    parent: 0
+    type: Transform
 - uid: 4833
   type: ReinforcedWindow
   components:
@@ -46457,6 +46225,18 @@ entities:
     pos: -13.5,-45.5
     parent: 0
     type: Transform
+- uid: 4886
+  type: WallReinforced
+  components:
+  - pos: -38.5,23.5
+    parent: 0
+    type: Transform
+- uid: 4887
+  type: WallReinforced
+  components:
+  - pos: -38.5,22.5
+    parent: 0
+    type: Transform
 - uid: 4888
   type: ComputerFrame
   components:
@@ -46518,6 +46298,12 @@ entities:
   type: Grille
   components:
   - pos: -2.5,-56.5
+    parent: 0
+    type: Transform
+- uid: 4898
+  type: WallReinforced
+  components:
+  - pos: -38.5,21.5
     parent: 0
     type: Transform
 - uid: 4899
@@ -47387,11 +47173,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5034
   type: Poweredlight
   components:
@@ -47400,11 +47181,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5035
   type: CableHV
   components:
@@ -47425,11 +47201,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5038
   type: Poweredlight
   components:
@@ -47438,11 +47209,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5039
   type: Poweredlight
   components:
@@ -47452,11 +47218,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5040
   type: Poweredlight
   components:
@@ -47466,11 +47227,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5041
   type: ClosetEmergencyFilledRandom
   components:
@@ -47659,11 +47415,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5068
   type: Poweredlight
   components:
@@ -47673,11 +47424,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5069
   type: Poweredlight
   components:
@@ -47686,11 +47432,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5070
   type: Poweredlight
   components:
@@ -47699,11 +47440,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5071
   type: FirelockGlass
   components:
@@ -48140,14 +47876,11 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 5126
-  type: GasPipeStraight
+  type: WallReinforced
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,-35.5
+  - pos: -38.5,20.5
     parent: 0
     type: Transform
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 5127
   type: GasPipeStraight
   components:
@@ -48533,14 +48266,11 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 5174
-  type: GasPipeStraight
+  type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -3.5,-34.5
+  - pos: -38.5,19.5
     parent: 0
     type: Transform
-  - color: '#FF1212FF'
-    type: AtmosPipeColor
 - uid: 5175
   type: GasPipeStraight
   components:
@@ -49329,11 +49059,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5284
   type: Poweredlight
   components:
@@ -49342,11 +49067,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 5285
   type: WallReinforced
   components:
@@ -51150,18 +50870,39 @@ entities:
   - pos: 21.5,-30.5
     parent: 0
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 6690
+    type: SignalReceiver
 - uid: 5574
   type: BlastDoor
   components:
   - pos: 21.5,-29.5
     parent: 0
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 6690
+    type: SignalReceiver
 - uid: 5575
   type: BlastDoor
   components:
   - pos: 21.5,-28.5
     parent: 0
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 6690
+    type: SignalReceiver
 - uid: 5576
   type: SignalButton
   components:
@@ -51298,10 +51039,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 5595
-  type: GasPassiveVent
+  type: WallReinforced
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 23.5,-30.5
+  - pos: -38.5,18.5
     parent: 0
     type: Transform
 - uid: 5596
@@ -55305,7 +55045,7 @@ entities:
     - Plastic
     - Wood
     - Gold
-    type: Lathe
+    type: MaterialStorage
 - uid: 6183
   type: Autolathe
   components:
@@ -55317,7 +55057,8 @@ entities:
     - Plastic
     - Wood
     - Glass
-    type: Lathe
+    - Cloth
+    type: MaterialStorage
 - uid: 6184
   type: CircuitImprinter
   components:
@@ -55328,7 +55069,7 @@ entities:
     - Steel
     - Glass
     - Gold
-    type: Lathe
+    type: MaterialStorage
 - uid: 6185
   type: ComputerResearchAndDevelopment
   components:
@@ -55647,7 +55388,7 @@ entities:
     - Steel
     - Glass
     - Gold
-    type: Lathe
+    type: MaterialStorage
 - uid: 6234
   type: ToolboxMechanicalFilled
   components:
@@ -55739,9 +55480,6 @@ entities:
   - pos: 16.462831,-27.480993
     parent: 0
     type: Transform
-  - tags:
-    - Trash
-    type: Tag
 - uid: 6249
   type: CableApcStack
   components:
@@ -55829,11 +55567,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6259
   type: Poweredlight
   components:
@@ -55843,11 +55576,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6260
   type: Poweredlight
   components:
@@ -55856,11 +55584,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6261
   type: Poweredlight
   components:
@@ -55870,11 +55593,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6262
   type: Poweredlight
   components:
@@ -55883,11 +55601,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6263
   type: Poweredlight
   components:
@@ -55897,11 +55610,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6264
   type: Poweredlight
   components:
@@ -55911,11 +55619,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6265
   type: Poweredlight
   components:
@@ -55925,11 +55628,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6266
   type: Poweredlight
   components:
@@ -55938,11 +55636,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6267
   type: Poweredlight
   components:
@@ -55951,11 +55644,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6268
   type: Poweredlight
   components:
@@ -55965,11 +55653,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6269
   type: Poweredlight
   components:
@@ -55979,11 +55662,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6270
   type: Poweredlight
   components:
@@ -55993,11 +55671,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6271
   type: Poweredlight
   components:
@@ -56006,11 +55679,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6272
   type: Poweredlight
   components:
@@ -56020,11 +55688,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6273
   type: Poweredlight
   components:
@@ -56034,11 +55697,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6274
   type: Poweredlight
   components:
@@ -56048,11 +55706,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6275
   type: Poweredlight
   components:
@@ -56062,11 +55715,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6276
   type: Poweredlight
   components:
@@ -56075,11 +55723,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6277
   type: Poweredlight
   components:
@@ -56089,11 +55732,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6278
   type: PoweredSmallLight
   components:
@@ -56126,6 +55764,12 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
+- uid: 6280
+  type: ClothingUniformJumpsuitNanotrasen
+  components:
+  - pos: -36.536194,32.49803
+    parent: 0
+    type: Transform
 - uid: 6281
   type: PoweredSmallLight
   components:
@@ -56575,10 +56219,6 @@ entities:
   - pos: 32.5,-23.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6346
   type: KitchenReagentGrinder
   components:
@@ -57348,14 +56988,12 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 6455
-  type: GasPipeStraight
+  type: GasVentScrubber
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -3.5,-31.5
+  - rot: 3.141592653589793 rad
+    pos: -3.5,-35.5
     parent: 0
     type: Transform
-  - color: '#FF1212FF'
-    type: AtmosPipeColor
 - uid: 6456
   type: GasPipeStraight
   components:
@@ -57402,14 +57040,11 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 6461
-  type: GasPipeStraight
+  type: GasVentPump
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,-32.5
+  - pos: -1.5,-31.5
     parent: 0
     type: Transform
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 6462
   type: GasPipeTJunction
   components:
@@ -57546,11 +57181,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 6479
   type: Handcuffs
   components:
@@ -58908,12 +58538,39 @@ entities:
     parent: 0
     type: Transform
 - uid: 6687
-  type: WindoorMedicalLocked
+  type: GasVentScrubber
   components:
   - rot: 3.141592653589793 rad
-    pos: -21.5,-26.5
+    pos: -3.5,-32.5
     parent: 0
     type: Transform
+- uid: 6688
+  type: CableApcExtension
+  components:
+  - pos: -9.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 6689
+  type: CableApcExtension
+  components:
+  - pos: -9.5,-25.5
+    parent: 0
+    type: Transform
+- uid: 6690
+  type: SignalButton
+  components:
+  - pos: 26.5,-28.5
+    parent: 0
+    type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 5575
+      - port: Toggle
+        uid: 5574
+      - port: Toggle
+        uid: 5573
+    type: SignalTransmitter
 - uid: 6691
   type: TableGlass
   components:
@@ -59475,9 +59132,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 6784
-  type: WallReinforced
+  type: FireAxeCabinetFilled
   components:
-  - pos: -23.5,-25.5
+  - pos: -40.5,6.5
     parent: 0
     type: Transform
 - uid: 6785
@@ -60915,9 +60572,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 7003
-  type: TableWood
+  type: PaintingAmogusTriptych
   components:
-  - pos: -18.5,-34.5
+  - pos: -21.5,6.5
     parent: 0
     type: Transform
 - uid: 7004
@@ -61029,11 +60686,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7020
   type: PoweredSmallLight
   components:
@@ -61110,11 +60762,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7025
   type: Airlock
   components:
@@ -61221,7 +60868,7 @@ entities:
 - uid: 7041
   type: DrinkWineBottleFull
   components:
-  - pos: -18.5,-33.5
+  - pos: -13.459903,-33.042583
     parent: 0
     type: Transform
 - uid: 7042
@@ -61233,9 +60880,17 @@ entities:
 - uid: 7043
   type: lantern
   components:
-  - pos: -18.521666,-34.311176
+  - pos: -18.349216,-33.27696
     parent: 0
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -62594,11 +62249,18 @@ entities:
   - pos: -18.502743,-28.454454
     parent: 0
     type: Transform
-- uid: 7249
-  type: WindowReinforcedDirectional
+- uid: 7248
+  type: HospitalCurtainsOpen
   components:
-  - rot: 3.141592653589793 rad
-    pos: -20.5,-26.5
+  - pos: -21.5,-26.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7249
+  type: OperatingTable
+  components:
+  - pos: -21.5,-28.5
     parent: 0
     type: Transform
 - uid: 7250
@@ -62614,10 +62276,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 7252
-  type: WindowReinforcedDirectional
+  type: AirlockMedicalGlassLocked
   components:
-  - rot: 3.141592653589793 rad
-    pos: -22.5,-26.5
+  - pos: -21.5,-26.5
     parent: 0
     type: Transform
 - uid: 7253
@@ -62658,9 +62319,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 7259
-  type: StasisBed
+  type: FirelockGlass
   components:
-  - pos: -21.5,-28.5
+  - pos: -13.5,-25.5
     parent: 0
     type: Transform
 - uid: 7260
@@ -62824,13 +62485,13 @@ entities:
 - uid: 7283
   type: FirelockGlass
   components:
-  - pos: -13.5,-25.5
+  - pos: -13.5,-24.5
     parent: 0
     type: Transform
 - uid: 7284
-  type: FirelockGlass
+  type: SignKiddiePlaque
   components:
-  - pos: -13.5,-24.5
+  - pos: -3.5,27.5
     parent: 0
     type: Transform
 - uid: 7285
@@ -62845,7 +62506,7 @@ entities:
     - Plastic
     - Durathread
     - Cloth
-    type: Lathe
+    type: MaterialStorage
 - uid: 7286
   type: VendingMachineMedical
   components:
@@ -64805,9 +64466,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 7570
-  type: VendingMachineWallMedical
+  type: SignPlaque
   components:
-  - pos: -13.5,-23.5
+  - pos: 24.5,-21.5
     parent: 0
     type: Transform
 - uid: 7571
@@ -64928,11 +64589,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7581
   type: Poweredlight
   components:
@@ -64941,11 +64597,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7582
   type: Poweredlight
   components:
@@ -64954,11 +64605,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7583
   type: Poweredlight
   components:
@@ -64968,11 +64614,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7584
   type: Poweredlight
   components:
@@ -64982,11 +64623,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7585
   type: Poweredlight
   components:
@@ -64996,11 +64632,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7586
   type: Poweredlight
   components:
@@ -65009,11 +64640,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7587
   type: Poweredlight
   components:
@@ -65023,11 +64649,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7588
   type: Poweredlight
   components:
@@ -65037,11 +64658,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7589
   type: DisposalTrunk
   components:
@@ -65272,11 +64888,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7622
   type: Poweredlight
   components:
@@ -65286,11 +64897,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7623
   type: Poweredlight
   components:
@@ -65299,11 +64905,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7624
   type: Poweredlight
   components:
@@ -65312,11 +64913,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7625
   type: Poweredlight
   components:
@@ -65326,11 +64922,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7626
   type: Poweredlight
   components:
@@ -65340,11 +64931,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7627
   type: Poweredlight
   components:
@@ -65354,11 +64940,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7628
   type: Poweredlight
   components:
@@ -65368,11 +64949,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7629
   type: Poweredlight
   components:
@@ -65381,11 +64957,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7630
   type: Poweredlight
   components:
@@ -65394,11 +64965,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7631
   type: Poweredlight
   components:
@@ -65407,11 +64973,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7632
   type: Poweredlight
   components:
@@ -65420,11 +64981,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 7633
   type: SpawnPointChaplain
   components:
@@ -66008,15 +65564,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 7730
-  type: ReinforcedWindow
+  type: SignKiddiePlaque
   components:
-  - pos: -32.5,20.5
+  - pos: -14.5,-29.5
     parent: 0
     type: Transform
 - uid: 7731
-  type: ReinforcedWindow
+  type: PaintingPrayerHands
   components:
-  - pos: -32.5,19.5
+  - pos: -23.5,-26.5
     parent: 0
     type: Transform
 - uid: 7732
@@ -66074,15 +65630,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 7741
-  type: ReinforcedWindow
+  type: PaintingOlympia
   components:
-  - pos: -35.5,18.5
+  - pos: -28.5,-35.5
     parent: 0
     type: Transform
 - uid: 7742
-  type: ReinforcedWindow
+  type: PaintingSleepingGypsy
   components:
-  - pos: -33.5,18.5
+  - pos: -28.5,-13.5
     parent: 0
     type: Transform
 - uid: 7743
@@ -68817,11 +68373,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8142
   type: Poweredlight
   components:
@@ -68831,11 +68382,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8143
   type: Poweredlight
   components:
@@ -68845,11 +68391,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8144
   type: Poweredlight
   components:
@@ -68859,11 +68400,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8145
   type: Poweredlight
   components:
@@ -68873,11 +68409,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8146
   type: PoweredSmallLight
   components:
@@ -69640,11 +69171,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8248
   type: RandomSoap
   components:
@@ -69807,11 +69333,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8270
   type: PoweredSmallLight
   components:
@@ -70068,11 +69589,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8305
   type: Poweredlight
   components:
@@ -70082,11 +69598,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8306
   type: GasVentPump
   components:
@@ -70571,7 +70082,7 @@ entities:
     - Glass
     - Plastic
     - Steel
-    type: Lathe
+    type: MaterialStorage
 - uid: 8372
   type: SurveillanceCameraRouterSecurity
   components:
@@ -70654,21 +70165,21 @@ entities:
     parent: 0
     type: Transform
 - uid: 8380
-  type: WindoorArmoryLocked
+  type: PaintingRedBlueYellow
   components:
-  - pos: -34.5,19.5
+  - pos: 1.5,-7.5
     parent: 0
     type: Transform
 - uid: 8381
-  type: WindowReinforcedDirectional
+  type: SignPlaque
   components:
-  - pos: -35.5,19.5
+  - pos: -14.5,26.5
     parent: 0
     type: Transform
 - uid: 8382
-  type: WindowReinforcedDirectional
+  type: StasisBed
   components:
-  - pos: -33.5,19.5
+  - pos: -14.5,-21.5
     parent: 0
     type: Transform
 - uid: 8383
@@ -70893,11 +70404,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8416
   type: Poweredlight
   components:
@@ -70907,11 +70413,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8417
   type: PosterLegitNanotrasenLogo
   components:
@@ -71014,10 +70515,6 @@ entities:
   - pos: -39.5,12.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8429
   type: DonkpocketBoxSpawner
   components:
@@ -71108,6 +70605,12 @@ entities:
   type: ClothingEyesHudSecurity
   components:
   - pos: -36.423813,15.378265
+    parent: 0
+    type: Transform
+- uid: 8444
+  type: TableReinforcedGlass
+  components:
+  - pos: -14.5,-22.5
     parent: 0
     type: Transform
 - uid: 8445
@@ -72148,11 +71651,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8604
   type: Poweredlight
   components:
@@ -72162,11 +71660,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 8605
   type: PosterContrabandHackingGuide
   components:
@@ -73095,6 +72588,12 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
+- uid: 8758
+  type: ShuttersNormalOpen
+  components:
+  - pos: -13.5,-22.5
+    parent: 0
+    type: Transform
 - uid: 8759
   type: GasPipeStraight
   components:
@@ -73192,6 +72691,13 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
+- uid: 8770
+  type: ShuttersNormalOpen
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -13.5,-21.5
+    parent: 0
+    type: Transform
 - uid: 8771
   type: GasPipeStraight
   components:
@@ -73251,6 +72757,18 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
+- uid: 8778
+  type: MedkitBurnFilled
+  components:
+  - pos: -14.411808,-22.378784
+    parent: 0
+    type: Transform
+- uid: 8779
+  type: EmergencyRollerBed
+  components:
+  - pos: -16.536808,-21.285034
+    parent: 0
+    type: Transform
 - uid: 8780
   type: GasPipeStraight
   components:
@@ -73275,6 +72793,21 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
+- uid: 8783
+  type: Grille
+  components:
+  - pos: -23.5,-25.5
+    parent: 0
+    type: Transform
+- uid: 8784
+  type: ClothingShoesBootsWork
+  components:
+  - desc: These look like workboots but... they feel expensive.
+    name: Nimbs
+    type: MetaData
+  - pos: -34.496048,-16.64644
+    parent: 0
+    type: Transform
 - uid: 8785
   type: GasPipeStraight
   components:
@@ -73300,6 +72833,12 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
+- uid: 8788
+  type: ClothingHeadsetMining
+  components:
+  - pos: -34.39077,-40.588726
+    parent: 0
+    type: Transform
 - uid: 8789
   type: WallReinforced
   components:
@@ -73742,6 +73281,18 @@ entities:
   type: AirlockAtmosphericsLocked
   components:
   - pos: -32.5,-36.5
+    parent: 0
+    type: Transform
+- uid: 8863
+  type: ClothingMaskBreathMedical
+  components:
+  - pos: 14.451679,-40.556843
+    parent: 0
+    type: Transform
+- uid: 8864
+  type: ClothingShoesLeather
+  components:
+  - pos: 35.476944,-33.759735
     parent: 0
     type: Transform
 - uid: 8865
@@ -74804,11 +74355,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9018
   type: DiseaseDiagnoser
   components:
@@ -74960,6 +74506,12 @@ entities:
     type: Transform
   - open: False
     type: GasValve
+- uid: 9040
+  type: ClothingUniformJumpskirtJanimaid
+  components:
+  - pos: 10.492298,52.554813
+    parent: 0
+    type: Transform
 - uid: 9041
   type: AirCanister
   components:
@@ -75899,6 +75451,8 @@ entities:
     pos: -47.5,-0.5
     parent: 0
     type: Transform
+  - open: False
+    type: GasValve
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 9165
@@ -76100,45 +75654,39 @@ entities:
     parent: 0
     type: Transform
 - uid: 9193
-  type: GasVentPump
+  type: ClothingOuterCoatJensen
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -51.5,1.5
+  - pos: -13.455734,5.5269423
     parent: 0
     type: Transform
 - uid: 9194
-  type: GasVentPump
+  type: ClothingShoesBootsJack
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -51.5,3.5
+  - pos: 15.452381,-15.575151
     parent: 0
     type: Transform
 - uid: 9195
-  type: GasVentPump
+  type: ClothingHeadHatAnimalHeadslime
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -51.5,5.5
+  - pos: -33.510674,-34.64361
     parent: 0
     type: Transform
 - uid: 9196
-  type: GasVentPump
+  type: ClothingNeckHeadphones
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -51.5,7.5
+  - pos: -22.35473,0.53885174
     parent: 0
     type: Transform
 - uid: 9197
-  type: GasVentPump
+  type: ClothingNeckMantleHOS
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -51.5,9.5
+  - pos: -19.447493,22.601294
     parent: 0
     type: Transform
 - uid: 9198
-  type: GasVentPump
+  type: ClothingBackpackClown
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -51.5,11.5
+  - pos: -10.304824,1.6229031
     parent: 0
     type: Transform
 - uid: 9199
@@ -76872,11 +76420,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9312
   type: Poweredlight
   components:
@@ -76886,11 +76429,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9313
   type: Poweredlight
   components:
@@ -76900,11 +76438,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9314
   type: Poweredlight
   components:
@@ -76914,11 +76447,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9315
   type: Poweredlight
   components:
@@ -76928,11 +76456,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9316
   type: Poweredlight
   components:
@@ -76942,11 +76465,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9317
   type: Poweredlight
   components:
@@ -76956,11 +76474,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9318
   type: Poweredlight
   components:
@@ -76970,11 +76483,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9319
   type: Poweredlight
   components:
@@ -76984,11 +76492,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9320
   type: Poweredlight
   components:
@@ -76998,11 +76501,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9321
   type: CableApcExtension
   components:
@@ -78548,6 +78046,12 @@ entities:
   - pos: -35.5,2.5
     parent: 0
     type: Transform
+- uid: 9567
+  type: ClothingHeadFishCap
+  components:
+  - pos: 13.508905,-4.30057
+    parent: 0
+    type: Transform
 - uid: 9568
   type: TableReinforced
   components:
@@ -79104,9 +78608,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 9657
-  type: AsteroidRock
+  type: ClothingEyesEyepatch
   components:
-  - pos: -31.5,-43.5
+  - pos: 25.533524,-9.424093
     parent: 0
     type: Transform
 - uid: 9658
@@ -79476,11 +78980,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9707
   type: Poweredlight
   components:
@@ -79489,11 +78988,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9708
   type: CableApcExtension
   components:
@@ -80187,11 +79681,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9820
   type: Poweredlight
   components:
@@ -80201,11 +79690,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9821
   type: Poweredlight
   components:
@@ -80215,11 +79699,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9822
   type: Poweredlight
   components:
@@ -80229,11 +79708,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9823
   type: Poweredlight
   components:
@@ -80243,11 +79717,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 9824
   type: WallReinforced
   components:
@@ -85397,11 +84866,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10661
   type: Poweredlight
   components:
@@ -85411,11 +84875,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10662
   type: CableHV
   components:
@@ -85576,11 +85035,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10681
   type: Poweredlight
   components:
@@ -85589,11 +85043,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10682
   type: Poweredlight
   components:
@@ -85602,11 +85051,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10683
   type: Poweredlight
   components:
@@ -85615,11 +85059,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10684
   type: Poweredlight
   components:
@@ -85629,11 +85068,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10685
   type: Poweredlight
   components:
@@ -85643,11 +85077,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10686
   type: Poweredlight
   components:
@@ -85657,11 +85086,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10687
   type: Poweredlight
   components:
@@ -85671,11 +85095,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10688
   type: Poweredlight
   components:
@@ -85685,11 +85104,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10689
   type: Poweredlight
   components:
@@ -85698,11 +85112,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10690
   type: Poweredlight
   components:
@@ -85711,11 +85120,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10691
   type: Poweredlight
   components:
@@ -85725,11 +85129,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10692
   type: Poweredlight
   components:
@@ -85738,11 +85137,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10693
   type: Poweredlight
   components:
@@ -85751,11 +85145,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10694
   type: Poweredlight
   components:
@@ -85764,11 +85153,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10695
   type: Poweredlight
   components:
@@ -85778,11 +85162,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10696
   type: PoweredSmallLight
   components:
@@ -85824,7 +85203,7 @@ entities:
     - Plastic
     - Wood
     - Gold
-    type: Lathe
+    type: MaterialStorage
 - uid: 10700
   type: Autolathe
   components:
@@ -85836,7 +85215,8 @@ entities:
     - Plastic
     - Wood
     - Glass
-    type: Lathe
+    - Cloth
+    type: MaterialStorage
 - uid: 10701
   type: WeldingFuelTankFull
   components:
@@ -86439,6 +85819,12 @@ entities:
   type: DisposalPipe
   components:
   - pos: -33.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 10785
+  type: RandomDrinkGlass
+  components:
+  - pos: 1.5,8.5
     parent: 0
     type: Transform
 - uid: 10786
@@ -87344,11 +86730,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 10921
   type: WardrobeFormal
   components:
@@ -87422,69 +86803,69 @@ entities:
     parent: 0
     type: Transform
 - uid: 10930
-  type: AsteroidRock
+  type: RandomDrinkGlass
   components:
-  - pos: -38.5,18.5
+  - pos: 1.5,7.5
     parent: 0
     type: Transform
 - uid: 10931
-  type: AsteroidRock
+  type: RandomDrinkBottle
   components:
-  - pos: -38.5,19.5
+  - pos: 3.5,4.5
     parent: 0
     type: Transform
 - uid: 10932
-  type: AsteroidRock
+  type: ToySpawner
   components:
-  - pos: -38.5,20.5
+  - pos: -10.5,11.5
     parent: 0
     type: Transform
 - uid: 10933
-  type: AsteroidRock
+  type: RandomFoodMeal
   components:
-  - pos: -38.5,21.5
+  - pos: 1.5,-0.5
     parent: 0
     type: Transform
 - uid: 10934
-  type: AsteroidRock
+  type: RandomSpawner
   components:
-  - pos: -38.5,22.5
+  - pos: -1.5,17.5
     parent: 0
     type: Transform
 - uid: 10935
-  type: AsteroidRock
+  type: RandomSpawner
   components:
-  - pos: -38.5,23.5
+  - pos: -14.5,20.5
     parent: 0
     type: Transform
 - uid: 10936
-  type: AsteroidRock
+  type: RandomSpawner
   components:
-  - pos: -37.5,23.5
+  - pos: -23.5,18.5
     parent: 0
     type: Transform
 - uid: 10937
-  type: AsteroidRock
+  type: RandomSpawner
   components:
-  - pos: -36.5,23.5
+  - pos: -26.5,3.5
     parent: 0
     type: Transform
 - uid: 10938
-  type: AsteroidRock
+  type: RandomSpawner
   components:
-  - pos: -35.5,23.5
+  - pos: -20.5,2.5
     parent: 0
     type: Transform
 - uid: 10939
-  type: AsteroidRock
+  type: RandomSpawner
   components:
-  - pos: -34.5,23.5
+  - pos: -33.5,-1.5
     parent: 0
     type: Transform
 - uid: 10940
-  type: AsteroidRock
+  type: RandomSpawner
   components:
-  - pos: -33.5,23.5
+  - pos: -25.5,-8.5
     parent: 0
     type: Transform
 - uid: 10941
@@ -87752,9 +87133,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 10985
-  type: AsteroidRock
+  type: RandomSpawner
   components:
-  - pos: -36.5,32.5
+  - pos: -16.5,-12.5
     parent: 0
     type: Transform
 - uid: 10986
@@ -89297,20 +88678,6 @@ entities:
     pos: 9.5,-38.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -89377,47 +88744,6 @@ entities:
     pos: 10.5,-38.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.2,-0.2
-        - 0.2,0.2
-        - -0.2,0.2
-        - -0.2,-0.2
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      hard: False
-      id: brrt
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      layer:
-      - BulletImpassable
-      - Opaque
-      id: collision
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-        - -0.55,-0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
-      id: conveyor
-    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -89461,11 +88787,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11247
   type: Poweredlight
   components:
@@ -89475,11 +88796,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11248
   type: Poweredlight
   components:
@@ -89489,11 +88805,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11249
   type: PoweredlightEmpty
   components:
@@ -89503,11 +88814,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11250
   type: PoweredlightEmpty
   components:
@@ -89517,11 +88823,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11251
   type: SignDisposalSpace
   components:
@@ -92578,6 +91879,12 @@ entities:
   - pos: 40.5,-42.5
     parent: 0
     type: Transform
+- uid: 11739
+  type: RandomSpawner
+  components:
+  - pos: -6.5,-13.5
+    parent: 0
+    type: Transform
 - uid: 11740
   type: Grille
   components:
@@ -93670,6 +92977,36 @@ entities:
   - pos: -53.5,9.5
     parent: 0
     type: Transform
+- uid: 11911
+  type: RandomSpawner
+  components:
+  - pos: -0.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 11912
+  type: RandomSpawner
+  components:
+  - pos: -6.5,-34.5
+    parent: 0
+    type: Transform
+- uid: 11913
+  type: RandomSpawner
+  components:
+  - pos: -11.5,-40.5
+    parent: 0
+    type: Transform
+- uid: 11914
+  type: RandomSpawner
+  components:
+  - pos: -12.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 11915
+  type: RandomSpawner
+  components:
+  - pos: 6.5,-18.5
+    parent: 0
+    type: Transform
 - uid: 11916
   type: Poweredlight
   components:
@@ -93679,11 +93016,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11917
   type: Poweredlight
   components:
@@ -93692,11 +93024,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11918
   type: Poweredlight
   components:
@@ -93706,11 +93033,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11919
   type: CableApcExtension
   components:
@@ -93726,11 +93048,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11921
   type: Poweredlight
   components:
@@ -93739,11 +93056,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11922
   type: Poweredlight
   components:
@@ -93753,11 +93065,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11923
   type: Poweredlight
   components:
@@ -93766,11 +93073,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11924
   type: Poweredlight
   components:
@@ -93780,11 +93082,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11925
   type: Poweredlight
   components:
@@ -93794,11 +93091,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11926
   type: Poweredlight
   components:
@@ -93808,11 +93100,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11927
   type: WaterTankFull
   components:
@@ -94029,11 +93316,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 11962
   type: GasVentPump
   components:
@@ -94765,6 +94047,12 @@ entities:
   - pos: -50.5,-13.5
     parent: 0
     type: Transform
+- uid: 12047
+  type: RandomSpawner
+  components:
+  - pos: 21.5,-24.5
+    parent: 0
+    type: Transform
 - uid: 12048
   type: CableApcExtension
   components:
@@ -95419,18 +94707,12 @@ entities:
   - pos: -42.44835,-1.0036435
     parent: 0
     type: Transform
-  - containers:
-      cell_slot: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 12120
   type: ClothingHeadHatHardhatYellow
   components:
   - pos: -41.401306,-7.235723
     parent: 0
     type: Transform
-  - containers:
-      cell_slot: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 12121
   type: Grille
   components:
@@ -95575,10 +94857,22 @@ entities:
   - pos: -48.5,-25.5
     parent: 0
     type: Transform
+- uid: 12145
+  type: RandomSpawner
+  components:
+  - pos: 35.5,-24.5
+    parent: 0
+    type: Transform
 - uid: 12146
   type: AsteroidRockMining
   components:
   - pos: -52.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 12147
+  type: RandomSpawner
+  components:
+  - pos: 31.5,-33.5
     parent: 0
     type: Transform
 - uid: 12148
@@ -95586,6 +94880,12 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: -22.5,4.5
+    parent: 0
+    type: Transform
+- uid: 12149
+  type: RandomSpawner
+  components:
+  - pos: 15.5,-34.5
     parent: 0
     type: Transform
 - uid: 12150
@@ -95600,6 +94900,102 @@ entities:
   type: PosterContrabandNuclearDeviceInformational
   components:
   - pos: -1.5,27.5
+    parent: 0
+    type: Transform
+- uid: 12152
+  type: RandomSpawner
+  components:
+  - pos: 7.5,-37.5
+    parent: 0
+    type: Transform
+- uid: 12153
+  type: RandomSpawner
+  components:
+  - pos: 8.5,-36.5
+    parent: 0
+    type: Transform
+- uid: 12154
+  type: RandomSpawner
+  components:
+  - pos: 12.5,-38.5
+    parent: 0
+    type: Transform
+- uid: 12155
+  type: RandomSpawner
+  components:
+  - pos: 9.5,-33.5
+    parent: 0
+    type: Transform
+- uid: 12156
+  type: RandomSpawner
+  components:
+  - pos: 12.5,-31.5
+    parent: 0
+    type: Transform
+- uid: 12157
+  type: RandomSpawner
+  components:
+  - pos: 27.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 12158
+  type: RandomSpawner
+  components:
+  - pos: 16.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 12159
+  type: RandomSpawner
+  components:
+  - pos: 12.5,4.5
+    parent: 0
+    type: Transform
+- uid: 12160
+  type: RandomSpawner
+  components:
+  - pos: 19.5,14.5
+    parent: 0
+    type: Transform
+- uid: 12161
+  type: RandomSpawner
+  components:
+  - pos: -30.5,17.5
+    parent: 0
+    type: Transform
+- uid: 12162
+  type: Bed
+  components:
+  - pos: -25.5,-20.5
+    parent: 0
+    type: Transform
+- uid: 12163
+  type: BedsheetSpawner
+  components:
+  - pos: -25.5,-20.5
+    parent: 0
+    type: Transform
+- uid: 12164
+  type: RandomPainting
+  components:
+  - pos: -29.5,-20.5
+    parent: 0
+    type: Transform
+- uid: 12165
+  type: RandomPainting
+  components:
+  - pos: -33.5,-14.5
+    parent: 0
+    type: Transform
+- uid: 12166
+  type: RandomPainting
+  components:
+  - pos: -33.5,-16.5
+    parent: 0
+    type: Transform
+- uid: 12167
+  type: RandomPainting
+  components:
+  - pos: -33.5,-18.5
     parent: 0
     type: Transform
 ...

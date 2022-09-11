@@ -278,6 +278,7 @@
       - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
       - EmitterCircuitboard
+      - GasRecyclerMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
