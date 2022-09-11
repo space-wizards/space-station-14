@@ -77,17 +77,6 @@ public sealed class LightningSystem : SharedLightningSystem
     }
 
     /// <summary>
-    /// Picks a random sprite state for the lightning.
-    /// </summary>
-    /// <returns>Returns a sprite state of lightning_ + the chosen random number</returns>
-    private string LightningRandomizer()
-    {
-        //When the lightning is made with TryCreateBeam, spawns random sprites for each beam to make it look nicer.
-        var spriteStateNumber = _random.Next(1, 12);
-        return ("lightning_" + spriteStateNumber);
-    }
-
-    /// <summary>
     /// Looks for a target to arc to in all 8 directions, adds the closest to a local dictionary and picks at random
     /// </summary>
     /// <param name="component"></param>
