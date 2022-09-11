@@ -194,8 +194,8 @@ namespace Content.Client.Lathe.UI
             if (quantity <= 0) quantity = 1;
             for (var i = 0; i < _shownRecipes.Count; i++)
             {
-                var prototype = _shownRecipes[i];
-                _items[i].Disabled = !Owner.Lathe?.CanProduce(prototype, quantity) ?? true;
+                var prototype = _shownRecipes[i]; //TODO: sharedLatheSystem dependency
+                //_items[i].Disabled = !Owner.Lathe?.CanProduce(prototype, quantity) ?? true;
             }
         }
 

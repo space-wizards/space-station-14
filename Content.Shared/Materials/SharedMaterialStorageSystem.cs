@@ -5,7 +5,8 @@ using Content.Shared.Stacks;
 namespace Content.Shared.Materials;
 
 /// <summary>
-/// This handles...
+/// This handles storing materials and modifying their amounts
+/// <see cref="MaterialStorageComponent"/>
 /// </summary>
 public abstract class SharedMaterialStorageSystem : EntitySystem
 {
@@ -52,7 +53,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!component.Storage.ContainsKey(materialId))
             component.Storage.Add(materialId, 0);
         component.Storage[materialId] += volume;
-
+        RaiseLocalEvent(component.Owner, new MaterialAmountChangedEvent(materialId, volume));
         return true;
     }
 

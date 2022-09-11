@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Lathe;
@@ -18,14 +19,13 @@ public abstract class SharedLatheSystem : EntitySystem
 
     }
 
-    public bool CanProduce(SharedLatheComponent component, string recipe, int amount = 1)
+    [PublicAPI]
+    public bool CanProduce(LatheComponent component, string recipe, int amount = 1)
     {
-        if (!_proto.TryIndex<LatheRecipePrototype>(recipe, out var proto))
-            return false;
-        return CanProduce(component, proto, amount);
+        return _proto.TryIndex<LatheRecipePrototype>(recipe, out var proto) && CanProduce(component, proto, amount);
     }
 
-    public bool CanProduce(SharedLatheComponent component, LatheRecipePrototype recipe, int amount = 1)
+    public bool CanProduce(LatheComponent component, LatheRecipePrototype recipe, int amount = 1)
     {
         var lathe = component.Owner;
         if (!TryComp<MaterialStorageComponent>(lathe, out var materialStorage))

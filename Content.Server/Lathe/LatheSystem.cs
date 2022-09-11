@@ -82,6 +82,7 @@ namespace Content.Server.Lathe
             if (!TryComp<MaterialStorageComponent>(uid, out var storage))
                 return;
 
+            /*
             //TODO: fuck
             storage.MaterialWhiteList = new();
             foreach (var recipe in recipes)
@@ -91,7 +92,7 @@ namespace Content.Server.Lathe
                     if (!storage.MaterialWhiteList.Contains(mat.Key))
                         storage.MaterialWhiteList.Add(mat.Key);
                 }
-            }
+            }*/
         }
 
         private void OnMaterialEntityInserted(EntityUid uid, LatheComponent component, MaterialEntityInsertedEvent args)
@@ -131,7 +132,7 @@ namespace Content.Server.Lathe
                 return TryStartProducing(uid, prodComp, component);
             }
 
-            if (!component.CanProduce(recipe) || !TryComp(uid, out MaterialStorageComponent? storage))
+            if (!CanProduce(component, recipe) || !TryComp(uid, out MaterialStorageComponent? storage))
             {
                 component.Queue.RemoveAt(0);
                 return false;

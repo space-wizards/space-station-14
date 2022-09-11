@@ -63,7 +63,7 @@ namespace Content.Client.Entry
             factory.IgnoreMissingComponents();
 
             // Do not add to these, they are legacy.
-            factory.RegisterClass<SharedLatheComponent>();
+            factory.RegisterClass<LatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();

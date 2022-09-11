@@ -5,6 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Materials;
 
+[Access(typeof(SharedMaterialStorageSystem))]
 [RegisterComponent, NetworkedComponent]
 public sealed class MaterialStorageComponent : Component
 {
@@ -48,5 +49,21 @@ public readonly struct MaterialEntityInsertedEvent
     public MaterialEntityInsertedEvent(Dictionary<string, int> materials)
     {
         Materials = materials;
+    }
+}
+
+/// <summary>
+/// Event raised when a material amount is changed
+/// </summary>
+public readonly struct MaterialAmountChangedEvent
+{
+    public readonly string Material;
+
+    public readonly int Amount;
+
+    public MaterialAmountChangedEvent(string material, int amount)
+    {
+        Material = material;
+        Amount = amount;
     }
 }

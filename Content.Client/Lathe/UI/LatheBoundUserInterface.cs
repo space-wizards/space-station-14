@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Lathe.SharedLatheComponent;
+using static Content.Shared.Lathe.LatheComponent;
 
 namespace Content.Client.Lathe.UI
 {
@@ -23,7 +23,7 @@ namespace Content.Client.Lathe.UI
         private LatheQueueMenu? _queueMenu;
 
         public MaterialStorageComponent? Storage { get; private set; }
-        public SharedLatheComponent? Lathe { get; private set; }
+        public LatheComponent? Lathe { get; private set; }
         public SharedLatheDatabaseComponent? Database { get; private set; }
 
         [ViewVariables]
@@ -40,7 +40,7 @@ namespace Content.Client.Lathe.UI
             base.Open();
 
             if (!_entMan.TryGetComponent(Owner.Owner, out MaterialStorageComponent? storage)
-            ||  !_entMan.TryGetComponent(Owner.Owner, out SharedLatheComponent? lathe)
+            ||  !_entMan.TryGetComponent(Owner.Owner, out LatheComponent? lathe)
             ||  !_entMan.TryGetComponent(Owner.Owner, out SharedLatheDatabaseComponent? database)) return;
 
             Storage = storage;

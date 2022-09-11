@@ -11,10 +11,10 @@ public sealed class LatheSystem : SharedLatheSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedLatheComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<LatheComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnAppearanceChange(EntityUid uid, SharedLatheComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, LatheComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
