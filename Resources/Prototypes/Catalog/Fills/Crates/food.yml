@@ -26,15 +26,26 @@
     contents:
     - id: ReagentContainerFlour
       amount: 3
+    - id: ReagentContainerRice
+      amount: 1
     - id: ReagentContainerMilk
       amount: 4
     - id: ReagentContainerMilkSoy
       amount: 1
     - id: ReagentContainerSugar
       amount: 1
+    - id: FoodCondimentPacketSalt
+      amount: 3
     - id: FoodCondimentBottleEnzyme
       amount: 1
     - id: FoodBowlBig
+      amount: 3
+    - id: FoodPlate
+      amount: 3
+    - id: FoodPlateSmall
+      amount: 3
+    - id: FoodContainerEgg
+    - id: FoodKebabSkewer
       amount: 3
     - id: KitchenKnife
       amount: 1
