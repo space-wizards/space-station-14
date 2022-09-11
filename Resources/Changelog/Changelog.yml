@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Credits & cargo points have been renamed to spacebucks., type: Tweak}
-  id: 1781
-  time: '2022-06-24T14:43:44.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Spacebucks now have an "S" on them rather than a "C" to be in line with
@@ -2925,3 +2920,8 @@ Entries:
   - {message: Gave Miasma a slightly spookier palette., type: Tweak}
   id: 2280
   time: '2022-09-11T07:00:43.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring will now ignore non-hard physics bodies., type: Fix}
+  id: 2281
+  time: '2022-09-11T09:19:27.0000000+00:00'
