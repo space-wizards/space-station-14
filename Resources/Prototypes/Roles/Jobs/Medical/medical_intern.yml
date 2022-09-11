@@ -3,9 +3,9 @@
   name: job-name-intern
   playTimeTracker: JobMedicalIntern
   requirements:
-    - !type:RoleTimeRequirement
-      role: JobPassenger
-      time: 1800
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 18000
       inverted: true # stop playing intern if you're good at med!
   startingGear: MedicalInternGear
   icon: "MedicalIntern"
