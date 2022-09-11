@@ -1,10 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'Pills can now be dissolved into beakers. And, you can crack eggs into
-      bowls now! The future is now!', type: Add}
-  id: 1779
-  time: '2022-06-24T02:26:54.0000000+00:00'
 - author: Rane
   changes:
   - {message: Corpses are now circled by buzzing flies when they've started to rot.,
@@ -2930,3 +2924,10 @@ Entries:
   - {message: Added some more networking options to the options window., type: Add}
   id: 2278
   time: '2022-09-11T06:52:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed missing text in the uplink withdraw menu, type: Fix}
+  - {message: Fixed uplinks being able to brick themselves if currency was inserted
+      into them before it was opened., type: Fix}
+  id: 2279
+  time: '2022-09-11T06:54:16.0000000+00:00'
