@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: 'Filters, mixers, pressure pumps and volume pumps now always appear
-      on when they''re enabled, not only when they''re transferring gas.', type: Tweak}
-  id: 1774
-  time: '2022-06-23T12:18:11.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Chat bubbles will no longer be offset in low-resolution high-scale modes.,
@@ -2930,3 +2924,9 @@ Entries:
   - {message: Added a sussy lil friend to the station., type: Add}
   id: 2273
   time: '2022-09-11T00:08:17.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: Pipes with high pressure will warn you when unachoring them and take
+      slightly longer., type: Fix}
+  id: 2274
+  time: '2022-09-11T06:30:10.0000000+00:00'
