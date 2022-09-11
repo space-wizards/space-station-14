@@ -1,7 +1,11 @@
 reagent-name-aluminium = алюминий
 reagent-desc-aluminium = Серебристый, мягкий, немагнитный и ковкий металл.
+reagent-name-ash = ash
+reagent-desc-ash = A light grey powdery residue
 reagent-name-carbon = углерод
 reagent-desc-carbon = Он же карбон. Черное кристаллическое твердое вещество.
+reagent-name-charcoal = charcoal
+reagent-desc-charcoal = A black, porous solid
 reagent-name-chlorine = хлор
 reagent-desc-chlorine = Желто-зеленый газ, токсичный для человека.
 reagent-name-copper = медь

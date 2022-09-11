@@ -139,3 +139,6 @@ ent-PonderingOrb = pondering orb
 ent-ToySword = toy sword
     .desc = New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
     .suffix = { "" }
+ent-ToyAmongPequeno = among pequeno
+    .desc = sus!
+    .suffix = { "" }

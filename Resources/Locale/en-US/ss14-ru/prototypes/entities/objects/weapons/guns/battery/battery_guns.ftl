@@ -37,3 +37,6 @@ ent-WeaponTaser = taser
 ent-WeaponAntiqueLaser = antique laser gun
     .desc = This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
     .suffix = { "" }
+ent-WeaponAdvancedLaser = advanced laser gun
+    .desc = An experimental laser gun with a self charging nuclear powered battery.
+    .suffix = { "" }

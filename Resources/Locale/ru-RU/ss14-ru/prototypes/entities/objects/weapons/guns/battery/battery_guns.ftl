@@ -37,3 +37,6 @@ ent-WeaponTaser = тазер
 ent-WeaponAntiqueLaser = антикварный лазерный пистолет
     .desc = Вся отделка выполнена на высочайшем уровне. Он украшен кожей ассистентов и хромом. Предмет устрашает энергетическими всплесками.
     .suffix = { "" }
+ent-WeaponAdvancedLaser = advanced laser gun
+    .desc = An experimental laser gun with a self charging nuclear powered battery.
+    .suffix = { "" }

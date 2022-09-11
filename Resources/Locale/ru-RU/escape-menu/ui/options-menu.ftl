@@ -7,6 +7,7 @@ ui-options-tab-audio = Аудио
 ui-options-tab-network = Сеть
 ui-options-apply = Применить
 ui-options-reset-all = Сбросить всё
+ui-options-default = Default
 
 ## Audio menu
 
@@ -165,3 +166,20 @@ ui-options-net-interp-ratio-tooltip =
     более устойчивой к потере пакетов, однако при этом
     это так же добавляет немного больше задержки и
     требует от клиента предсказывать больше будущих тиков.
+ui-options-net-predict-tick-bias = Prediction tick bias
+ui-options-net-predict-tick-bias-tooltip =
+    Increasing this will generally make the game more resistant 
+    to client->server packet-loss, however in doing so it 
+    effectively adds slightly more latency and requires the 
+    client to predict more future ticks.
+ui-options-net-pvs-entry = PVS entity budget
+ui-options-net-pvs-entry-tooltip =
+    This limits the rate at which the server will send new 
+    entities to the client. Lowering this can help reduce 
+    stuttering due to entity spawning, but can lead to pop-in.
+ui-options-net-pvs-leave = PVS detach rate
+ui-options-net-pvs-leave-tooltip =
+    This limits the rate at which the client will remove 
+    out-of-view entities. Lowering this can help reduce 
+    stuttering when walking around, but could occasionally 
+    lead to mispredicts and other issues.
