@@ -14,6 +14,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/gravity_generator.rsi
+    snapCardinals: true
     layers:
       - state: on
         map: ["enum.GravityGeneratorVisualLayers.Base"]
@@ -80,6 +81,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/gravity_generator_mini.rsi
+    snapCardinals: true
     layers:
       - state: on
         map: ["enum.GravityGeneratorVisualLayers.Base"]

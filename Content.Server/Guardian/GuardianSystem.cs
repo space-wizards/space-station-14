@@ -69,6 +69,9 @@ namespace Content.Server.Guardian
 
             if (!TryComp<GuardianHostComponent>(host, out var hostComponent)) return;
 
+            if (LifeStage(host) >= EntityLifeStage.MapInitialized)
+                return;
+
             RetractGuardian(hostComponent, component);
         }
 

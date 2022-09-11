@@ -11,6 +11,7 @@
 
 - type: construction
   name: reinforced glass
+  description: A reinforced sheet of glass.
   id: SheetRGlass
   graph: Glass
   startNode: start
@@ -21,6 +22,7 @@
 
 - type: construction
   name: plasma glass
+  description: A sheet of translucent plasma.
   id: SheetPGlass
   graph: Glass
   startNode: start
@@ -31,6 +33,7 @@
 
 - type: construction
   name: reinforced plasma glass
+  description: A reinforced sheet of translucent plasma.
   id: SheetRPGlass
   graph: Glass
   startNode: start

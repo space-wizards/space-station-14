@@ -1,11 +1,9 @@
-using System;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
-using Content.Client.Eye.Blinding;
 using Content.Client.Flash;
 using Content.Client.GhostKick;
 using Content.Client.HUD;
@@ -14,40 +12,33 @@ using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
-using Content.Client.MobState.Overlays;
-using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation;
-using Content.Client.Sandbox;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Content.Shared.Alert;
 using Content.Shared.AME;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Gravity;
 using Content.Shared.Lathe;
 using Content.Shared.Markers;
-using Content.Shared.Research.Components;
-using Content.Shared.VendingMachines;
-using Content.Shared.Wires;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+#if FULL_RELEASE
+using Robust.Shared;
+using Robust.Shared.Configuration;
+#endif
 using Robust.Shared.ContentPack;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -75,7 +66,6 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
-            factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
             // Do not add to the above, they are legacy
@@ -89,6 +79,8 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("objective");
             prototypes.RegisterIgnore("holiday");
             prototypes.RegisterIgnore("aiFaction");
+            prototypes.RegisterIgnore("htnCompound");
+            prototypes.RegisterIgnore("htnPrimitive");
             prototypes.RegisterIgnore("gameMap");
             prototypes.RegisterIgnore("behaviorSet");
             prototypes.RegisterIgnore("lobbyBackground");
@@ -105,6 +97,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("wireLayout");
             prototypes.RegisterIgnore("alertLevels");
             prototypes.RegisterIgnore("nukeopsRole");
+            prototypes.RegisterIgnore("flavor");
 
             ClientContentIoC.Register();
 
@@ -129,6 +122,11 @@ namespace Content.Client.Entry
             IoCManager.Resolve<PlayTimeTrackingManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
+
+#if FULL_RELEASE
+            // if FULL_RELEASE, because otherwise this breaks some integration tests.
+            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, 2);
+#endif
 
             _escapeMenuOwner.Initialize();
 

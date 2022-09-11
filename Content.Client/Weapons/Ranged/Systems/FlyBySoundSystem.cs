@@ -13,6 +13,7 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -28,11 +29,18 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         if (attachedEnt == null ||
             args.OtherFixture.Body.Owner != attachedEnt ||
             TryComp<ProjectileComponent>(args.OurFixture.Body.Owner, out var projectile) &&
-            projectile.Shooter == attachedEnt) return;
+            projectile.Shooter == attachedEnt)
+        {
+            return;
+        }
 
         if (args.OurFixture.ID != FlyByFixture ||
-            !_random.Prob(component.Prob)) return;
+            !_random.Prob(component.Prob))
+        {
+            return;
+        }
 
-        SoundSystem.Play(component.Sound.GetSound(), Filter.Local(), uid, component.Sound.Params);
+        // Play attached to our entity because the projectile may immediately delete or the likes.
+        _audio.Play(component.Sound, Filter.Local(), attachedEnt.Value);
     }
 }

@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat.TypingIndicator;
 using Robust.Server.GameObjects;
+using Robust.Shared.Players;
 
 namespace Content.Server.Chat.TypingIndicator;
 
@@ -33,24 +34,24 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         SetTypingIndicatorEnabled(uid, false);
     }
 
-    private void OnClientTypingChanged(TypingChangedEvent ev)
+    private void OnClientTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)
     {
-        // make sure that this entity still exist
-        if (!Exists(ev.Uid))
+        var uid = args.SenderSession.AttachedEntity;
+        if (!Exists(uid))
         {
-            Logger.Warning($"Client attached entity {ev.Uid} from TypingChangedEvent doesn't exist on server.");
+            Logger.Warning($"Client {args.SenderSession} sent TypingChangedEvent without an attached entity.");
             return;
         }
 
         // check if this entity can speak or emote
-        if (!_actionBlocker.CanEmote(ev.Uid) && !_actionBlocker.CanSpeak(ev.Uid))
+        if (!_actionBlocker.CanEmote(uid.Value) && !_actionBlocker.CanSpeak(uid.Value))
         {
             // nah, make sure that typing indicator is disabled
-            SetTypingIndicatorEnabled(ev.Uid, false);
+            SetTypingIndicatorEnabled(uid.Value, false);
             return;
         }
 
-        SetTypingIndicatorEnabled(ev.Uid, ev.IsTyping);
+        SetTypingIndicatorEnabled(uid.Value, ev.IsTyping);
     }
 
     private void SetTypingIndicatorEnabled(EntityUid uid, bool isEnabled, AppearanceComponent? appearance = null)

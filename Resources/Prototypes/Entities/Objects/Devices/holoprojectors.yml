@@ -8,6 +8,10 @@
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot {}
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellMedium

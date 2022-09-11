@@ -8,7 +8,7 @@ namespace Content.Client.Arcade.UI
     {
         private BlockGameMenu? _menu;
 
-        public BlockGameBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public BlockGameBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

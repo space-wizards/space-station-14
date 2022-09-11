@@ -13,6 +13,8 @@ namespace Content.Client.Info
     {
         [Dependency] private readonly IResourceCache _resourceManager = default!;
         [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+        [Dependency] private readonly RulesManager _rules = default!;
 
         private OptionsMenu optionsMenu;
 
@@ -35,17 +37,12 @@ namespace Content.Client.Info
             TabContainer.SetTabTitle(rulesList, Loc.GetString("ui-info-tab-rules"));
             TabContainer.SetTabTitle(tutorialList, Loc.GetString("ui-info-tab-tutorial"));
 
-            PopulateRules(rulesList);
+            AddSection(rulesList, _rules.RulesSection());
             PopulateTutorial(tutorialList);
 
             Contents.AddChild(rootContainer);
 
             SetSize = (650, 650);
-        }
-
-        private void PopulateRules(Info rulesList)
-        {
-            AddSection(rulesList, MakeRules(_cfgManager, _resourceManager));
         }
 
         private void PopulateTutorial(Info tutorialList)
@@ -74,9 +71,5 @@ namespace Content.Client.Info
             return new InfoSection(title, res.ContentFileReadAllText($"/Server Info/{path}"), markup);
         }
 
-        public static Control MakeRules(IConfigurationManager cfg, IResourceManager res)
-        {
-            return MakeSection(Loc.GetString(cfg.GetCVar(CCVars.RulesHeader)), cfg.GetCVar(CCVars.RulesFile), true, res);
-        }
     }
 }

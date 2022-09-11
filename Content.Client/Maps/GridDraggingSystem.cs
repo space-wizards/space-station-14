@@ -1,4 +1,3 @@
-using Content.Client.Administration.Managers;
 using Content.Shared.Maps;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -23,6 +22,23 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     private EntityUid? _dragging;
     private Vector2 _localPosition;
     private MapCoordinates? _lastMousePosition;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeNetworkEvent<GridDragToggleMessage>(OnToggleMessage);
+    }
+
+    private void OnToggleMessage(GridDragToggleMessage ev)
+    {
+        if (Enabled == ev.Enabled)
+            return;
+
+        Enabled = ev.Enabled;
+
+        if (!Enabled)
+            StopDragging();
+    }
 
     private void StartDragging(EntityUid grid, Vector2 localPosition)
     {

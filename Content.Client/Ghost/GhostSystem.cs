@@ -103,8 +103,7 @@ namespace Content.Client.Ghost
 
             if (window != null)
             {
-                window.Locations = msg.Locations;
-                window.Players = msg.Players;
+                window.UpdateWarps(msg.Warps);
                 window.Populate();
             }
         }

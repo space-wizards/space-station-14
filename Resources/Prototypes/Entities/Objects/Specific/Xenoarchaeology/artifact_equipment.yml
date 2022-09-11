@@ -67,3 +67,8 @@
         - type: StorageVisualizer
           state_open: artifact_container_open
           state_closed: artifact_container_door
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+        paper_label: !type:ContainerSlot

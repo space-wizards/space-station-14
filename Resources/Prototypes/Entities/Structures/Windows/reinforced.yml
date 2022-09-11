@@ -42,13 +42,12 @@
     graph: Window
     node: reinforcedWindow
   - type: Appearance
-    visuals:
-    - type: DamageVisualizer
-      thresholds: [4, 8, 12]
-      damageDivisor: 10
-      trackAllDamage: true
-      damageOverlay:
-        sprite: Structures/Windows/cracks.rsi
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 10
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 0.75
 

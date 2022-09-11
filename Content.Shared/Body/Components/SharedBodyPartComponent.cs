@@ -11,6 +11,8 @@ namespace Content.Shared.Body.Components
     [NetworkedComponent()]
     public abstract class SharedBodyPartComponent : Component
     {
+        public const string ContainerId = "bodypart";
+
         [Dependency] private readonly IEntityManager _entMan = default!;
         private SharedBodyComponent? _body;
 
@@ -255,9 +257,6 @@ namespace Content.Shared.Body.Components
 
         private void AddedToBody(SharedBodyComponent body)
         {
-            var transformComponent = _entMan.GetComponent<TransformComponent>(Owner);
-            transformComponent.LocalRotation = 0;
-            transformComponent.AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)

@@ -14,6 +14,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Threading;
+using Content.Client.Gameplay;
+using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Audio
@@ -44,7 +47,7 @@ namespace Content.Client.Audio
         /// <summary>
         /// What the ambience has been set to.
         /// </summary>
-        private SoundCollectionPrototype _currentCollection = default!;
+        private SoundCollectionPrototype? _currentCollection;
         private CancellationTokenSource _timerCancelTokenSource = new();
 
         private SoundCollectionPrototype _spaceAmbience = default!;
@@ -58,12 +61,22 @@ namespace Content.Client.Audio
             _spaceAmbience = _prototypeManager.Index<SoundCollectionPrototype>("SpaceAmbienceBase");
             _currentCollection = _stationAmbience;
 
+            // TOOD: Ideally audio loading streamed better / we have more robust audio but this is quite annoying
+            var cache = IoCManager.Resolve<IResourceCache>();
+
+            foreach (var audio in _spaceAmbience.PickFiles)
+            {
+                cache.GetResource<AudioResource>(audio.ToString());
+            }
+
             _configManager.OnValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
             _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
             _configManager.OnValueChanged(CCVars.StationAmbienceEnabled, StationAmbienceCVarChanged);
             _configManager.OnValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
 
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
+            SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
 
             _stateManager.OnStateChanged += StateManagerOnStateChanged;
 
@@ -73,9 +86,27 @@ namespace Content.Client.Audio
             _gameTicker.LobbyStatusUpdated += LobbySongReceived;
         }
 
+        private void OnPlayerAttached(PlayerAttachedEvent ev)
+        {
+            if (!TryComp<TransformComponent>(ev.Entity, out var xform))
+                return;
+
+            CheckAmbience(xform);
+        }
+
+        private void OnPlayerDetached(PlayerDetachedEvent ev)
+        {
+            EndAmbience();
+        }
+
         public override void Shutdown()
         {
             base.Shutdown();
+
+            _configManager.UnsubValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
+            _configManager.UnsubValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
+            _configManager.UnsubValueChanged(CCVars.StationAmbienceEnabled, StationAmbienceCVarChanged);
+            _configManager.UnsubValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
 
             _stateManager.OnStateChanged -= StateManagerOnStateChanged;
 
@@ -88,21 +119,27 @@ namespace Content.Client.Audio
             EndLobbyMusic();
         }
 
-        private void EntParentChanged(ref EntParentChangedMessage message)
+        private void CheckAmbience(TransformComponent xform)
         {
-            if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity ||
-               !_timing.IsFirstTimePredicted) return;
-
-            // Check if we traversed to grid.
-            if (message.Transform.GridUid != null)
+            if (xform.GridUid != null)
             {
-                if (_currentCollection == _stationAmbience) return;
+                if (_currentCollection == _stationAmbience)
+                    return;
                 ChangeAmbience(_stationAmbience);
             }
             else
             {
                 ChangeAmbience(_spaceAmbience);
             }
+        }
+
+        private void EntParentChanged(ref EntParentChangedMessage message)
+        {
+            if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity ||
+               !_timing.IsFirstTimePredicted) return;
+
+            // Check if we traversed to grid.
+            CheckAmbience(message.Transform);
         }
 
         private void ChangeAmbience(SoundCollectionPrototype newAmbience)
@@ -129,7 +166,7 @@ namespace Content.Client.Audio
                 StartLobbyMusic();
                 return;
             }
-            else if (args.NewState is GameScreen)
+            else if (args.NewState is GameplayState)
             {
                 StartAmbience();
             }
@@ -159,7 +196,7 @@ namespace Content.Client.Audio
 
         private void AmbienceCVarChanged(float volume)
         {
-            if (_stateManager.CurrentState is GameScreen)
+            if (_stateManager.CurrentState is GameplayState)
             {
                 StartAmbience();
             }
@@ -172,7 +209,8 @@ namespace Content.Client.Audio
         private void StartAmbience()
         {
             EndAmbience();
-            if (!CanPlayCollection(_currentCollection)) return;
+            if (_currentCollection == null || !CanPlayCollection(_currentCollection))
+                return;
             _playingCollection = _currentCollection;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
             _ambientStream = SoundSystem.Play(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
@@ -197,7 +235,10 @@ namespace Content.Client.Audio
 
         private void StationAmbienceCVarChanged(bool enabled)
         {
-            if (enabled && _stateManager.CurrentState is GameScreen && _currentCollection.ID == _stationAmbience.ID)
+            if (_currentCollection == null)
+                return;
+
+            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.ID == _stationAmbience.ID)
             {
                 StartAmbience();
             }
@@ -209,7 +250,10 @@ namespace Content.Client.Audio
 
         private void SpaceAmbienceCVarChanged(bool enabled)
         {
-            if (enabled && _stateManager.CurrentState is GameScreen && _currentCollection.ID == _spaceAmbience.ID)
+            if (_currentCollection == null)
+                return;
+
+            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.ID == _spaceAmbience.ID)
             {
                 StartAmbience();
             }

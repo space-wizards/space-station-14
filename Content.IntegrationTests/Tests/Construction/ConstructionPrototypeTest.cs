@@ -1,6 +1,9 @@
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
+using Content.Server.Stack;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Steps;
+using Content.Shared.Prototypes;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -107,6 +110,49 @@ namespace Content.IntegrationTests.Tests.Construction
                 Assert.That(protoMan.TryIndex(next.Entity, out EntityPrototype entity), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({next.Entity})");
                 Assert.That(entity.Components.ContainsKey("Construction"), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
             }
+            await pairTracker.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task TestStackPrototypeSteps()
+        {
+            // People often mistakenly use the prototype-step rather than a material-step, resulting in a whole stack
+            // being consumed. This checks that if something uses a prototype step, that the relevant prototype does not
+            // have a stack component.
+            //
+            // If, for whatever reason, that is ever required, then this test should probably just support an ignore
+            // list. Though the test should then also checks that it accepts both the full-stack and single-sheet
+            // prototypes.
+
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            var server = pairTracker.Pair.Server;
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
+            var stackName = server.ResolveDependency<IComponentFactory>().GetComponentName(typeof(StackComponent));
+
+            Assert.Multiple(() =>
+            {
+                // quadruple for loop nesting, what fun.
+                foreach (var protoGraph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
+                {
+                    foreach (var node in protoGraph.Nodes.Values)
+                    {
+                        foreach (var edge in node.Edges)
+                        {
+                            foreach (var step in edge.Steps)
+                            {
+                                if (step is not PrototypeConstructionGraphStep protoStep)
+                                    continue;
+
+                                var protoEnt = protoMan.Index<EntityPrototype>(protoStep.Prototype);
+
+                                Assert.False(protoEnt.Components.ContainsKey(stackName),
+                                    $"Construction graph {protoGraph.ID} uses a prototype-step that consumes a stackable entity {protoEnt.ID}");
+                            }
+                        }
+                    }
+                }
+            });
+
             await pairTracker.CleanReturnAsync();
         }
     }

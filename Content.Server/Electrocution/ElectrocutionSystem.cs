@@ -11,6 +11,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
@@ -252,18 +253,25 @@ namespace Content.Server.Electrocution
             }
         }
 
+        /// <param name="uid">Entity being electrocuted.</param>
+        /// <param name="sourceUid">Source entity of the electrocution.</param>
+        /// <param name="shockDamage">How much shock damage the entity takes.</param>
+        /// <param name="time">How long the entity will be stunned.</param>
+        /// <param name="refresh">Should <paramref>time</paramref> be refreshed (instead of accumilated) if the entity is already electrocuted?</param>
+        /// <param name="siemensCoeffiecient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
+        /// <param name="statusEffect">Status effect to apply to the entity.</param>
+        /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
         /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
         public bool TryDoElectrocution(
             EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-            StatusEffectsComponent? statusEffects = null)
+            StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
         {
-            if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient)
+            if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
                 || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
                 return false;
 
             RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
             return true;
-
         }
 
         private bool TryDoElectrocutionPowered(
@@ -281,7 +289,7 @@ namespace Content.Server.Electrocution
                 return false;
 
             // Coefficient needs to be higher than this to do a powered electrocution!
-            if(siemensCoefficient <= 0.5f)
+            if (siemensCoefficient <= 0.5f)
                 return DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects);
 
             if (!DoCommonElectrocution(uid, sourceUid, null, time, refresh, siemensCoefficient, statusEffects))
@@ -311,9 +319,11 @@ namespace Content.Server.Electrocution
             return true;
         }
 
-        private bool DoCommonElectrocutionAttempt(EntityUid uid, EntityUid? sourceUid, ref float siemensCoefficient)
+        private bool DoCommonElectrocutionAttempt(EntityUid uid, EntityUid? sourceUid, ref float siemensCoefficient, bool ignoreInsulation = false)
         {
-            var attemptEvent = new ElectrocutionAttemptEvent(uid, sourceUid, siemensCoefficient);
+
+            var attemptEvent = new ElectrocutionAttemptEvent(uid, sourceUid, siemensCoefficient,
+                ignoreInsulation ? SlotFlags.NONE : ~SlotFlags.POCKET);
             RaiseLocalEvent(uid, attemptEvent, true);
 
             // Cancel the electrocution early, so we don't recursively electrocute anything.

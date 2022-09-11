@@ -8,7 +8,7 @@
     - type: MachineBoard
     - type: Sprite
       sprite: Objects/Misc/module.rsi
-      state: id_mod
+      state: generic
     - type: Tag
       tags:
         - DroneUsable

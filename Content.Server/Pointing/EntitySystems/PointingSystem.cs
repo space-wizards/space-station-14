@@ -8,7 +8,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.MobState.Components;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -31,6 +31,8 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
@@ -70,7 +72,7 @@ namespace Content.Server.Pointing.EntitySystems
                         ? viewerPointedAtMessage
                         : viewerMessage;
 
-                source.PopupMessage(viewerEntity, message);
+                _popup.PopupEntity(message, source, Filter.Entities(viewerEntity));
             }
         }
 
@@ -108,7 +110,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             // Checking mob state directly instead of some action blocker, as many action blockers are blocked for
             // ghosts and there is no obvious choice for pointing.
-            if (TryComp(player, out MobStateComponent? mob) && mob.IsIncapacitated())
+            if (_mobState.IsIncapacitated(player))
             {
                 return false;
             }
@@ -120,7 +122,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (!InRange(player, coords))
             {
-                player.PopupMessage(Loc.GetString("pointing-system-try-point-cannot-reach"));
+                _popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), player, Filter.Entities(player));
                 return false;
             }
 

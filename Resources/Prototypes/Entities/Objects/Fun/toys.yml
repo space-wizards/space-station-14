@@ -491,6 +491,10 @@
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/drawbow2.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   parent: BaseItem
@@ -530,6 +534,10 @@
     autoCycle: true
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   parent: BaseItem
@@ -694,3 +702,23 @@
       damage:
         types:
           Blunt: 0
+
+- type: entity
+  parent: BasePlushie
+  id: ToyAmongPequeno
+  name: among pequeno
+  description: sus!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pequeno.rsi
+    netsync: false
+    layers:
+    - state: base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: visor
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          base: Sixteen
+  - type: StaticPrice
+    price: 3

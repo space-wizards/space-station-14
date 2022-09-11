@@ -67,7 +67,7 @@
   graph: flowercrown
   startNode: start
   targetNode: flowercrown
-  category: Misc
+  category: construction-category-misc
   description: "A coronet of fresh and fragrant flowers."
   icon:
     sprite: Clothing/Head/Misc/flower-crown.rsi

@@ -155,7 +155,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             aabb.Union(aabbs[i]);
         }
 
-        var (_, gridId) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
+        var (_, gridId) = _mapLoader.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
         {
             Offset = aabb.Center + MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f
         });

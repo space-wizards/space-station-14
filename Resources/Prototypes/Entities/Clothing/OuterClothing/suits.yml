@@ -35,6 +35,9 @@
     coefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetEVA
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
 
 - type: entity
   parent: ClothingOuterBaseLarge

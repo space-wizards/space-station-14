@@ -8,7 +8,7 @@ namespace Content.Client.AirlockPainter.UI
         private AirlockPainterWindow? _window;
         public List<string> Styles = new();
 
-        public AirlockPainterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public AirlockPainterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

@@ -8,6 +8,7 @@
         - state: blue
         - texture: Mobs/Species/Human/parts.rsi/full.png
         - state: ai
+    - type: Timer
     - type: TimedSpawner
       prototypes:
         - MobSpirate
@@ -27,6 +28,7 @@
       - state: blue
       - texture: Mobs/Aliens/Xenos/burrower.rsi/crit.png
       - state: ai
+    - type: Timer
     - type: TimedSpawner
       prototypes:
       - MobXeno
@@ -45,6 +47,7 @@
         - state: blue
         - texture: Mobs/Animals/mouse.rsi/icon-2.png
         - state: timed
+    - type: Timer
     - type: TimedSpawner
       prototypes:
         - MobMouse

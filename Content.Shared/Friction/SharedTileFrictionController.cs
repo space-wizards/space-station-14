@@ -3,6 +3,7 @@ using Content.Shared.Gravity;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
@@ -70,6 +71,8 @@ namespace Content.Shared.Friction
 
             var frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
+            var pullerQuery = GetEntityQuery<SharedPullerComponent>();
+            var pullableQuery = GetEntityQuery<SharedPullableComponent>();
 
             foreach (var body in mapComponent.AwakeBodies)
             {
@@ -94,6 +97,15 @@ namespace Content.Shared.Friction
                 if (frictionQuery.TryGetComponent(body.Owner, out var frictionComp))
                 {
                     bodyModifier = frictionComp.Modifier;
+                }
+
+                // If we're sandwiched between 2 pullers reduce friction
+                // Might be better to make this dynamic and check how many are in the pull chain?
+                // Either way should be much faster for now.
+                if (pullerQuery.TryGetComponent(body.Owner, out var puller) && puller.Pulling != null &&
+                    pullableQuery.TryGetComponent(body.Owner, out var pullable) && pullable.BeingPulled)
+                {
+                    bodyModifier *= 0.2f;
                 }
 
                 var friction = _frictionModifier * surfaceFriction * bodyModifier;

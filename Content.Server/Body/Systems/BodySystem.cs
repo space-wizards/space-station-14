@@ -21,6 +21,7 @@ namespace Content.Server.Body.Systems
             SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
             SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
             SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
+            SubscribeLocalEvent<BodyPartComponent, MapInitEvent>((_, c, _) => c.MapInitialize());
         }
 
         private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)

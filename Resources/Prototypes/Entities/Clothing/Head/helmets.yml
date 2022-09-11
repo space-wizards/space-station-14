@@ -221,6 +221,10 @@
         Heat: 0.65
         Radiation: 1
   - type: IdentityBlocker
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot {}
 
 - type: entity
   parent: ClothingHeadLightBase
