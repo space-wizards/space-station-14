@@ -354,3 +354,36 @@
   - type: Appearance
   - type: StaticPrice
     price: 750
+
+- type: entity
+  name: advanced laser gun
+  parent: BaseWeaponBatterySmall
+  id: WeaponAdvancedLaser
+  description: An experimental laser gun with a self charging nuclear powered battery.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 63

@@ -72,6 +72,7 @@
         acts: [ "Destruction" ]
   - type: AccessReader
   - type: Airlock
+    keepOpenIfClicked: true
     openPanelVisible: true
     # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
     safety: false
