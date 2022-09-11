@@ -1,15 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Corpses are now circled by buzzing flies when they've started to rot.,
-    type: Add}
-  - {message: 'Do you know how heavy cows are? It''s wack. They''re expensive to transport,
-      and the cow crate price has been increased.', type: Tweak}
-  - {message: Freezer crates now stop rotting., type: Fix}
-  - {message: Rejuvenation properly removes rotting., type: Fix}
-  - {message: Body parts should gib from rotting for real this time., type: Fix}
-  id: 1780
-  time: '2022-06-24T08:20:52.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Credits & cargo points have been renamed to spacebucks., type: Tweak}
@@ -2931,3 +2920,8 @@ Entries:
       into them before it was opened., type: Fix}
   id: 2279
   time: '2022-09-11T06:54:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gave Miasma a slightly spookier palette., type: Tweak}
+  id: 2280
+  time: '2022-09-11T07:00:43.0000000+00:00'
