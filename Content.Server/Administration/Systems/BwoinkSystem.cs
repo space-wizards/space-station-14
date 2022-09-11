@@ -271,7 +271,7 @@ namespace Content.Server.Administration.Systems
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.ChannelId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel));
+                _messageQueues[msg.ChannelId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, admins.Count == 0));
             }
 
             if (admins.Count != 0)
@@ -294,10 +294,17 @@ namespace Content.Server.Administration.Systems
                .ToList();
         }
 
-        private static string GenerateAHelpMessage(string username, string message, bool admin)
+        private static string GenerateAHelpMessage(string username, string message, bool admin, bool noReceivers = false)
         {
             var stringbuilder = new StringBuilder();
-            stringbuilder.Append(admin ? ":outbox_tray:" : ":inbox_tray:");
+
+            if (admin)
+                stringbuilder.Append(":outbox_tray:");
+            else if (noReceivers)
+                stringbuilder.Append(":sos:");
+            else
+                stringbuilder.Append(":inbox_tray:");
+
             stringbuilder.Append($" **{username}:** ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();
