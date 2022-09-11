@@ -124,7 +124,7 @@
                                    StyleClasses="LabelSecondaryColor" />
                             <SpinBox Name="PillNumber"
                                      Access="Public"
-                                     Value="1" />
+                                     Value="0" />
                             <Label Text="{Loc 'chem-master-window-dose-label'}"
                                    Margin="5 0 0 0"
                                    StyleClasses="LabelSecondaryColor" />
@@ -144,7 +144,7 @@
                                    StyleClasses="LabelSecondaryColor" />
                             <SpinBox Name="BottleAmount"
                                         Access="Public"
-                                        Value="1" />
+                                        Value="0" />
                             <Button Name="CreateBottleButton"
                                     Access="Public"
                                     Text="{Loc 'chem-master-window-create-button'}" />

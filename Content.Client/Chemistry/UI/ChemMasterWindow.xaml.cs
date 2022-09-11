@@ -10,7 +10,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using TerraFX.Interop.Windows;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chemistry.UI
@@ -100,17 +99,26 @@ namespace Content.Client.Chemistry.UI
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
             UpdatePanelInfo(castState);
+
+            var output = castState.OutputContainerInfo;
             
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
-            OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
-            CreateBottleButton.Disabled =
-                castState.OutputContainerInfo is null || !castState.OutputContainerInfo.HoldsReagents;
-            CreatePillButton.Disabled =
-                castState.OutputContainerInfo is null || castState.OutputContainerInfo.HoldsReagents;
+            OutputEjectButton.Disabled = output is null;
+            CreateBottleButton.Disabled = output is null || !output.HoldsReagents;
+            CreatePillButton.Disabled = output is null || output.HoldsReagents;
+
+            var remainingCapacity = output is null ? 0 : (output.MaxVolume - output.CurrentVolume).Int();
+            var holdsReagents = output?.HoldsReagents ?? false;
+            var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
+            var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
 
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
-            PillAmount.IsValid = x => x > 0 && x <= castState.PillProductionLimit;
-            BottleAmount.IsValid = x => x > 0 && x <= castState.BottleProductionLimit;
+            PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
+            PillAmount.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
+            BottleAmount.IsValid = x => x >= 0 && x <= bottleAmountMax;
+
+            if (PillNumber.Value > pillNumberMax) PillNumber.Value = pillNumberMax;
+            if (BottleAmount.Value > bottleAmountMax) BottleAmount.Value = bottleAmountMax;
         }
 
         /// <summary>

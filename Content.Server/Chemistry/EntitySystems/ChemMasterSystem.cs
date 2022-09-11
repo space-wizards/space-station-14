@@ -64,7 +64,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 chemMaster.Mode, dispenserName, 
                 BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
                 bufferReagents, bufferCurrentVolume,
-                chemMaster.PillType, chemMaster.PillProductionLimit, chemMaster.BottleProductionLimit, updateLabel);
+                chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
 
             _userInterfaceSystem.TrySetUiState(chemMaster.Owner, ChemMasterUiKey.Key, state);
         }
@@ -167,8 +167,8 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnCreatePillsMessage(EntityUid uid, ChemMasterComponent chemMaster, ChemMasterCreatePillsMessage message)
         {
             // Ensure the amount is valid.
-            if (message.Amount == 0 || message.Amount > chemMaster.PillProductionLimit)
-                return;
+            //if (message.Amount == 0 || message.Amount > chemMaster.PillProductionLimit)
+            //    return;
 
             CreatePillsOrBottles(chemMaster, pills: true, message.Amount, message.Label, message.Session.AttachedEntity);
             UpdateUiState(chemMaster);
@@ -178,8 +178,8 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnCreateBottlesMessage(EntityUid uid, ChemMasterComponent chemMaster, ChemMasterCreateBottlesMessage message)
         {
             // Ensure the amount is valid.
-            if (message.Amount == 0 || message.Amount > chemMaster.BottleProductionLimit)
-                return;
+            //if (message.Amount == 0 || message.Amount > chemMaster.BottleProductionLimit)
+            //    return;
 
             CreatePillsOrBottles(chemMaster, pills: false, message.Amount, message.Label, message.Session.AttachedEntity);
             UpdateUiState(chemMaster);
