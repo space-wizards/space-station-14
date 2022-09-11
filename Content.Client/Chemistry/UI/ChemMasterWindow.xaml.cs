@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using TerraFX.Interop.Windows;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chemistry.UI
@@ -102,6 +103,10 @@ namespace Content.Client.Chemistry.UI
             
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
+            CreateBottleButton.Disabled =
+                castState.OutputContainerInfo is null || !castState.OutputContainerInfo.HoldsReagents;
+            CreatePillButton.Disabled =
+                castState.OutputContainerInfo is null || castState.OutputContainerInfo.HoldsReagents;
 
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
             PillAmount.IsValid = x => x > 0 && x <= castState.PillProductionLimit;
@@ -195,13 +200,13 @@ namespace Content.Client.Chemistry.UI
             }
         }
 
-        private void BuildContainerUI(BoxContainer boxContainer, ContainerInfo? info, bool addReagentButtons)
+        private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
         {
-            boxContainer.Children.Clear();
+            control.Children.Clear();
 
             if (info is null)
             {
-                boxContainer.Children.Add(new Label
+                control.Children.Add(new Label
                 {
                     Text = Loc.GetString("chem-master-window-no-container-loaded-text")
                 });
@@ -209,7 +214,7 @@ namespace Content.Client.Chemistry.UI
             else
             {
                 // Name of the container and its fill status (Ex: 44/100u)
-                boxContainer.Children.Add(new BoxContainer
+                control.Children.Add(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
                     Children =
@@ -226,38 +231,30 @@ namespace Content.Client.Chemistry.UI
                 var contents = info.Contents
                     .Select(lineItem =>
                     {
-                        if (lineItem.IsReagent)
-                        {
-                            // Try to get the prototype for the given reagent. This gives us its name.
-                            _prototypeManager.TryIndex(lineItem.Id, out ReagentPrototype? proto);
-                            var name = proto?.LocalizedName
-                                       ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-                            
-                            return (name, lineItem);
-                        }
-                        else
-                        {
-                            var name = lineItem.Id;
-                            
-                            return (name, lineItem);
-                        }
-                    })
-                    .OrderBy(r => r.name);
-                
-                foreach (var reagent in contents)
-                {
-                    var id = reagent.lineItem.Id;
+                        if (!info.HoldsReagents) return (lineItem.Id, lineItem.Id, lineItem.Quantity);
+                        
+                        // Try to get the prototype for the given reagent. This gives us its name.
+                        _prototypeManager.TryIndex(lineItem.Id, out ReagentPrototype? proto);
+                        var name = proto?.LocalizedName
+                                   ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
+                        return (name, lineItem.Id, lineItem.Quantity);
+
+                    })
+                    .OrderBy(r => r.Item1);
+                
+                foreach (var (name, id, quantity) in contents)
+                {
                     var inner = new BoxContainer
                     {
                         Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
-                            new Label { Text = $"{reagent.name}: " },
+                            new Label { Text = $"{name}: " },
                             new Label
                             {
-                                Text = $"{reagent.lineItem.Quantity}u",
-                                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                                Text = $"{quantity}u",
+                                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
                             }
                         }
                     };
@@ -282,7 +279,7 @@ namespace Content.Client.Chemistry.UI
                                 ChemMasterReagentAmount.All, id, false, StyleBase.ButtonOpenLeft));
                     }
                     
-                    boxContainer.Children.Add(inner);
+                    control.Children.Add(inner);
                 }
                 
             }

@@ -37,13 +37,19 @@ namespace Content.Client.Chemistry.UI
             _window.OnClose += Close;
 
             // Setup static button actions.
-            _window.InputEjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
-            _window.OutputEjectButton.OnPressed += _ =>
-                SendMessage(new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
-            _window.BufferTransferButton.OnPressed += _ => SendMessage(new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
-            _window.BufferDiscardButton.OnPressed += _ => SendMessage(new ChemMasterSetModeMessage(ChemMasterMode.Discard));
-            _window.CreatePillButton.OnPressed += _ => SendMessage(new ChemMasterCreatePillsMessage(((uint)_window.PillAmount.Value), _window.LabelLine));
-            _window.CreateBottleButton.OnPressed += _ => SendMessage(new ChemMasterCreateBottlesMessage(((uint)_window.BottleAmount.Value), _window.LabelLine));
+            _window.InputEjectButton.OnPressed += _ => SendMessage(
+                new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
+            _window.OutputEjectButton.OnPressed += _ => SendMessage(
+                new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
+            _window.BufferTransferButton.OnPressed += _ => SendMessage(
+                new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
+            _window.BufferDiscardButton.OnPressed += _ => SendMessage(
+                new ChemMasterSetModeMessage(ChemMasterMode.Discard));
+            _window.CreatePillButton.OnPressed += _ => SendMessage(
+                new ChemMasterCreatePillsMessage(
+                    (uint)_window.PillAmount.Value, (uint)_window.PillNumber.Value, _window.LabelLine));
+            _window.CreateBottleButton.OnPressed += _ => SendMessage(
+                new ChemMasterCreateBottlesMessage((uint)_window.BottleAmount.Value, _window.LabelLine));
 
             for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {

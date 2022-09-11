@@ -274,20 +274,20 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out var solution);
                 var quantity = solution?.CurrentVolume ?? FixedPoint2.Zero;
-                return new LineItemInfo(Name(pill), false, quantity);
+                return (Name(pill), quantity);
             }).ToList();
 
             return pills is null
                 ? null
-                : new ContainerInfo(name, storage.StorageUsed, storage.StorageCapacityMax, pills);
+                : new ContainerInfo(name, false, storage.StorageUsed, storage.StorageCapacityMax, pills);
         }
 
         private static ContainerInfo BuildContainerInfo(string name, Solution solution)
         {
-            var reagents = solution.Contents.Select(reagent =>
-                new LineItemInfo(reagent.ReagentId, true, reagent.Quantity)).ToList();
+            var reagents = solution.Contents
+                .Select(reagent => (reagent.ReagentId, reagent.Quantity)).ToList();
 
-            return new ContainerInfo(name, solution.CurrentVolume, solution.MaxVolume, reagents);
+            return new ContainerInfo(name, true, solution.CurrentVolume, solution.MaxVolume, reagents);
         }
     }
 }

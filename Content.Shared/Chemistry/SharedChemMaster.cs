@@ -58,11 +58,13 @@ namespace Content.Shared.Chemistry
     public sealed class ChemMasterCreatePillsMessage : BoundUserInterfaceMessage
     {
         public readonly uint Amount;
+        public readonly uint Number;
         public readonly string Label;
 
-        public ChemMasterCreatePillsMessage(uint amount, string label)
+        public ChemMasterCreatePillsMessage(uint amount, uint number, string label)
         {
             Amount = amount;
+            Number = number;
             Label = label;
         }
     }
@@ -107,30 +109,19 @@ namespace Content.Shared.Chemistry
     }
 
     /// <summary>
-    /// Information about a single line item in a container.
-    /// This is intended to be generic over reagents and entities. See usage in <see cref="ContainerInfo"/>.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public struct LineItemInfo
-    {
-        public readonly string Id;
-        public readonly bool IsReagent;
-        public readonly FixedPoint2 Quantity;
-
-        public LineItemInfo(string id, bool isReagent, FixedPoint2 quantity)
-        {
-            Id = id;
-            IsReagent = isReagent;
-            Quantity = quantity;
-        }
-    }
-    
-    /// <summary>
     /// Information about the capacity and contents of a container for display in the UI
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class ContainerInfo
     {
+        /// <summary>
+        /// The container name to show to the player
+        /// </summary>
+        public readonly string DisplayName;
+        /// <summary>
+        /// Whether the container holds reagents or entities
+        /// </summary>
+        public readonly bool HoldsReagents;
         /// <summary>
         /// The currently used volume of the container
         /// </summary>
@@ -140,22 +131,18 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public readonly FixedPoint2 MaxVolume;
         /// <summary>
-        /// The container name to show to the player
-        /// </summary>
-        public readonly string DisplayName;
-        /// <summary>
-        /// A list of the reagents/items and their amounts within the container
+        /// A list of the reagents/entities and their sizes within the container
         /// </summary>
         // todo: this causes NetSerializer exceptions if it's an IReadOnlyList (which would be preferred)
-        public readonly List<LineItemInfo> Contents;
+        public readonly List<(string Id, FixedPoint2 Quantity)> Contents;
 
         public ContainerInfo(
-            string displayName,
-            FixedPoint2 currentVolume,
-            FixedPoint2 maxVolume,
-            List<LineItemInfo> contents)
+            string displayName, bool holdsReagents,
+            FixedPoint2 currentVolume, FixedPoint2 maxVolume,
+            List<(string, FixedPoint2)> contents)
         {
             DisplayName = displayName;
+            HoldsReagents = holdsReagents;
             CurrentVolume = currentVolume;
             MaxVolume = maxVolume;
             Contents = contents;
