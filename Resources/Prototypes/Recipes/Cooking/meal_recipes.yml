@@ -877,7 +877,7 @@
   name: slime cake recipe
   result: FoodCakeSlime
   time: 5
-  reagent:
+  reagents:
     Slime: 15
   solids:
     FoodCakePlain: 1
