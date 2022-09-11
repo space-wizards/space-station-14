@@ -1,4 +1,6 @@
 ﻿using Robust.Shared.Audio;
+using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Beam.Components;
 /// <summary>
@@ -91,5 +93,28 @@ public sealed class BeamFiredEvent : EntityEventArgs
     public BeamFiredEvent(EntityUid createdBeam)
     {
         CreatedBeam = createdBeam;
+    }
+}
+
+/// <summary>
+/// Raised on the new entity created after the <see cref="SharedBeamSystem"/> creates one.
+/// Used to get sprite data over to the client.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class BeamVisualizerEvent : EntityEventArgs
+{
+    public readonly EntityUid Beam;
+    public readonly float DistanceLength;
+    public readonly Angle UserAngle;
+    public readonly string? BodyState;
+    public readonly string Shader = "unshaded";
+
+    public BeamVisualizerEvent(EntityUid beam, float distanceLength, Angle userAngle, string? bodyState = null, string shader = "unshaded")
+    {
+        Beam = beam;
+        DistanceLength = distanceLength;
+        UserAngle = userAngle;
+        BodyState = bodyState;
+        Shader = shader;
     }
 }

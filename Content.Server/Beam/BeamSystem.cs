@@ -1,6 +1,9 @@
 ﻿using Content.Server.Beam.Components;
+using Content.Server.Lightning;
 using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Lightning;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -14,6 +17,9 @@ public sealed class BeamSystem : SharedBeamSystem
 {
     [Dependency] private readonly FixtureSystem _fixture = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly LightningSystem _lightning = default!;
+
+    private HashSet<EntityUid> EntireBeam = new();
 
     public override void Initialize()
     {
@@ -57,7 +63,7 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="calculatedDistance">The calculated distance from the user to the target.</param>
     /// <param name="beamStartPos">Where the beam will spawn in</param>
     /// <param name="distanceCorrection">Calculated correction so the <see cref="EdgeShape"/> can be properly dynamically created</param>
-    /// <param name="controller"></param>
+    /// <param name="controller"> The virtual beam controller that this beam will use. If one doesn't exist it will be created here.</param>
     /// <param name="bodyState">Optional sprite state for the <see cref="prototype"/> if it needs a dynamic one</param>
     /// <param name="shader">Optional shader for the <see cref="prototype"/> and <see cref="bodyState"/> if it needs something other than default</param>
     private void CreateBeam(string prototype,
@@ -74,14 +80,8 @@ public sealed class BeamSystem : SharedBeamSystem
         var shape = new EdgeShape(distanceCorrection, new Vector2(0,0));
         var distanceLength = distanceCorrection.Length;
 
-        if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) && TryComp<BeamComponent>(ent, out var beam))
+        if (TryComp<PhysicsComponent>(ent, out var physics) && TryComp<BeamComponent>(ent, out var beam))
         {
-            sprites.Rotation = userAngle;
-            if (bodyState != null)
-            {
-                sprites.LayerSetState(0, bodyState);
-                sprites.LayerSetShader(0, shader);
-            }
             var fixture = new Fixture(physics, shape)
             {
                 ID = "BeamBody",
@@ -92,6 +92,9 @@ public sealed class BeamSystem : SharedBeamSystem
             };
 
             _fixture.TryCreateFixture(physics, fixture);
+
+            var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
+            RaiseNetworkEvent(beamVisualizerEvent);
 
             if (controller != null)
                 beam.VirtualBeamController = controller;
@@ -108,25 +111,15 @@ public sealed class BeamSystem : SharedBeamSystem
                 RaiseLocalEvent(controllerEnt, beamControllerCreatedEvent, true);
             }
 
-            Dirty(ent);
-
-            //TODO: Sometime in the future this needs to be replaced with tiled sprites because lord this is shit.
+            //Create the rest of the beam, sprites handled through the BeamVisualizerEvent
             for (int i = 0; i < distanceLength-1; i++)
             {
                 beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized);
                 var newEnt = Spawn(prototype, beamSpawnPos);
-                if (!TryComp<SpriteComponent>(newEnt, out var newSprites))
-                    return;
-                newSprites.Rotation = userAngle;
-                if (bodyState != null)
-                {
-                    newSprites.LayerSetState(0, bodyState);
-                    newSprites.LayerSetShader(0, shader);
-                }
-
                 Transform(newEnt).AttachParent(ent);
 
-                Dirty(newEnt);
+                var ev = new BeamVisualizerEvent(newEnt, distanceLength, userAngle, bodyState, shader);
+                RaiseNetworkEvent(ev);
             }
 
             var beamFiredEvent = new BeamFiredEvent(ent);
