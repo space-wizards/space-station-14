@@ -1,15 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Chat bubbles will no longer be offset in low-resolution high-scale modes.,
-    type: Fix}
-  id: 1775
-  time: '2022-06-23T12:23:23.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed an issue where disposals could get stuck pressurizing, type: Fix}
-  id: 1776
-  time: '2022-06-24T01:26:20.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added the Fire Axe, a 9 TC Traitor weapon capable of setting opponents
@@ -2930,3 +2919,16 @@ Entries:
       slightly longer., type: Fix}
   id: 2274
   time: '2022-09-11T06:30:10.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Melee weapons that change damage now show their damage correctly., type: Fix}
+  - {message: Syndicate E-pens is no longer shown to be a weapon upon examination.,
+    type: Fix}
+  id: 2275
+  time: '2022-09-11T06:39:37.0000000+00:00'
+- author: LordEclipse
+  changes:
+  - {message: 'The job icon displayed for Quartermaster has been changed to a command
+      blue, to better represent where they stand on the station!', type: Tweak}
+  id: 2276
+  time: '2022-09-11T06:40:14.0000000+00:00'
