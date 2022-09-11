@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using Content.Server.Administration.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
+using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
@@ -33,7 +34,7 @@ namespace Content.Server.Administration.Systems
         private string _footerIconUrl = string.Empty;
         private string _avatarUrl = string.Empty;
         private string _serverName = string.Empty;
-        private readonly Dictionary<NetUserId, (string id, string username, string messages)> _relayMessages = new();
+        private readonly Dictionary<NetUserId, (string id, string username, string messages, string? characterName)> _relayMessages = new();
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
 
@@ -101,7 +102,9 @@ namespace Content.Server.Administration.Systems
                     return;
                 }
 
-                oldMessage = (string.Empty, lookup.Username, string.Empty);
+                var characterName = _playerManager.GetPlayerData(channelId).ContentData()?.Mind?.CharacterName;
+
+                oldMessage = (string.Empty, lookup.Username, string.Empty, characterName);
             }
 
             while (messages.TryDequeue(out var message))
@@ -111,7 +114,7 @@ namespace Content.Server.Administration.Systems
 
             var payload = new WebhookPayload
             {
-                Username = $"{oldMessage.username}",
+                Username = $"{oldMessage.username}{(oldMessage.characterName == null ? string.Empty : $" ({oldMessage.characterName})")}",
                 AvatarUrl = _avatarUrl,
                 Embeds = new List<Embed>
                 {
