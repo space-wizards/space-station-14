@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Spacebucks now have an "S" on them rather than a "C" to be in line with
-      the new name., type: Tweak}
-  id: 1782
-  time: '2022-06-24T14:45:32.0000000+00:00'
 - author: Sammy Boy
   changes:
   - {message: Crates cannot eat you while buckled anymore!, type: Fix}
@@ -2925,3 +2919,8 @@ Entries:
   - {message: Anchoring will now ignore non-hard physics bodies., type: Fix}
   id: 2281
   time: '2022-09-11T09:19:27.0000000+00:00'
+- author: och
+  changes:
+  - {message: Examining people tells you their pronouns and approximate age, type: Add}
+  id: 2282
+  time: '2022-09-11T14:45:40.0000000+00:00'
