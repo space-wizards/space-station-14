@@ -112,7 +112,7 @@ namespace Content.Server.Administration.Systems
             var payload = new WebhookPayload
             {
                 Username = $"{oldMessage.username}",
-                AvaterUrl = _avatarUrl,
+                AvatarUrl = _avatarUrl,
                 Embeds = new List<Embed>
                 {
                     new Embed
@@ -178,11 +178,14 @@ namespace Content.Server.Administration.Systems
 
             foreach (var channelId in _messageQueues.Keys.ToArray())
             {
-                if(_processingChannels.Contains(channelId)) continue;
+                if (_processingChannels.Contains(channelId))
+                    continue;
 
                 var queue = _messageQueues[channelId];
                 _messageQueues.Remove(channelId);
-                if (queue.Count == 0) continue;
+                if (queue.Count == 0)
+                    continue;
+
                 _processingChannels.Add(channelId);
 
                 ProcessQueue(channelId, queue);
@@ -288,7 +291,7 @@ namespace Content.Server.Administration.Systems
             public string Username { get; set; } = "";
 
             [JsonPropertyName("avatar_url")]
-            public string AvaterUrl { get; set; } = "";
+            public string AvatarUrl { get; set; } = "";
 
             [JsonPropertyName("embeds")]
             public List<Embed>? Embeds { get; set; } = null;
