@@ -14,9 +14,10 @@
     # This needs to be moved to boxinggloves
     #knockdownSound: /Audio/Weapons/boxingbell.ogg
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Blunt: 0.6
+        Blunt: 0.4
     soundHit:
       collection: BoxingHit
     animation: WeaponArcFist

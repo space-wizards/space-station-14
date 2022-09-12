@@ -134,10 +134,11 @@
   - type: MeleeWeapon
     range: 1.5
     angle: 0
+    attackRate: 0.75
     animation: WeaponArcFist
     damage:
       types:
-        Blunt: 50 #oof ouch owie my bones
+        Blunt: 66 #oof ouch owie my bones
   - type: Fixtures
     fixtures:
     - shape:

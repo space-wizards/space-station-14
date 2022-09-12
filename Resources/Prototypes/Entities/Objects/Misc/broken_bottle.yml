@@ -6,9 +6,10 @@
   components:
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Slash: 7
+        Slash: 5
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite

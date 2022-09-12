@@ -191,7 +191,6 @@
     damage:
      groups:
        Brute: 40
-    windupTime: 2
   - type: SlowOnDamage
     speedModifierThresholds:
       1000: 0.7
@@ -267,7 +266,6 @@
     damage:
      groups:
        Brute: 15
-    windupTime: 1
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
