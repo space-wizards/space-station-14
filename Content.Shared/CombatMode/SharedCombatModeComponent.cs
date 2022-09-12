@@ -15,12 +15,11 @@ namespace Content.Shared.CombatMode
         #region Disarm
 
         /// <summary>
-        /// Whether we are set to disarm. If we are doing our own melee attacks then we will attempt to disarm instead.
+        /// Whether we are able to disarm. This requires our active hand to be free.
+        /// False if it's toggled off for whatever reason, null if it's not possible.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("disarm")]
-        public bool? Disarm;
-
-        public bool CanDisarm => Disarm != null;
+        [ViewVariables(VVAccess.ReadWrite), DataField("canDisarm")]
+        public bool? CanDisarm;
 
         [DataField("disarmFailSound")]
         public readonly SoundSpecifier DisarmFailSound = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
@@ -33,9 +32,6 @@ namespace Content.Shared.CombatMode
 
         [DataField("disarmFailChance")]
         public readonly float BaseDisarmFailChance = 0.75f;
-
-        [DataField("disarmAction")] // must be a data-field to properly save cooldown when saving game state.
-        public EntityTargetAction? DisarmAction;
 
         #endregion
 

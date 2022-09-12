@@ -65,9 +65,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var weapon = GetWeapon(entity);
 
         if (weapon == null)
-        {
             return;
-        }
 
         if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity))
         {
@@ -115,6 +113,20 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 else
                 {
                     coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                }
+
+                // If it's an unarmed attack then do a disarm
+                if (weapon.Owner == entity)
+                {
+                    EntityUid? target = null;
+
+                    if (_stateManager.CurrentState is GameplayStateBase screen)
+                    {
+                        target = screen.GetEntityUnderPosition(mousePos);
+                    }
+
+                    EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(target, coordinates));
+                    return;
                 }
 
                 EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weapon.Owner, coordinates));

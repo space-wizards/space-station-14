@@ -38,6 +38,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeAllEvent<StartHeavyAttackEvent>(OnStartHeavyAttack);
         SubscribeAllEvent<StopHeavyAttackEvent>(OnStopHeavyAttack);
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
+        SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
     }
 
@@ -132,6 +133,21 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, msg);
     }
 
+    private void OnDisarmAttack(DisarmAttackEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity == null)
+        {
+            return;
+        }
+
+        var userWeapon = GetWeapon(args.SenderSession.AttachedEntity.Value);
+
+        if (userWeapon == null)
+            return;
+
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, userWeapon, msg);
+    }
+
     private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
     {
         args.State = new MeleeWeaponComponentState(component.AttackRate, component.Attacking, component.NextAttack,
@@ -194,8 +210,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (weapon.NextAttack < curTime)
             weapon.NextAttack = curTime;
 
-        // TODO: Disarms
-
         weapon.NextAttack += TimeSpan.FromSeconds(1f / weapon.AttackRate);
 
         // Attack confirmed
@@ -206,6 +220,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             case LightAttackEvent light:
                 DoLightAttack(user, light, weapon);
+                break;
+            case DisarmAttackEvent disarm:
+                DoDisarm(user, disarm, weapon);
                 break;
             case HeavyAttackEvent heavy:
                 DoHeavyAttack(user, heavy, weapon);
@@ -253,6 +270,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     }
 
     protected virtual void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component)
+    {
+
+    }
+
+    protected virtual void DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
     {
 
     }

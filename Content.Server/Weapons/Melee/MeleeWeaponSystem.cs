@@ -1,20 +1,24 @@
 using System.Linq;
+using Content.Server.Actions.Events;
 using Content.Server.Administration.Components;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.CombatMode;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Damage.Systems;
 using Content.Server.Examine;
+using Content.Server.Hands.Components;
 using Content.Server.Weapons.Melee.Components;
 using Content.Server.Weapons.Melee.Events;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Verbs;
@@ -25,6 +29,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -32,6 +37,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ContestsSystem _contests = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -151,11 +157,15 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             if (component.Owner == user)
+            {
                 _adminLogger.Add(LogType.MeleeHit,
                     $"{ToPrettyString(user):user} melee attacked {ToPrettyString(ev.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
+            }
             else
+            {
                 _adminLogger.Add(LogType.MeleeHit,
                     $"{ToPrettyString(user):user} melee attacked {ToPrettyString(ev.Target.Value):target} using {ToPrettyString(component.Owner):used} and dealt {damageResult.Total:damage} damage");
+            }
 
             PlayHitSound(ev.Target.Value, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
         }
@@ -246,11 +256,15 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 appliedDamage += damageResult;
 
                 if (component.Owner == user)
+                {
                     _adminLogger.Add(LogType.MeleeHit,
                         $"{ToPrettyString(user):user} melee attacked {ToPrettyString(entity):target} using their hands and dealt {damageResult.Total:damage} damage");
+                }
                 else
+                {
                     _adminLogger.Add(LogType.MeleeHit,
                         $"{ToPrettyString(user):user} melee attacked {ToPrettyString(entity):target} using {ToPrettyString(component.Owner):used} and dealt {damageResult.Total:damage} damage");
+                }
             }
         }
 
@@ -280,6 +294,86 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
+    protected override void DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    {
+        base.DoDisarm(user, ev, component);
+
+        var target = ev.Coordinates.EntityId;
+
+        if (!TryComp<SharedCombatModeComponent>(user, out var combatMode) ||
+            Deleted(target) ||
+            !_interaction.InRangeUnobstructed(user, target, component.Range + 0.1f))
+        {
+            return;
+        }
+
+        EntityUid? inTargetHand = null;
+
+        if (TryComp<HandsComponent>(target, out var targetHandsComponent)
+            && targetHandsComponent.ActiveHand is { IsEmpty: false })
+        {
+            inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
+        }
+
+        var attemptEvent = new DisarmAttemptEvent(target, user, inTargetHand);
+
+        if (inTargetHand != null)
+        {
+            RaiseLocalEvent(inTargetHand.Value, attemptEvent);
+        }
+        RaiseLocalEvent(target, attemptEvent);
+
+        if (attemptEvent.Cancelled)
+            return;
+
+        var filterAll = Filter.Pvs(user);
+        var filterOther = filterAll.RemoveWhereAttachedEntity(e => e == user);
+
+        var chance = CalculateDisarmChance(user, target, inTargetHand, combatMode);
+
+        if (_random.Prob(chance))
+        {
+            Audio.Play(combatMode.DisarmFailSound, filterAll, user, AudioParams.Default.WithVariation(0.025f));
+
+            var msgOther = Loc.GetString(
+                "disarm-action-popup-message-other-clients",
+                ("performerName", Identity.Entity(user, EntityManager)),
+                ("targetName", Identity.Entity(target, EntityManager)));
+
+            var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", Identity.Entity(target, EntityManager)));
+
+            PopupSystem.PopupEntity(msgOther, user, filterOther);
+            PopupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
+            return;
+        }
+
+        Audio.Play(combatMode.DisarmSuccessSound, filterAll, user, AudioParams.Default.WithVariation(0.025f));
+        _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
+
+        var eventArgs = new DisarmedEvent { Target = target, Source = user, PushProbability = 1 - chance };
+        RaiseLocalEvent(target, eventArgs);
+    }
+
+    private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
+    {
+        if (HasComp<DisarmProneComponent>(disarmer))
+            return 1.0f;
+
+        if (HasComp<DisarmProneComponent>(disarmed))
+            return 0.0f;
+
+        var contestResults = 1 - _contests.OverallStrengthContest(disarmer, disarmed);
+
+        float chance = (disarmerComp.BaseDisarmFailChance + contestResults);
+
+        if (inTargetHand != null && TryComp<DisarmMalusComponent>(inTargetHand, out var malus))
+        {
+            chance += malus.Malus;
+        }
+
+        return Math.Clamp(chance, 0f, 1f);
+    }
+
     private HashSet<EntityUid> ArcRayCast(Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId, EntityUid ignore)
     {
         // TODO: This is pretty sucky.
@@ -304,26 +398,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         return resSet;
-    }
-
-    private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
-    {
-        if (HasComp<DisarmProneComponent>(disarmer))
-            return 1.0f;
-
-        if (HasComp<DisarmProneComponent>(disarmed))
-            return 0.0f;
-
-        var contestResults = 1 - _contests.OverallStrengthContest(disarmer, disarmed);
-
-        float chance = (disarmerComp.BaseDisarmFailChance + contestResults);
-
-        if (inTargetHand != null && TryComp<DisarmMalusComponent>(inTargetHand, out var malus))
-        {
-            chance += malus.Malus;
-        }
-
-        return Math.Clamp(chance, 0f, 1f);
     }
 
     public override void DoLunge(EntityUid user, Vector2 localPos, string? animation)
@@ -407,7 +481,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         foreach (var (type, damage) in modifiedDamage.DamageDict)
         {
-            if (damage <= highestDamage) continue;
+            if (damage <= highestDamage)
+                continue;
+
             highestDamageType = type;
         }
 
