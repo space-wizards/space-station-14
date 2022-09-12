@@ -35,7 +35,6 @@
                HorizontalExpand="True"/>
     </BoxContainer>
     <!-- Spacer -->
-    <BoxContainer Name="AuthorizationsContainer" Orientation="Vertical">
-    </BoxContainer>
+    <BoxContainer Name="AuthorizationsContainer" Orientation="Vertical"/>
 </BoxContainer>
 </controls:FancyWindow>
