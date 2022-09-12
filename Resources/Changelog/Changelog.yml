@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Fire Axe now costs 10 TC and does less fire damage., type: Tweak}
-  id: 1786
-  time: '2022-06-25T05:27:14.0000000+00:00'
 - author: Sammy Boy
   changes:
   - {message: Nukies are fixed and should be able to spawn in again!, type: Fix}
@@ -2925,3 +2920,9 @@ Entries:
   - {message: Hot coffee and tea sprites show liquid level, type: Tweak}
   id: 2285
   time: '2022-09-12T03:53:48.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: We have changed to the old airlock models with that soul sound some
+      people recognize., type: Add}
+  id: 2286
+  time: '2022-09-12T05:55:08.0000000+00:00'
