@@ -4,22 +4,16 @@
   playTimeTracker: JobHeadOfPersonnel
   requirements:
     - !type:DepartmentTimeRequirement
-      department: Science
-      time: 72000
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 72000
+      department: Engineering
+      time: 7200
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 72000
+      time: 7200
     - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 72000
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 72000
+      department: Security
+      time: 7200
     - !type:OverallPlaytimeRequirement
-      time: 288000
+      time: 108000
   weight: 20
   startingGear: HoPGear
   icon: "HeadOfPersonnel"

@@ -5,7 +5,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 126000
+      time: 36000
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "ResearchDirector"

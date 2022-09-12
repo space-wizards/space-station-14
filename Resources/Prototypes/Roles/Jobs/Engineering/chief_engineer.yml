@@ -5,10 +5,10 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 72000
+      time: 7200
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 144000
+      time: 36000
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "ChiefEngineer"

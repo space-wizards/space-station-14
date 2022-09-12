@@ -7,7 +7,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 144000
+      time: 36000
   weight: 10
   startingGear: CMOGear
   icon: "ChiefMedicalOfficer"
