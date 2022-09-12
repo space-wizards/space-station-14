@@ -566,7 +566,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (_nukeopsRuleConfig.GreetSound != null)
             _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession), AudioParams.Default);
 
-        if (_targetStation != null && !string.IsNullOrEmpty(MetaData(_targetStation.Value).EntityName))
+        if (_targetStation != null && !string.IsNullOrEmpty(Name(_targetStation.Value)))
             _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
     }
 
