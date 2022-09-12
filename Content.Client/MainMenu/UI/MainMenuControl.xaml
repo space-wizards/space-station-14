@@ -37,7 +37,9 @@
                     Text="{Loc 'main-menu-quit-button'}"
                     TextAlign="Center"
                     StyleIdentifier="mainMenu" />
-            <clog:ChangelogButton />
+            <clog:ChangelogButton
+                Name="ChangelogButton"
+                Access="Public"/>
         </BoxContainer>
         <Label Name="VersionLabel" Text="v0.1" />
     </LayoutContainer>

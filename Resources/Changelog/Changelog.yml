@@ -1,9 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Waystation now has jetpacks!, type: Add}
-  id: 1785
-  time: '2022-06-25T02:59:26.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Fire Axe now costs 10 TC and does less fire damage., type: Tweak}
@@ -2925,3 +2920,8 @@ Entries:
       into breathable gases., type: Add}
   id: 2284
   time: '2022-09-11T23:02:01.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Hot coffee and tea sprites show liquid level, type: Tweak}
+  id: 2285
+  time: '2022-09-12T03:53:48.0000000+00:00'
