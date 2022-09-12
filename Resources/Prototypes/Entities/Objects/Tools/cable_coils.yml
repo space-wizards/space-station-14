@@ -131,3 +131,38 @@
     size: 3
   - type: Stack
     count: 1
+    
+- type: entity
+  parent: CableStack
+  id: CableNetStack
+  name: Networking cable coil
+  description: High-speed networking cable for general purpose data transfer.
+  suffix: Full
+  components:
+  - type: Sprite
+    state: coilnet-30
+  - type: Item
+    size: 10
+    heldPrefix: coilnet
+  - type: CablePlacer
+    cablePrototypeID: CableNet
+    blockingWireType: Networking
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - coilnet-10
+          - coilnet-20
+          - coilnet-30
+
+- type: entity
+  parent: CableNetStack
+  id: CableNetStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coilnet-10
+  - type: Item
+    state: 3
+  - type: Stack
+    count: 1

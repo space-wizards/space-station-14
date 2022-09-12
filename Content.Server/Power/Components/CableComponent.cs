@@ -34,5 +34,6 @@ namespace Content.Server.Power.Components
         HighVoltage,
         MediumVoltage,
         Apc,
+        Networking
     }
 }

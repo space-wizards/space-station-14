@@ -28,9 +28,16 @@
         acts: ["Destruction"]
   - type: SubFloorHide
   - type: CollideOnAnchor
+  - type: Appearance
+  - type: CableVis
+  
+- type: entity
+  parent: CableBase
+  abstract: true
+  id: CablePowerBase
+  components:
   - type: AmbientSound
     enabled: false  # Leaving as false because 90% of them are set to this.
-  - type: Appearance
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false # wire-cutting handled separately.
@@ -41,10 +48,9 @@
     lowVoltageNode: power
   - type: CableVis
     node: power
-   
 
 - type: entity
-  parent: CableBase
+  parent: CablePowerBase
   id: CableHV
   name: HV power cable
   description: An orange high voltage power cable.
@@ -92,7 +98,7 @@
       path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
-  parent: CableBase
+  parent: CablePowerBase
   id: CableMV
   name: MV power cable
   description: A medium voltage power cable.
@@ -141,7 +147,7 @@
       path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
-  parent: CableBase
+  parent: CablePowerBase
   id: CableApcExtension
   name: LV power cable
   description: A cable used to connect machines to an APC. #APCs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
@@ -191,3 +197,49 @@
     range: 2
     sound:
       path: /Audio/Ambience/Objects/emf_buzz.ogg
+      
+- type: entity
+  parent: CableBase
+  id: CableNet
+  name: Networking Cable
+  description: A high-speed networking cable for general purpose data transfer.
+  components:
+    - type: Sprite
+      color: RoyalBlue
+      sprite: Structures/Networking/net_cable.rsi
+      state: netcable_0
+    - type: Icon
+      color: RoyalBlue
+      sprite: Structures/Networking/net_cable.rsi
+      state: netcable_4
+    - type: NodeContainer
+      nodes:
+        net:
+          !type:CableNode
+          nodeGroupID: WireNet
+    - type: Cable
+      cableDroppedOnCutPrototype: NetCableStack1
+      cableType: Networking
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                CableNetStack1:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: CableVisualizer
+      statePrefix: netcable_
+    - type: CableVis
+      node: net

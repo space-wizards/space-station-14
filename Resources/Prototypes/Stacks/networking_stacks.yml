@@ -1,0 +1,5 @@
+- type: stack
+  id: CableNet
+  name: net cable
+  icon: "/Textures/Objects/Tools/cable-coils.rsi/coilnet-30.png"
+  spawn: CableNetStack1

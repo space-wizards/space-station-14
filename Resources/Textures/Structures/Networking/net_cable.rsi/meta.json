@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fcf375d7d9ce6ceed5c7face899725e5655ab640",
+    "states": [
+        {
+            "name": "netcable_0"
+        },
+        {
+            "name": "netcable_1"
+        },
+        {
+            "name": "netcable_2"
+        },
+        {
+            "name": "netcable_3"
+        },
+        {
+            "name": "netcable_4"
+        },
+        {
+            "name": "netcable_5"
+        },
+        {
+            "name": "netcable_6"
+        },
+        {
+            "name": "netcable_7"
+        },
+        {
+            "name": "netcable_8"
+        },
+        {
+            "name": "netcable_9"
+        },
+        {
+            "name": "netcable_10"
+        },
+        {
+            "name": "netcable_11"
+        },
+        {
+            "name": "netcable_12"
+        },
+        {
+            "name": "netcable_13"
+        },
+        {
+            "name": "netcable_14"
+        },
+        {
+            "name": "netcable_15"
+        }
+    ]
+}
