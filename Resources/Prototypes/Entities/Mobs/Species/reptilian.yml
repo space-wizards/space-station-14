@@ -4,7 +4,6 @@
   parent: BaseMobOrganic
   id: BaseMobReptilian
   abstract: true
-  description: A miserable pile of scales.
   components:
   - type: Hunger
   - type: Thirst

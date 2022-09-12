@@ -58,6 +58,7 @@
   description: 'A dark ink pen.'
   components:
   - type: EnergySword
+    secret: true
     litDamageBonus:
         types:
             Slash: 7.5
@@ -74,6 +75,7 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
+    hidden: true
     damage:
       types:
         Blunt: 1

@@ -37,7 +37,7 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
             SubscribeLocalEvent<WieldableComponent, DisarmAttemptEvent>(OnDisarmAttemptEvent);
 
-            SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<IncreaseDamageOnWieldComponent, ItemMeleeDamageEvent>(OnMeleeHit);
         }
 
         private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
@@ -233,7 +233,7 @@ namespace Content.Server.Wieldable
                 AttemptUnwield(args.BlockingEntity, component, args.User);
         }
 
-        private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
+        private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, ItemMeleeDamageEvent args)
         {
             if (EntityManager.TryGetComponent<WieldableComponent>(uid, out var wield))
             {
@@ -243,7 +243,7 @@ namespace Content.Server.Wieldable
             if (args.Handled)
                 return;
 
-            args.ModifiersList.Add(component.Modifiers);
+            args.BonusDamage += component.BonusDamage;
         }
     }
 
