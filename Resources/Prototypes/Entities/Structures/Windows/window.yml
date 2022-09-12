@@ -104,6 +104,11 @@
   - type: Tag
     tags:
       - Window
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: Sprite
     drawdepth: Mobs
     netsync: false

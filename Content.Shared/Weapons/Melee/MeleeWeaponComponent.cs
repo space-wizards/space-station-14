@@ -102,7 +102,10 @@ public sealed class MeleeWeaponComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundSwing")]
-    public SoundSpecifier SwingSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
+    public SoundSpecifier SwingSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-3f).WithVariation(0.025f),
+    };
 
     // We do not predict the below sounds in case the client thinks but the server disagrees. If this were the case
     // then a player may doubt if the target actually took damage or not.
