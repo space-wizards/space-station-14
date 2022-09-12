@@ -158,7 +158,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatEldritch
   name: eldritch mask
-  description: Shows your appreciation for the great old ones.
+  description: Show your appreciation for the great old ones.
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/cthulhu.rsi
