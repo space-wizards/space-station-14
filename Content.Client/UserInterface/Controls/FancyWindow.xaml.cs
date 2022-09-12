@@ -3,7 +3,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Maths;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.UserInterface.Controls
 {
     [GenerateTypedNameReferences]
     [Virtual]
