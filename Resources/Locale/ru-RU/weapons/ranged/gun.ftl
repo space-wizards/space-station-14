@@ -12,15 +12,15 @@ gun-ballistic-cycle = Перезарядка
 gun-ballistic-cycled = Перезаряжено
 gun-ballistic-cycled-empty = Разряжено
 # CartridgeAmmo
-gun-cartridge-spent = It is [color=red]spent[/color].
-gun-cartridge-unspent = It is [color=lime]not spent[/color].
+gun-cartridge-spent = Он [color=red]израсходован[/color].
+gun-cartridge-unspent = Он [color=lime]не израсходован[/color].
 # BatteryAmmoProvider
-gun-battery-examine = Заряда хватит на [color={ $color }]{ $count } выстрелов.
+gun-battery-examine = Заряда хватит на [color={ $color }]{ $count }[/color] выстрелов.
 # MagazineAmmoProvider
 gun-magazine-examine = Осталось [color={ $color }]{ $count }[/color] выстрелов.
 # RevolverAmmoProvider
 gun-revolver-empty = Разрядить револьвер
 gun-revolver-full = Револьвер полностью заряжен
-gun-revolver-insert = Вставить
-gun-revolver-spin = Крутануть барабан
-gun-revolver-spun = Повернуть
+gun-revolver-insert = Заряжен
+gun-revolver-spin = Вращать барабан
+gun-revolver-spun = Барабан вращается
