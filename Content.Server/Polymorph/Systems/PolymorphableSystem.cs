@@ -184,7 +184,7 @@ namespace Content.Server.Polymorph.Systems
 
             var act = new InstantAction()
             {
-                Event = new PolymorphActionEvent()
+                Event = new PolymorphActionEvent
                 {
                     Prototype = polyproto,
                 },

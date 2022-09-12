@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                           xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-                           Title="{Loc 'shuttle-console-window-title'}">
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+                      Title="{Loc 'shuttle-console-window-title'}">
     <GridContainer Columns="3"
                   HorizontalAlignment="Stretch"
                   Margin="5 5 5 5">
@@ -16,8 +16,7 @@
                     <Label Name="DockingPortsLabel" Text="{Loc 'shuttle-console-dock-label'}" HorizontalAlignment="Center"/>
                 </controls:StripeBack>
                 <BoxContainer Name="DockPorts"
-                              Orientation="Vertical">
-                </BoxContainer>
+                              Orientation="Vertical"/>
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
                 <controls:StripeBack>
