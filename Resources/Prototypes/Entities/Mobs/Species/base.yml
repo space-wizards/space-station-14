@@ -301,7 +301,7 @@
     attackRate: 1.5
     damage:
       types:
-        Blunt: 2.5
+        Blunt: 3.5
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
