@@ -1,6 +1,8 @@
 using Content.Shared.Maps;
 using Robust.Server.Console;
 using Robust.Server.Player;
+using Robust.Shared.Players;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Maps;
 
@@ -9,11 +11,38 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 {
     [Dependency] private readonly IConGroupController _admin = default!;
 
+    private readonly HashSet<ICommonSession> _draggers = new();
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeNetworkEvent<GridDragRequestPosition>(OnRequestDrag);
         SubscribeNetworkEvent<GridDragVelocityRequest>(OnRequestVelocity);
+    }
+
+    public bool IsEnabled(ICommonSession session) => _draggers.Contains(session);
+
+    public void Toggle(ICommonSession session)
+    {
+        if (session is not IPlayerSession pSession)
+            return;
+
+        DebugTools.Assert(_admin.CanCommand(pSession, CommandName));
+
+        // Weird but it's a toggle
+        if (_draggers.Add(session))
+        {
+
+        }
+        else
+        {
+            _draggers.Remove(session);
+        }
+
+        RaiseNetworkEvent(new GridDragToggleMessage()
+        {
+            Enabled = _draggers.Contains(session),
+        }, session.ConnectedClient);
     }
 
     private void OnRequestVelocity(GridDragVelocityRequest ev, EntitySessionEventArgs args)

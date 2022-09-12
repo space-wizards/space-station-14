@@ -9,6 +9,7 @@
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
     netsync: false
+    noRot: true
     layers:
     - state: icon
     - state: unlit

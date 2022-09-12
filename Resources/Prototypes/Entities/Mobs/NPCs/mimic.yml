@@ -9,9 +9,6 @@
     - FootstepSound
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
   - type: AiFactionTag
     factions:
     - SimpleHostile

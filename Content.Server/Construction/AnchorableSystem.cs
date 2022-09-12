@@ -20,8 +20,8 @@ namespace Content.Server.Construction
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
-        [Dependency] private readonly PullingSystem _pullingSystem = default!;
+        [Dependency] private readonly ToolSystem _tool = default!;
+        [Dependency] private readonly PullingSystem _pulling = default!;
 
         public override void Initialize()
         {
@@ -85,7 +85,7 @@ namespace Content.Server.Construction
 
             if (TryComp<SharedPullableComponent>(uid, out var pullable) && pullable.Puller != null)
             {
-                _pullingSystem.TryStopPull(pullable);
+                _pulling.TryStopPull(pullable);
             }
 
             // TODO: Anchoring snaps rn anyway!
@@ -120,8 +120,11 @@ namespace Content.Server.Construction
             while (enumerator.MoveNext(out var ent))
             {
                 if (!bodyQuery.TryGetComponent(ent, out var body) ||
-                    !body.CanCollide)
+                    !body.CanCollide ||
+                    !body.Hard)
+                {
                     continue;
+                }
 
                 if ((body.CollisionMask & anchorBody.CollisionLayer) != 0x0 ||
                     (body.CollisionLayer & anchorBody.CollisionMask) != 0x0)
@@ -154,6 +157,8 @@ namespace Content.Server.Construction
                 RaiseLocalEvent(uid, (AnchorAttemptEvent) attempt, false);
             else
                 RaiseLocalEvent(uid, (UnanchorAttemptEvent) attempt, false);
+
+            anchorable.Delay += attempt.Delay;
 
             if (attempt.Cancelled)
                 return false;
@@ -192,7 +197,7 @@ namespace Content.Server.Construction
 
             anchorable.CancelToken = new CancellationTokenSource();
 
-            _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
+            _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
                 new TryAnchorCompletedEvent(), new TryAnchorCancelledEvent(), uid, cancelToken: anchorable.CancelToken.Token);
         }
 
@@ -215,7 +220,7 @@ namespace Content.Server.Construction
 
             anchorable.CancelToken = new CancellationTokenSource();
 
-            _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
+            _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
                 new TryUnanchorCompletedEvent(), new TryUnanchorCancelledEvent(), uid, cancelToken: anchorable.CancelToken.Token);
         }
 

@@ -102,13 +102,9 @@ namespace Content.Shared.Maps
             IRobustRandom? robustRandom = null)
         {
             var tile = tileRef.Tile;
-            var indices = tileRef.GridIndices;
 
             // If the arguments are null, resolve the needed dependencies.
-            mapManager ??= IoCManager.Resolve<IMapManager>();
             tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
 
             if (tile.IsEmpty) return false;
 
@@ -116,19 +112,58 @@ namespace Content.Shared.Maps
 
             if (!tileDef.CanCrowbar) return false;
 
+            return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
+        }
+
+        public static bool CutTile(this TileRef tileRef,
+            IMapManager? mapManager = null,
+            ITileDefinitionManager? tileDefinitionManager = null,
+            IEntityManager? entityManager = null,
+            IRobustRandom? robustRandom = null)
+        {
+            var tile = tileRef.Tile;
+
+            // If the arguments are null, resolve the needed dependencies.
+            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+
+            if (tile.IsEmpty) return false;
+
+            var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.TypeId];
+
+            if (!tileDef.CanWirecutter) return false;
+
+            return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
+        }
+
+        private static bool DeconstructTile(this TileRef tileRef,
+            IMapManager? mapManager = null,
+            ITileDefinitionManager? tileDefinitionManager = null,
+            IEntityManager? entityManager = null,
+            IRobustRandom? robustRandom = null)
+        {
+            var indices = tileRef.GridIndices;
+
+            mapManager ??= IoCManager.Resolve<IMapManager>();
+            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
+
+            var tileDef = (ContentTileDefinition) tileDefinitionManager[tileRef.Tile.TypeId];
             var mapGrid = mapManager.GetGrid(tileRef.GridUid);
+
+            const float margin = 0.1f;
+            var (x, y) = ((mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin,
+                (mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin);
+            var coordinates = mapGrid.GridTileToLocal(indices).Offset(new Vector2(x, y));
+
+            //Actually spawn the relevant tile item at the right position and give it some random offset.
+            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
+            entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation
+                = robustRandom.NextDouble() * Math.Tau;
 
             var plating = tileDefinitionManager[tileDef.BaseTurfs[^1]];
 
-             mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
-
-             const float margin = 0.1f;
-
-             var (x, y) = ((mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin, (mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin);
-
-            //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridUid, mapManager).Offset(new Vector2(x, y)));
-            entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation = robustRandom.NextDouble() * Math.Tau;
+            mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
 
             return true;
         }

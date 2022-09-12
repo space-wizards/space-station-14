@@ -19,6 +19,8 @@ public sealed partial class TriggerSystem
         //Ensures the entity trigger will have an active component
         EnsureComp<ActiveTriggerOnTimedCollideComponent>(uid);
         var otherUID = args.OtherFixture.Body.Owner;
+        if (component.Colliding.ContainsKey(otherUID))
+            return;
         component.Colliding.Add(otherUID, 0);
     }
 

@@ -3,7 +3,6 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
 using Robust.Shared.Physics;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Physics.Controllers
@@ -23,7 +22,17 @@ namespace Content.Client.Physics.Controllers
             if (TryComp<RelayInputMoverComponent>(player, out var relayMover))
             {
                 if (relayMover.RelayEntity != null)
+                {
+                    if (TryComp<InputMoverComponent>(player, out var mover) &&
+                        TryComp<InputMoverComponent>(relayMover.RelayEntity, out var relayed))
+                    {
+                        relayed.RelativeEntity = mover.RelativeEntity;
+                        relayed.RelativeRotation = mover.RelativeRotation;
+                        relayed.TargetRelativeRotation = mover.RelativeRotation;
+                    }
+
                     HandleClientsideMovement(relayMover.RelayEntity.Value, frameTime);
+                }
             }
 
             HandleClientsideMovement(player, frameTime);
@@ -31,8 +40,10 @@ namespace Content.Client.Physics.Controllers
 
         private void HandleClientsideMovement(EntityUid player, float frameTime)
         {
+            var xformQuery = GetEntityQuery<TransformComponent>();
+
             if (!TryComp(player, out InputMoverComponent? mover) ||
-                !TryComp(player, out TransformComponent? xform))
+                !xformQuery.TryGetComponent(player, out var xform))
             {
                 return;
             }
@@ -47,19 +58,11 @@ namespace Content.Client.Physics.Controllers
                 {
                     return;
                 }
-
-                if (TryComp<InputMoverComponent>(xform.ParentUid, out var parentMover))
-                {
-                    mover.LastGridAngle = parentMover.LastGridAngle;
-                }
             }
             else if (!TryComp(player, out body))
             {
                 return;
             }
-
-            if (xform.GridUid != null)
-                mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
             // Essentially we only want to set our mob to predicted so every other entity we just interpolate
             // (i.e. only see what the server has sent us).
@@ -98,7 +101,7 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(mover, body, xformMover, frameTime);
+            HandleMobMovement(mover, body, xformMover, frameTime, xformQuery);
         }
 
         protected override bool CanSound()

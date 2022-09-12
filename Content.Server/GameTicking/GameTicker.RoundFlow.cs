@@ -121,10 +121,9 @@ namespace Content.Server.GameTicking
 
             var (entities, gridIds) = _mapLoader.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            var gridUids = gridIds.Select(g => (EntityUid)g).ToList();
+            var gridUids = gridIds.Select(g => g).ToList();
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, gridUids, stationName));
 
-            _spawnPoint = _mapManager.GetGrid(gridIds[0]).ToCoordinates();
             return (entities, gridUids);
         }
 

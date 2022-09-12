@@ -70861,10 +70861,6 @@ entities:
   - pos: -23.5,-22.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6411
   type: GasPipeStraight
   components:
@@ -74809,21 +74805,6 @@ entities:
   - pos: -46.5,-33.5
     parent: 69
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 6865
   type: TableReinforcedGlass
   components:
@@ -77031,21 +77012,6 @@ entities:
   - pos: -48.5,-30.5
     parent: 69
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 7180
   type: DisposalPipe
   components:
@@ -83526,10 +83492,6 @@ entities:
   - pos: 58.5,-84.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8061
   type: DonkpocketBoxSpawner
   components:
@@ -83733,10 +83695,6 @@ entities:
   - pos: -18.5,-22.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8091
   type: KitchenReagentGrinder
   components:
@@ -100527,21 +100485,6 @@ entities:
   - pos: -56.5,4.5
     parent: 69
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 10453
   type: AsteroidRock
   components:
@@ -108616,10 +108559,6 @@ entities:
   - pos: 23.5,-85.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11561
   type: DonkpocketBoxSpawner
   components:
@@ -112828,10 +112767,6 @@ entities:
   - pos: -26.5,-77.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 12121
   type: DonkpocketBoxSpawner
   components:
@@ -136242,10 +136177,6 @@ entities:
   - pos: 50.5,-41.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 15343
   type: Table
   components:
@@ -167221,10 +167152,6 @@ entities:
   - pos: 49.5,-24.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 19376
   type: DonkpocketBoxSpawner
   components:
@@ -177561,10 +177488,6 @@ entities:
   - pos: -32.5,-125.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 20552
   type: DonkpocketBoxSpawner
   components:
@@ -198567,10 +198490,6 @@ entities:
   - pos: -42.5,0.5
     parent: 69
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 23488
   type: DonkpocketBoxSpawner
   components:

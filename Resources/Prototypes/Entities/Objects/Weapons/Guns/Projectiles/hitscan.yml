@@ -10,6 +10,9 @@
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
   - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
   - type: AnimationPlayer
 
 - type: hitscan

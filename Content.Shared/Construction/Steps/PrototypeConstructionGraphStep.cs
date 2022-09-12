@@ -1,11 +1,14 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Examine;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
     public sealed class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        [DataField("prototype")] public string Prototype { get; } = string.Empty;
+        [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>), required:true)]
+        public string Prototype { get; } = string.Empty;
 
         public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
         {

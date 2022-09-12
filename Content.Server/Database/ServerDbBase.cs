@@ -27,6 +27,7 @@ namespace Content.Server.Database
                 .Preference
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
+                .Include(p => p.Profiles).ThenInclude(h => h.Traits)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
 
@@ -156,6 +157,7 @@ namespace Content.Server.Database
         {
             var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
             var antags = profile.Antags.Select(a => a.AntagName);
+            var traits = profile.Traits.Select(t => t.TraitName);
 
             var sex = Sex.Male;
             if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
@@ -211,7 +213,8 @@ namespace Content.Server.Database
                 backpack,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
-                antags.ToList()
+                antags.ToList(),
+                traits.ToList()
             );
         }
 
@@ -253,6 +256,10 @@ namespace Content.Server.Database
             entity.Antags.AddRange(
                 humanoid.AntagPreferences
                     .Select(a => new Antag {AntagName = a})
+            );
+            entity.Traits.AddRange(
+                humanoid.TraitPreferences
+                        .Select(t => new Trait {TraitName = t})
             );
 
             return entity;

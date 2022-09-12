@@ -258,6 +258,11 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private void SendToConnections(ReadOnlySpan<DeviceNetworkComponent> connections, DeviceNetworkPacketEvent packet)
         {
+            if (Deleted(packet.Sender))
+            {
+                return;
+            }
+
             var xform = Transform(packet.Sender);
 
             BeforePacketSentEvent beforeEv = new(packet.Sender, xform, _transformSystem.GetWorldPosition(xform));

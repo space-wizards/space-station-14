@@ -17,6 +17,7 @@ namespace Content.Shared.Vehicle;
 /// </summary>
 public abstract partial class SharedVehicleSystem : EntitySystem
 {
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -134,10 +135,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// </summary>
     protected void UpdateDrawDepth(EntityUid uid, int drawDepth)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        appearance.SetData(VehicleVisuals.DrawDepth, drawDepth);
+        Appearance.SetData(uid, VehicleVisuals.DrawDepth, drawDepth);
     }
 
     /// <summary>
@@ -145,10 +143,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// </summary>
     protected void UpdateAutoAnimate(EntityUid uid, bool autoAnimate)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        appearance.SetData(VehicleVisuals.AutoAnimate, autoAnimate);
+        Appearance.SetData(uid, VehicleVisuals.AutoAnimate, autoAnimate);
     }
 }
 

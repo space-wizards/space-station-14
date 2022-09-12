@@ -18,6 +18,7 @@
         Blunt: 0.6
     hitSound:
       collection: BoxingHit
+    arc: fist
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-red

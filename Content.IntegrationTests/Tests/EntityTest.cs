@@ -6,6 +6,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -18,79 +19,89 @@ namespace Content.IntegrationTests.Tests
     public sealed class EntityTest
     {
         [Test]
-        public async Task SpawnTest()
+        public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps()
         {
-            //TODO: Run this test in a for loop, and figure out why garbage is ending up in the Entities list on cleanup.
-            //If this gets fixed, see also UninitializedSaveTest.
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Dirty = true, Destructive = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var entityMan = server.ResolveDependency<IEntityManager>();
-            var prototypeMan = server.ResolveDependency<IPrototypeManager>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+            IEntityManager entityMan = null;
 
-            var prototypes = new List<EntityPrototype>();
-            IMapGrid grid = default;
-            EntityUid testEntity;
-
-            //Build up test environment
             await server.WaitPost(() =>
             {
-                // Create a one tile grid to stave off the grid 0 monsters
-                var mapId = mapManager.CreateMap();
-
-                mapManager.AddUninitializedMap(mapId);
-
-                grid = mapManager.CreateGrid(mapId);
-
-                var tileDefinition = tileDefinitionManager["UnderPlating"];
-                var tile = new Tile(tileDefinition.TileId);
-                var coordinates = grid.ToCoordinates();
-
-                grid.SetTile(coordinates, tile);
-
-                mapManager.DoMapInitialize(mapId);
+                entityMan = IoCManager.Resolve<IEntityManager>();
+                var mapManager = IoCManager.Resolve<IMapManager>();
+                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+                var protoIds = prototypeMan
+                    .EnumeratePrototypes<EntityPrototype>()
+                    .Where(p=>!p.Abstract)
+                    .Select(p => p.ID)
+                    .ToList();
+                foreach (var protoId in protoIds)
+                {
+                    var mapId = mapManager.CreateMap();
+                    var grid = mapManager.CreateGrid(mapId);
+                    var coord = new EntityCoordinates(grid.GridEntityId, 0, 0);
+                    entityMan.SpawnEntity(protoId, coord);
+                }
             });
 
             await server.WaitRunTicks(5);
 
-            await server.WaitAssertion(() =>
+            await server.WaitPost(() =>
             {
-                var testLocation = grid.ToCoordinates();
-
-                //Generate list of non-abstract prototypes to test
-                foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
+                var entityMetas = entityMan.EntityQuery<MetaDataComponent>().ToList();
+                foreach (var meta in entityMetas)
                 {
-                    if (prototype.Abstract)
-                    {
-                        continue;
-                    }
-
-                    prototypes.Add(prototype);
+                    if(!entityMan.Deleted(meta.Owner))
+                        entityMan.DeleteEntity(meta.Owner);
                 }
 
-                Assert.Multiple(() =>
-                {
-                    //Iterate list of prototypes to spawn
-                    foreach (var prototype in prototypes)
-                    {
-                        Assert.DoesNotThrow(() =>
-                            {
-                                Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
-                                testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
-                                server.RunTicks(1);
-                                if(!entityMan.Deleted(testEntity))
-                                    entityMan.DeleteEntity(testEntity);
-                            }, "Entity '{0}' threw an exception.",
-                            prototype.ID);
-                    }
-                });
+                Assert.That(entityMan.EntityCount, Is.Zero);
             });
-
             await pairTracker.CleanReturnAsync();
         }
 
+        [Test]
+        public async Task SpawnAndDeleteAllEntitiesInTheSameSpot()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
+            var server = pairTracker.Pair.Server;
+
+            IEntityManager entityMan = null;
+
+            await server.WaitPost(() =>
+            {
+                entityMan = IoCManager.Resolve<IEntityManager>();
+                var mapManager = IoCManager.Resolve<IMapManager>();
+
+                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+                var protoIds = prototypeMan
+                    .EnumeratePrototypes<EntityPrototype>()
+                    .Where(p=>!p.Abstract)
+                    .Select(p => p.ID)
+                    .ToList();
+                var mapId = mapManager.CreateMap();
+                var grid = mapManager.CreateGrid(mapId);
+                var coord = new EntityCoordinates(grid.GridEntityId, 0, 0);
+                foreach (var protoId in protoIds)
+                {
+                    entityMan.SpawnEntity(protoId, coord);
+                }
+            });
+            await server.WaitRunTicks(5);
+            await server.WaitPost(() =>
+            {
+                var entityMetas = entityMan.EntityQuery<MetaDataComponent>().ToList();
+                foreach (var meta in entityMetas)
+                {
+                    if(!entityMan.Deleted(meta.Owner))
+                        entityMan.DeleteEntity(meta.Owner);
+                }
+
+                Assert.That(entityMan.EntityCount, Is.Zero);
+            });
+            await pairTracker.CleanReturnAsync();
+        }
         [Test]
         public async Task AllComponentsOneToOneDeleteTest()
         {

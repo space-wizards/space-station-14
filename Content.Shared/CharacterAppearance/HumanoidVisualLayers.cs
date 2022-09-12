@@ -24,6 +24,7 @@ namespace Content.Shared.CharacterAppearance
         LFoot,
         Handcuffs,
         StencilMask,
+        Ensnare,
         Fire,
     }
 }
