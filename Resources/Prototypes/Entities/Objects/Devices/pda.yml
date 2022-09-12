@@ -634,13 +634,28 @@
     state: pda-syndi
 
 - type: entity
-  parent: HoSPDA
+  parent: BasePDA
   id: ERTLeaderPDA
   name: ERT PDA
   description: Red for firepower.
   components:
   - type: PDA
     id: ERTLeaderIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-ert
+  - type: Icon
+    state: pda-ert
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: CBURNPDA
+  name: CBURN PDA
+  description: Smells like rotten flesh.
+  components:
+  - type: PDA
+    id: CBURNIDcard
 
 - type: entity
   parent: BasePDA

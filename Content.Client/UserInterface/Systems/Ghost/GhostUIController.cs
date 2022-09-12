@@ -70,8 +70,7 @@ public sealed class GhostUIController : UIController, IOnStateChanged<GameplaySt
         if (Gui?.TargetWindow is not { } window)
             return;
 
-        window.Locations = msg.Locations;
-        window.Players = msg.Players;
+        window.UpdateWarps(msg.Warps);
         window.Populate();
     }
 
@@ -80,15 +79,9 @@ public sealed class GhostUIController : UIController, IOnStateChanged<GameplaySt
         UpdateGui();
     }
 
-    private void PlayerClicked(EntityUid player)
+    private void OnWarpClicked(EntityUid player)
     {
         var msg = new GhostWarpToTargetRequestEvent(player);
-        _net.SendSystemNetworkMessage(msg);
-    }
-
-    private void LocationClicked(string location)
-    {
-        var msg = new GhostWarpToLocationRequestEvent(location);
         _net.SendSystemNetworkMessage(msg);
     }
 
@@ -100,8 +93,7 @@ public sealed class GhostUIController : UIController, IOnStateChanged<GameplaySt
         Gui.RequestWarpsPressed += RequestWarps;
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
-        Gui.TargetWindow.PlayerClicked += PlayerClicked;
-        Gui.TargetWindow.LocationClicked += LocationClicked;
+        Gui.TargetWindow.WarpClicked += OnWarpClicked;
 
         Gui.Visible = _system?.IsGhost ?? false;
     }
@@ -114,8 +106,7 @@ public sealed class GhostUIController : UIController, IOnStateChanged<GameplaySt
         Gui.RequestWarpsPressed -= RequestWarps;
         Gui.ReturnToBodyPressed -= ReturnToBody;
         Gui.GhostRolesPressed -= GhostRolesPressed;
-        Gui.TargetWindow.PlayerClicked -= PlayerClicked;
-        Gui.TargetWindow.LocationClicked -= LocationClicked;
+        Gui.TargetWindow.WarpClicked -= OnWarpClicked;
 
         Gui.Hide();
     }

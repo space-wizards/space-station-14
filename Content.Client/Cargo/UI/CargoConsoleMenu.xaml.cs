@@ -99,8 +99,6 @@ namespace Content.Client.Cargo.UI
             _categoryStrings.Clear();
             Categories.Clear();
 
-            _categoryStrings.Add(Loc.GetString("cargo-console-menu-populate-categories-all-text"));
-
             foreach (var prototype in ProductPrototypes)
             {
                 if (!_categoryStrings.Contains(prototype.Category))
@@ -108,7 +106,12 @@ namespace Content.Client.Cargo.UI
                     _categoryStrings.Add(Loc.GetString(prototype.Category));
                 }
             }
+
             _categoryStrings.Sort();
+
+            // Add "All" category at the top of the list
+            _categoryStrings.Insert(0, Loc.GetString("cargo-console-menu-populate-categories-all-text"));
+
             foreach (var str in _categoryStrings)
             {
                 Categories.AddItem(str);

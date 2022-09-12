@@ -32,6 +32,17 @@
   - type: Construction
     graph: Machine
     node: machine
+    containers:
+    - machine_parts
+    - machine_board
+  - type: ContainerContainer
+    containers:
+      scanner-bodyContainer: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: SignalReceiver
+    inputs:
+      MedicalScannerReceiver: []
   - type: Destructible
     thresholds:
     - trigger:

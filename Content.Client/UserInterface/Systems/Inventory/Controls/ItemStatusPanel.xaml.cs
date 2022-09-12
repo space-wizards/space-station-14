@@ -21,9 +21,6 @@ public sealed partial class ItemStatusPanel : Popup
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
     [ViewVariables]
-    private readonly List<(IItemStatus, Control)> _activeStatusComponents = new();
-
-    [ViewVariables]
     private EntityUid? _entity;
 
     public ItemStatusPanel()
@@ -126,13 +123,6 @@ public sealed partial class ItemStatusPanel : Popup
     private void ClearOldStatus()
     {
         StatusContents.RemoveAllChildren();
-
-        foreach (var (itemStatus, control) in _activeStatusComponents)
-        {
-            itemStatus.DestroyControl(control);
-        }
-
-        _activeStatusComponents.Clear();
     }
 
     private void BuildNewEntityStatus()
@@ -140,14 +130,6 @@ public sealed partial class ItemStatusPanel : Popup
         DebugTools.AssertNotNull(_entity);
 
         ClearOldStatus();
-
-        foreach (var statusComponent in _entityManager.GetComponents<IItemStatus>(_entity!.Value))
-        {
-            var control = statusComponent.MakeControl();
-            StatusContents.AddChild(control);
-
-            _activeStatusComponents.Add((statusComponent, control));
-        }
 
         var collectMsg = new ItemStatusCollectMessage();
         _entityManager.EventBus.RaiseLocalEvent(_entity!.Value, collectMsg, true);

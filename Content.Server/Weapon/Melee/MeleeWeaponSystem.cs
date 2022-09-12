@@ -7,13 +7,16 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Damage.Components;
 using Content.Server.Damage.Systems;
+using Content.Server.Examine;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Physics;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -27,12 +30,14 @@ namespace Content.Server.Weapon.Melee
 {
     public sealed class MeleeWeaponSystem : EntitySystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly StaminaSystem _staminaSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
         public const float DamagePitchVariation = 0.15f;
@@ -44,7 +49,47 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnHandSelected);
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
+            SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<ExamineVerb>>(OnMeleeExaminableVerb);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+        }
+
+        private void OnMeleeExaminableVerb(EntityUid uid, MeleeWeaponComponent component, GetVerbsEvent<ExamineVerb> args)
+        {
+            if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
+                return;
+
+            var getDamage = new ItemMeleeDamageEvent(component.Damage);
+            RaiseLocalEvent(uid, getDamage, false);
+
+            var damageSpec = GetDamage(component);
+
+            if (damageSpec == null)
+                damageSpec = new DamageSpecifier();
+
+            damageSpec += getDamage.BonusDamage;
+
+            if (damageSpec.Total == FixedPoint2.Zero)
+                return;
+
+            var verb = new ExamineVerb()
+            {
+                Act = () =>
+                {
+                    var markup = _damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
+                    _examine.SendExamineTooltip(args.User, uid, markup, false, false);
+                },
+                Text = Loc.GetString("damage-examinable-verb-text"),
+                Message = Loc.GetString("damage-examinable-verb-message"),
+                Category = VerbCategory.Examine,
+                IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+        private DamageSpecifier? GetDamage(MeleeWeaponComponent component)
+        {
+            return component.Damage.Total > FixedPoint2.Zero ? component.Damage : null;
         }
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)
@@ -88,7 +133,7 @@ namespace Content.Server.Weapon.Melee
 
             if (args.Target is {Valid: true} target)
             {
-                // Raise event before doing damage so we can cancel damage if the event is handled
+                // Raising a melee hit event which may handle combat for us
                 var hitEvent = new MeleeHitEvent(new List<EntityUid>() { target }, args.User, comp.Damage);
                 RaiseLocalEvent(owner, hitEvent, false);
 
@@ -97,10 +142,16 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
+                    // Raising a GetMeleeDamage event which gets our damage
+                    var getDamageEvent = new ItemMeleeDamageEvent(comp.Damage);
+                    RaiseLocalEvent(owner, getDamageEvent, false);
+
                     RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
-                    var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
-                    var damageResult = _damageableSystem.TryChangeDamage(target, modifiedDamage);
+                    var modifiersList = getDamageEvent.ModifiersList;
+                    modifiersList.AddRange(hitEvent.ModifiersList);
+                    var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage + getDamageEvent.BonusDamage, modifiersList);
+                    var damageResult = _damageable.TryChangeDamage(target, modifiedDamage);
 
                     if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
@@ -181,22 +232,26 @@ namespace Content.Server.Weapon.Melee
                     hitEntities.Add(entity);
                 }
             }
-
-            // Raise event before doing damage so we can cancel damage if handled
+            // Raising a melee hit event which may handle combat for us
             var hitEvent = new MeleeHitEvent(hitEntities, args.User, comp.Damage);
             RaiseLocalEvent(owner, hitEvent, false);
             SendAnimation(comp.Arc, angle, args.User, owner, hitEntities);
 
             if (!hitEvent.Handled)
             {
-                var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+                var getDamageEvent = new ItemMeleeDamageEvent(comp.Damage);
+                RaiseLocalEvent(owner, getDamageEvent, false);
+
+                var modifiersList = getDamageEvent.ModifiersList;
+                modifiersList.AddRange(hitEvent.ModifiersList);
+                var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage + getDamageEvent.BonusDamage, modifiersList);
                 var appliedDamage = new DamageSpecifier();
 
                 foreach (var entity in hitEntities)
                 {
                     RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
-                    var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
+                    var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage);
 
                     if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
@@ -383,6 +438,33 @@ namespace Content.Server.Weapon.Melee
         public void SendLunge(Angle angle, EntityUid source)
         {
             RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayLungeAnimationMessage(angle, source), Filter.Pvs(source, 1f));
+        }
+    }
+
+    public sealed class ItemMeleeDamageEvent : HandledEntityEventArgs
+    {
+        /// <summary>
+        ///     The base amount of damage dealt by the melee hit.
+        /// </summary>
+        public readonly DamageSpecifier BaseDamage = new();
+
+        /// <summary>
+        ///     Modifier sets to apply to the damage when it's all said and done.
+        ///     This should be modified by adding a new entry to the list.
+        /// </summary>
+        public List<DamageModifierSet> ModifiersList = new();
+
+        /// <summary>
+        ///     Damage to add to the default melee weapon damage. Applied before modifiers.
+        /// </summary>
+        /// <remarks>
+        ///     This might be required as damage modifier sets cannot add a new damage type to a DamageSpecifier.
+        /// </remarks>
+        public DamageSpecifier BonusDamage = new();
+
+        public ItemMeleeDamageEvent(DamageSpecifier baseDamage)
+        {
+            BaseDamage = baseDamage;
         }
     }
 

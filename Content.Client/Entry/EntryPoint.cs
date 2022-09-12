@@ -70,6 +70,8 @@ namespace Content.Client.Entry
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
+        public const int NetBufferSizeOverride = 2;
+
         public override void Init()
         {
             ClientContentIoC.Register();
@@ -85,7 +87,7 @@ namespace Content.Client.Entry
 
 #if FULL_RELEASE
             // if FULL_RELEASE, because otherwise this breaks some integration tests.
-            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, 2);
+            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, NetBufferSizeOverride);
 #endif
 
             _componentFactory.DoAutoRegistrations();
@@ -95,7 +97,6 @@ namespace Content.Client.Entry
             _componentFactory.RegisterClass<SharedLatheComponent>();
             _componentFactory.RegisterClass<SharedSpawnPointComponent>();
             _componentFactory.RegisterClass<SharedReagentDispenserComponent>();
-            _componentFactory.RegisterClass<SharedChemMasterComponent>();
             _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
             _componentFactory.RegisterClass<SharedAMEControllerComponent>();
             // Do not add to the above, they are legacy
@@ -109,6 +110,8 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("objective");
             _prototypeManager.RegisterIgnore("holiday");
             _prototypeManager.RegisterIgnore("aiFaction");
+            _prototypeManager.RegisterIgnore("htnCompound");
+            _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("behaviorSet");
             _prototypeManager.RegisterIgnore("lobbyBackground");
@@ -125,6 +128,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("wireLayout");
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
+            _prototypeManager.RegisterIgnore("flavor");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
