@@ -1,5 +1,5 @@
-﻿<ui:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:ui="clr-namespace:Content.Client.UserInterface"
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:networkConfigurator="clr-namespace:Content.Client.NetworkConfigurator"
                 Title="Network Configurator" MinSize="220 400">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
@@ -10,4 +10,4 @@
             <Button Name="ClearButton" Access="Public" Text="{Loc 'network-configurator-ui-clear-button'}"></Button>
         </BoxContainer>
     </BoxContainer>
-</ui:FancyWindow>
+</controls:FancyWindow>

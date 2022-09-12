@@ -1,8 +1,8 @@
 ﻿
-<ui:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:ui="clr-namespace:Content.Client.UserInterface"
-                MouseFilter="Stop"
-                MinWidth="200" MinHeight="150">
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MouseFilter="Stop"
+                      MinWidth="200" MinHeight="150">
     <PanelContainer StyleClasses="AngleRect" />
 
     <BoxContainer Orientation="Vertical">
@@ -18,4 +18,4 @@
         <PanelContainer StyleClasses="LowDivider" />
         <Control Access="Public" Name="ContentsContainer" Margin="0 2" RectClipContent="True" VerticalExpand="true" />
     </BoxContainer>
-</ui:FancyWindow>
+</controls:FancyWindow>
