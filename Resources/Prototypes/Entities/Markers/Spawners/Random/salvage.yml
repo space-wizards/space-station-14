@@ -120,3 +120,21 @@
     chance: 0.75
     offset: 0.2
 
+- type: entity
+  name: SalvageMobSpawner69
+  id: PrawnMobSpawner
+  parent: MarkerBase
+  suffix: 69
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Mobs/Species/Prawn/parts.rsi/full.png
+    - type: RandomSpawner
+      prototypes:
+        - MobPrawnSpaceSalvage
+        - MobPrawnSpaceSalvage
+        - MobPrawnSpaceSalvage
+        - MobPrawnSpaceSalvage
+      chance: 0.25
+      offset: 0.2

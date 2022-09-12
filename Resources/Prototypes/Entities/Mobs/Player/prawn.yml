@@ -1,0 +1,65 @@
+﻿- type: entity
+  save: false
+  name: Prawn
+  parent: BaseMobPrawn
+  id: MobPrawn
+  description: A miserable pile of seafood.
+  components:
+  - type: CombatMode
+    canDisarm: true
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+  - type: Mind
+    showExamineInfo: true
+  - type: Input
+    context: "human"
+  - type: MobMover
+  - type: InputMover
+  - type: Alerts
+  - type: Actions
+  - type: Eye
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 10000
+  - type: CameraRecoil
+  - type: Examiner
+  - type: NoSlip
+  - type: CanHostGuardian
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
+  - type: PrawnSquirt
+    actionPrawnSquirt:
+      useDelay: 5
+      icon: Interface/Actions/PrawnDefense.png
+      name: prawn squirt defense
+      description: prawn-squirt-defense-description
+      itemIconStyle: NoItem
+      event: !type:PrawnSquirtActionEvent
+    ThirstPerSquirtUse: 15
+  - type: Access
+    tags:
+    - Maintenance
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Prawn
+    description: Survive and try to avoid being turned into a Shrimp Cocktail.
+    rules: You are a Prawn, interact with the crew, be a bit of a nuscience, eat the station pets, get murdered by the chef, get turned into Shrimp Gumbo. Do not murder crewmembers or sabotage station. 
+  - type: Vocal
+    maleScream: /Audio/Voice/Prawn/prawn_scream.ogg
+    femaleScream: /Audio/Voice/Prawn/prawn_scream.ogg
+
+- type: entity
+  id: MobPrawnSpaceSalvage
+  parent: MobPrawn
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    prob: 0.5
+    name: Prawn
+    description: |
+      Say hello to the salvage crew, be a bit of a nuscience, do not murder crewmembers, you may attempt to join the crew, you could end up turned into shrimp gumbo by the chef!
+  - type: SalvageMobRestrictions

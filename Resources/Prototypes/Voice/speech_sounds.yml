@@ -87,3 +87,12 @@
     path: /Audio/Voice/Talk/slime_ask.ogg
   exclaimSound:
     path: /Audio/Voice/Talk/slime_exclaim.ogg
+
+- type: speechSounds
+  id: PrawnSpeech
+  saySound:
+    path: /Audio/Animals/prawn_scream.ogg
+  askSound:
+    path: /Audio/Animals/prawn_scream.ogg
+  exclaimSound:
+    path: /Audio/Animals/prawn_scream.ogg

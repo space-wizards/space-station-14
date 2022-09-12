@@ -1,0 +1,14 @@
+- type: bodyPreset
+  name: "prawn"
+  id: PrawnPreset
+  partIDs:
+    head: HeadPrawn
+    torso: TorsoPrawn
+    right arm: RightArmPrawn
+    left arm: LeftArmPrawn
+    right hand: RightHandPrawn
+    left hand: LeftHandPrawn
+    right leg: RightLegPrawn
+    left leg: LeftLegPrawn
+    right foot: RightFootPrawn
+    left foot: LeftFootPrawn
