@@ -1,0 +1,201 @@
+﻿- type: entity
+  id: BaseMobPrawn
+  parent: BaseMobOrganic
+  name: Urist McFishy
+  description: A miserable pile of seafood.
+  abstract: true
+  components:
+  - type: Hunger
+  - type: MovementAlwaysTouching
+  - type: Inventory
+    speciesId: prawn
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 0
+    currentTemperature: 310.15
+    specificHeat: 0
+    coldDamage:
+      types:
+        Cold: 0.01
+    heatDamage:
+      types:
+        Heat: 0.1
+  - type: PrawnAccent
+  - type: Thirst
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: full
+  # Other
+  - type: Sprite
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: torso_m
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: head_m
+    - map: ["enum.HumanoidVisualLayers.Eyes"]
+      color: "#008800"
+      sprite: Mobs/Customization/eyes.rsi
+      state: no_eyes
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: r_arm
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_arm
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: r_leg
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_leg
+    - shader: StencilClear
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_leg
+    - shader: StencilMask
+      map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+      sprite: Mobs/Customization/masking_helpers.rsi
+      state: female_full
+      visible: false
+    - map: [ "jumpsuit" ]
+      shader: StencilDraw
+    - map: [ "enum.HumanoidVisualLayers.LHand" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_hand
+    - map: [ "enum.HumanoidVisualLayers.RHand" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: r_hand
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_foot
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: r_foot
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "id" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+  - type: Body
+    template: HumanoidTemplate
+    preset: PrawnPreset
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Weapons/pierce.ogg
+    range: 0.8
+    arcwidth: 30
+    arc: fist
+    damage:
+      types:
+        Pierce: 4
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 5
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatShrimp
+      amount: 5
+  - type: MobState
+    thresholds:
+      0: Alive
+      80: Critical
+      170: Dead
+
+- type: entity
+  id: MobPrawnDummy
+  name: Urist McFishy
+  parent: BaseMobOrganicDummy
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Mobs
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: torso_m
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: head_m
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+        color: "#008800"
+        sprite: Mobs/Customization/eyes.rsi
+        state: no_eyes
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: r_arm
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: l_arm
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: r_leg
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: l_leg
+      - map: [ "enum.HumanoidVisualLayers.LHand" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: l_hand
+      - map: [ "enum.HumanoidVisualLayers.RHand" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: r_hand
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        sprite: Mobs/Species/Prawn/parts.rsi
+        state: r_foot
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "belt" ]
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+        state: shaved
+        sprite: Mobs/Customization/human_facial_hair.rsi
+      - map: [ "enum.HumanoidVisualLayers.Hair" ]
+        state: bald
+        sprite: Mobs/Customization/human_hair.rsi
+      - map: [ "mask" ]
+      - map: [ "head" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
+  - type: Body
+    template: HumanoidTemplate
+    preset: PrawnPreset

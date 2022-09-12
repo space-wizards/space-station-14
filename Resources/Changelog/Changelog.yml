@@ -1,9 +1,4 @@
 Entries:
-- author: Sammy Boy
-  changes:
-  - {message: Nukies are fixed and should be able to spawn in again!, type: Fix}
-  id: 1787
-  time: '2022-06-26T00:00:45.0000000+00:00'
 - author: Rane
   changes:
   - {message: Miasma poison damage no longer scales by amount. This is a massive reduction
@@ -2926,3 +2921,8 @@ Entries:
       people recognize., type: Add}
   id: 2286
   time: '2022-09-12T05:55:08.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Locks on cabinets actually work., type: Fix}
+  id: 2287
+  time: '2022-09-12T16:42:55.0000000+00:00'

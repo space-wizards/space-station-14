@@ -12,8 +12,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
     netsync: false
-  - type: Extractable
-    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -275,24 +273,6 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 2
-
-- type: entity
-  name: raw rat meat
-  parent: FoodMeatBase
-  id: FoodMeatRat
-  description: Prime meat from maintenance!
-  components:
-  - type: Tag
-    tags:
-    - Raw
-  - type: Sprite
-    state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
 
 - type: entity
   name: raw lizard meat
@@ -1211,3 +1191,58 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+
+- type: entity
+  name: raw shrimp
+  parent: FoodMeatBase
+  id: FoodMeatShrimp
+  description: You can barbeque it, boil it, broil it, bake it, saute it...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: shrimp
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 0.5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 0.5
+      - ReagentId: Brine
+        Quantity: 6
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 2
+
+- type: entity
+  name: cooked shrimp
+  parent: FoodMeatBase
+  id: FoodMeatShrimpCooked
+  description: Some deliciously cooked shrimp.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+  - type: Tag
+    tags:
+    - Cooked
+  - type: Sprite
+    state: shrimp-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: CarpoToxin
+          Quantity: 0.1
