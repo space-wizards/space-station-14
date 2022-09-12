@@ -1,15 +1,10 @@
-using System;
-using System.Linq;
-using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
-using Content.Client.Resources;
 using Content.Client.Voting;
-using Content.Shared.GameTicking;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.Input;
@@ -18,15 +13,8 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using Content.Client.UserInterface.Systems;
-using Content.Client.Options.UI;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 
 

@@ -1,8 +1,5 @@
-using System;
-using System.Globalization;
 using Content.Client.Lobby;
 using Content.Client.Gameplay;
-using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Info;
 using Robust.Client.Console;

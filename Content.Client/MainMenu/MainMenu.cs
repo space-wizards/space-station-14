@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using Content.Client.MainMenu.UI;
-using Content.Client.Options.UI;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client;
 using Robust.Client.ResourceManagement;

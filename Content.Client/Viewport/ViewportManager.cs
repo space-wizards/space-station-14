@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
 using Content.Client.UserInterface.Controls;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Viewport
 {
