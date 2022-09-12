@@ -165,6 +165,6 @@
   - type: Sprite
     state: coilnet-10
   - type: Item
-    state: 3
+    size: 3
   - type: Stack
     count: 1
