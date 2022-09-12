@@ -130,7 +130,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             if (dmg.Total > FixedPoint2.Zero)
                             {
-                                RaiseNetworkEvent(new DamageEffectEvent(result.HitEntity), Filter.Pvs(result.HitEntity, entityManager: EntityManager));
+                                RaiseNetworkEvent(new DamageEffectEvent(new List<EntityUid> {result.HitEntity}), Filter.Pvs(result.HitEntity, entityManager: EntityManager));
                             }
 
                             PlayImpactSound(result.HitEntity, dmg, hitscan.Sound, hitscan.ForceSound);

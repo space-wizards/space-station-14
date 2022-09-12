@@ -8,6 +8,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Damage.Systems;
+using Content.Server.Examine;
 using Content.Server.Weapons.Melee.Components;
 using Content.Server.Weapons.Melee.Events;
 using Content.Shared.CombatMode;
@@ -16,6 +17,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
@@ -33,6 +35,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ContestsSystem _contests = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly ExamineSystem _examine = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
@@ -51,6 +54,46 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         base.Initialize();
         SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+        SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<ExamineVerb>>(OnMeleeExaminableVerb);
+    }
+
+    private void OnMeleeExaminableVerb(EntityUid uid, MeleeWeaponComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
+            return;
+
+        var getDamage = new ItemMeleeDamageEvent(component.Damage);
+        RaiseLocalEvent(uid, getDamage);
+
+        var damageSpec = GetDamage(component);
+
+        if (damageSpec == null)
+            damageSpec = new DamageSpecifier();
+
+        damageSpec += getDamage.BonusDamage;
+
+        if (damageSpec.Total == FixedPoint2.Zero)
+            return;
+
+        var verb = new ExamineVerb()
+        {
+            Act = () =>
+            {
+                var markup = _damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
+                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
+            },
+            Text = Loc.GetString("damage-examinable-verb-text"),
+            Message = Loc.GetString("damage-examinable-verb-message"),
+            Category = VerbCategory.Examine,
+            IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    private DamageSpecifier? GetDamage(MeleeWeaponComponent component)
+    {
+        return component.Damage.Total > FixedPoint2.Zero ? component.Damage : null;
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
@@ -130,7 +173,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (damageResult?.Total > FixedPoint2.Zero)
         {
-            RaiseNetworkEvent(new MeleeEffectEvent(targets), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
+            RaiseNetworkEvent(new DamageEffectEvent(targets), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
         }
     }
 
@@ -233,7 +276,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (appliedDamage.Total > FixedPoint2.Zero)
         {
-            RaiseNetworkEvent(new MeleeEffectEvent(targets), Filter.Pvs(Transform(targets[0]).Coordinates, entityMan: EntityManager));
+            RaiseNetworkEvent(new DamageEffectEvent(targets), Filter.Pvs(Transform(targets[0]).Coordinates, entityMan: EntityManager));
         }
     }
 

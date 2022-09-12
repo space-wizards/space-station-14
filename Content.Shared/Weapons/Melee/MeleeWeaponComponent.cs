@@ -16,6 +16,13 @@ namespace Content.Shared.Weapons.Melee;
 public sealed class MeleeWeaponComponent : Component
 {
     /// <summary>
+    /// Should the melee weapon's damage stats be examinable.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("hidden")]
+    public bool HideFromExamine { get; set; } = false;
+
+    /// <summary>
     /// Next time this component is allowed to light attack. Heavy attacks are wound up and never have a cooldown.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack")]

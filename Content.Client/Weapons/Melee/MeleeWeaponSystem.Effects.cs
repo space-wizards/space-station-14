@@ -77,36 +77,41 @@ public sealed partial class MeleeWeaponSystem
 
     private void OnDamageEffect(DamageEffectEvent ev)
     {
-        if (Deleted(ev.Entity))
-            return;
-
-        var player = EnsureComp<AnimationPlayerComponent>(ev.Entity);
-
-        // Need to stop the existing animation first to ensure the sprite color is fixed.
-        // Otherwise we might lerp to a red colour instead.
-        if (_animation.HasRunningAnimation(ev.Entity, player, DamageAnimationKey))
+        foreach (var ent in ev.Entities)
         {
-            _animation.Stop(ev.Entity, player, DamageAnimationKey);
+            if (Deleted(ent))
+            {
+                continue;
+            }
+
+            var player = EnsureComp<AnimationPlayerComponent>(ent);
+
+            // Need to stop the existing animation first to ensure the sprite color is fixed.
+            // Otherwise we might lerp to a red colour instead.
+            if (_animation.HasRunningAnimation(ent, player, DamageAnimationKey))
+            {
+                _animation.Stop(ent, player, DamageAnimationKey);
+            }
+
+            if (!TryComp<SpriteComponent>(ent, out var sprite))
+            {
+                continue;
+            }
+
+            if (TryComp<DamageEffectComponent>(ent, out var effect))
+            {
+                sprite.Color = effect.Color;
+            }
+
+            var animation = GetDamageAnimation(ent, sprite);
+
+            if (animation == null)
+                continue;
+
+            var comp = EnsureComp<DamageEffectComponent>(ent);
+            comp.NetSyncEnabled = false;
+            comp.Color = sprite.Color;
+            _animation.Play(player, DefaultDamageAnimation, DamageAnimationKey);
         }
-
-        if (!TryComp<SpriteComponent>(ev.Entity, out var sprite))
-        {
-            return;
-        }
-
-        if (TryComp<DamageEffectComponent>(ev.Entity, out var effect))
-        {
-            sprite.Color = effect.Color;
-        }
-
-        var animation = GetDamageAnimation(ev.Entity, sprite);
-
-        if (animation == null)
-            return;
-
-        var comp = EnsureComp<DamageEffectComponent>(ev.Entity);
-        comp.NetSyncEnabled = false;
-        comp.Color = sprite.Color;
-        _animation.Play(player, DefaultDamageAnimation, DamageAnimationKey);
     }
 }

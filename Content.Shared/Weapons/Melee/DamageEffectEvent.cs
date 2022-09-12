@@ -8,10 +8,10 @@ namespace Content.Shared.Weapons.Melee;
 [Serializable, NetSerializable]
 public sealed class DamageEffectEvent : EntityEventArgs
 {
-    public EntityUid Entity;
+    public List<EntityUid> Entities;
 
-    public DamageEffectEvent(EntityUid entity)
+    public DamageEffectEvent(List<EntityUid> entities)
     {
-        Entity = entity;
+        Entities = entities;
     }
 }

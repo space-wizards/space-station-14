@@ -50,7 +50,7 @@ namespace Content.Server.Projectiles
             {
                 if (modifiedDamage.Total > FixedPoint2.Zero)
                 {
-                    RaiseNetworkEvent(new DamageEffectEvent(otherEntity), Filter.Pvs(otherEntity, entityManager: EntityManager));
+                    RaiseNetworkEvent(new DamageEffectEvent(new List<EntityUid> {otherEntity}), Filter.Pvs(otherEntity, entityManager: EntityManager));
                 }
 
                 _adminLogger.Add(LogType.BulletHit,
