@@ -338,13 +338,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var winText = Loc.GetString($"nukeops-{_winType.ToString()}");
+        var winText = Loc.GetString($"nukeops-{_winType.ToString().ToLower()}");
 
         ev.AddLine(winText);
 
         foreach (var cond in _winConditions)
         {
-            var text = Loc.GetString($"nukeops-cond-{cond.ToString()}");
+            var text = Loc.GetString($"nukeops-cond-{cond.ToString().ToLower()}");
 
             ev.AddLine(text);
         }
