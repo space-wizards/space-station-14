@@ -1,4 +1,6 @@
+using Content.Client.CombatMode;
 using Content.Client.Gameplay;
+using Content.Client.Hands;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Melee;
@@ -193,6 +195,26 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             EntityManager.RaisePredictiveEvent(new StopAttackEvent(weapon.Owner));
         }
+    }
+
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    {
+        if (!base.DoDisarm(user, ev, component))
+            return false;
+
+        if (!HasComp<CombatModeComponent>(user))
+            return false;
+
+        // If target doesn't have hands then we can't disarm so will let the player know it's pointless.
+        if (!HasComp<HandsComponent>(ev.Target!.Value))
+        {
+            if (Timing.IsFirstTimePredicted)
+                PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value, Filter.Local());
+
+            return false;
+        }
+
+        return true;
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

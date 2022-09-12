@@ -2,6 +2,7 @@ using Content.Shared.Weapons;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Animations;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Melee;
@@ -11,7 +12,7 @@ public sealed partial class MeleeWeaponSystem
     /// <summary>
     /// It's a little on the long side but given we use multiple colours denoting what happened it makes it easier to register.
     /// </summary>
-    private const float DamageAnimationLength = 0.3f;
+    private const float DamageAnimationLength = 0.30f;
     private const string DamageAnimationKey = "damage-effect";
 
     private void InitializeEffect()
@@ -47,6 +48,7 @@ public sealed partial class MeleeWeaponSystem
                 {
                     ComponentType = typeof(SpriteComponent),
                     Property = nameof(SpriteComponent.Color),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(color * sprite.Color, 0f),
@@ -69,6 +71,7 @@ public sealed partial class MeleeWeaponSystem
             }
 
             var player = EnsureComp<AnimationPlayerComponent>(ent);
+            player.NetSyncEnabled = false;
 
             // Need to stop the existing animation first to ensure the sprite color is fixed.
             // Otherwise we might lerp to a red colour instead.

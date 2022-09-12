@@ -294,22 +294,30 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    protected override void DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
     {
-        base.DoDisarm(user, ev, component);
+        if (!base.DoDisarm(user, ev, component))
+            return false;
 
-        if (!TryComp<SharedCombatModeComponent>(user, out var combatMode) ||
-            Deleted(ev.Target) ||
-            !_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range + 0.1f))
+        if (!TryComp<CombatModeComponent>(user, out var combatMode))
+            return false;
+
+        var target = ev.Target!.Value;
+
+        if (!TryComp<HandsComponent>(ev.Target.Value, out var targetHandsComponent))
         {
-            return;
+            // Client will have already predicted this.
+            return false;
         }
 
-        var target = ev.Target.Value;
+        if (!_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range + 0.1f))
+        {
+            return false;
+        }
+
         EntityUid? inTargetHand = null;
 
-        if (TryComp<HandsComponent>(target, out var targetHandsComponent)
-            && targetHandsComponent.ActiveHand is { IsEmpty: false })
+        if (targetHandsComponent.ActiveHand is { IsEmpty: false })
         {
             inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
         }
@@ -320,29 +328,32 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             RaiseLocalEvent(inTargetHand.Value, attemptEvent);
         }
+
         RaiseLocalEvent(target, attemptEvent);
 
         if (attemptEvent.Cancelled)
-            return;
+            return false;
 
-        var filterAll = Filter.Pvs(user);
-        var filterOther = filterAll.RemoveWhereAttachedEntity(e => e == user);
         var chance = CalculateDisarmChance(user, target, inTargetHand, combatMode);
 
         if (_random.Prob(chance))
         {
             // Don't play a sound as the swing is already predicted.
-            var msgOther = Loc.GetString(
+            // Also don't play popups because most disarms will miss.
+            return false;
+        }
+
+        var filterOther = Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user);
+
+        var msgOther = Loc.GetString(
                 "disarm-action-popup-message-other-clients",
                 ("performerName", Identity.Entity(user, EntityManager)),
                 ("targetName", Identity.Entity(target, EntityManager)));
 
-            var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", Identity.Entity(target, EntityManager)));
+        var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", Identity.Entity(target, EntityManager)));
 
-            PopupSystem.PopupEntity(msgOther, user, filterOther);
-            PopupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
-            return;
-        }
+        PopupSystem.PopupEntity(msgOther, user, filterOther);
+        PopupSystem.PopupEntity(msgUser, target, Filter.Entities(user));
 
         Audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
         _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
@@ -350,7 +361,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var eventArgs = new DisarmedEvent { Target = target, Source = user, PushProbability = 1 - chance };
         RaiseLocalEvent(target, eventArgs);
 
-        RaiseNetworkEvent(new DamageEffectEvent(Color.Blue, new List<EntityUid>() {target}));
+        RaiseNetworkEvent(new DamageEffectEvent(Color.Aqua, new List<EntityUid>() {target}));
+        return true;
     }
 
     private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)

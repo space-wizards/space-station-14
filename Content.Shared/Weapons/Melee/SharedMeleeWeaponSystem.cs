@@ -5,6 +5,7 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -280,9 +281,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     }
 
-    protected virtual void DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
     {
+        if (Deleted(ev.Target) ||
+            user == ev.Target)
+            return false;
 
+        return true;
     }
 
     private void DoLungeAnimation(EntityUid user, MapCoordinates coordinates, string? animation)
