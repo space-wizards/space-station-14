@@ -11,7 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
+using GunSystem = Content.Server.Weapons.Ranged.Systems.GunSystem;
 
 namespace Content.Server.Projectiles
 {

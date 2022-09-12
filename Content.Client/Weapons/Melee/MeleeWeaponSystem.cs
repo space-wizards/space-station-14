@@ -19,7 +19,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Melee;
 
-public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
+public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -33,47 +33,14 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
     private const string MeleeLungeKey = "melee-lunge";
-    private const string MeleeEffectKey = "melee-effect";
-
-    /// <summary>
-    /// Plays the red effect whenever the server confirms something is hit
-    /// </summary>
-    private static readonly Animation MeleeEffectAnimation = new()
-    {
-        Length = TimeSpan.FromSeconds(0.15),
-        AnimationTracks =
-        {
-            new AnimationTrackComponentProperty()
-            {
-                ComponentType = typeof(SpriteComponent),
-                Property = nameof(SpriteComponent.Color),
-                KeyFrames =
-                {
-                    new AnimationTrackProperty.KeyFrame(Color.Red, 0f),
-                    new AnimationTrackProperty.KeyFrame(Color.White, 0.15f)
-                }
-            }
-        }
-    };
 
     public override void Initialize()
     {
         base.Initialize();
+        InitializeEffect();
         _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _protoManager, _cache));
-        SubscribeNetworkEvent<MeleeEffectEvent>(OnMeleeEffect);
+        SubscribeNetworkEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
-    }
-
-    private void OnMeleeEffect(MeleeEffectEvent msg)
-    {
-        foreach (var ent in msg.HitEntities)
-        {
-            if (Deleted(ent))
-                continue;
-
-            _animation.Stop(ent, MeleeEffectKey);
-            _animation.Play(ent, MeleeEffectAnimation, MeleeEffectKey);
-        }
     }
 
     public override void Shutdown()

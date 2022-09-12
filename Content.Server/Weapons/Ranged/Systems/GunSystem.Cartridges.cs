@@ -6,7 +6,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Weapon.Ranged.Systems;
+namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
