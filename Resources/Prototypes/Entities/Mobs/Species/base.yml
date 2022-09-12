@@ -298,10 +298,10 @@
     range: 1.5
     angle: 30
     animation: WeaponArcFist
-    attackRate: 1.5
+    attackRate: 1
     damage:
       types:
-        Blunt: 3.5
+        Blunt: 5
   - type: Pullable
   - type: DoAfter
   - type: CreamPied

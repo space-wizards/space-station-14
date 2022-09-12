@@ -85,11 +85,39 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Heavy attack.
         if (altDown == BoundKeyState.Down)
         {
-            // We did the left-click to end the attack but haven't pulled the key up.
+            // We did the click to end the attack but haven't pulled the key up.
             if (weapon.Attacking)
             {
                 return;
             }
+
+            // If it's an unarmed attack then do a disarm
+            if (weapon.Owner == entity)
+            {
+                EntityUid? target = null;
+
+                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                EntityCoordinates coordinates;
+
+                if (MapManager.TryFindGridAt(mousePos, out var grid))
+                {
+                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                }
+                else
+                {
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                }
+
+                if (_stateManager.CurrentState is GameplayStateBase screen)
+                {
+                    target = screen.GetEntityUnderPosition(mousePos);
+                }
+
+                EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(target, coordinates));
+                return;
+            }
+
+            // Otherwise do heavy attack if it's a weapon.
 
             // Start a windup
             if (weapon.WindUpStart == null)
@@ -113,20 +141,6 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 else
                 {
                     coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
-                }
-
-                // If it's an unarmed attack then do a disarm
-                if (weapon.Owner == entity)
-                {
-                    EntityUid? target = null;
-
-                    if (_stateManager.CurrentState is GameplayStateBase screen)
-                    {
-                        target = screen.GetEntityUnderPosition(mousePos);
-                    }
-
-                    EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(target, coordinates));
-                    return;
                 }
 
                 EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weapon.Owner, coordinates));

@@ -327,11 +327,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var filterAll = Filter.Pvs(user);
         var filterOther = filterAll.RemoveWhereAttachedEntity(e => e == user);
-
-        var modifier = GetModifier(component, false);
         var chance = CalculateDisarmChance(user, target, inTargetHand, combatMode);
 
-        if (modifier < component.HeavyDamageModifier.Float() || _random.Prob(chance))
+        if (_random.Prob(chance))
         {
             // Don't play a sound as the swing is already predicted.
             var msgOther = Loc.GetString(
