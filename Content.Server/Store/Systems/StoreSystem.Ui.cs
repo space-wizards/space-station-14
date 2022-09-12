@@ -72,13 +72,9 @@ public sealed partial class StoreSystem : EntitySystem
         }
 
         //this is the person who will be passed into logic for all listing filtering.
-        var buyer = user;
-        if (buyer != null) //if we have no "buyer" for this update, then don't update the listings
+        if (user != null) //if we have no "buyer" for this update, then don't update the listings
         {
-            if (component.AccountOwner != null) //if we have one stored, then use that instead
-                buyer = component.AccountOwner.Value;
-
-            component.LastAvailableListings = GetAvailableListings(buyer.Value, component).ToHashSet();
+            component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? user.Value, component).ToHashSet();
         }
 
         //dictionary for all currencies, including 0 values for currencies on the whitelist
@@ -91,7 +87,8 @@ public sealed partial class StoreSystem : EntitySystem
                 allCurrency[supported] = component.Balance[supported];
         }
 
-        // TODO: if multiple are supposed to be able to interact with a single BUI & see different stores/listings, use session specific BUI states.
+        // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
+        // stores/listings, this needs to use session specific BUI states.
 
         var state = new StoreUpdateState(component.LastAvailableListings, allCurrency);
         _ui.SetUiState(ui, state);
@@ -115,10 +112,11 @@ public sealed partial class StoreSystem : EntitySystem
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
             return;
+
         //condition checking because why not
         if (listing.Conditions != null)
         {
-            var args = new ListingConditionArgs(buyer, component.Owner, listing, EntityManager);
+            var args = new ListingConditionArgs(component.AccountOwner ?? buyer, component.Owner, listing, EntityManager);
             var conditionsMet = listing.Conditions.All(condition => condition.Condition(args));
 
             if (!conditionsMet)
@@ -141,7 +139,7 @@ public sealed partial class StoreSystem : EntitySystem
         if (listing.ProductEntity != null)
         {
             var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
-            _hands.TryPickupAnyHand(buyer, product);
+            _hands.PickupOrDrop(buyer, product);
         }
 
         //give action
@@ -218,7 +216,7 @@ public sealed partial class StoreSystem : EntitySystem
 
                     var maxAmount = Math.Min(amountToRemove, stack.MaxCount); //limit it based on max stack amount
                     _stack.SetCount(ent, maxAmount, stack);
-                    _hands.TryPickupAnyHand(buyer, ent);
+                    _hands.PickupOrDrop(buyer, ent);
                     amountToRemove -= maxAmount;
                 }
             }
@@ -227,7 +225,7 @@ public sealed partial class StoreSystem : EntitySystem
                 for (var i = 0; i < amountToSpawn; i++)
                 {
                     var ent = Spawn(cashId, coordinates);
-                    _hands.TryPickupAnyHand(buyer, ent);
+                    _hands.PickupOrDrop(buyer, ent);
                 }
             }
             amountRemaining -= value * amountToSpawn;
