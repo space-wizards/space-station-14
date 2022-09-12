@@ -139,6 +139,8 @@
   description: High-speed networking cable for general purpose data transfer.
   suffix: Full
   components:
+  - type: Stack
+    stackType: CableNet
   - type: Sprite
     state: coilnet-30
   - type: Item

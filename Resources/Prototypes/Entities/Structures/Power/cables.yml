@@ -218,7 +218,7 @@
           !type:CableNode
           nodeGroupID: WireNet
     - type: Cable
-      cableDroppedOnCutPrototype: NetCableStack1
+      cableDroppedOnCutPrototype: CableNetStack1
       cableType: Networking
     - type: Destructible
       thresholds:
