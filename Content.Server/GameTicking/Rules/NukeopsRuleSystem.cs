@@ -338,35 +338,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var winText = _winType switch
-        {
-            WinType.OpsMajor => Loc.GetString("nukeops-ops-major"),
-            WinType.OpsMinor => Loc.GetString("nukeops-ops-minor"),
-            WinType.Neutral => Loc.GetString("nukeops-neutral"),
-            WinType.CrewMinor => Loc.GetString("nukeops-crew-minor"),
-            WinType.CrewMajor => Loc.GetString("nukeops-crew-major"),
-            _ => "oopsie woopsie! nukie wukies! (Contact a developer about this immediately.)"
-        };
+        var winText = Loc.GetString($"nukeops-{_winType.ToString()}");
 
         ev.AddLine(winText);
 
         foreach (var cond in _winConditions)
         {
-            var text = cond switch
-            {
-                WinCondition.NukeExplodedOnCorrectStation => Loc.GetString("nukeops-cond-correct-station"),
-                WinCondition.NukeExplodedOnNukieOutpost => Loc.GetString("nukeops-cond-nukie-outpost-destroyed"),
-                WinCondition.NukeExplodedOnIncorrectLocation => Loc.GetString("nukeops-cond-incorrect-station"),
-                WinCondition.NukeActiveInStation => Loc.GetString("nukeops-cond-active-on-station"),
-                WinCondition.NukeActiveAtCentCom => Loc.GetString("nukeops-cond-active-on-centcom"),
-                WinCondition.NukeDiskOnCentCom => Loc.GetString("nukeops-cond-disk-on-centcom"),
-                WinCondition.NukeDiskNotOnCentCom => Loc.GetString("nukeops-cond-disk-not-on-centcom"),
-                WinCondition.NukiesAbandoned => Loc.GetString("nukeops-cond-nukies-abandoned"),
-                WinCondition.AllNukiesDead => Loc.GetString("nukeops-cond-all-nukies-dead"),
-                WinCondition.SomeNukiesAlive => Loc.GetString("nukeops-cond-some-nukies-dead"),
-                WinCondition.AllNukiesAlive => Loc.GetString("nukeops-cond-no-nukies-dead"),
-                _ => "the nuclear operatives managed to break something! (Contact a developer about this immediately.)",
-            };
+            var text = Loc.GetString($"nukeops-cond-{cond.ToString()}");
 
             ev.AddLine(text);
         }
