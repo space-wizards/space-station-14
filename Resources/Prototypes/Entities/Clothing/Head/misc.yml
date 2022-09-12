@@ -153,3 +153,15 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCthulhu
+  name: Cthulhu Mask
+  description: Tell everyone about your lord and savior Cthulhu.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/cthulhu.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/cthulhu.rsi
+  - type: IngestionBlocker
