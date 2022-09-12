@@ -1,0 +1,270 @@
+- type: entity
+  name: Prawn
+  id: MobPrawn
+  parent: SimpleMobBase
+  description: A miserable pile of seafood.
+  components:
+  - type: EnsnareableVisualizer
+  - type: Climbing
+  - type: Cuffable
+  - type: CombatMode
+    canDisarm: true
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
+  - type: HeatResistance
+  - type: DamageVisuals
+    thresholds: [ 20, 40, 100 ]
+    targetLayers:
+      - "enum.HumanoidVisualLayers.Chest"
+      - "enum.HumanoidVisualLayers.Head"
+      - "enum.HumanoidVisualLayers.LArm"
+      - "enum.HumanoidVisualLayers.LLeg"
+      - "enum.HumanoidVisualLayers.RArm"
+      - "enum.HumanoidVisualLayers.RLeg"
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#FF0000"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3.7
+  - type: InputMover
+  - type: MobMover
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: full
+  # Other
+  - type: RandomMetadata
+    nameSet: NamesPrawn
+  - type: StandingState
+  - type: Sprite
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: torso_m
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: head_m
+    - map: ["enum.HumanoidVisualLayers.Eyes"]
+      color: "#008800"
+      sprite: Mobs/Customization/eyes.rsi
+      state: no_eyes
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: r_arm
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_arm
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: r_leg
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_leg
+    - shader: StencilClear
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_leg
+    - shader: StencilMask
+      map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+      sprite: Mobs/Customization/masking_helpers.rsi
+      state: female_full
+      visible: false
+    - map: [ "jumpsuit" ]
+      shader: StencilDraw
+    - map: [ "enum.HumanoidVisualLayers.LHand" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_hand
+    - map: [ "enum.HumanoidVisualLayers.RHand" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: r_hand
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: l_foot
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+      color: "#ffffff"
+      sprite: Mobs/Species/Prawn/parts.rsi
+      state: r_foot
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.3
+      mass: 65
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MobState
+    thresholds:
+      0: Alive
+      100: Critical
+      180: Dead
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTypeTrigger
+          damageType: Blunt
+          damage: 300
+        behaviors:
+          - !type:GibBehavior { }
+  - type: MeleeWeapon
+    hitSound:
+      collection: Punch
+    range: 0.8
+    arcwidth: 30
+    arc: fist
+    damage:
+      types:
+        Blunt: 4
+  - type: Body
+    template: HumanoidTemplate
+    preset: PrawnPreset
+  - type: Appearance
+    visuals:
+      - type: RotationVisualizer
+      - type: BuckleVisualizer
+      - type: CreamPiedVisualizer
+        state: creampie_human
+  - type: InjectableSolution
+    solution: chemicals
+  - type: IdExaminable
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+  - type: Bloodstream
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.2
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: shrobster
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Prawn
+    description: A walking shrimp cocktail.
+    rules: You are NOT an antagonist, however you will probably be murdered and made into shrimp gumbo.
+  - type: Tag
+    tags:
+      - CanPilot
+      - DoorBumpOpener
+      - FootstepSound
+  - type: StatusEffects
+    allowed:
+      - Stun
+      - KnockedDown
+      - SlowedDown
+      - Stutter
+      - SeeingRainbows
+      - Electrocution
+      - Drunk
+      - SlurredSpeech
+      - PressureImmunity
+      - Muted
+      - ForcedSleep
+      - TemporaryBlindness
+      - Pacified
+  - type: Flashable
+  - type: Ensnareable
+    sprite: Objects/Misc/ensnare.rsi
+    state: icon
+  - type: Polymorphable
+  - type: AtmosExposed
+  - type: Identity
+  - type: Hands
+  - type: DiseaseCarrier
+  - type: Blindable
+  - type: Pullable
+  - type: Stamina
+  - type: DoAfter
+  - type: CharacterInfo
+  - type: CreamPied
+  - type: Stripping
+  - type: Puller
+  - type: Fingerprint
+  - type: HumanoidAppearance
+  - type: Damageable
+    damageContainer: Biological
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 110
+    implicitHeatRegulation: 520
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
+    normalBodyTemperature: 320
+    thermalRegulationTemperatureThreshold: 40
+  - type: Internals
+  - type: Strippable
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.08 #per second, scales with pressure and other constants.
+  - type: UserInterface
+    interfaces:
+      - key: enum.StrippingUiKey.Key
+        type: StrippableBoundUserInterface
+  - type: Speech
+    speechSounds: PrawnSpeech
+  - type: Vocal
+    maleScream: /Audio/Animals/prawn_scream.ogg
+    femaleScream: /Audio/Animals/prawn_scream.ogg
+  - type: Inventory
+    templateId: human
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatShrimp
+        amount: 5
+  - type: MobPrice
+    price: 2000
+    deathPenalty: 0.2
+

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "discord:brainfood#7460 github: brainfood1183",
+  "states": [
+    {
+      "name": "dead"
+    },
+	{
+      "name": "icon"
+    },
+      {
+      "name": "wounded",
+      "directions": 4
+    },
+	{
+      "name": "crit"
+    },
+    {
+      "name": "shrobster",
+      "directions": 4
+    }
+  ]
+}

@@ -1191,3 +1191,53 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+
+- type: entity
+  name: raw shrimp
+  parent: FoodMeatBase
+  # MeatFish?...
+  id: FoodMeatShrimp
+  description: You can barbeque it, boil it, broil it, bake it, saute it...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: shrimp
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 2
+
+- type: entity
+  name: cooked shrimp
+  parent: FoodMeatBase
+  id: FoodMeatCrabCooked
+  description: Some deliciously cooked shrimp.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+  - type: Tag
+    tags:
+    - Cooked
+  - type: Sprite
+    state: shrimp-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5

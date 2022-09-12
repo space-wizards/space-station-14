@@ -1,0 +1,231 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  id: PartPrawn
+  parent: BaseItem
+  name: "Prawn body part"
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+
+- type: entity
+  id: TorsoPrawn
+  name: "Prawn torso"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/prawn/parts.rsi
+    state: "torso_m"
+  - type: Icon
+    sprite: Mobs/Species/prawn/parts.rsi
+    state: "torso_m"
+  - type: BodyPart
+    partType: Torso
+    size: 14
+    compatibility: Biological
+    mechanisms:
+    - OrganPrawnHeart
+    - OrganPrawnLungs
+    - OrganPrawnStomach
+    - OrganPrawnLiver
+    - OrganPrawnKidneys
+#    criticalThreshold: 100
+#    deadThreshold: 150
+
+- type: entity
+  id: HeadPrawn
+  name: "Prawn head"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/prawn/parts.rsi
+    state: "head_m"
+  - type: Icon
+    sprite: Mobs/Species/prawn/parts.rsi
+    state: "head_m"
+  - type: BodyPart
+    partType: Head
+    size: 7
+    compatibility: Biological
+    vital: true
+    mechanisms:
+    - OrganPrawnBrain
+    - OrganPrawnEyes
+#    criticalThreshold: 50
+#    deadThreshold: 120
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
+  - type: InputMover
+  - type: GhostOnMove
+
+- type: entity
+  id: LeftArmPrawn
+  name: "left prawn arm"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "l_arm"
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "l_arm"
+  - type: BodyPart
+    partType: Arm
+    size: 5
+    compatibility: Biological
+    symmetry: Left
+#    criticalThreshold: 40
+#    deadThreshold: 80
+
+- type: entity
+  id: RightArmPrawn
+  name: "right prawn arm"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/prawn/parts.rsi
+    state: "r_arm"
+  - type: Icon
+    sprite: Mobs/Species/prawn/parts.rsi
+    state: "r_arm"
+  - type: BodyPart
+    partType: Arm
+    size: 5
+    compatibility: Biological
+    symmetry: Right
+#    criticalThreshold: 40
+#    deadThreshold: 80
+
+- type: entity
+  id: LeftHandPrawn
+  name: "left prawn hand"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "l_hand"
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "l_hand"
+  - type: BodyPart
+    partType: Hand
+    size: 3
+    compatibility: Biological
+    symmetry: Left
+#    criticalThreshold: 30
+#    deadThreshold: 60
+
+- type: entity
+  id: RightHandPrawn
+  name: "right prawn hand"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "r_hand"
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "r_hand"
+  - type: BodyPart
+    partType: Hand
+    size: 3
+    compatibility: Biological
+    symmetry: Right
+#    criticalThreshold: 30
+#    deadThreshold: 60
+
+- type: entity
+  id: LeftLegPrawn
+  name: "left prawn leg"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "l_leg"
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "l_leg"
+  - type: BodyPart
+    partType: Leg
+    size: 6
+    compatibility: Biological
+    symmetry: Left
+#    criticalThreshold: 45
+#    deadThreshold: 90
+
+- type: entity
+  id: RightLegPrawn
+  name: "right prawn leg"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "r_leg"
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "r_leg"
+  - type: BodyPart
+    partType: Leg
+    size: 6
+    compatibility: Biological
+    symmetry: Right
+#    criticalThreshold: 45
+#    deadThreshold: 90
+
+- type: entity
+  id: LeftFootPrawn
+  name: "left prawn foot"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "l_foot"
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "l_foot"
+  - type: BodyPart
+    partType: Foot
+    size: 2
+    compatibility: Biological
+    symmetry: Left
+#    criticalThreshold: 30
+#    deadThreshold: 60
+
+- type: entity
+  id: RightFootPrawn
+  name: "right prawn foot"
+  parent: PartPrawn
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "r_foot"
+  - type: Icon
+    sprite: Mobs/Species/Prawn/parts.rsi
+    state: "r_foot"
+  - type: BodyPart
+    partType: Foot
+    size: 2
+    compatibility: Biological
+    symmetry: Right
+#    criticalThreshold: 30
+#    deadThreshold: 60
+

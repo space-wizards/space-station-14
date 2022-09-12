@@ -1,0 +1,199 @@
+- type: entity
+  id: BasePrawnOrgan
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Prawn/organs.rsi
+  - type: Mechanism
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+
+- type: entity
+  id: OrganPrawnBrain
+  parent: BasePrawnOrgan
+  name: prawn brain
+  description: "Looks suspiciously like crab meat."
+  components:
+  - type: Sprite
+    state: brain
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Input
+    context: "ghost"
+  - type: InputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
+  - type: GhostOnMove
+  - type: Brain
+
+- type: entity
+  id: OrganPrawnEyes
+  parent: BasePrawnOrgan
+  name: prawn eyes
+  description: "A juicy set of eyeballs."
+  components:
+  - type: Sprite
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: OrganPrawnTongue
+  parent: BasePrawnOrgan
+  name: prawn tongue
+  description: "A fleshy muscle mostly used for lying."
+  components:
+  - type: Sprite
+    state: tongue
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: OrganPrawnAppendix
+  parent: BasePrawnOrgan
+  name: prawn digestive gland
+  components:
+  - type: Sprite
+    layers:
+    - state: appendix
+    - state: appendix-inflamed
+      visible: false
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: OrganPrawnEars
+  parent: BasePrawnOrgan
+  name: prawn sensory gland
+  description: For picking up vibrations in the air.
+  components:
+  - type: Sprite
+    state: ears
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: OrganPrawnLungs
+  parent: BasePrawnOrgan
+  name: prawn gills
+  description: "Are gills useful in space?."
+  components:
+  - type: Sprite
+    layers:
+      - state: lung-l
+      - state: lung-r
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+
+- type: entity
+  id: OrganPrawnHeart
+  parent: BasePrawnOrgan
+  name: prawn heart
+  description: "I feel bad for the heartless bastard who lost this."
+  components:
+  - type: Sprite
+    state: heart-on
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
+  # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
+  # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [Human]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganPrawnStomach
+  parent: BasePrawnOrgan
+  name: prawn stomach
+  description: "large, bloated and stinky."
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 200
+  - type: Stomach
+  # The stomach metabolizes stuff like foods and drinks.
+  # TODO: Have it work off of the ent's solution container, and move this
+  # to intestines instead.
+  - type: Metabolizer
+    # mm yummy
+    maxReagents: 3
+    metabolizerTypes: [Human]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  id: OrganPrawnLiver
+  parent: BasePrawnOrgan
+  name: prawn liver
+  description: "Pairing suggestion: chianti and fava beans."
+  components:
+  - type: Sprite
+    state: liver
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
+    metabolizerTypes: [Human]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.07 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  id: OrganPrawnKidneys
+  parent: BasePrawnOrgan
+  name: prawn kidneys
+  description: "Filters toxins from the bloodstream."
+  components:
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [Human]
+    removeEmpty: true
