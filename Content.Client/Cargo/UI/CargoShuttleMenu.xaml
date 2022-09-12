@@ -38,7 +38,7 @@
                 <BoxContainer Name="Orders"
                               Orientation="Vertical"
                               StyleClasses="transparentItemList"
-                              VerticalExpand="True" />
+                              VerticalExpand="True"/>
             </ScrollContainer>
         </PanelContainer>
         <TextureButton VerticalExpand="True" />

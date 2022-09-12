@@ -1,8 +1,8 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:ui="clr-namespace:Content.Client.UserInterface"
-                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                MouseFilter="Stop"
-                MinWidth="200" MinHeight="150">
+
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MouseFilter="Stop"
+                      MinWidth="200" MinHeight="150">
     <PanelContainer StyleClasses="AngleRect" />
 
     <BoxContainer Orientation="Vertical">
