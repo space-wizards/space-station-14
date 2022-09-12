@@ -27,7 +27,7 @@ public sealed partial class StoreSystem : EntitySystem
 
     private void InitializeUi()
     {
-        SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>((_,c,r) => UpdateUserInterface(r.CurrentBuyer, c));
+        SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>((_,c,r) => UpdateUserInterface(r.Session.AttachedEntity, c));
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
     }
@@ -91,7 +91,9 @@ public sealed partial class StoreSystem : EntitySystem
                 allCurrency[supported] = component.Balance[supported];
         }
 
-        var state = new StoreUpdateState(buyer, component.LastAvailableListings, allCurrency);
+        // TODO: if multiple are supposed to be able to interact with a single BUI & see different stores/listings, use session specific BUI states.
+
+        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency);
         _ui.SetUiState(ui, state);
     }
 
@@ -107,13 +109,16 @@ public sealed partial class StoreSystem : EntitySystem
             return;
         }
 
+        if (msg.Session.AttachedEntity is not { Valid: true } buyer)
+            return;
+
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
             return;
         //condition checking because why not
         if (listing.Conditions != null)
         {
-            var args = new ListingConditionArgs(msg.Buyer, component.Owner, listing, EntityManager);
+            var args = new ListingConditionArgs(buyer, component.Owner, listing, EntityManager);
             var conditionsMet = listing.Conditions.All(condition => condition.Condition(args));
 
             if (!conditionsMet)
@@ -135,15 +140,15 @@ public sealed partial class StoreSystem : EntitySystem
         //spawn entity
         if (listing.ProductEntity != null)
         {
-            var product = Spawn(listing.ProductEntity, Transform(msg.Buyer).Coordinates);
-            _hands.TryPickupAnyHand(msg.Buyer, product);
+            var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
+            _hands.TryPickupAnyHand(buyer, product);
         }
 
         //give action
         if (listing.ProductAction != null)
         {
             var action = new InstantAction(_proto.Index<InstantActionPrototype>(listing.ProductAction));
-            _actions.AddAction(msg.Buyer, action, null);
+            _actions.AddAction(buyer, action, null);
         }
 
         //broadcast event
@@ -153,7 +158,7 @@ public sealed partial class StoreSystem : EntitySystem
         }
 
         //log dat shit.
-        if (TryComp<MindComponent>(msg.Buyer, out var mind))
+        if (TryComp<MindComponent>(buyer, out var mind))
         {
             _admin.Add(LogType.StorePurchase, LogImpact.Low,
                 $"{ToPrettyString(mind.Owner):player} purchased listing \"{listing.Name}\" from {ToPrettyString(uid)}");
@@ -162,7 +167,7 @@ public sealed partial class StoreSystem : EntitySystem
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.Play(component.BuySuccessSound, Filter.SinglePlayer(msg.Session), uid); //cha-ching!
 
-        UpdateUserInterface(msg.Buyer, component);
+        UpdateUserInterface(buyer, component);
     }
 
     /// <summary>
@@ -186,8 +191,11 @@ public sealed partial class StoreSystem : EntitySystem
         if (proto.Cash == null || !proto.CanWithdraw)
             return;
 
+        if (msg.Session.AttachedEntity is not { Valid: true} buyer)
+            return;
+        
         FixedPoint2 amountRemaining = msg.Amount;
-        var coordinates = Transform(msg.Buyer).Coordinates;
+        var coordinates = Transform(buyer).Coordinates;
 
         var sortedCashValues = proto.Cash.Keys.OrderByDescending(x => x).ToList();
         foreach (var value in sortedCashValues)
@@ -210,7 +218,7 @@ public sealed partial class StoreSystem : EntitySystem
 
                     var maxAmount = Math.Min(amountToRemove, stack.MaxCount); //limit it based on max stack amount
                     _stack.SetCount(ent, maxAmount, stack);
-                    _hands.TryPickupAnyHand(msg.Buyer, ent);
+                    _hands.TryPickupAnyHand(buyer, ent);
                     amountToRemove -= maxAmount;
                 }
             }
@@ -219,13 +227,13 @@ public sealed partial class StoreSystem : EntitySystem
                 for (var i = 0; i < amountToSpawn; i++)
                 {
                     var ent = Spawn(cashId, coordinates);
-                    _hands.TryPickupAnyHand(msg.Buyer, ent);
+                    _hands.TryPickupAnyHand(buyer, ent);
                 }
             }
             amountRemaining -= value * amountToSpawn;
         }
 
         component.Balance[msg.Currency] -= msg.Amount;
-        UpdateUserInterface(msg.Buyer, component);
+        UpdateUserInterface(buyer, component);
     }
 }
