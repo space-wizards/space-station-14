@@ -18,7 +18,7 @@ namespace Content.Shared.CombatMode
         /// Whether we are able to disarm. This requires our active hand to be free.
         /// False if it's toggled off for whatever reason, null if it's not possible.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("canDisarm")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("disarm")]
         public bool? CanDisarm;
 
         [DataField("disarmFailSound")]
@@ -26,9 +26,6 @@ namespace Content.Shared.CombatMode
 
         [DataField("disarmSuccessSound")]
         public readonly SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
-
-        [DataField("disarmActionId", customTypeSerializer:typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
-        public readonly string DisarmActionId = "Disarm";
 
         [DataField("disarmFailChance")]
         public readonly float BaseDisarmFailChance = 0.75f;

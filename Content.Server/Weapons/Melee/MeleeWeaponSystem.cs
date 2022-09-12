@@ -183,7 +183,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (damageResult?.Total > FixedPoint2.Zero)
         {
-            RaiseNetworkEvent(new DamageEffectEvent(targets), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
+            RaiseNetworkEvent(new DamageEffectEvent(Color.Red, targets), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
         }
     }
 
@@ -290,7 +290,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (appliedDamage.Total > FixedPoint2.Zero)
         {
-            RaiseNetworkEvent(new DamageEffectEvent(targets), Filter.Pvs(Transform(targets[0]).Coordinates, entityMan: EntityManager));
+            RaiseNetworkEvent(new DamageEffectEvent(Color.Red, targets), Filter.Pvs(Transform(targets[0]).Coordinates, entityMan: EntityManager));
         }
     }
 
@@ -298,15 +298,14 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         base.DoDisarm(user, ev, component);
 
-        var target = ev.Coordinates.EntityId;
-
         if (!TryComp<SharedCombatModeComponent>(user, out var combatMode) ||
-            Deleted(target) ||
-            !_interaction.InRangeUnobstructed(user, target, component.Range + 0.1f))
+            Deleted(ev.Target) ||
+            !_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range + 0.1f))
         {
             return;
         }
 
+        var target = ev.Target.Value;
         EntityUid? inTargetHand = null;
 
         if (TryComp<HandsComponent>(target, out var targetHandsComponent)
@@ -329,12 +328,12 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var filterAll = Filter.Pvs(user);
         var filterOther = filterAll.RemoveWhereAttachedEntity(e => e == user);
 
+        var modifier = GetModifier(component, false);
         var chance = CalculateDisarmChance(user, target, inTargetHand, combatMode);
 
-        if (_random.Prob(chance))
+        if (modifier < component.HeavyDamageModifier.Float() || _random.Prob(chance))
         {
-            Audio.Play(combatMode.DisarmFailSound, filterAll, user, AudioParams.Default.WithVariation(0.025f));
-
+            // Don't play a sound as the swing is already predicted.
             var msgOther = Loc.GetString(
                 "disarm-action-popup-message-other-clients",
                 ("performerName", Identity.Entity(user, EntityManager)),
@@ -347,11 +346,13 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        Audio.Play(combatMode.DisarmSuccessSound, filterAll, user, AudioParams.Default.WithVariation(0.025f));
+        Audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
         _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
 
         var eventArgs = new DisarmedEvent { Target = target, Source = user, PushProbability = 1 - chance };
         RaiseLocalEvent(target, eventArgs);
+
+        RaiseNetworkEvent(new DamageEffectEvent(Color.Blue, new List<EntityUid>() {target}));
     }
 
     private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)

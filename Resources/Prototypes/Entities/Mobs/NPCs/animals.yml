@@ -638,7 +638,7 @@
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
   - type: CombatMode
-    disarm: false
+    disarm: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -676,7 +676,7 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: CombatMode
-    disarm: false
+    disarm: null
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget

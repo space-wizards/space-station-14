@@ -282,6 +282,7 @@
     fireStackAlternateState: 3
   - type: EnsnareableVisualizer
   - type: CombatMode
+    disarm: true
   - type: Climbing
   - type: Cuffable
   - type: Ensnareable
@@ -291,12 +292,12 @@
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon
+    heavyWindupModifier: 1.0
     soundHit:
       collection: Punch
     range: 1.5
     angle: 30
     animation: WeaponArcFist
-    windUpStart: null
     attackRate: 1.5
     damage:
       types:

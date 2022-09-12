@@ -254,7 +254,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Wraps around back to 0
         releaseTime %= (2 * windupTime);
 
-        var releaseDiff = Math.Abs((releaseTime - windupTime));
+        var releaseDiff = Math.Abs(releaseTime - windupTime);
+
+        if (releaseDiff < 0)
+            releaseDiff = Math.Min(0, releaseDiff + GracePeriod);
+        else
+            releaseDiff = Math.Max(0, releaseDiff - GracePeriod);
+
         var fraction = (windupTime - releaseDiff) / windupTime;
 
         if (fraction < 0.4)
