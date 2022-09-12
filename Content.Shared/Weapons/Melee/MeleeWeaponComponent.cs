@@ -109,7 +109,7 @@ public sealed class MeleeWeaponComponent : Component
     // If overwatch and apex do this then we probably should too.
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("hitSound")]
+    [DataField("soundHit")]
     public SoundSpecifier? HitSound;
 
     /// <summary>
