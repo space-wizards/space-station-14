@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Client.Hands.Systems;
 using Content.Client.HUD;
 using Content.Client.Inventory;
 using Content.Client.Items.Managers;
@@ -14,13 +13,10 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Hands
+namespace Content.Client.Hands.UI
 {
     [GenerateTypedNameReferences]
     public sealed partial class HandsGui : Control

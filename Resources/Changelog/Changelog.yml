@@ -1,14 +1,4 @@
 Entries:
-- author: Sammy Boy
-  changes:
-  - {message: Crates cannot eat you while buckled anymore!, type: Fix}
-  id: 1783
-  time: '2022-06-24T19:26:57.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Counters can now be vaulted again., type: Fix}
-  id: 1784
-  time: '2022-06-24T19:34:09.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Waystation now has jetpacks!, type: Add}
@@ -2924,3 +2914,14 @@ Entries:
   - {message: Examining people tells you their pronouns and approximate age, type: Add}
   id: 2282
   time: '2022-09-11T14:45:40.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Artifacts fits into artifact storage again, type: Fix}
+  id: 2283
+  time: '2022-09-11T22:24:00.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Gas recyclers can now convert waste carbon dioxide and nitrous oxide
+      into breathable gases., type: Add}
+  id: 2284
+  time: '2022-09-11T23:02:01.0000000+00:00'

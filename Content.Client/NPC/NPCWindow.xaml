@@ -1,7 +1,7 @@
-<userInterface:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:ui="clr-namespace:Content.Client.HUD.UI"
-            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="NPC debug"
             MinSize="200 200">
     <BoxContainer Name="Options" Orientation="Vertical">
@@ -21,4 +21,4 @@
             <CheckBox Name="PathRegions" Text="Regions"/>
         </BoxContainer>
     </BoxContainer>
-</userInterface:FancyWindow>
+</controls:FancyWindow>

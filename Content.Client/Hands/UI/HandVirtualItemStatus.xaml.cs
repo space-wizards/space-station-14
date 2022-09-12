@@ -1,7 +1,7 @@
 ﻿using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.Hands
+namespace Content.Client.Hands.UI
 {
     public sealed class HandVirtualItemStatus : Control
     {
