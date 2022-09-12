@@ -25,7 +25,10 @@ namespace Content.Server.Radio.Components
 
         private bool _radioOn;
         [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-        private HashSet<string> _channels = new();
+        private HashSet<string> _channels = new()
+        {
+            "Common"
+        };
 
         public int BroadcastFrequency => IoCManager.Resolve<IPrototypeManager>()
             .Index<RadioChannelPrototype>(BroadcastChannel).Frequency;
