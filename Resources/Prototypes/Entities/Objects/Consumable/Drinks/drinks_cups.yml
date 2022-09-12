@@ -179,7 +179,7 @@
     layers:
       - state: icon-0
       - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-3
+        state: icon-4
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
@@ -205,7 +205,7 @@
     layers:
       - state: icon-0
       - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-2
+        state: icon-4
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
