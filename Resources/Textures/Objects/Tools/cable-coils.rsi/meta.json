@@ -32,6 +32,14 @@
       "directions": 4
     },
     {
+      "name": "coilnet-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "coilnet-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "coil-30"
     },
     {
@@ -93,6 +101,10 @@
     },
     {
       "name": "coilhv-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "coilnet-equipped-BELT",
       "directions": 4
     }
   ]
