@@ -2,7 +2,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
-using Content.Client.EscapeMenu;
+using Content.Client.Options;
 using Content.Client.Eui;
 using Content.Client.Flash;
 using Content.Client.GhostKick;
@@ -53,6 +53,8 @@ namespace Content.Client.Entry
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        public const int NetBufferSizeOverride = 2;
 
         public override void Init()
         {
@@ -125,7 +127,7 @@ namespace Content.Client.Entry
 
 #if FULL_RELEASE
             // if FULL_RELEASE, because otherwise this breaks some integration tests.
-            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, 2);
+            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, NetBufferSizeOverride);
 #endif
 
             _escapeMenuOwner.Initialize();

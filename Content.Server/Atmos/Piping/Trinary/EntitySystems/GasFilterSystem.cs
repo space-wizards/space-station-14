@@ -62,15 +62,15 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferRatio = (float)(filter.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds) / inletNode.Air.Volume;
+            var transferVol = (float)(filter.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds);
 
-            if (transferRatio <= 0)
+            if (transferVol <= 0)
             {
                 _ambientSoundSystem.SetAmbience(filter.Owner, false);
                 return;
             }
 
-            var removed = inletNode.Air.RemoveRatio(transferRatio);
+            var removed = inletNode.Air.RemoveVolume(transferVol);
 
             if (filter.FilteredGas.HasValue)
             {
