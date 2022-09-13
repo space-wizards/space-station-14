@@ -159,7 +159,7 @@ namespace Content.Client.Administration.Systems
 
             if (function == EngineKeyFunctions.UIClick)
                 _clientConsoleHost.ExecuteCommand($"vv {uid}");
-            else if (function == ContentKeyFunctions.OpenContextMenu)
+            else if (function == EngineKeyFunctions.AltUse)
                 _verbSystem.VerbMenu.OpenVerbMenu(uid, true);
             else
                 return;
@@ -177,7 +177,7 @@ namespace Content.Client.Administration.Systems
 
             if (function == EngineKeyFunctions.UIClick)
                 _clientConsoleHost.ExecuteCommand($"vv {uid}");
-            else if (function == ContentKeyFunctions.OpenContextMenu)
+            else if (function == EngineKeyFunctions.AltUse)
                 _verbSystem.VerbMenu.OpenVerbMenu(uid, true);
             else
                 return;
