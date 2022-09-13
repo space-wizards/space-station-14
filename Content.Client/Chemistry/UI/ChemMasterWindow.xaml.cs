@@ -75,9 +75,9 @@ namespace Content.Client.Chemistry.UI
                 Grid.AddChild(PillTypeButtons[i]);
             }
 
-            PillAmount.InitDefaultButtons();
+            PillDosage.InitDefaultButtons();
             PillNumber.InitDefaultButtons();
-            BottleAmount.InitDefaultButtons();
+            BottleDosage.InitDefaultButtons();
 
             Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
@@ -119,13 +119,13 @@ namespace Content.Client.Chemistry.UI
 
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
-            PillAmount.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
-            BottleAmount.IsValid = x => x >= 0 && x <= bottleAmountMax;
+            PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
+            BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
 
             if (PillNumber.Value > pillNumberMax)
                 PillNumber.Value = pillNumberMax;
-            if (BottleAmount.Value > bottleAmountMax)
-                BottleAmount.Value = bottleAmountMax;
+            if (BottleDosage.Value > bottleAmountMax)
+                BottleDosage.Value = bottleAmountMax;
         }
 
         /// <summary>
