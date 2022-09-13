@@ -1,5 +1,6 @@
 using Content.Server.Climbing.Components;
 using Content.Server.DoAfter;
+using Content.Server.Interaction;
 using Content.Server.Interaction.Components;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
@@ -39,7 +40,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
 
@@ -134,10 +135,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!_cfg.GetCVar(CCVars.GameTableBonk))
         {
             // Not set to always bonk, try clumsy roll.
-            if (!TryComp(user, out ClumsyComponent? clumsy))
-                return false;
-
-            if (!clumsy.RollClumsy(component.BonkClumsyChance))
+            if (!_interactionSystem.TryRollClumsy(user, component.BonkClumsyChance))
                 return false;
         }
 
