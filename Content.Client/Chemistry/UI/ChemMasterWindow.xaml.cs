@@ -78,6 +78,9 @@ namespace Content.Client.Chemistry.UI
             PillAmount.InitDefaultButtons();
             PillNumber.InitDefaultButtons();
             BottleAmount.InitDefaultButtons();
+
+            Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
+            Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
         }
 
         private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, string id, bool isBuffer, string styleClass)
@@ -101,7 +104,9 @@ namespace Content.Client.Chemistry.UI
             UpdatePanelInfo(castState);
 
             var output = castState.OutputContainerInfo;
-            
+
+            BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
+
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = output is null;
             CreateBottleButton.Disabled = output is null || !output.HoldsReagents;
@@ -171,7 +176,7 @@ namespace Content.Client.Chemistry.UI
             bufferHBox.AddChild(bufferLabel);
             var bufferVol = new Label
             {
-                Text = $"{state.BufferCurrentVolume}",
+                Text = $"{state.BufferCurrentVolume}u",
                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
             };
             bufferHBox.AddChild(bufferVol);
@@ -243,7 +248,7 @@ namespace Content.Client.Chemistry.UI
                     {
                         if (!info.HoldsReagents)
                             return (lineItem.Id, lineItem.Id, lineItem.Quantity);
-                        
+
                         // Try to get the prototype for the given reagent. This gives us its name.
                         _prototypeManager.TryIndex(lineItem.Id, out ReagentPrototype? proto);
                         var name = proto?.LocalizedName
@@ -253,7 +258,7 @@ namespace Content.Client.Chemistry.UI
 
                     })
                     .OrderBy(r => r.Item1);
-                
+
                 foreach (var (name, id, quantity) in contents)
                 {
                     var inner = new BoxContainer
@@ -289,10 +294,10 @@ namespace Content.Client.Chemistry.UI
                             Loc.GetString("chem-master-window-buffer-all-amount"),
                             ChemMasterReagentAmount.All, id, false, StyleBase.ButtonOpenLeft));
                     }
-                    
+
                     control.Children.Add(inner);
                 }
-                
+
             }
         }
 
