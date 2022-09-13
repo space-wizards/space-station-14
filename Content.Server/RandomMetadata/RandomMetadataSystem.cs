@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Shared.Dataset;
+﻿using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -31,7 +30,7 @@ public sealed class RandomMetadataSystem : EntitySystem
                     ? _random.Pick(proto.Values)
                     : segment);
             }
-            meta.EntityName = string.Join(" ", outputSegments);
+            meta.EntityName = string.Join(component.NameSeparator, outputSegments);
         }
 
         if (component.DescriptionSegments != null)
@@ -43,7 +42,7 @@ public sealed class RandomMetadataSystem : EntitySystem
                     ? _random.Pick(proto.Values)
                     : segment);
             }
-            meta.EntityDescription = string.Join(" ", outputSegments);
+            meta.EntityDescription = string.Join(component.DescriptionSeparator, outputSegments);
         }
     }
 }
