@@ -286,7 +286,6 @@
   parent: BaseStorageItem
   description: Holds up to 12 pills.
   components:
-  - type: FitsInChemMasterOutput
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister

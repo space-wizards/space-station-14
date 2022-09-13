@@ -33,6 +33,8 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
+        
+        private const string PillPrototypeId = "Pill";
 
         public override void Initialize()
         {
@@ -178,19 +180,22 @@ namespace Content.Server.Chemistry.EntitySystems
             }
             
             // Ensure the number is valid.
-            if (message.Number == 0 || message.Number > storage.StorageCapacityMax - storage.StorageUsed) return;
+            if (message.Number == 0 || message.Number > storage.StorageCapacityMax - storage.StorageUsed)
+                return;
             
             // Ensure the amount is valid.
-            if (message.Amount == 0 || message.Amount > chemMaster.PillDosageLimit) return;
+            if (message.Amount == 0 || message.Amount > chemMaster.PillDosageLimit)
+                return;
 
             var needed = message.Amount * message.Number;
-            if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal)) return;
+            if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
+                return;
             
             Label(container, message.Label);
             
             for (var i = 0; i < message.Number; i++)
             {
-                var item = Spawn("Pill", Transform(container).Coordinates);
+                var item = Spawn(PillPrototypeId, Transform(container).Coordinates);
                 DebugTools.Assert(_storageSystem.Insert(container, item, storage));
                 Label(item, message.Label);
 
@@ -220,9 +225,11 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Ensure the amount is valid.
-            if (message.Amount == 0 || message.Amount > solution.AvailableVolume) return;
+            if (message.Amount == 0 || message.Amount > solution.AvailableVolume)
+                return;
             
-            if (!WithdrawFromBuffer(chemMaster, message.Amount, user, out var withdrawal)) return;
+            if (!WithdrawFromBuffer(chemMaster, message.Amount, user, out var withdrawal))
+                return;
 
             Label(container, message.Label);
             DebugTools.Assert(_solutionContainerSystem.TryAddSolution(
@@ -282,7 +289,8 @@ namespace Content.Server.Chemistry.EntitySystems
         
         private ContainerInfo? BuildInputContainerInfo(EntityUid? container)
         {
-            if (container is not { Valid: true }) return null;
+            if (container is not { Valid: true })
+                return null;
 
             if (!TryComp(container, out FitsInDispenserComponent? fits)
                 || !_solutionContainerSystem.TryGetSolution(container.Value, fits.Solution, out var solution))
@@ -295,10 +303,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
         {
-            if (container is not { Valid: true }) return null;
+            if (container is not { Valid: true })
+                return null;
 
             var name = Name(container.Value);
-
             {
                 if (_solutionContainerSystem.TryGetSolution(
                         container.Value, SharedChemMaster.BottleSolutionName, out var solution))
@@ -307,7 +315,8 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
-            if (!TryComp(container, out ServerStorageComponent? storage)) return null;
+            if (!TryComp(container, out ServerStorageComponent? storage))
+                return null;
 
             var pills = storage.Storage?.ContainedEntities.Select(pill =>
             {

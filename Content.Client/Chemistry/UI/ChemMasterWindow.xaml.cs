@@ -117,8 +117,10 @@ namespace Content.Client.Chemistry.UI
             PillAmount.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
             BottleAmount.IsValid = x => x >= 0 && x <= bottleAmountMax;
 
-            if (PillNumber.Value > pillNumberMax) PillNumber.Value = pillNumberMax;
-            if (BottleAmount.Value > bottleAmountMax) BottleAmount.Value = bottleAmountMax;
+            if (PillNumber.Value > pillNumberMax)
+                PillNumber.Value = pillNumberMax;
+            if (BottleAmount.Value > bottleAmountMax)
+                BottleAmount.Value = bottleAmountMax;
         }
 
         /// <summary>
@@ -239,7 +241,8 @@ namespace Content.Client.Chemistry.UI
                 var contents = info.Contents
                     .Select(lineItem =>
                     {
-                        if (!info.HoldsReagents) return (lineItem.Id, lineItem.Id, lineItem.Quantity);
+                        if (!info.HoldsReagents)
+                            return (lineItem.Id, lineItem.Id, lineItem.Quantity);
                         
                         // Try to get the prototype for the given reagent. This gives us its name.
                         _prototypeManager.TryIndex(lineItem.Id, out ReagentPrototype? proto);
@@ -269,22 +272,22 @@ namespace Content.Client.Chemistry.UI
 
                     if (addReagentButtons)
                     {
-                            var cs = inner.Children;
-                            
-                            // Padding
-                            cs.Add(new Control { HorizontalExpand = true });
+                        var cs = inner.Children;
 
-                            cs.Add(MakeReagentButton(
-                                "1", ChemMasterReagentAmount.U1, id, false, StyleBase.ButtonOpenRight));
-                            cs.Add(MakeReagentButton(
-                                "5", ChemMasterReagentAmount.U5, id, false, StyleBase.ButtonOpenBoth));
-                            cs.Add(MakeReagentButton(
-                                "10", ChemMasterReagentAmount.U10, id, false, StyleBase.ButtonOpenBoth));
-                            cs.Add(MakeReagentButton(
-                                "25", ChemMasterReagentAmount.U25, id, false, StyleBase.ButtonOpenBoth));
-                            cs.Add(MakeReagentButton(
-                                Loc.GetString("chem-master-window-buffer-all-amount"),
-                                ChemMasterReagentAmount.All, id, false, StyleBase.ButtonOpenLeft));
+                        // Padding
+                        cs.Add(new Control { HorizontalExpand = true });
+
+                        cs.Add(MakeReagentButton(
+                            "1", ChemMasterReagentAmount.U1, id, false, StyleBase.ButtonOpenRight));
+                        cs.Add(MakeReagentButton(
+                            "5", ChemMasterReagentAmount.U5, id, false, StyleBase.ButtonOpenBoth));
+                        cs.Add(MakeReagentButton(
+                            "10", ChemMasterReagentAmount.U10, id, false, StyleBase.ButtonOpenBoth));
+                        cs.Add(MakeReagentButton(
+                            "25", ChemMasterReagentAmount.U25, id, false, StyleBase.ButtonOpenBoth));
+                        cs.Add(MakeReagentButton(
+                            Loc.GetString("chem-master-window-buffer-all-amount"),
+                            ChemMasterReagentAmount.All, id, false, StyleBase.ButtonOpenLeft));
                     }
                     
                     control.Children.Add(inner);

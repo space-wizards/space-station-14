@@ -50,7 +50,6 @@
   parent: BaseChemistryEmptyBottle
   id: ChemistryEmptyBottle01
   components:
-  - type: FitsInChemMasterOutput
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:

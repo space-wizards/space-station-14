@@ -72,8 +72,9 @@
       outputSlot:
         whitelistFailPopup: chem-master-component-cannot-put-entity-message
         whitelist:
-          components:
-          - FitsInChemMasterOutput
+          tags:
+          - Bottle
+          - PillCanister
   - type: SolutionContainerManager
     solutions:
       buffer: {}
