@@ -83,17 +83,20 @@ public sealed class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
 
+    /// <summary>
+    /// Nearest edge range to hit an entity.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("range")]
-    public float Range = SharedInteractionSystem.InteractionRange;
+    public float Range = 1f;
 
     /// <summary>
     /// Total width of the angle for wide attacks.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("angle")]
-    public Angle Angle = Angle.Zero;
+    public Angle Angle = Angle.FromDegrees(60);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Animation = "WeaponArcThrust";
+    public string Animation = "WeaponArcSlash";
 
     // Sounds
 
@@ -126,6 +129,8 @@ public sealed class MeleeWeaponComponent : Component
 [Serializable, NetSerializable]
 public sealed class MeleeWeaponComponentState : ComponentState
 {
+    // None of the other data matters for client as they're not predicted.
+
     public float AttackRate;
     public bool Attacking;
     public TimeSpan NextAttack;

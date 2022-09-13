@@ -5,7 +5,6 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -232,7 +231,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 throw new NotImplementedException();
         }
 
-        DoLungeAnimation(user, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
+        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
         weapon.Attacking = true;
         Dirty(weapon);
     }
@@ -290,7 +289,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return true;
     }
 
-    private void DoLungeAnimation(EntityUid user, MapCoordinates coordinates, string? animation)
+    private void DoLungeAnimation(EntityUid user, Angle angle, MapCoordinates coordinates, string? animation)
     {
         // TODO: Assert that offset eyes are still okay.
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -303,8 +302,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         localPos = userXform.LocalRotation.RotateVec(localPos);
-        DoLunge(user, localPos, animation);
+        DoLunge(user, angle, localPos, animation);
     }
 
-    public abstract void DoLunge(EntityUid user, Vector2 localPos, string? animation);
+    public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation);
 }

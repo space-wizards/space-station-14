@@ -2,7 +2,6 @@ using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
 using Content.Client.Weapons.Melee.Components;
-using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Client.Animations;
@@ -227,13 +226,13 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnMeleeLunge(MeleeLungeEvent ev)
     {
-        DoLunge(ev.Entity, ev.LocalPos, ev.Animation);
+        DoLunge(ev.Entity, ev.Angle, ev.LocalPos, ev.Animation);
     }
 
     /// <summary>
     /// Does all of the melee effects for a player that are predicted, i.e. character lunge and weapon animation.
     /// </summary>
-    public override void DoLunge(EntityUid user, Vector2 localPos, string? animation)
+    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation)
     {
         if (!Timing.IsFirstTimePredicted)
             return;
@@ -262,7 +261,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                     switch (arcComponent.Animation)
                     {
                         case WeaponArcAnimation.Slash:
-                            _animation.Play(animationUid, GetSlashAnimation(sprite), "melee-slash");
+                            _animation.Play(animationUid, GetSlashAnimation(sprite, angle), "melee-slash");
                             break;
                         case WeaponArcAnimation.Thrust:
                             _animation.Play(animationUid, GetThrustAnimation(sprite, distance), "melee-thrust");
@@ -277,10 +276,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    private Animation GetSlashAnimation(SpriteComponent sprite)
+    private Animation GetSlashAnimation(SpriteComponent sprite, Angle arc)
     {
-        // TODO: Weapon based arc
-        var arc = Angle.FromDegrees(45);
         var slashStart = 0.03f;
         var slashEnd = 0.065f;
         var length = slashEnd + 0.05f;

@@ -49,12 +49,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     public const float DamagePitchVariation = 0.05f;
 
+    private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
+
     // TODO:
-    // - Sprite lerping -> Check rotated eyes
     // - Eye kick?
-    // - Better overlay
-    // - Port
-    // - CVars to toggle some stuff
 
     public override void Initialize()
     {
@@ -121,11 +119,16 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             Deleted(ev.Target) ||
             // For consistency with wide attacks stuff needs damageable.
             !HasComp<DamageableComponent>(ev.Target) ||
-            !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
-            !_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range + 0.1f))
+            !TryComp<TransformComponent>(ev.Target, out var targetXform))
         {
             return;
         }
+
+        // InRangeUnobstructed is insufficient rn as it checks the centre of the body rather than the nearest edge.
+        // TODO: Look at fixing it
+        // This is mainly to keep consistency between the wide attack raycast and the click attack raycast.
+        if (!_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range + 0.35f))
+            return;
 
         var damage = component.Damage * GetModifier(component, true);
         Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
@@ -400,7 +403,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             var castAngle = new Angle(baseAngle + increment * i);
             var res = _physics.IntersectRay(mapId,
                 new CollisionRay(position, castAngle.ToWorldVec(),
-                    (int) (CollisionGroup.MobMask | CollisionGroup.Opaque)), range, ignore, false).ToList();
+                    AttackMask), range, ignore, false).ToList();
 
             if (res.Count != 0)
             {
@@ -411,9 +414,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         return resSet;
     }
 
-    public override void DoLunge(EntityUid user, Vector2 localPos, string? animation)
+    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation)
     {
-        RaiseNetworkEvent(new MeleeLungeEvent(user, localPos, animation), Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
+        RaiseNetworkEvent(new MeleeLungeEvent(user, angle, localPos, animation), Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
 
     private void PlayHitSound(EntityUid target, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)

@@ -135,7 +135,7 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     range: 0.8
-    arcwidth: 30
+    angle: 30
     arc: fist
     damage:
       types:

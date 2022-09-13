@@ -11,6 +11,11 @@ public sealed class MeleeLungeEvent : EntityEventArgs
     public EntityUid Entity;
 
     /// <summary>
+    /// Width of the attack angle.
+    /// </summary>
+    public Angle Angle;
+
+    /// <summary>
     /// The relative local position to the <see cref="Entity"/>
     /// </summary>
     public Vector2 LocalPos;
@@ -20,9 +25,10 @@ public sealed class MeleeLungeEvent : EntityEventArgs
     /// </summary>
     public string? Animation;
 
-    public MeleeLungeEvent(EntityUid uid, Vector2 localPos, string? animation)
+    public MeleeLungeEvent(EntityUid uid, Angle angle, Vector2 localPos, string? animation)
     {
         Entity = uid;
+        Angle = angle;
         LocalPos = localPos;
         Animation = animation;
     }

@@ -19,6 +19,7 @@
     bluntStaminaDamageFactor: 2.0
     range: 1.5
     angle: 60
+    animation: WeaponArcSlash
   - type: StaminaDamageOnHit
     damage: 55
   - type: Battery
