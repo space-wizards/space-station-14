@@ -1,16 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: The quartermaster is now a head (The only difference is they can now
-      enter the bridge. that's it. The game already considered them a head in every
-      other way.), type: Tweak}
-  id: 1790
-  time: '2022-06-26T06:22:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nukies now no longer get the Common channel., type: Tweak}
-  id: 1791
-  time: '2022-06-26T07:21:03.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Adjusted the shuttle authorization colours to be more alarming., type: Tweak}
@@ -2925,3 +2913,13 @@ Entries:
   - {message: Handheld radios can now receive messages properly, type: Fix}
   id: 2289
   time: '2022-09-13T03:32:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Clumsy for clowns has been fixed again., type: Fix}
+  id: 2290
+  time: '2022-09-13T13:52:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Clowns bonking on a table no longer get free movement., type: Fix}
+  id: 2291
+  time: '2022-09-13T13:53:03.0000000+00:00'
