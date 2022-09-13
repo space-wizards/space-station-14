@@ -136,7 +136,7 @@
       path: /Audio/Weapons/pierce.ogg
     range: 0.8
     angle: 30
-    arc: fist
+    animation: WeaponArcFist
     damage:
       types:
         Piercing: 5

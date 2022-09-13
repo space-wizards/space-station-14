@@ -228,7 +228,6 @@
     damage:
      groups:
        Brute: 35
-    windupTime: 1.5
   - type: SlowOnDamage
     speedModifierThresholds:
       450: 0.7

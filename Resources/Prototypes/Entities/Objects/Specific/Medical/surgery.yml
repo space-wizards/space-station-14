@@ -41,7 +41,7 @@
     damage:
       types:
         Piercing: 10
-    hitSound:
+    soundHit:
       path: /Audio/Items/drill_hit.ogg
 
 # Scalpel
