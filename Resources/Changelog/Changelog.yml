@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Evac shuttle has been added for round ends now., type: Add}
-  id: 1789
-  time: '2022-06-26T05:20:45.0000000+00:00'
 - author: moony
   changes:
   - {message: The quartermaster is now a head (The only difference is they can now
@@ -2925,3 +2920,8 @@ Entries:
   - {message: Removed fun!, type: Remove}
   id: 2288
   time: '2022-09-13T01:47:59.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Handheld radios can now receive messages properly, type: Fix}
+  id: 2289
+  time: '2022-09-13T03:32:08.0000000+00:00'
