@@ -92,6 +92,9 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnGridInit(GridInitializeEvent ev)
         {
+            if (ev.IsMap)
+                return;
+
             EntityManager.EnsureComponent<ShuttleComponent>(ev.EntityUid);
         }
 
