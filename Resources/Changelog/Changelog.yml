@@ -1,15 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Adjusted the shuttle authorization colours to be more alarming., type: Tweak}
-  - {message: Fix the emergency shuttle notif not going off on early launch by admins.,
-    type: Fix}
-  - {message: Shuttle doors will now also try to close when going to hyperspace.,
-    type: Tweak}
-  id: 1792
-  time: '2022-06-26T08:19:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: It's no longer possible to melee yourself., type: Tweak}
   id: 1793
   time: '2022-06-26T09:25:29.0000000+00:00'
@@ -2923,3 +2914,9 @@ Entries:
   - {message: Clowns bonking on a table no longer get free movement., type: Fix}
   id: 2291
   time: '2022-09-13T13:53:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Split Station major update. New medbay, new bar and other misc changes
+      across the board.', type: Tweak}
+  id: 2292
+  time: '2022-09-13T14:26:16.0000000+00:00'
