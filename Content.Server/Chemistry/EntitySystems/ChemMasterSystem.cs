@@ -184,10 +184,10 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
             
             // Ensure the amount is valid.
-            if (message.Amount == 0 || message.Amount > chemMaster.PillDosageLimit)
+            if (message.Dosage == 0 || message.Dosage > chemMaster.PillDosageLimit)
                 return;
 
-            var needed = message.Amount * message.Number;
+            var needed = message.Dosage * message.Number;
             if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
                 return;
             
@@ -202,7 +202,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 var itemSolution = _solutionContainerSystem.EnsureSolution(item, SharedChemMaster.PillSolutionName);
                 
                 DebugTools.Assert(_solutionContainerSystem.TryAddSolution(
-                    item, itemSolution, withdrawal.SplitSolution(message.Amount)));
+                    item, itemSolution, withdrawal.SplitSolution(message.Dosage)));
                 
                 if (TryComp<SpriteComponent>(item, out var spriteComp))
                     spriteComp.LayerSetState(0, "pill" + (chemMaster.PillType + 1));
@@ -225,10 +225,10 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Ensure the amount is valid.
-            if (message.Amount == 0 || message.Amount > solution.AvailableVolume)
+            if (message.Dosage == 0 || message.Dosage > solution.AvailableVolume)
                 return;
             
-            if (!WithdrawFromBuffer(chemMaster, message.Amount, user, out var withdrawal))
+            if (!WithdrawFromBuffer(chemMaster, message.Dosage, user, out var withdrawal))
                 return;
 
             Label(container, message.Label);

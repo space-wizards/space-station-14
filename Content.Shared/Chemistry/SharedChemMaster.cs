@@ -57,13 +57,13 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ChemMasterCreatePillsMessage : BoundUserInterfaceMessage
     {
-        public readonly uint Amount;
+        public readonly uint Dosage;
         public readonly uint Number;
         public readonly string Label;
 
-        public ChemMasterCreatePillsMessage(uint amount, uint number, string label)
+        public ChemMasterCreatePillsMessage(uint dosage, uint number, string label)
         {
-            Amount = amount;
+            Dosage = dosage;
             Number = number;
             Label = label;
         }
@@ -72,12 +72,12 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
     {
-        public readonly uint Amount;
+        public readonly uint Dosage;
         public readonly string Label;
 
-        public ChemMasterOutputToBottleMessage(uint amount, string label)
+        public ChemMasterOutputToBottleMessage(uint dosage, string label)
         {
-            Amount = amount;
+            Dosage = dosage;
             Label = label;
         }
     }
@@ -154,7 +154,7 @@ namespace Content.Shared.Chemistry
     {
         public readonly ContainerInfo? InputContainerInfo;
         public readonly ContainerInfo? OutputContainerInfo;
-        
+
         /// <summary>
         /// A list of the reagents and their amounts within the buffer, if applicable.
         /// </summary>
