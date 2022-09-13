@@ -556,8 +556,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtLawyerRed
-  name: red lawyer jumpskirt
-  description: A flashy red suit worn by lawyers and show-offs.
+  name: red lawyer suitskirt
+  description: A flashy red suitskirt worn by lawyers and show-offs.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
@@ -567,8 +567,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtLawyerBlue
-  name: blue lawyer jumpskirt
-  description: A flashy blue suit worn by lawyers and show-offs.
+  name: blue lawyer suitskirt
+  description: A flashy blue suitskirt worn by lawyers and show-offs.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
@@ -578,8 +578,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtLawyerBlack
-  name: black lawyer jumpskirt
-  description: A subtle black suit worn by lawyers and gangsters.
+  name: black lawyer suitskirt
+  description: A subtle black suitskirt worn by lawyers and gangsters.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
@@ -589,7 +589,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtLawyerPurple
-  name: purple lawyer jumpskirt
+  name: purple lawyer suitskirt
   description: A stylish purple piece worn by lawyers and show people.
   components:
     - type: Sprite
