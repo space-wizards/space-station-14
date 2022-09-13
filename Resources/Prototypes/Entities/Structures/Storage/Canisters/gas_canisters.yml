@@ -128,10 +128,10 @@
       - state: grey
   - type: GasCanister
     gasMixture:
-      volume: 1000
+      volume: 10000
       moles:
-        - 393.0592071 # oxygen 21%
-        - 1478.6513029 # nitrogen 79%
+        - 3930.0592071 # oxygen 21%
+        - 14780.6513029 # nitrogen 79%
       temperature: 293.15
   - type: Destructible
     thresholds:
@@ -159,9 +159,9 @@
       - state: blue
   - type: GasCanister
     gasMixture:
-      volume: 1000
+      volume: 10000
       moles:
-        - 1871.71051 # oxygen
+        - 18710.71051 # oxygen
       temperature: 293.15
   - type: Destructible
     thresholds:
@@ -189,10 +189,10 @@
         - state: red
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles:
           - 0 # oxygen
-          - 1871.71051 # nitrogen
+          - 18710.71051 # nitrogen
         temperature: 293.15
     - type: Destructible
       thresholds:

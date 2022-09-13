@@ -4,7 +4,7 @@
     sprite: Structures/Storage/canister.rsi
     state: grey
   product: AirCanister
-  cost: 2700
+  cost: 6200
   category: Atmospherics
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Structures/Storage/canister.rsi
     state: blue
   product: OxygenCanister
-  cost: 2300
+  cost: 4300
   category: Atmospherics
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Structures/Storage/canister.rsi
     state: red
   product: NitrogenCanister
-  cost: 3200
+  cost: 4300
   category: Atmospherics
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
-  cost: 2600
+  cost: 1800
   category: Atmospherics
   group: market
 
