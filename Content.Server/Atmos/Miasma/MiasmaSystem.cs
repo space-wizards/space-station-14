@@ -201,7 +201,7 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnRejuvenate(EntityUid uid, RottingComponent component, RejuvenateEvent args)
         {
-            EntityManager.RemoveComponent<RottingComponent>(uid);
+            EntityManager.RemoveComponentDeferred<RottingComponent>(uid);
         }
 
         /// Containers

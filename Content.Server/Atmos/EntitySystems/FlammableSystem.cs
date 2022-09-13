@@ -67,7 +67,6 @@ namespace Content.Server.Atmos.EntitySystems
                 flammable.FireStacks += component.FireStacks;
                 Ignite(entity, flammable);
             }
-
         }
 
         private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, StartCollideEvent args)
