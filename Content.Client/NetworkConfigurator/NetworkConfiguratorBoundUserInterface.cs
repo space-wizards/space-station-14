@@ -100,7 +100,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
         }
 
         _netConfig.SetActiveDeviceList(Owner.Owner, cast.Device.Value);
-        _deviceList.UpdateDeviceList(cast.Device.Value, cast.Devices);
+        _deviceList.UpdateDeviceList(cast.Device.Value, cast.Devices, dirty: false);
         _netConfig.ToggleVisualization(Owner.Owner, true);
         _configurationMenu.Show.Pressed = true;
     }

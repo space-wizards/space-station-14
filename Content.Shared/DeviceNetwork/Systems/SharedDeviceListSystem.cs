@@ -17,8 +17,9 @@ public abstract class SharedDeviceListSystem : EntitySystem
     /// <param name="uid">The entity to update.</param>
     /// <param name="devices">The devices to store.</param>
     /// <param name="merge">Whether to merge or replace the devices stored.</param>
+    /// <param name="dirty">If the component should be dirtied upon this call.</param>
     /// <param name="deviceList">Device list component</param>
-    public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
+    public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, bool dirty = true, DeviceListComponent? deviceList = null)
     {
         if (!Resolve(uid, ref deviceList))
             return DeviceListUpdateResult.NoComponent;
@@ -36,7 +37,10 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
 
-        Dirty(deviceList);
+        if (dirty)
+        {
+            Dirty(deviceList);
+        }
 
         return DeviceListUpdateResult.UpdateOk;
     }
