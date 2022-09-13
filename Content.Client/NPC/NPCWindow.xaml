@@ -1,24 +1,23 @@
-<userInterface:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:ui="clr-namespace:Content.Client.HUD.UI"
-            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="NPC debug"
             MinSize="200 200">
     <BoxContainer Name="Options" Orientation="Vertical">
-        <ui:StripeBack>
+        <controls:StripeBack>
             <Label Text="NPC" HorizontalAlignment="Center"/>
-        </ui:StripeBack>
+        </controls:StripeBack>
         <BoxContainer Name="NPCBox" Orientation="Vertical">
             <CheckBox Name="NPCPath" Text="Path"/>
             <CheckBox Name="NPCThonk" Text="Thonk"/>
         </BoxContainer>
-        <ui:StripeBack>
+        <controls:StripeBack>
             <Label Text="Pathfinder" HorizontalAlignment="Center"/>
-        </ui:StripeBack>
+        </controls:StripeBack>
         <BoxContainer Name="PathfinderBox" Orientation="Vertical">
             <CheckBox Name="PathNodes" Text="Nodes"/>
             <CheckBox Name="PathRoutes" Text="Routes"/>
             <CheckBox Name="PathRegions" Text="Regions"/>
         </BoxContainer>
     </BoxContainer>
-</userInterface:FancyWindow>
+</controls:FancyWindow>

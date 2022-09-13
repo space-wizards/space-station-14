@@ -3,7 +3,6 @@
   parent: BaseMobOrganic
   id: BaseMobSlimePerson
   abstract: true
-  description: A miserable pile of slime.
   components:
   - type: Hunger
   - type: Thirst

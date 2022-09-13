@@ -41,8 +41,11 @@ namespace Content.Shared.Damage
 
             foreach (var damage in damageSpecifier.DamageDict)
             {
-                msg.PushNewline();
-                msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
+                if (damage.Value != FixedPoint2.Zero)
+                {
+                    msg.PushNewline();
+                    msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
+                }
             }
 
             return msg;

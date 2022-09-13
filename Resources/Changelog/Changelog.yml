@@ -1,141 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Added a basic fireball spell, soon to be used.', type: Add}
-  id: 1770
-  time: '2022-06-23T10:24:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix ghost radios., type: Fix}
-  - {message: Adjusted radio colours., type: Tweak}
-  id: 1771
-  time: '2022-06-23T10:48:26.0000000+00:00'
-- author: OldDanceJacket
-  changes:
-  - {message: Added lighthouse ACTUALLY, type: Add}
-  id: 1772
-  time: '2022-06-23T11:14:58.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nerf L6 again., type: Tweak}
-  id: 1773
-  time: '2022-06-23T11:24:36.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: 'Filters, mixers, pressure pumps and volume pumps now always appear
-      on when they''re enabled, not only when they''re transferring gas.', type: Tweak}
-  id: 1774
-  time: '2022-06-23T12:18:11.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Chat bubbles will no longer be offset in low-resolution high-scale modes.,
-    type: Fix}
-  id: 1775
-  time: '2022-06-23T12:23:23.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed an issue where disposals could get stuck pressurizing, type: Fix}
-  id: 1776
-  time: '2022-06-24T01:26:20.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the Fire Axe, a 9 TC Traitor weapon capable of setting opponents
-      on fire with a single strike.', type: Add}
-  id: 1777
-  time: '2022-06-24T01:27:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Barratry has received one last set of small tweaks and additions before
-      the big rework. Coming soon:tm:', type: Add}
-  id: 1778
-  time: '2022-06-24T01:49:23.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'Pills can now be dissolved into beakers. And, you can crack eggs into
-      bowls now! The future is now!', type: Add}
-  id: 1779
-  time: '2022-06-24T02:26:54.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Corpses are now circled by buzzing flies when they've started to rot.,
-    type: Add}
-  - {message: 'Do you know how heavy cows are? It''s wack. They''re expensive to transport,
-      and the cow crate price has been increased.', type: Tweak}
-  - {message: Freezer crates now stop rotting., type: Fix}
-  - {message: Rejuvenation properly removes rotting., type: Fix}
-  - {message: Body parts should gib from rotting for real this time., type: Fix}
-  id: 1780
-  time: '2022-06-24T08:20:52.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Credits & cargo points have been renamed to spacebucks., type: Tweak}
-  id: 1781
-  time: '2022-06-24T14:43:44.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Spacebucks now have an "S" on them rather than a "C" to be in line with
-      the new name., type: Tweak}
-  id: 1782
-  time: '2022-06-24T14:45:32.0000000+00:00'
-- author: Sammy Boy
-  changes:
-  - {message: Crates cannot eat you while buckled anymore!, type: Fix}
-  id: 1783
-  time: '2022-06-24T19:26:57.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Counters can now be vaulted again., type: Fix}
-  id: 1784
-  time: '2022-06-24T19:34:09.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Waystation now has jetpacks!, type: Add}
-  id: 1785
-  time: '2022-06-25T02:59:26.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Fire Axe now costs 10 TC and does less fire damage., type: Tweak}
-  id: 1786
-  time: '2022-06-25T05:27:14.0000000+00:00'
-- author: Sammy Boy
-  changes:
-  - {message: Nukies are fixed and should be able to spawn in again!, type: Fix}
-  id: 1787
-  time: '2022-06-26T00:00:45.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Miasma poison damage no longer scales by amount. This is a massive reduction
-      in niche situations where an ungodly amount of miasma is on a tile., type: Tweak}
-  - {message: Most mobs' miasma generation reduced by ~30%., type: Tweak}
-  - {message: Cow miasma generation reduced by ~55%., type: Tweak}
-  id: 1788
-  time: '2022-06-26T02:04:40.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Evac shuttle has been added for round ends now., type: Add}
-  id: 1789
-  time: '2022-06-26T05:20:45.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The quartermaster is now a head (The only difference is they can now
-      enter the bridge. that's it. The game already considered them a head in every
-      other way.), type: Tweak}
-  id: 1790
-  time: '2022-06-26T06:22:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nukies now no longer get the Common channel., type: Tweak}
-  id: 1791
-  time: '2022-06-26T07:21:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Adjusted the shuttle authorization colours to be more alarming., type: Tweak}
-  - {message: Fix the emergency shuttle notif not going off on early launch by admins.,
-    type: Fix}
-  - {message: Shuttle doors will now also try to close when going to hyperspace.,
-    type: Tweak}
-  id: 1792
-  time: '2022-06-26T08:19:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: It's no longer possible to melee yourself., type: Tweak}
@@ -2930,3 +2793,130 @@ Entries:
   - {message: Nuclear disk pinpointer should be working again., type: Fix}
   id: 2269
   time: '2022-09-10T08:49:02.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Windoors will now stay open if you open them by clicking., type: Tweak}
+  id: 2270
+  time: '2022-09-10T21:48:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix minimum rotation speed for eye lerping., type: Fix}
+  id: 2271
+  time: '2022-09-10T21:51:41.0000000+00:00'
+- author: WPRobson
+  changes:
+  - {message: Added charcoal into the game. Heals poison damage and removes chemicals
+      from the bloodstream, type: Add}
+  id: 2272
+  time: '2022-09-10T23:20:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a sussy lil friend to the station., type: Add}
+  id: 2273
+  time: '2022-09-11T00:08:17.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: Pipes with high pressure will warn you when unachoring them and take
+      slightly longer., type: Fix}
+  id: 2274
+  time: '2022-09-11T06:30:10.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Melee weapons that change damage now show their damage correctly., type: Fix}
+  - {message: Syndicate E-pens is no longer shown to be a weapon upon examination.,
+    type: Fix}
+  id: 2275
+  time: '2022-09-11T06:39:37.0000000+00:00'
+- author: LordEclipse
+  changes:
+  - {message: 'The job icon displayed for Quartermaster has been changed to a command
+      blue, to better represent where they stand on the station!', type: Tweak}
+  id: 2276
+  time: '2022-09-11T06:40:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Slipping should feel nicer., type: Fix}
+  id: 2277
+  time: '2022-09-11T06:49:10.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added some more networking options to the options window., type: Add}
+  id: 2278
+  time: '2022-09-11T06:52:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed missing text in the uplink withdraw menu, type: Fix}
+  - {message: Fixed uplinks being able to brick themselves if currency was inserted
+      into them before it was opened., type: Fix}
+  id: 2279
+  time: '2022-09-11T06:54:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gave Miasma a slightly spookier palette., type: Tweak}
+  id: 2280
+  time: '2022-09-11T07:00:43.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring will now ignore non-hard physics bodies., type: Fix}
+  id: 2281
+  time: '2022-09-11T09:19:27.0000000+00:00'
+- author: och
+  changes:
+  - {message: Examining people tells you their pronouns and approximate age, type: Add}
+  id: 2282
+  time: '2022-09-11T14:45:40.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Artifacts fits into artifact storage again, type: Fix}
+  id: 2283
+  time: '2022-09-11T22:24:00.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Gas recyclers can now convert waste carbon dioxide and nitrous oxide
+      into breathable gases., type: Add}
+  id: 2284
+  time: '2022-09-11T23:02:01.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Hot coffee and tea sprites show liquid level, type: Tweak}
+  id: 2285
+  time: '2022-09-12T03:53:48.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: We have changed to the old airlock models with that soul sound some
+      people recognize., type: Add}
+  id: 2286
+  time: '2022-09-12T05:55:08.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Locks on cabinets actually work., type: Fix}
+  id: 2287
+  time: '2022-09-12T16:42:55.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The fallback gamemode should something happen is now extended, not
+      sandbox.', type: Fix}
+  - {message: Removed fun!, type: Remove}
+  id: 2288
+  time: '2022-09-13T01:47:59.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Handheld radios can now receive messages properly, type: Fix}
+  id: 2289
+  time: '2022-09-13T03:32:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Clumsy for clowns has been fixed again., type: Fix}
+  id: 2290
+  time: '2022-09-13T13:52:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Clowns bonking on a table no longer get free movement., type: Fix}
+  id: 2291
+  time: '2022-09-13T13:53:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Split Station major update. New medbay, new bar and other misc changes
+      across the board.', type: Tweak}
+  id: 2292
+  time: '2022-09-13T14:26:16.0000000+00:00'
