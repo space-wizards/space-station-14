@@ -181,7 +181,11 @@ namespace Content.Server.Lathe
 
             TryComp<LatheProducingComponent>(uid, out var prodComp);
 
-            var state = new LatheUpdateState(GetAvailableRecipes(component), component.Queue, prodComp?.Recipe);
+            var materials = TryComp<MaterialStorageComponent>(uid, out var mat)
+                ? mat.Storage
+                : new Dictionary<string, int>();
+
+            var state = new LatheUpdateState(GetAvailableRecipes(component), component.Queue, materials, prodComp?.Recipe);
             _uiSys.SetUiState(ui, state);
         }
 

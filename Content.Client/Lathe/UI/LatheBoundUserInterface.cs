@@ -61,7 +61,7 @@ namespace Content.Client.Lathe.UI
                     if (_menu != null)
                         _menu.Recipes = msg.Recipes;
                     _menu?.PopulateRecipes(Owner.Owner);
-                    _menu?.PopulateMaterials(Owner.Owner);
+                    _menu?.PopulateMaterials(msg.Materials);
                     _queueMenu?.PopulateList(msg.Queue);
                     _queueMenu?.SetInfo(msg.CurrentlyProducing);
                     break;

@@ -83,15 +83,11 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeQueueAction?.Invoke(Recipes[args.ItemIndex], quantity);
     }
 
-    public void PopulateMaterials(EntityUid lathe)
+    public void PopulateMaterials(Dictionary<string, int> materials)
     {
         Materials.Clear();
 
-        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materialStorageComponent))
-            return;
-
-
-        foreach (var (id, amount) in materialStorageComponent.Storage)
+        foreach (var (id, amount) in materials)
         {
             if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
                 continue;
