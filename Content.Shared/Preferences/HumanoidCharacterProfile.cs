@@ -119,13 +119,16 @@ namespace Content.Shared.Preferences
                 new List<string>());
         }
 
-        public static HumanoidCharacterProfile Random()
+        public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var species = random.Pick(prototypeManager
-                .EnumeratePrototypes<SpeciesPrototype>().Where(x => x.RoundStart).ToArray()).ID;
+                .EnumeratePrototypes<SpeciesPrototype>()
+                .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
+                .ToArray()
+            ).ID;
             var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 

@@ -22,7 +22,8 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
             return;
         }
 
-        var profile = HumanoidCharacterProfile.Random();
+        var profile = HumanoidCharacterProfile.Random(component.IgnoredSpecies);
+
         _humanoid.LoadProfile(uid, profile);
 
         if (component.RandomizeName)
