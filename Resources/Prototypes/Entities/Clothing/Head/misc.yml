@@ -156,9 +156,9 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatCthulhu
-  name: Cthulhu Mask
-  description: Tell everyone about your lord and savior Cthulhu.
+  id: ClothingHeadHatEldritchMask
+  name: Eldritch Mask
+  description: You are strangely drawn to this novelty hat.
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/cthulhu.rsi
