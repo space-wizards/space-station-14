@@ -265,12 +265,13 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void Label(EntityUid ent, string label)
         {
-            if (label == "") return;
+            if (string.IsNullOrEmpty(label)) 
+                return;
             var labelComponent = EnsureComp<LabelComponent>(ent);
             
             labelComponent.OriginalName = Name(ent);
             var val = Name(ent) + $" ({label})";
-            Comp<MetaDataComponent>(ent).EntityName = val;
+            MetaData(ent).EntityName = val;
             labelComponent.CurrentLabel = label;
         }
 
