@@ -21,6 +21,7 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
+  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: ShowDebugMonitors
   type: Toggle
   key: F3
@@ -193,11 +194,6 @@ binds:
 - function: ReleasePulledObject
   type: State
   key: H
-- function: OpenContextMenu
-  type: State
-  key: MouseRight
-  canFocus: true
-  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: OpenCraftingMenu
   type: State
   key: G
