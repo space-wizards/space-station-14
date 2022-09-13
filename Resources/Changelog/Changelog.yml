@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Miasma poison damage no longer scales by amount. This is a massive reduction
-      in niche situations where an ungodly amount of miasma is on a tile., type: Tweak}
-  - {message: Most mobs' miasma generation reduced by ~30%., type: Tweak}
-  - {message: Cow miasma generation reduced by ~55%., type: Tweak}
-  id: 1788
-  time: '2022-06-26T02:04:40.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Evac shuttle has been added for round ends now., type: Add}
@@ -2926,3 +2918,10 @@ Entries:
   - {message: Locks on cabinets actually work., type: Fix}
   id: 2287
   time: '2022-09-12T16:42:55.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The fallback gamemode should something happen is now extended, not
+      sandbox.', type: Fix}
+  - {message: Removed fun!, type: Remove}
+  id: 2288
+  time: '2022-09-13T01:47:59.0000000+00:00'
