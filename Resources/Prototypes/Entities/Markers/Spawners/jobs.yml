@@ -210,7 +210,7 @@
   name: lawyer
   components:
   - type: SpawnPoint
-    job_id: Lawyer
+    job_id: IAA # Lawyers was replaced with IAA
   - type: Sprite
     layers:
       - state: green
@@ -431,7 +431,7 @@
     layers:
       - state: green
       - state: ertleader
-      
+
 - type: entity
   id: SpawnPointERTEngineer
   parent: SpawnPointJobBase
@@ -443,7 +443,7 @@
     layers:
       - state: green
       - state: ertengineer
-      
+
 - type: entity
   id: SpawnPointERTMedical
   parent: SpawnPointJobBase
@@ -455,7 +455,7 @@
     layers:
       - state: green
       - state: ertmedical
-      
+
 - type: entity
   id: SpawnPointERTSecurity
   parent: SpawnPointJobBase
@@ -467,7 +467,7 @@
     layers:
       - state: green
       - state: ertsecurity
-      
+
 - type: entity
   id: SpawnPointERTJanitor
   parent: SpawnPointJobBase

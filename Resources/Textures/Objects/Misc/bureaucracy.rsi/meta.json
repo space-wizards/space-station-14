@@ -127,6 +127,9 @@
       "name": "paper_stamp-deny"
     },
     {
+      "name": "paper_stamp-approve"
+    },
+    {
       "name": "paper_stamp-hop"
     },
     {
@@ -209,7 +212,7 @@
     },
     {
       "name": "pen_hop"
-    },      
+    },
 	{
       "name": "overpriced_pen"
     },

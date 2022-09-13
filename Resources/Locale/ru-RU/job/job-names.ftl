@@ -38,6 +38,8 @@ job-name-ertengineer = инженер ОБР
 job-name-ertsecurity = офицер безопасности ОБР
 job-name-ertmedic = медик ОБР
 job-name-ertjanitor = уборщик ОБР
+job-name-iaa = агент внутренних дел
+
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = атмосферный техник
 JobSalvageSpecialist = утилизатор

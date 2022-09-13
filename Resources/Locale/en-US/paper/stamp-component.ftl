@@ -15,3 +15,4 @@ stamp-component-stamped-name-warden = Warden
 stamp-component-stamped-name-trader = Trader
 stamp-component-stamped-name-syndicate = Syndicate
 stamp-component-stamped-name-ce = Chief Engineer
+stamp-component-stamped-name-iaa = Internal affairs agent
