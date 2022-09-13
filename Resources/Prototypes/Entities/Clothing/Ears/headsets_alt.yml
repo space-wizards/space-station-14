@@ -9,8 +9,30 @@
   - type: Sprite
     state: icon_alt
   - type: Clothing
+    equippedPrefix: alt
     slots:
     - ears
+
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltCentCom
+  name: CentCom overear-headset
+  components:
+    - type: Headset
+      channels:
+      - Common
+      - Command
+      - CentCom
+      - Engineering
+      - Medical
+      - Science
+      - Security
+      - Service
+      - Supply
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/centcom.rsi
+    - type: Clothing
+      sprite: Clothing/Ears/Headsets/centcom.rsi
 
 - type: entity
   parent: ClothingHeadsetAlt
