@@ -1,0 +1,13 @@
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetIAA
+  name: iaa headset
+  description: A headset for internal affairs agent to hear the captain's last words.
+  components:
+    - type: Headset
+      channels:
+        - Common
+        - Command
+        - Security
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/servicesecurity.rsi

@@ -27,5 +27,5 @@
     shoes: ClothingShoesColorBlack
     id: IAAPDA
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetCommand
+    ears: ClothingHeadsetIAA
     # TODO add copy of space law
