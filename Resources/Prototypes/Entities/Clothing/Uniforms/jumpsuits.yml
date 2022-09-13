@@ -207,7 +207,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/engineering_hazard.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/engineering_hazard.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoP
@@ -844,3 +844,15 @@
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerGood
+  name: good lawyer's suit
+  description: A tacky suit perfect for a CRIMINAL lawyer!
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
+

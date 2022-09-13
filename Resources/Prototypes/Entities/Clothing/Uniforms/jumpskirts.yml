@@ -596,3 +596,14 @@
       sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtLawyerGood
+  name: good lawyer's suitskirt
+  description: A tacky suitskirt perfect for a CRIMINAL lawyer!
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
