@@ -1,27 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Waystation now has jetpacks!, type: Add}
-  id: 1785
-  time: '2022-06-25T02:59:26.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Fire Axe now costs 10 TC and does less fire damage., type: Tweak}
-  id: 1786
-  time: '2022-06-25T05:27:14.0000000+00:00'
-- author: Sammy Boy
-  changes:
-  - {message: Nukies are fixed and should be able to spawn in again!, type: Fix}
-  id: 1787
-  time: '2022-06-26T00:00:45.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Miasma poison damage no longer scales by amount. This is a massive reduction
-      in niche situations where an ungodly amount of miasma is on a tile., type: Tweak}
-  - {message: Most mobs' miasma generation reduced by ~30%., type: Tweak}
-  - {message: Cow miasma generation reduced by ~55%., type: Tweak}
-  id: 1788
-  time: '2022-06-26T02:04:40.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Evac shuttle has been added for round ends now., type: Add}
@@ -2925,3 +2902,26 @@ Entries:
       into breathable gases., type: Add}
   id: 2284
   time: '2022-09-11T23:02:01.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Hot coffee and tea sprites show liquid level, type: Tweak}
+  id: 2285
+  time: '2022-09-12T03:53:48.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: We have changed to the old airlock models with that soul sound some
+      people recognize., type: Add}
+  id: 2286
+  time: '2022-09-12T05:55:08.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Locks on cabinets actually work., type: Fix}
+  id: 2287
+  time: '2022-09-12T16:42:55.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The fallback gamemode should something happen is now extended, not
+      sandbox.', type: Fix}
+  - {message: Removed fun!, type: Remove}
+  id: 2288
+  time: '2022-09-13T01:47:59.0000000+00:00'

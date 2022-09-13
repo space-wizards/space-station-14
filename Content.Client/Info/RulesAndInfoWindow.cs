@@ -1,5 +1,4 @@
-using Content.Client.EscapeMenu.UI;
-using Content.Shared.CCVar;
+using Content.Client.Options.UI;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

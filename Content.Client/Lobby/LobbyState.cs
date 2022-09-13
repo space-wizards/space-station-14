@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
-using Content.Client.EscapeMenu.UI;
+using Content.Client.Options.UI;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
