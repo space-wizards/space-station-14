@@ -94,6 +94,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_solutionContainerSystem.TryGetSolution(food.Owner, food.SolutionName, out var foodSolution))
                 return false;
 
+            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(food.Owner, user, foodSolution);
+
             if (food.UsesRemaining <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("food-system-try-use-food-is-empty",
@@ -125,7 +127,6 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             var moveBreak = user != target;
-            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(food.Owner, user, foodSolution);
 
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay, food.CancelToken.Token, target, food.Owner)
             {
