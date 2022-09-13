@@ -103,6 +103,12 @@ public sealed partial class GunSystem : SharedGunSystem
                             shotProjectiles.Add(uid);
                         }
 
+                        //signal ChemicalAmmo to transfer solution
+                        RaiseLocalEvent(cartridge.Owner, new AmmoShotEvent()
+                        {
+                            FiredProjectiles = shotProjectiles,
+                        }, false);
+
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
                         PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
