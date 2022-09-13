@@ -84,6 +84,6 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, component.Target);
+        _melee.AttemptLightAttack(component.Owner, weapon, component.Target);
     }
 }

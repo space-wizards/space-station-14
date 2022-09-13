@@ -84,11 +84,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var interactHand = false;
             await server.WaitAssertion(() =>
             {
-                testInteractionSystem.AttackEvent    = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(target)); attack = true; };
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
-                interactionSystem.DoAttack(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, false, target);
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(attack);
                 Assert.That(interactUsing, Is.False);
@@ -150,11 +148,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var interactHand = false;
             await server.WaitAssertion(() =>
             {
-                testInteractionSystem.AttackEvent    = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(target)); attack = true; };
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
-                interactionSystem.DoAttack(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, false, target);
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(attack, Is.False);
                 Assert.That(interactUsing, Is.False);
@@ -214,11 +210,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var interactHand = false;
             await server.WaitAssertion(() =>
             {
-                testInteractionSystem.AttackEvent    = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(target)); attack = true; };
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
-                interactionSystem.DoAttack(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, false, target);
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(attack);
                 Assert.That(interactUsing, Is.False);
@@ -279,11 +273,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var interactHand = false;
             await server.WaitAssertion(() =>
             {
-                testInteractionSystem.AttackEvent    = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(target)); attack = true; };
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
-                interactionSystem.DoAttack(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, false, target);
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(attack, Is.False);
                 Assert.That(interactUsing, Is.False);
@@ -353,17 +345,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(container.Insert(user));
                 Assert.That(sEntities.GetComponent<TransformComponent>(user).Parent.Owner, Is.EqualTo(containerEntity));
 
-                testInteractionSystem.AttackEvent     = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); attack = true; };
                 testInteractionSystem.InteractUsingEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent     = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactHand = true; };
 
-                interactionSystem.DoAttack(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, false, target);
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(attack, Is.False);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
-                interactionSystem.DoAttack(user, sEntities.GetComponent<TransformComponent>(containerEntity).Coordinates, false, containerEntity);
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(containerEntity).Coordinates, containerEntity);
                 Assert.That(attack);
                 Assert.That(interactUsing, Is.False);
@@ -384,14 +373,12 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Reflect(false)]
         public sealed class TestInteractionSystem : EntitySystem
         {
-            public ComponentEventHandler<HandsComponent, ClickAttackEvent>? AttackEvent;
             public EntityEventHandler<InteractUsingEvent>? InteractUsingEvent;
             public EntityEventHandler<InteractHandEvent>? InteractHandEvent;
 
             public override void Initialize()
             {
                 base.Initialize();
-                SubscribeLocalEvent<HandsComponent, ClickAttackEvent>((u, c, e) => AttackEvent?.Invoke(u, c, e));
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractHandEvent>((e) => InteractHandEvent?.Invoke(e));
             }

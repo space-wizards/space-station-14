@@ -189,6 +189,22 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return null;
     }
 
+    public void AttemptLightAttack(EntityUid user, MeleeWeaponComponent weapon, EntityUid target)
+    {
+        if (!TryComp<TransformComponent>(target, out var targetXform))
+            return;
+
+        AttemptAttack(user, weapon, new LightAttackEvent(target, weapon.Owner, targetXform.Coordinates));
+    }
+
+    public void AttemptDisarmAttack(EntityUid user, MeleeWeaponComponent weapon, EntityUid target)
+    {
+        if (!TryComp<TransformComponent>(target, out var targetXform))
+            return;
+
+        AttemptAttack(user, weapon, new DisarmAttackEvent(target, targetXform.Coordinates));
+    }
+
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>

@@ -1,18 +1,10 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Weapons.Melee;
-using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -31,10 +23,7 @@ namespace Content.Server.Interaction
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!;
-
 
         public override void Initialize()
         {
@@ -130,21 +119,6 @@ namespace Content.Server.Interaction
         }
         #endregion
 
-        /// <summary>
-        /// Entity will try and use their active hand at the target location.
-        /// Don't use for players
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="coords"></param>
-        /// <param name="uid"></param>
-        internal void AiUseInteraction(EntityUid entity, EntityCoordinates coords, EntityUid uid)
-        {
-            if (HasComp<ActorComponent>(entity))
-                throw new InvalidOperationException();
-
-            UserInteraction(entity, coords, uid);
-        }
-
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
@@ -166,83 +140,6 @@ namespace Content.Server.Interaction
                 return false;
 
             return _pullSystem.TogglePull(userEntity.Value, pull);
-        }
-
-        public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (!ValidateInteractAndFace(user, coordinates))
-                return;
-
-            // Check general interaction blocking.
-            if (!_actionBlockerSystem.CanInteract(user, target))
-                return;
-
-            // Check combat-specific action blocking.
-            if (!_actionBlockerSystem.CanAttack(user, target))
-                return;
-
-            if (!wideAttack)
-            {
-                // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (target != null && !Deleted(target.Value) && !ContainerSystem.IsInSameOrParentContainer(user, target.Value) && !CanAccessViaStorage(user, target.Value))
-                {
-                    Logger.WarningS("system.interaction",
-                        $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");
-                    return;
-                }
-
-                // TODO: Replace with body attack range when we get something like arm length or telekinesis or something.
-                var unobstructed = (target == null)
-                    ? InRangeUnobstructed(user, coordinates)
-                    : InRangeUnobstructed(user, target.Value);
-
-                if (!unobstructed)
-                    return;
-            }
-            else if (ContainerSystem.IsEntityInContainer(user))
-            {
-                // No wide attacking while in containers (holos, lockers, etc).
-                // Can't think of a valid case where you would want this.
-                return;
-            }
-
-            // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (TryComp(user, out HandsComponent? hands))
-            {
-                var item = hands.ActiveHandEntity;
-
-                if (!Deleted(item))
-                {
-                    var meleeVee = new MeleeAttackAttemptEvent();
-                    RaiseLocalEvent(item.Value, ref meleeVee, true);
-
-                    if (meleeVee.Cancelled) return;
-
-                    if (wideAttack)
-                    {
-                        var ev = new WideAttackEvent(item.Value, user, coordinates);
-                        RaiseLocalEvent(item.Value, ev, false);
-
-                        if (ev.Handled)
-                            return;
-                    }
-                    else
-                    {
-                        var ev = new ClickAttackEvent(item.Value, user, coordinates, target);
-                        RaiseLocalEvent(item.Value, ev, false);
-
-                        if (ev.Handled)
-                            return;
-                    }
-                }
-                else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
-                {
-                    // We pick up items if our hand is empty, even if we're in combat mode.
-                    InteractHand(user, target.Value);
-                    return;
-                }
-            }
         }
     }
 }
