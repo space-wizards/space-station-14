@@ -178,7 +178,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         foreach (var (id, marking) in _markingPrototypeCache)
         {
-            var item = MarkingList.AddItem(id, marking.Sprites[0].Frame0());
+            var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), marking.Sprites[0].Frame0());
             item.Metadata = marking.ID;
 
             if (_markings[Slot].MarkingId == id)
