@@ -142,8 +142,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // BONK!
 
         _audioSystem.PlayPvs(component.BonkSound, component.Owner);
-
-        _stunSystem.TryKnockdown(user, TimeSpan.FromSeconds(component.BonkTime), true);
+        _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(component.BonkTime), true);
 
         if (component.BonkDamage is { } bonkDmg)
             _damageableSystem.TryChangeDamage(user, bonkDmg, true);
