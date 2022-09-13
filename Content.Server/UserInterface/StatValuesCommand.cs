@@ -36,8 +36,8 @@ public sealed class StatValuesCommand : IConsoleCommand
 
         switch (args[0])
         {
-            case "cargo":
-                message = GetCargo(compFactory, protoManager);
+            case "melee":
+                message = GetMelee(compFactory, protoManager);
                 break;
             default:
                 shell.WriteError($"{args[0]} is not a valid stat!");
@@ -50,7 +50,7 @@ public sealed class StatValuesCommand : IConsoleCommand
         eui.SendMessage(message);
     }
 
-    private StatValuesEuiMessage GetCargo( IComponentFactory compFactory, IPrototypeManager protoManager)
+    private StatValuesEuiMessage GetMelee(IComponentFactory compFactory, IPrototypeManager protoManager)
     {
         var values = new List<string[]>();
 
