@@ -1,13 +1,17 @@
 using System.Linq;
 using Content.Server.Damage.Systems;
 using Content.Server.Examine;
+using Content.Server.Interaction;
+using Content.Server.Interaction.Components;
 using Content.Server.Projectiles.Components;
+using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
 using Content.Server.Weapon.Ranged.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -26,12 +30,37 @@ public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly ExamineSystem _examine = default!;
+    [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
 
     public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
+    public const float GunClumsyChance = 0.5f;
 
     public override void Shoot(GunComponent gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
+        // Try a clumsy roll
+        if (TryComp<ClumsyComponent>(user, out var clumsy))
+        {
+            for (var i = 0; i < ammo.Count; i++)
+            {
+                if (_interaction.TryRollClumsy(user.Value, GunClumsyChance, clumsy))
+                {
+                    // Wound them
+                    Damageable.TryChangeDamage(user, clumsy.ClumsyDamage);
+                    _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
+
+                    // Apply salt to the wound ("Honk!")
+                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gun.Owner);
+                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/bikehorn.ogg"), gun.Owner);
+
+                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value, Filter.Pvs(user.Value, entityManager: EntityManager));
+                    Del(gun.Owner);
+                    return;
+                }
+            }
+        }
+
         var fromMap = fromCoordinates.ToMap(EntityManager);
         var toMap = toCoordinates.ToMapPos(EntityManager);
         var mapDirection = toMap - fromMap.Position;
