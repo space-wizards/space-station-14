@@ -57,18 +57,10 @@ public readonly struct MaterialEntityInsertedEvent
 /// </summary>
 public readonly struct MaterialAmountChangedEvent
 {
-    public readonly string Material;
 
-    public readonly int Amount;
-
-    public MaterialAmountChangedEvent(string material, int amount)
-    {
-        Material = material;
-        Amount = amount;
-    }
 }
 
-public struct GetMaterialWhitelistEvent
+public sealed class GetMaterialWhitelistEvent : EntityEventArgs
 {
     public readonly EntityUid Storage;
 

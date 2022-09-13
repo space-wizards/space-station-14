@@ -12,6 +12,7 @@ using Robust.Shared.Prototypes;
 using JetBrains.Annotations;
 using System.Linq;
 using Content.Server.Materials;
+using Content.Server.UserInterface;
 using Robust.Server.Player;
 
 namespace Content.Server.Lathe
@@ -33,11 +34,14 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
-            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
 
+            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
+
+            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
+            SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
         }
 
         public override void Update(float frameTime)
@@ -72,6 +76,8 @@ namespace Content.Server.Lathe
 
         private void OnGetWhitelist(EntityUid uid, LatheComponent component, GetMaterialWhitelistEvent args)
         {
+            if (args.Storage != uid)
+                return;
             var materialWhitelist = new List<string>();
             var recipes =  GetAllBaseRecipes(component);
             foreach (var id in recipes)
@@ -81,10 +87,14 @@ namespace Content.Server.Lathe
                 foreach (var (mat, _) in proto.RequiredMaterials)
                 {
                     if (!materialWhitelist.Contains(mat))
+                    {
                         materialWhitelist.Add(mat);
+                    }
                 }
             }
-            args.Whitelist = args.Whitelist.Union(materialWhitelist).ToList();
+
+            var combined = args.Whitelist.Union(materialWhitelist).ToList();
+            args.Whitelist = combined;
         }
 
         [PublicAPI]
@@ -124,7 +134,7 @@ namespace Content.Server.Lathe
 
             foreach (var (mat, amount) in recipe.RequiredMaterials)
             {
-                _materialStorage.TryChangeMaterialAmount(uid, mat, amount);
+                _materialStorage.TryChangeMaterialAmount(uid, mat, -amount);
             }
             component.Queue.Add(recipe);
 
@@ -145,27 +155,35 @@ namespace Content.Server.Lathe
             prodComp.Recipe = recipe;
             prodComp.TimeRemaining = (float) recipe.CompleteTime.TotalSeconds;
 
-            // Again, this should really just be a bui state instead of two separate messages.
-            _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheProducingRecipeMessage(recipe.ID));
-            //_uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue));
             _audio.PlayPvs(component.ProducingSound, component.Owner);
             UpdateRunningAppearance(uid, true);
             return true;
         }
 
-        private void FinishProducing(EntityUid uid, LatheComponent? comp = null, LatheProducingComponent? prodComp = null)
+        public void FinishProducing(EntityUid uid, LatheComponent? comp = null, LatheProducingComponent? prodComp = null)
         {
             if (!Resolve(uid, ref comp, ref prodComp))
                 return;
 
             if (prodComp.Recipe != null)
                 Spawn(prodComp.Recipe.Result, Transform(uid).Coordinates);
-            // TODO this should probably just be a BUI state, not a special message.
-            _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheStoppedProducingRecipeMessage());
             RemComp(prodComp.Owner, prodComp);
             UpdateRunningAppearance(uid, false);
+            UpdateUserInterfaceState(uid, comp);
         }
 
+        public void UpdateUserInterfaceState(EntityUid uid, LatheComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            var ui = _uiSys.GetUi(uid, LatheUiKey.Key);
+
+            TryComp<LatheProducingComponent>(uid, out var prodComp);
+
+            var state = new LatheUpdateState(GetAvailableRecipes(component), component.Queue, prodComp?.Recipe);
+            _uiSys.SetUiState(ui, state);
+        }
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
         {
@@ -235,37 +253,30 @@ namespace Content.Server.Lathe
             {
                 for (var i = 0; i < args.Quantity; i++)
                 {
-                    if (!TryAddToQueue(uid, recipe, component))
-                        return;
+                    TryAddToQueue(uid, recipe, component);
                 }
-
-                // Again: TODO this should be handled by BUI states
-                //_uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue));
             }
-
             TryStartProducing(uid, component);
+            UpdateUserInterfaceState(uid, component);
         }
 
         private void OnLatheSyncRequestMessage(EntityUid uid, LatheComponent component, LatheSyncRequestMessage args)
         {
-            // Again: TODO BUI states. Why TF was this was this ever two separate messages!?!?
-            //_uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheFullQueueMessage(component.Queue.));
-            if (TryComp(uid, out LatheProducingComponent? prodComp) && prodComp.Recipe != null)
-                _uiSys.TrySendUiMessage(uid, LatheUiKey.Key, new LatheProducingRecipeMessage(prodComp.Recipe.ID));
+            UpdateUserInterfaceState(uid, component);
         }
 
         private void OnLatheServerSelectionMessage(EntityUid uid, LatheComponent component, LatheServerSelectionMessage args)
         {
-            // TODO W.. b.. why?
-            // the client can just open the ui itself. why tf is it asking the server to open it for it.
-            _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+            // TODO: one day, when you can open BUIs clientside, do that. Until then, picture Electro seething.
+            if (component.DynamicRecipes != null)
+                _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
         }
 
         private void OnLatheServerSyncMessage(EntityUid uid, TechnologyDatabaseComponent component, LatheServerSyncMessage args)
         {
+            Logger.Debug("OnLatheServerSyncMessage");
             _researchSys.SyncWithServer(component);
-
-            //TODO: make the lathe ui update on sync if nothing has changed
+            UpdateUserInterfaceState(uid);
         }
 
         #endregion

@@ -18,6 +18,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
+    private readonly List<MaterialStorageComponent> _defferedMaterialChangeEvent = new();
+
     /// <summary>
     /// Gets the volume of a specified material contained in this storage.
     /// </summary>
@@ -105,8 +107,10 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             return false;
         if (!component.Storage.ContainsKey(materialId))
             component.Storage.Add(materialId, 0);
-        component.Storage[materialId] += volume; //TODO: make this event deffered so it doesn't spam the fuck out of ui
-        RaiseLocalEvent(component.Owner, new MaterialAmountChangedEvent(materialId, volume));
+        component.Storage[materialId] += volume;
+
+        if (!_defferedMaterialChangeEvent.Contains(component))
+            _defferedMaterialChangeEvent.Add(component);
         return true;
     }
 
@@ -191,5 +195,14 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             return;
         args.Handled = true;
         TryInsertMaterialEntity(args.Used, uid, component);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        foreach (var comp in _defferedMaterialChangeEvent)
+        {
+            RaiseLocalEvent(comp.Owner, new MaterialAmountChangedEvent());
+        }
     }
 }
