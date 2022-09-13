@@ -112,26 +112,7 @@ namespace Content.Server.Administration.Systems
                 oldMessage.messages += $"\n{message}";
             }
 
-            var payload = new WebhookPayload
-            {
-                Username = $"{oldMessage.username}{(oldMessage.characterName == null ? string.Empty : $" ({oldMessage.characterName})")}",
-                AvatarUrl = _avatarUrl,
-                Embeds = new List<Embed>
-                {
-                    new Embed
-                    {
-                        Description = oldMessage.messages,
-                        // If no admins are online, set embed color to red. Otherwise green
-                        Color = GetTargetAdmins().Count > 0 ? 0x41F097 : 0xFF0000,
-                        Footer = new EmbedFooter
-                        {
-                            // Limit server name to 1500 characters, in case someone tries to be a little funny
-                            Text = $"{_serverName[..Math.Min(_serverName.Length, 1500)]} (round {_gameTicker.RoundId})",
-                            IconUrl = _footerIconUrl,
-                        },
-                    },
-                },
-            };
+            var payload = GeneratePayload(oldMessage.messages, oldMessage.username, oldMessage.characterName);
 
             if (oldMessage.id == string.Empty)
             {
@@ -173,6 +154,41 @@ namespace Content.Server.Administration.Systems
             _relayMessages[channelId] = oldMessage;
 
             _processingChannels.Remove(channelId);
+        }
+
+        private WebhookPayload GeneratePayload(string messages, string username, string? characterName = null)
+        {
+            // Add character name
+            if (characterName != null)
+                username += $" ({characterName})";
+
+            // If no admins are online, set embed color to red. Otherwise green
+            var color = GetTargetAdmins().Count > 0 ? 0x41F097 : 0xFF0000;
+
+            // Limit server name to 1500 characters, in case someone tries to be a little funny
+            var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
+
+            // If the round ID is 0, it most likely means we are in the lobby
+            var round = _gameTicker.RoundId == 0 ? "lobby" : $"round {_gameTicker.RoundId}";
+
+            return new WebhookPayload
+            {
+                Username = username,
+                AvatarUrl = _avatarUrl,
+                Embeds = new List<Embed>
+                {
+                    new Embed
+                    {
+                        Description = messages,
+                        Color = color,
+                        Footer = new EmbedFooter
+                        {
+                            Text = $"{serverName} ({round})",
+                            IconUrl = _footerIconUrl,
+                        },
+                    },
+                },
+            };
         }
 
         public override void Update(float frameTime)
@@ -255,7 +271,7 @@ namespace Content.Server.Administration.Systems
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.ChannelId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel));
+                _messageQueues[msg.ChannelId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, admins.Count == 0));
             }
 
             if (admins.Count != 0)
@@ -278,10 +294,17 @@ namespace Content.Server.Administration.Systems
                .ToList();
         }
 
-        private static string GenerateAHelpMessage(string username, string message, bool admin)
+        private static string GenerateAHelpMessage(string username, string message, bool admin, bool noReceivers = false)
         {
             var stringbuilder = new StringBuilder();
-            stringbuilder.Append(admin ? ":outbox_tray:" : ":inbox_tray:");
+
+            if (admin)
+                stringbuilder.Append(":outbox_tray:");
+            else if (noReceivers)
+                stringbuilder.Append(":sos:");
+            else
+                stringbuilder.Append(":inbox_tray:");
+
             stringbuilder.Append($" **{username}:** ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();
