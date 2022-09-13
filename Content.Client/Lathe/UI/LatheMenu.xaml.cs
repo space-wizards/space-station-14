@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -27,6 +28,7 @@ public sealed partial class LatheMenu : DefaultWindow
     public event Action<string, int>? RecipeQueueAction;
 
     public List<string> Recipes = new();
+    private List<LatheRecipePrototype> _oldRecipesToShow = new();
 
     public LatheMenu(LatheBoundUserInterface owner)
     {
@@ -44,7 +46,7 @@ public sealed partial class LatheMenu : DefaultWindow
         };
         AmountLineEdit.OnTextChanged += _ =>
         {
-            PopulateRecipes(owner.Lathe);
+            SetRecipeCraftable(owner.Lathe);
         };
 
         // This is a shitty hack, because item lists apparently don't actually support tooltips. Yay..
@@ -72,33 +74,50 @@ public sealed partial class LatheMenu : DefaultWindow
         }
     }
 
-    public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
+    private void ItemSelected(ItemList.ItemListSelectedEventArgs args)
     {
         args.ItemList.HideTooltip();
         args.ItemList.ToolTip = args.ItemList[args.ItemIndex].TooltipText;
 
-        int.TryParse(AmountLineEdit.Text, out var quantity);
-        if (quantity <= 0)
+        if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
             quantity = 1;
         RecipeQueueAction?.Invoke(Recipes[args.ItemIndex], quantity);
     }
 
-    public void PopulateMaterials(Dictionary<string, int> materials)
+    public void PopulateMaterials(EntityUid lathe)
     {
-        Materials.Clear();
+        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
+            return;
 
-        foreach (var (id, amount) in materials)
+        Materials.Clear();
+        foreach (var (id, amount) in materials.Storage)
         {
             if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
                 continue;
             //TODO: loc string this bitch
             Materials.AddItem($"{material.Name} {amount} cm³", _spriteSystem.Frame0(material.Icon), false);
         }
+        SetRecipeCraftable(lathe);
     }
 
+    public void SetRecipeCraftable(EntityUid lathe)
+    {
+        if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
+            quantity = 1;
+
+        for (var i = 0; i < RecipeList.Count; i++)
+        {
+            var item = RecipeList[i];
+            item.Disabled = !_lathe.CanProduce(lathe, Recipes[i], quantity);
+        }
+    }
+
+    /// <summary>
+    /// Populates the list of all the recipes
+    /// </summary>
+    /// <param name="lathe"></param>
     public void PopulateRecipes(EntityUid lathe)
     {
-        RecipeList.Clear();
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
@@ -116,6 +135,14 @@ public sealed partial class LatheMenu : DefaultWindow
             }
         }
 
+        //don't redraw this list if it hasn't changed
+        if (recipesToShow.SequenceEqual(_oldRecipesToShow))
+        {
+            return;
+        }
+
+        RecipeList.Clear();
+        _oldRecipesToShow = recipesToShow;
         foreach (var prototype in recipesToShow)
         {
             var item = RecipeList.AddItem(prototype.Name, _spriteSystem.Frame0(prototype.Icon));
@@ -130,19 +157,15 @@ public sealed partial class LatheMenu : DefaultWindow
                 if (first)
                     first = false;
                 else
-                    sb.Append("\n");
+                    sb.Append('\n');
 
-                sb.Append(amount.ToString());
-                sb.Append(" ");
+                sb.Append(amount);
+                sb.Append(' ');
                 sb.Append(proto.Name);
             }
 
-            int.TryParse(AmountLineEdit.Text, out var quantity);
-            if (quantity <= 0)
-                quantity = 1;
-
             item.TooltipText = sb.ToString();
-            item.Disabled = !_lathe.CanProduce(lathe, prototype, quantity);
+            SetRecipeCraftable(lathe);
         }
     }
 }

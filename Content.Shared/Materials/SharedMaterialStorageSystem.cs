@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Materials;
 
@@ -16,9 +17,25 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
     }
 
     private readonly List<MaterialStorageComponent> _defferedMaterialChangeEvent = new();
+
+    private void OnGetState(EntityUid uid, MaterialStorageComponent component, ref ComponentGetState args)
+    {
+        args.State = new MaterialStorageComponentState(component.Storage, component.MaterialWhiteList);
+    }
+
+    private void OnHandleState(EntityUid uid, MaterialStorageComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not MaterialStorageComponentState state)
+            return;
+
+        component.Storage = state.Storage;
+        component.MaterialWhiteList = state.MaterialWhitelist;
+    }
 
     /// <summary>
     /// Gets the volume of a specified material contained in this storage.
@@ -111,6 +128,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
         if (!_defferedMaterialChangeEvent.Contains(component))
             _defferedMaterialChangeEvent.Add(component);
+        Dirty(component);
         return true;
     }
 

@@ -1,6 +1,7 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Materials;
@@ -69,5 +70,19 @@ public sealed class GetMaterialWhitelistEvent : EntityEventArgs
     public GetMaterialWhitelistEvent(EntityUid storage)
     {
         Storage = storage;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class MaterialStorageComponentState : ComponentState
+{
+    public Dictionary<string, int> Storage;
+
+    public List<string>? MaterialWhitelist;
+
+    public MaterialStorageComponentState(Dictionary<string, int> storage, List<string>? materialWhitelist)
+    {
+        Storage = storage;
+        MaterialWhitelist = materialWhitelist;
     }
 }

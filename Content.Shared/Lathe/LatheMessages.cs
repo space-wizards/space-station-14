@@ -12,14 +12,11 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
 
     public LatheRecipePrototype? CurrentlyProducing;
 
-    public Dictionary<string, int> Materials;
-
-    public LatheUpdateState(List<string> recipes, List<LatheRecipePrototype> queue, Dictionary<string, int> materials, LatheRecipePrototype? currentlyProducing = null)
+    public LatheUpdateState(List<string> recipes, List<LatheRecipePrototype> queue, LatheRecipePrototype? currentlyProducing = null)
     {
         Recipes = recipes;
         Queue = queue;
         CurrentlyProducing = currentlyProducing;
-        Materials = materials;
     }
 }
 

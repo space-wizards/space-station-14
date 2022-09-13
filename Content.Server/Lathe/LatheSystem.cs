@@ -157,6 +157,7 @@ namespace Content.Server.Lathe
 
             _audio.PlayPvs(component.ProducingSound, component.Owner);
             UpdateRunningAppearance(uid, true);
+            UpdateUserInterfaceState(uid, component);
             return true;
         }
 
@@ -181,11 +182,11 @@ namespace Content.Server.Lathe
 
             TryComp<LatheProducingComponent>(uid, out var prodComp);
 
-            var materials = TryComp<MaterialStorageComponent>(uid, out var mat)
-                ? mat.Storage
-                : new Dictionary<string, int>();
+            var producing = prodComp != null
+                ? prodComp.Recipe
+                : component.Queue.FirstOrDefault();
 
-            var state = new LatheUpdateState(GetAvailableRecipes(component), component.Queue, materials, prodComp?.Recipe);
+            var state = new LatheUpdateState(GetAvailableRecipes(component), component.Queue, producing);
             _uiSys.SetUiState(ui, state);
         }
 
