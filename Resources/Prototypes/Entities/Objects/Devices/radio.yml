@@ -20,4 +20,3 @@
   - type: Item
     sprite: Objects/Devices/communication.rsi
     heldPrefix: walkietalkie
-  - type: Speech
