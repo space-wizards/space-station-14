@@ -1,11 +1,6 @@
-using System.Collections.Generic;
-using Content.Client.Research.UI;
 using Content.Shared.Lathe;
-using Content.Shared.Materials;
-using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lathe.UI
 {

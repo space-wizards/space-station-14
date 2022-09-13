@@ -204,5 +204,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         {
             RaiseLocalEvent(comp.Owner, new MaterialAmountChangedEvent());
         }
+        _defferedMaterialChangeEvent.Clear();
     }
 }

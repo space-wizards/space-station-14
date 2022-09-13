@@ -13,12 +13,6 @@ public abstract class SharedLatheSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-
-    }
-
     [PublicAPI]
     public bool CanProduce(EntityUid uid, string recipe, int amount = 1, LatheComponent? component = null)
     {

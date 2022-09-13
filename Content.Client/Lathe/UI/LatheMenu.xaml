@@ -58,8 +58,7 @@
         <ItemList
             Name="RecipeList"
             SizeFlagsStretchRatio="8"
-            VerticalExpand="True"
-            SelectMode="Button">
+            VerticalExpand="True">
         </ItemList>
         <LineEdit
             Name="AmountLineEdit"
