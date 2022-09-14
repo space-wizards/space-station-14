@@ -15,7 +15,7 @@ namespace Content.Shared.Lathe
         public readonly List<string> StaticRecipes = new();
 
         /// <summary>
-        /// All of the recipes that the lathe is capaable of researching
+        /// All of the recipes that the lathe is capable of researching
         /// </summary>
         [DataField("dynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         public readonly List<string>? DynamicRecipes;
