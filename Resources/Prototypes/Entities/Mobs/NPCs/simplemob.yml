@@ -18,7 +18,7 @@
     rootTask: IdleCompound
   - type: Input
     context: "human"
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: MovementSpeedModifier
@@ -116,6 +116,7 @@
     preset: AnimalPreset
   - type: Examiner
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: bite

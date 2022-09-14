@@ -16,7 +16,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.3"
+        bounds: "-0.49,-0.49,0.49,-0.45"
       mass: 50
       mask:
       - TabletopMachineMask

@@ -25,7 +25,10 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using SharpZstd.Interop;
 
@@ -221,7 +224,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         return true;
     }
 
-    private void OnClimbEndCollide(EntityUid uid, ClimbingComponent component, EndCollideEvent args)
+    private void OnClimbEndCollide(EntityUid uid, ClimbingComponent component, ref EndCollideEvent args)
     {
         if (args.OurFixture.ID != ClimbingFixtureName
             || !component.IsClimbing

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Shuttles.Components;
 using NUnit.Framework;
@@ -6,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -17,6 +17,7 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
+            await server.WaitIdleAsync();
 
             var mapMan = server.ResolveDependency<IMapManager>();
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -29,8 +30,8 @@ namespace Content.IntegrationTests.Tests
                 var grid = mapMan.CreateGrid(mapId);
                 gridEnt = grid.GridEntityId;
 
-                Assert.That(sEntities.TryGetComponent(gridEnt, out ShuttleComponent? shuttleComponent));
-                Assert.That(sEntities.TryGetComponent(gridEnt, out PhysicsComponent? physicsComponent));
+                Assert.That(sEntities.HasComponent<ShuttleComponent>(gridEnt));
+                Assert.That(sEntities.TryGetComponent<PhysicsComponent>(gridEnt, out var physicsComponent));
                 Assert.That(physicsComponent!.BodyType, Is.EqualTo(BodyType.Dynamic));
                 Assert.That(sEntities.GetComponent<TransformComponent>(gridEnt).LocalPosition, Is.EqualTo(Vector2.Zero));
                 physicsComponent.ApplyLinearImpulse(Vector2.One);

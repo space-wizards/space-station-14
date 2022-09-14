@@ -114,7 +114,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("htnCompound");
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
-            _prototypeManager.RegisterIgnore("behaviorSet");
+            _prototypeManager.RegisterIgnore("faction");
             _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("advertisementsPack");
             _prototypeManager.RegisterIgnore("metabolizerType");

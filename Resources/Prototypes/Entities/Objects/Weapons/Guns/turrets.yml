@@ -72,6 +72,6 @@
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - Syndicate

@@ -29,6 +29,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         SubscribeLocalEvent<VehicleComponent, RefreshMovementSpeedModifiersEvent>(OnVehicleModifier);
         SubscribeLocalEvent<VehicleComponent, ComponentStartup>(OnVehicleStartup);
         SubscribeLocalEvent<VehicleComponent, RotateEvent>(OnVehicleRotate);
+
     }
 
     private void OnVehicleModifier(EntityUid uid, VehicleComponent component, RefreshMovementSpeedModifiersEvent args)
