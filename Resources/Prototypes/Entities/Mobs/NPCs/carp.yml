@@ -138,6 +138,8 @@
     - type: GhostTakeoverAvailable
       prob: 0.33
       name: space carp on salvage wreck
+      allowMovement: true
+      allowSpeech: true
       description: |
         Defend the loot inside the salvage wreck!
     - type: SalvageMobRestrictions
@@ -149,6 +151,8 @@
   parent: BaseMobCarp
   components:
     - type: GhostTakeoverAvailable
+      allowMovement: true
+      allowSpeech: true
       makeSentient: true
       name: Sentient Carp
       description: Help the dragon flood the station with carps!

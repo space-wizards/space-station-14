@@ -21,6 +21,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Doors.Systems;
 
@@ -256,7 +258,7 @@ public sealed class DoorSystem : SharedDoorSystem
     ///     Open a door if a player or door-bumper (PDA, ID-card) collide with the door. Sadly, bullets no longer
     ///     generate "access denied" sounds as you fire at a door.
     /// </summary>
-    protected override void HandleCollide(EntityUid uid, DoorComponent door, StartCollideEvent args)
+    protected override void HandleCollide(EntityUid uid, DoorComponent door, ref StartCollideEvent args)
     {
         // TODO ACCESS READER move access reader to shared and predict door opening/closing
         // Then this can be moved to the shared system without mispredicting.

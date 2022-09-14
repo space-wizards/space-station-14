@@ -30,6 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
 
 
 namespace Content.Server.Cloning.Systems

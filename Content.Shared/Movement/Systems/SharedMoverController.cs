@@ -17,6 +17,8 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -69,7 +71,7 @@ namespace Content.Shared.Movement.Systems
             InitializeRelay();
             _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
-            UpdatesBefore.Add(typeof(SharedTileFrictionController));
+            UpdatesBefore.Add(typeof(TileFrictionController));
         }
 
         private void SetRelativeMovement(bool value) => _relativeMovement = value;
