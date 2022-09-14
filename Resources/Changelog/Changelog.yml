@@ -2660,7 +2660,7 @@ Entries:
 - author: lapatison
   changes:
   - {message: CBURN equipment has been improved, type: Tweak}
-  - {message: new ERT\CBURN pda sprite added, type: Add}
+  - {message: new ERT/BURN pda sprite added, type: Add}
   id: 2248
   time: '2022-09-06T02:49:56.0000000+00:00'
 - author: Rane
