@@ -22,10 +22,13 @@ namespace Content.Client.LateJoin
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
         public event Action<(EntityUid, string)> SelectedId;
 
-        private readonly SpriteSystem _sprites = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
+        private readonly ClientGameTicker _gameTicker;
+        private readonly SpriteSystem _sprites;
+        private readonly CrewManifestSystem _crewManifest;
 
         private readonly Dictionary<EntityUid, Dictionary<string, JobButton>> _jobButtons = new();
         private readonly Dictionary<EntityUid, Dictionary<string, BoxContainer>> _jobCategories = new();
@@ -37,15 +40,16 @@ namespace Content.Client.LateJoin
         {
             MinSize = SetSize = (360, 560);
             IoCManager.InjectDependencies(this);
+            _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
+            _crewManifest = _entitySystem.GetEntitySystem<CrewManifestSystem>();
+            _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
 
-            var gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
             Title = Loc.GetString("late-join-gui-title");
 
             _base = new BoxContainer()
             {
                 Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
-                Margin = new Thickness(0),
             };
 
             Contents.AddChild(_base);
@@ -60,7 +64,7 @@ namespace Content.Client.LateJoin
                 Close();
             };
 
-            gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
+            _gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
         }
 
         private void RebuildUI()
@@ -70,17 +74,15 @@ namespace Content.Client.LateJoin
             _jobButtons.Clear();
             _jobCategories.Clear();
 
-            var gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
-            var tracker = IoCManager.Resolve<PlayTimeTrackingManager>();
-
-            if (!gameTicker.DisallowedLateJoin && gameTicker.StationNames.Count == 0)
+            if (!_gameTicker.DisallowedLateJoin && _gameTicker.StationNames.Count == 0)
                 Logger.Warning("No stations exist, nothing to display in late-join GUI");
 
-            foreach (var (id, name) in gameTicker.StationNames)
+            foreach (var (id, name) in _gameTicker.StationNames)
             {
                 var jobList = new BoxContainer
                 {
-                    Orientation = LayoutOrientation.Vertical
+                    Orientation = LayoutOrientation.Vertical,
+                    Margin = new Thickness(0, 0, 5f, 0),
                 };
 
                 var collapseButton = new ContainerButton()
@@ -125,8 +127,7 @@ namespace Content.Client.LateJoin
                     {
                         Text = Loc.GetString("crew-manifest-button-label")
                     };
-                    crewManifestButton.OnPressed += _ =>
-                        _entitySystem.GetEntitySystem<CrewManifestSystem>().RequestCrewManifest(id);
+                    crewManifestButton.OnPressed += _ => _crewManifest.RequestCrewManifest(id);
 
                     _base.AddChild(crewManifestButton);
                 }
@@ -161,7 +162,7 @@ namespace Content.Client.LateJoin
                     var departmentName = Loc.GetString($"department-{department.ID}");
                     _jobCategories[id] = new Dictionary<string, BoxContainer>();
                     _jobButtons[id] = new Dictionary<string, JobButton>();
-                    var stationAvailable = gameTicker.JobsAvailable[id];
+                    var stationAvailable = _gameTicker.JobsAvailable[id];
 
                     var category = new BoxContainer
                     {
@@ -232,7 +233,7 @@ namespace Content.Client.LateJoin
 
                         var jobLabel = new Label
                         {
-                            Margin = new Thickness(5f, 0f, 0f, 0f),
+                            Margin = new Thickness(5f, 0, 0, 0),
                             Text = value != null ?
                                 Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.LocalizedName), ("amount", value)) :
                                 Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.LocalizedName)),
@@ -244,7 +245,7 @@ namespace Content.Client.LateJoin
 
                         jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
 
-                        if (!tracker.IsAllowed(prototype, out var reason))
+                        if (!_playTimeTracking.IsAllowed(prototype, out var reason))
                         {
                             jobButton.Disabled = true;
 
@@ -284,7 +285,7 @@ namespace Content.Client.LateJoin
 
             if (disposing)
             {
-                _entitySystem.GetEntitySystem<ClientGameTicker>().LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
+                _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
                 _jobButtons.Clear();
                 _jobCategories.Clear();
             }
