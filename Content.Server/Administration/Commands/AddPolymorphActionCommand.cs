@@ -5,7 +5,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
-[AdminCommand(AdminFlags.Admin)]
+[AdminCommand(AdminFlags.Fun)]
 public sealed class AddPolymorphActionCommand : IConsoleCommand
 {
     public string Command => "addpolymorphaction";
