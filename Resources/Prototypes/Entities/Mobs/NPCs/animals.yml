@@ -54,6 +54,7 @@
   - type: ReplacementAccent
     accent: mouse
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -130,6 +131,7 @@
       autoPopulate: false
       name: action-name-disarm
   - type: MeleeWeapon
+    hidden: true
     range: 0.3
     arcwidth: 0
     arc: bite
@@ -141,7 +143,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Bloodstream
@@ -655,6 +657,7 @@
       Dead:
         Base: kangaroo-boxing-dead
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: claw
@@ -665,7 +668,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
 
@@ -1148,7 +1151,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - Syndicate
   - type: Sprite
@@ -1182,6 +1185,7 @@
     - id: FoodMeatPenguin
       amount: 3
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: bite
@@ -1305,7 +1309,7 @@
   id: MobGiantSpiderAngry
   suffix: Angry
   components:
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - Xeno
     - type: InputMover

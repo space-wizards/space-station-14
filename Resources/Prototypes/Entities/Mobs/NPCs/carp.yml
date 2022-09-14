@@ -9,7 +9,7 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - SimpleHostile
     - type: Sprite
@@ -65,6 +65,7 @@
         - id: FoodMeatFish
           amount: 2
     - type: MeleeWeapon
+      hidden: true
       range: 1.5
       arcwidth: 0
       arc: bite

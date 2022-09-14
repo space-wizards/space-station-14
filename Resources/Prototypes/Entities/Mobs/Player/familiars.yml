@@ -40,6 +40,7 @@
     description: Obey your master. Spread chaos.
     rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -49,7 +50,7 @@
         Slash: 7
   - type: InputMover
   - type: MobMover
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: InteractionPopup

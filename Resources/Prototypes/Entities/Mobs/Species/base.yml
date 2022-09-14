@@ -291,6 +291,7 @@
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon
+    hidden: true
     hitSound:
       collection: Punch
     range: 0.8

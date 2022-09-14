@@ -1,31 +1,4 @@
 Entries:
-- author: greenrock64
-  changes:
-  - {message: Fixed a server crash when slicing some raw meats., type: Fix}
-  id: 1801
-  time: '2022-06-27T04:00:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Syndicate Zombie Bundle has been removed from the Uplink., type: Remove}
-  id: 1802
-  time: '2022-06-27T04:05:12.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Removed starvation and thirst damage., type: Remove}
-  id: 1803
-  time: '2022-06-27T04:08:09.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Add missing mining & robotics headsets channels, type: Fix}
-  id: 1804
-  time: '2022-06-27T04:14:48.0000000+00:00'
-- author: ProfanedBane
-  changes:
-  - {message: 'The contents of trash bags can now be dumped into disposals with alt
-      click, you can then flush by alt clicking again', type: Add}
-  - {message: Cigars can now be picked up by trash bags, type: Tweak}
-  id: 1805
-  time: '2022-06-27T04:19:18.0000000+00:00'
 - author: Sammy Boy
   changes:
   - {message: Jetpacks will now turn off properly when the tank runs out of air!,
@@ -2923,3 +2896,30 @@ Entries:
       syndicate imposters., type: Add}
   id: 2300
   time: '2022-09-14T08:42:14.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: In-Character names now get proper casing automatically, type: Tweak}
+  id: 2301
+  time: '2022-09-14T09:50:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shooting at and shooting from vehicles now works as expected, type: Fix}
+  id: 2302
+  time: '2022-09-14T10:03:00.0000000+00:00'
+- author: themias
+  changes:
+  - {message: 'Trash bags can pick up empty booze bottles, empty ingredient packs,
+      and plastic plates', type: Tweak}
+  id: 2303
+  time: '2022-09-14T17:14:55.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Empty Fuel Tank wont explode., type: Add}
+  - {message: Fuel Tank explosion scales with remaining fuel., type: Add}
+  id: 2304
+  time: '2022-09-14T17:15:55.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: You can no longer examine players and other mobs melee damage., type: Fix}
+  id: 2305
+  time: '2022-09-14T17:17:24.0000000+00:00'

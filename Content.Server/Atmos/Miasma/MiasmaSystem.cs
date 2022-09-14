@@ -5,6 +5,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
+using Content.Shared.Rejuvenate;
 using Robust.Server.GameObjects;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -132,6 +133,7 @@ namespace Content.Server.Atmos.Miasma
             SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, BeingGibbedEvent>(OnGibbed);
             SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<RottingComponent, RejuvenateEvent>(OnRejuvenate);
             // Containers
             SubscribeLocalEvent<AntiRottingContainerComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<AntiRottingContainerComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
@@ -196,6 +198,11 @@ namespace Content.Server.Atmos.Miasma
                 >= 2 => "miasma-bloated",
                    _ => "miasma-rotting"};
             args.PushMarkup(Loc.GetString(description));
+        }
+
+        private void OnRejuvenate(EntityUid uid, RottingComponent component, RejuvenateEvent args)
+        {
+            EntityManager.RemoveComponentDeferred<RottingComponent>(uid);
         }
 
         /// Containers
