@@ -1,14 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Removed starvation and thirst damage., type: Remove}
-  id: 1803
-  time: '2022-06-27T04:08:09.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Add missing mining & robotics headsets channels, type: Fix}
-  id: 1804
-  time: '2022-06-27T04:14:48.0000000+00:00'
 - author: ProfanedBane
   changes:
   - {message: 'The contents of trash bags can now be dumped into disposals with alt
@@ -2923,3 +2913,15 @@ Entries:
   - {message: Shooting at and shooting from vehicles now works as expected, type: Fix}
   id: 2302
   time: '2022-09-14T10:03:00.0000000+00:00'
+- author: themias
+  changes:
+  - {message: 'Trash bags can pick up empty booze bottles, empty ingredient packs,
+      and plastic plates', type: Tweak}
+  id: 2303
+  time: '2022-09-14T17:14:55.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Empty Fuel Tank wont explode., type: Add}
+  - {message: Fuel Tank explosion scales with remaining fuel., type: Add}
+  id: 2304
+  time: '2022-09-14T17:15:55.0000000+00:00'
