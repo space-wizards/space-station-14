@@ -1558,7 +1558,12 @@
       "name": "television"
     },
     {
-      "name": "television_broken"
+      "name": "telescreen",
+      "directions": 4
+    },
+    {
+      "name": "telescreen_broken",
+      "directions": 4
     },
     {
       "name": "detective_television"

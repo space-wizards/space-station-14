@@ -38,7 +38,8 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Fiber
     fiberMaterial: fibers-synthetic
     fiberColor: fibers-black
@@ -159,7 +160,8 @@
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
@@ -173,7 +175,8 @@
   description: These gloves are cheap knockoffs of the coveted ones - no way this can end badly.
   components:
     - type: Clothing
-      HeatResistance: 0
+    - type: GloveHeatResistance
+      heatResistance: 0
     - type: Insulated
     - type: Fiber
       fiberMaterial: fibers-insulative

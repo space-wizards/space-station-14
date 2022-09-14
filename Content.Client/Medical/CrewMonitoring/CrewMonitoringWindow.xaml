@@ -1,6 +1,6 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'crew-monitoring-user-interface-title'}"
-            SetSize="450 400">
+            SetSize="775 400">
     <ScrollContainer HorizontalExpand="True"
                      VerticalExpand="True">
         <GridContainer Name="SensorsTable"

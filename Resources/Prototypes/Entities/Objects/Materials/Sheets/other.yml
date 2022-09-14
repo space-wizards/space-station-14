@@ -36,7 +36,7 @@
   - type: Sprite
     state: paper_3
   - type: Item
-    HeldPrefix: paper
+    heldPrefix: paper
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -70,7 +70,7 @@
   - type: Sprite
     state: plasma_3
   - type: Item
-    HeldPrefix: plasma
+    heldPrefix: plasma
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -120,7 +120,7 @@
   - type: Sprite
     state: plastic_3
   - type: Item
-    HeldPrefix: plastic
+    heldPrefix: plastic
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -154,7 +154,7 @@
   - type: Sprite
     state: uranium
   - type: Item
-    HeldPrefix: uranium
+    heldPrefix: uranium
   - type: Extractable
     grindableSolutionName: uranium
   - type: SolutionContainerManager

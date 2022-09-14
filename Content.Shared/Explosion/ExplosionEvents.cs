@@ -11,10 +11,9 @@ namespace Content.Shared.Explosion;
 public sealed class GetExplosionResistanceEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
-    ///     Can be set to whatever, but currently is being additively increased by components & clothing. So think twice
-    ///     before multiplying or directly setting this.
+    ///     A coefficient applied to overall explosive damage.
     /// </summary>
-    public float Resistance = 0;
+    public float DamageCoefficient = 1;
 
     public readonly string ExplotionPrototype;
 

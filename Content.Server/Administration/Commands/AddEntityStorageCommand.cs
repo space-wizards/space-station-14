@@ -1,4 +1,5 @@
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -33,9 +34,10 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (entityManager.TryGetComponent<EntityStorageComponent>(storageUid, out var storage))
+            if (entityManager.HasComponent<EntityStorageComponent>(storageUid) &&
+                entityManager.EntitySysManager.TryGetEntitySystem<EntityStorageSystem>(out var storageSys))
             {
-                storage.Insert(entityUid);
+                storageSys.Insert(entityUid, storageUid);
             }
             else
             {

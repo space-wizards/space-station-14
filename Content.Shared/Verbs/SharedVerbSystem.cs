@@ -24,6 +24,11 @@ namespace Content.Shared.Verbs
             if (user == null)
                 return;
 
+            // It is possible that client-side prediction can cause this event to be raised after the target entity has
+            // been deleted. So we need to check that the entity still exists.
+            if (Deleted(args.Target) || Deleted(user))
+                return;
+
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
             // the user can perform.
             var verbs = GetLocalVerbs(args.Target, user.Value, args.RequestedVerb.GetType());
@@ -58,8 +63,10 @@ namespace Content.Shared.Verbs
             bool canAccess = false;
             if (force || target == user)
                 canAccess = true;
-            else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target))
+            else if (_interactionSystem.InRangeUnobstructed(user, target))
             {
+                // Note that being in a container does not count as an obstruction for InRangeUnobstructed
+                // Therefore, we need extra checks to ensure the item is actually accessible: 
                 if (ContainerSystem.IsInSameOrParentContainer(user, target))
                     canAccess = true;
                 else

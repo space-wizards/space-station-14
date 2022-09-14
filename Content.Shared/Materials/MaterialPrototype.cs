@@ -1,6 +1,7 @@
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Materials
@@ -12,9 +13,11 @@ namespace Content.Shared.Materials
     [Prototype("material")]
     public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
+        private string _name = string.Empty;
+
         [ViewVariables]
-        [ParentDataField(typeof(AbstractPrototypeIdSerializer<MaterialPrototype>))]
-        public string? Parent { get; } = null;
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
+        public string[]? Parents { get; }
 
         [ViewVariables]
         [AbstractDataFieldAttribute]
@@ -30,7 +33,11 @@ namespace Content.Shared.Materials
 
         [ViewVariables]
         [DataField("name")]
-        public string Name { get; } = "unobtanium";
+        public string Name
+        {
+            get => _name;
+            private set => _name = Loc.GetString(value);
+        }
 
         [ViewVariables]
         [DataField("color")]

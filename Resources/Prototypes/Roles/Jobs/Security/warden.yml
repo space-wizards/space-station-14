@@ -1,9 +1,12 @@
 - type: job
   id: Warden
   name: job-name-warden
+  playTimeTracker: JobWarden
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 10800
   startingGear: WardenGear
-  departments:
-  - Security
   icon: "Warden"
   supervisors: job-supervisors-hos
   canBeAntag: false
@@ -13,6 +16,7 @@
   - Maintenance
   - Service
   - Brig
+  - External
 
 - type: startingGear
   id: WardenGear

@@ -13,8 +13,6 @@ namespace Content.Server.Nutrition.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private float _accumulatedFrameTime;
-
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
@@ -23,7 +21,7 @@ namespace Content.Server.Nutrition.Components
             set => _baseDecayRate = value;
         }
         [DataField("baseDecayRate")]
-        private float _baseDecayRate = 0.1f;
+        private float _baseDecayRate = 0.01666666666f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ActualDecayRate
@@ -52,18 +50,18 @@ namespace Content.Server.Nutrition.Components
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
         private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
-            { HungerThreshold.Overfed, 600.0f },
-            { HungerThreshold.Okay, 450.0f },
-            { HungerThreshold.Peckish, 300.0f },
-            { HungerThreshold.Starving, 150.0f },
+            { HungerThreshold.Overfed, 200.0f },
+            { HungerThreshold.Okay, 150.0f },
+            { HungerThreshold.Peckish, 100.0f },
+            { HungerThreshold.Starving, 50.0f },
             { HungerThreshold.Dead, 0.0f },
         };
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {
-            { HungerThreshold.Overfed, AlertType.Overfed },
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
+            { HungerThreshold.Dead, AlertType.Starving },
         };
 
         public void HungerThresholdEffect(bool force = false)
@@ -162,9 +160,6 @@ namespace Content.Server.Nutrition.Components
         {
             _currentHunger -= frametime * ActualDecayRate;
             UpdateCurrentThreshold();
-
-            if (_currentHungerThreshold != HungerThreshold.Dead)
-                return;
         }
 
         private void UpdateCurrentThreshold()

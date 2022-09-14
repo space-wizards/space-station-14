@@ -267,16 +267,8 @@ namespace Content.Client.Wires.UI
 
 
             _statusContainer.RemoveAllChildren();
-            var originalStatuses = new List<StatusEntry>(state.Statuses); // TODO: maybe not this way?
-            var shuffledStatuses = new List<StatusEntry>();
-            for (var i = originalStatuses.Count; i > 0; i--)
-            {
-                var index = random.Next(originalStatuses.Count);
-                shuffledStatuses.Add(originalStatuses[index]);
-                originalStatuses.RemoveAt(index);
-            }
 
-            foreach (var status in shuffledStatuses)
+            foreach (var status in state.Statuses)
             {
                 if (status.Value is StatusLightData statusLightData)
                 {

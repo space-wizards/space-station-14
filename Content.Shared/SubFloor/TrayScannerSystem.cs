@@ -64,7 +64,7 @@ public sealed class TrayScannerSystem : EntitySystem
         if (args.Current is not TrayScannerState state)
             return;
 
-        SetScannerEnabled(uid, scanner.Enabled, scanner);
+        SetScannerEnabled(uid, state.Enabled, scanner);
 
         // This is hacky and somewhat inefficient for the client. But when resetting predicted entities we have to unset
         // last position. This is because appearance data gets reset, but if the position isn't reset the scanner won't

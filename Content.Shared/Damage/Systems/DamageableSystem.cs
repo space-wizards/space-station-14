@@ -2,10 +2,12 @@ using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Radiation.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage
 {
@@ -19,6 +21,34 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
+        }
+
+        /// <summary>
+        /// Retrieves the damage examine values.
+        /// </summary>
+        public FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
+        {
+            var msg = new FormattedMessage();
+
+            if (string.IsNullOrEmpty(type))
+            {
+                msg.AddMarkup(Loc.GetString("damage-examine"));
+            }
+            else
+            {
+                msg.AddMarkup(Loc.GetString("damage-examine-type", ("type", type)));
+            }
+
+            foreach (var damage in damageSpecifier.DamageDict)
+            {
+                if (damage.Value != FixedPoint2.Zero)
+                {
+                    msg.PushNewline();
+                    msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
+                }
+            }
+
+            return msg;
         }
 
         /// <summary>
@@ -256,7 +286,7 @@ namespace Content.Shared.Damage
             int ent1DeadState = 0;
             foreach (var state in oldstate._highestToLowestStates)
             {
-                if (state.Value.IsDead())
+                if (state.Value == DamageState.Dead)
                 {
                     ent1DeadState = state.Key;
                 }
@@ -265,7 +295,7 @@ namespace Content.Shared.Damage
             int ent2DeadState = 0;
             foreach (var state in newstate._highestToLowestStates)
             {
-                if (state.Value.IsDead())
+                if (state.Value == DamageState.Dead)
                 {
                     ent2DeadState = state.Key;
                 }

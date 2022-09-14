@@ -9,7 +9,7 @@
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
         - state: fire_extinguisher_closed
-          map: [ "enum.FireExtinguisherVisualLayers.Base" ]
+          map: [ "enabled" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: 10
@@ -44,10 +44,12 @@
     hitSound:
       path: /Audio/Weapons/smash.ogg
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: FireExtinguisherVisualizer
-        safety_on_state: fire_extinguisher_closed
-        safety_off_state: fire_extinguisher_open
+      enum.FireExtinguisherVisuals.Safety:
+        enabled:
+          True: { state: fire_extinguisher_closed }
+          False: { state: fire_extinguisher_open }
 
 - type: entity
   name: extinguisher spray

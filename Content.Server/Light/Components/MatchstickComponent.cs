@@ -1,6 +1,6 @@
 using Content.Shared.Smoking;
-using Content.Shared.Sound;
 using Content.Server.Light.EntitySystems;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Light.Components
 {

@@ -1,7 +1,7 @@
 ﻿- type: entity
   save: false
   name: Vox
-  parent: MobVoxBase
+  parent: BaseMobVox
   id: MobVox
   components:
     - type: CombatMode
@@ -15,8 +15,8 @@
       showExamineInfo: true
     - type: Input
       context: "human"
-    - type: PlayerMobMover
-    - type: PlayerInputMover
+    - type: MobMover
+    - type: InputMover
     - type: Vocal
       maleScream: /Audio/Voice/Vox/shriek1.ogg
       femaleScream: /Audio/Voice/Vox/shriek1.ogg

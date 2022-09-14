@@ -43,6 +43,7 @@
   id: BaseGrenade
   name: base grenade
   parent: BaseItem
+  abstract: true
   components:
   - type: Tag
     tags:

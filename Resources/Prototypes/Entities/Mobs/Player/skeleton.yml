@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  parent: MobSkeletonPersonBase
+  parent: BaseMobSkeletonPerson
   id: MobSkeletonPerson
   components:
     - type: InteractionPopup
@@ -12,8 +12,8 @@
       showExamineInfo: true
     - type: Input
       context: "human"
-    - type: PlayerMobMover
-    - type: PlayerInputMover
+    - type: MobMover
+    - type: InputMover
     - type: Vocal
       maleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
       femaleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg

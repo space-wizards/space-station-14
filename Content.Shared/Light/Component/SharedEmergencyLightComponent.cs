@@ -24,5 +24,6 @@ namespace Content.Shared.Light.Component
     public enum EmergencyLightVisuals
     {
         On,
+        Color
     }
 }

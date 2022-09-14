@@ -178,7 +178,7 @@ namespace Content.Server.Mind
             _roles.Add(role);
             role.Greet();
 
-            var message = new RoleAddedEvent(role);
+            var message = new RoleAddedEvent(this, role);
             if (OwnedEntity != null)
             {
                 IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
@@ -203,7 +203,7 @@ namespace Content.Server.Mind
 
             _roles.Remove(role);
 
-            var message = new RoleRemovedEvent(role);
+            var message = new RoleRemovedEvent(this, role);
 
             if (OwnedEntity != null)
             {

@@ -6,31 +6,45 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunbaton.rsi
-    state: stunbaton_off
+    netsync: false
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
     energyPerUse: 100
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 5
+    bluntStaminaDamageFactor: 2.0
     range: 1.5
     arcwidth: 60
     arc: default
-  - type: UseDelay
-    delay: 4
+    cooldownTime: 1.5
+    arcCooldownTime: 1.5
+  - type: StaminaDamageOnHit
+    damage: 55
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
   - type: ItemCooldown
+  - type: Item
+    size: 20
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
-    HeldPrefix: off
+    heldPrefix: off
     quickEquip: false
-    size: 20
-    Slots:
+    slots:
     - Belt
   - type: DisarmMalus
     malus: 0.225
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: stunbaton_on}
+          False: {state: stunbaton_off}
 
 - type: entity
   name: flash
@@ -50,7 +64,7 @@
       arcWidth: 10
       arc: default
     - type: Item
-      size: 2
+      size: 5
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: ItemCooldown
 

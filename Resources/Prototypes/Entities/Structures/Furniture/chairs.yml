@@ -48,8 +48,6 @@
   components:
   - type: Transform
     anchored: true
-  - type: RandomMetadata
-    nameSet: chair
   - type: Anchorable
   - type: Rotatable
   - type: Sprite

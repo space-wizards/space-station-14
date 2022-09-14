@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -10,10 +11,26 @@ namespace Content.Server.GameTicking
     {
         // No duplicates.
         [ViewVariables] private readonly HashSet<GameRulePrototype> _addedGameRules = new();
-        public IEnumerable<GameRulePrototype> AddedGameRules => _addedGameRules;
+
+        /// <summary>
+        ///     Holds all currently added game rules.
+        /// </summary>
+        public IReadOnlySet<GameRulePrototype> AddedGameRules => _addedGameRules;
 
         [ViewVariables] private readonly HashSet<GameRulePrototype> _startedGameRules = new();
-        public IEnumerable<GameRulePrototype> StartedGameRules => _startedGameRules;
+
+        /// <summary>
+        ///     Holds all currently started game rules.
+        /// </summary>
+        public IReadOnlySet<GameRulePrototype> StartedGameRules => _startedGameRules;
+
+        [ViewVariables] private readonly List<(TimeSpan, GameRulePrototype)> _allPreviousGameRules = new();
+
+        /// <summary>
+        ///     A list storing the start times of all game rules that have been started this round.
+        ///     Game rules can be started and stopped at any time, including midround.
+        /// </summary>
+        public IReadOnlyList<(TimeSpan, GameRulePrototype)> AllPreviousGameRules => _allPreviousGameRules;
 
         private void InitializeGameRules()
         {
@@ -21,13 +38,15 @@ namespace Content.Server.GameTicking
             _consoleHost.RegisterCommand("addgamerule",
                 string.Empty,
                 "addgamerule <rules>",
-                AddGameRuleCommand);
+                AddGameRuleCommand,
+                AddGameRuleCompletions);
 
             // End game rule command.
             _consoleHost.RegisterCommand("endgamerule",
                 string.Empty,
                 "endgamerule <rules>",
-                EndGameRuleCommand);
+                EndGameRuleCommand,
+                EndGameRuleCompletions);
 
             // Clear game rules command.
             _consoleHost.RegisterCommand("cleargamerules",
@@ -49,8 +68,11 @@ namespace Content.Server.GameTicking
         /// </summary>
         public void StartGameRule(GameRulePrototype rule)
         {
-            if (!GameRuleAdded(rule))
+            if (!IsGameRuleAdded(rule))
                 AddGameRule(rule);
+
+            _allPreviousGameRules.Add((RoundDuration(), rule));
+            _sawmill.Info($"Started game rule {rule.ID}");
 
             if (_startedGameRules.Add(rule))
                 RaiseLocalEvent(new GameRuleStartedEvent(rule));
@@ -58,41 +80,43 @@ namespace Content.Server.GameTicking
 
         /// <summary>
         ///     Ends a game rule.
-        ///     This always includes removing it (removing it from added game rules) so that behavior
+        ///     This always includes removing it (from added game rules) so that behavior
         ///     is not separate from this.
         /// </summary>
         /// <param name="rule"></param>
         public void EndGameRule(GameRulePrototype rule)
         {
-            if (!GameRuleAdded(rule))
+            if (!IsGameRuleAdded(rule))
                 return;
 
             _addedGameRules.Remove(rule);
+            _sawmill.Info($"Ended game rule {rule.ID}");
 
-            if (GameRuleStarted(rule))
+            if (IsGameRuleStarted(rule))
                 _startedGameRules.Remove(rule);
             RaiseLocalEvent(new GameRuleEndedEvent(rule));
         }
 
         /// <summary>
         ///     Adds a game rule to the list, but does not
-        ///     start it yet, instead waiting until roundstart.
+        ///     start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
         /// </summary>
         public bool AddGameRule(GameRulePrototype rule)
         {
             if (!_addedGameRules.Add(rule))
                 return false;
 
+            _sawmill.Info($"Added game rule {rule.ID}");
             RaiseLocalEvent(new GameRuleAddedEvent(rule));
             return true;
         }
 
-        public bool GameRuleAdded(GameRulePrototype rule)
+        public bool IsGameRuleAdded(GameRulePrototype rule)
         {
             return _addedGameRules.Contains(rule);
         }
 
-        public bool GameRuleAdded(string rule)
+        public bool IsGameRuleAdded(string rule)
         {
             foreach (var ruleProto in _addedGameRules)
             {
@@ -103,12 +127,12 @@ namespace Content.Server.GameTicking
             return false;
         }
 
-        public bool GameRuleStarted(GameRulePrototype rule)
+        public bool IsGameRuleStarted(GameRulePrototype rule)
         {
             return _startedGameRules.Contains(rule);
         }
 
-        public bool GameRuleStarted(string rule)
+        public bool IsGameRuleStarted(string rule)
         {
             foreach (var ruleProto in _startedGameRules)
             {
@@ -142,10 +166,17 @@ namespace Content.Server.GameTicking
 
                 AddGameRule(rule);
 
-                // Start rule if we're already in the middle of a round.
+                // Start rule if we're already in the middle of a round
                 if(RunLevel == GameRunLevel.InRound)
                     StartGameRule(rule);
             }
+        }
+
+        private CompletionResult AddGameRuleCompletions(IConsoleShell shell, string[] args)
+        {
+            var activeIds = _addedGameRules.Select(c => c.ID);
+            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GameRulePrototype>().Where(p => !activeIds.Contains(p.Value)),
+                "<rule>");
         }
 
         [AdminCommand(AdminFlags.Fun)]
@@ -163,12 +194,18 @@ namespace Content.Server.GameTicking
             }
         }
 
+        private CompletionResult EndGameRuleCompletions(IConsoleShell shell, string[] args)
+        {
+            return CompletionResult.FromHintOptions(_addedGameRules.Select(c => new CompletionOption(c.ID)),
+                "<added rule>");
+        }
+
         [AdminCommand(AdminFlags.Fun)]
         private void ClearGameRulesCommand(IConsoleShell shell, string argstr, string[] args)
         {
             ClearGameRules();
         }
-        
+
         #endregion
     }
 

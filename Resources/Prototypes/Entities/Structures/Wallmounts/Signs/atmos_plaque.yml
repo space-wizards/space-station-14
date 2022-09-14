@@ -13,5 +13,14 @@
       layer:
       - MidImpassable
   - type: Sprite
-    state: atmosplaque
+    layers:
+      - state: atmosplaque
+        map: ["plaque"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AtmosPlaqueVisuals.State:
+        plaque:
+          zumosplaque: { state: zumosplaque }
+          atmosplaque: { state: atmosplaque }
   - type: AtmosPlaque

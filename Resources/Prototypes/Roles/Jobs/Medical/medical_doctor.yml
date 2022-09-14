@@ -1,9 +1,12 @@
 - type: job
   id: MedicalDoctor
   name: job-name-doctor
+  playTimeTracker: JobMedicalDoctor
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 1800
   startingGear: DoctorGear
-  departments:
-  - Medical
   icon: "MedicalDoctor"
   supervisors: job-supervisors-cmo
   access:

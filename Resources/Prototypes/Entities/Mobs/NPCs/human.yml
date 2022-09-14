@@ -1,17 +1,11 @@
 - type: entity
   name: Civilian
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobCivilian
   description: A miserable pile of secrets.
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Clothing
-    - Hunger
-    - Thirst
-    - Idle
+  - type: InputMover
+  - type: MobMover
   - type: Loadout
     prototype: PassengerGear
   - type: AiFactionTag
@@ -20,24 +14,36 @@
 
 - type: entity
   name: Spirate
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobSpirate
   description: Yarr!
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Clothing
-    - Hunger
-    - Thirst
-    - Idle
-    - Spirate
+  - type: AiFactionTag
+    factions:
+      - Syndicate
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: RangedCombatCompound
 
 - type: entity
-  parent: MobHumanBase
+  parent: MobHuman
+  id: MobCBURNUnit
+  name: CBURN Agent
+  description: A miserable pile of secrets
+  components:
+  - type: RandomHumanoidAppearance
+  - type: Loadout
+    prototype: CBURNGear
+  - type: GhostTakeoverAvailable
+    makeSentient: false
+    name: CBURN Agent
+    description: A highly trained CentCom agent, capable of dealing with various threats.
+
+- type: entity
+  parent: BaseMobHuman
   suffix: Dead
-  save: true
+  save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse
   name: unidentified human
   description: We barely knew ye.

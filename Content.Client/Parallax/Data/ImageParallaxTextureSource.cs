@@ -1,12 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using Content.Client.Resources;
 using Content.Client.IoC;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Data;
@@ -21,9 +18,9 @@ public sealed class ImageParallaxTextureSource : IParallaxTextureSource
     [DataField("path", required: true)]
     public ResourcePath Path { get; } = default!;
 
-    async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel = default)
+    Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel)
     {
-        return StaticIoC.ResC.GetTexture(Path);
+        return Task.FromResult(StaticIoC.ResC.GetTexture(Path));
     }
 }
 

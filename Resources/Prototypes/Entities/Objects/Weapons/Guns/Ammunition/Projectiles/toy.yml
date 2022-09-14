@@ -1,34 +1,14 @@
 - type: entity
-  id: BaseBulletDonkSoft
+  id: BulletFoam
+  description: I hope you're wearing eye protection.
   name: foam dart
   parent: BaseItem
-  abstract: true
   components:
-  - type: Tag
-    tags:
-      - Cartridge
-      - CartridgeRocket
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 1
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-
-- type: entity
-  id: BulletDonkSoft
-  name: foam dart
-  parent: BaseBulletDonkSoft
-  description: I hope you're wearing eye protection.
-  components:
-  - type: CartridgeAmmo
-    proto: BulletFoam
-    deleteOnSpawn: true
-  - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    layers:
-      - state: foamdart
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 1
+    - type: Tag
+      tags:
+        - BulletFoam
+    - type: Ammo
+    - type: Sprite
+      sprite: Objects/Fun/toys.rsi
+      layers:
+        - state: foamdart

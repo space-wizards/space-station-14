@@ -1,9 +1,12 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Popups;
 using Content.Shared.Examine;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -22,14 +25,6 @@ public sealed class ImmovableRodSystem : EntitySystem
         // we are deliberately including paused entities. rod hungers for all
         foreach (var (rod, trans) in EntityManager.EntityQuery<ImmovableRodComponent, TransformComponent>(true))
         {
-            rod.Accumulator += frameTime;
-
-            if (rod.Accumulator > rod.Lifetime.TotalSeconds)
-            {
-                QueueDel(rod.Owner);
-                return;
-            }
-
             if (!rod.DestroyTiles)
                 continue;
             if (!_map.TryGetGrid(trans.GridID, out var grid))
@@ -71,7 +66,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         }
     }
 
-    private void OnCollide(EntityUid uid, ImmovableRodComponent component, StartCollideEvent args)
+    private void OnCollide(EntityUid uid, ImmovableRodComponent component, ref StartCollideEvent args)
     {
         var ent = args.OtherFixture.Body.Owner;
 
@@ -84,7 +79,8 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             // oh god.
             var coords = Transform(uid).Coordinates;
-            _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords, Filter.Pvs(uid));
+            _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords,
+                Filter.Pvs(uid), PopupType.LargeCaution);
 
             Del(uid);
             Del(ent);
@@ -98,7 +94,8 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             component.MobCount++;
 
-            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, Filter.Pvs(uid));
+            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid,
+                Filter.Pvs(uid), PopupType.LargeCaution);
             body.Gib();
         }
 

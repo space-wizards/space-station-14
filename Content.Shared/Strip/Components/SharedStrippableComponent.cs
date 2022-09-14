@@ -65,17 +65,31 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
+    public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage
+    {
+        public EntityUid Ensnare { get; }
+
+        public StrippingEnsnareButtonPressed(EntityUid ensnare)
+        {
+            Ensnare = ensnare;
+        }
+    }
+
+    [NetSerializable, Serializable]
     public sealed class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
         public Dictionary<(string ID, string Name), string> Inventory { get; }
         public Dictionary<string, string> Hands { get; }
         public Dictionary<EntityUid, string> Handcuffs { get; }
+        public Dictionary<EntityUid, string> Ensnare { get; }
 
-        public StrippingBoundUserInterfaceState(Dictionary<(string ID, string Name), string> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs)
+        public StrippingBoundUserInterfaceState(Dictionary<(string ID, string Name), string> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs,
+            Dictionary<EntityUid, string> ensnare)
         {
             Inventory = inventory;
             Hands = hands;
             Handcuffs = handcuffs;
+            Ensnare = ensnare;
         }
     }
 

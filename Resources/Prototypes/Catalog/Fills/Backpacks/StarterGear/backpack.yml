@@ -156,7 +156,7 @@
         - id: MagazinePistolHighCapacityRubber
         - id: MagazinePistol
         - id: Handcuffs
-        
+
 
 - type: entity
   noSpawn: true
@@ -166,12 +166,12 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
-        - id: WeaponTaser
+        - id: WeaponDisabler
         - id: WeaponPulsePistol
         - id: WeaponPulseCarbine
         - id: BoxHandcuff
         - id: Handcuffs
-        
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpackERTMedical
@@ -199,7 +199,7 @@
         - id: RCDAmmo
         - id: RCDAmmo
         - id: RCDAmmo
-        
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpackERTJanitor

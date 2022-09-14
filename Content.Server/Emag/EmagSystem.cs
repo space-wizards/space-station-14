@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
@@ -61,15 +62,25 @@ namespace Content.Server.Emag
                 return;
             }
 
-            var emaggedEvent = new GotEmaggedEvent(args.User);
-            RaiseLocalEvent(args.Target.Value, emaggedEvent, false);
-            if (emaggedEvent.Handled)
+            var handled = DoEmag(args.Target, args.User);
+            if (handled)
             {
-                _popupSystem.PopupEntity(Loc.GetString("emag-success", ("target", args.Target)), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("emag-success", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.User,
+                    Filter.Entities(args.User), PopupType.Medium);
                 _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(args.User):player} emagged {ToPrettyString(args.Target.Value):target}");
                 component.Charges--;
                 return;
             }
+        }
+
+        public bool DoEmag(EntityUid? target, EntityUid? user)
+        {
+            if (target == null || user == null)
+                return false;
+
+            var emaggedEvent = new GotEmaggedEvent(user.Value);
+            RaiseLocalEvent(target.Value, emaggedEvent, false);
+            return emaggedEvent.Handled;
         }
     }
 }

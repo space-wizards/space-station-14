@@ -48,12 +48,12 @@
     Steel: 200
 
 - type: latheRecipe
-  id: BodyBag_Folded
+  id: BodyBag
   icon: Objects/Specific/Medical/Morgue/bodybags.rsi/bag_folded.png
   result: BodyBag_Folded
-  completetime: 1.2
+  completetime: 2
   materials:
-    Plastic: 200
+    Plastic: 300
 
 - type: latheRecipe
   id: HandheldCrewMonitor
@@ -97,7 +97,7 @@
   result: ClothingMaskSterile
   completetime: 2
   materials:
-    Plastic: 300
+    Plastic: 100
 
 - type: latheRecipe
   id: DiseaseSwab

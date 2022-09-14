@@ -2,6 +2,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using System.Linq;
 using Robust.Shared.Utility;
+using Content.Server.Shuttles.Events;
 
 namespace Content.Server.Pinpointer
 {
@@ -13,12 +14,29 @@ namespace Content.Server.Pinpointer
         {
             base.Initialize();
             SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<HyperspaceJumpCompletedEvent>(OnLocateTarget);
         }
 
         private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
         {
             TogglePinpointer(uid, component);
+            LocateTarget(uid, component);
+        }
 
+        private void OnLocateTarget(HyperspaceJumpCompletedEvent ev)
+        {
+            // This feels kind of expensive, but it only happens once per hyperspace jump
+            foreach (var uid in ActivePinpointers)
+            {
+                if (TryComp<PinpointerComponent>(uid, out var component))
+                {
+                    LocateTarget(uid, component);
+                }
+            }
+        }
+
+        private void LocateTarget(EntityUid uid, PinpointerComponent component)
+        {
             // try to find target from whitelist
             if (component.IsActive && component.Component != null)
             {

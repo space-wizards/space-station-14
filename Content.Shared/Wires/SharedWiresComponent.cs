@@ -34,7 +34,7 @@ namespace Content.Shared.Wires
     }
 
     [Serializable, NetSerializable]
-    public class WiresActionMessage : BoundUserInterfaceMessage
+    public sealed class WiresActionMessage : BoundUserInterfaceMessage
     {
         public readonly int Id;
         public readonly WiresAction Action;
@@ -116,7 +116,7 @@ namespace Content.Shared.Wires
     }
 
     [Serializable, NetSerializable]
-    public class WiresBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class WiresBoundUserInterfaceState : BoundUserInterfaceState
     {
         public string BoardName { get; }
         public string? SerialNumber { get; }
@@ -167,7 +167,7 @@ namespace Content.Shared.Wires
     ///     what wires there are on an entity.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ClientWire
+    public sealed class ClientWire
     {
         /// <summary>
         ///     ID of this wire, which corresponds to

@@ -33,6 +33,11 @@
   id: FoodDonkpocket
   description: The food of choice for the seasoned traitor.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - meaty
+      - cheap
   - type: Sprite
     state: plain
 
@@ -42,6 +47,11 @@
   id: FoodDonkpocketWarm
   description: The heated food of choice for the seasoned traitor.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - meaty
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -56,6 +66,10 @@
   id: FoodDonkpocketDank
   description: The food of choice for the seasoned botanist.
   components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -71,6 +85,10 @@
   id: FoodDonkpocketDankWarm
   description: The heated food of choice for the seasoned botanist.
   components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -86,6 +104,11 @@
   id: FoodDonkpocketSpicy
   description: The classic snack food, now with a heat-activated spicy flair.
   components:
+  - type: FlavorProfile
+    flavors:
+      - spicy
+      - meaty
+      - cheap
   - type: Sprite
     state: plain
 
@@ -95,6 +118,11 @@
   id: FoodDonkpocketSpicyWarm
   description: The classic snack food, now maybe a bit too spicy.
   components:
+  - type: FlavorProfile
+    flavors:
+      - spicy
+      - meaty
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -112,6 +140,11 @@
   id: FoodDonkpocketTeriyaki
   description: An East Asian take on the classic stationside snack.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - sweet
+      - cheap
   - type: Sprite
     state: teriyaki
 
@@ -121,6 +154,11 @@
   id: FoodDonkpocketTeriyakiWarm
   description: An East Asian take on the classic stationside snack, now steamy and warm.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - sweet
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -136,6 +174,12 @@
   id: FoodDonkpocketPizza
   description: Delicious, cheesy and surprisingly filling.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - cheesy
+      - tomato
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -151,6 +195,12 @@
   id: FoodDonkpocketPizzaWarm
   description: Cheese filling really hits the spot when warm.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - cheesy
+      - tomato
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -166,6 +216,10 @@
   id: FoodDonkpocketHonk
   description: The award-winning donk-pocket that won the hearts of clowns and humans alike.
   components:
+  - type: FlavorProfile
+    flavors:
+      - funny
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -183,6 +237,10 @@
   id: FoodDonkpocketHonkWarm
   description: The award-winning donk-pocket, now warm and toasty.
   components:
+  - type: FlavorProfile
+    flavors:
+      - funny
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -198,6 +256,10 @@
   id: FoodDonkpocketBerry
   description: A relentlessly sweet donk-pocket first created for use in Operation Iraqi Freedom.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -213,6 +275,10 @@
   id: FoodDonkpocketBerryWarm
   description: A relentlessly sweet donk-pocket, now warm and delicious.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -230,6 +296,10 @@
   id: FoodDonkpocketGondola
   description: The choice to use real gondola meat in the recipe is controversial, to say the least.
   components:
+  - type: FlavorProfile
+    flavors:
+      - shocking
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -244,6 +314,10 @@
   parent: FoodDonkpocketGondola
   id: FoodDonkpocketGondolaWarm
   components:
+  - type: FlavorProfile
+    flavors:
+      - shocking
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
@@ -259,11 +333,17 @@
   id: FoodDonkpocketDink
   description: An off-brand lizard donk-pocket, filled with pickled carrot and wrapped with seaweed. Best eaten cold, or even better, not eaten at all.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cold
+      - cheap
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
+        - ReagentId: JuiceCarrot
+          Quantity: 1
   - type: Sprite
     state: dink

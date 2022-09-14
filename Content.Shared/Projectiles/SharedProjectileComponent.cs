@@ -1,13 +1,17 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Projectiles
 {
-    [NetworkedComponent()]
+    [NetworkedComponent, Access(typeof(SharedProjectileSystem))]
     public abstract class SharedProjectileComponent : Component
     {
+        [ViewVariables(VVAccess.ReadWrite), DataField("impactEffect", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? ImpactEffect;
+
         private bool _ignoreShooter = true;
-        public EntityUid Shooter { get; protected set; }
+        public EntityUid Shooter { get; set; }
 
         public bool IgnoreShooter
         {
@@ -19,19 +23,6 @@ namespace Content.Shared.Projectiles
                 _ignoreShooter = value;
                 Dirty();
             }
-        }
-
-        [NetSerializable, Serializable]
-        protected sealed class ProjectileComponentState : ComponentState
-        {
-            public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
-            {
-                Shooter = shooter;
-                IgnoreShooter = ignoreShooter;
-            }
-
-            public EntityUid Shooter { get; }
-            public bool IgnoreShooter { get; }
         }
     }
 }

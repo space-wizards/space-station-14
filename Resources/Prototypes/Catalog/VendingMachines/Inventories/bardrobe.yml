@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: BarDrobeInventory
-  name: BarDrobe
-  spriteName: bardrobe
   startingInventory:
     ClothingHeadHatTophat: 2
     ClothingEyesGlassesBeer: 2
@@ -11,7 +9,7 @@
     ClothingUniformJumpskirtBartender: 2
     ClothingUniformJumpsuitBartenderPurple: 2
     ClothingShoesColorBlack: 2
-    ClothingOuterVestKevlar: 1
-    ClothingBeltBandolier: 1
-    ClothingEyesGlassesSunglasses: 1
-    BoxBeanbag: 1
+    ClothingOuterVestKevlar: 2
+    ClothingBeltBandolier: 2
+    ClothingEyesGlassesSunglasses: 2
+    BoxBeanbag: 2

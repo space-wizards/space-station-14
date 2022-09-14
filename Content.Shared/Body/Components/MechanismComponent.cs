@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Body.Components
 {
     [RegisterComponent]
-    public sealed class MechanismComponent : Component, ISerializationHooks
+    public sealed class MechanismComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         private SharedBodyPartComponent? _part;

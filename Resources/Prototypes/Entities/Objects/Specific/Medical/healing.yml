@@ -7,7 +7,7 @@
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
     sprite: Objects/Specific/Medical/medical.rsi
-    HeldPrefix: ointment
+    heldPrefix: ointment
 
 - type: entity
   name: ointment
@@ -21,12 +21,12 @@
   - type: Sprite
     state: ointment
   - type: Item
-    HeldPrefix: ointment
+    heldPrefix: ointment
   - type: Healing
     damageContainer: Biological
     damage:
       groups:
-        Burn: -10 # 5 for each type in the group
+        Burn: -15 # 5 for each type in the group
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:
@@ -123,7 +123,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: Dexalin
           Quantity: 15
@@ -136,7 +136,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: Dylovene
           Quantity: 15
@@ -149,7 +149,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: Hyronalin
           Quantity: 15
@@ -162,7 +162,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: Iron
           Quantity: 15
@@ -175,7 +175,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: Kelotane
           Quantity: 15
@@ -188,7 +188,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 15
@@ -201,7 +201,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: Tricordrazine
           Quantity: 15
@@ -214,7 +214,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: Romerol
           Quantity: 10
@@ -222,7 +222,7 @@
 # Syringes
 - type: entity
   name: ephedrine syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeEphedrine
   components:
   - type: SolutionContainerManager
@@ -235,7 +235,7 @@
 
 - type: entity
   name: inaprovaline syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeInaprovaline
   components:
   - type: SolutionContainerManager
@@ -248,7 +248,7 @@
 
 - type: entity
   name: tranexamic acid syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeTranexamicAcid
   components:
   - type: SolutionContainerManager
@@ -261,7 +261,7 @@
 
 - type: entity
   name: spaceacillin syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeSpaceacillin
   components:
   - type: SolutionContainerManager
@@ -274,7 +274,7 @@
 
 - type: entity
   name: ipecac syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeIpecac
   components:
   - type: SolutionContainerManager
@@ -288,7 +288,7 @@
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
   name: corpium syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeCorpium
   components:
   - type: SolutionContainerManager

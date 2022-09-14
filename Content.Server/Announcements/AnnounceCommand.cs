@@ -11,7 +11,7 @@ namespace Content.Server.Announcements
     {
         public string Command => "announce";
         public string Description => "Send an in-game announcement.";
-        public string Help => $"{Command} <sender> <message> or {Command} <message> to send announcement as centcomm.";
+        public string Help => $"{Command} <sender> <message> or {Command} <message> to send announcement as CentCom.";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
@@ -24,12 +24,12 @@ namespace Content.Server.Announcements
 
             if (args.Length == 1)
             {
-                chat.DispatchGlobalStationAnnouncement(args[0], colorOverride: Color.Gold);
+                chat.DispatchGlobalAnnouncement(args[0], colorOverride: Color.Gold);
             }
             else
             {
                 var message = string.Join(' ', new ArraySegment<string>(args, 1, args.Length-1));
-                chat.DispatchGlobalStationAnnouncement(message, args[0], colorOverride: Color.Gold);
+                chat.DispatchGlobalAnnouncement(message, args[0], colorOverride: Color.Gold);
             }
             shell.WriteLine("Sent!");
         }

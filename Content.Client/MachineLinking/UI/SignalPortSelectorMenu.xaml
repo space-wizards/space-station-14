@@ -1,4 +1,4 @@
-<DefaultWindow xmlns="https://spacestation14.io" Title="Port Selector" MinSize="400 200">
+<DefaultWindow xmlns="https://spacestation14.io" Title="{Loc signal-port-selector-menu-title}" MinSize="400 200">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.3">
@@ -12,8 +12,8 @@
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Button Name="ButtonClear" Text="Clear"/>
-            <Button Name="ButtonLinkDefault" Text="Link Defaults"/>
+            <Button Name="ButtonClear" Text="{Loc signal-port-selector-menu-clear}"/>
+            <Button Name="ButtonLinkDefault" Text="{Loc signal-port-selector-menu-link-defaults}"/>
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

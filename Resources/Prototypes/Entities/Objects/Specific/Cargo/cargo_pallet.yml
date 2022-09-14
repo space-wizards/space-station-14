@@ -1,7 +1,7 @@
 - type: entity
   id: CargoPallet
   name: cargo pallet
-  description: Designates valid items to sell to Centcomm when a shuttle is recalled.
+  description: Designates valid items to sell to CentCom when a shuttle is recalled.
   parent: BaseStructure
   components:
   - type: CargoPallet

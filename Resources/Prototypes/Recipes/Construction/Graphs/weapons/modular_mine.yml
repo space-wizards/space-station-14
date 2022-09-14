@@ -18,6 +18,11 @@
       steps:
       - material: Cable
         doAfter: 0.5
+      - prototype: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: proximity sensor
 
   - node: wiredCase
     entity: LandMineModular
@@ -32,6 +37,8 @@
         completed:
         - !type:SpawnPrototype
           prototype: CableApcStack1
+        - !type:SpawnPrototype
+          prototype: ProximitySensor
     - to: mine
       steps:
       - tag: Payload

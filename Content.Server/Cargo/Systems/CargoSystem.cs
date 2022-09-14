@@ -43,4 +43,10 @@ public sealed partial class CargoSystem : SharedCargoSystem
         UpdateConsole(frameTime);
         UpdateTelepad(frameTime);
     }
+
+    // please don't delete this thank you
+    public void UpdateBankAccount(StationBankAccountComponent component, int BalanceAdded)
+    {
+        component.Balance += BalanceAdded;
+    }
 }

@@ -15,7 +15,7 @@ public sealed class EntityLootTablePrototype : IPrototype
     public ImmutableList<EntitySpawnEntry> Entries = ImmutableList<EntitySpawnEntry>.Empty;
 
     /// <inheritdoc cref="EntitySpawnCollection.GetSpawns"/>
-    public List<string> GetSpawns(IRobustRandom? random = null)
+    public List<string?> GetSpawns(IRobustRandom? random = null)
     {
         return EntitySpawnCollection.GetSpawns(Entries, random);
     }

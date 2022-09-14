@@ -58,7 +58,7 @@
   - type: Sprite
     state: glass_3
   - type: Item
-    HeldPrefix: glass
+    heldPrefix: glass
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -68,7 +68,7 @@
       - glass_3
   - type: FloorTile
     outputs:
-    - floor_glass
+    - FloorGlass
   - type: Construction
     graph: Glass
     node: SheetGlass
@@ -89,6 +89,7 @@
   parent: SheetGlassBase
   id: SheetRGlass
   name: reinforced glass
+  description: A reinforced sheet of glass.
   suffix: Full
   components:
   - type: Material
@@ -99,7 +100,7 @@
   - type: Sprite
     state: rglass_3
   - type: Item
-    HeldPrefix: rglass
+    heldPrefix: rglass
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -109,7 +110,7 @@
       - rglass_3
   - type: FloorTile
     outputs:
-    - floor_rglass
+    - FloorRGlass
   - type: Construction
     graph: Glass
     node: SheetRGlass
@@ -130,6 +131,7 @@
   parent: SheetGlassBase
   id: SheetPGlass
   name: plasma glass
+  description: A sheet of translucent plasma.
   suffix: Full
   components:
   - type: Material
@@ -140,7 +142,7 @@
   - type: Sprite
     state: pglass_3
   - type: Item
-    HeldPrefix: pglass
+    heldPrefix: pglass
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -168,6 +170,7 @@
   parent: SheetGlassBase
   id: SheetRPGlass
   name: reinforced plasma glass
+  description: A reinforced sheet of translucent plasma.
   suffix: Full
   components:
   - type: Material
@@ -178,7 +181,7 @@
   - type: Sprite
     state: rpglass_3
   - type: Item
-    HeldPrefix: rpglass
+    heldPrefix: rpglass
   - type: Appearance
     visuals:
     - type: StackVisualizer

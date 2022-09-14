@@ -10,6 +10,7 @@ namespace Content.Client.Pinpointer
     [UsedImplicitly]
     public sealed class PinpointerVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

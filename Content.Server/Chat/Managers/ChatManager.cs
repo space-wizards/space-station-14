@@ -36,7 +36,6 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private StationSystem _stationSystem = default!;
@@ -207,7 +206,7 @@ namespace Content.Server.Chat.Managers
 
         #region Utility
 
-        public void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client)
+        public void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null)
         {
             var msg = new MsgChatMessage();
             msg.Channel = channel;
@@ -215,6 +214,10 @@ namespace Content.Server.Chat.Managers
             msg.MessageWrap = messageWrap;
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
+            if (colorOverride != null)
+            {
+                msg.MessageColorOverride = colorOverride.Value;
+            }
             _netManager.ServerSendMessage(msg, client);
         }
 

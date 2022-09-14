@@ -13,6 +13,9 @@ salvage-system-report-activate-success = The salvage magnet is pulling in a piec
 
 salvage-system-magnet-examined-inactive = The salvage magnet is inactive.
 salvage-system-magnet-examined-pulling-in = The salvage magnet is attempting to pull in salvage.
-salvage-system-magnet-examined-active = The salvage magnet is holding salvage in place. Can hold for {$timeLeft} seconds.
+salvage-system-magnet-examined-active = The salvage magnet is holding salvage in place. Can hold for { $timeLeft ->
+    [1] one second.
+    *[other] { $timeLeft } seconds.
+}
 salvage-system-magnet-examined-releasing = The salvage magnet is releasing the salvage.
 salvage-system-magnet-examined-cooling-down = The salvage magnet is cooling down.

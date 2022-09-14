@@ -8,12 +8,14 @@ using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -51,7 +53,7 @@ namespace Content.Server.Recycling
                 }
             }
 
-            _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", victim)),
+            _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", Identity.Entity(victim, EntityManager))),
                 victim,
                 Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim));
 
@@ -79,7 +81,7 @@ namespace Content.Server.Recycling
             _ambience.SetAmbience(component.Owner, false);
         }
 
-        private void OnCollide(EntityUid uid, RecyclerComponent component, StartCollideEvent args)
+        private void OnCollide(EntityUid uid, RecyclerComponent component, ref StartCollideEvent args)
         {
             if (component.Enabled && args.OurFixture.ID != "brrt") return;
 

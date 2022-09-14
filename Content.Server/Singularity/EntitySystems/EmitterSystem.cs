@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Projectiles;
 using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
 using Content.Server.Storage.Components;
@@ -13,6 +14,7 @@ using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -187,7 +189,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            projectileComponent.IgnoreEntity(component.Owner);
+            Get<ProjectileSystem>().SetShooter(projectileComponent, component.Owner);
 
             physicsComponent
                 .LinearVelocity = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * 20f;

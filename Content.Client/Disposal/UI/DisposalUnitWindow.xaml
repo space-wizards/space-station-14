@@ -1,5 +1,6 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-            MinSize="300 140"
+               xmlns:ui="clr-namespace:Content.Client.Disposal.UI"
+               MinSize="300 140"
             SetSize="300 140"
             Resizable="False">
     <BoxContainer Orientation="Vertical">
@@ -13,7 +14,7 @@
         <BoxContainer Orientation="Horizontal"
                       SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-pressure'}" />
-            <ProgressBar Name="PressureBar"
+            <ui:PressureBar Name="PressureBar"
                          MinSize="190 20"
                          HorizontalAlignment="Right"
                          MinValue="0"

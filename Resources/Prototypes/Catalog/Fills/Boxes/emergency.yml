@@ -11,7 +11,7 @@
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
-      - id: FoodSnackChocolate
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -30,7 +30,7 @@
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
-      - id: FoodSnackChocolate
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -50,7 +50,7 @@
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
-      - id: FoodSnackChocolate
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -70,7 +70,7 @@
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
-      - id: FoodSnackChocolate
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -87,7 +87,7 @@
       - state: box_hug
       - state: heart
   - type: Item
-    HeldPrefix: hug
+    heldPrefix: hug
   - type: StorageFill
     contents:
       - id: ClothingMaskBreath
@@ -95,7 +95,7 @@
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
-      - id: FoodSnackChocolate
+      - id: FoodTinMRE
 
 - type: entity
   name: extended-capacity survival box
@@ -110,7 +110,7 @@
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
-      - id: FoodSnackChocolate
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals

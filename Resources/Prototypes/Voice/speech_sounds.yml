@@ -69,3 +69,21 @@
     path: /Audio/Animals/monkey_scream.ogg
   exclaimSound:
     path: /Audio/Animals/monkey_scream.ogg
+
+- type: speechSounds
+  id: Lizard
+  saySound:
+    path: /Audio/Voice/Talk/lizard.ogg
+  askSound:
+    path: /Audio/Voice/Talk/lizard_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/lizard_exclaim.ogg
+
+- type: speechSounds
+  id: Slime
+  saySound:
+    path: /Audio/Voice/Talk/slime.ogg
+  askSound:
+    path: /Audio/Voice/Talk/slime_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/slime_exclaim.ogg

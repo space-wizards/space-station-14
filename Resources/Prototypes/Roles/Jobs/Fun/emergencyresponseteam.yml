@@ -2,10 +2,9 @@
 - type: job
   id: ERTLeader
   name: job-name-ertleader
+  playTimeTracker: JobERTLeader
   setPreference: false
   startingGear: ERTLeaderGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -49,10 +48,9 @@
 - type: job
   id: ERTEngineer
   name: job-name-ertengineer
+  playTimeTracker: JobERTEngineer
   setPreference: false
   startingGear: ERTEngineerGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -95,10 +93,9 @@
 - type: job
   id: ERTSecurity
   name: job-name-ertsecurity
+  playTimeTracker: JobERTSecurity
   setPreference: false
   startingGear: ERTEngineerGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -141,10 +138,9 @@
 - type: job
   id: ERTMedical
   name: job-name-ertmedic
+  playTimeTracker: JobERTMedical
   setPreference: false
   startingGear: ERTMedicalGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -188,10 +184,9 @@
 - type: job
   id: ERTJanitor
   name: job-name-ertjanitor
+  playTimeTracker: JobERTJanitor
   setPreference: false
   startingGear: ERTJanitorGearEVA
-  departments:
-  - Command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false

@@ -1,6 +1,7 @@
 ﻿- type: entity
   abstract: true
   id: ReagentDispenserBase
+  parent: ConstructibleMachine
   placement:
     mode: SnapgridCenter
   components:
@@ -52,3 +53,9 @@
       whitelist:
         components:
         - FitsInDispenser
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      ReagentDispenser-beaker: !type:ContainerSlot

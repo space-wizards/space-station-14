@@ -142,13 +142,17 @@ namespace Content.Client.Instruments.UI
             if (instrumentEnt == null || instrument == null)
                 return false;
 
-            // If we're a handheld instrument, we might be in a container. Get it just in case.
-            instrumentEnt.Value.TryGetContainerMan(out var conMan);
-
             var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
 
             // If we don't have a player or controlled entity, we return.
             if (localPlayer?.ControlledEntity == null) return false;
+
+            // By default, allow an instrument to play itself and skip all other checks
+            if (localPlayer.ControlledEntity == instrumentEnt)
+                return true;
+
+            // If we're a handheld instrument, we might be in a container. Get it just in case.
+            instrumentEnt.Value.TryGetContainerMan(out var conMan);
 
             // If the instrument is handheld and we're not holding it, we return.
             if ((instrument.Handheld && (conMan == null

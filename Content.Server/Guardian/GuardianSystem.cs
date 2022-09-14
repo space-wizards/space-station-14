@@ -8,6 +8,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MobState;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -68,6 +69,9 @@ namespace Content.Server.Guardian
 
             if (!TryComp<GuardianHostComponent>(host, out var hostComponent)) return;
 
+            if (LifeStage(host) >= EntityLifeStage.MapInitialized)
+                return;
+
             RetractGuardian(hostComponent, component);
         }
 
@@ -98,7 +102,7 @@ namespace Content.Server.Guardian
             if (args.Cancelled || args.Target != component.Host)
                 return;
 
-            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid));
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid), PopupType.LargeCaution);
             args.Cancel();
         }
 

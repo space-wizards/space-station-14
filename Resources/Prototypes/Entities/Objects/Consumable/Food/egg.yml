@@ -126,8 +126,13 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
-    state: icon
-  - type: RandomSpriteState
-    spriteStates:
-      - icon
-      - white
+    layers:
+      - state: icon
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+    netsync: false
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          icon: ""
+      - enum.DamageStateVisualLayers.Base:
+          white: ""

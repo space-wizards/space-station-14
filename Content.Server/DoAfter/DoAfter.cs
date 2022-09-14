@@ -22,7 +22,9 @@ namespace Content.Server.DoAfter
 
         public EntityCoordinates TargetGrid { get; }
 
+#pragma warning disable RA0004
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
+#pragma warning restore RA0004
 
         // NeedHand
         private readonly string? _activeHand;
@@ -159,6 +161,30 @@ namespace Content.Server.DoAfter
                     {
                         return true;
                     }
+                }
+            }
+
+            if (EventArgs.DistanceThreshold != null)
+            {
+                var xformQuery = entityManager.GetEntityQuery<TransformComponent>();
+                TransformComponent? userXform = null;
+
+                // Check user distance to target AND used entities.
+                if (EventArgs.Target != null && !EventArgs.User.Equals(EventArgs.Target))
+                {
+                    //recalculate Target location in case Target has also moved
+                    var targetCoordinates = xformQuery.GetComponent(EventArgs.Target.Value).Coordinates;
+                    userXform ??= xformQuery.GetComponent(EventArgs.User);
+                    if (!userXform.Coordinates.InRange(entityManager, targetCoordinates, EventArgs.DistanceThreshold.Value))
+                        return true;
+                }
+
+                if (EventArgs.Used != null)
+                {
+                    var targetCoordinates = xformQuery.GetComponent(EventArgs.Used.Value).Coordinates;
+                    userXform ??= xformQuery.GetComponent(EventArgs.User);
+                    if (!userXform.Coordinates.InRange(entityManager, targetCoordinates, EventArgs.DistanceThreshold.Value))
+                        return true;
                 }
             }
 

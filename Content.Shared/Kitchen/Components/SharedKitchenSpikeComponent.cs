@@ -1,6 +1,6 @@
 using Content.Shared.DragDrop;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components

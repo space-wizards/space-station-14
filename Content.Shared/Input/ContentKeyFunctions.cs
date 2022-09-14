@@ -50,6 +50,13 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Arcade2 = "Arcade2";
         public static readonly BoundKeyFunction Arcade3 = "Arcade3";
         public static readonly BoundKeyFunction OpenActionsMenu = "OpenAbilitiesMenu";
+        public static readonly BoundKeyFunction ShuttleStrafeLeft = "ShuttleStrafeLeft";
+        public static readonly BoundKeyFunction ShuttleStrafeUp = "ShuttleStrafeUp";
+        public static readonly BoundKeyFunction ShuttleStrafeRight = "ShuttleStrafeRight";
+        public static readonly BoundKeyFunction ShuttleStrafeDown = "ShuttleStrafeDown";
+        public static readonly BoundKeyFunction ShuttleRotateLeft = "ShuttleRotateLeft";
+        public static readonly BoundKeyFunction ShuttleRotateRight = "ShuttleRotateRight";
+        public static readonly BoundKeyFunction ShuttleBrake = "ShuttleBrake";
         public static readonly BoundKeyFunction Hotbar0 = "Hotbar0";
         public static readonly BoundKeyFunction Hotbar1 = "Hotbar1";
         public static readonly BoundKeyFunction Hotbar2 = "Hotbar2";

@@ -16,8 +16,12 @@
     solution: drink
   - type: RefillableSolution
     solution: drink
+  - type: DrainableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: Spillable
+    solution: drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
@@ -32,6 +36,13 @@
   name: shot glass
   description: ''
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 10
+  - type: SolutionTransfer
+    transferAmount: 10
+    minTransferAmount: 10
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi

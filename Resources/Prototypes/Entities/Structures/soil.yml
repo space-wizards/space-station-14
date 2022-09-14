@@ -53,5 +53,4 @@
       - !type:AddToSolutionReaction
         solution: soil
   - type: Appearance
-    visuals:
-      - type: PlantHolderVisualizer
+  - type: PlantHolderVisuals

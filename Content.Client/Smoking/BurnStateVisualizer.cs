@@ -25,6 +25,7 @@ namespace Content.Client.Smoking
             IoCManager.InjectDependencies(this);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

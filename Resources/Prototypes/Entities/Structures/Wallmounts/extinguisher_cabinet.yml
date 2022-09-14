@@ -12,6 +12,7 @@
     - type: Sprite
       sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
       netsync: false
+      snapCardinals: true
       layers:
       - state: frame
       - state: extinguisher
@@ -31,6 +32,10 @@
     - type: ItemCabinetVisuals
       openState: open
       closedState: closed
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        ItemCabinet: !type:ContainerSlot
   placement:
     mode: SnapgridCenter
 

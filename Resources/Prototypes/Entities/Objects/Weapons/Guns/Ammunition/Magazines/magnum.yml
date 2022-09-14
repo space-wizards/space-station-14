@@ -79,20 +79,6 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineMagnumFlash
-  name: "Lamia magazine (.40 magnum flash)"
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumFlash
-  - type: Sprite
-    layers:
-    - state: flash
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazineMagnumHighVelocity
   name: "Lamia magazine (.40 magnum high-velocity)"
   parent: BaseMagazineMagnum

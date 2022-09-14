@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Server.Wires;
 
@@ -16,8 +17,8 @@ public sealed class WireLayoutPrototype : IPrototype, IInheritingPrototype
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
-    [ParentDataField(typeof(AbstractPrototypeIdSerializer<WireLayoutPrototype>))]
-    public string? Parent { get; } = default!;
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<WireLayoutPrototype>))]
+    public string[]? Parents { get; private set; }
 
     [AbstractDataField]
     public bool Abstract { get; }

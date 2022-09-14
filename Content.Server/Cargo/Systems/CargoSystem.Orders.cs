@@ -154,9 +154,8 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            order.Approved = true;
             _idCardSystem.TryFindIdCard(player, out var idCard);
-            order.Approver = idCard?.FullName ?? string.Empty;
+            order.SetApproverData(idCard);
 
 
             SoundSystem.Play(component.ConfirmSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
@@ -227,7 +226,7 @@ namespace Content.Server.Cargo.Systems
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)
         {
-            return new CargoOrderData(index, args.Requester, args.Reason, args.ProductId, args.Amount);
+            return new CargoOrderData(index, args.ProductId, args.Amount, args.Requester, args.Reason);
         }
 
         private int GetOrderCount(StationCargoOrderDatabaseComponent component)

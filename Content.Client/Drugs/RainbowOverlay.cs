@@ -66,5 +66,6 @@ public sealed class RainbowOverlay : Overlay
         _rainbowShader.SetParameter("effectScale", EffectScale);
         handle.UseShader(_rainbowShader);
         handle.DrawRect(args.WorldBounds, Color.White);
+        handle.UseShader(null);
     }
 }

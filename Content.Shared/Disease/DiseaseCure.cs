@@ -11,7 +11,12 @@ namespace Content.Shared.Disease
         /// and false otherwise
         /// </summary>
         public abstract bool Cure(DiseaseEffectArgs args);
-
+        /// <summary>
+        /// What stages the cure applies to.
+        /// probably should be all, but go wild
+        /// </summary>
+        [DataField("stages")]
+        public readonly int[] Stages = { 0 };
         /// <summary>
         /// This is used by the disease diangoser machine
         /// to generate reports to tell people all of a disease's

@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "explosive emergency crate"
   id: EmergencyExplosive
-  description: "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (time not included)"
   icon:
     sprite: Clothing/Head/Helmets/bombsuit.rsi
     state: icon
@@ -11,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: "firefighting crate"
   id: EmergencyFire
-  description: "Only you can prevent station fires. Partner up with two firefighter suits, gas masks, flashlights, large oxygen tanks, extinguishers, and hardhats!"
   icon:
     sprite: Objects/Misc/fire_extinguisher.rsi
     state: fire_extinguisher_closed
@@ -23,9 +19,7 @@
   group: market
 
 - type: cargoProduct
-  name: "internals crate"
   id: EmergencyInternals
-  description: "Master your life energy and control your breathing with three breath masks, three emergency oxygen tanks and three large air tanks."
   icon:
     sprite: Clothing/Mask/breath.rsi
     state: icon
@@ -35,9 +29,7 @@
   group: market
 
 - type: cargoProduct
-  name: "radiation protection crate"
   id: EmergencyRadiation
-  description: "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this."
   icon:
     sprite: Structures/Wallmounts/signs.rsi
     state: radiation
@@ -47,9 +39,7 @@
   group: market
 
 - type: cargoProduct
-  name: "inflatable wall crate"
   id: EmergencyInflatablewall
-  description: "Three stacks of inflatable walls for when the stations metal walls don't want to hold atmosphere anymore."
   icon:
     sprite: Objects/Misc/inflatable_wall.rsi
     state: item_wall

@@ -73,7 +73,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            return _entMan.HasComponent<SharedItemComponent>(entity) ||
+            return _entMan.HasComponent<ItemComponent>(entity) ||
                    _entMan.HasComponent<SharedBodyComponent>(entity);
         }
 

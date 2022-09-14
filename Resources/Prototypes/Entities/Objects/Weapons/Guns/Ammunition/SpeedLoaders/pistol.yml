@@ -12,6 +12,10 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   id: SpeedLoaderPistol
@@ -28,25 +32,6 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: base
-    steps: 7
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  id: SpeedLoaderPistolFlash
-  name: "speed loader (.35 auto flash)"
-  parent: BaseSpeedLoaderPistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolFlash
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: flash-6
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: flash
     steps: 7
     zeroVisible: false
   - type: Appearance

@@ -155,10 +155,12 @@ public sealed partial class ExplosionSystem : EntitySystem
                 var ev = new GetExplosionResistanceEvent(explosionType.ID);
                 RaiseLocalEvent(uid, ev, false);
 
-                damagePerIntensity += value * Math.Clamp(0, 1 - ev.Resistance, 1);
+                damagePerIntensity += value * Math.Max(0, ev.DamageCoefficient);
             }
 
-            explosionTolerance[index] = (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity);
+            explosionTolerance[index] = damagePerIntensity > 0
+                ? (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity)
+                : float.MaxValue;
         }
 
         return explosionTolerance;

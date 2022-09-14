@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: JaniDrobeInventory
-  name: JaniDrobe
-  spriteName: janidrobe
   startingInventory:
     ClothingUniformJumpsuitJanitor: 2
     ClothingUniformJumpskirtJanitor: 2

@@ -29,11 +29,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            foreach (var (player, status) in gameTicker.PlayersInLobby)
-            {
-                if(status != LobbyPlayerStatus.Observer)
-                    gameTicker.ToggleReady(player, ready);
-            }
+            gameTicker.ToggleReadyAll(ready);
         }
     }
 }

@@ -7,6 +7,7 @@
   - type: HandheldLight
     addPrefix: true
   - type: PowerCellSlot
+  - type: ItemSlots
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
@@ -15,6 +16,8 @@
     netsync: false
   - type: Item
     sprite: Objects/Misc/Lights/lights.rsi
+    size: 20
+    heldPrefix: off
   - type: PointLight
     netsync: false
     enabled: false
@@ -79,6 +82,8 @@
   parent: BaseLamp
   description: A pole with powerful mounted lights on it.
   components:
+  - type: Item
+    size: 50
   - type: Sprite
     layers:
       - state: floodlight

@@ -1,12 +1,12 @@
-using Content.Client.Cargo.UI;
-using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
+using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -40,7 +40,7 @@ namespace Content.Client.Cargo.BUI
         /// </summary>
         private CargoProductPrototype? _product;
 
-        public CargoOrderConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public CargoOrderConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -53,11 +53,12 @@ namespace Content.Client.Cargo.BUI
             var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
             _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
             var localPlayer = IoCManager.Resolve<IPlayerManager>()?.LocalPlayer?.ControlledEntity;
+            var description = new FormattedMessage();
 
             string orderRequester;
 
             if (entityManager.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
-                orderRequester = metadata.EntityName;
+                orderRequester = Identity.Name(localPlayer.Value, entityManager);
             else
                 orderRequester = string.Empty;
 
@@ -69,10 +70,20 @@ namespace Content.Client.Cargo.BUI
             {
                 if (args.Button.Parent is not CargoProductRow row)
                     return;
+
+                description.Clear();
+                description.PushColor(Color.White); // Rich text default color is grey
+                if (row.MainButton.ToolTip != null)
+                    description.AddText(row.MainButton.ToolTip);
+                    _orderMenu.Description.SetMessage(description);
+
                 _product = row.Product;
+                _orderMenu.ProductName.Text = row.ProductName.Text;
+                _orderMenu.PointCost.Text = row.PointCost.Text;
                 _orderMenu.Requester.Text = orderRequester;
                 _orderMenu.Reason.Text = "";
                 _orderMenu.Amount.Value = 1;
+
                 _orderMenu.OpenCentered();
             };
             _menu.OnOrderApproved += ApproveOrder;

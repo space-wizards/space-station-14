@@ -1,8 +1,7 @@
 using Content.Server.Administration;
-using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Content.Shared.Traitor.Uplink;
+using Content.Shared.FixedPoint;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -14,27 +13,47 @@ namespace Content.Server.Traitor.Uplink.Commands
     {
         public string Command => "adduplink";
 
-        public string Description => "Creates uplink on selected item and link it to users account";
+        public string Description => Loc.GetString("add-uplink-command-description");
 
-        public string Help => "Usage: adduplink <username> <item-id>";
+        public string Help => Loc.GetString("add-uplink-command-help");
+
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            return args.Length switch
+            {
+                1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("add-uplink-command-completion-1")),
+                2 => CompletionResult.FromHint(Loc.GetString("add-uplink-command-completion-2")),
+                _ => CompletionResult.Empty
+            };
+        }
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length < 1)
+            if (args.Length > 2)
             {
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
-            // Get player entity
-            if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(args[0], out var session))
+            IPlayerSession? session;
+            if (args.Length > 0)
             {
-                shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
-                return;
+                // Get player entity
+                if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(args[0], out session))
+                {
+                    shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
+                    return;
+                }
             }
-            if (session.AttachedEntity is not {} user)
+            else
             {
-                shell.WriteLine(Loc.GetString("Selected player doesn't controll any entity"));
+                session = (IPlayerSession?) shell.Player;
+            }
+
+            if (session?.AttachedEntity is not { } user)
+            {
+                shell.WriteLine(Loc.GetString("add-uplink-command-error-1"));
                 return;
             }
 
@@ -62,17 +81,12 @@ namespace Content.Server.Traitor.Uplink.Commands
             // Get TC count
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var tcCount = configManager.GetCVar(CCVars.TraitorStartingBalance);
-
-            // Get account
-            var uplinkAccount = new UplinkAccount(tcCount, user);
-            var accounts = entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-            accounts.AddNewAccount(uplinkAccount);
-
+            Logger.Debug(entityManager.ToPrettyString(user));
             // Finally add uplink
-            if (!entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .AddUplink(user, uplinkAccount, uplinkEntity))
+            var uplinkSys = entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>();
+            if (!uplinkSys.AddUplink(user, FixedPoint2.New(tcCount), uplinkEntity: uplinkEntity))
             {
-                shell.WriteLine(Loc.GetString("Failed to add uplink to the player"));
+                shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
                 return;
             }
         }

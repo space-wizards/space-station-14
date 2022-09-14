@@ -128,11 +128,12 @@ namespace Content.Server.RoundEnd
                units = "eta-units-minutes";
             }
 
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",
                 ("time", time),
                 ("units", Loc.GetString(units))),
                 Loc.GetString("Station"),
                 false,
+                null,
                 Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
@@ -163,7 +164,7 @@ namespace Content.Server.RoundEnd
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
             }
 
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());

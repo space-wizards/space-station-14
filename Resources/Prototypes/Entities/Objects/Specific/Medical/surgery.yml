@@ -77,7 +77,7 @@
   - type: Sprite
     state: shiv
   - type: Item
-    HeldPrefix: shiv
+    heldPrefix: shiv
 
 - type: entity
   name: advanced scalpel
@@ -88,7 +88,7 @@
   - type: Sprite
     state: advanced
   - type: Item
-    HeldPrefix: advanced
+    heldPrefix: advanced
 
 - type: entity
   name: laser scalpel
@@ -99,7 +99,7 @@
   - type: Sprite
     state: laser
   - type: Item
-    HeldPrefix: laser
+    heldPrefix: laser
 
 # Scissors
 
@@ -125,7 +125,7 @@
   - type: Sprite
     state: hemostat
   - type: Item
-    HeldPrefix: hemostat
+    heldPrefix: hemostat
 
   # - type: entity
   #   name: bone setter
@@ -151,6 +151,10 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
   - type: ItemCooldown
+  - type: Tool
+    qualities:
+      - Sawing
+    speed: 1.0
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity
@@ -162,13 +166,17 @@
   - type: Sprite
     state: improv
   - type: Item
-    HeldPrefix: improv
+    heldPrefix: improv
   - type: MeleeWeapon
     damage:
       groups:
         Brute: 10
     hitSound:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: Tool
+    qualities:
+      - Sawing
+    speed: 0.5
 
 - type: entity
   name: circular saw
@@ -179,13 +187,17 @@
   - type: Sprite
     state: electric
   - type: Item
-    HeldPrefix: electric
+    heldPrefix: electric
   - type: MeleeWeapon
     damage:
       groups:
         Brute: 15
     hitSound:
       path: /Audio/Items/drill_hit.ogg
+  - type: Tool
+    qualities:
+      - Sawing
+    speed: 1.5
 
 - type: entity
   name: advanced circular saw
@@ -196,10 +208,14 @@
   - type: Sprite
     state: advanced
   - type: Item
-    HeldPrefix: advanced
+    heldPrefix: advanced
   - type: MeleeWeapon
     damage:
       groups:
         Brute: 20
     hitSound:
       path: /Audio/Items/drill_hit.ogg
+  - type: Tool
+    qualities:
+      - Sawing
+    speed: 2.0

@@ -21,7 +21,7 @@
     base: catwalk_
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: footstep_catwalk
+      collection: FootstepCatwalk
   - type: Construction
     graph: Catwalk
     node: Catwalk

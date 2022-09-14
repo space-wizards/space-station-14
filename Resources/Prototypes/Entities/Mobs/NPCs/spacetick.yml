@@ -2,14 +2,10 @@
   name: space tick
   id: MobTick
   parent: SimpleSpaceMobBase
-  description: It's a space tick, watch out for its nasty bite. Centcomm reports that 90 percent of cargo leg amputations are due to space tick bites.
+  description: It's a space tick, watch out for its nasty bite. CentCom reports that 90 percent of cargo leg amputations are due to space tick bites.
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -36,9 +32,9 @@
       - SmallMobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      15: !type:DeadMobState {}
-  - type: MovementIgnoreGravity
+      0: Alive
+      15: Dead
+  - type: MovementAlwaysTouching
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -78,6 +74,7 @@
   - type: SolutionTransfer
     maxTransferAmount: 5
   - type: GhostTakeoverAvailable
+    prob: 0.33
     makeSentient: true
     name: space tick
     description: |

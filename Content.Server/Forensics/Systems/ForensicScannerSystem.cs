@@ -51,6 +51,7 @@ namespace Content.Server.Forensics
 
             scanner.Fingerprints = forensics.Fingerprints.ToList();
             scanner.Fibers = forensics.Fibers.ToList();
+            scanner.LastScanned = MetaData(ev.Target).EntityName;
             OpenUserInterface(ev.User, scanner);
         }
 
@@ -62,7 +63,7 @@ namespace Content.Server.Forensics
             component.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.ScanDelay, component.CancelToken.Token, target: args.Target)
             {
-                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, args.Target, component.Owner),
+                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, (EntityUid) args.Target, component.Owner),
                 BroadcastCancelledEvent = new ScanCancelledEvent(component.Owner),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -110,7 +111,7 @@ namespace Content.Server.Forensics
             var ui = _uiSystem.GetUi(component.Owner, ForensicScannerUiKey.Key);
 
             ui.Open(actor.PlayerSession);
-            ui.SendMessage(new ForensicScannerUserMessage(component.Fingerprints, component.Fibers));
+            ui.SendMessage(new ForensicScannerUserMessage(component.Fingerprints, component.Fibers, component.LastScanned));
         }
 
         private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)
@@ -124,7 +125,7 @@ namespace Content.Server.Forensics
             if (!TryComp<PaperComponent>(printed, out var paper))
                 return;
 
-            MetaData(printed).EntityName = Loc.GetString("forensic-scanner-report-title");
+            MetaData(printed).EntityName = Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScanned));
 
             var text = new StringBuilder();
 
@@ -156,9 +157,9 @@ namespace Content.Server.Forensics
         private sealed class TargetScanSuccessfulEvent : EntityEventArgs
         {
             public EntityUid User;
-            public EntityUid? Target;
+            public EntityUid Target;
             public EntityUid Scanner;
-            public TargetScanSuccessfulEvent(EntityUid user, EntityUid? target, EntityUid scanner)
+            public TargetScanSuccessfulEvent(EntityUid user, EntityUid target, EntityUid scanner)
             {
                 User = user;
                 Target = target;

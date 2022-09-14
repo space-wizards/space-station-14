@@ -13,7 +13,7 @@ namespace Content.Client.Light
 {
     public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
     {
-        private const float DegreesPerSecond = 270;
+        private const float DegreesPerSecond = 90;
         private static Animation Animation =>
             new()
             {

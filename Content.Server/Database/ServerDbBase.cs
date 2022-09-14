@@ -27,6 +27,7 @@ namespace Content.Server.Database
                 .Preference
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
+                .Include(p => p.Profiles).ThenInclude(h => h.Traits)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
 
@@ -156,6 +157,7 @@ namespace Content.Server.Database
         {
             var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
             var antags = profile.Antags.Select(a => a.AntagName);
+            var traits = profile.Traits.Select(t => t.TraitName);
 
             var sex = Sex.Male;
             if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
@@ -211,7 +213,8 @@ namespace Content.Server.Database
                 backpack,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
-                antags.ToList()
+                antags.ToList(),
+                traits.ToList()
             );
         }
 
@@ -253,6 +256,10 @@ namespace Content.Server.Database
             entity.Antags.AddRange(
                 humanoid.AntagPreferences
                     .Select(a => new Antag {AntagName = a})
+            );
+            entity.Traits.AddRange(
+                humanoid.TraitPreferences
+                        .Select(t => new Trait {TraitName = t})
             );
 
             return entity;
@@ -357,6 +364,59 @@ namespace Content.Server.Database
 
         public abstract Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
         public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
+        #endregion
+
+        #region Playtime
+        public async Task<List<PlayTime>> GetPlayTimes(Guid player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.PlayTime
+                .Where(p => p.PlayerId == player)
+                .ToListAsync();
+        }
+
+        public async Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
+        {
+            await using var db = await GetDb();
+
+            // Ideally I would just be able to send a bunch of UPSERT commands, but EFCore is a pile of garbage.
+            // So... In the interest of not making this take forever at high update counts...
+            // Bulk-load play time objects for all players involved.
+            // This allows us to semi-efficiently load all entities we need in a single DB query.
+            // Then we can update & insert without further round-trips to the DB.
+
+            var players = updates.Select(u => u.User.UserId).Distinct().ToArray();
+            var dbTimes = (await db.DbContext.PlayTime
+                    .Where(p => players.Contains(p.PlayerId))
+                    .ToArrayAsync())
+                .GroupBy(p => p.PlayerId)
+                .ToDictionary(g => g.Key, g => g.ToDictionary(p => p.Tracker, p => p));
+
+            foreach (var (user, tracker, time) in updates)
+            {
+                if (dbTimes.TryGetValue(user.UserId, out var userTimes)
+                    && userTimes.TryGetValue(tracker, out var ent))
+                {
+                    // Already have a tracker in the database, update it.
+                    ent.TimeSpent = time;
+                    continue;
+                }
+
+                // No tracker, make a new one.
+                var playTime = new PlayTime
+                {
+                    Tracker = tracker,
+                    PlayerId = user.UserId,
+                    TimeSpent = time
+                };
+
+                db.DbContext.PlayTime.Add(playTime);
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Player Records
@@ -597,14 +657,15 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
-        public async Task<Server> AddOrGetServer(string serverName)
+        public async Task<(Server, bool existed)> AddOrGetServer(string serverName)
         {
             await using var db = await GetDb();
-            var server = await db.DbContext.Server.Where(server => server.Name.Equals(serverName)).SingleOrDefaultAsync();
+            var server = await db.DbContext.Server
+                .Where(server => server.Name.Equals(serverName))
+                .SingleOrDefaultAsync();
+
             if (server != default)
-            {
-                return server;
-            }
+                return (server, true);
 
             server = new Server
             {
@@ -615,7 +676,7 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
 
-            return server;
+            return (server, false);
         }
 
         public virtual async Task AddAdminLogs(List<QueuedLog> logs)
@@ -921,5 +982,6 @@ namespace Content.Server.Database
 
             public abstract ValueTask DisposeAsync();
         }
+
     }
 }

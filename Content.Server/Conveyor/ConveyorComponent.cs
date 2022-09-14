@@ -1,11 +1,13 @@
+using Content.Server.Physics.Controllers;
 using Content.Shared.Conveyor;
 using Content.Shared.MachineLinking;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Conveyor
 {
     [RegisterComponent]
-    [Access(typeof(ConveyorSystem))]
+    [Access(typeof(ConveyorController))]
     public sealed class ConveyorComponent : Component
     {
         /// <summary>
@@ -36,5 +38,8 @@ namespace Content.Server.Conveyor
 
         [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
         public string OffPort = "Off";
+
+        [ViewVariables]
+        public readonly HashSet<EntityUid> Intersecting = new();
     }
 }

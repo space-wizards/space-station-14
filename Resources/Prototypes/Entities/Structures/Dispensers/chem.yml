@@ -7,14 +7,13 @@
   - type: Sprite
     sprite: Structures/dispensers.rsi
     state: industrial-working
+    netsync: false
+    snapCardinals: true
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
     emagPack: ChemDispenserEmaggedInventory
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:

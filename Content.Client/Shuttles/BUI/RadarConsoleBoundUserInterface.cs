@@ -10,13 +10,14 @@ public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
 {
     private RadarConsoleWindow? _window;
 
-    public RadarConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+    public RadarConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
     protected override void Open()
     {
         base.Open();
         _window = new RadarConsoleWindow();
-        _window?.OpenCentered();
+        _window.OnClose += Close;
+        _window.OpenCentered();
     }
 
     protected override void Dispose(bool disposing)

@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -13,8 +14,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
     [UsedImplicitly]
     public sealed class AtmosUnsafeUnanchorSystem : EntitySystem
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -27,17 +28,19 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (_atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates) is not {} environment)
+            if (_atmosphere.GetContainingMixture(uid, true) is not {} environment)
                 return;
 
             foreach (var node in nodes.Nodes.Values)
             {
-                if (node is not PipeNode pipe) continue;
+                if (node is not PipeNode pipe)
+                    continue;
 
-                if ((pipe.Air.Pressure - environment.Pressure) > 2 * Atmospherics.OneAtmosphere)
+                if (pipe.Air.Pressure - environment.Pressure > 2 * Atmospherics.OneAtmosphere)
                 {
-                    args.Delay += 1.5f;
-                    _popupSystem.PopupCursor(Loc.GetString("comp-atmos-unsafe-unanchor-warning"), Filter.Entities(args.User));
+                    args.Delay += 2f;
+                    _popup.PopupEntity(Loc.GetString("comp-atmos-unsafe-unanchor-warning"), pipe.Owner,
+                        Filter.Entities(args.User), PopupType.MediumCaution);
                     return; // Show the warning only once.
                 }
             }
@@ -48,7 +51,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (_atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is not {} environment)
+            if (_atmosphere.GetContainingMixture(uid, true, true) is not {} environment)
                 environment = GasMixture.SpaceGas;
 
             var lost = 0f;
@@ -56,7 +59,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             foreach (var node in nodes.Nodes.Values)
             {
-                if (node is not PipeNode pipe) continue;
+                if (node is not PipeNode pipe)
+                    continue;
 
                 var difference = pipe.Air.Pressure - environment.Pressure;
                 lost += difference * environment.Volume / (environment.Temperature * Atmospherics.R);
@@ -68,12 +72,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             foreach (var node in nodes.Nodes.Values)
             {
-                if (node is not PipeNode pipe) continue;
+                if (node is not PipeNode pipe)
+                    continue;
 
-                _atmosphereSystem.Merge(buffer, pipe.Air.Remove(sharedLoss));
+                _atmosphere.Merge(buffer, pipe.Air.Remove(sharedLoss));
             }
 
-            _atmosphereSystem.Merge(environment, buffer);
+            _atmosphere.Merge(environment, buffer);
         }
     }
 }

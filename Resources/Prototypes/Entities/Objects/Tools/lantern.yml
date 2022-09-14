@@ -16,7 +16,7 @@
           map: [ "light" ]
     - type: Item
       sprite: Objects/Tools/lantern.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       netsync: false
       enabled: false
@@ -30,6 +30,10 @@
     - type: PowerCellSlot
       cellSlot:
         startingItem: PowerCellMedium
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot {}
 
 - type: entity
   name: extra-bright lantern
@@ -42,3 +46,5 @@
       radius: 5
       energy: 10
       color: "#FFC458"
+    - type: Flash
+      uses: 15

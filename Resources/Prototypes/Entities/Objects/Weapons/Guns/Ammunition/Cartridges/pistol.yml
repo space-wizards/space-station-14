@@ -28,14 +28,6 @@
     proto: BulletPistol
 
 - type: entity
-  id: CartridgePistolFlash
-  name: cartridge (.35 auto flash)
-  parent: BaseCartridgePistol
-  components:
-  - type: CartridgeAmmo
-    proto: BulletPistolFlash
-
-- type: entity
   id: CartridgePistolHighVelocity
   name: cartridge (.35 auto high-velocity)
   parent: BaseCartridgePistol

@@ -1,6 +1,6 @@
 - type: entity
   id: chem_master
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: ChemMaster 4000
   description: An industrial grade chemical manipulator with pill and bottle production included.
   placement:
@@ -9,6 +9,7 @@
   - type: Sprite
     sprite: Structures/Machines/mixer.rsi
     netsync: false
+    snapCardinals: true
     layers:
     - state: mixer_empty
     - state: mixer_screens
@@ -17,11 +18,8 @@
     sprite: Structures/Machines/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
-    beakerSlot:
-      whitelistFailPopup: chem-master-component-cannot-put-entity-message
-      whitelist:
-        components:
-        - FitsInDispenser
+    pillProductionLimit: 10
+    bottleProductionLimit: 10
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -60,7 +58,18 @@
   - type: Machine
     board: ChemMasterMachineCircuitboard
   - type: MaterialStorage
-  - type: Construction
-    graph: Machine
-    node: machine
-
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelistFailPopup: chem-master-component-cannot-put-entity-message
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}

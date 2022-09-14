@@ -2,6 +2,7 @@
 using Content.Shared.Pulling.Components;
 using Content.Shared.Rotatable;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
@@ -30,6 +31,9 @@ namespace Content.Server.Physics.Controllers
         private const float SettleShutdownDistance = 1.0f;
         // Velocity change of -LinearVelocity * frameTime * this
         private const float SettleShutdownMultiplier = 20.0f;
+
+        // How much you must move for the puller movement check to actually hit.
+        private const float MinimumMovementDistance = 0.005f;
 
         [Dependency] private readonly SharedPullingSystem _pullableSystem = default!;
 
@@ -63,6 +67,10 @@ namespace Content.Server.Physics.Controllers
                 !TryComp<SharedPullableComponent>(component.Pulling.Value, out var pullable)) return;
 
             UpdatePulledRotation(uid, pullable.Owner);
+
+            if (args.NewPosition.EntityId == args.OldPosition.EntityId &&
+                (args.NewPosition.Position - args.OldPosition.Position).LengthSquared < MinimumMovementDistance * MinimumMovementDistance)
+                return;
 
             if (TryComp<PhysicsComponent>(pullable.Owner, out var physics))
                 physics.WakeBody();

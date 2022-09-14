@@ -390,9 +390,17 @@ namespace Content.Shared.Body.Components
 
         public virtual HashSet<EntityUid> Gib(bool gibParts = false)
         {
+            var entMgr = IoCManager.Resolve<IEntityManager>();
+            var metaQuery = entMgr.GetEntityQuery<MetaDataComponent>();
             var gibs = new HashSet<EntityUid>();
             foreach (var part in SlotParts.Keys)
             {
+                if (!metaQuery.TryGetComponent(part.Owner, out var meta) ||
+                    meta.EntityLifeStage >= EntityLifeStage.Terminating)
+                {
+                    SlotParts.Remove(part);
+                    continue;
+                }
                 gibs.Add(part.Owner);
                 RemovePart(part);
 

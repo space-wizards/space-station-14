@@ -38,6 +38,7 @@ namespace Content.Client.Gravity
             }
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -49,6 +50,7 @@ namespace Content.Client.Gravity
             sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Core);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

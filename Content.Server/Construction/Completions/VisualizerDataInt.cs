@@ -1,4 +1,4 @@
-﻿using Content.Shared.Construction;
+using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
@@ -21,10 +21,6 @@ namespace Content.Server.Construction.Completions
                 if(IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(Key, out var @enum))
                 {
                     appearance.SetData(@enum, Data);
-                }
-                else
-                {
-                    appearance.SetData(Key, Data);
                 }
             }
         }
