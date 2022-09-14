@@ -2,6 +2,7 @@ using Content.Server.Shuttles.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
 namespace Content.Server.Shuttles.Systems;
@@ -20,7 +21,7 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<ShuttleComponent, StartCollideEvent>(OnShuttleCollide);
     }
 
-    private void OnShuttleCollide(EntityUid uid, ShuttleComponent component, StartCollideEvent args)
+    private void OnShuttleCollide(EntityUid uid, ShuttleComponent component, ref StartCollideEvent args)
     {
         var ourBody = args.OurFixture.Body;
         var otherBody = args.OtherFixture.Body;
