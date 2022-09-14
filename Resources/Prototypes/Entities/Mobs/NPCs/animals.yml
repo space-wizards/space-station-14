@@ -139,10 +139,8 @@
         Piercing: 1
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
-    - Idle
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -665,9 +663,8 @@
         Blunt: 10
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -741,6 +738,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
+    allowSpeech: true
+    allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
   - type: Speech
@@ -802,7 +801,7 @@
           Quantity: 50
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatRat
       amount: 1
   - type: ReplacementAccent
     accent: mouse
@@ -935,7 +934,7 @@
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatLizard
       amount: 1
   - type: InteractionPopup
     successChance: 0.3
@@ -1147,9 +1146,8 @@
     baseSprintSpeed : 7
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - Syndicate
@@ -1312,10 +1310,8 @@
         - Xeno
     - type: InputMover
     - type: MobMover
-    - type: UtilityNPC
-      behaviorSets:
-        - Idle
-        - UnarmedAttackHostiles
+    - type: HTN
+      rootTask: SimpleHostileCompound
     - type: GhostTakeoverAvailable
       makeSentient: true
       name: ghost-role-information-giant-spider-name

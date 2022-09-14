@@ -78,6 +78,9 @@
   components:
   - type: VendingMachine
     pack: AmmoVendInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: AmmoVendAds
   - type: Speech
@@ -85,17 +88,13 @@
     sprite: Structures/Machines/VendingMachines/ammo.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
 
 - type: entity
@@ -106,6 +105,11 @@
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+    loopDeny: false
   - type: Advertise
     pack: BoozeOMatAds
   - type: Speech
@@ -113,17 +117,13 @@
     sprite: Structures/Machines/VendingMachines/boozeomat.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Bar"]]
@@ -136,23 +136,22 @@
   components:
   - type: VendingMachine
     pack: PTechInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cart.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1
@@ -171,6 +170,11 @@
     pack: CigaretteMachineInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Advertise
     pack: CigaretteMachineAds
   - type: Speech
@@ -178,19 +182,13 @@
     sprite: Structures/Machines/VendingMachines/cigs.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
 
 - type: entity
@@ -201,6 +199,10 @@
   components:
   - type: VendingMachine
     pack: ClothesMateInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
   - type: Advertise
     pack: ClothesMateAds
   - type: Speech
@@ -211,18 +213,13 @@
     sprite: Structures/Machines/VendingMachines/clothing.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.8
@@ -239,6 +236,13 @@
     pack: HotDrinksMachineInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    screenState: screen
+    ejectDelay: 5
   - type: Advertise
     pack: HotDrinksMachineAds
   - type: Speech
@@ -246,23 +250,16 @@
     sprite: Structures/Machines/VendingMachines/coffee.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: "screen"
       map: ["enum.VendingMachineVisualLayers.Screen"]
       shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      screen: true
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -279,6 +276,12 @@
     pack: RobustSoftdrinksInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -286,19 +289,13 @@
     sprite: Structures/Machines/VendingMachines/cola.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -313,24 +310,23 @@
   components:
   - type: VendingMachine
     pack: DinnerwareInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
   - type: Advertise
     pack: DinnerwareAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/dinnerware.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Service"]]
@@ -347,24 +343,22 @@
   components:
   - type: VendingMachine
     pack: MagiVendInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: MagiVendAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/magivend.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -381,6 +375,9 @@
     pack: DiscountDansInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: DiscountDansAds
   - type: Speech
@@ -388,17 +385,13 @@
     sprite: Structures/Machines/VendingMachines/discount.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -413,23 +406,22 @@
   components:
   - type: VendingMachine
     pack: EngiVendInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/engivend.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Engineering"]]
@@ -446,25 +438,25 @@
   components:
   - type: VendingMachine
     pack: NanoMedPlusInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 0.6
   - type: Advertise
     pack: NanoMedAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/medical.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
@@ -481,25 +473,24 @@
   components:
   - type: VendingMachine
     pack: NutriMaxInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Advertise
     pack: NutriMaxAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/nutri.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Hydroponics"]]
@@ -516,25 +507,24 @@
   components:
   - type: VendingMachine
     pack: SecTechInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Advertise
     pack: SecTechAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/sec.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Security"]]
@@ -552,24 +542,24 @@
   components:
   - type: VendingMachine
     pack: MegaSeedServitorInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Advertise
     pack: MegaSeedAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/seeds.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -592,24 +582,29 @@
   components:
   - type: VendingMachine
     pack: SmartFridgeInventory
+    offState: off-real
+    brokenState: broken
+    normalState: off
+    denyState: deny-unshaded
+    screenState: normal-unshaded
+    loopDeny: false
   - type: Advertise
     pack: SmartFridgeAds
   - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/smartfridge.rsi
     layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
+    - state: off-real
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: off-real
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.Screen"]
+      shader: unshaded
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -626,6 +621,11 @@
     pack: GetmoreChocolateCorpInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Advertise
     pack: GetmoreChocolateCorpAds
   - type: Speech
@@ -633,19 +633,13 @@
     sprite: Structures/Machines/VendingMachines/snack.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -662,6 +656,11 @@
     pack: BodaInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Advertise
     pack: BodaAds
   - type: Speech
@@ -669,19 +668,13 @@
     sprite: Structures/Machines/VendingMachines/sovietsoda.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -696,6 +689,12 @@
   components:
   - type: VendingMachine
     pack: AutoDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    screenState: screen
   - type: Advertise
     pack: AutoDrobeAds
   - type: Speech
@@ -703,7 +702,7 @@
     sprite: Structures/Machines/VendingMachines/theater.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
@@ -713,13 +712,6 @@
       map: ["enum.VendingMachineVisualLayers.Screen"]
       shader: unshaded
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      screen: true
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -737,6 +729,11 @@
   components:
   - type: VendingMachine
     pack: VendomatInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Advertise
     pack: VendomatAds
   - type: Speech
@@ -744,20 +741,13 @@
     sprite: Structures/Machines/VendingMachines/vendomat.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      eject: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -772,22 +762,21 @@
   components:
   - type: VendingMachine
     pack: NanoMedInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/wallmed.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
@@ -800,11 +789,14 @@
   components:
   - type: VendingMachine
     pack: YouToolInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/youtool.rsi
     layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
@@ -813,13 +805,6 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      eject: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -837,24 +822,24 @@
   components:
   - type: VendingMachine
     pack: GoodCleanFunInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    ejectdelay: 1.8
   - type: Advertise
     pack: GoodCleanFunAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/games.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -871,6 +856,9 @@
     pack: ChangInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: ChangAds
   - type: Speech
@@ -878,17 +866,13 @@
     sprite: Structures/Machines/VendingMachines/changs.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -903,29 +887,28 @@
   components:
   - type: VendingMachine
     pack: SalvageEquipmentInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/mining.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      eject: true
-      ejectUnshaded: false
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
     energy: 1.6
     color: "#9dc5c9"
+  - type: AccessReader
+    access: [["Salvage"]]
 
 - type: entity
   parent: VendingMachine
@@ -937,6 +920,9 @@
     pack: DonutInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: DonutAds
   - type: Speech
@@ -944,17 +930,13 @@
     sprite: Structures/Machines/VendingMachines/donut.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -971,23 +953,22 @@
   components:
   - type: VendingMachine
     pack: HyDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: HyDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/hydrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Hydroponics"]]
@@ -1000,23 +981,22 @@
   components:
   - type: VendingMachine
     pack: LawDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: LawDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/lawdrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Brig"]]
@@ -1029,23 +1009,22 @@
   components:
   - type: VendingMachine
     pack: SecDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: SecDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/secdrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Security"]]
@@ -1058,23 +1037,22 @@
   components:
   - type: VendingMachine
     pack: BarDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: BarDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/bardrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Bar"]]
@@ -1086,11 +1064,15 @@
   components:
   - type: VendingMachine
     pack: PietyVendInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chapdrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
@@ -1099,11 +1081,6 @@
   - type: AccessReader
     access: [["Chapel"]]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: PointLight
     radius: 1.5
@@ -1118,23 +1095,22 @@
   components:
   - type: VendingMachine
     pack: CargoDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: CargoDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cargodrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Cargo"]]
@@ -1147,23 +1123,22 @@
   components:
   - type: VendingMachine
     pack: MediDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: MediDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/medidrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
@@ -1176,23 +1151,22 @@
   components:
   - type: VendingMachine
     pack: ChemDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: ChemDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chemdrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Chemistry"]]
@@ -1205,23 +1179,22 @@
   components:
   - type: VendingMachine
     pack: AtmosDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: AtmosDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/atmosdrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Engineering"]]
@@ -1234,23 +1207,22 @@
   components:
   - type: VendingMachine
     pack: EngiDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: EngiDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/engidrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Engineering"]]
@@ -1263,23 +1235,22 @@
   components:
   - type: VendingMachine
     pack: ChefDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: ChefDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chefdrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Kitchen"]]
@@ -1292,23 +1263,22 @@
   components:
   - type: VendingMachine
     pack: DetDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: DetDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/detdrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Security"]]
@@ -1321,23 +1291,22 @@
   components:
   - type: VendingMachine
     pack: JaniDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: JaniDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/janidrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Janitor"]]
@@ -1350,23 +1319,22 @@
   components:
   - type: VendingMachine
     pack: SciDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: SciDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/scidrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Research"]]
@@ -1379,23 +1347,22 @@
   components:
   - type: VendingMachine
     pack: RoboDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: RoboDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/robodrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Research"]]
@@ -1408,23 +1375,22 @@
   components:
   - type: VendingMachine
     pack: GeneDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: GeneDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/genedrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]
@@ -1437,23 +1403,22 @@
   components:
   - type: VendingMachine
     pack: ViroDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
   - type: Advertise
     pack: ViroDrobeAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/virodrobe.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
   - type: WiresVisuals
   - type: AccessReader
     access: [["Medical"]]

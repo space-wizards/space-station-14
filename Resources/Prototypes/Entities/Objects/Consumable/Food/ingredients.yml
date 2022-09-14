@@ -327,6 +327,9 @@
   id: FoodDough
   description: A piece of dough.
   components:
+  - type: FlavorProfile
+    flavors:
+      - dough
   - type: Sprite
     state: dough
   - type: SliceableFood
@@ -339,6 +342,9 @@
   id: FoodDoughSlice
   description: A slice of dough. Can be cooked into a bun.
   components:
+  - type: FlavorProfile
+    flavors:
+      - dough
   - type: Sprite
     state: dough-slice
 
@@ -348,6 +354,9 @@
   id: FoodDoughBun
   description: A base for any self-respecting burger.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
     state: bun
@@ -403,6 +412,9 @@
   id: FoodCakeBatter
   description: Cook it to get a cake.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweetdough
   - type: Sprite
     state: cakebatter
 
@@ -421,6 +433,9 @@
   id: FoodCheese
   description: A big wheel of delcious Cheddar.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
   - type: Sprite
     state: cheesewheel
   - type: SliceableFood
@@ -433,6 +448,9 @@
   id: FoodCheeseSlice
   description: A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
   - type: Sprite
     state: cheesewedge
   - type: SolutionContainerManager
@@ -449,6 +467,9 @@
   id: FoodBadRecipe
   description: Someone should be demoted from cook for this.
   components:
+  - type: FlavorProfile
+    flavors:
+      - terrible
   - type: Sprite
     state: badrecipe
   - type: SolutionContainerManager

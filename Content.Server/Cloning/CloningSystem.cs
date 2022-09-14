@@ -22,6 +22,7 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction.Components;
 using Content.Server.Stack;
+using Content.Server.Jobs;
 using Robust.Server.GameObjects;
 using Robust.Server.Containers;
 using Robust.Server.Player;
@@ -29,6 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
 
 
 namespace Content.Server.Cloning.Systems
@@ -233,6 +235,19 @@ namespace Content.Server.Cloning.Systems
             _euiManager.OpenEui(new AcceptCloningEui(mind, this), client);
 
             AddComp<ActiveCloningPodComponent>(uid);
+
+            // TODO: Ideally, components like this should be on a mind entity so this isn't neccesary.
+            // Remove this when 'mind entities' are added.
+            // Add on special job components to the mob.
+            if (mind.CurrentJob != null)
+            {
+                foreach (var special in mind.CurrentJob.Prototype.Special)
+                {
+                    if (special.GetType() == typeof(AddComponentSpecial))
+                        special.AfterEquip(mob);
+                }
+            }
+
             return true;
         }
 

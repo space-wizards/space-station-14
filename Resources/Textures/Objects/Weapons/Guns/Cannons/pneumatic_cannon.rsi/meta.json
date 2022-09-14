@@ -1,1 +1,29 @@
-{"version":1,"name":1,"size":{"x":32,"y":32},"states":[{"name":"pneumaticCannon","directions":1},{"name":"oxygen","directions":1},{"name":"inhand-left","directions":4},{"name":"inhand-right","directions":4}],"license":"CC-BY-SA-3.0","copyright":"tgstation at b2e5316993806b1524ab81237b1735b0591df2a2"}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation at b2e5316993806b1524ab81237b1735b0591df2a2, backpack sprite by peptide",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pneumaticCannon"
+    },
+    {
+      "name": "oxygen"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    }
+  ]
+}

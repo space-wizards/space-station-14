@@ -39,6 +39,10 @@
       startingItem: PowerCellMedium
   - type: Item
     heldPrefix: off
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

@@ -15,6 +15,7 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -80,7 +81,7 @@ namespace Content.Server.Recycling
             _ambience.SetAmbience(component.Owner, false);
         }
 
-        private void OnCollide(EntityUid uid, RecyclerComponent component, StartCollideEvent args)
+        private void OnCollide(EntityUid uid, RecyclerComponent component, ref StartCollideEvent args)
         {
             if (component.Enabled && args.OurFixture.ID != "brrt") return;
 

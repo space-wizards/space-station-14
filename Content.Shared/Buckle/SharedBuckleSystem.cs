@@ -5,6 +5,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Buckle
@@ -63,6 +64,11 @@ namespace Content.Shared.Buckle
             }
         }
 
+        public bool IsBuckled(EntityUid uid, SharedBuckleComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) && component.Buckled;
+        }
+
         private void OnBuckleChangeDirectionAttempt(EntityUid uid, SharedBuckleComponent component, ChangeDirectionAttemptEvent args)
         {
             if (component.Buckled)
@@ -100,13 +106,13 @@ namespace Content.Shared.Buckle
             args.Cancel();
         }
 
-        private void PreventCollision(EntityUid uid, SharedBuckleComponent component, PreventCollideEvent args)
+        private void PreventCollision(EntityUid uid, SharedBuckleComponent component, ref PreventCollideEvent args)
         {
             if (args.BodyB.Owner != component.LastEntityBuckledTo) return;
 
             if (component.Buckled || component.DontCollide)
             {
-                args.Cancel();
+                args.Cancelled = true;
             }
         }
     }

@@ -48,6 +48,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -67,10 +68,62 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
             SubscribeLocalEvent<ServerStorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
 
+            SubscribeLocalEvent<ServerStorageComponent, AreaPickupCompleteEvent>(OnAreaPickupComplete);
+            SubscribeLocalEvent<ServerStorageComponent, AreaPickupCancelledEvent>(OnAreaPickupCancelled);
+
             SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
             SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
+        }
+
+        private void OnAreaPickupCancelled(EntityUid uid, ServerStorageComponent component, AreaPickupCancelledEvent args)
+        {
+            component.CancelToken = null;
+        }
+
+        private void OnAreaPickupComplete(EntityUid uid, ServerStorageComponent component, AreaPickupCompleteEvent args)
+        {
+            component.CancelToken = null;
+            var successfullyInserted = new List<EntityUid>();
+            var successfullyInsertedPositions = new List<EntityCoordinates>();
+            var itemQuery = GetEntityQuery<ItemComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            xformQuery.TryGetComponent(uid, out var xform);
+
+            foreach (var entity in args.ValidStorables)
+            {
+                // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
+                if (_containerSystem.IsEntityInContainer(entity)
+                    || entity == args.User
+                    || !itemQuery.HasComponent(entity))
+                    continue;
+
+                if (xform == null ||
+                    !xformQuery.TryGetComponent(entity, out var targetXform) ||
+                    targetXform.MapID != xform.MapID)
+                {
+                    continue;
+                }
+
+                var position = EntityCoordinates.FromMap(
+                    xform.ParentUid.IsValid() ? xform.ParentUid : uid,
+                    new MapCoordinates(_transform.GetWorldPosition(targetXform, xformQuery),
+                        targetXform.MapID), EntityManager);
+
+                if (PlayerInsertEntityInWorld(uid, args.User, entity, component))
+                {
+                    successfullyInserted.Add(entity);
+                    successfullyInsertedPositions.Add(position);
+                }
+            }
+
+            // If we picked up atleast one thing, play a sound and do a cool animation!
+            if (successfullyInserted.Count > 0)
+            {
+                _audio.PlayPvs(component.StorageInsertSound, uid);
+                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions));
+            }
         }
 
         private void OnComponentInit(EntityUid uid, ServerStorageComponent storageComp, ComponentInit args)
@@ -130,14 +183,16 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             // Get the session for the user
-            if (!TryComp<ActorComponent>(args.User, out var actor) || actor?.PlayerSession == null)
+            if (!TryComp<ActorComponent>(args.User, out var actor))
                 return;
 
             // Does this player currently have the storage UI open?
             bool uiOpen = _uiSystem.SessionHasOpenUi(uid, StorageUiKey.Key, actor.PlayerSession);
 
-            ActivationVerb verb = new();
-            verb.Act = () => OpenStorageUI(uid, args.User, component);
+            ActivationVerb verb = new()
+            {
+                Act = () => OpenStorageUI(uid, args.User, component)
+            };
             if (uiOpen)
             {
                 verb.Text = Loc.GetString("verb-common-close-ui");
@@ -178,8 +233,6 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-
-
         /// <summary>
         /// Inserts storable entities into this storage container if possible, otherwise return to the hand of the user
         /// </summary>
@@ -210,9 +263,6 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns></returns>
         private void OnActivate(EntityUid uid, ServerStorageComponent storageComp, ActivateInWorldEvent args)
         {
-            if (!TryComp<ActorComponent>(args.User, out var actor))
-                return;
-
             if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
@@ -224,27 +274,27 @@ namespace Content.Server.Storage.EntitySystems
         /// around a click.
         /// </summary>
         /// <returns></returns>
-        private async void AfterInteract(EntityUid uid, ServerStorageComponent storageComp, AfterInteractEvent eventArgs)
+        private async void AfterInteract(EntityUid uid, ServerStorageComponent storageComp, AfterInteractEvent args)
         {
-            if (!eventArgs.CanReach) return;
+            if (!args.CanReach) return;
 
             if (storageComp.CancelToken != null)
             {
-                storageComp.CancelToken.Cancel();
-                storageComp.CancelToken = null;
                 return;
             }
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<ItemComponent>(eventArgs.Target.Value)))
+            if (storageComp.AreaInsert && (args.Target == null || !HasComp<ItemComponent>(args.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
-                foreach (var entity in _entityLookupSystem.GetEntitiesInRange(eventArgs.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
+                var itemQuery = GetEntityQuery<ItemComponent>();
+
+                foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
                 {
-                    if (entity == eventArgs.User
-                        || !HasComp<ItemComponent>(entity)
-                        || !_interactionSystem.InRangeUnobstructed(eventArgs.User, entity))
+                    if (entity == args.User
+                        || !itemQuery.HasComponent(entity)
+                        || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                         continue;
 
                     validStorables.Add(entity);
@@ -254,57 +304,30 @@ namespace Content.Server.Storage.EntitySystems
                 if (validStorables.Count > 1)
                 {
                     storageComp.CancelToken = new CancellationTokenSource();
-                    var doAfterArgs = new DoAfterEventArgs(eventArgs.User, 0.2f * validStorables.Count, storageComp.CancelToken.Token, uid)
+                    var doAfterArgs = new DoAfterEventArgs(args.User, 0.2f * validStorables.Count, storageComp.CancelToken.Token, target: uid)
                     {
                         BreakOnStun = true,
                         BreakOnDamage = true,
                         BreakOnUserMove = true,
                         NeedHand = true,
+                        TargetCancelledEvent = new AreaPickupCancelledEvent(),
+                        TargetFinishedEvent = new AreaPickupCompleteEvent(args.User, validStorables),
                     };
 
-                    await _doAfterSystem.WaitDoAfter(doAfterArgs);
+                    _doAfterSystem.DoAfter(doAfterArgs);
                 }
 
-                // TODO: Make it use the event DoAfter
-                var successfullyInserted = new List<EntityUid>();
-                var successfullyInsertedPositions = new List<EntityCoordinates>();
-                foreach (var entity in validStorables)
-                {
-                    // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
-                    if (_containerSystem.IsEntityInContainer(entity)
-                        || entity == eventArgs.User
-                        || !HasComp<ItemComponent>(entity))
-                        continue;
-
-                    if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(entity, out var transformEnt))
-                    {
-                        var position = EntityCoordinates.FromMap(transformOwner.Parent?.Owner ?? uid, transformEnt.MapPosition);
-
-                        if (PlayerInsertEntityInWorld(uid, eventArgs.User, entity, storageComp))
-                        {
-                            successfullyInserted.Add(entity);
-                            successfullyInsertedPositions.Add(position);
-                        }
-                    }
-                }
-
-                // If we picked up atleast one thing, play a sound and do a cool animation!
-                if (successfullyInserted.Count > 0)
-                {
-                    if (storageComp.StorageInsertSound is not null)
-                        SoundSystem.Play(storageComp.StorageInsertSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, AudioParams.Default);
-                    RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions));
-                }
                 return;
             }
+
             // Pick up the clicked entity
-            else if (storageComp.QuickInsert)
+            if (storageComp.QuickInsert)
             {
-                if (eventArgs.Target is not {Valid: true} target)
+                if (args.Target is not {Valid: true} target)
                     return;
 
                 if (_containerSystem.IsEntityInContainer(target)
-                    || target == eventArgs.User
+                    || target == args.User
                     || !HasComp<ItemComponent>(target))
                     return;
 
@@ -313,9 +336,10 @@ namespace Content.Server.Storage.EntitySystems
                     var parent = transformOwner.ParentUid;
 
                     var position = EntityCoordinates.FromMap(
-                    parent.IsValid() ? parent : uid,
-                    transformEnt.MapPosition);
-                    if (PlayerInsertEntityInWorld(uid, eventArgs.User, target, storageComp))
+                        parent.IsValid() ? parent : uid,
+                        transformEnt.MapPosition);
+
+                    if (PlayerInsertEntityInWorld(uid, args.User, target, storageComp))
                     {
                         RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid,
                             new List<EntityUid> { target },
@@ -323,7 +347,6 @@ namespace Content.Server.Storage.EntitySystems
                     }
                 }
             }
-            return;
         }
 
         private void OnDestroy(EntityUid uid, ServerStorageComponent storageComp, DestructionEventArgs args)
@@ -678,6 +701,26 @@ namespace Content.Server.Storage.EntitySystems
             if (!storageComp.ShowPopup) return;
 
             _popupSystem.PopupEntity(Loc.GetString(message), player, Filter.Entities(player));
+        }
+
+        /// <summary>
+        /// Raised on storage if it successfully completes area pickup.
+        /// </summary>
+        private sealed class AreaPickupCompleteEvent : EntityEventArgs
+        {
+            public EntityUid User;
+            public List<EntityUid> ValidStorables;
+
+            public AreaPickupCompleteEvent(EntityUid user, List<EntityUid> validStorables)
+            {
+                User = user;
+                ValidStorables = validStorables;
+            }
+        }
+
+        private sealed class AreaPickupCancelledEvent : EntityEventArgs
+        {
+
         }
     }
 }

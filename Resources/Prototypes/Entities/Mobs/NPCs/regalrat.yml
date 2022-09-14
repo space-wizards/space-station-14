@@ -113,6 +113,10 @@
     - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
+  - type: RandomMetadata
+    nameSegments:
+    - RegalRatNameKingdom
+    - RegalRatNameTitle
 
 - type: entity
   id: MobRatKingBuff
@@ -165,10 +169,8 @@
     baseSprintSpeed : 3.5
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]

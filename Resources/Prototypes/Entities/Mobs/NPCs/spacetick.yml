@@ -6,10 +6,6 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
   - type: AiFactionTag
     factions:
     - SimpleHostile

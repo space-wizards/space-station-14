@@ -53,14 +53,10 @@
     - showsubfloor
     - showsubfloorforever
     - mapping
+    - toggleautosave
     - toggledecals
     - nodevis
     - nodevisfilter
-
-- Flags: FUN
-  Commands:
-    - tethergun
-    - griddrag
 
 - Flags: ADMIN
   Commands:

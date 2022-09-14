@@ -1,5 +1,6 @@
 using Content.Server.Light.Components;
 using Content.Server.Light.Events;
+using Content.Server.Mind.Components;
 using Content.Shared.Actions;
 using Content.Shared.Light;
 using Content.Shared.Toggleable;
@@ -21,6 +22,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<UnpoweredFlashlightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerbs);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, ToggleActionEvent>(OnToggleAction);
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, MindAddedMessage>(OnMindAdded);
         }
 
         private void OnToggleAction(EntityUid uid, UnpoweredFlashlightComponent component, ToggleActionEvent args)
@@ -52,6 +54,10 @@ namespace Content.Server.Light.EntitySystems
             args.Verbs.Add(verb);
         }
 
+        private void OnMindAdded(EntityUid uid, UnpoweredFlashlightComponent component, MindAddedMessage args)
+        {
+            _actionsSystem.AddAction(uid, component.ToggleAction, null);
+        }
         public void ToggleLight(UnpoweredFlashlightComponent flashlight)
         {
             if (!EntityManager.TryGetComponent(flashlight.Owner, out PointLightComponent? light))
