@@ -1,12 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Space mobs are now stun immune to make combat a bit more interesting.,
-    type: Tweak}
-  id: 1794
-  time: '2022-06-26T09:25:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Hotfix singulo pulling people through walls., type: Fix}
   id: 1795
   time: '2022-06-26T13:54:19.0000000+00:00'
@@ -2920,3 +2914,8 @@ Entries:
   - {message: 'Removed clonexadone, cryoxadone still exists', type: Remove}
   id: 2293
   time: '2022-09-13T19:51:31.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed tranquillizer shells not injecting their solution, type: Fix}
+  id: 2294
+  time: '2022-09-14T02:40:50.0000000+00:00'
