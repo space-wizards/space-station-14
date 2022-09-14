@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Accents no longer affect radio channel prefixes, type: Fix}
-  id: 1798
-  time: '2022-06-27T03:56:38.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station now supports the cargo and escape shuttles., type: Tweak}
@@ -2923,3 +2918,8 @@ Entries:
       virus plaguing our networks.', type: Fix}
   id: 2297
   time: '2022-09-14T03:46:50.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: New fashionable clothes for lawyers., type: Add}
+  id: 2298
+  time: '2022-09-14T04:47:08.0000000+00:00'
