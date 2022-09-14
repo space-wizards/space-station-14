@@ -1,11 +1,4 @@
 Entries:
-- author: ProfanedBane
-  changes:
-  - {message: 'The contents of trash bags can now be dumped into disposals with alt
-      click, you can then flush by alt clicking again', type: Add}
-  - {message: Cigars can now be picked up by trash bags, type: Tweak}
-  id: 1805
-  time: '2022-06-27T04:19:18.0000000+00:00'
 - author: Sammy Boy
   changes:
   - {message: Jetpacks will now turn off properly when the tank runs out of air!,
@@ -2925,3 +2918,8 @@ Entries:
   - {message: Fuel Tank explosion scales with remaining fuel., type: Add}
   id: 2304
   time: '2022-09-14T17:15:55.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: You can no longer examine players and other mobs melee damage., type: Fix}
+  id: 2305
+  time: '2022-09-14T17:17:24.0000000+00:00'
