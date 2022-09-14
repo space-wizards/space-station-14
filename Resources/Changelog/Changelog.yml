@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Fix emergency shuttle docking on top of other grids, woops.', type: Fix}
-  id: 1796
-  time: '2022-06-26T17:48:49.0000000+00:00'
 - author: Ablankmann
   changes:
   - {message: 'Added the Syndicate Headset and the Jetpack to the uplink, for 2 TC
@@ -2921,3 +2916,9 @@ Entries:
     type: Tweak}
   id: 2295
   time: '2022-09-14T02:42:19.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: More detailed informations are now displayed on the cargo order form,
+    type: Add}
+  id: 2296
+  time: '2022-09-14T03:20:39.0000000+00:00'
