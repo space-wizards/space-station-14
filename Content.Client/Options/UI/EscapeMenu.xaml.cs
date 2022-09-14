@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.UserInterface;
 using Content.Client.Links;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.Options.UI
@@ -16,15 +17,11 @@ namespace Content.Client.Options.UI
     {
         private readonly IClientConsoleHost _consoleHost;
 
-        private readonly OptionsMenu _optionsMenu;
-
         public EscapeMenu(IClientConsoleHost consoleHost)
         {
             _consoleHost = consoleHost;
 
             RobustXamlLoader.Load(this);
-
-            _optionsMenu = new OptionsMenu();
 
             OptionsButton.OnPressed += OnOptionsButtonClicked;
             QuitButton.OnPressed += OnQuitButtonClicked;
@@ -47,23 +44,13 @@ namespace Content.Client.Options.UI
 
         private void OnOptionsButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            _optionsMenu.OpenCentered();
+            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<OptionsUIController>().ToggleWindow();
         }
 
         private void OnWikiButtonClicked(BaseButton.ButtonEventArgs args)
         {
             var uriOpener = IoCManager.Resolve<IUriOpener>();
             uriOpener.OpenUri(UILinks.Wiki);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                _optionsMenu.Dispose();
-            }
         }
     }
 }
