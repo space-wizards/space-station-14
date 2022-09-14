@@ -1,13 +1,8 @@
-using System.Collections.Generic;
 using Content.Client.Strip;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Inventory
 {
@@ -17,11 +12,12 @@ namespace Content.Client.Inventory
         public Dictionary<(string ID, string Name), string>? Inventory { get; private set; }
         public Dictionary<string, string>? Hands { get; private set; }
         public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
+        public Dictionary<EntityUid, string>? Ensnare { get; private set; }
 
         [ViewVariables]
         private StrippingMenu? _strippingMenu;
 
-        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -33,7 +29,7 @@ namespace Content.Client.Inventory
             _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, entMan)))}");
 
             _strippingMenu.OnClose += Close;
-            _strippingMenu.OpenCentered();
+            _strippingMenu.OpenCenteredLeft();
             UpdateMenu();
         }
 
@@ -84,6 +80,17 @@ namespace Content.Client.Inventory
                     });
                 }
             }
+
+            if (Ensnare != null)
+            {
+                foreach (var (id, name) in Ensnare)
+                {
+                    _strippingMenu.AddButton(Loc.GetString("strippable-bound-user-interface-stripping-menu-ensnare-button"), name, (ev) =>
+                    {
+                        SendMessage(new StrippingEnsnareButtonPressed(id));
+                    });
+                }
+            }
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -95,6 +102,7 @@ namespace Content.Client.Inventory
             Inventory = stripState.Inventory;
             Hands = stripState.Hands;
             Handcuffs = stripState.Handcuffs;
+            Ensnare = stripState.Ensnare;
 
             UpdateMenu();
         }

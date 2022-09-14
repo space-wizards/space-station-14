@@ -107,8 +107,20 @@
       "name": "frills_divinity",
       "directions": 4
     },
-    {
+     {
       "name": "horns_double",
+      "directions": 4
+    },
+	{
+      "name": "frills_axolotl",
+      "directions": 4
+    },
+	{
+      "name": "frills_hood_primary",
+      "directions": 4
+    },
+	{
+      "name": "frills_hood_secondary",
       "directions": 4
     },
     {
@@ -118,6 +130,7 @@
     {
       "name": "body_tiger",
       "directions": 4
+	
     }
   ]
 }

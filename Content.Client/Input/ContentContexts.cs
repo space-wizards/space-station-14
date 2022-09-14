@@ -33,6 +33,11 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.EditorCopyObject);
 
             var human = contexts.GetContext("human");
+            human.AddFunction(EngineKeyFunctions.MoveUp);
+            human.AddFunction(EngineKeyFunctions.MoveDown);
+            human.AddFunction(EngineKeyFunctions.MoveLeft);
+            human.AddFunction(EngineKeyFunctions.MoveRight);
+            human.AddFunction(EngineKeyFunctions.Walk);
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.Drop);
             human.AddFunction(ContentKeyFunctions.UseItemInHand);
@@ -89,7 +94,7 @@ namespace Content.Client.Input
             aghost.AddFunction(ContentKeyFunctions.Drop);
             aghost.AddFunction(ContentKeyFunctions.ThrowItemInHand);
 
-            var ghost = contexts.New("ghost", "common");
+            var ghost = contexts.New("ghost", "human");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
             ghost.AddFunction(EngineKeyFunctions.MoveDown);
             ghost.AddFunction(EngineKeyFunctions.MoveLeft);

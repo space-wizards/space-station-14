@@ -1,31 +1,26 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/56cbafd6ad8c013ccd5472d6c4a0db790f7f872a/icons/obj/guns/projectile/heavysniper.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/pull/13612/commits/c1cf3c42b0cd00023937e46845a7c32d6beefa0e",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "base"
-    },
-    {
-      "name": "bolt-closed"
-    },
-    {
-      "name": "bolt-open"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        }
+    ]
 }

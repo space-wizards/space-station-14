@@ -10,12 +10,10 @@
     protection: 1
   - type: CombatMode
     canDisarm: true
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: XenoCompound
   - type: Tool
     speed: 0.3
     qualities:
@@ -88,6 +86,8 @@
     - id: FoodMeatXeno
       amount: 5
   - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
     makeSentient: true
     name: xeno
     description: You are a xeno, co-operate with your hive to kill all crewmembers!
@@ -349,12 +349,10 @@
     attributes:
       proper: true
       gender: male
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: AiFactionTag
     factions:
     - Xeno

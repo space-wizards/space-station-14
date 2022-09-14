@@ -38,7 +38,6 @@
 
 - type: latheRecipe
   id: CableStack
-  name: LV cable
   icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
   result: CableApcStack1
   completetime: 2
@@ -47,7 +46,6 @@
 
 - type: latheRecipe
   id: CableMVStack
-  name: MV cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
   result: CableMVStack1
   completetime: 2
@@ -56,7 +54,6 @@
 
 - type: latheRecipe
   id: CableHVStack
-  name: HV cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
   result: CableHVStack1
   completetime: 2
@@ -145,6 +142,24 @@
     Glass: 300
 
 - type: latheRecipe
+  id: TRayScanner
+  icon: Objects/Tools/t-ray.rsi/tray-off.png
+  result: trayScanner
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
+  id: GasAnalyzer
+  icon: Objects/Specific/Atmos/gasanalyzer.rsi/icon.png
+  result: GasAnalyzer
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
   id: AirlockPainter
   icon: /Textures/Objects/Tools/airlock_painter.rsi/airlock_painter.png
   result: AirlockPainter
@@ -152,3 +167,25 @@
   materials:
     Steel: 300
     Plastic: 100
+
+- type: latheRecipe
+  id: UtilityBelt
+  icon: Clothing/Belt/utility.rsi/icon.png
+  result: ClothingBeltUtility
+  completetime: 2
+  materials:
+    Cloth: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: HolofanProjector
+  icon: 
+    sprite: Objects/Devices/Holoprojectors/atmos.rsi
+    state: icon
+  result: HolofanProjector
+  completetime: 8
+  materials: # Inherited materials and time from PowerCellMedium recipe
+    Steel: 600
+    Glass: 350
+    Plastic: 150
+    Gold: 10

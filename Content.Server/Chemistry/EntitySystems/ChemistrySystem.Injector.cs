@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
@@ -15,6 +14,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using System.Threading;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -69,13 +69,14 @@ public sealed partial class ChemistrySystem
         }
         else if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Draw)
         {
-            /// Draw from a bloodstream, if the target has that
+            // Draw from a bloodstream, if the target has that
             if (TryComp<BloodstreamComponent>(target, out var stream))
             {
                 TryDraw(component, target, stream.BloodSolution, user, stream);
                 return;
             }
-            /// Draw from an object (food, beaker, etc)
+
+            // Draw from an object (food, beaker, etc)
             if (_solutions.TryGetDrawableSolution(target, out var drawableSolution))
             {
                 TryDraw(component, target, drawableSolution, user);
@@ -111,7 +112,8 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorAfterInteract(EntityUid uid, InjectorComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach) return;
+        if (args.Handled || !args.CanReach)
+            return;
 
         if (component.CancelToken != null)
         {
@@ -141,12 +143,14 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorStartup(EntityUid uid, InjectorComponent component, ComponentStartup args)
     {
+        /// ???? why ?????
         Dirty(component);
     }
 
     private void OnInjectorUse(EntityUid uid, InjectorComponent component, UseInHandEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
 
         Toggle(component, args.User);
         args.Handled = true;
@@ -195,16 +199,16 @@ public sealed partial class ChemistrySystem
         if (user != target)
         {
             // Create a pop-up for the target
-            var userName = Identity.Name(user, EntityManager);
+            var userName = Identity.Entity(user, EntityManager);
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
                 ("user", userName)), user, Filter.Entities(target));
 
             // Check if the target is incapacitated or in combat mode and modify time accordingly.
-            if (TryComp<MobStateComponent>(target, out var mobState) && mobState.IsIncapacitated())
+            if (_mobState.IsIncapacitated(target))
             {
                 actualDelay /= 2;
             }
-            else if (TryComp<CombatModeComponent>(target, out var combat) && combat.IsInCombatMode)
+            else if (_combat.IsInCombatMode(target))
             {
                 // Slightly increase the delay when the target is in combat mode. Helps prevents cheese injections in
                 // combat with fast syringes & lag.
@@ -355,10 +359,10 @@ public sealed partial class ChemistrySystem
             return;
         }
 
-        /// We have some snowflaked behavior for streams.
+        // We have some snowflaked behavior for streams.
         if (stream != null)
         {
-            DrawFromBlood(user, targetEntity, component, solution, stream, (float) realTransferAmount);
+            DrawFromBlood(user, targetEntity, component, solution, stream, realTransferAmount);
             return;
         }
 
@@ -378,10 +382,11 @@ public sealed partial class ChemistrySystem
         AfterDraw(component);
     }
 
-    private void DrawFromBlood(EntityUid user, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, float drawAmount)
+    private void DrawFromBlood(EntityUid user, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, FixedPoint2 transferAmount)
     {
-        float bloodAmount = drawAmount;
-        float chemAmount = 0f;
+        var drawAmount = (float) transferAmount;
+        var bloodAmount = drawAmount;
+        var chemAmount = 0f;
         if (stream.ChemicalSolution.CurrentVolume > 0f) // If they have stuff in their chem stream, we'll draw some of that
         {
             bloodAmount = drawAmount * 0.85f;
@@ -395,7 +400,7 @@ public sealed partial class ChemistrySystem
         _solutions.TryAddSolution(component.Owner, injectorSolution, chemTemp);
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
-                ("amount", drawAmount),
+                ("amount", transferAmount),
                 ("target", Identity.Entity(target, EntityManager))), component.Owner, Filter.Entities(user));
 
         Dirty(component);

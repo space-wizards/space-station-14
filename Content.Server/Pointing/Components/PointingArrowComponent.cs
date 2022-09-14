@@ -53,16 +53,6 @@ namespace Content.Server.Pointing.Components
         [DataField("rogue")]
         public bool Rogue = false;
 
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
-            {
-                sprite.DrawDepth = (int) DrawDepth.Overlays;
-            }
-        }
-
         public void Update(float frameTime)
         {
             var movement = _speed * frameTime * (_up ? 1 : -1);

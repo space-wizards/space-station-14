@@ -65,8 +65,8 @@ namespace Content.Shared.Lathe;
         [Serializable, NetSerializable]
         public sealed class LatheFullQueueMessage : BoundUserInterfaceMessage
         {
-            public readonly Queue<string> Recipes;
-            public LatheFullQueueMessage(Queue<string> recipes)
+            public readonly List<string> Recipes;
+            public LatheFullQueueMessage(List<string> recipes)
             {
                 Recipes = recipes;
             }

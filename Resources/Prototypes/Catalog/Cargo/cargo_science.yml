@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "Artifact Container"
   id: ArtifactContainer
-  description: Used to safely contain and move artifacts.
   icon:
     sprite: Structures/Storage/Crates/artifact.rsi
     state: artifact_container_icon

@@ -14,7 +14,7 @@ namespace Content.Shared.Access.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<AccessComponent, ComponentInit>(OnAccessInit);
+            SubscribeLocalEvent<AccessComponent, MapInitEvent>(OnAccessInit);
             SubscribeLocalEvent<AccessComponent, ComponentGetState>(OnAccessGetState);
             SubscribeLocalEvent<AccessComponent, ComponentHandleState>(OnAccessHandleState);
         }
@@ -39,7 +39,7 @@ namespace Content.Shared.Access.Systems
             };
         }
 
-        private void OnAccessInit(EntityUid uid, AccessComponent component, ComponentInit args)
+        private void OnAccessInit(EntityUid uid, AccessComponent component, MapInitEvent args)
         {
             // Add all tags in groups to the list of tags.
             foreach (var group in component.Groups)

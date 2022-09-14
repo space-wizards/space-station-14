@@ -11,11 +11,11 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Grenades/grenade.rsi
+  - type: Item
     size: 5
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - Belt
   - type: OnUseTimerTrigger
     delay: 3.5
@@ -52,11 +52,11 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Grenades/flashbang.rsi
+  - type: Item
     size: 5
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - Belt
   - type: OnUseTimerTrigger
     delay: 3.5

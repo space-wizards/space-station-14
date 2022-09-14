@@ -1,0 +1,26 @@
+- type: entity
+  name: medibot spawner
+  id: SpawnMobMedibot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Mobs/Silicon/Bots/medibot.rsi/medibot.png
+  - type: ConditionalSpawner
+    prototypes:
+      - MobMedibot
+
+- type: entity
+  name: cleanbot spawner
+  id: SpawnMobCleanBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Mobs/Silicon/Bots/cleanbot.rsi/cleanbot.png
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCleanBot
+

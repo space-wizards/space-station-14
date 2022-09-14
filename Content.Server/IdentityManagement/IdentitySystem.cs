@@ -1,4 +1,4 @@
-﻿using Content.Server.Access.Systems;
+using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Database;
@@ -141,7 +141,7 @@ public class IdentitySystem : SharedIdentitySystem
         // Get their name and job from their ID for their presumed name.
         if (_idCard.TryFindIdCard(target, out var id))
         {
-            presumedName = id.FullName;
+            presumedName = string.IsNullOrWhiteSpace(id.FullName) ? null : id.FullName;
             presumedJob = id.JobTitle?.ToLowerInvariant();
         }
 

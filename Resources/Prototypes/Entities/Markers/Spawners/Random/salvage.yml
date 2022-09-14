@@ -87,6 +87,20 @@
         - MobTickSalvage
 
 - type: entity
+  name: Salvage Space Bear Spawner
+  id: SpawnMobBearSalvage
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: bear
+      sprite: Mobs/Animals/bear.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBearSpaceSalvage
+
+- type: entity
   id: SalvageMobSpawner75
   parent: SalvageMobSpawner
   suffix: 75

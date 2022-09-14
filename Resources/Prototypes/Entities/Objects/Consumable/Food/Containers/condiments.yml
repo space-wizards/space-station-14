@@ -5,12 +5,14 @@
 # Since this one is closed, the only way to insert liquid is with a syringe.
 - type: entity
   parent: BaseItem
-  id: FoodCondimentPacket
+  id: BaseFoodCondimentPacket
   name: condiment packet
+  abstract: true
   description: A small plastic pack with condiments to put on your food.
   components:
   - type: Drink
     solution: food
+    refillable: false
     openSounds:
       collection: packetOpenSounds
   - type: DrawableSolution
@@ -19,7 +21,9 @@
     solution: food
   - type: DrainableSolution
     solution: food
-    # Note NOT refillable
+    # Note NOT refillable. 
+    # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
+    # Well its fixed now, but I want to share my pain.
   - type: SolutionContainerManager
     solutions:
       food:
@@ -33,9 +37,19 @@
   - type: Icon
     sprite: Objects/Consumable/Food/condiments.rsi
     state: packet-empty
+  - type: TrashOnEmpty
+    solution: food
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacket
+  components:
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketAstrotame
   name: Astrotame
   description: The sweetness of a thousand sugars but none of the calories.
@@ -56,13 +70,12 @@
   - type: Icon
     state: packet-astrotame
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketBbq
   name: BBQ sauce
   description: Hand wipes not included.
@@ -83,13 +96,12 @@
   - type: Icon
     state: packet-bbq
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketCornoil
   name: corn oil
   description: Corn oil. A delicious oil used in cooking. Made from corn.
@@ -110,13 +122,12 @@
   - type: Icon
     state: packet-cornoil
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketFrostoil
   name: coldsauce
   description: Coldsauce. Leaves the tongue numb in its passage.
@@ -137,13 +148,12 @@
   - type: Icon
     state: packet-frostoil
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketHorseradish
   name: horseradish sauce
   description: A packet of smelly horseradish sauce.
@@ -164,13 +174,12 @@
   - type: Icon
     state: packet-greygoo
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketHotsauce
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
@@ -191,13 +200,12 @@
   - type: Icon
     state: packet-hotsauce
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-trans-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketKetchup
   name: ketchup
   description: You feel more American already.
@@ -217,13 +225,12 @@
   - type: Icon
     state: packet-ketchup
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketPepper
   name: black pepper
   description: Often used to flavor food or make people sneeze.
@@ -243,13 +250,12 @@
   - type: Icon
     state: packet-pepper
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketSalt
   name: salt
   description: Salt. From space oceans, presumably.
@@ -271,13 +277,12 @@
   - type: Icon
     state: packet-salt
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketSoy
   name: soy sauce
   description: A salty soy-based flavoring.
@@ -297,13 +302,12 @@
   - type: Icon
     state: packet-soysauce
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 - type: entity
-  parent: FoodCondimentPacket
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketSugar
   name: sugar
   description: Tasty spacey sugar!
@@ -323,16 +327,16 @@
   - type: Icon
     state: packet-sugar
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 2
-      fillBaseName: packet-solid-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
 
 # Bottles
 
 - type: entity
   parent: BaseItem
-  id: FoodCondimentBottle
+  id: BaseFoodCondimentBottle
+  abstract: true
   name: condiment bottle
   description: A thin glass bottle used to store condiments.
   components:
@@ -340,6 +344,10 @@
     solution: food
     openSounds:
       collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -353,13 +361,22 @@
     sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-empty
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-alpha-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-alpha-
+  - type: TrashOnEmpty
+    solution: food
 
 - type: entity
-  parent: FoodCondimentBottle
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottle
+  components:
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleColdsauce
   name: coldsauce bottle
   description: Leaves the tongue numb in its passage.
@@ -382,7 +399,7 @@
     state: bottle-coldsauce
 
 - type: entity
-  parent: FoodCondimentBottle
+  parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleEnzyme
   name: universal enzyme
   description: Used in cooking various dishes.
@@ -405,7 +422,7 @@
     state: bottle-enzyme
 
 - type: entity
-  parent: FoodCondimentBottle
+  parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleHotsauce
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
@@ -428,7 +445,7 @@
     state: bottle-hotsauce
 
 - type: entity
-  parent: FoodCondimentBottle
+  parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleKetchup
   name: ketchup
   description: You feel more American already.
@@ -451,7 +468,7 @@
     state: bottle-ketchup
 
 - type: entity
-  parent: FoodCondimentBottle
+  parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleBBQ
   name: BBQ sauce
   description: Hand wipes not included.
@@ -478,7 +495,8 @@
 
 - type: entity
   parent: BaseItem
-  id: FoodCondimentBottleSmall
+  id: BaseFoodCondimentBottleSmall
+  abstract: true
   name: condiment bottle
   description: A smaller glass bottle used to store condiments.
   components:
@@ -486,6 +504,10 @@
     solution: food
     openSounds:
       collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -497,13 +519,22 @@
     sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-s-empty
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 3
-      fillBaseName: bottle-s-alpha-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: bottle-s-alpha-
+  - type: TrashOnEmpty
+    solution: food
 
 - type: entity
-  parent: FoodCondimentBottleSmall
+  parent: BaseFoodCondimentBottleSmall
+  id: FoodCondimentBottleSmall
+  components:
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  parent: BaseFoodCondimentBottleSmall
   id: FoodCondimentBottleSmallColdsauce
   name: coldsauce bottle
   description: Leaves the tongue numb in its passage.
@@ -526,7 +557,7 @@
     state: bottle-s-coldsauce
 
 - type: entity
-  parent: FoodCondimentBottleSmall
+  parent: BaseFoodCondimentBottleSmall
   id: FoodCondimentBottleSmallHotsauce
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
@@ -549,7 +580,7 @@
     state: bottle-s-hotsauce
 
 - type: entity
-  parent: FoodCondimentBottleSmall
+  parent: BaseFoodCondimentBottleSmall
   id: FoodCondimentBottleSmallKetchup
   name: ketchup
   description: You feel more American already.
@@ -572,7 +603,7 @@
     state: bottle-s-ketchup
 
 - type: entity
-  parent: FoodCondimentBottleSmall
+  parent: BaseFoodCondimentBottleSmall
   id: FoodCondimentBottleSmallVinegar
   name: vinegar
   description: Used in cooking to enhance flavor.

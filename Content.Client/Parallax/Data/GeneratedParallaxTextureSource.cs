@@ -45,7 +45,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
     /// </summary>
     private ResourcePath PreviousParallaxConfigPath => new($"/parallax_{Identifier}config_old");
 
-    async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel = default)
+    async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel)
     {
         var parallaxConfig = GetParallaxConfig();
         if (parallaxConfig == null)

@@ -36,6 +36,7 @@
   description: action-description-disarm
   icon: Interface/Actions/disarmOff.png
   iconOn: Interface/Actions/disarm.png
+  repeat: true
   useDelay: 1.5
   interactOnMiss: true
   event: !type:DisarmActionEvent
@@ -52,7 +53,7 @@
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
   userPopup: action-popup-combat
-  popupToggleSuffix: -disabling
+  popupToggleSuffix: -enabled
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
@@ -71,9 +72,32 @@
   event: !type:ToggleActionEvent
 
 - type: instantAction
+  id: ClearNetworkLinkOverlays
+  name: network-configurator-clear-network-link-overlays
+  description: network-configurator-clear-network-link-overlays-desc
+  icon: Objects/Tools/multitool.rsi/icon.png
+  event: !type:ClearAllOverlaysEvent
+
+- type: instantAction
   id: AnimalLayEgg
   name: action-name-lay-egg
   description: action-description-lay-egg
   icon: Objects/Consumable/Food/egg.rsi/icon.png
   useDelay: 60
   serverEvent: !type:EggLayInstantActionEvent
+
+- type: instantAction
+  id: Sleep
+  name: action-name-sleep
+  description: action-desc-sleep
+  checkCanInteract: false
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  event: !type:SleepActionEvent
+
+- type: instantAction
+  id: Wake
+  name: action-name-wake
+  description: action-desc-wake
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  checkCanInteract: false
+  event: !type:WakeActionEvent

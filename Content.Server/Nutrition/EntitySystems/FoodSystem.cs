@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
@@ -11,16 +10,17 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Content.Shared.Inventory;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction.Events;
+using System.Threading;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -30,6 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
     public sealed class FoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly FlavorProfileSystem _flavorProfileSystem = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -93,6 +94,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_solutionContainerSystem.TryGetSolution(food.Owner, food.SolutionName, out var foodSolution))
                 return false;
 
+            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(food.Owner, user, foodSolution);
+
             if (food.UsesRemaining <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("food-system-try-use-food-is-empty",
@@ -115,7 +118,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forceFeed)
             {
-                var userName = Identity.Name(user, EntityManager);
+                var userName = Identity.Entity(user, EntityManager);
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)),
                     user, Filter.Entities(target));
 
@@ -132,8 +135,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnStun = true,
                 BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
-                DistanceThreshold = 2.0f,
-                TargetFinishedEvent = new FeedEvent(user, food, foodSolution, utensils),
+                DistanceThreshold = 1.0f,
+                TargetFinishedEvent = new FeedEvent(user, food, foodSolution, flavors, utensils),
                 BroadcastCancelledEvent = new ForceFeedCancelledEvent(food),
                 NeedHand = true,
             });
@@ -157,6 +160,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 : args.FoodSolution.CurrentVolume;
 
             var split = _solutionContainerSystem.SplitSolution((args.Food).Owner, args.FoodSolution, transferAmount);
+
+
             var firstStomach = stomachs.FirstOrNull(
                 stomach => _stomachSystem.CanTransferSolution((stomach.Comp).Owner, split));
 
@@ -177,11 +182,13 @@ namespace Content.Server.Nutrition.EntitySystems
             split.DoEntityReaction(uid, ReactionMethod.Ingestion);
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, split, firstStomach.Value.Comp);
 
+            var flavors = args.FlavorMessage;
+
             if (forceFeed)
             {
-                var targetName = Identity.Name(uid, EntityManager);
-                var userName = Identity.Name(args.User, EntityManager);
-                _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName)),
+                var targetName = Identity.Entity(uid, EntityManager);
+                var userName = Identity.Entity(args.User, EntityManager);
+                _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName), ("flavors", flavors)),
                     uid, Filter.Entities(uid));
 
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success-user", ("target", targetName)),
@@ -189,7 +196,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString(args.Food.EatMessage, ("food", args.Food.Owner)), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString(args.Food.EatMessage, ("food", args.Food.Owner), ("flavors", flavors)), args.User, Filter.Entities(args.User));
             }
 
             SoundSystem.Play(args.Food.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-1f));

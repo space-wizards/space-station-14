@@ -104,7 +104,8 @@ public class EntityTargetAction : TargetedAction
         Whitelist = toClone.Whitelist;
 
         // Events should be re-usable, and shouldn't be modified during prediction.
-        Event = toClone.Event;
+        if (toClone.Event != null)
+            Event = toClone.Event;
     }
 
     public override object Clone()
@@ -141,7 +142,8 @@ public class WorldTargetAction : TargetedAction
             return;
 
         // Events should be re-usable, and shouldn't be modified during prediction.
-        Event = toClone.Event;
+        if (toClone.Event != null)
+            Event = toClone.Event;
     }
 
     public override object Clone()

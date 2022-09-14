@@ -30,6 +30,7 @@ namespace Content.Client.Light
             }
         };
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

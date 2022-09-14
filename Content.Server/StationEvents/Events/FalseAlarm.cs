@@ -21,7 +21,7 @@ namespace Content.Server.StationEvents.Events
 
             if (cfg.StartAnnouncement != null)
             {
-                ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(cfg.StartAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
+                ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(cfg.StartAnnouncement), playSound: false, colorOverride: Color.Gold);
             }
 
             if (cfg.StartAudio != null)

@@ -1,4 +1,8 @@
 using Content.Shared.Lathe;
+using Content.Shared.Whitelist;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Content.Shared.Materials;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Lathe.Components
 {
@@ -16,6 +20,26 @@ namespace Content.Server.Lathe.Components
         public int StorageLimit => _storageLimit;
         [DataField("StorageLimit")]
         private int _storageLimit = -1;
+
+        /// <summary>
+        /// Whitelist for specifying the kind of items that can be insert into this entity.
+        /// </summary>
+        [ViewVariables]
+        [DataField("whitelist")]
+        public EntityWhitelist? EntityWhitelist;
+
+        /// <summary>
+        /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
+        /// </summary>
+        [ViewVariables]
+        [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
+        public List<string> MaterialWhiteList = new();
+
+        /// <summary>
+        /// The sound that plays when inserting an item into the storage
+        /// </summary>
+        [DataField("insertingSound")]
+        public SoundSpecifier? InsertingSound;
 
         public override ComponentState GetComponentState()
         {
@@ -72,6 +96,15 @@ namespace Content.Server.Lathe.Components
         public bool RemoveMaterial(string id, int amount)
         {
             return InsertMaterial(id, -amount);
+        }
+
+        // forgive me I needed to write a crumb of e/c code to not go fucking insane i swear i will ecs this entire shitty fucking system one day
+        public int GetMaterialAmount(string id)
+        {
+            if (!Storage.TryGetValue(id, out var amount))
+                return 0;
+
+            return amount;
         }
     }
 }

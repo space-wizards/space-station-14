@@ -22,7 +22,7 @@
     solution: spray
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
-    HeldPrefix: plantbgone
+    heldPrefix: plantbgone
 
 - type: entity
   name: weed spray

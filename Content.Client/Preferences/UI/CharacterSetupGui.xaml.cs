@@ -235,7 +235,7 @@ namespace Content.Client.Preferences.UI
                 if (!disposing)
                     return;
 
-                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy);
                 _previewDummy = default;
             }
         }

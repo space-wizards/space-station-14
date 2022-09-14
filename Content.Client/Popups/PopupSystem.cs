@@ -19,7 +19,6 @@ namespace Content.Client.Popups
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
@@ -157,7 +156,8 @@ namespace Content.Client.Popups
 
         public override void FrameUpdate(float frameTime)
         {
-            if (_aliveWorldLabels.Count == 0) return;
+            if (_aliveWorldLabels.Count == 0 && _aliveCursorLabels.Count == 0)
+                return;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
             var playerPos = player != null ? Transform(player.Value).MapPosition : MapCoordinates.Nullspace;
@@ -234,13 +234,13 @@ namespace Content.Client.Popups
 
             public CursorPopupLabel(ScreenCoordinates screenCoords) : base()
             {
-                InitialPos = screenCoords.Position / UIScale - DesiredSize / 2;
+                InitialPos = screenCoords.Position - DesiredSize / 2;
             }
 
             protected override void FrameUpdate(FrameEventArgs eventArgs)
             {
                 base.FrameUpdate(eventArgs);
-                LayoutContainer.SetPosition(this, InitialPos - (0, 20 * (TotalTime * TotalTime + TotalTime)));
+                LayoutContainer.SetPosition(this, InitialPos / UIScale - (0, 20 * (TotalTime * TotalTime + TotalTime)));
             }
         }
 

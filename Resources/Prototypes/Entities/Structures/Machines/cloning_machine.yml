@@ -5,9 +5,13 @@
   description: A Cloning Pod. 50% reliable.
   components:
   - type: CloningPod
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/cloning.rsi
+    snapCardinals: true
     layers:
       - state: pod_0
   - type: Physics
@@ -25,6 +29,9 @@
   - type: Construction
     graph: Machine
     node: machine
+  - type: EmptyOnMachineDeconstruct
+    containers:
+      - clonepod-bodyContainer
   - type: Destructible
     thresholds:
     - trigger:
@@ -38,11 +45,13 @@
   - type: Machine
     board: CloningPodMachineCircuitboard
   - type: MaterialStorage
+    materialWhiteList:
+    - Biomass
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod
   - type: ApcPowerReceiver
-    powerLoad: 2000
+    powerLoad: 200 #Receives most of its power from the console
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer
@@ -53,10 +62,4 @@
           enum.CloningPodStatus.NoMind: pod_e
           enum.CloningPodStatus.Gore: pod_g
           enum.CloningPodStatus.Idle: pod_0
-  - type: ActivatableUI
-    key: enum.CloningPodUIKey.Key #Ejecting doesn't require power so I didn't give it that component
-  - type: UserInterface
-    interfaces:
-      - key: enum.CloningPodUIKey.Key
-        type: CloningPodBoundUserInterface
   - type: Climbable

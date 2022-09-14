@@ -1,8 +1,10 @@
 using Content.Server.Clothing.Components;
 using Content.Server.Light.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light.Component;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -14,6 +16,10 @@ namespace Content.Server.Light.EntitySystems
     [UsedImplicitly]
     public sealed class ExpendableLightSystem : EntitySystem
     {
+        [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -53,15 +59,17 @@ namespace Content.Server.Light.EntitySystems
                     case ExpendableLightState.Fading:
                         component.CurrentState = ExpendableLightState.Dead;
                         var meta = MetaData(component.Owner);
-                        meta.EntityName = component.SpentName;
-                        meta.EntityDescription = component.SpentDesc;
+                        meta.EntityName = Loc.GetString(component.SpentName);
+                        meta.EntityDescription = Loc.GetString(component.SpentDesc);
+
+                        _tagSystem.AddTag(component.Owner, "Trash");
 
                         UpdateSpriteAndSounds(component);
                         UpdateVisualizer(component);
 
-                        if (TryComp<SharedItemComponent>(component.Owner, out var item))
+                        if (TryComp<ItemComponent>(component.Owner, out var item))
                         {
-                            item.EquippedPrefix = "unlit";
+                            _item.SetHeldPrefix(component.Owner, "unlit", item);
                         }
 
                         break;
@@ -76,9 +84,9 @@ namespace Content.Server.Light.EntitySystems
         {
             if (!component.Activated && component.CurrentState == ExpendableLightState.BrandNew)
             {
-                if (TryComp<SharedItemComponent>(component.Owner, out var item))
+                if (TryComp<ItemComponent>(component.Owner, out var item))
                 {
-                    item.EquippedPrefix = "lit";
+                    _item.SetHeldPrefix(component.Owner, "lit", item);
                 }
 
                 component.CurrentState = ExpendableLightState.Lit;
@@ -154,15 +162,15 @@ namespace Content.Server.Light.EntitySystems
 
             if (TryComp<ClothingComponent>(component.Owner, out var clothing))
             {
-                clothing.EquippedPrefix = component.Activated ? "Activated" : string.Empty;
+                _clothing.SetEquippedPrefix(component.Owner, component.Activated ? "Activated" : string.Empty, clothing);
             }
         }
 
         private void OnExpLightInit(EntityUid uid, ExpendableLightComponent component, ComponentInit args)
         {
-            if (TryComp<SharedItemComponent?>(uid, out var item))
+            if (TryComp<ItemComponent?>(uid, out var item))
             {
-                item.EquippedPrefix = "unlit";
+                _item.SetHeldPrefix(uid, "unlit", item);
             }
 
             component.CurrentState = ExpendableLightState.BrandNew;

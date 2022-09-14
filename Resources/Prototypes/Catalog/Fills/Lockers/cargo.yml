@@ -16,3 +16,4 @@
       - id: ClothingBeltUtilityFilled
         prob: 0.8
       - id: SurvivalKnife
+      - id: WeaponProtoKineticAccelerator

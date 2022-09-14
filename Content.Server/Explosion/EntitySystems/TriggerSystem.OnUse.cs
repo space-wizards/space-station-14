@@ -87,6 +87,15 @@ public sealed partial class TriggerSystem
                 },
             });
         }
+
+        if (component.AllowToggleStartOnStick)
+        {
+            args.Verbs.Add(new AlternativeVerb()
+            {
+                Text = Loc.GetString("verb-toggle-start-on-stick"),
+                Act = () => ToggleStartOnStick(uid, args.User, component)
+            });
+        }
     }
 
     private void CycleDelay(OnUseTimerTriggerComponent component, EntityUid user)
@@ -113,6 +122,20 @@ public sealed partial class TriggerSystem
                 _popupSystem.PopupEntity(Loc.GetString("popup-trigger-timer-set", ("time", option)), user, Filter.Entities(user));
                 return;
             }
+        }
+    }
+
+    private void ToggleStartOnStick(EntityUid grenade, EntityUid user, OnUseTimerTriggerComponent comp)
+    {
+        if (comp.StartOnStick)
+        {
+            comp.StartOnStick = false;
+            _popupSystem.PopupEntity(Loc.GetString("popup-start-on-stick-off"), grenade, Filter.Entities(user));
+        }
+        else
+        {
+            comp.StartOnStick = true;
+            _popupSystem.PopupEntity(Loc.GetString("popup-start-on-stick-on"), grenade, Filter.Entities(user));
         }
     }
 

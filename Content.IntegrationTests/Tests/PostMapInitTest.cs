@@ -16,8 +16,8 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public sealed class PostMapInitTest
     {
-        public const bool SkipTestMaps = true;
-        public const string TestMapsPath = "/Maps/Test/";
+        private const bool SkipTestMaps = true;
+        private const string TestMapsPath = "/Maps/Test/";
 
         [Test]
         public async Task NoSavedPostMapInitTest()
@@ -63,13 +63,19 @@ namespace Content.IntegrationTests.Tests
 
         private static string[] GetMapNames()
         {
-           Task<string[]> task = null;
+           Task<string[]> task;
             using (ExecutionContext.SuppressFlow())
             {
                 task = Task.Run(static async () =>
                 {
                     await Task.Yield();
-                    await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{Disconnected = true});
+                    await using var pairTracker = await PoolManager.GetServerClient(
+                        new PoolSettings
+                        {
+                            Disconnected = true,
+                            TestName = $"{nameof(PostMapInitTest)}.{nameof(GetMapNames)}"
+                        }
+                    );
                     var server = pairTracker.Pair.Server;
                     var resourceManager = server.ResolveDependency<IResourceManager>();
                     var mapFolder = new ResourcePath("/Maps");
@@ -99,7 +105,7 @@ namespace Content.IntegrationTests.Tests
             return task.GetAwaiter().GetResult();
         }
 
-        [Test, TestCaseSource("GetMapNames")]
+        [Test, TestCaseSource(nameof(GetMapNames))]
         public async Task MapsLoadableTest(string mapName)
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});

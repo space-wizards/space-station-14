@@ -6,7 +6,7 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
-      - id: WeaponTaser
+      - id: WeaponDisabler
         prob: 0.3
       - id: ClothingHeadHatWarden
       - id: ClothingHeadHatBeretWarden

@@ -13,8 +13,7 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IResourceCache _resCache = default!;
-    [Dependency] private readonly SubFloorHideSystem _subfloorSys = default!;
-    
+
     public override void Initialize()
     {
         base.Initialize();
@@ -65,7 +64,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
         // transform connected directions to local-coordinates
         var connectedDirections = worldConnectedDirections.RotatePipeDirection(-Transform(uid).LocalRotation);
-        
+
         foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
         {
             if (!args.Sprite.LayerMapTryGet(layerKey, out var key))

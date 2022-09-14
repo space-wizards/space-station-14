@@ -1,12 +1,14 @@
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Roles;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Roles
 {
-    public sealed class Job : Role
+    public sealed class Job : Role, IRoleTimer
     {
+        [ViewVariables] public string Timer => Prototype.PlayTimeTracker;
+
         [ViewVariables]
         public JobPrototype Prototype { get; }
 

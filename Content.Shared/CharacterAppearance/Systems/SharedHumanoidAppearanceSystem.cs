@@ -1,19 +1,26 @@
 using Content.Shared.Body.Part;
+using Content.Shared.Examine;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Preferences;
+using Content.Shared.IdentityManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
+using Content.Shared.Species;
 
 namespace Content.Shared.CharacterAppearance.Systems
 {
     public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentGetState>(OnAppearanceGetState);
             SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentHandleState>(OnAppearanceHandleState);
+            SubscribeLocalEvent<HumanoidAppearanceComponent, ExaminedEvent>(OnExamined);
         }
 
         public void UpdateFromProfile(EntityUid uid, ICharacterProfile profile, HumanoidAppearanceComponent? appearance=null)
@@ -56,6 +63,42 @@ namespace Content.Shared.CharacterAppearance.Systems
             component.Dirty();
 
             RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, component.Sex, component.Gender, component.Species), true);
+        }
+
+        public void UpdateSexGender(EntityUid uid, Sex sex, Gender gender, HumanoidAppearanceComponent? component = null)
+        {
+            if (!Resolve(uid, ref component)) return;
+
+            component.Sex = sex;
+            component.Gender = gender;
+
+            component.Dirty();
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(component.Appearance, component.Sex, component.Gender, component.Species), true);
+        }
+
+        /// <summary>
+        /// Takes ID of the species prototype, returns UI-friendly name of the species.
+        /// </summary>
+        public string GetSpeciesRepresentation(string speciesId)
+        {
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(speciesId, out var species))
+            {
+                return Loc.GetString(species.Name);
+            }
+            else
+            {
+                return Loc.GetString("humanoid-appearance-component-unknown-species");
+            }
+        }
+
+        public string GetAgeRepresentation(int age)
+        {
+            return age switch
+            {
+                <= 30 => Loc.GetString("identity-age-young"),
+                > 30 and <= 60 => Loc.GetString("identity-age-middle-aged"),
+                > 60 => Loc.GetString("identity-age-old")
+            };
         }
 
         private void OnAppearanceGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
@@ -132,6 +175,15 @@ namespace Content.Shared.CharacterAppearance.Systems
                 Gender = gender;
                 Species = species;
             }
+        }
+
+        private void OnExamined(EntityUid uid, HumanoidAppearanceComponent component, ExaminedEvent args)
+        {
+            var identity = Identity.Entity(component.Owner, EntityManager);
+            var species = GetSpeciesRepresentation(component.Species).ToLower();
+            var age = GetAgeRepresentation(component.Age);
+
+            args.PushText(Loc.GetString("humanoid-appearance-component-examine", ("user", identity), ("age", age), ("species", species)));
         }
     }
 }

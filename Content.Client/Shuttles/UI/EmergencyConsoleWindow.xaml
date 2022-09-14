@@ -1,6 +1,6 @@
-<userInterface:FancyWindow xmlns="https://spacestation14.io"
-                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
-                           Title="Emergency Shuttle Console"
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                           Title="{Loc 'emergency-shuttle-console-window-title'}"
                            MinSize="400 400">
 <BoxContainer Orientation="Vertical"
               Margin="5">
@@ -35,7 +35,6 @@
                HorizontalExpand="True"/>
     </BoxContainer>
     <!-- Spacer -->
-    <BoxContainer Name="AuthorizationsContainer" Orientation="Vertical">
-    </BoxContainer>
+    <BoxContainer Name="AuthorizationsContainer" Orientation="Vertical"/>
 </BoxContainer>
-</userInterface:FancyWindow>
+</controls:FancyWindow>

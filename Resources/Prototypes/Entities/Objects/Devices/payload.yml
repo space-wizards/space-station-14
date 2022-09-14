@@ -76,6 +76,11 @@
         enum.ChemicalPayloadFilledSlots.Left: payload-chemical-left
         enum.ChemicalPayloadFilledSlots.Right: payload-chemical-right
         enum.ChemicalPayloadFilledSlots.Both: payload-chemical-armed
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      BeakerSlotA: !type:ContainerSlot
+      BeakerSlotB: !type:ContainerSlot
 
 - type: entity
   name: flash payload

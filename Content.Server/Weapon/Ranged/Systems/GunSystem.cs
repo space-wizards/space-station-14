@@ -1,12 +1,18 @@
 using System.Linq;
 using Content.Server.Damage.Systems;
+using Content.Server.Examine;
+using Content.Server.Interaction;
+using Content.Server.Interaction.Components;
 using Content.Server.Projectiles.Components;
+using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
 using Content.Server.Weapon.Ranged.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Sound;
+using Content.Shared.FixedPoint;
+using Content.Shared.StatusEffect;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -14,6 +20,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
@@ -22,13 +29,39 @@ namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private readonly EffectSystem _effects = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] private readonly ExamineSystem _examine = default!;
+    [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
 
     public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
+    public const float GunClumsyChance = 0.5f;
 
     public override void Shoot(GunComponent gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
+        // Try a clumsy roll
+        if (TryComp<ClumsyComponent>(user, out var clumsy))
+        {
+            for (var i = 0; i < ammo.Count; i++)
+            {
+                if (_interaction.TryRollClumsy(user.Value, GunClumsyChance, clumsy))
+                {
+                    // Wound them
+                    Damageable.TryChangeDamage(user, clumsy.ClumsyDamage);
+                    _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
+
+                    // Apply salt to the wound ("Honk!")
+                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gun.Owner);
+                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/bikehorn.ogg"), gun.Owner);
+
+                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value, Filter.Pvs(user.Value, entityManager: EntityManager));
+                    Del(gun.Owner);
+                    return;
+                }
+            }
+        }
+
         var fromMap = fromCoordinates.ToMap(EntityManager);
         var toMap = toCoordinates.ToMapPos(EntityManager);
         var mapDirection = toMap - fromMap.Position;
@@ -60,16 +93,22 @@ public sealed partial class GunSystem : SharedGunSystem
                             for (var i = 0; i < cartridge.Count; i++)
                             {
                                 var uid = Spawn(cartridge.Prototype, fromCoordinates);
-                                ShootProjectile(uid, angles[i].ToVec(), user);
+                                ShootProjectile(uid, angles[i].ToVec(), user, gun.ProjectileSpeed);
                                 shotProjectiles.Add(uid);
                             }
                         }
                         else
                         {
                             var uid = Spawn(cartridge.Prototype, fromCoordinates);
-                            ShootProjectile(uid, mapDirection, user);
+                            ShootProjectile(uid, mapDirection, user, gun.ProjectileSpeed);
                             shotProjectiles.Add(uid);
                         }
+
+                        //signal ChemicalAmmo to transfer solution
+                        RaiseLocalEvent(cartridge.Owner, new AmmoShotEvent()
+                        {
+                            FiredProjectiles = shotProjectiles,
+                        }, false);
 
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
@@ -100,11 +139,11 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         RemComp<AmmoComponent>(newAmmo.Owner);
                         // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
-                        ThrowingSystem.TryThrow(newAmmo.Owner, mapDirection, 20f, user);
+                        ThrowingSystem.TryThrow(newAmmo.Owner, mapDirection, gun.ProjectileSpeed, user);
                         break;
                     }
 
-                    ShootProjectile(newAmmo.Owner, mapDirection, user);
+                    ShootProjectile(newAmmo.Owner, mapDirection, user, gun.ProjectileSpeed);
                     break;
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
@@ -126,6 +165,11 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (dmg != null)
                         {
+                            if (dmg.Total > FixedPoint2.Zero)
+                            {
+                                RaiseNetworkEvent(new DamageEffectEvent(result.HitEntity), Filter.Pvs(result.HitEntity, entityManager: EntityManager));
+                            }
+
                             PlayImpactSound(result.HitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
 
                             if (user != null)
@@ -157,11 +201,11 @@ public sealed partial class GunSystem : SharedGunSystem
         }, false);
     }
 
-    public void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null)
+    public void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null, float speed = 20f)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
         physics.BodyStatus = BodyStatus.InAir;
-        physics.LinearVelocity = direction.Normalized * 20f;
+        physics.LinearVelocity = direction.Normalized * speed;
 
         if (user != null)
         {
@@ -215,26 +259,31 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) {}
 
-    protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)
+    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        // TODO: Fucking bad
+        var filter = Filter.Pvs(uid, entityManager: EntityManager);
+
         if (TryComp<ActorComponent>(user, out var actor))
-        {
-            _effects.CreateParticle(message, actor.PlayerSession);
-        }
-        else
-        {
-            _effects.CreateParticle(message);
-        }
+            filter.RemovePlayer(actor.PlayerSession);
+
+        RaiseNetworkEvent(message, filter);
     }
 
     public void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)
     {
+        if (Deleted(otherEntity))
+            return;
+
         // Like projectiles and melee,
         // 1. Entity specific sound
         // 2. Ammo's sound
         // 3. Nothing
         var playedSound = false;
+
+        // woops the other entity is deleted
+        // someone needs to handle this better. for now i'm just gonna make it not crash the server -rane
+        if (Deleted(otherEntity))
+            return;
 
         if (!forceWeaponSound && modifiedDamage != null && modifiedDamage.Total > 0 && TryComp<RangedDamageSoundComponent>(otherEntity, out var rangedSound))
         {
@@ -242,24 +291,20 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
             {
-                SoundSystem.Play(damageSoundType!.GetSound(),
-                    Filter.Pvs(otherEntity, entityManager: EntityManager),
-                    otherEntity, AudioHelpers.WithVariation(DamagePitchVariation));
-
+                Audio.PlayPvs(damageSoundType, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
             else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
             {
-                SoundSystem.Play(damageSoundGroup!.GetSound(),
-                    Filter.Pvs(otherEntity, entityManager: EntityManager),
-                    otherEntity, AudioHelpers.WithVariation(DamagePitchVariation));
-
+                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
         }
 
         if (!playedSound && weaponSound != null)
-            SoundSystem.Play(weaponSound.GetSound(), Filter.Pvs(otherEntity, entityManager: EntityManager), otherEntity);
+        {
+            Audio.PlayPvs(weaponSound, otherEntity);
+        }
     }
 
     // TODO: Pseudo RNG so the client can predict these.
@@ -293,7 +338,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         if (sprites.Count > 0)
         {
-            RaiseNetworkEvent(new HitscanEvent()
+            RaiseNetworkEvent(new HitscanEvent
             {
                 Sprites = sprites,
             }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));

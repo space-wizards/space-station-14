@@ -32,6 +32,8 @@
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
+    netsync: false
+    snapCardinals: true
   - type: NodeContainer
     examinable: true
     nodes:
@@ -151,7 +153,7 @@
     supplyRate: 3000
 
 - type: entity
-  parent: BaseGenerator
+  parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorPlasma
   suffix: Plasma, 5kW
   components:
@@ -160,21 +162,14 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Wires
     BoardName: "GeneratorPlasma"
     LayoutId: GeneratorPlasma
   - type: Machine
     board: GeneratorPlasmaMachineCircuitboard
-  - type: ContainerContainer
-    containers:
-      machine_parts: !type:Container
-      machine_board: !type:Container
 
 - type: entity
-  parent: BaseGenerator
+  parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorUranium
   suffix: Uranium, 15kW
   components:
@@ -183,18 +178,11 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Wires
     BoardName: "GeneratorUranium"
     LayoutId: GeneratorUranium
   - type: Machine
     board: GeneratorUraniumMachineCircuitboard
-  - type: ContainerContainer
-    containers:
-      machine_parts: !type:Container
-      machine_board: !type:Container
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -255,8 +243,5 @@
     layers:
       - state: rtg_damaged
       - state: rtg_glow
-  - type: RadiationPulse # ideally only when opened.
+  - type: RadiationSource # ideally only when opened.
     range: 2
-    decay: false
-    minPulseLifespan: 1
-    maxPulseLifespan: 1

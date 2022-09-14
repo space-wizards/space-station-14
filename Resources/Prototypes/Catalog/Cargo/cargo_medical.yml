@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "Medical Supplies"
   id: MedicalSupplies
-  description: Basic medical supplies.
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: firstaid
@@ -9,11 +7,9 @@
   cost: 1000
   category: Medical
   group: market
-  
+
 - type: cargoProduct
-  name: "Chemistry Supplies"
   id: MedicalChemistrySupplies
-  description: Basic chemistry supplies.
   icon:
     sprite: Objects/Specific/Chemistry/beaker.rsi
     state: beaker

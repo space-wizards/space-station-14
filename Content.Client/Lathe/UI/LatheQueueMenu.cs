@@ -23,7 +23,7 @@ namespace Content.Client.Lathe.UI
         {
             Owner = owner;
             SetSize = MinSize = (300, 450);
-            Title = Loc.GetString("lathequeue-menu-title");
+            Title = Loc.GetString("lathe-queue-menu-title");
 
             var vBox = new BoxContainer
             {
@@ -97,7 +97,7 @@ namespace Content.Client.Lathe.UI
         {
             _icon.Texture = Texture.Transparent;
             _nameLabel.Text = "-------";
-            _description.Text = Loc.GetString("lathequeue-menu-not-producing-text");
+            _description.Text = Loc.GetString("lathe-queue-menu-not-producing-text");
         }
 
         public void PopulateList()

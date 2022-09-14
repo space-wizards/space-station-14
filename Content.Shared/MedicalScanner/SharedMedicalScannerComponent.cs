@@ -7,23 +7,6 @@ namespace Content.Shared.MedicalScanner
     public abstract class SharedMedicalScannerComponent : Component, IDragDropOn
     {
         [Serializable, NetSerializable]
-        public sealed class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
-        {
-            public readonly bool IsScannable;
-
-            public MedicalScannerBoundUserInterfaceState(bool isScannable)
-            {
-                IsScannable = isScannable;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public enum MedicalScannerUiKey
-        {
-            Key
-        }
-
-        [Serializable, NetSerializable]
         public enum MedicalScannerVisuals
         {
             Status
@@ -38,11 +21,6 @@ namespace Content.Shared.MedicalScanner
             Death,
             Green,
             Yellow,
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class ScanButtonPressedMessage : BoundUserInterfaceMessage
-        {
         }
 
         public bool CanInsert(EntityUid entity)

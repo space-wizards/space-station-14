@@ -60,6 +60,8 @@ namespace Content.Client.Flash
             {
                 screenSpaceHandle.DrawTextureRect(_screenshotTexture, screenSize);
             }
+
+            screenSpaceHandle.UseShader(null);
         }
 
         protected override void DisposeBehavior()

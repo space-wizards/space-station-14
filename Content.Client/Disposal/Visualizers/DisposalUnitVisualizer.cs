@@ -1,12 +1,8 @@
-using System;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.Visualizers
@@ -145,6 +141,7 @@ namespace Content.Client.Disposal.Visualizers
             }
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -155,6 +152,7 @@ namespace Content.Client.Disposal.Visualizers
             ChangeState(appearance);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

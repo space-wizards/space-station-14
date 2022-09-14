@@ -12,6 +12,10 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   id: SpeedLoaderPistol

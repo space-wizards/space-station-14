@@ -1,12 +1,10 @@
-using System.Collections.Generic;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 
 namespace Content.Client.CharacterInfo.Components;
 

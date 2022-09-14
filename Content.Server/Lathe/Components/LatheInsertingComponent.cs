@@ -5,5 +5,11 @@ namespace Content.Server.Lathe.Components
     /// <summary>
     [RegisterComponent]
     public sealed class LatheInsertingComponent : Component
-    {}
+    {
+        /// <summary>
+        /// Remaining insertion time, in seconds.
+        /// </summary>
+        [DataField("timeRemaining", required: true)]
+        public float TimeRemaining;
+    }
 }

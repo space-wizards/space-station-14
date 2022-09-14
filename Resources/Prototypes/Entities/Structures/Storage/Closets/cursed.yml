@@ -6,3 +6,6 @@
   description: A standard-issue Nanotrasen storage unit.
   components:
   - type: CursedEntityStorage
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Effects/teleport_arrival.ogg

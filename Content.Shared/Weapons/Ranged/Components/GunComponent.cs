@@ -1,5 +1,5 @@
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
@@ -84,6 +84,12 @@ public class GunComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")]
     public float FireRate = 8f;
+
+    /// <summary>
+    /// How fast the projectile moves.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("projectileSpeed")]
+    public float ProjectileSpeed = 20f;
 
     /// <summary>
     /// When the gun is next available to be shot.

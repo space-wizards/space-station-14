@@ -94,6 +94,11 @@
     - type: PoweredLightVisualizer
       blinkingSound:
         path: "/Audio/Machines/light_tube_on.ogg"
+  - type: SignalReceiver
+    inputs:
+      On: []
+      Off: []
+      Toggle: []
 
 - type: entity
   id: Poweredlight
@@ -306,7 +311,7 @@
   - type: AmbientSound
     sound:
       path: /Audio/Ambience/Objects/alarm.ogg
-    volume: -18
+    volume: -12
     range: 5
     enabled: false
   placement:

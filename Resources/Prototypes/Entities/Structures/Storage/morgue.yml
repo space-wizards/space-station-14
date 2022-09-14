@@ -9,6 +9,10 @@
     layers:
     - state: morgue_closed
       map: ["enum.MorgueVisualLayers.Base"]
+    - state: morgue_tray
+      offset: 0, -1
+      visible: false
+      map: ["enum.StorageVisualLayers.Door"]
     - state: morgue_nomob_light
       visible: false
       map: ["enum.MorgueVisualLayers.Light"]
@@ -27,34 +31,50 @@
       - MachineMask
       layer:
       - WallLayer
-  - type: MorgueEntityStorage
-    IsCollidableWhenOpen: true
-    Capacity: 1
+  - type: EntityStorage
+    isCollidableWhenOpen: true
+    showContents: false
+    capacity: 1
+    enteringOffset: 0, -1
     closeSound:
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
-    trayPrototype: MorgueTray
+  - type: EntityStorageLayingDownOverride
+  - type: Morgue
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
       morgue_tray: !type:ContainerSlot
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: MorgueVisualizer
-      state_open: morgue_open
-      state_closed: morgue_closed
-      light_contents: morgue_nomob_light
-      light_mob: morgue_nosoul_light
-      light_soul: morgue_soul_light
+      enum.StorageVisuals.Open:
+        # basic open.close layer:
+        enum.MorgueVisualLayers.Base:
+          True: { state: morgue_open}
+          False: { state: morgue_closed}
+        # show/hide morgue tray:
+        enum.StorageVisualLayers.Door:
+          True: { visible: true}
+          False: { visible: false}
+      enum.MorgueVisuals.Contents:
+        # toggle contents light indicator:
+        enum.MorgueVisualLayers.Light:
+          Empty: {visible: false}
+          HasContents: {visible: true, state: morgue_nomob_light}
+          HasMob: {visible: true, state: morgue_nosoul_light}
+          HasSoul: {visible: true, state: morgue_soul_light}
   - type: Transform
     anchored: true
   - type: AntiRottingContainer
 
+#needs to be removed
 - type: entity
   id: MorgueTray
   name: morgue tray
   description: If you lay down to have a rest on this, you'll soon have a problem.
+  noSpawn: true
   components:
   - type: Physics
     bodyType: Static
@@ -70,10 +90,6 @@
     netsync: false
     sprite: Structures/Storage/morgue.rsi
     state: morgue_tray
-  - type: Clickable
-  - type: InteractionOutline
-  - type: MorgueTray
-  - type: AntiRottingContainer
 
 - type: entity
   id: Crematorium
@@ -86,6 +102,9 @@
     layers:
     - state: crema_closed
       map: ["enum.CrematoriumVisualLayers.Base"]
+    - state: crema_tray
+      offset: 0, -1
+      map: ["enum.StorageVisualLayers.Door"]
     - state: crema_contents_light
       visible: false
       map: ["enum.CrematoriumVisualLayers.Light"]
@@ -104,29 +123,35 @@
       - MachineMask
       layer:
       - MachineLayer
-  - type: CrematoriumEntityStorage
-    IsCollidableWhenOpen: true
-    Capacity: 1
+  - type: EntityStorage
+    isCollidableWhenOpen: true
+    showContents: false
+    capacity: 1
+    enteringOffset: 0, -1
     closeSound:
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
-    trayPrototype: CrematoriumTray
-    doSoulBeep: false
+  - type: EntityStorageLayingDownOverride
+  - type: Crematorium
   - type: Appearance
     visuals:
-    - type: CrematoriumVisualizer
-      state_open: crema_open
-      state_closed: crema_closed
-      light_contents: crema_contents_light
-      light_burning: crema_active_light
+    - type: StorageVisualizer
+      state: crema_closed
+      state_alt: crema_open
+      state_open: crema_tray
+  - type: CrematoriumVisuals
+    lightContents: crema_contents_light
+    lightBurning: crema_active_light
   - type: Transform
     anchored: true
 
+#needs to be removed
 - type: entity
   id: CrematoriumTray
   name: crematorium tray
   parent: MorgueTray
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false

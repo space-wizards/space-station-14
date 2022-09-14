@@ -1,0 +1,22 @@
+﻿- type: entity
+  id: WeaponStaffBase
+  abstract: true
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+  - type: Item
+    heldPrefix: staff
+    size: 60
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: AmmoCounter
+  # All staves recharge. Wands are not.
+  - type: RechargeBasicEntityAmmo
+  - type: Tag
+    tags:
+    - WizardStaff
+

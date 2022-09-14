@@ -22,3 +22,7 @@
     steps: 6
     zeroVisible: false
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []

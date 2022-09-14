@@ -6,10 +6,15 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
 
 - type: entity
-  id: LeftHandDrone
-  name: "left drone hand"
+  id: LeftArmBorg
+  name: "left borg arm"
   parent: PartSilicon
   components:
   - type: Sprite
@@ -27,11 +32,12 @@
   - type: Tag
     tags:
     - Trash
+    - BorgArm
   - type: Recyclable
 
 - type: entity
-  id: RightHandDrone
-  name: "right drone hand"
+  id: RightArmBorg
+  name: "right borg arm"
   parent: PartSilicon
   components:
   - type: Sprite
@@ -49,4 +55,5 @@
   - type: Tag
     tags:
     - Trash
+    - BorgArm
   - type: Recyclable

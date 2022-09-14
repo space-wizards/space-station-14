@@ -14,7 +14,6 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -141,6 +140,13 @@ namespace Content.Server.Nuke
         private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateUserInterface(uid, component);
+
+            if (args.Anchored == false && component.Status == NukeStatus.ARMED && component.RemainingTime > component.DisarmDoafterLength)
+            {
+                // yes, this means technically if you can find a way to unanchor the nuke, you can disarm it
+                // without the doafter. but that takes some effort, and it won't allow you to disarm a nuke that can't be disarmed by the doafter.
+                DisarmBomb(uid, component);
+            }
         }
 
         #endregion
@@ -202,7 +208,7 @@ namespace Content.Server.Nuke
             if (!component.DiskSlot.HasItem)
                 return;
 
-            if (component.Status == NukeStatus.AWAIT_ARM)
+            if (component.Status == NukeStatus.AWAIT_ARM && Transform(uid).Anchored)
             {
                 ArmBomb(uid, component);
             }
@@ -432,7 +438,7 @@ namespace Content.Server.Nuke
             var announcement = Loc.GetString("nuke-component-announcement-armed",
                 ("time", (int) component.RemainingTime), ("position", posText));
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, Color.Red);
+            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, null, Color.Red);
 
             NukeArmedAudio(component);
 
@@ -513,7 +519,10 @@ namespace Content.Server.Nuke
                 component.IntensitySlope,
                 component.MaxIntensity);
 
-            RaiseLocalEvent(new NukeExplodedEvent());
+            RaiseLocalEvent(new NukeExplodedEvent()
+            {
+                OwningStation = transform.GridUid,
+            });
 
             _soundSystem.StopStationEventMusic(component.Owner, StationEventMusicType.Nuke);
             EntityManager.DeleteEntity(uid);
@@ -540,6 +549,7 @@ namespace Content.Server.Nuke
             {
                 TargetCancelledEvent = new NukeDisarmCancelledEvent(),
                 TargetFinishedEvent = new NukeDisarmSuccessEvent(),
+                BroadcastFinishedEvent = new NukeDisarmSuccessEvent(),
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
@@ -564,7 +574,10 @@ namespace Content.Server.Nuke
         }
     }
 
-    public sealed class NukeExplodedEvent : EntityEventArgs {}
+    public sealed class NukeExplodedEvent : EntityEventArgs
+    {
+        public EntityUid? OwningStation;
+    }
 
     /// <summary>
     ///     Raised directed on the nuke when its disarm doafter is successful.

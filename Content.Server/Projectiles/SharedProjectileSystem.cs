@@ -3,11 +3,15 @@ using Content.Server.Projectiles.Components;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
+using Robust.Shared.Physics.Events;
 using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
 
 namespace Content.Server.Projectiles
@@ -17,7 +21,7 @@ namespace Content.Server.Projectiles
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly GunSystem _guns = default!;
 
         public override void Initialize()
@@ -32,7 +36,7 @@ namespace Content.Server.Projectiles
             args.State = new ProjectileComponentState(component.Shooter, component.IgnoreShooter);
         }
 
-        private void OnStartCollide(EntityUid uid, ProjectileComponent component, StartCollideEvent args)
+        private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
         {
             // This is so entities that shouldn't get a collision are ignored.
             if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
@@ -40,11 +44,16 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
-            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
+            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances);
             component.DamagedEntity = true;
 
             if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
             {
+                if (modifiedDamage.Total > FixedPoint2.Zero)
+                {
+                    RaiseNetworkEvent(new DamageEffectEvent(otherEntity), Filter.Pvs(otherEntity, entityManager: EntityManager));
+                }
+
                 _adminLogger.Add(LogType.BulletHit,
                     HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
                     $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
@@ -56,7 +65,7 @@ namespace Content.Server.Projectiles
             if (HasComp<CameraRecoilComponent>(otherEntity))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
-                _cameraRecoil.KickCamera(otherEntity, direction);
+                _sharedCameraRecoil.KickCamera(otherEntity, direction);
             }
 
             if (component.DeleteOnCollide)
@@ -65,7 +74,7 @@ namespace Content.Server.Projectiles
 
                 if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
                 {
-                    RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates));
+                    RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
                 }
             }
         }

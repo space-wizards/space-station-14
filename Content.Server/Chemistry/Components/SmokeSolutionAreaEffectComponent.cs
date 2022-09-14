@@ -34,7 +34,7 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             if (_entMan.TryGetComponent(entity, out InternalsComponent? internals) &&
-                internals.AreInternalsWorking())
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InternalsSystem>().AreInternalsWorking(internals))
                 return;
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();

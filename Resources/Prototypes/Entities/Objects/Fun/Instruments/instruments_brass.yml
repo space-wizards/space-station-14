@@ -1,0 +1,76 @@
+﻿- type: entity
+  parent: BaseHandheldInstrument
+  id: TrumpetInstrument
+  name: trumpet
+  description: The favorite instrument of jazz musicians and egotistical middle schoolers.
+  components:
+  - type: Instrument
+    program: 56
+  - type: SwappableInstrument
+    instrumentList:
+      "Standard": {56: 0}
+      "Muted": {59: 0}
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/trumpet.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/Instruments/trumpet.rsi
+  - type: Tag
+    tags:
+    - BrassInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: TromboneInstrument
+  name: trombone
+  description: Everyone's favorite sliding brass instrument.
+  components:
+  - type: Instrument
+    program: 57
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/trombone.rsi
+    state: icon
+  - type: Item
+    size: 48
+    sprite: Objects/Fun/Instruments/trombone.rsi
+  - type: Tag
+    tags:
+    - BrassInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: FrenchHornInstrument
+  name: french horn
+  description: The fact that holding it involves using your hand to muffle it may suggest something about its sound.
+  components:
+  - type: Instrument
+    program: 60
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/frenchhorn.rsi
+    state: icon
+  - type: Item
+    size: 48
+    sprite: Objects/Fun/Instruments/frenchhorn.rsi
+  - type: Tag
+    tags:
+    - BrassInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: EuphoniumInstrument
+  name: euphonium
+  description: A baby tuba? A Baritone? Whatever it is, it's a pretty cool mess of pipes.
+  components:
+  - type: Instrument
+    program: 3
+    bank: 1
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/euphonium.rsi
+    state: icon
+  - type: Item
+    size: 48
+    sprite: Objects/Fun/Instruments/euphonium.rsi
+  - type: Tag
+    tags:
+    - BrassInstrument

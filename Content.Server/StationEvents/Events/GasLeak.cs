@@ -15,10 +15,12 @@ namespace Content.Server.StationEvents.Events
 
         public override string Prototype => "GasLeak";
 
-        private static readonly Gas[] LeakableGases = {
+        private static readonly Gas[] LeakableGases =
+        {
             Gas.Miasma,
             Gas.Plasma,
             Gas.Tritium,
+            Gas.Frezon,
         };
 
         /// <summary>

@@ -1,13 +1,13 @@
-using Content.Server.Popups;
 using Content.Server.Interaction.Components;
+using Content.Server.Popups;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Robust.Shared.Random;
-
+using Robust.Shared.Timing;
 
 namespace Content.Server.Interaction;
 
@@ -28,6 +28,10 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (args.Handled || args.User == args.Target)
             return;
 
+        //Handling does nothing and this thing annoyingly plays way too often.
+        if (HasComp<SleepingComponent>(uid))
+            return;
+
         var curTime = _gameTiming.CurTime;
 
         if (curTime < component.LastInteractTime + component.InteractDelay)
@@ -36,6 +40,9 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (TryComp<MobStateComponent>(uid, out var state) // if it has a MobStateComponent,
             && !state.IsAlive())                           // AND if that state is not Alive (e.g. dead/incapacitated/critical)
             return;
+
+        // TODO: Should be an attempt event
+        // TODO: Need to handle pausing with an accumulator.
 
         string msg = ""; // Stores the text to be shown in the popup message
         string? sfx = null; // Stores the filepath of the sound to be played

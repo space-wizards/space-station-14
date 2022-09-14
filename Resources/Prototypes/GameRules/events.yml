@@ -23,9 +23,25 @@
   id: DiseaseOutbreak
   config:
     !type:StationEventRuleConfiguration
+    startAnnouncement: station-event-disease-outbreak-announcement
+    startAudio:
+      path: /Audio/Announcements/outbreak7.ogg
     id: DiseaseOutbreak
-    weight: 10
+    weight: 5
     endAfter: 1
+    earliestStart: 15
+    maxOccurrences: 3
+
+- type: gameRule
+  id: Dragon
+  config:
+    !type:StationEventRuleConfiguration
+    id: Dragon
+    weight: 10
+    endAfter: 2
+    earliestStart: 15
+    maxOccurrences: 7
+    minimumPlayers: 15
 
 - type: gameRule
   id: FalseAlarm
@@ -142,7 +158,7 @@
   id: ZombieOutbreak
   config:
     !type:StationEventRuleConfiguration
-    id: ZombieOutbreak
+    id: Zombie
     earliestStart: 50
     weight: 2.5
     endAfter: 1

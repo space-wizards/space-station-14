@@ -237,11 +237,16 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
-    state: stick
-  - type: RandomSpriteState
-    spriteStates:
-    - stick
-    - stick2
+    netsync: false
+    layers:
+      - state: stick
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          stick: ""
+      - enum.DamageStateVisualLayers.Base:
+          stick2: ""
   - type: Tag
     tags:
     - Trash

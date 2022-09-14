@@ -78,9 +78,10 @@
     damage:
       types:
         Slash: 25
-  - type: Clothing
+  - type: Item
     size: 20
+  - type: Clothing
     sprite: Objects/Weapons/Melee/claymore.rsi
-    Slots:
+    slots:
     - back
   - type: DisarmMalus

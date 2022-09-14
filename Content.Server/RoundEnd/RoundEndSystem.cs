@@ -133,6 +133,7 @@ namespace Content.Server.RoundEnd
                 ("units", Loc.GetString(units))),
                 Loc.GetString("Station"),
                 false,
+                null,
                 Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());

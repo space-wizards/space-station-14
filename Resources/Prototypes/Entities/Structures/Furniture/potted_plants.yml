@@ -22,9 +22,13 @@
     drawdepth: Overdoors
     offset: "0.0,0.3"
     sprite: Structures/Furniture/potted_plants.rsi
+    noRot: true
   - type: PottedPlantHide
   - type: SecretStash
     secretPartName: the plant
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
   - type: Pullable
   - type: Damageable
     damageContainer: Inorganic # The pot. Not the plant. Or is it plastic?

@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Shuttles.Components
 {
@@ -18,5 +19,15 @@ namespace Content.Shared.Shuttles.Components
         [ViewVariables] public EntityCoordinates? Position { get; set; }
 
         public const float BreakDistance = 0.25f;
+
+        public Vector2 CurTickStrafeMovement = Vector2.Zero;
+        public float CurTickRotationMovement;
+        public float CurTickBraking;
+
+        public GameTick LastInputTick = GameTick.Zero;
+        public ushort LastInputSubTick = 0;
+
+        [ViewVariables]
+        public ShuttleButtons HeldButtons = ShuttleButtons.None;
     }
 }

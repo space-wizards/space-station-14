@@ -9,7 +9,7 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots:
+    slots:
     - ears
     sprite: Clothing/Ears/Headsets/base.rsi
 
@@ -43,7 +43,7 @@
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetCentCom
-  name: centcomm headset
+  name: CentCom headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
   - type: Headset

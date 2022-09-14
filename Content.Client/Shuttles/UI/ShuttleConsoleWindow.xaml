@@ -1,10 +1,10 @@
-<userInterface:FancyWindow xmlns="https://spacestation14.io"
-                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
-                           xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-                           xmlns:ui1="clr-namespace:Content.Client.HUD.UI"
-                           Title="{Loc 'shuttle-console-window-title'}">
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+                      Title="{Loc 'shuttle-console-window-title'}">
     <GridContainer Columns="3"
-                  HorizontalAlignment="Stretch">
+                  HorizontalAlignment="Stretch"
+                  Margin="5 5 5 5">
         <BoxContainer Name="LeftDisplay"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
@@ -12,12 +12,18 @@
                       Align="Center"
                       Orientation="Vertical">
             <BoxContainer Orientation="Vertical">
-                <ui1:StripeBack>
+                <controls:StripeBack>
                     <Label Name="DockingPortsLabel" Text="{Loc 'shuttle-console-dock-label'}" HorizontalAlignment="Center"/>
-                </ui1:StripeBack>
+                </controls:StripeBack>
                 <BoxContainer Name="DockPorts"
-                              Orientation="Vertical">
-                </BoxContainer>
+                              Orientation="Vertical"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical">
+                <controls:StripeBack>
+                    <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-hyperspace-label'}" HorizontalAlignment="Center"/>
+                </controls:StripeBack>
+                <BoxContainer Name="HyperspaceDestinations"
+                              Orientation="Vertical"/>
             </BoxContainer>
         </BoxContainer>
         <PanelContainer>
@@ -29,17 +35,25 @@
         </PanelContainer>
         <BoxContainer Name="RightDisplay"
                       VerticalAlignment="Top"
-                      HorizontalAlignment="Left"
+                      HorizontalAlignment="Right"
                       MinWidth="256"
                       Align="Center"
                       Orientation="Vertical">
-            <ui1:StripeBack>
+            <controls:StripeBack>
                 <Label Name="DisplayLabel" Text="{Loc 'shuttle-console-display-label'}" HorizontalAlignment="Center"/>
-            </ui1:StripeBack>
+            </controls:StripeBack>
             <BoxContainer Name="ReadonlyDisplay">
                 <GridContainer Columns="2"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Top">
+                    <Label Text="{Loc 'shuttle-console-ftl-state'}"/>
+                    <Label Name="FTLState"
+                           Text="{Loc 'ftl-shuttle-console-available'}"
+                           HorizontalAlignment="Right"/>
+                    <Label Text="{Loc 'shuttle-console-ftl-timer'}"/>
+                    <Label Name="FTLTimer"
+                           Text="0.0"
+                           HorizontalAlignment="Right"/>
                     <Label Text="{Loc 'shuttle-console-max-radar'}"/>
                     <Label Name="MaxRadarRange"
                            Text="0.0"
@@ -66,10 +80,6 @@
                            Align="Right"/>
                 </GridContainer>
             </BoxContainer>
-            <Button Name="ShuttleModeDisplay"
-                    Text="{Loc 'shuttle-console-strafing'}"
-                    TextAlign="Center"
-                    ToggleMode="True"/>
             <Button Name="IFFToggle"
                     Text="{Loc 'shuttle-console-iff-toggle'}"
                     TextAlign="Center"
@@ -84,4 +94,4 @@
                     Disabled="True"/>
         </BoxContainer>
     </GridContainer>
-</userInterface:FancyWindow>
+</controls:FancyWindow>

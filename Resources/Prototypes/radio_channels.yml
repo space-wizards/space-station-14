@@ -3,7 +3,7 @@
   name: chat-radio-common
   keycode: ";"
   frequency: 1459
-  color: "#1ecc43"
+  color: "#32cd32"
 
 - type: radioChannel
   id: CentCom

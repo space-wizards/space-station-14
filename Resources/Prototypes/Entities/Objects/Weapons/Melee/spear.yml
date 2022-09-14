@@ -22,11 +22,11 @@
     damage:
       types:
         Piercing: 15
-  - type: Clothing
+  - type: Item
     size: 40
-    sprite: Objects/Weapons/Melee/spear.rsi
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - back
   - type: Construction
     graph: Spear
@@ -45,9 +45,9 @@
     maxTransferAmount: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
-    modifiers:
-      flatReductions:
-        Piercing: -7
+    damage:
+      types:
+        Piercing: 7
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

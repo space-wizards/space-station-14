@@ -1,31 +1,5 @@
 - type: cargoProduct
-  name: "water tank"
-  id: MaterialWaterTank
-  description: "A tank of fresh water for when the station has ran out."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: WaterTankFull
-  cost: 2000
-  category: Materials
-  group: market
-
-- type: cargoProduct
-  name: "fuel tank"
-  id: MaterialFuelTank
-  description: "A tank of welder fuel for when the station has ran out."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: fueltank
-  product: WeldingFuelTankFull
-  cost: 2000
-  category: Materials
-  group: market
-
-- type: cargoProduct
-  name: "crate of glass sheets"
   id: MaterialGlass
-  description: "90 sheets of glass, packed with care."
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
     state: glass_3
@@ -35,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: "crate of steel sheets"
   id: MaterialSteel
-  description: "90 sheets of steel."
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
     state: steel_3
@@ -47,9 +19,7 @@
   group: market
 
 - type: cargoProduct
-  name: "crate of plastic sheets"
   id: MaterialPlastic
-  description: "90 sheets of plastic."
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
     state: plastic_3
@@ -59,9 +29,7 @@
   group: market
 
 - type: cargoProduct
-  name: "crate of plasteel sheets"
   id: MaterialPlasteel
-  description: "90 sheets of plasteel."
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
     state: plasteel_3
@@ -71,9 +39,7 @@
   group: market
 
 - type: cargoProduct
-  name: "crate of solid plasma"
   id: MaterialPlasma
-  description: "90 sheets of plasma."
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
     state: plasma_3
@@ -82,3 +48,22 @@
   category: Materials
   group: market
 
+- type: cargoProduct
+  id: MaterialFuelTank
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: fueltank
+  product: WeldingFuelTankFull
+  cost: 2000
+  category: Materials
+  group: market
+
+- type: cargoProduct
+  id: MaterialWaterTank
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: WaterTankFull
+  cost: 2000
+  category: Materials
+  group: market

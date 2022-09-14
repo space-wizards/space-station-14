@@ -18,7 +18,8 @@ public abstract class SharedIdentitySystem : EntitySystem
 
     private void OnSeeIdentity(EntityUid uid, IdentityBlockerComponent component, SeeIdentityAttemptEvent args)
     {
-        args.Cancel();
+        if (component.Enabled)
+            args.Cancel();
     }
 
     protected virtual void OnComponentInit(EntityUid uid, IdentityComponent component, ComponentInit args)

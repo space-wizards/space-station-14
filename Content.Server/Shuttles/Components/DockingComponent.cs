@@ -13,6 +13,9 @@ namespace Content.Server.Shuttles.Components
         [ViewVariables]
         public Joint? DockJoint;
 
+        [ViewVariables, DataField("dockJointId")]
+        public string? DockJointId;
+
         [ViewVariables]
         public override bool Docked => DockedWith != null;
 

@@ -1,4 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CCVar;
@@ -43,7 +45,7 @@ namespace Content.Server.Preferences.Managers
             var index = message.SelectedCharacterIndex;
             var userId = message.MsgChannel.UserId;
 
-            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
                 return;
@@ -83,7 +85,7 @@ namespace Content.Server.Preferences.Managers
                 return;
             }
 
-            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
                 return;
@@ -116,7 +118,7 @@ namespace Content.Server.Preferences.Managers
             var slot = message.Slot;
             var userId = message.MsgChannel.UserId;
 
-            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
                 return;
@@ -163,14 +165,15 @@ namespace Content.Server.Preferences.Managers
             }
         }
 
-        public async void OnClientConnected(IPlayerSession session)
+        // Should only be called via UserDbDataManager.
+        public async Task LoadData(IPlayerSession session, CancellationToken cancel)
         {
             if (!ShouldStorePrefs(session.ConnectedClient.AuthType))
             {
                 // Don't store data for guests.
                 var prefsData = new PlayerPrefData
                 {
-                    PrefsLoaded = Task.CompletedTask,
+                    PrefsLoaded = true,
                     Prefs = new PlayerPreferences(
                         new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Random())},
                         0, Color.Transparent)
@@ -182,7 +185,6 @@ namespace Content.Server.Preferences.Managers
             {
                 var prefsData = new PlayerPrefData();
                 var loadTask = LoadPrefs();
-                prefsData.PrefsLoaded = loadTask;
                 _cachedPlayerPrefs[session.UserId] = prefsData;
 
                 await loadTask;
@@ -191,6 +193,7 @@ namespace Content.Server.Preferences.Managers
                 {
                     var prefs = await GetOrCreatePreferencesAsync(session.UserId);
                     prefsData.Prefs = prefs;
+                    prefsData.PrefsLoaded = true;
 
                     var msg = new MsgPreferencesAndSettings();
                     msg.Preferences = prefs;
@@ -203,7 +206,6 @@ namespace Content.Server.Preferences.Managers
             }
         }
 
-
         public void OnClientDisconnected(IPlayerSession session)
         {
             _cachedPlayerPrefs.Remove(session.UserId);
@@ -214,9 +216,24 @@ namespace Content.Server.Preferences.Managers
             return _cachedPlayerPrefs.ContainsKey(session.UserId);
         }
 
-        public Task WaitPreferencesLoaded(IPlayerSession session)
+
+        /// <summary>
+        /// Tries to get the preferences from the cache
+        /// </summary>
+        /// <param name="userId">User Id to get preferences for</param>
+        /// <param name="playerPreferences">The user preferences if true, otherwise null</param>
+        /// <returns>If preferences are not null</returns>
+        public bool TryGetCachedPreferences(NetUserId userId,
+            [NotNullWhen(true)] out PlayerPreferences? playerPreferences)
         {
-            return _cachedPlayerPrefs[session.UserId].PrefsLoaded;
+            if (_cachedPlayerPrefs.TryGetValue(userId, out var prefs))
+            {
+                playerPreferences = prefs.Prefs;
+                return prefs.Prefs != null;
+            }
+
+            playerPreferences = null;
+            return false;
         }
 
         /// <summary>
@@ -303,7 +320,7 @@ namespace Content.Server.Preferences.Managers
 
         private sealed class PlayerPrefData
         {
-            public Task PrefsLoaded = default!;
+            public bool PrefsLoaded;
             public PlayerPreferences? Prefs;
         }
     }

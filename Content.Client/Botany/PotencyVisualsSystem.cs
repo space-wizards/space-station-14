@@ -1,4 +1,5 @@
 using Content.Shared.Botany;
+using Content.Client.Botany.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Botany;
