@@ -94,6 +94,7 @@
     lightEnergy: 0.8
     lightRadius: 10
     lightSoftness: 1
+    PowerUse: 25
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
@@ -111,7 +112,7 @@
     lightRadius: 10
     lightSoftness: 0.9
     BurningTemperature: 350
-    PowerUse: 25
+    PowerUse: 12
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal

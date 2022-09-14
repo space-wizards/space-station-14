@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Alerts;
 
 [UsedImplicitly]
-internal sealed class ClientAlertsSystem : AlertsSystem
+public sealed class ClientAlertsSystem : AlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
 
@@ -95,9 +95,6 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
     private void OnPlayerDetached(EntityUid uid, AlertsComponent component, PlayerDetachedEvent args)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
-            return;
-
         ClearAlerts?.Invoke(this, EventArgs.Empty);
     }
 

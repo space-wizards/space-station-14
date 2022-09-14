@@ -69,7 +69,7 @@ namespace Content.Shared.Movement.Systems
             InitializeRelay();
             _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
-            UpdatesBefore.Add(typeof(SharedTileFrictionController));
+            UpdatesBefore.Add(typeof(TileFrictionController));
         }
 
         private void SetRelativeMovement(bool value) => _relativeMovement = value;
@@ -165,11 +165,11 @@ namespace Content.Shared.Movement.Systems
             if (!angleDiff.EqualsApprox(Angle.Zero, 0.001))
             {
                 var adjustment = angleDiff * 5f * frameTime;
-                var minAdjustment = 0.005 * frameTime;
+                var minAdjustment = 0.01 * frameTime;
 
                 if (angleDiff < 0)
                 {
-                    adjustment = Math.Min(adjustment, minAdjustment);
+                    adjustment = Math.Min(adjustment, -minAdjustment);
                     adjustment = Math.Clamp(adjustment, angleDiff, -angleDiff);
                 }
                 else
@@ -179,10 +179,12 @@ namespace Content.Shared.Movement.Systems
                 }
 
                 mover.RelativeRotation += adjustment;
+                mover.RelativeRotation.FlipPositive();
                 Dirty(mover);
             }
             else if (!angleDiff.Equals(Angle.Zero))
             {
+                mover.TargetRelativeRotation.FlipPositive();
                 mover.RelativeRotation = mover.TargetRelativeRotation;
                 Dirty(mover);
             }
