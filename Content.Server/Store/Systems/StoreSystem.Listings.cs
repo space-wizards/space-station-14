@@ -63,23 +63,23 @@ public sealed partial class StoreSystem : EntitySystem
     /// <summary>
     /// Gets the available listings for a store
     /// </summary>
-    /// <param name="user">The person getting the listings.</param>
+    /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
     /// <param name="component">The store the listings are coming from.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingData> GetAvailableListings(EntityUid user, StoreComponent component)
+    public IEnumerable<ListingData> GetAvailableListings(EntityUid buyer, StoreComponent component)
     {
-        return GetAvailableListings(user, component.Listings, component.Categories, component.Owner);
+        return GetAvailableListings(buyer, component.Listings, component.Categories, component.Owner);
     }
 
     /// <summary>
     /// Gets the available listings for a user given an overall set of listings and categories to filter by.
     /// </summary>
-    /// <param name="user">The person getting the listings.</param>
+    /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
     /// <param name="listings">All of the listings that are available. If null, will just get all listings from the prototypes.</param>
     /// <param name="categories">What categories to filter by.</param>
     /// <param name="storeEntity">The physial entity of the store. Can be null.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingData> GetAvailableListings(EntityUid user, HashSet<ListingData>? listings, HashSet<string> categories, EntityUid? storeEntity = null)
+    public IEnumerable<ListingData> GetAvailableListings(EntityUid buyer, HashSet<ListingData>? listings, HashSet<string> categories, EntityUid? storeEntity = null)
     {
         if (listings == null)
             listings = GetAllListings();
@@ -91,7 +91,7 @@ public sealed partial class StoreSystem : EntitySystem
 
             if (listing.Conditions != null)
             {
-                var args = new ListingConditionArgs(user, storeEntity, listing, EntityManager);
+                var args = new ListingConditionArgs(buyer, storeEntity, listing, EntityManager);
                 var conditionsMet = true;
 
                 foreach (var condition in listing.Conditions)

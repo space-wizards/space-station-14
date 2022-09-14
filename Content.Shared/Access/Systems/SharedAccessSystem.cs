@@ -1,10 +1,12 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Roles;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
 {
-    public sealed class AccessSystem : EntitySystem
+    public abstract class SharedAccessSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -13,6 +15,28 @@ namespace Content.Shared.Access.Systems
             base.Initialize();
 
             SubscribeLocalEvent<AccessComponent, MapInitEvent>(OnAccessInit);
+            SubscribeLocalEvent<AccessComponent, ComponentGetState>(OnAccessGetState);
+            SubscribeLocalEvent<AccessComponent, ComponentHandleState>(OnAccessHandleState);
+        }
+
+        private void OnAccessHandleState(EntityUid uid, AccessComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not AccessComponentState state) return;
+
+            // Don't do = because prediction and refs
+            component.Tags.Clear();
+            component.Groups.Clear();
+            component.Tags.UnionWith(state.Tags);
+            component.Groups.UnionWith(state.Groups);
+        }
+
+        private void OnAccessGetState(EntityUid uid, AccessComponent component, ref ComponentGetState args)
+        {
+            args.State = new AccessComponentState()
+            {
+                Tags = component.Tags,
+                Groups = component.Groups,
+            };
         }
 
         private void OnAccessInit(EntityUid uid, AccessComponent component, MapInitEvent args)
@@ -38,6 +62,7 @@ namespace Content.Shared.Access.Systems
 
             access.Tags.Clear();
             access.Tags.UnionWith(newTags);
+            Dirty(access);
 
             return true;
         }
@@ -55,6 +80,7 @@ namespace Content.Shared.Access.Systems
                 access.Tags.UnionWith(proto.Tags);
             }
 
+            Dirty(access);
             return true;
         }
 
@@ -84,6 +110,13 @@ namespace Content.Shared.Access.Systems
                 access.Tags.UnionWith(prototype.ExtendedAccess);
                 TryAddGroups(uid, prototype.ExtendedAccessGroups, access);
             }
+        }
+
+        [Serializable, NetSerializable]
+        private sealed class AccessComponentState : ComponentState
+        {
+            public HashSet<string> Tags = new();
+            public HashSet<string> Groups = new();
         }
     }
 }

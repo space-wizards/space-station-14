@@ -1,7 +1,7 @@
 - type: material
   id: Biomass
   stack: Biomass
-  name: biomass
+  name: materials-biomass
   icon: /Textures/Objects/Misc/monkeycube.rsi/cube.png
   color: "#8A9A5B"
   price: 0.05
@@ -9,7 +9,7 @@
 - type: material
   id: Cloth
   stack: Cloth
-  name: cloth
+  name: materials-cloth
   icon: /Textures/Objects/Materials/materials.rsi/cloth.png
   color: "#e7e7de"
   price: 0.005
@@ -17,7 +17,7 @@
 - type: material
   id: Durathread
   stack: Durathread
-  name: durathread
+  name: materials-durathread
   icon: /Textures/Objects/Materials/materials.rsi/durathread.png
   color: "#8291a1"
   price: 0.0175 # 1-1 mix of plastic and cloth.
@@ -25,7 +25,7 @@
 - type: material
   id: Plasma
   stack: Plasma
-  name: plasma
+  name: materials-plasma
   icon: Objects/Materials/Sheets/other.rsi/plasma.png
   color: "#7e009e"
   price: 0.1
@@ -33,7 +33,7 @@
 - type: material
   id: Plastic
   stack: Plastic
-  name: plastic
+  name: materials-plastic
   icon: Objects/Materials/Sheets/other.rsi/plastic.png
   color: "#d9d9d9"
   price: 0.0125
@@ -41,7 +41,7 @@
 - type: material
   id: Wood
   stack: WoodPlank
-  name: wood
+  name: materials-wood
   icon: Objects/Materials/materials.rsi/wood.png
   color: "#966F33"
   price: 0.01
@@ -49,7 +49,7 @@
 - type: material
   id: Uranium
   stack: Uranium
-  name: uranium
+  name: materials-uranium
   icon: Objects/Materials/Sheets/other.rsi/uranium.png
   color: "#32a852"
   price: 0.05

@@ -1,78 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: The quartermaster is now a head (The only difference is they can now
-      enter the bridge. that's it. The game already considered them a head in every
-      other way.), type: Tweak}
-  id: 1790
-  time: '2022-06-26T06:22:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nukies now no longer get the Common channel., type: Tweak}
-  id: 1791
-  time: '2022-06-26T07:21:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Adjusted the shuttle authorization colours to be more alarming., type: Tweak}
-  - {message: Fix the emergency shuttle notif not going off on early launch by admins.,
-    type: Fix}
-  - {message: Shuttle doors will now also try to close when going to hyperspace.,
-    type: Tweak}
-  id: 1792
-  time: '2022-06-26T08:19:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: It's no longer possible to melee yourself., type: Tweak}
-  id: 1793
-  time: '2022-06-26T09:25:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Space mobs are now stun immune to make combat a bit more interesting.,
-    type: Tweak}
-  id: 1794
-  time: '2022-06-26T09:25:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Hotfix singulo pulling people through walls., type: Fix}
-  id: 1795
-  time: '2022-06-26T13:54:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Fix emergency shuttle docking on top of other grids, woops.', type: Fix}
-  id: 1796
-  time: '2022-06-26T17:48:49.0000000+00:00'
-- author: Ablankmann
-  changes:
-  - {message: 'Added the Syndicate Headset and the Jetpack to the uplink, for 2 TC
-      and 5 TC respectively.', type: Add}
-  id: 1797
-  time: '2022-06-26T17:49:14.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Accents no longer affect radio channel prefixes, type: Fix}
-  id: 1798
-  time: '2022-06-27T03:56:38.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station now supports the cargo and escape shuttles., type: Tweak}
-  id: 1799
-  time: '2022-06-27T03:57:11.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The dollar sign in all of the cargo UI is now in the correct position
-      in front of the amount., type: Fix}
-  id: 1800
-  time: '2022-06-27T03:58:06.0000000+00:00'
-- author: greenrock64
-  changes:
-  - {message: Fixed a server crash when slicing some raw meats., type: Fix}
-  id: 1801
-  time: '2022-06-27T04:00:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Syndicate Zombie Bundle has been removed from the Uplink., type: Remove}
-  id: 1802
-  time: '2022-06-27T04:05:12.0000000+00:00'
 - author: Rane
   changes:
   - {message: Removed starvation and thirst damage., type: Remove}
@@ -2686,7 +2612,7 @@ Entries:
 - author: lapatison
   changes:
   - {message: CBURN equipment has been improved, type: Tweak}
-  - {message: new ERT\CBURN pda sprite added, type: Add}
+  - {message: new ERT/BURN pda sprite added, type: Add}
   id: 2248
   time: '2022-09-06T02:49:56.0000000+00:00'
 - author: Rane
@@ -2925,3 +2851,75 @@ Entries:
   - {message: Handheld radios can now receive messages properly, type: Fix}
   id: 2289
   time: '2022-09-13T03:32:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Clumsy for clowns has been fixed again., type: Fix}
+  id: 2290
+  time: '2022-09-13T13:52:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Clowns bonking on a table no longer get free movement., type: Fix}
+  id: 2291
+  time: '2022-09-13T13:53:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Split Station major update. New medbay, new bar and other misc changes
+      across the board.', type: Tweak}
+  id: 2292
+  time: '2022-09-13T14:26:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Removed clonexadone, cryoxadone still exists', type: Remove}
+  id: 2293
+  time: '2022-09-13T19:51:31.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed tranquillizer shells not injecting their solution, type: Fix}
+  id: 2294
+  time: '2022-09-14T02:40:50.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Nanotrasen and the Syndicate have provided guidelines to their crews
+      as to how to consider clashes against nuclear operations as successes or failures.,
+    type: Tweak}
+  id: 2295
+  time: '2022-09-14T02:42:19.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: More detailed informations are now displayed on the cargo order form,
+    type: Add}
+  id: 2296
+  time: '2022-09-14T03:20:39.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has removed the wheels from vending machines. They should
+      no longer be able to move, if your station suffers from a case of the sentient
+      virus plaguing our networks.', type: Fix}
+  id: 2297
+  time: '2022-09-14T03:46:50.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: New fashionable clothes for lawyers., type: Add}
+  id: 2298
+  time: '2022-09-14T04:47:08.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Tile prying no longer spawns the tile item in the wall., type: Fix}
+  id: 2299
+  time: '2022-09-14T07:07:44.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added chameleon clothing that can mimic any uniform. Watch out for suspicious
+      syndicate imposters., type: Add}
+  id: 2300
+  time: '2022-09-14T08:42:14.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: In-Character names now get proper casing automatically, type: Tweak}
+  id: 2301
+  time: '2022-09-14T09:50:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shooting at and shooting from vehicles now works as expected, type: Fix}
+  id: 2302
+  time: '2022-09-14T10:03:00.0000000+00:00'
