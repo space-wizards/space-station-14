@@ -80,6 +80,14 @@ public sealed class ListContainer : Control
             _itemHeight = control.DesiredSize.Y;
             control.Dispose();
         }
+
+        // Ensure buttons are re-generated.
+        foreach (var button in _buttons.Values)
+        {
+            button.Dispose();
+        }
+        _buttons.Clear();
+
         _data = data.ToList();
         _updateChildren = true;
         InvalidateArrange();
