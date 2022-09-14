@@ -13,7 +13,7 @@ namespace Content.Client.Disposal.UI
     {
         private DisposalRouterWindow? _window;
 
-        public DisposalRouterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public DisposalRouterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

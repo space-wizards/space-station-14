@@ -5,6 +5,7 @@
   startNode: start
   targetNode: computer
   category: construction-category-machines
+  description: A frame used to construct anything with a computer circuitboard.
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -13,6 +14,7 @@
 
 - type: construction
   name: machine frame
+  description: A machine under construction. Needs more parts.
   id: MachineFrame
   graph: Machine
   startNode: start

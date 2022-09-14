@@ -60,11 +60,16 @@
     softness: 0.75
   - type: UserInterface
     interfaces:
-    - key: enum.RevenantUiKey.Key
-      type: RevenantBoundUserInterface
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
   - type: MobState
   - type: Visibility
     layer: 2 #ghost vis layer
+  - type: Store
+    categories:
+    - RevenantAbilities
+    currencyWhitelist:
+    - StolenEssence
 
 - type: entity
   parent: BaseItem

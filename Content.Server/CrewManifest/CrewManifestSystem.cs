@@ -186,8 +186,8 @@ public sealed class CrewManifestSystem : EntitySystem
 
         if (eui.Owner == owner)
         {
-            eui.Close();
             euis.Remove(session);
+            eui.Close();
         }
 
         if (euis.Count == 0)

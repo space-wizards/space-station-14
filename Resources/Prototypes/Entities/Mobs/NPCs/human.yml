@@ -6,12 +6,6 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Clothing
-    - Hunger
-    - Thirst
-    - Idle
   - type: Loadout
     prototype: PassengerGear
   - type: AiFactionTag
@@ -24,15 +18,13 @@
   id: MobSpirate
   description: Yarr!
   components:
+  - type: AiFactionTag
+    factions:
+      - Syndicate
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Clothing
-    - Hunger
-    - Thirst
-    - Idle
-    - Spirate
+  - type: HTN
+    rootTask: RangedCombatCompound
 
 - type: entity
   parent: MobHuman
@@ -51,7 +43,7 @@
 - type: entity
   parent: BaseMobHuman
   suffix: Dead
-  save: true
+  save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse
   name: unidentified human
   description: We barely knew ye.

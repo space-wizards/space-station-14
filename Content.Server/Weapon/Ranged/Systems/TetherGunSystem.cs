@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Ghost.Components;
 using Content.Shared.Administration;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -6,7 +7,9 @@ using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -20,7 +23,8 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
 
-    private Dictionary<ICommonSession, (EntityUid Entity, EntityUid Tether, Joint Joint)> _tethered = new();
+    private readonly Dictionary<ICommonSession, (EntityUid Entity, EntityUid Tether, Joint Joint)> _tethered = new();
+    private readonly HashSet<ICommonSession> _draggers = new();
 
     private const string JointId = "tether-joint";
 
@@ -44,6 +48,35 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         base.Shutdown();
 
         _playerManager.PlayerStatusChanged -= OnStatusChange;
+    }
+
+    public void Toggle(ICommonSession? session)
+    {
+        if (session == null)
+            return;
+
+        if (_draggers.Add(session))
+        {
+            RaiseNetworkEvent(new TetherGunToggleMessage()
+            {
+                Enabled = true,
+            }, session.ConnectedClient);
+            return;
+        }
+
+        _draggers.Remove(session);
+        RaiseNetworkEvent(new TetherGunToggleMessage()
+        {
+            Enabled = false,
+        }, session.ConnectedClient);
+    }
+
+    public bool IsEnabled(ICommonSession? session)
+    {
+        if (session == null)
+            return false;
+
+        return _draggers.Contains(session);
     }
 
     private void OnStartTether(StartTetherEvent msg, EntitySessionEventArgs args)

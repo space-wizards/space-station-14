@@ -48,7 +48,7 @@ namespace Content.Server.Medical
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
         {
             base.Initialize();
-            scannerComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"{scannerComponent.Name}-bodyContainer");
+            scannerComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"scanner-bodyContainer");
             _signalSystem.EnsureReceiverPorts(uid, MedicalScannerComponent.ScannerPort);
         }
 
@@ -94,6 +94,7 @@ namespace Content.Server.Medical
                 verb.Act = () => EjectBody(uid, component);
                 verb.Category = VerbCategory.Eject;
                 verb.Text = Loc.GetString("medical-scanner-verb-noun-occupant");
+                verb.Priority = 1; // Promote to top to make ejecting the ALT-click action
                 args.Verbs.Add(verb);
             }
 

@@ -1,8 +1,5 @@
 - type: vendingMachineInventory
   id: CigaretteMachineInventory
-  name: cigarette machine
-  animationDuration: 2.1
-  spriteName: cigs
   startingInventory:
     CigPackGreen: 2
     CigPackRed: 2

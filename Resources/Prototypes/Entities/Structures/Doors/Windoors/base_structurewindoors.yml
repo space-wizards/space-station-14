@@ -16,7 +16,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.3"
+        bounds: "-0.49,-0.49,0.49,-0.45"
       mass: 50
       mask:
       - TabletopMachineMask
@@ -72,6 +72,7 @@
         acts: [ "Destruction" ]
   - type: AccessReader
   - type: Airlock
+    keepOpenIfClicked: true
     openPanelVisible: true
     # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
     safety: false
@@ -101,7 +102,7 @@
         denyAnimationTime: 0.4
         animatedPanel: false
         openUnlitVisible: true
-      - type: WiresVisualizer
+  - type: WiresVisuals
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false

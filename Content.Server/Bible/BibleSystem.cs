@@ -101,7 +101,7 @@ namespace Content.Server.Bible
                 return;
             }
 
-            if (args.Target == null || args.Target == args.User || _mobStateSystem.IsDead(args.Target.Value))
+            if (args.Target == null || args.Target == args.User || !_mobStateSystem.IsAlive(args.Target.Value))
             {
                 return;
             }

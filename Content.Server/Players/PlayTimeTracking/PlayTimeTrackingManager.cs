@@ -124,7 +124,6 @@ public sealed class PlayTimeTrackingManager
             if (data.NeedRefreshTackers)
             {
                 RefreshSingleTracker(player, data, time);
-                data.NeedRefreshTackers = true;
             }
 
             if (data.NeedSendTimers)

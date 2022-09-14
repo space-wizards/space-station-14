@@ -3,13 +3,14 @@ using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
+using Content.Server.Store.Systems;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
-using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory;
 using Content.Shared.Roles;
-using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -28,6 +29,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly UplinkSystem _uplink = default!;
 
     public override string Prototype => "Traitor";
 
@@ -35,6 +40,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     public List<TraitorRole> Traitors = new();
 
     private const string TraitorPrototypeID = "Traitor";
+    private const string TraitorUplinkPresetId = "StorePresetUplink";
 
     public int TotalTraitors => Traitors.Count;
     public string[] Codewords = new string[3];
@@ -173,16 +179,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         }
 
         // creadth: we need to create uplink for the antag.
-        // PDA should be in place already, so we just need to
-        // initiate uplink account.
+        // PDA should be in place already
         DebugTools.AssertNotNull(mind.OwnedEntity);
 
         var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
-        var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity!);
-        var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-        accounts.AddNewAccount(uplinkAccount);
 
-        if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>().AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
+        if (!_uplink.AddUplink(mind.OwnedEntity!.Value, startingBalance))
             return false;
 
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);

@@ -36,7 +36,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceUpdateEvent>(OnVentScrubberUpdated);
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceEnabledEvent>(OnVentScrubberEnterAtmosphere);
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceDisabledEvent>(OnVentScrubberLeaveAtmosphere);
-            SubscribeLocalEvent<GasVentScrubberComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<GasVentScrubberComponent, AtmosAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentScrubberComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<GasVentScrubberComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
@@ -124,13 +124,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             return true;
         }
 
-        private void OnAtmosAlarm(EntityUid uid, GasVentScrubberComponent component, AtmosMonitorAlarmEvent args)
+        private void OnAtmosAlarm(EntityUid uid, GasVentScrubberComponent component, AtmosAlarmEvent args)
         {
-            if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+            if (args.AlarmType == AtmosAlarmType.Danger)
             {
                 component.Enabled = false;
             }
-            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+            else if (args.AlarmType == AtmosAlarmType.Normal)
             {
                 component.Enabled = true;
             }
@@ -147,7 +147,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnPacketRecv(EntityUid uid, GasVentScrubberComponent component, DeviceNetworkPacketEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)
-                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable)
                 || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;
 
@@ -155,24 +154,19 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             switch (cmd)
             {
-                case AirAlarmSystem.AirAlarmSyncCmd:
-                    payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
-                    payload.Add(AirAlarmSystem.AirAlarmSyncData, component.ToAirAlarmData());
+                case AtmosDeviceNetworkSystem.SyncData:
+                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
+                    payload.Add(AtmosDeviceNetworkSystem.SyncData, component.ToAirAlarmData());
 
                     _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
 
                     return;
-                case AirAlarmSystem.AirAlarmSetData:
-                    if (!args.Data.TryGetValue(AirAlarmSystem.AirAlarmSetData, out GasVentScrubberData? setData))
+                case DeviceNetworkConstants.CmdSetState:
+                    if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out GasVentScrubberData? setData))
                         break;
 
                     component.FromAirAlarmData(setData);
                     UpdateState(uid, component);
-                    alarmable.IgnoreAlarms = setData.IgnoreAlarms;
-                    payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSetDataStatus);
-                    payload.Add(AirAlarmSystem.AirAlarmSetDataStatus, true);
-
-                    _deviceNetSystem.QueuePacket(uid, null, payload, device: netConn);
 
                     return;
             }

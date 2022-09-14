@@ -16,7 +16,7 @@ namespace Content.Client.PDA
 
         private PDAMenu? _menu;
 
-        public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public PDABoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
             IoCManager.InjectDependencies(this);
         }

@@ -13,6 +13,7 @@ namespace Content.Server.Disposal.Tube.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const string HolderPrototypeId = "DisposalHolder";
+        public override string ContainerId => "DisposalEntry";
 
         public bool TryInsert(DisposalUnitComponent from, IEnumerable<string>? tags = default)
         {

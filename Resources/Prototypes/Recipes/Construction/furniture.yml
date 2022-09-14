@@ -314,7 +314,7 @@
   startNode: start
   targetNode: toilet
   category: construction-category-furniture
-  description: A human excrement flushing apparatus
+  description: A human excrement flushing apparatus.
   icon:
     sprite: Structures/Furniture/toilet.rsi
     state: closed_toilet_seat_up

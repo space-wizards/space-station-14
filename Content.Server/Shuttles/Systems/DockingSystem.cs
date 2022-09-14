@@ -8,8 +8,10 @@ using Content.Shared.Shuttles.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -461,13 +463,13 @@ namespace Content.Server.Shuttles.Systems
                 _doorSystem.TryClose(doorB.Owner, doorB);
             }
 
-            if (!Deleted(dock.Owner))
+            if (LifeStage(dock.Owner) < EntityLifeStage.Terminating)
             {
                 var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;
             }
 
-            if (!Deleted(dock.DockedWith.Value))
+            if (TryComp(dock.DockedWith.Value, out MetaDataComponent? meta) && meta.EntityLifeStage < EntityLifeStage.Terminating)
             {
                 var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;

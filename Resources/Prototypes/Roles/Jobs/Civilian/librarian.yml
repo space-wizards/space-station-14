@@ -14,7 +14,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitLibrarian
     back: ClothingBackpackBriefcaseFilled
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesBootsLaceup
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d10Dice

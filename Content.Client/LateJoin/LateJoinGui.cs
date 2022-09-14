@@ -1,11 +1,8 @@
-using System.Linq;
 using Content.Client.CrewManifest;
-using Content.Client.Eui;
 using Content.Client.GameTicking.Managers;
-using Content.Client.HUD.UI;
+using Content.Client.UserInterface.Controls;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
-using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
@@ -247,7 +244,7 @@ namespace Content.Client.LateJoin
 
                         string? reason = null;
 
-                        if (value == 0 || !tracker.IsAllowed(prototype, out reason))
+                        if (!tracker.IsAllowed(prototype, out reason))
                         {
                             jobButton.Disabled = true;
 
@@ -255,6 +252,10 @@ namespace Content.Client.LateJoin
                             {
                                 jobButton.ToolTip = reason;
                             }
+                        }
+                        else if (value == 0)
+                        {
+                            jobButton.Disabled = true;
                         }
 
                         _jobButtons[id][prototype.ID] = jobButton;

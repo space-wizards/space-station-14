@@ -23,7 +23,10 @@ using Content.Shared.MobState;
 using Content.Server.Explosion.EntitySystems;
 using System.Linq;
 using Content.Server.Emag;
+using Content.Server.Store.Components;
 using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.FixedPoint;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Revenant.EntitySystems;
@@ -177,7 +180,9 @@ public sealed partial class RevenantSystem : EntitySystem
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
-        component.StolenEssence += essence.EssenceAmount;
+        if (TryComp<StoreComponent>(uid, out var store))
+            _store.TryAddCurrency(new Dictionary<string, FixedPoint2>()
+                    { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, store);
 
         if (!TryComp<MobStateComponent>(args.Target, out var mobstate))
             return;

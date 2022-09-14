@@ -1,7 +1,13 @@
 # Alphabetical order is now apparently required.
 
 - type: Tag
+  id: AirAlarm
+
+- type: Tag
   id: AirAlarmElectronics
+
+- type: Tag
+  id: AirSensor
 
 - type: Tag
   id: ATVKeys
@@ -35,6 +41,9 @@
 
 - type: Tag
   id: Bottle
+
+- type: Tag
+  id: BulletFoam
 
 - type: Tag
   id: CableCoil
@@ -163,9 +172,6 @@
   id: Donut
 
 - type: Tag
-  id: Drone
-
-- type: Tag
   id: DroneUsable
 
 - type: Tag
@@ -181,10 +187,16 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: FireAlarm
+
+- type: Tag
   id: FireAlarmElectronics
 
 - type: Tag
   id: FireAxe
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -211,6 +223,12 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: GasScrubber
+
+- type: Tag
+  id: GasVent
+
+- type: Tag
   id: Gauze
 
 - type: Tag
@@ -233,6 +251,9 @@
 
 - type: Tag
   id: Hoe
+
+- type: Tag #Drop this innate tool instead of deleting it.
+  id: InnateDontDelete
 
 - type: Tag
   id: Ingot
@@ -307,7 +328,7 @@
 
 - type: Tag
   id: MailingUnitElectronics
-  
+
 - type: Tag
   id: Medkit
 
@@ -328,6 +349,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NukeOpsUplink
 
 - type: Tag
   id: Ointment
@@ -400,7 +424,13 @@
   id: Screwdriver
 
 - type: Tag
+  id: SecBeltEquip
+
+- type: Tag
   id: SecwayKeys
+
+- type: Tag
+  id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
   id: Sheet

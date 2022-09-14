@@ -11,7 +11,7 @@ namespace Content.Client.Arcade.UI
 
         //public SharedSpaceVillainArcadeComponent SpaceVillainArcade;
 
-        public SpaceVillainArcadeBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public SpaceVillainArcadeBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
             SendAction(PlayerAction.RequestData);
         }
