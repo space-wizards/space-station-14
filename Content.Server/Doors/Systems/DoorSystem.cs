@@ -57,7 +57,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (args.Handled || !door.ClickOpen)
             return;
 
-        TryToggleDoor(uid, door, args.User);
+        TryToggleDoor(uid, door, args.User, default, true);
         args.Handled = true;
     }
 
@@ -314,7 +314,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
-    public override void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
+    public override void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false, bool clickedOpen = false)
     {
         if (!Resolve(uid, ref door))
             return;
@@ -322,6 +322,9 @@ public sealed class DoorSystem : SharedDoorSystem
         var lastState = door.State;
 
         SetState(uid, DoorState.Opening, door);
+
+        // Only set this here after all checks have been done.
+        door.ClickedOpen = clickedOpen;
 
         if (door.OpenSound != null)
             PlaySound(uid, door.OpenSound, AudioParams.Default.WithVolume(-5), user, predicted);

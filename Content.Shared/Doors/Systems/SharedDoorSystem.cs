@@ -208,14 +208,14 @@ public abstract class SharedDoorSystem : EntitySystem
             PlaySound(uid, door.DenySound, AudioParams.Default.WithVolume(-3), user, predicted);
     }
 
-    public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
+    public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false, bool clickedOpen = false)
     {
         if (!Resolve(uid, ref door))
             return false;
 
         if (door.State == DoorState.Closed)
         {
-            return TryOpen(uid, door, user, predicted);
+            return TryOpen(uid, door, user, predicted, default, clickedOpen);
         }
         else if (door.State == DoorState.Open)
         {
@@ -227,7 +227,7 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Opening
-    public bool TryOpen(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false, bool quiet = false)
+    public bool TryOpen(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false, bool quiet = false, bool clickedOpen = false)
     {
         if (!Resolve(uid, ref door))
             return false;
@@ -235,7 +235,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!CanOpen(uid, door, user, quiet))
             return false;
 
-        StartOpening(uid, door, user, predicted);
+        StartOpening(uid, door, user, predicted, clickedOpen);
 
         return true;
     }
@@ -263,12 +263,15 @@ public abstract class SharedDoorSystem : EntitySystem
         return true;
     }
 
-    public virtual void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
+    public virtual void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false, bool clickedOpen = false)
     {
         if (!Resolve(uid, ref door))
             return;
 
         SetState(uid, DoorState.Opening, door);
+
+        // Only set this here after all checks have been done.
+        door.ClickedOpen = clickedOpen;
 
         if (door.OpenSound != null)
             PlaySound(uid, door.OpenSound, AudioParams.Default.WithVolume(-5), user, predicted);
@@ -580,7 +583,14 @@ public abstract class SharedDoorSystem : EntitySystem
             case DoorState.Opening:
                 // Either fully or partially open this door.
                 if (door.Partial)
+                {
+                    if(door.StayOpenOnClick && door.ClickedOpen)
+                    {
+                        door.NextStateChange = null;
+                        door.ClickedOpen = false;
+                    }
                     SetState(door.Owner, DoorState.Open, door);
+                }
                 else
                     OnPartialOpen(door.Owner, door);
 

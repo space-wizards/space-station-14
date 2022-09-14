@@ -85,6 +85,7 @@
       path: /Audio/Machines/windoor_open.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+    stayOpenOnClick: true
   - type: Electrified
     enabled: false
     usesApcPower: true

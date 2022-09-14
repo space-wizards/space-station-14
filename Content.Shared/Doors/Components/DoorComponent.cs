@@ -205,6 +205,19 @@ public sealed class DoorComponent : Component, ISerializationHooks
     [DataField("clickOpen")]
     public bool ClickOpen = true;
 
+    /// <summary>
+    /// Whether the door will stay open when it is activated or clicked.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("stayOpenOnClick")]
+    public bool StayOpenOnClick = false;
+
+    /// <summary>
+    ///     Whether the door is being manually opened
+    /// </summary>
+    [DataField("clickedOpen")]
+    public bool ClickedOpen = false;
+
     [DataField("openDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
 
