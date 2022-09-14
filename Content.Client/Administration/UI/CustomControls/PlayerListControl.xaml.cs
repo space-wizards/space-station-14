@@ -49,6 +49,10 @@ namespace Content.Client.Administration.UI.CustomControls
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
                 OnSelectionChanged?.Invoke(selectedPlayer);
+
+                // update label text. Only required if there is some override (e.g. unread bwoink count).
+                if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
+                    label.Text = GetText(selectedPlayer);
             }
             else if (args.Event.Function == ContentKeyFunctions.OpenContextMenu)
             {
@@ -84,13 +88,18 @@ namespace Content.Client.Administration.UI.CustomControls
             FilterList();
         }
 
-        private void GenerateButton(ListData data, ListContainerButton button)
+        private string GetText(PlayerInfo info)
         {
-            if (data is not PlayerListData {Info: var info})
-                return;
             var text = $"{info.CharacterName} ({info.Username})";
             if (OverrideText != null)
                 text = OverrideText?.Invoke(info, text);
+            return text;
+        }
+
+        private void GenerateButton(ListData data, ListContainerButton button)
+        {
+            if (data is not PlayerListData { Info: var info })
+                return;
 
             button.AddChild(new BoxContainer
             {
@@ -100,7 +109,7 @@ namespace Content.Client.Administration.UI.CustomControls
                     new Label
                     {
                         ClipText = true,
-                        Text = text
+                        Text = GetText(info)
                     }
                 }
             });
