@@ -205,9 +205,9 @@ namespace Content.Server.Administration.Systems
             {
                 existingEmbed.description += _gameTicker.RunLevel switch
                 {
-                    GameRunLevel.PreRoundLobby => "\n:arrow_forward: _Pre-round lobby started_",
-                    GameRunLevel.InRound => "\n:arrow_forward: _Round started_",
-                    GameRunLevel.PostRound => "\n:stop_button: _Post-round started_",
+                    GameRunLevel.PreRoundLobby => "\n\n:arrow_forward: _**Pre-round lobby started**_\n",
+                    GameRunLevel.InRound => "\n\n:arrow_forward: _**Round started**_\n",
+                    GameRunLevel.PostRound => "\n\n:stop_button: _**Post-round started**_\n",
                     _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel), $"{_gameTicker.RunLevel} was not matched."),
                 };
 
