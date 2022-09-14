@@ -1,10 +1,4 @@
 Entries:
-- author: Ablankmann
-  changes:
-  - {message: 'Added the Syndicate Headset and the Jetpack to the uplink, for 2 TC
-      and 5 TC respectively.', type: Add}
-  id: 1797
-  time: '2022-06-26T17:49:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Accents no longer affect radio channel prefixes, type: Fix}
@@ -2922,3 +2916,10 @@ Entries:
     type: Add}
   id: 2296
   time: '2022-09-14T03:20:39.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has removed the wheels from vending machines. They should
+      no longer be able to move, if your station suffers from a case of the sentient
+      virus plaguing our networks.', type: Fix}
+  id: 2297
+  time: '2022-09-14T03:46:50.0000000+00:00'
