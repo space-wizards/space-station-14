@@ -18,6 +18,7 @@ namespace Content.Server.Disposal.Tube.Components
         public override string ContainerId => "DisposalTagger";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("tag")]
         public string Tag = "";
 
         [ViewVariables]

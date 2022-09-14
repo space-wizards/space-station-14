@@ -51517,7 +51517,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -28836.994
+  - SecondsUntilStateChange: -28926.914
     state: Opening
     type: Door
 - uid: 3729
@@ -123589,7 +123589,7 @@ entities:
   - pos: 31.5,-19.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -22349.895
+  - SecondsUntilStateChange: -22439.814
     state: Closing
     type: Door
   - canCollide: False
@@ -167998,6 +167998,13 @@ entities:
   - pos: 50.5,-45.5
     parent: 60
     type: Transform
+- uid: 21130
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 44.5,31.5
+    parent: 60
+    type: Transform
 - uid: 21131
   type: SurveillanceCameraCommand
   components:
@@ -184928,6 +184935,33 @@ entities:
   type: SignAi
   components:
   - pos: -60.5,16.5
+    parent: 60
+    type: Transform
+- uid: 23380
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 46.5,31.5
+    parent: 60
+    type: Transform
+- uid: 23381
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 52.5,31.5
+    parent: 60
+    type: Transform
+- uid: 23382
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 54.5,31.5
+    parent: 60
+    type: Transform
+- uid: 23383
+  type: PaintingAmogusTriptych
+  components:
+  - pos: 5.5,-8.5
     parent: 60
     type: Transform
 ...
