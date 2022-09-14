@@ -52,3 +52,14 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsLaceup
+  name: laceup shoes
+  description: The height of fashion, and they're pre-polished!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/laceups.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/laceups.rsi

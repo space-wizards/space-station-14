@@ -44,6 +44,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasVentPumpComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<GasVentPumpComponent, SignalReceivedEvent>(OnSignalReceived);
+            SubscribeLocalEvent<GasVentPumpComponent, GasAnalyzerScanEvent>(OnAnalyzed);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
@@ -270,6 +271,29 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     args.PushMarkup(Loc.GetString("gas-vent-pump-uvlo"));
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnAnalyzed(EntityUid uid, GasVentPumpComponent component, GasAnalyzerScanEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            var gasMixDict = new Dictionary<string, GasMixture?>();
+
+            // these are both called pipe, above it switches using this so I duplicated that...?
+            var nodeName = component.PumpDirection switch
+            {
+                VentPumpDirection.Releasing => component.Inlet,
+                VentPumpDirection.Siphoning => component.Outlet,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            if(nodeContainer.TryGetNode(nodeName, out PipeNode? pipe))
+                gasMixDict.Add(nodeName, pipe.Air);
+
+            args.GasMixtures = gasMixDict;
         }
     }
 }
