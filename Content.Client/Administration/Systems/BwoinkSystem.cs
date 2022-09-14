@@ -34,7 +34,7 @@ namespace Content.Client.Administration.Systems
             base.OnBwoinkTextMessage(message, eventArgs);
             LogBwoink(message);
             // Actual line
-            var window = EnsurePanel(message.ChannelId);
+            var window = EnsurePanel(message.UserId);
             window.ReceiveLine(message);
             // Play a sound if we didn't send it
             var localPlayer = _playerManager.LocalPlayer;
@@ -50,7 +50,7 @@ namespace Content.Client.Administration.Systems
                 _plainWindow?.Open();
             else
             {
-                _adminWindow?.OnBwoink(message.ChannelId);
+                _adminWindow?.OnBwoink(message.UserId);
 
                 if (_adminWindow?.IsOpen != true)
                     _hud.SetInfoRed(true);
