@@ -11,9 +11,12 @@ public sealed partial class InfoSection : BoxContainer
     public InfoSection(string title, string text, bool markup = false)
     {
         RobustXamlLoader.Load(this);
+        SetText(title, text, markup);
+    }
 
+    public void SetText(string title, string text, bool markup = false)
+    {
         TitleLabel.Text = title;
-
         if (markup)
             Content.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
         else

@@ -20,6 +20,8 @@ poster_being_set.ogg taken from https://github.com/tgstation/tgstation/blob/2834
 saw.ogg taken from https://freesound.org/people/domiscz/sounds/461728/ and clipped - CC0-1.0
 *It's actually an angle grinder
 
+double_beep.ogg taken from https://freesound.org/people/andersmmg/sounds/511492/ under CC BY 4.0
+
 smoke.ogg taken from https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg
 
 voteding.ogg taken from "Bike, Bell Ding, Single, 01-01.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org at https://freesound.org/people/InspectorJ/sounds/484344/ under CC BY 3.0. The volume has been reduced.

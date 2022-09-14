@@ -1,10 +1,16 @@
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Tools;
+using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Tools.Components;
+using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -20,6 +26,9 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ToolSystem _toolSystem = default!;
+
+        private const float ScrewTime = 2f;
 
         public override void Initialize()
         {
@@ -31,6 +40,10 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
             SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
+
+            SubscribeLocalEvent<ApcToolFinishedEvent>(OnToolFinished);
+            SubscribeLocalEvent<ApcComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<ApcComponent, ExaminedEvent>(OnExamine);
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
@@ -88,13 +101,18 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref apc, ref battery))
                 return;
 
+            if (TryComp(uid, out AppearanceComponent? appearance))
+            {
+                UpdatePanelAppearance(uid, appearance, apc);
+            }
+
             var newState = CalcChargeState(uid, apc, battery);
             if (newState != apc.LastChargeState && apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
             {
                 apc.LastChargeState = newState;
                 apc.LastChargeStateTime = _gameTiming.CurTime;
 
-                if (TryComp(uid, out AppearanceComponent? appearance))
+                if (appearance != null)
                 {
                     appearance.SetData(ApcVisuals.ChargeState, newState);
                 }
@@ -167,6 +185,70 @@ namespace Content.Server.Power.EntitySystems
             }
 
             return ApcExternalPowerState.Good;
+        }
+
+        public static ApcPanelState GetPanelState(ApcComponent apc)
+        {
+            if (apc.IsApcOpen)
+                return ApcPanelState.Open;
+            else
+                return ApcPanelState.Closed;
+        }
+
+        private void OnInteractUsing(EntityUid uid, ApcComponent component, InteractUsingEvent args)
+        {
+            if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
+                return;
+            if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new string[] { "Screwing" }, doAfterCompleteEvent: new ApcToolFinishedEvent(uid), toolComponent: tool))
+            {
+                args.Handled = true;
+            }
+        }
+
+        private void OnToolFinished(ApcToolFinishedEvent args)
+        {
+            if (!EntityManager.TryGetComponent(args.Target, out ApcComponent? component))
+                return;
+            component.IsApcOpen = !component.IsApcOpen;
+
+            if (TryComp(args.Target, out AppearanceComponent? appearance))
+            {
+                UpdatePanelAppearance(args.Target, appearance);
+            }
+
+            if (component.IsApcOpen)
+            {
+                SoundSystem.Play(component.ScrewdriverOpenSound.GetSound(), Filter.Pvs(args.Target), args.Target);
+            }
+            else
+            {
+                SoundSystem.Play(component.ScrewdriverCloseSound.GetSound(), Filter.Pvs(args.Target), args.Target);
+            }
+        }
+
+        private void UpdatePanelAppearance(EntityUid uid, AppearanceComponent? appearance = null, ApcComponent? apc = null)
+        {
+            if (!Resolve(uid, ref appearance, ref apc, false))
+                return;
+
+            appearance.SetData(ApcVisuals.PanelState, GetPanelState(apc));
+        }
+
+        private sealed class ApcToolFinishedEvent : EntityEventArgs
+        {
+            public EntityUid Target { get; }
+
+            public ApcToolFinishedEvent(EntityUid target)
+            {
+                Target = target;
+            }
+        }
+
+        private void OnExamine(EntityUid uid, ApcComponent component, ExaminedEvent args)
+        {
+            args.PushMarkup(Loc.GetString(component.IsApcOpen
+                ? "apc-component-on-examine-panel-open"
+                : "apc-component-on-examine-panel-closed"));
         }
     }
 }

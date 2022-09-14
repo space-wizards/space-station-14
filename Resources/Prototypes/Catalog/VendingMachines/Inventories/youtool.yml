@@ -1,8 +1,5 @@
 - type: vendingMachineInventory
   id: YouToolInventory
-  name: YouTool
-  animationDuration: 1.1
-  spriteName: youtool
   startingInventory:
     CableApcStack: 5
     Crowbar: 5

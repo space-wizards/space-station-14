@@ -243,8 +243,5 @@
     layers:
       - state: rtg_damaged
       - state: rtg_glow
-  - type: RadiationPulse # ideally only when opened.
+  - type: RadiationSource # ideally only when opened.
     range: 2
-    decay: false
-    minPulseLifespan: 1
-    maxPulseLifespan: 1

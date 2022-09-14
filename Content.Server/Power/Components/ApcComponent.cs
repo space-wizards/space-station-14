@@ -6,7 +6,6 @@ using Robust.Shared.Audio;
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-[Access(typeof(ApcSystem))]
 public sealed class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
@@ -15,6 +14,13 @@ public sealed class ApcComponent : BaseApcNetComponent
     [ViewVariables]
     public ApcChargeState LastChargeState;
     public TimeSpan LastChargeStateTime;
+
+    /// <summary>
+    ///     Is the panel open for this entity's APC?
+    /// </summary>
+    [ViewVariables]
+    [DataField("open")]
+    public bool IsApcOpen { get; set; }
 
     [ViewVariables]
     public ApcExternalPowerState LastExternalState;
@@ -38,4 +44,11 @@ public sealed class ApcComponent : BaseApcNetComponent
     {
         apcNet.RemoveApc(this);
     }
+
+    [DataField("screwdriverOpenSound")]
+    public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
+
+    [DataField("screwdriverCloseSound")]
+    public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
+
 }

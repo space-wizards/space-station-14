@@ -1,0 +1,42 @@
+<BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True">
+    <Collapsible Orientation="Vertical">
+        <CollapsibleHeading Name="SensorAddress" />
+        <CollapsibleBody Margin="2">
+            <BoxContainer Orientation="Vertical">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="0 0 2 0" HorizontalExpand="True">
+                        <Label Text="{Loc 'air-alarm-ui-window-pressure-label'}" />
+                        <Label Text="{Loc 'air-alarm-ui-window-temperature-label'}" />
+                        <Label Text="{Loc 'air-alarm-ui-window-alarm-state-label'}" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <RichTextLabel Name="PressureLabel" />
+                        <RichTextLabel Name="TemperatureLabel" />
+                        <RichTextLabel Name="AlarmStateLabel" />
+                    </BoxContainer>
+                </BoxContainer>
+                <Collapsible Orientation="Vertical" Margin="2">
+                    <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-gases'}" />
+                    <CollapsibleBody>
+                        <BoxContainer Name="GasContainer" Orientation="Vertical" Margin="2" />
+                    </CollapsibleBody>
+                </Collapsible>
+                <Collapsible Orientation="Vertical" Margin="2">
+                    <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-thresholds'}" />
+                    <CollapsibleBody>
+                        <BoxContainer Orientation="Vertical">
+                            <Control Name="PressureThresholdContainer" Margin="2 0 2 0" />
+                            <Control Name="TemperatureThresholdContainer" Margin="2 0 2 0" />
+                            <Collapsible Orientation="Vertical" Margin="2 0 2 0">
+                                <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-gases'}" />
+                                <CollapsibleBody Margin="4 2 4 2">
+                                    <BoxContainer Name="GasThresholds" Orientation="Vertical" Margin="2 0 2 0" />
+                                </CollapsibleBody>
+                            </Collapsible>
+                        </BoxContainer>
+                    </CollapsibleBody>
+                </Collapsible>
+            </BoxContainer>
+        </CollapsibleBody>
+    </Collapsible>
+</BoxContainer>

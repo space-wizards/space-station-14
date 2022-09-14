@@ -24229,21 +24229,6 @@ entities:
   - pos: 19.5,38.5
     parent: 55
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      ChemMaster-beaker: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-  - solutions:
-      buffer:
-        reagents: []
-    type: SolutionContainerManager
 - uid: 2848
   type: DrinkWhiskeyGlass
   components:

@@ -3,11 +3,14 @@ using Content.Server.Projectiles.Components;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
 using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
 
@@ -46,6 +49,11 @@ namespace Content.Server.Projectiles
 
             if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
             {
+                if (modifiedDamage.Total > FixedPoint2.Zero)
+                {
+                    RaiseNetworkEvent(new DamageEffectEvent(otherEntity), Filter.Pvs(otherEntity, entityManager: EntityManager));
+                }
+
                 _adminLogger.Add(LogType.BulletHit,
                     HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
                     $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
@@ -66,7 +74,7 @@ namespace Content.Server.Projectiles
 
                 if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
                 {
-                    RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates));
+                    RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
                 }
             }
         }

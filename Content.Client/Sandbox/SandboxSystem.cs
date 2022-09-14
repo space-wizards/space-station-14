@@ -1,5 +1,6 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Decals.UI;
+using Content.Client.Eui;
 using Content.Client.HUD;
 using Content.Client.Markers;
 using Content.Client.SubFloor;
@@ -14,6 +15,8 @@ using Robust.Client.Input;
 using Robust.Client.Placement;
 using Robust.Client.Placement.Modes;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers.Implementations;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input.Binding;
@@ -47,7 +50,6 @@ namespace Content.Client.Sandbox
         {
             Resizable = false;
             _gameHud = IoCManager.Resolve<IGameHud>();
-
             Title = Loc.GetString("sandbox-window-title");
 
             var vBox = new BoxContainer
@@ -125,6 +127,7 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         public bool SandboxAllowed { get; private set; }
 
@@ -394,44 +397,16 @@ namespace Content.Client.Sandbox
         // TODO: These should check for command perms + be reset if the round is over.
         public void ToggleEntitySpawnWindow()
         {
-            if (_spawnWindow == null)
-            {
-                if (!CanSandbox()) return;
-
-                _spawnWindow = new EntitySpawnWindow(_placementManager, PrototypeManager, _resourceCache);
-                _spawnWindow.OpenToLeft();
+            if (!CanSandbox())
                 return;
-            }
-
-            if (_spawnWindow.IsOpen)
-            {
-                _spawnWindow.Close();
-            }
-            else
-            {
-                _spawnWindow.Open();
-            }
+            _userInterfaceManager.GetUIController<EntitySpawningUIController>().ToggleWindow();
         }
 
         public void ToggleTilesWindow()
         {
-            if (_tilesSpawnWindow == null)
-            {
-                if (!CanSandbox()) return;
-
-                _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
-                _tilesSpawnWindow.OpenToLeft();
+            if (!CanSandbox())
                 return;
-            }
-
-            if (_tilesSpawnWindow.IsOpen)
-            {
-                _tilesSpawnWindow.Close();
-            }
-            else
-            {
-                _tilesSpawnWindow.Open();
-            }
+            _userInterfaceManager.GetUIController<TileSpawningUIController>().ToggleWindow();
         }
 
         public void ToggleDecalsWindow()
