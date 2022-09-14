@@ -1,9 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Delta Station now supports the cargo and escape shuttles., type: Tweak}
-  id: 1799
-  time: '2022-06-27T03:57:11.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The dollar sign in all of the cargo UI is now in the correct position
@@ -2923,3 +2918,8 @@ Entries:
   - {message: New fashionable clothes for lawyers., type: Add}
   id: 2298
   time: '2022-09-14T04:47:08.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Tile prying no longer spawns the tile item in the wall., type: Fix}
+  id: 2299
+  time: '2022-09-14T07:07:44.0000000+00:00'
