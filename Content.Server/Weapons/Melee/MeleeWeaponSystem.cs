@@ -27,6 +27,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -50,9 +51,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     public const float DamagePitchVariation = 0.05f;
 
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
-
-    // TODO:
-    // - Eye kick?
 
     public override void Initialize()
     {
@@ -131,7 +129,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
 
         var damage = component.Damage * GetModifier(component, true);
-        Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
+        // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
         var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target.Value }, user, damage);
@@ -230,7 +228,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         var damage = component.Damage * GetModifier(component, false);
-        Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
+        // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
         var hitEvent = new MeleeHitEvent(targets, user, damage);

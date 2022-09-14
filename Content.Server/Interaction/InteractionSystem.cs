@@ -1,3 +1,6 @@
+
+
+using Content.Server.Administration.Logs;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
@@ -5,6 +8,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -12,7 +16,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Interaction
 {
@@ -26,6 +29,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
@@ -51,7 +55,7 @@ namespace Content.Server.Interaction
             if (Deleted(target))
                 return false;
 
-            if (!target.TryGetContainer(out var container))
+            if (!_container.TryGetContainingContainer(target, out var container))
                 return false;
 
             if (!TryComp(container.Owner, out ServerStorageComponent? storage))
@@ -64,7 +68,7 @@ namespace Content.Server.Interaction
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return _uiSystem.SessionHasOpenUi(container.Owner, StorageUiKey.Key, actor.PlayerSession);
+            return _uiSystem.SessionHasOpenUi(container.Owner, SharedStorageComponent.StorageUiKey.Key, actor.PlayerSession);
         }
 
         #region Drag drop

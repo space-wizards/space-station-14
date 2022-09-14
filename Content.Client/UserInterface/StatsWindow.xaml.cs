@@ -29,7 +29,7 @@ namespace Content.Client.UserInterface
                 });
             }
 
-            values.Sort((x, y) => string.Compare(x[0], y[0], StringComparison.Ordinal));
+            values.Sort((x, y) => string.Compare(x[0], y[0], StringComparison.CurrentCultureIgnoreCase));
 
             for (var i = 0; i < values.Count; i++)
             {

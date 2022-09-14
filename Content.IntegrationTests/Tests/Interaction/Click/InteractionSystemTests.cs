@@ -6,12 +6,9 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Weapons.Melee;
-using Content.Shared.Weapons.Melee.Events;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
@@ -79,7 +76,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
             Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
 
-            var attack = false;
             var interactUsing = false;
             var interactHand = false;
             await server.WaitAssertion(() =>
@@ -88,7 +84,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
-                Assert.That(attack);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
@@ -143,7 +138,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
             Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
 
-            var attack = false;
             var interactUsing = false;
             var interactHand = false;
             await server.WaitAssertion(() =>
@@ -152,7 +146,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
-                Assert.That(attack, Is.False);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
@@ -205,7 +198,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
             Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
 
-            var attack = false;
             var interactUsing = false;
             var interactHand = false;
             await server.WaitAssertion(() =>
@@ -214,7 +206,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
-                Assert.That(attack);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
@@ -268,7 +259,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
             Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
 
-            var attack = false;
             var interactUsing = false;
             var interactHand = false;
             await server.WaitAssertion(() =>
@@ -277,7 +267,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
-                Assert.That(attack, Is.False);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
@@ -337,7 +326,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 
             await server.WaitIdleAsync();
 
-            var attack = false;
             var interactUsing = false;
             var interactHand = false;
             await server.WaitAssertion(() =>
@@ -349,12 +337,10 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractHandEvent     = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactHand = true; };
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
-                Assert.That(attack, Is.False);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(containerEntity).Coordinates, containerEntity);
-                Assert.That(attack);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
