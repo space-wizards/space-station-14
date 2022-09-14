@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Hotfix singulo pulling people through walls., type: Fix}
-  id: 1795
-  time: '2022-06-26T13:54:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: 'Fix emergency shuttle docking on top of other grids, woops.', type: Fix}
   id: 1796
   time: '2022-06-26T17:48:49.0000000+00:00'
@@ -2919,3 +2914,10 @@ Entries:
   - {message: Fixed tranquillizer shells not injecting their solution, type: Fix}
   id: 2294
   time: '2022-09-14T02:40:50.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Nanotrasen and the Syndicate have provided guidelines to their crews
+      as to how to consider clashes against nuclear operations as successes or failures.,
+    type: Tweak}
+  id: 2295
+  time: '2022-09-14T02:42:19.0000000+00:00'
