@@ -1,9 +1,4 @@
 Entries:
-- author: greenrock64
-  changes:
-  - {message: Fixed a server crash when slicing some raw meats., type: Fix}
-  id: 1801
-  time: '2022-06-27T04:00:03.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Syndicate Zombie Bundle has been removed from the Uplink., type: Remove}
@@ -2923,3 +2918,8 @@ Entries:
       syndicate imposters., type: Add}
   id: 2300
   time: '2022-09-14T08:42:14.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: In-Character names now get proper casing automatically, type: Tweak}
+  id: 2301
+  time: '2022-09-14T09:50:15.0000000+00:00'
