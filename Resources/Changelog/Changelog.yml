@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Syndicate Zombie Bundle has been removed from the Uplink., type: Remove}
-  id: 1802
-  time: '2022-06-27T04:05:12.0000000+00:00'
 - author: Rane
   changes:
   - {message: Removed starvation and thirst damage., type: Remove}
@@ -2923,3 +2918,8 @@ Entries:
   - {message: In-Character names now get proper casing automatically, type: Tweak}
   id: 2301
   time: '2022-09-14T09:50:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shooting at and shooting from vehicles now works as expected, type: Fix}
+  id: 2302
+  time: '2022-09-14T10:03:00.0000000+00:00'
