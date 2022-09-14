@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.CrewManifest;
 using Content.Client.GameTicking.Managers;
 using Content.Client.UserInterface.Controls;
@@ -233,9 +232,10 @@ namespace Content.Client.LateJoin
 
                         var jobLabel = new Label
                         {
-                            Text = " " + (value != null ?
+                            Margin = new Thickness(5f, 0f, 0f, 0f),
+                            Text = value != null ?
                                 Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.LocalizedName), ("amount", value)) :
-                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.LocalizedName)))
+                                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.LocalizedName)),
                         };
 
                         jobSelector.AddChild(jobLabel);
