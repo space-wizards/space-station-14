@@ -97,7 +97,7 @@ public sealed class ListContainer : Control
     {
         if (!_data.Contains(data))
             return;
-        if (_buttons.TryGetValue(data, out var button))
+        if (_buttons.TryGetValue(data, out var button) && Toggle)
             button.Pressed = true;
         _selected = data;
         button ??= new ListContainerButton(data);
@@ -247,7 +247,7 @@ public sealed class ListContainer : Control
                         GenerateItem?.Invoke(data, button);
                         _buttons.Add(data, button);
 
-                        if (data == _selected)
+                        if (Toggle && data == _selected)
                             button.Pressed = true;
                     }
                     AddChild(button);
