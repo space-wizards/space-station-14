@@ -255,6 +255,7 @@
   - type: Tag
     tags:
     - HidesHair
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase

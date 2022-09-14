@@ -17,3 +17,28 @@
   color: "#E7EA91"
   boilingPoint: 55.5
   meltingPoint: -50.0
+
+- type: reagent
+  id: Charcoal
+  name: reagent-name-charcoal
+  desc: reagent-desc-charcoal
+  physicalDesc: reagent-physical-desc-porous
+  color: "#22282b"
+  boilingPoint: 4200.0
+  meltingPoint: 3550.0
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
+      - !type:ChemCleanBoodstream
+        cleanseRate: 3
+
+- type: reagent
+  id: Ash
+  name: reagent-name-ash
+  desc: reagent-desc-ash
+  physicalDesc: reagent-physical-desc-powder
+  color: white

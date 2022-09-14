@@ -24,7 +24,6 @@ namespace Content.Client.Power.APC
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapSet(Layers.Panel, sprite.AddLayerState("apc0"));
-            sprite.LayerSetShader(Layers.Panel, "unshaded");
 
             sprite.LayerMapSet(Layers.ChargeState, sprite.AddLayerState("apco3-0"));
             sprite.LayerSetShader(Layers.ChargeState, "unshaded");

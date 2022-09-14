@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
+using Robust.Shared.Physics.Events;
 
 
 namespace Content.Server.Damage.Systems;
@@ -130,7 +131,7 @@ public sealed class StaminaSystem : EntitySystem
         }
     }
 
-    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, StartCollideEvent args)
+    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, ref StartCollideEvent args)
     {
         if (!args.OurFixture.ID.Equals(CollideFixture)) return;
 

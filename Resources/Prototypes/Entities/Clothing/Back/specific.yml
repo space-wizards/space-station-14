@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackChameleon
+  name: backpack
+  description: You wear this on your back and put items into it.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/backpack.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Back/Backpacks/backpack.rsi
+    - type: ChameleonClothing
+      slot: [back]
+      default: ClothingBackpack
+    - type: UserInterface
+      interfaces:
+        - key: enum.StorageUiKey.Key
+          type: StorageBoundUserInterface
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Content.Client.EscapeMenu.UI;
+using Content.Client.Options.UI;
 using Content.Client.MainMenu.UI;
 using Robust.Client;
 using Robust.Client.ResourceManagement;

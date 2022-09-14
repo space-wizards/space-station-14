@@ -36,6 +36,7 @@
   - type: HumanoidAppearance
   - type: AnimationPlayer
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: fist

@@ -11,6 +11,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Destructible;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 
 namespace Content.Server.Destructible
 {
@@ -25,6 +27,8 @@ namespace Content.Server.Destructible
         [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
         [Dependency] public readonly StackSystem StackSystem = default!;
         [Dependency] public readonly TriggerSystem TriggerSystem = default!;
+        [Dependency] public readonly SolutionContainerSystem SolutionContainerSystem = default!;
+        [Dependency] public readonly SpillableSystem SpillableSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] public readonly IComponentFactory ComponentFactory = default!;
 

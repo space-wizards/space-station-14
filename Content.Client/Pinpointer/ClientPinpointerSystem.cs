@@ -27,9 +27,10 @@ namespace Content.Client.Pinpointer
 
             // because eye can change it rotation anytime
             // we need to update this arrow in a update loop
-            foreach (var uid in ActivePinpointers)
+            foreach (var pinpointer in EntityQuery<PinpointerComponent>())
             {
-                UpdateEyeDir(uid);
+                UpdateAppearance(pinpointer.Owner, pinpointer);
+                UpdateEyeDir(pinpointer.Owner, pinpointer);
             }
         }
 
@@ -39,9 +40,6 @@ namespace Content.Client.Pinpointer
             SetActive(uid, state.IsActive, pinpointer);
             SetDirection(uid, state.DirectionToTarget, pinpointer);
             SetDistance(uid, state.DistanceToTarget, pinpointer);
-
-            UpdateAppearance(uid, pinpointer);
-            UpdateEyeDir(uid, pinpointer);
         }
 
         private void UpdateAppearance(EntityUid uid, PinpointerComponent? pinpointer = null,
