@@ -1,3 +1,5 @@
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Console;
 
 namespace Content.Client.Access.Commands;
@@ -9,9 +11,23 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
     public string Help => $"{Command}";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var access = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AccessSystem>();
+        var collection = IoCManager.Instance;
 
-        access.ReaderOverlay ^= true;
-        shell.WriteLine($"Set access reader debug overlay to {access.ReaderOverlay}");
+        if (collection == null) return;
+
+        var overlay = collection.Resolve<IOverlayManager>();
+
+        if (overlay.RemoveOverlay<AccessOverlay>())
+        {
+            shell.WriteLine($"Set access reader debug overlay to false");
+            return;
+        }
+
+        var entManager = collection.Resolve<IEntityManager>();
+        var cache = collection.Resolve<IResourceCache>();
+        var system = entManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
+
+        overlay.AddOverlay(new AccessOverlay(entManager, cache, system));
+        shell.WriteLine($"Set access reader debug overlay to true");
     }
 }

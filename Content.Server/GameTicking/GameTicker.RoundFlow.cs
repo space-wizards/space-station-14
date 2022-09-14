@@ -5,7 +5,6 @@ using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.CCVar;
-using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
@@ -20,7 +19,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Threading.Tasks;
-using Robust.Shared.Players;
 
 namespace Content.Server.GameTicking
 {
