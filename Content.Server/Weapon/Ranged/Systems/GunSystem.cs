@@ -13,6 +13,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Vehicle.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -92,14 +93,14 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             for (var i = 0; i < cartridge.Count; i++)
                             {
-                                var uid = Spawn(cartridge.Prototype, fromCoordinates);
+                                var uid = Spawn(cartridge.Prototype, fromMap);
                                 ShootProjectile(uid, angles[i].ToVec(), user, gun.ProjectileSpeed);
                                 shotProjectiles.Add(uid);
                             }
                         }
                         else
                         {
-                            var uid = Spawn(cartridge.Prototype, fromCoordinates);
+                            var uid = Spawn(cartridge.Prototype, fromMap);
                             ShootProjectile(uid, mapDirection, user, gun.ProjectileSpeed);
                             shotProjectiles.Add(uid);
                         }
@@ -147,46 +148,49 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
-                    var rayCastResults = Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
+
+                    var rayCastResults =
+                        Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
 
                     if (rayCastResults.Count >= 1)
                     {
                         var result = rayCastResults[0];
+                        var hitEntity = result.HitEntity;
                         var distance = result.Distance;
-                        FireEffects(fromCoordinates, distance, entityDirection.ToAngle(), hitscan, result.HitEntity);
+                        FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
 
                         if (hitscan.StaminaDamage > 0f)
-                            _stamina.TakeStaminaDamage(result.HitEntity, hitscan.StaminaDamage);
+                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage);
 
                         var dmg = hitscan.Damage;
 
                         if (dmg != null)
-                            dmg = Damageable.TryChangeDamage(result.HitEntity, dmg);
+                            dmg = Damageable.TryChangeDamage(hitEntity, dmg);
 
                         if (dmg != null)
                         {
                             if (dmg.Total > FixedPoint2.Zero)
                             {
-                                RaiseNetworkEvent(new DamageEffectEvent(result.HitEntity), Filter.Pvs(result.HitEntity, entityManager: EntityManager));
+                                RaiseNetworkEvent(new DamageEffectEvent(hitEntity), Filter.Pvs(hitEntity, entityManager: EntityManager));
                             }
 
-                            PlayImpactSound(result.HitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                            PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
 
                             if (user != null)
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"{ToPrettyString(user.Value):user} hit {ToPrettyString(result.HitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"{ToPrettyString(user.Value):user} hit {ToPrettyString(hitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
                             }
                             else
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"Hit {ToPrettyString(result.HitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"Hit {ToPrettyString(hitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
                             }
                         }
                     }
                     else
                     {
-                        FireEffects(fromCoordinates, hitscan.MaxLength, entityDirection.ToAngle(), hitscan);
+                        FireEffects(fromCoordinates, hitscan.MaxLength, mapDirection.ToAngle(), hitscan);
                     }
                     PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                     break;
@@ -310,14 +314,28 @@ public sealed partial class GunSystem : SharedGunSystem
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
 
-    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle angle, HitscanPrototype hitscan, EntityUid? hitEntity = null)
+    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, HitscanPrototype hitscan, EntityUid? hitEntity = null)
     {
         // Lord
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
         var sprites = new List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
+        var gridUid = fromCoordinates.GetGridUid(EntityManager);
+        var angle = mapDirection;
 
         // We'll get the effects relative to the grid / map of the firer
+        // Look you could probably optimise this a bit with redundant transforms at this point.
+        if (TryComp<TransformComponent>(gridUid, out var gridXform))
+        {
+            var (_, gridRot, gridInvMatrix) = gridXform.GetWorldPositionRotationInvMatrix();
+
+            fromCoordinates = new EntityCoordinates(gridUid.Value,
+                gridInvMatrix.Transform(fromCoordinates.ToMapPos(EntityManager)));
+
+            // Use the fallback angle I guess?
+            angle -= gridRot;
+        }
+
         if (distance >= 1f)
         {
             if (hitscan.MuzzleFlash != null)
