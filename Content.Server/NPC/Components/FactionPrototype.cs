@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.NPC.Components
@@ -13,10 +14,10 @@ namespace Content.Server.NPC.Components
         [IdDataField]
         public string ID { get; } = default!;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("friendly", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<FactionPrototype>))]
-        public HashSet<string> Friendly = new();
+        [ViewVariables(VVAccess.ReadWrite), DataField("friendly", customTypeSerializer:typeof(PrototypeIdListSerializer<FactionPrototype>))]
+        public List<string> Friendly = new();
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("hostile", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<FactionPrototype>))]
-        public HashSet<string> Hostile = new();
+        [ViewVariables(VVAccess.ReadWrite), DataField("hostile", customTypeSerializer:typeof(PrototypeIdListSerializer<FactionPrototype>))]
+        public List<string> Hostile = new();
     }
 }

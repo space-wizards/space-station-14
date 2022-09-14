@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.NPC.Components;
 using Robust.Shared.Prototypes;
 
@@ -13,12 +14,18 @@ namespace Content.Server.NPC.Systems
 
         private ISawmill _sawmill = default!;
 
+        /// <summary>
+        /// To avoid prototype mutability we store an intermediary data class that gets used instead.
+        /// </summary>
+        private Dictionary<string, FactionData> _factions = new();
+
         public override void Initialize()
         {
             base.Initialize();
             _sawmill = Logger.GetSawmill("faction");
             SubscribeLocalEvent<FactionComponent, ComponentStartup>(OnFactionStartup);
             _protoManager.PrototypesReloaded += OnProtoReload;
+            RefreshFactions();
         }
 
         public override void Shutdown()
@@ -45,11 +52,11 @@ namespace Content.Server.NPC.Systems
             foreach (var faction in component.Factions)
             {
                 // YAML Linter already yells about this
-                if (!_protoManager.TryIndex<FactionPrototype>(faction, out var factionProto))
+                if (!_factions.TryGetValue(faction, out var factionData))
                     continue;
 
-                component.FriendlyFactions.UnionWith(factionProto.Friendly);
-                component.HostileFactions.UnionWith(factionProto.Hostile);
+                component.FriendlyFactions.UnionWith(factionData.Friendly);
+                component.HostileFactions.UnionWith(factionData.Hostile);
             }
         }
 
@@ -137,13 +144,13 @@ namespace Content.Server.NPC.Systems
         /// </summary>
         public void MakeFriendly(string source, string target)
         {
-            if (!_protoManager.TryIndex<FactionPrototype>(source, out var sourceFaction))
+            if (!_factions.TryGetValue(source, out var sourceFaction))
             {
                 _sawmill.Error($"Unable to find faction {source}");
                 return;
             }
 
-            if (!_protoManager.HasIndex<FactionPrototype>(target))
+            if (!_factions.ContainsKey(target))
             {
                 _sawmill.Error($"Unable to find faction {target}");
                 return;
@@ -156,6 +163,17 @@ namespace Content.Server.NPC.Systems
 
         private void RefreshFactions()
         {
+            _factions.Clear();
+
+            foreach (var faction in _protoManager.EnumeratePrototypes<FactionPrototype>())
+            {
+                _factions[faction.ID] = new FactionData()
+                {
+                    Friendly = faction.Friendly.ToHashSet(),
+                    Hostile = faction.Hostile.ToHashSet(),
+                };
+            }
+
             foreach (var comp in EntityQuery<FactionComponent>(true))
             {
                 comp.FriendlyFactions.Clear();
@@ -169,13 +187,13 @@ namespace Content.Server.NPC.Systems
         /// </summary>
         public void MakeHostile(string source, string target)
         {
-            if (!_protoManager.TryIndex<FactionPrototype>(source, out var sourceFaction))
+            if (!_factions.TryGetValue(source, out var sourceFaction))
             {
                 _sawmill.Error($"Unable to find faction {source}");
                 return;
             }
 
-            if (!_protoManager.HasIndex<FactionPrototype>(target))
+            if (!_factions.ContainsKey(target))
             {
                 _sawmill.Error($"Unable to find faction {target}");
                 return;
