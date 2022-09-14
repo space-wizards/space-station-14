@@ -1,4 +1,5 @@
-﻿using Content.Server.DoAfter;
+﻿using System.Threading;
+using Content.Server.DoAfter;
 using Content.Server.MachineLinking.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction.Events;
@@ -60,12 +61,17 @@ public sealed class ReleaseSignallerSystem : EntitySystem
         if(EntityManager.TryGetComponent<ReleaseSignallerHolderComponent>(args.User, out var holderComp))
             holderComp.Switches.Remove(component);
         _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-self", ("device", uid)), args.User, Filter.Entities(args.User), PopupType.MediumCaution);
-        _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-other", ("device", uid), ("person", args.User)), args.User, Filter.PvsExcept(args.User), PopupType.MediumCaution);
+        _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-other", ("device", uid), ("user", args.User)), args.User, Filter.PvsExcept(args.User), PopupType.MediumCaution);
         args.Handled = true;
     }
 
     private void OnUsedInHand(EntityUid uid, ReleaseSignallerComponent component, UseInHandEvent args)
     {
+        if(args.Handled)
+            return;
+
+        args.Handled = true;
+
         if (component.Armed == false)
         {
             var holder = EnsureComp<ReleaseSignallerHolderComponent>(args.User);
@@ -86,13 +92,15 @@ public sealed class ReleaseSignallerSystem : EntitySystem
     {
         if (component.Armed)
         {
+            component.CancelToken = new CancellationTokenSource();
             args.Verbs.Add(new AlternativeVerb()
             {
                 Text = Loc.GetString("verb-release-signaller-disarm"),
                 Act = () =>
                 {
-                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, 15f, target: uid)
+                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.DisarmDelay, component.CancelToken.Token, uid)
                     {
+                        BreakOnDamage = true,
                         BreakOnStun = true,
                         NeedHand = true,
                         TargetFinishedEvent = new ReleaseSignallerDisarmCompleteEvent(args.User)
@@ -116,7 +124,7 @@ public sealed class ReleaseSignallerSystem : EntitySystem
     private void OnSuccessfulDisarm(EntityUid uid, ReleaseSignallerComponent component, ReleaseSignallerDisarmCompleteEvent args)
     {
         component.Armed = false;
-        _popupSystem.PopupEntity(Loc.GetString("release-signaller-disarmed"), args.Disarmer, Filter.Entities(args.Disarmer));
+        _popupSystem.PopupEntity(Loc.GetString("release-signaller-disarmed", ("device", component.Owner)), args.Disarmer, Filter.Entities(args.Disarmer));
     }
 
     private sealed class ReleaseSignallerDisarmCompleteEvent : EntityEventArgs

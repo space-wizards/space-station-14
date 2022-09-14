@@ -25,3 +25,4 @@
     - type: SignalTransmitter
       outputs:
         Pressed: [ ]
+    - type: UseDelay

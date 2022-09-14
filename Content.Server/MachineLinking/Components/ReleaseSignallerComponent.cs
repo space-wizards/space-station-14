@@ -1,4 +1,5 @@
-﻿using Content.Shared.MachineLinking;
+﻿using System.Threading;
+using Content.Shared.MachineLinking;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.MachineLinking.Components;
@@ -9,6 +10,8 @@ namespace Content.Server.MachineLinking.Components;
 [RegisterComponent]
 public sealed class ReleaseSignallerComponent : Component
 {
+    public CancellationTokenSource? CancelToken;
+
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Armed;
 
@@ -17,4 +20,7 @@ public sealed class ReleaseSignallerComponent : Component
     /// </summary>
     [DataField("port", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
     public string Port = "Pressed";
+
+    [DataField("disarmDelay")]
+    public float DisarmDelay = 15f;
 }
