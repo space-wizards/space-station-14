@@ -50,7 +50,7 @@ namespace Content.Server.Administration.Systems
         private const ushort MessageLengthCap = 3000;
 
         // Text to be used to cut off text. Should be shorter than MessageLengthCap
-        private const string TooLongText = "... (too long)";
+        private const string TooLongText = "... **(too long)**";
 
         private int _maxAdditionalChars;
 
