@@ -113,6 +113,10 @@
     - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
+  - type: RandomMetadata
+    nameSegments:
+    - RegalRatNameKingdom
+    - RegalRatNameTitle
 
 - type: entity
   id: MobRatKingBuff

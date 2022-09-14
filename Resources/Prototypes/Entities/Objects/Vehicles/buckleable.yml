@@ -236,7 +236,7 @@
     - Cargo
     - Maintenance
   - type: RandomMetadata
-    descriptionSet: ATVDescriptions
+    descriptionSegments: [ATVDescriptions]
   - type: MovementSpeedModifier
     acceleration: 1
     friction: 1

@@ -64,7 +64,7 @@
   - type: Loadout
     prototype: ERTLeaderGear
   - type: RandomMetadata
-    nameSet: NamesFirstMilitaryLeader
+    nameSegments: [NamesFirstMilitaryLeader]
   - type: RandomHumanoidAppearance
     randomizeName: false
 
@@ -197,7 +197,7 @@
   - type: Loadout
     prototype: SyndicateOperativeGearExtremelyBasic
   - type: RandomMetadata
-    nameSet: names_death_commando
+    nameSegments: [names_death_commando]
 
 # Nuclear Operative
 - type: entity
