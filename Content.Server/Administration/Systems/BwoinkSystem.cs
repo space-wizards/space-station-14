@@ -49,7 +49,7 @@ namespace Content.Server.Administration.Systems
         // Should be shorter than DescriptionMax
         private const ushort MessageLengthCap = 3000;
 
-        // Text to be used to cut off text. Should be shorter than MessageLengthCap
+        // Text to be used to cut off messages that are too long. Should be shorter than MessageLengthCap
         private const string TooLongText = "... **(too long)**";
 
         private int _maxAdditionalChars;
@@ -78,7 +78,7 @@ namespace Content.Server.Administration.Systems
                 return;
             }
 
-            // Store the Discored message IDs of the previous round
+            // Store the Discord message IDs of the previous round
             _oldMessageIds = new Dictionary<NetUserId, string>();
             foreach (var message in _relayMessages)
             {
@@ -107,23 +107,20 @@ namespace Content.Server.Administration.Systems
 
         private void OnWebhookChanged(string url)
         {
-            // Reset values
-            _webhookUrl = string.Empty;
+            _webhookUrl = url;
 
             if (url == string.Empty)
                 return;
 
-            // Basic sanity check and capturing webhook ID
+            // Basic sanity check and capturing webhook ID and token
             var match = Regex.Match(url, @"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$");
 
             if (!match.Success)
             {
-                Logger.Error("Webhook URL does not appear to be valid. Using anyways...");
-                _webhookUrl = url;
+                // TODO: Ideally, CVar validation during setting should be better integrated
+                Logger.Warning("Webhook URL does not appear to be valid. Using anyways...");
                 return;
             }
-
-            _webhookUrl = url;
 
             if (match.Groups.Count <= 2)
             {
@@ -164,7 +161,7 @@ namespace Content.Server.Administration.Systems
 
         private async void ProcessQueue(NetUserId userId, Queue<string> messages)
         {
-            // Whether an embed already exists
+            // Whether an embed already exists for this player
             var exists = _relayMessages.TryGetValue(userId, out var existingEmbed);
 
             // Whether the message will become too long after adding these new messages
@@ -178,7 +175,7 @@ namespace Content.Server.Administration.Systems
 
                 if (lookup == null)
                 {
-                    _sawmill.Log(LogLevel.Error, $"Unable to find player for netuserid {userId} when sending discord webhook.");
+                    _sawmill.Log(LogLevel.Error, $"Unable to find player for NetUserId {userId} when sending discord webhook.");
                     _relayMessages.Remove(userId);
                     return;
                 }
@@ -190,12 +187,9 @@ namespace Content.Server.Administration.Systems
                 // If we have all the data required, we can link to the embed of the previous round or embed that was too long
                 if (_webhookData is { GuildId: { } guildId, ChannelId: { } channelId })
                 {
-                    if (tooLong)
+                    if (tooLong && existingEmbed.id != null)
                     {
-                        if (existingEmbed.id != null)
-                        {
-                            linkToPrevious = $"**[Go to previous embed of this round](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.id})**\n";
-                        }
+                        linkToPrevious = $"**[Go to previous embed of this round](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.id})**\n";
                     }
                     else if (_oldMessageIds.TryGetValue(userId, out var id) && !string.IsNullOrEmpty(id))
                     {
@@ -288,7 +282,6 @@ namespace Content.Server.Administration.Systems
             // Limit server name to 1500 characters, in case someone tries to be a little funny
             var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
 
-            // If the round ID is 0, it most likely means we are in the lobby
             var round = _gameTicker.RunLevel switch
             {
                 GameRunLevel.PreRoundLobby => _gameTicker.RoundId == 0
