@@ -60,7 +60,7 @@ namespace Content.Server.NPC.Systems
         {
             if (!_protoManager.HasIndex<FactionPrototype>(faction))
             {
-                _sawmill.Error($"Unable to find action {faction}");
+                _sawmill.Error($"Unable to find faction {faction}");
                 return;
             }
 
