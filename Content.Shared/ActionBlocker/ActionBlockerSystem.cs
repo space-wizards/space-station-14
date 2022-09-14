@@ -41,7 +41,7 @@ namespace Content.Shared.ActionBlocker
                 return false;
 
             var ev = new UpdateCanMoveEvent(uid);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ev);
 
             if (component.CanMove == ev.Cancelled && component is Component comp)
                 Dirty(comp);

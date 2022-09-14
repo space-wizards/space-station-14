@@ -738,6 +738,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
+    allowSpeech: true
+    allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
   - type: Speech
