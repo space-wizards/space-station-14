@@ -6,7 +6,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite

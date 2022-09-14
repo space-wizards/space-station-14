@@ -13,7 +13,7 @@
       description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
     - type: HTN
       rootTask: XenoCompound
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - Dragon
     - type: Speech

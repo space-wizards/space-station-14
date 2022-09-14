@@ -143,7 +143,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Bloodstream
@@ -668,7 +668,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
 
@@ -1151,7 +1151,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - Syndicate
   - type: Sprite
@@ -1309,7 +1309,7 @@
   id: MobGiantSpiderAngry
   suffix: Angry
   components:
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - Xeno
     - type: InputMover

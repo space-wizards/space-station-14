@@ -14,7 +14,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -177,7 +177,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite

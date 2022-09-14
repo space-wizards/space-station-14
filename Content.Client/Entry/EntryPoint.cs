@@ -84,7 +84,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("htnCompound");
             prototypes.RegisterIgnore("htnPrimitive");
             prototypes.RegisterIgnore("gameMap");
-            prototypes.RegisterIgnore("behaviorSet");
+            prototypes.RegisterIgnore("faction");
             prototypes.RegisterIgnore("lobbyBackground");
             prototypes.RegisterIgnore("advertisementsPack");
             prototypes.RegisterIgnore("metabolizerType");

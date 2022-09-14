@@ -24,7 +24,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - Xeno
   - type: Hands
@@ -357,7 +357,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - Xeno
   - type: MeleeWeapon
