@@ -10,7 +10,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Mind.Commands
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class MakeSentientCommand : IConsoleCommand
     {
         public string Command => "makesentient";
