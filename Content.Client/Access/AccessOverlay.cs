@@ -9,9 +9,9 @@ namespace Content.Client.Access;
 
 public sealed class AccessOverlay : Overlay
 {
-    private IEntityManager _entityManager;
-    private EntityLookupSystem _lookup;
-    private Font _font;
+    private readonly IEntityManager _entityManager;
+    private readonly EntityLookupSystem _lookup;
+    private readonly Font _font;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
