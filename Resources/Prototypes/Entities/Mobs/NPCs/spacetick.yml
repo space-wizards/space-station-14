@@ -54,6 +54,7 @@
       autoPopulate: false
       name: action-name-disarm
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: bite

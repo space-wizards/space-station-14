@@ -54,6 +54,7 @@
   - type: ReplacementAccent
     accent: mouse
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -130,6 +131,7 @@
       autoPopulate: false
       name: action-name-disarm
   - type: MeleeWeapon
+    hidden: true
     range: 0.3
     arcwidth: 0
     arc: bite
@@ -655,6 +657,7 @@
       Dead:
         Base: kangaroo-boxing-dead
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: claw
@@ -1182,6 +1185,7 @@
     - id: FoodMeatPenguin
       amount: 3
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: bite

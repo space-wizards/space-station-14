@@ -79,6 +79,7 @@
       proto: guardian
     - type: Pullable
     - type: MeleeWeapon
+      hidden: true
       range: 2
       arcwidth: 30
       arc: fist
