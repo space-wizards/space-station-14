@@ -30,7 +30,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         DebugTools.Assert(_inventoryWindow == null);
         _inventoryWindow = UIManager.CreateWindow<InventoryWindow>();
-        _inventoryButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InventoryButton;
+        _inventoryButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().InventoryButton;
         LayoutContainer.SetAnchorPreset(_inventoryWindow,LayoutContainer.LayoutPreset.Center);
         _inventoryWindow.OnClose += () => { _inventoryButton.Pressed = false; };
         _inventoryWindow.OnOpen += () => { _inventoryButton.Pressed = true; };

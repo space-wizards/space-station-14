@@ -5,11 +5,10 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.UserInterface.Systems.MenuBar.Widgets
 {
-    // TODO HUD REFACTOR BEFORE MERGE rename this to something else than the one in engine
     [GenerateTypedNameReferences]
-    public sealed partial class MenuBar : UIWidget
+    public sealed partial class GameTopMenuBar : UIWidget
     {
-        public MenuBar()
+        public GameTopMenuBar()
         {
             RobustXamlLoader.Load(this);
             InfoButton.OnToggled += ButtonInfoToggledHandler;

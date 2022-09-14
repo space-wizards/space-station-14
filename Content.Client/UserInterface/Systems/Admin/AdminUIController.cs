@@ -35,7 +35,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
     {
         DebugTools.Assert(_window == null);
         _window = UIManager.CreateWindow<AdminMenuWindow>();
-        _adminButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().AdminButton;
+        _adminButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().AdminButton;
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
         _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
         _window.OnOpen += () => _adminButton.Pressed = true;

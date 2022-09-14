@@ -28,7 +28,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_escapeWindow == null);
-        _escapeButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().EscapeButton;
+        _escapeButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().EscapeButton;
         _escapeButton.OnPressed += EscapeButtonOnOnPressed;
 
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();

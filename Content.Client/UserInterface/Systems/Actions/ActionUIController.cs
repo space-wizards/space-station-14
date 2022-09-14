@@ -71,7 +71,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
     {
         DebugTools.Assert(_window == null);
         _window = UIManager.CreateWindow<ActionsWindow>();
-        _actionButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().ActionButton;
+        _actionButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().ActionButton;
         LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
         _window.OnClose += () => { _actionButton.Pressed = false; };
         _window.OnOpen += () => { _actionButton.Pressed = true; };

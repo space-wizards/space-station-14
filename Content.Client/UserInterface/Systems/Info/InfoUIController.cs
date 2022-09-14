@@ -40,7 +40,7 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_infoWindow == null);
-        _infoButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InfoButton;
+        _infoButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().InfoButton;
         _infoButton.OnPressed += InfoButtonPressed;
 
         _infoWindow = UIManager.CreateWindow<RulesAndInfoWindow>();

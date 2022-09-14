@@ -28,7 +28,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
-        _characterButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().CharacterButton;
+        _characterButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().CharacterButton;
         _characterButton.OnPressed += CharacterButtonPressed;
 
         _window = UIManager.CreateWindow<CharacterWindow>();

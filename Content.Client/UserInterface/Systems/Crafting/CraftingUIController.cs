@@ -9,7 +9,7 @@ public sealed class CraftingUIController : UIController, IOnStateEntered<Gamepla
 {
 
     private ConstructionMenuPresenter? _presenter;
-    private MenuButton CraftingButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().CraftingButton;
+    private MenuButton CraftingButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().CraftingButton;
 
     public void OnStateEntered(GameplayState state)
     {

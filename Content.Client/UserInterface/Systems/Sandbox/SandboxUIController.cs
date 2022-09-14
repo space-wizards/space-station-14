@@ -47,7 +47,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
-        _sandboxButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().SandboxButton;
+        _sandboxButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().SandboxButton;
         _sandboxButton.OnPressed += SandboxButtonPressed;
 
         _window = UIManager.CreateWindow<SandboxWindow>();

@@ -11,7 +11,7 @@
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
-    <menuBar:MenuBar Name="TopBar" Access="Protected" />
+    <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
     <widgets:GhostGui Name="Ghost" Access="Protected" />
     <hands:HandsGui Name="Hands" Access="Protected" />
     <actions:ActionsBar Name="Actions" Access="Protected" />
