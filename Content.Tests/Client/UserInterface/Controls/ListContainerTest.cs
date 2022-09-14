@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface.Controls;
@@ -230,7 +230,7 @@ public sealed class ListContainerTest : RobustUnitTest
     {
         var height = 10;
         var root = new Control { MinSize = (50, height) };
-        var listContainer = new ListContainer { SeparationOverride = 0 };
+        var listContainer = new ListContainer { SeparationOverride = 0, Toggle = true };
         root.AddChild(listContainer);
         listContainer.GenerateItem += (_, button) => {
             button.AddChild(new Control { MinSize = (10, 10) });
