@@ -26,21 +26,18 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            if (_menu.CurrentBuyer != null)
-              SendMessage(new StoreBuyListingMessage(_menu.CurrentBuyer.Value, listing));
+            SendMessage(new StoreBuyListingMessage(listing));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>
         {
             _menu.CurrentCategory = category;
-            if (_menu.CurrentBuyer != null)
-                SendMessage(new StoreRequestUpdateInterfaceMessage(_menu.CurrentBuyer.Value));
+            SendMessage(new StoreRequestUpdateInterfaceMessage());
         };
 
         _menu.OnWithdrawAttempt += (_, type, amount) =>
         {
-            if (_menu.CurrentBuyer != null)
-                SendMessage(new StoreRequestWithdrawMessage(_menu.CurrentBuyer.Value, type, amount));
+            SendMessage(new StoreRequestWithdrawMessage(type, amount));
         };
     }
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -53,8 +50,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         switch (state)
         {
             case StoreUpdateState msg:
-                if (msg.Buyer != null)
-                    _menu.CurrentBuyer = msg.Buyer;
                 _menu.UpdateBalance(msg.Balance);
                 _menu.PopulateStoreCategoryButtons(msg.Listings);
                 _menu.UpdateListing(msg.Listings.ToList());

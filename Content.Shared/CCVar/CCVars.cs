@@ -143,7 +143,7 @@ namespace Content.Shared.CCVar
         ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "sandbox", CVar.ARCHIVE);
+            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "extended", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if people can win the game in Suspicion or Deathmatch.
@@ -250,8 +250,24 @@ namespace Content.Shared.CCVar
          * Discord
          */
 
+        /// <summary>
+        /// URL of the Discord webhook which will relay all ahelp messages.
+        /// </summary>
         public static readonly CVarDef<string> DiscordAHelpWebhook =
             CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The server icon to use in the Discord ahelp embed footer.
+        /// Valid values are specified at https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordAHelpFooterIcon =
+            CVarDef.Create("discord.ahelp_footer_icon", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The avatar to use for the webhook. Should be an URL.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordAHelpAvatar =
+            CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /*
          * Suspicion
@@ -1066,6 +1082,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ChatPunctuation =
             CVarDef.Create("ic.punctuation", false, CVar.SERVER);
+
+        /// <summary>
+        /// Enables automatically forcing IC name rules. Uppercases the first letter of the first and last words of the name
+        /// </summary>
+        public static readonly CVarDef<bool> ICNameCase =
+            CVarDef.Create("ic.name_case", true, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Salvage

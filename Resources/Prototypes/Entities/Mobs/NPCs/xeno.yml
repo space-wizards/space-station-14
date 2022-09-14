@@ -86,6 +86,8 @@
     - id: FoodMeatXeno
       amount: 5
   - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
     makeSentient: true
     name: xeno
     description: You are a xeno, co-operate with your hive to kill all crewmembers!

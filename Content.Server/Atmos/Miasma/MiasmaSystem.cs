@@ -9,6 +9,7 @@ using Content.Shared.Rejuvenate;
 using Robust.Server.GameObjects;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.Miasma
