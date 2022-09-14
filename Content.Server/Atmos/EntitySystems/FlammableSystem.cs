@@ -115,7 +115,7 @@ namespace Content.Server.Atmos.EntitySystems
             args.Handled = true;
         }
 
-        private void OnCollide(EntityUid uid, FlammableComponent flammable, StartCollideEvent args)
+        private void OnCollide(EntityUid uid, FlammableComponent flammable, ref StartCollideEvent args)
         {
             var otherUid = args.OtherFixture.Body.Owner;
 
