@@ -738,6 +738,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
+    allowSpeech: true
+    allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
   - type: Speech
@@ -799,7 +801,7 @@
           Quantity: 50
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatRat
       amount: 1
   - type: ReplacementAccent
     accent: mouse
@@ -932,7 +934,7 @@
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatLizard
       amount: 1
   - type: InteractionPopup
     successChance: 0.3

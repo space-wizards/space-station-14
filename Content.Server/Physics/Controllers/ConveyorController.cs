@@ -14,8 +14,11 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -43,7 +46,7 @@ namespace Content.Server.Physics.Controllers
             base.Initialize();
         }
 
-        private void OnConveyorEndCollide(EntityUid uid, ConveyorComponent component, EndCollideEvent args)
+        private void OnConveyorEndCollide(EntityUid uid, ConveyorComponent component, ref EndCollideEvent args)
         {
             component.Intersecting.Remove(args.OtherFixture.Body.Owner);
 
@@ -53,7 +56,7 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, StartCollideEvent args)
+        private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
         {
             var otherUid = args.OtherFixture.Body.Owner;
 

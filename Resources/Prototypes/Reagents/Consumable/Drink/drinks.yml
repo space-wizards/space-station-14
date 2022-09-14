@@ -4,6 +4,7 @@
   parent: BaseDrink
   desc: reagent-desc-coffee
   physicalDesc: reagent-physical-desc-aromatic
+  flavor: coffee
   color: "#664300"
   metabolisms:
     Drink:
@@ -20,6 +21,7 @@
   group: Drinks
   desc: reagent-desc-cream
   physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
   color: "#DFD7AF"
   metabolisms:
     Drink:
@@ -33,6 +35,7 @@
   parent: BaseDrink
   desc: reagent-desc-cafe-latte
   physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
   color: "#664300"
   spritePath: cafe_latte.rsi
 
@@ -42,6 +45,7 @@
   parent: BaseDrink
   desc: reagent-desc-green-tea
   physicalDesc: reagent-physical-desc-aromatic
+  flavor: tea
   color: "#C33F00"
   spritePath: glass_green.rsi #Placeholder
 
@@ -51,6 +55,7 @@
   parent: BaseDrink
   desc: reagent-desc-grenadine
   physicalDesc: reagent-physical-desc-dark-red
+  flavor: bitter
   color: "#EA1D26"
   spritePath: grenadineglass.rsi
 
@@ -60,6 +65,7 @@
   parent: BaseDrink
   desc: reagent-desc-iced-coffee
   physicalDesc: reagent-physical-desc-aromatic
+  flavor: coffee
   color: "#102838"
   spritePath: icedcoffeeglass.rsi
 
@@ -69,6 +75,7 @@
   parent: BaseDrink
   desc: reagent-desc-iced-green-tea
   physicalDesc: reagent-physical-desc-aromatic
+  flavor: icedtea
   color: "#CE4200"
   spritePath: glass_green.rsi #Placeholder
 
@@ -78,6 +85,7 @@
   parent: BaseDrink
   desc: reagent-desc-iced-tea
   physicalDesc: reagent-physical-desc-aromatic
+  flavor: icedtea
   color: "#104038"
   spritePath: icedteaglass.rsi
   metabolisms:
@@ -95,6 +103,7 @@
   group: Drinks
   desc: reagent-desc-lemonade
   physicalDesc: reagent-physical-desc-tart
+  flavor: sweet
   color: "#FFFF00"
   spritePath: lemonadeglass.rsi
   metabolisms:
@@ -109,6 +118,7 @@
   group: Drinks
   desc: reagent-desc-milk
   physicalDesc: reagent-physical-desc-opaque
+  flavor: milk
   color: "#DFDFDF"
   plantMetabolism:
     - !type:PlantAdjustNutrition
@@ -133,6 +143,7 @@
   group: Drinks
   desc: reagent-desc-milk-oat
   physicalDesc: reagent-physical-desc-refreshing
+  flavor: oats
   color: "#302000"
   metabolisms:
     Drink:
@@ -152,6 +163,7 @@
   group: Drinks
   desc: reagent-desc-milk-spoiled
   physicalDesc: reagent-physical-desc-putrid
+  flavor: terrible
   color: "#faffba"
   metabolisms:
     Drink:
@@ -179,6 +191,7 @@
   group: Drinks
   desc: reagent-desc-nuclear-cola
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: atomiccola
   color: "#100800"
   spritePath: nuclear_colaglass.rsi
   metabolisms:
@@ -199,6 +212,7 @@
   parent: BaseDrink
   desc: reagent-desc-soda-water
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: fizzy
   color: "#619494"
 
 - type: reagent
@@ -207,6 +221,7 @@
   parent: BaseDrink
   desc: reagent-desc-soy-latte
   physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: soy
   color: "#664300"
   spritePath: soy_latte.rsi
 
@@ -216,6 +231,7 @@
   parent: BaseDrink
   desc: reagent-desc-tea
   physicalDesc: reagent-physical-desc-aromatic
+  flavor: tea
   color: "#8a5a3a"
   metabolisms:
     Drink:
@@ -232,6 +248,7 @@
   parent: BaseDrink
   desc: reagent-desc-tonic-water
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: water
   color: "#0064C8"
 
 - type: reagent
@@ -240,6 +257,7 @@
   parent: BaseDrink
   desc: reagent-desc-water
   physicalDesc: reagent-physical-desc-translucent
+  flavor: water
   color: "#75b1f0"
   boilingPoint: 100.0
   meltingPoint: 0.0
@@ -254,6 +272,7 @@
   name: reagent-name-ice
   desc: reagent-desc-ice
   physicalDesc: reagent-physical-desc-frosty
+  flavor: cold
   color: "#bed8e6"
   meltingPoint: 0.0
   boilingPoint: 100.0
@@ -267,6 +286,7 @@
   parent: BaseDrink
   desc: reagent-desc-dry-ramen
   physicalDesc: reagent-physical-desc-wormy
+  flavor: cheapnoodles
   color: "#664300"
   metabolisms:
     Food:
@@ -280,6 +300,7 @@
   parent: BaseDrink
   desc: reagent-desc-hot-ramen
   physicalDesc: reagent-physical-desc-wormy
+  flavor: cheapnoodles
   color: "#664300"
   metabolisms:
     Food:
@@ -293,6 +314,7 @@
   parent: BaseDrink
   desc: reagent-desc-pilk
   physicalDesc: reagent-physical-desc-creamy
+  flavor: pilk
   color: "#e7c69f"
   metabolisms:
     Drink:
@@ -306,6 +328,7 @@
   parent: BaseDrink
   desc: Long live the guy who everyone had mistaken for a girl. Baka!
   physicalDesc: strong-smelling
+  flavor: sweet
   color: "#CCCC99"
   spritePath: kiraspecial.rsi
 
@@ -315,6 +338,7 @@
   parent: BaseDrink
   desc: The secret of the sanctuary of the Librarian...
   physicalDesc: strong-smelling
+  flavor: sweet
   color: "#485000"
   spritePath: rewriter.rsi
 
@@ -324,5 +348,6 @@
   parent: BaseDrink
   desc: reagent-desc-kvass
   physicalDesc: reagent-physical-desc-bubbly
+  flavor: bread
   color: "#381600"
   spritePath: kvass.rsi

@@ -1,4 +1,3 @@
-﻿
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Commands;
@@ -32,6 +31,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
@@ -376,11 +376,11 @@ public sealed partial class AdminVerbSystem
                 Text = "Send to test arena",
                 Category = VerbCategory.Tricks,
                 IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
+
                 Act = () =>
                 {
-                    var (_, arenaGrid) = _adminTestArenaSystem.AssertArenaLoaded(player);
-
-                    Transform(args.Target).Coordinates = new EntityCoordinates(arenaGrid, Vector2.One);
+                    var (mapUid, gridUid) = _adminTestArenaSystem.AssertArenaLoaded(player);
+                    Transform(args.Target).Coordinates = new EntityCoordinates(gridUid ?? mapUid, Vector2.One);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-send-to-test-arena-description"),

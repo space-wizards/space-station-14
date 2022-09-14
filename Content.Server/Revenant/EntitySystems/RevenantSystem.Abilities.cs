@@ -26,6 +26,7 @@ using Content.Server.Emag;
 using Content.Server.Store.Components;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Revenant.EntitySystems;
