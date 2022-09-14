@@ -5,6 +5,7 @@ using Content.Server.NPC.Pathfinding.Pathfinders;
 using Content.Shared.Access.Systems;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.NPC.Pathfinding
 {

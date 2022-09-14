@@ -5,6 +5,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
