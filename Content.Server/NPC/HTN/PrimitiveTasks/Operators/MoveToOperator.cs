@@ -5,6 +5,7 @@ using Content.Server.NPC.Pathfinding;
 using Content.Server.NPC.Pathfinding.Pathfinders;
 using Content.Server.NPC.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 

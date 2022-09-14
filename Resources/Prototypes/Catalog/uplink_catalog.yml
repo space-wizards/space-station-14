@@ -428,7 +428,17 @@
 
 # Armor
 
-# Should be cameleon shoes, change when implemented.
+- type: listing
+  id: UplinkChameleon
+  name: Chameleon Kit
+  description: A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+  productEntity: ClothingBackpackChameleonFill
+  icon: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi/icon.png
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkArmor
+
 - type: listing
   id: UplinkClothingNoSlipsShoes
   name: no-slip shoes

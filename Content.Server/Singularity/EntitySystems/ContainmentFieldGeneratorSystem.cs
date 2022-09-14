@@ -11,6 +11,8 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -58,7 +60,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// <summary>
     /// A generator receives power from a source colliding with it.
     /// </summary>
-    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
+    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, ref StartCollideEvent args)
     {
         if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
         {

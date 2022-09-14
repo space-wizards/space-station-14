@@ -101,10 +101,32 @@
     sprite: Clothing/Shoes/Specific/wizard.rsi
 
 - type: entity
-  parent: ClothingShoesColorBlack
+  parent: ClothingShoesBase
+  id: ClothingShoesChameleon
+  name: black shoes
+  suffix: Chameleon
+  description: Stylish black shoes.
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Shoes/Color/black.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Shoes/Color/black.rsi
+    - type: ChameleonClothing
+      slot: [FEET]
+      default: ClothingShoesColorBlack
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ClothingShoesChameleon
   id: ClothingShoesChameleonNoSlips
   name: black shoes #actual name and description in uplink_catalog.yml
-  suffix: no-slip
+  suffix: No-slip, Chameleon
   description: Stylish black shoes.
   components:
   - type: NoSlip

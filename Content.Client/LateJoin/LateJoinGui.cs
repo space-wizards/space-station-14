@@ -1,11 +1,8 @@
-using System.Linq;
 using Content.Client.CrewManifest;
-using Content.Client.Eui;
 using Content.Client.GameTicking.Managers;
-using Content.Client.HUD.UI;
+using Content.Client.UserInterface.Controls;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
-using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;

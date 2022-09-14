@@ -1,5 +1,5 @@
-﻿<ui:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:ui="clr-namespace:Content.Client.UserInterface"
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:networkConfigurator="clr-namespace:Content.Client.NetworkConfigurator"
                 Title="Network Configurator" MinSize="350 100">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
@@ -17,4 +17,4 @@
         </BoxContainer>
         <Label Name="Count" HorizontalAlignment="Right" />
     </BoxContainer>
-</ui:FancyWindow>
+</controls:FancyWindow>

@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Interaction;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -48,7 +49,7 @@ namespace Content.Server.Chemistry.Components
             {
                 msgFormat = "hypospray-component-inject-self-message";
             }
-            else if (EligibleEntity(user, _entMan) && ClumsyComponent.TryRollClumsy(user, ClumsyFailChance))
+            else if (EligibleEntity(user, _entMan) && _entMan.EntitySysManager.GetEntitySystem<InteractionSystem>().TryRollClumsy(user, ClumsyFailChance))
             {
                 msgFormat = "hypospray-component-inject-self-clumsy-message";
                 target = user;
