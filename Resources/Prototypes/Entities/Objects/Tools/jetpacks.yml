@@ -140,6 +140,7 @@
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     slots:
       - Back
+      - suitStorage
   - type: Item
     size: 30
 
@@ -233,6 +234,9 @@
     sprite: Objects/Tanks/Jetpacks/void.rsi
     slots:
       - Back
+      - suitStorage
+  - type: Item
+    size: 50
 
 # Filled void
 - type: entity
