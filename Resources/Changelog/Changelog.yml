@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The dollar sign in all of the cargo UI is now in the correct position
-      in front of the amount., type: Fix}
-  id: 1800
-  time: '2022-06-27T03:58:06.0000000+00:00'
 - author: greenrock64
   changes:
   - {message: Fixed a server crash when slicing some raw meats., type: Fix}
@@ -2923,3 +2917,9 @@ Entries:
   - {message: Tile prying no longer spawns the tile item in the wall., type: Fix}
   id: 2299
   time: '2022-09-14T07:07:44.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added chameleon clothing that can mimic any uniform. Watch out for suspicious
+      syndicate imposters., type: Add}
+  id: 2300
+  time: '2022-09-14T08:42:14.0000000+00:00'
