@@ -92,7 +92,7 @@ namespace Content.Client.Administration.UI.CustomControls
         {
             var text = $"{info.CharacterName} ({info.Username})";
             if (OverrideText != null)
-                text = OverrideText?.Invoke(info, text);
+                text = OverrideText.Invoke(info, text);
             return text;
         }
 
