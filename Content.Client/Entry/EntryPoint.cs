@@ -40,6 +40,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
@@ -187,6 +188,19 @@ namespace Content.Client.Entry
             _userInterfaceManager.MainViewport.Visible = false;
 
             SwitchToDefaultState();
+        }
+
+        public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
+        {
+            base.Update(level, frameEventArgs);
+
+            switch (level)
+            {
+                case ModUpdateLevel.FramePreEngine:
+                    // TODO: Turn IChatManager into an EntitySystem and remove the line below.
+                    IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
+                    break;
+            }
         }
 
         private void SwitchToDefaultState(bool disconnected = false)
