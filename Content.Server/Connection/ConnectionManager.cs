@@ -42,7 +42,7 @@ namespace Content.Server.Connection
             var ban = await _db.GetServerBanByIpAsync(eventArgs.Connection.RemoteEndPoint.Address);
             if (ban != null)
             {
-                var expires = "This is a permanent ban.";
+                var expires = "This ban is appeal only.";
                 if (ban.ExpirationTime is { } expireTime)
                 {
                     var duration = expireTime - ban.BanTime;

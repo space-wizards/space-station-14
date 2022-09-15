@@ -55,7 +55,7 @@ namespace Content.Server.Database
         public string DisconnectMessage
         {
             get {
-                var expires = "This is a permanent ban.";
+                var expires = "This ban is appeal only.";
                 if (this.ExpirationTime is { } expireTime)
                 {
                     var duration = expireTime - this.BanTime;
