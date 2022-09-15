@@ -1,6 +1,5 @@
 - type: vendingMachineInventory
   id: ClothesMateInventory
-  name: ClothesMate
   startingInventory:
     ClothingBackpack: 5
     ClothingBackpackDuffel: 5

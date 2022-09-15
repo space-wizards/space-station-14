@@ -21,7 +21,7 @@ namespace Content.Client.Power.APC
             _menu.OpenCentered();
         }
 
-        public ApcBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ApcBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

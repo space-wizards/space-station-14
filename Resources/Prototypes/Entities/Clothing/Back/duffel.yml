@@ -119,6 +119,14 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateBundle
+  abstract: true
+  components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateAmmo
   name: syndicate duffel bag
   components:
@@ -129,6 +137,14 @@
     heldPrefix: ammo
   - type: Clothing
     equippedPrefix: ammo
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateAmmoBundle
+  abstract: true
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -144,6 +160,14 @@
     equippedPrefix: med
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateMedicalBundle
+  abstract: true
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelHolding
   name: duffelbag of holding
@@ -157,4 +181,4 @@
     - state: icon-unlit
       shader: unshaded
   - type: Storage
-    capacity: 10000
+    capacity: 9999

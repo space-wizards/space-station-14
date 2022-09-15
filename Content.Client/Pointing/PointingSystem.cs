@@ -1,5 +1,5 @@
 using Content.Client.Pointing.Components;
-using Content.Shared.MobState.Components;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Pointing;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
@@ -7,8 +7,10 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
-internal sealed class PointingSystem : EntitySystem
+public sealed class PointingSystem : EntitySystem
 {
+    [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -33,7 +35,7 @@ internal sealed class PointingSystem : EntitySystem
 
         // Can the user point? Checking mob state directly instead of some action blocker, as many action blockers are blocked for
         // ghosts and there is no obvious choice for pointing (unless ghosts CanEmote?).
-        if (TryComp(args.User, out MobStateComponent? mob) && mob.IsIncapacitated())
+        if (_mobState.IsIncapacitated(args.User))
             return;
 
         // We won't check in range or visibility, as this verb is currently only executable via the context menu,

@@ -4,7 +4,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class RemoveBodyPartCommand : IConsoleCommand
     {
         public string Command => "rmbodypart";

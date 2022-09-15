@@ -32,6 +32,8 @@
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
+    netsync: false
+    snapCardinals: true
   - type: NodeContainer
     examinable: true
     nodes:
@@ -65,6 +67,8 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: StaticPrice
+    price: 500
 
 # Base Wallmount Generator
 
@@ -241,8 +245,5 @@
     layers:
       - state: rtg_damaged
       - state: rtg_glow
-  - type: RadiationPulse # ideally only when opened.
+  - type: RadiationSource # ideally only when opened.
     range: 2
-    decay: false
-    minPulseLifespan: 1
-    maxPulseLifespan: 1

@@ -40,8 +40,15 @@ public sealed class CrewManifestEui : BaseEui
         switch (msg)
         {
             case CrewManifestEuiClosed:
-                _crewManifest.CloseEui(_station, Player, Owner);
+                Closed();
                 break;
         }
+    }
+
+    public override void Closed()
+    {
+        base.Closed();
+
+        _crewManifest.CloseEui(_station, Player, Owner);
     }
 }

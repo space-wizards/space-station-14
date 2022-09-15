@@ -1,11 +1,9 @@
-using Content.Client.Ghost.UI;
 using Content.Client.HUD;
+using Content.Client.UserInterface.Systems.Ghost;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Ghost
 {
@@ -103,8 +101,7 @@ namespace Content.Client.Ghost
 
             if (window != null)
             {
-                window.Locations = msg.Locations;
-                window.Players = msg.Players;
+                window.UpdateWarps(msg.Warps);
                 window.Populate();
             }
         }

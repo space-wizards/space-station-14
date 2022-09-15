@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -31,6 +32,12 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     {
         base.Initialize();
         SubscribeNetworkEvent<PredictTetherEvent>(OnPredictTether);
+        SubscribeNetworkEvent<TetherGunToggleMessage>(OnTetherGun);
+    }
+
+    private void OnTetherGun(TetherGunToggleMessage ev)
+    {
+        Enabled = ev.Enabled;
     }
 
     private void OnPredictTether(PredictTetherEvent ev)

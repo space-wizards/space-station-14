@@ -22,13 +22,15 @@ public sealed class FeedEvent : EntityEventArgs
     public readonly EntityUid User;
     public readonly FoodComponent Food;
     public readonly Solution FoodSolution;
+    public readonly string FlavorMessage;
     public readonly List<UtensilComponent> Utensils;
 
-    public FeedEvent(EntityUid user, FoodComponent food, Solution foodSolution, List<UtensilComponent> utensils)
+    public FeedEvent(EntityUid user, FoodComponent food, Solution foodSolution, string flavorMessage, List<UtensilComponent> utensils)
     {
         User = user;
         Food = food;
         FoodSolution = foodSolution;
+        FlavorMessage = flavorMessage;
         Utensils = utensils;
     }
 }
@@ -54,12 +56,14 @@ public sealed class DrinkEvent : EntityEventArgs
     public readonly EntityUid User;
     public readonly DrinkComponent Drink;
     public readonly Solution DrinkSolution;
+    public readonly string FlavorMessage;
 
-    public DrinkEvent(EntityUid user, DrinkComponent drink, Solution drinkSolution)
+    public DrinkEvent(EntityUid user, DrinkComponent drink, Solution drinkSolution, string flavorMessage)
     {
         User = user;
         Drink = drink;
         DrinkSolution = drinkSolution;
+        FlavorMessage = flavorMessage;
     }
 }
 

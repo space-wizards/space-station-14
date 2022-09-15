@@ -39,32 +39,6 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
 
             SubscribeLocalEvent<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt);
-
-            SubscribeLocalEvent<FlashableComponent, ComponentStartup>(OnFlashableStartup);
-            SubscribeLocalEvent<FlashableComponent, ComponentShutdown>(OnFlashableShutdown);
-            SubscribeLocalEvent<FlashableComponent, MetaFlagRemoveAttemptEvent>(OnMetaFlagRemoval);
-            SubscribeLocalEvent<FlashableComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        }
-
-        private void OnPlayerAttached(EntityUid uid, FlashableComponent component, PlayerAttachedEvent args)
-        {
-            Dirty(component);
-        }
-
-        private void OnMetaFlagRemoval(EntityUid uid, FlashableComponent component, ref MetaFlagRemoveAttemptEvent args)
-        {
-            if (component.LifeStage == ComponentLifeStage.Running)
-                args.ToRemove &= ~MetaDataFlags.EntitySpecific;
-        }
-
-        private void OnFlashableStartup(EntityUid uid, FlashableComponent component, ComponentStartup args)
-        {
-            _metaSystem.AddFlag(uid, MetaDataFlags.EntitySpecific);
-        }
-
-        private void OnFlashableShutdown(EntityUid uid, FlashableComponent component, ComponentShutdown args)
-        {
-            _metaSystem.RemoveFlag(uid, MetaDataFlags.EntitySpecific);
         }
 
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
@@ -165,7 +139,7 @@ namespace Content.Server.Flash
             foreach (var entity in flashableEntities)
             {
                 // Check for unobstructed entities while ignoring the mobs with flashable components.
-                if (!_interactionSystem.InRangeUnobstructed(entity, mapPosition, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e)))
+                if (!_interactionSystem.InRangeUnobstructed(entity, mapPosition, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e) || e == source))
                     continue;
 
                 // They shouldn't have flash removed in between right?

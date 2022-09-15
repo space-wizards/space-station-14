@@ -11,7 +11,7 @@ namespace Content.Client.Labels.UI
     {
         private HandLabelerWindow? _window;
 
-        public HandLabelerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public HandLabelerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

@@ -41,6 +41,9 @@ public sealed class InteractionPopupSystem : EntitySystem
             && !state.IsAlive())                           // AND if that state is not Alive (e.g. dead/incapacitated/critical)
             return;
 
+        // TODO: Should be an attempt event
+        // TODO: Need to handle pausing with an accumulator.
+
         string msg = ""; // Stores the text to be shown in the popup message
         string? sfx = null; // Stores the filepath of the sound to be played
 

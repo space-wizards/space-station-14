@@ -1,5 +1,5 @@
 using Content.Client.Lobby;
-using Content.Client.Viewport;
+using Content.Client.Gameplay;
 using Content.Shared.CCVar;
 using Content.Shared.Info;
 using Robust.Client.Console;
@@ -17,7 +17,9 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
+    private InfoSection rulesSection = new InfoSection("", "", false);
     private bool _shouldShowRules;
 
     public void Initialize()
@@ -40,7 +42,7 @@ public sealed class RulesManager : SharedRulesManager
 
     private void OnStateChanged(StateChangedEventArgs args)
     {
-        if (args.NewState is not (GameScreen or LobbyState))
+        if (args.NewState is not (GameplayState or LobbyState))
             return;
 
         if (!_shouldShowRules)
@@ -71,5 +73,18 @@ public sealed class RulesManager : SharedRulesManager
     {
         var message = _netManager.CreateNetMessage<RulesAcceptedMessage>();
         _netManager.ClientSendMessage(message);
+    }
+
+    public void UpdateRules()
+    {
+        var rules = _sysMan.GetEntitySystem<InfoSystem>().Rules;
+        rulesSection.SetText(rules.Title, rules.Text, true);
+    }
+
+    public Control RulesSection()
+    {
+        rulesSection = new InfoSection("", "", false);
+        UpdateRules();
+        return rulesSection;
     }
 }

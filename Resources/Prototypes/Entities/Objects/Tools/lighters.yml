@@ -41,7 +41,7 @@
       visible: false
     - state: basic_icon_top
   - type: Item
-    size: 2
+    size: 1
     sprite: Objects/Tools/lighters.rsi
     heldPrefix: off
   - type: ItemCooldown

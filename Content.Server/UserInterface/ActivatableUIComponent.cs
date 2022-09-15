@@ -50,6 +50,12 @@ namespace Content.Server.UserInterface
         public bool AllowSpectator = true;
 
         /// <summary>
+        ///     Whether the UI should close when the item is deselected due to a hand swap or drop
+        /// </summary>
+        [DataField("closeOnHandDeselect")]
+        public bool CloseOnHandDeselect = true;
+
+        /// <summary>
         ///     The client channel currently using the object, or null if there's none/not single user.
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>

@@ -1,10 +1,8 @@
+using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
-using Content.Server.AI.Utility;
-using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.WorldState;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
@@ -48,8 +46,8 @@ namespace Content.Server.Entry
         {
             base.Init();
 
-            IoCManager.Resolve<IStatusHost>().SetAczInfo("Content.Client",
-                new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" });
+            var aczProvider = new ContentMagicAczProvider(IoCManager.Resolve<IDependencyCollection>());
+            IoCManager.Resolve<IStatusHost>().SetMagicAczProvider(aczProvider);
 
             var factory = IoCManager.Resolve<IComponentFactory>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
@@ -126,8 +124,6 @@ namespace Content.Server.Entry
             else
             {
                 IoCManager.Resolve<RecipeManager>().Initialize();
-                IoCManager.Resolve<BlackboardManager>().Initialize();
-                IoCManager.Resolve<ConsiderationsManager>().Initialize();
                 IoCManager.Resolve<IAdminManager>().Initialize();
                 IoCManager.Resolve<IAfkManager>().Initialize();
                 IoCManager.Resolve<RulesManager>().Initialize();

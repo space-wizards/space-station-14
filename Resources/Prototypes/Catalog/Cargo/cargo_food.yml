@@ -4,7 +4,7 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: margherita
   product: CrateFoodPizza
-  cost: 1000
+  cost: 500
   category: Food
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
   product: CrateFoodMRE
-  cost: 4000
+  cost: 1000
   category: Food
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Objects/Consumable/Food/ingredients.rsi
     state: flour-big
   product: CrateFoodCooking
-  cost: 5000
+  cost: 1500
   category: Food
   group: market
 

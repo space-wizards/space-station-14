@@ -53,6 +53,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var doors = entityManager.EntitySysManager.GetEntitySystem<DoorSystem>();
 
             EntityUid airlock = default;
             DoorComponent doorComponent = null;
@@ -71,7 +72,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitAssertion(() =>
             {
-                EntitySystem.Get<DoorSystem>().StartOpening(airlock);
+                doors.StartOpening(airlock);
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.Opening));
             });
 
@@ -83,7 +84,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitAssertion(() =>
             {
-                EntitySystem.Get<DoorSystem>().TryClose((EntityUid) airlock);
+                doors.TryClose(airlock);
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closing));
             });
 
