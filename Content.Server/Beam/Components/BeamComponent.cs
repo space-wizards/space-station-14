@@ -2,7 +2,6 @@
 
 namespace Content.Server.Beam.Components;
 [RegisterComponent]
-[ComponentReference(typeof(SharedBeamComponent))]
 public sealed class BeamComponent : SharedBeamComponent
 {
 

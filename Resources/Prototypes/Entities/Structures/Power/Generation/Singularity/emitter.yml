@@ -33,7 +33,8 @@
     - state: lock
       shader: unshaded
       visible: false
-  - type: Emitter
+  #- type: Emitter
+  - type: Beam
   - type: PowerConsumer
     voltage: Medium
   - type: NodeContainer

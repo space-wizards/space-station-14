@@ -1,18 +1,16 @@
 ﻿- type: entity
   name: lightning
-  id: LightningBase
+  id: BaseLightning
   abstract: true
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
     drawdepth: Effects
+    netsync: false
     layers:
     - state: "lightning_1"
       shader: unshaded
-  - type: Transform
   - type: Physics
-  - type: CollisionWake
-    enabled: false
   - type: Electrified
     requirePower: false
   - type: Lightning
@@ -34,7 +32,7 @@
 - type: entity
   name: lightning
   id: Lightning
-  parent: LightningBase
+  parent: BaseLightning
   components:
     - type: Lightning
       canArc: true
@@ -42,7 +40,7 @@
 - type: entity
   name: charged lightning
   id: ChargedLightning
-  parent: LightningBase
+  parent: BaseLightning
   components:
     - type: Sprite
       sprite: /Textures/Effects/lightning.rsi

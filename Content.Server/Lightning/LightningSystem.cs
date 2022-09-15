@@ -26,9 +26,7 @@ public sealed class LightningSystem : SharedLightningSystem
 
     private void OnRemove(EntityUid uid, LightningComponent component, ComponentRemove args)
     {
-        if (!TryComp<BeamComponent>(uid, out var lightningBeam)
-            || lightningBeam.VirtualBeamController == null
-            || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
+        if (!TryComp<BeamComponent>(uid, out var lightningBeam) || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
         {
             return;
         }
@@ -38,9 +36,7 @@ public sealed class LightningSystem : SharedLightningSystem
 
     private void OnCollide(EntityUid uid, LightningComponent component, StartCollideEvent args)
     {
-        if (!TryComp<BeamComponent>(uid, out var lightningBeam)
-            || lightningBeam.VirtualBeamController == null
-            || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
+        if (!TryComp<BeamComponent>(uid, out var lightningBeam) || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
         {
             return;
         }
@@ -92,6 +88,7 @@ public sealed class LightningSystem : SharedLightningSystem
 
         var lightningQuery = GetEntityQuery<LightningComponent>();
         var beamQuery = GetEntityQuery<BeamComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         Dictionary<Direction, EntityUid> arcDirections =  new();
 
@@ -99,8 +96,9 @@ public sealed class LightningSystem : SharedLightningSystem
         for (int i = 0; i < directions; i++)
         {
             var direction = (Direction) i;
-            var dirRad = direction.ToAngle() + targetXForm.GetWorldPositionRotation().WorldRotation;
-            var ray = new CollisionRay(targetXForm.GetWorldPositionRotation().WorldPosition, dirRad.ToVec(), component.CollisionMask);
+            var (targetPos, targetRot) = targetXForm.GetWorldPositionRotation(xformQuery);
+            var dirRad = direction.ToAngle() + targetRot;
+            var ray = new CollisionRay(targetPos, dirRad.ToVec(), component.CollisionMask);
             var rayCastResults = _physics.IntersectRay(targetXForm.MapID, ray, component.MaxLength, target, false).ToList();
 
             RayCastResults? closestResult = null;
@@ -117,6 +115,7 @@ public sealed class LightningSystem : SharedLightningSystem
                 }
 
                 closestResult = result;
+                break;
             }
 
             if (closestResult == null)

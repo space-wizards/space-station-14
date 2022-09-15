@@ -19,8 +19,6 @@ public sealed class BeamSystem : SharedBeamSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
 
-    private HashSet<EntityUid> EntireBeam = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -29,6 +27,12 @@ public sealed class BeamSystem : SharedBeamSystem
         SubscribeLocalEvent<BeamComponent, BeamControllerCreatedEvent>(OnControllerCreated);
         SubscribeLocalEvent<BeamComponent, BeamFiredEvent>(OnBeamFired);
         SubscribeLocalEvent<BeamComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<BeamComponent, InteractHandEvent>(InteractHand);
+    }
+
+    private void InteractHand(EntityUid uid, BeamComponent component, InteractHandEvent args)
+    {
+        _lightning.ShootLightning(args.Target, args.User);
     }
 
     private void OnBeamCreationSuccess(EntityUid uid, BeamComponent component, CreateBeamSuccessEvent args)
@@ -86,12 +90,12 @@ public sealed class BeamSystem : SharedBeamSystem
             {
                 ID = "BeamBody",
                 Hard = false,
-                Body = { BodyType = BodyType.Dynamic},
                 CollisionMask = (int)CollisionGroup.ItemMask, //Change to MobMask
                 CollisionLayer = (int)CollisionGroup.MobLayer //Change to WallLayer
             };
 
             _fixture.TryCreateFixture(physics, fixture);
+            physics.BodyType = BodyType.Dynamic;
 
             var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
             RaiseNetworkEvent(beamVisualizerEvent);
@@ -104,11 +108,10 @@ public sealed class BeamSystem : SharedBeamSystem
                 var controllerEnt = Spawn("VirtualBeamEntityController", beamSpawnPos);
                 beam.VirtualBeamController = controllerEnt;
 
-                if (beam.Sound != null)
-                    _audio.PlayPvs(beam.Sound, beam.Owner);
+                _audio.PlayPvs(beam.Sound, beam.Owner);
 
                 var beamControllerCreatedEvent = new BeamControllerCreatedEvent(ent, controllerEnt);
-                RaiseLocalEvent(controllerEnt, beamControllerCreatedEvent, true);
+                RaiseLocalEvent(controllerEnt, beamControllerCreatedEvent);
             }
 
             //Create the rest of the beam, sprites handled through the BeamVisualizerEvent
@@ -116,14 +119,13 @@ public sealed class BeamSystem : SharedBeamSystem
             {
                 beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized);
                 var newEnt = Spawn(prototype, beamSpawnPos);
-                Transform(newEnt).AttachParent(ent);
 
                 var ev = new BeamVisualizerEvent(newEnt, distanceLength, userAngle, bodyState, shader);
                 RaiseNetworkEvent(ev);
             }
 
             var beamFiredEvent = new BeamFiredEvent(ent);
-            RaiseLocalEvent(beam.VirtualBeamController.Value, beamFiredEvent, true);
+            RaiseLocalEvent(beam.VirtualBeamController.Value, beamFiredEvent);
         }
     }
 
@@ -137,21 +139,23 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="bodyState">Optional sprite state for the <see cref="bodyPrototype"/> if a default one is not given</param>
     /// <param name="shader">Optional shader for the <see cref="bodyPrototype"/> if a default one is not given</param>
     /// <param name="controller"></param>
-    public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype, string? bodyState = null,
-        string shader = "unshaded", EntityUid? controller = null)
+    public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype, string? bodyState = null, string shader = "unshaded", EntityUid? controller = null)
     {
         if (!user.IsValid() || !target.IsValid())
             return;
 
-        var userXForm = Transform(user);
-        var targetXForm = Transform(target);
+        var userMapPos = Transform(user).MapPosition;
+        var targetMapPos = Transform(target).MapPosition;
 
         //The distance between the target and the user.
-        var calculatedDistance = targetXForm.WorldPosition - userXForm.WorldPosition;
+        var calculatedDistance = targetMapPos.Position - userMapPos.Position;
         var userAngle = calculatedDistance.ToWorldAngle();
 
+        if (userMapPos.MapId != targetMapPos.MapId)
+            return;
+
         //Where the start of the beam will spawn
-        var beamStartPos = userXForm.MapPosition.Offset(calculatedDistance.Normalized);
+        var beamStartPos = userMapPos.Offset(calculatedDistance.Normalized);
 
         //Don't divide by zero
         if (calculatedDistance.Length == 0)
@@ -168,6 +172,6 @@ public sealed class BeamSystem : SharedBeamSystem
         CreateBeam(bodyPrototype, userAngle, calculatedDistance, beamStartPos, distanceCorrection, controller, bodyState, shader);
 
         var ev = new CreateBeamSuccessEvent(user, target);
-        RaiseLocalEvent(user, ev, true);
+        RaiseLocalEvent(user, ev);
     }
 }

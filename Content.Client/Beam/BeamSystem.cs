@@ -11,11 +11,11 @@ public sealed class BeamSystem : SharedBeamSystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<BeamVisualizerEvent>(OnBeamVisuzalizer);
+        SubscribeNetworkEvent<BeamVisualizerEvent>(BeamVisualizerMessage);
     }
 
     //TODO: Sometime in the future this needs to be replaced with tiled sprites
-    private void OnBeamVisuzalizer(BeamVisualizerEvent args)
+    private void BeamVisualizerMessage(BeamVisualizerEvent args)
     {
         if (TryComp<SpriteComponent>(args.Beam, out var sprites))
         {
