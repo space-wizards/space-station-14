@@ -21,7 +21,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         SubscribeLocalEvent<CartridgeLoaderComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CartridgeLoaderComponent, AfterInteractEvent>(OnUsed);
-        SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeLoaderUiMessage>(OnUiMessage);
+        SubscribeLocalEvent<CartridgeLoaderComponent, BoundUserInterfaceMessage>(OnUiMessage);
     }
 
     public void UpdateUiState(EntityUid loaderUid, CartridgeLoaderUiState state, IPlayerSession? session = default!, CartridgeLoaderComponent? loader  = default!)
@@ -201,31 +201,40 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         RelayEvent(component, new CartridgeDeviceNetPacketEvent(uid, args));
     }
 
-    private void OnUiMessage(EntityUid loaderUid, CartridgeLoaderComponent component, CartridgeLoaderUiMessage args)
+    private void OnUiMessage(EntityUid loaderUid, CartridgeLoaderComponent component, BoundUserInterfaceMessage args)
     {
-        switch (args.Action)
+        if (args is not CartridgeLoaderUiMessage message)
+        {
+            RelayEvent(component, args, true);
+            return;
+        }
+
+        switch (message.Action)
         {
             case CartridgeUiMessageAction.Activate:
-                ActivateProgram(loaderUid, args.CartridgeUid, component);
+                ActivateProgram(loaderUid, message.CartridgeUid, component);
                 break;
             case CartridgeUiMessageAction.Deactivate:
-                DeactivateProgram(loaderUid, args.CartridgeUid, component);
+                DeactivateProgram(loaderUid, message.CartridgeUid, component);
                 break;
             case CartridgeUiMessageAction.Install:
-                InstallCartridge(loaderUid, args.CartridgeUid, component);
+                InstallCartridge(loaderUid, message.CartridgeUid, component);
                 break;
             case CartridgeUiMessageAction.Uninstall:
-                UninstallProgram(loaderUid, args.CartridgeUid, component);
+                UninstallProgram(loaderUid, message.CartridgeUid, component);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    private void RelayEvent<TEvent>(CartridgeLoaderComponent loader, TEvent args) where TEvent : notnull
+    private void RelayEvent<TEvent>(CartridgeLoaderComponent loader, TEvent args, bool skipBackgroundPrograms = false) where TEvent : notnull
     {
         if (loader.ActiveProgram.HasValue)
             RaiseLocalEvent(loader.ActiveProgram.Value, args);
+
+        if (skipBackgroundPrograms)
+            return;
 
         foreach (var program in loader.BackgroundPrograms)
         {
