@@ -1,12 +1,6 @@
 Entries:
 - author: Sammy Boy
   changes:
-  - {message: Jetpacks will now turn off properly when the tank runs out of air!,
-    type: Fix}
-  id: 1806
-  time: '2022-06-27T04:36:20.0000000+00:00'
-- author: Sammy Boy
-  changes:
   - {message: Body bags will now accept bodies again!, type: Fix}
   id: 1807
   time: '2022-06-27T05:37:30.0000000+00:00'
@@ -2923,3 +2917,8 @@ Entries:
   - {message: You can no longer examine players and other mobs melee damage., type: Fix}
   id: 2305
   time: '2022-09-14T17:17:24.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added verb context menu to player lists in admin menus., type: Add}
+  id: 2306
+  time: '2022-09-15T00:03:14.0000000+00:00'
