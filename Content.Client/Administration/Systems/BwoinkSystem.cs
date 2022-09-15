@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.CustomControls;
+using Content.Client.HUD;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
