@@ -43,7 +43,7 @@ namespace Content.Server.Medical.Components
         /// Delay multiplier when healing yourself.
         /// </summary>
         [DataField("selfHealPenaltyMultiplier")]
-        public float SelfHealPenaltyMultiplier = 3f;
+        public float SelfHealPenaltyMultiplier = 2f;
 
         public CancellationTokenSource? CancelToken = null;
 
