@@ -4,7 +4,6 @@
   parent: BaseMobOrganic
   id: BaseMobReptilian
   abstract: true
-  description: A miserable pile of scales.
   components:
   - type: Hunger
   - type: Thirst
@@ -133,6 +132,7 @@
     damageContainer: Biological
     damageModifierSet: Scale
   - type: MeleeWeapon
+    hidden: true
     hitSound:
       path: /Audio/Weapons/pierce.ogg
     range: 0.8

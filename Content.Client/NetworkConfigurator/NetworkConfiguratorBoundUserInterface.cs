@@ -55,20 +55,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 
     private void OnShowPressed(BaseButton.ButtonEventArgs args)
     {
-        if (!args.Button.Pressed)
-        {
-            _netConfig.ToggleVisualization(Owner.Owner, false);
-            return;
-        }
-
-        if (_entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityLifeStage == EntityLifeStage.Initialized)
-        {
-            // We're in mapping mode. Do something hacky.
-            SendMessage(new ManualDeviceListSyncMessage(null, null));
-            return;
-        }
-
-        _netConfig.ToggleVisualization(Owner.Owner, true);
+        _netConfig.ToggleVisualization(Owner.Owner, args.Button.Pressed);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -84,25 +71,6 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _configurationMenu?.UpdateState(listState);
                 break;
         }
-    }
-
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        base.ReceiveMessage(message);
-
-        if (_configurationMenu == null
-            || _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityLifeStage > EntityLifeStage.Initialized
-            || message is not ManualDeviceListSyncMessage cast
-            || cast.Device == null
-            || cast.Devices == null)
-        {
-            return;
-        }
-
-        _netConfig.SetActiveDeviceList(Owner.Owner, cast.Device.Value);
-        _deviceList.UpdateDeviceList(cast.Device.Value, cast.Devices);
-        _netConfig.ToggleVisualization(Owner.Owner, true);
-        _configurationMenu.Show.Pressed = true;
     }
 
     protected override void Dispose(bool disposing)

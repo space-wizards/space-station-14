@@ -11,7 +11,8 @@ namespace Content.Shared.Chemistry
     {
         public const uint PillTypes = 20;
         public const string BufferSolutionName = "buffer";
-        public const string ContainerSlotName = "beakerSlot";
+        public const string InputSlotName = "beakerSlot";
+        public const string OutputSlotName = "outputSlot";
         public const string PillSolutionName = "food";
         public const string BottleSolutionName = "drink";
     }
@@ -56,25 +57,27 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ChemMasterCreatePillsMessage : BoundUserInterfaceMessage
     {
-        public readonly uint Amount;
+        public readonly uint Dosage;
+        public readonly uint Number;
         public readonly string Label;
 
-        public ChemMasterCreatePillsMessage(uint amount, string label)
+        public ChemMasterCreatePillsMessage(uint dosage, uint number, string label)
         {
-            Amount = amount;
+            Dosage = dosage;
+            Number = number;
             Label = label;
         }
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterCreateBottlesMessage : BoundUserInterfaceMessage
+    public sealed class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
     {
-        public readonly uint Amount;
+        public readonly uint Dosage;
         public readonly string Label;
 
-        public ChemMasterCreateBottlesMessage(uint amount, string label)
+        public ChemMasterOutputToBottleMessage(uint dosage, string label)
         {
-            Amount = amount;
+            Dosage = dosage;
             Label = label;
         }
     }
@@ -105,17 +108,53 @@ namespace Content.Shared.Chemistry
         }
     }
 
+    /// <summary>
+    /// Information about the capacity and contents of a container for display in the UI
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class ContainerInfo
+    {
+        /// <summary>
+        /// The container name to show to the player
+        /// </summary>
+        public readonly string DisplayName;
+        /// <summary>
+        /// Whether the container holds reagents or entities
+        /// </summary>
+        public readonly bool HoldsReagents;
+        /// <summary>
+        /// The currently used volume of the container
+        /// </summary>
+        public readonly FixedPoint2 CurrentVolume;
+        /// <summary>
+        /// The maximum volume of the container
+        /// </summary>
+        public readonly FixedPoint2 MaxVolume;
+        /// <summary>
+        /// A list of the reagents/entities and their sizes within the container
+        /// </summary>
+        // todo: this causes NetSerializer exceptions if it's an IReadOnlyList (which would be preferred)
+        public readonly List<(string Id, FixedPoint2 Quantity)> Contents;
+
+        public ContainerInfo(
+            string displayName, bool holdsReagents,
+            FixedPoint2 currentVolume, FixedPoint2 maxVolume,
+            List<(string, FixedPoint2)> contents)
+        {
+            DisplayName = displayName;
+            HoldsReagents = holdsReagents;
+            CurrentVolume = currentVolume;
+            MaxVolume = maxVolume;
+            Contents = contents;
+        }
+    }
+
     [Serializable, NetSerializable]
     public sealed class ChemMasterBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public readonly FixedPoint2? ContainerCurrentVolume;
-        public readonly FixedPoint2? ContainerMaxVolume;
-        public readonly string? ContainerName;
+        public readonly ContainerInfo? InputContainerInfo;
+        public readonly ContainerInfo? OutputContainerInfo;
 
-        /// <summary>
-        /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
-        /// </summary>
-        public readonly IReadOnlyList<Solution.ReagentQuantity>? ContainerReagents;
         /// <summary>
         /// A list of the reagents and their amounts within the buffer, if applicable.
         /// </summary>
@@ -127,32 +166,25 @@ namespace Content.Shared.Chemistry
         public readonly FixedPoint2? BufferCurrentVolume;
         public readonly uint SelectedPillType;
 
-        public readonly uint PillProductionLimit;
-        public readonly uint BottleProductionLimit;
+        public readonly uint PillDosageLimit;
 
         public readonly bool UpdateLabel;
 
-        public ChemMasterBoundUserInterfaceState(FixedPoint2? containerCurrentVolume, FixedPoint2? containerMaxVolume, string? containerName,
-            string dispenserName, IReadOnlyList<Solution.ReagentQuantity>? containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, ChemMasterMode mode,
-            FixedPoint2 bufferCurrentVolume, uint selectedPillType, uint pillProdictionLimit, uint bottleProdictionLimit, bool updateLabel)
+        public ChemMasterBoundUserInterfaceState(
+            ChemMasterMode mode, string dispenserName,
+            ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
+            IReadOnlyList<Solution.ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
+            uint selectedPillType, uint pillDosageLimit, bool updateLabel)
         {
-            ContainerCurrentVolume = containerCurrentVolume;
-            ContainerMaxVolume = containerMaxVolume;
-            ContainerName = containerName;
+            InputContainerInfo = inputContainerInfo;
+            OutputContainerInfo = outputContainerInfo;
             DispenserName = dispenserName;
-            ContainerReagents = containerReagents;
             BufferReagents = bufferReagents;
             Mode = mode;
             BufferCurrentVolume = bufferCurrentVolume;
             SelectedPillType = selectedPillType;
-            PillProductionLimit = pillProdictionLimit;
-            BottleProductionLimit = bottleProdictionLimit;
+            PillDosageLimit = pillDosageLimit;
             UpdateLabel = updateLabel;
-        }
-
-        public bool HasContainer()
-        {
-            return ContainerCurrentVolume is not null;
         }
     }
 

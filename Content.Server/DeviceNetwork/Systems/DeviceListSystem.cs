@@ -12,8 +12,14 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<DeviceListComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
+    }
+
+    public void OnInit(EntityUid uid, DeviceListComponent component, ComponentInit args)
+    {
+        Dirty(component);
     }
 
     /// <summary>

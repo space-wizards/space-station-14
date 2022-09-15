@@ -5,6 +5,7 @@ using Content.Server.NPC.Pathfinding.Pathfinders;
 using Content.Shared.Access.Systems;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.NPC.Pathfinding
 {
@@ -37,7 +38,7 @@ namespace Content.Server.NPC.Pathfinding
             return job;
         }
 
-        public Job<Queue<TileRef>> RequestPath(EntityUid source, EntityUid target, CancellationToken cancellationToken)
+        public Job<Queue<TileRef>>? RequestPath(EntityUid source, EntityUid target, CancellationToken cancellationToken)
         {
             var collisionMask = 0;
 
@@ -46,17 +47,16 @@ namespace Content.Server.NPC.Pathfinding
                 collisionMask = body.CollisionMask;
             }
 
-            var start = TileRef.Zero;
-            var end = TileRef.Zero;
-
-            if (TryComp<TransformComponent>(source, out var xform) &&
-                _mapManager.TryGetGrid(xform.GridUid, out var grid) &&
-                TryComp<TransformComponent>(target, out var targetXform) &&
-                _mapManager.TryGetGrid(targetXform.GridUid, out var targetGrid))
+            if (!TryComp<TransformComponent>(source, out var xform) ||
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid) ||
+                !TryComp<TransformComponent>(target, out var targetXform) ||
+                !_mapManager.TryGetGrid(targetXform.GridUid, out var targetGrid))
             {
-                start = grid.GetTileRef(xform.Coordinates);
-                end = grid.GetTileRef(targetXform.Coordinates);
+                return null;
             }
+
+            var start = grid.GetTileRef(xform.Coordinates);
+            var end = targetGrid.GetTileRef(targetXform.Coordinates);
 
             var args = new PathfindingArgs(source, _access.FindAccessTags(source), collisionMask, start, end);
 

@@ -55,6 +55,8 @@
         key: rollerbed
       - type: RollerbedVisualizer
         key: rollerbed
+    - type: StaticPrice
+      price: 200
 
 - type: entity
   id: CheapRollerBed
