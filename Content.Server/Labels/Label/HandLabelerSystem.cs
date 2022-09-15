@@ -1,8 +1,8 @@
 using Content.Server.Labels.Components;
 using Content.Server.UserInterface;
+using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Labels;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
