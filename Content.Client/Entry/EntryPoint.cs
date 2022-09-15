@@ -1,6 +1,5 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
-using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
 using Content.Client.Options;
 using Content.Client.Eui;
@@ -31,9 +30,9 @@ using Content.Shared.Markers;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
 #if FULL_RELEASE
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -41,65 +40,43 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
     public sealed class EntryPoint : GameClient
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IParallaxManager _parallaxManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
+        [Dependency] private readonly IScreenshotHook _screenshotHook = default!;
+        [Dependency] private readonly ChangelogManager _changelogManager = default!;
+        [Dependency] private readonly RulesManager _rulesManager = default!;
+        [Dependency] private readonly ViewportManager _viewportManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
+        [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
+        [Dependency] private readonly NetworkResourceManager _networkResources = default!;
+        [Dependency] private readonly GhostKickManager _ghostKick = default!;
+        [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
 
         public const int NetBufferSizeOverride = 2;
 
         public override void Init()
         {
-            var factory = IoCManager.Resolve<IComponentFactory>();
-            var prototypes = IoCManager.Resolve<IPrototypeManager>();
-
-            factory.DoAutoRegistrations();
-            factory.IgnoreMissingComponents();
-
-            // Do not add to these, they are legacy.
-            factory.RegisterClass<SharedLatheComponent>();
-            factory.RegisterClass<SharedSpawnPointComponent>();
-            factory.RegisterClass<SharedReagentDispenserComponent>();
-            factory.RegisterClass<SharedGravityGeneratorComponent>();
-            factory.RegisterClass<SharedAMEControllerComponent>();
-            // Do not add to the above, they are legacy
-
-            prototypes.RegisterIgnore("accent");
-            prototypes.RegisterIgnore("material");
-            prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
-            prototypes.RegisterIgnore("gasReaction");
-            prototypes.RegisterIgnore("seed"); // Seeds prototypes are server-only.
-            prototypes.RegisterIgnore("barSign");
-            prototypes.RegisterIgnore("objective");
-            prototypes.RegisterIgnore("holiday");
-            prototypes.RegisterIgnore("aiFaction");
-            prototypes.RegisterIgnore("htnCompound");
-            prototypes.RegisterIgnore("htnPrimitive");
-            prototypes.RegisterIgnore("gameMap");
-            prototypes.RegisterIgnore("faction");
-            prototypes.RegisterIgnore("lobbyBackground");
-            prototypes.RegisterIgnore("advertisementsPack");
-            prototypes.RegisterIgnore("metabolizerType");
-            prototypes.RegisterIgnore("metabolismGroup");
-            prototypes.RegisterIgnore("salvageMap");
-            prototypes.RegisterIgnore("gamePreset");
-            prototypes.RegisterIgnore("gameRule");
-            prototypes.RegisterIgnore("worldSpell");
-            prototypes.RegisterIgnore("entitySpell");
-            prototypes.RegisterIgnore("instantSpell");
-            prototypes.RegisterIgnore("roundAnnouncement");
-            prototypes.RegisterIgnore("wireLayout");
-            prototypes.RegisterIgnore("alertLevels");
-            prototypes.RegisterIgnore("nukeopsRole");
-            prototypes.RegisterIgnore("flavor");
-
             ClientContentIoC.Register();
 
             foreach (var callback in TestingCallbacks)
@@ -109,19 +86,6 @@ namespace Content.Client.Entry
             }
 
             IoCManager.BuildGraph();
-            factory.GenerateNetIds();
-
-            IoCManager.Resolve<IClientAdminManager>().Initialize();
-            IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
-            IoCManager.Resolve<IStylesheetManager>().Initialize();
-            IoCManager.Resolve<IScreenshotHook>().Initialize();
-            IoCManager.Resolve<ChangelogManager>().Initialize();
-            IoCManager.Resolve<RulesManager>().Initialize();
-            IoCManager.Resolve<ViewportManager>().Initialize();
-            IoCManager.Resolve<GhostKickManager>().Initialize();
-            IoCManager.Resolve<ExtendedDisconnectInformationManager>().Initialize();
-            IoCManager.Resolve<PlayTimeTrackingManager>().Initialize();
-
             IoCManager.InjectDependencies(this);
 
 #if FULL_RELEASE
@@ -129,71 +93,86 @@ namespace Content.Client.Entry
             IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, NetBufferSizeOverride);
 #endif
 
-            _baseClient.PlayerJoinedServer += (_, _) =>
-            {
-                IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
-            };
+            _componentFactory.DoAutoRegistrations();
+            _componentFactory.IgnoreMissingComponents();
 
-        }
+            // Do not add to these, they are legacy.
+            _componentFactory.RegisterClass<SharedLatheComponent>();
+            _componentFactory.RegisterClass<SharedSpawnPointComponent>();
+            _componentFactory.RegisterClass<SharedReagentDispenserComponent>();
+            _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
+            _componentFactory.RegisterClass<SharedAMEControllerComponent>();
+            // Do not add to the above, they are legacy
 
-        /// <summary>
-        /// Subscribe events to the player manager after the player manager is set up
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public void SubscribePlayerAttachmentEvents(object? sender, EventArgs args)
-        {
-            if (_playerManager.LocalPlayer != null)
-            {
-                _playerManager.LocalPlayer.EntityAttached += AttachPlayerToEntity;
-                _playerManager.LocalPlayer.EntityDetached += DetachPlayerFromEntity;
-            }
-        }
+            _prototypeManager.RegisterIgnore("accent");
+            _prototypeManager.RegisterIgnore("material");
+            _prototypeManager.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            _prototypeManager.RegisterIgnore("gasReaction");
+            _prototypeManager.RegisterIgnore("seed"); // Seeds prototypes are server-only.
+            _prototypeManager.RegisterIgnore("barSign");
+            _prototypeManager.RegisterIgnore("objective");
+            _prototypeManager.RegisterIgnore("holiday");
+            _prototypeManager.RegisterIgnore("aiFaction");
+            _prototypeManager.RegisterIgnore("htnCompound");
+            _prototypeManager.RegisterIgnore("htnPrimitive");
+            _prototypeManager.RegisterIgnore("gameMap");
+            _prototypeManager.RegisterIgnore("faction");
+            _prototypeManager.RegisterIgnore("lobbyBackground");
+            _prototypeManager.RegisterIgnore("advertisementsPack");
+            _prototypeManager.RegisterIgnore("metabolizerType");
+            _prototypeManager.RegisterIgnore("metabolismGroup");
+            _prototypeManager.RegisterIgnore("salvageMap");
+            _prototypeManager.RegisterIgnore("gamePreset");
+            _prototypeManager.RegisterIgnore("gameRule");
+            _prototypeManager.RegisterIgnore("worldSpell");
+            _prototypeManager.RegisterIgnore("entitySpell");
+            _prototypeManager.RegisterIgnore("instantSpell");
+            _prototypeManager.RegisterIgnore("roundAnnouncement");
+            _prototypeManager.RegisterIgnore("wireLayout");
+            _prototypeManager.RegisterIgnore("alertLevels");
+            _prototypeManager.RegisterIgnore("nukeopsRole");
+            _prototypeManager.RegisterIgnore("flavor");
 
-        /// <summary>
-        /// Add the character interface master which combines all character interfaces into one window
-        /// </summary>
-        public void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
-        {
-            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
-            _entityManager.AddComponent<CharacterInterfaceComponent>(eventArgs.NewEntity);
-        }
+            _componentFactory.GenerateNetIds();
+            _adminManager.Initialize();
+            _stylesheetManager.Initialize();
+            _screenshotHook.Initialize();
+            _changelogManager.Initialize();
+            _rulesManager.Initialize();
+            _viewportManager.Initialize();
+            _ghostKick.Initialize();
+            _extendedDisconnectInformation.Initialize();
+            _playTimeTracking.Initialize();
+            _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
 
-        /// <summary>
-        /// Remove the character interface master from this entity now that we have detached ourselves from it
-        /// </summary>
-        public void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
-        {
-            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
-            if (!_entityManager.Deleted(eventArgs.OldEntity))
-            {
-                _entityManager.RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity);
-            }
+            //AUTOSCALING default Setup!
+            _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
+            _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffY", 720);
+            _configManager.SetCVar("interface.resolutionAutoScaleLowerCutoffX", 520);
+            _configManager.SetCVar("interface.resolutionAutoScaleLowerCutoffY", 240);
+            _configManager.SetCVar("interface.resolutionAutoScaleMinimum", 0.5f);
         }
 
         public override void PostInit()
         {
             base.PostInit();
-
             // Setup key contexts
-            var inputMan = IoCManager.Resolve<IInputManager>();
-            ContentContexts.SetupContexts(inputMan.Contexts);
+            ContentContexts.SetupContexts(_inputManager.Contexts);
 
-            IoCManager.Resolve<IGameHud>().Initialize();
-            IoCManager.Resolve<IParallaxManager>().LoadDefaultParallax(); // Have to do this later because prototypes are needed.
+            _parallaxManager.LoadDefaultParallax();
 
-            var overlayMgr = IoCManager.Resolve<IOverlayManager>();
+            _overlayManager.AddOverlay(new SingularityOverlay());
+            _overlayManager.AddOverlay(new FlashOverlay());
+            _overlayManager.AddOverlay(new RadiationPulseOverlay());
 
-            overlayMgr.AddOverlay(new SingularityOverlay());
-            overlayMgr.AddOverlay(new FlashOverlay());
-            overlayMgr.AddOverlay(new RadiationPulseOverlay());
-
-            IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<IVoteManager>().Initialize();
-            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
-            IoCManager.Resolve<NetworkResourceManager>().Initialize();
+            _gameHud.Initialize();
+            _chatManager.Initialize();
+            _clientPreferencesManager.Initialize();
+            _euiManager.Initialize();
+            _voteManager.Initialize();
+            _gamePrototypeLoadManager.Initialize();
+            _networkResources.Initialize();
+            _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
 
             _baseClient.RunLevelChanged += (_, args) =>
             {
@@ -205,7 +184,7 @@ namespace Content.Client.Entry
             };
 
             // Disable engine-default viewport since we use our own custom viewport control.
-            IoCManager.Resolve<IUserInterfaceManager>().MainViewport.Visible = false;
+            _userInterfaceManager.MainViewport.Visible = false;
 
             SwitchToDefaultState();
         }
@@ -227,19 +206,6 @@ namespace Content.Client.Entry
             else
             {
                 _stateManager.RequestStateChange<MainScreen>();
-            }
-        }
-
-        public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
-        {
-            base.Update(level, frameEventArgs);
-
-            switch (level)
-            {
-                case ModUpdateLevel.FramePreEngine:
-                    // TODO: Turn IChatManager into an EntitySystem and remove the line below.
-                    IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
-                    break;
             }
         }
     }
