@@ -298,22 +298,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void CalculateCanisterPrice(EntityUid uid, GasCanisterComponent component, ref PriceCalculationEvent args)
         {
-            float basePrice = 0; // moles of gas * price/mole
-            float totalMoles = 0; // total number of moles in can
-            float maxComponent = 0; // moles of the dominant gas
-            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                basePrice += component.Air.Moles[i] * _atmosphereSystem.GetGas(i).PricePerMole;
-                totalMoles += component.Air.Moles[i];
-                maxComponent = Math.Max(maxComponent, component.Air.Moles[i]);
-            }
-
-            // Pay more for gas canisters that are more pure
-            float purity = 1;
-            if (totalMoles > 0) {
-                purity = maxComponent / totalMoles;
-            }
-            args.Price += basePrice * purity;
+            args.Price += _atmosphereSystem.GetPrice(component.Air);
         }
 
         /// <summary>
