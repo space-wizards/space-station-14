@@ -13,7 +13,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     private CartridgeUI? _activeCartridgeUI;
     private Control? _activeUiFragment;
 
-    protected CartridgeLoaderBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    protected CartridgeLoaderBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
     }
