@@ -13,7 +13,7 @@ namespace Content.Client.Research.UI
         private ResearchConsoleMenu? _consoleMenu;
         private TechnologyDatabaseComponent? _technologyDatabase;
 
-        public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
             SendMessage(new ConsoleServerSyncMessage());
         }

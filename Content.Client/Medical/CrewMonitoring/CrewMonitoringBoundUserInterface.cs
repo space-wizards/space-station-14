@@ -9,7 +9,7 @@ namespace Content.Client.Medical.CrewMonitoring
     {
         private CrewMonitoringWindow? _menu;
 
-        public CrewMonitoringBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public CrewMonitoringBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] Enum uiKey) : base(owner, uiKey)
         {
         }
 

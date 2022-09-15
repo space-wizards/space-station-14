@@ -17,6 +17,7 @@ namespace Content.Shared.SubFloor
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly TrayScannerSystem _trayScannerSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
 
         public override void Initialize()
         {
@@ -166,15 +167,19 @@ namespace Content.Shared.SubFloor
             SubFloorHideComponent? hideComp = null,
             AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref hideComp, ref appearance, false))
+            if (!Resolve(uid, ref hideComp, false))
                 return;
 
-            appearance.SetData(SubFloorVisuals.Covered, hideComp.IsUnderCover);
-            appearance.SetData(SubFloorVisuals.ScannerRevealed, hideComp.RevealedBy.Count != 0);
             if (hideComp.BlockAmbience && hideComp.IsUnderCover)
                 _ambientSoundSystem.SetAmbience(uid, false);
             else if (hideComp.BlockAmbience && !hideComp.IsUnderCover)
                 _ambientSoundSystem.SetAmbience(uid, true);
+
+            if (Resolve(uid, ref appearance, false))
+            {
+                Appearance.SetData(uid, SubFloorVisuals.Covered, hideComp.IsUnderCover, appearance);
+                Appearance.SetData(uid, SubFloorVisuals.ScannerRevealed, hideComp.RevealedBy.Count != 0, appearance);
+            }
         }
     }
 

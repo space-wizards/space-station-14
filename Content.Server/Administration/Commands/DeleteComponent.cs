@@ -3,7 +3,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.VarEdit)]
+    [AdminCommand(AdminFlags.Spawn)]
     public sealed class DeleteComponent : IConsoleCommand
     {
         public string Command => "deletecomponent";

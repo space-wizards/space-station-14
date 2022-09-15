@@ -16,7 +16,7 @@ namespace Content.Server.Singularity.Components
         // For the "emitter fired" sound
         public const float Variation = 0.25f;
         public const float Volume = 0.5f;
-        public const float Distance = 3f;
+        public const float Distance = 6f;
 
         [ViewVariables] public int FireShotCounter;
 

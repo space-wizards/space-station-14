@@ -42,7 +42,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
     {
         if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
-            vending.CanShoot = true;
+            _vendingMachineSystem.SetShooting(wire.Owner, true, vending);
         }
 
         return true;
@@ -52,7 +52,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
     {
         if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
-            vending.CanShoot = false;
+            _vendingMachineSystem.SetShooting(wire.Owner, false, vending);
         }
 
         return true;

@@ -1,5 +1,7 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -16,6 +18,8 @@ namespace Content.Server.Paper
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -77,7 +81,7 @@ namespace Content.Server.Paper
             if (_tagSystem.HasTag(args.Used, "Write"))
             {
                 if (!TryComp<ActorComponent>(args.User, out var actor))
-                return;
+                    return;
 
                 paperComp.Mode = PaperAction.Write;
                 UpdateUserInterface(uid, paperComp);
@@ -109,6 +113,10 @@ namespace Content.Server.Paper
 
             if (TryComp<MetaDataComponent>(uid, out var meta))
                 meta.EntityDescription = "";
+
+            if (args.Session.AttachedEntity != null)
+                _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                    $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
 
             UpdateUserInterface(uid, paperComp);
         }

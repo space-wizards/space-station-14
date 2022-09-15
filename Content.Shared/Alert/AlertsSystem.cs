@@ -158,38 +158,21 @@ public abstract class AlertsSystem : EntitySystem
         SubscribeLocalEvent<AlertsComponent, ComponentStartup>(HandleComponentStartup);
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>(HandleComponentShutdown);
 
-        SubscribeLocalEvent<AlertsComponent, MetaFlagRemoveAttemptEvent>(OnMetaFlagRemoval);
         SubscribeLocalEvent<AlertsComponent, ComponentGetState>(ClientAlertsGetState);
-        SubscribeLocalEvent<AlertsComponent, ComponentGetStateAttemptEvent>(OnCanGetState);
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
 
         LoadPrototypes();
         _prototypeManager.PrototypesReloaded += HandlePrototypesReloaded;
     }
 
-    private void OnMetaFlagRemoval(EntityUid uid, AlertsComponent component, ref MetaFlagRemoveAttemptEvent args)
-    {
-        if (component.LifeStage == ComponentLifeStage.Running)
-            args.ToRemove &= ~MetaDataFlags.EntitySpecific;
-    }
-
-    private void OnCanGetState(EntityUid uid, AlertsComponent component, ref ComponentGetStateAttemptEvent args)
-    {
-        // Only send alert state data to the relevant player.
-        if (args.Player.AttachedEntity != uid)
-            args.Cancelled = true;
-    }
-
     protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
     {
         RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
-        _metaSystem.RemoveFlag(uid, MetaDataFlags.EntitySpecific);
     }
 
     private void HandleComponentStartup(EntityUid uid, AlertsComponent component, ComponentStartup args)
     {
         RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
-        _metaSystem.AddFlag(uid, MetaDataFlags.EntitySpecific);
     }
 
     public override void Shutdown()

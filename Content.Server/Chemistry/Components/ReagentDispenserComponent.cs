@@ -1,9 +1,11 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -29,6 +31,7 @@ namespace Content.Server.Chemistry.Components
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))] private string _packPrototypeId = "";
 
@@ -171,8 +174,11 @@ namespace Content.Server.Chemistry.Components
                     if (BeakerSlot.HasItem)
                     {
                         TryDispense(msg.DispenseIndex);
+                        // Ew
+                        if (BeakerSlot.Item != null)
+                            _adminLogger.Add(LogType.ChemicalReaction, LogImpact.Medium,
+                                $"{_entities.ToPrettyString(obj.Session.AttachedEntity.Value):player} dispensed {_dispenseAmount}u of {Inventory[msg.DispenseIndex].ID} into {_entities.ToPrettyString(BeakerSlot.Item.Value):entity}");
                     }
-                    Logger.Info($"User {obj.Session.UserId.UserId} ({obj.Session.Name}) dispensed {_dispenseAmount}u of {Inventory[msg.DispenseIndex].ID}");
 
                     break;
                 default:

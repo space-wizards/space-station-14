@@ -16,10 +16,14 @@ namespace Content.Server.Examine
 
         private static readonly FormattedMessage _entityNotFoundMessage;
 
+        private static readonly FormattedMessage _entityOutOfRangeMessage;
+
         static ExamineSystem()
         {
             _entityNotFoundMessage = new FormattedMessage();
             _entityNotFoundMessage.AddText(Loc.GetString("examine-system-entity-does-not-exist"));
+            _entityOutOfRangeMessage = new FormattedMessage();
+            _entityOutOfRangeMessage.AddText(Loc.GetString("examine-system-cant-see-entity"));
         }
 
         public override void Initialize()
@@ -54,11 +58,17 @@ namespace Content.Server.Examine
             var channel = player.ConnectedClient;
 
             if (session.AttachedEntity is not {Valid: true} playerEnt
-                || !EntityManager.EntityExists(request.EntityUid)
-                || !CanExamine(playerEnt, request.EntityUid))
+                || !EntityManager.EntityExists(request.EntityUid))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                     request.EntityUid, _entityNotFoundMessage), channel);
+                return;
+            }
+
+            if (!CanExamine(playerEnt, request.EntityUid))
+            {
+                RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
+                    request.EntityUid, _entityOutOfRangeMessage, knowTarget: false), channel);
                 return;
             }
 

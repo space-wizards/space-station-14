@@ -31,6 +31,7 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+  - type: ItemSlots
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false
@@ -51,6 +52,8 @@
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: seclite
@@ -58,6 +61,9 @@
   id: FlashlightSeclite
   description: A robust flashlight used by security.
   components:
+  - type: Tag
+    tags:
+      - SecBeltEquip
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellHigh

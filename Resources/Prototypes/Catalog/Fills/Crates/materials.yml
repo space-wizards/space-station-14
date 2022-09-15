@@ -1,6 +1,5 @@
 - type: entity
   id: CrateMaterialGlass
-  name:  glass sheet crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -10,7 +9,6 @@
 
 - type: entity
   id: CrateMaterialSteel
-  name:  steel sheet crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -20,7 +18,6 @@
 
 - type: entity
   id: CrateMaterialPlastic
-  name:  plastic sheet crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -30,13 +27,30 @@
 
 - type: entity
   id: CrateMaterialWood
-  name:  wood crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
       - id: MaterialWoodPlank
         amount: 1
+
+- type: entity
+  id: CrateMaterialPlasteel
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetPlasteel
+        amount: 3
+
+- type: entity
+  id: CrateMaterialPlasma
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetPlasma
+        amount: 3
 
 #- type: entity
 #  id: CrateMaterialHFuelTank
@@ -57,23 +71,3 @@
 #    contents:
 #      - id: WaterTankFull
 #        amount: 1
-
-- type: entity
-  id: CrateMaterialPlasteel
-  name: plasteel crate
-  parent: CrateGenericSteel
-  components:
-  - type: StorageFill
-    contents:
-      - id: SheetPlasteel
-        amount: 3
-
-- type: entity
-  id: CrateMaterialPlasma
-  name: solid plasma crate
-  parent: CrateGenericSteel
-  components:
-  - type: StorageFill
-    contents:
-      - id: SheetPlasma
-        amount: 3

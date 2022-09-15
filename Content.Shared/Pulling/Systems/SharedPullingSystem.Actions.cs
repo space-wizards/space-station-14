@@ -7,6 +7,7 @@ using Content.Shared.Pulling.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Pulling
 {

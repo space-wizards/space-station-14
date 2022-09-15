@@ -6,7 +6,7 @@
     lifetime: 2
   - type: Sprite
     netsync: false
-    drawdepth: Effects
+    drawdepth: SmallMobs
     noRot: true
     layers:
     - shader: unshaded
@@ -14,6 +14,9 @@
       sprite: Effects/atmospherics.rsi
       state: frezon_old
   - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
   - type: AnimationPlayer
 
 - type: entity
@@ -63,6 +66,8 @@
         useDelay: 1.0
         event: !type:ToggleJetpackEvent
     - type: Appearance
+    - type: StaticPrice
+      price: 100
 
 #Empty blue
 - type: entity
@@ -86,12 +91,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315
 
 #Empty black
 - type: entity
@@ -115,12 +121,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315
 
 #Empty captain
 - type: entity
@@ -132,10 +139,11 @@
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/captain.rsi
   - type: Clothing
-    size: 30
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     slots:
       - Back
+  - type: Item
+    size: 30
 
 # Filled captain
 - type: entity
@@ -145,12 +153,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315
 
 #Empty mini
 - type: entity
@@ -162,10 +171,10 @@
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
-      size: 50
       sprite: Objects/Tanks/Jetpacks/mini.rsi
       slots:
         - Back
+        - suitStorage
 
 # Filled mini
 - type: entity
@@ -175,12 +184,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       temperature: 293.15
       volume: 2
       moles:
-      - 0.323460326
+      - 0.161
+      - 0.161
 
 #Empty security
 - type: entity
@@ -204,12 +214,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315
 
 #Empty void
 - type: entity
@@ -233,9 +244,10 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315

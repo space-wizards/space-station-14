@@ -45,7 +45,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: RedOxygenTankFilled
+        - id: YellowOxygenTankFilled
           prob: 0.6
         - id: ClothingOuterSuitFire
           prob: 0.75

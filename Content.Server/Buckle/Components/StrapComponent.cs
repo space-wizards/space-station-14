@@ -115,7 +115,7 @@ namespace Content.Server.Buckle.Components
             // Update the visuals of the strap object
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
             {
-                appearance.SetData("StrapState", true);
+                appearance.SetData(StrapVisuals.State, true);
             }
 
             Dirty();
@@ -133,7 +133,7 @@ namespace Content.Server.Buckle.Components
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
                 {
-                    appearance.SetData("StrapState", false);
+                    appearance.SetData(StrapVisuals.State, false);
                 }
 
                 _occupiedSize -= buckle.Size;

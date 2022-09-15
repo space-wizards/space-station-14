@@ -27,7 +27,7 @@ namespace Content.Client.Chemistry.UI
             _window.OpenCentered();
         }
 
-        public TransferAmountBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public TransferAmountBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

@@ -43,6 +43,8 @@
         type: SurveillanceCameraSetupBoundUi
       - key: enum.WiresUiKey.Key
         type: WiresBoundUserInterface
+  - type: StaticPrice
+    price: 200
   placement:
     mode: SnapgridCenter
     snap:

@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
 using Content.Server.Administration.Components;
+using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
@@ -16,6 +18,7 @@ namespace Content.Server.Cuffs.Components
     public sealed class HandcuffComponent : SharedHandcuffComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
@@ -173,11 +176,13 @@ namespace Content.Server.Cuffs.Components
                     if (target == user)
                     {
                         user.PopupMessage(Loc.GetString("handcuff-component-cuff-self-success-message"));
+                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entities.ToPrettyString(user):player} has cuffed himself");
                     }
                     else
                     {
                         user.PopupMessage(Loc.GetString("handcuff-component-cuff-other-success-message",("otherName", target)));
                         target.PopupMessage(Loc.GetString("handcuff-component-cuff-by-other-success-message", ("otherName", user)));
+                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entities.ToPrettyString(user):player} has cuffed {_entities.ToPrettyString(target):player}");
                     }
                 }
             }

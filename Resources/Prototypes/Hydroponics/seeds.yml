@@ -86,7 +86,7 @@
   growthStages: 3
   waterConsumption: 6
   chemicals:
-    Nutriment:
+    JuiceCarrot:
       Min: 1
       Max: 5
       PotencyDivisor: 20
@@ -414,7 +414,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    Nutriment:
+    Egg:
       Min: 1
       Max: 10
       PotencyDivisor: 10

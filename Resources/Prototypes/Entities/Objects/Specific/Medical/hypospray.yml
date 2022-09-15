@@ -67,11 +67,10 @@
     solutionName: pen
     transferAmount: 15
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 1
-      changeColor: false
-      emptySpriteName: medipen_empty
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: medipen_empty
   - type: Tag
     tags:
     - Trash
@@ -79,6 +78,8 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 75 # These are limited supply items.
+  - type: TrashOnEmpty
+    solution: pen
 
 - type: entity
   name: emergency medipen
@@ -126,11 +127,10 @@
     - state: hypovolemic
       map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: Appearance
-    visuals:
-      - type: SolutionContainerVisualizer
-        maxFillLevels: 1
-        changeColor: false
-        emptySpriteName: hypovolemic_empty
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: hypovolemic_empty
   - type: Hypospray
     solutionName: pen
     transferAmount: 30

@@ -37,6 +37,7 @@ using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
@@ -44,6 +45,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -70,6 +72,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -246,7 +249,7 @@ public sealed partial class AdminVerbSystem
                     }
 
                     _electrocutionSystem.TryDoElectrocution(args.Target, null, damageToDeal,
-                        TimeSpan.FromSeconds(30), true);
+                        TimeSpan.FromSeconds(30), refresh: true, ignoreInsulation: true);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-electrocute-description")
@@ -810,5 +813,23 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-smite-disarm-prone-description"),
         };
         args.Verbs.Add(disarmProne);
+
+        Verb superSpeed = new()
+        {
+            Text = "Super speed",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/AdminActions/super_speed.png",
+            Act = () =>
+            {
+                var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(args.Target);
+                _movementSpeedModifierSystem?.ChangeBaseSpeed(args.Target, 400, 8000, 40, movementSpeed);
+
+                _popupSystem.PopupEntity(Loc.GetString("admin-smite-super-speed-prompt"), args.Target,
+                    Filter.Entities(args.Target), PopupType.LargeCaution);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-super-speed-description"),
+        };
+        args.Verbs.Add(superSpeed);
     }
 }

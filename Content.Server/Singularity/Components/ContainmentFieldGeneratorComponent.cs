@@ -89,7 +89,7 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// </summary>
     [ViewVariables]
     [DataField("collisionMask")]
-    public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.Impassable | CollisionGroup.MachineMask);
+    public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.Impassable | CollisionGroup.MachineMask | CollisionGroup.Opaque);
 
     /// <summary>
     /// A collection of connections that the generator has based on direction.

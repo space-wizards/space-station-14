@@ -63,7 +63,7 @@ public sealed partial class GunSystem : SharedGunSystem
         base.Initialize();
         UpdatesOutsidePrediction = true;
         SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
-        SubscribeLocalEvent<GunComponent, MuzzleFlashEvent>(OnMuzzleFlash);
+        SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
 
         // Plays animated effects on the client.
         SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
@@ -72,9 +72,9 @@ public sealed partial class GunSystem : SharedGunSystem
         InitializeSpentAmmo();
     }
 
-    private void OnMuzzleFlash(EntityUid uid, GunComponent component, MuzzleFlashEvent args)
+    private void OnMuzzleFlash(MuzzleFlashEvent args)
     {
-        CreateEffect(uid, args);
+        CreateEffect(args.Uid, args);
     }
 
     private void OnHitscan(HitscanEvent ev)
@@ -82,7 +82,11 @@ public sealed partial class GunSystem : SharedGunSystem
         // ALL I WANT IS AN ANIMATED EFFECT
         foreach (var a in ev.Sprites)
         {
-            if (a.Sprite is not SpriteSpecifier.Rsi rsi) continue;
+            if (a.Sprite is not SpriteSpecifier.Rsi rsi ||
+                Deleted(a.coordinates.EntityId))
+            {
+                continue;
+            }
 
             var ent = Spawn("HitscanEffect", a.coordinates);
             var sprite = Comp<SpriteComponent>(ent);
@@ -235,8 +239,19 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        if (!Timing.IsFirstTimePredicted || !TryComp<TransformComponent>(uid, out var xform)) return;
-        var ent = Spawn(message.Prototype, xform.Coordinates);
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
+        EntityCoordinates coordinates;
+
+        if (message.MatchRotation)
+            coordinates = new EntityCoordinates(uid, Vector2.Zero);
+        else if (TryComp<TransformComponent>(uid, out var xform))
+            coordinates = xform.Coordinates;
+        else
+            return;
+
+        var ent = Spawn(message.Prototype, coordinates);
 
         var effectXform = Transform(ent);
         effectXform.LocalRotation -= MathF.PI / 2;
@@ -271,6 +286,7 @@ public sealed partial class GunSystem : SharedGunSystem
         _animPlayer.Play(ent, anim, "muzzle-flash");
         var light = EnsureComp<PointLightComponent>(uid);
 
+        light.NetSyncEnabled = false;
         light.Enabled = true;
         light.Color = Color.FromHex("#cc8e2b");
         light.Radius = 2f;

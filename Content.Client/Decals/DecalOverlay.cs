@@ -11,10 +11,8 @@ namespace Content.Client.Decals
     public sealed class DecalOverlay : Overlay
     {
         private readonly DecalSystem _decals;
-        private readonly SharedTransformSystem _transform;
         private readonly SpriteSystem _sprites;
         private readonly IEntityManager _entManager;
-        private readonly IMapManager _mapManager;
         private readonly IPrototypeManager _prototypeManager;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
@@ -23,17 +21,13 @@ namespace Content.Client.Decals
 
         public DecalOverlay(
             DecalSystem decals,
-            SharedTransformSystem transforms,
             SpriteSystem sprites,
             IEntityManager entManager,
-            IMapManager mapManager,
             IPrototypeManager prototypeManager)
         {
             _decals = decals;
-            _transform = transforms;
             _sprites = sprites;
             _entManager = entManager;
-            _mapManager = mapManager;
             _prototypeManager = prototypeManager;
         }
 
@@ -42,14 +36,25 @@ namespace Content.Client.Decals
             // Shouldn't need to clear cached textures unless the prototypes get reloaded.
             var handle = args.WorldHandle;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+            var eyeAngle = args.Viewport.Eye?.Rotation ?? Angle.Zero;
 
             foreach (var (gridId, zIndexDictionary) in _decals.DecalRenderIndex)
             {
-                if (zIndexDictionary.Count == 0) continue;
+                if (zIndexDictionary.Count == 0)
+                    continue;
 
-                var xform = xformQuery.GetComponent(gridId);
+                if (!xformQuery.TryGetComponent(gridId, out var xform))
+                {
+                    Logger.Error($"Tried to draw decals on a non-existent grid. GridUid: {gridId}");
+                    continue;
+                }
 
-                handle.SetTransform(_transform.GetWorldMatrix(xform, xformQuery));
+                if (xform.MapID != args.MapId)
+                    continue;
+
+                var (_, worldRot, worldMatrix) = xform.GetWorldPositionRotationMatrix(xformQuery);
+
+                handle.SetTransform(worldMatrix);
 
                 foreach (var (_, decals) in zIndexDictionary)
                 {
@@ -62,24 +67,37 @@ namespace Content.Client.Decals
                             _cachedTextures[decal.Id] = texture;
                         }
 
-                        if (decal.Angle.Equals(Angle.Zero))
+                        if (!_prototypeManager.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
+                            continue;
+
+                        var cardinal = Angle.Zero;
+
+                        if (decalProto.SnapCardinals)
+                        {
+                            var worldAngle = eyeAngle + worldRot;
+                            cardinal = worldAngle.GetCardinalDir().ToAngle();
+                        }
+
+                        var angle = decal.Angle - cardinal;
+
+                        if (angle.Equals(Angle.Zero))
                             handle.DrawTexture(texture, decal.Coordinates, decal.Color);
                         else
-                            handle.DrawTexture(texture, decal.Coordinates, decal.Angle, decal.Color);
+                            handle.DrawTexture(texture, decal.Coordinates, angle, decal.Color);
                     }
                 }
             }
+
+            handle.SetTransform(Matrix3.Identity);
         }
 
         public SpriteSpecifier GetDecalSprite(string id)
         {
             if (_prototypeManager.TryIndex<DecalPrototype>(id, out var proto))
                 return proto.Sprite;
-            else
-            {
-                Logger.Error($"Unknown decal prototype: {id}");
-                return new SpriteSpecifier.Texture(new ResourcePath("/Textures/noSprite.png"));
-            }
+
+            Logger.Error($"Unknown decal prototype: {id}");
+            return new SpriteSpecifier.Texture(new ResourcePath("/Textures/noSprite.png"));
         }
     }
 }

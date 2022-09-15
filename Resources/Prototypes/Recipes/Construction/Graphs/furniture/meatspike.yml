@@ -3,6 +3,8 @@
   start: start
   graph:
     - node: start
+      actions:
+        - !type:DeleteEntity {}
       edges:
         - to: MeatSpike
           completed:

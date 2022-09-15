@@ -26,10 +26,17 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 
+        /// <summary>
+        /// Friction modifier for knocked down players.
+        /// Doesn't make them faster but makes them slow down... slower.
+        /// </summary>
+        public const float KnockDownModifier = 0.4f;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<KnockedDownComponent, ComponentInit>(OnKnockInit);
-            SubscribeLocalEvent<KnockedDownComponent, ComponentRemove>(OnKnockRemove);
+            SubscribeLocalEvent<KnockedDownComponent, ComponentShutdown>(OnKnockShutdown);
+            SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
             SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
@@ -46,6 +53,8 @@ namespace Content.Shared.Stunnable
             // helping people up if they're knocked down
             SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+
+            SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
 
             // Attempt event subscriptions.
             SubscribeLocalEvent<StunnedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
@@ -96,9 +105,15 @@ namespace Content.Shared.Stunnable
             _standingStateSystem.Down(uid);
         }
 
-        private void OnKnockRemove(EntityUid uid, KnockedDownComponent component, ComponentRemove args)
+        private void OnKnockShutdown(EntityUid uid, KnockedDownComponent component, ComponentShutdown args)
         {
             _standingStateSystem.Stand(uid);
+        }
+
+        private void OnStandAttempt(EntityUid uid, KnockedDownComponent component, StandAttemptEvent args)
+        {
+            if (component.LifeStage <= ComponentLifeStage.Running)
+                args.Cancel();
         }
 
         private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
@@ -198,6 +213,7 @@ namespace Content.Shared.Stunnable
             if (args.Handled || knocked.HelpTimer > 0f)
                 return;
 
+            // TODO: This should be an event.
             if (HasComp<SleepingComponent>(uid))
                 return;
 
@@ -208,9 +224,14 @@ namespace Content.Shared.Stunnable
 
             SoundSystem.Play(knocked.StunAttemptSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f));
 
-            knocked.Dirty();
+            Dirty(knocked);
 
             args.Handled = true;
+        }
+
+        private void OnKnockedTileFriction(EntityUid uid, KnockedDownComponent component, ref TileFrictionEvent args)
+        {
+            args.Modifier *= KnockDownModifier;
         }
 
         #region Attempt Event Handling

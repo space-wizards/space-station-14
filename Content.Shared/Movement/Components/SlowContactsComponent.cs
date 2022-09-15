@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Components;
 
@@ -6,8 +7,22 @@ namespace Content.Shared.Movement.Components;
 public sealed class SlowContactsComponent : Component
 {
     [ViewVariables, DataField("walkSpeedModifier")]
-    public float WalkSpeedModifier { get; private set; } = 1.0f;
+    public float WalkSpeedModifier { get; set; } = 1.0f;
 
     [ViewVariables, DataField("sprintSpeedModifier")]
-    public float SprintSpeedModifier { get; private set; } = 1.0f;
+    public float SprintSpeedModifier { get; set; } = 1.0f;
+}
+
+[Serializable, NetSerializable]
+public sealed class SlowContactsComponentState : ComponentState
+{
+    public readonly float WalkSpeedModifier;
+
+    public readonly float SprintSpeedModifier;
+
+    public SlowContactsComponentState(float walkSpeedModifier, float sprintSpeedModifier)
+    {
+        WalkSpeedModifier = walkSpeedModifier;
+        SprintSpeedModifier = sprintSpeedModifier;
+    }
 }

@@ -66,9 +66,9 @@
 
 - type: entity
   parent: OxygenTank
-  id: RedOxygenTank
-  name: oxygen tank
-  description: A tank of oxygen. This one is in red.
+  id: NitrogenTank
+  name: nitrogen tank
+  description: A tank of nitrogen.
   components:
   - type: Sprite
     sprite: Objects/Tanks/red.rsi

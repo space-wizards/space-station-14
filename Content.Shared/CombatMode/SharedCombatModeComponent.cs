@@ -15,10 +15,7 @@ namespace Content.Shared.CombatMode
         private TargetingZone _activeZone;
 
         [DataField("disarmFailChance")]
-        public readonly float BaseDisarmFailChance = 0.4f;
-
-        [DataField("pushChance")]
-        public readonly float BasePushFailChance = 0.4f;
+        public readonly float BaseDisarmFailChance = 0.75f;
 
         [DataField("disarmFailSound")]
         public readonly SoundSpecifier DisarmFailSound = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");

@@ -80,5 +80,8 @@ namespace Content.Shared.Atmos.Prototypes
         public string? Reagent { get; } = default!;
 
         [DataField("color")] public string Color { get; } = string.Empty;
+
+        [DataField("pricePerMole")]
+        public float PricePerMole { get; set; } = 0;
     }
 }

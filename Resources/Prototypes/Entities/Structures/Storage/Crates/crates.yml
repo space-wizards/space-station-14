@@ -23,7 +23,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
-
+    containers:
+    - entity_storage
 
 - type: entity
   id: CratePlastic
@@ -50,6 +51,8 @@
   - type: Construction
     graph: CratePlastic
     node: crateplastic
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateFreezer
@@ -76,6 +79,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
   - type: AntiRottingContainer
 
 - type: entity
@@ -103,6 +108,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateMedical
@@ -129,6 +136,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateRadiation
@@ -156,6 +165,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateInternals
@@ -182,6 +193,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateElectrical
@@ -208,6 +221,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateEngineering
@@ -234,6 +249,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateScience
@@ -260,6 +277,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   id: CrateSurgery
@@ -286,6 +305,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 # Secure Crates
 
@@ -629,4 +650,6 @@
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock
+    containers:
+    - entity_storage
 

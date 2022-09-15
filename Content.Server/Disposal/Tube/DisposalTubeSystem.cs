@@ -1,7 +1,9 @@
+using System.Text;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Disposal.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
@@ -18,51 +20,23 @@ namespace Content.Server.Disposal.Tube
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
+            SubscribeLocalEvent<DisposalTubeComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<DisposalTubeComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<DisposalTubeComponent, BreakageEventArgs>(OnBreak);
-            SubscribeLocalEvent<DisposalTaggerComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
-            SubscribeLocalEvent<DisposalRouterComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
             SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
             SubscribeLocalEvent<DisposalTaggerComponent, ActivatableUIOpenAttemptEvent>(OnOpenTaggerUIAttempt);
-
+            SubscribeLocalEvent<DisposalTubeComponent, ComponentStartup>(OnStartup);
         }
 
-        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetVerbsEvent<InteractionVerb> args)
+        private void OnStartup(EntityUid uid, DisposalTubeComponent component, ComponentStartup args)
         {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-                return;
-            var player = actor.PlayerSession;
-
-            InteractionVerb verb = new();
-            verb.Text = Loc.GetString("configure-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            verb.Act = () => component.OpenUserInterface(actor);
-            args.Verbs.Add(verb);
-        }
-
-        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetVerbsEvent<InteractionVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-                return;
-            var player = actor.PlayerSession;
-
-            InteractionVerb verb = new();
-            verb.Text = Loc.GetString("configure-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            verb.Act = () => component.OpenUserInterface(actor);
-            args.Verbs.Add(verb);
+            UpdateAnchored(uid, component, Transform(uid).Anchored);
         }
 
         private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, ref ContainerRelayMovementEntityEvent args)
@@ -94,9 +68,11 @@ namespace Content.Server.Disposal.Tube
             {
                 args.Cancel();
             }
+
+            UpdateRouterUserInterface(router);
         }
 
-        private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent router, ActivatableUIOpenAttemptEvent args)
+        private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent tagger, ActivatableUIOpenAttemptEvent args)
         {
             if (!TryComp<HandsComponent>(args.User, out var hands))
             {
@@ -109,15 +85,54 @@ namespace Content.Server.Disposal.Tube
             {
                 args.Cancel();
             }
+
+            tagger.UserInterface?.SetState(new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(tagger.Tag));
         }
 
-
-        private static void BodyTypeChanged(
-            EntityUid uid,
-            DisposalTubeComponent component,
-            ref PhysicsBodyTypeChangedEvent args)
+        /// <summary>
+        /// Gets component data to be used to update the user interface client-side.
+        /// </summary>
+        /// <returns>Returns a <see cref="SharedDisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
+        private void UpdateRouterUserInterface(DisposalRouterComponent router)
         {
-            component.AnchoredChanged();
+            if (router.Tags.Count <= 0)
+            {
+                router.UserInterface?.SetState(new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(""));
+                return;
+            }
+
+            var taglist = new StringBuilder();
+
+            foreach (var tag in router.Tags)
+            {
+                taglist.Append(tag);
+                taglist.Append(", ");
+            }
+
+            taglist.Remove(taglist.Length - 2, 2);
+
+            router.UserInterface?.SetState(new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(taglist.ToString()));
+        }
+
+        private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)
+        {
+            UpdateAnchored(uid, component, args.Anchored);
+        }
+
+        private void UpdateAnchored(EntityUid uid, DisposalTubeComponent component, bool anchored)
+        {
+            if (anchored)
+            {
+                component.Connect();
+
+                // TODO this visual data should just generalized into some anchored-visuals system/comp, this has nothing to do with disposal tubes.
+                _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Anchored);
+            }
+            else
+            {
+                component.Disconnect();
+                _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Free);
+            }
         }
 
         public IDisposalTubeComponent? NextTubeFor(EntityUid target, Direction nextDirection, IDisposalTubeComponent? targetTube = null)

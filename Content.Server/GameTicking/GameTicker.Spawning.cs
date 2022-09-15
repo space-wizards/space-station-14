@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
-using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -18,15 +17,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Job = Content.Server.Roles.Job;
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
         private const string ObserverPrototypeName = "MobObserver";
-
-        [ViewVariables(VVAccess.ReadWrite), Obsolete("Due for removal when observer spawning is refactored.")]
-        private EntityCoordinates _spawnPoint;
 
         /// <summary>
         /// How many players have joined the round through normal methods.
@@ -92,7 +89,10 @@ namespace Content.Server.GameTicking
             var character = GetPlayerProfile(player);
 
             var jobBans = _roleBanManager.GetJobBans(player.UserId);
-            if (jobBans == null || (jobId != null && jobBans.Contains(jobId)))
+            if (jobBans == null || jobId != null && jobBans.Contains(jobId))
+                return;
+
+            if (jobId != null && !_playTimeTrackings.IsAllowed(player, jobId))
                 return;
             SpawnPlayer(player, character, station, jobId, lateJoin);
         }
@@ -130,9 +130,18 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            // Figure out job restrictions
+            var restrictedRoles = new HashSet<string>();
+
+            var getDisallowed = _playTimeTrackings.GetDisallowedJobs(player);
+            restrictedRoles.UnionWith(getDisallowed);
+
+            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            if(jobBans != null) restrictedRoles.UnionWith(jobBans);
+
             // Pick best job best on prefs.
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station, character.JobPriorities, true,
-                _roleBanManager.GetJobBans(player.UserId));
+                restrictedRoles);
             // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {
@@ -160,6 +169,8 @@ namespace Content.Server.GameTicking
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
             newMind.AddRole(job);
+
+            _playTimeTrackings.PlayerRolesChanged(player);
 
             if (lateJoin)
             {
@@ -217,12 +228,11 @@ namespace Content.Server.GameTicking
 
         public void MakeJoinGame(IPlayerSession player, EntityUid station, string? jobId = null)
         {
-            if (!_playersInLobby.ContainsKey(player)) return;
-
-            if (!_prefsManager.HavePreferencesLoaded(player))
-            {
+            if (!_playerGameStatuses.ContainsKey(player.UserId))
                 return;
-            }
+
+            if (!_userDb.IsLoadComplete(player))
+                return;
 
             SpawnPlayer(player, station, jobId);
         }
@@ -252,8 +262,8 @@ namespace Content.Server.GameTicking
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
             newMind.TransferTo(mob);
 
-            _playersInLobby[player] = LobbyPlayerStatus.Observer;
-            RaiseNetworkEvent(GetStatusSingle(player, LobbyPlayerStatus.Observer));
+            _playerGameStatuses[player.UserId] = PlayerGameStatus.JoinedGame;
+            RaiseNetworkEvent(GetStatusSingle(player, PlayerGameStatus.JoinedGame));
         }
 
         #region Mob Spawning Helpers
@@ -267,20 +277,72 @@ namespace Content.Server.GameTicking
         #region Spawn Points
         public EntityCoordinates GetObserverSpawnPoint()
         {
-            var location = _spawnPoint;
-
             _possiblePositions.Clear();
 
             foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>(true))
             {
-                if (point.SpawnType == SpawnPointType.Observer)
-                    _possiblePositions.Add(transform.Coordinates);
+                if (point.SpawnType != SpawnPointType.Observer)
+                    continue;
+
+                _possiblePositions.Add(transform.Coordinates);
+            }
+
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+
+            // Fallback to a random grid.
+            if (_possiblePositions.Count == 0)
+            {
+                foreach (var grid in _mapManager.GetAllGrids())
+                {
+                    if (!metaQuery.TryGetComponent(grid.GridEntityId, out var meta) ||
+                        meta.EntityPaused)
+                    {
+                        continue;
+                    }
+
+                    _possiblePositions.Add(new EntityCoordinates(grid.GridEntityId, Vector2.Zero));
+                }
             }
 
             if (_possiblePositions.Count != 0)
-                location = _robustRandom.Pick(_possiblePositions);
+            {
+                // TODO: This is just here for the eye lerping.
+                // Ideally engine would just spawn them on grid directly I guess? Right now grid traversal is handling it during
+                // update which means we need to add a hack somewhere around it.
+                var spawn = _robustRandom.Pick(_possiblePositions);
+                var toMap = spawn.ToMap(EntityManager);
 
-            return location;
+                if (_mapManager.TryFindGridAt(toMap, out var foundGrid))
+                {
+                    return new EntityCoordinates(foundGrid.GridEntityId,
+                        foundGrid.InvWorldMatrix.Transform(toMap.Position));
+                }
+
+                return spawn;
+            }
+
+            if (_mapManager.MapExists(DefaultMap))
+            {
+                return new EntityCoordinates(_mapManager.GetMapEntityId(DefaultMap), Vector2.Zero);
+            }
+
+            // Just pick a point at this point I guess.
+            foreach (var map in _mapManager.GetAllMapIds())
+            {
+                var mapUid = _mapManager.GetMapEntityId(map);
+
+                if (!metaQuery.TryGetComponent(mapUid, out var meta) ||
+                    meta.EntityPaused)
+                {
+                    continue;
+                }
+
+                return new EntityCoordinates(mapUid, Vector2.Zero);
+            }
+
+            // AAAAAAAAAAAAA
+            _sawmill.Error("Found no observer spawn points!");
+            return EntityCoordinates.Invalid;
         }
         #endregion
     }

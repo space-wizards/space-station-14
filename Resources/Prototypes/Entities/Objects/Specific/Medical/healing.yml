@@ -8,6 +8,9 @@
   - type: Item
     sprite: Objects/Specific/Medical/medical.rsi
     heldPrefix: ointment
+  # Inherited
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: ointment
@@ -26,7 +29,7 @@
     damageContainer: Biological
     damage:
       groups:
-        Burn: -10 # 5 for each type in the group
+        Burn: -15 # 5 for each type in the group
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:
@@ -35,6 +38,8 @@
     stackType: Ointment
     max: 10
     count: 10
+  - type: StackPrice
+    price: 10
 
 - type: entity
   name: bruise pack
@@ -61,6 +66,8 @@
     stackType: Brutepack
     max: 10
     count: 10
+  - type: StackPrice
+    price: 10
 
 - type: entity
   name: roll of gauze
@@ -91,6 +98,8 @@
     stackType: Gauze
     max: 10
     count: 10
+  - type: StackPrice
+    price: 10
 
 - type: entity
   id: Gauze1
@@ -222,7 +231,7 @@
 # Syringes
 - type: entity
   name: ephedrine syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeEphedrine
   components:
   - type: SolutionContainerManager
@@ -235,7 +244,7 @@
 
 - type: entity
   name: inaprovaline syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeInaprovaline
   components:
   - type: SolutionContainerManager
@@ -248,7 +257,7 @@
 
 - type: entity
   name: tranexamic acid syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeTranexamicAcid
   components:
   - type: SolutionContainerManager
@@ -261,7 +270,7 @@
 
 - type: entity
   name: spaceacillin syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeSpaceacillin
   components:
   - type: SolutionContainerManager
@@ -274,7 +283,7 @@
 
 - type: entity
   name: ipecac syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeIpecac
   components:
   - type: SolutionContainerManager
@@ -288,7 +297,7 @@
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
   name: corpium syringe
-  parent: Syringe
+  parent: BaseSyringe
   id: SyringeCorpium
   components:
   - type: SolutionContainerManager

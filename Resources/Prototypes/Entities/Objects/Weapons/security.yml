@@ -16,6 +16,7 @@
     damage:
       types:
         Blunt: 5
+    bluntStaminaDamageFactor: 2.0
     range: 1.5
     arcwidth: 60
     arc: default
@@ -44,6 +45,8 @@
         enum.ToggleVisuals.Layer:
           True: {state: stunbaton_on}
           False: {state: stunbaton_off}
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: flash
@@ -66,6 +69,8 @@
       size: 5
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: ItemCooldown
+    - type: StaticPrice
+      price: 40
 
 - type: entity
   name: portable flasher

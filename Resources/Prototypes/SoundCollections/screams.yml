@@ -26,3 +26,10 @@
     - /Audio/Voice/Human/science_scream4.ogg
     - /Audio/Voice/Human/science_scream5.ogg
     - /Audio/Voice/Human/science_scream6.ogg
+
+- type: soundCollection
+  id: ZombieScreams
+  files:
+    - /Audio/Voice/Zombie/zombie-1.ogg
+    - /Audio/Voice/Zombie/zombie-2.ogg
+    - /Audio/Voice/Zombie/zombie-3.ogg

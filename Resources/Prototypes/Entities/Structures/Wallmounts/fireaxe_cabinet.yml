@@ -33,8 +33,13 @@
     - type: ItemCabinetVisuals
       openState: glass-up
       closedState: glass
+    - type: Lock      
     - type: AccessReader
       access: [["Atmospherics"]]
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        ItemCabinet: !type:ContainerSlot
   placement:
     mode: SnapgridCenter
 

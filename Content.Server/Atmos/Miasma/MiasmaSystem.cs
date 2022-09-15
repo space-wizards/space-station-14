@@ -5,9 +5,11 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
+using Content.Shared.Rejuvenate;
 using Robust.Server.GameObjects;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.Miasma
@@ -17,7 +19,6 @@ namespace Content.Server.Atmos.Miasma
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-
         [Dependency] private readonly IRobustRandom _random = default!;
 
         /// System Variables
@@ -132,6 +133,7 @@ namespace Content.Server.Atmos.Miasma
             SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, BeingGibbedEvent>(OnGibbed);
             SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<RottingComponent, RejuvenateEvent>(OnRejuvenate);
             // Containers
             SubscribeLocalEvent<AntiRottingContainerComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<AntiRottingContainerComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
@@ -188,8 +190,19 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
         {
-            if (component.Rotting)
-                args.PushMarkup(Loc.GetString("miasma-rotting"));
+            if (!component.Rotting)
+                return;
+            var stage = component.DeathAccumulator / component.RotAfter.TotalSeconds;
+            var description = stage switch {
+                >= 3 => "miasma-extremely-bloated",
+                >= 2 => "miasma-bloated",
+                   _ => "miasma-rotting"};
+            args.PushMarkup(Loc.GetString(description));
+        }
+
+        private void OnRejuvenate(EntityUid uid, RottingComponent component, RejuvenateEvent args)
+        {
+            EntityManager.RemoveComponentDeferred<RottingComponent>(uid);
         }
 
         /// Containers
@@ -202,15 +215,15 @@ namespace Content.Server.Atmos.Miasma
                 ToggleDecomposition(args.Entity, false, perishable);
             }
         }
+
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
-            if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            if (TryComp<PerishableComponent>(args.Entity, out var perishable) && !Terminating(uid))
             {
                 ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);
             }
         }
-
 
         /// Fly stuff
 
@@ -229,7 +242,7 @@ namespace Content.Server.Atmos.Miasma
 
         public void ToggleDecomposition(EntityUid uid, bool decompose, PerishableComponent? perishable = null)
         {
-            if (!Resolve(uid, ref perishable))
+            if (Terminating(uid) || !Resolve(uid, ref perishable))
                 return;
 
             if (decompose == perishable.Progressing) // Saved a few cycles

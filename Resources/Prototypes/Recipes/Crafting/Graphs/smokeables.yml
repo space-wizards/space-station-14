@@ -6,22 +6,9 @@
       edges:
         - to: joint
           steps:
-            - prototype: PaperRolling
-              icon:
-                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-                state: cigpaper
-              name: rolling paper
-            - prototype: CigaretteFilter
-              icon:
-                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-                state: cigfilter
-              name: cigarette filter
-            - prototype: GroundCannabis
-              icon:
-                sprite: Objects/Misc/reageant_fillings.rsi
-                state: powderpile
-#                color: darkgreen
-              name: ground cannabis
+            - material: PaperRolling
+            - material: CigaretteFilter
+            - material: GroundCannabis
               doAfter: 2
     - node: joint
       entity: Joint
@@ -34,22 +21,8 @@
       edges:
         - to: blunt
           steps:
-            - prototype: LeavesTobaccoDried
-              icon:
-                sprite: Objects/Specific/Hydroponics/tobacco.rsi
-                state: dried
-              name: dried tobacco leaves
-            - prototype: CigaretteFilter
-              icon:
-                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-                state: cigfilter
-              name: cigarette filter
-            - prototype: GroundCannabis
-              icon:
-                sprite: Objects/Misc/reageant_fillings.rsi
-                state: powderpile
-#                color: darkgreen
-              name: ground cannabis
+            - material: LeavesTobaccoDried
+            - material: GroundCannabis
               doAfter: 2
     - node: blunt
       entity: Blunt
@@ -62,22 +35,9 @@
       edges:
         - to: cigarette
           steps:
-            - prototype: PaperRolling
-              icon:
-                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-                state: cigpaper
-              name: rolling paper
-            - prototype: CigaretteFilter
-              icon:
-                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-                state: cigfilter
-              name: cigarette filter
-            - prototype: GroundTobacco
-              icon:
-                sprite: Objects/Misc/reageant_fillings.rsi
-                state: powderpile
-#                color: brown
-              name: ground tobacco
+            - material: PaperRolling
+            - material: CigaretteFilter
+            - material: GroundTobacco
               doAfter: 2
     - node: cigarette
       entity: Cigarette
@@ -107,6 +67,5 @@
           - material: LeavesTobaccoDried
             amount: 2
             doAfter: 5
-
     - node: ground
       entity: GroundTobacco

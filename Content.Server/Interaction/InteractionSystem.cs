@@ -19,6 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Interaction
@@ -27,11 +28,12 @@ namespace Content.Server.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public sealed class InteractionSystem : SharedInteractionSystem
+    public sealed partial class InteractionSystem : SharedInteractionSystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
 
@@ -225,10 +227,7 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
-                        {
-                            _adminLogger.Add(LogType.AttackArmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             return;
-                        }
                     }
                     else
                     {
@@ -236,20 +235,7 @@ namespace Content.Server.Interaction
                         RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
-                        {
-                            if (target != null)
-                            {
-                                _adminLogger.Add(LogType.AttackArmedClick, LogImpact.Low,
-                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
-                            }
-                            else
-                            {
-                                _adminLogger.Add(LogType.AttackArmedClick, LogImpact.Low,
-                                    $"{ToPrettyString(user):user} attacked with {ToPrettyString(item.Value):used} at {coordinates}");
-                            }
-
                             return;
-                        }
                     }
                 }
                 else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
@@ -279,19 +265,6 @@ namespace Content.Server.Interaction
             {
                 var ev = new ClickAttackEvent(used, user, coordinates, target);
                 RaiseLocalEvent(used, ev, false);
-                if (ev.Handled)
-                {
-                    if (target != null)
-                    {
-                        _adminLogger.Add(LogType.AttackUnarmedClick, LogImpact.Low,
-                            $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} at {coordinates}");
-                    }
-                    else
-                    {
-                        _adminLogger.Add(LogType.AttackUnarmedClick, LogImpact.Low,
-                            $"{ToPrettyString(user):user} attacked at {coordinates}");
-                    }
-                }
             }
         }
     }

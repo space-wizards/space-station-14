@@ -86,6 +86,12 @@ public class GunComponent : Component
     public float FireRate = 8f;
 
     /// <summary>
+    /// How fast the projectile moves.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("projectileSpeed")]
+    public float ProjectileSpeed = 20f;
+
+    /// <summary>
     /// When the gun is next available to be shot.
     /// Can be set multiple times in a single tick due to guns firing faster than a single tick time.
     /// </summary>

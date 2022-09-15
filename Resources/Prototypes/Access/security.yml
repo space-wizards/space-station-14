@@ -1,18 +1,18 @@
 - type: accessLevel
   id: HeadOfSecurity
-  name: Head of Security
+  name: id-card-access-level-head-of-security
 
 - type: accessLevel
   id: Security
-  name: Security
+  name: id-card-access-level-security
 
 - type: accessLevel
   id: Armory
-  name: Armory
+  name: id-card-access-level-armory
 
 - type: accessLevel
   id: Brig
-  name: Brig
+  name: id-card-access-level-brig
 
 #- type: accessLevel
 #  id: Detective

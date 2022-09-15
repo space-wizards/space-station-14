@@ -18,7 +18,7 @@ namespace Content.Shared.Access
         [DataField("name")]
         public string Name
         {
-            get => _name ?? ID;
+            get => (_name is not null) ? _name : ID;
             private set => _name = Loc.GetString(value);
         }
 

@@ -6,11 +6,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -38,7 +34,7 @@
     thresholds:
       0: Alive
       15: Dead
-  - type: MovementIgnoreGravity
+  - type: MovementAlwaysTouching
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -58,6 +54,7 @@
       autoPopulate: false
       name: action-name-disarm
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: bite

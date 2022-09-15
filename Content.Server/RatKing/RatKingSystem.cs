@@ -1,7 +1,5 @@
 using Content.Server.Actions;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
@@ -15,8 +13,6 @@ namespace Content.Server.RatKing
     {
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ActionsSystem _action = default!;
-        [Dependency] private readonly DiseaseSystem _disease = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly TransformSystem _xform = default!;
 

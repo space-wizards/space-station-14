@@ -10,7 +10,6 @@ namespace Content.Client.CloningConsole.UI
     [GenerateTypedNameReferences]
     public partial class CloningConsoleWindow : DefaultWindow
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
         public CloningConsoleWindow()
         {
             IoCManager.InjectDependencies(this);

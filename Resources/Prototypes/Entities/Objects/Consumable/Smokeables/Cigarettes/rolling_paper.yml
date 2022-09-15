@@ -43,12 +43,13 @@
   id: PaperRolling
   name: rolling paper
   description: A thin piece of paper used to make fine smokeables.
+  suffix: Full
   parent: BaseItem
   components:
   - type: Stack
     stackType: PaperRolling
     max: 5
-    count: 1
+    count: 5
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
     state: cigpaper
@@ -63,15 +64,24 @@
   - type: SpaceGarbage
 
 - type: entity
+  id: PaperRolling1
+  suffix: Single
+  parent: PaperRolling
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
   id: CigaretteFilter
   name: cigarette filter
   description: A strip of firm paper used as a filter for handmade cigarettes.
+  suffix: Full
   parent: BaseItem
   components:
   - type: Stack
     stackType: CigaretteFilter
     max: 5
-    count: 1
+    count: 5
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
     state: cigfilter
@@ -83,3 +93,11 @@
     - CigFilter
     - Trash
   - type: Recyclable
+
+- type: entity
+  id: CigaretteFilter1
+  suffix: Single
+  parent: CigaretteFilter
+  components:
+    - type: Stack
+      count: 1

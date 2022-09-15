@@ -1,6 +1,7 @@
 ﻿- type: entity
   parent: WeaponWandBase
   id: WeaponWandPolymorphBase
+  abstract: true
   components:
   - type: Sprite
     layers:

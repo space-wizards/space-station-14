@@ -8,6 +8,11 @@
   components:
   - type: Damageable
     damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
 
 - type: entity
   id: TorsoReptilian

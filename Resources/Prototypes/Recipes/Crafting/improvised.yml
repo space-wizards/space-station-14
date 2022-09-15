@@ -4,7 +4,7 @@
   graph: WoodenBat
   startNode: start
   targetNode: bat
-  category: Weapons
+  category: construction-category-weapons
   description: A robust baseball bat.
   icon:
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
@@ -17,7 +17,7 @@
   graph: makeshifthandcuffs
   startNode: start
   targetNode: cuffscable
-  category: Tools
+  category: construction-category-tools
   description: "Homemade handcuffs crafted from spare cables."
   icon: Objects/Misc/cablecuffs.rsi/cuff.png
   objectType: Item
@@ -28,7 +28,7 @@
   graph: PneumaticCannon
   startNode: start
   targetNode: cannon
-  category: Weapons
+  category: construction-category-weapons
   objectType: Item
   description: This son of a gun can fire anything that fits in it using just a little gas.
   icon:
@@ -41,7 +41,7 @@
   graph: Gauze
   startNode: start
   targetNode: gauze
-  category: Tools
+  category: construction-category-tools
   objectType: Item
   description: When you've really got nothing left.
   icon:
@@ -54,9 +54,22 @@
   graph: Blindfold
   startNode: start
   targetNode: blindfold
-  category: Tools
+  category: construction-category-tools
   objectType: Item
   description: Better hope everyone turns a blind eye to you crafting this sussy item...
   icon:
     sprite: Clothing/Eyes/Misc/blindfold.rsi
     state: icon
+
+- type: construction
+  name: flower crown
+  id: flowercrown
+  graph: flowercrown
+  startNode: start
+  targetNode: flowercrown
+  category: construction-category-misc
+  description: "A coronet of fresh and fragrant flowers."
+  icon:
+    sprite: Clothing/Head/Misc/flower-crown.rsi
+    state: icon
+  objectType: Item

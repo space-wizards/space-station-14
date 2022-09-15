@@ -15,7 +15,7 @@
         icon:
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon
-        name: promixmity sensor
+        name: proximity sensor
         doAfter: 2
       - tag: BorgArm
         icon:

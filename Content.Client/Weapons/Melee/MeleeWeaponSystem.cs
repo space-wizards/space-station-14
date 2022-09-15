@@ -1,5 +1,6 @@
 using System;
 using Content.Client.Weapons.Melee.Components;
+using Content.Shared.Examine;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -13,17 +14,19 @@ using static Content.Shared.Weapons.Melee.MeleeWeaponSystemMessages;
 
 namespace Content.Client.Weapons.Melee
 {
-    [UsedImplicitly]
-    public sealed class MeleeWeaponSystem : EntitySystem
+    public sealed partial class MeleeWeaponSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly AnimationPlayerSystem _animation = default!;
         [Dependency] private readonly EffectSystem _effectSystem = default!;
 
         public override void Initialize()
         {
+            InitializeEffect();
             SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
             SubscribeNetworkEvent<PlayLungeAnimationMessage>(PlayLunge);
+            SubscribeNetworkEvent<DamageEffectEvent>(OnDamageEffect);
         }
 
         public override void FrameUpdate(float frameTime)

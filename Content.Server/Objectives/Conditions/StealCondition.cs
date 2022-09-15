@@ -21,7 +21,7 @@ namespace Content.Server.Objectives.Conditions
         /// instead of "steal advanced magboots. Should be a loc string.
         /// </summary>
         [ViewVariables]
-        [DataField("owner", required: true)] private string _owner = string.Empty;
+        [DataField("owner")] private string? _owner = null;
 
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
@@ -38,7 +38,10 @@ namespace Content.Server.Objectives.Conditions
                 ? prototype.Name
                 : "[CANNOT FIND NAME]";
 
-        public string Title => Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(_owner)), ("itemName", Loc.GetString(PrototypeName)));
+        public string Title =>
+            _owner == null
+                ? Loc.GetString("objective-condition-steal-title-no-owner", ("itemName", Loc.GetString(PrototypeName)))
+                : Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(_owner)), ("itemName", Loc.GetString(PrototypeName)));
 
         public string Description => Loc.GetString("objective-condition-steal-description",("itemName", Loc.GetString(PrototypeName)));
 

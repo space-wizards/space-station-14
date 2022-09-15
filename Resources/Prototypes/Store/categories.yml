@@ -1,0 +1,65 @@
+#debug
+- type: storeCategory
+  id: Debug
+  name: debug category
+
+- type: storeCategory
+  id: Debug2
+  name: debug category 2
+
+#uplink categoires
+- type: storeCategory
+  id: UplinkWeapons
+  name: Weapons
+  priority: 0
+
+- type: storeCategory
+  id: UplinkAmmo
+  name: Ammo
+  priority: 1
+
+- type: storeCategory
+  id: UplinkExplosives
+  name: Explosives
+  priority: 2
+
+- type: storeCategory
+  id: UplinkMisc
+  name: Misc
+  priority: 3
+
+- type: storeCategory
+  id: UplinkBundles
+  name: Bundles
+  priority: 4
+
+- type: storeCategory
+  id: UplinkTools
+  name: Tools
+  priority: 5
+
+- type: storeCategory
+  id: UplinkUtility
+  name: Utility
+  priority: 6
+
+- type: storeCategory
+  id: UplinkJob
+  name: Job
+  priority: 7
+
+- type: storeCategory
+  id: UplinkArmor
+  name: Armor
+  priority: 8
+
+- type: storeCategory
+  id: UplinkPointless
+  name: Pointless
+  priority: 9
+
+#revenant
+- type: storeCategory
+  id: RevenantAbilities
+  name: Abilities
+

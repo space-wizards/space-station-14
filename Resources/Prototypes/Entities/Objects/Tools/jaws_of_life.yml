@@ -19,10 +19,12 @@
     slots:
       - Belt
   - type: TilePrying
+  - type: LatticeCutting
   - type: Tool
     qualities:
       - Prying
     speed: 1.5
+  - type: ToolForcePowered
   - type: MultipleTool
     statusShowBehavior: true
     entries:

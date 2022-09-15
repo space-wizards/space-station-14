@@ -1,9 +1,8 @@
 - type: job
   id: Janitor
   name: job-name-janitor
+  playTimeTracker: JobJanitor
   startingGear: JanitorGear
-  departments:
-  - Civilian
   icon: "Janitor"
   supervisors: job-supervisors-hop
   access:

@@ -29,5 +29,7 @@ namespace Content.Shared.Shuttles.Components
 
         [ViewVariables]
         public ShuttleButtons HeldButtons = ShuttleButtons.None;
+
+        public override bool SendOnlyToOwner => true;
     }
 }
