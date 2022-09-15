@@ -8,9 +8,16 @@
     state: monkey_painting
 
 # Directional Station Guide Signs
-
 - type: entity
   parent: BaseSign
+  id: BaseSignDirectional
+  abstract: true
+  components:
+    - type: Sprite
+      snapCardinals: false
+
+- type: entity
+  parent: BaseSignDirectional
   id: SignDirectionalBar
   name: bar sign
   description: A direction sign, pointing out which way the bar is.
@@ -19,7 +26,7 @@
     state: direction_bar
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalBridge
   name: bridge sign
   description: A direction sign, pointing out which way the Bridge is.
@@ -28,7 +35,7 @@
     state: direction_bridge
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalBrig
   name: brig sign
   description: A direction sign, pointing out which way the Brig is.
@@ -37,7 +44,7 @@
     state: direction_brig
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalChapel
   name: chapel sign
   description: A direction sign, pointing out which way the Chapel is.
@@ -46,7 +53,7 @@
     state: direction_chapel
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalChemistry
   name: chemistry sign
   description: A direction sign, pointing out which way the chemistry lab is.
@@ -55,7 +62,7 @@
     state: direction_chemistry
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalCryo
   name: cryo sign
   description: A direction sign, pointing out the way to cryogenics.
@@ -64,7 +71,7 @@
     state: direction_cryo
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalDorms
   name: dorms sign
   description: A direction sign, pointing out which way the Dorms are.
@@ -73,7 +80,7 @@
     state: direction_dorms
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalEng
   name: engineering sign
   description: A direction sign, pointing out which way the Engineering department is.
@@ -82,7 +89,7 @@
     state: direction_eng
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalEvac
   name: evac sign
   description: A direction sign, pointing out which way evac is.
@@ -91,7 +98,7 @@
     state: direction_evac
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalFood
   name: food sign
   description: A direction sign, pointing out which way the kitchen is.
@@ -100,7 +107,7 @@
     state: direction_food
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalGravity
   name: gravity sign
   description: A direction sign, pointing out which way the gravity generator is.
@@ -109,7 +116,7 @@
     state: direction_gravity
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalHop
   name: hop sign
   description: A direction sign, pointing out which way Head of Personnel's office is.
@@ -118,7 +125,7 @@
     state: direction_hop
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalHydro
   name: hydro sign
   description: A direction sign, pointing out which way hydroponics is.
@@ -127,7 +134,7 @@
     state: direction_hydro
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalJanitor
   name: janitor sign
   description: A direction sign, pointing out which way the janitor's closet is.
@@ -136,7 +143,7 @@
     state: direction_janitor
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalLibrary
   name: library sign
   description: A direction sign, pointing out which way the library is.
@@ -145,7 +152,7 @@
     state: direction_library
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalMed
   name: medical sign
   description: A direction sign, pointing out which way the Medical department is.
@@ -154,7 +161,7 @@
     state: direction_med
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalSalvage
   name: salvage sign
   description: A direction sign, pointing out which way the Salvage department is.
@@ -163,7 +170,7 @@
     state: direction_salvage
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalSci
   name: science sign
   description: A direction sign, pointing out which way the Science department is.
@@ -172,7 +179,7 @@
     state: direction_sci
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalSec
   name: sec sign
   description: A direction sign, pointing out which way Security is.
@@ -181,7 +188,7 @@
     state: direction_sec
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalSolar
   name: solars sign
   description: A direction sign, pointing out which way solars are.
@@ -190,7 +197,7 @@
     state: direction_solar
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalSupply
   name: supply sign
   description: A direction sign, pointing to some supplies.
@@ -199,7 +206,7 @@
     state: direction_supply
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignDirectionalWash
   name: washroom sign
   description: A direction sign, pointing to the way to a washroom.
@@ -793,6 +800,7 @@
   components:
   - type: Sprite
     state: securearea
+    snapCardinals: true
 
 - type: entity
   parent: BaseSign

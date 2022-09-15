@@ -12,6 +12,7 @@ public sealed class BlockingUserSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly BlockingSystem _blockingSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -54,9 +55,9 @@ public sealed class BlockingUserSystem : EntitySystem
 
     private void OnDamageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)
     {
-        if (component.BlockingItem != null)
+        if (args.DamageDelta != null && args.DamageIncreased)
         {
-            RaiseLocalEvent(component.BlockingItem.Value, args);
+            _damageable.TryChangeDamage(component.BlockingItem, args.DamageDelta);
         }
     }
 

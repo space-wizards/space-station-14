@@ -18,6 +18,7 @@
       board: SurveillanceCameraRouterCircuitboard
     - type: Sprite
       sprite: Structures/Machines/server.rsi
+      snapCardinals: true
       layers:
         - state: server
 

@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: HyDrobeInventory
-  name: HyDrobe
-  spriteName: hydrobe
   startingInventory:
     ClothingBackpackHydroponics: 2
     ClothingBackpackSatchelHydroponics: 2

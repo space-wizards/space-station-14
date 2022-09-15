@@ -72,6 +72,13 @@
   event: !type:ToggleActionEvent
 
 - type: instantAction
+  id: ClearNetworkLinkOverlays
+  name: network-configurator-clear-network-link-overlays
+  description: network-configurator-clear-network-link-overlays-desc
+  icon: Objects/Tools/multitool.rsi/icon.png
+  event: !type:ClearAllOverlaysEvent
+
+- type: instantAction
   id: AnimalLayEgg
   name: action-name-lay-egg
   description: action-description-lay-egg

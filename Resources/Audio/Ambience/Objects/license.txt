@@ -7,3 +7,4 @@ server_fans - https://freesound.org/people/DeVern/sounds/610761/ - CC-BY-3.0
 drain.ogg - https://freesound.org/people/PhreaKsAccount/sounds/46266/ - CC-BY-3.0 (by PhreaKsAccount)
 portable_scrubber.ogg - https://freesound.org/people/Beethovenboy/sounds/384335/ - CC0 (by Beethovenboy)
 alarm.ogg - https://github.com/Baystation12/Baystation12/commit/41b11ef289bccfdfa2940480beb9c1e3f50c3b93, fire_alarm.ogg CC-BY-SA-3.0
+reclaimer_ambience.ogg - https://freesound.org/people/cmorris035/sounds/319152/, Woodchipper Start (heavy machine) 02.wav CC0 (by cmorris035)

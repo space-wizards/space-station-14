@@ -1,9 +1,12 @@
 using System.Threading;
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
+using Content.Server.Ensnaring;
+using Content.Server.Ensnaring.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory;
 using Content.Server.UserInterface;
+using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -13,6 +16,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
+using Content.Shared.CombatMode;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 
@@ -24,6 +28,8 @@ namespace Content.Server.Strip
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly EnsnareableSystem _ensnaring = default!;
+        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
         // TODO: ECS popups. Not all of these have ECS equivalents yet.
 
@@ -36,30 +42,14 @@ namespace Content.Server.Strip
             SubscribeLocalEvent<StrippableComponent, DidUnequipEvent>(OnDidUnequip);
             SubscribeLocalEvent<StrippableComponent, ComponentInit>(OnCompInit);
             SubscribeLocalEvent<StrippableComponent, CuffedStateChangeEvent>(OnCuffStateChange);
+            SubscribeLocalEvent<StrippableComponent, EnsnaredChangedEvent>(OnEnsnareChange);
 
             // BUI
             SubscribeLocalEvent<StrippableComponent, StrippingInventoryButtonPressed>(OnStripInvButtonMessage);
             SubscribeLocalEvent<StrippableComponent, StrippingHandButtonPressed>(OnStripHandMessage);
             SubscribeLocalEvent<StrippableComponent, StrippingHandcuffButtonPressed>(OnStripHandcuffMessage);
-
-            SubscribeLocalEvent<StrippableComponent, OpenStrippingCompleteEvent>(OnOpenStripComplete);
-            SubscribeLocalEvent<StrippableComponent, OpenStrippingCancelledEvent>(OnOpenStripCancelled);
+            SubscribeLocalEvent<StrippableComponent, StrippingEnsnareButtonPressed>(OnStripEnsnareMessage);
         }
-
-        private void OnOpenStripCancelled(EntityUid uid, StrippableComponent component, OpenStrippingCancelledEvent args)
-        {
-            component.CancelTokens.Remove(args.User);
-        }
-
-        private void OnOpenStripComplete(EntityUid uid, StrippableComponent component, OpenStrippingCompleteEvent args)
-        {
-            component.CancelTokens.Remove(args.User);
-
-            if (!TryComp<ActorComponent>(args.User, out var actor)) return;
-
-            uid.GetUIOrNull(StrippingUiKey.Key)?.Open(actor.PlayerSession);
-        }
-
         private void OnStripHandcuffMessage(EntityUid uid, StrippableComponent component, StrippingHandcuffButtonPressed args)
         {
             if (args.Session.AttachedEntity is not {Valid: true} user)
@@ -73,6 +63,26 @@ namespace Content.Server.Strip
                     cuffed.TryUncuff(user, entity);
                     return;
                 }
+            }
+        }
+
+        private void OnStripEnsnareMessage(EntityUid uid, StrippableComponent component, StrippingEnsnareButtonPressed args)
+        {
+            if (args.Session.AttachedEntity is not {Valid: true} user)
+                return;
+
+            var ensnareQuery = GetEntityQuery<EnsnareableComponent>();
+
+            foreach (var entity in ensnareQuery.GetComponent(uid).Container.ContainedEntities)
+            {
+                if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
+                    continue;
+
+                if (entity != args.Ensnare)
+                    continue;
+
+                _ensnaring.TryFree(component.Owner, ensnaring, user);
+                return;
             }
         }
 
@@ -116,31 +126,17 @@ namespace Content.Server.Strip
             }
         }
 
-        public void StartOpeningStripper(EntityUid user, StrippableComponent component)
+        public void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)
         {
-            if (component.CancelTokens.ContainsKey(user)) return;
+            if (TryComp<SharedCombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
+                return;
 
             if (TryComp<ActorComponent>(user, out var actor))
             {
-                if (component.Owner.GetUIOrNull(StrippingUiKey.Key)?.SessionHasOpen(actor.PlayerSession) == true)
+                if (_userInterfaceSystem.SessionHasOpenUi(component.Owner, StrippingUiKey.Key, actor.PlayerSession))
                     return;
+                _userInterfaceSystem.TryOpen(component.Owner, StrippingUiKey.Key, actor.PlayerSession);
             }
-
-            var token = new CancellationTokenSource();
-
-            var doAfterArgs = new DoAfterEventArgs(user, component.OpenDelay, token.Token, component.Owner)
-            {
-                BreakOnStun = true,
-                BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                NeedHand = true,
-                TargetCancelledEvent = new OpenStrippingCancelledEvent(user),
-                TargetFinishedEvent = new OpenStrippingCompleteEvent(user),
-            };
-
-            component.CancelTokens[user] = token;
-            _doAfterSystem.DoAfter(doAfterArgs);
         }
 
         private void OnCompInit(EntityUid uid, StrippableComponent component, ComponentInit args)
@@ -152,6 +148,11 @@ namespace Content.Server.Strip
         private void OnCuffStateChange(EntityUid uid, StrippableComponent component, ref CuffedStateChangeEvent args)
         {
             UpdateState(uid, component);
+        }
+
+        private void OnEnsnareChange(EntityUid uid, StrippableComponent component, EnsnaredChangedEvent args)
+        {
+            SendUpdate(uid, component);
         }
 
         private void OnDidUnequip(EntityUid uid, StrippableComponent component, DidUnequipEvent args)
@@ -174,6 +175,7 @@ namespace Content.Server.Strip
             }
 
             var cuffs = new Dictionary<EntityUid, string>();
+            var ensnare = new Dictionary<EntityUid, string>();
             var inventory = new Dictionary<(string ID, string Name), string>();
             var hands = new Dictionary<string, string>();
 
@@ -183,6 +185,17 @@ namespace Content.Server.Strip
                 {
                     var name = Name(entity);
                     cuffs.Add(entity, name);
+                }
+            }
+
+            var ensnareQuery = GetEntityQuery<EnsnareableComponent>();
+
+            if (ensnareQuery.TryGetComponent(uid, out var _))
+            {
+                foreach (var entity in ensnareQuery.GetComponent(uid).Container.ContainedEntities)
+                {
+                    var name = Name(entity);
+                    ensnare.Add(entity, name);
                 }
             }
 
@@ -223,7 +236,7 @@ namespace Content.Server.Strip
                 }
             }
 
-            bui.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
+            bui.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs, ensnare));
         }
 
         private void AddStripVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<Verb> args)
@@ -238,7 +251,7 @@ namespace Content.Server.Strip
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
                 IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
-                Act = () => StartOpeningStripper(args.User, component),
+                Act = () => StartOpeningStripper(args.User, component, true),
             };
             args.Verbs.Add(verb);
         }

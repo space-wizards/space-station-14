@@ -1,7 +1,8 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Content.Client.EscapeMenu.UI;
+using Content.Client.Options.UI;
 using Content.Client.MainMenu.UI;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -28,14 +29,13 @@ namespace Content.Client.MainMenu
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private MainMenuControl _mainMenuControl = default!;
-        private OptionsMenu _optionsMenu = default!;
         private bool _isConnecting;
 
         // ReSharper disable once InconsistentNaming
         private static readonly Regex IPv6Regex = new(@"\[(.*:.*:.*)](?::(\d+))?");
 
         /// <inheritdoc />
-        public override void Startup()
+        protected override void Startup()
         {
             _mainMenuControl = new MainMenuControl(_resourceCache, _configurationManager);
             _userInterfaceManager.StateRoot.AddChild(_mainMenuControl);
@@ -46,18 +46,15 @@ namespace Content.Client.MainMenu
             _mainMenuControl.AddressBox.OnTextEntered += AddressBoxEntered;
 
             _client.RunLevelChanged += RunLevelChanged;
-
-            _optionsMenu = new OptionsMenu();
         }
 
         /// <inheritdoc />
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _client.RunLevelChanged -= RunLevelChanged;
             _netManager.ConnectFailed -= _onConnectFailed;
 
             _mainMenuControl.Dispose();
-            _optionsMenu.Dispose();
         }
 
         private void QuitButtonPressed(BaseButton.ButtonEventArgs args)
@@ -67,7 +64,7 @@ namespace Content.Client.MainMenu
 
         private void OptionsButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            _optionsMenu.OpenCentered();
+            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<OptionsUIController>().ToggleWindow();
         }
 
         private void DirectConnectButtonPressed(BaseButton.ButtonEventArgs args)

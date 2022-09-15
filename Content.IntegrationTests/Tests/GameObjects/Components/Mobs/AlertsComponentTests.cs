@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 alertsSystem.ShowAlert(playerUid, AlertType.Debug1);
                 alertsSystem.ShowAlert(playerUid, AlertType.Debug2);
 
-                Assert.AreEqual(alertCount + 2, alerts.Count);
+                Assert.That(alerts, Has.Count.EqualTo(alertCount + 2));
             });
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);

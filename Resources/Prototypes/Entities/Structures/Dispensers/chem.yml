@@ -7,6 +7,8 @@
   - type: Sprite
     sprite: Structures/dispensers.rsi
     state: industrial-working
+    netsync: false
+    snapCardinals: true
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
     emagPack: ChemDispenserEmaggedInventory

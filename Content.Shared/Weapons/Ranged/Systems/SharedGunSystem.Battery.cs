@@ -82,10 +82,12 @@ public abstract partial class SharedGunSystem
 
     protected void UpdateBatteryAppearance(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
-        appearance.SetData(AmmoVisuals.HasAmmo, component.Shots != 0);
-        appearance.SetData(AmmoVisuals.AmmoCount, component.Shots);
-        appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
+            return;
+
+        Appearance.SetData(uid, AmmoVisuals.HasAmmo, component.Shots != 0, appearance);
+        Appearance.SetData(uid, AmmoVisuals.AmmoCount, component.Shots, appearance);
+        Appearance.SetData(uid, AmmoVisuals.AmmoMax, component.Capacity, appearance);
     }
 
     private IShootable GetShootable(BatteryAmmoProviderComponent component, EntityCoordinates coordinates)

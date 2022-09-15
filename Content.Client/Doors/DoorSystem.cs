@@ -27,9 +27,9 @@ public sealed class DoorSystem : SharedDoorSystem
     }
 
     // TODO AUDIO PREDICT see comments in server-side PlaySound()
-    protected override void PlaySound(EntityUid uid, string sound, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
+    protected override void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
     {
         if (GameTiming.InPrediction && GameTiming.IsFirstTimePredicted)
-            SoundSystem.Play(sound, Filter.Local(), uid, audioParams);
+            Audio.Play(soundSpecifier, Filter.Local(), uid, audioParams);
     }
 }

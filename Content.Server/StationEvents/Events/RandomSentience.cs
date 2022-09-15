@@ -29,7 +29,6 @@ public sealed class RandomSentience : StationEventSystem
             if (toMakeSentient-- == 0)
                 break;
 
-            MakeSentientCommand.MakeSentient(target.Owner, EntityManager);
             EntityManager.RemoveComponent<SentienceTargetComponent>(target.Owner);
             var comp = EntityManager.AddComponent<GhostTakeoverAvailableComponent>(target.Owner);
             comp.RoleName = EntityManager.GetComponent<MetaDataComponent>(target.Owner).EntityName;

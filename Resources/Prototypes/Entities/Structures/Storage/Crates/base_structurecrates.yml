@@ -10,6 +10,7 @@
     noRot: true
   - type: Sprite
     netsync: false
+    noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
     - state: crate
@@ -76,6 +77,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/Crates/generic.rsi
+    snapCardinals: true
     layers:
     - state: crate
     - state: crate_door

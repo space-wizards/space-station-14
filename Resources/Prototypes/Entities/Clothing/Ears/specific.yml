@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingHeadsetGrey
+  id: ClothingHeadsetChameleon
+  name: passenger headset
+  description: An updated, modular intercom that fits over the head. Takes encryption keys.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/base.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Ears/Headsets/base.rsi
+    - type: ChameleonClothing
+      slot: [ears]
+      default: ClothingHeadsetGrey
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

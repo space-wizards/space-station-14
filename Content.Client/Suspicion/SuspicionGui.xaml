@@ -1,7 +1,8 @@
-﻿<Control xmlns="https://spacestation14.io">
+﻿<sus:SuspicionGui xmlns="https://spacestation14.io"
+                  xmlns:sus="clr-namespace:Content.Client.Suspicion">
     <BoxContainer Orientation="Vertical" SeparationOverride="0">
         <Button Name="RoleButton">
             <Label Name="TimerLabel" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
         </Button>
     </BoxContainer>
-</Control>
+</sus:SuspicionGui>

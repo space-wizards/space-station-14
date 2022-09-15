@@ -11,6 +11,8 @@
     state: signaller
   - type: Signaller
   - type: UseDelay
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   parent: BaseItem
@@ -26,3 +28,5 @@
       outputs:
         Pressed: [ ]
     - type: UseDelay
+    - type: StaticPrice
+      price: 40

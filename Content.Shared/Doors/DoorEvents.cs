@@ -78,10 +78,12 @@ namespace Content.Shared.Doors
     public sealed class BeforeDoorPryEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid User;
+        public readonly EntityUid Tool;
 
-        public BeforeDoorPryEvent(EntityUid user)
+        public BeforeDoorPryEvent(EntityUid user, EntityUid tool)
         {
             User = user;
+            Tool = tool;
         }
     }
 }
