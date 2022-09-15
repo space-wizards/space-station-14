@@ -9,7 +9,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Beam;
 
@@ -17,7 +19,6 @@ public sealed class BeamSystem : SharedBeamSystem
 {
     [Dependency] private readonly FixtureSystem _fixture = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly LightningSystem _lightning = default!;
 
     public override void Initialize()
     {
@@ -27,12 +28,6 @@ public sealed class BeamSystem : SharedBeamSystem
         SubscribeLocalEvent<BeamComponent, BeamControllerCreatedEvent>(OnControllerCreated);
         SubscribeLocalEvent<BeamComponent, BeamFiredEvent>(OnBeamFired);
         SubscribeLocalEvent<BeamComponent, ComponentRemove>(OnRemove);
-        SubscribeLocalEvent<BeamComponent, InteractHandEvent>(InteractHand);
-    }
-
-    private void InteractHand(EntityUid uid, BeamComponent component, InteractHandEvent args)
-    {
-        _lightning.ShootLightning(args.Target, args.User);
     }
 
     private void OnBeamCreationSuccess(EntityUid uid, BeamComponent component, CreateBeamSuccessEvent args)

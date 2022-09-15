@@ -6,6 +6,7 @@ using Content.Shared.Lightning;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
@@ -34,7 +35,7 @@ public sealed class LightningSystem : SharedLightningSystem
         beamController.CreatedBeams.Remove(uid);
     }
 
-    private void OnCollide(EntityUid uid, LightningComponent component, StartCollideEvent args)
+    private void OnCollide(EntityUid uid, LightningComponent component, ref StartCollideEvent args)
     {
         if (!TryComp<BeamComponent>(uid, out var lightningBeam) || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
         {
