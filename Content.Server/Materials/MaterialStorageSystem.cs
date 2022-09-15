@@ -5,7 +5,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Materials;
 
 /// <summary>
-/// This handles...
+/// This handles <see cref="SharedMaterialStorageSystem"/>
 /// </summary>
 public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {

@@ -59,7 +59,7 @@ namespace Content.Server.Lathe
 
             foreach (var comp in EntityQuery<LatheComponent>())
             {
-                if (!comp.Queue.Any() || !this.IsPowered(comp.Owner, EntityManager))
+                if (!comp.Queue.Any())
                     continue;
 
                 TryStartProducing(comp.Owner, comp);
@@ -67,6 +67,9 @@ namespace Content.Server.Lathe
 
             foreach (var (comp, lathe) in EntityQuery<LatheProducingComponent, LatheComponent>())
             {
+                if (!this.IsPowered(comp.Owner, EntityManager))
+                    continue;
+
                 comp.TimeRemaining -= frameTime;
 
                 if (comp.TimeRemaining <= 0)
@@ -113,7 +116,7 @@ namespace Content.Server.Lathe
             {
                 Recipes = component.StaticRecipes
             };
-            RaiseLocalEvent(component.Owner, ev, true);
+            RaiseLocalEvent(component.Owner, ev);
             return ev.Recipes;
         }
 
