@@ -20,8 +20,6 @@ public sealed partial class LatheMenu : DefaultWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
 
-    private const float RecipeTooltipDelay = 0.5f;
-
     public event Action<BaseButton.ButtonEventArgs>? OnQueueButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerSyncButtonPressed;
@@ -46,17 +44,8 @@ public sealed partial class LatheMenu : DefaultWindow
         };
         AmountLineEdit.OnTextChanged += _ =>
         {
-            SetRecipeCraftable(owner.Lathe);
+            PopulateRecipes(owner.Lathe);
         };
-
-        // This is a shitty hack, because item lists apparently don't actually support tooltips. Yay..
-        RecipeList.OnItemHover += ev =>
-        {
-            ev.ItemList.HideTooltip();
-            ev.ItemList.ToolTip = ev.ItemList[ev.ItemIndex].TooltipText;
-        };
-        RecipeList.TooltipDelay = RecipeTooltipDelay;
-        RecipeList.OnItemSelected += ItemSelected;
 
         QueueButton.OnPressed += a => OnQueueButtonPressed?.Invoke(a);
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
@@ -74,16 +63,6 @@ public sealed partial class LatheMenu : DefaultWindow
         }
     }
 
-    private void ItemSelected(ItemList.ItemListSelectedEventArgs args)
-    {
-        args.ItemList.HideTooltip();
-        args.ItemList.ToolTip = args.ItemList[args.ItemIndex].TooltipText;
-
-        if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
-            quantity = 1;
-        RecipeQueueAction?.Invoke(Recipes[args.ItemIndex], quantity);
-    }
-
     public void PopulateMaterials(EntityUid lathe)
     {
         if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
@@ -98,19 +77,7 @@ public sealed partial class LatheMenu : DefaultWindow
                 ("material", material.Name), ("amount", amount));
             Materials.AddItem(mat, _spriteSystem.Frame0(material.Icon), false);
         }
-        SetRecipeCraftable(lathe);
-    }
-
-    public void SetRecipeCraftable(EntityUid lathe)
-    {
-        if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
-            quantity = 1;
-
-        for (var i = 0; i < RecipeList.Count; i++)
-        {
-            var item = RecipeList[i];
-            item.Disabled = !_lathe.CanProduce(lathe, Recipes[i], quantity);
-        }
+        PopulateRecipes(lathe);
     }
 
     /// <summary>
@@ -142,12 +109,12 @@ public sealed partial class LatheMenu : DefaultWindow
             return;
         }
 
-        RecipeList.Clear();
+        var quantity = int.TryParse(AmountLineEdit.Text, out var txt) ? 1 : txt;
+
+        RecipeList.Children.Clear();
         _oldRecipesToShow = recipesToShow;
         foreach (var prototype in recipesToShow)
         {
-            var item = RecipeList.AddItem(prototype.Name, _spriteSystem.Frame0(prototype.Icon));
-
             StringBuilder sb = new();
             var first = true;
             foreach (var (id, amount) in prototype.RequiredMaterials)
@@ -165,8 +132,16 @@ public sealed partial class LatheMenu : DefaultWindow
                 sb.Append(proto.Name);
             }
 
-            item.TooltipText = sb.ToString();
-            SetRecipeCraftable(lathe);
+            var icon = _spriteSystem.Frame0(prototype.Icon);
+            var canProduce = _lathe.CanProduce(lathe, prototype, quantity);
+
+            var control = new RecipeControl(prototype, sb.ToString(), canProduce, icon);
+            control.OnButtonPressed += s => RecipeQueueAction?.Invoke(s, quantity);
+
+            var test = new Label();
+            test.Text = "TEST";
+            Logger.Debug("TEST");
+            RecipeList.AddChild(test);
         }
     }
 }

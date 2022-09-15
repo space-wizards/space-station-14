@@ -55,11 +55,13 @@
                 Disabled="True">
             </Button>
         </BoxContainer>
-        <ItemList
+        <ScrollContainer
             Name="RecipeList"
             SizeFlagsStretchRatio="8"
+            HScrollEnabled="False"
+            HorizontalExpand="True"
             VerticalExpand="True">
-        </ItemList>
+        </ScrollContainer>
         <LineEdit
             Name="AmountLineEdit"
             PlaceHolder="{Loc 'lathe-menu-search-amount'}"
