@@ -1805,6 +1805,74 @@ entities:
           color: '#FFFFFFFF'
           id: Dirt
           coordinates: -64,7
+        2182:
+          color: '#FFFFFFFF'
+          id: Flowersy4
+          coordinates: -60.852406,18.279133
+        2183:
+          color: '#FFFFFFFF'
+          id: Flowersy4
+          coordinates: -60.227406,18.638508
+        2184:
+          color: '#FFFFFFFF'
+          id: Flowersy4
+          coordinates: -60.05553,17.919758
+        2185:
+          color: '#FFFFFFFF'
+          id: Flowerspv1
+          coordinates: -60.27428,17.966633
+        2186:
+          color: '#FFFFFFFF'
+          id: Flowerspv1
+          coordinates: -60.696156,17.701008
+        2187:
+          color: '#FFFFFFFF'
+          id: Flowerspv1
+          coordinates: -60.164906,18.763508
+        2188:
+          color: '#FFFFFFFF'
+          id: Flowersbr3
+          coordinates: -60.55553,19.872883
+        2189:
+          color: '#FFFFFFFF'
+          id: Flowersbr3
+          coordinates: -60.071156,20.857258
+        2190:
+          color: '#FFFFFFFF'
+          id: Flowersbr1
+          coordinates: -60.52428,12.732259
+        2191:
+          color: '#FFFFFFFF'
+          id: Flowersbr2
+          coordinates: -61.99303,22.591633
+        2192:
+          color: '#FFFFFFFF'
+          id: Rock05
+          coordinates: -60.352406,17.654133
+        2194:
+          color: '#FFFFFFFF'
+          id: WarnLineW
+          coordinates: -53,19
+        2195:
+          color: '#FFFFFFFF'
+          id: WarnLineW
+          coordinates: -52,19
+        2196:
+          color: '#FFFFFFFF'
+          id: WarnLineW
+          coordinates: -51,19
+        2197:
+          color: '#FFFFFFFF'
+          id: WarnLineN
+          coordinates: -53,17
+        2198:
+          color: '#FFFFFFFF'
+          id: WarnLineN
+          coordinates: -52,17
+        2199:
+          color: '#FFFFFFFF'
+          id: WarnLineN
+          coordinates: -51,17
       -1,0:
         11:
           color: '#FFFFFFFF'
@@ -29261,10 +29329,9 @@ entities:
     parent: 8
     type: Transform
 - uid: 557
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 24.5,-2.5
+  - pos: 24.5,-2.5
     parent: 8
     type: Transform
 - uid: 558
@@ -29405,59 +29472,51 @@ entities:
     parent: 8
     type: Transform
 - uid: 578
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 32.5,-2.5
+  - pos: 31.5,-2.5
     parent: 8
     type: Transform
 - uid: 579
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 31.5,-2.5
+  - pos: 32.5,-2.5
     parent: 8
     type: Transform
 - uid: 580
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 30.5,-2.5
+  - pos: 25.5,-2.5
     parent: 8
     type: Transform
 - uid: 581
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 29.5,-2.5
+  - pos: 26.5,-2.5
     parent: 8
     type: Transform
 - uid: 582
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 28.5,-2.5
+  - pos: 27.5,-2.5
     parent: 8
     type: Transform
 - uid: 583
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 27.5,-2.5
+  - pos: 28.5,-2.5
     parent: 8
     type: Transform
 - uid: 584
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 26.5,-2.5
+  - pos: 29.5,-2.5
     parent: 8
     type: Transform
 - uid: 585
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 25.5,-2.5
+  - pos: 30.5,-2.5
     parent: 8
     type: Transform
 - uid: 586
@@ -29482,10 +29541,9 @@ entities:
     parent: 8
     type: Transform
 - uid: 589
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 31.5,-3.5
+  - pos: 31.5,-3.5
     parent: 8
     type: Transform
 - uid: 590
@@ -46275,9 +46333,9 @@ entities:
     parent: 8
     type: Transform
 - uid: 3116
-  type: VendingMachineEngivend
+  type: VendingMachineVendomat
   components:
-  - pos: -22.5,-2.5
+  - pos: 22.5,40.5
     parent: 8
     type: Transform
 - uid: 3117
@@ -70859,9 +70917,9 @@ entities:
     parent: 8
     type: Transform
 - uid: 6771
-  type: VendingMachineEngivend
+  type: WeaponLaserCarbine
   components:
-  - pos: 22.5,40.5
+  - pos: -46.59152,34.50001
     parent: 8
     type: Transform
 - uid: 6772
@@ -73169,9 +73227,9 @@ entities:
     parent: 8
     type: Transform
 - uid: 7046
-  type: VendingMachineEngivend
+  type: ToolboxEmergencyFilled
   components:
-  - pos: -50.5,20.5
+  - pos: -52.51956,20.560507
     parent: 8
     type: Transform
 - uid: 7047
@@ -154554,7 +154612,7 @@ entities:
 - uid: 18993
   type: BoxZiptie
   components:
-  - pos: -46.50291,34.47291
+  - pos: -41.698997,34.513542
     parent: 8
     type: Transform
 - uid: 18994
@@ -154588,13 +154646,13 @@ entities:
 - uid: 18998
   type: MagazinePistolRubber
   components:
-  - pos: -46.669537,34.43272
+  - pos: -46.54348,38.628582
     parent: 8
     type: Transform
 - uid: 18999
   type: MagazinePistolRubber
   components:
-  - pos: -46.49766,34.43272
+  - pos: -46.729782,38.684002
     parent: 8
     type: Transform
 - uid: 19000
@@ -174787,4 +174845,214 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
+- uid: 21356
+  type: WeaponLaserCarbine
+  components:
+  - pos: -46.59152,34.31251
+    parent: 8
+    type: Transform
+- uid: 21357
+  type: JetpackSecurityFilled
+  components:
+  - pos: -39.501225,32.50685
+    parent: 8
+    type: Transform
+- uid: 21358
+  type: JetpackSecurityFilled
+  components:
+  - pos: -38.469975,32.491226
+    parent: 8
+    type: Transform
+- uid: 21359
+  type: JetpackSecurityFilled
+  components:
+  - pos: -37.51685,32.491226
+    parent: 8
+    type: Transform
+- uid: 21360
+  type: JetpackSecurityFilled
+  components:
+  - pos: -36.5481,32.44435
+    parent: 8
+    type: Transform
+- uid: 21361
+  type: JetpackMiniFilled
+  components:
+  - pos: -54.507545,-22.490068
+    parent: 8
+    type: Transform
+- uid: 21362
+  type: JetpackMiniFilled
+  components:
+  - pos: -54.49192,-23.505693
+    parent: 8
+    type: Transform
+- uid: 21363
+  type: JetpackMiniFilled
+  components:
+  - pos: -54.507545,-24.505693
+    parent: 8
+    type: Transform
+- uid: 21364
+  type: JetpackMiniFilled
+  components:
+  - pos: -54.476295,-25.458818
+    parent: 8
+    type: Transform
+- uid: 21365
+  type: ClothingShoesBootsMag
+  components:
+  - pos: -54.54452,-22.603771
+    parent: 8
+    type: Transform
+- uid: 21366
+  type: ClothingShoesBootsMag
+  components:
+  - pos: -54.51327,-23.572521
+    parent: 8
+    type: Transform
+- uid: 21367
+  type: ClothingShoesBootsMag
+  components:
+  - pos: -54.54452,-24.541271
+    parent: 8
+    type: Transform
+- uid: 21368
+  type: ClothingShoesBootsMag
+  components:
+  - pos: -54.466396,-25.510021
+    parent: 8
+    type: Transform
+- uid: 21369
+  type: ClothingShoesBootsMag
+  components:
+  - pos: -51.54452,-24.572521
+    parent: 8
+    type: Transform
+- uid: 21370
+  type: ClothingShoesBootsMag
+  components:
+  - pos: -51.54452,-25.603771
+    parent: 8
+    type: Transform
+- uid: 21371
+  type: ClothingShoesBootsMag
+  components:
+  - pos: 5.2736564,-35.93089
+    parent: 8
+    type: Transform
+- uid: 21372
+  type: ClothingShoesBootsMag
+  components:
+  - pos: 5.4611564,-36.05589
+    parent: 8
+    type: Transform
+- uid: 21373
+  type: ClothingShoesBootsMag
+  components:
+  - pos: 5.5705314,-36.14964
+    parent: 8
+    type: Transform
+- uid: 21374
+  type: JetpackMiniFilled
+  components:
+  - pos: 5.5080314,-36.71214
+    parent: 8
+    type: Transform
+- uid: 21375
+  type: JetpackMiniFilled
+  components:
+  - pos: 5.5080314,-37.071514
+    parent: 8
+    type: Transform
+- uid: 21376
+  type: JetpackMiniFilled
+  components:
+  - pos: 5.5080314,-37.446514
+    parent: 8
+    type: Transform
+- uid: 21377
+  type: ClothingHeadHelmetVoidParamed
+  components:
+  - pos: 32.508923,-3.2760863
+    parent: 8
+    type: Transform
+- uid: 21378
+  type: ClothingOuterHardsuitVoidParamed
+  components:
+  - pos: 32.524548,-3.6042113
+    parent: 8
+    type: Transform
+- uid: 21379
+  type: Rack
+  components:
+  - pos: 32.5,-3.5
+    parent: 8
+    type: Transform
+- uid: 21380
+  type: ClothingShoesBootsMag
+  components:
+  - pos: 32.493298,-3.6354613
+    parent: 8
+    type: Transform
+- uid: 21381
+  type: EmergencyOxygenTankFilled
+  components:
+  - pos: 32.477673,-3.6198363
+    parent: 8
+    type: Transform
+- uid: 21382
+  type: JetpackMiniFilled
+  components:
+  - pos: 32.415173,-3.4948363
+    parent: 8
+    type: Transform
+- uid: 21383
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 33.5,-3.5
+    parent: 8
+    type: Transform
+- uid: 21384
+  type: WindoorCommandLocked
+  components:
+  - desc: Ask the CMO to be assigned to paramedic.
+    type: MetaData
+  - pos: 32.5,-3.5
+    parent: 8
+    type: Transform
+- uid: 21385
+  type: SignSecureSmall
+  components:
+  - desc: Speak to the CMO for access.
+    name: CMO Access Sign
+    type: MetaData
+  - pos: 32.484364,-2.8018522
+    parent: 8
+    type: Transform
+- uid: 21386
+  type: VendingMachineChang
+  components:
+  - pos: -22.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 21387
+  type: VendingMachineVendomat
+  components:
+  - pos: -50.5,20.5
+    parent: 8
+    type: Transform
+- uid: 21388
+  type: PlushieSpaceLizard
+  components:
+  - pos: -50.508347,22.969368
+    parent: 8
+    type: Transform
+- uid: 21389
+  type: PlushieBee
+  components:
+  - pos: -59.99303,18.669758
+    parent: 8
+    type: Transform
 ...
