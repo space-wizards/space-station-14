@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Now smg crate comes with correct magazines for Wt550., type: Fix}
-  id: 1815
-  time: '2022-06-27T16:34:24.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Crates now go through plastic flaps., type: Fix}
@@ -2926,3 +2921,13 @@ Entries:
       ($2,000).', type: Add}
   id: 2314
   time: '2022-09-15T17:28:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Most cargo crate prices have been tweaked down to reflect the value
+      of the crate. Security items in particular are much cheaper., type: Tweak}
+  - {message: Cargo passive income reduced from 2 to 1 per second., type: Tweak}
+  - {message: 'Pipes, racks, and walls should be worth a token amount of money.',
+    type: Tweak}
+  - {message: Dead organics can be sold., type: Tweak}
+  id: 2315
+  time: '2022-09-15T17:29:07.0000000+00:00'
