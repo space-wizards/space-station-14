@@ -10,7 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 8  # Should have the same or less damage than a regular pellet
+        Piercing: 70
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -24,7 +24,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 10
+        Blunt: 8
   - type: StaminaDamageOnCollide
     damage: 55
 
@@ -40,7 +40,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 12
+        Slash: 11
 
 - type: entity
   id: PelletShotgunIncendiary
