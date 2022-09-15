@@ -44,7 +44,7 @@ namespace Content.Server.Labels
             if (!Resolve(uid, ref metadata))
                 return;
             if (!Resolve(uid, ref label, false))
-                label = uid.EnsureComponent<LabelComponent>();
+                label = EnsureComp<LabelComponent>(uid);
 
             if (string.IsNullOrEmpty(text))
             {
