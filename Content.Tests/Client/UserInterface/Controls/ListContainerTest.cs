@@ -49,6 +49,32 @@ public sealed class ListContainerTest : RobustUnitTest
     }
 
     [Test]
+    public void TestCreatePopulateAndEmpty()
+    {
+        const int x = 50;
+        const int y = 10;
+        var root = new Control { MinSize = (x, y) };
+        var listContainer = new ListContainer { SeparationOverride = 3 };
+        root.AddChild(listContainer);
+        listContainer.GenerateItem += (_, button) => {
+            button.AddChild(new Control { MinSize = (10, 10) });
+        };
+
+        var list = new List<TestListData>();
+        listContainer.PopulateList(list);
+        root.Arrange(new UIBox2(0, 0, x, y));
+
+        list.Add(new(0));
+        list.Add(new (1));
+        listContainer.PopulateList(list);
+        root.Arrange(new UIBox2(0, 0, x, y));
+
+        list.Clear();
+        listContainer.PopulateList(list);
+        root.Arrange(new UIBox2(0, 0, x, y));
+    }
+
+    [Test]
     public void TestOnlyVisibleItemsAreAdded()
     {
         /*
