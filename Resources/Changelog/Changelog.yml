@@ -1,9 +1,4 @@
 Entries:
-- author: KIBORG04
-  changes:
-  - {message: Puddle slippery again!, type: Tweak}
-  id: 1818
-  time: '2022-06-27T17:30:06.0000000+00:00'
 - author: Rane
   changes:
   - {message: Removed plants with no current uses from botany vendors and crates.,
@@ -2931,3 +2926,8 @@ Entries:
   - {message: chance to find salami lid in a pizza crate has been decreased, type: Tweak}
   id: 2317
   time: '2022-09-15T22:15:45.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: Added icons for Lock and Unlock in the right click menu!, type: Add}
+  id: 2318
+  time: '2022-09-15T23:26:49.0000000+00:00'
