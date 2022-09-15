@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Cargo.Systems;
 using Content.Server.Damage.Systems;
 using Content.Server.Examine;
 using Content.Server.Interaction;
@@ -23,6 +24,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
@@ -33,11 +35,34 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly ExamineSystem _examine = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
 
     public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, PriceCalculationEvent>(OnBallisticPrice);
+    }
+
+    private void OnBallisticPrice(EntityUid uid, BallisticAmmoProviderComponent component, ref PriceCalculationEvent args)
+    {
+        if (string.IsNullOrEmpty(component.FillProto) || component.UnspawnedCount == 0)
+            return;
+
+        if (!ProtoManager.TryIndex<EntityPrototype>(component.FillProto, out var proto))
+        {
+            Sawmill.Error($"Unable to find fill prototype for price on {component.FillProto} on {ToPrettyString(uid)}");
+            return;
+        }
+
+        // Probably good enough for most.
+        var price = _pricing.GetEstimatedPrice(proto);
+        args.Price += price * component.UnspawnedCount;
+    }
 
     public override void Shoot(GunComponent gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {

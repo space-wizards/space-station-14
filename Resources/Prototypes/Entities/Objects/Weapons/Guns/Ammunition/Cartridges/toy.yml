@@ -17,6 +17,8 @@
       map: ["enum.AmmoVisualLayers.Base"]
   - type: SpentAmmoVisuals
   - type: Appearance
+  - type: StaticPrice
+    price: 5
 
 - type: entity
   id: CartridgeCap

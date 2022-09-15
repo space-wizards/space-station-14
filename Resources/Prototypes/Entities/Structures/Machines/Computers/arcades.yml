@@ -33,6 +33,8 @@
       bodyBroken: arcade
   - type: Anchorable
   - type: Pullable
+  - type: StaticPrice
+    price: 300
 
 - type: entity
   id: SpaceVillainArcade

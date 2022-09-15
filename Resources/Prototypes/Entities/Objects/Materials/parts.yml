@@ -28,7 +28,7 @@
 - type: entity
   parent: PartBase
   id: PartRodMetal
-  name: metals rods
+  name: metal rods
   suffix: Full
   components:
   - type: Stack
@@ -53,6 +53,10 @@
     outputs:
     - Lattice
     - FloorReinforced
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 5
 
 - type: entity
   parent: PartRodMetal
