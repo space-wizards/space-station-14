@@ -10,7 +10,6 @@
     - id: LidSalami
       prob: 0.1
 
-
 - type: entity
   id: CrateFoodMRE
   parent: CratePlastic
