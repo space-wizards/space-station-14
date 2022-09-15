@@ -49,6 +49,14 @@ namespace Content.Shared.Lathe
         [DataField("ignoreColor")]
         public bool IgnoreColor;
         #endregion
+
+        /// <summary>
+        /// The recipe the lathe is currently producing
+        /// </summary>
+        [ViewVariables]
+        public LatheRecipePrototype? Recipe;
+
+
     }
 
     public sealed class LatheGetRecipesEvent : EntityEventArgs

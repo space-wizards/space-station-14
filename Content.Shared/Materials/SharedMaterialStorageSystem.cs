@@ -212,7 +212,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        args.Handled = true;
-        TryInsertMaterialEntity(args.Used, uid, component);
+        args.Handled = TryInsertMaterialEntity(args.Used, uid, component);
     }
 }

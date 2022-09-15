@@ -4,7 +4,6 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Research;
 using Content.Shared.Research.Components;
 using Robust.Server.GameObjects;
@@ -12,6 +11,7 @@ using Robust.Shared.Prototypes;
 using JetBrains.Annotations;
 using System.Linq;
 using Content.Server.Materials;
+using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Robust.Server.Player;
 
@@ -33,15 +33,18 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, MaterialEntityInsertedEvent>(OnMaterialEntityInserted);
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
 
-            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
 
             SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
+
+            SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
+
+            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
         public override void Update(float frameTime)
@@ -59,7 +62,7 @@ namespace Content.Server.Lathe
 
             foreach (var comp in EntityQuery<LatheComponent>())
             {
-                if (!comp.Queue.Any())
+                if (comp.Queue.Count <= 0)
                     continue;
 
                 TryStartProducing(comp.Owner, comp);
@@ -67,12 +70,12 @@ namespace Content.Server.Lathe
 
             foreach (var (comp, lathe) in EntityQuery<LatheProducingComponent, LatheComponent>())
             {
-                if (!this.IsPowered(comp.Owner, EntityManager))
+                if (lathe.Recipe == null)
                     continue;
 
-                comp.TimeRemaining -= frameTime;
+                comp.TimeRemaining += frameTime;
 
-                if (comp.TimeRemaining <= 0)
+                if (comp.TimeRemaining >= (float) lathe.Recipe.CompleteTime.TotalSeconds)
                     FinishProducing(comp.Owner, lathe);
             }
         }
@@ -148,15 +151,14 @@ namespace Content.Server.Lathe
         {
             if (!Resolve(uid, ref component))
                 return false;
-            if (HasComp<LatheProducingComponent>(uid) || !component.Queue.Any())
+            if (component.Recipe != null || component.Queue.Count <= 0)
                 return false;
 
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
 
-            var prodComp = AddComp<LatheProducingComponent>(uid);
-            prodComp.Recipe = recipe;
-            prodComp.TimeRemaining = (float) recipe.CompleteTime.TotalSeconds;
+            AddComp<LatheProducingComponent>(uid);
+            component.Recipe = recipe;
 
             _audio.PlayPvs(component.ProducingSound, component.Owner);
             UpdateRunningAppearance(uid, true);
@@ -166,12 +168,13 @@ namespace Content.Server.Lathe
 
         public void FinishProducing(EntityUid uid, LatheComponent? comp = null, LatheProducingComponent? prodComp = null)
         {
-            if (!Resolve(uid, ref comp, ref prodComp))
+            if (!Resolve(uid, ref comp, ref prodComp, false))
                 return;
 
-            if (prodComp.Recipe != null)
-                Spawn(prodComp.Recipe.Result, Transform(uid).Coordinates);
+            if (comp.Recipe != null)
+                Spawn(comp.Recipe.Result, Transform(uid).Coordinates);
             RemComp(prodComp.Owner, prodComp);
+            comp.Recipe = null;
             UpdateRunningAppearance(uid, false);
             UpdateUserInterfaceState(uid, comp);
         }
@@ -182,12 +185,7 @@ namespace Content.Server.Lathe
                 return;
 
             var ui = _uiSys.GetUi(uid, LatheUiKey.Key);
-
-            TryComp<LatheProducingComponent>(uid, out var prodComp);
-
-            var producing = prodComp != null
-                ? prodComp.Recipe
-                : component.Queue.FirstOrDefault();
+            var producing = component.Recipe ?? component.Queue.FirstOrDefault();
 
             var state = new LatheUpdateState(GetAvailableRecipes(component), component.Queue, producing);
             _uiSys.SetUiState(ui, state);
@@ -246,6 +244,20 @@ namespace Content.Server.Lathe
             _appearance.SetData(uid, LatheVisuals.IsInserting, isInserting);
             if (color != null)
                 _appearance.SetData(uid, LatheVisuals.InsertingColor, color);
+        }
+
+        private void OnPowerChanged(EntityUid uid, LatheComponent component, PowerChangedEvent args)
+        {
+            if (!args.Powered)
+            {
+                if (TryComp<LatheProducingComponent>(uid, out var prodcomp))
+                    RemComp(uid, prodcomp);
+            }
+            else if (component.Recipe != null)
+            {
+                EnsureComp<LatheProducingComponent>(uid);
+            }
+            UpdateRunningAppearance(uid, args.Powered && HasComp<LatheProducingComponent>(uid));
         }
 
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
