@@ -10,6 +10,8 @@
       netsync: true
     - type: Item
       size: 2
+    - type: StaticPrice
+      price: 20
 
 - type: entity
   parent: SeedBase

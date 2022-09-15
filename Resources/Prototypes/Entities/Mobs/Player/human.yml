@@ -3,7 +3,6 @@
   name: Urist McHands
   parent: BaseMobHuman
   id: MobHuman
-  description: A miserable pile of secrets.
   components:
   - type: CombatMode
     canDisarm: true
@@ -31,7 +30,7 @@
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - NanoTrasen
 
@@ -65,7 +64,7 @@
   - type: Loadout
     prototypes: [ERTLeaderGear]
   - type: RandomMetadata
-    nameSet: NamesFirstMilitaryLeader
+    nameSegments: [NamesFirstMilitaryLeader]
   - type: RandomHumanoidAppearance
     randomizeName: false
 
@@ -198,7 +197,7 @@
   - type: Loadout
     prototypes: [SyndicateOperativeGearExtremelyBasic]
   - type: RandomMetadata
-    nameSet: names_death_commando
+    nameSegments: [names_death_commando]
 
 # Nuclear Operative
 - type: entity

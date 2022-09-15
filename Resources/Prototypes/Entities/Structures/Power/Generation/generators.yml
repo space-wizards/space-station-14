@@ -67,6 +67,8 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: StaticPrice
+    price: 500
 
 # Base Wallmount Generator
 

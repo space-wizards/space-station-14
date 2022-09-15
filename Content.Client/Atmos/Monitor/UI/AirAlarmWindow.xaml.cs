@@ -51,7 +51,16 @@ public sealed partial class AirAlarmWindow : DefaultWindow
 
         foreach (var mode in Enum.GetValues<AirAlarmMode>())
         {
-            _modes.AddItem($"{mode}", (int) mode);
+            var text = mode switch
+            {
+                AirAlarmMode.Filtering => "air-alarm-ui-mode-filtering",
+                AirAlarmMode.WideFiltering => "air-alarm-ui-mode-wide-filtering",
+                AirAlarmMode.Fill => "air-alarm-ui-mode-fill",
+                AirAlarmMode.Panic => "air-alarm-ui-mode-panic",
+                AirAlarmMode.None => "air-alarm-ui-mode-none",
+                _ => "error"
+            };
+            _modes.AddItem(Loc.GetString(text));
         }
 
         _modes.OnItemSelected += args =>

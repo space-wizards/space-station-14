@@ -6,7 +6,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -54,6 +54,7 @@
       autoPopulate: false
       name: action-name-disarm
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: bite

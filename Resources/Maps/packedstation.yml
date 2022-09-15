@@ -44578,28 +44578,12 @@ entities:
   - pos: 49.5,-4.5
     parent: 2
     type: Transform
-  - containers:
-      ChemMaster-reagentContainerContainer: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-      ChemMaster-beaker: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 5053
   type: chem_master
   components:
   - pos: 52.5,-3.5
     parent: 2
     type: Transform
-  - containers:
-      ChemMaster-reagentContainerContainer: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-      ChemMaster-beaker: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 5054
   type: Table
   components:

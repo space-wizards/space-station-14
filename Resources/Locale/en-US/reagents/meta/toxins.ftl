@@ -51,3 +51,6 @@ reagent-desc-uncooked-animal-proteins = This is very risky for the stomachs of s
 
 reagent-name-allicin = allicin
 reagent-desc-allicin = An organosulfur compound found in alliums like garlic, onions, and related plants.
+
+reagent-name-pax = pax
+reagent-desc-pax = A psychiatric drug which prevents the patient from directly harming anyone.

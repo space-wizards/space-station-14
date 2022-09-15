@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Physics;
 
@@ -27,12 +28,12 @@ public sealed class SharedPreventCollideSystem : EntitySystem
         component.Uid = state.Uid;
     }
 
-    private void OnPreventCollide(EntityUid uid, PreventCollideComponent component, PreventCollideEvent args)
+    private void OnPreventCollide(EntityUid uid, PreventCollideComponent component, ref PreventCollideEvent args)
     {
         var otherUid = args.BodyB.Owner;
 
         if (component.Uid == otherUid)
-            args.Cancel();
+            args.Cancelled = true;
     }
 
 }

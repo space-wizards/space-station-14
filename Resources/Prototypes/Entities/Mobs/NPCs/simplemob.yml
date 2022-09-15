@@ -18,7 +18,7 @@
     rootTask: IdleCompound
   - type: Input
     context: "human"
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: MovementSpeedModifier
@@ -110,11 +110,13 @@
     - Electrocution
     - ForcedSleep
     - TemporaryBlindness
+    - Pacified
   - type: Body
     template: AnimalTemplate
     preset: AnimalPreset
   - type: Examiner
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -173,6 +175,7 @@
       - Electrocution
       - ForcedSleep
       - TemporaryBlindness
+      - Pacified
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
