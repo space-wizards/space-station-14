@@ -363,7 +363,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void CheckRoundShouldEnd()
     {
-        if (!RuleAdded)
+        if (!RuleAdded || _winType == WinType.CrewMajor || _winType == WinType.OpsMajor)
             return;
 
         // If there are any nuclear bombs that are active, immediately return. We're not over yet.
