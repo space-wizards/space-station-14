@@ -18,7 +18,7 @@ chat-manager-sender-announcement-wrap-message = {$sender} Announcement:
                                                 {"{0}"}
 chat-manager-entity-say-wrap-message = {$entityName} says: "{"{0}"}"
 chat-manager-entity-whisper-wrap-message = {$entityName} whispers: "{"{0}"}"
-chat-manager-entity-me-wrap-message = {$entityName}: {"{0}"}
+chat-manager-entity-me-wrap-message = {$entityName} {"{0}"}
 chat-manager-entity-looc-wrap-message = LOOC: {$entityName}: {"{0}"}
 chat-manager-send-ooc-wrap-message = OOC: {$playerName}: {"{0}"}
 chat-manager-send-ooc-patron-wrap-message = OOC: [color={$patronColor}]{$playerName}[/color]: {"{0}"}
