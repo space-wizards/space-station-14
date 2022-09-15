@@ -16,6 +16,7 @@ using Content.Shared.Movement.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -195,7 +196,7 @@ namespace Content.Server.Ghost
                  _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
                  return;
             }
-            
+
             var xform = Transform(ghost.Owner);
             xform.Coordinates = Transform(msg.Target).Coordinates;
             xform.AttachToGridOrMap();
@@ -231,7 +232,7 @@ namespace Content.Server.Ghost
                 if (player.AttachedEntity is {Valid: true} attached)
                 {
                     if (attached == except) continue;
-                    
+
                     TryComp<MindComponent>(attached, out var mind);
 
                     string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";

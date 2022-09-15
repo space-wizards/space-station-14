@@ -31,6 +31,8 @@
           enum.ToggleVisuals.Layer:
             True: {state: icon-on}
             False: {state: icon}
+    - type: StaticPrice
+      price: 200
 
 - type: entity
   parent: ClothingShoesBootsMag

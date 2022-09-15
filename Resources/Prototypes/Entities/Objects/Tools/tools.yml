@@ -35,6 +35,8 @@
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
   - type: LatticeCutting
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: screwdriver
@@ -71,6 +73,8 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           screwdriver: Rainbow
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: wrench
@@ -100,6 +104,8 @@
       - Anchoring
     useSound:
       path: /Audio/Items/ratchet.ogg
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: crowbar
@@ -131,6 +137,8 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: TilePrying
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: emergency crowbar
@@ -190,6 +198,8 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: StaticPrice
+    price: 60
 
 - type: entity
   name: power drill
@@ -229,6 +239,8 @@
           path: /Audio/Items/drill_use.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
+  - type: StaticPrice
+    price: 60
 
 - type: entity
   name: RCD
@@ -249,6 +261,8 @@
     quickEquip: false
     slots:
     - Belt
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: RCD Ammo
@@ -263,6 +277,8 @@
   - type: Item
     sprite: Objects/Tools/rcd.rsi
     heldPrefix: ammo
+  - type: StaticPrice
+    price: 60
 
 - type: entity
   name: shovel

@@ -4567,7 +4567,7 @@ entities:
     type: Transform
 - uid: 658
   components:
-  - index: 7
+  - index: 5
     type: Map
 - uid: 659
   type: WallSolid
@@ -5019,10 +5019,15 @@ entities:
 - uid: 727
   type: SurveillanceCameraGeneral
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -35.5,-1.5
+  - rot: 3.141592653589793 rad
+    pos: 18.5,5.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: East Hallway
+    type: SurveillanceCamera
 - uid: 728
   type: LockerResearchDirectorFilled
   components:
@@ -29899,9 +29904,15 @@ entities:
 - uid: 3050
   type: SurveillanceCameraGeneral
   components:
-  - pos: -27.5,3.5
+  - rot: -1.5707963267948966 rad
+    pos: -37.5,-8.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: Arrivals
+    type: SurveillanceCamera
 - uid: 3051
   type: BedsheetQM
   components:
@@ -39067,12 +39078,22 @@ entities:
     pos: -22.5,-1.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: Upper Dorms
+    type: SurveillanceCamera
 - uid: 4347
   type: SurveillanceCameraGeneral
   components:
   - pos: -22.5,-8.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: Lower Dorms
+    type: SurveillanceCamera
 - uid: 4348
   type: CableMV
   components:
@@ -39158,6 +39179,11 @@ entities:
     pos: -19.5,5.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: West Hallway
+    type: SurveillanceCamera
 - uid: 4362
   type: CableMV
   components:
@@ -39202,6 +39228,11 @@ entities:
     pos: -23.5,10.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: Tool Hall
+    type: SurveillanceCamera
 - uid: 4369
   type: CableMV
   components:
@@ -39614,6 +39645,11 @@ entities:
     pos: 4.5,0.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: Medical Hallway
+    type: SurveillanceCamera
 - uid: 4434
   type: Grille
   components:
@@ -40382,6 +40418,11 @@ entities:
     pos: 2.5,-8.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: South Hallway
+    type: SurveillanceCamera
 - uid: 4550
   type: SurveillanceCameraGeneral
   components:
@@ -40389,6 +40430,11 @@ entities:
     pos: 1.5,-13.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: Science Hallway
+    type: SurveillanceCamera
 - uid: 4551
   type: Grille
   components:
@@ -40414,6 +40460,11 @@ entities:
     pos: 4.5,-29.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: South Hallway
+    type: SurveillanceCamera
 - uid: 4555
   type: SurveillanceCameraService
   components:
@@ -40421,6 +40472,11 @@ entities:
     pos: 9.5,-22.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraService
+    nameSet: True
+    id: Library
+    type: SurveillanceCamera
 - uid: 4556
   type: Emitter
   components:
@@ -40435,12 +40491,22 @@ entities:
     pos: -5.5,-16.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraScience
+    nameSet: True
+    id: Science lab
+    type: SurveillanceCamera
 - uid: 4558
   type: SurveillanceCameraScience
   components:
   - pos: -15.5,-22.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraScience
+    nameSet: True
+    id: Test Chamber
+    type: SurveillanceCamera
 - uid: 4559
   type: ContainmentFieldGenerator
   components:
@@ -40529,6 +40595,11 @@ entities:
   - pos: -7.5,-20.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraScience
+    nameSet: True
+    id: Science Locker Room
+    type: SurveillanceCamera
 - uid: 4573
   type: SurveillanceCameraRouterScience
   components:
@@ -40541,6 +40612,11 @@ entities:
   - pos: -5.5,-24.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraScience
+    nameSet: True
+    id: Research Director's Office
+    type: SurveillanceCamera
 - uid: 4575
   type: SurveillanceCameraSupply
   components:
@@ -40548,6 +40624,11 @@ entities:
     pos: 16.5,12.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraSupply
+    nameSet: True
+    id: Cargo Request Room
+    type: SurveillanceCamera
 - uid: 4576
   type: SurveillanceCameraSupply
   components:
@@ -40555,6 +40636,11 @@ entities:
     pos: 24.5,13.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraSupply
+    nameSet: True
+    id: Cargo Supply Room
+    type: SurveillanceCamera
 - uid: 4577
   type: ReinforcedWindow
   components:
@@ -41297,6 +41383,11 @@ entities:
     pos: 19.5,17.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraSupply
+    nameSet: True
+    id: Salvage Magnet
+    type: SurveillanceCamera
 - uid: 4691
   type: GasPipeStraight
   components:
@@ -41434,6 +41525,11 @@ entities:
     pos: 0.5,-3.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraService
+    nameSet: True
+    id: Bar
+    type: SurveillanceCamera
 - uid: 4707
   type: SurveillanceCameraCommand
   components:
@@ -53822,13 +53918,6 @@ entities:
   - pos: 56.5,2.5
     parent: 852
     type: Transform
-- uid: 6298
-  type: SurveillanceCameraGeneral
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,5.5
-    parent: 852
-    type: Transform
 - uid: 6299
   type: ContainmentFieldGenerator
   components:
@@ -53879,13 +53968,11 @@ entities:
     pos: 2.5,10.5
     parent: 852
     type: Transform
-- uid: 6307
-  type: SurveillanceCameraGeneral
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -35.5,-10.5
-    parent: 852
-    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: North Hallway
+    type: SurveillanceCamera
 - uid: 6308
   type: SurveillanceCameraGeneral
   components:
@@ -53893,6 +53980,11 @@ entities:
     pos: -34.5,7.5
     parent: 852
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraGeneral
+    nameSet: True
+    id: Evac camera
+    type: SurveillanceCamera
 - uid: 6309
   type: AirlockEngineeringGlassLocked
   components:
@@ -74186,12 +74278,6 @@ entities:
       hard: False
       id: docking
     type: Fixtures
-- uid: 9378
-  type: ReinforcedWindow
-  components:
-  - pos: -44.5,7.5
-    parent: 852
-    type: Transform
 - uid: 9379
   type: ReinforcedWindow
   components:

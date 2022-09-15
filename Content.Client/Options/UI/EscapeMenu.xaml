@@ -1,16 +1,17 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+﻿<ui1:EscapeMenu xmlns="https://spacestation14.io"
             xmlns:changelog="clr-namespace:Content.Client.Changelog"
             xmlns:ui="clr-namespace:Content.Client.Voting.UI"
+            xmlns:ui1="clr-namespace:Content.Client.Options.UI"
             Title="{Loc 'ui-escape-title'}"
             Resizable="False">
 
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
-        <changelog:ChangelogButton />
+        <changelog:ChangelogButton Access="Public" Name="ChangelogButton"/>
         <ui:VoteCallMenuButton />
-        <Button Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
-        <Button Name="RulesButton" Text="{Loc 'ui-escape-rules'}" />
-        <Button Name="WikiButton" Text="{Loc 'ui-escape-wiki'}" />
-        <Button Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
-        <Button Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
+        <Button Access="Public" Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
+        <Button Access="Public" Name="RulesButton" Text="{Loc 'ui-escape-rules'}" />
+        <Button Access="Public" Name="WikiButton" Text="{Loc 'ui-escape-wiki'}" />
+        <Button Access="Public" Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
+        <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
     </BoxContainer>
-</DefaultWindow>
+</ui1:EscapeMenu>

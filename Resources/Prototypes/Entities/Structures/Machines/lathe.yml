@@ -82,6 +82,8 @@
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
+  - type: StaticPrice
+    price: 800
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]

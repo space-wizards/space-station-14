@@ -122,10 +122,11 @@
   flavor: medicine
   color: "#0091ff"
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: -3
-    - !type:PlantAdjustHealth
-      amount: 3
+  - !type:PlantAdjustToxins
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: 5
+  - !type:PlantCryoxadone {}
   metabolisms:
     Medicine:
       effects:
@@ -141,22 +142,6 @@
               Brute: -4
               Burn: -4
               Toxin: -4
-
-- type: reagent
-  id: Clonexadone
-  name: reagent-name-clonexadone
-  group: Medicine
-  parent: Cryoxadone
-  desc: reagent-desc-clonexadone
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: medicine
-  color: "#0666ff"
-  plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: -5
-    - !type:PlantAdjustHealth
-      amount: 5
-    - !type:PlantClonexadone {}
 
 - type: reagent
   id: Dermaline

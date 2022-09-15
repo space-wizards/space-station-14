@@ -26,7 +26,7 @@ public sealed class FlavorProfileSystem : EntitySystem
         FlavorProfileComponent? flavorProfile = null)
     {
         var flavors = new HashSet<string>();
-        if (!Resolve(uid, ref flavorProfile))
+        if (!Resolve(uid, ref flavorProfile, false))
         {
             return Loc.GetString(BackupFlavorMessage);
         }

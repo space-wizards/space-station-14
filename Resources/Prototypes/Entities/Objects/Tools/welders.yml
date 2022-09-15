@@ -51,6 +51,8 @@
     color: orange
   - type: Appearance
   - type: RequiresEyeProtection
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: industrial welding tool
