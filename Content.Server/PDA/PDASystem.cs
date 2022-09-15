@@ -1,4 +1,5 @@
 using Content.Server.CartridgeLoader;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
@@ -103,8 +104,9 @@ namespace Content.Server.PDA
             if (!_uiSystem.TryGetUi(pda.Owner, PDAUiKey.Key, out var ui))
                 return;
 
+            var address = GetDeviceNetAddress(pda.Owner);
             var hasInstrument = HasComp<InstrumentComponent>(pda.Owner);
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument);
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument, address);
 
             _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, state);
 
@@ -115,7 +117,7 @@ namespace Content.Server.PDA
             if (!TryComp<StoreComponent>(pda.Owner, out var storeComponent))
                 return;
 
-            var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, hasInstrument);
+            var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, hasInstrument, address);
 
             foreach (var session in ui.SubscribedSessions)
             {
@@ -192,9 +194,21 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner));
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner), GetDeviceNetAddress(pda.Owner));
 
             _cartridgeLoaderSystem?.UpdateUiState(uid, state, args.Session);
+        }
+
+        private string? GetDeviceNetAddress(EntityUid uid)
+        {
+            string? address = null;
+
+            if (TryComp(uid, out DeviceNetworkComponent? deviceNetworkComponent))
+            {
+                address = deviceNetworkComponent?.Address;
+            }
+
+            return address;
         }
     }
 }
