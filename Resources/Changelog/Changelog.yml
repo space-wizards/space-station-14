@@ -1,9 +1,4 @@
 Entries:
-- author: Sammy Boy
-  changes:
-  - {message: Body bags will now accept bodies again!, type: Fix}
-  id: 1807
-  time: '2022-06-27T05:37:30.0000000+00:00'
 - author: ODJ
   changes:
   - {message: Proper evac support for lighthouse!, type: Add}
@@ -2922,3 +2917,9 @@ Entries:
   - {message: Added verb context menu to player lists in admin menus., type: Add}
   id: 2306
   time: '2022-09-15T00:03:14.0000000+00:00'
+- author: illiux
+  changes:
+  - {message: The ChemMaster 4000 now outputs directly into a pill canister or bottle,
+    type: Tweak}
+  id: 2307
+  time: '2022-09-15T00:10:13.0000000+00:00'
