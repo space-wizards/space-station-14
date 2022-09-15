@@ -5,6 +5,7 @@ using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Radiation.Events;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -21,6 +22,7 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
+            SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
         /// <summary>
@@ -243,6 +245,11 @@ namespace Content.Shared.Damage
             }
 
             TryChangeDamage(uid, damage);
+        }
+
+        private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)
+        {
+            SetAllDamage(component, 0);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)

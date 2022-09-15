@@ -30,7 +30,7 @@ namespace Content.Client.Hands.UI
         private readonly HandsComponent _handsComponent;
 
         private string StorageTexture => "back.png";
-        private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
+        private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Default/blocked.png");
 
         private ItemStatusPanel StatusPanel { get; }
 

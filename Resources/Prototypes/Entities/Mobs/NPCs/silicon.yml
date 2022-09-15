@@ -39,7 +39,7 @@
     netsync: false
   - type: Recyclable
     safe: false
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: HealthExaminable

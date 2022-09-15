@@ -10,7 +10,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 public abstract class NPCCombatOperator : HTNOperator
 {
     [Dependency] protected readonly IEntityManager EntManager = default!;
-    private AiFactionTagSystem _tags = default!;
+    private FactionSystem _tags = default!;
     protected InteractionSystem Interaction = default!;
 
     [ViewVariables, DataField("key")] public string Key = "CombatTarget";
@@ -24,7 +24,7 @@ public abstract class NPCCombatOperator : HTNOperator
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _tags = sysManager.GetEntitySystem<AiFactionTagSystem>();
+        _tags = sysManager.GetEntitySystem<FactionSystem>();
         Interaction = sysManager.GetEntitySystem<InteractionSystem>();
     }
 

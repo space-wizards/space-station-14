@@ -29,12 +29,15 @@ namespace Content.Client.Administration.Systems
 
         public bool IsOpen => (_adminWindow?.IsOpen ?? false) || (_plainWindow?.IsOpen ?? false);
 
+        public event Action? AdminReceivedAHelp;
+        public event Action? AdminOpenedAHelp;
+
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
             LogBwoink(message);
             // Actual line
-            var window = EnsurePanel(message.ChannelId);
+            var window = EnsurePanel(message.UserId);
             window.ReceiveLine(message);
             // Play a sound if we didn't send it
             var localPlayer = _playerManager.LocalPlayer;
@@ -50,10 +53,12 @@ namespace Content.Client.Administration.Systems
                 _plainWindow?.Open();
             else
             {
-                _adminWindow?.OnBwoink(message.ChannelId);
+                _adminWindow?.OnBwoink(message.UserId);
 
-                if (_adminWindow?.IsOpen != true)
-                    _hud.SetInfoRed(true);
+                if (_adminWindow?.IsOpen == true)
+                    return;
+                AdminReceivedAHelp?.Invoke();
+                _hud.SetInfoRed(true);
             }
         }
 
@@ -117,6 +122,7 @@ namespace Content.Client.Administration.Systems
             }
 
             _hud.SetInfoRed(false);
+            AdminOpenedAHelp?.Invoke();
 
             if (_adminManager.HasFlag(AdminFlags.Adminhelp))
             {
@@ -149,4 +155,3 @@ namespace Content.Client.Administration.Systems
         }
     }
 }
-

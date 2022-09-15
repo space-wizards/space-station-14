@@ -4,6 +4,7 @@ using Robust.Shared.Random;
 using Content.Shared.Movement.Components;
 using Content.Shared.Alert;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -25,6 +26,7 @@ namespace Content.Server.Nutrition.EntitySystems
             _sawmill = Logger.GetSawmill("thirst");
             SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<ThirstComponent, ComponentStartup>(OnComponentStartup);
+            SubscribeLocalEvent<ThirstComponent, RejuvenateEvent>(OnRejuvenate);
         }
         private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)
         {
@@ -45,6 +47,11 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var mod = component.CurrentThirstThreshold <= ThirstThreshold.Parched ? 0.75f : 1.0f;
             args.ModifySpeed(mod, mod);
+        }
+
+        private void OnRejuvenate(EntityUid uid, ThirstComponent component, RejuvenateEvent args)
+        {
+            ResetThirst(component);
         }
 
         private ThirstThreshold GetThirstThreshold(ThirstComponent component, float amount)
