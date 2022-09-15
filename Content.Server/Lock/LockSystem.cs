@@ -194,7 +194,6 @@ namespace Content.Server.Lock
                 () => TryLock(uid, args.User, component);
             verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
             verb.IconTexture = component.Locked ? "/Textures/Interface/VerbIcons/unlock.svg.192dpi.png" : "/Textures/Interface/VerbIcons/lock.svg.192dpi.png";
-            // TODO VERB ICONS need padlock open/close icons.
             args.Verbs.Add(verb);
         }
 
