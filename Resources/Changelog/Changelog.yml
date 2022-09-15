@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Whenever a baton successfully stuns it now applies a 4 second attack
-      cooldown., type: Tweak}
-  id: 1810
-  time: '2022-06-27T07:51:39.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Traitors can now once again get the "Stay Alive" objective., type: Add}
@@ -2927,3 +2921,8 @@ Entries:
   - {message: The ChemMaster 4000 applies labels correctly, type: Fix}
   id: 2309
   time: '2022-09-15T06:27:22.0000000+00:00'
+- author: illiux
+  changes:
+  - {message: Added bottle boxes to chemistry lockers, type: Add}
+  id: 2310
+  time: '2022-09-15T13:17:32.0000000+00:00'
