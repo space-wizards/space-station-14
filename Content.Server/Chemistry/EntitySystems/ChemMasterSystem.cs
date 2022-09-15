@@ -196,13 +196,13 @@ namespace Content.Server.Chemistry.EntitySystems
             for (var i = 0; i < message.Number; i++)
             {
                 var item = Spawn(PillPrototypeId, Transform(container).Coordinates);
-                DebugTools.Assert(_storageSystem.Insert(container, item, storage));
+                _storageSystem.Insert(container, item, storage);
                 Label(item, message.Label);
 
                 var itemSolution = _solutionContainerSystem.EnsureSolution(item, SharedChemMaster.PillSolutionName);
                 
-                DebugTools.Assert(_solutionContainerSystem.TryAddSolution(
-                    item, itemSolution, withdrawal.SplitSolution(message.Dosage)));
+                _solutionContainerSystem.TryAddSolution(
+                    item, itemSolution, withdrawal.SplitSolution(message.Dosage));
                 
                 if (TryComp<SpriteComponent>(item, out var spriteComp))
                     spriteComp.LayerSetState(0, "pill" + (chemMaster.PillType + 1));
@@ -232,8 +232,8 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             Label(container, message.Label);
-            DebugTools.Assert(_solutionContainerSystem.TryAddSolution(
-                container, solution, withdrawal));
+            _solutionContainerSystem.TryAddSolution(
+                container, solution, withdrawal);
 
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
