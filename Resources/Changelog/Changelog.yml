@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Traitors can now once again get the "Stay Alive" objective., type: Add}
-  id: 1811
-  time: '2022-06-27T11:37:42.0000000+00:00'
 - author: Schiene
   changes:
   - {message: Central Command's brand new control station has been completed !, type: Add}
@@ -2926,3 +2921,8 @@ Entries:
   - {message: Added bottle boxes to chemistry lockers, type: Add}
   id: 2310
   time: '2022-09-15T13:17:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Joints will break upon buckling to a vehicle., type: Fix}
+  id: 2311
+  time: '2022-09-15T13:19:40.0000000+00:00'
