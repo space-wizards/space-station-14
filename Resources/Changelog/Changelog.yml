@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Lawyers now have security headsets., type: Fix}
-  id: 1817
-  time: '2022-06-27T16:43:16.0000000+00:00'
 - author: KIBORG04
   changes:
   - {message: Puddle slippery again!, type: Tweak}
@@ -2931,3 +2926,8 @@ Entries:
   - {message: Soda water can no longer breaks into glass shards, type: Fix}
   id: 2316
   time: '2022-09-15T19:07:12.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: chance to find salami lid in a pizza crate has been decreased, type: Tweak}
+  id: 2317
+  time: '2022-09-15T22:15:45.0000000+00:00'
