@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chemistry.Components;
+using Content.Server.Labels;
 using Content.Server.Labels.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
@@ -33,6 +34,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
+        [Dependency] private readonly LabelSystem _labelSystem = default!;
         
         private const string PillPrototypeId = "Pill";
 
@@ -191,13 +193,13 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
                 return;
             
-            Label(container, message.Label);
+            _labelSystem.Label(container, message.Label);
             
             for (var i = 0; i < message.Number; i++)
             {
                 var item = Spawn(PillPrototypeId, Transform(container).Coordinates);
                 _storageSystem.Insert(container, item, storage);
-                Label(item, message.Label);
+                _labelSystem.Label(item, message.Label);
 
                 var itemSolution = _solutionContainerSystem.EnsureSolution(item, SharedChemMaster.PillSolutionName);
                 
@@ -231,7 +233,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!WithdrawFromBuffer(chemMaster, message.Dosage, user, out var withdrawal))
                 return;
 
-            Label(container, message.Label);
+            _labelSystem.Label(container, message.Label);
             _solutionContainerSystem.TryAddSolution(
                 container, solution, withdrawal);
 
@@ -268,18 +270,6 @@ namespace Content.Server.Chemistry.EntitySystems
 
             outputSolution = solution.SplitSolution(neededVolume);
             return true;
-        }
-
-        private void Label(EntityUid ent, string label)
-        {
-            if (string.IsNullOrEmpty(label)) 
-                return;
-            var labelComponent = EnsureComp<LabelComponent>(ent);
-            
-            labelComponent.OriginalName = Name(ent);
-            var val = Name(ent) + $" ({label})";
-            MetaData(ent).EntityName = val;
-            labelComponent.CurrentLabel = label;
         }
 
         private void ClickSound(ChemMasterComponent chemMaster)
