@@ -4,7 +4,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
 using JetBrains.Annotations;
-using Npgsql.Internal.TypeHandlers.LTreeHandlers;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
