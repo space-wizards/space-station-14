@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: "You now can\u2019t stack crafted atmos devices on one tile.", type: Fix}
-  id: 1809
-  time: '2022-06-27T05:42:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Whenever a baton successfully stuns it now applies a 4 second attack
@@ -2927,3 +2922,8 @@ Entries:
       their increased pace., type: Tweak}
   id: 2308
   time: '2022-09-15T01:53:18.0000000+00:00'
+- author: illiux
+  changes:
+  - {message: The ChemMaster 4000 applies labels correctly, type: Fix}
+  id: 2309
+  time: '2022-09-15T06:27:22.0000000+00:00'
