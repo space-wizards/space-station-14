@@ -63,7 +63,7 @@ namespace Content.Client.Cargo.UI
             Products.RemoveAllChildren();
             var products = ProductPrototypes.ToList();
             products.Sort((x, y) =>
-                string.Compare(x.Name, y.Name, StringComparison.Ordinal));
+                string.Compare(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase));
 
             var search = SearchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in products)

@@ -18,6 +18,7 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly LabelSystem _labelSystem = default!;
 
         public override void Initialize()
         {
@@ -68,23 +69,14 @@ namespace Content.Server.Labels
                 return;
             }
 
-            LabelComponent label = target.EnsureComponent<LabelComponent>();
-
-            if (label.OriginalName != null)
-                EntityManager.GetComponent<MetaDataComponent>(target).EntityName = label.OriginalName;
-            label.OriginalName = null;
-
             if (handLabeler.AssignedLabel == string.Empty)
             {
-                label.CurrentLabel = null;
+                _labelSystem.Label(target, null);
                 result = Loc.GetString("hand-labeler-successfully-removed");
                 return;
             }
 
-            label.OriginalName = EntityManager.GetComponent<MetaDataComponent>(target).EntityName;
-            string val = EntityManager.GetComponent<MetaDataComponent>(target).EntityName + $" ({handLabeler.AssignedLabel})";
-            EntityManager.GetComponent<MetaDataComponent>(target).EntityName = val;
-            label.CurrentLabel = handLabeler.AssignedLabel;
+            _labelSystem.Label(target, handLabeler.AssignedLabel);
             result = Loc.GetString("hand-labeler-successfully-applied");
         }
 

@@ -1,13 +1,16 @@
 using System.Linq;
+using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Preferences.Managers;
 using Content.Server.RoundEnd;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -30,6 +33,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
@@ -208,7 +212,8 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             MetaData(mob).EntityName = name;
 
             newMind.TransferTo(mob);
-            _stationSpawningSystem.EquipStartingGear(mob, pirateGear, null);
+            var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
+            _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
 
             _pirates.Add(newMind);
 
@@ -227,7 +232,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     {
         if (!mind.OwnedEntity.HasValue)
             return;
-        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("PirateGear"), null);
+        SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

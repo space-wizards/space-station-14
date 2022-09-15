@@ -74,6 +74,8 @@
   - type: ContainerContainer
     containers:
       DisposalUnit: !type:Container
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: DisposalUnit
