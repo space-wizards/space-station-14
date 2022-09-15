@@ -128,7 +128,12 @@ namespace Content.Server.Pointing.EntitySystems
 
             _rotateToFaceSystem.TryFaceCoordinates(player, mapCoords.Position);
 
-            var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
+            var arrow = EntityManager.SpawnEntity("PointingArrow", mapCoords);
+
+            if (TryComp<PointingArrowComponent>(arrow, out var pointing))
+            {
+                pointing.EndTime = _gameTiming.CurTime + TimeSpan.FromSeconds(4);
+            }
 
             if (EntityQuery<PointingArrowAngeringComponent>().FirstOrDefault() != null)
             {
@@ -242,7 +247,7 @@ namespace Content.Server.Pointing.EntitySystems
         private void Update(PointingArrowComponent component, TimeSpan currentTime)
         {
             // TODO: That pause PR
-            if (component.EndTime < currentTime)
+            if (component.EndTime > currentTime)
                 return;
 
             if (component.Rogue)
