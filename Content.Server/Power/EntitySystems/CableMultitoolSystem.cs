@@ -1,10 +1,13 @@
+using Content.Server.Examine;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Tools;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
@@ -15,12 +18,48 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PowerNetSystem _pnSystem = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<CableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+            SubscribeLocalEvent<CableComponent, AfterInteractUsingEvent>(OnAfterInteract);
+        }
+
+        private void OnAfterInteract(EntityUid uid, CableComponent component, AfterInteractUsingEvent args)
+        {
+            Logger.DebugS("debug","OnAfterInteract, is target equal to null?");
+            if (args.Target == null)
+                return;
+            Logger.DebugS("debug", "Target not null! Is it in details range?");
+            if (_examineSystem.IsInDetailsRange(args.User, args.Target.Value))
+            {
+                Logger.DebugS("debug", "Within details range! Does the tool have pulsing?");
+                if (_toolSystem.HasQuality(args.Used, "Pulsing"))
+                {
+                    Logger.DebugS("debug", "Tool has pulsing! Create verb.");
+                    var verb = new ExamineVerb
+                    {
+                        Message = Loc.GetString("cable-multitool-system-verb-tooltip"),
+                        Text = Loc.GetString("cable-multitool-system-verb-name"),
+                        Category = VerbCategory.Examine,
+                        IconTexture = "/Textures/Interface/VerbIcons/zap.svg.192dpi.png",
+                        Act = () =>
+                        {
+                            Logger.DebugS("debug", "Verb acted out, apparently.");
+                            var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));
+                            _examineSystem.SendExamineTooltip(args.User, uid, markup, true, false);
+                        }
+                    };
+                    Logger.DebugS("debug", "Verb created, executing it...");
+                    _verbSystem.ExecuteVerb(verb, args.User, args.Target.Value, true);
+                    Logger.DebugS("debug", "Verb executed.");
+                    //var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));
+                    //_examineSystem.SendExamineTooltip(args.User, uid, markup, true, false);
+                }
+            }
         }
 
         private void OnGetExamineVerbs(EntityUid uid, CableComponent component, GetVerbsEvent<ExamineVerb> args)
