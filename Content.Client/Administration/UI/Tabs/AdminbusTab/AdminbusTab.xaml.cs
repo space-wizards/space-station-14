@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Content.Client.Administration.Commands;
 using Content.Client.Administration.Managers;
 using Content.Client.Sandbox;
 using Content.Client.UserInterface.Systems.DecalPlacer;
@@ -31,19 +32,9 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             LoadBlueprintsButton.Disabled = !adminManager.HasFlag(AdminFlags.Mapping);
         }
 
-        private async void LoadGamePrototypeButtonOnPressed(BaseButton.ButtonEventArgs obj)
+        private void LoadGamePrototypeButtonOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            var dialogManager = IoCManager.Resolve<IFileDialogManager>();
-            var loadManager = IoCManager.Resolve<IGamePrototypeLoadManager>();
-
-            var stream = await dialogManager.OpenFile();
-            if (stream is null)
-                return;
-
-            // ew oop
-            var reader = new StreamReader(stream);
-            var proto = await reader.ReadToEndAsync();
-            loadManager.SendGamePrototype(proto);
+            LoadPrototypeCommand.LoadPrototype();
         }
 
         private void SpawnEntitiesButtonOnPressed(BaseButton.ButtonEventArgs obj)
