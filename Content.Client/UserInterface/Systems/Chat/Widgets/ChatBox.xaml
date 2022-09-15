@@ -10,9 +10,9 @@
             <graphics:StyleBoxFlat BackgroundColor="#25252AAA" />
         </PanelContainer.PanelOverride>
 
-        <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" SeparationOverride="4">
             <OutputPanel Name="Contents" VerticalExpand="True" />
-            <controls:ChatInputBox Name="ChatInput" Access="Public"/>
+            <controls:ChatInputBox Name="ChatInput" Access="Public" Margin="2"/>
         </BoxContainer>
     </PanelContainer>
 </widgets:ChatBox>

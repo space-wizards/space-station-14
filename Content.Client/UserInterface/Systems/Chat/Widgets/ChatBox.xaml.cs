@@ -13,7 +13,9 @@ using static Robust.Client.UserInterface.Controls.LineEdit;
 namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 
 [GenerateTypedNameReferences]
-public sealed partial class ChatBox : Control
+#pragma warning disable RA0003
+public partial class ChatBox : Control
+#pragma warning restore RA0003
 {
     private readonly ChatUIController _controller;
 

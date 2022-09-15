@@ -15,6 +15,6 @@
     <widgets:GhostGui Name="Ghost" Access="Protected" />
     <hands:HandsGui Name="Hands" Access="Protected" />
     <actions:ActionsBar Name="Actions" Access="Protected" />
-    <chat:ChatBox Name="Chat" Access="Protected" Main="True" />
+    <chat:ResizableChatBox Name="Chat" Access="Protected" Main="True" />
     <alerts:AlertsUI Name="Alerts" Access="Protected" />
 </screens:DefaultGameScreen>
