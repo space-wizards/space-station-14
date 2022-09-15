@@ -1,5 +1,3 @@
-using Content.Shared.Research.Prototypes;
-
 namespace Content.Server.Lathe.Components;
 
 /// <summary>

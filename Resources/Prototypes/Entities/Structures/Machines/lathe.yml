@@ -185,6 +185,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - ChemistryEmptyBottle01
       - Drone
       - Flash
       - MicroManipulatorStockPart
@@ -380,6 +381,7 @@
       - Syringe
       - PillCanister
       - BodyBag
+      - ChemistryEmptyBottle01
   - type: Machine
     board: MedicalTechFabCircuitboard
 
