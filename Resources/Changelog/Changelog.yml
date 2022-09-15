@@ -1,15 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Water Tanks and Fuel Tanks from cargo now come unpackaged., type: Tweak}
-  id: 1813
-  time: '2022-06-27T14:44:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Handcuff times have been bumped back up by 2 seconds for stun / non-stunned
-      times., type: Tweak}
-  id: 1814
-  time: '2022-06-27T16:28:04.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Now smg crate comes with correct magazines for Wt550., type: Fix}
@@ -2926,3 +2915,14 @@ Entries:
   - {message: 'Adds lightning, unused for now!', type: Add}
   id: 2312
   time: '2022-09-15T15:49:01.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Added lathe recipe for glass chemistry bottles, type: Add}
+  id: 2313
+  time: '2022-09-15T17:27:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Suppressed artifacts ($4,000) now sell for more than unsuppressed artifacts
+      ($2,000).', type: Add}
+  id: 2314
+  time: '2022-09-15T17:28:07.0000000+00:00'
