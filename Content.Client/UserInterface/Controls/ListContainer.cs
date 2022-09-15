@@ -4,6 +4,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -72,7 +73,8 @@ public sealed class ListContainer : Control
 
     public void PopulateList(IReadOnlyList<ListData> data)
     {
-        if (_itemHeight == 0 || _data is {Count: 0} && data.Count > 0)
+        // Always perform an initial measure of the size of each list entry.
+        if (data.Count > 0)
         {
             ListContainerButton control = new(data[0]);
             GenerateItem?.Invoke(data[0], control);
@@ -212,6 +214,10 @@ public sealed class ListContainer : Control
          * var end = (int) 2;
          *
          */
+
+        if (Data.Count == 0 || _itemHeight <= 0)
+            return finalSize;
+
         var scroll = GetScrollValue();
         var oldTopIndex = _topIndex;
         _topIndex = (int) ((scroll.Y + ActualSeparation) / (_itemHeight + ActualSeparation));
