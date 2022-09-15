@@ -53,8 +53,9 @@ namespace Content.Client.Administration.Systems
             {
                 _adminWindow?.OnBwoink(message.UserId);
 
-                if (_adminWindow?.IsOpen != true)
-                    AdminReceivedAHelp?.Invoke();
+                if (_adminWindow?.IsOpen == true)
+                    return;
+                AdminReceivedAHelp?.Invoke();
             }
         }
 
@@ -150,4 +151,3 @@ namespace Content.Client.Administration.Systems
         }
     }
 }
-

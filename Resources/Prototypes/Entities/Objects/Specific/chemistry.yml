@@ -78,6 +78,8 @@
     damage:
       types:
         Blunt: 5
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: beaker
@@ -113,6 +115,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: beakerlarge
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: cryostasis beaker
@@ -205,6 +209,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: dropper
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: syringe

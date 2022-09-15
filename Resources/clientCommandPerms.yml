@@ -61,3 +61,4 @@
 - Flags: QUERY
   Commands:
     - uploadfile
+    - loadprototype
