@@ -31,6 +31,7 @@ public sealed class EntityStorageSystem : EntitySystem
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly IMapManager _map = default!;
 
     public const string ContainerName = "entity_storage";
 
@@ -47,7 +48,6 @@ public sealed class EntityStorageSystem : EntitySystem
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, AtmosExposedGetAirEvent>(OnInsideExposed);
-
     }
 
     private void OnInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
@@ -66,11 +66,7 @@ public sealed class EntityStorageSystem : EntitySystem
         {
             // If we're closed on spawn, we need to pull some air into our environment from where we spawned,
             // so that we have -something-. For example, if you bought an animal crate or something.
-
-            if (_atmos.GetContainingMixture(uid, false, true) is {} environment)
-            {
-                _atmos.Merge(component.Air, environment.RemoveVolume(EntityStorageComponent.GasMixVolume));
-            }
+            TakeGas(uid, component);
         }
     }
 
@@ -153,13 +149,7 @@ public sealed class EntityStorageSystem : EntitySystem
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
         SoundSystem.Play(component.OpenSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
-
-        if (_atmos.GetContainingMixture(uid, false, true) is {} environment)
-        {
-            _atmos.Merge(environment, component.Air);
-            component.Air.Clear();
-        }
-
+        ReleaseGas(uid, component);
         RaiseLocalEvent(uid, new StorageAfterOpenEvent());
     }
 
@@ -195,11 +185,7 @@ public sealed class EntityStorageSystem : EntitySystem
                 break;
         }
 
-        if (_atmos.GetContainingMixture(uid, false, true) is {} environment)
-        {
-            _atmos.Merge(component.Air, environment.RemoveVolume(EntityStorageComponent.GasMixVolume));
-        }
-
+        TakeGas(uid, component);
         ModifyComponents(uid, component);
         SoundSystem.Play(component.CloseSound.GetSound(), Filter.Pvs(uid), uid);
         component.LastInternalOpenAttempt = default;
@@ -398,6 +384,39 @@ public sealed class EntityStorageSystem : EntitySystem
             appearance.SetData(StorageVisuals.Open, component.Open);
             appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Any());
         }
+    }
+
+    private void TakeGas(EntityUid uid, EntityStorageComponent component)
+    {
+        var tile = GetOffsetTileRef(uid, component);
+
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        {
+            _atmos.Merge(component.Air, environment.RemoveVolume(EntityStorageComponent.GasMixVolume));
+        }
+    }
+
+    private void ReleaseGas(EntityUid uid, EntityStorageComponent component)
+    {
+        var tile = GetOffsetTileRef(uid, component);
+
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        {
+            _atmos.Merge(environment, component.Air);
+            component.Air.Clear();
+        }
+    }
+
+    private TileRef? GetOffsetTileRef(EntityUid uid, EntityStorageComponent component)
+    {
+        var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset).ToMap(EntityManager);
+
+        if (_map.TryFindGridAt(targetCoordinates, out var grid))
+        {
+            return grid.GetTileRef(targetCoordinates);
+        }
+
+        return null;
     }
 
     #region Gas mix event handlers
