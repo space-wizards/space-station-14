@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseMachinePowered
+  parent: BaseStructure # Not a BaseMachinePowered since we don't want the anchorable component
   id: CryoPod
   name: cryo pod
   description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
@@ -21,6 +21,19 @@
       - state: pod-panel
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         visible: false
+  - type: InteractionOutline
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        mass: 200
+        mask:
+          - MachineMask
+        layer:
+          - MachineLayer
   - type: AtmosDevice
   - type: GasAnalyzable
   - type: CryoPodVisuals
@@ -34,6 +47,9 @@
   - type: Wires
     BoardName: "Cryo pod"
     LayoutId: CryoPod
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -46,6 +62,7 @@
           acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 3000
+  - type: ExtensionCableReceiver
   - type: NodeContainer
     nodes:
       port:

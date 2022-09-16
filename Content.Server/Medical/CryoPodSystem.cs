@@ -189,6 +189,11 @@ public sealed class CryoPodSystem: EntitySystem
 
     private void HandleDragDropOn(EntityUid uid, CryoPodComponent cryoPodComponent, DragDropEvent args)
     {
+        if (cryoPodComponent.BodyContainer.ContainedEntity != null)
+        {
+            return;
+        }
+
         var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, default, args.Dragged)
         {
             BreakOnDamage = true,
