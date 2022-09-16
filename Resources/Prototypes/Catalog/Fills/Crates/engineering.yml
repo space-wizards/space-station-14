@@ -94,5 +94,5 @@
   components:
   - type: StorageFill
     contents:
-      - id: JetpackBlueFilled
+      - id: JetpackBlue
         amount: 2
