@@ -1,10 +1,4 @@
 Entries:
-- author: TekuNut
-  changes:
-  - {message: Cigarettes and cigars now need to be in the mouth to apply effects,
-    type: Fix}
-  id: 1832
-  time: '2022-06-29T11:36:32.0000000+00:00'
 - author: themias
   changes:
   - {message: You can now pull down your mask for easy mouth access, type: Tweak}
@@ -2929,3 +2923,9 @@ Entries:
     type: Add}
   id: 2331
   time: '2022-09-16T21:22:17.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Setting the side port output on a gas mixer now behaves as intended,
+    type: Fix}
+  id: 2332
+  time: '2022-09-16T21:34:18.0000000+00:00'
