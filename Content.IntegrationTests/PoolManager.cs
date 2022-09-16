@@ -323,6 +323,12 @@ public static class PoolManager
     /// <param name="pair"></param>
     public static void NoCheckReturn(Pair pair)
     {
+        if (Pairs == null)
+        {
+            pair.Client.Dispose();
+            pair.Server.Dispose();
+            return;
+        }
         lock (PairLock)
         {
             Pairs.Add(pair);
@@ -429,6 +435,8 @@ public static class PoolManager
     {
         if (PoolFailureReason != null)
         {
+            // If the PoolFailureReason is not null, we can assume at least one test failed.
+            // So we say inconclusive so we don't add more failed tests to search through.
             Assert.Inconclusive(@"
 In a different test, the pool manager had an exception when trying to create a server/client pair.
 Instead of risking that the pool manager will fail at creating a server/client pairs for every single test,
@@ -437,7 +445,9 @@ we are just going to end this here to save a lot of time. This is the exception 
 
         if (Pairs == null)
         {
-            Assert.Inconclusive("The pool was shut down");
+            // If Pairs is null, we ran out of time, we can't assume a test failed.
+            // So we are going to tell it all future tests are a failure.
+            Assert.Fail("The pool was shut down");
         }
     }
     private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings)
