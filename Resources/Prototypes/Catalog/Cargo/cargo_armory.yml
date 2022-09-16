@@ -4,7 +4,7 @@
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
     state: icon
   product: CrateArmorySMG
-  cost: 8000
+  cost: 3000
   category: Armory
   group: market
 
@@ -14,6 +14,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
     state: icon
   product: CrateArmoryShotgun
-  cost: 8000
+  cost: 2500
   category: Armory
   group: market
