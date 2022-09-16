@@ -36,6 +36,8 @@
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
+    - type: StaticPrice
+      price: 1000
   placement:
     mode: SnapgridCenter
 
@@ -111,6 +113,8 @@
     autoRot: true
     offset: "0, 0.1" # shine from the top, not bottom of the computer
     color: "#4246b3"
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   id: DebugGyroscope

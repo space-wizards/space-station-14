@@ -682,8 +682,6 @@
   - type: IconSmooth
     key: walls
     base: solid
-  - type: StaticPrice
-    price: 1 # total material cost. If you change the recipe for the wall you should recalculate this.
 
 - type: entity
   parent: BaseWall

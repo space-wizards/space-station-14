@@ -40,6 +40,8 @@
           !type:CableDeviceNode
           nodeGroupID: MVPower
           # sadly, HVPower and Apc cables doesn't work right now
+    - type: StaticPrice
+      price: 2000
     - type: Electrified
       requirePower: true
       noWindowInTile: true

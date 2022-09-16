@@ -72,7 +72,7 @@ public sealed class ListContainer : Control
 
     public void PopulateList(IReadOnlyList<ListData> data)
     {
-        if (_itemHeight == 0 || _data is {Count: 0} && data.Count > 0)
+        if ((_itemHeight == 0 || _data is {Count: 0}) && data.Count > 0)
         {
             ListContainerButton control = new(data[0]);
             GenerateItem?.Invoke(data[0], control);
