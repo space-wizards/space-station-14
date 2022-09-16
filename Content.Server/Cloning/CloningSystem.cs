@@ -220,8 +220,7 @@ namespace Content.Server.Cloning.Systems
             // end of genetic damage checks
 
             var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
-            _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance);
-            _appearanceSystem.UpdateSexGender(mob, humanoid.Sex, humanoid.Gender);
+            _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance, humanoid.Sex, humanoid.Gender, humanoid.Species, humanoid.Age);
 
             MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
 
