@@ -1,0 +1,58 @@
+﻿- type: entity
+  id: FaxMachine
+  parent: BaseMachinePowered
+  name: fax machine
+  description: Bluespace technologies on the application of bureaucracy.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/fax_machine.rsi
+    netsync: false
+    layers:
+      - state: icon
+      - state: idle_unlit
+        shader: unshaded
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+#      - state: sending
+#        map: ["enum.FaxMachineVisualLayers.IsSending"]
+#      - state: receiving
+#        map: ["enum.FaxMachineVisualLayers.IsReceiving"]
+  - type: Icon
+    sprite: Structures/Machines/fax_machine.rsi
+    state: icon
+  - type: Appearance
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        mass: 25
+        mask:
+          - MachineMask
+        layer:
+          - MachineLayer
+#  - type: ActivatableUI # TODO: Fix this bullshit code with the fax system instead of copying it from CHEMMASTER
+#    key: enum.ChemMasterUiKey.Key
+#  - type: ActivatableUIRequiresPower
+#  - type: UserInterface
+#    interfaces:
+#      - key: enum.ChemMasterUiKey.Key
+#        type: FaxMachineBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: FaxMachine
+    paperSlot:
+      whitelist:
+        components:
+          - Paper
+  - type: FaxMachineVisuals
+    offState: icon
+    idleState: idle_unlit
+    sendingState: sending
+    receivingState: receiving
+  - type: ItemSlots
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: FaxCentcom
+    transmitFrequencyId: FaxCentcom

@@ -69,3 +69,8 @@
   id: MailingUnit
   name: device-frequency-prototype-name-mailing-units
   frequency: 2300
+
+- type: deviceFrequency
+  id: FaxCentcom
+  name: device-frequency-prototype-name-fax-centcom
+  frequency: 2640
