@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Sterile masks can't be used with oxygen tanks anymore, type: Fix}
-  id: 1829
-  time: '2022-06-28T21:45:36.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Waystation now has docking airlocks., type: Tweak}
@@ -2926,3 +2921,11 @@ Entries:
       the non-beginner jobs) as an intern (originally 30 minutes), type: Tweak}
   id: 2328
   time: '2022-09-16T14:45:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Entity storage (lockers, animal crates, etc) now hold some air inside
+      them when closed. Entities inside will be exposed to that air instead of the
+      environment surrounding the storage. Now you can take animals on spacewalks!',
+    type: Add}
+  id: 2329
+  time: '2022-09-16T18:46:09.0000000+00:00'
