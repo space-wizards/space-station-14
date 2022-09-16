@@ -8,7 +8,7 @@
       time: 3600
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 18000
+      time: 90000
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "ChiefEngineer"
