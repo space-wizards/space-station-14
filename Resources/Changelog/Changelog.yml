@@ -1,14 +1,4 @@
 Entries:
-- author: ODJ
-  changes:
-  - {message: Proper Evac support for Split!, type: Add}
-  id: 1824
-  time: '2022-06-28T01:20:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Xenos can now pry doors., type: Add}
-  id: 1825
-  time: '2022-06-28T10:50:58.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Research console should work again I guess., type: Fix}
@@ -2926,3 +2916,15 @@ Entries:
   - {message: Added strip button to examine tooltip., type: Add}
   id: 2323
   time: '2022-09-16T14:16:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bible heal has been reduced from 70 damage per 5 seconds to 10 damage
+      per 5 seconds., type: Tweak}
+  id: 2324
+  time: '2022-09-16T14:27:05.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Added 2 bottle boxes to chemistry supplies crate, price slightly increased',
+    type: Add}
+  id: 2325
+  time: '2022-09-16T14:27:28.0000000+00:00'
