@@ -6,7 +6,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -57,6 +57,7 @@
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: claw

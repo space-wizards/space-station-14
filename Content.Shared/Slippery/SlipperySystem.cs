@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Slippery
 {

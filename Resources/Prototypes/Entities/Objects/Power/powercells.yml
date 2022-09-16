@@ -28,6 +28,8 @@
       - DroneUsable
   - type: Appearance
   - type: PowerCellVisuals
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: potato battery

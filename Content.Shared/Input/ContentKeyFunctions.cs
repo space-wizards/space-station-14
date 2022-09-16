@@ -57,6 +57,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ShuttleRotateLeft = "ShuttleRotateLeft";
         public static readonly BoundKeyFunction ShuttleRotateRight = "ShuttleRotateRight";
         public static readonly BoundKeyFunction ShuttleBrake = "ShuttleBrake";
+
         public static readonly BoundKeyFunction Hotbar0 = "Hotbar0";
         public static readonly BoundKeyFunction Hotbar1 = "Hotbar1";
         public static readonly BoundKeyFunction Hotbar2 = "Hotbar2";
@@ -67,6 +68,13 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Hotbar7 = "Hotbar7";
         public static readonly BoundKeyFunction Hotbar8 = "Hotbar8";
         public static readonly BoundKeyFunction Hotbar9 = "Hotbar9";
+
+        public static BoundKeyFunction[] GetHotbarBoundKeys() =>
+            new[]
+            {
+                Hotbar0, Hotbar1, Hotbar2, Hotbar3, Hotbar4, Hotbar5, Hotbar6, Hotbar7, Hotbar8, Hotbar9
+            };
+
         public static readonly BoundKeyFunction Loadout1 = "Loadout1";
         public static readonly BoundKeyFunction Loadout2 = "Loadout2";
         public static readonly BoundKeyFunction Loadout3 = "Loadout3";
@@ -76,6 +84,13 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Loadout7 = "Loadout7";
         public static readonly BoundKeyFunction Loadout8 = "Loadout8";
         public static readonly BoundKeyFunction Loadout9 = "Loadout9";
+
+        public static BoundKeyFunction[] GetLoadoutBoundKeys() =>
+            new[]
+            {
+                Loadout1, Loadout2, Loadout3, Loadout4, Loadout5, Loadout6, Loadout7, Loadout8, Loadout9
+            };
+
         public static readonly BoundKeyFunction Vote0 = "Vote0";
         public static readonly BoundKeyFunction Vote1 = "Vote1";
         public static readonly BoundKeyFunction Vote2 = "Vote2";

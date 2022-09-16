@@ -2,13 +2,14 @@ using System;
 using System.Linq;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
-using Content.Client.EscapeMenu.UI;
+using Content.Client.Options.UI;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
 using Content.Client.Resources;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.Voting;
 using Content.Shared.GameTicking;
 using Robust.Client;
@@ -106,12 +107,17 @@ namespace Content.Client.Lobby
             };
 
             _lobby.LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
-            _lobby.OptionsButton.OnPressed += _ => new OptionsMenu().Open();
+            _lobby.OptionsButton.OnPressed += OnOptionsPressed;
 
 
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
+        }
+
+        private void OnOptionsPressed(BaseButton.ButtonEventArgs obj)
+        {
+            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<OptionsUIController>().ToggleWindow();
         }
 
         protected override void Shutdown()
