@@ -172,7 +172,13 @@ namespace Content.Server.Temperature.Systems
             var y = temperature.DamageCap;
             var c = y * 2;
 
-            if (temperature.CurrentTemperature >= temperature.HeatDamageThreshold)
+            var ev = new ChangeDamageGetThresholdsEvent();
+            RaiseLocalEvent(uid, ref ev);
+
+            var heatDamageThreshold = ev.HeatDamageThreshold ?? temperature.HeatDamageThreshold;
+            var coldDamageThreshold = ev.ColdDamageThreshold ?? temperature.ColdDamageThreshold;
+
+            if (temperature.CurrentTemperature >= heatDamageThreshold)
             {
                 if (!temperature.TakingDamage)
                 {
@@ -180,11 +186,11 @@ namespace Content.Server.Temperature.Systems
                     temperature.TakingDamage = true;
                 }
 
-                var diff = Math.Abs(temperature.CurrentTemperature - temperature.HeatDamageThreshold);
+                var diff = Math.Abs(temperature.CurrentTemperature - heatDamageThreshold);
                 var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
                 _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage, interruptsDoAfters: false);
             }
-            else if (temperature.CurrentTemperature <= temperature.ColdDamageThreshold)
+            else if (temperature.CurrentTemperature <= coldDamageThreshold)
             {
                 if (!temperature.TakingDamage)
                 {
@@ -192,9 +198,9 @@ namespace Content.Server.Temperature.Systems
                     temperature.TakingDamage = true;
                 }
 
-                var diff = Math.Abs(temperature.CurrentTemperature - temperature.ColdDamageThreshold);
+                var diff = Math.Abs(temperature.CurrentTemperature - coldDamageThreshold);
                 var tempDamage =
-                    Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / temperature.ColdDamageThreshold));
+                    Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / coldDamageThreshold));
                 _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage, interruptsDoAfters: false);
             }
             else if (temperature.TakingDamage)
@@ -234,5 +240,12 @@ namespace Content.Server.Temperature.Systems
         {
             TemperatureDelta = temperature;
         }
+    }
+
+    [ByRefEvent]
+    public struct ChangeDamageGetThresholdsEvent
+    {
+        public float? HeatDamageThreshold;
+        public float? ColdDamageThreshold;
     }
 }

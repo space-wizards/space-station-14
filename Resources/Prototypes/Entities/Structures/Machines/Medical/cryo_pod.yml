@@ -1,0 +1,74 @@
+﻿- type: entity
+  parent: BaseMachinePowered
+  id: CryoPod
+  name: cryo pod
+  description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/cryogenics.rsi
+    drawdepth: Mobs
+    offset: 0, -0.3
+    layers:
+      - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        state: pipeHalf
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+      - state: pod-open
+        map: [ "enum.CryoPodVisualLayers.Base" ]
+      - state: cover-on
+        map: [ "enum.CryoPodVisualLayers.Cover" ]
+        visible: false
+      - state: pod-panel
+        map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+        visible: false
+  - type: AtmosDevice
+  - type: GasAnalyzable
+  - type: CryoPodVisuals
+  - type: Appearance
+  - type: Machine
+    board: CryoPodMachineCircuitboard
+  - type: Construction
+    graph: Machine
+    node: machine
+  - type: WiresVisuals
+  - type: Wires
+    BoardName: "Cryo pod"
+    LayoutId: CryoPod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: ApcPowerReceiver
+    powerLoad: 3000
+  - type: NodeContainer
+    nodes:
+      port:
+        !type:PortablePipeNode
+        nodeGroupID: Pipe
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+            - FitsInDispenser
+  - type: UserInterface
+    interfaces:
+      - key: enum.HealthAnalyzerUiKey.Key
+        type: HealthAnalyzerBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
+  - type: PointLight
+    color: "#3a807f"
+    radius: 2
+    energy: 10
+    enabled: false
+  - type: EmptyOnMachineDeconstruct
+    containers:
+      - scanner-bodyContainer
+  - type: CryoPod

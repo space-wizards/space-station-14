@@ -246,6 +246,7 @@
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - CryoPodMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
