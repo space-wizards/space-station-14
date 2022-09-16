@@ -13,6 +13,10 @@ forensic-pad-already-used = This pad has already been used.
 forensic-scanner-match-fiber = Match in fiber found!
 forensic-scanner-match-fingerprint = Match in fingerprint found!
 forensic-scanner-match-none = No matches found!
+forensic-scanner-verb-text = Scan
+forensic-scanner-verb-message = Perform a forensic scan
+
+
 
 forensic-pad-fingerprint-name = {$entity}'s fingerprints
 forensic-pad-gloves-name = fibers from {$entity}
