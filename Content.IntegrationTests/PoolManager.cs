@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Client.IoC;
@@ -60,7 +61,10 @@ public static class PoolManager
 
     private static int PairId;
     private static object PairLock = new();
-    private static List<Pair> Pairs = new();
+
+    // Pair, IsBorrowed
+    private static Dictionary<Pair, bool> Pairs = new();
+    private static bool Dead;
     private static Exception PoolFailureReason;
 
     private static async Task ConfigurePrototypes(RobustIntegrationTest.IntegrationInstance instance,
@@ -124,16 +128,38 @@ public static class PoolManager
     /// </summary>
     public static void Shutdown()
     {
+        List<Pair> localPairs;
         lock (PairLock)
         {
-            var pairs = Pairs;
-            // We are trying to make things blow up if they are still happening after this method.
-            Pairs = null;
+            if(Dead)
+                return;
+            Dead = true;
+            localPairs = Pairs.Keys.ToList();
+        }
+
+        foreach (var pair in localPairs)
+        {
+            pair.Kill();
+        }
+    }
+
+    public static string DeathReport()
+    {
+        lock (PairLock)
+        {
+            var builder = new StringBuilder();
+            var pairs = Pairs.Keys.OrderBy(pair => pair.PairId);
             foreach (var pair in pairs)
             {
-                pair.Client.Dispose();
-                pair.Server.Dispose();
+                var borrowed = Pairs[pair];
+                builder.AppendLine($"Pair {pair.PairId}, Tests Run: {pair.TestHistory.Count}, Borrowed: {borrowed}");
+                for (int i = 0; i < pair.TestHistory.Count; i++)
+                {
+                    builder.AppendLine($"#{i}: {pair.TestHistory[i]}");
+                }
             }
+
+            return builder.ToString();
         }
     }
 
@@ -276,7 +302,7 @@ public static class PoolManager
             if (pair != null && pair.TestHistory.Count > 1)
             {
                 await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History Start");
-                for (int i = 0; i < pair.TestHistory.Count - 1; i++)
+                for (int i = 0; i < pair.TestHistory.Count; i++)
                 {
                     await TestContext.Out.WriteLineAsync($"- Pair {pair.PairId} Test #{i}: {pair.TestHistory[i]}");
                 }
@@ -303,17 +329,25 @@ public static class PoolManager
     {
         lock (PairLock)
         {
-            if (Pairs.Count == 0) return null;
-            for (var i = 0; i < Pairs.Count; i++)
+            Pair fallback = null;
+            foreach (var pair in Pairs.Keys)
             {
-                var pair = Pairs[i];
-                if (!pair.Settings.CanFastRecycle(poolSettings)) continue;
-                Pairs.RemoveAt(i);
+                if (Pairs[pair])
+                    continue;
+                if (!pair.Settings.CanFastRecycle(poolSettings))
+                {
+                    fallback = pair;
+                    continue;
+                }
+                Pairs[pair] = true;
                 return pair;
             }
-            var defaultPair = Pairs[^1];
-            Pairs.RemoveAt(Pairs.Count - 1);
-            return defaultPair;
+
+            if (fallback != null)
+            {
+                Pairs[fallback!] = true;
+            }
+            return fallback;
         }
     }
 
@@ -325,7 +359,14 @@ public static class PoolManager
     {
         lock (PairLock)
         {
-            Pairs.Add(pair);
+            if (pair.Dead)
+            {
+                Pairs.Remove(pair);
+            }
+            else
+            {
+                Pairs[pair] = false;
+            }
         }
     }
 
@@ -429,10 +470,19 @@ public static class PoolManager
     {
         if (PoolFailureReason != null)
         {
+            // If the PoolFailureReason is not null, we can assume at least one test failed.
+            // So we say inconclusive so we don't add more failed tests to search through.
             Assert.Inconclusive(@"
 In a different test, the pool manager had an exception when trying to create a server/client pair.
 Instead of risking that the pool manager will fail at creating a server/client pairs for every single test,
 we are just going to end this here to save a lot of time. This is the exception that started this:\n {0}", PoolFailureReason);
+        }
+
+        if (Dead)
+        {
+            // If Pairs is null, we ran out of time, we can't assume a test failed.
+            // So we are going to tell it all future tests are a failure.
+            Assert.Fail("The pool was shut down");
         }
     }
     private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings)
@@ -715,11 +765,19 @@ public sealed class TestMapData
 /// </summary>
 public sealed class Pair
 {
+    public bool Dead { get; private set; }
     public int PairId { get; init; }
     public List<string> TestHistory { get; set; } = new();
     public PoolSettings Settings { get; set; }
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; init; }
     public RobustIntegrationTest.ClientIntegrationInstance Client { get; init; }
+
+    public void Kill()
+    {
+        Dead = true;
+        Server.Dispose();
+        Client.Dispose();
+    }
 }
 
 /// <summary>
@@ -735,8 +793,8 @@ public sealed class PairTracker : IAsyncDisposable
         await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Test gave back pair {Pair.PairId} in {usageTime.TotalMilliseconds} ms");
         var dirtyWatch = new Stopwatch();
         dirtyWatch.Start();
-        Pair.Client.Dispose();
-        Pair.Server.Dispose();
+        Pair.Kill();
+        PoolManager.NoCheckReturn(Pair);
         var disposeTime = dirtyWatch.Elapsed;
         await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Disposed pair {Pair.PairId} in {disposeTime.TotalMilliseconds} ms");
     }
@@ -764,8 +822,8 @@ public sealed class PairTracker : IAsyncDisposable
 
         if (Pair.Settings.MustNotBeReused)
         {
-            Pair.Client.Dispose();
-            Pair.Server.Dispose();
+            Pair.Kill();
+            PoolManager.NoCheckReturn(Pair);
             await PoolManager.ReallyBeIdle(Pair);
             var returnTime2 = cleanWatch.Elapsed;
             await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: Clean disposed in {returnTime2.TotalMilliseconds} ms");

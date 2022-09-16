@@ -16,6 +16,8 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
+    - type: StaticPrice
+      price: 200
 
 - type: entity
   parent: GasUnaryBase
@@ -246,6 +248,8 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: StaticPrice
+      price: 500
 
 - type: entity
   parent: BaseGasThermoMachine

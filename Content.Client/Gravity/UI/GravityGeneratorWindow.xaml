@@ -1,5 +1,5 @@
-﻿<ui:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:ui="clr-namespace:Content.Client.UserInterface"
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 Title="{Loc 'gravity-generator-window-title'}"
                 MinSize="270 130"
                 SetSize="360 180">
@@ -32,4 +32,4 @@
         </PanelContainer>
     </BoxContainer>
 
-</ui:FancyWindow>
+</controls:FancyWindow>

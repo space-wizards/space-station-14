@@ -159,7 +159,7 @@ public sealed class EyeLerpingSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         var tickFraction = (float) _gameTiming.TickFraction / ushort.MaxValue;
-        var lerpMinimum = 0.01;
+        const double lerpMinimum = 0.00001;
 
         foreach (var (eye, entity) in GetEyes())
         {

@@ -232,16 +232,16 @@ namespace Content.Server.Construction
 
             construction.Node = id;
 
+            // ChangeEntity will handle the pathfinding update.
+            if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
+                return true;
+
             if(performActions)
                 PerformActions(uid, userUid, node.Actions);
 
             // An action might have deleted the entity... Account for this.
             if (!Exists(uid))
                 return false;
-
-            // ChangeEntity will handle the pathfinding update.
-            if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
-                return true;
 
             UpdatePathfinding(uid, construction);
             return true;
@@ -327,9 +327,6 @@ namespace Content.Server.Construction
             }
 
             QueueDel(uid);
-
-            if(GetCurrentNode(newUid, newConstruction) is {} node)
-                PerformActions(newUid, userUid, node.Actions);
 
             return newUid;
         }

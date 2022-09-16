@@ -78,6 +78,8 @@
     damage:
       types:
         Blunt: 5
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: beaker
@@ -104,6 +106,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
+    size: 10
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainerManager
     solutions:
@@ -113,6 +116,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: beakerlarge
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: cryostasis beaker
@@ -205,6 +210,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: dropper
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: syringe

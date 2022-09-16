@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
@@ -37,7 +38,6 @@ public sealed class PrototypeSaveTest
         // TODO fix more prototypes
         // The rest of these prototypes (probably) shouldn't be getting ignored.
         // There should be an issue up tracking all of these prototypes, indicating that still need to get fixed.
-        "C4",
         "WeaponProtoKineticAccelerator",
         "WeaponStaffHealing",
         "WeaponStaffPolymorphDoor",
@@ -64,12 +64,10 @@ public sealed class PrototypeSaveTest
         "JawsOfLife",
         "SyndicateJawsOfLife",
         "LightReplacer",
-        "ComputerCloningConsole",
         "PowerDrill",
         "Omnitool",
         "GasPressurePump",
         "GasVolumePump",
-        "GasDualPortVentPump",
         "PortableScrubber",
         "ParticleAcceleratorControlBox",
         "GasFilter",
@@ -98,11 +96,6 @@ public sealed class PrototypeSaveTest
         "SpaceMedipen",
         "HolosignWetFloor",
         "HeadSkeleton",
-        "PoweredlightEmpty",
-        "Poweredlight",
-        "PoweredlightLED",
-        "PoweredlightExterior",
-        "PoweredlightSodium",
         "PoweredSmallLightEmpty",
         "PoweredSmallLight",
         "PoweredLightPostSmallEmpty",
@@ -123,9 +116,7 @@ public sealed class PrototypeSaveTest
         "MedicalTechFab",
         "UniformPrinter",
         "OreProcessor",
-        "MedicalScanner",
         "MagazinePistolSubMachineGunTopMounted",
-        "Recycler",
         "EpinephrineChemistryBottle",
         "RobustHarvestChemistryBottle",
         "NocturineChemistryBottle",
@@ -137,12 +128,10 @@ public sealed class PrototypeSaveTest
         "BluespaceBeaker",
         "ClusterBang",
         "ClusterBangFull",
-        "CargoTelepad",
         "Vaccinator",
         "AirlockExternalShuttleLocked",
         "AirlockExternalGlassShuttleLocked",
         "AirlockExternalGlassShuttleEmergencyLocked",
-        "ConveyorBelt",
         "ClothingHeadHatChef",
         "Bucket",
         "AirlockShuttle",
@@ -244,7 +233,7 @@ public sealed class PrototypeSaveTest
                         var compName = compFact.GetComponentName(compType);
                         compNames.Add(compName);
 
-                        if (compType == typeof(MetaDataComponent) || compType == typeof(TransformComponent))
+                        if (compType == typeof(MetaDataComponent) || compType == typeof(TransformComponent) || compType == typeof(FixturesComponent))
                             continue;
 
                         MappingDataNode compMapping;

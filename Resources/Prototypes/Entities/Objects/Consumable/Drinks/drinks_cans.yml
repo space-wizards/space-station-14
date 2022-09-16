@@ -144,7 +144,7 @@
     sprite: Objects/Consumable/Drinks/rootbeer.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkCanBaseFull
   id: DrinkSodaWaterCan
   name: soda water can
   description: Soda water. Why not make a scotch and soda?
@@ -152,10 +152,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: SodaWater
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater.rsi
@@ -223,10 +223,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: TonicWater
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic.rsi

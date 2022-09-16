@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Server.Cargo.Systems;
 using Content.Server.Power.Components;
 using Robust.Server.Player;
 

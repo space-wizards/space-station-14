@@ -5,10 +5,13 @@
   name: APC electronics
   description: Circuit used in APC construction.
   components:
+    - type: ApcElectronics
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
+    - type: StaticPrice
+      price: 100
 
 # Wallmount Substation
 - type: entity
@@ -21,7 +24,9 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
-      
+    - type: StaticPrice
+      price: 100
+
 # Wallmount Generator
 - type: entity
   id: WallmountGeneratorElectronics
@@ -33,7 +38,9 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
-      
+    - type: StaticPrice
+      price: 100
+
 # APU
 - type: entity
   id: WallmountGeneratorAPUElectronics
@@ -45,6 +52,8 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
+    - type: StaticPrice
+      price: 100
 
 # Solar Tracker Electronics
 - type: entity
@@ -57,3 +66,5 @@
       sprite: Objects/Misc/module.rsi
       state: generic
       netsync: false
+    - type: StaticPrice
+      price: 100
