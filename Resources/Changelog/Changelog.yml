@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: You can now pull down your mask for easy mouth access, type: Tweak}
-  id: 1833
-  time: '2022-06-30T07:44:54.0000000+00:00'
 - author: Ablankmann
   changes:
   - {message: The Pointless tab within the uplink now holds your I-Want-To-Waste-TC
@@ -2929,3 +2924,8 @@ Entries:
     type: Fix}
   id: 2332
   time: '2022-09-16T21:34:18.0000000+00:00'
+- author: GTRsound
+  changes:
+  - {message: Picked as traitor sound changed, type: Tweak}
+  id: 2333
+  time: '2022-09-16T21:57:18.0000000+00:00'
