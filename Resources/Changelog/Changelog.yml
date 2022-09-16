@@ -1,10 +1,4 @@
 Entries:
-- author: Ablankmann
-  changes:
-  - {message: Added the Syndicate Shoulder Holster and the Outlaw's Hat to the Uplink.,
-    type: Add}
-  id: 1821
-  time: '2022-06-27T23:25:22.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'Adds thieving component, which lets you steal stuff faster from someone!',
@@ -2930,3 +2924,8 @@ Entries:
   - {message: Gas tanks can now also be sold (no longer just canisters)., type: Add}
   id: 2320
   time: '2022-09-16T14:04:25.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Gas canisters now come with access locks., type: Add}
+  id: 2321
+  time: '2022-09-16T14:06:30.0000000+00:00'
