@@ -1,15 +1,15 @@
 using System.Linq;
-using Content.Shared.Materials;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Materials
+namespace Content.Shared.Materials
 {
     /// <summary>
     ///     Component to store data such as "this object is made out of steel".
     ///     This is not a storage system for say smelteries.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class MaterialComponent : Component
     {
         [ViewVariables]
