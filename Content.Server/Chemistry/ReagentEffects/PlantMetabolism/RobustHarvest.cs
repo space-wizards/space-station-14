@@ -16,12 +16,18 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                                     plantHolderComp.Seed.Immutable)
                 return;
 
+            const int potencyLimit = 50;
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            if (plantHolderComp.Seed.Potency < 100)
+            if (plantHolderComp.Seed.Potency < potencyLimit)
             {
                 plantHolderComp.EnsureUniqueSeed();
-                plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + 3, 100);
+                plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + 3, potencyLimit);
+
+                if (plantHolderComp.Seed.Potency > 30)
+                {
+                    plantHolderComp.Seed.Seedless = true;
+                }
             }
             else if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
             {
