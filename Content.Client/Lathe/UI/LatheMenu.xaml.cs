@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -103,13 +102,8 @@ public sealed partial class LatheMenu : DefaultWindow
             }
         }
 
-        //don't redraw this list if it hasn't changed
-        if (recipesToShow.SequenceEqual(_oldRecipesToShow))
-        {
-            return;
-        }
-
-        var quantity = int.TryParse(AmountLineEdit.Text, out var txt) ? 1 : txt;
+        if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
+            quantity = 1;
 
         RecipeList.Children.Clear();
         _oldRecipesToShow = recipesToShow;
@@ -136,12 +130,13 @@ public sealed partial class LatheMenu : DefaultWindow
             var canProduce = _lathe.CanProduce(lathe, prototype, quantity);
 
             var control = new RecipeControl(prototype, sb.ToString(), canProduce, icon);
-            control.OnButtonPressed += s => RecipeQueueAction?.Invoke(s, quantity);
-
-            var test = new Label();
-            test.Text = "TEST";
-            Logger.Debug("TEST");
-            RecipeList.AddChild(test);
+            control.OnButtonPressed += s =>
+            {
+                if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
+                    amount = 1;
+                RecipeQueueAction?.Invoke(s, amount);
+            };
+            RecipeList.AddChild(control);
         }
     }
 }

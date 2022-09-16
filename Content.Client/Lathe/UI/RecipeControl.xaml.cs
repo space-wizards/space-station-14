@@ -17,7 +17,7 @@ public sealed partial class RecipeControl : Control
 
         RecipeName.Text = recipe.Name;
         RecipeTexture.Texture = texture;
-        RecipeTooltip.Text = tooltip;
+        Button.ToolTip = tooltip;
         Button.Disabled = !canProduce;
 
         Button.OnPressed += (_) =>
