@@ -13,3 +13,6 @@ ent-ClothingShoesBootsPerformer = performer's boots
 ent-ClothingShoesBootsCombat = combat boots
     .desc = Robust combat boots for combat scenarios or combat situations. All combat, all the time.
     .suffix = { "" }
+ent-ClothingShoesBootsLaceup = laceup shoes
+    .desc = The height of fashion, and they're pre-polished!
+    .suffix = { "" }

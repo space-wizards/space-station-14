@@ -1,0 +1,15 @@
+ent-BaseLightning = lightning
+    .desc = { "" }
+    .suffix = { "" }
+ent-Lightning = lightning
+    .desc = { ent-BaseLightning.desc }
+    .suffix = { "" }
+ent-ChargedLightning = charged lightning
+    .desc = { ent-BaseLightning.desc }
+    .suffix = { "" }
+ent-SuperchargedLightning = supercharged lightning
+    .desc = { ent-ChargedLightning.desc }
+    .suffix = { "" }
+ent-HyperchargedLightning = hypercharged lightning
+    .desc = { ent-ChargedLightning.desc }
+    .suffix = { "" }

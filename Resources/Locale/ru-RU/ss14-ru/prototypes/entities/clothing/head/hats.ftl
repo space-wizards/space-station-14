@@ -124,3 +124,6 @@ ent-ClothingHeadFishCap = кепка рыбака
 ent-ClothingHeadNurseHat = шапочка медсестры
     .desc = Почему-то мне кажется, что я не должна покидать это место.
     .suffix = { "" }
+ent-ClothingHeadRastaHat = rasta hat
+    .desc = Right near da beach, boyee.
+    .suffix = { "" }

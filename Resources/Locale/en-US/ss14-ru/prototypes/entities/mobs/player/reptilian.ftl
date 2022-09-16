@@ -1,3 +1,3 @@
 ent-MobReptilian = Urisst' Mzhand
-    .desc = A miserable pile of scales.
+    .desc = { ent-BaseMobReptilian.desc }
     .suffix = { "" }

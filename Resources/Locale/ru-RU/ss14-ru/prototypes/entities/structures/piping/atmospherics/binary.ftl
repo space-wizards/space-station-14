@@ -19,3 +19,6 @@ ent-GasPort = соединительный порт
 ent-GasDualPortVentPump = двухпортовая вентиляция
     .desc = Имеет клапан и прикрепленный к нему насос. Один вход для закачивания воздуха, другой - для откачивания.
     .suffix = { "" }
+ent-GasRecycler = gas recycler
+    .desc = Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
+    .suffix = { "" }

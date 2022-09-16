@@ -6,3 +6,6 @@ hand-labeler-successfully-applied = Этикетка успешно примен
 hand-labeler-successfully-removed = Этикетка успешно удалена
 # Appended to the description of an object with a label on input
 hand-labeler-has-label = На объекте имеется этикетка с надписью "{ $label }"
+# Verb text
+hand-labeler-remove-label-text = Remove label
+hand-labeler-add-label-text = Apply label
