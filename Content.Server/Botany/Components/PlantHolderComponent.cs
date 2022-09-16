@@ -128,6 +128,13 @@ namespace Content.Server.Botany.Components
             // todo ecs.
             var botanySystem = EntitySystem.Get<BotanySystem>();
 
+            // Process mutations
+            if (MutationLevel > 0)
+            {
+                Mutate(Math.Min(MutationLevel, 25));
+                MutationLevel = 0;
+            }
+
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
             if (WaterLevel > 10 && NutritionLevel > 2 && _random.Prob(Seed == null ? 0.05f : 0.01f))
             {
@@ -552,11 +559,7 @@ namespace Content.Server.Botany.Components
 
             if (solution.TotalVolume <= 0 || MutationLevel >= 25)
             {
-                if (MutationLevel >= 0)
-                {
-                    Mutate(Math.Min(MutationLevel, 25));
-                    MutationLevel = 0;
-                }
+                // do nothing
             }
             else
             {
@@ -573,7 +576,11 @@ namespace Content.Server.Botany.Components
 
         private void Mutate(float severity)
         {
-            // TODO: Coming soon in "Botany 2: Plant boogaloo".
+            if (Seed != null)
+            {
+                EnsureUniqueSeed();
+                MutationSystem.MutateSeed(Seed, severity);
+            }
         }
 
         public void UpdateSprite()
