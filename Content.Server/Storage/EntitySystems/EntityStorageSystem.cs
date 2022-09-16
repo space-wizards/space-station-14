@@ -61,6 +61,17 @@ public sealed class EntityStorageSystem : EntitySystem
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var placeable))
             _placeableSurface.SetPlaceable(uid, component.Open, placeable);
+
+        if (!component.Open)
+        {
+            // If we're closed on spawn, we need to pull some air into our environment from where we spawned,
+            // so that we have -something-. For example, if you bought an animal crate or something.
+
+            if (_atmos.GetContainingMixture(uid, false, true) is {} environment)
+            {
+                _atmos.Merge(component.Air, environment.RemoveVolume(EntityStorageComponent.GasMixVolume));
+            }
+        }
     }
 
     private void OnInteract(EntityUid uid, EntityStorageComponent component, ActivateInWorldEvent args)
