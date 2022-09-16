@@ -15,5 +15,6 @@ public sealed class SpawnRandomOffsetSystem : EntitySystem
     {
         // TODO: Kill this extension with fire, thanks
         uid.RandomOffset(component.Offset);
+        EntityManager.RemoveComponentDeferred(uid, component);
     }
 }
