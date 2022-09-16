@@ -19,6 +19,7 @@ namespace Content.Client.Light.Visualizers
 
         private Action<string>? _blinkingCallback;
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

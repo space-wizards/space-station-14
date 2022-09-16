@@ -382,6 +382,12 @@
   - type: Tag
     tags:
     - EmagImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      IdCardConsole-privilegedId: !type:ContainerSlot
+      IdCardConsole-targetId: !type:ContainerSlot
 
 - type: entity
   parent: BaseComputer
@@ -603,6 +609,9 @@
     color: "#1f8c28"
   - type: SignalTransmitter
     transmissionRange: 4
+    outputs:
+      MedicalScannerSender: []
+      CloningPodSender: []
   - type: ActivatableUI
     key: enum.CloningConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -610,6 +619,8 @@
     interfaces:
       - key: enum.CloningConsoleUiKey.Key
         type: CloningConsoleBoundUserInterface
+  - type: Speech
+    speechSounds: Pai
 
 - type: entity
   parent: BaseComputer

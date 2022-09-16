@@ -14,6 +14,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Components;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -454,7 +456,6 @@ public sealed partial class ShuttleSystem
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
-        Box2? aabb = null;
 
         // Spawn nearby.
         // We essentially expand the Box2 of the target area until nothing else is added then we know it's valid.

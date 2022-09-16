@@ -1,10 +1,8 @@
+using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
-using Content.Server.AI.Utility;
-using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.WorldState;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
@@ -31,6 +29,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server.Station.Systems;
 
 namespace Content.Server.Entry
 {
@@ -40,14 +39,15 @@ namespace Content.Server.Entry
         private IVoteManager _voteManager = default!;
         private ServerUpdateManager _updateManager = default!;
         private PlayTimeTrackingManager? _playTimeTracking;
+        private IEntitySystemManager? _sysMan;
 
         /// <inheritdoc />
         public override void Init()
         {
             base.Init();
 
-            IoCManager.Resolve<IStatusHost>().SetAczInfo("Content.Client",
-                new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" });
+            var aczProvider = new ContentMagicAczProvider(IoCManager.Resolve<IDependencyCollection>());
+            IoCManager.Resolve<IStatusHost>().SetMagicAczProvider(aczProvider);
 
             var factory = IoCManager.Resolve<IComponentFactory>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
@@ -80,6 +80,7 @@ namespace Content.Server.Entry
                 _voteManager = IoCManager.Resolve<IVoteManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
+                _sysMan = IoCManager.Resolve<IEntitySystemManager>();
 
                 var logManager = IoCManager.Resolve<ILogManager>();
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
@@ -123,8 +124,6 @@ namespace Content.Server.Entry
             else
             {
                 IoCManager.Resolve<RecipeManager>().Initialize();
-                IoCManager.Resolve<BlackboardManager>().Initialize();
-                IoCManager.Resolve<ConsiderationsManager>().Initialize();
                 IoCManager.Resolve<IAdminManager>().Initialize();
                 IoCManager.Resolve<IAfkManager>().Initialize();
                 IoCManager.Resolve<RulesManager>().Initialize();
@@ -160,6 +159,7 @@ namespace Content.Server.Entry
         protected override void Dispose(bool disposing)
         {
             _playTimeTracking?.Shutdown();
+            _sysMan?.GetEntitySystemOrNull<StationSystem>()?.OnServerDispose();
         }
     }
 }

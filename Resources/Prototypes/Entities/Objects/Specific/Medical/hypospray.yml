@@ -78,6 +78,8 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 75 # These are limited supply items.
+  - type: TrashOnEmpty
+    solution: pen
 
 - type: entity
   name: emergency medipen

@@ -4,7 +4,7 @@
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: cleaner
   product: CrateServiceJanitorialSupplies
-  cost: 1000
+  cost: 500
   category: Service
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Power/light_bulb.rsi
     state: normal
   product: CrateServiceReplacementLights
-  cost: 1000
+  cost: 600
   category: Service
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Objects/Devices/mousetrap.rsi
     state: mousetrap
   product: CrateMousetrapBoxes
-  cost: 1000
+  cost: 500
   category: Service
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     state: closed
   product: CrateServiceSmokeables
-  cost: 2000
+  cost: 1500
   category: Service
   group: market
 

@@ -29,7 +29,7 @@ namespace Content.Client.Lathe.UI
         public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
         private readonly Queue<LatheRecipePrototype> _queuedRecipes = new();
 
-        public LatheBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public LatheBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
             SendMessage(new LatheSyncRequestMessage());
         }

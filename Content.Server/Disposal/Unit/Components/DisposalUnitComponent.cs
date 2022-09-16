@@ -24,6 +24,10 @@ namespace Content.Server.Disposal.Unit.Components
         [DataField("pressure")]
         public float Pressure = 1f;
 
+        [ViewVariables]
+        [DataField("autoEngageEnabled")]
+        public bool AutomaticEngage = true;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("autoEngageTime")]
         public readonly TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);

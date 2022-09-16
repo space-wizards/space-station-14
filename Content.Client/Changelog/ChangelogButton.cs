@@ -1,7 +1,7 @@
 ﻿using Content.Client.Stylesheets;
+using Content.Client.UserInterface.Systems.EscapeMenu;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Client.Changelog
 {
@@ -13,7 +13,7 @@ namespace Content.Client.Changelog
         {
             IoCManager.InjectDependencies(this);
 
-            OnPressed += OnOnPressed;
+            OnPressed += OnChangelogPressed;
 
             // So that measuring before opening returns a correct height,
             // and the window has the correct size when opened.
@@ -35,9 +35,9 @@ namespace Content.Client.Changelog
             _changelogManager.NewChangelogEntriesChanged -= UpdateStuff;
         }
 
-        private void OnOnPressed(ButtonEventArgs obj)
+        private void OnChangelogPressed(ButtonEventArgs obj)
         {
-            new ChangelogWindow().OpenCentered();
+            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<ChangelogUIController>().ToggleWindow();
         }
 
         private void UpdateStuff()

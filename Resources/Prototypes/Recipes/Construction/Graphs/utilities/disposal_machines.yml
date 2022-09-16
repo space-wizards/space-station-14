@@ -68,12 +68,15 @@
           steps:
             - tool: Screwing
               doAfter: 0.25
-        #- to: frame_mailing
-        #  steps:
-        #    - ... # 1x mailing unit electronics
-        #      amount: 1
-        #    - tool: Screwing
-        #      doAfter: 0.25
+        - to: frame_mailing
+          steps:
+            - tag: MailingUnitElectronics
+              name: Mailing Unit Electronics
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "net_wired"
+            - tool: Screwing
+              doAfter: 0.25
     - node: frame_unit
       entity: DisposalMachineFrame
       actions:
@@ -95,6 +98,37 @@
       entity: DisposalUnit
       edges:
         - to: frame_unit
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:EmptyAllContainers
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Prying
+              doAfter: 1
+    - node: frame_mailing
+      entity: DisposalMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "frame_unit"
+      edges:
+        - to: frame_electronics
+          steps:
+            - tool: Prying
+              doAfter: 0.25
+        - to: mailing_unit
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+    - node: mailing_unit
+      entity: MailingUnit
+      edges:
+        - to: frame_mailing
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1

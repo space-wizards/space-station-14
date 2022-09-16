@@ -13,14 +13,13 @@ using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
 using Content.Server.Speech;
 using Content.Server.Chat.Systems;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
+using Content.Shared.Zombies;
 
 namespace Content.Server.Zombies
 {
-    public sealed class ZombieSystem : EntitySystem
+    public sealed class ZombieSystem : SharedZombieSystem
     {
-        [Dependency] private readonly DamageableSystem _damage = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
@@ -37,7 +36,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
-            SubscribeLocalEvent<ZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
+
         }
 
         private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
@@ -54,15 +53,9 @@ namespace Content.Server.Zombies
                 DoGroan(uid, component);
         }
 
-        private void OnRefreshSpeed(EntityUid uid, ZombieComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            var mod = component.ZombieMovementSpeedDebuff;
-            args.ModifySpeed(mod, mod);
-        }
-
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
         {
-            float baseChance = component.MaxZombieInfectionChance;
+            var baseChance = component.MaxZombieInfectionChance;
 
             if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
                 return baseChance;
@@ -91,7 +84,7 @@ namespace Content.Server.Zombies
             var max = component.MaxZombieInfectionChance;
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            float chance = (max-min) * ((total - items)/total) + min;
+            var chance = (max-min) * ((total - items)/total) + min;
             return chance;
         }
 
@@ -103,7 +96,7 @@ namespace Content.Server.Zombies
             if (!args.HitEntities.Any())
                 return;
 
-            foreach (EntityUid entity in args.HitEntities)
+            foreach (var entity in args.HitEntities)
             {
                 if (args.User == entity)
                     continue;
@@ -132,7 +125,7 @@ namespace Content.Server.Zombies
             }
         }
 
-        public void DoGroan(EntityUid uid, ActiveZombieComponent component)
+        private void DoGroan(EntityUid uid, ActiveZombieComponent component)
         {
             if (component.LastDamageGroanCooldown > 0)
                 return;

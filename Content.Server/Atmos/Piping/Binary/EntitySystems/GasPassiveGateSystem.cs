@@ -13,7 +13,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasPassiveGateSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         public override void Initialize()
         {

@@ -89,6 +89,7 @@
   parent: SheetGlassBase
   id: SheetRGlass
   name: reinforced glass
+  description: A reinforced sheet of glass.
   suffix: Full
   components:
   - type: Material
@@ -130,6 +131,7 @@
   parent: SheetGlassBase
   id: SheetPGlass
   name: plasma glass
+  description: A sheet of translucent plasma.
   suffix: Full
   components:
   - type: Material
@@ -168,11 +170,12 @@
   parent: SheetGlassBase
   id: SheetRPGlass
   name: reinforced plasma glass
+  description: A reinforced sheet of translucent plasma.
   suffix: Full
   components:
   - type: Material
     materials:
-      ReinforcedPlasmaGlass: 500
+      ReinforcedPlasmaGlass: 100
   - type: Stack
     stackType: ReinforcedPlasmaGlass
   - type: Sprite

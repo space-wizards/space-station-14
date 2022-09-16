@@ -11,6 +11,8 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -41,7 +43,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         foreach (var generator in EntityQuery<ContainmentFieldGeneratorComponent>())
         {
             if (generator.PowerBuffer <= 0) //don't drain power if there's no power, or if it's somehow less than 0.
-                return;
+                continue;
 
             generator.Accumulator += frameTime;
 
@@ -58,7 +60,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// <summary>
     /// A generator receives power from a source colliding with it.
     /// </summary>
-    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
+    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, ref StartCollideEvent args)
     {
         if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
         {

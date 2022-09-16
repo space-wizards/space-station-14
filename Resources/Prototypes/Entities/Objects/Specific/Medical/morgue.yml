@@ -67,6 +67,13 @@
           False: {visible: false}
   - type: Pullable
   - type: AntiRottingContainer
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   id: BodyBag_Folded
@@ -95,3 +102,16 @@
   - type: Tag
     tags:
     - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Ash
+          Quantity: 10
+  - type: SolutionSpiker
+    sourceSolution: food
+    ignoreEmpty: true
+  - type: DeleteOnTrigger
+  - type: Extractable
+    grindableSolutionName: food

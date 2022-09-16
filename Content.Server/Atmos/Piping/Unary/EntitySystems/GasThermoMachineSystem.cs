@@ -69,7 +69,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent component, RefreshPartsEvent args)
         {
-            // Here we evaluate the average quality of relevant machine parts. 
+            // Here we evaluate the average quality of relevant machine parts.
             var nLasers = 0;
             var nBins= 0;
             var matterBinRating = 0;

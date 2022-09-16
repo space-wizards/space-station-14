@@ -49,6 +49,7 @@
     node: tubeLight
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    snapCardinals: true
     layers:
     - state: on
       map: ["enum.PoweredLightLayers.Base"]

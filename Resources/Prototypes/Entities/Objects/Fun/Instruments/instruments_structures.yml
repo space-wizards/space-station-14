@@ -147,7 +147,7 @@
     state: toms
 
 - type: entity
-  parent: BasePlaceableInstrument
+  parent: [ BasePlaceableInstrument, ConstructibleMachine]
   id: DawInstrument
   name: digital audio workstation
   description: Cutting edge music technology, straight from the 90s.
@@ -160,11 +160,7 @@
     - state: daw-panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-    visuals:
-    - type: WiresVisualizer
-  - type: Construction
-    graph: Machine
-    node: machine
+  - type: WiresVisuals
   - type: Wires
     BoardName: "DawInstrument"
     LayoutId: DawInstrument

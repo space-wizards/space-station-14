@@ -8,7 +8,7 @@ namespace Content.Client.Wires.UI
     {
         private WiresMenu? _menu;
 
-        public WiresBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public WiresBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

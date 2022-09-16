@@ -4,6 +4,6 @@
     sprite: Structures/Storage/Crates/artifact.rsi
     state: artifact_container_icon
   product: CrateArtifactContainer
-  cost: 2000
+  cost: 500
   category: Science
   group: market

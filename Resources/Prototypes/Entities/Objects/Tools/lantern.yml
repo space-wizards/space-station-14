@@ -30,6 +30,10 @@
     - type: PowerCellSlot
       cellSlot:
         startingItem: PowerCellMedium
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot {}
 
 - type: entity
   name: extra-bright lantern

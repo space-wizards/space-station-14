@@ -14,6 +14,7 @@ namespace Content.Client.Explosion
         [DataField("state")]
         private string? _state;
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

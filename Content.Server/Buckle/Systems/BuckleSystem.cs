@@ -13,7 +13,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Buckle.Systems
 {
     [UsedImplicitly]
-    internal sealed class BuckleSystem : SharedBuckleSystem
+    public sealed class BuckleSystem : SharedBuckleSystem
     {
         public override void Initialize()
         {
@@ -85,6 +85,9 @@ namespace Content.Server.Buckle.Systems
 
         private void ContainerModifiedStrap(EntityUid uid, StrapComponent strap, ContainerModifiedMessage message)
         {
+            if (GameTiming.ApplyingState)
+                return;
+
             foreach (var buckledEntity in strap.BuckledEntities)
             {
                 if (!EntityManager.TryGetComponent(buckledEntity, out BuckleComponent? buckled))

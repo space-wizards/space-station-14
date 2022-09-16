@@ -37,7 +37,7 @@ public sealed class AirAlarmPanicWire : BaseWireAction
     {
         base.Initialize();
 
-        _airAlarmSystem = EntitySystem.Get<AirAlarmSystem>();
+        _airAlarmSystem = EntityManager.System<AirAlarmSystem>();
     }
 
     public override bool Cut(EntityUid user, Wire wire)

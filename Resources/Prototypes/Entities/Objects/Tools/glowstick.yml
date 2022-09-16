@@ -4,9 +4,6 @@
   id: GlowstickBase
   description: Useful for raves and emergencies.
   components:
-    - type: Tag
-      tags:
-      - Trash
     - type: Recyclable
     - type: SpaceGarbage
     - type: ExpendableLight

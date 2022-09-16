@@ -46,11 +46,6 @@
                         <RichTextLabel Name="ClonerBrainActivity"
                                 Access="Public"
                                 HorizontalExpand="True"/>
-                        <Button Name="EjectButton"
-                                Access="Public"
-                                Text="{Loc 'cloning-console-eject-body-button'}"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center" />
                     </BoxContainer>
                 </BoxContainer>
                 <BoxContainer Name="CloningPodMissing" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">

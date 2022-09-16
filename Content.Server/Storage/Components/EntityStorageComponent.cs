@@ -1,3 +1,4 @@
+using Content.Server.Atmos;
 using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -6,9 +7,10 @@ using Robust.Shared.Containers;
 namespace Content.Server.Storage.Components;
 
 [RegisterComponent]
-public sealed class EntityStorageComponent : Component
+public sealed class EntityStorageComponent : Component, IGasMixtureHolder
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
+    public const float GasMixVolume = 70f;
 
     public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
     public TimeSpan LastInternalOpenAttempt;
@@ -35,7 +37,7 @@ public sealed class EntityStorageComponent : Component
     [DataField("isCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
 
-    //The offset for where items are emptied/vacuumed for the EntityStorage. 
+    //The offset for where items are emptied/vacuumed for the EntityStorage.
     [DataField("enteringOffset")]
     public Vector2 EnteringOffset = new(0, 0);
 
@@ -77,6 +79,13 @@ public sealed class EntityStorageComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool IsWeldedShut;
+
+    /// <summary>
+    ///     Gas currently contained in this entity storage.
+    ///     None while open. Grabs gas from the atmosphere when closed, and exposes any entities inside to it.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public GasMixture Air { get; set; } = new (GasMixVolume);
 }
 
 public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs { }

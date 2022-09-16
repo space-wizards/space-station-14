@@ -64,3 +64,8 @@
   id: SmartLight #used by powered lights.
   name: device-frequency-prototype-name-lights
   frequency: 1173
+
+- type: deviceFrequency
+  id: MailingUnit
+  name: device-frequency-prototype-name-mailing-units
+  frequency: 2300

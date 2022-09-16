@@ -1,0 +1,48 @@
+- type: entity
+  id: BaseWallLocker
+  placement:
+    mode: SnapgridCenter
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Storage/wall_locker.rsi
+    layers:
+    - state: door
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: Storage
+    capacity: 100
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+
+- type: entity
+  id: WallLocker
+  parent: BaseWallLocker
+  name: wall locker
+  description: A locker built into the wall.

@@ -16,7 +16,7 @@ namespace Content.Client.Kitchen.UI
 
         private GrinderMenu? _menu;
 
-        public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
+        public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {

@@ -86,7 +86,7 @@
   growthStages: 3
   waterConsumption: 6
   chemicals:
-    Nutriment:
+    JuiceCarrot:
       Min: 1
       Max: 5
       PotencyDivisor: 20
