@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Research disks have been ported from Nyanotrasen MRP. They're in salvage
-      and maintenance loot tables., type: Add}
-  - {message: 'The first time a unique disease is scanned at a disease diagnoser,
-      it prints a 5000 point research disk.', type: Add}
-  id: 1828
-  time: '2022-06-28T14:41:09.0000000+00:00'
 - author: themias
   changes:
   - {message: Sterile masks can't be used with oxygen tanks anymore, type: Fix}
@@ -2928,3 +2920,9 @@ Entries:
   - {message: More variants of equipped headsets sprite, type: Add}
   id: 2327
   time: '2022-09-16T14:43:18.0000000+00:00'
+- author: Jukereise
+  changes:
+  - {message: Beginners can now spend up to 2 hours (90 extra minutes after unlocking
+      the non-beginner jobs) as an intern (originally 30 minutes), type: Tweak}
+  id: 2328
+  time: '2022-09-16T14:45:20.0000000+00:00'
