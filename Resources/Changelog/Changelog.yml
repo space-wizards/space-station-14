@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Inflatable doors are now transparent., type: Fix}
-  id: 1823
-  time: '2022-06-28T00:15:47.0000000+00:00'
 - author: ODJ
   changes:
   - {message: Proper Evac support for Split!, type: Add}
@@ -2926,3 +2921,8 @@ Entries:
   - {message: Fix all clones being young neuter humans, type: Fix}
   id: 2322
   time: '2022-09-16T14:13:46.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Added strip button to examine tooltip., type: Add}
+  id: 2323
+  time: '2022-09-16T14:16:10.0000000+00:00'
