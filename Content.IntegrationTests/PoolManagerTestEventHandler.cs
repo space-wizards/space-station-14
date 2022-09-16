@@ -10,9 +10,8 @@ namespace Content.IntegrationTests;
 public sealed class PoolManagerTestEventHandler
 {
     // This value is double the usual time for Content Integration tests
-    private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(7);
-
-    private static TimeSpan HardStopTimeLimit => MaximumTotalTestingTimeLimit.Add(TimeSpan.FromMinutes(1));
+    private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(1f);
+    private static TimeSpan HardStopTimeLimit => MaximumTotalTestingTimeLimit.Add(TimeSpan.FromMinutes(1f));
     [OneTimeSetUp]
     public void Setup()
     {
@@ -25,7 +24,8 @@ public sealed class PoolManagerTestEventHandler
         // If ending it nicely doesn't work within a minute, we do something a bit meaner.
         _ = Task.Delay(HardStopTimeLimit).ContinueWith(_ =>
         {
-            Environment.FailFast("Tests took way too long");
+            var deathReport = PoolManager.DeathReport();
+            Environment.FailFast($"Tests took way too ;\n Death Report:\n{deathReport}");
         });
     }
 
