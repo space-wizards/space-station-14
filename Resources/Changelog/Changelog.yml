@@ -1,10 +1,4 @@
 Entries:
-- author: Ablankmann
-  changes:
-  - {message: The Pointless tab within the uplink now holds your I-Want-To-Waste-TC
-      items., type: Tweak}
-  id: 1834
-  time: '2022-06-30T18:41:27.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Splitstation QoL update. See Github for the massive log of changes.,
@@ -2929,3 +2923,9 @@ Entries:
   - {message: Picked as traitor sound changed, type: Tweak}
   id: 2333
   time: '2022-09-16T21:57:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed various weird issues with lathe behavior that would result in
+      them getting stuck., type: Fix}
+  id: 2334
+  time: '2022-09-16T23:49:05.0000000+00:00'
