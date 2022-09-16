@@ -8,10 +8,10 @@ public sealed class SpawnRandomOffsetSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpawnRandomOffsetComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SpawnRandomOffsetComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnInit(EntityUid uid, SpawnRandomOffsetComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, SpawnRandomOffsetComponent component, MapInitEvent args)
     {
         // TODO: Kill this extension with fire, thanks
         uid.RandomOffset(component.Offset);
