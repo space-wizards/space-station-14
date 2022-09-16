@@ -8,7 +8,7 @@
   - type: MobMover
   - type: Loadout
     prototype: PassengerGear
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - NanoTrasen
 
@@ -18,7 +18,7 @@
   id: MobSpirate
   description: Yarr!
   components:
-  - type: AiFactionTag
+  - type: Faction
     factions:
       - Syndicate
   - type: InputMover

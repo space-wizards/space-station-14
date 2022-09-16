@@ -69,6 +69,8 @@
   - type: Actions
   - type: SentienceTarget
     flavorKind: mechanical
+  - type: StaticPrice
+    price: 200
 
 - type: entity
   parent: VendingMachine

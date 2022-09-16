@@ -6,7 +6,7 @@
   - type: Item
     size: 5
   - type: StaticPrice
-    price: 5
+    price: 20
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure

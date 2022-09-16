@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChameleon
+  name: black jumpsuit
+  description: A generic black jumpsuit with no rank markings.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
+    - type: SuitSensor
+      randomMode: false
+      mode: SensorOff
+    - type: ChameleonClothing
+      slot: [innerclothing]
+      default: ClothingUniformJumpsuitColorBlack
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

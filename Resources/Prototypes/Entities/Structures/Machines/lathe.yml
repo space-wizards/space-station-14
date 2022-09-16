@@ -85,6 +85,8 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+  - type: StaticPrice
+    price: 800
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -175,6 +177,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - ChemistryEmptyBottle01
       - Drone
       - Flash
       - MicroManipulatorStockPart
@@ -386,6 +389,7 @@
       - Syringe
       - PillCanister
       - BodyBag
+      - ChemistryEmptyBottle01
   - type: Machine
     board: MedicalTechFabCircuitboard
 

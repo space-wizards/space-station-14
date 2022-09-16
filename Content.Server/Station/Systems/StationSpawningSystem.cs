@@ -38,7 +38,7 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PDASystem _pdaSystem = default!;
-    [Dependency] private readonly AccessSystem _accessSystem = default!;
+    [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
 
     /// <inheritdoc/>

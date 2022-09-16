@@ -77,6 +77,9 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             // TODO: God the path api sucks PLUS I need some fast way to get this.
             var job = _path.RequestPath(owner, target.Owner, CancellationToken.None);
 
+            if (job == null)
+                continue;
+
             await job.AsTask;
 
             if (job.Result == null || !_entManager.TryGetComponent<TransformComponent>(target.Owner, out var targetXform))

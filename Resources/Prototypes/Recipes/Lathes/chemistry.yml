@@ -58,3 +58,13 @@
   completetime: 2
   materials:
     Plastic: 100
+
+- type: latheRecipe
+  id: ChemistryEmptyBottle01
+  icon:
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    state: bottle-1
+  result: ChemistryEmptyBottle01
+  completetime: 2
+  materials:
+    Glass: 200	
