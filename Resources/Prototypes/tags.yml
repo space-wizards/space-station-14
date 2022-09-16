@@ -1,7 +1,13 @@
 # Alphabetical order is now apparently required.
 
 - type: Tag
+  id: AirAlarm
+
+- type: Tag
   id: AirAlarmElectronics
+
+- type: Tag
+  id: AirSensor
 
 - type: Tag
   id: ATVKeys
@@ -89,6 +95,9 @@
 
 - type: Tag
   id: CartridgeRocket
+
+- type: Tag
+  id: Cigarette
 
 - type: Tag
   id: CigFilter
@@ -181,10 +190,16 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: FireAlarm
+
+- type: Tag
   id: FireAlarmElectronics
 
 - type: Tag
   id: FireAxe
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -209,6 +224,12 @@
 
 - type: Tag
   id: ForceNoFixRotations # fixrotations command WON'T target this
+
+- type: Tag
+  id: GasScrubber
+
+- type: Tag
+  id: GasVent
 
 - type: Tag
   id: Gauze
@@ -404,6 +425,9 @@
 
 - type: Tag
   id: Screwdriver
+
+- type: Tag
+  id: SecBeltEquip
 
 - type: Tag
   id: SecwayKeys

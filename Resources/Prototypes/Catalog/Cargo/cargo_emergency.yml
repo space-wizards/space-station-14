@@ -4,7 +4,7 @@
     sprite: Clothing/Head/Helmets/bombsuit.rsi
     state: icon
   product: CrateEmergencyExplosive
-  cost: 1500
+  cost: 500
   category: Emergency
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Clothing/Mask/breath.rsi
     state: icon
   product: CrateEmergencyInternals
-  cost: 1000
+  cost: 500
   category: Emergency
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Structures/Wallmounts/signs.rsi
     state: radiation
   product: CrateEmergencyRadiation
-  cost: 1000
+  cost: 500
   category: Emergency
   group: market
 
@@ -44,6 +44,6 @@
     sprite: Objects/Misc/inflatable_wall.rsi
     state: item_wall
   product: CrateEmergencyInflatablewall
-  cost: 1000
+  cost: 500
   category: Emergency
   group: market

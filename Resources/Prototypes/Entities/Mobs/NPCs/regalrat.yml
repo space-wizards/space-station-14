@@ -14,7 +14,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -41,6 +41,7 @@
       150: Critical
       200: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1
     arcwidth: 0
     arc: claw
@@ -113,6 +114,10 @@
     - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
+  - type: RandomMetadata
+    nameSegments:
+    - RegalRatNameKingdom
+    - RegalRatNameTitle
 
 - type: entity
   id: MobRatKingBuff
@@ -132,6 +137,7 @@
       300: Critical
       350: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: fist
@@ -165,15 +171,13 @@
     baseSprintSpeed : 3.5
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -200,6 +204,7 @@
       30: Critical
       60: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1
     arcwidth: 0
     arc: claw

@@ -63,6 +63,14 @@ namespace Content.Server.Ghost.Roles.Components
             }
         }
 
+        [DataField("allowSpeech")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowSpeech { get; set; } = true;
+
+        [DataField("allowMovement")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowMovement { get; set; }
+
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Taken { get; set; }
 

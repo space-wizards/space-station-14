@@ -53,6 +53,13 @@ namespace Content.Shared.Roles
         [DataField("weight")]
         public int Weight { get; private set; }
 
+        /// <summary>
+        ///     A numerical score for how much easier this job is for antagonists.
+        ///     For traitors, reduces starting TC by this amount. Other gamemodes can use it for whatever they find fitting.
+        /// </summary>
+        [DataField("antagAdvantage")]
+        public int AntagAdvantage = 0;
+
         [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }
 

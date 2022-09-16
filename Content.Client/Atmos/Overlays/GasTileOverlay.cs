@@ -145,7 +145,7 @@ namespace Content.Client.Atmos.Overlays
                     continue;
 
                 drawHandle.SetTransform(mapGrid.WorldMatrix);
-                var floatBounds = mapGrid.InvWorldMatrix.TransformBox(in args.WorldBounds);
+                var floatBounds = mapGrid.InvWorldMatrix.TransformBox(in args.WorldBounds).Enlarged(mapGrid.TileSize);
                 var localBounds = new Box2i(
                     (int) MathF.Floor(floatBounds.Left),
                     (int) MathF.Floor(floatBounds.Bottom),

@@ -23,6 +23,10 @@
           tankInserted:
             False: { state: can-open, visible: false }
             True: { state: can-open, visible: true }
+        enum.GasCanisterVisuals.Locked:
+          locked:
+            False: { state: can-unlocked, shader: "unshaded" }
+            True: { state: can-locked, shader: "unshaded" }
         enum.GasCanisterVisuals.PressureState:
           pressureLight:
             0: { state: can-o0, shader: "unshaded" }
@@ -81,6 +85,10 @@
     - type: GasCanister
     - type: StaticPrice
       price: 1000
+    - type: AccessReader
+      access: [["Atmospherics"], ["ResearchDirector"]]
+    - type: Lock
+      locked: false
 
 - type: entity
   parent: GasCanister
@@ -242,6 +250,8 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: Lock
+      locked: true
 
 - type: entity
   parent: GasCanister
@@ -276,6 +286,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
 
 - type: entity
   parent: GasCanister
@@ -310,6 +322,8 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: Lock
+      locked: true
 
 - type: entity
   parent: GasCanister
@@ -381,6 +395,8 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: Lock
+      locked: true
 
 - type: entity
   parent: GasCanister
@@ -455,6 +471,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Lock
+    locked: true
 
 # Broke Entities
 

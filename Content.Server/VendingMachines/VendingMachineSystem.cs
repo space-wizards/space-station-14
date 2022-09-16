@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -21,30 +22,54 @@ namespace Content.Server.VendingMachines
 {
     public sealed class VendingMachineSystem : SharedVendingMachineSystem
     {
+        [Dependency] private readonly IComponentFactory _factory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _action = default!;
-        [Dependency] private readonly AudioSystem _audioSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _action = default!;
+        [Dependency] private readonly PricingSystem _pricing = default!;
+        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+
+        private ISawmill _sawmill = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            _sawmill = Logger.GetSawmill("vending");
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamage);
+            SubscribeLocalEvent<VendingMachineComponent, PriceCalculationEvent>(OnVendingPrice);
 
             SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
             SubscribeLocalEvent<VendingMachineComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
 
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
+        }
+
+        private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
+        {
+            var price = 0.0;
+
+            foreach (var (id, entry) in component.Inventory)
+            {
+                if (!_prototypeManager.TryIndex<EntityPrototype>(entry.ID, out var proto))
+                {
+                    _sawmill.Error($"Unable to find entity prototype {entry.ID} on {ToPrettyString(uid)} vending.");
+                    continue;
+                }
+
+                price += entry.Amount * _pricing.GetEstimatedPrice(proto, _factory);
+            }
+
+            args.Price += price;
         }
 
         protected override void OnComponentInit(EntityUid uid, SharedVendingMachineComponent sharedComponent, ComponentInit args)
@@ -113,7 +138,7 @@ namespace Content.Server.VendingMachines
             component.Emagged = true;
             args.Handled = true;
         }
-        
+
         private void OnDamage(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
         {
             if (component.Broken || component.DispenseOnHitCoolingDown ||
@@ -320,7 +345,7 @@ namespace Content.Server.VendingMachines
                 vendComponent.ThrowNextItem = false;
                 return;
             }
-                
+
             var ent = EntityManager.SpawnEntity(vendComponent.NextItemToEject, Transform(vendComponent.Owner).Coordinates);
             if (vendComponent.ThrowNextItem)
             {
