@@ -34,6 +34,11 @@
           - MachineMask
         layer:
           - MachineLayer
+  - type: ContainerContainer
+    containers:
+      scanner-bodyContainer:
+        !type:ContainerSlot
+        showEnts: true
   - type: AtmosDevice
   - type: CryoPodVisuals
   - type: Appearance

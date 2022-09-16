@@ -77,7 +77,6 @@ public sealed class CryoPodSystem: EntitySystem
     {
         base.Initialize();
         cryoPodComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"scanner-bodyContainer");
-        cryoPodComponent.BodyContainer.ShowContents = true;
     }
 
     private void UpdateAppearance(EntityUid uid, CryoPodComponent? cryoPod = null)
