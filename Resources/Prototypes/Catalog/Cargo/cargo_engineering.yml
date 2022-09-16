@@ -52,7 +52,7 @@
   id: EngineeringJetpack
   icon:
     sprite: Objects/Tanks/Jetpacks/blue.rsi
-    state: base
+    state: icon
   product: CrateEngineeringJetpack
   cost: 1000
   category: Engineering
