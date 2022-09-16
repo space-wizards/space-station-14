@@ -1,10 +1,4 @@
 Entries:
-- author: Sammy Boy
-  changes:
-  - {message: Delta level alarm's volume has been decreased substantially to avoid
-      causing tinnitus!, type: Tweak}
-  id: 1820
-  time: '2022-06-27T20:45:01.0000000+00:00'
 - author: Ablankmann
   changes:
   - {message: Added the Syndicate Shoulder Holster and the Outlaw's Hat to the Uplink.,
@@ -2931,3 +2925,8 @@ Entries:
       follow the directional signs not to get lost., type: Add}
   id: 2319
   time: '2022-09-16T02:55:43.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Gas tanks can now also be sold (no longer just canisters)., type: Add}
+  id: 2320
+  time: '2022-09-16T14:04:25.0000000+00:00'
