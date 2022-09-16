@@ -434,6 +434,11 @@ In a different test, the pool manager had an exception when trying to create a s
 Instead of risking that the pool manager will fail at creating a server/client pairs for every single test,
 we are just going to end this here to save a lot of time. This is the exception that started this:\n {0}", PoolFailureReason);
         }
+
+        if (Pairs == null)
+        {
+            Assert.Inconclusive("The pool was shut down");
+        }
     }
     private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings)
     {
