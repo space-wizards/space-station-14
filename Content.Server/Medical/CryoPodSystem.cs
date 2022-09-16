@@ -130,10 +130,11 @@ public sealed class CryoPodSystem: EntitySystem
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             return;
 
-        if (!TryComp<MobStateComponent>(target, out var _comp))
+        if (!TryComp<MobStateComponent>(target, out var _comp) || !TryComp<TransformComponent>(target, out var xform))
             return;
 
-        cryoPodComponent.BodyContainer.Insert(target);
+        cryoPodComponent.BodyContainer.Insert(target, transform: xform);
+        xform.LocalPosition = new Vector2(0, 1); // So that the target appears to be floating within the pod
 
         var comp = EnsureComp<InsideCryoPodComponent>(target);
         comp.Holder = cryoPodComponent.Owner;

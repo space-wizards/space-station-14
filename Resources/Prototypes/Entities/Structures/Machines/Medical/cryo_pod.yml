@@ -8,7 +8,7 @@
     netsync: false
     sprite: Structures/Machines/cryogenics.rsi
     drawdepth: Mobs
-    offset: 0, -0.3
+    offset: 0, 0.5
     layers:
       - sprite: Structures/Piping/Atmospherics/pipe.rsi
         state: pipeHalf
@@ -51,6 +51,7 @@
       port:
         !type:PortablePipeNode
         nodeGroupID: Pipe
+        pipeDirection: South
   - type: ItemSlots
     slots:
       beakerSlot:
