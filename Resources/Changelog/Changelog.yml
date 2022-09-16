@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Changed salvage locker loadout and probability. Now chance of makeshift
-      laser rifles., type: Tweak}
-  id: 1827
-  time: '2022-06-28T13:21:46.0000000+00:00'
 - author: Rane
   changes:
   - {message: Research disks have been ported from Nyanotrasen MRP. They're in salvage
@@ -2929,3 +2923,8 @@ Entries:
       wall., type: Fix}
   id: 2326
   time: '2022-09-16T14:41:21.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: More variants of equipped headsets sprite, type: Add}
+  id: 2327
+  time: '2022-09-16T14:43:18.0000000+00:00'
