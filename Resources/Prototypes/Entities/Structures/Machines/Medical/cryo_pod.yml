@@ -35,7 +35,6 @@
         layer:
           - MachineLayer
   - type: AtmosDevice
-  - type: GasAnalyzable
   - type: CryoPodVisuals
   - type: Appearance
   - type: Machine
