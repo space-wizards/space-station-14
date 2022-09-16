@@ -10,8 +10,8 @@ namespace Content.IntegrationTests;
 public sealed class PoolManagerTestEventHandler
 {
     // This value is double the usual time for Content Integration tests
-    private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(1f);
-    private static TimeSpan HardStopTimeLimit => MaximumTotalTestingTimeLimit.Add(TimeSpan.FromMinutes(1f));
+    private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(7);
+    private static TimeSpan HardStopTimeLimit => MaximumTotalTestingTimeLimit.Add(TimeSpan.FromMinutes(1));
     [OneTimeSetUp]
     public void Setup()
     {
