@@ -75,6 +75,7 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             var target = _random.PickAndTake(targets);
 
             // TODO: God the path api sucks PLUS I need some fast way to get this.
+            /*
             var job = _path.RequestPath(owner, target.Owner, CancellationToken.None);
 
             if (job == null)
@@ -91,6 +92,7 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             {
                 { TargetKey, targetXform.Coordinates },
             });
+            */
         }
 
         return (false, null);

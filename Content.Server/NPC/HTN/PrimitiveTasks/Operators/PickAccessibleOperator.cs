@@ -1,6 +1,4 @@
 using System.Threading.Tasks;
-using Content.Server.NPC.Pathfinding;
-using Content.Server.NPC.Pathfinding.Accessible;
 using Robust.Shared.Random;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
@@ -12,7 +10,7 @@ public sealed class PickAccessibleOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    private AiReachableSystem _reachable = default!;
+    // private AiReachableSystem _reachable = default!;
 
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
@@ -23,7 +21,7 @@ public sealed class PickAccessibleOperator : HTNOperator
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _reachable = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiReachableSystem>();
+        // _reachable = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiReachableSystem>();
     }
 
     /// <inheritdoc/>
@@ -35,6 +33,8 @@ public sealed class PickAccessibleOperator : HTNOperator
         if (!_entManager.TryGetComponent(_entManager.GetComponent<TransformComponent>(owner).GridUid, out IMapGridComponent? grid))
             return (false, null);
 
+        // TODO:
+        /*
         var reachableArgs = ReachableArgs.GetArgs(owner, blackboard.GetValueOrDefault<float>(RangeKey));
         var entityRegion = _reachable.GetRegion(owner);
         var reachableRegions = _reachable.GetReachableRegions(reachableArgs, entityRegion);
@@ -43,6 +43,7 @@ public sealed class PickAccessibleOperator : HTNOperator
             return (false, null);
 
         var reachableNodes = new List<PathfindingNode>();
+
 
         foreach (var region in reachableRegions)
         {
@@ -59,5 +60,7 @@ public sealed class PickAccessibleOperator : HTNOperator
         {
             { TargetKey, target },
         });
+        */
+        return (false, null);
     }
 }

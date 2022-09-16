@@ -11,7 +11,7 @@ namespace Content.Client.Commands
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
         public string Description => "Toggles visibility of pathfinding debuggers.";
-        public string Help => "pathfinder [hide/nodes/routes/graph/regioncache/regions]";
+        public string Help => "pathfinder [hide/breadcrumbs]";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {

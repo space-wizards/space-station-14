@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
-using Content.Server.NPC.Pathfinding.Pathfinders;
 using Content.Server.NPC.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -100,6 +99,8 @@ public sealed class MoveToOperator : HTNOperator
         var cancelToken = new CancellationTokenSource();
         var access = blackboard.GetValueOrDefault<ICollection<string>>(NPCBlackboard.Access) ?? new List<string>();
 
+        return (false, null);
+        /* TODO
         var job = _pathfind.RequestPath(
             new PathfindingArgs(
                 blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
@@ -121,6 +122,7 @@ public sealed class MoveToOperator : HTNOperator
             {NPCBlackboard.OwnerCoordinates, targetCoordinates},
             {PathfindKey, job.Result}
         });
+        */
     }
 
     // Given steering is complicated we'll hand it off to a dedicated system rather than this singleton operator.

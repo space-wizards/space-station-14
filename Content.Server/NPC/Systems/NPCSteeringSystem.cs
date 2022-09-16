@@ -3,13 +3,11 @@ using System.Threading;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
-using Content.Server.NPC.Pathfinding.Pathfinders;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
@@ -390,6 +388,8 @@ namespace Content.Server.NPC.Systems
 
             var access = _accessReader.FindAccessTags(steering.Owner);
 
+            // TODO:
+            /*
             steering.Pathfind = _pathfindingSystem.RequestPath(new PathfindingArgs(
                 steering.Owner,
                 access,
@@ -398,6 +398,7 @@ namespace Content.Server.NPC.Systems
                 endTile,
                 steering.Range
             ), steering.PathfindToken.Token);
+            */
         }
 
         // TODO: Move these to movercontroller

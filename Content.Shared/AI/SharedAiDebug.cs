@@ -3,6 +3,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.AI
 {
+    // TODO: DELETE DON'T LET SLOTH FORGET
+
     public static class SharedAiDebug
     {
         #region Mob Debug
