@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Research console should work again I guess., type: Fix}
-  id: 1826
-  time: '2022-06-28T12:54:08.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Changed salvage locker loadout and probability. Now chance of makeshift
@@ -2928,3 +2923,9 @@ Entries:
     type: Add}
   id: 2325
   time: '2022-09-16T14:27:28.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Deconstructing certain things dont leave their materials stuck in the
+      wall., type: Fix}
+  id: 2326
+  time: '2022-09-16T14:41:21.0000000+00:00'
