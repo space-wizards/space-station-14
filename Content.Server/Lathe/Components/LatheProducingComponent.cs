@@ -7,9 +7,9 @@ namespace Content.Server.Lathe.Components;
 public sealed class LatheProducingComponent : Component
 {
     /// <summary>
-    /// Remaining production time, in seconds.
+    /// How much production time has passed, in seconds.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float TimeRemaining;
+    public float AccumulatedTime;
 }
 

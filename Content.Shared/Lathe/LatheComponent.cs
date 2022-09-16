@@ -54,7 +54,7 @@ namespace Content.Shared.Lathe
         /// The recipe the lathe is currently producing
         /// </summary>
         [ViewVariables]
-        public LatheRecipePrototype? Recipe;
+        public LatheRecipePrototype? CurrentRecipe;
 
 
     }
