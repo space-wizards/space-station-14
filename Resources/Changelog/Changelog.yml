@@ -1,15 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Waystation now has docking airlocks., type: Tweak}
-  id: 1830
-  time: '2022-06-29T03:26:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Cuff time reduced by 1.5 seconds for both stunned and non-stunned targets.,
-    type: Tweak}
-  id: 1831
-  time: '2022-06-29T09:41:29.0000000+00:00'
 - author: TekuNut
   changes:
   - {message: Cigarettes and cigars now need to be in the mouth to apply effects,
@@ -2929,3 +2918,14 @@ Entries:
     type: Add}
   id: 2329
   time: '2022-09-16T18:46:09.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: You can now buy jetpacks from cargo., type: Add}
+  id: 2330
+  time: '2022-09-16T21:21:46.0000000+00:00'
+- author: Rolfero
+  changes:
+  - {message: Forensic scanners can be used by a verb in the right-clicking menu.,
+    type: Add}
+  id: 2331
+  time: '2022-09-16T21:22:17.0000000+00:00'
