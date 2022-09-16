@@ -92,9 +92,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> StatusMoMMIPassword =
             CVarDef.Create("status.mommipassword", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
-
         /*
-         * Game
+         * Events
          */
 
         /// <summary>
@@ -102,6 +101,24 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Average time (in minutes) for when the ramping event scheduler should stop increasing the chaos modifier.
+        ///     Close to how long you expect a round to last.
+        /// </summary>
+        public static readonly CVarDef<float>
+            EventsRampingAverageEndTime = CVarDef.Create("events.ramping_average_end_time", 75f, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Average ending chaos modifier for the ramping event scheduler.
+        ///     Chosen for a round will deviate from this
+        /// </summary>
+        public static readonly CVarDef<float>
+            EventsRampingAverageChaos = CVarDef.Create("events.ramping_average_chaos", 10f, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /*
+         * Game
+         */
 
         /// <summary>
         ///     Disables most functionality in the GameTicker.
