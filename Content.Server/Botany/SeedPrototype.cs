@@ -126,14 +126,14 @@ public class SeedData
 
     [DataField("waterConsumption")] public float WaterConsumption = 3f;
     [DataField("idealHeat")] public float IdealHeat = 293f;
-    [DataField("heatTolerance")] public float HeatTolerance = 20f;
+    [DataField("heatTolerance")] public float HeatTolerance = 10f;
     [DataField("idealLight")] public float IdealLight = 7f;
-    [DataField("lightTolerance")] public float LightTolerance = 5f;
+    [DataField("lightTolerance")] public float LightTolerance = 3f;
     [DataField("toxinsTolerance")] public float ToxinsTolerance = 4f;
 
-    [DataField("lowPressureTolerance")] public float LowPressureTolerance = 25f;
+    [DataField("lowPressureTolerance")] public float LowPressureTolerance = 81f;
 
-    [DataField("highPressureTolerance")] public float HighPressureTolerance = 200f;
+    [DataField("highPressureTolerance")] public float HighPressureTolerance = 121f;
 
     [DataField("pestTolerance")] public float PestTolerance = 5f;
 
@@ -153,6 +153,28 @@ public class SeedData
     [DataField("harvestRepeat")] public HarvestType HarvestRepeat = HarvestType.NoRepeat;
 
     [DataField("potency")] public float Potency = 1f;
+
+    /// <summary>
+    ///     If true, cannot be harvested for seeds. Balances hybrids and
+    ///     mutations.
+    /// </summary>
+    [DataField("seedless")] public bool Seedless = false;
+
+    /// <summary>
+    ///     If true, rapidly decrease health while growing. Used to kill off
+    ///     plants with "bad" mutations.
+    /// </summary>
+    [DataField("viable")] public bool Viable = true;
+
+    /// <summary>
+    ///     If true, fruit slips players.
+    /// </summary>
+    [DataField("slip")] public bool Slip = false;
+
+    /// <summary>
+    ///     If true, fruits are sentient.
+    /// </summary>
+    [DataField("sentient")] public bool Sentient = false;
 
     /// <summary>
     ///     If true, a sharp tool is required to harvest this plant.
@@ -181,9 +203,11 @@ public class SeedData
 
     [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
 
-    [DataField("bioluminescent")] public bool Bioluminescent { get; set; }
+    [DataField("bioluminescent")] public bool Bioluminescent;
 
     [DataField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
+
+    public float BioluminescentRadius = 2f;
 
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
@@ -227,13 +251,17 @@ public class SeedData
             HarvestRepeat = HarvestRepeat,
             Potency = Potency,
 
+            Seedless = Seedless,
+            Viable = Viable,
+            Slip = Slip,
+            Sentient = Sentient,
+            Ligneous = Ligneous,
+
             PlantRsi = PlantRsi,
             PlantIconState = PlantIconState,
             Bioluminescent = Bioluminescent,
             BioluminescentColor = BioluminescentColor,
             SplatPrototype = SplatPrototype,
-
-            Ligneous = Ligneous,
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
             Unique = true,

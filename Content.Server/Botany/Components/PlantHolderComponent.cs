@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
+using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -192,6 +193,13 @@ namespace Content.Server.Botany.Components
 
             var healthMod = _random.Next(1, 3) * HydroponicsSpeedMultiplier;
 
+            // Make sure genetics are viable.
+            if (!Seed.Viable)
+            {
+                AffectGrowth(-1);
+                Health -= 6*healthMod;
+            }
+
             // Make sure the plant is not starving.
             if (_random.Prob(0.35f))
             {
@@ -373,6 +381,13 @@ namespace Content.Server.Botany.Components
             }
 
             CheckLevelSanity();
+
+            if (Seed.Sentient)
+            {
+                var comp = _entMan.EnsureComponent<GhostTakeoverAvailableComponent>(Owner);
+                comp.RoleName = _entMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+                comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
+            }
 
             if (_updateSpriteAfterUpdate)
                 UpdateSprite();
@@ -564,6 +579,17 @@ namespace Content.Server.Botany.Components
         public void UpdateSprite()
         {
             _updateSpriteAfterUpdate = false;
+
+            if (Seed != null && Seed.Bioluminescent)
+            {
+                var light = _entMan.EnsureComponent<PointLightComponent>(Owner);
+                light.Radius = Seed.BioluminescentRadius;
+                light.Color = Seed.BioluminescentColor;
+            }
+            else
+            {
+                _entMan.RemoveComponent<PointLightComponent>(Owner);
+            }
 
             if (!_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
                 return;
