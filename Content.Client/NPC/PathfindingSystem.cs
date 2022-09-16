@@ -1,16 +1,10 @@
-using System.Linq;
-using Content.Shared.AI;
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Client.NPC
 {
-    public sealed class ClientPathfindingDebugSystem : EntitySystem
+    public sealed class PathfindingSystem : SharedPathfindingSystem
     {
         public PathfindingDebugMode Modes
         {
@@ -29,8 +23,10 @@ namespace Content.Client.NPC
 
                 if (!overlayManager.HasOverlay<DebugPathfindingOverlay>())
                 {
-                    overlayManager.AddOverlay(new DebugPathfindingOverlay());
+                    overlayManager.AddOverlay(new DebugPathfindingOverlay(this));
                 }
+
+                if (value )
 
                 RaiseNetworkEvent(new RequestPathfindingBreadcrumbsMessage());
             }
@@ -38,25 +34,34 @@ namespace Content.Client.NPC
 
         private PathfindingDebugMode _modes = PathfindingDebugMode.None;
 
+        // It's debug data IDC if it doesn't support snapshots I just want something fast.
+        public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeNetworkEvent<PathfindingBreadcrumbsMessage>(OnBreadcrumbs);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            Breadcrumbs.Clear();
+        }
+
         private void OnBreadcrumbs(PathfindingBreadcrumbsMessage ev)
         {
-            throw new NotImplementedException();
+            Breadcrumbs = ev.Breadcrumbs;
         }
     }
 
     internal sealed class DebugPathfindingOverlay : Overlay
     {
-        private ClientPathfindingDebugSystem _system;
+        private PathfindingSystem _system;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public DebugPathfindingOverlay(ClientPathfindingDebugSystem system)
+        public DebugPathfindingOverlay(PathfindingSystem system)
         {
             _system = system;
         }
@@ -65,12 +70,5 @@ namespace Content.Client.NPC
         {
             return;
         }
-    }
-
-    [Flags]
-    public enum PathfindingDebugMode : byte
-    {
-        None = 0,
-        Breadcrumbs = 1 << 0,
     }
 }

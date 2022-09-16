@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.NPC;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -168,7 +169,7 @@ public sealed partial class PathfindingSystem
                         // Subtile
                         var localPos = new Vector2(x + (float) subX / SubStep, y + (float) subY / SubStep);
 
-                        var point = new GridPathfindingPoint()
+                        var point = new PathfindingBreadcrumb()
                         {
                             Coordinates = localPos,
                             IsSpace = isSpace,
@@ -211,5 +212,6 @@ public sealed partial class PathfindingSystem
         }
 
         // TODO: Work out neighbor nodes.
+        SendBreadcrumbs();
     }
 }

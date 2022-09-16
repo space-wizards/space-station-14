@@ -1,3 +1,5 @@
+using Content.Shared.NPC;
+
 namespace Content.Server.NPC.Pathfinding;
 
 /// <summary>
@@ -12,7 +14,7 @@ public sealed class GridPathfindingComponent : Component
 
 public sealed class GridPathfindingChunk
 {
-    public readonly GridPathfindingPoint[] Points = new GridPathfindingPoint[
+    public readonly PathfindingBreadcrumb[] Points = new PathfindingBreadcrumb[
         PathfindingSystem.ChunkSize * PathfindingSystem.SubStep *
         PathfindingSystem.ChunkSize * PathfindingSystem.SubStep];
 
@@ -20,12 +22,4 @@ public sealed class GridPathfindingChunk
     {
         Array.Clear(Points);
     }
-}
-
-public struct GridPathfindingPoint
-{
-    public Vector2 Coordinates;
-    public bool IsSpace;
-    public int CollisionLayer;
-    public int CollisionMask;
 }
