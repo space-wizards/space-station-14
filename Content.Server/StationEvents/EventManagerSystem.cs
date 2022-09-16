@@ -30,8 +30,6 @@ public sealed class EventManagerSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("events");
 
-        // Can't just check debug / release for a default given mappers need to use release mode
-        // As such we'll always pause it by default.
         _configurationManager.OnValueChanged(CCVars.EventsEnabled, SetEnabled, true);
     }
 

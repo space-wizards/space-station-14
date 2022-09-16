@@ -1,9 +1,8 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.StationEvents.Events;
 using Content.Shared.CCVar;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents;
@@ -13,9 +12,7 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem
     public override string Prototype => "RampingStationEventScheduler";
 
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
@@ -23,6 +20,13 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem
     private float _maxChaos;
     private float _startingChaos;
     private float _timeUntilNextEvent;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<GetSeverityModifierEvent>(OnGetSeverityModifier);
+    }
 
     public override void Started()
     {
@@ -59,6 +63,15 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem
         }
 
         _event.RunRandomEvent();
+    }
+
+    private void OnGetSeverityModifier(GetSeverityModifierEvent ev)
+    {
+        if (!RuleStarted)
+            return;
+
+        ev.Modifier *= GetChaosModifier();
+        Logger.Info($"Ramping set modifier to {ev.Modifier}");
     }
 
     private float GetChaosModifier()
