@@ -11,7 +11,6 @@ public sealed class RadiationDebugOverlay : Overlay
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
 
     private readonly Font _font;
 
@@ -44,7 +43,7 @@ public sealed class RadiationDebugOverlay : Overlay
 
     private void DrawScreenRays(OverlayDrawArgs args)
     {
-        if (Rays == null)
+        if (Rays == null || args.ViewportControl == null)
             return;
 
         var handle = args.ScreenHandle;
@@ -55,13 +54,13 @@ public sealed class RadiationDebugOverlay : Overlay
 
             if (ray.ReachedDestination)
             {
-                var screenCenter = _eyeManager.WorldToScreen(ray.Destination);
+                var screenCenter = args.ViewportControl.WorldToScreen(ray.Destination);
                 handle.DrawString(_font, screenCenter, ray.Rads.ToString("F2"), 2f, Color.White);
             }
 
             foreach (var (blockerPos, rads) in ray.Blockers)
             {
-                var screenCenter = _eyeManager.WorldToScreen(blockerPos);
+                var screenCenter = args.ViewportControl.WorldToScreen(blockerPos);
                 handle.DrawString(_font, screenCenter, rads.ToString("F2"), 1.5f, Color.White);
             }
 
@@ -73,7 +72,7 @@ public sealed class RadiationDebugOverlay : Overlay
                         continue;
 
                     var worldPos = grid.GridTileToWorldPos(tile);
-                    var screenCenter = _eyeManager.WorldToScreen(worldPos);
+                    var screenCenter = args.ViewportControl.WorldToScreen(worldPos);
                     handle.DrawString(_font, screenCenter, rads.Value.ToString("F2"), 1.5f, Color.White);
                 }
             }
@@ -82,7 +81,7 @@ public sealed class RadiationDebugOverlay : Overlay
 
     private void DrawScreenResistance(OverlayDrawArgs args)
     {
-        if (ResistanceGrids == null)
+        if (ResistanceGrids == null || args.ViewportControl == null)
             return;
 
         var handle = args.ScreenHandle;
@@ -98,7 +97,7 @@ public sealed class RadiationDebugOverlay : Overlay
             {
                 var localPos = grid.GridTileToLocal(tile).Position + offset;
                 var worldPos = grid.LocalToWorld(localPos);
-                var screenCenter = _eyeManager.WorldToScreen(worldPos);
+                var screenCenter = args.ViewportControl.WorldToScreen(worldPos);
                 handle.DrawString(_font, screenCenter, value.ToString("F2"), color: Color.White);
             }
         }
