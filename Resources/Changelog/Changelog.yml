@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Cargo Shuttle cooldown has been increased from 45 seconds to 2.5
-      minutes., type: Tweak}
-  id: 1838
-  time: '2022-07-01T20:33:18.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Basic shuttle call time reduced from 20 minutes to 10 minutes., type: Tweak}
@@ -2929,3 +2923,8 @@ Entries:
   - {message: You can now lathe appraisal tools., type: Add}
   id: 2337
   time: '2022-09-17T16:16:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a variety of wall-mounted lockers., type: Add}
+  id: 2338
+  time: '2022-09-17T20:05:39.0000000+00:00'
