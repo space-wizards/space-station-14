@@ -10,32 +10,44 @@ public struct PathfindingBreadcrumb : IEquatable<PathfindingBreadcrumb>
     /// The actual coordinates require using <see cref="SharedPathfindingSystem.ChunkSize"/> and <see cref="SharedPathfindingSystem.SubStep"/>
     /// </summary>
     public Vector2i Coordinates;
-    public bool IsSpace;
+
+    public PathfindingBreadcrumbFlag Flags;
     public int CollisionLayer;
     public int CollisionMask;
 
     public static readonly PathfindingBreadcrumb Invalid = new()
     {
-        IsSpace = true,
+        Flags = PathfindingBreadcrumbFlag.Space,
         CollisionLayer = -1,
         CollisionMask = -1,
     };
 
+    public bool IsInterior => (Flags & PathfindingBreadcrumbFlag.Interior) != 0x0;
+    public bool IsBoundary => (Flags & PathfindingBreadcrumbFlag.Interior) == 0x0;
+
+    public PathfindingBreadcrumb(Vector2i coordinates, int layer, int mask, PathfindingBreadcrumbFlag flags = PathfindingBreadcrumbFlag.None)
+    {
+        Coordinates = coordinates;
+        CollisionLayer = layer;
+        CollisionMask = mask;
+        Flags = flags;
+    }
+
     /// <summary>
-    /// Is this crumb equal (apart from coordinates).
+    /// Is this crumb equal for pathfinding region purposes.
     /// </summary>
     public bool Equivalent(PathfindingBreadcrumb other)
     {
         return CollisionLayer.Equals(other.CollisionLayer) &&
                CollisionMask.Equals(other.CollisionMask) &&
-               IsSpace.Equals(other.IsSpace);
+               (Flags & PathfindingBreadcrumbFlag.Space) == (other.Flags & PathfindingBreadcrumbFlag.Space);
     }
 
     public bool Equals(PathfindingBreadcrumb other)
     {
         return CollisionLayer.Equals(other.CollisionLayer) &&
                CollisionMask.Equals(other.CollisionMask) &&
-               IsSpace.Equals(other.IsSpace) &&
+               Flags.Equals(other.Flags) &&
                Coordinates.Equals(other.Coordinates);
     }
 
@@ -46,6 +58,14 @@ public struct PathfindingBreadcrumb : IEquatable<PathfindingBreadcrumb>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Coordinates, IsSpace, CollisionLayer, CollisionMask);
+        return HashCode.Combine(Coordinates, Flags, CollisionLayer, CollisionMask);
     }
+}
+
+[Flags]
+public enum PathfindingBreadcrumbFlag : ushort
+{
+    None = 0,
+    Space = 1 << 0,
+    Interior = 1 << 1,
 }

@@ -115,7 +115,11 @@ namespace Content.Client.NPC
                             var masked = crumb.CollisionMask != 0 || crumb.CollisionLayer != 0;
                             Color color;
 
-                            if (masked)
+                            if ((crumb.Flags & PathfindingBreadcrumbFlag.Space) != 0x0)
+                            {
+                                color = Color.Green;
+                            }
+                            else if (masked)
                             {
                                 color = Color.Blue;
                             }

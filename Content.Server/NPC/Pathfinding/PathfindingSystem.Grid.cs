@@ -1,5 +1,7 @@
 using System.Linq;
+using Content.Shared.Maps;
 using Content.Shared.NPC;
+using Content.Shared.Physics;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -30,6 +32,11 @@ public sealed partial class PathfindingSystem
 
     private const float UpdateCooldown = 0.3f;
     private float _accumulator = UpdateCooldown;
+
+    // What relevant collision groups we track for pathfinding.
+    // Stuff like chairs have collision but aren't relevant for mobs.
+    public const int PathfindingCollisionMask = (int) CollisionGroup.MobMask;
+    public const int PathfindingCollisionLayer = (int) CollisionGroup.MobLayer;
 
     private void InitializeGrid()
     {
@@ -217,18 +224,22 @@ public sealed partial class PathfindingSystem
             for (var y = 0; y < ChunkSize; y++)
             {
                 // Tile
-                var tile = grid.GetTileRef(new Vector2i(x, y));
-                var isSpace = tile.Tile.IsEmpty;
+                var tilePos = new Vector2i(x, y) + gridOrigin;
+
+                var tile = grid.GetTileRef(tilePos);
+                var flags = tile.Tile.IsEmpty ? PathfindingBreadcrumbFlag.Space : PathfindingBreadcrumbFlag.None;
 
                 var tileEntities = new ValueList<EntityUid>();
-                var anchored = grid.GetAnchoredEntitiesEnumerator(new Vector2i(x, y) + gridOrigin);
+                var anchored = grid.GetAnchoredEntitiesEnumerator(tilePos);
 
                 while (anchored.MoveNext(out var ent))
                 {
                     // Irrelevant for pathfinding
                     if (!physicsQuery.TryGetComponent(ent, out var body) ||
                         !body.CanCollide ||
-                        !body.Hard)
+                        !body.Hard ||
+                        ((body.CollisionLayer & PathfindingCollisionMask) == 0x0 &&
+                         (body.CollisionMask & PathfindingCollisionLayer) == 0x0))
                     {
                         continue;
                     }
@@ -285,7 +296,7 @@ public sealed partial class PathfindingSystem
                             }
                         }
 
-                        if (isSpace)
+                        if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
                         {
                             DebugTools.Assert(tileEntities.Count == 0);
                         }
@@ -293,7 +304,7 @@ public sealed partial class PathfindingSystem
                         points[x * SubStep + subX, y * SubStep + subY] = new PathfindingBreadcrumb()
                         {
                             Coordinates = GetPointCoordinate(localPos),
-                            IsSpace = isSpace,
+                            Flags = flags,
                             CollisionLayer = collisionLayer,
                             CollisionMask = collisionMask,
                         };
@@ -302,8 +313,8 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // Cleanup data now if we ever do that in future.
-        // If required could also consider multiple groups of nodes.
+        // Cleanup data now
+        // If required could also consider multiple groups of nodes, i.e. 3x3.
         const int CleanupIterations = 3;
 
         for (var it = 0; it < CleanupIterations; it++)
@@ -317,7 +328,9 @@ public sealed partial class PathfindingSystem
                     ref var point = ref points[x, y];
 
                     if (point.Equals(PathfindingBreadcrumb.Invalid))
+                    {
                         continue;
+                    }
 
                     var neighbors = DirectionFlag.None;
 
@@ -368,14 +381,33 @@ public sealed partial class PathfindingSystem
                     // If we only have one neighbor OR we only have a single line then dump it.
                     switch (neighbors)
                     {
+                        case DirectionFlag.None:
+                            // Even if it's a collidable point we'll cull it anyway if it's isolated.
+                            anyCleanup = true;
+                            point = PathfindingBreadcrumb.Invalid;
+                            break;
                         case (DirectionFlag.North | DirectionFlag.South):
                         case (DirectionFlag.East | DirectionFlag.West):
                         case DirectionFlag.North:
                         case DirectionFlag.West:
                         case DirectionFlag.South:
                         case DirectionFlag.East:
+                            // If it's an empty node then we won't allow single tiles on their own.
+                            // Anything else we can't exactly remove due to thindows existing.
+                            if (point.CollisionLayer != 0 && point.CollisionMask != 0)
+                            {
+                                point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
+                                break;
+                            }
+
                             anyCleanup = true;
                             point = PathfindingBreadcrumb.Invalid;
+                            break;
+                        case (DirectionFlag.North | DirectionFlag.East | DirectionFlag.South | DirectionFlag.West):
+                            point.Flags |= PathfindingBreadcrumbFlag.Interior;
+                            break;
+                        default:
+                            point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
                             break;
                     }
 
