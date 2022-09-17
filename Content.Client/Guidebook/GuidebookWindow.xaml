@@ -1,4 +1,4 @@
-﻿<ui:FancyWindow xmlns:ui="clr-namespace:Content.Client.UserInterface"
+﻿<ui:FancyWindow xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 SetSize="750 700"
