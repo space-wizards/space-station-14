@@ -107,6 +107,10 @@
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+        ents: []
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
