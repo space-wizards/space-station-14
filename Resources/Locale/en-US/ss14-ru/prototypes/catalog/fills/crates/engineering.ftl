@@ -19,3 +19,6 @@ ent-CrateEngineeringCableBulk = { ent-CrateElectrical }
 ent-CrateEngineeringElectricalSupplies = { ent-CrateElectrical }
     .desc = { ent-CrateElectrical.desc }
     .suffix = { "" }
+ent-CrateEngineeringJetpack = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }

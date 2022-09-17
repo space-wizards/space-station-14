@@ -4324,36 +4324,6 @@ entities:
   - pos: -1.5,-5.5
     parent: 16
     type: Transform
-- uid: 607
-  type: pointingarrow
-  components:
-  - pos: 10.495093,2.3575568
-    parent: 16
-    type: Transform
-  - drawdepth: Overlays
-    type: Sprite
-  - layer: 2
-    type: Visibility
-- uid: 608
-  type: pointingarrow
-  components:
-  - pos: -9.2956085,3.4921217
-    parent: 16
-    type: Transform
-  - drawdepth: Overlays
-    type: Sprite
-  - layer: 2
-    type: Visibility
-- uid: 609
-  type: pointingarrow
-  components:
-  - pos: -9.6983185,3.162306
-    parent: 16
-    type: Transform
-  - drawdepth: Overlays
-    type: Sprite
-  - layer: 2
-    type: Visibility
 - uid: 610
   type: PianoInstrument
   components:

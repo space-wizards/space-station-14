@@ -7,6 +7,7 @@ fibers-durathread = дюратканевые
 fibers-latex = латексные
 fibers-nitrile = нитриловые
 fibers-nanomachines = изолирующие наномашинные
+fibers-chameleon = holographic chameleon
 fibers-purple = фиолетовые
 fibers-red = красные
 fibers-black = чёрные

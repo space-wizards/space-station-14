@@ -81,4 +81,6 @@
   - type: Construction
     graph: ConveyorGraph
     node: item
+  - type: StaticPrice
+    price: 40
 

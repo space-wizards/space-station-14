@@ -19,3 +19,6 @@ ent-GasPort = connector port
 ent-GasDualPortVentPump = dual-port air vent
     .desc = Has a valve and a pump attached to it. There are two ports, one is an input for releasing air, the other is an output when siphoning.
     .suffix = { "" }
+ent-GasRecycler = gas recycler
+    .desc = Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
+    .suffix = { "" }

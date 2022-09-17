@@ -40,6 +40,8 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: chair

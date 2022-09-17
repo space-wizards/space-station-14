@@ -5,7 +5,6 @@ using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.CCVar;
-using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
@@ -20,7 +19,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Threading.Tasks;
-using Robust.Shared.Players;
 
 namespace Content.Server.GameTicking
 {
@@ -112,8 +110,10 @@ namespace Content.Server.GameTicking
         /// <param name="loadOptions">Map loading options, includes offset.</param>
         /// <param name="stationName">Name to assign to the loaded station.</param>
         /// <returns>All loaded entities and grids.</returns>
-        public (IReadOnlyList<EntityUid>, IReadOnlyList<EntityUid>) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
+        public (IReadOnlyList<EntityUid> Entities, IReadOnlyList<EntityUid> Grids) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
         {
+            // Okay I specifically didn't set LoadMap here because this is typically called onto a new map.
+            // whereas the command can also be used on an existing map.
             var loadOpts = loadOptions ?? new MapLoadOptions();
 
             var ev = new PreGameMapLoad(targetMapId, map, loadOpts);

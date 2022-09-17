@@ -61,3 +61,5 @@
       - id: BoxSyringe
       - id: BoxBeaker
       - id: BoxPillCanister
+      - id: BoxBottle
+      - id: BoxBottle

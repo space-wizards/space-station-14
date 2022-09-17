@@ -21,6 +21,7 @@ using Robust.Shared.Utility;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item;
 using Content.Server.MobState;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Disease
 {
@@ -44,6 +45,7 @@ namespace Content.Server.Disease
             base.Initialize();
             SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
+            SubscribeLocalEvent<DiseaseCarrierComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<DiseasedComponent, UserInteractedWithItemEvent>(OnUserInteractDiseased);
             SubscribeLocalEvent<DiseasedComponent, ItemInteractedWithEvent>(OnTargetInteractDiseased);
             SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
@@ -186,6 +188,11 @@ namespace Content.Server.Disease
                     return;
                 }
             }
+        }
+
+        private void OnRejuvenate(EntityUid uid, DiseaseCarrierComponent component, RejuvenateEvent args)
+        {
+            CureAllDiseases(uid, component);
         }
 
         /// <summary>

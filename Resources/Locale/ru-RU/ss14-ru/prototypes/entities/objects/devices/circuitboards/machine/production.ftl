@@ -91,3 +91,6 @@ ent-SurveillanceWirelessCameraMovableCircuitboard = мобильная бесп�
 ent-SurveillanceWirelessCameraAnchoredCircuitboard = беспроводная камера (машинная плата)
     .desc = Печатная плата беспроводной камеры.
     .suffix = { "" }
+ent-GasRecyclerMachineCircuitboard = gas recycler board
+    .desc = A printed circuit board for a gas recycler
+    .suffix = { "" }

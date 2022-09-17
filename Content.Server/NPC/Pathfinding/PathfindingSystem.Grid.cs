@@ -3,6 +3,8 @@ using Content.Shared.Access.Systems;
 using Content.Shared.GameTicking;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Pathfinding;

@@ -91,3 +91,6 @@ ent-SurveillanceWirelessCameraMovableCircuitboard = movable wireless camera boar
 ent-SurveillanceWirelessCameraAnchoredCircuitboard = wireless camera board
     .desc = A machine printed circuit board for a wireless camera
     .suffix = { "" }
+ent-GasRecyclerMachineCircuitboard = gas recycler board
+    .desc = A printed circuit board for a gas recycler
+    .suffix = { "" }

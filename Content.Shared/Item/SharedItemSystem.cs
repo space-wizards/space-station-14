@@ -49,6 +49,22 @@ public abstract class SharedItemSystem : EntitySystem
         VisualsChanged(uid);
     }
 
+    /// <summary>
+    ///     Copy all item specific visuals from another item.
+    /// </summary>
+    public void CopyVisuals(EntityUid uid, ItemComponent otherItem, ItemComponent? item = null)
+    {
+        if (!Resolve(uid, ref item))
+            return;
+
+        item.RsiPath = otherItem.RsiPath;
+        item.InhandVisuals = otherItem.InhandVisuals;
+        item.HeldPrefix = otherItem.HeldPrefix;
+
+        Dirty(item);
+        VisualsChanged(uid);
+    }
+
     #endregion
 
     private void OnHandInteract(EntityUid uid, ItemComponent component, InteractHandEvent args)

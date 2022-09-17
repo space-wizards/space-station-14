@@ -131,5 +131,7 @@
     solution: ammo
   - type: SolutionTransfer
     maxTransferAmount: 15
+  - type: ExaminableSolution
+    solution: ammo
   - type: SpentAmmoVisuals
     state: "practice"

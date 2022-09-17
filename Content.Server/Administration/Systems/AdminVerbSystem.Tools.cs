@@ -31,6 +31,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
@@ -39,7 +40,7 @@ public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
-    [Dependency] private readonly AccessSystem _accessSystem = default!;
+    [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;

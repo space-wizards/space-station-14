@@ -265,6 +265,8 @@ namespace Content.Server.Nutrition.EntitySystems
             drink.CancelToken = new CancellationTokenSource();
             var moveBreak = user != target;
 
+            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(user, drinkSolution);
+
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceDrink ? drink.ForceFeedDelay : drink.Delay, drink.CancelToken.Token, target, drink.Owner)
             {
                 BreakOnUserMove = moveBreak,
@@ -273,7 +275,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
                 DistanceThreshold = 1.0f,
-                TargetFinishedEvent = new DrinkEvent(user, drink, drinkSolution),
+                TargetFinishedEvent = new DrinkEvent(user, drink, drinkSolution, flavors),
                 BroadcastCancelledEvent = new DrinkCancelledEvent(drink),
                 NeedHand = true,
             });
@@ -336,7 +338,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(args.User, drained);
+            var flavors = args.FlavorMessage;
 
             if (forceDrink)
             {

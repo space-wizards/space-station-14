@@ -8,6 +8,30 @@ namespace Content.Server.Atmos.EntitySystems;
 
 public partial class AtmosphereSystem
 {
+    /// <summary>
+    /// Gets the particular price of an air mixture.
+    /// </summary>
+    public double GetPrice(GasMixture mixture)
+    {
+        float basePrice = 0; // moles of gas * price/mole
+        float totalMoles = 0; // total number of moles in can
+        float maxComponent = 0; // moles of the dominant gas
+        for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+        {
+            basePrice += mixture.Moles[i] * GetGas(i).PricePerMole;
+            totalMoles += mixture.Moles[i];
+            maxComponent = Math.Max(maxComponent, mixture.Moles[i]);
+        }
+
+        // Pay more for gas canisters that are more pure
+        float purity = 1;
+        if (totalMoles > 0) {
+            purity = maxComponent / totalMoles;
+        }
+
+        return basePrice * purity;
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void InvalidateVisuals(EntityUid gridUid, Vector2i tile)
     {
