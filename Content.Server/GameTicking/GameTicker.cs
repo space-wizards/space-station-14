@@ -108,6 +108,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IConsoleHost _consoleHost = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
@@ -121,6 +122,5 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
         [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;
         [Dependency] private readonly UserDbDataManager _userDb = default!;
-        [Dependency] private readonly AdminManager _adminManager = default!;
     }
 }
