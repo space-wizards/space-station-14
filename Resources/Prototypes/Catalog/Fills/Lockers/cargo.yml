@@ -17,5 +17,3 @@
         prob: 0.8
       - id: SurvivalKnife
       - id: WeaponProtoKineticAccelerator
-      - id: JetpackBlueFilled
-        prob: 0.6
