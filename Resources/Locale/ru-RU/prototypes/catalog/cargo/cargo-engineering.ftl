@@ -8,3 +8,5 @@ ent-EngineeringCableBulk = { ent-CrateEngineeringCableBulk }
     .desc = { ent-CrateEngineeringCableBulk.desc }
 ent-EngineeringElectricalSupplies = { ent-CrateEngineeringElectricalSupplies }
     .desc = { ent-CrateEngineeringElectricalSupplies.desc }
+ent-EngineeringJetpack = { ent-CrateEngineeringJetpack }
+    .desc = { ent-CrateEngineeringJetpack.desc }

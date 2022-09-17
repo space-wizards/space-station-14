@@ -14,3 +14,5 @@ ent-CrateEngineeringCableBulk = ящик кабеля различного во�
     .desc = 2 мотка кабеля каждого типа.
 ent-CrateEngineeringElectricalSupplies = ящик электромонтажного снаряжения
     .desc = NT не несёт ответственности за любые рабочие конфликты, связанные с изолированными перчатками, входящими в комплект этих ящиков.
+ent-CrateEngineeringJetpack = Jetpack crate
+    .desc = Two jetpacks for those who don't know how to use fire extinguishers.

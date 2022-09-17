@@ -19,3 +19,6 @@ ent-CrateEngineeringCableBulk = ящик кабелей различного в�
 ent-CrateEngineeringElectricalSupplies = ящик электротехнического снаряжения
     .desc = { ent-CrateElectrical.desc }
     .suffix = { "" }
+ent-CrateEngineeringJetpack = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }

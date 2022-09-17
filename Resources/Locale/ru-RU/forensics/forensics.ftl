@@ -13,5 +13,7 @@ forensic-pad-already-used = Эта пластинка уже использов�
 forensic-scanner-match-fiber = Найдены совпадения по волокнам!
 forensic-scanner-match-fingerprint = Найдены совпадения по отпечаткам пальцев!
 forensic-scanner-match-none = Совпадений не найдено!
+forensic-scanner-verb-text = Scan
+forensic-scanner-verb-message = Perform a forensic scan
 forensic-pad-fingerprint-name = владелец отпечатков: { $entity }
 forensic-pad-gloves-name = источник волокон: { $entity }
