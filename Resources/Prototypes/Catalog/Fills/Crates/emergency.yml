@@ -77,3 +77,20 @@
   - type: StorageFill
     contents:
       - id: BoxInflatable
+
+- type: entity
+  id: CrateEVASupply
+  parent: CrateCommandSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetEVA
+        amount: 2
+      - id: ClothingOuterHardsuitEVA
+        amount: 2
+      - id: ClothingShoesBootsMag
+        amount: 2
+      - id: JetpackMiniFilled
+        amount: 2
+      - id: DoubleEmergencyOxygenTankFilled
+        amount: 2
