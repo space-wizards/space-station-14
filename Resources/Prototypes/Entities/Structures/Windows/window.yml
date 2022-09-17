@@ -66,8 +66,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Airtight
-  - type: RadiationBlocker
-    resistance: 0.5
   - type: IconSmooth
     key: windows
     base: window
