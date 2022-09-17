@@ -30,6 +30,7 @@ namespace Content.Server.Doors.Systems
             base.Initialize();
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
+            SubscribeLocalEvent<FirelockComponent, BeforeDoorClosedEvent>(OnBeforeDoorClose);
             SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
@@ -154,6 +155,12 @@ namespace Content.Server.Doors.Systems
                 args.Cancel();
         }
 
+        private void OnBeforeDoorClose(EntityUid uid, FirelockComponent component, BeforeDoorClosedEvent args)
+        {
+            if (!this.IsPowered(uid, EntityManager))
+                args.Cancel();
+        }
+
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosAlarmEvent args)
         {
             if (!TryComp<DoorComponent>(uid, out var doorComponent)) return;
@@ -165,7 +172,7 @@ namespace Content.Server.Doors.Systems
             }
             else if (args.AlarmType == AtmosAlarmType.Danger)
             {
-                EmergencyPressureStop(uid, component, doorComponent);
+                _doorSystem.TryClose(uid, doorComponent);
             }
         }
 
