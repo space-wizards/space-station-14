@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: The restart vote can no longer be called when admins are online., type: Tweak}
-  - {message: The restart vote now defaults to needing 85% agreement., type: Tweak}
-  id: 1837
-  time: '2022-07-01T07:52:20.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Cargo Shuttle cooldown has been increased from 45 seconds to 2.5
@@ -2929,3 +2923,9 @@ Entries:
       lockers instead.', type: Tweak}
   id: 2336
   time: '2022-09-17T14:43:34.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Cargo techs and the QM now start with an appraisal tool., type: Add}
+  - {message: You can now lathe appraisal tools., type: Add}
+  id: 2337
+  time: '2022-09-17T16:16:36.0000000+00:00'
