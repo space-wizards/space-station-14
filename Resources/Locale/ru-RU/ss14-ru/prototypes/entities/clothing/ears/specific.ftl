@@ -1,3 +1,3 @@
-ent-ClothingHeadsetChameleon = passenger headset
-    .desc = An updated, modular intercom that fits over the head. Takes encryption keys.
-    .suffix = Chameleon
+ent-ClothingHeadsetChameleon = гарнитура пассажира
+    .desc = Модифицированный модульный интерком, надеваемый на голову. Принимает ключи шифрования.
+    .suffix = Хамелеон

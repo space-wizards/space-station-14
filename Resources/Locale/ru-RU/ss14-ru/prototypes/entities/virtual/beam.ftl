@@ -1,3 +1,3 @@
-ent-VirtualBeamEntityController = BEAM ENTITY YOU SHOULD NOT SEE THIS
+ent-VirtualBeamEntityController = СУЩНОСТЬ ЛУЧА ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТОГО
     .desc = { "" }
     .suffix = { "" }

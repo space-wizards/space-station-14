@@ -1,5 +1,5 @@
 ent-BaseMobHuman = Урист МакХэндс
-    .desc = Жалкая кучка тайн.
+    .desc = { ent-BaseMobOrganic.desc }
     .suffix = { "" }
 ent-MobHumanDummy = Урист МакХэндс
     .desc = { ent-BaseMobOrganicDummy.desc }

@@ -3,7 +3,7 @@ gun-fire-rate-examine = Скорострельность [color={ $color }]{ $fi
 gun-selector-verb = Изменить на { $mode }
 gun-selected-mode = Выбран { $mode }
 gun-disabled = Вы не можете использовать оружие!
-gun-clumsy = The gun blows up in your face!
+gun-clumsy = Оружие взрывается вам в лицо!
 # SelectiveFire
 gun-SemiAuto = полуавто
 gun-Burst = очередь
