@@ -91,8 +91,19 @@ public partial class RadiationSystem
         var grids = _mapManager.FindGridsIntersecting(mapId, box, true);
 
         // we are only interested in grids that has some radiation blockers
-        var resGrids = grids.Where(grid => resistanceQuery.HasComponent(grid.GridEntityId)).ToArray();
-        var resGridsCount = resGrids.Length;
+        // lets count them (could use linq, but this a bit faster)
+        var resGridsCount = 0;
+        EntityUid lastGridUid = default;
+        foreach (var grid in grids)
+        {
+            if (!resistanceQuery.HasComponent(grid.GridEntityId))
+                continue;
+            lastGridUid = grid.GridEntityId;
+
+            resGridsCount++;
+            if (resGridsCount > 1)
+                break;
+        }
 
         if (resGridsCount == 0)
         {
@@ -103,7 +114,7 @@ public partial class RadiationSystem
         else if (resGridsCount == 1)
         {
             // one grid found - use it for gridcast
-            return Gridcast(mapId, resGrids[0].GridEntityId, sourceUid, destUid,
+            return Gridcast(mapId, lastGridUid, sourceUid, destUid,
                 sourceWorld, destWorld, rads, resistanceQuery);
         }
         else
