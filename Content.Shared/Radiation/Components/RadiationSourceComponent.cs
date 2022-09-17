@@ -22,5 +22,5 @@ public sealed class RadiationSourceComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slope")]
-    public float Slope = 1f;
+    public float Slope = 0.5f;
 }

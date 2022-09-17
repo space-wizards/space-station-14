@@ -70,8 +70,7 @@ public partial class RadiationSystem
         var dist = dir.Length;
 
         // will it even reach destination considering distance penalty
-        var slopeDist = slope * dist;
-        var rads = slopeDist > 1f ? incomingRads / slopeDist : incomingRads;
+        var rads = incomingRads - slope * dist;
         if (rads <= MinIntensity)
             return null;
 
