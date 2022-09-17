@@ -306,5 +306,25 @@ public sealed partial class PathfindingSystem
 
         // TODO: Work out neighbor nodes.
         SendBreadcrumbs(chunk, grid.GridEntityId);
+
+        // TODO: Cleanup data
+        // i.e. anywhere with 1 connection or 2 opposite connections dump it.
+
+        // TODO: Trace boundaries
+
+        // TODO: Verts
+        // - Floodfill each one to get distance to nearest boundary
+        // - Check distance to nearest vert and see if it's too close
+        // - Check distance to boundary and see if it's too close
+        // - Promote any that are too far from an existing vert / boundaries
+
+        // TODO: Edges
+        // - Choose edge candidates up to the above maximum length. Should be able to trace it along the points.
+        // - Ignore any existing boundary edges / anything collinear with a boundary edge
+        // - Then, sort these edges by length and consider shortest length.
+        // - Reject if they intersect second-degree neighbor edges
+
+        // TODO: Triangles
+        // - Avoid having larger one encompass smaller one
     }
 }
