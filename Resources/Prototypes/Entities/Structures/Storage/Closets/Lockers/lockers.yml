@@ -49,6 +49,21 @@
   - type: AccessReader
     access: [["Salvage"]]
 
+- type: entity
+  id: LockerCargoTechnician
+  parent: LockerBase
+  name: cargo technician's equipment
+  description: All the basics for a Cargonian resident.
+  components:
+    - type: Appearance
+      visuals:
+      - type: StorageVisualizer
+        state: cargo
+        state_open: cargo_open
+        state_closed: cargo_door
+    - type: AccessReader
+      access: [["Cargo"]]
+
 # Command
 - type: entity
   id: LockerCaptain

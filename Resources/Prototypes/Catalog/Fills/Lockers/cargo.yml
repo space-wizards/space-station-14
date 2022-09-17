@@ -17,3 +17,25 @@
         prob: 0.8
       - id: SurvivalKnife
       - id: WeaponProtoKineticAccelerator
+
+- type: entity
+  id: LockerCargoTechnicianFilled
+  suffix: Filled
+  parent: LockerCargoTechnician
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatCargosoft
+        amount: 1
+      - id: ClothingUniformJumpsuitCargo
+        amount: 1
+      - id: ClothingBackpack
+        amount: 1
+      - id: ClothingShoesColorBlack
+        amount: 1
+      - id: ClothingUniformJumpskirtCargo
+        amount: 1
+      - id: ClothingHandsGlovesFingerless
+        amount: 1
+      - id: AppraisalTool
+        amount: 1
