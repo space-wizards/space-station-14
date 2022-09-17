@@ -16,7 +16,7 @@ public sealed class RadiationBlockerComponent : Component
     public bool Enabled = true;
 
     /// <summary>
-    ///     How much rads per second does blocker absorbs?
+    ///     How many rads per second does blocker absorbs?
     /// </summary>
     [DataField("resistance")]
     public float RadResistance = 1f;

@@ -32,22 +32,22 @@ public sealed class RadiationRay
     /// </summary>
     public Vector2 Destination;
     /// <summary>
-    ///     How much rads intensity reached radiation receiver.
+    ///     How many rads intensity reached radiation receiver.
     /// </summary>
     public float Rads;
 
     /// <summary>
-    ///     Does rad ray reached destination or lost all intensity after blockers?
+    ///     Has rad ray reached destination or lost all intensity after blockers?
     /// </summary>
     public bool ReachedDestination => Rads > 0;
 
     /// <summary>
-    ///     Does radiation traveled by grid tiles (gridcast) or world coordinates (raycast)?
+    ///     Does radiation travel by grid tiles (gridcast) or world coordinates (raycast)?
     /// </summary>
     public bool IsGridcast => Grid != null;
 
     /// <summary>
-    ///     Grid uid on which gridcast traveled. If it wasn't gridcast
+    ///     Grid uid on which gridcast traveled. If it isn't gridcast
     ///     will be set to null. Right now gridcast can travel only on one grid.
     /// </summary>
     public EntityUid? Grid;
@@ -56,7 +56,7 @@ public sealed class RadiationRay
     ///     will have float with updated radiation value. Empty if not gridcast.
     /// </summary>
     /// <remarks>
-    ///     Last tile may have negative value if ray lost all intensity.
+    ///     Last tile may have negative value if ray has lost all intensity.
     /// </remarks>
     public List<(Vector2i, float?)> VisitedTiles = new();
 
@@ -65,7 +65,7 @@ public sealed class RadiationRay
     ///     and float with updated radiation value. Empty if not raycast.
     /// </summary>
     /// <remarks>
-    ///     Last position may have negative value if ray lost all intensity.
+    ///     Last position may have negative value if ray has lost all intensity.
     /// </remarks>
     public List<(Vector2, float)> Blockers = new();
 
