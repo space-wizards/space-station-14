@@ -210,8 +210,6 @@ public sealed partial class PathfindingSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var gridOrigin = chunk.Origin * ChunkSize;
 
-        const float offset = 1f / SubStep / 2f;
-
         // TODO: Make this more efficient
         // For now I just want to get it working.
         for (var x = 0; x < ChunkSize; x++)
@@ -243,7 +241,7 @@ public sealed partial class PathfindingSystem
                     for (var subY = 0; subY < SubStep; subY++)
                     {
                         // Subtile
-                        var localPos = new Vector2(offset + gridOrigin.X + x + (float) subX / SubStep, offset + gridOrigin.Y + y + (float) subY / SubStep);
+                        var localPos = new Vector2(StepOffset + gridOrigin.X + x + (float) subX / SubStep, StepOffset + gridOrigin.Y + y + (float) subY / SubStep);
                         var collisionMask = 0x0;
                         var collisionLayer = 0x0;
 
@@ -294,7 +292,7 @@ public sealed partial class PathfindingSystem
 
                         points[x * SubStep + subX, y * SubStep + subY] = new PathfindingBreadcrumb()
                         {
-                            Coordinates = localPos,
+                            Coordinates = GetPointCoordinate(localPos),
                             IsSpace = isSpace,
                             CollisionLayer = collisionLayer,
                             CollisionMask = collisionMask,
@@ -304,11 +302,94 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // TODO: Work out neighbor nodes.
-        SendBreadcrumbs(chunk, grid.GridEntityId);
+        // Cleanup data now if we ever do that in future.
+        // If required could also consider multiple groups of nodes.
+        const int CleanupIterations = 3;
 
-        // TODO: Cleanup data
-        // i.e. anywhere with 1 connection or 2 opposite connections dump it.
+        for (var it = 0; it < CleanupIterations; it++)
+        {
+            var anyCleanup = false;
+
+            for (var x = 0; x < ChunkSize * SubStep; x++)
+            {
+                for (var y = 0; y < ChunkSize * SubStep; y++)
+                {
+                    ref var point = ref points[x, y];
+
+                    if (point.Equals(PathfindingBreadcrumb.Invalid))
+                        continue;
+
+                    var neighbors = DirectionFlag.None;
+
+                    foreach (var direction in new[]
+                                 { DirectionFlag.North, DirectionFlag.East, DirectionFlag.South, DirectionFlag.West })
+                    {
+                        int i, j;
+
+                        switch (direction)
+                        {
+                            case DirectionFlag.North:
+                                i = 0;
+                                j = 1;
+                                break;
+                            case DirectionFlag.East:
+                                i = 1;
+                                j = 0;
+                                break;
+                            case DirectionFlag.South:
+                                i = 0;
+                                j = -1;
+                                break;
+                            case DirectionFlag.West:
+                                i = -1;
+                                j = 0;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
+                        var neighborX = x + i;
+                        var neighborY = y + j;
+
+                        if (neighborX < 0 || neighborY < 0 ||
+                            neighborX >= ChunkSize * SubStep || neighborY >= ChunkSize * SubStep)
+                        {
+                            continue;
+                        }
+
+                        ref var pointNeighbor = ref points[neighborX, neighborY];
+
+                        if (pointNeighbor.Equivalent(point))
+                        {
+                            neighbors |= direction;
+                        }
+                    }
+
+                    // If we only have one neighbor OR we only have a single line then dump it.
+                    switch (neighbors)
+                    {
+                        case (DirectionFlag.North | DirectionFlag.South):
+                        case (DirectionFlag.East | DirectionFlag.West):
+                        case DirectionFlag.North:
+                        case DirectionFlag.West:
+                        case DirectionFlag.South:
+                        case DirectionFlag.East:
+                            anyCleanup = true;
+                            point = PathfindingBreadcrumb.Invalid;
+                            break;
+                    }
+
+                    // Go through the neighbours and work out which is equal
+                }
+            }
+
+            if (!anyCleanup)
+            {
+                break;
+            }
+        }
+
+        SendBreadcrumbs(chunk, grid.GridEntityId);
 
         // TODO: Trace boundaries
 

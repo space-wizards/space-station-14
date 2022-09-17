@@ -105,6 +105,11 @@ namespace Content.Client.NPC
 
                         foreach (var crumb in chunk.Value)
                         {
+                            if (crumb.Equals(PathfindingBreadcrumb.Invalid))
+                            {
+                                continue;
+                            }
+
                             const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
 
                             var masked = crumb.CollisionMask != 0 || crumb.CollisionLayer != 0;
@@ -119,7 +124,8 @@ namespace Content.Client.NPC
                                 color = Color.Orange;
                             }
 
-                            worldHandle.DrawRect(new Box2(crumb.Coordinates - edge, crumb.Coordinates + edge), color.WithAlpha(0.25f));
+                            var coordinate = _system.GetCoordinate(crumb.Coordinates);
+                            worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.25f));
                         }
                     }
                 }

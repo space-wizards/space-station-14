@@ -15,8 +15,8 @@ public sealed class GridPathfindingComponent : Component
 public sealed class GridPathfindingChunk
 {
     public readonly PathfindingBreadcrumb[,] Points = new PathfindingBreadcrumb[
-        PathfindingSystem.ChunkSize * PathfindingSystem.SubStep,
-        PathfindingSystem.ChunkSize * PathfindingSystem.SubStep];
+        SharedPathfindingSystem.ChunkSize * SharedPathfindingSystem.SubStep,
+        SharedPathfindingSystem.ChunkSize * SharedPathfindingSystem.SubStep];
 
     public Vector2i Origin;
 

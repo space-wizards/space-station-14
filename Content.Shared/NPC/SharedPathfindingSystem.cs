@@ -9,4 +9,19 @@ public abstract class SharedPathfindingSystem : EntitySystem
     public const int SubStep = 4;
 
     public const int ChunkSize = 4;
+
+    /// <summary>
+    /// We won't do points on edges so we'll offset them slightly.
+    /// </summary>
+    public const float StepOffset = 1f / SubStep / 2f;
+
+    public Vector2i GetPointCoordinate(Vector2 origin)
+    {
+        return new Vector2i((int) ((origin.X - StepOffset) * SubStep), (int) ((origin.Y - StepOffset) * SubStep));
+    }
+
+    public Vector2 GetCoordinate(Vector2i origin)
+    {
+        return new Vector2(origin.X / (float) SubStep + StepOffset, origin.Y / (float) SubStep + StepOffset);
+    }
 }
