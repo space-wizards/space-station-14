@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Splitstation QoL update. See Github for the massive log of changes.,
-    type: Tweak}
-  id: 1835
-  time: '2022-06-30T18:45:38.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'The rules have been tweaked slightly to clarify some points in most
@@ -2929,3 +2923,9 @@ Entries:
       them getting stuck., type: Fix}
   id: 2334
   time: '2022-09-16T23:49:05.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'combat gloves were removed from atmosdrobe, because fighting fire is
+      not actual fighting', type: Remove}
+  id: 2335
+  time: '2022-09-17T02:05:06.0000000+00:00'
