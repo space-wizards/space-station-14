@@ -76,3 +76,4 @@
         components:
         - HitscanBatteryAmmoProvider
         - ProjectileBatteryAmmoProvider
+        - Stunbaton

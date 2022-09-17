@@ -231,6 +231,7 @@ public enum DoorVisuals
     Powered,
     BoltLights,
     EmergencyLights,
+    ClosedLights,
     BaseRSI,
 }
 

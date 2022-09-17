@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: CargoDrobeInventory
   startingInventory:
-    AppraisalTool: 3
     ClothingUniformJumpsuitCargo: 3
     ClothingUniformJumpskirtCargo: 3
     ClothingShoesColorBlack: 3

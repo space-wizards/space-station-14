@@ -7,11 +7,9 @@
   components:
     - type: InputMover
     - type: MobMover
-    - type: UtilityNPC
-      behaviorSets:
-        - Idle
-        - UnarmedAttackHostiles
-    - type: AiFactionTag
+    - type: HTN
+      rootTask: SimpleHostileCompound
+    - type: Faction
       factions:
         - SimpleHostile
     - type: Sprite
@@ -67,6 +65,7 @@
         - id: FoodMeatFish
           amount: 2
     - type: MeleeWeapon
+      hidden: true
       range: 1.5
       arcwidth: 0
       arc: bite
@@ -140,6 +139,8 @@
     - type: GhostTakeoverAvailable
       prob: 0.33
       name: space carp on salvage wreck
+      allowMovement: true
+      allowSpeech: true
       description: |
         Defend the loot inside the salvage wreck!
     - type: SalvageMobRestrictions
@@ -151,6 +152,10 @@
   parent: BaseMobCarp
   components:
     - type: GhostTakeoverAvailable
+      allowMovement: true
+      allowSpeech: true
       makeSentient: true
       name: Sentient Carp
       description: Help the dragon flood the station with carps!
+    - type: HTN
+      rootTask: DragonCarpCompound

@@ -68,6 +68,8 @@
   - type: Transform
     anchored: true
   - type: AntiRottingContainer
+  - type: StaticPrice
+    price: 200
 
 #needs to be removed
 - type: entity

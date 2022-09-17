@@ -1,31 +1,25 @@
-﻿using Content.Server.DeviceNetwork.Components;
+﻿using System.Linq;
+using Content.Server.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
-public sealed class DeviceListSystem : EntitySystem
+public sealed class DeviceListSystem : SharedDeviceListSystem
 {
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<DeviceListComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
     }
 
-    /// <summary>
-    /// Replaces or merges the current device list with the given one
-    /// </summary>
-    public void UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
+    public void OnInit(EntityUid uid, DeviceListComponent component, ComponentInit args)
     {
-        if (!Resolve(uid, ref deviceList))
-            return;
-
-        if (!merge)
-            deviceList.Devices.Clear();
-
-        deviceList.Devices.UnionWith(devices);
+        Dirty(component);
     }
 
     /// <summary>
@@ -48,16 +42,6 @@ public sealed class DeviceListSystem : EntitySystem
         }
 
         return devices;
-    }
-
-    /// <summary>
-    /// Toggles the given device lists connection visualisation on and off.
-    /// TODO: Implement an overlay that draws a line between the given entity and the entities in the device list
-    /// </summary>
-    public void ToggleVisualization(EntityUid uid, bool ensureOff = false, DeviceListComponent? deviceList = null)
-    {
-        if (!Resolve(uid, ref deviceList))
-            return;
     }
 
     /// <summary>

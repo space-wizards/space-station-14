@@ -1,6 +1,7 @@
 using Content.Server.Explosion.EntitySystems;
 using Robust.Shared.Physics.Collision.Shapes;
 using Content.Shared.Explosion;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Explosion.Components
 {

@@ -54,6 +54,7 @@
   - type: ReplacementAccent
     accent: mouse
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -130,6 +131,7 @@
       autoPopulate: false
       name: action-name-disarm
   - type: MeleeWeapon
+    hidden: true
     range: 0.3
     arcwidth: 0
     arc: bite
@@ -139,11 +141,9 @@
         Piercing: 1
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
-    - Idle
-  - type: AiFactionTag
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Bloodstream
@@ -657,6 +657,7 @@
       Dead:
         Base: kangaroo-boxing-dead
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: claw
@@ -665,10 +666,9 @@
         Blunt: 10
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - SimpleHostile
 
@@ -749,6 +749,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
+    allowSpeech: true
+    allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
   - type: Speech
@@ -810,7 +812,7 @@
           Quantity: 50
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatRat
       amount: 1
   - type: ReplacementAccent
     accent: mouse
@@ -943,7 +945,7 @@
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatLizard
       amount: 1
   - type: InteractionPopup
     successChance: 0.3
@@ -1155,10 +1157,9 @@
     baseSprintSpeed : 7
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - Syndicate
   - type: Sprite
@@ -1192,6 +1193,7 @@
     - id: FoodMeatPenguin
       amount: 3
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: bite
@@ -1315,15 +1317,13 @@
   id: MobGiantSpiderAngry
   suffix: Angry
   components:
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - Xeno
     - type: InputMover
     - type: MobMover
-    - type: UtilityNPC
-      behaviorSets:
-        - Idle
-        - UnarmedAttackHostiles
+    - type: HTN
+      rootTask: SimpleHostileCompound
     - type: GhostTakeoverAvailable
       makeSentient: true
       name: ghost-role-information-giant-spider-name

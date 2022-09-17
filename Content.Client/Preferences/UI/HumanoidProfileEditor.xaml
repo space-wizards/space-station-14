@@ -2,8 +2,7 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:magicmirror="clr-namespace:Content.Client.CharacterAppearance"
          xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI"
-         xmlns:markings="clr-namespace:Content.Client.Markings"
-         xmlns:flavorText="clr-namespace:Content.Client.FlavorText">
+         xmlns:markings="clr-namespace:Content.Client.Markings">
     <BoxContainer Orientation="Horizontal">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
@@ -47,6 +46,7 @@
                     </prefUi:HighlightedContainer>
                 </BoxContainer>
             </BoxContainer>
+            <Control MinHeight="10" />
             <!-- tabContainer -->
             <TabContainer Name="CTabContainer" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical">
@@ -133,13 +133,19 @@
                         <BoxContainer Name="CJobList" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer>
-                <BoxContainer Orientation="Vertical">
+                <BoxContainer Orientation="Vertical" Margin="10">
                     <!-- Antags -->
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="CAntagList" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer>
-                <BoxContainer Name="CMarkingsTab" Orientation="Vertical">
+                <BoxContainer Orientation="Vertical" Margin="10">
+                    <!-- Traits -->
+                    <ScrollContainer VerticalExpand="True">
+                        <BoxContainer Name="CTraitsList" Orientation="Vertical" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <BoxContainer Name="CMarkingsTab" Orientation="Vertical" Margin="10">
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">
                         <markings:MarkingPicker Name="CMarkings" />
