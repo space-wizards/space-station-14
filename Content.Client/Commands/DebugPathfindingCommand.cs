@@ -37,5 +37,20 @@ namespace Content.Client.Commands
                 }
             }
         }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length > 1)
+            {
+                return CompletionResult.Empty;
+            }
+
+            var options = new CompletionOption[]
+            {
+                new("breadcrumbs")
+            };
+
+            return CompletionResult.FromOptions(options);
+        }
     }
 }

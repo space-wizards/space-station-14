@@ -1,5 +1,4 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.NPC;
 using Robust.Server.Player;
@@ -31,10 +30,16 @@ namespace Content.Server.NPC.Pathfinding
         {
             base.Initialize();
             InitializeGrid();
-            SubscribeNetworkEvent<RequestPathfindingBreadcrumbsMessage>(OnBreadcrumbs);
+            SubscribeNetworkEvent<RequestPathfindingDebugMessage>(OnBreadcrumbs);
         }
 
-        private void OnBreadcrumbs(RequestPathfindingBreadcrumbsMessage msg, EntitySessionEventArgs args)
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            UpdateGrid();
+        }
+
+        private void OnBreadcrumbs(RequestPathfindingDebugMessage msg, EntitySessionEventArgs args)
         {
             var pSession = (IPlayerSession) args.SenderSession;
 
@@ -45,14 +50,19 @@ namespace Content.Server.NPC.Pathfinding
 
             var sessions = _subscribedSessions.GetOrNew(args.SenderSession);
 
-            if ((sessions & PathfindingDebugMode.Breadcrumbs) != 0x0)
+            if (msg.Mode == PathfindingDebugMode.None)
             {
+                _subscribedSessions.Remove(args.SenderSession);
                 return;
             }
 
-            sessions |= PathfindingDebugMode.Breadcrumbs;
+            sessions = msg.Mode;
             _subscribedSessions[args.SenderSession] = sessions;
-            SendBreadcrumbs(pSession);
+
+            if ((sessions & PathfindingDebugMode.Breadcrumbs) != 0x0)
+            {
+                SendBreadcrumbs(pSession);
+            }
         }
 
         private void SendBreadcrumbs()
@@ -76,14 +86,45 @@ namespace Content.Server.NPC.Pathfinding
 
                 foreach (var chunk in comp.Chunks)
                 {
-                    var crumbs = new List<PathfindingBreadcrumb>();
-                    crumbs.AddRange(chunk.Value.Points);
-
-                    msg.Breadcrumbs[comp.Owner].Add(chunk.Key, crumbs);
+                    var data = GetData(chunk.Value);
+                    msg.Breadcrumbs[comp.Owner].Add(chunk.Key, data);
                 }
             }
 
             RaiseNetworkEvent(msg, pSession.ConnectedClient);
+        }
+
+        private void SendBreadcrumbs(GridPathfindingChunk chunk, EntityUid gridUid)
+        {
+            var msg = new PathfindingBreadcrumbsRefreshMessage()
+            {
+                Origin = chunk.Origin,
+                GridUid = gridUid,
+                Data = GetData(chunk),
+            };
+
+            foreach (var session in _subscribedSessions)
+            {
+                if ((session.Value & PathfindingDebugMode.Breadcrumbs) == 0x0)
+                    continue;
+
+                RaiseNetworkEvent(msg, session.Key.ConnectedClient);
+            }
+        }
+
+        private List<PathfindingBreadcrumb> GetData(GridPathfindingChunk chunk)
+        {
+            var crumbs = new List<PathfindingBreadcrumb>(chunk.Points.Length * chunk.Points.Length);
+
+            for (var x = 0; x < ChunkSize * SubStep; x++)
+            {
+                for (var y = 0; y < ChunkSize * SubStep; y++)
+                {
+                    crumbs.Add(chunk.Points[x, y]);
+                }
+            }
+
+            return crumbs;
         }
     }
 }

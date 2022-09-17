@@ -11,14 +11,6 @@ namespace Content.Server.NPC.Pathfinding;
 
 public sealed partial class PathfindingSystem
 {
-    /// <summary>
-    /// This is equivalent to agent radii for navmeshes. In our case it's preferable that things are cleanly
-    /// divisible per tile so we'll make sure it works as a discrete number.
-    /// </summary>
-    public const int SubStep = 4;
-
-    public const int ChunkSize = 4;
-
     /*
      * TODO: For map pathfinding just straightline for now if they're both on the same map
      * Otherwise, move towards the relevant grid and when within the expanded AABB swap to grid pathfinding.
@@ -33,6 +25,11 @@ public sealed partial class PathfindingSystem
      * Step 1 is get point data (breadcrumbs); we get multiple points per tile that contains all of the data relevant for pathfinding.
      */
 
+    private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
+
+    private const float UpdateCooldown = 0.3f;
+    private float _accumulator = UpdateCooldown;
+
     private void InitializeGrid()
     {
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
@@ -42,10 +39,41 @@ public sealed partial class PathfindingSystem
         SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
     }
 
+    private void UpdateGrid()
+    {
+        _accumulator -= UpdateCooldown;
+
+        if (_accumulator > 0f)
+        {
+            return;
+        }
+
+        _accumulator += UpdateCooldown;
+
+        // We defer chunk updates because rebuilding a navmesh is hella costly
+        foreach (var (gridUid, chunks) in _dirtyChunks)
+        {
+            if (Deleted(gridUid))
+                continue;
+
+            foreach (var origin in chunks)
+            {
+                var chunk = GetChunk(gridUid, origin);
+                RebuildChunk(chunk, gridUid);
+            }
+        }
+
+        _dirtyChunks.Clear();
+    }
+
     private void OnCollisionChange(ref CollisionChangeEvent ev)
     {
         var xform = Transform(ev.Body.Owner);
-        RebuildChunk(xform.GridUid, xform.Coordinates);
+
+        if (xform.GridUid == null)
+            return;
+
+        DirtyChunk(xform.GridUid.Value, xform.Coordinates);
     }
 
     private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
@@ -55,7 +83,7 @@ public sealed partial class PathfindingSystem
             TryComp<TransformComponent>(ev.Entity, out var xform) &&
             xform.GridUid != null)
         {
-            RebuildChunk(xform.GridUid, xform.Coordinates);
+            DirtyChunk(xform.GridUid.Value, xform.Coordinates);
         }
     }
 
@@ -76,14 +104,28 @@ public sealed partial class PathfindingSystem
             return;
         }
 
-        var oldChunk = GetChunk(oldGridUid, ev.OldPosition);
-        var chunk = GetChunk(gridUid, ev.NewPosition);
-
-        RebuildChunk(oldChunk, oldGridUid);
-
-        if (oldChunk != chunk)
+        if (oldGridUid != null && gridUid != null)
         {
-            RebuildChunk(chunk, gridUid);
+            // If the chunk hasn't changed then just dirty that one.
+            var oldOrigin = GetOrigin(ev.OldPosition, oldGridUid.Value);
+            var origin = GetOrigin(ev.NewPosition, gridUid.Value);
+
+            if (oldOrigin == origin)
+            {
+                // TODO: Don't need to transform again numpty.
+                DirtyChunk(oldGridUid.Value, ev.NewPosition);
+                return;
+            }
+        }
+
+        if (oldGridUid != null)
+        {
+            DirtyChunk(oldGridUid.Value, ev.OldPosition);
+        }
+
+        if (gridUid != null)
+        {
+            DirtyChunk(gridUid.Value, ev.NewPosition);
         }
     }
 
@@ -97,27 +139,42 @@ public sealed partial class PathfindingSystem
         RemComp<GridPathfindingComponent>(ev.EntityUid);
     }
 
-    private GridPathfindingChunk? GetChunk(EntityUid? gridUid, EntityCoordinates coordinates)
+    private void DirtyChunk(EntityUid gridUid, EntityCoordinates coordinates)
+    {
+        var chunks = _dirtyChunks.GetOrNew(gridUid);
+        // TODO: Change these args around.
+        chunks.Add(GetOrigin(coordinates, gridUid));
+    }
+
+    private GridPathfindingChunk? GetChunk(EntityUid? gridUid, Vector2i origin)
     {
         if (!TryComp<GridPathfindingComponent>(gridUid, out var pather))
             return null;
 
-        var origin = GetOrigin(coordinates, gridUid.Value);
+        if (pather.Chunks.TryGetValue(origin, out var chunk))
+            return chunk;
 
-        if (origin == null)
-            return null;
+        chunk = new GridPathfindingChunk()
+        {
+            Origin = origin,
+        };
 
-        return pather.Chunks.GetOrNew(origin.Value);
+        pather.Chunks[origin] = chunk;
+        return chunk;
     }
 
-    private Vector2i? GetOrigin(EntityCoordinates coordinates, EntityUid gridUid)
+    private GridPathfindingChunk? GetChunk(EntityUid? gridUid, EntityCoordinates coordinates)
     {
-        if (!TryComp<TransformComponent>(gridUid, out var gridXform))
-        {
-            DebugTools.Assert(false);
+        if (gridUid == null)
             return null;
-        }
 
+        var origin = GetOrigin(coordinates, gridUid.Value);
+        return GetChunk(gridUid, origin);
+    }
+
+    private Vector2i GetOrigin(EntityCoordinates coordinates, EntityUid gridUid)
+    {
+        var gridXform = Transform(gridUid);
         var localPos = gridXform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
         return new Vector2i((int) Math.Floor(localPos.X / ChunkSize), (int) Math.Floor(localPos.Y / ChunkSize));
     }
@@ -149,6 +206,9 @@ public sealed partial class PathfindingSystem
         var points = chunk.Points;
         var fixturesQuery = GetEntityQuery<FixturesComponent>();
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        var gridOrigin = chunk.Origin * ChunkSize;
+
+        const float offset = 1f / SubStep / 2f;
 
         // TODO: Make this more efficient
         // For now I just want to get it working.
@@ -160,28 +220,30 @@ public sealed partial class PathfindingSystem
                 var tile = grid.GetTileRef(new Vector2i(x, y));
                 var isSpace = tile.Tile.IsEmpty;
 
-                var tileEntities = grid.GetAnchoredEntities(new Vector2i(x, y)).ToList();
+                var tileEntities = new ValueList<EntityUid>();
+                var anchored = grid.GetAnchoredEntitiesEnumerator(new Vector2i(x, y) + gridOrigin);
+
+                while (anchored.MoveNext(out var ent))
+                {
+                    // Irrelevant for pathfinding
+                    if (!physicsQuery.TryGetComponent(ent, out var body) ||
+                        !body.CanCollide ||
+                        !body.Hard)
+                    {
+                        continue;
+                    }
+
+                    tileEntities.Add(ent.Value);
+                }
 
                 for (var subX = 0; subX < SubStep; subX++)
                 {
                     for (var subY = 0; subY < SubStep; subY++)
                     {
                         // Subtile
-                        var localPos = new Vector2(x + (float) subX / SubStep, y + (float) subY / SubStep);
-
-                        var point = new PathfindingBreadcrumb()
-                        {
-                            Coordinates = localPos,
-                            IsSpace = isSpace,
-                        };
-
-                        points[x + y * ChunkSize] = point;
-
-                        if (isSpace)
-                        {
-                            DebugTools.Assert(tileEntities.Count == 0);
-                            continue;
-                        }
+                        var localPos = new Vector2(offset + gridOrigin.X + x + (float) subX / SubStep, offset + gridOrigin.Y + y + (float) subY / SubStep);
+                        var collisionMask = 0x0;
+                        var collisionLayer = 0x0;
 
                         foreach (var ent in tileEntities)
                         {
@@ -192,8 +254,8 @@ public sealed partial class PathfindingSystem
                             foreach (var (_, fixture) in fixtures.Fixtures)
                             {
                                 // Don't need to re-do it.
-                                if ((point.CollisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
-                                    (point.CollisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
+                                if ((collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
+                                    (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
                                     continue;
 
                                 foreach (var proxy in fixture.Proxies)
@@ -201,17 +263,30 @@ public sealed partial class PathfindingSystem
                                     if (!proxy.AABB.Contains(localPos))
                                         continue;
 
-                                    point.CollisionLayer |= fixture.CollisionLayer;
-                                    point.CollisionMask |= fixture.CollisionMask;
+                                    collisionLayer |= fixture.CollisionLayer;
+                                    collisionMask |= fixture.CollisionMask;
                                 }
                             }
                         }
+
+                        if (isSpace)
+                        {
+                            DebugTools.Assert(tileEntities.Count == 0);
+                        }
+
+                        points[x * SubStep + subX, y * SubStep + subY] = new PathfindingBreadcrumb()
+                        {
+                            Coordinates = localPos,
+                            IsSpace = isSpace,
+                            CollisionLayer = collisionLayer,
+                            CollisionMask = collisionMask,
+                        };
                     }
                 }
             }
         }
 
         // TODO: Work out neighbor nodes.
-        SendBreadcrumbs();
+        SendBreadcrumbs(chunk, grid.GridEntityId);
     }
 }

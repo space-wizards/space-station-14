@@ -1,11 +1,14 @@
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 
 namespace Content.Client.NPC
 {
     public sealed class PathfindingSystem : SharedPathfindingSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public PathfindingDebugMode Modes
         {
             get => _modes;
@@ -15,20 +18,20 @@ namespace Content.Client.NPC
 
                 if (value == PathfindingDebugMode.None)
                 {
-                    overlayManager.RemoveOverlay<DebugPathfindingOverlay>();
-                    return;
+                    Breadcrumbs.Clear();
+                    overlayManager.RemoveOverlay<PathfindingOverlay>();
+                }
+                else if (!overlayManager.HasOverlay<PathfindingOverlay>())
+                {
+                    overlayManager.AddOverlay(new PathfindingOverlay(_mapManager, this));
                 }
 
                 _modes = value;
 
-                if (!overlayManager.HasOverlay<DebugPathfindingOverlay>())
+                RaiseNetworkEvent(new RequestPathfindingDebugMessage()
                 {
-                    overlayManager.AddOverlay(new DebugPathfindingOverlay(this));
-                }
-
-                if (value )
-
-                RaiseNetworkEvent(new RequestPathfindingBreadcrumbsMessage());
+                    Mode = _modes,
+                });
             }
         }
 
@@ -41,6 +44,7 @@ namespace Content.Client.NPC
         {
             base.Initialize();
             SubscribeNetworkEvent<PathfindingBreadcrumbsMessage>(OnBreadcrumbs);
+            SubscribeNetworkEvent<PathfindingBreadcrumbsRefreshMessage>(OnBreadcrumbsRefresh);
         }
 
         public override void Shutdown()
@@ -53,22 +57,75 @@ namespace Content.Client.NPC
         {
             Breadcrumbs = ev.Breadcrumbs;
         }
+
+        private void OnBreadcrumbsRefresh(PathfindingBreadcrumbsRefreshMessage ev)
+        {
+            if (!Breadcrumbs.TryGetValue(ev.GridUid, out var chunks))
+                return;
+
+            chunks[ev.Origin] = ev.Data;
+        }
     }
 
-    internal sealed class DebugPathfindingOverlay : Overlay
+    internal sealed class PathfindingOverlay : Overlay
     {
-        private PathfindingSystem _system;
+        private readonly IMapManager _mapManager;
+        private readonly PathfindingSystem _system;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public DebugPathfindingOverlay(PathfindingSystem system)
+        public PathfindingOverlay(IMapManager mapManager, PathfindingSystem system)
         {
+            _mapManager = mapManager;
             _system = system;
         }
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            return;
+            var worldHandle = args.WorldHandle;
+
+            if ((_system.Modes & PathfindingDebugMode.Breadcrumbs) != 0x0)
+            {
+                foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
+                {
+                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
+                        continue;
+
+                    worldHandle.SetTransform(grid.WorldMatrix);
+                    var localAABB = grid.InvWorldMatrix.TransformBox(args.WorldBounds);
+
+                    foreach (var chunk in crumbs)
+                    {
+                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
+
+                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
+
+                        if (!chunkAABB.Intersects(localAABB))
+                            continue;
+
+                        foreach (var crumb in chunk.Value)
+                        {
+                            const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
+
+                            var masked = crumb.CollisionMask != 0 || crumb.CollisionLayer != 0;
+                            Color color;
+
+                            if (masked)
+                            {
+                                color = Color.Blue;
+                            }
+                            else
+                            {
+                                color = Color.Orange;
+                            }
+
+                            worldHandle.DrawRect(new Box2(crumb.Coordinates - edge, crumb.Coordinates + edge), color.WithAlpha(0.25f));
+                        }
+                    }
+                }
+            }
+
+            worldHandle.SetTransform(Matrix3.Identity);
         }
     }
 }
