@@ -55,14 +55,18 @@ public sealed class RadiationRay
     ///     All tiles visited by gridcast. If radiation has encountered blockers on this tile
     ///     will have float with updated radiation value. Empty if not gridcast.
     /// </summary>
-    /// <remarks>Last tile may have negative value if ray lost all intensity.</remarks>
+    /// <remarks>
+    ///     Last tile may have negative value if ray lost all intensity.
+    /// </remarks>
     public List<(Vector2i, float?)> VisitedTiles = new();
 
     /// <summary>
     ///     All blockers visited by raycast. Consist of pairs of impact point in world space
     ///     and float with updated radiation value. Empty if not raycast.
     /// </summary>
-    /// <remarks>Last position may have negative value if ray lost all intensity.</remarks>
+    /// <remarks>
+    ///     Last position may have negative value if ray lost all intensity.
+    /// </remarks>
     public List<(Vector2, float)> Blockers = new();
 
     public RadiationRay(MapId mapId, EntityUid sourceUid, Vector2 source,
