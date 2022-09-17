@@ -69,6 +69,9 @@ public partial class RadiationSystem
         var dir = destWorld - sourceWorld;
         var dist = dir.Length;
 
+        // check if receiver is too far away
+        if (dist > GridcastMaxDistance)
+            return null;
         // will it even reach destination considering distance penalty
         var rads = incomingRads - slope * dist;
         if (rads <= MinIntensity)
