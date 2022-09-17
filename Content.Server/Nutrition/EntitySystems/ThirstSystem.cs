@@ -72,7 +72,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void UpdateThirst(ThirstComponent component, float amount)
         {
-            component.CurrentThirst = Math.Min(component.CurrentThirst + amount, component.ThirstThresholds[ThirstThreshold.OverHydrated]);
+            component.CurrentThirst = Math.Max(Math.Min(component.CurrentThirst + amount, component.ThirstThresholds[ThirstThreshold.OverHydrated]), 0);
         }
 
         public void ResetThirst(ThirstComponent component)
