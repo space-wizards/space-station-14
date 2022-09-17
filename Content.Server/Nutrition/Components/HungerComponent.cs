@@ -158,7 +158,7 @@ namespace Content.Server.Nutrition.Components
         //  Should use a multiplier as something like a disease would overwrite decay rate.
         public void OnUpdate(float frametime)
         {
-            _currentHunger -= frametime * ActualDecayRate;
+            UpdateFood(- frametime * ActualDecayRate);
             UpdateCurrentThreshold();
         }
 

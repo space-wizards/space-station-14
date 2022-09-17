@@ -153,7 +153,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 foreach (var component in EntityManager.EntityQuery<ThirstComponent>())
                 {
-                    component.CurrentThirst -= component.ActualDecayRate;
+                    UpdateThirst(component, - component.ActualDecayRate);
                     var calculatedThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
                     if (calculatedThirstThreshold != component.CurrentThirstThreshold)
                     {
