@@ -90,7 +90,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
-  - type: Flavor
+  - type: FlavorProfile
     flavors:
       - sweet
       - funny
@@ -194,7 +194,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
-  - type: Flavor
+  - type: FlavorProfile
     flavors:
       - savory
       - salty
@@ -258,7 +258,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
-  - type: Flavor
+  - type: FlavorProfile
     flavors:
       - meaty
       - salty

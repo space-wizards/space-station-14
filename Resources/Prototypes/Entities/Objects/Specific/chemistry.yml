@@ -274,7 +274,7 @@
     transferAmount: null
     eatMessage: food-swallow
     useSound: /Audio/Items/pill.ogg
-  - type: Flavor
+  - type: FlavorProfile
     ignoreReagents:
   - type: SolutionContainerManager
     solutions:
