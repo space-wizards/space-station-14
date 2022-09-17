@@ -71,7 +71,7 @@ grids:
   - ind: -1,-1
     tiles: NAAAADoAAAAiAAAAIgAAACIAAAAiAAAAIgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADQAAAA6AAAAIgAAACIAAAAiAAAAIgAAACIAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAAAIgAAACIAAAAiAAAAIgAAACIAAAAiAAAAOgAAADYAAAA6AAAAOgAAADoAAAA2AAAAOgAAADoAAAA6AAAANAAAADoAAAAiAAAAIgAAACIAAAAiAAAAIgAAADoAAAA2AAAAOgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADQAAAA6AAAAIgAAACIAAAAiAAAAIgAAACIAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAAAOgAAACIAAAAiAAAAIgAAACIAAAAiAAAAOgAAADoAAAA6AAAAOgAAADgAAAA4AAAAOAAAADgAAAA4AAAANAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA4AAAAOAAAADgAAAA4AAAAOAAAADQAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOAAAADgAAAA4AAAAOAAAADgAAAA0AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADgAAAA4AAAAOAAAADgAAAA4AAAANAAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOAAAADQAAAAVAAAAOgAAADoAAAA6AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAA6AAAACwAAAAsAAAALAAAACwAAAAsAAAA0AAAAFQAAADoAAAA6AAAAOgAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAAAsAAAAeAAAAHgAAAB4AAAAeAAAANAAAABUAAAA6AAAAOgAAADoAAAAcAAAAHAAAAAsAAAALAAAACwAAAAsAAAALAAAAHgAAAB4AAAAeAAAAHgAAADQAAAA6AAAAOgAAADoAAAA6AAAAHAAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAA0AAAAOgAAADoAAAA6AAAAOgAAABwAAAALAAAACwAAAAsAAAAcAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAANAAAADoAAAA6AAAAOgAAADoAAAAcAAAACwAAAAsAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAALAAAAHAAAAA==
   - ind: 0,-1
-    tiles: OgAAADUAAAA1AAAANQAAADUAAAA6AAAAOgAAADoAAAA6AAAAFQAAABUAAAA0AAAAFQAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAAOgAAABUAAAA0AAAANAAAABUAAAA6AAAANwAAADcAAAA6AAAAOAAAADgAAAA4AAAAOAAAADoAAAA6AAAAOgAAADoAAAA0AAAANAAAADQAAAA0AAAANwAAADcAAAA3AAAAOgAAADgAAAA4AAAAOAAAADgAAAA6AAAANgAAADoAAAA6AAAAFQAAADQAAAA0AAAANAAAADcAAAA3AAAANwAAADoAAAA6AAAAOgAAADgAAAA6AAAAOgAAADoAAAA6AAAAOgAAABUAAAA0AAAANAAAABUAAAA6AAAANwAAADcAAAA4AAAAOAAAADoAAAA4AAAAOAAAADgAAAA4AAAAOAAAADoAAAAVAAAANAAAADQAAAAVAAAAOgAAADcAAAA3AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA6AAAAFQAAADQAAAA0AAAAFQAAADoAAAA3AAAANwAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADQAAAA0AAAANAAAABUAAAA6AAAANwAAADcAAAA4AAAAOAAAADoAAAA4AAAAOAAAADgAAAA4AAAAOAAAADoAAAAVAAAANAAAADQAAAAVAAAAOgAAADcAAAA3AAAAOgAAADoAAAA6AAAAOgAAADoAAAA4AAAAOgAAADoAAAA6AAAAFQAAADQAAAA0AAAAFQAAADcAAAA3AAAANwAAAAsAAAALAAAAOgAAAB4AAAAeAAAACwAAAB4AAAAeAAAAOgAAABUAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAAeAAAACwAAABwAAAAcAAAAHAAAAAsAAAAcAAAAHAAAADoAAAAVAAAANAAAADQAAAA0AAAANwAAADcAAAA3AAAAHgAAAAsAAAALAAAACwAAAAsAAAALAAAAHAAAABwAAAA6AAAAFQAAADQAAAA0AAAAFQAAADcAAAA3AAAANwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAAcAAAAOgAAABUAAAA0AAAANAAAABUAAAA6AAAANwAAADcAAAALAAAACwAAAAsAAAAcAAAACwAAAAsAAAALAAAAHAAAADoAAAAVAAAANAAAADQAAAAVAAAAOgAAADcAAAA3AAAAHAAAABwAAAAcAAAAHAAAABwAAAALAAAACwAAABwAAAA6AAAAFQAAADQAAAA0AAAAFQAAADoAAAA3AAAANwAAAA==
+    tiles: OgAAADUAAAA1AAAANQAAADUAAAA6AAAAOgAAADoAAAA6AAAAFQAAABUAAAA0AAAAFQAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADYAAAA6AAAAOgAAABUAAAA0AAAANAAAABUAAAA6AAAANwAAADcAAAA6AAAAOAAAADgAAAA4AAAAOAAAADoAAAA6AAAAOgAAADoAAAA0AAAANAAAADQAAAA0AAAANwAAADcAAAA3AAAAOgAAADgAAAA4AAAAOAAAADgAAAA6AAAANgAAADoAAAA6AAAAFQAAADQAAAA0AAAANAAAADcAAAA3AAAANwAAADoAAAA6AAAAOgAAADgAAAA6AAAAOgAAADoAAAA6AAAAOgAAABUAAAA0AAAANAAAABUAAAA6AAAANwAAADcAAAA4AAAAOAAAADoAAAA4AAAAOAAAADgAAAA4AAAAOAAAADoAAAAVAAAANAAAADQAAAAVAAAAOgAAADcAAAA3AAAAOAAAADgAAAAVAAAAOAAAADgAAAA4AAAAOAAAADgAAAA6AAAAFQAAADQAAAA0AAAAFQAAADoAAAA3AAAANwAAADgAAAA4AAAAFQAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADQAAAA0AAAANAAAABUAAAA6AAAANwAAADcAAAA4AAAAOAAAADoAAAA4AAAAOAAAADgAAAA4AAAAOAAAADoAAAAVAAAANAAAADQAAAAVAAAAOgAAADcAAAA3AAAAOgAAADoAAAA6AAAAOgAAADoAAAA4AAAAOgAAADoAAAA6AAAAFQAAADQAAAA0AAAAFQAAADcAAAA3AAAANwAAAAsAAAALAAAAOgAAAB4AAAAeAAAACwAAAB4AAAAeAAAAOgAAABUAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAAeAAAACwAAABwAAAAcAAAAHAAAAAsAAAAcAAAAHAAAADoAAAAVAAAANAAAADQAAAA0AAAANwAAADcAAAA3AAAAHgAAAAsAAAALAAAACwAAAAsAAAALAAAAHAAAABwAAAA6AAAAFQAAADQAAAA0AAAAFQAAADcAAAA3AAAANwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAAcAAAAOgAAABUAAAA0AAAANAAAABUAAAA6AAAANwAAADcAAAALAAAACwAAAAsAAAAcAAAACwAAAAsAAAALAAAAHAAAADoAAAAVAAAANAAAADQAAAAVAAAAOgAAADcAAAA3AAAAHAAAABwAAAAcAAAAHAAAABwAAAALAAAACwAAABwAAAA6AAAAFQAAADQAAAA0AAAAFQAAADoAAAA3AAAANwAAAA==
   - ind: -1,0
     tiles: NAAAADoAAAAMAAAADAAAADoAAAAcAAAACwAAAAsAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABUAAAAVAAAAFQAAABUAAAA6AAAAHAAAAAsAAAALAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAA0AAAANAAAADQAAAA0AAAANAAAAAsAAAALAAAACwAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAAAANAAAADQAAAA0AAAANAAAADQAAAALAAAACwAAAAsAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABUAAAA0AAAANAAAABUAAAA6AAAACwAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAA0AAAANAAAADQAAAA0AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAADQAAAA0AAAAFQAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABUAAAA0AAAANAAAABUAAAA6AAAAAAAAAAAAAAAAAAAAOQAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAVAAAANAAAADQAAAAVAAAAOgAAAAAAAAAAAAAAOQAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAFQAAADQAAAA0AAAAFQAAADoAAAAAAAAAAAAAAAAAAAA6AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAABUAAAA0AAAANAAAABUAAAA6AAAAAAAAAAAAAAAAAAAAOgAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAAVAAAANAAAADQAAAAVAAAAOgAAADoAAAA6AAAAOgAAADoAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAAFQAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAABUAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAAVAAAAOgAAADoAAAA6AAAAOgAAADoAAAA6AAAAOgAAADoAAAA4AAAAOgAAADoAAAA6AAAAFQAAADQAAAA0AAAAFQAAADoAAAAAAAAAAAAAADkAAAA6AAAAOAAAADgAAAA4AAAAOAAAADgAAAA6AAAAOAAAAA==
   - ind: 0,0
@@ -1849,27 +1849,27 @@ entities:
           color: '#FFFFFFFF'
           id: Rock05
           coordinates: -60.352406,17.654133
-        2194:
+        2193:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -53,19
-        2195:
+        2194:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -52,19
-        2196:
+        2195:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -51,19
-        2197:
+        2196:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -53,17
-        2198:
+        2197:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -52,17
-        2199:
+        2198:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -51,17
@@ -51774,7 +51774,7 @@ entities:
     type: Transform
 - uid: 3962
   components:
-  - index: 2
+  - index: 4
     type: Map
 - uid: 3963
   type: ReinforcedWindow
@@ -68220,6 +68220,7 @@ entities:
       machine_parts: !type:Container
         ents: []
       beakerSlot: !type:ContainerSlot {}
+      outputSlot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6406
   type: chem_master
@@ -68234,6 +68235,7 @@ entities:
       machine_parts: !type:Container
         ents: []
       beakerSlot: !type:ContainerSlot {}
+      outputSlot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6407
   type: chem_dispenser
@@ -69777,9 +69779,10 @@ entities:
     parent: 8
     type: Transform
 - uid: 6599
-  type: WallReinforced
+  type: GasOutletInjector
   components:
-  - pos: -94.5,7.5
+  - rot: 1.5707963267948966 rad
+    pos: -95.5,7.5
     parent: 8
     type: Transform
 - uid: 6600
@@ -80947,13 +80950,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8088
-  type: Poweredlight
+  type: GasMinerOxygen
   components:
-  - pos: -91.5,24.5
+  - pos: -93.5,23.5
     parent: 8
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 8089
   type: Poweredlight
   components:
@@ -81855,77 +81856,73 @@ entities:
     parent: 8
     type: Transform
 - uid: 8214
-  type: GasVentPump
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -99.5,7.5
-    parent: 8
-    type: Transform
-- uid: 8215
-  type: GasVentPump
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -97.5,7.5
-    parent: 8
-    type: Transform
-- uid: 8216
-  type: GasVentPump
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -95.5,7.5
-    parent: 8
-    type: Transform
-- uid: 8217
-  type: GasVentPump
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -93.5,7.5
-    parent: 8
-    type: Transform
-- uid: 8218
-  type: GasVentPump
+  type: GasOutletInjector
   components:
   - rot: 1.5707963267948966 rad
     pos: -91.5,7.5
     parent: 8
     type: Transform
+- uid: 8215
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -93.5,7.5
+    parent: 8
+    type: Transform
+- uid: 8216
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -97.5,7.5
+    parent: 8
+    type: Transform
+- uid: 8217
+  type: GasOutletInjector
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -99.5,7.5
+    parent: 8
+    type: Transform
+- uid: 8218
+  type: WallReinforced
+  components:
+  - pos: -94.5,7.5
+    parent: 8
+    type: Transform
 - uid: 8219
-  type: GasVentPump
+  type: GasMinerNitrogen
+  components:
+  - pos: -95.5,23.5
+    parent: 8
+    type: Transform
+- uid: 8220
+  type: GasMinerCarbonDioxide
+  components:
+  - pos: -97.5,23.5
+    parent: 8
+    type: Transform
+- uid: 8221
+  type: GasOutletInjector
   components:
   - rot: -1.5707963267948966 rad
     pos: -99.5,24.5
     parent: 8
     type: Transform
-- uid: 8220
-  type: GasVentPump
+- uid: 8222
+  type: GasOutletInjector
   components:
   - rot: -1.5707963267948966 rad
     pos: -97.5,24.5
     parent: 8
     type: Transform
-- uid: 8221
-  type: GasVentPump
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -95.5,24.5
-    parent: 8
-    type: Transform
-- uid: 8222
-  type: GasVentPump
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -93.5,24.5
-    parent: 8
-    type: Transform
 - uid: 8223
-  type: GasVentPump
+  type: Poweredlight
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -91.5,24.5
+  - pos: -91.5,24.5
     parent: 8
     type: Transform
-  - color: '#03FCD3FF'
-    type: AtmosPipeColor
+  - powerLoad: 0
+    type: ApcPowerReceiver
 - uid: 8224
   type: GasPassiveVent
   components:
@@ -81951,13 +81948,12 @@ entities:
     parent: 8
     type: Transform
 - uid: 8228
-  type: GasVentPump
+  type: GasPassiveVent
   components:
-  - pos: -91.5,22.5
+  - rot: -1.5707963267948966 rad
+    pos: -91.5,24.5
     parent: 8
     type: Transform
-  - color: '#0055CCFF'
-    type: AtmosPipeColor
 - uid: 8229
   type: GasPassiveVent
   components:
@@ -82299,14 +82295,12 @@ entities:
   - color: '#03FCD3FF'
     type: AtmosPipeColor
 - uid: 8276
-  type: GasPipeStraight
+  type: GasPassiveGate
   components:
   - rot: 3.141592653589793 rad
     pos: -92.5,17.5
     parent: 8
     type: Transform
-  - color: '#03FCD3FF'
-    type: AtmosPipeColor
 - uid: 8277
   type: GasPipeTJunction
   components:
@@ -82328,9 +82322,8 @@ entities:
     pos: -93.5,16.5
     parent: 8
     type: Transform
-  - inletTwoConcentration: 0.19999999
-    inletOneConcentration: 0.8
-    enabled: False
+  - inletTwoConcentration: 0.22000003
+    inletOneConcentration: 0.78
     type: GasMixer
   - color: '#03FCD3FF'
     type: AtmosPipeColor
@@ -88917,115 +88910,102 @@ entities:
     parent: 8
     type: Transform
 - uid: 9312
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -4.5,-8.5
+  - pos: -2.5,-8.5
     parent: 8
     type: Transform
 - uid: 9313
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -4.5,-9.5
+  - pos: -3.5,-9.5
     parent: 8
     type: Transform
 - uid: 9314
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -3.5,-8.5
+  - pos: -3.5,-8.5
     parent: 8
     type: Transform
 - uid: 9315
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -3.5,-9.5
+  - pos: -2.5,-9.5
     parent: 8
     type: Transform
 - uid: 9316
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -2.5,-8.5
+  - pos: -1.5,-9.5
     parent: 8
     type: Transform
 - uid: 9317
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -2.5,-9.5
+  - pos: -1.5,-8.5
     parent: 8
     type: Transform
 - uid: 9318
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,-8.5
+  - pos: -0.5,-8.5
     parent: 8
     type: Transform
 - uid: 9319
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,-9.5
+  - pos: -0.5,-9.5
     parent: 8
     type: Transform
 - uid: 9320
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -0.5,-8.5
+  - pos: 0.5,-9.5
     parent: 8
     type: Transform
 - uid: 9321
-  type: CarpetBlue
+  type: CarpetSBlue
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -0.5,-9.5
+  - pos: 0.5,-8.5
     parent: 8
     type: Transform
 - uid: 9322
-  type: CarpetBlue
+  type: FirelockGlass
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 0.5,-8.5
+  - pos: 2.5,-9.5
     parent: 8
     type: Transform
 - uid: 9323
-  type: CarpetBlue
+  type: FirelockGlass
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 0.5,-9.5
+  - pos: 2.5,-8.5
     parent: 8
     type: Transform
 - uid: 9324
-  type: CarpetBlue
+  type: GasOutletInjector
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 1.5,-8.5
+  - rot: -1.5707963267948966 rad
+    pos: -95.5,24.5
     parent: 8
     type: Transform
 - uid: 9325
-  type: CarpetBlue
+  type: GasOutletInjector
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 1.5,-9.5
+  - rot: -1.5707963267948966 rad
+    pos: -93.5,24.5
     parent: 8
     type: Transform
 - uid: 9326
-  type: CarpetBlue
+  type: GasPassiveVent
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 2.5,-8.5
+  - pos: -91.5,22.5
     parent: 8
     type: Transform
 - uid: 9327
-  type: CarpetBlue
+  type: GasMinerPlasma
   components:
   - rot: 1.5707963267948966 rad
-    pos: 2.5,-9.5
+    pos: -93.5,8.5
     parent: 8
     type: Transform
 - uid: 9328
@@ -175053,6 +175033,12 @@ entities:
   type: PlushieBee
   components:
   - pos: -59.99303,18.669758
+    parent: 8
+    type: Transform
+- uid: 21390
+  type: GasMinerWaterVapor
+  components:
+  - pos: -99.5,8.5
     parent: 8
     type: Transform
 ...
