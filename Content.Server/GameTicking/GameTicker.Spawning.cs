@@ -24,6 +24,7 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         private const string ObserverPrototypeName = "MobObserver";
+        private const string AdminObserverPrototypeName = "AdminObserver";
 
         /// <summary>
         /// How many players have joined the round through normal methods.
@@ -256,7 +257,7 @@ namespace Content.Server.GameTicking
             newMind.ChangeOwningPlayer(data.UserId);
             newMind.AddRole(new ObserverRole(newMind));
 
-            var mob = SpawnObserverMob();
+            var mob = SpawnObserverMob(_adminManager.IsAdmin(player));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
             var ghost = EntityManager.GetComponent<GhostComponent>(mob);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
@@ -267,10 +268,10 @@ namespace Content.Server.GameTicking
         }
 
         #region Mob Spawning Helpers
-        private EntityUid SpawnObserverMob()
+        private EntityUid SpawnObserverMob(bool aghost)
         {
             var coordinates = GetObserverSpawnPoint();
-            return EntityManager.SpawnEntity(ObserverPrototypeName, coordinates);
+            return EntityManager.SpawnEntity(aghost ? AdminObserverPrototypeName : ObserverPrototypeName, coordinates);
         }
         #endregion
 

@@ -121,5 +121,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
         [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;
         [Dependency] private readonly UserDbDataManager _userDb = default!;
+        [Dependency] private readonly AdminManager _adminManager = default!;
     }
 }
