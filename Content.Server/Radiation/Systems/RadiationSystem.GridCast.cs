@@ -15,6 +15,7 @@ public partial class RadiationSystem
 {
     private void UpdateGridcast()
     {
+        var saveVisitedTiles = _debugSessions.Count > 0;
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
@@ -30,7 +31,7 @@ public partial class RadiationSystem
             foreach (var (_, destTrs) in destinations)
             {
                 var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs,
-                    source.Intensity, source.Slope, blockerQuery, resistanceQuery);
+                    source.Intensity, source.Slope, saveVisitedTiles, blockerQuery, resistanceQuery);
                 if (ray != null)
                     rays.Add(ray);
             }
@@ -54,7 +55,7 @@ public partial class RadiationSystem
 
     private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs,
         EntityUid destUid, TransformComponent destTrs,
-        float incomingRads, float slope,
+        float incomingRads, float slope, bool saveVisitedTiles,
         EntityQuery<RadiationBlockerComponent> blockerQuery,
         EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
     {
@@ -83,7 +84,7 @@ public partial class RadiationSystem
         if (GridcastSimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
             return Gridcast(mapId, sourceTrs.GridUid.Value, sourceUid, destUid,
-                sourceWorld, destWorld, rads, resistanceQuery);
+                sourceWorld, destWorld, rads, saveVisitedTiles, resistanceQuery);
         }
 
         // lets check how many grids are between source and destination
@@ -117,7 +118,7 @@ public partial class RadiationSystem
         {
             // one grid found - use it for gridcast
             return Gridcast(mapId, lastGridUid, sourceUid, destUid,
-                sourceWorld, destWorld, rads, resistanceQuery);
+                sourceWorld, destWorld, rads, saveVisitedTiles, resistanceQuery);
         }
         else
         {
@@ -128,7 +129,7 @@ public partial class RadiationSystem
     }
 
     private RadiationRay Gridcast(MapId mapId, EntityUid gridUid, EntityUid sourceUid, EntityUid destUid,
-        Vector2 sourceWorld, Vector2 destWorld, float incomingRads,
+        Vector2 sourceWorld, Vector2 destWorld, float incomingRads, bool saveVisitedTiles,
         EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
     {
         var visitedTiles = new List<(Vector2i, float?)>();
@@ -155,15 +156,16 @@ public partial class RadiationSystem
         var line = Line(sourceGrid.X, sourceGrid.Y, destGrid.X, destGrid.Y);
         foreach (var point in line)
         {
+            (Vector2i, float?) visitedTile = (point, null);
             if (resistanceMap.TryGetValue(point, out var resData))
             {
                 radRay.Rads -= resData;
-                visitedTiles.Add((point, radRay.Rads));
+                visitedTile.Item2 = radRay.Rads;
             }
-            else
-            {
-                visitedTiles.Add((point, null));
-            }
+
+            // save data for debug
+            if (saveVisitedTiles)
+                radRay.VisitedTiles.Add(visitedTile);
 
             // no intensity left after blocker
             if (radRay.Rads <= MinIntensity)
