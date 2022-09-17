@@ -863,6 +863,15 @@
   - type: Sprite
     state: poster37_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitJustAWeekAway
+  name: "Just a Week Away..."
+  description: A poster advertising a long delayed project, it still claims it to be 'just a week away...'
+  components:
+  - type: Sprite
+    state: poster38_legit
+
 #maps
 
 - type: entity

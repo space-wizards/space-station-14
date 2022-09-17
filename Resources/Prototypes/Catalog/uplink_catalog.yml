@@ -428,7 +428,17 @@
 
 # Armor
 
-# Should be cameleon shoes, change when implemented.
+- type: listing
+  id: UplinkChameleon
+  name: Chameleon Kit
+  description: A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+  productEntity: ClothingBackpackChameleonFill
+  icon: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi/icon.png
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkArmor
+
 - type: listing
   id: UplinkClothingNoSlipsShoes
   name: no-slip shoes
@@ -629,6 +639,24 @@
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
   cost:
     Telecrystal: 4
+  categories:
+  - UplinkPointless
+  
+- type: listing
+  id: UplinkOperativeSuit
+  description: A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  productEntity: ClothingUniformJumpsuitOperative
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+  
+- type: listing
+  id: UplinkOperativeSkirt
+  description: A skirt given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  productEntity: ClothingUniformJumpskirtOperative
+  cost:
+    Telecrystal: 1
   categories:
   - UplinkPointless
 

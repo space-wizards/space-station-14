@@ -6,11 +6,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -61,6 +57,7 @@
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
     arcwidth: 0
     arc: claw

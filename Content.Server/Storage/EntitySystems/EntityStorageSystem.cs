@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Popups;
@@ -29,6 +30,8 @@ public sealed class EntityStorageSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly IMapManager _map = default!;
 
     public const string ContainerName = "entity_storage";
 
@@ -41,6 +44,10 @@ public sealed class EntityStorageSystem : EntitySystem
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
         SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestroy);
+
+        SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
+        SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
+        SubscribeLocalEvent<InsideEntityStorageComponent, AtmosExposedGetAirEvent>(OnInsideExposed);
     }
 
     private void OnInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
@@ -54,6 +61,13 @@ public sealed class EntityStorageSystem : EntitySystem
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var placeable))
             _placeableSurface.SetPlaceable(uid, component.Open, placeable);
+
+        if (!component.Open)
+        {
+            // If we're closed on spawn, we need to pull some air into our environment from where we spawned,
+            // so that we have -something-. For example, if you bought an animal crate or something.
+            TakeGas(uid, component);
+        }
     }
 
     private void OnInteract(EntityUid uid, EntityStorageComponent component, ActivateInWorldEvent args)
@@ -117,11 +131,12 @@ public sealed class EntityStorageSystem : EntitySystem
         var containedArr = component.Contents.ContainedEntities.ToArray();
         foreach (var contained in containedArr)
         {
-            if (component.Contents.Remove(contained))
-            {
-                Transform(contained).WorldPosition =
-                    uidXform.WorldPosition + uidXform.WorldRotation.RotateVec(component.EnteringOffset);
-            }
+            if (!component.Contents.Remove(contained))
+                continue;
+
+            RemComp<InsideEntityStorageComponent>(contained);
+            Transform(contained).WorldPosition =
+                uidXform.WorldPosition + uidXform.WorldRotation.RotateVec(component.EnteringOffset);
         }
     }
 
@@ -134,6 +149,7 @@ public sealed class EntityStorageSystem : EntitySystem
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
         SoundSystem.Play(component.OpenSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
+        ReleaseGas(uid, component);
         RaiseLocalEvent(uid, new StorageAfterOpenEvent());
     }
 
@@ -161,11 +177,15 @@ public sealed class EntityStorageSystem : EntitySystem
             if (!AddToContents(entity, uid, component))
                 continue;
 
+            var inside = EnsureComp<InsideEntityStorageComponent>(entity);
+            inside.Storage = uid;
+
             count++;
             if (count >= component.Capacity)
                 break;
         }
 
+        TakeGas(uid, component);
         ModifyComponents(uid, component);
         SoundSystem.Play(component.CloseSound.GetSound(), Filter.Pvs(uid), uid);
         component.LastInternalOpenAttempt = default;
@@ -365,4 +385,70 @@ public sealed class EntityStorageSystem : EntitySystem
             appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Any());
         }
     }
+
+    private void TakeGas(EntityUid uid, EntityStorageComponent component)
+    {
+        var tile = GetOffsetTileRef(uid, component);
+
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        {
+            _atmos.Merge(component.Air, environment.RemoveVolume(EntityStorageComponent.GasMixVolume));
+        }
+    }
+
+    private void ReleaseGas(EntityUid uid, EntityStorageComponent component)
+    {
+        var tile = GetOffsetTileRef(uid, component);
+
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        {
+            _atmos.Merge(environment, component.Air);
+            component.Air.Clear();
+        }
+    }
+
+    private TileRef? GetOffsetTileRef(EntityUid uid, EntityStorageComponent component)
+    {
+        var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset).ToMap(EntityManager);
+
+        if (_map.TryFindGridAt(targetCoordinates, out var grid))
+        {
+            return grid.GetTileRef(targetCoordinates);
+        }
+
+        return null;
+    }
+
+    #region Gas mix event handlers
+
+    private void OnInsideInhale(EntityUid uid, InsideEntityStorageComponent component, InhaleLocationEvent args)
+    {
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
+        {
+            args.Gas = storage.Air;
+        }
+    }
+
+    private void OnInsideExhale(EntityUid uid, InsideEntityStorageComponent component, ExhaleLocationEvent args)
+    {
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
+        {
+            args.Gas = storage.Air;
+        }
+    }
+
+    private void OnInsideExposed(EntityUid uid, InsideEntityStorageComponent component, ref AtmosExposedGetAirEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
+        {
+            args.Gas = storage.Air;
+        }
+
+        args.Handled = true;
+    }
+
+    #endregion
 }

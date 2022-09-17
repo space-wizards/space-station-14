@@ -87,7 +87,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 0.5
+    price: 100
 
 - type: entity
   id: WindowDirectional
@@ -124,7 +124,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.3"
+        bounds: "-0.49,-0.49,0.49,-0.45"
       mass: 50
       mask:
       - FullTileMask

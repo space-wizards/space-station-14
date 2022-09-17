@@ -42,16 +42,14 @@ namespace Content.Server.Connection
             var ban = await _db.GetServerBanByIpAsync(eventArgs.Connection.RemoteEndPoint.Address);
             if (ban != null)
             {
-                var expires = "This is a permanent ban.";
+                var expires = Loc.GetString("ban-banned-permanent");
                 if (ban.ExpirationTime is { } expireTime)
                 {
                     var duration = expireTime - ban.BanTime;
                     var utc = expireTime.ToUniversalTime();
-                    expires = $"This ban is for {duration.TotalMinutes} minutes and will expire at {utc:f} UTC.";
+                    expires = Loc.GetString("ban-expires", ("duration", duration.TotalMinutes.ToString("N0")), ("time", utc.ToString("f")));
                 }
-                var reason = $@"You, or another user of this computer or connection is banned from playing here.
-The ban reason is: ""{ban.Reason}""
-{expires}";
+                var reason = Loc.GetString("ban-banned-1") + "\n" + Loc.GetString("ban-banned-2", ("reason", this.Reason)) + "\n" + expires;;
                 return NetApproval.Deny(reason);
             }
 

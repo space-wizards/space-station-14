@@ -18,7 +18,7 @@
         - tool: Welding
           doAfter: 4
         completed:
-        - !type:SpawnPrototype
+        - !type:GivePrototype
           prototype: SheetSteel1
           amount: 5
       - to: parts
@@ -51,7 +51,7 @@
           doAfter: 1
       - to: frame
         completed:
-        - !type:SpawnPrototype
+        - !type:GivePrototype
           prototype: CableHVStack1
           amount: 5
         steps:

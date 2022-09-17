@@ -2,6 +2,7 @@
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Radiation.Systems;
 
