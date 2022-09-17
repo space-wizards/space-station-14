@@ -168,6 +168,7 @@
       - CableMVStack
       - CableHVStack
       - ConveyorBeltAssembly
+      - AppraisalTool
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet

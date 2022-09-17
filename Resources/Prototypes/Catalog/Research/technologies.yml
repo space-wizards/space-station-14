@@ -221,6 +221,7 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
+    - AppraisalTool
     - ConveyorBeltAssembly
     - RCD
     - RCDAmmo
