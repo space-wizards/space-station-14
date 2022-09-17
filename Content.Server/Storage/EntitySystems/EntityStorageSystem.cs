@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
+using Content.Shared.Wall;
 using Content.Shared.Whitelist;
 using Robust.Server.Containers;
 using Robust.Shared.Audio;
@@ -265,7 +266,7 @@ public sealed class EntityStorageSystem : EntitySystem
         }
 
         //Checks to see if the opening position, if offset, is inside of a wall.
-        if (component.EnteringOffset != (0, 0)) //if the entering position is offset
+        if (component.EnteringOffset != (0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
         {
             var targetXform = Transform(target);
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
