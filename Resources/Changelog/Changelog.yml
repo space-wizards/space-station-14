@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'The rules have been tweaked slightly to clarify some points in most
-      rules. Most notably are the Security Rules, which have been rewritten to clarify
-      that antagonists do not have to be cloned, and that antagonists may be permabrigged
-      at any time.', type: Tweak}
-  id: 1836
-  time: '2022-07-01T00:13:49.0000000+00:00'
 - author: moony
   changes:
   - {message: The restart vote can no longer be called when admins are online., type: Tweak}
@@ -2929,3 +2921,11 @@ Entries:
       not actual fighting', type: Remove}
   id: 2335
   time: '2022-09-17T02:05:06.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: 'Due to a mix-up in the NanoTrasen Standardized Equipment Logistics
+      Warehouse, non-clothing items were getting stocked in ''Drobe machines. We''ve
+      corrected this issue and ensured said equipment should be available in the appropriate
+      lockers instead.', type: Tweak}
+  id: 2336
+  time: '2022-09-17T14:43:34.0000000+00:00'
