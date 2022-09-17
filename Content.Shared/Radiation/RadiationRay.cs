@@ -4,11 +4,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radiation.Systems;
 
-public abstract class SharedRadiationSystem : EntitySystem
-{
-
-}
-
 /// <summary>
 ///     Ray emitted by radiation source towards radiation receiver.
 ///     Contains all information about encountered radiation blockers.

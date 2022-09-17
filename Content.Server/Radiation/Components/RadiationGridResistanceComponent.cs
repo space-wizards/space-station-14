@@ -1,5 +1,4 @@
 using Content.Server.Radiation.Systems;
-using Content.Shared.Radiation.Components;
 
 namespace Content.Server.Radiation.Components;
 

@@ -1,11 +1,10 @@
 using Content.Client.Radiation.Overlays;
 using Content.Shared.Radiation.Events;
-using Content.Shared.Radiation.Systems;
 using Robust.Client.Graphics;
 
 namespace Content.Client.Radiation.Systems;
 
-public sealed class RadiationSystem : SharedRadiationSystem
+public sealed class RadiationSystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 

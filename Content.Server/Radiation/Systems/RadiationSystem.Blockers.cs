@@ -1,7 +1,6 @@
 using Content.Server.Radiation.Components;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
-using Content.Shared.Radiation.Components;
 
 namespace Content.Server.Radiation.Systems;
 

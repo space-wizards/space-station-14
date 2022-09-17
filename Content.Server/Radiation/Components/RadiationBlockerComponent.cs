@@ -1,12 +1,12 @@
-using Content.Shared.Radiation.Systems;
+using Content.Server.Radiation.Systems;
 
-namespace Content.Shared.Radiation.Components;
+namespace Content.Server.Radiation.Components;
 
 /// <summary>
 ///     Blocks radiation when placed on tile.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(SharedRadiationSystem))]
+[Access(typeof(RadiationSystem))]
 public sealed class RadiationBlockerComponent : Component
 {
     /// <summary>

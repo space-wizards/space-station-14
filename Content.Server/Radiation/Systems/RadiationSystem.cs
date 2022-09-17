@@ -1,12 +1,11 @@
 ﻿using Content.Shared.Radiation.Events;
-using Content.Shared.Radiation.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Radiation.Systems;
 
-public sealed partial class RadiationSystem : SharedRadiationSystem
+public sealed partial class RadiationSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
