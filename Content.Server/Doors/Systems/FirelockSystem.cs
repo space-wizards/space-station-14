@@ -159,7 +159,8 @@ namespace Content.Server.Doors.Systems
             if (!this.IsPowered(uid, EntityManager))
                 return;
 
-            if (!TryComp<DoorComponent>(uid, out var doorComponent)) return;
+            if (!TryComp<DoorComponent>(uid, out var doorComponent))
+                return;
 
             if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
             {
@@ -168,7 +169,7 @@ namespace Content.Server.Doors.Systems
             }
             else if (args.AlarmType == AtmosAlarmType.Danger)
             {
-                _doorSystem.TryClose(uid, doorComponent);
+                EmergencyPressureStop(uid, component, doorComponent);
             }
         }
 
