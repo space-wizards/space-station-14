@@ -2,6 +2,7 @@ using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.NPC;
 using Robust.Server.Player;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
@@ -23,6 +24,7 @@ namespace Content.Server.NPC.Pathfinding
          */
 
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly FixtureSystem _fixtures = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 

@@ -5,6 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Pathfinding;
@@ -206,6 +207,7 @@ public sealed partial class PathfindingSystem
         var points = chunk.Points;
         var fixturesQuery = GetEntityQuery<FixturesComponent>();
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
         var gridOrigin = chunk.Origin * ChunkSize;
 
         const float offset = 1f / SubStep / 2f;
@@ -258,14 +260,30 @@ public sealed partial class PathfindingSystem
                                     (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
                                     continue;
 
+                                // Do an AABB check first as it's probably faster, then do an actual point check.
+                                var intersects = false;
+
                                 foreach (var proxy in fixture.Proxies)
                                 {
                                     if (!proxy.AABB.Contains(localPos))
                                         continue;
 
-                                    collisionLayer |= fixture.CollisionLayer;
-                                    collisionMask |= fixture.CollisionMask;
+                                    intersects = true;
                                 }
+
+                                if (!intersects ||
+                                    !xformQuery.TryGetComponent(ent, out var xform))
+                                {
+                                    continue;
+                                }
+
+                                if (!_fixtures.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
+                                {
+                                    continue;
+                                }
+
+                                collisionLayer |= fixture.CollisionLayer;
+                                collisionMask |= fixture.CollisionMask;
                             }
                         }
 
