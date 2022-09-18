@@ -9,18 +9,18 @@
     "states": [
         {
             "name": "folding",
-			"directions": "4"
+			"directions": 4
         },
         {
             "name": "folding_folded"
         },
         {
             "name": "inhand-left",
-			"directions": "4"
+			"directions": 4
         },
         {
             "name": "inhand-right",
-			"directions": "4"
+			"directions": 4
         }
     ]
 }
