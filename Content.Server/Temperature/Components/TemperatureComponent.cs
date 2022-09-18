@@ -24,6 +24,18 @@ namespace Content.Server.Temperature.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float ColdDamageThreshold = 260f;
 
+        /// <summary>
+        /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float? ParentHeatDamageThreshold;
+
+        /// <summary>
+        /// Overrides ColdDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float? ParentColdDamageThreshold;
+
         [DataField("specificHeat")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float SpecificHeat = 50f;

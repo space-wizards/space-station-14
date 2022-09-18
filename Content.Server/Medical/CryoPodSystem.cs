@@ -84,11 +84,12 @@ public sealed class CryoPodSystem: EntitySystem
         if (!Resolve(uid, ref cryoPod))
             return;
 
+        var cryoPodEnabled = HasComp<ActiveCryoPodComponent>(uid);
         _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOpen, cryoPod.BodyContainer.ContainedEntity == null);
-        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, cryoPod.Enabled);
+        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, cryoPodEnabled);
         if (TryComp<PointLightComponent>(uid, out var light))
         {
-            light.Enabled = cryoPod.Enabled && cryoPod.BodyContainer.ContainedEntity != null;
+            light.Enabled = cryoPodEnabled && cryoPod.BodyContainer.ContainedEntity != null;
         }
 
         _appearanceSystem.SetData(uid,SharedCryoPodComponent.CryoPodVisuals.PanelOpen, false);
@@ -97,12 +98,8 @@ public sealed class CryoPodSystem: EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        foreach (var cryoPod in EntityQuery<CryoPodComponent>())
+        foreach (var (_, cryoPod) in EntityQuery<ActiveCryoPodComponent, CryoPodComponent>())
         {
-            if (!cryoPod.Enabled)
-            {
-                continue;
-            }
             cryoPod.Accumulator += frameTime;
 
             if (cryoPod.Accumulator < cryoPod.BeakerTransferTime)
@@ -111,15 +108,22 @@ public sealed class CryoPodSystem: EntitySystem
             cryoPod.Accumulator -= cryoPod.BeakerTransferTime;
 
             var container = _itemSlotsSystem.GetItem(cryoPod.Owner, "beakerSlot");
+            var patient = cryoPod.BodyContainer.ContainedEntity;
             if (container != null
                 && container.Value.Valid
-                && cryoPod.BodyContainer.ContainedEntity != null
-                && TryComp<BloodstreamComponent>(cryoPod.BodyContainer.ContainedEntity, out var bloodstream)
+                && patient != null
                 && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
             {
+
+                var bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
+                if (!bloodstreamQuery.TryGetComponent(patient, out var bloodstream))
+                {
+                    continue;
+                }
+
                 var solutionToInject = _solutionContainerSystem.SplitSolution(container.Value, containerSolution, cryoPod.BeakerTransferAmount);
-                _bloodstreamSystem.TryAddToChemicals(bloodstream.Owner, solutionToInject, bloodstream);
-                solutionToInject.DoEntityReaction(bloodstream.Owner, ReactionMethod.Injection);
+                _bloodstreamSystem.TryAddToChemicals(patient.Value, solutionToInject, bloodstream);
+                solutionToInject.DoEntityReaction(patient.Value, ReactionMethod.Injection);
             }
         }
     }
@@ -213,7 +217,7 @@ public sealed class CryoPodSystem: EntitySystem
 
     private void HandleInteractHand(EntityUid uid, CryoPodComponent cryoPodComponent, InteractHandEvent args)
     {
-        if (!cryoPodComponent.Enabled)
+        if (!HasComp<ActiveCryoPodComponent>(uid))
         {
             return;
         }
@@ -320,9 +324,13 @@ public sealed class CryoPodSystem: EntitySystem
 
     private void OnPowerChanged(EntityUid uid, CryoPodComponent component, PowerChangedEvent args)
     {
-        component.Enabled = args.Powered;
-        if (!args.Powered)
+        if (args.Powered)
         {
+            EnsureComp<ActiveCryoPodComponent>(uid);
+        }
+        else
+        {
+            RemCompDeferred<ActiveCryoPodComponent>(uid);
             _uiSystem.TryCloseAll(uid, SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key);
         }
         UpdateAppearance(uid, component);

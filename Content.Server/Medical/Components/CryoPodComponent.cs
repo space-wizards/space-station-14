@@ -56,12 +56,6 @@ public sealed class CryoPodComponent: Component, IGasMixtureHolder
     public float PryDelay = 5f;
 
     /// <summary>
-    /// Alias for Powered.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled { get; set; } = true;
-
-    /// <summary>
     /// If true, the eject verb will not work on the pod and the user must use a crowbar to pry the pod open.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]

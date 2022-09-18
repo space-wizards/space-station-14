@@ -10,8 +10,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Temperature.Systems
 {
@@ -40,6 +38,9 @@ namespace Content.Server.Temperature.Systems
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
             SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
             SubscribeLocalEvent<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
+
+            // Allows overriding thresholds based on the parent's thresholds.
+            SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
         }
 
         public override void Update(float frameTime)
@@ -172,11 +173,8 @@ namespace Content.Server.Temperature.Systems
             var y = temperature.DamageCap;
             var c = y * 2;
 
-            var ev = new ChangeDamageGetThresholdsEvent();
-            RaiseLocalEvent(uid, ref ev);
-
-            var heatDamageThreshold = ev.HeatDamageThreshold ?? temperature.HeatDamageThreshold;
-            var coldDamageThreshold = ev.ColdDamageThreshold ?? temperature.ColdDamageThreshold;
+            var heatDamageThreshold = temperature.ParentHeatDamageThreshold ?? temperature.HeatDamageThreshold;
+            var coldDamageThreshold = temperature.ParentColdDamageThreshold ?? temperature.ColdDamageThreshold;
 
             if (temperature.CurrentTemperature >= heatDamageThreshold)
             {
@@ -214,6 +212,19 @@ namespace Content.Server.Temperature.Systems
         {
             args.TemperatureDelta *= component.Coefficient;
         }
+
+        private void OnParentChange(EntityUid uid, TemperatureComponent component,
+            ref EntParentChangedMessage args)
+        {
+            if (!TryComp<ContainerTemperatureDamageThresholdsComponent>(args.Transform.ParentUid, out var newThresholds))
+            {
+                component.ParentHeatDamageThreshold = null;
+                component.ParentColdDamageThreshold = null;
+                return;
+            }
+            component.ParentHeatDamageThreshold = newThresholds.HeatDamageThreshold;
+            component.ParentColdDamageThreshold = newThresholds.ColdDamageThreshold;
+        }
     }
 
     public sealed class OnTemperatureChangeEvent : EntityEventArgs
@@ -240,12 +251,5 @@ namespace Content.Server.Temperature.Systems
         {
             TemperatureDelta = temperature;
         }
-    }
-
-    [ByRefEvent]
-    public struct ChangeDamageGetThresholdsEvent
-    {
-        public float? HeatDamageThreshold;
-        public float? ColdDamageThreshold;
     }
 }

@@ -8,22 +8,29 @@ public sealed class CryoPodSystem: VisualizerSystem<CryoPodVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, CryoPodVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (!TryComp(uid, out SpriteComponent? sprite)
-            || !args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOpen, out bool isOpen)
-            || !args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn))
+        if (args.Sprite == null)
+        {
             return;
+        }
+
+        if (!args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOpen, out bool isOpen)
+            || !args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn))
+        {
+            return;
+        }
+
         if (isOpen)
         {
-            sprite.LayerSetState(CryoPodVisualLayers.Base, "pod-open");
-            sprite.LayerSetVisible(CryoPodVisualLayers.Cover, false);
-            sprite.DrawDepth = (int) DrawDepth.Objects;
+            args.Sprite.LayerSetState(CryoPodVisualLayers.Base, "pod-open");
+            args.Sprite.LayerSetVisible(CryoPodVisualLayers.Cover, false);
+            args.Sprite.DrawDepth = (int) DrawDepth.Objects;
         }
         else
         {
-            sprite.DrawDepth = (int) DrawDepth.Mobs;
-            sprite.LayerSetState(CryoPodVisualLayers.Base, isOn ? "pod-on" : "pod-off");
-            sprite.LayerSetState(CryoPodVisualLayers.Cover, isOn ? "cover-on" : "cover-off");
-            sprite.LayerSetVisible(CryoPodVisualLayers.Cover, true);
+            args.Sprite.DrawDepth = (int) DrawDepth.Mobs;
+            args.Sprite.LayerSetState(CryoPodVisualLayers.Base, isOn ? "pod-on" : "pod-off");
+            args.Sprite.LayerSetState(CryoPodVisualLayers.Cover, isOn ? "cover-on" : "cover-off");
+            args.Sprite.LayerSetVisible(CryoPodVisualLayers.Cover, true);
         }
     }
 }

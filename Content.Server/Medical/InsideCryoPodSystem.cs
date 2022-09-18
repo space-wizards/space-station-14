@@ -16,7 +16,6 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<InsideCryoPodComponent, ExhaleLocationEvent>(OnExhaleLocation);
             SubscribeLocalEvent<InsideCryoPodComponent, AtmosExposedGetAirEvent>(OnGetAir);
 
-            SubscribeLocalEvent<InsideCryoPodComponent, ChangeDamageGetThresholdsEvent>(OnTemperatureDamage);
             SubscribeLocalEvent<InsideCryoPodComponent, DownAttemptEvent>(HandleDown);
 
         }
@@ -54,11 +53,5 @@ namespace Content.Server.Medical
         }
 
         #endregion
-
-        private void OnTemperatureDamage(EntityUid uid, InsideCryoPodComponent component,
-            ref ChangeDamageGetThresholdsEvent args)
-        {
-            args.ColdDamageThreshold = component.ColdThreshold;
-        }
     }
 }
