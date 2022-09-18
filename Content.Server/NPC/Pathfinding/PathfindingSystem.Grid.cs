@@ -418,7 +418,7 @@ public sealed partial class PathfindingSystem
                     // So we should already have the interior nodes based on the above
                     // However, we might have the corners of the chunk flagged as interior nodes so we'll make sure
                     // they're not
-                    if (x is 0 or ChunkSize - 1 && y is 0 or ChunkSize - 1)
+                    if (x is 0 or (ChunkSize * SubStep) - 1 && y is 0 or (ChunkSize * SubStep) - 1)
                     {
                         point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
                     }

@@ -273,13 +273,6 @@ namespace Content.Client.NPC
                                 continue;
                             }
 
-                            if (crumb.Coordinates ==
-                                new Vector2i(SharedPathfindingSystem.ChunkSize * SharedPathfindingSystem.SubStep,
-                                    SharedPathfindingSystem.ChunkSize * SharedPathfindingSystem.SubStep))
-                            {
-
-                            }
-
                             const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
 
                             var color = Color.Green;
