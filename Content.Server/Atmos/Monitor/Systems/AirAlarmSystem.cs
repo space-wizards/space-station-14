@@ -183,6 +183,8 @@ public sealed class AirAlarmSystem : EntitySystem
         component.VentData.Clear();
         component.KnownDevices.Clear();
 
+        UpdateUI(uid, component);
+
         SyncRegisterAllDevices(uid);
     }
 
