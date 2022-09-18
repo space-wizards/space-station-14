@@ -438,77 +438,11 @@ public sealed partial class PathfindingSystem
         SendCells(chunk, grid.GridEntityId, cells);
         SendBreadcrumbs(chunk, grid.GridEntityId);
 
-        // Step 3. Get the boundary edges
-        // At this point we have a decent point cloud for navmesh or the likes
-        // In our case we'll make a navmesh out of it because we aren't strictly tile-based and we likely need
-        // variable sized mobs.
+        // Okay so at this point if we wanted then we COULD get a navmesh, e.g. if you're a downstream with whacky terrain
+        // What I would do is expand out the array slightly again so 1x1 tiles still turn into 2x2 (for stuff like thindows)
+        // This also means you can ensure you get closed cycles
 
-        var edges = new List<PathfindingBoundary>();
-        var visited = new HashSet<Vector2i>(SubStep * 4);
-
-        while (boundaryNodes.Count > 0)
-        {
-            visited.Clear();
-            var seed = boundaryNodes.First();
-            var node = seed;
-            DebugTools.Assert(!node.IsInterior);
-            boundaryNodes.Remove(node);
-            var crumbs = new List<PathfindingBreadcrumb>();
-            crumbs.Add(seed);
-
-            var lastDirection = DirectionFlag.None;
-            // For our purposes we have thindows so 1 x n width points may be valid unfortunately so we can't just check for a loop
-            // It might be a chain without connecting onto itself.
-
-            bool moved;
-
-            while (true)
-            {
-                moved = false;
-
-                // For consistency with physics we'll go in CCW order.
-                foreach (var direction in new[]
-                             { DirectionFlag.West, DirectionFlag.South, DirectionFlag.East, DirectionFlag.North })
-                {
-                    // Don't backtrack
-                    if (lastDirection != DirectionFlag.None && direction.AsDir() == lastDirection.AsDir().GetOpposite())
-                        continue;
-
-                    var offset = direction.GetOffset();
-
-                    // Don't consider nodes outside of bounds for edges
-                    if ((node.Coordinates.X + offset.X) < (ExpansionSize * SubStep) ||
-                        (node.Coordinates.X + offset.X) >= ((ChunkSize + ExpansionSize) * SubStep) ||
-                        (node.Coordinates.Y + offset.Y) < (ExpansionSize * SubStep) ||
-                        (node.Coordinates.Y + offset.Y) >= ((ChunkSize + ExpansionSize) * SubStep))
-                    {
-                        continue;
-                    }
-
-                    ref var neighbor = ref points[node.Coordinates.X + offset.X, node.Coordinates.Y + offset.Y];
-
-                    if (neighbor.IsInterior || !neighbor.Equivalent(node) || !visited.Add(neighbor.Coordinates))
-                        continue;
-
-                    lastDirection = direction;
-                    crumbs.Add(neighbor);
-                    boundaryNodes.Remove(neighbor);
-                    node = neighbor;
-                    visited.Add(node.Coordinates);
-                    moved = true;
-                    break;
-                }
-
-                if (!moved || node.Equals(seed))
-                    break;
-            }
-
-            // TODO: Need to prune collinear.
-
-            DebugTools.Assert(crumbs.Count > 0);
-            var edge = new PathfindingBoundary(moved, crumbs);
-            edges.Add(edge);
-        }
+        // However, for now I'm just making square polys to get something working and trying to get the exact bounds is a waste.
 
         SendEdges(chunk, grid.GridEntityId, edges);
 
