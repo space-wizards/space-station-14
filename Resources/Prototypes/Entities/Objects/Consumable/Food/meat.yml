@@ -1217,8 +1217,6 @@
       reagents:
       - ReagentId: CarpoToxin
         Quantity: 0.5
-      - ReagentId: Brine
-        Quantity: 6
       - ReagentId: UncookedAnimalProteins
         Quantity: 2
 
