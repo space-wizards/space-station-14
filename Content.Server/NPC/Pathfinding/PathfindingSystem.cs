@@ -63,7 +63,7 @@ namespace Content.Server.NPC.Pathfinding
             sessions = msg.Mode;
             _subscribedSessions[args.SenderSession] = sessions;
 
-            if ((sessions & PathfindingDebugMode.Breadcrumbs) != 0x0)
+            if ((sessions & (PathfindingDebugMode.Boundary | PathfindingDebugMode.Breadcrumbs | PathfindingDebugMode.Chunks)) != 0x0)
             {
                 SendBreadcrumbs(pSession);
             }

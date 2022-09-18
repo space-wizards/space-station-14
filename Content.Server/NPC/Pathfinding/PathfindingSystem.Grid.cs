@@ -224,7 +224,6 @@ public sealed partial class PathfindingSystem
                 // Tile
                 var offsetX = x - ExpansionSize;
                 var offsetY = y - ExpansionSize;
-
                 var tilePos = new Vector2i(offsetX, offsetY) + gridOrigin;
 
                 var tile = grid.GetTileRef(tilePos);
@@ -318,10 +317,6 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // At this point we have a decent point cloud for navmesh or the likes, at least if we clean it up.
-        // Just because I want to get something working (and we can optimise it more later after the API is cleaned up)
-        SendBreadcrumbs(chunk, grid.GridEntityId);
-
         // Step 2. Cleanup the points
         const int CleanupIterations = 3;
         var boundaryNodes = new HashSet<PathfindingBreadcrumb>();
@@ -336,8 +331,8 @@ public sealed partial class PathfindingSystem
             {
                 for (var y = 0; y < ChunkSize * SubStep; y++)
                 {
-                    var offsetX = x + ExpansionSize;
-                    var offsetY = y + ExpansionSize;
+                    var offsetX = x + (ExpansionSize * SubStep);
+                    var offsetY = y + (ExpansionSize * SubStep);
 
                     ref var point = ref points[offsetX, offsetY];
 
@@ -375,9 +370,10 @@ public sealed partial class PathfindingSystem
                                 throw new ArgumentOutOfRangeException();
                         }
 
-                        var neighborX = x + i;
-                        var neighborY = y + j;
+                        var neighborX = offsetX + i;
+                        var neighborY = offsetY + j;
 
+                        // Don't need to bounds check the array because it's guaranteed to exist
                         ref var pointNeighbor = ref points[neighborX, neighborY];
 
                         if (pointNeighbor.Equivalent(point))
@@ -387,19 +383,19 @@ public sealed partial class PathfindingSystem
                     }
 
                     // If we only have one neighbor OR we only have a single line then dump it.
-                    switch (neighbors)
+                    switch ((int) neighbors)
                     {
-                        case DirectionFlag.None:
+                        case (int) DirectionFlag.None:
                             // Even if it's a collidable point we'll cull it anyway if it's isolated.
                             anyCleanup = true;
                             point = PathfindingBreadcrumb.Invalid;
                             break;
-                        case (DirectionFlag.North | DirectionFlag.South):
-                        case (DirectionFlag.East | DirectionFlag.West):
-                        case DirectionFlag.North:
-                        case DirectionFlag.West:
-                        case DirectionFlag.South:
-                        case DirectionFlag.East:
+                        case (int) (DirectionFlag.North | DirectionFlag.South):
+                        case (int) (DirectionFlag.East | DirectionFlag.West):
+                        case (int) DirectionFlag.North:
+                        case (int) DirectionFlag.West:
+                        case (int) DirectionFlag.South:
+                        case (int) DirectionFlag.East:
                             // If it's an empty node then we won't allow single tiles on their own.
                             // Anything else we can't exactly remove due to thindows existing.
                             if (point.CollisionLayer != 0 && point.CollisionMask != 0)
@@ -411,12 +407,11 @@ public sealed partial class PathfindingSystem
                             anyCleanup = true;
                             point = PathfindingBreadcrumb.Invalid;
                             break;
-                        case (DirectionFlag.North | DirectionFlag.East | DirectionFlag.South | DirectionFlag.West):
+                        case (int) (DirectionFlag.North | DirectionFlag.East | DirectionFlag.South | DirectionFlag.West):
                             point.Flags |= PathfindingBreadcrumbFlag.Interior;
                             break;
                         default:
                             point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
-                            boundaryNodes.Add(point);
                             break;
                     }
 
@@ -427,6 +422,11 @@ public sealed partial class PathfindingSystem
                     {
                         point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
                     }
+
+                    if ((point.Flags & PathfindingBreadcrumbFlag.Interior) == 0x0)
+                    {
+                        boundaryNodes.Add(point);
+                    }
                 }
             }
 
@@ -435,6 +435,11 @@ public sealed partial class PathfindingSystem
                 break;
             }
         }
+
+        // At this point we have a decent point cloud for navmesh or the likes
+        // In our case we'll make a navmesh out of it because we aren't strictly tile-based and we likely need
+        // variable sized mobs.
+        SendBreadcrumbs(chunk, grid.GridEntityId);
 
         // TODO: Trace boundaries
 

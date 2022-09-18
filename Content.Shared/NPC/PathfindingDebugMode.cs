@@ -4,6 +4,25 @@ namespace Content.Shared.NPC;
 public enum PathfindingDebugMode : byte
 {
     None = 0,
-    Breadcrumbs = 1 << 0,
-    Chunks = 1 << 1,
+
+    /// <summary>
+    /// Show the pathfinding breadcrumbs that are exterior.
+    /// NOT the breadcrumbs that are considered outside of the chunk boundary.
+    /// </summary>
+    Boundary = 1 << 0,
+
+    /// <summary>
+    /// Show the individual pathfinding breadcrumbs.
+    /// </summary>
+    Breadcrumbs = 1 << 1,
+
+    /// <summary>
+    /// Show the pathfinding chunk edges.
+    /// </summary>
+    Chunks = 1 << 2,
+
+    /// <summary>
+    /// Shows the stats nearest crumb to the mouse cursor.
+    /// </summary>
+    Crumb = 1 << 3,
 }

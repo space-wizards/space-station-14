@@ -1,6 +1,8 @@
+using System.Text;
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 
@@ -11,6 +13,7 @@ namespace Content.Client.NPC
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IResourceCache _cache = default!;
 
         public PathfindingDebugMode Modes
         {
@@ -26,7 +29,7 @@ namespace Content.Client.NPC
                 }
                 else if (!overlayManager.HasOverlay<PathfindingOverlay>())
                 {
-                    overlayManager.AddOverlay(new PathfindingOverlay(_eyeManager, _inputManager, _mapManager, this));
+                    overlayManager.AddOverlay(new PathfindingOverlay(_eyeManager, _inputManager, _mapManager, _cache, this));
                 }
 
                 _modes = value;
@@ -77,74 +80,212 @@ namespace Content.Client.NPC
         private readonly IMapManager _mapManager;
         private readonly PathfindingSystem _system;
 
-        public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        public override OverlaySpace Space => OverlaySpace.ScreenSpace | OverlaySpace.WorldSpace;
 
-        public PathfindingOverlay(IEyeManager eyeManager, IInputManager inputManager, IMapManager mapManager, PathfindingSystem system)
+        private readonly Font _font;
+
+        public PathfindingOverlay(IEyeManager eyeManager, IInputManager inputManager, IMapManager mapManager, IResourceCache cache, PathfindingSystem system)
         {
             _eyeManager = eyeManager;
             _inputManager = inputManager;
             _mapManager = mapManager;
             _system = system;
+            _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         }
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            var worldHandle = args.WorldHandle;
-
-            if ((_system.Modes & PathfindingDebugMode.Breadcrumbs) != 0x0)
+            switch (args.DrawingHandle)
             {
-                var mousePos = _inputManager.MouseScreenPosition;
-                var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
+                case DrawingHandleScreen screenHandle:
+                    DrawScreen(args, screenHandle);
+                    break;
+                case DrawingHandleWorld worldHandle:
+                    DrawWorld(args, worldHandle);
+                    break;
+            }
+        }
 
-                if (mouseWorldPos.MapId == args.MapId)
+        private void DrawScreen(OverlayDrawArgs args, DrawingHandleScreen screenHandle)
+        {
+            var mousePos = _inputManager.MouseScreenPosition;
+            var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
+            var aabb = new Box2(mouseWorldPos.Position - SharedPathfindingSystem.ChunkSize, mouseWorldPos.Position + SharedPathfindingSystem.ChunkSize);
+
+            if ((_system.Modes & PathfindingDebugMode.Crumb) != 0x0 &&
+                mouseWorldPos.MapId == args.MapId)
+            {
+                var found = false;
+
+                foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
                 {
-                    var aabb = new Box2(mouseWorldPos.Position - Vector2.One / 4f, mouseWorldPos.Position + Vector2.One / 4f);
+                    if (found || !_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
+                        continue;
 
-                    foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
+                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb.Enlarged(float.Epsilon - SharedPathfindingSystem.ChunkSize));
+                    var worldMatrix = grid.WorldMatrix;
+
+                    foreach (var chunk in crumbs)
                     {
-                        if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
+                        if (found)
                             continue;
 
-                        worldHandle.SetTransform(grid.WorldMatrix);
-                        var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
 
-                        foreach (var chunk in crumbs)
+                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
+
+                        if (!chunkAABB.Intersects(localAABB))
+                            continue;
+
+                        PathfindingBreadcrumb? nearest = null;
+                        var nearestDistance = float.MaxValue;
+
+                        foreach (var crumb in chunk.Value)
                         {
-                            var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
+                            var crumbMapPos = worldMatrix.Transform(_system.GetCoordinate(crumb.Coordinates));
+                            var distance = (crumbMapPos - mouseWorldPos.Position).Length;
 
-                            var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
-
-                            if (!chunkAABB.Intersects(localAABB))
-                                continue;
-
-                            foreach (var crumb in chunk.Value)
+                            if (distance < nearestDistance)
                             {
-                                if (crumb.Equals(PathfindingBreadcrumb.Invalid))
-                                {
-                                    continue;
-                                }
-
-                                const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
-
-                                var masked = crumb.CollisionMask != 0 || crumb.CollisionLayer != 0;
-                                Color color;
-
-                                if ((crumb.Flags & PathfindingBreadcrumbFlag.Space) != 0x0)
-                                {
-                                    color = Color.Green;
-                                }
-                                else if (masked)
-                                {
-                                    color = Color.Blue;
-                                }
-                                else
-                                {
-                                    color = Color.Orange;
-                                }
-
-                                var coordinate = _system.GetCoordinate(crumb.Coordinates);
-                                worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.25f));
+                                nearestDistance = distance;
+                                nearest = crumb;
                             }
+                        }
+
+                        if (nearest != null)
+                        {
+                            var text = new StringBuilder();
+
+                            // Sandbox moment
+                            var coords = $"Point coordinates: {nearest.Value.Coordinates.ToString()}";
+                            var gridCoords =
+                                $"Grid coordinates: {_system.GetCoordinate(nearest.Value.Coordinates).ToString()}";
+                            var layer = $"Layer: {nearest.Value.CollisionLayer.ToString()}";
+                            var mask = $"Mask: {nearest.Value.CollisionMask.ToString()}";
+
+                            text.AppendLine(coords);
+                            text.AppendLine(gridCoords);
+                            text.AppendLine(layer);
+                            text.AppendLine(mask);
+                            text.AppendLine($"Flags:");
+
+                            foreach (var flag in Enum.GetValues<PathfindingBreadcrumbFlag>())
+                            {
+                                if ((flag & nearest.Value.Flags) == 0x0)
+                                    continue;
+
+                                var flagStr = $"- {flag.ToString()}";
+                                text.AppendLine(flagStr);
+                            }
+
+                            screenHandle.DrawString(_font, mousePos.Position, text.ToString());
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DrawWorld(OverlayDrawArgs args, DrawingHandleWorld worldHandle)
+        {
+            var mousePos = _inputManager.MouseScreenPosition;
+            var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
+            var aabb = new Box2(mouseWorldPos.Position - Vector2.One / 4f, mouseWorldPos.Position + Vector2.One / 4f);
+
+            if ((_system.Modes & PathfindingDebugMode.Breadcrumbs) != 0x0 &&
+                mouseWorldPos.MapId == args.MapId)
+            {
+                foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
+                {
+                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
+                        continue;
+
+                    worldHandle.SetTransform(grid.WorldMatrix);
+                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+
+                    foreach (var chunk in crumbs)
+                    {
+                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
+
+                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
+
+                        if (!chunkAABB.Intersects(localAABB))
+                            continue;
+
+                        foreach (var crumb in chunk.Value)
+                        {
+                            if (crumb.Equals(PathfindingBreadcrumb.Invalid))
+                            {
+                                continue;
+                            }
+
+                            const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
+
+                            var masked = crumb.CollisionMask != 0 || crumb.CollisionLayer != 0;
+                            Color color;
+
+                            if ((crumb.Flags & PathfindingBreadcrumbFlag.Space) != 0x0)
+                            {
+                                color = Color.Green;
+                            }
+                            else if (masked)
+                            {
+                                color = Color.Blue;
+                            }
+                            else
+                            {
+                                color = Color.Orange;
+                            }
+
+                            var coordinate = _system.GetCoordinate(crumb.Coordinates);
+                            worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.25f));
+                        }
+                    }
+                }
+            }
+
+            if ((_system.Modes & PathfindingDebugMode.Boundary) != 0x0 &&
+                mouseWorldPos.MapId == args.MapId)
+            {
+                foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
+                {
+                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
+                        continue;
+
+                    worldHandle.SetTransform(grid.WorldMatrix);
+                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+
+                    foreach (var chunk in crumbs)
+                    {
+                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
+
+                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
+
+                        if (!chunkAABB.Intersects(localAABB))
+                            continue;
+
+                        foreach (var crumb in chunk.Value)
+                        {
+                            if (crumb.Equals(PathfindingBreadcrumb.Invalid) ||
+                                (crumb.Flags & (PathfindingBreadcrumbFlag.Interior | PathfindingBreadcrumbFlag.IsBorder)) != 0x0)
+                            {
+                                continue;
+                            }
+
+                            if (crumb.Coordinates ==
+                                new Vector2i(SharedPathfindingSystem.ChunkSize * SharedPathfindingSystem.SubStep,
+                                    SharedPathfindingSystem.ChunkSize * SharedPathfindingSystem.SubStep))
+                            {
+
+                            }
+
+                            const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
+
+                            var color = Color.Green;
+
+                            var coordinate = _system.GetCoordinate(crumb.Coordinates);
+                            worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.5f));
                         }
                     }
                 }
