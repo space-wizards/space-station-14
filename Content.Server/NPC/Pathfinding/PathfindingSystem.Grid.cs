@@ -381,7 +381,8 @@ public sealed partial class PathfindingSystem
                 }
             }
 
-            if (anyCleanup)
+            // If we still have more iterations to try (at least until we give up).
+            if (anyCleanup && it != CleanupIterations - 1)
             {
                 continue;
             }
@@ -394,7 +395,39 @@ public sealed partial class PathfindingSystem
                     var offsetX = x + originOffset;
                     var offsetY = y + originOffset;
 
+                    // If we're on the edge of the chunk then we're a border node.
+                    if (x == 0 ||
+                        y == 0 ||
+                        x == (ChunkSize * SubStep) - 1 ||
+                        y == (ChunkSize * SubStep) - 1)
+                    {
+                        continue;
+                    }
 
+                    ref var point = ref points[offsetX, offsetY];
+                    var isBoundary = false;
+
+                    for (var i = -PathfindingCell.Length / 2; i <= 0; i++)
+                    {
+                        for (var j = -PathfindingCell.Length / 2; j <= 0; j++)
+                        {
+                            if (i != 0 && j != 0)
+                                continue;
+
+                            ref var cell = ref cells[x + i, y + j];
+
+                            if (cell.Data.Equals(point.Data))
+                                continue;
+
+                            isBoundary = true;
+                            goto Cell;
+                        }
+                    }
+
+                    Cell: ;
+
+                    if (!isBoundary)
+                        point.Data.Flags |= PathfindingBreadcrumbFlag.Interior;
                 }
             }
         }
