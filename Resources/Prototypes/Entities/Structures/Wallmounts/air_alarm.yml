@@ -16,6 +16,7 @@
     sendBroadcastAttemptEvent: true
   - type: WiredNetworkConnection
   - type: DeviceList
+  - type: DeviceNetworkRequiresPower
   - type: AtmosAlarmable
     syncWith:
       - AirAlarm

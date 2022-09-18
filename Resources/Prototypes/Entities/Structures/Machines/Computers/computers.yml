@@ -640,6 +640,7 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
@@ -670,6 +671,7 @@
       transmitFrequencyId: SurveillanceCamera
     - type: WirelessNetworkConnection
       range: 200
+    - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
