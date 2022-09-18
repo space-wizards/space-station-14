@@ -15,7 +15,10 @@ public partial class RadiationSystem
 {
     private void UpdateGridcast()
     {
+        // should we save debug information into rays?
+        // if there is no debug sessions connected - just ignore it
         var saveVisitedTiles = _debugSessions.Count > 0;
+
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
@@ -23,21 +26,26 @@ public partial class RadiationSystem
         var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>().ToArray();
         var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
         var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
+        var transformQuery = GetEntityQuery<TransformComponent>();
 
         // trace all rays from rad source to rad receivers
         var rays = new List<RadiationRay>();
         var receivedRads = new List<(RadiationReceiverComponent, float)>();
         foreach (var (dest, destTrs) in destinations)
         {
+            var destWorld = _transform.GetWorldPosition(destTrs, transformQuery);
+
             var rads = 0f;
             foreach (var (source, sourceTrs) in sources)
             {
                 // send ray towards destination entity
-                var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs,
-                    source.Intensity, source.Slope, saveVisitedTiles, blockerQuery, resistanceQuery);
+                var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs, destWorld,
+                    source.Intensity, source.Slope, saveVisitedTiles,
+                    blockerQuery, resistanceQuery, transformQuery);
                 if (ray == null)
                     continue;
 
+                // save ray for debug
                 rays.Add(ray);
 
                 // add rads to total rad exposure
@@ -69,10 +77,11 @@ public partial class RadiationSystem
     }
 
     private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs,
-        EntityUid destUid, TransformComponent destTrs,
+        EntityUid destUid, TransformComponent destTrs, Vector2 destWorld,
         float incomingRads, float slope, bool saveVisitedTiles,
         EntityQuery<RadiationBlockerComponent> blockerQuery,
-        EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
+        EntityQuery<RadiationGridResistanceComponent> resistanceQuery,
+        EntityQuery<TransformComponent> transformQuery)
     {
         // lets first check that source and destination on the same map
         if (sourceTrs.MapID != destTrs.MapID)
@@ -80,8 +89,7 @@ public partial class RadiationSystem
         var mapId = sourceTrs.MapID;
 
         // get direction from rad source to destination and its distance
-        var sourceWorld = sourceTrs.WorldPosition;
-        var destWorld = destTrs.WorldPosition;
+        var sourceWorld = _transform.GetWorldPosition(sourceTrs, transformQuery);
         var dir = destWorld - sourceWorld;
         var dist = dir.Length;
 
