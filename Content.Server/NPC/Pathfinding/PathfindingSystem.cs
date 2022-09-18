@@ -116,6 +116,24 @@ namespace Content.Server.NPC.Pathfinding
             }
         }
 
+        private void SendEdges(GridPathfindingChunk chunk, EntityUid gridUid, List<List<PathfindingBreadcrumb>> edges)
+        {
+            var msg = new PathfindingEdgesMessage()
+            {
+                Origin = chunk.Origin,
+                GridUid = gridUid,
+                Edges = edges,
+            };
+
+            foreach (var session in _subscribedSessions)
+            {
+                if ((session.Value & PathfindingDebugMode.Edges) == 0x0)
+                    continue;
+
+                RaiseNetworkEvent(msg, session.Key.ConnectedClient);
+            }
+        }
+
         private List<PathfindingBreadcrumb> GetData(GridPathfindingChunk chunk)
         {
             var crumbs = new List<PathfindingBreadcrumb>(chunk.Points.Length * chunk.Points.Length);

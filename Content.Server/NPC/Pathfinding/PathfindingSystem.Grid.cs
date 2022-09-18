@@ -9,6 +9,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
+using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
 
 namespace Content.Server.NPC.Pathfinding;
 
@@ -216,6 +217,7 @@ public sealed partial class PathfindingSystem
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
         var gridOrigin = chunk.Origin * ChunkSize;
+        var tileEntities = new ValueList<EntityUid>();
 
         for (var x = 0; x < ChunkSize + ExpansionSize * 2; x++)
         {
@@ -233,7 +235,7 @@ public sealed partial class PathfindingSystem
                 if (isBorder)
                     flags |= PathfindingBreadcrumbFlag.IsBorder;
 
-                var tileEntities = new ValueList<EntityUid>();
+                tileEntities.Clear();
                 var anchored = grid.GetAnchoredEntitiesEnumerator(tilePos);
 
                 while (anchored.MoveNext(out var ent))
@@ -255,6 +257,9 @@ public sealed partial class PathfindingSystem
                 {
                     for (var subY = 0; subY < SubStep; subY++)
                     {
+                        var xOffset = x * SubStep + subX;
+                        var yOffset = y * SubStep + subY;
+
                         // Subtile
                         var localPos = new Vector2(StepOffset + gridOrigin.X + offsetX + (float) subX / SubStep, StepOffset + gridOrigin.Y + offsetY + (float) subY / SubStep);
                         var collisionMask = 0x0;
@@ -265,7 +270,7 @@ public sealed partial class PathfindingSystem
                             if (!fixturesQuery.TryGetComponent(ent, out var fixtures))
                                 continue;
 
-                            //  TODO: Inefficient af
+                            // TODO: Inefficient af
                             foreach (var (_, fixture) in fixtures.Fixtures)
                             {
                                 // Don't need to re-do it.
@@ -305,9 +310,9 @@ public sealed partial class PathfindingSystem
                             DebugTools.Assert(tileEntities.Count == 0);
                         }
 
-                        points[x * SubStep + subX, y * SubStep + subY] = new PathfindingBreadcrumb()
+                        points[xOffset, yOffset] = new PathfindingBreadcrumb()
                         {
-                            Coordinates = GetPointCoordinate(localPos),
+                            Coordinates = new Vector2i(xOffset, yOffset),
                             Flags = flags,
                             CollisionLayer = collisionLayer,
                             CollisionMask = collisionMask,
@@ -346,32 +351,9 @@ public sealed partial class PathfindingSystem
                     foreach (var direction in new[]
                                  { DirectionFlag.North, DirectionFlag.East, DirectionFlag.South, DirectionFlag.West })
                     {
-                        int i, j;
-
-                        switch (direction)
-                        {
-                            case DirectionFlag.North:
-                                i = 0;
-                                j = 1;
-                                break;
-                            case DirectionFlag.East:
-                                i = 1;
-                                j = 0;
-                                break;
-                            case DirectionFlag.South:
-                                i = 0;
-                                j = -1;
-                                break;
-                            case DirectionFlag.West:
-                                i = -1;
-                                j = 0;
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-
-                        var neighborX = offsetX + i;
-                        var neighborY = offsetY + j;
+                        var offset = direction.GetOffset();
+                        var neighborX = offsetX + offset.X;
+                        var neighborY = offsetY + offset.Y;
 
                         // Don't need to bounds check the array because it's guaranteed to exist
                         ref var pointNeighbor = ref points[neighborX, neighborY];
@@ -418,7 +400,7 @@ public sealed partial class PathfindingSystem
                     // So we should already have the interior nodes based on the above
                     // However, we might have the corners of the chunk flagged as interior nodes so we'll make sure
                     // they're not
-                    if (x is 0 or (ChunkSize * SubStep) - 1 && y is 0 or (ChunkSize * SubStep) - 1)
+                    if (x is 0 or (ChunkSize * SubStep) - 1 || y is 0 or (ChunkSize * SubStep) - 1)
                     {
                         point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
                     }
@@ -441,7 +423,48 @@ public sealed partial class PathfindingSystem
         // variable sized mobs.
         SendBreadcrumbs(chunk, grid.GridEntityId);
 
+        var edges = new List<List<PathfindingBreadcrumb>>();
+
         // TODO: Trace boundaries
+        while (boundaryNodes.Count > 0)
+        {
+            var node = boundaryNodes.First();
+            DebugTools.Assert(!node.IsInterior);
+            boundaryNodes.Remove(node);
+            var edge = new List<PathfindingBreadcrumb>()
+            {
+                node,
+            };
+
+            var lastDirection = DirectionFlag.None;
+
+            // For consistency with physics we'll go in CCW order.
+            foreach (var direction in new[]
+                         { DirectionFlag.West, DirectionFlag.South, DirectionFlag.East, DirectionFlag.North })
+            {
+                // Don't backtrack
+                if (lastDirection != DirectionFlag.None && direction.AsDir() == lastDirection.AsDir().GetOpposite())
+                    continue;
+
+                var offset = direction.GetOffset();
+
+                ref var neighbor = ref points[node.Coordinates.X + offset.X, node.Coordinates.Y + offset.Y];
+
+                if (neighbor.IsInterior)
+                    continue;
+
+                lastDirection = direction;
+                edge.Add(neighbor);
+                boundaryNodes.Remove(neighbor);
+            }
+
+            // TODO: Need to prune collinear.
+
+            DebugTools.Assert(edge.Count > 0);
+            edges.Add(edge);
+        }
+
+        SendEdges(chunk, grid.GridEntityId, edges);
 
         // TODO: Verts
         // - Floodfill each one to get distance to nearest boundary

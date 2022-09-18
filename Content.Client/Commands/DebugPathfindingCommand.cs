@@ -11,7 +11,7 @@ namespace Content.Client.Commands
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
         public string Description => "Toggles visibility of pathfinding debuggers.";
-        public string Help => "pathfinder [boundary / breadcrumbs / chunks]";
+        public string Help => "pathfinder [boundary / breadcrumbs / chunks / crumb / edges]";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -43,6 +43,10 @@ namespace Content.Client.Commands
                         system.Modes ^= PathfindingDebugMode.Crumb;
                         shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Crumb}");
                         break;
+                    case "edges":
+                        system.Modes ^= PathfindingDebugMode.Edges;
+                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Edges}");
+                        break;
                     default:
                         shell.WriteError($"Unrecognised pathfinder args {arg}");
                         break;
@@ -62,6 +66,7 @@ namespace Content.Client.Commands
                 new("boundary"),
                 new("breadcrumbs"),
                 new("chunks"),
+                new("edges"),
 
             };
 

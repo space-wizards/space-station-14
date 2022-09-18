@@ -27,8 +27,8 @@ public abstract class SharedPathfindingSystem : EntitySystem
         return new Vector2i((int) ((origin.X - StepOffset - ExpansionSize) * SubStep), (int) ((origin.Y - StepOffset - ExpansionSize) * SubStep));
     }
 
-    public Vector2 GetCoordinate(Vector2i origin)
+    public Vector2 GetCoordinate(Vector2i chunk, Vector2i index)
     {
-        return new Vector2(origin.X / (float) SubStep + StepOffset + ExpansionSize, origin.Y / (float) SubStep + StepOffset + ExpansionSize);
+        return new Vector2(index.X, index.Y) / SubStep - ExpansionSize + (chunk) * ChunkSize + StepOffset;
     }
 }

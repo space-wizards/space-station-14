@@ -25,4 +25,9 @@ public enum PathfindingDebugMode : byte
     /// Shows the stats nearest crumb to the mouse cursor.
     /// </summary>
     Crumb = 1 << 3,
+
+    /// <summary>
+    /// Show the external edges being used for triangulation.
+    /// </summary>
+    Edges = 1 << 4,
 }
