@@ -153,6 +153,9 @@
         reagents:
         - ReagentId: UnstableMutagen
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: NocturineChemistryBottle
