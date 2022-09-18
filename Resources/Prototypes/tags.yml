@@ -333,6 +333,9 @@
   id: MailingUnitElectronics
 
 - type: Tag
+  id: MedBeltEquip
+
+- type: Tag
   id: Medkit
 
 - type: Tag

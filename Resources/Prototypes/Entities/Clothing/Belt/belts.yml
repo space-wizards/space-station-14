@@ -229,6 +229,8 @@
         - CigPack
         - Pill
         - PillCanister
+        - DiscreteHealthAnalyzer
+        - MedBeltEquip
       components:
         - Hypospray
         - Radio
