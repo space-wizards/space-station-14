@@ -120,9 +120,9 @@ namespace Content.Server.NPC.Pathfinding
         {
             var crumbs = new List<PathfindingBreadcrumb>(chunk.Points.Length * chunk.Points.Length);
 
-            for (var x = 0; x < ChunkSize * SubStep; x++)
+            for (var x = 0; x < (ChunkSize + ExpansionSize * 2) * SubStep; x++)
             {
-                for (var y = 0; y < ChunkSize * SubStep; y++)
+                for (var y = 0; y < (ChunkSize + ExpansionSize * 2) * SubStep; y++)
                 {
                     crumbs.Add(chunk.Points[x, y]);
                 }

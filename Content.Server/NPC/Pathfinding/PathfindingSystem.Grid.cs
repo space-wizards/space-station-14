@@ -217,17 +217,22 @@ public sealed partial class PathfindingSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var gridOrigin = chunk.Origin * ChunkSize;
 
-        // TODO: Make this more efficient
-        // For now I just want to get it working.
-        for (var x = 0; x < ChunkSize; x++)
+        for (var x = 0; x < ChunkSize + ExpansionSize * 2; x++)
         {
-            for (var y = 0; y < ChunkSize; y++)
+            for (var y = 0; y < ChunkSize + ExpansionSize * 2; y++)
             {
                 // Tile
-                var tilePos = new Vector2i(x, y) + gridOrigin;
+                var offsetX = x - ExpansionSize;
+                var offsetY = y - ExpansionSize;
+
+                var tilePos = new Vector2i(offsetX, offsetY) + gridOrigin;
 
                 var tile = grid.GetTileRef(tilePos);
                 var flags = tile.Tile.IsEmpty ? PathfindingBreadcrumbFlag.Space : PathfindingBreadcrumbFlag.None;
+                var isBorder = offsetX < 0 || offsetY < 0 || offsetX >= ChunkSize || offsetY >= ChunkSize;
+
+                if (isBorder)
+                    flags |= PathfindingBreadcrumbFlag.IsBorder;
 
                 var tileEntities = new ValueList<EntityUid>();
                 var anchored = grid.GetAnchoredEntitiesEnumerator(tilePos);
@@ -252,7 +257,7 @@ public sealed partial class PathfindingSystem
                     for (var subY = 0; subY < SubStep; subY++)
                     {
                         // Subtile
-                        var localPos = new Vector2(StepOffset + gridOrigin.X + x + (float) subX / SubStep, StepOffset + gridOrigin.Y + y + (float) subY / SubStep);
+                        var localPos = new Vector2(StepOffset + gridOrigin.X + offsetX + (float) subX / SubStep, StepOffset + gridOrigin.Y + offsetY + (float) subY / SubStep);
                         var collisionMask = 0x0;
                         var collisionLayer = 0x0;
 
@@ -313,115 +318,23 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // Cleanup data now
-        // If required could also consider multiple groups of nodes, i.e. 3x3.
-        const int CleanupIterations = 3;
+        // At this point we have a decent point cloud for navmesh or the likes, at least if we clean it up.
+        // Just because I want to get something working (and we can optimise it more later after the API is cleaned up)
+        // I've just opted to brute force.
+        SendBreadcrumbs(chunk, grid.GridEntityId);
 
-        for (var it = 0; it < CleanupIterations; it++)
+        // Make sure we have 2x2 regions of navigability (tracing N -> E -> S -> West) and if so create a crumb (offset to the top right0.
+        var actual = new PathfindingBreadcrumb[SubStep / 2 * ChunkSize, SubStep / 2 * ChunkSize];
+
+        for (var x = 0; x < ChunkSize * SubStep; x++)
         {
-            var anyCleanup = false;
-
-            for (var x = 0; x < ChunkSize * SubStep; x++)
+            for (var y = 0; y < ChunkSize * SubStep; y++)
             {
-                for (var y = 0; y < ChunkSize * SubStep; y++)
-                {
-                    ref var point = ref points[x, y];
+                var point = points[x, y];
 
-                    if (point.Equals(PathfindingBreadcrumb.Invalid))
-                    {
-                        continue;
-                    }
 
-                    var neighbors = DirectionFlag.None;
-
-                    foreach (var direction in new[]
-                                 { DirectionFlag.North, DirectionFlag.East, DirectionFlag.South, DirectionFlag.West })
-                    {
-                        int i, j;
-
-                        switch (direction)
-                        {
-                            case DirectionFlag.North:
-                                i = 0;
-                                j = 1;
-                                break;
-                            case DirectionFlag.East:
-                                i = 1;
-                                j = 0;
-                                break;
-                            case DirectionFlag.South:
-                                i = 0;
-                                j = -1;
-                                break;
-                            case DirectionFlag.West:
-                                i = -1;
-                                j = 0;
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-
-                        var neighborX = x + i;
-                        var neighborY = y + j;
-
-                        if (neighborX < 0 || neighborY < 0 ||
-                            neighborX >= ChunkSize * SubStep || neighborY >= ChunkSize * SubStep)
-                        {
-                            continue;
-                        }
-
-                        ref var pointNeighbor = ref points[neighborX, neighborY];
-
-                        if (pointNeighbor.Equivalent(point))
-                        {
-                            neighbors |= direction;
-                        }
-                    }
-
-                    // If we only have one neighbor OR we only have a single line then dump it.
-                    switch (neighbors)
-                    {
-                        case DirectionFlag.None:
-                            // Even if it's a collidable point we'll cull it anyway if it's isolated.
-                            anyCleanup = true;
-                            point = PathfindingBreadcrumb.Invalid;
-                            break;
-                        case (DirectionFlag.North | DirectionFlag.South):
-                        case (DirectionFlag.East | DirectionFlag.West):
-                        case DirectionFlag.North:
-                        case DirectionFlag.West:
-                        case DirectionFlag.South:
-                        case DirectionFlag.East:
-                            // If it's an empty node then we won't allow single tiles on their own.
-                            // Anything else we can't exactly remove due to thindows existing.
-                            if (point.CollisionLayer != 0 && point.CollisionMask != 0)
-                            {
-                                point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
-                                break;
-                            }
-
-                            anyCleanup = true;
-                            point = PathfindingBreadcrumb.Invalid;
-                            break;
-                        case (DirectionFlag.North | DirectionFlag.East | DirectionFlag.South | DirectionFlag.West):
-                            point.Flags |= PathfindingBreadcrumbFlag.Interior;
-                            break;
-                        default:
-                            point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
-                            break;
-                    }
-
-                    // Go through the neighbours and work out which is equal
-                }
-            }
-
-            if (!anyCleanup)
-            {
-                break;
             }
         }
-
-        SendBreadcrumbs(chunk, grid.GridEntityId);
 
         // TODO: Trace boundaries
 

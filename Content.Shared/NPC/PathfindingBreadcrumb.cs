@@ -68,4 +68,9 @@ public enum PathfindingBreadcrumbFlag : ushort
     None = 0,
     Space = 1 << 0,
     Interior = 1 << 1,
+
+    /// <summary>
+    /// Are we outside the bounds of our chunk. This is separate to Interior.
+    /// </summary>
+    IsBorder = 1 << 2,
 }

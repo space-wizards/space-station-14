@@ -8,7 +8,14 @@ public abstract class SharedPathfindingSystem : EntitySystem
     /// </summary>
     public const int SubStep = 4;
 
-    public const int ChunkSize = 4;
+    public const int ChunkSize = 8;
+
+    /// <summary>
+    /// Something we need to consider is that we're chunk-based. The issue with this is if the border of one chunk
+    /// has a bunch of obstacles then the other neighbor doesn't know about it. To resolve this we expand
+    /// out slightly
+    /// </summary>
+    public const int ExpansionSize = 1;
 
     /// <summary>
     /// We won't do points on edges so we'll offset them slightly.
@@ -17,11 +24,11 @@ public abstract class SharedPathfindingSystem : EntitySystem
 
     public Vector2i GetPointCoordinate(Vector2 origin)
     {
-        return new Vector2i((int) ((origin.X - StepOffset) * SubStep), (int) ((origin.Y - StepOffset) * SubStep));
+        return new Vector2i((int) ((origin.X - StepOffset - ExpansionSize) * SubStep), (int) ((origin.Y - StepOffset - ExpansionSize) * SubStep));
     }
 
     public Vector2 GetCoordinate(Vector2i origin)
     {
-        return new Vector2(origin.X / (float) SubStep + StepOffset, origin.Y / (float) SubStep + StepOffset);
+        return new Vector2(origin.X / (float) SubStep + StepOffset + ExpansionSize, origin.Y / (float) SubStep + StepOffset + ExpansionSize);
     }
 }
