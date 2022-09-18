@@ -320,19 +320,119 @@ public sealed partial class PathfindingSystem
 
         // At this point we have a decent point cloud for navmesh or the likes, at least if we clean it up.
         // Just because I want to get something working (and we can optimise it more later after the API is cleaned up)
-        // I've just opted to brute force.
         SendBreadcrumbs(chunk, grid.GridEntityId);
 
-        // Make sure we have 2x2 regions of navigability (tracing N -> E -> S -> West) and if so create a crumb (offset to the top right0.
-        var actual = new PathfindingBreadcrumb[SubStep / 2 * ChunkSize, SubStep / 2 * ChunkSize];
+        // Step 2. Cleanup the points
+        const int CleanupIterations = 3;
+        var boundaryNodes = new HashSet<PathfindingBreadcrumb>();
 
-        for (var x = 0; x < ChunkSize * SubStep; x++)
+        for (var it = 0; it < CleanupIterations; it++)
         {
-            for (var y = 0; y < ChunkSize * SubStep; y++)
+            boundaryNodes.Clear();
+            var anyCleanup = false;
+
+            // Go through anything not outside of the chunk and work out the relevant interior nodes.
+            for (var x = 0; x < ChunkSize * SubStep; x++)
             {
-                var point = points[x, y];
+                for (var y = 0; y < ChunkSize * SubStep; y++)
+                {
+                    var offsetX = x + ExpansionSize;
+                    var offsetY = y + ExpansionSize;
 
+                    ref var point = ref points[offsetX, offsetY];
 
+                    if (point.Equals(PathfindingBreadcrumb.Invalid))
+                    {
+                        continue;
+                    }
+
+                    var neighbors = DirectionFlag.None;
+
+                    foreach (var direction in new[]
+                                 { DirectionFlag.North, DirectionFlag.East, DirectionFlag.South, DirectionFlag.West })
+                    {
+                        int i, j;
+
+                        switch (direction)
+                        {
+                            case DirectionFlag.North:
+                                i = 0;
+                                j = 1;
+                                break;
+                            case DirectionFlag.East:
+                                i = 1;
+                                j = 0;
+                                break;
+                            case DirectionFlag.South:
+                                i = 0;
+                                j = -1;
+                                break;
+                            case DirectionFlag.West:
+                                i = -1;
+                                j = 0;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
+                        var neighborX = x + i;
+                        var neighborY = y + j;
+
+                        ref var pointNeighbor = ref points[neighborX, neighborY];
+
+                        if (pointNeighbor.Equivalent(point))
+                        {
+                            neighbors |= direction;
+                        }
+                    }
+
+                    // If we only have one neighbor OR we only have a single line then dump it.
+                    switch (neighbors)
+                    {
+                        case DirectionFlag.None:
+                            // Even if it's a collidable point we'll cull it anyway if it's isolated.
+                            anyCleanup = true;
+                            point = PathfindingBreadcrumb.Invalid;
+                            break;
+                        case (DirectionFlag.North | DirectionFlag.South):
+                        case (DirectionFlag.East | DirectionFlag.West):
+                        case DirectionFlag.North:
+                        case DirectionFlag.West:
+                        case DirectionFlag.South:
+                        case DirectionFlag.East:
+                            // If it's an empty node then we won't allow single tiles on their own.
+                            // Anything else we can't exactly remove due to thindows existing.
+                            if (point.CollisionLayer != 0 && point.CollisionMask != 0)
+                            {
+                                point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
+                                break;
+                            }
+
+                            anyCleanup = true;
+                            point = PathfindingBreadcrumb.Invalid;
+                            break;
+                        case (DirectionFlag.North | DirectionFlag.East | DirectionFlag.South | DirectionFlag.West):
+                            point.Flags |= PathfindingBreadcrumbFlag.Interior;
+                            break;
+                        default:
+                            point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
+                            boundaryNodes.Add(point);
+                            break;
+                    }
+
+                    // So we should already have the interior nodes based on the above
+                    // However, we might have the corners of the chunk flagged as interior nodes so we'll make sure
+                    // they're not
+                    if (x is 0 or ChunkSize - 1 && y is 0 or ChunkSize - 1)
+                    {
+                        point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
+                    }
+                }
+            }
+
+            if (!anyCleanup)
+            {
+                break;
             }
         }
 
