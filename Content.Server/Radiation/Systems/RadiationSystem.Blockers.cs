@@ -15,6 +15,8 @@ public partial class RadiationSystem
         SubscribeLocalEvent<RadiationBlockerComponent, ReAnchorEvent>(OnReAnchor);
 
         SubscribeLocalEvent<RadiationBlockerComponent, DoorStateChangedEvent>(OnDoorChanged);
+
+        SubscribeLocalEvent<RadiationGridResistanceComponent, EntityTerminatingEvent>(OnGridRemoved);
     }
 
     private void OnInit(EntityUid uid, RadiationBlockerComponent component, ComponentInit args)
@@ -63,6 +65,13 @@ public partial class RadiationSystem
                 SetEnabled(uid, true, component);
                 break;
         }
+    }
+
+    private void OnGridRemoved(EntityUid uid, RadiationGridResistanceComponent component, ref EntityTerminatingEvent args)
+    {
+        // grid is about to be removed - lets delete grid component first
+        // this should save a bit performance when blockers will be deleted
+        RemComp(uid, component);
     }
 
     public void SetEnabled(EntityUid uid, bool isEnabled, RadiationBlockerComponent? component = null)
