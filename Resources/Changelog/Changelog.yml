@@ -1,13 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Basic shuttle call time reduced from 20 minutes to 10 minutes., type: Tweak}
-  - {message: The shuttle can no longer be recalled after half of the time has elapsed.,
-    type: Tweak}
-  id: 1839
-  time: '2022-07-01T20:40:36.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Stomach capacity has been reduced significantly in most cases (besides
       the rat king and his servants). Humans can eat about 4 bites before needing
       to wait a little bit, and mice can eat about 2 bites.', type: Tweak}
@@ -2928,3 +2921,9 @@ Entries:
   - {message: Added a variety of wall-mounted lockers., type: Add}
   id: 2338
   time: '2022-09-17T20:05:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added folding chairs. Perfect for slamming people in the back of the
+      head with., type: Add}
+  id: 2339
+  time: '2022-09-18T17:47:31.0000000+00:00'
