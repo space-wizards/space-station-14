@@ -171,8 +171,8 @@ namespace Content.Client.NPC
                             var coords = $"Point coordinates: {nearest.Value.Coordinates.ToString()}";
                             var gridCoords =
                                 $"Grid coordinates: {_system.GetCoordinate(chunk.Key, nearest.Value.Coordinates).ToString()}";
-                            var layer = $"Layer: {nearest.Value.CollisionLayer.ToString()}";
-                            var mask = $"Mask: {nearest.Value.CollisionMask.ToString()}";
+                            var layer = $"Layer: {nearest.Value.Data.CollisionLayer.ToString()}";
+                            var mask = $"Mask: {nearest.Value.Data.CollisionMask.ToString()}";
 
                             text.AppendLine(coords);
                             text.AppendLine(gridCoords);
@@ -182,7 +182,7 @@ namespace Content.Client.NPC
 
                             foreach (var flag in Enum.GetValues<PathfindingBreadcrumbFlag>())
                             {
-                                if ((flag & nearest.Value.Flags) == 0x0)
+                                if ((flag & nearest.Value.Data.Flags) == 0x0)
                                     continue;
 
                                 var flagStr = $"- {flag.ToString()}";
@@ -233,10 +233,10 @@ namespace Content.Client.NPC
 
                             const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
 
-                            var masked = crumb.CollisionMask != 0 || crumb.CollisionLayer != 0;
+                            var masked = crumb.Data.CollisionMask != 0 || crumb.Data.CollisionLayer != 0;
                             Color color;
 
-                            if ((crumb.Flags & PathfindingBreadcrumbFlag.Space) != 0x0)
+                            if ((crumb.Data.Flags & PathfindingBreadcrumbFlag.Space) != 0x0)
                             {
                                 color = Color.Green;
                             }
@@ -279,7 +279,7 @@ namespace Content.Client.NPC
                         foreach (var crumb in chunk.Value)
                         {
                             if (crumb.Equals(PathfindingBreadcrumb.Invalid) ||
-                                (crumb.Flags & (PathfindingBreadcrumbFlag.Interior | PathfindingBreadcrumbFlag.IsBorder)) != 0x0)
+                                (crumb.Data.Flags & (PathfindingBreadcrumbFlag.Interior | PathfindingBreadcrumbFlag.External)) != 0x0)
                             {
                                 continue;
                             }

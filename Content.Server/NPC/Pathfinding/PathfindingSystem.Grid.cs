@@ -233,7 +233,7 @@ public sealed partial class PathfindingSystem
                 var isBorder = offsetX < 0 || offsetY < 0 || offsetX >= ChunkSize || offsetY >= ChunkSize;
 
                 if (isBorder)
-                    flags |= PathfindingBreadcrumbFlag.IsBorder;
+                    flags |= PathfindingBreadcrumbFlag.External;
 
                 tileEntities.Clear();
                 var anchored = grid.GetAnchoredEntitiesEnumerator(tilePos);
@@ -313,111 +313,93 @@ public sealed partial class PathfindingSystem
                         points[xOffset, yOffset] = new PathfindingBreadcrumb()
                         {
                             Coordinates = new Vector2i(xOffset, yOffset),
-                            Flags = flags,
-                            CollisionLayer = collisionLayer,
-                            CollisionMask = collisionMask,
+                            Data = new PathfindingData(flags, collisionLayer, collisionMask),
                         };
                     }
                 }
             }
         }
 
-        // Step 2. Cleanup the points
+        // Step 2. We get 2x2 cells and work out which points aren't in a cell on all 4 cardinals
+        // If so then it's a boundary point.
         const int CleanupIterations = 3;
+        const int originOffset = ExpansionSize * SubStep;
         var boundaryNodes = new HashSet<PathfindingBreadcrumb>();
+        const int cellLength = ChunkSize * SubStep - 1;
+
+        var cells = new PathfindingCell[cellLength, cellLength];
 
         for (var it = 0; it < CleanupIterations; it++)
         {
             boundaryNodes.Clear();
+            Array.Clear(cells);
             var anyCleanup = false;
 
             // Go through anything not outside of the chunk and work out the relevant interior nodes.
+            for (var x = 0; x < cellLength; x++)
+            {
+                for (var y = 0; y < cellLength; y++)
+                {
+                    var offsetX = x + originOffset;
+                    var offsetY = y + originOffset;
+
+                    ref var originPoint = ref points[offsetX, offsetY];
+
+                    if (originPoint.Equals(PathfindingBreadcrumb.Invalid))
+                    {
+                        cells[x, y] = PathfindingCell.Invalid;
+                        continue;
+                    }
+
+                    var data = originPoint.Data;
+                    var homogenous = true;
+
+                    for (var i = 1; i < PathfindingCell.Length; i++)
+                    {
+                        for (var j = 0; j < PathfindingCell.Length; j++)
+                        {
+                            ref var point = ref points[offsetX + i, offsetY + j];
+
+                            if (data.Equals(point.Data))
+                                continue;
+
+                            homogenous = false;
+                            goto Cell;
+                        }
+                    }
+
+                    Cell: ;
+
+                    if (!homogenous)
+                    {
+                        cells[x, y] = PathfindingCell.Invalid;
+                        anyCleanup = true;
+                        continue;
+                    }
+
+                    cells[x, y] = new PathfindingCell(data);
+                }
+            }
+
+            if (anyCleanup)
+            {
+                continue;
+            }
+
+            // Alright now we have our pathfinding cells we know if any breadcrumb occupies 4 cells then it can't be a boundary.
             for (var x = 0; x < ChunkSize * SubStep; x++)
             {
                 for (var y = 0; y < ChunkSize * SubStep; y++)
                 {
-                    var offsetX = x + (ExpansionSize * SubStep);
-                    var offsetY = y + (ExpansionSize * SubStep);
+                    var offsetX = x + originOffset;
+                    var offsetY = y + originOffset;
 
-                    ref var point = ref points[offsetX, offsetY];
 
-                    if (point.Equals(PathfindingBreadcrumb.Invalid))
-                    {
-                        continue;
-                    }
-
-                    var neighbors = DirectionFlag.None;
-
-                    foreach (var direction in new[]
-                                 { DirectionFlag.North, DirectionFlag.East, DirectionFlag.South, DirectionFlag.West })
-                    {
-                        var offset = direction.GetOffset();
-                        var neighborX = offsetX + offset.X;
-                        var neighborY = offsetY + offset.Y;
-
-                        // Don't need to bounds check the array because it's guaranteed to exist
-                        ref var pointNeighbor = ref points[neighborX, neighborY];
-
-                        if (pointNeighbor.Equivalent(point))
-                        {
-                            neighbors |= direction;
-                        }
-                    }
-
-                    // If we only have one neighbor OR we only have a single line then dump it.
-                    switch ((int) neighbors)
-                    {
-                        case (int) DirectionFlag.None:
-                            // Even if it's a collidable point we'll cull it anyway if it's isolated.
-                            anyCleanup = true;
-                            point = PathfindingBreadcrumb.Invalid;
-                            break;
-                        case (int) (DirectionFlag.North | DirectionFlag.South):
-                        case (int) (DirectionFlag.East | DirectionFlag.West):
-                        case (int) DirectionFlag.North:
-                        case (int) DirectionFlag.West:
-                        case (int) DirectionFlag.South:
-                        case (int) DirectionFlag.East:
-                            // If it's an empty node then we won't allow single tiles on their own.
-                            // Anything else we can't exactly remove due to thindows existing.
-                            if (point.CollisionLayer != 0 && point.CollisionMask != 0)
-                            {
-                                point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
-                                break;
-                            }
-
-                            anyCleanup = true;
-                            point = PathfindingBreadcrumb.Invalid;
-                            break;
-                        case (int) (DirectionFlag.North | DirectionFlag.East | DirectionFlag.South | DirectionFlag.West):
-                            point.Flags |= PathfindingBreadcrumbFlag.Interior;
-                            break;
-                        default:
-                            point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
-                            break;
-                    }
-
-                    // So we should already have the interior nodes based on the above
-                    // However, we might have the corners of the chunk flagged as interior nodes so we'll make sure
-                    // they're not
-                    if (x is 0 or (ChunkSize * SubStep) - 1 || y is 0 or (ChunkSize * SubStep) - 1)
-                    {
-                        point.Flags &= ~PathfindingBreadcrumbFlag.Interior;
-                    }
-
-                    if ((point.Flags & PathfindingBreadcrumbFlag.Interior) == 0x0)
-                    {
-                        boundaryNodes.Add(point);
-                    }
                 }
-            }
-
-            if (!anyCleanup)
-            {
-                break;
             }
         }
 
+        // Step 3. Get the boundary edges
         // At this point we have a decent point cloud for navmesh or the likes
         // In our case we'll make a navmesh out of it because we aren't strictly tile-based and we likely need
         // variable sized mobs.
@@ -425,10 +407,11 @@ public sealed partial class PathfindingSystem
 
         var edges = new List<List<PathfindingBreadcrumb>>();
 
-        // TODO: Trace boundaries
+        /*
         while (boundaryNodes.Count > 0)
         {
-            var node = boundaryNodes.First();
+            var seed = boundaryNodes.First();
+            var node = seed;
             DebugTools.Assert(!node.IsInterior);
             boundaryNodes.Remove(node);
             var edge = new List<PathfindingBreadcrumb>()
@@ -438,33 +421,41 @@ public sealed partial class PathfindingSystem
 
             var lastDirection = DirectionFlag.None;
 
-            // For consistency with physics we'll go in CCW order.
-            foreach (var direction in new[]
-                         { DirectionFlag.West, DirectionFlag.South, DirectionFlag.East, DirectionFlag.North })
+            while (true)
             {
-                // Don't backtrack
-                if (lastDirection != DirectionFlag.None && direction.AsDir() == lastDirection.AsDir().GetOpposite())
-                    continue;
-
-                var offset = direction.GetOffset();
-
-                // Don't consider nodes outside of bounds for edges
-                if ((node.Coordinates.X + offset.X) < (ExpansionSize * SubStep) ||
-                    (node.Coordinates.X + offset.X) > ((ExpansionSize + ChunkSize) * SubStep) ||
-                    (node.Coordinates.Y + offset.Y) < (ExpansionSize * SubStep) ||
-                    (node.Coordinates.Y + offset.Y) > ((ExpansionSize + ChunkSize) * SubStep))
+                // For consistency with physics we'll go in CCW order.
+                foreach (var direction in new[]
+                             { DirectionFlag.West, DirectionFlag.South, DirectionFlag.East, DirectionFlag.North })
                 {
-                    continue;
+                    // Don't backtrack
+                    if (lastDirection != DirectionFlag.None && direction.AsDir() == lastDirection.AsDir().GetOpposite())
+                        continue;
+
+                    var offset = direction.GetOffset();
+
+                    // Don't consider nodes outside of bounds for edges
+                    if ((node.Coordinates.X + offset.X) < (ExpansionSize * SubStep) ||
+                        (node.Coordinates.X + offset.X) >= ((ChunkSize + ExpansionSize) * SubStep) ||
+                        (node.Coordinates.Y + offset.Y) < (ExpansionSize * SubStep) ||
+                        (node.Coordinates.Y + offset.Y) >= ((ChunkSize + ExpansionSize) * SubStep))
+                    {
+                        continue;
+                    }
+
+                    ref var neighbor = ref points[node.Coordinates.X + offset.X, node.Coordinates.Y + offset.Y];
+
+                    if (neighbor.IsInterior || !neighbor.Equivalent(node))
+                        continue;
+
+                    lastDirection = direction;
+                    edge.Add(neighbor);
+                    boundaryNodes.Remove(neighbor);
+                    node = neighbor;
+                    break;
                 }
 
-                ref var neighbor = ref points[node.Coordinates.X + offset.X, node.Coordinates.Y + offset.Y];
-
-                if (neighbor.IsInterior)
-                    continue;
-
-                lastDirection = direction;
-                edge.Add(neighbor);
-                boundaryNodes.Remove(neighbor);
+                if (node.Equals(seed))
+                    break;
             }
 
             // TODO: Need to prune collinear.
@@ -472,6 +463,7 @@ public sealed partial class PathfindingSystem
             DebugTools.Assert(edge.Count > 0);
             edges.Add(edge);
         }
+        */
 
         SendEdges(chunk, grid.GridEntityId, edges);
 
