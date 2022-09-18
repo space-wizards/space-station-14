@@ -38,6 +38,8 @@
         amount: 1
       - id: Dropper
         amount: 2
+      - id: BoxBottle
+        amount: 2
 
 - type: entity
   id: CrateMedicalSurgery

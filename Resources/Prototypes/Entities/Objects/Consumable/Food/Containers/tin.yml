@@ -90,6 +90,10 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - funny
   - type: Food
     trash: FoodTinPeachesTrash
 
@@ -190,6 +194,11 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
+  - type: FlavorProfile
+    flavors:
+      - savory
+      - salty
+      - cheap
   - type: Food
     trash: FoodTinBeansTrash
 
@@ -249,6 +258,11 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - salty
+      - cheap
   - type: Food
     trash: FoodTinMRETrash
 

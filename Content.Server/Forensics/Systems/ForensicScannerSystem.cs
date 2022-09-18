@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -27,6 +28,7 @@ namespace Content.Server.Forensics
 
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+            SubscribeLocalEvent<ForensicScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
             SubscribeLocalEvent<ScanCancelledEvent>(OnScanCancelled);
@@ -53,6 +55,33 @@ namespace Content.Server.Forensics
             scanner.Fibers = forensics.Fibers.ToList();
             scanner.LastScanned = MetaData(ev.Target).EntityName;
             OpenUserInterface(ev.User, scanner);
+        }
+
+        private void OnUtilityVerb(EntityUid uid, ForensicScannerComponent component, GetVerbsEvent<UtilityVerb> args)
+        {
+            if (!args.CanInteract || !args.CanAccess || component.CancelToken != null)
+                return;
+
+            var verb = new UtilityVerb()
+            {
+                Act = () =>
+                {
+                    component.CancelToken = new CancellationTokenSource();
+                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.ScanDelay, component.CancelToken.Token, target: args.Target)
+                    {
+                        BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, (EntityUid) args.Target, component.Owner),
+                        BroadcastCancelledEvent = new ScanCancelledEvent(component.Owner),
+                        BreakOnTargetMove = true,
+                        BreakOnUserMove = true,
+                        BreakOnStun = true,
+                        NeedHand = true
+                    });
+                },
+                Text = Loc.GetString("forensic-scanner-verb-text"),
+                Message = Loc.GetString("forensic-scanner-verb-message")
+            };
+
+            args.Verbs.Add(verb);
         }
 
         private void OnAfterInteract(EntityUid uid, ForensicScannerComponent component, AfterInteractEvent args)

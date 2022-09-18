@@ -94,7 +94,7 @@
     sprite: Mobs/Animals/gorilla.rsi
     state: icon
   product: CrateNPCGorilla
-  cost: 2000
+  cost: 1000
   category: Livestock
   group: market
 
@@ -104,7 +104,7 @@
     sprite: Mobs/Animals/monkey.rsi
     state: monkey
   product: CrateNPCMonkeyCube
-  cost: 1500
+  cost: 2000
   category: Livestock
   group: market
 
@@ -134,7 +134,7 @@
     sprite: Mobs/Animals/penguin.rsi
     state: penguin
   product: CrateNPCPenguin
-  cost: 2000
+  cost: 1500
   category: Livestock
   group: market
 
