@@ -445,7 +445,7 @@ public sealed partial class PathfindingSystem
         // However, for now I'm just making square polys to get something working and trying to get the exact bounds is a waste.
         // Also, we can store a minimum width / height for a particular poly to specify if our agent can pass thru.
 
-        SendEdges(chunk, grid.GridEntityId, edges);
+        // SendEdges(chunk, grid.GridEntityId, edges);
 
         // TODO: Verts
         // - Floodfill each one to get distance to nearest boundary
