@@ -27,7 +27,7 @@ public sealed class OnRadiationOverlayUpdateEvent : EntityEventArgs
     public readonly int SourcesCount;
 
     /// <summary>
-    ///     Total count of entities with <see cref="RadiationReceiverComponent"/> on all maps.
+    ///     Total count of entities with radiation receiver on all maps.
     /// </summary>
     public readonly int ReceiversCount;
 

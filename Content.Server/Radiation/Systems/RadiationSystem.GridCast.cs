@@ -26,15 +26,26 @@ public partial class RadiationSystem
 
         // trace all rays from rad source to rad receivers
         var rays = new List<RadiationRay>();
-        foreach (var (source, sourceTrs) in sources)
+        var receivedRads = new List<(RadiationReceiverComponent, float)>();
+        foreach (var (dest, destTrs) in destinations)
         {
-            foreach (var (_, destTrs) in destinations)
+            var rads = 0f;
+            foreach (var (source, sourceTrs) in sources)
             {
+                // send ray towards destination entity
                 var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs,
                     source.Intensity, source.Slope, saveVisitedTiles, blockerQuery, resistanceQuery);
-                if (ray != null)
-                    rays.Add(ray);
+                if (ray == null)
+                    continue;
+
+                rays.Add(ray);
+
+                // add rads to total rad exposure
+                if (ray.ReachedDestination)
+                    rads += ray.Rads;
             }
+
+            receivedRads.Add((dest, rads));
         }
 
         // update information for debug overlay
@@ -44,12 +55,16 @@ public partial class RadiationSystem
         var ev = new OnRadiationOverlayUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
         UpdateDebugOverlay(ev);
 
-        // send rads for each entity
-        foreach (var ray in rays)
+        // send rads to each entity
+        foreach (var (receiver, rads) in receivedRads)
         {
-            if (ray.Rads <= 0)
-                continue;
-            IrradiateEntity(ray.DestinationUid, ray.Rads, GridcastUpdateRate);
+            // update radiation value of receiver
+            // if no radiation rays reached target, that will set it to 0
+            receiver.CurrentRadiation = rads;
+
+            // also send an event with combination of total rad
+            if (rads > 0)
+                IrradiateEntity(receiver.Owner, rads,GridcastUpdateRate);
         }
     }
 

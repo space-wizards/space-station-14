@@ -24,7 +24,7 @@ public sealed class RadiationRay
     /// </summary>
     public Vector2 Source;
     /// <summary>
-    ///     Uid of entity with <see cref="RadiationReceiverComponent"/>
+    ///     Uid of entity with radiation receiver component.
     /// </summary>
     public EntityUid DestinationUid;
     /// <summary>
