@@ -1,9 +1,4 @@
 Entries:
-- author: Solbusaur
-  changes:
-  - {message: Added new "Pharmacy" lobby art by Solbusaur, type: Add}
-  id: 1841
-  time: '2022-07-02T00:54:04.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Detective added, type: Add}
@@ -2924,3 +2919,8 @@ Entries:
   - {message: SMES's and substations are no longer filled upon construction, type: Remove}
   id: 2340
   time: '2022-09-18T18:02:45.0000000+00:00'
+- author: Sheppard
+  changes:
+  - {message: Comfy chair can now be rotated, type: Fix}
+  id: 2341
+  time: '2022-09-18T19:56:51.0000000+00:00'
