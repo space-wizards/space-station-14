@@ -9,7 +9,6 @@
     netsync: false
     layers:
     - state: stunbaton_off
-      visible: true
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
     energyPerUse: 100
