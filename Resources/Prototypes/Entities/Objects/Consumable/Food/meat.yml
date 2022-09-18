@@ -12,6 +12,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
     netsync: false
+  - type: Extractable
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -273,6 +275,24 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 2
+
+- type: entity
+  name: raw rat meat
+  parent: FoodMeatBase
+  id: FoodMeatRat
+  description: Prime meat from maintenance!
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
 
 - type: entity
   name: raw lizard meat
