@@ -276,7 +276,6 @@
       - ReagentId: Ichor
         Quantity: 2
 
-
 - type: entity
   name: raw rat meat
   parent: FoodMeatBase
