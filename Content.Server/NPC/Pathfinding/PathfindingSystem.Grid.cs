@@ -448,6 +448,15 @@ public sealed partial class PathfindingSystem
 
                 var offset = direction.GetOffset();
 
+                // Don't consider nodes outside of bounds for edges
+                if ((node.Coordinates.X + offset.X) < (ExpansionSize * SubStep) ||
+                    (node.Coordinates.X + offset.X) > ((ExpansionSize + ChunkSize) * SubStep) ||
+                    (node.Coordinates.Y + offset.Y) < (ExpansionSize * SubStep) ||
+                    (node.Coordinates.Y + offset.Y) > ((ExpansionSize + ChunkSize) * SubStep))
+                {
+                    continue;
+                }
+
                 ref var neighbor = ref points[node.Coordinates.X + offset.X, node.Coordinates.Y + offset.Y];
 
                 if (neighbor.IsInterior)
