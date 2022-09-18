@@ -322,6 +322,9 @@ public sealed partial class PathfindingSystem
 
         // Step 2. We get 2x2 cells and work out which points aren't in a cell on all 4 cardinals
         // If so then it's a boundary point.
+
+        // TODO: For boundaries need to go all the way to the edge.
+
         const int CleanupIterations = 3;
         const int originOffset = ExpansionSize * SubStep;
         var boundaryNodes = new HashSet<PathfindingBreadcrumb>();
@@ -426,6 +429,8 @@ public sealed partial class PathfindingSystem
 
                     if (!isBoundary)
                         point.Data.Flags |= PathfindingBreadcrumbFlag.Interior;
+                    else
+                        boundaryNodes.Add(point);
                 }
             }
         }
@@ -438,24 +443,29 @@ public sealed partial class PathfindingSystem
         // In our case we'll make a navmesh out of it because we aren't strictly tile-based and we likely need
         // variable sized mobs.
 
-        var edges = new List<List<PathfindingBreadcrumb>>();
+        var edges = new List<PathfindingBoundary>();
+        var visited = new HashSet<Vector2i>(SubStep * 4);
 
-        /*
         while (boundaryNodes.Count > 0)
         {
+            visited.Clear();
             var seed = boundaryNodes.First();
             var node = seed;
             DebugTools.Assert(!node.IsInterior);
             boundaryNodes.Remove(node);
-            var edge = new List<PathfindingBreadcrumb>()
-            {
-                node,
-            };
+            var crumbs = new List<PathfindingBreadcrumb>();
+            crumbs.Add(seed);
 
             var lastDirection = DirectionFlag.None;
+            // For our purposes we have thindows so 1 x n width points may be valid unfortunately so we can't just check for a loop
+            // It might be a chain without connecting onto itself.
+
+            bool moved;
 
             while (true)
             {
+                moved = false;
+
                 // For consistency with physics we'll go in CCW order.
                 foreach (var direction in new[]
                              { DirectionFlag.West, DirectionFlag.South, DirectionFlag.East, DirectionFlag.North })
@@ -477,26 +487,28 @@ public sealed partial class PathfindingSystem
 
                     ref var neighbor = ref points[node.Coordinates.X + offset.X, node.Coordinates.Y + offset.Y];
 
-                    if (neighbor.IsInterior || !neighbor.Equivalent(node))
+                    if (neighbor.IsInterior || !neighbor.Equivalent(node) || !visited.Add(neighbor.Coordinates))
                         continue;
 
                     lastDirection = direction;
-                    edge.Add(neighbor);
+                    crumbs.Add(neighbor);
                     boundaryNodes.Remove(neighbor);
                     node = neighbor;
+                    visited.Add(node.Coordinates);
+                    moved = true;
                     break;
                 }
 
-                if (node.Equals(seed))
+                if (!moved || node.Equals(seed))
                     break;
             }
 
             // TODO: Need to prune collinear.
 
-            DebugTools.Assert(edge.Count > 0);
+            DebugTools.Assert(crumbs.Count > 0);
+            var edge = new PathfindingBoundary(moved, crumbs);
             edges.Add(edge);
         }
-        */
 
         SendEdges(chunk, grid.GridEntityId, edges);
 

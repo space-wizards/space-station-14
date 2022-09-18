@@ -49,7 +49,7 @@ namespace Content.Client.NPC
         // It's debug data IDC if it doesn't support snapshots I just want something fast.
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingCell>>> Cells = new();
-        public Dictionary<EntityUid, Dictionary<Vector2i, List<List<PathfindingBreadcrumb>>>> Edges = new();
+        public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBoundary>>> Edges = new();
 
         public override void Initialize()
         {
@@ -362,12 +362,16 @@ namespace Content.Client.NPC
 
                         foreach (var chain in chunk.Value)
                         {
-                            var worldEdges = new ValueList<Vector2>(chain.Count);
+                            var worldEdges = new ValueList<Vector2>(chain.Breadcrumbs.Count);
+                            var center = Vector2.Zero;
 
-                            foreach (var vert in chain)
+                            foreach (var vert in chain.Breadcrumbs)
                             {
-                                worldEdges.Add(_system.GetCoordinate(chunk.Key, vert.Coordinates));
+                                var coord = _system.GetCoordinate(chunk.Key, vert.Coordinates);
+                                worldEdges.Add(coord);
                             }
+
+                            var color = chain.Closed ? Color.Blue : Color.Green;
 
                             // Uhh couldn't find a primitive topology that was implemented for this
                             for (var i = 0; i < worldEdges.Count; i++)
@@ -375,7 +379,8 @@ namespace Content.Client.NPC
                                 var vert = worldEdges[i];
                                 var nextVert = worldEdges[(i + 1) % worldEdges.Count];
 
-                                worldHandle.DrawLine(vert, nextVert, Color.Blue.WithAlpha(0.5f));
+                                // worldHandle.DrawRect(new Box2(vert - SharedPathfindingSystem.StepOffset / 2f, vert + SharedPathfindingSystem.StepOffset / 2f), Color.Red.WithAlpha(0.25f));
+                                worldHandle.DrawLine(vert, nextVert, color);
                             }
                         }
                     }

@@ -145,7 +145,7 @@ namespace Content.Server.NPC.Pathfinding
             }
         }
 
-        private void SendEdges(GridPathfindingChunk chunk, EntityUid gridUid, List<List<PathfindingBreadcrumb>> edges)
+        private void SendEdges(GridPathfindingChunk chunk, EntityUid gridUid, List<PathfindingBoundary> edges)
         {
             var msg = new PathfindingEdgesMessage()
             {
@@ -165,7 +165,7 @@ namespace Content.Server.NPC.Pathfinding
 
         private List<PathfindingBreadcrumb> GetData(GridPathfindingChunk chunk)
         {
-            var crumbs = new List<PathfindingBreadcrumb>(chunk.Points.Length * chunk.Points.Length);
+            var crumbs = new List<PathfindingBreadcrumb>(chunk.Points.Length);
 
             for (var x = 0; x < (ChunkSize + ExpansionSize * 2) * SubStep; x++)
             {

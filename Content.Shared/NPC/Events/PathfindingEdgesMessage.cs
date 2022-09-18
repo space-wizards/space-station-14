@@ -7,5 +7,5 @@ public sealed class PathfindingEdgesMessage : EntityEventArgs
 {
     public EntityUid GridUid;
     public Vector2i Origin;
-    public List<List<PathfindingBreadcrumb>> Edges = new();
+    public List<PathfindingBoundary> Edges = new();
 }
