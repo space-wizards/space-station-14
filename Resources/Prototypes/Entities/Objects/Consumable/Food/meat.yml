@@ -12,6 +12,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
     netsync: false
+  - type: Extractable
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
       food:
