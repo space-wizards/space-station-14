@@ -354,9 +354,9 @@ public sealed partial class PathfindingSystem
                     var data = originPoint.Data;
                     var homogenous = true;
 
-                    for (var i = 1; i < PathfindingCell.Length; i++)
+                    for (var i = 0; i < PathfindingCell.Length; i++)
                     {
-                        for (var j = 0; j < PathfindingCell.Length; j++)
+                        for (var j = 1; j < PathfindingCell.Length; j++)
                         {
                             ref var point = ref points[offsetX + i, offsetY + j];
 
@@ -432,11 +432,13 @@ public sealed partial class PathfindingSystem
             }
         }
 
+        SendCells(chunk, grid.GridEntityId, cells);
+        SendBreadcrumbs(chunk, grid.GridEntityId);
+
         // Step 3. Get the boundary edges
         // At this point we have a decent point cloud for navmesh or the likes
         // In our case we'll make a navmesh out of it because we aren't strictly tile-based and we likely need
         // variable sized mobs.
-        SendBreadcrumbs(chunk, grid.GridEntityId);
 
         var edges = new List<List<PathfindingBreadcrumb>>();
 
