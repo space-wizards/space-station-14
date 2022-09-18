@@ -460,12 +460,24 @@ namespace Content.Server.Construction
                 if (!Exists(uid) || !TryComp(uid, out ConstructionComponent? construction))
                     continue;
 
+#if EXCEPTION_TOLERANCE
+                try
+                {
+#endif
                 // Handle all queued interactions!
                 while (construction.InteractionQueue.TryDequeue(out var interaction))
                 {
                     // We set validation to false because we actually want to perform the interaction here.
                     HandleEvent(uid, interaction, false, construction);
                 }
+#if EXCEPTION_TOLERANCE
+                }
+                catch (Exception e)
+                {
+                    _sawmill.Error($"Caught exception while processing construction queue. Entity {ToPrettyString(uid)}, graph: {construction.Graph}, exception: {e}");
+                    Del(uid);
+                }
+#endif
             }
 
             _constructionUpdateQueue.Clear();
