@@ -15,3 +15,11 @@ public sealed class PathfindingBreadcrumbsRefreshMessage : EntityEventArgs
     public Vector2i Origin;
     public List<PathfindingBreadcrumb> Data = new();
 }
+
+[Serializable, NetSerializable]
+public sealed class PathfindingCellsMessage : EntityEventArgs
+{
+    public EntityUid GridUid;
+    public Vector2i Origin;
+    public List<PathfindingCell> Data = new();
+}

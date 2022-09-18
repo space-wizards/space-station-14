@@ -1,3 +1,4 @@
+using System.IO;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.NPC;
@@ -110,6 +111,34 @@ namespace Content.Server.NPC.Pathfinding
             foreach (var session in _subscribedSessions)
             {
                 if ((session.Value & PathfindingDebugMode.Breadcrumbs) == 0x0)
+                    continue;
+
+                RaiseNetworkEvent(msg, session.Key.ConnectedClient);
+            }
+        }
+
+        private void SendCells(GridPathfindingChunk chunk, EntityUid gridUid, PathfindingCell[,] cells)
+        {
+            var data = new List<PathfindingCell>(cells.Length);
+
+            for (var x = 0; x < Math.Sqrt(cells.Length); x++)
+            {
+                for (var y = 0; y < Math.Sqrt(cells.Length); y++)
+                {
+                    data.Add(cells[x, y]);
+                }
+            }
+
+            var msg = new PathfindingCellsMessage()
+            {
+                Origin = chunk.Origin,
+                GridUid = gridUid,
+                Data = data,
+            };
+
+            foreach (var session in _subscribedSessions)
+            {
+                if ((session.Value & PathfindingDebugMode.Cells) == 0x0)
                     continue;
 
                 RaiseNetworkEvent(msg, session.Key.ConnectedClient);

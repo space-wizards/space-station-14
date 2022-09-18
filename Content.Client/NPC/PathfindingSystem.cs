@@ -48,6 +48,7 @@ namespace Content.Client.NPC
 
         // It's debug data IDC if it doesn't support snapshots I just want something fast.
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
+        public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingCell>>> Cells = new();
         public Dictionary<EntityUid, Dictionary<Vector2i, List<List<PathfindingBreadcrumb>>>> Edges = new();
 
         public override void Initialize()
@@ -56,12 +57,21 @@ namespace Content.Client.NPC
             SubscribeNetworkEvent<PathfindingBreadcrumbsMessage>(OnBreadcrumbs);
             SubscribeNetworkEvent<PathfindingBreadcrumbsRefreshMessage>(OnBreadcrumbsRefresh);
             SubscribeNetworkEvent<PathfindingEdgesMessage>(OnEdges);
+            SubscribeNetworkEvent<PathfindingCellsMessage>(OnCells);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
             Breadcrumbs.Clear();
+            Cells.Clear();
+            Edges.Clear();
+        }
+
+        private void OnCells(PathfindingCellsMessage ev)
+        {
+            var chunks = Cells.GetOrNew(ev.GridUid);
+            chunks[ev.Origin] = ev.Data;
         }
 
         private void OnEdges(PathfindingEdgesMessage ev)
@@ -251,6 +261,42 @@ namespace Content.Client.NPC
 
                             var coordinate = _system.GetCoordinate(chunk.Key, crumb.Coordinates);
                             worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.25f));
+                        }
+                    }
+                }
+            }
+
+            if ((_system.Modes & PathfindingDebugMode.Cells) != 0x0 &&
+                mouseWorldPos.MapId == args.MapId)
+            {
+                foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
+                {
+                    if (!_system.Cells.TryGetValue(grid.GridEntityId, out var data))
+                        continue;
+
+                    worldHandle.SetTransform(grid.WorldMatrix);
+                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+
+                    foreach (var chunk in data)
+                    {
+                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
+
+                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
+
+                        if (!chunkAABB.Intersects(localAABB))
+                            continue;
+
+                        foreach (var cell in chunk.Value)
+                        {
+                            if (cell.Equals(PathfindingCell.Invalid))
+                                continue;
+
+                            const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
+
+                            var color = Color.Red;
+
+                            var coordinate = _system.GetCoordinate(chunk.Key, cell.Indices + SharedPathfindingSystem.SubStep) + SharedPathfindingSystem.StepOffset;
+                            worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.5f));
                         }
                     }
                 }

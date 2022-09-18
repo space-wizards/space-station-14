@@ -354,21 +354,19 @@ public sealed partial class PathfindingSystem
                     var data = originPoint.Data;
                     var homogenous = true;
 
-                    for (var i = 0; i < PathfindingCell.Length; i++)
+                    for (var i = 1; i < PathfindingCell.Length * PathfindingCell.Length; i++)
                     {
-                        for (var j = 1; j < PathfindingCell.Length; j++)
-                        {
-                            ref var point = ref points[offsetX + i, offsetY + j];
+                        var ix = i / PathfindingCell.Length;
+                        var iy = i % PathfindingCell.Length;
 
-                            if (data.Equals(point.Data))
-                                continue;
+                        ref var point = ref points[offsetX + ix, offsetY + iy];
 
-                            homogenous = false;
-                            goto Cell;
-                        }
+                        if (data.Equals(point.Data))
+                            continue;
+
+                        homogenous = false;
+                        break;
                     }
-
-                    Cell: ;
 
                     if (!homogenous)
                     {
@@ -377,7 +375,10 @@ public sealed partial class PathfindingSystem
                         continue;
                     }
 
-                    cells[x, y] = new PathfindingCell(data);
+                    cells[x, y] = new PathfindingCell(data)
+                    {
+                        Indices = new Vector2i(x, y)
+                    };
                 }
             }
 
@@ -407,13 +408,10 @@ public sealed partial class PathfindingSystem
                     ref var point = ref points[offsetX, offsetY];
                     var isBoundary = false;
 
-                    for (var i = -PathfindingCell.Length / 2; i <= 0; i++)
+                    for (var i = -1; i <= 0; i++)
                     {
-                        for (var j = -PathfindingCell.Length / 2; j <= 0; j++)
+                        for (var j = -1; j <= 0; j++)
                         {
-                            if (i != 0 && j != 0)
-                                continue;
-
                             ref var cell = ref cells[x + i, y + j];
 
                             if (cell.Data.Equals(point.Data))

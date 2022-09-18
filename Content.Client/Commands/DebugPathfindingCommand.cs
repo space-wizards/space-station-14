@@ -35,6 +35,10 @@ namespace Content.Client.Commands
                         system.Modes ^= PathfindingDebugMode.Breadcrumbs;
                         shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Breadcrumbs}");
                         break;
+                    case "cells":
+                        system.Modes ^= PathfindingDebugMode.Cells;
+                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Cells}");
+                        break;
                     case "chunks":
                         system.Modes ^= PathfindingDebugMode.Chunks;
                         shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Chunks}");
@@ -65,7 +69,9 @@ namespace Content.Client.Commands
             {
                 new("boundary"),
                 new("breadcrumbs"),
+                new ("cells"),
                 new("chunks"),
+                new("crumb"),
                 new("edges"),
 
             };

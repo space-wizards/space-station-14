@@ -17,17 +17,22 @@ public enum PathfindingDebugMode : byte
     Breadcrumbs = 1 << 1,
 
     /// <summary>
+    /// Show the n x n cells used to determine boundary breadcrumbs.
+    /// </summary>
+    Cells = 1 << 2,
+
+    /// <summary>
     /// Show the pathfinding chunk edges.
     /// </summary>
-    Chunks = 1 << 2,
+    Chunks = 1 << 3,
 
     /// <summary>
     /// Shows the stats nearest crumb to the mouse cursor.
     /// </summary>
-    Crumb = 1 << 3,
+    Crumb = 1 << 4,
 
     /// <summary>
     /// Show the external edges being used for triangulation.
     /// </summary>
-    Edges = 1 << 4,
+    Edges = 1 << 5,
 }
