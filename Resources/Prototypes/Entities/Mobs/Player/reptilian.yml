@@ -3,7 +3,6 @@
   name: Urisst' Mzhand
   parent: BaseMobReptilian
   id: MobReptilian
-  description: A miserable pile of scales.
   components:
     - type: CombatMode
       canDisarm: true
@@ -26,7 +25,7 @@
     - type: CameraRecoil
     - type: Examiner
     - type: CanHostGuardian
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - NanoTrasen
     - type: Respirator

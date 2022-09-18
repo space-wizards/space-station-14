@@ -13,3 +13,5 @@ vending_jingle.ogg made by github.com/hubismal licensed under CC-BY-3.0
 lightswitch.ogg taken from https://github.com/Skyrat-SS13/Skyrat-tg/blob/3f6099bbc3c2afdc609bf1991c2f06297a0f13c2/modular_skyrat/modules/aesthetics/lightswitch/sound/lightswitch.ogg under CC-BY-SA 3.0
 
 reclaimer_startup.ogg - https://freesound.org/people/cmorris035/sounds/319152/, Woodchipper Start (heavy machine) 02.wav CC0 (by cmorris035)
+
+airlock_open.ogg and airlock_close.ogg are from: https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines

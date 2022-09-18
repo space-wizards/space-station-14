@@ -118,7 +118,7 @@ namespace Content.Client.HUD
             }
             dir = proto.Path;
 
-            var resourcePath = (new ResourcePath("/Textures/Interface/Inventory") / dir) / path;
+            var resourcePath = (new ResourcePath("/Textures/Interface/") / dir) / "Slots" / path;
             return _resourceCache.GetTexture(resourcePath);
         }
 

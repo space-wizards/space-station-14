@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
@@ -24,11 +23,20 @@ using Robust.Shared.Utility;
 using Content.Server.Traitor;
 using Content.Shared.MobState.Components;
 using System.Data;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Station.Components;
+using Content.Shared.Chat;
+using Content.Shared.Nuke;
+using Robust.Server.GameObjects;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Server.Traitor.Uplink;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Content.Server.Administration.Commands;
+using Content.Shared.Preferences;
+using Content.Server.Preferences.Managers;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -36,19 +44,83 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
+    [Dependency] private readonly FactionSystem _faction = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
+    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
-    private bool _opsWon;
+
+    private enum WinType
+    {
+        /// <summary>
+        ///     Operative major win. This means they nuked the station.
+        /// </summary>
+        OpsMajor,
+        /// <summary>
+        ///     Minor win. All nukies were alive at the end of the round.
+        ///     Alternatively, some nukies were alive, but the disk was left behind.
+        /// </summary>
+        OpsMinor,
+        /// <summary>
+        ///     Neutral win. The nuke exploded, but on the wrong station.
+        /// </summary>
+        Neutral,
+        /// <summary>
+        ///     Crew minor win. The nuclear authentication disk escaped on the shuttle,
+        ///     but some nukies were alive.
+        /// </summary>
+        CrewMinor,
+        /// <summary>
+        ///     Crew major win. This means they either killed all nukies,
+        ///     or the bomb exploded too far away from the station, or on the nukie moon.
+        /// </summary>
+        CrewMajor
+    }
+
+    private enum WinCondition
+    {
+        NukeExplodedOnCorrectStation,
+        NukeExplodedOnNukieOutpost,
+        NukeExplodedOnIncorrectLocation,
+        NukeActiveInStation,
+        NukeActiveAtCentCom,
+        NukeDiskOnCentCom,
+        NukeDiskNotOnCentCom,
+        NukiesAbandoned,
+        AllNukiesDead,
+        SomeNukiesAlive,
+        AllNukiesAlive
+    }
+
+    private WinType _winType = WinType.Neutral;
+
+    private WinType RuleWinType
+    {
+        get => _winType;
+        set
+        {
+            _winType = value;
+
+            if (value == WinType.CrewMajor || value == WinType.OpsMajor)
+            {
+                _roundEndSystem.EndRound();
+            }
+        }
+    }
+    private List<WinCondition> _winConditions = new ();
 
     private MapId? _nukiePlanet;
     private EntityUid? _nukieOutpost;
     private EntityUid? _nukieShuttle;
+    private EntityUid? _targetStation;
 
     public override string Prototype => "Nukeops";
 
@@ -84,6 +156,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<NukeOperativeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+        SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarm);
         SubscribeLocalEvent<NukeOperativeComponent, GhostRoleSpawnerUsedEvent>(OnPlayersGhostSpawning);
         SubscribeLocalEvent<NukeOperativeComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentInit>(OnComponentInit);
@@ -111,8 +185,170 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     	if (!RuleAdded)
             return;
 
-        _opsWon = true;
+        if (ev.OwningStation != null)
+        {
+            if (ev.OwningStation == _nukieOutpost)
+            {
+                _winConditions.Add(WinCondition.NukeExplodedOnNukieOutpost);
+                RuleWinType = WinType.CrewMajor;
+                return;
+            }
+
+            if (TryComp(_targetStation, out StationDataComponent? data))
+            {
+                foreach (var grid in data.Grids)
+                {
+                    if (grid != ev.OwningStation)
+                    {
+                        continue;
+                    }
+
+                    _winConditions.Add(WinCondition.NukeExplodedOnCorrectStation);
+                    RuleWinType = WinType.OpsMajor;
+                    return;
+                }
+            }
+
+            _winConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
+        }
+        else
+        {
+            _winConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
+        }
+
         _roundEndSystem.EndRound();
+    }
+
+    private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
+    {
+        switch (ev.New)
+        {
+            case GameRunLevel.InRound:
+                OnRoundStart();
+                break;
+            case GameRunLevel.PostRound:
+                OnRoundEnd();
+                break;
+        }
+    }
+
+    private void OnRoundStart()
+    {
+        // TODO: This needs to try and target a Nanotrasen station. At the very least,
+        // we can only currently guarantee that NT stations are the only station to
+        // exist in the base game.
+
+        _targetStation = _stationSystem.Stations.FirstOrNull();
+
+        if (_targetStation == null)
+        {
+            return;
+        }
+
+        foreach (var nukie in EntityQuery<NukeOperativeComponent>())
+        {
+            if (!TryComp<ActorComponent>(nukie.Owner, out var actor))
+            {
+                continue;
+            }
+
+            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
+        }
+    }
+
+    private void OnRoundEnd()
+    {
+        // If the win condition was set to operative/crew major win, ignore.
+        if (RuleWinType == WinType.OpsMajor || RuleWinType == WinType.CrewMajor)
+        {
+            return;
+        }
+
+        foreach (var (nuke, nukeTransform) in EntityManager.EntityQuery<NukeComponent, TransformComponent>(true))
+        {
+            if (nuke.Status != NukeStatus.ARMED)
+            {
+                continue;
+            }
+
+            // UH OH
+            if (nukeTransform.MapID == _shuttleSystem.CentComMap)
+            {
+                _winConditions.Add(WinCondition.NukeActiveAtCentCom);
+                RuleWinType = WinType.OpsMajor;
+                return;
+            }
+
+            if (nukeTransform.GridUid == null || _targetStation == null)
+            {
+                continue;
+            }
+
+            if (!TryComp(_targetStation.Value, out StationDataComponent? data))
+            {
+                continue;
+            }
+
+            foreach (var grid in data.Grids)
+            {
+                if (grid != nukeTransform.GridUid)
+                {
+                    continue;
+                }
+
+                _winConditions.Add(WinCondition.NukeActiveInStation);
+                RuleWinType = WinType.OpsMajor;
+                return;
+            }
+        }
+
+        var allAlive = true;
+        foreach (var (_, state) in EntityQuery<NukeOperativeComponent, MobStateComponent>())
+        {
+            if (state.CurrentState is DamageState.Alive)
+            {
+                continue;
+            }
+
+            allAlive = false;
+            break;
+        }
+        // If all nuke ops were alive at the end of the round,
+        // the nuke ops win. This is to prevent people from
+        // running away the moment nuke ops appear.
+        if (allAlive)
+        {
+            RuleWinType = WinType.OpsMinor;
+            _winConditions.Add(WinCondition.AllNukiesAlive);
+            return;
+        }
+
+        _winConditions.Add(WinCondition.SomeNukiesAlive);
+
+        var diskAtCentCom = false;
+        foreach (var (comp, transform) in EntityManager.EntityQuery<NukeDiskComponent, TransformComponent>())
+        {
+            var diskMapId = transform.MapID;
+            diskAtCentCom = _shuttleSystem.CentComMap == diskMapId;
+
+            // TODO: The target station should be stored, and the nuke disk should store its original station.
+            // This is fine for now, because we can assume a single station in base SS14.
+            break;
+        }
+
+        // If the disk is currently at Central Command, the crew wins - just slightly.
+        // This also implies that some nuclear operatives have died.
+        if (diskAtCentCom)
+        {
+            RuleWinType = WinType.CrewMinor;
+            _winConditions.Add(WinCondition.NukeDiskOnCentCom);
+        }
+        // Otherwise, the nuke ops win.
+        else
+        {
+            RuleWinType = WinType.OpsMinor;
+            _winConditions.Add(WinCondition.NukeDiskNotOnCentCom);
+        }
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -120,7 +356,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
+        var winText = Loc.GetString($"nukeops-{_winType.ToString().ToLower()}");
+
+        ev.AddLine(winText);
+
+        foreach (var cond in _winConditions)
+        {
+            var text = Loc.GetString($"nukeops-cond-{cond.ToString().ToLower()}");
+
+            ev.AddLine(text);
+        }
+
         ev.AddLine(Loc.GetString("nukeops-list-start"));
         foreach (var nukeop in _operativePlayers)
         {
@@ -130,30 +376,66 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void CheckRoundShouldEnd()
     {
-        if (!RuleAdded)
+        if (!RuleAdded || RuleWinType == WinType.CrewMajor || RuleWinType == WinType.OpsMajor)
             return;
+
+        // If there are any nuclear bombs that are active, immediately return. We're not over yet.
+        foreach (var nuke in EntityQuery<NukeComponent>())
+        {
+            if (nuke.Status == NukeStatus.ARMED)
+            {
+                return;
+            }
+        }
 
         MapId? shuttleMapId = EntityManager.EntityExists(_nukieShuttle)
             ? Transform(_nukieShuttle!.Value).MapID
             : null;
 
-        // Check if there are nuke operatives still alive on the same map as the shuttle.
+        MapId? targetStationMap = null;
+        if (_targetStation != null && TryComp(_targetStation, out StationDataComponent? data))
+        {
+            var grid = data.Grids.FirstOrNull();
+            targetStationMap = grid != null
+                ? Transform(grid.Value).MapID
+                : null;
+        }
+
+        // Check if there are nuke operatives still alive on the same map as the shuttle,
+        // or on the same map as the station.
         // If there are, the round can continue.
         var operatives = EntityQuery<NukeOperativeComponent, MobStateComponent, TransformComponent>(true);
         var operativesAlive = operatives
-            .Where(ent => ent.Item3.MapID == shuttleMapId)
+            .Where(ent =>
+                ent.Item3.MapID == shuttleMapId
+                || ent.Item3.MapID == targetStationMap)
             .Any(ent => ent.Item2.CurrentState == DamageState.Alive && ent.Item1.Running);
 
         if (operativesAlive)
-            return; // There are living operatives than can access the shuttle.
+            return; // There are living operatives than can access the shuttle, or are still on the station's map.
 
         // Check that there are spawns available and that they can access the shuttle.
         var spawnsAvailable = EntityQuery<NukeOperativeSpawnerComponent>(true).Any();
         if (spawnsAvailable && shuttleMapId == _nukiePlanet)
             return; // Ghost spawns can still access the shuttle. Continue the round.
 
-        // The shuttle is inaccessible to both living nuke operatives and yet to spawn nuke operatives.
-        _roundEndSystem.EndRound();
+        // The shuttle is inaccessible to both living nuke operatives and yet to spawn nuke operatives,
+        // and there are no nuclear operatives on the target station's map.
+        if (spawnsAvailable)
+        {
+            _winConditions.Add(WinCondition.NukiesAbandoned);
+        }
+        else
+        {
+            _winConditions.Add(WinCondition.AllNukiesDead);
+        }
+
+        RuleWinType = WinType.CrewMajor;
+    }
+
+    private void OnNukeDisarm(NukeDisarmSuccessEvent ev)
+    {
+        CheckRoundShouldEnd();
     }
 
     private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
@@ -274,7 +556,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!TryComp<NukeOperativeSpawnerComponent>(spawner, out var nukeOpSpawner))
             return;
 
-        SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.OperativeStartingGear);
+        HumanoidCharacterProfile? profile = null;
+        if (TryComp(args.Spawned, out ActorComponent? actor))
+            profile = _prefs.GetPreferences(actor.PlayerSession.UserId).SelectedCharacter as HumanoidCharacterProfile;
+
+        SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.OperativeStartingGear, profile);
 
         _operativeMindPendingData.Add(uid, nukeOpSpawner.OperativeRolePrototype);
     }
@@ -299,6 +585,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (_nukeopsRuleConfig.GreetSound != null)
             _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession), AudioParams.Default);
+
+        if (_targetStation != null && !string.IsNullOrEmpty(Name(_targetStation.Value)))
+            _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
     }
 
     private bool SpawnMap()
@@ -389,18 +678,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     /// <summary>
     ///     Adds missing nuke operative components, equips starting gear and renames the entity.
     /// </summary>
-    private void SetupOperativeEntity(EntityUid mob, string name, string gear)
+    private void SetupOperativeEntity(EntityUid mob, string name, string gear, HumanoidCharacterProfile? profile)
     {
         MetaData(mob).EntityName = name;
         EntityManager.EnsureComponent<RandomHumanoidAppearanceComponent>(mob);
         EntityManager.EnsureComponent<NukeOperativeComponent>(mob);
 
         if(_startingGearPrototypes.TryGetValue(gear, out var gearPrototype))
-            _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, null);
+            _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, profile);
 
-        var faction = EnsureComp<AiFactionTagComponent>(mob);
-        faction.Factions |= Faction.Syndicate;
-        faction.Factions &= ~Faction.NanoTrasen;
+        _faction.RemoveFaction(mob, "NanoTrasen", false);
+        _faction.AddFaction(mob, "Syndicate", true);
     }
 
     private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints)
@@ -439,7 +727,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             if (sessions.TryGetValue(i, out var session))
             {
                 var mob = EntityManager.SpawnEntity(_nukeopsRuleConfig.SpawnEntityPrototype, _random.Pick(spawns));
-                SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear);
+                var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
+                SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile);
 
                 var newMind = new Mind.Mind(session.UserId)
                 {
@@ -485,15 +774,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
 
         mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(_nukeopsRuleConfig.OperativeRoleProto)));
-        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
+        SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!RuleAdded)
+        if (!RuleAdded || Configuration is not NukeopsRuleConfiguration nukeOpsConfig)
             return;
 
-        var minPlayers = _nukeopsRuleConfig.MinPlayers;
+        _nukeopsRuleConfig = nukeOpsConfig;
+
+        var minPlayers = nukeOpsConfig.MinPlayers;
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-not-enough-ready-players", ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
@@ -510,7 +801,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public override void Started()
     {
-        _opsWon = false;
+        RuleWinType = WinType.Neutral;
+        _winConditions.Clear();
         _nukieOutpost = null;
         _nukiePlanet = null;
 
@@ -518,9 +810,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _operativeNames.Clear();
         _operativeMindPendingData.Clear();
         _operativePlayers.Clear();
-
-        if (Configuration is not NukeopsRuleConfiguration)
-            return;
 
         // TODO: Loot table or something
         foreach (var proto in new[]

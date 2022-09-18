@@ -22,7 +22,7 @@
               
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 2
             - !type:DeleteEntity {}
@@ -45,10 +45,10 @@
                 
         - to: TelescreenFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SurveillanceCameraMonitorCircuitboard
               amount: 1
           steps:
@@ -69,7 +69,7 @@
 
         - to: Wired
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetGlass1
               amount: 2
           steps:
@@ -111,7 +111,7 @@
               
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 2
             - !type:DeleteEntity {}
@@ -134,10 +134,10 @@
                 
         - to: TelevisionFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: ComputerTelevisionCircuitboard
               amount: 1
           steps:
@@ -158,7 +158,7 @@
 
         - to: Wired
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetGlass1
               amount: 2
           steps:

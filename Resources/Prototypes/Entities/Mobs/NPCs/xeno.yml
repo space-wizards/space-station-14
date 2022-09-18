@@ -24,7 +24,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - Xeno
   - type: Hands
@@ -61,6 +61,7 @@
         Bloodloss:
           -0.25
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     hitSound:
@@ -86,6 +87,8 @@
     - id: FoodMeatXeno
       amount: 5
   - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
     makeSentient: true
     name: xeno
     description: You are a xeno, co-operate with your hive to kill all crewmembers!
@@ -188,6 +191,7 @@
     baseWalkSpeed : 2.8
     baseSprintSpeed : 3.8
   - type: MeleeWeapon
+    hidden: true
     damage:
      groups:
        Brute: 40
@@ -226,6 +230,7 @@
     baseWalkSpeed : 2.3
     baseSprintSpeed : 4.2
   - type: MeleeWeapon
+    hidden: true
     damage:
      groups:
        Brute: 35
@@ -264,6 +269,7 @@
     baseWalkSpeed : 2.7
     baseSprintSpeed : 6.0
   - type: MeleeWeapon
+    hidden: true
     damage:
      groups:
        Brute: 15
@@ -351,10 +357,11 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - Xeno
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: bite
