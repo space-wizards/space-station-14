@@ -176,6 +176,12 @@
     },
 	{
       "name": "dragon_veins"
+    },
+    {
+      "name": "shrimp"
+    },
+    {
+      "name": "shrimp-cooked"
     }
   ]
 }

@@ -48,3 +48,14 @@
 #  prototype: MobVox
 #  dollPrototype: MobVoxDummy
 #  skinColoration: Hues
+
+- type: species
+  id: Prawn
+  name: species-name-prawn
+  roundStart: true
+  prototype: MobPrawn
+  dollPrototype: MobPrawnDummy
+  skinColoration: Hues
+  maleFirstNames: names_prawn_male
+  femaleFirstNames: names_prawn_female
+  naming: FirstDashFirst

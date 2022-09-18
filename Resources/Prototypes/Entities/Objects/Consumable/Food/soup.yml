@@ -992,3 +992,29 @@
           - ReagentId: CapsaicinOil
             Quantity: 5
 # Tastes like bungo, hot curry, tropical sweetness.
+
+- type: entity
+  name: bowl of shrimp gumbo
+  parent: FoodBowlBase
+  id: FoodShrimpGumbo
+  description: A mildly spicey and probably edible Shrimp Gumbo. 
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: gumbo-shrimp
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 5
+          - ReagentId: CapsaicinOil
+            Quantity: 2
+          - ReagentId: Vitamin
+            Quantity: 3
+          - ReagentId: Allicin
+            Quantity: 1
+          - ReagentId: CarpoToxin
+            Quantity: 1 

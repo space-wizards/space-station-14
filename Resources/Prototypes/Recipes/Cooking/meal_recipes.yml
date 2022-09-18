@@ -1144,3 +1144,34 @@
   solids:
     FoodMeatLizard: 1
     FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeShrimp
+  name: cooked shrimp recipe
+  result: FoodMeatShrimpCooked
+  time: 10
+  solids:
+    FoodMeatShrimp: 1
+
+- type: microwaveMealRecipe
+  id: RecipeShrimpGumbo
+  name: shrimp gumbo recipe
+  result: FoodShrimpGumbo
+  time: 20
+  reagents:
+    Water: 5
+  solids: # this may be subject to change depending on if any new ingredients get added better fitting.
+    FoodChili: 1
+    FoodMeatShrimpCooked: 1
+    FoodOnionSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeShrimpCocktail
+  name: shrimp cocktail recipe
+  result: FoodMealShrimpCocktail
+  time: 10
+  reagents:
+    Ketchup: 5
+    JuiceLemon: 5
+  solids:
+    FoodMeatShrimpCooked: 1

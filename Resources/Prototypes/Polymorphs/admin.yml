@@ -41,3 +41,10 @@
   forced: true
   inventory: Drop
   allowRepeatedMorphs: true
+
+- type: polymorph
+  id: AdminPrawnSmite
+  entity: MobPrawn
+  forced: true
+  inventory: Transfer
+  allowRepeatedMorphs: true
