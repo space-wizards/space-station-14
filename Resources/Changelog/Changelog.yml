@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Stomach capacity has been reduced significantly in most cases (besides
-      the rat king and his servants). Humans can eat about 4 bites before needing
-      to wait a little bit, and mice can eat about 2 bites.', type: Tweak}
-  - {message: 'Pills can now only hold 20 units of reagent, down from 50.', type: Tweak}
-  id: 1840
-  time: '2022-07-01T20:42:29.0000000+00:00'
 - author: Solbusaur
   changes:
   - {message: Added new "Pharmacy" lobby art by Solbusaur, type: Add}
@@ -2927,3 +2919,8 @@ Entries:
       head with., type: Add}
   id: 2339
   time: '2022-09-18T17:47:31.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: SMES's and substations are no longer filled upon construction, type: Remove}
+  id: 2340
+  time: '2022-09-18T18:02:45.0000000+00:00'
