@@ -168,7 +168,15 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
     {
-        _atmosDevNetSystem.Deregister(uid, null);
+        foreach (var device in args.OldDevices)
+        {
+            if (!TryComp<DeviceNetworkComponent>(device, out var deviceNet))
+            {
+                continue;
+            }
+
+            _atmosDevNetSystem.Deregister(uid, deviceNet.Address);
+        }
 
         component.ScrubberData.Clear();
         component.SensorData.Clear();
