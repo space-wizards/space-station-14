@@ -32,6 +32,7 @@ public sealed class FireAlarmSystem : EntitySystem
 
     private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, DeviceListUpdateEvent args)
     {
+        _atmosDevNet.Deregister(uid, null);
         _atmosDevNet.Register(uid, null);
         _atmosDevNet.Sync(uid, null);
     }
