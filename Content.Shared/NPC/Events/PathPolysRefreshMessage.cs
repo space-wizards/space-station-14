@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.NPC;
 
 [Serializable, NetSerializable]
-public sealed class PathTilePolysRefreshMessage : EntityEventArgs
+public sealed class PathPolysRefreshMessage : EntityEventArgs
 {
     public EntityUid GridUid;
     public Vector2i Origin;

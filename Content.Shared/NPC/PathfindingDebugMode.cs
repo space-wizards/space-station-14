@@ -6,38 +6,28 @@ public enum PathfindingDebugMode : ushort
     None = 0,
 
     /// <summary>
-    /// Show the pathfinding breadcrumbs that are exterior.
-    /// NOT the breadcrumbs that are considered outside of the chunk boundary.
-    /// </summary>
-    Boundary = 1 << 0,
-
-    /// <summary>
     /// Show the individual pathfinding breadcrumbs.
     /// </summary>
-    Breadcrumbs = 1 << 1,
-
-    /// <summary>
-    /// Show the n x n cells used to determine boundary breadcrumbs.
-    /// </summary>
-    Cells = 1 << 2,
+    Breadcrumbs = 1 << 0,
 
     /// <summary>
     /// Show the pathfinding chunk edges.
     /// </summary>
-    Chunks = 1 << 3,
+    Chunks = 1 << 1,
 
     /// <summary>
     /// Shows the stats nearest crumb to the mouse cursor.
     /// </summary>
-    Crumb = 1 << 4,
+    Crumb = 1 << 2,
 
     /// <summary>
-    /// Show the external edges being used for triangulation.
+    /// Shows all of the pathfinding polys.
     /// </summary>
-    Edges = 1 << 5,
+    Polys = 1 << 6,
 
-    TilePolys = 1 << 6,
-
+    /// <summary>
+    /// Shows the edges between pathfinding polys.
+    /// </summary>
     PolyNeighbors = 1 << 7,
 
     /// <summary>

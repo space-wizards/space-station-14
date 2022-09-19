@@ -15,9 +15,9 @@
             <Label Text="Pathfinder" HorizontalAlignment="Center"/>
         </controls:StripeBack>
         <BoxContainer Name="PathfinderBox" Orientation="Vertical">
-            <CheckBox Name="PathNodes" Text="Nodes"/>
-            <CheckBox Name="PathRoutes" Text="Routes"/>
-            <CheckBox Name="PathRegions" Text="Regions"/>
+            <CheckBox Name="PathCrumbs" Text="Breadcrumbs"/>
+            <CheckBox Name="PathPolys" Text="Polygons"/>
+            <CheckBox Name="PathNeighbors" Text="Neighbors"/>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

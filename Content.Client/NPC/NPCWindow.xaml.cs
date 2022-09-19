@@ -22,14 +22,12 @@ public sealed partial class NPCWindow : FancyWindow
         NPCPath.OnToggled += args => debugSys.ToggleTooltip(AiDebugMode.Paths);
         NPCThonk.OnToggled += args => debugSys.ToggleTooltip(AiDebugMode.Thonk);
 
-        /*
-        PathNodes.Pressed = (path.Modes & PathfindingDebugMode.Nodes) != 0x0;
-        PathRegions.Pressed = (path.Modes & PathfindingDebugMode.Regions) != 0x0;
-        PathRoutes.Pressed = (path.Modes & PathfindingDebugMode.Route) != 0x0;
+        PathCrumbs.Pressed = (path.Modes & PathfindingDebugMode.Breadcrumbs) != 0x0;
+        PathPolys.Pressed = (path.Modes & PathfindingDebugMode.Polys) != 0x0;
+        PathNeighbors.Pressed = (path.Modes & PathfindingDebugMode.PolyNeighbors) != 0x0;
 
-        PathNodes.OnToggled += args => path.ToggleTooltip(PathfindingDebugMode.Nodes);
-        PathRegions.OnToggled += args => path.ToggleTooltip(PathfindingDebugMode.Regions);
-        PathRoutes.OnToggled += args => path.ToggleTooltip(PathfindingDebugMode.Route);
-        */
+        PathCrumbs.OnToggled += args => path.Modes ^= PathfindingDebugMode.Breadcrumbs;
+        PathPolys.OnToggled += args => path.Modes ^= PathfindingDebugMode.Polys;
+        PathNeighbors.OnToggled += args => path.Modes ^= PathfindingDebugMode.PolyNeighbors;
     }
 }

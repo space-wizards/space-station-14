@@ -63,6 +63,7 @@ public sealed partial class PathfindingSystem
                 i++;
             }
 
+            // Without parallel this is roughly 3x slower on my desktop.
             Parallel.For(0, dirt.Length, i =>
             {
                 // Doing the queries per task seems faster.
@@ -367,8 +368,13 @@ public sealed partial class PathfindingSystem
                         !points[x * SubStep + nextX, y * SubStep + nextY].Data.Equals(data))
                     {
                         tilePolys.Add(new Box2i(start, new Vector2i(ix, iy)));
-                        start = new Vector2i(nextX, nextY);
-                        data = points[x * SubStep + nextX, y * SubStep + nextY].Data;
+
+                        if (i < (SubStep * SubStep) - 1)
+                        {
+                            start = new Vector2i(nextX, nextY);
+                            data = points[x * SubStep + nextX, y * SubStep + nextY].Data;
+                        }
+
                         continue;
                     }
                 }
@@ -565,6 +571,6 @@ public sealed partial class PathfindingSystem
         }
 
         // _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
-        SendTilePolys(chunk, component.Owner, chunkPolys);
+        SendPolys(chunk, component.Owner, chunkPolys);
     }
 }

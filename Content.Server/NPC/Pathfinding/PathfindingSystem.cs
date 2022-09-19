@@ -1,9 +1,7 @@
-using System.IO;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.NPC;
 using Robust.Server.Player;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -28,7 +26,6 @@ namespace Content.Server.NPC.Pathfinding
 
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly ITileDefinitionManager _defManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
 
         private ISawmill _sawmill = default!;
@@ -41,6 +38,12 @@ namespace Content.Server.NPC.Pathfinding
             _sawmill = Logger.GetSawmill("nav");
             InitializeGrid();
             SubscribeNetworkEvent<RequestPathfindingDebugMessage>(OnBreadcrumbs);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _subscribedSessions.Clear();
         }
 
         public override void Update(float frameTime)
@@ -69,15 +72,30 @@ namespace Content.Server.NPC.Pathfinding
             sessions = msg.Mode;
             _subscribedSessions[args.SenderSession] = sessions;
 
-            if ((sessions & (PathfindingDebugMode.Boundary | PathfindingDebugMode.Breadcrumbs | PathfindingDebugMode.Chunks)) != 0x0)
+            if (IsCrumb(sessions))
             {
                 SendBreadcrumbs(pSession);
             }
+
+            if (IsPoly(sessions))
+            {
+                SendPolys(pSession);
+            }
+        }
+
+        private bool IsCrumb(PathfindingDebugMode mode)
+        {
+            return (mode & (PathfindingDebugMode.Breadcrumbs | PathfindingDebugMode.Crumb)) != 0x0;
+        }
+
+        private bool IsPoly(PathfindingDebugMode mode)
+        {
+            return (mode & (PathfindingDebugMode.Chunks | PathfindingDebugMode.Polys | PathfindingDebugMode.Poly | PathfindingDebugMode.PolyNeighbors)) != 0x0;
         }
 
         private void SendBreadcrumbs(ICommonSession pSession)
         {
-            var msg = new PathfindingBreadcrumbsMessage();
+            var msg = new PathBreadcrumbsMessage();
 
             foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
             {
@@ -85,8 +103,26 @@ namespace Content.Server.NPC.Pathfinding
 
                 foreach (var chunk in comp.Chunks)
                 {
-                    var data = GetData(chunk.Value);
+                    var data = GetCrumbs(chunk.Value);
                     msg.Breadcrumbs[comp.Owner].Add(chunk.Key, data);
+                }
+            }
+
+            RaiseNetworkEvent(msg, pSession.ConnectedClient);
+        }
+
+        private void SendPolys(ICommonSession pSession)
+        {
+            var msg = new PathPolysMessage();
+
+            foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
+            {
+                msg.Polys.Add(comp.Owner, new Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>(comp.Chunks.Count));
+
+                foreach (var chunk in comp.Chunks)
+                {
+                    var data = GetPolys(chunk.Value);
+                    msg.Polys[comp.Owner].Add(chunk.Key, data);
                 }
             }
 
@@ -98,36 +134,40 @@ namespace Content.Server.NPC.Pathfinding
             if (_subscribedSessions.Count == 0)
                 return;
 
-            var msg = new PathfindingBreadcrumbsRefreshMessage()
+            var msg = new PathBreadcrumbsRefreshMessage()
             {
                 Origin = chunk.Origin,
                 GridUid = gridUid,
-                Data = GetData(chunk),
+                Data = GetCrumbs(chunk),
             };
 
             foreach (var session in _subscribedSessions)
             {
-                if ((session.Value & PathfindingDebugMode.Breadcrumbs) == 0x0)
+                if (!IsCrumb(session.Value))
                     continue;
 
                 RaiseNetworkEvent(msg, session.Key.ConnectedClient);
             }
         }
 
-        private void SendTilePolys(GridPathfindingChunk chunk, EntityUid gridUid,
+        private void SendPolys(GridPathfindingChunk chunk, EntityUid gridUid,
             List<PathPoly>[,] tilePolys)
         {
-            var data = new Dictionary<Vector2i, List<PathPoly>>(tilePolys.Length);
+            if (_subscribedSessions.Count == 0)
+                return;
 
-            for (var x = 0; x < Math.Sqrt(tilePolys.Length); x++)
+            var data = new Dictionary<Vector2i, List<PathPoly>>(tilePolys.Length);
+            var extent = Math.Sqrt(tilePolys.Length);
+
+            for (var x = 0; x < extent; x++)
             {
-                for (var y = 0; y < Math.Sqrt(tilePolys.Length); y++)
+                for (var y = 0; y < extent; y++)
                 {
                     data[new Vector2i(x, y)] = tilePolys[x, y];
                 }
             }
 
-            var msg = new PathTilePolysRefreshMessage()
+            var msg = new PathPolysRefreshMessage()
             {
                 Origin = chunk.Origin,
                 GridUid = gridUid,
@@ -136,26 +176,42 @@ namespace Content.Server.NPC.Pathfinding
 
             foreach (var session in _subscribedSessions)
             {
-                if ((session.Value & PathfindingDebugMode.TilePolys) == 0x0)
+                if (!IsPoly(session.Value))
                     continue;
 
                 RaiseNetworkEvent(msg, session.Key.ConnectedClient);
             }
         }
 
-        private List<PathfindingBreadcrumb> GetData(GridPathfindingChunk chunk)
+        private List<PathfindingBreadcrumb> GetCrumbs(GridPathfindingChunk chunk)
         {
             var crumbs = new List<PathfindingBreadcrumb>(chunk.Points.Length);
+            const int extent = ChunkSize * SubStep;
 
-            for (var x = 0; x < (ChunkSize + ExpansionSize * 2) * SubStep; x++)
+            for (var x = 0; x < extent; x++)
             {
-                for (var y = 0; y < (ChunkSize + ExpansionSize * 2) * SubStep; y++)
+                for (var y = 0; y < extent; y++)
                 {
                     crumbs.Add(chunk.Points[x, y]);
                 }
             }
 
             return crumbs;
+        }
+
+        private Dictionary<Vector2i, List<PathPoly>> GetPolys(GridPathfindingChunk chunk)
+        {
+            var polys = new Dictionary<Vector2i, List<PathPoly>>(chunk.Polygons.Length);
+
+            for (var x = 0; x < ChunkSize; x++)
+            {
+                for (var y = 0; y < ChunkSize; y++)
+                {
+                    polys[new Vector2i(x, y)] = chunk.Polygons[x, y];
+                }
+            }
+
+            return polys;
         }
     }
 }

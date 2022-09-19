@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.NPC;
 using Content.Shared.NPC;
 using JetBrains.Annotations;
@@ -11,7 +12,7 @@ namespace Content.Client.Commands
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
         public string Description => "Toggles visibility of pathfinding debuggers.";
-        public string Help => "pathfinder [boundary / breadcrumbs / chunks / crumb / edges]";
+        public string Help => "pathfinder [options]";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -25,48 +26,14 @@ namespace Content.Client.Commands
 
             foreach (var arg in args)
             {
-                switch (arg)
+                if (!Enum.TryParse<PathfindingDebugMode>(arg, out var mode))
                 {
-                    case "boundary":
-                        system.Modes ^= PathfindingDebugMode.Boundary;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Boundary}");
-                        break;
-                    case "breadcrumbs":
-                        system.Modes ^= PathfindingDebugMode.Breadcrumbs;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Breadcrumbs}");
-                        break;
-                    case "cells":
-                        system.Modes ^= PathfindingDebugMode.Cells;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Cells}");
-                        break;
-                    case "chunks":
-                        system.Modes ^= PathfindingDebugMode.Chunks;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Chunks}");
-                        break;
-                    case "crumb":
-                        system.Modes ^= PathfindingDebugMode.Crumb;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Crumb}");
-                        break;
-                    case "edges":
-                        system.Modes ^= PathfindingDebugMode.Edges;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Edges}");
-                        break;
-                    case "poly":
-                        system.Modes ^= PathfindingDebugMode.Poly;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Poly}");
-                        break;
-                    case "polyneighbors":
-                        system.Modes ^= PathfindingDebugMode.PolyNeighbors;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.PolyNeighbors}");
-                        break;
-                    case "tilepolys":
-                        system.Modes ^= PathfindingDebugMode.TilePolys;
-                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.TilePolys}");
-                        break;
-                    default:
-                        shell.WriteError($"Unrecognised pathfinder args {arg}");
-                        break;
+                    shell.WriteError($"Unrecognised pathfinder args {arg}");
+                    continue;
                 }
+
+                system.Modes ^= mode;
+                shell.WriteLine($"Toggled {arg} to {(system.Modes & mode) != 0x0}");
             }
         }
 
@@ -77,16 +44,16 @@ namespace Content.Client.Commands
                 return CompletionResult.Empty;
             }
 
-            var options = new CompletionOption[]
-            {
-                new("boundary"),
-                new("breadcrumbs"),
-                new ("cells"),
-                new("chunks"),
-                new("crumb"),
-                new("edges"),
+            var values = Enum.GetValues<PathfindingDebugMode>().ToList();
+            var options = new List<CompletionOption>();
 
-            };
+            foreach (var val in values)
+            {
+                if (val == PathfindingDebugMode.None)
+                    continue;
+
+                options.Add(new CompletionOption(val.ToString()));
+            }
 
             return CompletionResult.FromOptions(options);
         }

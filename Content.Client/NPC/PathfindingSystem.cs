@@ -1,10 +1,8 @@
-using System.Linq;
 using System.Text;
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Collections;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -28,12 +26,12 @@ namespace Content.Client.NPC
                 if (value == PathfindingDebugMode.None)
                 {
                     Breadcrumbs.Clear();
-                    Edges.Clear();
+                    Polys.Clear();
                     overlayManager.RemoveOverlay<PathfindingOverlay>();
                 }
                 else if (!overlayManager.HasOverlay<PathfindingOverlay>())
                 {
-                    overlayManager.AddOverlay(new PathfindingOverlay(EntityManager, _eyeManager, _inputManager, _mapManager, _cache, this));
+                    overlayManager.AddOverlay(new PathfindingOverlay(_eyeManager, _inputManager, _mapManager, _cache, this));
                 }
 
                 _modes = value;
@@ -49,53 +47,40 @@ namespace Content.Client.NPC
 
         // It's debug data IDC if it doesn't support snapshots I just want something fast.
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
-        public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingCell>>> Cells = new();
-        public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBoundary>>> Edges = new();
-        public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>> TilePolys = new();
+        public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>> Polys = new();
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeNetworkEvent<PathfindingBreadcrumbsMessage>(OnBreadcrumbs);
-            SubscribeNetworkEvent<PathfindingBreadcrumbsRefreshMessage>(OnBreadcrumbsRefresh);
-            SubscribeNetworkEvent<PathfindingEdgesMessage>(OnEdges);
-            SubscribeNetworkEvent<PathfindingCellsMessage>(OnCells);
-            SubscribeNetworkEvent<PathTilePolysRefreshMessage>(OnTilePolys);
+            SubscribeNetworkEvent<PathBreadcrumbsMessage>(OnBreadcrumbs);
+            SubscribeNetworkEvent<PathBreadcrumbsRefreshMessage>(OnBreadcrumbsRefresh);
+            SubscribeNetworkEvent<PathPolysMessage>(OnPolys);
+            SubscribeNetworkEvent<PathPolysRefreshMessage>(OnPolysRefresh);
         }
 
-        private void OnTilePolys(PathTilePolysRefreshMessage ev)
+        private void OnPolys(PathPolysMessage ev)
         {
-            var chunks = TilePolys.GetOrNew(ev.GridUid);
+            Polys = ev.Polys;
+        }
+
+        private void OnPolysRefresh(PathPolysRefreshMessage ev)
+        {
+            var chunks = Polys.GetOrNew(ev.GridUid);
             chunks[ev.Origin] = ev.Polys;
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            Breadcrumbs.Clear();
-            Cells.Clear();
-            Edges.Clear();
-            TilePolys.Clear();
+            Modes = PathfindingDebugMode.None;
         }
 
-        private void OnCells(PathfindingCellsMessage ev)
-        {
-            var chunks = Cells.GetOrNew(ev.GridUid);
-            chunks[ev.Origin] = ev.Data;
-        }
-
-        private void OnEdges(PathfindingEdgesMessage ev)
-        {
-            var chunks = Edges.GetOrNew(ev.GridUid);
-            chunks[ev.Origin] = ev.Edges;
-        }
-
-        private void OnBreadcrumbs(PathfindingBreadcrumbsMessage ev)
+        private void OnBreadcrumbs(PathBreadcrumbsMessage ev)
         {
             Breadcrumbs = ev.Breadcrumbs;
         }
 
-        private void OnBreadcrumbsRefresh(PathfindingBreadcrumbsRefreshMessage ev)
+        private void OnBreadcrumbsRefresh(PathBreadcrumbsRefreshMessage ev)
         {
             if (!Breadcrumbs.TryGetValue(ev.GridUid, out var chunks))
                 return;
@@ -106,7 +91,6 @@ namespace Content.Client.NPC
 
     public sealed class PathfindingOverlay : Overlay
     {
-        private readonly IEntityManager _entManager;
         private readonly IEyeManager _eyeManager;
         private readonly IInputManager _inputManager;
         private readonly IMapManager _mapManager;
@@ -116,9 +100,13 @@ namespace Content.Client.NPC
 
         private readonly Font _font;
 
-        public PathfindingOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager inputManager, IMapManager mapManager, IResourceCache cache, PathfindingSystem system)
+        public PathfindingOverlay(
+            IEyeManager eyeManager,
+            IInputManager inputManager,
+            IMapManager mapManager,
+            IResourceCache cache,
+            PathfindingSystem system)
         {
-            _entManager = entManager;
             _eyeManager = eyeManager;
             _inputManager = inputManager;
             _mapManager = mapManager;
@@ -227,7 +215,7 @@ namespace Content.Client.NPC
 
                 var found = false;
 
-                if (!_system.TilePolys.TryGetValue(grid.GridEntityId, out var data))
+                if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data))
                     return;
 
                 var tileRef = grid.GetTileRef(mouseWorldPos);
@@ -350,48 +338,12 @@ namespace Content.Client.NPC
                 }
             }
 
-            if ((_system.Modes & PathfindingDebugMode.Cells) != 0x0 &&
+            if ((_system.Modes & PathfindingDebugMode.Polys) != 0x0 &&
                 mouseWorldPos.MapId == args.MapId)
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
-                    if (!_system.Cells.TryGetValue(grid.GridEntityId, out var data))
-                        continue;
-
-                    worldHandle.SetTransform(grid.WorldMatrix);
-                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
-
-                    foreach (var chunk in data)
-                    {
-                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
-
-                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
-
-                        if (!chunkAABB.Intersects(localAABB))
-                            continue;
-
-                        foreach (var cell in chunk.Value)
-                        {
-                            if (cell.Equals(PathfindingCell.Invalid))
-                                continue;
-
-                            const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
-
-                            var color = Color.Red;
-
-                            var coordinate = _system.GetCoordinate(chunk.Key, cell.Indices + SharedPathfindingSystem.SubStep) + SharedPathfindingSystem.StepOffset;
-                            worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.5f));
-                        }
-                    }
-                }
-            }
-
-            if ((_system.Modes & PathfindingDebugMode.TilePolys) != 0x0 &&
-                mouseWorldPos.MapId == args.MapId)
-            {
-                foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
-                {
-                    if (!_system.TilePolys.TryGetValue(grid.GridEntityId, out var data))
+                    if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data))
                         continue;
 
                     worldHandle.SetTransform(grid.WorldMatrix);
@@ -423,7 +375,7 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
-                    if (!_system.TilePolys.TryGetValue(grid.GridEntityId, out var data))
+                    if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data))
                         continue;
 
                     worldHandle.SetTransform(grid.WorldMatrix);
@@ -454,91 +406,6 @@ namespace Content.Client.NPC
                                     var neighborPoly = neighborTile[neighbor.TileIndex];
                                     worldHandle.DrawLine(poly.Box.Center, neighborPoly.Box.Center, Color.Blue);
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if ((_system.Modes & PathfindingDebugMode.Boundary) != 0x0 &&
-                mouseWorldPos.MapId == args.MapId)
-            {
-                foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
-                {
-                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
-                        continue;
-
-                    worldHandle.SetTransform(grid.WorldMatrix);
-                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
-
-                    foreach (var chunk in crumbs)
-                    {
-                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
-
-                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
-
-                        if (!chunkAABB.Intersects(localAABB))
-                            continue;
-
-                        foreach (var crumb in chunk.Value)
-                        {
-                            if (crumb.Equals(PathfindingBreadcrumb.Invalid) ||
-                                (crumb.Data.Flags & (PathfindingBreadcrumbFlag.Interior | PathfindingBreadcrumbFlag.External)) != 0x0)
-                            {
-                                continue;
-                            }
-
-                            const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
-
-                            var color = Color.Green;
-
-                            var coordinate = _system.GetCoordinate(chunk.Key, crumb.Coordinates);
-                            worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.5f));
-                        }
-                    }
-                }
-            }
-
-            if ((_system.Modes & PathfindingDebugMode.Edges) != 0x0)
-            {
-                foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
-                {
-                    if (!_system.Edges.TryGetValue(grid.GridEntityId, out var edges))
-                        continue;
-
-                    worldHandle.SetTransform(grid.WorldMatrix);
-                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
-
-                    foreach (var chunk in edges)
-                    {
-                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
-
-                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
-
-                        if (!chunkAABB.Intersects(localAABB))
-                            continue;
-
-                        foreach (var chain in chunk.Value)
-                        {
-                            var worldEdges = new ValueList<Vector2>(chain.Breadcrumbs.Count);
-                            var center = Vector2.Zero;
-
-                            foreach (var vert in chain.Breadcrumbs)
-                            {
-                                var coord = _system.GetCoordinate(chunk.Key, vert.Coordinates);
-                                worldEdges.Add(coord);
-                            }
-
-                            var color = chain.Closed ? Color.Blue : Color.Green;
-
-                            // Uhh couldn't find a primitive topology that was implemented for this
-                            for (var i = 0; i < worldEdges.Count; i++)
-                            {
-                                var vert = worldEdges[i];
-                                var nextVert = worldEdges[(i + 1) % worldEdges.Count];
-
-                                // worldHandle.DrawRect(new Box2(vert - SharedPathfindingSystem.StepOffset / 2f, vert + SharedPathfindingSystem.StepOffset / 2f), Color.Red.WithAlpha(0.25f));
-                                worldHandle.DrawLine(vert, nextVert, color);
                             }
                         }
                     }

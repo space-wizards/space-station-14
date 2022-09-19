@@ -3,13 +3,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.NPC;
 
 [Serializable, NetSerializable]
-public sealed class PathfindingBreadcrumbsMessage : EntityEventArgs
+public sealed class PathBreadcrumbsMessage : EntityEventArgs
 {
     public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
 }
 
 [Serializable, NetSerializable]
-public sealed class PathfindingBreadcrumbsRefreshMessage : EntityEventArgs
+public sealed class PathBreadcrumbsRefreshMessage : EntityEventArgs
 {
     public EntityUid GridUid;
     public Vector2i Origin;
@@ -17,9 +17,7 @@ public sealed class PathfindingBreadcrumbsRefreshMessage : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed class PathfindingCellsMessage : EntityEventArgs
+public sealed class PathPolysMessage : EntityEventArgs
 {
-    public EntityUid GridUid;
-    public Vector2i Origin;
-    public List<PathfindingCell> Data = new();
+    public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>> Polys = new();
 }
