@@ -7,12 +7,18 @@ using Content.Shared.Construction.Steps;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
+#if EXCEPTION_TOLERANCE
+using Robust.Shared.Exceptions;
+#endif
 
 namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+#if EXCEPTION_TOLERANCE
+        [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+#endif
 
         private readonly HashSet<EntityUid> _constructionUpdateQueue = new();
 
@@ -474,7 +480,8 @@ namespace Content.Server.Construction
                 }
                 catch (Exception e)
                 {
-                    _sawmill.Error($"Caught exception while processing construction queue. Entity {ToPrettyString(uid)}, graph: {construction.Graph}, exception: {e}");
+                    _sawmill.Error($"Caught exception while processing construction queue. Entity {ToPrettyString(uid)}, graph: {construction.Graph}");
+                    _runtimeLog.LogException(e, $"{nameof(ConstructionSystem)}.{nameof(UpdateInteractions)}");
                     Del(uid);
                 }
 #endif
