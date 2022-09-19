@@ -19,7 +19,7 @@ public sealed class PirateAccentSystem : EntitySystem
         { "crew", "me harties" },
         { "yes", "aye" },
         { "yes captain", "aye aye captain"},
-        { "hand hoy", "emergency" },
+        { "emergency", "hand hoy" },
         { "get ready", "batten down the hatches"},
         { "wow", "blimey"},
         { "pirate", "buccaneer" },
