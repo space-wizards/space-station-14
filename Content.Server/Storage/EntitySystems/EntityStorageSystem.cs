@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
+using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
@@ -10,8 +11,10 @@ using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Movement.Events;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
+using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
 using Robust.Server.Containers;
@@ -19,6 +22,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -34,6 +38,7 @@ public sealed class EntityStorageSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public const string ContainerName = "entity_storage";
 
@@ -46,6 +51,8 @@ public sealed class EntityStorageSystem : EntitySystem
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
         SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestroy);
+        SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
+        SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
@@ -107,6 +114,41 @@ public sealed class EntityStorageSystem : EntitySystem
         component.Open = true;
         if (!component.DeleteContentsOnDestruction)
             EmptyContents(uid, component);
+    }
+
+    private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!CanOpen(args.User, args.Target, silent: true, component))
+            return;
+
+        InteractionVerb verb = new();
+        if (component.Open)
+        {
+            verb.Text = Loc.GetString("verb-common-close");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+        }
+        else
+        {
+            verb.Text = Loc.GetString("verb-common-open");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+        }
+        verb.Act = () => ToggleOpen(args.User, args.Target, component);
+        args.Verbs.Add(verb);
+    }
+
+    private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
+    {
+        if (!EntityManager.HasComponent<HandsComponent>(args.Entity))
+            return;
+
+        if (_gameTiming.CurTime < component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
+            return;
+
+        component.LastInternalOpenAttempt = _gameTiming.CurTime;
+        TryOpenStorage(args.Entity, component.Owner);
     }
 
     public void ToggleOpen(EntityUid user, EntityUid target, EntityStorageComponent? component = null)
@@ -221,7 +263,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!Resolve(container, ref component))
             return false;
 
-        if (component.Open)
+        if (!component.Open)
             return true;
 
         if (component.Contents.ContainedEntities.Count >= component.Capacity)
