@@ -357,16 +357,18 @@ public sealed partial class PathfindingSystem
                     for (var i = 0; i < tilePolys.Count; i++)
                     {
                         var poly = tilePolys[i];
+                        data = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
                         for (var j = i + 1; j < tilePolys.Count; j++)
                         {
                             var nextPoly = tilePolys[j];
+                            var nextData = points[x * SubStep + nextPoly.Left, y * SubStep + nextPoly.Bottom].Data;
 
                             // Oh no, Combine
-                            if (poly.BottomLeft.Y == nextPoly.BottomLeft.Y &&
-                                poly.TopRight.Y == nextPoly.TopRight.Y &&
-                                poly.BottomLeft.X + 1 == nextPoly.BottomLeft.X &&
-                                poly.TopRight.X + 1 == nextPoly.TopRight.X)
+                            if (poly.Bottom == nextPoly.Bottom &&
+                                poly.Top == nextPoly.Top &&
+                                poly.Right + 1 == nextPoly.Left &&
+                                data.Equals(nextData))
                             {
                                 tilePolys.RemoveAt(j);
                                 j--;
