@@ -14,7 +14,7 @@
     sprite: Clothing/Head/Helmets/security.rsi
     state: icon
   product: CrateSecurityHelmet
-  cost: 500
+  cost: 550
   category: Security
   group: market
 
