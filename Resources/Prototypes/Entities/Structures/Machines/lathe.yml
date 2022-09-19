@@ -314,7 +314,7 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    dynamicRecipes:
+    staticRecipes:
       - Flash
       - FlashPayload
       - Handcuffs
