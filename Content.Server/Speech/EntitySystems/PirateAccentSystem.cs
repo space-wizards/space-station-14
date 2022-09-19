@@ -23,7 +23,7 @@ public sealed class PirateAccentSystem : EntitySystem
         { "get ready", "batten down the hatches"},
         { "wow", "blimey"},
         { "pirate", "buccaneer" },
-        { "song", "sea chanty" },
+        { "song", "sea shanty" },
         { "beat", "flogged" },
         { "beaten", "flogged" },
         { "beating", "flogging" },
