@@ -67,6 +67,9 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
             SubscribeLocalEvent<ServerStorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
             SubscribeLocalEvent<ServerStorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
+            SubscribeLocalEvent<ServerStorageComponent, ContainerIsInsertingAttemptEvent>(
+                OnContainerIsInsertingAttemptEvent);
+            SubscribeLocalEvent<ServerStorageComponent, EntInsertedIntoContainerMessage>(OnEntInsertedIntoContainerEvent);
 
             SubscribeLocalEvent<ServerStorageComponent, AreaPickupCompleteEvent>(OnAreaPickupComplete);
             SubscribeLocalEvent<ServerStorageComponent, AreaPickupCancelledEvent>(OnAreaPickupCancelled);
@@ -75,6 +78,20 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
+        }
+
+        private void OnEntInsertedIntoContainerEvent(EntityUid uid, ServerStorageComponent component, EntInsertedIntoContainerMessage args)
+        {
+            RecalculateStorageUsed(component);
+            UpdateStorageUI(uid, component);
+        }
+
+        private void OnContainerIsInsertingAttemptEvent(EntityUid uid, ServerStorageComponent component, ContainerIsInsertingAttemptEvent args)
+        {
+            if (component.Storage == null || args.Container != component.Storage)
+                return;
+            if (!CanInsert(uid, args.EntityUid, out _, component))
+                args.Cancel();
         }
 
         private void OnAreaPickupCancelled(EntityUid uid, ServerStorageComponent component, AreaPickupCancelledEvent args)
@@ -559,16 +576,12 @@ namespace Content.Server.Storage.EntitySystems
             if (!Resolve(uid, ref storageComp))
                 return false;
 
-            if (!CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
+            if (storageComp.Storage?.Insert(insertEnt) != true)
                 return false;
 
             if (playSound && storageComp.StorageInsertSound is not null)
-            {
                 _audio.PlayPvs(storageComp.StorageInsertSound, uid);
-            }
 
-            RecalculateStorageUsed(storageComp);
-            UpdateStorageUI(uid, storageComp);
             return true;
         }
 
