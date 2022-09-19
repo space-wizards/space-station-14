@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Footstep sounds should have much more variation and feel more appropriate
-      for a station., type: Tweak}
-  - {message: Walking now reduces footstep volume (and weightlessness removes them),
-    type: Tweak}
-  id: 1844
-  time: '2022-07-02T09:54:39.0000000+00:00'
 - author: Ablankmann
   changes:
   - {message: 'Added Shuttle Windows, coming soon to a shuttle near you.', type: Add}
@@ -2923,3 +2915,8 @@ Entries:
   - {message: Fixed the medical techfab sprite breaking while printing., type: Fix}
   id: 2343
   time: '2022-09-19T19:35:31.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Open soda can no longer show error, type: Fix}
+  id: 2344
+  time: '2022-09-19T23:47:45.0000000+00:00'
