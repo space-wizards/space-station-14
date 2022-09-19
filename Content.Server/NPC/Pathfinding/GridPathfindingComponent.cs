@@ -6,7 +6,6 @@ namespace Content.Server.NPC.Pathfinding;
 /// Stores the relevant pathfinding data for grids.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(PathfindingSystem))]
 public sealed class GridPathfindingComponent : Component
 {
     public readonly Dictionary<Vector2i, GridPathfindingChunk> Chunks = new();

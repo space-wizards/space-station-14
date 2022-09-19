@@ -382,11 +382,12 @@ public sealed partial class PathfindingSystem
                 }
 
                 var a = new List<PathPoly>(tilePolys.Count);
+                var polyOffset = gridOrigin + new Vector2(x, y);
 
                 foreach (var poly in tilePolys)
                 {
-                    var box = new Box2((Vector2) poly.BottomLeft / SubStep + gridOrigin * ChunkSize - StepOffset,
-                        (Vector2) poly.TopRight / SubStep + gridOrigin * ChunkSize + StepOffset);
+                    var box = new Box2((Vector2) poly.BottomLeft / SubStep + polyOffset,
+                        (Vector2) (poly.TopRight + Vector2i.One) / SubStep + polyOffset);
                     var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
                     a.Add(new PathPoly(box, polyData));
@@ -409,16 +410,25 @@ public sealed partial class PathfindingSystem
             for (var y = 0; y < ChunkSize; y++)
             {
                 var tile = actualChunkPolys[x, y];
+                var index = (byte) (x * ChunkSize + y);
 
                 // TODO: Get in-tile polys
 
-                for (var i = 0; i < tile.Count; i++)
+                for (byte i = 0; i < tile.Count; i++)
                 {
                     var poly = tile[i];
+
+                    var polyRef = new PathPolyRef()
+                    {
+                        ChunkOrigin = gridOrigin,
+                        Index = index,
+                        TileIndex = i,
+                    };
+
                     var enlarged = poly.Box.Enlarged(StepOffset);
 
                     // Shouldn't need to wraparound as previous neighbors would've handled us.
-                    for (var j = i + 1; j < tile.Count; j++)
+                    for (var j = (byte) (i + 1); j < tile.Count; j++)
                     {
                         var neighbor = tile[j];
                         var enlargedNeighbor = neighbor.Box.Enlarged(StepOffset);
@@ -427,8 +437,15 @@ public sealed partial class PathfindingSystem
                         if (Box2.Area(enlarged.Intersect(enlargedNeighbor)) <= 1f / SubStep)
                             continue;
 
-                        poly.Neighbors.Add(neighbor);
-                        neighbor.Neighbors.Add(poly);
+                        var neighborRef = new PathPolyRef()
+                        {
+                            ChunkOrigin = gridOrigin,
+                            Index = index,
+                            TileIndex = j,
+                        };
+
+                        poly.Neighbors.Add(neighborRef);
+                        neighbor.Neighbors.Add(polyRef);
                     }
                 }
 

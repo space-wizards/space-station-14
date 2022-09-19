@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
@@ -32,7 +33,7 @@ namespace Content.Client.NPC
                 }
                 else if (!overlayManager.HasOverlay<PathfindingOverlay>())
                 {
-                    overlayManager.AddOverlay(new PathfindingOverlay(_eyeManager, _inputManager, _mapManager, _cache, this));
+                    overlayManager.AddOverlay(new PathfindingOverlay(EntityManager, _eyeManager, _inputManager, _mapManager, _cache, this));
                 }
 
                 _modes = value;
@@ -105,6 +106,7 @@ namespace Content.Client.NPC
 
     public sealed class PathfindingOverlay : Overlay
     {
+        private readonly IEntityManager _entManager;
         private readonly IEyeManager _eyeManager;
         private readonly IInputManager _inputManager;
         private readonly IMapManager _mapManager;
@@ -114,8 +116,9 @@ namespace Content.Client.NPC
 
         private readonly Font _font;
 
-        public PathfindingOverlay(IEyeManager eyeManager, IInputManager inputManager, IMapManager mapManager, IResourceCache cache, PathfindingSystem system)
+        public PathfindingOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager inputManager, IMapManager mapManager, IResourceCache cache, PathfindingSystem system)
         {
+            _entManager = entManager;
             _eyeManager = eyeManager;
             _inputManager = inputManager;
             _mapManager = mapManager;
@@ -336,6 +339,48 @@ namespace Content.Client.NPC
                             foreach (var poly in tile.Value)
                             {
                                 worldHandle.DrawRect(poly.Box, Color.Red.WithAlpha(0.25f));
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ((_system.Modes & PathfindingDebugMode.PolyNeighbors) != 0x0 &&
+                mouseWorldPos.MapId == args.MapId)
+            {
+                foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
+                {
+                    if (!_system.TilePolys.TryGetValue(grid.GridEntityId, out var data))
+                        continue;
+
+                    worldHandle.SetTransform(grid.WorldMatrix);
+                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+
+                    foreach (var chunk in data)
+                    {
+                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
+
+                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
+
+                        if (!chunkAABB.Intersects(localAABB))
+                            continue;
+
+                        foreach (var tile in chunk.Value)
+                        {
+                            foreach (var poly in tile.Value)
+                            {
+                                foreach (var neighbor in poly.Neighbors)
+                                {
+                                    var neighborX = neighbor.Index / SharedPathfindingSystem.ChunkSize;
+                                    var neighborY = neighbor.Index % SharedPathfindingSystem.ChunkSize;
+
+                                    if (!data.TryGetValue(neighbor.ChunkOrigin / SharedPathfindingSystem.ChunkSize, out var neighborChunk) ||
+                                        !neighborChunk.TryGetValue(new Vector2i(neighborX, neighborY), out var neighborTile))
+                                        continue;
+
+                                    var neighborPoly = neighborTile[neighbor.TileIndex];
+                                    worldHandle.DrawLine(poly.Box.Center, neighborPoly.Box.Center, Color.Blue);
+                                }
                             }
                         }
                     }

@@ -6,16 +6,16 @@ public abstract class SharedPathfindingSystem : EntitySystem
     /// This is equivalent to agent radii for navmeshes. In our case it's preferable that things are cleanly
     /// divisible per tile so we'll make sure it works as a discrete number.
     /// </summary>
-    public const int SubStep = 4;
+    public const byte SubStep = 4;
 
-    public const int ChunkSize = 8;
+    public const byte ChunkSize = 8;
 
     /// <summary>
     /// Something we need to consider is that we're chunk-based. The issue with this is if the border of one chunk
     /// has a bunch of obstacles then the other neighbor doesn't know about it. To resolve this we expand
     /// out slightly
     /// </summary>
-    public const int ExpansionSize = 1;
+    public const byte ExpansionSize = 1;
 
     /// <summary>
     /// We won't do points on edges so we'll offset them slightly.

@@ -37,4 +37,6 @@ public enum PathfindingDebugMode : byte
     Edges = 1 << 5,
 
     TilePolys = 1 << 6,
+
+    PolyNeighbors = 1 << 7,
 }

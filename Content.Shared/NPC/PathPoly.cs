@@ -35,7 +35,7 @@ public struct PathPolyRef : IEquatable<PathPolyRef>
     public Vector2i ChunkOrigin;
 
     /// <summary>
-    /// X / Y index in the chunk.
+    /// X / Y index of the tile in the chunk.
     /// </summary>
     public byte Index;
 
