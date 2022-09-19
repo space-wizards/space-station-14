@@ -13,12 +13,7 @@ public abstract class SharedPathfindingSystem : EntitySystem
     /// <summary>
     /// We won't do points on edges so we'll offset them slightly.
     /// </summary>
-    public const float StepOffset = 1f / SubStep / 2f;
-
-    public Vector2i GetPointCoordinate(Vector2 origin)
-    {
-        return new Vector2i((int) ((origin.X - StepOffset) * SubStep), (int) ((origin.Y - StepOffset) * SubStep));
-    }
+    protected const float StepOffset = 1f / SubStep / 2f;
 
     public Vector2 GetCoordinate(Vector2i chunk, Vector2i index)
     {

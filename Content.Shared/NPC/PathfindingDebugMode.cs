@@ -34,4 +34,9 @@ public enum PathfindingDebugMode : ushort
     /// Shows the nearest poly to the mouse cursor.
     /// </summary>
     Poly = 1 << 8,
+
+    /// <summary>
+    /// Gets a path from the current attached entity to the mouse cursor.
+    /// </summary>
+    Path = 1 << 9,
 }

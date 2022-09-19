@@ -63,6 +63,8 @@ public sealed partial class PathfindingSystem
                 i++;
             }
 
+            // TODO: Inflate grid bounds slightly and get chunks.
+
             // Without parallel this is roughly 3x slower on my desktop.
             Parallel.For(0, dirt.Length, i =>
             {
