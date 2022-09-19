@@ -90,6 +90,9 @@
       - !type:AirlockBolted
         value: false
       - !type:WirePanel {}
+      - !type:AllWiresCut
+        ignoreTypes:
+          - !type:DoorBoltWireAction
       completed:
       - !type:EmptyAllContainers {}
       steps:
@@ -130,6 +133,9 @@
       - !type:AirlockBolted
         value: false
       - !type:WirePanel {}
+      - !type:AllWiresCut
+        ignoreTypes:
+          - !type:DoorBoltWireAction
       completed:
       - !type:SpawnPrototype
         prototype: SheetRGlass1

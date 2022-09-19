@@ -3,9 +3,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
-using Content.Server.AI.Utility;
-using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.WorldState;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
@@ -41,8 +38,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IServerDbManager, ServerDbManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<BlackboardManager, BlackboardManager>();
-            IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<ServerUpdateManager>();
             IoCManager.Register<IObjectivesManager, ObjectivesManager>();

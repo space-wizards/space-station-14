@@ -19,6 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -42,6 +43,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
+    [Dependency] protected readonly ExamineSystemShared Examine = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
@@ -154,6 +156,14 @@ public abstract partial class SharedGunSystem : EntitySystem
         component.AvailableModes = state.AvailableSelectiveFire;
     }
 
+    public bool CanShoot(GunComponent component)
+    {
+        if (component.NextFire > Timing.CurTime)
+            return false;
+
+        return true;
+    }
+
     public GunComponent? GetGun(EntityUid entity)
     {
         if (!_combatMode.IsInCombatMode(entity))
@@ -178,6 +188,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
         Dirty(gun);
+    }
+
+    /// <summary>
+    /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
+    /// </summary>
+    public void AttemptShoot(EntityUid user, GunComponent gun, EntityCoordinates toCoordinates)
+    {
+        gun.ShootCoordinates = toCoordinates;
+        AttemptShoot(user, gun);
+        gun.ShotCounter = 0;
     }
 
     private void AttemptShoot(EntityUid user, GunComponent gun)
@@ -349,8 +369,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(gun, sprite);
-
+        var ev = new MuzzleFlashEvent(gun, sprite, user == gun);
         CreateEffect(gun, ev, user);
     }
 

@@ -1,4 +1,4 @@
-using Content.Client.AI;
+using Content.Client.NPC;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;

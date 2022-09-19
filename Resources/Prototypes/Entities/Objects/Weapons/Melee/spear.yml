@@ -45,9 +45,9 @@
     maxTransferAmount: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
-    modifiers:
-      flatReductions:
-        Piercing: -7
+    damage:
+      types:
+        Piercing: 7
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
