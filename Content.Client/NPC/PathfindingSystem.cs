@@ -218,6 +218,78 @@ namespace Content.Client.NPC
                     }
                 }
             }
+
+            if ((_system.Modes & PathfindingDebugMode.Poly) != 0x0 &&
+                mouseWorldPos.MapId == args.MapId)
+            {
+                if (!_mapManager.TryFindGridAt(mouseWorldPos, out var grid))
+                    return;
+
+                var found = false;
+
+                if (!_system.TilePolys.TryGetValue(grid.GridEntityId, out var data))
+                    return;
+
+                var tileRef = grid.GetTileRef(mouseWorldPos);
+                var localPos = tileRef.GridIndices;
+                var chunkOrigin = localPos / SharedPathfindingSystem.ChunkSize;
+
+                if (!data.TryGetValue(chunkOrigin, out var chunk) ||
+                    !chunk.TryGetValue(new Vector2i(localPos.X % SharedPathfindingSystem.ChunkSize,
+                        localPos.Y % SharedPathfindingSystem.ChunkSize), out var tile))
+                {
+                    return;
+                }
+
+                var invGridMatrix = grid.InvWorldMatrix;
+                PathPoly? nearest = null;
+                var nearestDistance = float.MaxValue;
+
+                foreach (var poly in tile)
+                {
+                    if (poly.Box.Contains(invGridMatrix.Transform(mouseWorldPos.Position)))
+                    {
+                        nearest = poly;
+                        break;
+                    }
+                }
+
+                if (nearest != null)
+                {
+                    var text = new StringBuilder();
+                    /*
+
+                    // Sandbox moment
+                    var coords = $"Point coordinates: {nearest.Value.Coordinates.ToString()}";
+                    var gridCoords =
+                        $"Grid coordinates: {_system.GetCoordinate(chunk.Key, nearest.Value.Coordinates).ToString()}";
+                    var layer = $"Layer: {nearest.Value.Data.CollisionLayer.ToString()}";
+                    var mask = $"Mask: {nearest.Value.Data.CollisionMask.ToString()}";
+
+                    text.AppendLine(coords);
+                    text.AppendLine(gridCoords);
+                    text.AppendLine(layer);
+                    text.AppendLine(mask);
+                    text.AppendLine($"Flags:");
+
+                    foreach (var flag in Enum.GetValues<PathfindingBreadcrumbFlag>())
+                    {
+                        if ((flag & nearest.Value.Data.Flags) == 0x0)
+                            continue;
+
+                        var flagStr = $"- {flag.ToString()}";
+                        text.AppendLine(flagStr);
+                    }
+
+                    foreach (var neighbor in )
+
+                    screenHandle.DrawString(_font, mousePos.Position, text.ToString());
+                    found = true;
+                    break;
+                    */
+                }
+
+            }
         }
 
         private void DrawWorld(OverlayDrawArgs args, DrawingHandleWorld worldHandle)
@@ -338,7 +410,8 @@ namespace Content.Client.NPC
                         {
                             foreach (var poly in tile.Value)
                             {
-                                worldHandle.DrawRect(poly.Box, Color.Red.WithAlpha(0.25f));
+                                worldHandle.DrawRect(poly.Box, Color.Green.WithAlpha(0.25f));
+                                worldHandle.DrawRect(poly.Box, Color.Red, false);
                             }
                         }
                     }

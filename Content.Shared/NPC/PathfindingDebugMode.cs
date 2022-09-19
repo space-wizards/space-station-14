@@ -1,7 +1,7 @@
 namespace Content.Shared.NPC;
 
 [Flags]
-public enum PathfindingDebugMode : byte
+public enum PathfindingDebugMode : ushort
 {
     None = 0,
 
@@ -39,4 +39,9 @@ public enum PathfindingDebugMode : byte
     TilePolys = 1 << 6,
 
     PolyNeighbors = 1 << 7,
+
+    /// <summary>
+    /// Shows the nearest poly to the mouse cursor.
+    /// </summary>
+    Poly = 1 << 8,
 }

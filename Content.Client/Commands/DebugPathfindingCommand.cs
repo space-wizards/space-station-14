@@ -51,6 +51,10 @@ namespace Content.Client.Commands
                         system.Modes ^= PathfindingDebugMode.Edges;
                         shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Edges}");
                         break;
+                    case "poly":
+                        system.Modes ^= PathfindingDebugMode.Poly;
+                        shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.Poly}");
+                        break;
                     case "polyneighbors":
                         system.Modes ^= PathfindingDebugMode.PolyNeighbors;
                         shell.WriteLine($"Toggled {arg} to {system.Modes & PathfindingDebugMode.PolyNeighbors}");

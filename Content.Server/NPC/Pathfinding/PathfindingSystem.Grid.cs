@@ -432,9 +432,10 @@ public sealed partial class PathfindingSystem
                     {
                         var neighbor = tile[j];
                         var enlargedNeighbor = neighbor.Box.Enlarged(StepOffset);
+                        var overlap = Box2.Area(enlarged.Intersect(enlargedNeighbor));
 
                         // Need to ensure they intersect by at least 2 tiles.
-                        if (Box2.Area(enlarged.Intersect(enlargedNeighbor)) <= 1f / SubStep)
+                        if (overlap <= 0.5f / SubStep)
                             continue;
 
                         var neighborRef = new PathPolyRef()
