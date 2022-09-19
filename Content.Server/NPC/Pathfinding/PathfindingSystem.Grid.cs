@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Doors.Components;
 using Content.Shared.NPC;
@@ -36,7 +37,9 @@ public sealed partial class PathfindingSystem
     private void UpdateGrid()
     {
         var curTime = _timing.CurTime;
+#if DEBUG
         var updateCount = 0;
+#endif
         _stopwatch.Restart();
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
@@ -60,9 +63,7 @@ public sealed partial class PathfindingSystem
                 i++;
             }
 
-            var division = 4;
-
-            Parallel.For(0, dirt.Length / 4 + 1, i =>
+            Parallel.For(0, dirt.Length, i =>
             {
                 // Doing the queries per task seems faster.
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
@@ -71,24 +72,47 @@ public sealed partial class PathfindingSystem
                 BuildBreadcrumbs(dirt[i], mapGridComp.Grid, comp, fixturesQuery, physicsQuery, xformQuery);
             });
 
-            // TODO: You could for sure do this multi-threaded in 4 iterations but I'm too lazy to do it now (ensuring no 2 neighbor chunks
-            // are being operated in the same iteration). You essentially do bottom left, bottom right, top left, top right in quadrants.
+            const int Division = 4;
+
+            // You can safely do this in parallel as long as no neighbor chunks are being touched in the same iteration.
+            // You essentially do bottom left, bottom right, top left, top right in quadrants.
             // For each 4x4 block of chunks.
 
             // i.e. first iteration: 0,0; 2,0; 0,2
             // second iteration: 1,0; 3,0; 1;2
-            // third iteration: 0,1; 2,1; 0,3
-            foreach (var chunk in dirt)
+            // third iteration: 0,1; 2,1; 0,3 etc
+
+            // TODO: You can probably skimp on some neighbor chunk caches but this runs in like half a ms on average
+            // It'd mainly be about the initial build (like 30ms or so).
+            for (var it = 0; it < Division; it++)
             {
-                BuildNavmesh(chunk, comp);
-                updateCount++;
+                var it1 = it;
+
+                Parallel.For(0, dirt.Length, j =>
+                {
+                    var chunk = dirt[j];
+                    // Check if the chunk is safe on this iteration.
+                    var x = Math.Abs(chunk.Origin.X % 2);
+                    var y = Math.Abs(chunk.Origin.Y % 2);
+                    var index = x * 2 + y;
+
+                    if (index != it1)
+                        return;
+
+                    BuildNavmesh(chunk, comp);
+#if DEBUG
+                    Interlocked.Increment(ref updateCount);
+#endif
+                });
             }
 
             comp.DirtyChunks.Clear();
         }
 
+#if DEBUG
         if (updateCount > 0)
             _sawmill.Debug($"Updated {updateCount} nav chunks in {_stopwatch.Elapsed.TotalMilliseconds:0.000}ms");
+#endif
     }
 
     private void OnCollisionChange(ref CollisionChangeEvent ev)
@@ -400,7 +424,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
         SendBreadcrumbs(chunk, grid.GridEntityId);
     }
 
@@ -540,7 +564,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
+        // _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
         SendTilePolys(chunk, component.Owner, chunkPolys);
     }
 }

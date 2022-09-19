@@ -71,8 +71,6 @@ public sealed class GridPathfindingChunk
                         var neighbor = component.GetNeighbor(neighborRef);
                         neighbor.Neighbors.Remove(nodeRef);
                     }
-
-                    // TODO: Just re-use the struct
                 }
             }
         }
