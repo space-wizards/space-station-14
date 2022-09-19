@@ -207,7 +207,8 @@ public sealed partial class PathfindingSystem
         if (chunk == null)
             return;
 
-        chunk.Clear();
+        var component = Comp<GridPathfindingComponent>(grid.GridEntityId);
+        chunk.Clear(component);
         var points = chunk.Points;
         var fixturesQuery = GetEntityQuery<FixturesComponent>();
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
@@ -217,7 +218,6 @@ public sealed partial class PathfindingSystem
         var tileCrumbs = new HashSet<PathfindingBreadcrumb>(SubStep * SubStep);
         var actualChunkPolys = new List<PathPoly>[ChunkSize, ChunkSize];
         var tilePolys = new ValueList<Box2i>(SubStep);
-        var component = Comp<GridPathfindingComponent>(grid.GridEntityId);
 
         // Need to get the relevant polygons in each tile.
         // If we wanted to create a larger navmesh we could triangulate these points but in our case we're just going

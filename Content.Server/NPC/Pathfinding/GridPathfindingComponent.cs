@@ -10,6 +10,14 @@ namespace Content.Server.NPC.Pathfinding;
 public sealed class GridPathfindingComponent : Component
 {
     public readonly Dictionary<Vector2i, GridPathfindingChunk> Chunks = new();
+
+    public PathPoly GetNeighbor(PathPolyRef neighbor)
+    {
+        var tileX = neighbor.TileIndex / SharedPathfindingSystem.ChunkSize;
+        var tileY = neighbor.TileIndex % SharedPathfindingSystem.ChunkSize;
+
+        return Chunks[neighbor.ChunkOrigin].Polygons[tileX, tileY][neighbor.Index];
+    }
 }
 
 public sealed class GridPathfindingChunk
@@ -33,22 +41,36 @@ public sealed class GridPathfindingChunk
         }
     }
 
-    public void Clear()
+    public void Clear(GridPathfindingComponent component)
     {
         Array.Clear(Points);
 
         // TODO: Only go on the outside polys
-        foreach (var arr in Polygons)
+        for (byte x = 0; x < SharedPathfindingSystem.ChunkSize; x++)
         {
-            foreach (var poly in arr)
+            for (byte y = 0; y < SharedPathfindingSystem.ChunkSize; y++)
             {
-                foreach (var neighbor in poly.Neighbors)
+                var tilePolys = Polygons[x, y];
+
+                for (byte i = 0; i < tilePolys.Count; i++)
                 {
-                    neighbor.Neighbors.Remove(poly);
+                    var poly = tilePolys[i];
+                    var index = (byte) (x * SharedPathfindingSystem.ChunkSize + y);
+
+                    var nodeRef = new PathPolyRef()
+                    {
+                        ChunkOrigin = Origin,
+                        Index = index,
+                        TileIndex = i,
+                    };
+
+                    foreach (var neighborRef in poly.Neighbors)
+                    {
+                        var neighbor = component.GetNeighbor(neighborRef);
+                        neighbor.Neighbors.Remove(nodeRef);
+                    }
                 }
             }
-
-            arr.Clear();
         }
     }
 }

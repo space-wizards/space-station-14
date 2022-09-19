@@ -7,13 +7,13 @@ public struct PathPoly : IEquatable<PathPoly>
 {
     public Box2 Box;
     public PathfindingData Data;
-    public HashSet<PathPoly> Neighbors;
+    public List<PathPolyRef> Neighbors;
 
     public PathPoly(Box2 vertices, PathfindingData data)
     {
         Box = vertices;
         Data = data;
-        Neighbors = new();
+        Neighbors = new List<PathPolyRef>();
     }
 
     public bool Equals(PathPoly other)
@@ -23,13 +23,36 @@ public struct PathPoly : IEquatable<PathPoly>
                Neighbors.Equals(other.Neighbors);
     }
 
-    public override bool Equals(object? obj)
+    public override int GetHashCode()
     {
-        return obj is PathPoly other && Equals(other);
+        return HashCode.Combine(Data, Box, Neighbors);
+    }
+}
+
+[Serializable, NetSerializable]
+public struct PathPolyRef : IEquatable<PathPolyRef>
+{
+    public Vector2i ChunkOrigin;
+
+    /// <summary>
+    /// X / Y index in the chunk.
+    /// </summary>
+    public byte Index;
+
+    /// <summary>
+    /// Index of the poly on the tile's polys.
+    /// </summary>
+    public byte TileIndex;
+
+    public bool Equals(PathPolyRef other)
+    {
+        return ChunkOrigin.Equals(other.ChunkOrigin) &&
+               Index == other.Index &&
+               TileIndex == other.TileIndex;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Data, Box, Neighbors);
+        return HashCode.Combine(ChunkOrigin, Index, TileIndex);
     }
 }
