@@ -69,7 +69,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnPipeSolutionEmptyEvent(EntityUid uid, SmokingPipeComponent component, SmokableSolutionEmptyEvent args)
         {
-            component.BowlSlot.Locked = false;
+            _itemSlotsSystem.SetLock(component.Owner, component.BowlSlot, false);
             SetSmokableState(uid, SmokableState.Unlit);
         }
 
@@ -92,7 +92,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             EntityManager.DeleteEntity(contents);
 
-            component.BowlSlot.Locked = true; //no inserting more until current runs out
+            _itemSlotsSystem.SetLock(component.Owner, component.BowlSlot, true); //no inserting more until current runs out
 
             return true;
         }
