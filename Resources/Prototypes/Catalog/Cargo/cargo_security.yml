@@ -4,7 +4,7 @@
     sprite: Clothing/OuterClothing/Vests/oldarmor.rsi
     state: icon
   product: CrateSecurityArmor
-  cost: 500
+  cost: 700
   category: Security
   group: market
 
