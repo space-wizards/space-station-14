@@ -117,46 +117,29 @@ namespace Content.Server.NPC.Pathfinding
             }
         }
 
-        private void SendCells(GridPathfindingChunk chunk, EntityUid gridUid, PathfindingCell[,] cells)
+        private void SendTilePolys(GridPathfindingChunk chunk, EntityUid gridUid,
+            List<Box2i>[,] tilePolys)
         {
-            var data = new List<PathfindingCell>(cells.Length);
+            var data = new Dictionary<Vector2i, List<Box2i>>(tilePolys.Length);
 
-            for (var x = 0; x < Math.Sqrt(cells.Length); x++)
+            for (var x = 0; x < Math.Sqrt(tilePolys.Length); x++)
             {
-                for (var y = 0; y < Math.Sqrt(cells.Length); y++)
+                for (var y = 0; y < Math.Sqrt(tilePolys.Length); y++)
                 {
-                    data.Add(cells[x, y]);
+                    data[new Vector2i(x, y)] = tilePolys[x, y];
                 }
             }
 
-            var msg = new PathfindingCellsMessage()
+            var msg = new PathTilePolysRefreshMessage()
             {
                 Origin = chunk.Origin,
                 GridUid = gridUid,
-                Data = data,
+                Polys = data,
             };
 
             foreach (var session in _subscribedSessions)
             {
-                if ((session.Value & PathfindingDebugMode.Cells) == 0x0)
-                    continue;
-
-                RaiseNetworkEvent(msg, session.Key.ConnectedClient);
-            }
-        }
-
-        private void SendEdges(GridPathfindingChunk chunk, EntityUid gridUid, List<PathfindingBoundary> edges)
-        {
-            var msg = new PathfindingEdgesMessage()
-            {
-                Origin = chunk.Origin,
-                GridUid = gridUid,
-                Edges = edges,
-            };
-
-            foreach (var session in _subscribedSessions)
-            {
-                if ((session.Value & PathfindingDebugMode.Edges) == 0x0)
+                if ((session.Value & PathfindingDebugMode.TilePolys) == 0x0)
                     continue;
 
                 RaiseNetworkEvent(msg, session.Key.ConnectedClient);

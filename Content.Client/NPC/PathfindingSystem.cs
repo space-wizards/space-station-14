@@ -50,6 +50,7 @@ namespace Content.Client.NPC
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingCell>>> Cells = new();
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBoundary>>> Edges = new();
+        public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<Box2i>>>> TilePolys = new();
 
         public override void Initialize()
         {
@@ -58,6 +59,13 @@ namespace Content.Client.NPC
             SubscribeNetworkEvent<PathfindingBreadcrumbsRefreshMessage>(OnBreadcrumbsRefresh);
             SubscribeNetworkEvent<PathfindingEdgesMessage>(OnEdges);
             SubscribeNetworkEvent<PathfindingCellsMessage>(OnCells);
+            SubscribeNetworkEvent<PathTilePolysRefreshMessage>(OnTilePolys);
+        }
+
+        private void OnTilePolys(PathTilePolysRefreshMessage ev)
+        {
+            var chunks = TilePolys.GetOrNew(ev.GridUid);
+            chunks[ev.Origin] = ev.Polys;
         }
 
         public override void Shutdown()
@@ -66,6 +74,7 @@ namespace Content.Client.NPC
             Breadcrumbs.Clear();
             Cells.Clear();
             Edges.Clear();
+            TilePolys.Clear();
         }
 
         private void OnCells(PathfindingCellsMessage ev)
@@ -297,6 +306,41 @@ namespace Content.Client.NPC
 
                             var coordinate = _system.GetCoordinate(chunk.Key, cell.Indices + SharedPathfindingSystem.SubStep) + SharedPathfindingSystem.StepOffset;
                             worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.5f));
+                        }
+                    }
+                }
+            }
+
+            if ((_system.Modes & PathfindingDebugMode.TilePolys) != 0x0 &&
+                mouseWorldPos.MapId == args.MapId)
+            {
+                foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
+                {
+                    if (!_system.TilePolys.TryGetValue(grid.GridEntityId, out var data))
+                        continue;
+
+                    worldHandle.SetTransform(grid.WorldMatrix);
+                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+
+                    foreach (var chunk in data)
+                    {
+                        var origin = chunk.Key * SharedPathfindingSystem.ChunkSize;
+
+                        var chunkAABB = new Box2(origin, origin + SharedPathfindingSystem.ChunkSize);
+
+                        if (!chunkAABB.Intersects(localAABB))
+                            continue;
+
+                        foreach (var tile in chunk.Value)
+                        {
+                            foreach (var poly in tile.Value)
+                            {
+                                var coordinate = (Vector2) tile.Key + chunk.Key * SharedPathfindingSystem.ChunkSize + SharedPathfindingSystem.StepOffset;
+                                worldHandle.DrawRect(new Box2(
+                                    coordinate + (Vector2) poly.BottomLeft / SharedPathfindingSystem.SubStep,
+                                    coordinate + (Vector2) poly.TopRight / SharedPathfindingSystem.SubStep),
+                                    Color.Red.WithAlpha(0.25f));
+                            }
                         }
                     }
                 }

@@ -218,19 +218,20 @@ public sealed partial class PathfindingSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var gridOrigin = chunk.Origin * ChunkSize;
         var tileEntities = new ValueList<EntityUid>();
+        var tileCrumbs = new HashSet<PathfindingBreadcrumb>(SubStep * SubStep);
+        var chunkPolys = new List<Box2i>[ChunkSize, ChunkSize];
 
-        for (var x = 0; x < ChunkSize + ExpansionSize * 2; x++)
+        // Need to get the relevant polygons in each tile.
+        for (var x = 0; x < ChunkSize; x++)
         {
-            for (var y = 0; y < ChunkSize + ExpansionSize * 2; y++)
+            for (var y = 0; y < ChunkSize; y++)
             {
                 // Tile
-                var offsetX = x - ExpansionSize;
-                var offsetY = y - ExpansionSize;
-                var tilePos = new Vector2i(offsetX, offsetY) + gridOrigin;
+                var tilePos = new Vector2i(x, y) + gridOrigin;
 
                 var tile = grid.GetTileRef(tilePos);
                 var flags = tile.Tile.IsEmpty ? PathfindingBreadcrumbFlag.Space : PathfindingBreadcrumbFlag.None;
-                var isBorder = offsetX < 0 || offsetY < 0 || offsetX >= ChunkSize || offsetY >= ChunkSize;
+                var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
 
                 if (isBorder)
                     flags |= PathfindingBreadcrumbFlag.External;
@@ -261,7 +262,7 @@ public sealed partial class PathfindingSystem
                         var yOffset = y * SubStep + subY;
 
                         // Subtile
-                        var localPos = new Vector2(StepOffset + gridOrigin.X + offsetX + (float) subX / SubStep, StepOffset + gridOrigin.Y + offsetY + (float) subY / SubStep);
+                        var localPos = new Vector2(StepOffset + gridOrigin.X + x + (float) subX / SubStep, StepOffset + gridOrigin.Y + y + (float) subY / SubStep);
                         var collisionMask = 0x0;
                         var collisionLayer = 0x0;
 
@@ -310,51 +311,79 @@ public sealed partial class PathfindingSystem
                             DebugTools.Assert(tileEntities.Count == 0);
                         }
 
-                        points[xOffset, yOffset] = new PathfindingBreadcrumb()
+                        var crumb = new PathfindingBreadcrumb()
                         {
                             Coordinates = new Vector2i(xOffset, yOffset),
                             Data = new PathfindingData(flags, collisionLayer, collisionMask),
                         };
+
+                        points[xOffset, yOffset] = crumb;
+
+                        tileCrumbs.Add(crumb);
                     }
                 }
-            }
-        }
 
-        // Step 2. We treat the initial breadcrumbs as 2x2 cells and get points from that
-        // This means that even valid 1 x n areas like thindows can still generate a closed loop of points
-        var a = new PathfindingBreadcrumb[ChunkSize * SubStep + 1, ChunkSize * SubStep + 1];
+                // Now we got tile data and we can get the polys
+                var tilePolys = new List<Box2i>(SubStep);
+                var data = points[x * SubStep, y * SubStep].Data;
+                var start = Vector2i.Zero;
 
-        const int OriginOffset = SubStep * ExpansionSize;
-
-        for (var x = 0; x < ChunkSize * SubStep + 1; x++)
-        {
-            for (var y = 0; y < ChunkSize * SubStep + 1; y++)
-            {
-                // Check each neighboring breadcrumb to see if we're a boundary node.
-                // If you think of a point in the middle of a tile then we need the breadcrumbs that correspond
-                // to SE / NE / NW / SW
-                // These are the (-1, -1), (0, -1), (-1, 0), (0, 0)
-                var homogenous = true;
-
-                var originPoint = points[OriginOffset + x - 1, OriginOffset + y - 1];
-                var originData = originPoint.Data;
-
-                for (var i = -3; i <= 0; i++)
+                for (var i = 0; i < SubStep * SubStep; i++)
                 {
-                    var ix = i / 2;
-                    var iy = i % 2;
+                    var ix = i / SubStep;
+                    var iy = i % SubStep;
 
-                    var crumb = points[OriginOffset + x + ix, OriginOffset + y + iy];
+                    var nextX = (i + 1) / SubStep;
+                    var nextY = (i + 1) % SubStep;
 
-                    if (crumb.Data.Equals(originData))
+                    // End point
+                    if (iy == SubStep - 1 ||
+                        !points[x * SubStep + nextX, y * SubStep + nextY].Data.Equals(data))
+                    {
+                        tilePolys.Add(new Box2i(start, new Vector2i(ix, iy)));
+                        start = new Vector2i(nextX, nextY);
+                        data = points[x * SubStep + nextX, y * SubStep + nextY].Data;
                         continue;
-
-                    homogenous = false;
+                    }
                 }
 
-                var point = new PathfindingBreadcrumb();
-                a[x, y] = point;
+                // Now combine the lines
+                var anyCombined = true;
+
+                while (anyCombined)
+                {
+                    anyCombined = false;
+
+                    for (var i = 0; i < tilePolys.Count; i++)
+                    {
+                        var poly = tilePolys[i];
+
+                        for (var j = i + 1; j < tilePolys.Count; j++)
+                        {
+                            var nextPoly = tilePolys[j];
+
+                            // Oh no, Combine
+                            if (poly.BottomLeft.Y == nextPoly.BottomLeft.Y &&
+                                poly.TopRight.Y == nextPoly.TopRight.Y &&
+                                poly.BottomLeft.X + 1 == nextPoly.BottomLeft.X &&
+                                poly.TopRight.X + 1 == nextPoly.TopRight.X)
+                            {
+                                tilePolys.RemoveAt(j);
+                                j--;
+                                poly = new Box2i(poly.Left, poly.Bottom, poly.Right + 1, poly.Top);
+                                anyCombined = true;
+                            }
+                        }
+
+                        tilePolys[i] = poly;
+                    }
+                }
+
+                chunkPolys[x, y] = tilePolys;
             }
         }
+
+        SendBreadcrumbs(chunk, grid.GridEntityId);
+        SendTilePolys(chunk, grid.GridEntityId, chunkPolys);
     }
 }

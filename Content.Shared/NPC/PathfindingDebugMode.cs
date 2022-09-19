@@ -35,4 +35,6 @@ public enum PathfindingDebugMode : byte
     /// Show the external edges being used for triangulation.
     /// </summary>
     Edges = 1 << 5,
+
+    TilePolys = 1 << 6,
 }
