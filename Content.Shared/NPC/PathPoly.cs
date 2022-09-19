@@ -1,4 +1,3 @@
-using System.Linq;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.NPC;
@@ -6,21 +5,21 @@ namespace Content.Shared.NPC;
 [Serializable, NetSerializable]
 public struct PathPoly : IEquatable<PathPoly>
 {
-    public Vector2i[] Vertices;
+    public Box2 Box;
     public PathfindingData Data;
-    public HashSet<PathPoly> Neighbors = new();
+    public HashSet<PathPoly> Neighbors;
 
-    public PathPoly(Vector2i[] vertices, PathfindingData data)
+    public PathPoly(Box2 vertices, PathfindingData data)
     {
-        Vertices = vertices;
+        Box = vertices;
         Data = data;
+        Neighbors = new();
     }
 
     public bool Equals(PathPoly other)
     {
         return Data.Equals(other.Data) &&
-               Vertices.Length.Equals(other.Vertices.Length) &&
-               Vertices.SequenceEqual(other.Vertices) &&
+               Box.Equals(other.Box) &&
                Neighbors.Equals(other.Neighbors);
     }
 
@@ -31,6 +30,6 @@ public struct PathPoly : IEquatable<PathPoly>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Vertices, Data, Neighbors);
+        return HashCode.Combine(Data, Box, Neighbors);
     }
 }

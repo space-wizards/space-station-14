@@ -118,9 +118,9 @@ namespace Content.Server.NPC.Pathfinding
         }
 
         private void SendTilePolys(GridPathfindingChunk chunk, EntityUid gridUid,
-            List<Box2i>[,] tilePolys)
+            List<PathPoly>[,] tilePolys)
         {
-            var data = new Dictionary<Vector2i, List<Box2i>>(tilePolys.Length);
+            var data = new Dictionary<Vector2i, List<PathPoly>>(tilePolys.Length);
 
             for (var x = 0; x < Math.Sqrt(tilePolys.Length); x++)
             {

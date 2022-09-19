@@ -11,5 +11,5 @@ public sealed class PathTilePolysRefreshMessage : EntityEventArgs
     /// <summary>
     /// Multi-dimension arrays aren't supported so
     /// </summary>
-    public Dictionary<Vector2i, List<Box2i>> Polys = new();
+    public Dictionary<Vector2i, List<PathPoly>> Polys = new();
 }

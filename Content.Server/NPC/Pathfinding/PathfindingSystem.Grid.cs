@@ -1,5 +1,3 @@
-using System.Linq;
-using Content.Shared.Maps;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
 using Robust.Shared.Collections;
@@ -7,9 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
-using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
 
 namespace Content.Server.NPC.Pathfinding;
 
@@ -219,15 +215,20 @@ public sealed partial class PathfindingSystem
         var gridOrigin = chunk.Origin * ChunkSize;
         var tileEntities = new ValueList<EntityUid>();
         var tileCrumbs = new HashSet<PathfindingBreadcrumb>(SubStep * SubStep);
-        var chunkPolys = new List<Box2i>[ChunkSize, ChunkSize];
+        var actualChunkPolys = new List<PathPoly>[ChunkSize, ChunkSize];
+        var tilePolys = new ValueList<Box2i>(SubStep);
+        var component = Comp<GridPathfindingComponent>(grid.GridEntityId);
 
         // Need to get the relevant polygons in each tile.
+        // If we wanted to create a larger navmesh we could triangulate these points but in our case we're just going
+        // to treat them as tile-based.
         for (var x = 0; x < ChunkSize; x++)
         {
             for (var y = 0; y < ChunkSize; y++)
             {
                 // Tile
                 var tilePos = new Vector2i(x, y) + gridOrigin;
+                tilePolys.Clear();
 
                 var tile = grid.GetTileRef(tilePos);
                 var flags = tile.Tile.IsEmpty ? PathfindingBreadcrumbFlag.Space : PathfindingBreadcrumbFlag.None;
@@ -324,7 +325,6 @@ public sealed partial class PathfindingSystem
                 }
 
                 // Now we got tile data and we can get the polys
-                var tilePolys = new List<Box2i>(SubStep);
                 var data = points[x * SubStep, y * SubStep].Data;
                 var start = Vector2i.Zero;
 
@@ -381,11 +381,97 @@ public sealed partial class PathfindingSystem
                     }
                 }
 
-                chunkPolys[x, y] = tilePolys;
+                var a = new List<PathPoly>(tilePolys.Count);
+
+                foreach (var poly in tilePolys)
+                {
+                    var box = new Box2((Vector2) poly.BottomLeft / SubStep + gridOrigin * ChunkSize - StepOffset,
+                        (Vector2) poly.TopRight / SubStep + gridOrigin * ChunkSize + StepOffset);
+                    var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
+
+                    a.Add(new PathPoly(box, polyData));
+                }
+
+                actualChunkPolys[x, y] = a;
             }
         }
 
         SendBreadcrumbs(chunk, grid.GridEntityId);
-        SendTilePolys(chunk, grid.GridEntityId, chunkPolys);
+
+        component.Chunks.TryGetValue(gridOrigin - new Vector2i(-1, 0), out var leftChunk);
+        component.Chunks.TryGetValue(gridOrigin - new Vector2i(0, -1), out var bottomChunk);
+        component.Chunks.TryGetValue(gridOrigin - new Vector2i(1, 0), out var rightChunk);
+        component.Chunks.TryGetValue(gridOrigin - new Vector2i(0, 1), out var topChunk);
+
+        // Now we can get the neighbors for our tile polys
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                var tile = actualChunkPolys[x, y];
+
+                // TODO: Get in-tile polys
+
+                for (var i = 0; i < tile.Count; i++)
+                {
+                    var poly = tile[i];
+                    var enlarged = poly.Box.Enlarged(StepOffset);
+
+                    // Shouldn't need to wraparound as previous neighbors would've handled us.
+                    for (var j = i + 1; j < tile.Count; j++)
+                    {
+                        var neighbor = tile[j];
+                        var enlargedNeighbor = neighbor.Box.Enlarged(StepOffset);
+
+                        // Need to ensure they intersect by at least 2 tiles.
+                        if (Box2.Area(enlarged.Intersect(enlargedNeighbor)) <= 1f / SubStep)
+                            continue;
+
+                        poly.Neighbors.Add(neighbor);
+                        neighbor.Neighbors.Add(poly);
+                    }
+                }
+
+                {
+                    // TODO: Get neighbor tile polys
+                    for (var i = -1; i <= 1; i++)
+                    {
+                        for (var j = -1; j <= 1; j++)
+                        {
+                            if (i == 0 || j == 0)
+                                continue;
+
+                            var neighborX = x + i;
+                            var neighborY = y + j;
+
+                            if (neighborX < 0)
+                            {
+                                // TODO: Get left chunk
+                            }
+
+                            if (neighborY < 0)
+                            {
+                                // TODO: Get bottom chunk
+                                continue;
+                            }
+
+                            if (neighborX >= ChunkSize)
+                            {
+                                // TODO: Get right chunk
+                                continue;
+                            }
+
+                            if (neighborY >= ChunkSize)
+                            {
+                                // TODO: Get top chunk
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        SendTilePolys(chunk, grid.GridEntityId, actualChunkPolys);
     }
 }

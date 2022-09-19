@@ -50,7 +50,7 @@ namespace Content.Client.NPC
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingCell>>> Cells = new();
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBoundary>>> Edges = new();
-        public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<Box2i>>>> TilePolys = new();
+        public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>> TilePolys = new();
 
         public override void Initialize()
         {
@@ -335,11 +335,7 @@ namespace Content.Client.NPC
                         {
                             foreach (var poly in tile.Value)
                             {
-                                var coordinate = (Vector2) tile.Key + chunk.Key * SharedPathfindingSystem.ChunkSize + SharedPathfindingSystem.StepOffset;
-                                worldHandle.DrawRect(new Box2(
-                                    coordinate + (Vector2) poly.BottomLeft / SharedPathfindingSystem.SubStep,
-                                    coordinate + (Vector2) poly.TopRight / SharedPathfindingSystem.SubStep),
-                                    Color.Red.WithAlpha(0.25f));
+                                worldHandle.DrawRect(poly.Box, Color.Red.WithAlpha(0.25f));
                             }
                         }
                     }
