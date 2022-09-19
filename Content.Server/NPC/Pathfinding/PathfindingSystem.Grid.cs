@@ -320,146 +320,41 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // Step 2. We get 2x2 cells and work out which points aren't in a cell on all 4 cardinals
-        // If so then it's a boundary point.
+        // Step 2. We treat the initial breadcrumbs as 2x2 cells and get points from that
+        // This means that even valid 1 x n areas like thindows can still generate a closed loop of points
+        var a = new PathfindingBreadcrumb[ChunkSize * SubStep + 1, ChunkSize * SubStep + 1];
 
-        // TODO: For boundaries need to go all the way to the edge.
+        const int OriginOffset = SubStep * ExpansionSize;
 
-        const int CleanupIterations = 3;
-        const int originOffset = ExpansionSize * SubStep;
-        var boundaryNodes = new HashSet<PathfindingBreadcrumb>();
-        const int cellLength = ChunkSize * SubStep - 1;
-
-        var cells = new PathfindingCell[cellLength, cellLength];
-
-        for (var it = 0; it < CleanupIterations; it++)
+        for (var x = 0; x < ChunkSize * SubStep + 1; x++)
         {
-            boundaryNodes.Clear();
-            Array.Clear(cells);
-            var anyCleanup = false;
-
-            // Go through anything not outside of the chunk and work out the relevant interior nodes.
-            for (var x = 0; x < cellLength; x++)
+            for (var y = 0; y < ChunkSize * SubStep + 1; y++)
             {
-                for (var y = 0; y < cellLength; y++)
+                // Check each neighboring breadcrumb to see if we're a boundary node.
+                // If you think of a point in the middle of a tile then we need the breadcrumbs that correspond
+                // to SE / NE / NW / SW
+                // These are the (-1, -1), (0, -1), (-1, 0), (0, 0)
+                var homogenous = true;
+
+                var originPoint = points[OriginOffset + x - 1, OriginOffset + y - 1];
+                var originData = originPoint.Data;
+
+                for (var i = -3; i <= 0; i++)
                 {
-                    var offsetX = x + originOffset;
-                    var offsetY = y + originOffset;
+                    var ix = i / 2;
+                    var iy = i % 2;
 
-                    ref var originPoint = ref points[offsetX, offsetY];
+                    var crumb = points[OriginOffset + x + ix, OriginOffset + y + iy];
 
-                    if (originPoint.Equals(PathfindingBreadcrumb.Invalid))
-                    {
-                        cells[x, y] = PathfindingCell.Invalid;
+                    if (crumb.Data.Equals(originData))
                         continue;
-                    }
 
-                    var data = originPoint.Data;
-                    var homogenous = true;
-
-                    for (var i = 1; i < PathfindingCell.Length * PathfindingCell.Length; i++)
-                    {
-                        var ix = i / PathfindingCell.Length;
-                        var iy = i % PathfindingCell.Length;
-
-                        ref var point = ref points[offsetX + ix, offsetY + iy];
-
-                        if (data.Equals(point.Data))
-                            continue;
-
-                        homogenous = false;
-                        break;
-                    }
-
-                    if (!homogenous)
-                    {
-                        cells[x, y] = PathfindingCell.Invalid;
-                        anyCleanup = true;
-                        continue;
-                    }
-
-                    cells[x, y] = new PathfindingCell(data)
-                    {
-                        Indices = new Vector2i(x, y)
-                    };
+                    homogenous = false;
                 }
-            }
 
-            // If we still have more iterations to try (at least until we give up).
-            if (anyCleanup && it != CleanupIterations - 1)
-            {
-                continue;
-            }
-
-            // Alright now we have our pathfinding cells we know if any breadcrumb occupies 4 cells then it can't be a boundary.
-            for (var x = 0; x < ChunkSize * SubStep; x++)
-            {
-                for (var y = 0; y < ChunkSize * SubStep; y++)
-                {
-                    var offsetX = x + originOffset;
-                    var offsetY = y + originOffset;
-
-                    // If we're on the edge of the chunk then we're a border node.
-                    if (x == 0 ||
-                        y == 0 ||
-                        x == (ChunkSize * SubStep) - 1 ||
-                        y == (ChunkSize * SubStep) - 1)
-                    {
-                        continue;
-                    }
-
-                    ref var point = ref points[offsetX, offsetY];
-                    var isBoundary = false;
-
-                    for (var i = -1; i <= 0; i++)
-                    {
-                        for (var j = -1; j <= 0; j++)
-                        {
-                            ref var cell = ref cells[x + i, y + j];
-
-                            if (cell.Data.Equals(point.Data))
-                                continue;
-
-                            isBoundary = true;
-                            goto Cell;
-                        }
-                    }
-
-                    Cell: ;
-
-                    if (!isBoundary)
-                        point.Data.Flags |= PathfindingBreadcrumbFlag.Interior;
-                    else
-                        boundaryNodes.Add(point);
-                }
+                var point = new PathfindingBreadcrumb();
+                a[x, y] = point;
             }
         }
-
-        SendCells(chunk, grid.GridEntityId, cells);
-        SendBreadcrumbs(chunk, grid.GridEntityId);
-
-        // Okay so at this point if we wanted then we COULD get a navmesh, e.g. if you're a downstream with whacky terrain
-        // What I would do is expand out the array slightly again so 1x1 tiles still turn into 2x2 (for stuff like thindows)
-        // This also means you can ensure you get closed cycles
-
-        // However, for now I'm just making square polys to get something working and trying to get the exact bounds is a waste.
-        // Also, we can store a minimum width / height for a particular poly to specify if our agent can pass thru.
-
-        // SendEdges(chunk, grid.GridEntityId, edges);
-
-        // TODO: Verts
-        // - Floodfill each one to get distance to nearest boundary
-        // - Check distance to nearest vert and see if it's too close
-        // - Check distance to boundary and see if it's too close
-        // - Promote any that are too far from an existing vert / boundaries
-
-        // TODO: Edges
-        // - Choose edge candidates up to the above maximum length. Should be able to trace it along the points.
-        // - Ignore any existing boundary edges / anything collinear with a boundary edge
-        // - Then, sort these edges by length and consider shortest length.
-        // - Reject if they intersect second-degree neighbor edges
-
-        // TODO: Triangles
-        // - Avoid having larger one encompass smaller one
     }
 }
