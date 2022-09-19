@@ -41,6 +41,7 @@
       prefix: device-address-prefix-sensor
       sendBroadcastAttemptEvent: true
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: AtmosDevice
     - type: AtmosMonitor
       temperatureThreshold: stationTemperature
