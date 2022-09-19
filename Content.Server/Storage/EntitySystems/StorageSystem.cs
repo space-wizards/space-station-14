@@ -406,12 +406,16 @@ namespace Content.Server.Storage.EntitySystems
         {
             if (component.Storage == null || args.Container != component.Storage)
                 return;
+
             if (!CanInsert(uid, args.EntityUid, out _, component))
                 args.Cancel();
         }
 
         private void OnEntInsertedIntoContainerEvent(EntityUid uid, ServerStorageComponent component, EntInsertedIntoContainerMessage args)
         {
+            if (component.Storage == null || args.Container != component.Storage)
+                return;
+
             RecalculateStorageUsed(component);
             UpdateStorageUI(uid, component);
         }
