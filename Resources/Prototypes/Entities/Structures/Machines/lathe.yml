@@ -361,7 +361,7 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Lathe
     idleState: icon
-    runningState: building
+    runningState: icon
     dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
