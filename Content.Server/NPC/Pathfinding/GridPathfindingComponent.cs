@@ -12,10 +12,10 @@ public sealed class GridPathfindingComponent : Component
 
     public PathPoly GetNeighbor(PathPolyRef neighbor)
     {
-        var tileX = neighbor.TileIndex / SharedPathfindingSystem.ChunkSize;
-        var tileY = neighbor.TileIndex % SharedPathfindingSystem.ChunkSize;
+        var tileX = neighbor.Index / SharedPathfindingSystem.ChunkSize;
+        var tileY = neighbor.Index % SharedPathfindingSystem.ChunkSize;
 
-        return Chunks[neighbor.ChunkOrigin].Polygons[tileX, tileY][neighbor.Index];
+        return Chunks[neighbor.ChunkOrigin].Polygons[tileX, tileY][neighbor.TileIndex];
     }
 }
 
@@ -68,6 +68,8 @@ public sealed class GridPathfindingChunk
                         var neighbor = component.GetNeighbor(neighborRef);
                         neighbor.Neighbors.Remove(nodeRef);
                     }
+
+                    // TODO: Just re-use the struct
                 }
             }
         }

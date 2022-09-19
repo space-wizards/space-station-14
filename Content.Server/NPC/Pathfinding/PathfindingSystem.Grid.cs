@@ -216,7 +216,7 @@ public sealed partial class PathfindingSystem
         var gridOrigin = chunk.Origin * ChunkSize;
         var tileEntities = new ValueList<EntityUid>();
         var tileCrumbs = new HashSet<PathfindingBreadcrumb>(SubStep * SubStep);
-        var actualChunkPolys = new List<PathPoly>[ChunkSize, ChunkSize];
+        var chunkPolys = chunk.Polygons;
         var tilePolys = new ValueList<Box2i>(SubStep);
 
         // Need to get the relevant polygons in each tile.
@@ -393,26 +393,24 @@ public sealed partial class PathfindingSystem
                     a.Add(new PathPoly(box, polyData));
                 }
 
-                actualChunkPolys[x, y] = a;
+                chunkPolys[x, y] = a;
             }
         }
 
         SendBreadcrumbs(chunk, grid.GridEntityId);
 
-        component.Chunks.TryGetValue(gridOrigin - new Vector2i(-1, 0), out var leftChunk);
-        component.Chunks.TryGetValue(gridOrigin - new Vector2i(0, -1), out var bottomChunk);
-        component.Chunks.TryGetValue(gridOrigin - new Vector2i(1, 0), out var rightChunk);
-        component.Chunks.TryGetValue(gridOrigin - new Vector2i(0, 1), out var topChunk);
+        component.Chunks.TryGetValue(chunk.Origin + new Vector2i(-1, 0), out var leftChunk);
+        component.Chunks.TryGetValue(chunk.Origin + new Vector2i(0, -1), out var bottomChunk);
+        component.Chunks.TryGetValue(chunk.Origin + new Vector2i(1, 0), out var rightChunk);
+        component.Chunks.TryGetValue(chunk.Origin + new Vector2i(0, 1), out var topChunk);
 
         // Now we can get the neighbors for our tile polys
         for (var x = 0; x < ChunkSize; x++)
         {
             for (var y = 0; y < ChunkSize; y++)
             {
-                var tile = actualChunkPolys[x, y];
+                var tile = chunkPolys[x, y];
                 var index = (byte) (x * ChunkSize + y);
-
-                // TODO: Get in-tile polys
 
                 for (byte i = 0; i < tile.Count; i++)
                 {
@@ -420,7 +418,7 @@ public sealed partial class PathfindingSystem
 
                     var polyRef = new PathPolyRef()
                     {
-                        ChunkOrigin = gridOrigin,
+                        ChunkOrigin = chunk.Origin,
                         Index = index,
                         TileIndex = i,
                     };
@@ -440,7 +438,7 @@ public sealed partial class PathfindingSystem
 
                         var neighborRef = new PathPolyRef()
                         {
-                            ChunkOrigin = gridOrigin,
+                            ChunkOrigin = chunk.Origin,
                             Index = index,
                             TileIndex = j,
                         };
@@ -448,41 +446,83 @@ public sealed partial class PathfindingSystem
                         poly.Neighbors.Add(neighborRef);
                         neighbor.Neighbors.Add(polyRef);
                     }
-                }
 
-                {
                     // TODO: Get neighbor tile polys
-                    for (var i = -1; i <= 1; i++)
+                    for (var ix = -1; ix <= 1; ix++)
                     {
-                        for (var j = -1; j <= 1; j++)
+                        for (var iy = -1; iy <= 1; iy++)
                         {
-                            if (i == 0 || j == 0)
+                            if (ix != 0 && iy != 0)
                                 continue;
 
-                            var neighborX = x + i;
-                            var neighborY = y + j;
+                            var neighborX = x + ix;
+                            var neighborY = y + iy;
+                            List<PathPoly> neighborTile;
+                            GridPathfindingChunk neighborChunk;
 
                             if (neighborX < 0)
                             {
-                                // TODO: Get left chunk
+                                if (leftChunk == null)
+                                    continue;
+
+                                neighborX = ChunkSize - 1;
+                                neighborTile = leftChunk.Polygons[neighborX, neighborY];
+                                neighborChunk = leftChunk;
+                            }
+                            else if (neighborY < 0)
+                            {
+                                if (bottomChunk == null)
+                                    continue;
+
+                                neighborY = ChunkSize - 1;
+                                neighborTile = bottomChunk.Polygons[neighborX, neighborY];
+                                neighborChunk = bottomChunk;
+                            }
+                            else if (neighborX >= ChunkSize)
+                            {
+                                if (rightChunk == null)
+                                    continue;
+
+                                neighborX = 0;
+                                neighborTile = rightChunk.Polygons[neighborX, neighborY];
+                                neighborChunk = rightChunk;
+                            }
+                            else if (neighborY >= ChunkSize)
+                            {
+                                if (topChunk == null)
+                                    continue;
+
+                                neighborY = 0;
+                                neighborTile = topChunk.Polygons[neighborX, neighborY];
+                                neighborChunk = topChunk;
+                            }
+                            else
+                            {
+                                neighborTile = chunkPolys[neighborX, neighborY];
+                                neighborChunk = chunk;
                             }
 
-                            if (neighborY < 0)
-                            {
-                                // TODO: Get bottom chunk
-                                continue;
-                            }
+                            var neighborIndex = (byte) (neighborX * ChunkSize + neighborY);
 
-                            if (neighborX >= ChunkSize)
+                            for (byte j = 0; j < neighborTile.Count; j++)
                             {
-                                // TODO: Get right chunk
-                                continue;
-                            }
+                                var neighbor = neighborTile[j];
+                                var enlargedNeighbor = neighbor.Box.Enlarged(StepOffset);
+                                var overlap = Box2.Area(enlarged.Intersect(enlargedNeighbor));
 
-                            if (neighborY >= ChunkSize)
-                            {
-                                // TODO: Get top chunk
-                                continue;
+                                // Need to ensure they intersect by at least 2 tiles.
+                                if (overlap <= 0.5f / SubStep)
+                                    continue;
+
+                                var neighborRef = new PathPolyRef()
+                                {
+                                    ChunkOrigin = neighborChunk.Origin,
+                                    Index = neighborIndex,
+                                    TileIndex = j,
+                                };
+
+                                poly.Neighbors.Add(neighborRef);
+                                neighbor.Neighbors.Add(polyRef);
                             }
                         }
                     }
@@ -490,6 +530,6 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        SendTilePolys(chunk, grid.GridEntityId, actualChunkPolys);
+        SendTilePolys(chunk, grid.GridEntityId, chunkPolys);
     }
 }

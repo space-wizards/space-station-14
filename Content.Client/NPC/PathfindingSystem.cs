@@ -447,7 +447,7 @@ namespace Content.Client.NPC
                                     var neighborX = neighbor.Index / SharedPathfindingSystem.ChunkSize;
                                     var neighborY = neighbor.Index % SharedPathfindingSystem.ChunkSize;
 
-                                    if (!data.TryGetValue(neighbor.ChunkOrigin / SharedPathfindingSystem.ChunkSize, out var neighborChunk) ||
+                                    if (!data.TryGetValue(neighbor.ChunkOrigin, out var neighborChunk) ||
                                         !neighborChunk.TryGetValue(new Vector2i(neighborX, neighborY), out var neighborTile))
                                         continue;
 

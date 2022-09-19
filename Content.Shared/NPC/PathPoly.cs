@@ -7,13 +7,13 @@ public struct PathPoly : IEquatable<PathPoly>
 {
     public Box2 Box;
     public PathfindingData Data;
-    public List<PathPolyRef> Neighbors;
+    public HashSet<PathPolyRef> Neighbors;
 
     public PathPoly(Box2 vertices, PathfindingData data)
     {
         Box = vertices;
         Data = data;
-        Neighbors = new List<PathPolyRef>();
+        Neighbors = new HashSet<PathPolyRef>();
     }
 
     public bool Equals(PathPoly other)
