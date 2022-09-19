@@ -17,10 +17,9 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<SmokingPipeComponent, InteractUsingEvent>(OnPipeInteractUsingEvent);
             SubscribeLocalEvent<SmokingPipeComponent, SmokableSolutionEmptyEvent>(OnPipeSolutionEmptyEvent);
             SubscribeLocalEvent<SmokingPipeComponent, AfterInteractEvent>(OnPipeAfterInteract);
-            SubscribeLocalEvent<SmokingPipeComponent, ComponentInit>(OnComponentInit);
         }
 
-        public void OnComponentInit(EntityUid uid, SmokingPipeComponent pipe, ComponentInit args)
+        public void OnPipeInit(EntityUid uid, SmokingPipeComponent pipe, ComponentInit args)
         {
             _itemSlotsSystem.AddItemSlot(uid, SmokingPipeComponent.BowlSlotId, pipe.BowlSlot);
         }
