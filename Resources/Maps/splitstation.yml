@@ -59466,25 +59466,12 @@ entities:
     pos: 26.5,10.5
     parent: 69
     type: Transform
-- uid: 5014
-  type: CrematoriumTray
-  components:
-  - parent: 5015
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5015
   type: Crematorium
   components:
   - pos: 25.5,13.5
     parent: 69
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 5014
-    type: ContainerContainer
 - uid: 5016
   type: AsteroidRock
   components:
