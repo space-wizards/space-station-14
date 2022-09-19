@@ -10,7 +10,7 @@ namespace Content.Server.Radiation.Components;
 public sealed class RadiationBlockerComponent : Component
 {
     /// <summary>
-    ///     Does it blocks radiation at all?
+    ///     Does it block radiation at all?
     /// </summary>
     [DataField("enabled")]
     public bool Enabled = true;
