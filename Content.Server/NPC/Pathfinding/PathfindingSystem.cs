@@ -6,6 +6,7 @@ using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Pathfinding
@@ -26,14 +27,18 @@ namespace Content.Server.NPC.Pathfinding
          */
 
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly ITileDefinitionManager _defManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+
+        private ISawmill _sawmill = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = Logger.GetSawmill("nav");
             InitializeGrid();
             SubscribeNetworkEvent<RequestPathfindingDebugMessage>(OnBreadcrumbs);
         }
@@ -70,17 +75,6 @@ namespace Content.Server.NPC.Pathfinding
             }
         }
 
-        private void SendBreadcrumbs()
-        {
-            foreach (var session in _subscribedSessions)
-            {
-                if ((session.Value & PathfindingDebugMode.Breadcrumbs) == 0)
-                    continue;
-
-                SendBreadcrumbs(session.Key);
-            }
-        }
-
         private void SendBreadcrumbs(ICommonSession pSession)
         {
             var msg = new PathfindingBreadcrumbsMessage();
@@ -101,6 +95,9 @@ namespace Content.Server.NPC.Pathfinding
 
         private void SendBreadcrumbs(GridPathfindingChunk chunk, EntityUid gridUid)
         {
+            if (_subscribedSessions.Count == 0)
+                return;
+
             var msg = new PathfindingBreadcrumbsRefreshMessage()
             {
                 Origin = chunk.Origin,

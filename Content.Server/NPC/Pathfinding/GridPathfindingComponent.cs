@@ -8,6 +8,9 @@ namespace Content.Server.NPC.Pathfinding;
 [RegisterComponent]
 public sealed class GridPathfindingComponent : Component
 {
+    public readonly HashSet<Vector2i> DirtyChunks = new();
+    public TimeSpan NextUpdate;
+
     public readonly Dictionary<Vector2i, GridPathfindingChunk> Chunks = new();
 
     public PathPoly GetNeighbor(PathPolyRef neighbor)
@@ -27,7 +30,7 @@ public sealed class GridPathfindingChunk
 
     public Vector2i Origin;
 
-    public List<PathPoly>[,] Polygons = new List<PathPoly>[SharedPathfindingSystem.ChunkSize, SharedPathfindingSystem.ChunkSize];
+    public readonly List<PathPoly>[,] Polygons = new List<PathPoly>[SharedPathfindingSystem.ChunkSize, SharedPathfindingSystem.ChunkSize];
 
     public GridPathfindingChunk()
     {
@@ -44,10 +47,10 @@ public sealed class GridPathfindingChunk
     {
         Array.Clear(Points);
 
-        // TODO: Only go on the outside polys
-        for (byte x = 0; x < SharedPathfindingSystem.ChunkSize; x++)
+        // Considering polys can't go across a single tile don't need to worry about internal nodes.
+        for (byte x = 0; x < SharedPathfindingSystem.ChunkSize; x+= SharedPathfindingSystem.ChunkSize - 1)
         {
-            for (byte y = 0; y < SharedPathfindingSystem.ChunkSize; y++)
+            for (byte y = 0; y < SharedPathfindingSystem.ChunkSize; y+= SharedPathfindingSystem.ChunkSize - 1)
             {
                 var tilePolys = Polygons[x, y];
 
