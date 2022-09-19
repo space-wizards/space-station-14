@@ -154,6 +154,12 @@
       state_closed: mixed_door
 
 - type: entity
+  id: ClosetWallJanitor
+  parent: ClosetWallMixed
+  name: custodial closet
+  description: It's a storage unit for janitorial clothes and gear.
+
+- type: entity
   id: ClosetWallAtmospherics
   parent: BaseWallCloset
   name: atmospherics wall closet
