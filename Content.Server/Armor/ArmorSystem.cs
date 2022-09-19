@@ -27,47 +27,47 @@ namespace Content.Server.Armor
 
             double price = 0;
 
-            double coefDefaultPrice = 1; //default price of 1% protection against a certain type of damage
+            double coefDefaultPrice = 2; //default price of 1% protection against a certain type of damage
             var coefPriceList = new Dictionary<string, double>()
             {
-                {"Brute", 3 }, //Group: Blunt, Slash, Piercing
-                {"Blunt", 1 },
-                {"Slash", 1 },
-                {"Piercing", 1 },
-                {"Burn", 3.6 }, //Group: Heat, Cold, Shock
-                {"Heat", 1.2 },
-                {"Cold", 1.2 },
-                {"Shock", 1.2 },
-                {"Toxin", 6.7 }, //Group: Radiation, Poison
-                {"Radiation", 1.2 }, 
-                {"Poison", 5 }, //  Armor stopping poison damage? Sounds strong
-                {"Genetic", 2 }, //Group: Cellular
-                {"Cellular", 2 }, //idk
-                {"Airloss", 6 }, //Group: Bloodloss, Asphyxiation
-                {"Bloodloss", 3 }, 
-                {"Asphyxiation", 3 },
-                {"Caustic", 6.2 } //Group: Heat, Poison
+                {"Brute", 6 }, //Group: Blunt, Slash, Piercing
+                {"Blunt", 2 },
+                {"Slash", 2 },
+                {"Piercing", 2 },
+                {"Burn", 7.5 }, //Group: Heat, Cold, Shock
+                {"Heat", 2.5 },
+                {"Cold", 2.5 },
+                {"Shock", 2.5 },
+                {"Toxin", 12.5 }, //Group: Radiation, Poison
+                {"Radiation", 2.5 }, 
+                {"Poison", 10 }, //  Armor stopping poison damage? Sounds strong
+                {"Genetic", 5 }, //Group: Cellular
+                {"Cellular", 5 }, //idk
+                {"Airloss", 10 }, //Group: Bloodloss, Asphyxiation
+                {"Bloodloss", 5 }, 
+                {"Asphyxiation", 5 },
+                {"Caustic", 12.5 } //Group: Heat, Poison
             };
             double flatDefaultPrice = 5; //default price of 1 damage protection against a certain type of damage
             var flatPriceList = new Dictionary<string, double>()
             {
-                {"Brute", 15 }, //Group: Blunt, Slash, Piercing
-                {"Blunt", 5 },
-                {"Slash", 5 },
-                {"Piercing", 5 },
-                {"Burn", 30 }, //Group: Heat, Cold, Shock
-                {"Heat", 10 },
-                {"Cold", 10 },
-                {"Shock", 10 },
-                {"Toxin", 62 }, //Group: Radiation, Poison
-                {"Radiation", 12 },
-                {"Poison", 50 }, //  Armor stopping poison damage? Sounds strong
-                {"Genetic", 20 }, //Group: Cellular
-                {"Cellular", 20 }, //idk
-                {"Airloss", 60 }, //Group: Bloodloss, Asphyxiation
-                {"Bloodloss", 30 },
-                {"Asphyxiation", 30 },
-                {"Caustic", 60 } //Group: Heat, Poison
+                {"Brute", 30 }, //Group: Blunt, Slash, Piercing
+                {"Blunt", 10 },
+                {"Slash", 10 },
+                {"Piercing", 10 },
+                {"Burn", 60 }, //Group: Heat, Cold, Shock
+                {"Heat", 20 },
+                {"Cold", 20 },
+                {"Shock", 20 },
+                {"Toxin", 76 }, //Group: Radiation, Poison
+                {"Radiation", 16 },
+                {"Poison", 60 }, //  Armor stopping poison damage? Sounds strong
+                {"Genetic", 30 }, //Group: Cellular
+                {"Cellular", 30 }, //idk
+                {"Airloss", 100 }, //Group: Bloodloss, Asphyxiation
+                {"Bloodloss", 50 },
+                {"Asphyxiation", 50 },
+                {"Caustic", 80 } //Group: Heat, Poison
             };
 
             foreach (var modifier in component.Modifiers.Coefficients)
