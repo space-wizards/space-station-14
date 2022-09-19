@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Movement;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -78,20 +77,6 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
-        }
-
-        private void OnEntInsertedIntoContainerEvent(EntityUid uid, ServerStorageComponent component, EntInsertedIntoContainerMessage args)
-        {
-            RecalculateStorageUsed(component);
-            UpdateStorageUI(uid, component);
-        }
-
-        private void OnContainerIsInsertingAttemptEvent(EntityUid uid, ServerStorageComponent component, ContainerIsInsertingAttemptEvent args)
-        {
-            if (component.Storage == null || args.Container != component.Storage)
-                return;
-            if (!CanInsert(uid, args.EntityUid, out _, component))
-                args.Cancel();
         }
 
         private void OnAreaPickupCancelled(EntityUid uid, ServerStorageComponent component, AreaPickupCancelledEvent args)
@@ -458,6 +443,21 @@ namespace Content.Server.Storage.EntitySystems
             RecalculateStorageUsed(storageComp);
             UpdateStorageUI(uid, storageComp);
         }
+
+        private void OnContainerIsInsertingAttemptEvent(EntityUid uid, ServerStorageComponent component, ContainerIsInsertingAttemptEvent args)
+        {
+            if (component.Storage == null || args.Container != component.Storage)
+                return;
+            if (!CanInsert(uid, args.EntityUid, out _, component))
+                args.Cancel();
+        }
+
+        private void OnEntInsertedIntoContainerEvent(EntityUid uid, ServerStorageComponent component, EntInsertedIntoContainerMessage args)
+        {
+            RecalculateStorageUsed(component);
+            UpdateStorageUI(uid, component);
+        }
+
 
         private void UpdateStorageVisualization(EntityUid uid, ServerStorageComponent storageComp)
         {
