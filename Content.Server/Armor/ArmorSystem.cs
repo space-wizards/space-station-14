@@ -27,8 +27,8 @@ namespace Content.Server.Armor
 
             double price = 0;
 
-            double coefDefaultPrice = 2; //default price of 1% protection against a certain type of damage
-            var coefPriceList = new Dictionary<string, double>()
+            double coefDefaultPrice = 2; // default price of 1% protection against any type of damage
+            var coefPriceList = new Dictionary<string, double>() // List of damage type and cost per 1% of protection
             {
                 {"Brute", 6 }, //Group: Blunt, Slash, Piercing
                 {"Blunt", 2 },
@@ -40,16 +40,16 @@ namespace Content.Server.Armor
                 {"Shock", 2.5 },
                 {"Toxin", 12.5 }, //Group: Radiation, Poison
                 {"Radiation", 2.5 }, 
-                {"Poison", 10 }, //  Armor stopping poison damage? Sounds strong
+                {"Poison", 10 }, 
                 {"Genetic", 5 }, //Group: Cellular
-                {"Cellular", 5 }, //idk
+                {"Cellular", 5 }, 
                 {"Airloss", 10 }, //Group: Bloodloss, Asphyxiation
                 {"Bloodloss", 5 }, 
                 {"Asphyxiation", 5 },
                 {"Caustic", 12.5 } //Group: Heat, Poison
             };
-            double flatDefaultPrice = 5; //default price of 1 damage protection against a certain type of damage
-            var flatPriceList = new Dictionary<string, double>()
+            double flatDefaultPrice = 10; //default price of 1 damage protection against a certain type of damage
+            var flatPriceList = new Dictionary<string, double>() // List of damage type and cost per 1 damage reduction
             {
                 {"Brute", 30 }, //Group: Blunt, Slash, Piercing
                 {"Blunt", 10 },
@@ -61,9 +61,9 @@ namespace Content.Server.Armor
                 {"Shock", 20 },
                 {"Toxin", 76 }, //Group: Radiation, Poison
                 {"Radiation", 16 },
-                {"Poison", 60 }, //  Armor stopping poison damage? Sounds strong
+                {"Poison", 60 },
                 {"Genetic", 30 }, //Group: Cellular
-                {"Cellular", 30 }, //idk
+                {"Cellular", 30 },
                 {"Airloss", 100 }, //Group: Bloodloss, Asphyxiation
                 {"Bloodloss", 50 },
                 {"Asphyxiation", 50 },
