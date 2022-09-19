@@ -1,9 +1,4 @@
 Entries:
-- author: Ablankmann
-  changes:
-  - {message: 'Added Shuttle Windows, coming soon to a shuttle near you.', type: Add}
-  id: 1845
-  time: '2022-07-03T02:10:20.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed vomit puddle mopping behavior, type: Fix}
@@ -2920,3 +2915,8 @@ Entries:
   - {message: Open soda can no longer show error, type: Fix}
   id: 2344
   time: '2022-09-19T23:47:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Splitstation minor update. Jetpacks, CMO locker and more.', type: Add}
+  id: 2345
+  time: '2022-09-19T23:50:32.0000000+00:00'
