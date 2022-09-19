@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed vomit puddle mopping behavior, type: Fix}
-  id: 1846
-  time: '2022-07-03T02:13:12.0000000+00:00'
 - author: Rane
   changes:
   - {message: Incidents of sickness from miasma will give all entities the same disease.,
@@ -2920,3 +2915,8 @@ Entries:
   - {message: 'Splitstation minor update. Jetpacks, CMO locker and more.', type: Add}
   id: 2345
   time: '2022-09-19T23:50:32.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Added a smoking pipe. Get your Sherlock Holmes on!, type: Add}
+  id: 2346
+  time: '2022-09-19T23:54:33.0000000+00:00'
