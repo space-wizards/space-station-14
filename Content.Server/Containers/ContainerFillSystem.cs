@@ -19,7 +19,8 @@ public sealed class ContainerFillSystem : EntitySystem
 
     private void OnContainerFillMapInit(EntityUid uid, ContainerFillComponent component, MapInitEvent args)
     {
-        if (component.Containers.Count == 0) return;
+        if (component.Containers.Count == 0)
+            return;
 
         if (!TryComp<ContainerManagerComponent>(uid, out var containerManagerComponent))
             return;
@@ -38,7 +39,10 @@ public sealed class ContainerFillSystem : EntitySystem
             {
                 var entity = EntityManager.SpawnEntity(prototypeName, coordinates);
                 if (!container.Insert(entity, EntityManager, ownerTransform: transform))
+                {
                     Logger.Warning($"Couldn't insert {ToPrettyString(entity)} into {ToPrettyString(uid)}!");
+                    EntityManager.DeleteEntity(entity);
+                }
             }
 
             if (construction != null)
