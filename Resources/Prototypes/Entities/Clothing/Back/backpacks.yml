@@ -192,3 +192,12 @@
     equippedPrefix: holding
   - type: Storage
     capacity: 9999
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackPirate
+  name: pirate backpack
+  description: Even a pirate needs somewhere to put his plushies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/pirate.rsi

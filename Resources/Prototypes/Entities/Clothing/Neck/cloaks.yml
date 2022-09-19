@@ -114,3 +114,12 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/trans.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakPirateCap
+  name: pirate captain's cloak
+  description: Be the scourge of the space seas in this rather fetching black cloak, complete with skull motif.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/piratecap.rsi

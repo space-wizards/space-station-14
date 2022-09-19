@@ -296,3 +296,24 @@
         Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadPirateCaptain
+  name: pirate captain's helmet
+  description: A pirate captain's helmet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/piratecaptainhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/piratecaptainhelm.rsi
+  - type: IngestionBlocker
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.4
+        Heat: 0.4
+        Radiation: 0.4
