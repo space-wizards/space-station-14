@@ -42,7 +42,6 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
-            SubscribeLocalEvent<SmokingPipeComponent, ComponentInit>(OnPipeInit);
 
             InitializeCigars();
             InitializePipes();

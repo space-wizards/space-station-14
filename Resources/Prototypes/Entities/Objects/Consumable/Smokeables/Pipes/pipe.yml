@@ -28,7 +28,7 @@
   components:
   - type: ContainerContainer
     containers:
-      BowlSlotId: !type:ContainerSlot {}
+      bowl_slot: !type:ContainerSlot
   - type: ItemSlots
   - type: SmokingPipe
     bowl_slot: 
@@ -50,7 +50,7 @@
   components:
   - type: ContainerContainer
     containers:
-      BowlSlotId: !type:ContainerSlot {}
+      bowl_slot: !type:ContainerSlot
   - type: ItemSlots
   - type: SmokingPipe
     bowl_slot: 
