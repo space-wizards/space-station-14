@@ -2,7 +2,7 @@
 using Content.Server.Administration;
 using Content.Server.Body.Components;
 using Content.Server.Cargo.Components;
-using Content.Server.Materials;
+using Content.Shared.Materials;
 using Content.Server.Stack;
 using Content.Shared.Administration;
 using Content.Shared.MobState.Components;

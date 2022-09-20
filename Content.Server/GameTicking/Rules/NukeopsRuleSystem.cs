@@ -56,6 +56,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
 
     private enum WinType
@@ -101,9 +102,26 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
     private WinType _winType = WinType.Neutral;
+
+    private WinType RuleWinType
+    {
+        get => _winType;
+        set
+        {
+            _winType = value;
+
+            if (value == WinType.CrewMajor || value == WinType.OpsMajor)
+            {
+                _roundEndSystem.EndRound();
+            }
+        }
+    }
     private List<WinCondition> _winConditions = new ();
 
     private MapId? _nukiePlanet;
+
+    // TODO: use components, don't just cache entity UIDs
+    // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
     private EntityUid? _nukieOutpost;
     private EntityUid? _nukieShuttle;
     private EntityUid? _targetStation;
@@ -175,28 +193,27 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             if (ev.OwningStation == _nukieOutpost)
             {
-                _winType = WinType.CrewMajor;
                 _winConditions.Add(WinCondition.NukeExplodedOnNukieOutpost);
+                RuleWinType = WinType.CrewMajor;
+                return;
             }
-            else
+
+            if (TryComp(_targetStation, out StationDataComponent? data))
             {
-                if (TryComp(_targetStation, out StationDataComponent? data))
+                foreach (var grid in data.Grids)
                 {
-                    foreach (var grid in data.Grids)
+                    if (grid != ev.OwningStation)
                     {
-                        if (grid != ev.OwningStation)
-                        {
-                            continue;
-                        }
-
-                        _winType = WinType.OpsMajor;
-                        _winConditions.Add(WinCondition.NukeExplodedOnCorrectStation);
-                        return;
+                        continue;
                     }
-                }
 
-                _winConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
+                    _winConditions.Add(WinCondition.NukeExplodedOnCorrectStation);
+                    RuleWinType = WinType.OpsMajor;
+                    return;
+                }
             }
+
+            _winConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
         }
         else
         {
@@ -232,6 +249,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
+        var filter = Filter.Empty();
         foreach (var nukie in EntityQuery<NukeOperativeComponent>())
         {
             if (!TryComp<ActorComponent>(nukie.Owner, out var actor))
@@ -240,13 +258,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
 
             _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
+            filter.AddPlayer(actor.PlayerSession);
         }
+
+        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter);
     }
 
     private void OnRoundEnd()
     {
         // If the win condition was set to operative/crew major win, ignore.
-        if (_winType == WinType.OpsMajor || _winType == WinType.CrewMajor)
+        if (RuleWinType == WinType.OpsMajor || RuleWinType == WinType.CrewMajor)
         {
             return;
         }
@@ -261,8 +282,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             // UH OH
             if (nukeTransform.MapID == _shuttleSystem.CentComMap)
             {
-                _winType = WinType.OpsMajor;
                 _winConditions.Add(WinCondition.NukeActiveAtCentCom);
+                RuleWinType = WinType.OpsMajor;
                 return;
             }
 
@@ -283,8 +304,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                     continue;
                 }
 
-                _winType = WinType.OpsMajor;
                 _winConditions.Add(WinCondition.NukeActiveInStation);
+                RuleWinType = WinType.OpsMajor;
                 return;
             }
         }
@@ -305,7 +326,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // running away the moment nuke ops appear.
         if (allAlive)
         {
-            _winType = WinType.OpsMinor;
+            RuleWinType = WinType.OpsMinor;
             _winConditions.Add(WinCondition.AllNukiesAlive);
             return;
         }
@@ -327,13 +348,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // This also implies that some nuclear operatives have died.
         if (diskAtCentCom)
         {
-            _winType = WinType.CrewMinor;
+            RuleWinType = WinType.CrewMinor;
             _winConditions.Add(WinCondition.NukeDiskOnCentCom);
         }
         // Otherwise, the nuke ops win.
         else
         {
-            _winType = WinType.OpsMinor;
+            RuleWinType = WinType.OpsMinor;
             _winConditions.Add(WinCondition.NukeDiskNotOnCentCom);
         }
     }
@@ -363,7 +384,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void CheckRoundShouldEnd()
     {
-        if (!RuleAdded)
+        if (!RuleAdded || RuleWinType == WinType.CrewMajor || RuleWinType == WinType.OpsMajor)
             return;
 
         // If there are any nuclear bombs that are active, immediately return. We're not over yet.
@@ -401,8 +422,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (operativesAlive)
             return; // There are living operatives than can access the shuttle, or are still on the station's map.
 
-        _winType = WinType.CrewMajor;
-
         // Check that there are spawns available and that they can access the shuttle.
         var spawnsAvailable = EntityQuery<NukeOperativeSpawnerComponent>(true).Any();
         if (spawnsAvailable && shuttleMapId == _nukiePlanet)
@@ -419,7 +438,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _winConditions.Add(WinCondition.AllNukiesDead);
         }
 
-        _roundEndSystem.EndRound();
+        RuleWinType = WinType.CrewMajor;
     }
 
     private void OnNukeDisarm(NukeDisarmSuccessEvent ev)
@@ -531,11 +550,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             GameTicker.PlayerJoinGame(session);
             _operativePlayers.Add(session);
         }
-
-        if (_nukeopsRuleConfig.GreetSound == null)
-            return;
-
-        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayers(operatives), AudioParams.Default);
     }
 
     private void OnPlayersGhostSpawning(EntityUid uid, NukeOperativeComponent component, GhostRoleSpawnerUsedEvent args)
@@ -572,8 +586,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _operativePlayers.Add(playerSession);
 
+        if (_ticker.RunLevel != GameRunLevel.InRound)
+            return;
+
         if (_nukeopsRuleConfig.GreetSound != null)
-            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession), AudioParams.Default);
+            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession));
 
         if (_targetStation != null && !string.IsNullOrEmpty(Name(_targetStation.Value)))
             _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
@@ -790,7 +807,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public override void Started()
     {
-        _winType = WinType.Neutral;
+        RuleWinType = WinType.Neutral;
         _winConditions.Clear();
         _nukieOutpost = null;
         _nukiePlanet = null;

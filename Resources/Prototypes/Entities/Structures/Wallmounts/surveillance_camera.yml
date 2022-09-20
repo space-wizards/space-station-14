@@ -17,6 +17,7 @@
   - type: ExtensionCableReceiver
   - type: Eye
   - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
   - type: Transform
     anchored: true
   - type: Wires

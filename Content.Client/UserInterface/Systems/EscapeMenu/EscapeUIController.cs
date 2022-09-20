@@ -36,7 +36,8 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.ChangelogButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
-            UIManager.GetUIController<ChangelogUIController>().ToggleWindow();
+            // Put this back when changelog button no longer controls the window
+            // UIManager.GetUIController<ChangelogUIController>().ToggleWindow();
         };
 
         _escapeWindow.RulesButton.OnPressed += _ =>
