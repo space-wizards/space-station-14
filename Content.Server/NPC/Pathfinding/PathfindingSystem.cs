@@ -93,6 +93,17 @@ namespace Content.Server.NPC.Pathfinding
             }
         }
 
+        public async Task<PathfindingResultEvent> GetPath(
+            EntityUid entity,
+            EntityCoordinates start,
+            EntityCoordinates end,
+            PathFlags flags,
+            float range,
+            CancellationToken cancelToken)
+        {
+            return await GetPath(start, end, flags, range, cancelToken);
+        }
+
         /// <summary>
         /// Asynchronously gets a path.
         /// </summary>
@@ -100,6 +111,7 @@ namespace Content.Server.NPC.Pathfinding
             EntityCoordinates start,
             EntityCoordinates end,
             PathFlags flags,
+            float range,
             CancellationToken cancelToken)
         {
             // Don't allow the caller to pass in the request in case they try to do something with its data.
@@ -125,9 +137,10 @@ namespace Content.Server.NPC.Pathfinding
             EntityCoordinates start,
             EntityCoordinates end,
             PathFlags flags,
+            float range,
             CancellationToken cancelToken)
         {
-            var path = await GetPath(start, end, flags, cancelToken);
+            var path = await GetPath(start, end, flags, range, cancelToken);
             RaiseLocalEvent(uid, path);
         }
 

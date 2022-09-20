@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.NPC.Systems;
+using Content.Shared.NPC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
@@ -97,32 +99,30 @@ public sealed class MoveToOperator : HTNOperator
         }
 
         var cancelToken = new CancellationTokenSource();
-        var access = blackboard.GetValueOrDefault<ICollection<string>>(NPCBlackboard.Access) ?? new List<string>();
 
-        return (false, null);
-        /* TODO
-        var job = _pathfind.RequestPath(
-            new PathfindingArgs(
-                blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
-                access,
-                body.CollisionMask,
-                ownerGrid.GetTileRef(xform.Coordinates),
-                ownerGrid.GetTileRef(targetCoordinates),
-                range), cancelToken.Token);
+        var job = _pathfind.GetPath(
+            blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
+            xform.Coordinates,
+                targetCoordinates,
+             PathFlags.Access,
+                range,
+            cancelToken.Token);
 
-        job.Run();
+        await job;
 
-        await job.AsTask.WaitAsync(cancelToken.Token);
-
-        if (job.Result == null)
+        if (!job.IsCompletedSuccessfully)
+        {
             return (false, null);
+        }
 
         return (true, new Dictionary<string, object>()
         {
             {NPCBlackboard.OwnerCoordinates, targetCoordinates},
+#pragma warning disable RA0004
             {PathfindKey, job.Result}
+#pragma warning restore RA0004
         });
-        */
+
     }
 
     // Given steering is complicated we'll hand it off to a dedicated system rather than this singleton operator.

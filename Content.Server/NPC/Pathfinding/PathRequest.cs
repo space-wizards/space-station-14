@@ -1,10 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Shared.NPC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.NPC;
+namespace Content.Server.NPC.Pathfinding;
 
 /// <summary>
 /// Stores the in-progress data of a pathfinding request.
@@ -46,32 +47,4 @@ public sealed class PathRequest
         Flags = flags;
         Tcs = new TaskCompletionSource<PathResult>(cancelToken);
     }
-}
-
-public enum PathResult : byte
-{
-    NoPath,
-    PartialPath,
-    Path,
-}
-
-[Flags]
-public enum PathFlags : byte
-{
-    None = 0,
-
-    /// <summary>
-    /// Do we have any form of access.
-    /// </summary>
-    Access = 1 << 0,
-
-    /// <summary>
-    /// Can we pry airlocks if necessary.
-    /// </summary>
-    Prying = 1 << 1,
-
-    /// <summary>
-    /// Can stuff like walls be broken.
-    /// </summary>
-    Smashing = 1 << 2,
 }
